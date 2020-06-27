@@ -195,8 +195,8 @@ export default {
       sendAuthCode: true /*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */,
       auth_time: 0 /*倒计时 计数器*/,
       loginForm: {
-        password: "",
-        account: ""
+        password: "EdtTest",
+        account: "EdtTest"
       },
       forgetForm: {
         nickname: "",
@@ -240,7 +240,7 @@ export default {
       companyInit: "company/companyInit"
     }),
 
-    
+
     userIsLogin(data) {
       this.saveuser(data);
       const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg);
