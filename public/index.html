@@ -1,0 +1,69 @@
+<!--
+ * @Date: 2020-02-04 15:51:25
+ * @LastEditors: Dana
+ * @LastEditTime: 2020-05-08 16:08:58
+ * @FilePath: /cloudAdmin/public/index.html
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>教育后台</title>
+</head>
+
+<style>
+  html {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    height: 100%;
+    background-color: #ccc;
+  }
+</style>
+
+<script>
+  window.SITE_CONFIG = {};
+  window.SITE_CONFIG['version'] = 'v1.1.0';
+  window.SITE_CONFIG['nodeEnv'] = '<%= process.env.NODE_ENV %>';
+  window.SITE_CONFIG['hasMock'] = false;                      // api请求地址
+  window.SITE_CONFIG['storeState'] = {};                  // vuex本地储存初始化状态（用于不刷新页面的情况下，也能重置初始化项目中所有状态）
+
+</script>
+<!-- 生产环境 -->
+<% if (process.env.NODE_ENV == 'development') { %>
+<script>
+
+  window.SITE_CONFIG['apiURL'] = './api';
+  window.SITE_CONFIG['sysURL'] = './system';
+  window.SITE_CONFIG['newApi'] = './newApi';
+
+
+</script>
+<% } %>
+<!-- 生产环境 -->
+<% if (process.env.NODE_ENV == 'production') { %>
+<script>
+
+  window.SITE_CONFIG['apiURL'] = 'https://www.iif2f.com/public/index.php/';
+
+  window.SITE_CONFIG['newApi'] = 'https://www.iif2f.com/public/index.php/';
+
+
+  window.SITE_CONFIG['sysURL'] = 'edt-server';
+
+</script>
+<% } %>
+
+<body>
+
+  <div id="app">
+
+  </div>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>

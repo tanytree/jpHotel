@@ -1,0 +1,200 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    background-color: #eee !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;;
+}
+
+.clear::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.btn-a {
+    background-color: #0083b0 !important;
+    color: #fff;
+}
+
+
+.pageTab {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .subTab {
+        .el-tabs__header {
+            margin-bottom: 0;
+        }
+
+        .el-tabs__content {
+            padding: 0;
+        }
+    }
+
+    & > .el-tabs__header {
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+
+        .el-tabs__nav-wrap {
+            &::after {
+                display: none;
+            }
+
+            .el-tabs__active-bar {
+                display: none;
+            }
+
+            .el-tabs__item {
+                padding: 0 25px;
+                line-height: 40px;
+
+                &.is-active {
+                    background: rgba(18, 110, 255, 1);
+                    border-radius: 4px;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+
+    &.padding {
+        .el-tabs__content {
+            padding: 20px;
+        }
+    }
+
+    .el-tabs__content {
+        flex: 1;
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px 20px 0;
+
+        .el-tab-pane {
+            height: 100%;
+            padding: 10px;
+        }
+    }
+}
+
+.el-form {
+    .el-form-item .el-form-item {
+        margin-bottom: 0;
+    }
+}
+
+.card10 {
+    .el-card__header {
+        padding: 10px;
+    }
+
+    .el-card__body {
+        padding: 10px;
+    }
+}
+
+.el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+    }
+}
+
+.el-card {
+    height: 100%;
+
+    .el-card__body {
+        height: 100%;
+    }
+}
+
+.el-pagination {
+    padding: 15px 0;
+    width: 100%;
+    text-align: right;
+
+    .el-pagination__total {
+        float: left;
+    }
+}
+
+.sec1 {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .top-body {
+        background: #FAFAFA;
+        padding: 15px 15px 0;
+        border-radius: 6px;
+    }
+
+    .subTab .el-tabs__content {
+        display: none;
+    }
+
+
+    .components-edit {
+        flex: 1;
+        padding: 15px 0 0;
+        height: 0;
+
+        .components-table {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+.el-button {
+    font-size: 16px;
+    border-radius: 8px;
+    width: 140px;
+
+
+    &.el-button--text {
+        border: 0;
+        width: auto;
+        padding: 0 6px;
+    }
+
+    &.cancel {
+        color: #126EFF;
+        border: 1px solid #126EFF;
+    }
+    &.submit {
+        background: #126EFF;
+        color: #fff;
+    }
+}
+
