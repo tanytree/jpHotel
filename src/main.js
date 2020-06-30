@@ -55,8 +55,8 @@ import '@/assets/style/index.less'
 const i18n = new VueI18n({
     locale: 'zh', // 定义默认语言为中文 
     messages: {
-        'zh': require('@/assets/languages/zh.json'),
-        'en': require('@/assets/languages/en.json')
+        'zh': require('@/assets/languages/zh.js'),
+        'ri': require('@/assets/languages/ri.js')
     }
 
 });

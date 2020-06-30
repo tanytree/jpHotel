@@ -21,10 +21,31 @@ export default new Router({
         {
             path: '/main', name: 'main', meta: { title: '主页' }, component: Main,
             children: [
-                //管理部
+                // 总办
                 {
-                path: '/manager', name: 'manager', meta: { title: 'manager' },
-                component: () => import('@/views/manager/manager')
+                    path: '/boss-index', name: 'bossIndex', meta: { title: 'bossIndex' },
+                    component: () => import('@/views/Boss/Index')
+                },
+                {
+                    path: '/index-design', name: 'indexDesign',meta: { title: 'indexDesign' },
+                    component: () => import('@/views/Boss/IndexDesign')
+                },
+                {
+                    path: '/department-charge', name: 'DepartmentCharge',
+                    component: () => import('@/views/Boss/DepartmentCharge')
+                },
+                {
+                    path: '/person-mg', name: 'PersonMg',
+                    component: () => import('@/views/Boss/PersonMg')
+                },
+                {
+                    path: '/pay-mg', name: 'PayMg',
+                    component: () => import('@/views/Boss/PayMg')
+                },
+				//管理部
+                {
+                path: '/manager-index', name: 'managerIndex', meta: { title: 'manager' },
+                component: () => import('@/views/manager/index')
                 },
                 //售后部 当前课程/活动项目
                 {
