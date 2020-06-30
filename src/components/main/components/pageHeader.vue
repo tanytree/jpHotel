@@ -47,6 +47,12 @@
         <img src="@/assets/images/topBanner/gonggao.png" alt />
         公告
       </span>-->
+      <span class="itemTxt rightItem">
+       <el-select v-model="language" placeholder="请选择" @change="languageChange">
+          <el-option label="中文" value="zh"> </el-option>
+          <el-option label="日文" value="ri"> </el-option>
+        </el-select>
+      </span>
       <span class="itemTxt logoout">
         <el-dropdown>
           <span class="userInfo">
@@ -71,11 +77,32 @@ export default {
   computed: {
     ...mapState({
       user: state => state.user,
+      routesmap: state => state.routermsg.routermsg,
     })
+  },
+
+
+
+  data() {
+    return {
+      language: 'zh'
+    }
+  },
+  created() {
+    this.$i18n.locale = this.language;
   },
   methods: {
     ...mapActions({
     }),
+    languageChange() {
+      debugger
+      console.log(this.$i18n.locale);
+      this.$i18n.locale = this.language;
+      console.log(this.$i18n.locale);
+      // this.$router.push('product')
+      this.$emit('calRouter', this.language)
+    },
+
     modelShowfuc() {
       this.$confirm("是否确认退出系统？", "提示", {
         confirmButtonText: "确定",

@@ -17,20 +17,11 @@
 							{{item.name}}
 						</li>
 					</ul>
-					<!-- <el-menu>
-            <template>
-              <el-menu-item
-                :key="item.id"
-                :class="sectionid==item.id?'is-active':''"
-                @click="toSection(item)"
-              >{{item.name}}</el-menu-item>
-            </template>
-          </el-menu>-->
 				</div>
 			</el-aside>
 			<el-container class="mainContainer">
 				<el-header class="layheader">
-					<div class="header-item" v-for="item in routesmap" :key="item.name" @click="menulfuc(item)" :class="partmentId==item.id?'itemactive':''">
+					<div class="header-item" v-for="item in routesmap" :key="item.name" @click="menulfuc(item)" :class="partmentId == item.id?'itemactive':''">
 						<img :src="require(`@/assets/images/${item.icon}.png`)" alt />
 						<div>{{item.name}}</div>
 					</div>
@@ -61,91 +52,24 @@
 	</el-container>
 </template>
 <script>
-	import {
-		getRouterKey,
-		removeToken
-	} from "@/utils/auth";
+	import { removeToken } from "@/utils/auth";
 	import esMenu from "./components/sidebar";
 	import pageHeader from "./components/pageHeader";
-
-	import {
-		mapState,
-		mapActions
-	} from "vuex";
-	import {
-		get_user_enterprise
-	} from "@/utils/api/login";
+  import { mapState, mapActions } from "vuex";
 	export default {
 		name: "Main",
 		components: {
 			esMenu,
 			pageHeader
 		},
+
 		computed: {
 			...mapState({
-				// routesmap: state => state.routermsg.routermsg,
+				routesmap: state => state.routermsg.routermsg,
 				token: state => state.user.token,
 				userId: state => state.user.id,
-				companyList: state => state.user.companyList
-			}),
-			routesmap() {
-				return [
-					{
-					  name: this.$t('tabName[0].name'), // 总办
-					  icon: "icon06",
-					  value: "product",
-					  id: '1',
-					  children: [
-					    { name: this.$t('tabName[0].children[0].name'), id: "10", icon: "sales/nav01.png", value: "bossIndex"},
-					    { name: this.$t('tabName[0].children[1].name'), id: "11", icon: "market/nav02.png", value: "DepartmentCharge"},
-					    { name: this.$t('tabName[0].children[2].name'), id: "12", icon: "market/nav03.png", value: "PersonMg" },
-					    { name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg", }
-					  ]
-					},
-					{
-					  name: this.$t('tabName[1].name'), // 管理部
-					  icon: "icon09",
-					  value: "product",
-					  id: '1',
-					  children: [
-					    { name: this.$t('tabName[1].children[0].name'), id: "10", icon: "market/nav01.png", value: "managerIndex" },
-					    { name: this.$t('tabName[1].children[1].name'), id: "11", icon: "market/nav02.png", value: "product" },
-					    { name: this.$t('tabName[1].children[2].name'), id: "12", icon: "market/nav03.png", value: "promotion" },
-					    { name: this.$t('tabName[1].children[3].name'), id: "13", icon: "market/nav04.png", value: "advert"},
-						{ name: this.$t('tabName[1].children[4].name'), id: "13", icon: "market/nav04.png", value: "advert", }
-					  ]
-					},
-					{
-					  name: this.$t('tabName[2].name'), // 财务部
-					  icon: "icon08",
-					  value: "product",
-					  id: '1',
-					  children: [
-					    { name: this.$t('tabName[2].children[0].name'), id: "10", icon: "market/nav01.png", value: "market" },
-					    { name: this.$t('tabName[2].children[1].name'), id: "11", icon: "market/nav02.png", value: "product" },
-					    { name: this.$t('tabName[2].children[2].name'), id: "12", icon: "market/nav03.png", value: "promotion" },
-					    { name: this.$t('tabName[2].children[3].name'), id: "13", icon: "market/nav04.png", value: "advert"},
-						{ name: this.$t('tabName[2].children[4].name'), id: "13", icon: "market/nav04.png", value: "advert", },
-						{ name: this.$t('tabName[2].children[5].name'), id: "13", icon: "market/nav04.png", value: "advert", }
-					  ]
-					},
-					{
-					  name: this.$t('tabName[3].name'), // 前台部
-					  icon: "icon04",
-					  value: "product",
-					  id: '1',
-					  children: [
-					    { name: this.$t('tabName[3].children[0].name'), id: "10", icon: "market/nav01.png", value: "market" },
-					    { name: this.$t('tabName[3].children[1].name'), id: "11", icon: "market/nav02.png", value: "product" },
-					    { name: this.$t('tabName[3].children[2].name'), id: "12", icon: "market/nav03.png", value: "promotion" },
-					    { name: this.$t('tabName[3].children[3].name'), id: "13", icon: "market/nav04.png", value: "advert"},
-						{ name: this.$t('tabName[3].children[4].name'), id: "13", icon: "market/nav04.png", value: "advert", },
-						{ name: this.$t('tabName[3].children[5].name'), id: "13", icon: "market/nav04.png", value: "advert", },
-						{ name: this.$t('tabName[3].children[5].name'), id: "13", icon: "market/nav04.png", value: "advert", }
-					  ]
-					}
-				]
-			}
+				companyList: state => state.user.companyList,
+			})
 		},
 		data() {
 			return {
@@ -165,7 +89,11 @@
 		onShow() {
 		},
 		methods: {
-			menulfuc(item) {
+      ...mapActions({
+        routeractions: "routermsg/routeractions",
+      }),
+
+      menulfuc(item) {
 				this.routerCompany = "";
 				this.menul = item;
 				sessionStorage.menul = JSON.stringify(item);
@@ -173,6 +101,7 @@
 				this.sectionid = "";
 				sessionStorage.partmentId = item.id;
 				this.$forceUpdate();
+        this.toSection(this.menul.children[0])
 			},
 			//点击左侧导航
 			toSection(item) {
@@ -223,8 +152,8 @@
 				this.$router.push("/");
 			},
 			// 处理路由
-			calRouter() {
-				this.partmentId = sessionStorage.partmentId || "";
+			calRouter(language) {
+        this.partmentId = sessionStorage.partmentId || "";
 				this.sectionid = sessionStorage.sectionid || "";
 				this.pageId = sessionStorage.pageId || "";
 				if (sessionStorage.subMenul) {
@@ -253,21 +182,76 @@
 		created() {
 			this.calRouter();
 		},
-		mounted() {
-			// this.$refs.slidBar.getRouter();
-			this.company = this.companyList[0];
-			// get_user_enterprise({
-			//   token: this.token,
-			//   userId: this.userId,
-			//   userId: this.plat_source,
-			//   enterCode: this.company.enterCode
-			// }).then(res => {});
-		},
+    activated () {
+		  debugger
+      this.routeractions([
+        {
+          name: this.$t('tabName[0].name'), // 总办
+          icon: "icon06",
+          value: "product",
+          id: '1',
+          children: [
+            { name: this.$t('tabName[0].children[0].name'), id: "10", icon: "sales/nav01.png", value: "bossIndex"},
+            { name: this.$t('tabName[0].children[1].name'), id: "11", icon: "market/nav02.png", value: "DepartmentCharge"},
+            { name: this.$t('tabName[0].children[2].name'), id: "12", icon: "market/nav03.png", value: "PersonMg" },
+            { name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg", }
+          ]
+        },
+        {
+          name: this.$t('tabName[1].name'), // 管理部
+          icon: "icon09",
+          value: "product",
+          id: '2',
+          children: [
+            { name: this.$t('tabName[1].children[0].name'), id: "20", icon: "market/nav01.png", value: "managerIndex" },
+            { name: this.$t('tabName[1].children[1].name'), id: "21", icon: "market/nav02.png", value: "product" },
+            { name: this.$t('tabName[1].children[2].name'), id: "22", icon: "market/nav03.png", value: "promotion" },
+            { name: this.$t('tabName[1].children[3].name'), id: "23", icon: "market/nav04.png", value: "advert"},
+            { name: this.$t('tabName[1].children[4].name'), id: "24", icon: "market/nav04.png", value: "advert", }
+          ]
+        },
+        {
+          name: this.$t('tabName[2].name'), // 财务部
+          icon: "icon08",
+          value: "product",
+          id: '3',
+          children: [
+            { name: this.$t('tabName[2].children[0].name'), id: "30", icon: "market/nav01.png", value: "market" },
+            { name: this.$t('tabName[2].children[1].name'), id: "31", icon: "market/nav02.png", value: "product" },
+            { name: this.$t('tabName[2].children[2].name'), id: "32", icon: "market/nav03.png", value: "promotion" },
+            { name: this.$t('tabName[2].children[3].name'), id: "33", icon: "market/nav04.png", value: "advert"},
+            { name: this.$t('tabName[2].children[4].name'), id: "34", icon: "market/nav04.png", value: "advert", },
+            { name: this.$t('tabName[2].children[5].name'), id: "35", icon: "market/nav04.png", value: "advert", }
+          ]
+        },
+        {
+          name: this.$t('tabName[3].name'), // 前台部
+          icon: "icon04",
+          value: "product",
+          id: '4',
+          children: [
+            { name: this.$t('tabName[3].children[0].name'), id: "40", icon: "market/nav01.png", value: "market" },
+            { name: this.$t('tabName[3].children[1].name'), id: "41", icon: "market/nav02.png", value: "product" },
+            { name: this.$t('tabName[3].children[2].name'), id: "42", icon: "market/nav03.png", value: "promotion" },
+            { name: this.$t('tabName[3].children[3].name'), id: "43", icon: "market/nav04.png", value: "advert"},
+            { name: this.$t('tabName[3].children[4].name'), id: "44", icon: "market/nav04.png", value: "advert", },
+            { name: this.$t('tabName[3].children[5].name'), id: "45", icon: "market/nav04.png", value: "advert", },
+            { name: this.$t('tabName[3].children[5].name'), id: "46", icon: "market/nav04.png", value: "advert", }
+          ]
+        }
+      ]);
+      // this.$i18n.locale = 'zh';
+      this.company = this.companyList[0];
+      this.menulfuc(this.routesmap[0])
+      this.toSection(this.menul.children[0])
+
+
+    },
 		watch: {
-			$route(to, from) {
-				this.calRouter();
-				this.toSection()
-			}
+			// $route(to, from) {
+			// 	this.calRouter();
+			// 	this.toSection()
+			// }
 		}
 	};
 </script>
