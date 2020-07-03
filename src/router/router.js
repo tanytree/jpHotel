@@ -47,6 +47,10 @@ export default new Router({
                 path: '/manager-index', name: 'managerIndex', meta: { title: 'manager' },
                 component: () => import('@/views/manager/index')
                 },
+				{
+				path: '/guest-center', name: 'guestCenter', meta: { title: 'guestCenter' },
+				component: () => import('@/views/manager/guestCenter/main')
+				},
                 //售后部 当前课程/活动项目
                 {
                   path: '/currentCourse', name: 'currentCourse', meta: { title: 'currentCourse' },

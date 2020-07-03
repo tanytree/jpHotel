@@ -40,19 +40,21 @@
 						<div class="components-edit">
 							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
 							 @selection-change="handleSelectionChange">
-								<el-table-column prop="name" label="员工姓名" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="time" label="入职时间" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="job_status" label="在职状态" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="job" label="职位" width="50"></el-table-column>
-								<el-table-column prop="number" label="工号" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="part" label="所在部门" show-overflow-tooltip></el-table-column>
-								<el-table-column label="操作" width="300">
+								<el-table-column prop="name" label="员工姓名"></el-table-column>
+								<el-table-column prop="time" label="入职时间"></el-table-column>
+								<el-table-column prop="job_status" label="在职状态"></el-table-column>
+								<el-table-column prop="job" label="职位"></el-table-column>
+								<el-table-column prop="number" label="工号"></el-table-column>
+								<el-table-column prop="part" label="所在部门"></el-table-column>
+								<el-table-column label="操作" width="350">
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup('change')">修改</el-button>
 										<el-button type="text" size="small" @click="popup('detail')">详情</el-button>
 										<el-button type="text" size="small" @click="popup('gone')">办理离职</el-button>
 										<el-button type="text" size="small" @click="popup('zheng')">转正</el-button>
-										<el-button type="text" size="small">删除</el-button>
+										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
+											<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
+										</el-popconfirm>
 									</template>
 								</el-table-column>
 							</el-table>
@@ -95,16 +97,19 @@
 							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
 							 @selection-change="handleSelectionChange">
 								<!-- <el-table-column type="index" label="序号" width="50"></el-table-column> -->
-								<el-table-column prop="name" label="员工姓名" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="time" label="入职时间" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="job" label="职位" width="50"></el-table-column>
-								<el-table-column prop="number" label="工号" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="part" label="离职时间" show-overflow-tooltip></el-table-column>
-								<el-table-column label="操作" width="150">
+								<el-table-column prop="name" label="员工姓名"></el-table-column>
+								<el-table-column prop="time" label="入职时间"></el-table-column>
+								<el-table-column prop="job" label="职位"></el-table-column>
+								<el-table-column prop="number" label="工号"></el-table-column>
+								<el-table-column prop="part" label="离职时间"></el-table-column>
+								<el-table-column label="操作" width="250">
 									<template slot-scope="scope">
 										<el-button type="text" size="small"  @click="popup('detail')">详情</el-button>
 										<el-button type="text" size="small">重新入职</el-button>
-										<el-button type="text" size="small">删除</el-button>
+										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
+											<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
+										</el-popconfirm>
+										<!-- <el-button type="text" size="small">删除</el-button> -->
 									</template>
 								</el-table-column>
 							</el-table>
@@ -428,6 +433,8 @@
 				justify-content: space-between;
 
 				.page-all {
+					display: flex;
+					width: 200px;
 					font-size: 12px;
 					color: #666666;
 					letter-spacing: 2px;

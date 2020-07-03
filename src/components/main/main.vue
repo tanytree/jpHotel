@@ -204,7 +204,7 @@
           id: '2',
           children: [
             { name: this.$t('tabName[1].children[0].name'), id: "20", icon: "market/nav01.png", value: "managerIndex" },
-            { name: this.$t('tabName[1].children[1].name'), id: "21", icon: "market/nav02.png", value: "product" },
+            { name: this.$t('tabName[1].children[1].name'), id: "21", icon: "market/nav02.png", value: "guestCenter" },
             { name: this.$t('tabName[1].children[2].name'), id: "22", icon: "market/nav03.png", value: "promotion" },
             { name: this.$t('tabName[1].children[3].name'), id: "23", icon: "market/nav04.png", value: "advert"},
             { name: this.$t('tabName[1].children[4].name'), id: "24", icon: "market/nav04.png", value: "advert", }

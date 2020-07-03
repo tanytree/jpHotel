@@ -488,6 +488,8 @@
 				justify-content: space-between;
 
 				.page-all {
+					display: flex;
+					width: 200px;
 					font-size: 12px;
 					color: #666666;
 					letter-spacing: 2px;
