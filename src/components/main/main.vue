@@ -234,7 +234,7 @@
             { name: this.$t('tabName[3].children[1].name'), id: "41", icon: "market/nav02.png", value: "product" },
             { name: this.$t('tabName[3].children[2].name'), id: "42", icon: "market/nav03.png", value: "promotion" },
             { name: this.$t('tabName[3].children[3].name'), id: "43", icon: "market/nav04.png", value: "advert"},
-            { name: this.$t('tabName[3].children[4].name'), id: "44", icon: "market/nav04.png", value: "advert", },
+            { name: this.$t('tabName[3].children[4].name'), id: "44", icon: "market/nav04.png", value: "customer", },
             { name: this.$t('tabName[3].children[5].name'), id: "45", icon: "market/nav04.png", value: "advert", },
             { name: this.$t('tabName[3].children[5].name'), id: "46", icon: "market/nav04.png", value: "advert", }
           ]

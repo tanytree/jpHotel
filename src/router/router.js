@@ -214,11 +214,11 @@ export default new Router({
                         import ('@/views/market/promotion/slideshow/publish')
                 },
                 {
-                    path: '/advert',
-                    name: 'advert',
-                    meta: { title: '广告管理', pid: "13" },
+                    path: '/customer',
+                    name: 'customer',
+                    meta: { title: '客户管理', pid: "13" },
                     component: () =>
-                        import ('@/views/market/advert')
+                        import ('@/views/market/customer')
                 },
                 {
                     path: '/advertList',
