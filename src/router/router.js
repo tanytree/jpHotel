@@ -68,11 +68,19 @@ export default new Router({
                     name: 'managerIndex',
                     meta: { title: 'manager' },
                     component: () =>
-                        import ('@/views/manager/index')
+                        import ('@/views/manager/index/main')
                 },
 				{
 				path: '/guest-center', name: 'guestCenter', meta: { title: 'guestCenter' },
 				component: () => import('@/views/manager/guestCenter/main')
+				},
+				{
+				path: '/guest-Room_2', name: 'guestRoom_2', meta: { title: 'guestRoom_2' },
+				component: () => import('@/views/manager/guestRoom_2/main')
+				},
+				{
+				path: '/price-system', name: 'priceSystem', meta: { title: 'priceSystem' },
+				component: () => import('@/views/manager/priceSystem/main')
 				},
                 //售后部 当前课程/活动项目
                 {

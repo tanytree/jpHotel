@@ -1,14 +1,14 @@
 <template>
-	<!-- 房型维护 -->
+	<!-- 房屋维护 -->
 	<el-row>
 		<el-tabs v-model="tag" v-if="tab_show">
 			<el-tab-pane label="客房房型" name="one">
-				<el-row :gutter="20">
-					<el-col :span="6" :offset="20">
+				<el-row :gutter="22">
+					<el-col :span="22"  :offset="21">
 						<el-button type="primary" style="width: 100px;" size="small" @click="add">新增</el-button>
 					</el-col>
 				</el-row>
-				<el-table ref="multipleTable" :data="four_tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+				<el-table ref="multipleTable" :data="four_tableData" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
 				 @selection-change="handleSelectionChange">shu
 					<el-table-column prop="name" label="房型名称"></el-table-column>
 					<el-table-column prop="name" label="门市价"></el-table-column>

@@ -1,7 +1,7 @@
 <template>
 	<el-container class="mainpage">
 		<el-header class="mainheader" height="40px">
-			<pageHeader @calRouter="calRouter" />
+			<pageHeader @calRouter="calRouter" :language='language'/>
 		</el-header>
 		<el-container class="main-container">
 			<el-aside v-if="menul.children && menul.children.length>0&&routerCompany!=='company'" class="mainAside">
@@ -83,7 +83,9 @@
 				subMenul: [],
 				parentMenu: {},
 				company: {},
-				siderflg: false
+				siderflg: false,
+				
+				language: 'zh'
 			};
 		},
 		onShow() {
@@ -153,7 +155,9 @@
 			},
 			// 处理路由
 			calRouter(language) {
-        this.partmentId = sessionStorage.partmentId || "";
+				this.language = language
+				this.$forceUpdate();	
+				this.partmentId = sessionStorage.partmentId || "";
 				this.sectionid = sessionStorage.sectionid || "";
 				this.pageId = sessionStorage.pageId || "";
 				if (sessionStorage.subMenul) {
@@ -205,8 +209,8 @@
           children: [
             { name: this.$t('tabName[1].children[0].name'), id: "20", icon: "market/nav01.png", value: "managerIndex" },
             { name: this.$t('tabName[1].children[1].name'), id: "21", icon: "market/nav02.png", value: "guestCenter" },
-            { name: this.$t('tabName[1].children[2].name'), id: "22", icon: "market/nav03.png", value: "promotion" },
-            { name: this.$t('tabName[1].children[3].name'), id: "23", icon: "market/nav04.png", value: "advert"},
+            { name: this.$t('tabName[1].children[2].name'), id: "22", icon: "market/nav03.png", value: "guestRoom_2" },
+            { name: this.$t('tabName[1].children[3].name'), id: "23", icon: "market/nav04.png", value: "priceSystem"},
             { name: this.$t('tabName[1].children[4].name'), id: "24", icon: "market/nav04.png", value: "advert", }
           ]
         },

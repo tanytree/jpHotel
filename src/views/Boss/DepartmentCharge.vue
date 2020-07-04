@@ -2,7 +2,7 @@
 	<div class="boss-index">
 		<el-tabs class="pageTab" v-model="activeName">
 			<el-tab-pane label="负责人授权" name="first">
-				<el-table :data="tableData" style="width: 100%" tooltip-effect="dark" :header-cell-style="{background:'#e6e6e6',color:'#1E1E1E'}">
+				<el-table :data="tableData" style="width: 100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}">
 					<el-table-column prop="name" label="部门名称">
 					</el-table-column>
 					<el-table-column prop="people" label="负责人" width="800">

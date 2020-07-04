@@ -1,4 +1,4 @@
-<!-- 楼栋楼层 -->
+<!-- 房屋信息 -->
 <template>
 	<div id="page1">
 		<el-row v-if="!add_show">
@@ -75,7 +75,7 @@
 				</div>
 			</el-row>
 		</el-row>
-		<el-row>
+		<el-row v-if="add_show">
 			<AddRoom ref="AddRoom" :add_show="add_show" @changeShow="changeShow"></AddRoom>
 		</el-row>
 	</div>
