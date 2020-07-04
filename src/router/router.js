@@ -1,13 +1,17 @@
 /*
  * @Date: 2019-12-12 11:15:44
- * @LastEditors: Dana
- * @LastEditTime: 2020-04-30 21:33:13
- * @FilePath: /cloudAdmin/src/router/router.js
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-04 21:41:13
+ * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/main/main'
 Vue.use(Router)
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
     // 不需要要权限的页面默认挂载
 export default new Router({
     mode: 'hash',
@@ -151,6 +155,21 @@ export default new Router({
                         import ('@/views/market/main')
                 },
                 {
+                    path: '/customer',
+                    name: 'customer',
+                    meta: { title: '客户管理', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/customer')
+                },
+                {
+                    path: '/nightaudit',
+                    name: 'nightaudit',
+                    meta: { title: '客户管理', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/nightaudit')
+                },
+
+                {
                     path: '/market-authSet',
                     name: 'marketauthSet',
                     meta: { title: '权限设置' },
@@ -220,13 +239,6 @@ export default new Router({
                     meta: { title: '限时抢购发布', pid: "12" },
                     component: () =>
                         import ('@/views/market/promotion/slideshow/publish')
-                },
-                {
-                    path: '/advert',
-                    name: 'advert',
-                    meta: { title: '广告管理', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/advert')
                 },
                 {
                     path: '/advertList',
