@@ -1345,6 +1345,7 @@ export default {
       ],
       checked: false,
       activeThree: "a",
+      currentPage3:'',
       // value1: '',//时间
       // value2: '',
       // value3: ''
