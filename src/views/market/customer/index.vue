@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 15:23:53
+ * @LastEditTime: 2020-07-05 07:48:05
  * @FilePath: /jiudian/src/views/market/customer/index.vue
  -->
 
@@ -29,10 +29,9 @@ import list1 from "./list1";
 import list2 from "./list2";
 import list3 from "./list3";
 import list4 from "./list4";
-import list5 from "./list5";
 
 export default {
-  components: { list1, list2, list3, list4, list5 },
+  components: { list1, list2, list3, list4 },
   data() {
     return {
       activeName: "first" //第一个默认启动
