@@ -14,6 +14,7 @@ import store from '@/store'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/css/index.css';
 import VueI18n from 'vue-i18n'
+import i18n from './utils/i18n.js'
 import utils from '@/utils/publicJS';
 import Video from 'video.js'
 import Distpicker from 'v-distpicker'
@@ -52,14 +53,14 @@ import '@/assets/style/index.less'
 //         next()
 //     }
 // })
-const i18n = new VueI18n({
-    locale: 'zh', // 定义默认语言为中文 
-    messages: {
-        'zh': require('@/assets/languages/zh.js'),
-        'ri': require('@/assets/languages/ri.js')
-    }
-
-});
+// const i18n = new VueI18n({
+//     locale: localStorage.getItem('locale') || 'zh', // 定义默认语言为中文 
+//     messages: {
+//         'zh': require('@/assets/languages/zh.js'),
+//         'ri': require('@/assets/languages/ri.js')
+//     },
+// 	locale.i18n((key, value) => i18n.t(key, value)) //为了实现element插件的多语言切换
+// });
 
 new Vue({
     el: '#app',

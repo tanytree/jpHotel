@@ -38,7 +38,7 @@
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
 							 @selection-change="handleSelectionChange">
 								<el-table-column prop="name" label="员工姓名"></el-table-column>
 								<el-table-column prop="time" label="入职时间"></el-table-column>

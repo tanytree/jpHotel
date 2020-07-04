@@ -17,7 +17,7 @@
 				<el-form :model="threeForm" :rules="threerules" ref="ruleForm" label-width="100px">
 					<el-col :span="8">
 						<el-form-item label="房型:" prop="name">
-							<el-select v-model="threeForm.name" placeholder="请选择房型" class="row-width">
+							<el-select v-model="threeForm.name" placeholder="请选择房型"  style="width: 100%;">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
 							</el-select>
@@ -25,7 +25,7 @@
 					</el-col>
 					<el-col :span="8">
 						<el-form-item label="楼栋:" prop="name">
-							<el-select v-model="threeForm.name" placeholder="请选择楼栋" class="row-width">
+							<el-select v-model="threeForm.name" placeholder="请选择楼栋"  style="width: 100%;">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
 							</el-select>
@@ -33,7 +33,7 @@
 					</el-col>
 					<el-col :span="8">
 						<el-form-item label="楼层:" prop="name">
-							<el-select v-model="threeForm.name" placeholder="请选择楼层" class="row-width">
+							<el-select v-model="threeForm.name" placeholder="请选择楼层"  style="width: 100%;">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
 							</el-select>
@@ -41,12 +41,12 @@
 					</el-col>
 					<el-col :span="8">
 						<el-form-item label="房间号:" prop="name">
-							<el-input v-model="threeForm.name" style="width: 200px;"></el-input>
+							<el-input v-model="threeForm.name"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="8">
 						<el-form-item label="电话分机:" prop="name">
-							<el-input v-model="threeForm.name" style="width: 200px;"></el-input>
+							<el-input v-model="threeForm.name"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-form>

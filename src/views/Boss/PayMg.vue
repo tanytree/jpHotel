@@ -28,24 +28,24 @@
 						</el-row>
 						<div class="components-edit">
 							<el-table ref="multipleTable" :data="tableData" style="width: 100%"
-    max-height="200" tooltip-effect="dark" :header-cell-style="{background:'#d9d9d9',color:'#1E1E1E'}"
+    max-height="200" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
 							 @selection-change="handleSelectionChange">
 								<!-- <el-table-column prop="name" label="部门" show-overflow-tooltip></el-table-column> -->
-								<el-table-column prop="name" label="职位" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="name" label="员工状态" width="50"></el-table-column>
-								<el-table-column prop="name" label="工号" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="name" label="工资月份" show-overflow-tooltip></el-table-column>
+								<el-table-column prop="name" label="职位"></el-table-column>
+								<el-table-column prop="name" label="姓名"></el-table-column>
+								<el-table-column prop="name" label="员工状态"></el-table-column>
+								<el-table-column prop="name" label="工号"></el-table-column>
+								<el-table-column prop="name" label="工资月份"></el-table-column>
 								<el-table-column label="基本工资">
 									<el-table-column prop="name" label="基础工资"></el-table-column>
 									<el-table-column prop="name" label="社保补助"></el-table-column>
 									<el-table-column prop="name" label="其他"></el-table-column>
 									<el-table-column prop="name" label="保密工资"></el-table-column>
 								</el-table-column>
-								<el-table-column prop="name" label="岗位工资" show-overflow-tooltip></el-table-column>
-								<el-table-column type="name" label="绩效工资" width="50"></el-table-column>
-								<el-table-column prop="name" label="奖金" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="name" label="工资月份" show-overflow-tooltip></el-table-column>
+								<el-table-column prop="name" label="岗位工资"></el-table-column>
+								<el-table-column type="name" label="绩效工资"></el-table-column>
+								<el-table-column prop="name" label="奖金"></el-table-column>
+								<el-table-column prop="name" label="工资月份"></el-table-column>
 								<el-table-column label="补贴">
 									<el-table-column prop="name" label="餐补"></el-table-column>
 									<el-table-column prop="name" label="房补"></el-table-column>
@@ -61,11 +61,11 @@
 									<el-table-column prop="name" label="社保扣款"></el-table-column>
 									<el-table-column prop="name" label="个税扣款"></el-table-column>
 								</el-table-column>
-								<el-table-column prop="name" label="应发工资" show-overflow-tooltip></el-table-column>
-								<el-table-column type="name" label="实发工资" width="50"></el-table-column>
-								<el-table-column prop="name" label="当月报销费用" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="name" label="实发工资" show-overflow-tooltip></el-table-column>
-								<el-table-column fixed="right" label="操作" width="120">
+								<el-table-column prop="name" label="应发工资"></el-table-column>
+								<el-table-column type="name" label="实发工资"></el-table-column>
+								<el-table-column prop="name" label="当月报销费用"></el-table-column>
+								<el-table-column prop="name" label="实发工资"></el-table-column>
+								<el-table-column fixed="right" label="操作" width="160">
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup('change')">员工详情</el-button>
 										<el-button type="text" size="small" @click="popup('change')">修改</el-button>
@@ -105,15 +105,15 @@
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
 							 @selection-change="handleSelectionChange">
 								<!-- <el-table-column type="index" label="序号" width="50"></el-table-column> -->
-								<el-table-column prop="name" label="员工姓名" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="time" label="状态" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="job" label="职位" width="50"></el-table-column>
-								<el-table-column prop="job" label="工号" show-overflow-tooltip></el-table-column>
-								<el-table-column prop="job" label="所在部门" show-overflow-tooltip></el-table-column>
-								<el-table-column label="操作" width="150">
+								<el-table-column prop="name" label="员工姓名"></el-table-column>
+								<el-table-column prop="time" label="状态"></el-table-column>
+								<el-table-column prop="job" label="职位"></el-table-column>
+								<el-table-column prop="job" label="工号"></el-table-column>
+								<el-table-column prop="job" label="所在部门"></el-table-column>
+								<el-table-column label="操作" width="200">
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup('detail')">查看</el-button>
 										<el-button type="text" size="small">薪资设置</el-button>

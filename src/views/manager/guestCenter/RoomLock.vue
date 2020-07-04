@@ -1,4 +1,4 @@
-<!-- 楼栋楼层 -->
+<!-- 房锁维护 -->
 <template>
 	<div id="page1">
 		<el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
@@ -15,7 +15,7 @@
 			<el-row :gutter="20" class="demo-form-inline">
 				<el-col :span="10" :offset="14">
 					<el-row style="display: flex;justify-content: flex-end;flex: 1;margin-bottom: 20px;">
-						<el-button type="primary" size="mini">按列批量修改</el-button>
+						<el-button type="primary" size="mini" @click="popup('addPie')">按列批量修改</el-button>
 					</el-row>
 				</el-col>
 			</el-row>
@@ -36,7 +36,7 @@
 				<el-table-column prop="part" label="房间序列号"></el-table-column>
 				<el-table-column label="操作" width="150">
 					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="popup('detail')">修改</el-button>
+						<el-button type="text" size="small" @click="popup('change')">修改</el-button>
 						<el-button type="text" size="small" @click="popup('change')">详情</el-button>
 					</template>
 				</el-table-column>
@@ -50,6 +50,125 @@
 				 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
 			</div>
 		</el-row>
+		<!-- 按列批量修改 -->
+		<el-dialog title="按列批量修改" :visible.sync="dialogAdd_kinds" :close-on-click-modal="false">
+			<el-row class="demo-form-inline">
+				<el-checkbox-group v-model="checkList" style="line-height: 30px;">
+				    <el-checkbox label="硬件"></el-checkbox>
+				    <el-checkbox label="楼栋"></el-checkbox>
+				    <el-checkbox label="楼层"></el-checkbox>
+					<el-checkbox label="锁号"></el-checkbox>
+					<el-checkbox label="接口类型"></el-checkbox>
+					<el-checkbox label="门锁配置信息"></el-checkbox>
+					<!-- 这是为了显得多，下面的不是ui图上的 -->
+					<el-checkbox label="硬件"></el-checkbox>
+					<el-checkbox label="楼栋"></el-checkbox>
+					<el-checkbox label="楼层"></el-checkbox>
+					<el-checkbox label="锁号"></el-checkbox>
+					<el-checkbox label="接口类型"></el-checkbox>
+					<el-checkbox label="门锁配置信息"></el-checkbox>
+				  </el-checkbox-group>
+			</el-row>
+			<el-row>
+				<!-- 这里看设计图，因为不一样，根据列不一样展示下拉，输入框，或者单选 -->
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+				 @selection-change="handleSelectionChange">
+					<el-table-column prop="name" label="名称" width="150"></el-table-column>
+					<el-table-column prop="name" label="设置值">
+						<template slot-scope="name">
+							<el-input v-model="name"></el-input>
+						</template>
+					</el-table-column>
+				</el-table>
+			</el-row>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="centerDialogVisible = false">取 消</el-button>
+				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+			</span>
+		</el-dialog>
+		<!-- 修改 -->
+		<el-dialog title="修改" :visible.sync="dialogChange_show" :close-on-click-modal="false">
+			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+				<el-row class="demo-form-inline">
+					<el-col>
+						<!-- 得去确认哪些是必填项 -->
+						<!-- 详情和修改是一样的，可以将输入框变成不可输入，去掉取消确认按钮 标题变成详情-->
+						<el-form-item label="房间号" :disabled="true">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="楼层" :disabled="true">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="接口类型" prop="name">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="反开">
+							<el-radio-group v-model="ruleForm.resource">
+								<el-radio label="是"></el-radio>
+								<el-radio label="否"></el-radio>
+							</el-radio-group>
+						</el-form-item>
+						<el-form-item label="房间流水号">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数1">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数3">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数5">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数7">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="硬件:">
+							<el-select v-model="ruleForm.name" placeholder="请选择硬件" class="row-width">
+								<el-option label="区域一" value="shanghai"></el-option>
+								<el-option label="区域二" value="beijing"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col class="margin-l">
+						<el-form-item label="楼栋">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="锁号">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="房间配置信息">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="锁类型">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="房间序列号">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数2">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数4">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数6">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="门锁参数8">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+						<el-form-item label="制卡数">
+							<el-input v-model="ruleForm.name"></el-input>
+						</el-form-item>
+					</el-col>
+				</el-row>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+			    <el-button @click="centerDialogVisible = false">取 消</el-button>
+			    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+			  </span>
+		</el-dialog>
 	</div>
 </template>
 
@@ -108,12 +227,44 @@
 							label: '一致'
 						}]
 					}]
-				}]
+				}],
+				dialogAdd_kinds : false,
+				checkList: ['硬件','楼栋'],
+				dialogChange_show: false,
+				ruleForm: {
+					name: '',
+					region: '',
+					date1: '',
+					date2: '',
+					delivery: false,
+					type: [],
+					resource: '',
+					desc: ''
+				},
+				rules: {
+					name: [{
+							required: true,
+							message: '请输入姓名',
+							trigger: 'blur'
+						}
+					]
+				}
 			}
 		},
 		created() {},
 		activated() {},
-		methods: {}
+		methods: {
+			popup(type) {
+				switch (type) {
+					case 'addPie':
+					this.dialogAdd_kinds = true
+					break
+					case 'change':
+					this.dialogChange_show = true
+					break
+				}
+			}
+		}
 	}
 </script>
 
