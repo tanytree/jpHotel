@@ -1,40 +1,28 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 13:37:47
- * @FilePath: /cunhoutaiqianduan/Users/dforest/Documents/workspace/mine/jiudian/src/views/market/customer/list5.vue
+ * @LastEditTime: 2020-07-04 23:14:13
+ * @FilePath: /jiudian/src/views/market/nightaudit/list2.vue
  -->
 
 <template>
 <!-- 统一的列表格式 -->
 <div>
     <el-card>
-        <!-- 查询部分 -->
-        <el-form inline size="small">
-            <el-form-item label="规则名称">
-                <el-input v-model="searchForm.content"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="getDataList">查询</el-button>
-                <el-button type="primary" @click="initForm">重置</el-button>
-            </el-form-item>
-            <el-form-item class="fr">
-                <el-button type="primary">添加头条</el-button>
-            </el-form-item>
-
-        </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
-            <el-table-column type="index" label="序号"></el-table-column>
-            <el-table-column prop="enterName" label="规则名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="上次修改时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStatus" label="修改人" show-overflow-tooltip>
-            </el-table-column>
+            <el-table-column type="index" label="预订人"></el-table-column>
+            <el-table-column prop="enterName" label="手机号码" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="预定时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="抵离时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="订金" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="订单来源" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="入住类型" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="预定订单" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="$router.push({path:'/companyDetails',query:{id:row.enterCode}})">详情</el-button>
-                    <el-button type="text" size="mini" @click="$router.push({path:'/companyDetails',query:{id:row.enterCode}})">编辑</el-button>
-                    <el-button type="text" size="mini" @click="$router.push({path:'/companyDetails',query:{id:row.enterCode}})">删除</el-button>
+                    <el-button type="text" size="mini">详情</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -51,9 +39,7 @@ import {
     mapState,
     mapActions
 } from "vuex";
-// import {
-//     enterprise_list
-// } from "@/utils/api/company";
+
 export default {
     computed: {
         ...mapState({
@@ -65,7 +51,7 @@ export default {
     },
     data() {
         return {
-            loading: true,
+            loading: false,
             showEdit: false,
             showDetail: false,
             searchForm: {

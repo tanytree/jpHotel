@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 17:13:34
+ * @LastEditTime: 2020-07-04 21:31:29
  * @FilePath: /jiudian/src/views/market/customer/list4.vue
  -->
 
@@ -34,7 +34,7 @@ import c4 from "./company/c4";
 import c5 from "./company/c5";
 
 export default {
-  components: { c1, c2,c3,c4},
+  components: { c1, c2,c3,c4,c5},
   data() {
     return {
       activeName: "first" //第一个默认启动
