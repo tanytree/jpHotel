@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 21:41:13
+ * @LastEditTime: 2020-07-05 16:28:39
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -164,9 +164,16 @@ export default new Router({
                 {
                     path: '/nightaudit',
                     name: 'nightaudit',
-                    meta: { title: '客户管理', pid: "13" },
+                    meta: { title: '夜审', pid: "13" },
                     component: () =>
                         import ('@/views/market/nightaudit')
+                },
+                {
+                    path: '/orders',
+                    name: 'orders',
+                    meta: { title: '订单管理', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/orders')
                 },
 
                 {
