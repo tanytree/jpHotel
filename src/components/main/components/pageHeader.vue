@@ -86,51 +86,35 @@
 	} from "vuex";
 
 	export default {
-		props:['language'],
+		// props:['language'],
 		computed: {
 			...mapState({
 				user: state => state.user,
-				routesmap: state => state.routermsg.routermsg,
 			})
 		},
 		data() {
 			return {
+			  language: '日本語',
 			}
 		},
 		watch: {
 		},
 		activated() {
-			this.$i18n.locale = localStorage.getItem('locale');
+      this.language = this.$F.getLangDesc(localStorage.getItem('locale') || 'ri');
 		},
 		methods: {
 			...mapActions({}),
 			toggleLang(lang) {
-				if (lang == 'zh') {
-					localStorage.setItem('locale', 'zh')
-					this.$i18n.locale = localStorage.getItem('locale')
-					this.$forceUpdate();
-					// this.$message({
-					// 	message: '切换为中文！',
-					// 	type: 'success'
-					// })
-				} else if (lang == 'ri') {
-					localStorage.setItem('locale', 'ri')
-					this.$i18n.locale = localStorage.getItem('locale')
-					this.$forceUpdate();
-					// this.$message({
-					// 	message: 'Switch to English!',
-					// 	type: 'success'
-					// })
-				}
-				this.$emit('calRouter', this.$i18n.locale)
-			},
-			languageChange() {
-				debugger
-				console.log(this.$i18n.locale);
-				this.$i18n.locale = this.language;
-				console.log(this.$i18n.locale);
-				// this.$router.push('product')
-				this.$emit('calRouter', this.language)
+        this.$i18n.locale = lang;
+        localStorage.setItem('locale', lang)
+        let langDesc = this.$F.getLangDesc(lang);
+        this.language = langDesc;
+        this.$forceUpdate();
+        this.$message({
+        	message: `切换为${langDesc}成功`,
+        	type: 'success'
+        })
+				// this.$emit('calRouter', lang)
 			},
 
 			modelShowfuc() {

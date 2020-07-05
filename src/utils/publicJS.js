@@ -3,23 +3,31 @@ import {request } from "@/utils/request";
 import merge from 'lodash/merge'
 var code2Table = {};
 let uploadUrl = 'http://xxyweeds.top:8895';
+const languageObject = {
+  'ri': '日本語',
+  'zh': '中文',
+}
 const $F = {
+  getLangDesc(langKey) {
+    return languageObject[langKey];
+  },
+
   getUploadUrl() {
     return uploadUrl;
   },
   deepClone(obj) {
-    var str, newobj = obj.constructor === Array ? [] : {};
+    let str, newObject = obj.constructor === Array ? [] : {};
     if(typeof obj !== 'object'){
-      return;
+        return;
     } else if(window.JSON){
-      str = JSON.stringify(obj), //序列化对象
-        newobj = JSON.parse(str); //还原
+        str = JSON.stringify(obj), //序列化对象
+        newObject = JSON.parse(str); //还原
     } else {
       for(var i in obj){
-        newobj[i] = typeof obj[i] === 'object' ? deepClone(obj[i]) : obj[i];
+        newObject[i] = typeof obj[i] === 'object' ? deepClone(obj[i]) : obj[i];
       }
     }
-    return newobj;
+    return newObject;
   },
 
   guid() {
@@ -63,15 +71,6 @@ const $F = {
 
   merge(origin={}, params={}) {
     merge(origin, params)
-  },
-
-  /*转换活动数据*/
-  changeActivityDatas(array, leaf) {
-    var newArray = []
-    array.forEach(item => {
-      newArray.push({label: item.activityName, value: item.id, leaf: leaf || false});
-    })
-    return newArray;
   },
 
   /**根据userAuth字段 组装用户菜单权限*/

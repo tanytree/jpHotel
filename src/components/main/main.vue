@@ -84,7 +84,6 @@
 				parentMenu: {},
 				company: {},
 				siderflg: false,
-				
 				language: 'zh'
 			};
 		},
@@ -155,8 +154,8 @@
 			},
 			// 处理路由
 			calRouter(language) {
-				this.language = language
-				this.$forceUpdate();	
+				this.language = language;
+				this.$forceUpdate();
 				this.partmentId = sessionStorage.partmentId || "";
 				this.sectionid = sessionStorage.sectionid || "";
 				this.pageId = sessionStorage.pageId || "";
@@ -188,7 +187,8 @@
 		},
     activated () {
 		  debugger
-      this.routeractions([
+      this.language = this.$F.getLangDesc(localStorage.getItem('locale') || 'ri');
+      this.routeractions = [
         {
           name: this.$t('tabName[0].name'), // 总办
           icon: "icon06",
@@ -243,7 +243,7 @@
             { name: this.$t('tabName[3].children[5].name'), id: "46", icon: "market/nav04.png", value: "advert", }
           ]
         }
-      ]);
+      ];
       // this.$i18n.locale = 'zh';
       this.company = this.companyList[0];
       this.menulfuc(this.routesmap[0])
