@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 23:13:22
+ * @LastEditTime: 2020-07-05 12:17:16
  * @FilePath: /jiudian/src/views/market/nightaudit/list1.vue
  -->
 
@@ -43,10 +43,11 @@
                 </div>
             </el-col>
         </el-row>
+    </el-card>
+    <br />
         <el-row>
             <el-button type="primary">夜审</el-button>
         </el-row>
-    </el-card>
 
 </div>
 </template>
