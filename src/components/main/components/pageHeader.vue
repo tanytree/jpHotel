@@ -1,37 +1,37 @@
 <template>
-	<div class="mainheader" height="40px">
-		<div class="leftHead">
-			<!--      <el-dropdown>-->
-			<!--        <span class="el-dropdownBox">-->
-			<!--          <span class="enterName">{{company.enterName}}</span>-->
-			<!--          <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-			<!--        </span>-->
-			<!--        <el-dropdown-menu slot="dropdown">-->
-			<!--          <el-dropdown-item-->
-			<!--            class="itemel"-->
-			<!--            v-for="(item,index) in companyList"-->
-			<!--            :key="index"-->
-			<!--            @click.native="selectCompany(item)"-->
-			<!--          >-->
-			<!--            <div class="itemComang" :class="[item.enterCode==company.enterCode?'activeC':'']">-->
-			<!--              <span-->
-			<!--                class="itemSpam"-->
-			<!--                :class="[item.default==1?'active':'']"-->
-			<!--              >{{item.default==1?"默认":""}}</span>-->
-			<!--              {{item.enterName}}-->
-			<!--            </div>-->
-			<!--          </el-dropdown-item>-->
-			<!--          <el-dropdown-item @click.native="joinCompany">-->
-			<!--            <span class="itemSpam"></span>-->
-			<!--            <i class="el-icon-plus"></i>创建/加入企业-->
-			<!--          </el-dropdown-item>-->
-			<!--        </el-dropdown-menu>-->
-			<!--      </el-dropdown>-->
-			<!--      <span class="itemTxt" @click="toNext('companyInfo')">企业管理</span>-->
-		</div>
+  <div class="mainheader" height="40px">
+    <div class="leftHead">
+      <!--      <el-dropdown>-->
+      <!--        <span class="el-dropdownBox">-->
+      <!--          <span class="enterName">{{company.enterName}}</span>-->
+      <!--          <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+      <!--        </span>-->
+      <!--        <el-dropdown-menu slot="dropdown">-->
+      <!--          <el-dropdown-item-->
+      <!--            class="itemel"-->
+      <!--            v-for="(item,index) in companyList"-->
+      <!--            :key="index"-->
+      <!--            @click.native="selectCompany(item)"-->
+      <!--          >-->
+      <!--            <div class="itemComang" :class="[item.enterCode==company.enterCode?'activeC':'']">-->
+      <!--              <span-->
+      <!--                class="itemSpam"-->
+      <!--                :class="[item.default==1?'active':'']"-->
+      <!--              >{{item.default==1?"默认":""}}</span>-->
+      <!--              {{item.enterName}}-->
+      <!--            </div>-->
+      <!--          </el-dropdown-item>-->
+      <!--          <el-dropdown-item @click.native="joinCompany">-->
+      <!--            <span class="itemSpam"></span>-->
+      <!--            <i class="el-icon-plus"></i>创建/加入企业-->
+      <!--          </el-dropdown-item>-->
+      <!--        </el-dropdown-menu>-->
+      <!--      </el-dropdown>-->
+      <!--      <span class="itemTxt" @click="toNext('companyInfo')">企业管理</span>-->
+    </div>
 
-		<div class="header_right">
-			<!-- <span class="itemTxt rightItem">
+    <div class="header_right">
+      <!-- <span class="itemTxt rightItem">
         <img src="@/assets/images/topBanner/zuzhi.png" alt />
         组织架构
       </span>
@@ -47,7 +47,7 @@
         <img src="@/assets/images/topBanner/gonggao.png" alt />
         公告
       </span>-->
-			<span class="itemTxt rightItem">
+      <span class="itemTxt rightItem">
 				<el-dropdown>
 					<span class="el-dropdown-link">
 						{{language}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -57,12 +57,12 @@
 						<el-dropdown-item @click.native="toggleLang('ri')" :disabled="$i18n.locale == 'ri'">日本語</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
-				<!-- <el-select v-model="language" placeholder="请选择" @change="languageChange">
-					<el-option label="中文" value="zh"> </el-option>
-					<el-option label="日文" value="ri"> </el-option>
-				</el-select> -->
+        <!-- <el-select v-model="language" placeholder="请选择" @change="languageChange">
+          <el-option label="中文" value="zh"> </el-option>
+          <el-option label="日文" value="ri"> </el-option>
+        </el-select> -->
 			</span>
-			<span class="itemTxt logoout">
+      <span class="itemTxt logoout">
 				<el-dropdown>
 					<span class="userInfo">
 						<img :src="user.headimgurl" alt />
@@ -75,184 +75,168 @@
 					</el-dropdown-menu>
 				</el-dropdown>
 			</span>
-		</div>
-	</div>
+    </div>
+  </div>
 </template>
 
 <script>
-	import {
-		mapState,
-		mapActions
-	} from "vuex";
+  import {
+    mapState,
+    mapActions
+  } from "vuex";
 
-	export default {
-		props:['language'],
-		computed: {
-			...mapState({
-				user: state => state.user,
-				routesmap: state => state.routermsg.routermsg,
-			})
-		},
-		data() {
-			return {
-			}
-		},
-		watch: {
-		},
-		activated() {
-			this.$i18n.locale = localStorage.getItem('locale');
-		},
-		methods: {
-			...mapActions({}),
-			toggleLang(lang) {
-				if (lang == 'zh') {
-					localStorage.setItem('locale', 'zh')
-					this.$i18n.locale = localStorage.getItem('locale')
-					this.$forceUpdate();
-					// this.$message({
-					// 	message: '切换为中文！',
-					// 	type: 'success'
-					// })
-				} else if (lang == 'ri') {
-					localStorage.setItem('locale', 'ri')
-					this.$i18n.locale = localStorage.getItem('locale')
-					this.$forceUpdate();
-					// this.$message({
-					// 	message: 'Switch to English!',
-					// 	type: 'success'
-					// })
-				}
-				this.$emit('calRouter', this.$i18n.locale)
-			},
-			languageChange() {
-				debugger
-				console.log(this.$i18n.locale);
-				this.$i18n.locale = this.language;
-				console.log(this.$i18n.locale);
-				// this.$router.push('product')
-				this.$emit('calRouter', this.language)
-			},
+  export default {
+    // props:['language'],
+    computed: {
+      ...mapState({
+        user: state => state.user,
+      })
+    },
+    data() {
+      return {
+        language: '日本語',
+      }
+    },
+    watch: {
+    },
+    activated() {
+      this.language = this.$F.getLangDesc(localStorage.getItem('locale') || 'ri');
+    },
+    methods: {
+      ...mapActions({}),
+      toggleLang(lang) {
+        this.$i18n.locale = lang;
+        localStorage.setItem('locale', lang)
+        let langDesc = this.$F.getLangDesc(lang);
+        this.language = langDesc;
+        this.$forceUpdate();
+        this.$message({
+          message: `切换为${langDesc}成功`,
+          type: 'success'
+        })
+        // this.$emit('calRouter', lang)
+      },
 
-			modelShowfuc() {
-				this.$confirm("是否确认退出系统？", "提示", {
-						confirmButtonText: "确定",
-						cancelButtonText: "取消",
-						type: "warning"
-					})
-					.then(res => {
-						localStorage.clear();
-						sessionStorage.clear();
-						this.$router.push("/login");
-					})
-					.catch(res => {});
-			},
-		}
-	};
+      modelShowfuc() {
+        this.$confirm("是否确认退出系统？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(res => {
+            localStorage.clear();
+            sessionStorage.clear();
+            this.$router.push("/login");
+          })
+          .catch(res => {});
+      },
+    }
+  };
 </script>
 
 <style lang="less">
-	.itemComang {
-		&.activeC {
-			color: rgba(59, 135, 255, 1);
-		}
-	}
+  .itemComang {
+    &.activeC {
+      color: rgba(59, 135, 255, 1);
+    }
+  }
 
-	.itemSpam {
-		width: 35px;
-		height: 24px;
-		border-radius: 2px;
-		display: inline-block;
-		margin-right: 5px;
-		text-align: center;
-		line-height: 24px;
-		font-size: 12px;
+  .itemSpam {
+    width: 35px;
+    height: 24px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 5px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
 
-		&.active {
-			background-color: rgba(59, 135, 255, 1);
-			font-family: PingFangSC-Regular;
-			color: #fff;
-		}
-	}
+    &.active {
+      background-color: rgba(59, 135, 255, 1);
+      font-family: PingFangSC-Regular;
+      color: #fff;
+    }
+  }
 
-	.itemel {
-		display: flex;
-		align-items: center;
-	}
+  .itemel {
+    display: flex;
+    align-items: center;
+  }
 
-	.mainheader {
-		width: 100%;
-		min-width: 1150px;
-		background-color: #2b2e3f;
-		color: #fff;
-		font-size: 14px;
-		font-weight: bold;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+  .mainheader {
+    width: 100%;
+    min-width: 1150px;
+    background-color: #2b2e3f;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-		.el-dropdownBox {
-			color: #fff;
-			padding-right: 20px;
-			cursor: pointer;
-			width: 140px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
+    .el-dropdownBox {
+      color: #fff;
+      padding-right: 20px;
+      cursor: pointer;
+      width: 140px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-			.enterName {
-				width: 100px;
-				text-overflow: ellipsis;
-				display: inline-block;
-				overflow: hidden;
-				height: 30px;
-				line-height: 30px;
-			}
-		}
+      .enterName {
+        width: 100px;
+        text-overflow: ellipsis;
+        display: inline-block;
+        overflow: hidden;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
 
-		.leftHead {
-			display: flex;
-			align-items: center;
-		}
-	}
+    .leftHead {
+      display: flex;
+      align-items: center;
+    }
+  }
 
-	.itemTxt {
-		cursor: pointer;
-		margin: 0 8px;
-		color: #ffffff;
-	}
+  .itemTxt {
+    cursor: pointer;
+    margin: 0 8px;
+    color: #ffffff;
+  }
 
-	.header_right {
-		display: flex;
-		align-items: center;
-		line-height: 1;
+  .header_right {
+    display: flex;
+    align-items: center;
+    line-height: 1;
 
-		.rightItem {
-			display: flex;
-			align-items: center;
-			line-height: 1;
+    .rightItem {
+      display: flex;
+      align-items: center;
+      line-height: 1;
 
-			img {
-				width: 22px;
-				height: 22px;
-				margin: 0 10px;
-			}
-		}
+      img {
+        width: 22px;
+        height: 22px;
+        margin: 0 10px;
+      }
+    }
 
-		.logoout {
-			margin-left: 40px;
-		}
+    .logoout {
+      margin-left: 40px;
+    }
 
-		.userInfo {
-			color: #ffffff;
-			display: flex;
-			align-items: center;
+    .userInfo {
+      color: #ffffff;
+      display: flex;
+      align-items: center;
 
-			img {
-				width: 24px;
-				height: 24px;
-				border-radius: 50%;
-				margin-right: 10px;
-			}
-		}
-	}
+      img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+  }
 </style>
