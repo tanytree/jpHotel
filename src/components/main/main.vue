@@ -155,6 +155,7 @@
 			// 处理路由
 			calRouter(language) {
 				this.language = language;
+
 				this.$forceUpdate();
 				this.partmentId = sessionStorage.partmentId || "";
 				this.sectionid = sessionStorage.sectionid || "";
