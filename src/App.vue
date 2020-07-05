@@ -109,7 +109,7 @@ export default {
     $route(to, from) {
       //console.log(to,from)
       if (from.name == "login" && to.name != "login") {
-        this.refresh();
+        // this.refresh();
       } else {
         this.fetchData();
       }
