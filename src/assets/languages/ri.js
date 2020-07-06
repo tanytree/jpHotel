@@ -1,3 +1,9 @@
+/*
+ * @Date: 2020-07-03 16:34:17
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-06 17:03:11
+ * @FilePath: /jiudian/src/assets/languages/ri.js
+ */ 
 module.exports = {
   language: {
     name: '日本語'
@@ -38,7 +44,7 @@ module.exports = {
       children: [
         { name: "首页"},
         { name: "前台服务"},
-        { name: "预定管理"},
+        { name: "预订管理"},
         { name: "订单管理"},
         { name: "客户管理"},
         { name: "夜审"},

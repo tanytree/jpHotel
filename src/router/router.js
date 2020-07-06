@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-05 16:28:39
+ * @LastEditTime: 2020-07-06 09:28:54
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -174,6 +174,13 @@ export default new Router({
                     meta: { title: '订单管理', pid: "13" },
                     component: () =>
                         import ('@/views/market/orders')
+                },
+                {
+                    path: '/reception',
+                    name: 'reception',
+                    meta: { title: '前台服务', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/reception')
                 },
 
                 {
