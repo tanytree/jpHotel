@@ -1,3 +1,9 @@
+/*
+ * @Date: 2020-07-03 16:34:17
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-06 17:03:22
+ * @FilePath: /jiudian/src/assets/languages/zh.js
+ */
 module.exports = {
     language: {
         name: '中文'
