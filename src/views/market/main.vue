@@ -1,6 +1,10 @@
-/*
-前台部
-*/
+
+<!--
+
+ * @LastEditors: 魏轩
+
+ * 
+ -->
 <template>
   <div>
     <el-tabs class="pageTab" v-model="activeName">
@@ -175,9 +179,10 @@
               </el-row>
               <el-row :gutter="20" style="margin-top: 10px;">
                 <el-col
+                  @click.native="hostelmess()"
                   :span="4"
                   class="tag-margin"
-                  :style="`height:120px;background:${value.bgColor}`"
+                  :style="`height:120px;background:${value.bgColor};cursor: pointer;`"
                   v-for="(value, index) in roomList"
                   :key="index"
                 >
@@ -418,9 +423,462 @@
             </el-row>
           </el-col>
         </el-row>
+
+        <!-- 房间信息 -->
+            <el-dialog
+                :visible.sync="hosteldis"
+                width="50%"
+                :before-close="handleClose">
+                <!-- <span>这是一段信息</span> -->
+                <el-row style="font-size:18px">
+                  A01房间--全天房
+                </el-row>
+                <el-tabs type="border-card" style="margin-top:10px">
+                  <el-tab-pane label="入住信息" >
+                      <el-row>
+                          <el-col :span="8">
+                              入住时间：<span>5465465</span>
+                          </el-col>
+                          <el-col :span="8">
+                              入住类型：<span>正常</span>
+                          </el-col>
+                          <el-col :span="8">
+                              消费合计：<span>5465465</span>
+                          </el-col>
+                          <el-col :span="8">
+                              入住时间：<span>5465465</span>
+                          </el-col>
+                          <el-col :span="8">
+                              入住类型：<span>正常</span>
+                          </el-col>
+                          <el-col :span="8">
+                              消费合计：<span>5465465</span>
+                          </el-col>
+                      </el-row>
+
+                      <el-table
+                        :data="hosteldata"
+                        style="width: 100%">
+                        <!-- <el-table-column
+                          label="日期"
+                          width="180">
+                          <template slot-scope="scope">
+                            <i class="el-icon-time"></i>
+                            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                          </template>
+                        </el-table-column> -->
+                        <el-table-column
+                          label="姓名"
+                          width="100">
+                          <template slot-scope="scope">
+                            {{scope.row.name}}
+                          </template>
+                        </el-table-column>
+                        <el-table-column
+                          label="手机号"
+                          width="150">
+                          <template slot-scope="scope">
+                            {{scope.row.phonenum}}
+                            
+                          </template>
+                        </el-table-column>
+                        <el-table-column
+                          label="性别"
+                          width="50">
+                          <template slot-scope="scope">
+                            {{scope.row.sex}}
+
+                          </template>
+                        </el-table-column>
+                        <el-table-column
+                          label="客源"
+                          width="50">
+                          <template slot-scope="scope">
+                            {{scope.row.sex}}
+
+                          </template>
+                        </el-table-column>
+                        <el-table-column
+                          label="同来客"
+                          width="80">
+                          <template slot-scope="scope">
+                            {{scope.row.sex}}
+
+                          </template>
+                        </el-table-column>
+                        <el-table-column label="操作">
+                          <template slot-scope="scope">
+                            <el-button
+                              size="mini"
+                              type="text"
+                            >查看</el-button>
+                            <!--  @click="handleEdit(scope.$index, scope.row)" -->
+                          </template>
+                        </el-table-column>
+                      </el-table>
+                      <el-row>
+                        <label >备注：<span>提醒客户起床</span></label><el-button type='text'>修改</el-button>
+                      </el-row>
+                      <el-row style="margin-top:10px">
+                        <el-button style="width:60px;"  @click="stayoer=true">续住</el-button>
+                        <el-button style="width:60px;" @click="yokeplate=true">联房</el-button>
+                        <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
+                        <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
+                        <el-button style="width:60px;">置脏</el-button>
+                      </el-row>
+                
+                
+                  </el-tab-pane>
+                  <el-tab-pane label="房间信息">
+                      <el-row>
+                          <el-col :span="8">
+                              入住时间：<span>5465465</span>
+                          </el-col>
+                          <el-col :span="8">
+                              入住类型：<span>正常</span>
+                          </el-col>
+                          <el-col :span="8">
+                              消费合计：<span>5465465</span>
+                          </el-col>
+                          <el-col :span="8">
+                              入住时间：<span>5465465</span>
+                          </el-col>
+                          <el-col :span="8">
+                              入住类型：<span>正常</span>
+                          </el-col>
+                          <el-col :span="8">
+                              消费合计：<span>5465465</span>
+                          </el-col>
+                      </el-row>
+                  </el-tab-pane>
+                </el-tabs>
+              </el-dialog>
+
+            <!-- 续住 -->
+            <el-dialog
+              title="续住"
+              :visible.sync="stayoer"
+              width="80%"
+              :before-close="handleClose">
+                <el-alert
+                title="如果需要提前离店，需要在续住天数中输入负数"
+                type="error"
+                :closable="false"
+                show-icon>
+              </el-alert>
+                 <el-table
+                    :data="tableData"
+                    style="width: 100%">
+                      <el-table-column
+                        label="房间号"
+                        width="100">
+                        <template slot-scope="scope">
+                          A100
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                      label="姓名"
+                      width="100">
+                      <template slot-scope="scope">
+                        A100
+                      </template>
+                      </el-table-column>
+                      <el-table-column
+                      label="原预离时间"
+                      width="100">
+                      <template slot-scope="scope">
+                        A100
+                      </template>
+                      </el-table-column>
+                      <el-table-column
+                        label="续住天数"
+                        >
+                        <div>
+                            <el-input-number v-model="stayoernum" :step="1"></el-input-number>
+                        </div>
+                        
+                      </el-table-column>
+                      <el-table-column
+                        label="新预离时间"
+                        >
+                        <div class="block">
+                        <el-date-picker
+                          v-model="value1"
+                          type="date"
+                          placeholder="选择日期">
+                        </el-date-picker>
+                      </div>
+                      </el-table-column>
+
+                      <el-table-column
+                      label="合计房价"
+                      >
+                      <template slot-scope="scope">
+                        A100
+                      </template>
+                      </el-table-column>
+                  </el-table>
+
+                  <el-row>
+                    <el-checkbox v-model="stayoerchecked">按入住时房价续住<span style="color:red">(午夜房不可按入住时房价入住)</span></el-checkbox>
+                  </el-row>
+
+                  <div slot="footer" class="dialog-footer" >
+                    <el-button style="width:80px;">取消</el-button>
+                    <el-button style="width:80px;" type="primary">确定</el-button>
+                  </div>
+            </el-dialog>
+
+            <!-- 联房 -->
+            <el-dialog
+              title="联房"
+              :visible.sync="yokeplate"
+              width="60%"
+              :before-close="handleClose">
+                <el-card>
+                    <el-col :span="16">
+                      <el-row>
+                        选择列表(100) <span>点击选择房间</span>
+                      </el-row>
+                      <el-card  style="text-align:center">
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="4" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="4" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="4" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="4" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="5" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        <el-col :span="4" >
+                            <el-tag style="padding:0 30px">标签一</el-tag>
+                        </el-col>
+                        
+                        
+                        
+                      </el-card>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-row>
+                          联房列表 现有联房<span>5</span>间
+                        </el-row>
+
+                        <el-card>
+                          <el-col :span="12">
+                            <el-tag>标签一</el-tag>
+                          </el-col>
+                          <el-col  :span="12">
+                            <el-tag>标签一</el-tag>
+                          </el-col>
+                        </el-card>
+                    </el-col>
+
+
+                </el-card>
+                 <el-button>取消</el-button>
+                 <el-button type="primary">确定</el-button>
+
+            </el-dialog>
+
+              <!-- 换房 -->
+
+            <el-dialog
+              title="换房"
+              :visible.sync="roomchange"
+              width="80%"
+              :before-close="handleClose">
+                <el-card>
+                  <el-form>
+                      <el-row>
+                        <span>房间号：A100</span>
+                        <span>客人姓名：战三</span>
+                        <span>房价：300</span>
+                        <span>换房原因：</span><el-input style="width:100px"></el-input>
+                      </el-row>
+                  </el-form>
+                  <el-col :span="18">
+                    <el-card>
+                      <el-col :span="8">
+                        <el-card>
+                            <el-row>标准间</el-row>
+                            <el-row>
+                              <span>可订 12</span>
+                              <el-input  style="width:80px" disabled value="130"></el-input>
+                              <span>400</span>
+                              </el-row>
+                        </el-card>
+                      </el-col>
+                      <el-col :span="8">
+                        <el-card>
+                            <el-row>标准间</el-row>
+                            <el-row>
+                              <span>可订 12</span>
+                              <el-input  style="width:80px" disabled value="130"></el-input>
+                              <span>400</span>
+                              </el-row>
+                        </el-card>
+                      </el-col>
+                      <el-col :span="8">
+                        <el-card>
+                            <el-row>标准间</el-row>
+                            <el-row>
+                              <span>可订 12</span>
+                              <el-input  style="width:80px" disabled value="130"></el-input>
+                              <span>400</span>
+                              </el-row>
+                        </el-card>
+                      </el-col>
+
+                      <el-col :span="8">
+                        <el-card>
+                            <el-row>
+                              <span>大床房</span>
+                               <el-input-number v-model="num"  :min="1" ></el-input-number>
+                            </el-row>
+                            <el-row>
+                              <span>可订 12</span>
+                              <el-input  style="width:80px" disabled value="130"></el-input>
+                              <span>400</span>
+                              </el-row>
+                        </el-card>
+                      </el-col>
+                     
+                    </el-card>
+                  </el-col>
+                  <el-col :span="5" style="padding-left:10px">
+                      <el-row>
+                        总统 套房1间
+                        <el-button style="width:60px;float:right" type="primary">排房</el-button>
+                      </el-row>
+                      <el-row>
+                        <el-tag style="margin:0 5px">标签一</el-tag>
+                        <el-tag style="margin:0 5px">标签一</el-tag>
+                        <el-tag style="margin:0 5px">标签一</el-tag>
+
+                      </el-row>
+                  </el-col>
+
+
+
+                </el-card>
+                  <el-row>
+                    <el-button style="width:60px;float:right" >取消</el-button>
+                    <el-button style="width:60px;float:right" type="primary">确定</el-button>
+                  </el-row>
+
+            </el-dialog>
+
+             <!-- 制卡 -->
+
+            <el-dialog
+              title="房卡操作"
+              :visible.sync="mackcade"
+              width="60%"
+              :before-close="handleClose">
+                <el-card>
+                    <el-form>
+                        <el-row>
+                          <el-form-item>
+                            <span>共一间&nbsp;&nbsp;本次已制卡数：0</span>
+                            <el-button >制卡</el-button>
+                            <el-button >清卡</el-button>
+                            <el-button >读卡</el-button>
+                          </el-form-item>
+                          </el-row>
+
+                          <el-form-item>
+                              <el-table
+                                ref="multipleTable"
+                                :data="tableData"
+                                tooltip-effect="dark"
+                                style="width: 100%"
+                                @selection-change="handleSelectionChange">
+                                <el-table-column
+                                  type="selection"
+                                  width="55">
+                                </el-table-column>
+                                <el-table-column
+                                  prop="name"
+                                  label="房间号"
+                                  width="200">
+                                </el-table-column>
+                                <el-table-column
+                                  prop="name"
+                                  label="本次制卡状态">
+                                </el-table-column>
+                              </el-table>
+                          </el-form-item>
+                    </el-form>
+                </el-card>
+            </el-dialog>
+
+
       </el-tab-pane>
       <!-- 开票申请 -->
-      <el-tab-pane label="开票申请" name="two" class="font" style=" text-align: center;">
+      <el-tab-pane label="开票申请" name="two" class="font" style="text-align: center;">
         <el-row>
           <el-tabs v-model="activeThree">
             <el-tab-pane label="待开票" name="a">
@@ -1117,7 +1575,281 @@
 
       </el-tab-pane>
       <!-- 员工管理 -->
-      <el-tab-pane label="员工管理" name="five"></el-tab-pane>
+      <el-tab-pane label="员工管理" name="five">
+          <div v-if="display">
+          <h4>前台部</h4>
+          <el-divider></el-divider>
+          <span>
+            <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+            <label style="margin:0 10px">张鑫</label><span class="duty">部门负责人</span>
+            </span>
+          <el-dropdown @command="handleCommand" style="float:right">
+          <span class="el-dropdown-link">
+            操作<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="checkData">查看资料</el-dropdown-item>
+            <el-dropdown-item command="jurisdiction">权限设置</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+          <el-divider></el-divider>
+        </div>
+
+        <div>
+          <el-breadcrumb separator-class="el-icon-arrow-right"  v-if="!display">
+            <!--  v-if="!display" -->
+            <el-breadcrumb-item ><span @click="management()" style="cursor: pointer;">员工管理</span></el-breadcrumb-item>
+            <el-breadcrumb-item>权限设置</el-breadcrumb-item>
+            <el-divider></el-divider>
+            <div>
+              <span>
+                <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                <label style="margin:0 10px">张鑫</label>
+                <el-divider></el-divider>
+              </span>
+            </div>
+
+            <el-row style="margin-left:10px">
+                <div>
+                    <span style="font-size:18px">具体权限设置(前台部)</span><span style="margin-left:20px">开启后就有该项权限</span>
+                    <!-- 首页 -->
+                    <el-row style="margin-top:30px">
+                        <span>首页</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>实时房态</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>开票申请</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>留言管理</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>物品寄存</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+                    <!-- 客房中心 -->
+                    <el-row style="margin-top:30px">
+                        <span>客房中心</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>实时房态</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>开票申请</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>留言管理</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>物品寄存</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+                    <!-- 预定管理 -->
+                    <el-row style="margin-top:30px">
+                        <span>预定管理</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>实时房态</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>开票申请</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+
+                    <!-- 订单管理 -->
+                    <el-row style="margin-top:30px">
+                        <span>订单管理</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>实时房态</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>开票申请</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+
+                    <!-- 预定管理 -->
+                    <el-row style="margin-top:30px">
+                        <span>预定管理</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>实时房态</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>开票申请</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+
+                    <!-- 客户管理 -->
+                    <el-row style="margin-top:30px">
+                        <span>客户管理</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>会员管理</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span> 客史档案</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span> 单位管理</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+
+                    <!-- 夜审 -->
+                    <el-row style="margin-top:30px">
+                        <span>夜审</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>夜审</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+
+                
+                </div>
+            </el-row>
+
+          </el-breadcrumb>
+
+
+        </div>
+
+
+      </el-tab-pane>
+        
+
+
+
     </el-tabs>
   </div>
 </template>
@@ -1126,6 +1858,8 @@
 export default {
   data() {
     return {
+      stayoernum:'1',//续住天数
+      stayoerchecked:false,//续住  勾选
       tableData: [
         //待开票表格字段
         {
@@ -1175,6 +1909,12 @@ export default {
       editBill: false, //已开票  编辑
       newCheck:false,//新增寄存按钮
       checkPatch:false,//寄存补打 按钮
+      hosteldis:false,//
+      stayoer:false,//续住
+      yokeplate:false,//联房
+      roomchange:false,//换房
+      mackcade:false,//制卡
+      dirty:false,// 置脏
       formInline: {
         //待开票
         user: "",
@@ -1244,11 +1984,18 @@ export default {
           operator:'张三'
           }
       ],
+      hosteldata:[
+          {
+
+          }
+      ],
+      display:true,
       activeName: "one",
       roomStatus: {
         dong: "", //楼栋
         tag: "" //楼层
       },
+      Oswitch:false,
       input: "", //搜索框
       checked1: false,
       checked2: false,
@@ -1352,6 +2099,9 @@ export default {
     };
   },
   methods: {
+     hostelmess(){
+       this.hosteldis = true;
+     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
@@ -1400,7 +2150,20 @@ export default {
       console.log("新增寄存保存");
       this.newCheck = false
     },
-    // 查询按钮
+
+    // 员工管理
+     handleCommand(command) {
+        // this.$message('click on item ' + command);
+        if(command=='jurisdiction'){
+          // alert(11111)
+          this.display=!this.display;
+
+        }
+      },   
+      management(){
+          this.display=!this.display;;
+      },
+       // 查询按钮
     onSubmit() {
       console.log("submit!");
     },
@@ -1442,6 +2205,7 @@ export default {
   border: 1px solid #333;
   background: #666;
   color: #fff;
+  
 }
 .search {
   width: 137px !important;
@@ -1468,6 +2232,12 @@ export default {
   font-size: 12px;
   text-align: left;
   font-family: PingFangSC-Regular;
+}
+.duty{
+  border:1px solid #1B80FF;
+  font-size: 12px;
+  padding: 3px 10px;
+  
 }
 .rescet {
   border-radius: 0;

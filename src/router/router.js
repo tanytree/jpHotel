@@ -9,9 +9,9 @@ import Router from 'vue-router'
 import Main from '@/components/main/main'
 Vue.use(Router)
 const originalPush = Router.prototype.push
-Router.prototype.push = function push (location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+Router.prototype.push = function push(location) {
+        return originalPush.call(this, location).catch(err => err)
+    }
     // 不需要要权限的页面默认挂载
 export default new Router({
     mode: 'hash',
@@ -21,8 +21,13 @@ export default new Router({
 
         { path: '/', redirect: '/login', },
         // { path: '/', name: 'main', component: Main },
-        { path: '/login', name: 'login', meta: { title: '登录' }, component: () =>
-                import ('@/views/login/login') },
+        {
+            path: '/login',
+            name: 'login',
+            meta: { title: '登录' },
+            component: () =>
+                import ('@/views/login/login')
+        },
         {
             path: '/main',
             name: 'main',
@@ -70,18 +75,27 @@ export default new Router({
                     component: () =>
                         import ('@/views/manager/index/main')
                 },
-				{
-				path: '/guest-center', name: 'guestCenter', meta: { title: 'guestCenter' },
-				component: () => import('@/views/manager/guestCenter/main')
-				},
-				{
-				path: '/guest-Room_2', name: 'guestRoom_2', meta: { title: 'guestRoom_2' },
-				component: () => import('@/views/manager/guestRoom_2/main')
-				},
-				{
-				path: '/price-system', name: 'priceSystem', meta: { title: 'priceSystem' },
-				component: () => import('@/views/manager/priceSystem/main')
-				},
+                {
+                    path: '/guest-center',
+                    name: 'guestCenter',
+                    meta: { title: 'guestCenter' },
+                    component: () =>
+                        import ('@/views/manager/guestCenter/main')
+                },
+                {
+                    path: '/guest-Room_2',
+                    name: 'guestRoom_2',
+                    meta: { title: 'guestRoom_2' },
+                    component: () =>
+                        import ('@/views/manager/guestRoom_2/main')
+                },
+                {
+                    path: '/price-system',
+                    name: 'priceSystem',
+                    meta: { title: 'priceSystem' },
+                    component: () =>
+                        import ('@/views/manager/priceSystem/main')
+                },
                 //售后部 当前课程/活动项目
                 {
                     path: '/currentCourse',
@@ -268,7 +282,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/market/advert/groupManage')
                 },
-                // 渠道管理
+                /**人事部 */ // 渠道管理
                 {
                     path: '/channel',
                     name: 'channel',
@@ -361,11 +375,11 @@ export default new Router({
                         import ('@/views/market/address/returnAd')
                 },
 
-                /**销售部 */
+                //企划部      /**销售部 */
                 {
                     path: '/salemain',
                     name: 'salemain',
-                    meta: { title: '销售部首页', pid: "22" },
+                    meta: { title: '企划部首页', pid: "22" },
                     component: () =>
                         import ('@/views/sale/main')
                 },
@@ -676,8 +690,12 @@ export default new Router({
 
             ]
         },
-        { path: '/404', name: '404', component: () =>
-                import ('@/components/error') },
+        {
+            path: '/404',
+            name: '404',
+            component: () =>
+                import ('@/components/error')
+        },
 
 
 

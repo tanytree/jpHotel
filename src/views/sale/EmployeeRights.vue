@@ -1,0 +1,157 @@
+<!--
+ * @Date: 
+ * @LastEditors: 魏轩
+ * @LastEditTime: 2020-07-06 
+ * @FilePath: jiudian\src\views\sale\EmployeeRights.vue
+ -->
+
+<template>
+ <div> 
+             <el-row>
+              <div v-if="display">
+                <h4>前台部</h4>
+                <el-divider></el-divider>
+                <span>
+                  <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                  <label style="margin:0 10px">张鑫</label><span class="duty">部门负责人</span>
+                  </span>
+                <el-dropdown @command="handleCommand" style="float:right">
+                <span class="el-dropdown-link">
+                  操作<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="checkData">查看资料</el-dropdown-item>
+                  <el-dropdown-item command="jurisdiction">权限设置</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+                <el-divider></el-divider>
+              </div>
+            </el-row>
+
+            <el-row v-if="!display">
+                <el-breadcrumb separator-class="el-icon-arrow-right">
+                  <el-breadcrumb-item ><span @click="management()" style="cursor: pointer;">员工权限</span></el-breadcrumb-item>
+                  <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+                </el-breadcrumb>
+                <el-divider></el-divider>
+                <div>
+                    <span style="font-size:18px">具体权限设置(企划部)</span><span style="margin-left:20px">开启后就有该项权限</span>
+
+                    <!-- 中央预订 -->
+                    <el-row style="margin-top:30px">
+                        <span>中央预订</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>中央预订</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          
+                        </div>
+                    </el-row>
+
+                    <!-- 会员管理 -->
+                    <el-row style="margin-top:30px">
+                        <span>会员管理</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>实时房态</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>开票申请</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>
+
+                    <!-- 单位管理 -->
+                    <el-row style="margin-top:30px">
+                        <span>单位管理</span>
+                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+                        <div style="margin-top:10px;">
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span>会员管理</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span> 客史档案</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                            <i class="el-icon-more"></i>
+                            <span> 单位管理</span>
+                            <el-switch
+                            style="margin-left:170px"
+                              v-model="Oswitch"
+                              >
+                            </el-switch>
+                          </el-col>
+                        </div>
+                    </el-row>                
+                </div>
+               
+            </el-row>
+ </div>
+</template>
+
+<script>
+export default {
+   data() {
+    return {
+     display:true,
+     Oswitch:false,
+    }
+   },
+   methods:{
+    handleCommand(command) {
+        // this.$message('click on item ' + command);
+        if(command=='jurisdiction'){
+          // alert(11111)
+          this.display=!this.display;
+
+        }
+      }, 
+      management(){
+       this.display=!this.display;;
+      }
+   }
+}
+</script>
+<style lang="less" scoped>
+ .duty{
+  border:1px solid #1B80FF;
+  font-size: 12px;
+  padding: 3px 10px;
+  
+}
+</style>
