@@ -3,7 +3,7 @@
 		<el-row class="demo-form-inline">
 			<div class="tag-group">
 				<span class="tag-group__title">房态:</span>
-				<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l">
+				<el-tag v-for="(item, i) in items" :key="i" :type="item.type" effect="plain" class="tag-width margin-l">
 					{{ item.label }}
 				</el-tag>
 			</div>
@@ -24,7 +24,7 @@
 		<el-row class="demo-form-inline">
 			<div class="tag-group">
 				<span class="tag-group__title">房型:</span>
-				<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l">
+				<el-tag v-for="(item, i) in items" :key="i" :type="item.type" effect="plain" class="tag-width margin-l">
 					{{ item.label }}
 				</el-tag>
 			</div>
@@ -200,7 +200,7 @@
 				},
 				dialogAdd_kinds: false,
 				dialogAdd_thing: false,
-	
+
 				activeFive: 'five_a',
 				beiYong_show: true,
 				five_redioList: [{
@@ -214,7 +214,7 @@
 					radio: false
 				}],
 				five_money: '',
-	
+
 				seven_redioList: [{
 					name: '寄存单',
 					radio: true
@@ -234,7 +234,7 @@
 					name: '餐饮消费单',
 					radio: false
 				}],
-	
+
 				dialogImageUrl: '',
 				dialogVisible: false,
 				disabled: false,

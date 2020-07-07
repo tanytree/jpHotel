@@ -14,7 +14,7 @@
 						<el-col :span="8">
 							<el-input v-model="five_money" placeholder="请输入备用金"></el-input>
 						</el-col>
-						<el-col :span="8" offset="0.5" style="color: #888888;">日元</el-col>
+						<el-col :span="8" :offset="0.5" style="color: #888888;">日元</el-col>
 					</el-row>
 					<el-row :gutter="18" class="demo-form-inline" style="padding: 20px 0px;">
 						<el-col :span="3">模式说明:</el-col>
@@ -216,7 +216,7 @@
 				},
 				dialogAdd_kinds: false,
 				dialogAdd_thing: false,
-	
+
 				activeFive: 'five_a',
 				beiYong_show: true,
 				five_redioList: [{
@@ -230,7 +230,7 @@
 					radio: false
 				}],
 				five_money: '',
-	
+
 				seven_redioList: [{
 					name: '寄存单',
 					radio: true
@@ -250,7 +250,7 @@
 					name: '餐饮消费单',
 					radio: false
 				}],
-	
+
 				dialogImageUrl: '',
 				dialogVisible: false,
 				disabled: false,
@@ -308,7 +308,11 @@
 			},
 			handleDownload(file) {
 				console.log(file);
-			}
+			},
+			handleSelectionChange() {},
+			handleSizeChange() {},
+			handleCurrentChange() {},
+			onConfirm() {}
 		}
 	}
 </script>
