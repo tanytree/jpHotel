@@ -35,6 +35,7 @@
 			}
 		},
 		methods: {
+			handleCommand() {},
 		}
 	}
 </script>

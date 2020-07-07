@@ -89,7 +89,7 @@
 					</el-row>
 					<el-row :gutter="20" style="display: flex;justify-content: center;">
 						<el-col :span="20">
-							<el-steps active="0" finish-status="success" align-center style="padding: 40px 0px;">
+							<el-steps :active="0" finish-status="success" align-center style="padding: 40px 0px;">
 								<el-step description="请顾客使用手机微信扫描以上二维码"></el-step>
 								<el-step description="请顾客填写开票信息 并提交开票申请"></el-step>
 								<el-step description="进入前台部 > 首页 >发票申请 完成开票"></el-step>
@@ -146,7 +146,7 @@
 				},
 				dialogAdd_kinds: false,
 				dialogAdd_thing: false,
-	
+
 				activeFive: 'five_a',
 				beiYong_show: true,
 				five_redioList: [{
@@ -160,7 +160,7 @@
 					radio: false
 				}],
 				five_money: '',
-	
+
 				seven_redioList: [{
 					name: '寄存单',
 					radio: true
@@ -180,10 +180,11 @@
 					name: '餐饮消费单',
 					radio: false
 				}],
-	
+
 				dialogImageUrl: '',
 				dialogVisible: false,
 				disabled: false,
+				checked: false,
 				pickerOptions: {
 					shortcuts: [{
 						text: '今天',

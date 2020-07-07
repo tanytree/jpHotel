@@ -4,31 +4,31 @@
 			<el-col :span="2">
 				<el-checkbox v-model="checked">处理应到未到</el-checkbox>
 			</el-col>
-			<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
+			<el-col :span="8" :offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
 		</el-row>
 		<el-row :gutter="20" class="tag-top">
 			<el-col :span="2">
 				<el-checkbox v-model="checked">处理应离未离</el-checkbox>
 			</el-col>
-			<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
+			<el-col :span="8" :offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
 		</el-row>
 		<el-row :gutter="20" class="tag-top">
 			<el-col :span="2">
 				<el-checkbox v-model="checked">处理走结订单</el-checkbox>
 			</el-col>
-			<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
+			<el-col :span="8" :offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
 		</el-row>
 		<el-row :gutter="20" class="tag-top">
 			<el-col :span="2">
 				<el-checkbox v-model="checked">夜审房间状态OD</el-checkbox>
 			</el-col>
-			<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
+			<el-col :span="8" :offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
 		</el-row>
 		<el-row :gutter="20" class="tag-top">
 			<el-col :span="2">
 				<el-checkbox v-model="checked">夜审自动交班</el-checkbox>
 			</el-col>
-			<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
+			<el-col :span="8" :offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
 		</el-row>
 		<el-row :gutter="20" class="tag-top" style="padding: 20px 0px;">
 			<el-col :span="2">夜审方式:</el-col>
@@ -36,10 +36,10 @@
 				<el-radio v-model="radio" label="1">手动夜审+自动夜审</el-radio>
 			</el-col>
 			<el-col :span="3">
-				<el-radio v-model="radio" label="1" offset="1">手动夜审</el-radio>
+				<el-radio v-model="radio" label="1" :offset="1">手动夜审</el-radio>
 			</el-col>
 			<el-col :span="3">
-				<el-radio v-model="radio" label="1" offset="1">自动夜审</el-radio>
+				<el-radio v-model="radio" label="1" :offset="1">自动夜审</el-radio>
 			</el-col>
 		</el-row>
 		<el-row :gutter="18" class="demo-form-inline" style="padding: 20px 0px;">
@@ -56,7 +56,7 @@
 				<el-time-picker v-model="two.time" :picker-options="{selectableRange: '18:30:00 - 20:30:00'}" placeholder="任意时间点">
 				</el-time-picker>
 			</el-col>
-			<el-col :span="8" offset="0.5" style="color: #888888;">系统将在设定的夜审时间五分钟内自动执行夜审</el-col>
+			<el-col :span="8" :offset="0.5" style="color: #888888;">系统将在设定的夜审时间五分钟内自动执行夜审</el-col>
 		</el-row>
 		<el-row>
 			<el-button type="primary" style="width: 80px;">保存</el-button>
@@ -68,7 +68,7 @@
 	export default {
 		data() {
 			return {
-				checked: true,
+				checked: true, radio: '',
 				two: {
 					time: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)]
 				},

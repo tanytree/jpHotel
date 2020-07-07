@@ -51,8 +51,8 @@
 	export default {
 		data() {
 			return {
-				activeFive: 'five_a',
-				beiYong_show: true,
+				activeFive: 'five_a', five_money: '',
+				beiYong_show: true, radio: '',
 				seven_redioList: [{
 					name: '寄存单',
 					radio: true
@@ -119,7 +119,10 @@
 			},
 			handleDownload(file) {
 				console.log(file);
-			}
+			},
+			handleSelectionChange() {},
+			handleCommand() {},
+
 		}
 	}
 </script>
