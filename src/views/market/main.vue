@@ -427,8 +427,7 @@
         <!-- 房间信息 -->
             <el-dialog
                 :visible.sync="hosteldis"
-                width="50%"
-                :before-close="handleClose">
+                width="50%">
                 <!-- <span>这是一段信息</span> -->
                 <el-row style="font-size:18px">
                   A01房间--全天房
@@ -559,7 +558,7 @@
               title="续住"
               :visible.sync="stayoer"
               width="80%"
-              :before-close="handleClose">
+              >
                 <el-alert
                 title="如果需要提前离店，需要在续住天数中输入负数"
                 type="error"
@@ -633,8 +632,7 @@
             <el-dialog
               title="联房"
               :visible.sync="yokeplate"
-              width="60%"
-              :before-close="handleClose">
+              width="60%">
                 <el-card>
                     <el-col :span="16">
                       <el-row>
@@ -748,8 +746,7 @@
             <el-dialog
               title="换房"
               :visible.sync="roomchange"
-              width="80%"
-              :before-close="handleClose">
+              width="80%">
                 <el-card>
                   <el-form>
                       <el-row>
@@ -836,8 +833,7 @@
             <el-dialog
               title="房卡操作"
               :visible.sync="mackcade"
-              width="60%"
-              :before-close="handleClose">
+              width="60%">
                 <el-card>
                     <el-form>
                         <el-row>
@@ -854,8 +850,7 @@
                                 ref="multipleTable"
                                 :data="tableData"
                                 tooltip-effect="dark"
-                                style="width: 100%"
-                                @selection-change="handleSelectionChange">
+                                style="width: 100%">
                                 <el-table-column
                                   type="selection"
                                   width="55">
@@ -1209,7 +1204,7 @@
       </el-tab-pane>
       <!-- 留言管理 -->
       <el-tab-pane label="留言管理" name="three">
-        <el-form :model="noteForm" :rules="rules" ref="noteForm" label-width="100px" class="demo-ruleForm">
+        <el-form :model="noteForm"  ref="noteForm" label-width="100px" class="demo-ruleForm">
          
           <el-row>
             <label>留言类型：</label>
@@ -1337,7 +1332,7 @@
 
       <!-- 物品寄存 -->
       <el-tab-pane label="物品寄存" name="four">
-            <el-form :model="leftLuggage" :rules="rules" ref="leftLuggage" label-width="100px" class="demo-ruleForm">
+            <el-form :model="leftLuggage"  ref="leftLuggage" label-width="100px" class="demo-ruleForm">
          
               <el-row>
                 <label>留言类型：</label>
@@ -1858,6 +1853,8 @@
 export default {
   data() {
     return {
+      num:1,
+      currentPage4: 4,//分页当前所在页数的位置
       stayoernum:'1',//续住天数
       stayoerchecked:false,//续住  勾选
       tableData: [
@@ -2093,7 +2090,7 @@ export default {
       checked: false,
       activeThree: "a",
       currentPage3:'',
-      // value1: '',//时间
+       value1: '',//时间
       // value2: '',
       // value3: ''
     };
@@ -2102,6 +2099,9 @@ export default {
      hostelmess(){
        this.hosteldis = true;
      },
+     handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },

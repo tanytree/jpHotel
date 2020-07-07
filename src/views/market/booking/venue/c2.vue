@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 11:36:55
- * @FilePath: /jiudian/src/views/market/orders/list1.vue
+ * @LastEditTime: 2020-07-07 10:18:11
+ * @FilePath: /jiudian/src/views/market/booking/venue/c2.vue
  -->
 
 <template>
@@ -12,46 +12,27 @@
         <!-- 查询部分 -->
         <el-form inline size="small">
             <el-row>
-                <el-form-item label="订单状态">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">未入住</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">取消</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">离店</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">待确认</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">拒单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">已入驻</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">NOSHOW</el-tag>&nbsp;&nbsp;
-                </el-form-item>
-            </el-row>
-            <el-row>
-                <el-form-item label="预抵日期">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">上周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">今日</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">本周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">下周</el-tag>&nbsp;&nbsp;
+                <el-form-item label="会议时间">
+                    <el-tag type="success">当天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">明天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">后天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">近七天</el-tag>&nbsp;&nbsp;
                     <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+                    <el-form-item label="">
+                        <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <span style="margin:0 5px">-</span>
+                        <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                    </el-form-item>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="预订日期">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">上周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">今日</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">本周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">下周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+                <el-form-item label="登记时间">
+                    <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                    <span style="margin:0 5px">-</span>
+                    <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
-
             </el-row>
             <el-row>
-                <el-form-item label="入住类型">
-                    <el-select v-model="searchForm.enterStatus">
-                        <el-option label="全部" value="3">全部</el-option>
-                        <el-option label="已认证" value="1">已认证</el-option>
-                        <el-option label="未认证" value="2">未认证</el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="订单来源">
                     <el-select v-model="searchForm.enterStatus">
                         <el-option label="全部" value="3">全部</el-option>
@@ -59,68 +40,50 @@
                         <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="团队名称">
-                    <el-input v-model="searchForm.content"></el-input>
-                </el-form-item>
-                <el-form-item label="预定单号">
-                    <el-input v-model="searchForm.content"></el-input>
-                </el-form-item>
-
-            </el-row>
-            <el-row>
-
-                <el-form-item label="预订人">
-                    <el-input v-model="searchForm.content"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号">
-                    <el-input v-model="searchForm.content"></el-input>
-                </el-form-item>
-                <el-form-item label="房类">
+                <el-form-item label="客源类别">
                     <el-select v-model="searchForm.enterStatus">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="外部订单">
-                    <el-input v-model="searchForm.content"></el-input>
-                </el-form-item>
             </el-row>
             <el-row>
+
                 <el-form-item label="预订人">
                     <el-input v-model="searchForm.content"></el-input>
+                </el-form-item>
+                <el-form-item label="房间号">
+                    <el-input v-model="searchForm.content"></el-input>
+                </el-form-item>
+                <el-form-item label="订单号">
+                    <el-select v-model="searchForm.enterStatus">
+                        <el-option label="全部" value="3">全部</el-option>
+                        <el-option label="已认证" value="1">已认证</el-option>
+                        <el-option label="未认证" value="2">未认证</el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getDataList">查询</el-button>
                     <el-button type="primary" @click="initForm">重置</el-button>
-                    <el-button type="primary" @click="initForm">导出</el-button>
                 </el-form-item>
-                 <el-form-item style="float:right">
-                <el-button type="text" icon="el-icon-arrow-up">收起</el-button>
-            </el-form-item>
             </el-row>
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="预订人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="预订时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="抵离时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="房型（房号）" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="订金" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="总房费" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" label="单位" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="会议名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="会议开始-会议结束" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="房间号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="会议厅" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="客源类别" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="订单来源" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="会议状态" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="handelDetail(row)">详情</el-button>
-                    <el-button type="text" size="mini">订金</el-button>
-                    <el-button type="text" size="mini">NOSHOW</el-button>
-                    <el-button type="text" size="mini">取消</el-button>
-                    <el-button type="text" size="mini">接受</el-button>
-                    <el-button type="text" size="mini">拒单</el-button>
-                    <el-button type="text" size="mini">恢复</el-button>
-                    <el-button type="text" size="mini">撤销</el-button>
+                    <el-button type="text" size="mini">详情</el-button>
+                    <el-button type="text" size="mini">会议登记</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -196,9 +159,6 @@ export default {
                     this.listTotal = res.data.total;
                 }
             });
-        },
-        handelDetail(item){
-            this.$router.push('/orderdetail')
         },
         /**编辑 */
         editRowItem(row) {
