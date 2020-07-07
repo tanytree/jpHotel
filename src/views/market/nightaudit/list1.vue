@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-05 12:17:16
+ * @LastEditTime: 2020-07-07 11:18:31
  * @FilePath: /jiudian/src/views/market/nightaudit/list1.vue
  -->
 
@@ -11,7 +11,7 @@
     <el-card class="box-card">
         <div slot="header" class="clearfix">
             <span>建议夜审前处理以下业务</span>
-            <el-button style="float: right; padding: 3px 0" type="text">夜审记录</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text" @click="recordShow=true">夜审记录</el-button>
         </div>
         <el-row>
             <el-col :span="6">
@@ -45,10 +45,25 @@
         </el-row>
     </el-card>
     <br />
-        <el-row>
-            <el-button type="primary">夜审</el-button>
-        </el-row>
+    <el-row>
+        <el-button type="primary">夜审</el-button>
+    </el-row>
+    <el-dialog :visible.sync="recordShow" title="选择企业" width="600px" class="dialogCom">
+ <!--表格数据 -->
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
+            <el-table-column prop="enterName" label="夜审时间（自然日）"></el-table-column>
+            <el-table-column prop="enterName" label="夜审营业日" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="夜审结果" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="操作人" show-overflow-tooltip></el-table-column>
+        </el-table>
+        <div style="margin-top:10px"></div>
+        <!--分页 -->
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" type="primary" @click="recordShow=false">关闭</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -68,9 +83,8 @@ export default {
     },
     data() {
         return {
-            loading: true,
-            showEdit: false,
-            showDetail: false,
+            loading: false,
+            recordShow:false,
             searchForm: {
                 searchType: 1,
                 content: '',
@@ -85,7 +99,6 @@ export default {
             tableData: [] //表格数据
         };
     },
-
     mounted() {
         // this.initForm();
     },
@@ -117,8 +130,8 @@ export default {
                 }
             });
         },
-        setCurrentItem(v){
-            this.$emit('getCurrentItem',v)
+        setCurrentItem(v) {
+            this.$emit('getCurrentItem', v)
         },
         /**编辑 */
         editRowItem(row) {
@@ -159,13 +172,20 @@ export default {
     }
 };
 </script>
+
 <style scoped>
-.grid-content {text-align: center;border-right:1px solid #eee;padding: 80px 0;}
-.grid-content >>> .el-button{
-    border:0
+.grid-content {
+    text-align: center;
+    border-right: 1px solid #eee;
+    padding: 80px 0;
 }
-.grid-content >>> .el-badge__content.is-fixed{
+
+.grid-content>>>.el-button {
+    border: 0
+}
+
+.grid-content>>>.el-badge__content.is-fixed {
     left: -10px;
-    right:inherit;
+    right: inherit;
 }
 </style>

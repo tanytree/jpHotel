@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-06 09:28:54
+ * @LastEditTime: 2020-07-07 11:31:23
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -190,13 +190,27 @@ export default new Router({
                         import ('@/views/market/orders')
                 },
                 {
+                    path: '/orderdetail',
+                    name: 'orderdetails',
+                    meta: { title: '订单详情', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/orders/detail')
+                },
+                {
                     path: '/reception',
                     name: 'reception',
                     meta: { title: '前台服务', pid: "13" },
                     component: () =>
                         import ('@/views/market/reception')
                 },
-
+                {
+                    path: '/booking',
+                    name: 'booking',
+                    meta: { title: '预订管理', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/booking')
+                },
+                
                 {
                     path: '/market-authSet',
                     name: 'marketauthSet',
