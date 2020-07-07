@@ -1,6 +1,6 @@
 
 <template>
-    <div id="page1">
+    <div class="boss-index" id="page1">
         <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="房间动态" name="a">
                 <roomStatus ref="roomStatus"/>
