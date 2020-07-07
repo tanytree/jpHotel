@@ -1,7 +1,7 @@
 
 <!--
 
- * @LastEditors: 魏轩
+ * @LastEditors: 董林
 
  * 
  -->
@@ -1702,7 +1702,7 @@
                     </el-row>
                     <!-- 预定管理 -->
                     <el-row style="margin-top:30px">
-                        <span>预定管理</span>
+                        <span>预订管理</span>
                         <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
                         <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
                         <div style="margin-top:10px;">
@@ -1756,7 +1756,7 @@
 
                     <!-- 预定管理 -->
                     <el-row style="margin-top:30px">
-                        <span>预定管理</span>
+                        <span>预订管理</span>
                         <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
                         <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
                         <div style="margin-top:10px;">
