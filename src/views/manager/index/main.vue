@@ -49,7 +49,8 @@
         },
         data () {
             return {
-                activeName: 'a' //第一个默认启动
+                activeName: 'a', //第一个默认启动
+
             }
         },
         created () {
@@ -57,6 +58,7 @@
         activated () {
         },
         methods: {
+			handleClick() {}
         }
     }
 </script>
@@ -68,39 +70,39 @@
 		display: flex;
 		justify-content: center;
 	}
-	
+
 	.margin-l {
 		margin-left: 8px;
 	}
-	
+
 	.tag-margin {
 		margin-right: 8px;
 		margin-top: 8px;
 	}
-	
+
 	.row-width {
 		width: 120px;
 	}
-	
+
 	.demo-form-inline {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.font {
 		font-size: 13px;
 	}
-	
+
 	.tag-top {
 		margin-top: 10px;
 	}
-	
+
 	.tag-group {
 		display: flex;
 		align-items: center;
 		margin-bottom: 18px;
 	}
-	
+
 	.box-card {
 		display: flex;
 		justify-content: center;
@@ -109,7 +111,7 @@
 		height: auto;
 		padding: 10px 20px;
 	}
-	
+
 	.fix-circle {
 		height: 45px;
 		width: 45px;
@@ -117,29 +119,29 @@
 		bottom: -20px;
 		right: -20px;
 	}
-	
+
 	// 下拉标题
 	.el-dropdown-link {
 		cursor: pointer;
 		color: #409EFF;
 	}
-	
+
 	.el-icon-arrow-down {
 		font-size: 12px;
 	}
-	
+
 	// ========
 	.second-body {
 		.title {
 			border-bottom: 1px solid #E4E7ED;
-	
+
 			span {
 				display: flex;
 				padding: 15px 0px;
 				font-weight: bolder;
 			}
 		}
-	
+
 		.row-body {
 			.row-line {
 				display: flex;
@@ -147,23 +149,23 @@
 				align-items: center;
 				padding: 15px 0px;
 				border-bottom: 1px solid #e5e5e5;
-	
+
 				.row-item {
 					display: flex;
 					align-items: center;
 					font-size: 12px;
-	
+
 					.row-img {
 						height: 40px;
 						width: 40px;
 						border-radius: 50%;
 						background-color: #F2F2F2;
 					}
-	
+
 					.default-text {
 						padding: 0px 15px;
 					}
-	
+
 					.active-facus {
 						border: 1px solid #126eff;
 						padding: 3px 15px;

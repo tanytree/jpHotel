@@ -1,11 +1,11 @@
 /*
 * @Author: 黄栋 广告管理
 * @Date: 2020-03-10 13:45:16
-* @Last Modified by: 黄栋
+* @Last Modified by: cindy
 * @Last Modified time: 2020-03-11 16:59:58
 */
 <template>
-	<div>
+	<div class="boss-index">
 		<el-tabs class="pageTab" v-model="activeName">
 			<el-tab-pane :label="boss_first_title" name="first">
 				<el-tabs v-model="active_second_name" type="card">
@@ -96,84 +96,87 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-	// 下拉标题
-	.el-dropdown-link {
-		cursor: pointer;
-		color: #409EFF;
-	}
+	.boss-index {
+		height: 100%;
 
-	.el-icon-arrow-down {
-		font-size: 12px;
-	}
-
-	// ========
-	.first-body {
-		.title {
-			border-bottom: 1px solid #E4E7ED;
-			margin-bottom: 15px;
-
-			span {
-				display: flex;
-				padding: 15px 0px;
-				font-weight: bolder;
-			}
+		.el-dropdown-link {
+			cursor: pointer;
+			color: #409EFF;
 		}
 
-		.content-body {
-			.body-item {
-				display: flex;
+		.el-icon-arrow-down {
+			font-size: 12px;
+		}
 
-				.item-tag {
-					width: 200px;
-					font-size: 12px;
+		// ========
+		.first-body {
+			.title {
+				border-bottom: 1px solid #E4E7ED;
+				margin-bottom: 15px;
+
+				span {
 					display: flex;
-					//flex: 1;
-					flex-direction: column;
-					justify-content: space-between;
+					padding: 15px 0px;
+					font-weight: bolder;
+				}
+			}
 
-					.item {
-						padding: 5px 0px;
-						line-height: 15px;
+			.content-body {
+				.body-item {
+					display: flex;
+
+					.item-tag {
+						width: 200px;
+						font-size: 12px;
+						display: flex;
+						//flex: 1;
+						flex-direction: column;
+						justify-content: space-between;
+
+						.item {
+							padding: 5px 0px;
+							line-height: 15px;
+						}
 					}
 				}
 			}
 		}
-	}
 
-	.second-body {
-		.title {
-			border-bottom: 1px solid #E4E7ED;
-			span {
-				display: flex;
-				padding: 15px 0px;
-				font-weight: bolder;
-			}
-		}
-		.row-body {
-			.row-line {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 15px 0px;
-				border-bottom: 1px solid #e5e5e5;
-				.row-item {
+		.second-body {
+			.title {
+				border-bottom: 1px solid #E4E7ED;
+				span {
 					display: flex;
+					padding: 15px 0px;
+					font-weight: bolder;
+				}
+			}
+			.row-body {
+				.row-line {
+					display: flex;
+					justify-content: space-between;
 					align-items: center;
-					font-size: 12px;
-					.row-img {
-						height: 40px;
-						width: 40px;
-						border-radius: 50%;
-						background-color: #F2F2F2;
-					}
-					.default-text {
-						padding: 0px 15px;
-					}
-					.active-facus {
-						border: 1px solid #126eff;
-						padding: 3px 15px;
-						border-radius: 5px;
-						color: #126eff;
+					padding: 15px 0px;
+					border-bottom: 1px solid #e5e5e5;
+					.row-item {
+						display: flex;
+						align-items: center;
+						font-size: 12px;
+						.row-img {
+							height: 40px;
+							width: 40px;
+							border-radius: 50%;
+							background-color: #F2F2F2;
+						}
+						.default-text {
+							padding: 0px 15px;
+						}
+						.active-facus {
+							border: 1px solid #126eff;
+							padding: 3px 15px;
+							border-radius: 5px;
+							color: #126eff;
+						}
 					}
 				}
 			}

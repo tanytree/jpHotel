@@ -703,10 +703,6 @@ export default new Router({
             component: () =>
                 import ('@/components/error')
         },
-
-
-
-
     ]
 
 })

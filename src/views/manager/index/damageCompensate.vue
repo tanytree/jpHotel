@@ -128,7 +128,7 @@
 	export default {
 		data() {
 			return {
-				activeFour: 'four_a',
+				activeFour: 'four_a', radio: '',
 				four_tableData: [{
 					name: '张十三',
 					time: '2020-5-20',
@@ -156,7 +156,7 @@
 				},
 				dialogAdd_kinds: false,
 				dialogAdd_thing: false,
-	
+
 				activeFive: 'five_a',
 				beiYong_show: true,
 				five_redioList: [{
@@ -170,7 +170,7 @@
 					radio: false
 				}],
 				five_money: '',
-	
+
 				seven_redioList: [{
 					name: '寄存单',
 					radio: true
@@ -190,7 +190,7 @@
 					name: '餐饮消费单',
 					radio: false
 				}],
-	
+
 				dialogImageUrl: '',
 				dialogVisible: false,
 				disabled: false,
@@ -248,7 +248,11 @@
 			},
 			handleDownload(file) {
 				console.log(file);
-			}
+			},
+			handleSelectionChange() {},
+			handleSizeChange() {},
+			handleCurrentChange() {},
+			onConfirm() {}
 		}
 	}
 </script>
