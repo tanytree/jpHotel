@@ -12,14 +12,11 @@
      <el-col :span="20">
        <el-form ref="form" :model="form" label-width="80px">
         <el-col :span="8">
-           <el-form-item label="预抵时间:">
-           <el-col :span="3">
-             <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 150px;"></el-date-picker>
-           </el-col>
-           <el-col :span="3">
-             <el-time-picker placeholder="选择时间" v-model="form.date2" style="width:150px"></el-time-picker>
-           </el-col>
-         </el-form-item>
+            <div class="grid-content">
+                <el-form-item label="预抵时间：">
+                    <el-date-picker v-model="form.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                </el-form-item>
+            </div>
         </el-col>
          
         <el-col :span="8">
@@ -28,28 +25,28 @@
          </el-form-item>
          </el-col>
          <el-col :span="8">
-         <el-form-item label="预离时间:">
-           <el-col :span="3">
-             <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 150px;"></el-date-picker>
-           </el-col>
-           <el-col :span="3">
-             <el-time-picker placeholder="选择时间" v-model="form.date2" style="width:150px"></el-time-picker>
-           </el-col>
-         </el-form-item>
+            <div class="grid-content">
+                <el-form-item label="预离时间：" prop="resource">
+                    <el-date-picker v-model="form.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                </el-form-item>
+            </div>
+
          </el-col>
          <el-col :span="8">
          <el-form-item label="位置筛选:">
            <el-select v-model="form.region" placeholder="请选择">
-             <el-option label="区域一" value="shanghai"></el-option>
-             <el-option label="区域二" value="beijing"></el-option>
+             <el-option label="全部" value="3">全部</el-option>
+             <el-option label="已认证" value="1">已认证</el-option>
+             <el-option label="未认证" value="2">未认证</el-option>
            </el-select>
          </el-form-item>
          </el-col>
          <el-col :span="8">
          <el-form-item label="所属酒店:">
            <el-select v-model="form.region" placeholder="请选择">
-             <el-option label="区域一" value="shanghai"></el-option>
-             <el-option label="区域二" value="beijing"></el-option>
+             <el-option label="全部" value="3">全部</el-option>
+             <el-option label="已认证" value="1">已认证</el-option>
+             <el-option label="未认证" value="2">未认证</el-option>
            </el-select>
          </el-form-item>
          </el-col>
@@ -192,16 +189,13 @@ export default {
   data() {
    return {
      form: {
-          name: '',
           region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          startTime:"",//开始时间
+          endTime:"",//结束时间
+          type: []
         },
-        num: 1
+        num: 1,
+        tableData:[]
    }
    
   },

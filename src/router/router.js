@@ -293,21 +293,21 @@ export default new Router({
                 {
                     path: '/channel',
                     name: 'channel',
-                    meta: { title: '渠道管理' },
+                    meta: { title: '首页' },
                     component: () =>
                         import ('@/views/market/channel')
                 },
                 {
                     path: '/channelFenxiao',
                     name: 'channelFenxiao',
-                    meta: { title: '渠道管理' },
+                    meta: { title: '人员管理' },
                     component: () =>
                         import ('@/views/market/channel/fenxiao/channelFenxiao')
                 },
                 {
                     path: '/channelDaili',
                     name: 'channelDaili',
-                    meta: { title: '渠道管理' },
+                    meta: { title: '薪酬管理' },
                     component: () =>
                         import ('@/views/market/channel/daili/channelDaili')
                 },
@@ -393,14 +393,14 @@ export default new Router({
                 {
                     path: '/saleOrder',
                     name: 'saleOrder',
-                    meta: { title: '促销管理', pid: "21" },
+                    meta: { title: '会员管理', pid: "21" },
                     component: () =>
                         import ('@/views/sale/order')
                 },
                 {
                     path: '/saleContract',
                     name: 'saleContract',
-                    meta: { title: '合同管理', pid: "25" },
+                    meta: { title: '单位管理', pid: "25" },
                     component: () =>
                         import ('@/views/sale/contract/index')
                 },

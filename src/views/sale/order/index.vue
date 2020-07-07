@@ -7,22 +7,34 @@
 <template>
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="用户订单" name="first">
+      <el-tab-pane label="会员管理类型" name="first">
         <Personer   />
       </el-tab-pane>
-      <el-tab-pane label="售后订单" name="forth">
+      <el-tab-pane label="会员变更规则" name="second">
         <Aftersale />
+      </el-tab-pane>
+      <el-tab-pane label="会员价格" name="thirdly">
+        <Memberprice />
+      </el-tab-pane>
+      <el-tab-pane label="会员查询" name="forth">
+        <Vipquery />
+      </el-tab-pane>
+      <el-tab-pane label="积分设置" name="fifth">
+        <Intergtal />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import Personer from "./Personer";
-import Aftersale from "./Aftersale";
+import Personer from "./member/Personer";
+import Aftersale from "./member/changeRules";
+import Memberprice from "./member/memberPrice";
+import Vipquery  from "./member/vipquery"
+import Intergtal from "./member/integtal"
 
 export default {
-  components: { Personer, Aftersale },
+  components: { Personer, Aftersale,Memberprice,Vipquery,Intergtal },
   data() {
     return {
       activeName: "first" //第一个默认启动
