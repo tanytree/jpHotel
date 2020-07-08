@@ -319,7 +319,7 @@ export default {
     this.fetchActiveList();
     this.uploadData = {
       imgModel: "1",
-      platSource: 1005,
+      platSource: 1006,
       userId: this.user.userId
     };
   },

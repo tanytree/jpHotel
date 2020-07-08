@@ -74,7 +74,7 @@ export function leftMean() {
                 { 'menuId': 11002, 'dbResourceId': "333" },
                 { 'menuId': 11003, 'dbResourceId': "333" },
                 { 'menuId': 11004, 'dbResourceId': "333" },
-                { 'menuId': 11005, 'dbResourceId': "333" },
+                { 'menuId': 11006, 'dbResourceId': "333" },
                 { 'menuId': 11006, 'dbResourceId': "333" },
                 { 'menuId': 11007, 'dbResourceId': "333" },
                 { 'menuId': 12000, 'dbResourceId': "333" },
