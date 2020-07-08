@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 16:10:17
+ * @LastEditTime: 2020-07-08 15:46:57
  * @FilePath: /jiudian/src/views/market/customer/company/c2.vue
  -->
 
@@ -10,16 +10,16 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-form-item label="收款门店">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="单位名称">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>

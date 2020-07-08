@@ -386,10 +386,15 @@
     }
 
     .main-content {
-        flex: 1;
-        height: 0;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: auto;
         background-color: #f5f5f5;
         display: block;
+        border: 1px solid transparent;
 
         > .main-inner {
             width: 100%;

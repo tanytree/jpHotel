@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 14:17:01
+ * @LastEditTime: 2020-07-08 15:31:13
  * @FilePath: /jiudian/src/views/market/customer/vip/info.vue
  -->
 
@@ -10,40 +10,40 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-form-item label="开卡门店">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="发展途径">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="会员类型">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="手机号">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <br />
             <el-form-item label="卡号">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="姓名">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="正常" value="1"></el-option>
                     <el-option label="挂失" value="2"></el-option>
@@ -51,7 +51,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="黑名单">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="是" value="1"></el-option>
                     <el-option label="否" value="2"></el-option>
@@ -91,8 +91,8 @@
             <el-table-column prop="enterType" label="是否黑名单" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">详情</el-button>
-                    <el-button type="text" size="mini">修改</el-button>
+                    <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
+                    <el-button type="text" size="mini" @click="handleEdit(row)">修改</el-button>
                     <el-dropdown>
                         <span class="el-dropdown-link">
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
@@ -179,6 +179,12 @@ export default {
                     this.listTotal = res.data.total;
                 }
             });
+        },
+        handleDetail(item){
+            this.$router.push({name:'customerdetails'})
+        },
+        handleEdit(item){
+            this.$router.push({name:'customeredit'})
         },
         /**编辑 */
         editRowItem(row) {

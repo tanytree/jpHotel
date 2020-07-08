@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 17:34:05
+ * @LastEditTime: 2020-07-08 15:55:02
  * @FilePath: /jiudian/src/views/market/customer/company/c5.vue
  -->
 
@@ -10,23 +10,23 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-form-item label="消费门店">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="挂账单位">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="结账状态">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已结" value="1">已认证</el-option>
                     <el-option label="未结" value="2">未认证</el-option>
@@ -34,10 +34,10 @@
             </el-form-item>
             <br />
             <el-form-item label="姓名">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="房间号">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
            <el-form-item label="消费日期">
                 <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
