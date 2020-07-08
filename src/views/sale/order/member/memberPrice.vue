@@ -24,10 +24,6 @@
           <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
           
         </el-form-item>
-        <el-form-item style="float:right">
-          <el-button   type="primary">新增</el-button>
-          <!-- @click="resetForm" -->
-        </el-form-item>
       </el-row>
       
     </el-form>
@@ -40,10 +36,36 @@
             <el-table-column prop="enterType" label="修改人" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">编辑折扣</el-button>
+                    <el-button type="text" size="mini"  @click="discount=true">编辑折扣</el-button>
                 </template>
             </el-table-column>
         </el-table>
+
+        <!-- 编辑折扣 -->
+        <el-dialog title="编辑折扣" :visible.sync="discount">
+              <el-form ref="discountform" :model="form" label-width="80px">
+                
+                <el-form-item label="是否折扣:">
+                  <el-radio-group v-model="discountform.resource">
+                    <el-radio label="是"></el-radio>
+                    <el-radio label="否"></el-radio>
+                  </el-radio-group>
+                </el-form-item>
+                <el-form-item label="折扣比例">
+                  <el-input v-model="discountform.name" placeholder="请填写"></el-input>
+                </el-form-item>
+                    <el-divider></el-divider>
+
+                
+                
+                <el-form-item>
+
+                  <el-button type="primary" >确定</el-button>
+                  <el-button @click="discount = false">取消</el-button>
+                </el-form-item>
+              </el-form>
+
+          </el-dialog>
   </div>
 </template>
 <script>
@@ -55,6 +77,7 @@ import {
 export default {
   data() {
     return {
+      discount:false,
       loading: false,
       pageIndex: 1,
       pageSize: 8,
@@ -64,6 +87,7 @@ export default {
       dataListSelections: [],
       status: "",
       form: {},
+      discountform:{},
       tableData: [{}] //表格数据
     };
   },

@@ -210,7 +210,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/market/booking')
                 },
-                
+
                 {
                     path: '/market-authSet',
                     name: 'marketauthSet',
@@ -410,6 +410,13 @@ export default new Router({
                     meta: { title: '会员管理', pid: "21" },
                     component: () =>
                         import ('@/views/sale/order')
+                },
+                {
+                    path: '/newdetail',
+                    name: 'newdetail',
+                    meta: { title: '新增会员类型', pid: "21" },
+                    component: () =>
+                        import ('@/views/sale/order/member/graces/new')
                 },
                 {
                     path: '/saleContract',

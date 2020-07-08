@@ -252,7 +252,7 @@
                         {name: this.$t('tabName[4].children[0].name'), id: "47", icon: "market/nav01.png", value: "salemain"},
                         {name: this.$t('tabName[4].children[1].name'), id: "48", icon: "market/nav02.png", value: "saleOrder"},
                         {name: this.$t('tabName[4].children[2].name'), id: "49", icon: "market/nav03.png", value: "saleContract"},
-                        {name: this.$t('tabName[4].children[3].name'), id: "49", icon: "market/nav03.png", value: "contracted"}
+                        {name: this.$t('tabName[4].children[3].name'), id: "50", icon: "market/nav03.png", value: "contracted"}
                     ]
                 },
                 {
@@ -261,10 +261,10 @@
                     value: "product",
                     id: '6',
                     children: [
-                        {name: this.$t('tabName[5].children[0].name'), id: "50", icon: "market/nav01.png", value: "channel"},
-                        {name: this.$t('tabName[5].children[1].name'), id: "51", icon: "market/nav02.png", value: "channelFenxiao"},
-                        {name: this.$t('tabName[5].children[2].name'), id: "52", icon: "market/nav03.png", value: "channelDaili"},
-                        {name: this.$t('tabName[5].children[3  ].name'), id: "53", icon: "market/nav03.png", value: "channelSetting"}
+                        {name: this.$t('tabName[5].children[0].name'), id: "51", icon: "market/nav01.png", value: "channel"},
+                        {name: this.$t('tabName[5].children[1].name'), id: "52", icon: "market/nav02.png", value: "channelFenxiao"},
+                        {name: this.$t('tabName[5].children[2].name'), id: "53", icon: "market/nav03.png", value: "channelDaili"},
+                        {name: this.$t('tabName[5].children[3  ].name'), id: "54", icon: "market/nav03.png", value: "channelSetting"}
                     ]
                 }
             ]);

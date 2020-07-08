@@ -7,7 +7,7 @@
 <template>
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="会员管理类型" name="first">
+      <el-tab-pane label="会员类型管理" name="first">
         <Personer   />
       </el-tab-pane>
       <el-tab-pane label="会员变更规则" name="second">

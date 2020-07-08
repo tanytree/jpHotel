@@ -40,7 +40,7 @@
           
         </el-form-item>
         <el-form-item style="float:right">
-          <el-button   type="primary">重置</el-button>
+          <el-button   type="primary" @click="newupdata=true">+新增</el-button>
           <!-- @click="resetForm" -->
         </el-form-item>
       </el-row>
@@ -55,12 +55,163 @@
             <el-table-column prop="enterType" label="规则 " show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">查看</el-button>
+                    <el-button type="text" size="mini" @click="checkrules=true">查看</el-button>
                     <el-button type="text" size="mini">删除</el-button>
-                    <el-button type="text" size="mini">修改</el-button>
+                    <el-button type="text" size="mini"  @click="updatas= true">修改</el-button>
                 </template>
             </el-table-column>
         </el-table>
+        <!-- 新增 -->
+        <el-dialog title="新增" :visible.sync="newupdata">
+              <el-form ref="discountform" :model="updataform" label-width="80px">
+                <el-row>
+                    <el-form-item label="规则名称">
+                      <el-input v-model="updataform.name" ></el-input>
+                    </el-form-item>
+                    <el-form-item label="状态:">
+                      <el-radio-group v-model="updataform.resource">
+                        <el-radio label="启用"></el-radio>
+                        <el-radio label="禁用"></el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                </el-row>
+
+                <el-row>
+                  <el-form-item label="入职日期">
+                      <el-date-picker v-model="updataform.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                      <span style="margin:0 5px">-</span>
+                      <el-date-picker v-model="updataform.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                  </el-form-item>
+                </el-row>
+                <el-row>
+                  <el-form-item label="选择日期">
+                      <el-checkbox :indeterminate="updataform.isIndeterminate" v-model="updataform.checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+
+                      <el-checkbox-group v-model="updataform.checkedCities" @change="handleCheckedCitiesChange">
+                        <el-checkbox v-for="city in updataform.cities" :label="city" :key="city">{{city}}</el-checkbox>
+                      </el-checkbox-group>
+                  </el-form-item>
+                </el-row>
+                <el-row>
+                  <el-form-item>
+                    <el-form-item label="折扣率">
+                      <el-input style="width:240px" v-model="updataform.name" ></el-input>
+                      <span>实际价格=门市价*折扣率</span>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-radio-group v-model="updataform.resource">
+                        <el-radio label="向上取整"></el-radio>
+                        <el-radio label="向下取整"></el-radio>
+                        <el-radio label="四舍五入（取整）"></el-radio>
+                        <el-radio label="保持不变"></el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-form-item>
+                </el-row>
+                <el-divider></el-divider>
+
+                
+                
+                <el-form-item>
+
+                  <el-button type="primary" >确定</el-button>
+                  <el-button @click="newupdata = false">取消</el-button>
+                </el-form-item>
+              </el-form>
+
+      </el-dialog>
+
+      <!-- 修改 -->
+
+       <el-dialog title="修改" :visible.sync="updatas">
+              <el-form ref="discountform" :model="updata" label-width="80px">
+                <el-row>
+                    <el-form-item label="规则名称">
+                      <el-input v-model="updata.name" ></el-input>
+                    </el-form-item>
+                    <el-form-item label="状态:">
+                      <el-radio-group v-model="updata.resource">
+                        <el-radio label="启用"></el-radio>
+                        <el-radio label="禁用"></el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                </el-row>
+
+                <el-row>
+                  <el-form-item label="入职日期">
+                      <el-date-picker v-model="updata.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                      <span style="margin:0 5px">-</span>
+                      <el-date-picker v-model="updata.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                  </el-form-item>
+                </el-row>
+                <el-row>
+                  <el-form-item label="选择日期">
+                      <el-checkbox :indeterminate="updata.isIndeterminate" v-model="updata.checkAll" @change="handleCheckAllChanges">全选</el-checkbox>
+
+                      <el-checkbox-group v-model="updata.checkedCities" @change="handleCheckedCitiesChanges">
+                        <el-checkbox v-for="city in updata.cities" :label="city" :key="city">{{city}}</el-checkbox>
+                      </el-checkbox-group>
+                  </el-form-item>
+                </el-row>
+                <el-row>
+                  <el-form-item>
+                    <el-form-item label="折扣率">
+                      <el-input style="width:240px" v-model="updata.name" ></el-input>
+                      <span>实际价格=门市价*折扣率</span>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-radio-group v-model="updata.resource">
+                        <el-radio label="向上取整"></el-radio>
+                        <el-radio label="向下取整"></el-radio>
+                        <el-radio label="四舍五入（取整）"></el-radio>
+                        <el-radio label="保持不变"></el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-form-item>
+                </el-row>
+                <el-divider></el-divider>
+
+                
+                
+                <el-form-item>
+
+                  <el-button type="primary" >确定</el-button>
+                  <el-button @click="updatas = false" >取消</el-button>
+                </el-form-item>
+              </el-form>
+
+      </el-dialog>
+            <!-- 查看 -->
+        <el-dialog title="查看" :visible.sync="checkrules">
+          <el-row>
+              <label >规则名称：</label>
+              <span>规则2</span>
+          </el-row> 
+          <el-row>
+              <label >状态：</label>
+              <span>禁用</span>
+          </el-row>
+          <el-row>
+              <label >时间：</label>
+              <span>2020-04-17至2021-04-17</span>
+          </el-row>
+          <el-row>
+              <label >星期：</label>
+              <span>每天</span>
+          </el-row> 
+          <el-row>
+              <label >折扣率：</label>
+              <span>0.9（向上取整）</span>
+          </el-row>
+          
+
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="checkrules = false">关闭</el-button>
+          </div>
+        </el-dialog>
+  
+  
+  
   </div>
 </template>
 <script>
@@ -69,9 +220,13 @@ import {
   edit_goods_status,
   del_goods_info
 } from "@/utils/api/market";
+const cityOptions = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 export default {
   data() {
     return {
+      checkrules:false,
+      newupdata:false,
+      updatas:false,
       loading: false,
       pageIndex: 1,
       pageSize: 8,
@@ -84,6 +239,26 @@ export default {
        name:"",
        orderType:''
       },
+      updataform:{
+        startTime:'',
+       endTime:'',
+       resource:'',
+       name:'',
+       checkAll: false,
+        checkedCities: [],
+        cities: cityOptions,
+        isIndeterminate: true
+      },
+      updata:{
+        startTime:'',
+       endTime:'',
+       resource:'',
+       name:'',
+       checkAll: false,
+        checkedCities: [],
+        cities: cityOptions,
+        isIndeterminate: true
+      },
       tableData: [{}] //表格数据
     };
   },
@@ -92,7 +267,26 @@ export default {
     // this.fetchGoodList();
   },
   methods: {
-
+    // 新增 
+      handleCheckAllChange(val) {
+        this.updataform.checkedCities = val ? cityOptions : [];
+        this.updataform.isIndeterminate = false;
+      },
+      handleCheckedCitiesChange(value) {
+        let checkedCount = value.length;
+        this.updataform.checkAll = checkedCount === this.updataform.cities.length;
+        this.updataform.isIndeterminate = checkedCount > 0 && checkedCount < this.updataform.cities.length;
+      },
+      // 修改
+      handleCheckAllChanges(val) {
+        this.updata.checkedCities = val ? cityOptions : [];
+        this.updata.isIndeterminate = false;
+      },
+      handleCheckedCitiesChanges(value) {
+        let checkedCount = value.length;
+        this.updata.checkAll = checkedCount === this.updata.cities.length;
+        this.updata.isIndeterminate = checkedCount > 0 && checkedCount < this.updata.cities.length;
+      }
  
 
   }
