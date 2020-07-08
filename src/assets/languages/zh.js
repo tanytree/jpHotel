@@ -4,19 +4,21 @@
  * @LastEditTime: 2020-07-07 10:20:25
  * @FilePath: /jiudian/src/assets/languages/zh.js
  */
-module.exports = {
+import bossLang from "./boss/bossZh";
+import commons from "./commons/commonsZh";
+export default {
     language: {
         name: '中文'
     },
     tabName: [{
-            name: '总办',
-            children: [
-                { name: "首页" },
-                { name: "部门负责人" },
-                { name: "员工管理" },
-                { name: "薪酬管理" },
-            ]
-        },
+        name: '总办',
+        children: [
+            { name: "首页" },
+            { name: "部门负责人" },
+            { name: "员工管理" },
+            { name: "薪酬管理" },
+        ]
+    },
         {
             name: '管理部',
             children: [
@@ -86,5 +88,10 @@ module.exports = {
                 { name: "薪酬管理" },
             ]
         }
-    ]
+    ],
+
+    //所有模块公共的国际化语言 都可以进行搜录进去 例如 查询 重启 导入 导出 等公用描述
+    commons: commons,
+    //总经理办公室
+    boss: bossLang
 }

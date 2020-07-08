@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 11:31:23
+ * @LastEditTime: 2020-07-08 16:56:41
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -173,7 +173,45 @@ export default new Router({
                     name: 'customer',
                     meta: { title: '客户管理', pid: "13" },
                     component: () =>
-                        import ('@/views/market/customer')
+                        import ('@/views/market/customer'),
+                        // children:[
+                        //     {
+                        //         path: 'detail',
+                        //         name: 'customerdetails',
+                        //         meta: { title: '客户详情', pid: "13" },
+                        //         component: () =>
+                        //             import ('@/views/market/customer/children/detail')
+                        //     },
+            
+                        // ]
+                },
+                {
+                    path: '/customerdetails',
+                    name: 'customerdetails',
+                    meta: { title: '客户详情', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/customer/children/detail')
+                },
+                {
+                    path: '/customeredit',
+                    name: 'customeredit',
+                    meta: { title: '客户编辑', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/customer/children/detail')
+                },
+                {
+                    path: '/customerhistory',
+                    name: 'customerhistory',
+                    meta: { title: '客史记录', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/customer/children/history')
+                },
+                {
+                    path: '/historydetail',
+                    name: 'historydetail',
+                    meta: { title: '客史详情', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/customer/children/historydetail')
                 },
                 {
                     path: '/nightaudit',

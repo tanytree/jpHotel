@@ -74,15 +74,13 @@ export default {
       companyInit: "company/companyInit"
     }),
     fetchData: function() {
-      let RouterKey = getRouterKey() ? JSON.parse(getRouterKey()) : [-2];
- 
-
-      if (RouterKey.includes(+this.$route.meta.roles)) {
-      } else {
-        // this.$router.push({
-        //   path: '/@/views/noaccess/noaccess'
-        // })
-      }
+      // let RouterKey = getRouterKey() ? JSON.parse(getRouterKey()) : [-2];
+      // if (RouterKey.includes(+this.$route.meta.roles)) {
+      // } else {
+      //   // this.$router.push({
+      //   //   path: '/@/views/noaccess/noaccess'
+      //   // })
+      // }
     },
     refresh() {
       this.isRouterAlive = false;
@@ -109,7 +107,7 @@ export default {
     $route(to, from) {
       //console.log(to,from)
       if (from.name == "login" && to.name != "login") {
-        // this.refresh();
+        this.refresh();
       } else {
         this.fetchData();
       }

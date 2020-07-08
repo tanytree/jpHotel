@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 17:23:34
+ * @LastEditTime: 2020-07-08 15:41:36
  * @FilePath: /jiudian/src/views/market/customer/list3.vue
  -->
 
@@ -10,46 +10,45 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-form-item label="创建门店">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="宾客籍贯">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="增加" value="1"></el-option>
                     <el-option label="扣除" value="2"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="签证种类">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="姓名">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <br />
             <el-form-item label="手机号">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="证件类型">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="证件号">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
-
             <el-form-item>
                 <el-button type="primary" @click="getDataList">查询</el-button>
                 <el-button type="primary" @click="initForm">重置</el-button>

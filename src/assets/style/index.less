@@ -109,6 +109,10 @@
   .text-right{text-align: right;}
   .text-left{text-align: left;}
   .text-center{text-align: center;}
+  .width300{width:300px}
+  .width200{width:200px}
+  .width150{width:150px}
+  .width100{width:100px}
   
   .ovh{overflow: hidden;}
   .fr{float: right;}
@@ -222,6 +226,8 @@ li {
     }
 
     .el-tabs__content {
+        display: flex;
+        flex-direction: column;
         flex: 1;
         background: #fff;
         border-radius: 8px;
@@ -230,6 +236,13 @@ li {
         .el-tab-pane {
             height: 100%;
             padding: 10px;
+            overflow: auto;
+
+            .el-tabs {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
         }
     }
 }
@@ -333,5 +346,9 @@ li {
         background: #126EFF;
         color: #fff;
     }
+}
+
+.boss-index {
+    height: 100%;
 }
 

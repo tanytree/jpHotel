@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="boss-index">
 		<!--薪酬管理-->
 		<el-tabs class="pageTab" v-model="activeName">
 			<el-tab-pane label="薪酬管理" name="first">
@@ -27,8 +27,7 @@
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" style="width: 100%"
-    max-height="200" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
+							<el-table ref="multipleTable" :data="tableData" height="100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
 							 @selection-change="handleSelectionChange">
 								<!-- <el-table-column prop="name" label="部门" show-overflow-tooltip></el-table-column> -->
 								<el-table-column prop="name" label="职位"></el-table-column>
@@ -105,7 +104,7 @@
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
+							<el-table ref="multipleTable" :data="tableData" height="100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
 							 @selection-change="handleSelectionChange">
 								<!-- <el-table-column type="index" label="序号" width="50"></el-table-column> -->
 								<el-table-column prop="name" label="员工姓名"></el-table-column>

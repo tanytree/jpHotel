@@ -1,79 +1,81 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-08 15:36:40
- * @FilePath: /jiudian/src/views/market/customer/vip/points.vue
+ * @LastEditTime: 2020-07-08 16:20:28
+ * @FilePath: /jiudian/src/views/market/customer/children/history.vue
  -->
 
 <template>
 <!-- 统一的列表格式 -->
 <div>
     <el-card>
+         <!-- 头部导航 -->
+        <div slot="header" class="clearfix">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item :to="{ path: '/customer' }">客史档案</el-breadcrumb-item>
+                <el-breadcrumb-item>客史</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
-            <el-form-item label="发布日期">
-              <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">今日</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">昨日</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">本周</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">本月</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+            <h3>客史记录-张三</h3>
+            <el-form-item label="发生门店：">
+                <el-input v-model="searchForm.content" class="width150"></el-input>
+            </el-form-item>
+            <el-form-item label="房类：">
+                <el-select v-model="searchForm.enterStatus" class="width150">
+                    <el-option label="全部" value="3">全部</el-option>
+                    <el-option label="会场" value="1"></el-option>
+                    <el-option label="客房" value="2"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="入住人：">
+                <el-input v-model="searchForm.content" class="width150"></el-input>
+            </el-form-item>
+            <br />
+            <el-form-item label="入住日期：">            
                 <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                <span style="margin:0 5px">-</span>
+                <span style="margin:0 5px">至</span>
                 <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
-            <br />
-            <el-form-item label="发生门店">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="操作类型">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="增加" value="1"></el-option>
-                    <el-option label="扣除" value="2"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="会员类型">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="手机号">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
-            </el-form-item>
-            <br />
-            <el-form-item label="卡号">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
-            </el-form-item>
-            <el-form-item label="姓名">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+            <el-form-item label="离店日期：">            
+                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                <span style="margin:0 5px">至</span>
+                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="getDataList">查询</el-button>
                 <el-button type="primary" @click="initForm">重置</el-button>
             </el-form-item>
-            <el-form-item>
-               <el-button plain>读会员卡</el-button>
+            <el-form-item style="float:right">
+                <el-button type="primary">+新增</el-button>
+                <el-button type="primary">批量设置</el-button>
             </el-form-item>
+            <el-row>
+                <el-form-item>
+                    <el-button type="text">开卡总数：999</el-button>
+                </el-form-item>
+            </el-row>
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="卡号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="会员类型" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="手机号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="增加" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="扣除" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="发生日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="入住人" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" label="入住-离店日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="天数" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="房类" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="入住方式" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="房间号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="房型" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="总房价" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="总消费" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="发生门店" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="操作员" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="备注" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="订单号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" label="同来宾客" show-overflow-tooltip></el-table-column>
+            <el-table-column label="操作" width="220">
+                <template slot-scope="{row}">
+                    <el-button type="text" size="mini">详情</el-button>
+                </template>
+            </el-table-column>
         </el-table>
         <div style="margin-top:10px"></div>
         <!--分页 -->
@@ -113,7 +115,7 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [] //表格数据
+            tableData: [{}] //表格数据
         };
     },
 
