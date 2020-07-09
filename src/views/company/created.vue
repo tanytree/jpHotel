@@ -100,7 +100,7 @@
           style="text-align:center;margin:20px 0;"
         >企业资料已提交，工作人员会尽快完成企业资质审核，审核成功后我们会以短信的形式通知你，你也可以登录查看审核状态</p>
         <div style="text-align:center">
-          <el-button style="width:150px" @click="$router.push('/companyList')" plain>完成</el-button>
+          <el-button style="width:150px" @click="$router.push('/storeList')" plain>完成</el-button>
         </div>
       </div>
     </el-col>

@@ -20,7 +20,7 @@
           </el-input>
         </el-form-item>
         <el-form-item style="float:right">
-          <el-button type="text" @click="$router.push('/companyList')">我的企业列表</el-button>
+          <el-button type="text" @click="$router.push('/storeList')">我的企业列表</el-button>
         </el-form-item>
       </el-form>
       <div style="padding-bottom:20px">相关企业</div>

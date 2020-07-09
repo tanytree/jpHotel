@@ -65,7 +65,7 @@
       <el-input style="width:400px;margin-right:10px" v-model="companyName" placeholder="请输入公司名称"></el-input>
       <el-button type="primary" @click="searchCompany">查询</el-button>
       <el-row :gutter="10" style="padding:10px">
-        <el-col :span="8" style="padding:8px" v-for="(item,index) in companyList" :key="index">
+        <el-col :span="8" style="padding:8px" v-for="(item,index) in storeList" :key="index">
           <label style="margin-right:5px">{{item.co_name}}</label>
           <el-button size="mini" @click="bindCompany(item)">关联</el-button>
         </el-col>
@@ -94,7 +94,7 @@ export default {
       visible: false,
       editForm: { id: "" },
       companyName: "",
-      companyList: [],
+      storeList: [],
       enterProps: {
         label: "name",
         value: "id",
@@ -148,7 +148,7 @@ export default {
     searchCompany() {
       get_company_list({ co_name: this.companyName }).then(res => {
         if (res.code == 200) {
-          this.companyList = res.data;
+          this.storeList = res.data;
         } else {
           this.$message.error(res.message);
         }

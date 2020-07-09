@@ -53,7 +53,7 @@ export default {
       visible: false,
       editForm: { id: "" },
       companyName: "",
-      companyList: [],
+      storeList: [],
       enterProps: {
         label: "name",
         value: "id",

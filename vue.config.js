@@ -125,12 +125,12 @@ module.exports = {
       },
 
       '/system': {
-        target: 'http://xxyweeds.top:8895/',
+        // target: 'http://xxyweeds.top:8895/',  // target: 'http://115.29.143.91:8887/',
         target: 'http://115.29.143.91:8887/',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/system': ''  //通过pathRewrite重写地址，将前缀/api转为/
+          '^/system': '' //通过pathRewrite重写地址，将前缀/api转为/
         }
       }
     },

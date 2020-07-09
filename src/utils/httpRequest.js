@@ -100,7 +100,7 @@ http.adornParams = (params = {}, openDefultParams = true) => {
  *  form: 'application/x-www-form-urlencoded; charset=utf-8'
  */
 http.adornData = (data = {}, openDefultdata = true, contentType = 'form') => {
-    data = merge({platSource: '1006'}, data)
+    data = merge({platSource: '1005'}, data)
     console.log(store.state)
     var defaults = {
         // 't': new Date().getTime()

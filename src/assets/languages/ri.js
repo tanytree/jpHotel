@@ -19,6 +19,7 @@ export default {
                 { name: "部門長" },
                 { name: "従業員の管理" },
                 { name: "給与管理" },
+                { name: "门店管理" },
             ]
         },
         {

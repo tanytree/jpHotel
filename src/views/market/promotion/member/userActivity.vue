@@ -289,7 +289,7 @@ export default {
     },
   activated() {
       this.action = 'http://xxyweeds.top:8895/edt/upload/upload_img';
-      this.uploadData = { imgModel: "3", platSource: 1006, userId: this.user.userId };
+      this.uploadData = { imgModel: "3", platSource: 1005, userId: this.user.userId };
       this.resetForm();
       this.getDataList(); //进行中请求的接口
       this.orderList(); //兑换记录请求的接口

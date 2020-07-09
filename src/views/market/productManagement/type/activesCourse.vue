@@ -162,7 +162,7 @@ export default {
   created() {
       this.fileUploadData = {
           imgModel: 2,
-          platSource: 1006,
+          platSource: 1005,
           userId: this.user.userId,
           videoModel: 2
       };
@@ -290,7 +290,7 @@ export default {
       let fd = new FormData();
       fd.append("files", res.file);
       fd.append("videoModel", 2); //课程
-      fd.append("platSource", 1006);
+      fd.append("platSource", 1005);
       fd.append("userId", this.user.userId);
       axios
         .post(

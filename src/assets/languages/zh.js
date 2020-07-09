@@ -17,6 +17,7 @@ export default {
             { name: "部门负责人" },
             { name: "员工管理" },
             { name: "薪酬管理" },
+            { name: "门店管理" },
         ]
     },
         {

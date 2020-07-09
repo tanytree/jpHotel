@@ -68,7 +68,7 @@
                 routesmap: state => state.routermsg.routermsg,
                 token: state => state.user.token,
                 userId: state => state.user.id,
-                companyList: state => state.user.companyList,
+                storeList: state => state.user.storeList,
             })
         },
         data() {
@@ -197,7 +197,8 @@
                         {name: this.$t('tabName[0].children[0].name'), id: "10", icon: "sales/nav01.png", value: "bossIndex"},
                         {name: this.$t('tabName[0].children[1].name'), id: "11", icon: "market/nav02.png", value: "DepartmentCharge"},
                         {name: this.$t('tabName[0].children[2].name'), id: "12", icon: "market/nav03.png", value: "PersonMg"},
-                        {name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg",}
+                        {name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg",},
+                        {name: this.$t('tabName[0].children[4].name'), id: "14", icon: "market/nav05.png", value: "PayMg",}
                     ]
                 },
                 {
@@ -268,7 +269,7 @@
                 }
             ]);
             // this.$i18n.locale = 'zh';
-            this.company = this.companyList[0];
+            this.company = this.storeList[0];
             this.menulfuc(this.routesmap[0])
             this.toSection(this.menul.children[0])
 

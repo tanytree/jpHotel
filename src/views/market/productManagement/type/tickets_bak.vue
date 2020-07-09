@@ -194,7 +194,7 @@ export default {
       checked: false,
       uploadData: {
         imgModel: 1,
-        platSource: 1006
+        platSource: 1005
       },
       categoryid: "",
       co_categoryid: "",
@@ -225,7 +225,7 @@ export default {
     };
   },
   created() {
-    this.uploadData = { imgModel: "1", platSource: 1006, userId: this.user.userId };
+    this.uploadData = { imgModel: "1", platSource: 1005, userId: this.user.userId };
   },
   methods: {
     /**初始化数据 */
@@ -522,7 +522,7 @@ export default {
       // let fd = new FormData()
       // fd.append('file', file)
       // fd.append('imgModel', 1)
-      // fd.append('platSource', 1006)
+      // fd.append('platSource', 1005)
       // axios.post('http://xxyweeds.top:8895/edt/upload/upload_img', fd, {})
       //   .then(res=>{
       //     console.log(res.data);

@@ -162,7 +162,7 @@ export default {
   created() {
       this.fileUploadData = {
           imgModel: 2,
-          platSource: 1006,
+          platSource: 1005,
           userId: this.user.userId,
           videoModel: 2
       };

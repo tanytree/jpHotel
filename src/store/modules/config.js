@@ -6,7 +6,7 @@
  */
 const state = {
     msgKey: "a5b4c18cc837456092804e400b5019c9",//短信发送秘钥
-    plat_source: "1006",//1001android 1002ios 1003pad 1004h5 1006webchat 1006PC端 1007内部平台
+    plat_source: "1005",//1001android 1002ios 1003pad 1004h5 1005webchat 1005PC端 1007内部平台
     logisticList: [
         { name: "中通快递", value: "ZTO" },
         { name: "申通快递", value: "STO" },

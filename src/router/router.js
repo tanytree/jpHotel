@@ -38,7 +38,7 @@ export default new Router({
                     path: '/organization', name: 'organization', meta: { title: 'company' },
                     component: () => import('@/views/organization/index')
                 },
-        
+
                 // 总办
                 {
                     path: '/boss-index',
@@ -145,8 +145,8 @@ export default new Router({
                         import ('@/views/company/created')
                 },
                 {
-                    path: '/companyList',
-                    name: 'companyList',
+                    path: '/storeList',
+                    name: 'storeList',
                     meta: { title: 'company' },
                     component: () =>
                         import ('@/views/company/list')
@@ -187,7 +187,7 @@ export default new Router({
                         //         component: () =>
                         //             import ('@/views/market/customer/children/detail')
                         //     },
-            
+
                         // ]
                 },
                 {

@@ -9,7 +9,7 @@
       <!--        <el-dropdown-menu slot="dropdown">-->
       <!--          <el-dropdown-item-->
       <!--            class="itemel"-->
-      <!--            v-for="(item,index) in companyList"-->
+      <!--            v-for="(item,index) in storeList"-->
       <!--            :key="index"-->
       <!--            @click.native="selectCompany(item)"-->
       <!--          >-->
@@ -31,7 +31,7 @@
     </div>
 
     <div class="header_right">
-      <!-- 
+      <!--
       <span class="itemTxt rightItem">
         <img src="@/assets/images/topBanner/shengpi.png" alt />
         审批

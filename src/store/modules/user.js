@@ -10,7 +10,7 @@ const state = {
   userId: "",
   token: "",
   name: '',
-  companyList: [],//所在公司集合
+  storeList: [],//所有门店集合
   roles: [],
   db: '',
   tenantId: '',
@@ -29,7 +29,7 @@ const mutations = {
     state.token = data.token.accessToken;
     sessionStorage.accessToken=data.token.accessToken;
     Object.assign(state, data.user)
-    state.companyList = data.belongTo || [];
+    state.storeList = data.belongTo || [];
   },
   // 全局token
   SET_TOKEN: (state, token) => {

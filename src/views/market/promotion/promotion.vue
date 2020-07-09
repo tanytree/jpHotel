@@ -43,7 +43,7 @@ export default {
     },
     created() {
         this.action = this.$F.getUploadUrl() + '/edt/upload/upload_img';
-        this.uploadData = { imgModel: "1", platSource: 1006, userId: this.user.userId };
+        this.uploadData = { imgModel: "1", platSource: 1005, userId: this.user.userId };
     },
   methods: {
       handleClick(){}
