@@ -59,7 +59,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
       </div>
         <!-- 查看资料 -->
-      <el-dialog title="查看资料" :visible.sync="details" width="20%" >
+      <el-dialog title="查看资料" :visible.sync="details" width="350px" >
           <el-row style="margin:10px 0">
             <label >姓名：</label>
             <span style="margin-left:30px">张三</span>

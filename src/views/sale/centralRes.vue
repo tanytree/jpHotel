@@ -418,7 +418,7 @@
                       <el-row>
                         <el-col :span="6">
                           <div class="grid-content">
-                            <el-form-item label="所属单位:">
+                            <el-form-item label="会员类型:">
                               <el-select style="width:140px" v-model="checkInForm.enterStatus">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
@@ -437,22 +437,20 @@
                         <el-col :span="12">
                           <div class="grid-content">
                             <el-form-item>
-                              <el-col :span="6">
+                              <el-col >
                                     <!-- <div class="grid-content"> -->
-                                      <el-form-item label="所属单位:">
+                                      <el-form-item label="证件类型:">
                                         <el-select style="width:140px" v-model="checkInForm.enterStatus">
                                           <el-option label="全部" value="3">全部</el-option>
                                           <el-option label="已认证" value="1">已认证</el-option>
                                           <el-option label="未认证" value="2">未认证</el-option>
                                         </el-select>
                                       </el-form-item>
+                                      <el-form-item>
+                                        <el-input style="width:140px" v-model="checkInForm.content"></el-input>
+                                      </el-form-item>
                                     <!-- </div> -->
                                   </el-col>
-                              <el-col :span="6">
-                                <el-form-item>
-                                  <el-input style="width:140px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
-                                </el-form-item>
-                              </el-col>
 
                             </el-form-item>
                           </div>
@@ -593,7 +591,7 @@
                         </el-row>
                         <el-row>
                             <el-form-item>
-                                <el-checkbox v-model="checked">备选项</el-checkbox>
+                                <el-checkbox v-model="checked">立即发卡</el-checkbox>
                             </el-form-item>
                         </el-row>
                       </el-row>

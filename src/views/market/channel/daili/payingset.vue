@@ -35,8 +35,8 @@
       </el-row>
       
     </el-form>
-
-     <!--表格数据 -->
+    <div>
+         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column prop="enterName" label="员工姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="状态" show-overflow-tooltip></el-table-column>
@@ -45,14 +45,150 @@
             <el-table-column prop="enterType" label="所在部门" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">详情</el-button>
-                    <el-button type="text" size="mini">酬薪设置</el-button>
+                    <el-button type="text" size="mini" @click="detail=true">详情</el-button>
+                    <el-button type="text" size="mini" @click="setting=true">酬薪设置</el-button>
                 </template>
             </el-table-column>
         </el-table>
-
         <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
+    </div>
+    <!-- 薪酬详情 -->
+    <div>
+        <el-dialog :title="'查看-'+'张三'" :visible.sync="detail">
+          <el-form :model="form" label-width="120px">
+              <h4>基本工资：</h4>
+            <!-- <el-form-item label="活动名称" :label-width="formLabelWidth">
+              <el-input v-model="form.name" autocomplete="off"></el-input>
+            </el-form-item> -->
+
+            <el-row>
+                <el-col style="height:40px" :span="12">
+                    <el-form-item label="基本工资:">
+                        3000
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="社保补助:">
+                        3000
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12">
+                    <el-form-item label="其他:">
+                        3000
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="保密工资:">
+                        3000
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                 <el-col style="height:40px" :span="12">
+                    <el-form-item label="岗位工资:">
+                        3000
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="绩效工资:">
+                        3000
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12">
+                    <el-form-item label="奖金:">
+                        3000
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <h4>补贴：</h4>
+            <el-row>
+                 <el-col style="height:40px" :span="12">
+                    <el-form-item label="房补:">
+                        3000
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="餐补:">
+                        3000
+                    </el-form-item>
+                </el-col>
+            </el-row>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="detail = false">关 闭</el-button>
+          </div>
+        </el-dialog>
+
+    </div>
+    <!-- 薪酬设置 -->
+    <div>
+        <el-dialog :title="'酬薪设置-'+'张三'" :visible.sync="setting">
+          <el-form :model="form" label-width="120px">
+              <h4>基本工资：</h4>
+            <!-- <el-form-item label="活动名称" :label-width="formLabelWidth">
+              <el-input v-model="form.name" autocomplete="off"></el-input>
+            </el-form-item> -->
+
+            <el-row>
+                <el-col style="height:40px" :span="12">
+                    <el-form-item label="基本工资:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="社保补助:">
+                      <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12">
+                    <el-form-item label="其他:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="保密工资:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                 <el-col style="height:40px" :span="12">
+                    <el-form-item label="岗位工资:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="绩效工资:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12">
+                    <el-form-item label="奖金:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <h4>补贴：</h4>
+            <el-row>
+                 <el-col style="height:40px" :span="12">
+                    <el-form-item label="房补:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col style="height:40px" :span="12"  >
+                    <el-form-item label="餐补:">
+                        <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="setting = false">取消</el-button>
+            <el-button type="primary">确 定</el-button>
+          </div>
+        </el-dialog>
+    </div>  
     
   </div>
 </template>
@@ -65,6 +201,8 @@
 export default {
   data() {
     return {
+      setting: false,
+      detail: false,
       loading: false,
       pageIndex: 1,
       pageSize: 8,

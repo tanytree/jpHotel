@@ -1,6 +1,6 @@
 <template>
     <div class="register-index">
-        <div class="register-body" v-if="loginType=='login'">
+        <!-- <div class="register-body" v-if="loginType=='login'">
             <div v-if="!forget" class="title">欢迎登录管理后台</div>
             <el-page-header v-if="forget" @back="forget=false;forgetStep=1" title="返回登录"></el-page-header>
             <div class="body-info">
@@ -29,12 +29,7 @@
                                     @keyup.enter.native="clickLoginBtn()"
                             ></el-input>
                         </el-form-item>
-                        <!--            <el-form-item>-->
-                        <!--              <div class="tag">-->
-                        <!--                <el-button type="text" @click="loginType='register'">注册</el-button>-->
-                        <!--                <el-button type="text" @click="forget=true">忘记密码</el-button>-->
-                        <!--              </div>-->
-                        <!--            </el-form-item>-->
+
                         <el-form-item>
                             <el-button style="width:100%" type="primary" @click="clickLoginBtn()">登录</el-button>
                         </el-form-item>
@@ -96,11 +91,11 @@
                     <div class="ma">
                         <img src="@/assets/images/login/registerQr.png" alt/>
                     </div>
-                    <!--          <div class="detail">扫码二维码，下载指点社区</div>-->
+                  
                 </div>
             </div>
-        </div>
-        <div class="register-body" v-else>
+        </div> -->
+        <!-- <div class="register-body" v-else>
             <div class="contentR">
                 <p style="margin:5px 0 30px">注册</p>
                 <el-form
@@ -152,7 +147,67 @@
                     <el-button @click="loginType='login'" type="text">立即登陆</el-button>
                 </p>
             </div>
+        </div> -->
+
+          <div style="position: absolute;left:360px;color:#fff">
+                    <h1 >大仓集团酒店管理系统</h1>
+                    <h3 >管理酒店更轻松</h3>
+          </div>
+        <div class="register-body" style="width:544px;position: absolute;right:200px">
+              
+
+                <div class="body-l">
+                    <h3>
+                        欢迎登录大仓集团酒店管理系统
+                    </h3>
+                    <el-form
+                            :model="loginForm"
+                            size="small"
+                            validate-on-rule-change
+                            :rules="dataRule"
+                            ref="loginForm"
+                        >
+                        <el-form-item prop="account">
+                            <el-select style="width:355px;" v-model="loginForm.account" placeholder="请选择门店">
+                                <el-option label="大仓集团总部后台" value="1"></el-option>
+                                <el-option label="大仓集团第一酒店" value="2"></el-option>
+                                <el-option label="大仓集团第二酒店" value="3"></el-option>
+                                <el-option label="大仓集团第三酒店" value="4"></el-option>
+                                <el-option label="大仓集团第四酒店" value=""></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item prop="account">
+                            <el-input
+                                    prefix-icon="el-icon-s-custom"
+                                    placeholder="请输入账号"
+                                    maxlength="18"
+                                    style="width:355px;height:40px;line-height:40px"
+                            >
+                            <!-- v-model="loginForm.account" -->
+                            </el-input>
+
+                        </el-form-item>
+                        <el-form-item prop="password">
+                            <el-input
+                                    type="password"
+                                    prefix-icon="el-icon-lock"
+                                    placeholder="请输入密码，长度为6 - 18个字符"
+                                    style="width:355px;"
+                            >
+                                    
+                            <!-- v-model.trim="loginForm.password"  @keyup.enter.native="clickLoginBtn()"-->
+                            </el-input>
+                        </el-form-item>
+
+                        <el-form-item>
+                            <el-button style="width:355px;" type="primary">登录</el-button>
+                            <!--  @click="clickLoginBtn()" -->
+                        </el-form-item>
+                    </el-form>
+                </div>
         </div>
+
+
     </div>
 </template>
 
@@ -394,9 +449,6 @@
                     }
                 });
             }
-        },
-        mounted:{
-            
         }
     };
 </script>
