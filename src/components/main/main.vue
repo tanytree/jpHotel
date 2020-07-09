@@ -171,7 +171,6 @@
                 }
                 this.routerCompany = "";
 
-
                 if (this.$route.meta) {
                     if (this.$route.meta.title) {
                         this.routerCompany = this.$route.meta.title;
@@ -276,10 +275,10 @@
 
         },
         watch: {
-            // $route(to, from) {
-            // 	this.calRouter();
-            // 	this.toSection()
-            // }
+            $route(to, from) {
+            	this.calRouter(this.routesmap[0]);
+            	// this.toSection()
+            }
         }
     };
 </script>

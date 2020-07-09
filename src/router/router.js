@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-08 16:56:41
+ * @LastEditTime: 2020-07-09 15:02:33
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -34,6 +34,11 @@ export default new Router({
             meta: { title: '主页' },
             component: Main,
             children: [
+                {
+                    path: '/organization', name: 'organization', meta: { title: 'company' },
+                    component: () => import('@/views/organization/index')
+                },
+        
                 // 总办
                 {
                     path: '/boss-index',
@@ -212,6 +217,13 @@ export default new Router({
                     meta: { title: '客史详情', pid: "13" },
                     component: () =>
                         import ('@/views/market/customer/children/historydetail')
+                },
+                {
+                    path: '/companydetail',
+                    name: 'companydetail',
+                    meta: { title: '单位详情', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/customer/children/companydetail')
                 },
                 {
                     path: '/nightaudit',

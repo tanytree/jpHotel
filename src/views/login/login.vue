@@ -255,7 +255,7 @@
                 //   url = "main";
                 // }
                 this.$forceUpdate();
-                this.$router.push({path: '/main'})
+                // this.$router.push({path: '/main'})
                 // this.$router.push({
                 //   name: url
                 // });
@@ -310,7 +310,7 @@
                 this.$refs["loginForm"].validate(valid => {
                     if (valid) {
                         console.log(request);
-                        request('/edt/freeadmin/edt_login', {
+                        request('/pms/freeuser/login', {
                             account: this.loginForm.account,
                             password: this.loginForm.password
                         }, 'post', false).then((res) => {

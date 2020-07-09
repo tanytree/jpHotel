@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-08 15:41:36
+ * @LastEditTime: 2020-07-09 14:29:22
  * @FilePath: /jiudian/src/views/market/customer/list3.vue
  -->
 
@@ -54,7 +54,7 @@
                 <el-button type="primary" @click="initForm">重置</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary">登记外宾</el-button>
+                <el-button type="primary" @click="setForeignFormVisible=true">登记外宾</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -85,9 +85,81 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-</div>
+    <el-dialog title="登记外宾" :visible.sync="setForeignFormVisible" class="setForeignForm" width="1200px">
+        <el-form :model="foreignForm" label-width="80px" size="mini">
+            <el-row class="row">
+                <el-row class="cell">
+                    <el-col :span="6" class="col">
+                        <el-form-item label="外宾姓名" class="require">
+                            <el-input v-model="foreignForm.name" class="width150" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                        <el-form-item label="性别" class="require">
+                            <el-input v-model="foreignForm.name" class="width150" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                        <el-form-item label="证件类型" class="require">
+                            <el-select v-model="foreignForm.name" class="width150" >
+                                <el-option label="全部" value="3">全部</el-option>
+                                <el-option label="已认证" value="1">已认证</el-option>
+                                <el-option label="未认证" value="2">未认证</el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                        <el-form-item label="证件类型" class="require">
+                            <el-input v-model="foreignForm.name" class="width150" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row class="cell">
+                    <el-col :span="6" class="col">
+                        <el-form-item label="签证种类" class="require">
+                            <el-select v-model="foreignForm.name" class="width150" >
+                                <el-option label="全部" value="3">全部</el-option>
+                                <el-option label="已认证" value="1">已认证</el-option>
+                                <el-option label="未认证" value="2">未认证</el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                        <el-form-item label="有效时间" class="require">
+                            <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                        <el-form-item label="宾客国籍" class="require">
+                            <el-select v-model="foreignForm.name" class="width150" >
+                                <el-option label="全部" value="3">全部</el-option>
+                                <el-option label="已认证" value="1">已认证</el-option>
+                                <el-option label="未认证" value="2">未认证</el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                        <el-form-item label="手机号码" class="require">
+                            <el-input v-model="foreignForm.name" class="width150" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row class="cell">
+                    <el-col :span="24" class="col">
+                        <el-form-item label="手机号码" class="require">
+                            <el-input type="textarea" v-model="foreignForm.name" style="display:block;width:100%" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="setForeignFormVisible=false">关闭</el-button>
+            <el-button type="primary" @click="setForeignFormVisible=false">确认</el-button>
+        </div>
+    </el-dialog>
+    </div>
 </template>
-
 <script>
 import {
     mapState,
@@ -118,7 +190,11 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [] //表格数据
+            tableData: [], //表格数据
+            setForeignFormVisible:false,
+            foreignForm:{
+                name:''
+            }
         };
     },
 
