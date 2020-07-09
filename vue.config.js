@@ -126,6 +126,7 @@ module.exports = {
 
       '/system': {
         target: 'http://xxyweeds.top:8895/',
+        target: 'http://115.29.143.91:8887/',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
