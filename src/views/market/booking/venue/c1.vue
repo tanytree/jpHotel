@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 09:56:57
+ * @LastEditTime: 2020-07-10 17:43:21
  * @FilePath: /jiudian/src/views/market/booking/venue/c1.vue
  -->
 
@@ -10,35 +10,37 @@
 <div>
     <el-row>
         <h3>会议登记信息</h3>
-        <el-form inline size="small" label-width="120px">
+        <el-form inline size="small" label-width="100px">
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="预订人：">
-                            <el-input v-model="checkInForm.content"></el-input> &nbsp;&nbsp;
+                            <el-input v-model="checkInForm.content"  class="width200"></el-input> &nbsp;&nbsp;
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="手机号码：">
-                            <el-input v-model="checkInForm.content"></el-input> &nbsp;&nbsp;
+                            <el-input v-model="checkInForm.content"  class="width200"></el-input> &nbsp;&nbsp;
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="订单来源：" prop="resource">
-                            <el-radio-group v-model="checkInForm.content">
-                                <el-radio label="前台"></el-radio>
-                            </el-radio-group>
+                            <el-select v-model="checkInForm.enterStatus"  class="width200">
+                                <el-option label="全部" value="3">全部</el-option>
+                                <el-option label="已认证" value="1">已认证</el-option>
+                                <el-option label="未认证" value="2">未认证</el-option>
+                            </el-select>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.enterStatus">
+                            <el-select v-model="checkInForm.enterStatus"  class="width200">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
@@ -51,28 +53,28 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="到店时间：">
-                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="预离时间：">
-                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="会议名称：">
-                            <el-input v-model="checkInForm.content"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="单位名称：">
-                            <el-input v-model="checkInForm.content"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -81,7 +83,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="客源类型：" prop="resource">
-                            <el-input type="input" v-model="checkInForm.content" style="width:200px">
+                            <el-input type="input" v-model="checkInForm.content" class="width200">
                                 <template slot="append">…</template>
                             </el-input>
                         </el-form-item>
@@ -90,14 +92,14 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="保留时间：">
-                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="订单备注：">
-                            <el-input v-model="checkInForm.content" style="width:100%"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>

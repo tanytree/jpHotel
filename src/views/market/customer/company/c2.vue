@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-08 15:46:57
+ * @LastEditTime: 2020-07-10 16:45:51
  * @FilePath: /jiudian/src/views/market/customer/company/c2.vue
  -->
 
@@ -26,38 +26,38 @@
                 </el-select>
             </el-form-item>
             <el-row>
-            <el-form-item label="收款类型">
-                <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">结算</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">预收款</el-tag>&nbsp;&nbsp;
-            </el-form-item>
+                <el-form-item label="收款类型">
+                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">结算</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">预收款</el-tag>&nbsp;&nbsp;
+                </el-form-item>
             </el-row>
             <el-row>
-            <el-form-item label="支付方式">
-                <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">现金</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">银行卡</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">支票</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">支付宝</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
-            </el-form-item>
+                <el-form-item label="支付方式">
+                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">现金</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">银行卡</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">支票</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">支付宝</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+                </el-form-item>
             </el-row>
             <el-row>
-            <el-form-item label="收款时间">
-                <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">今日</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">昨日</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">上周</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">上月</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">本月</el-tag>&nbsp;&nbsp;
-              <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
-            </el-form-item>
-             <el-form-item>
-                <el-button type="primary" @click="getDataList">查询</el-button>
-                <el-button type="primary" @click="initForm">重置</el-button>
-            </el-form-item>
+                <el-form-item label="收款时间">
+                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">今日</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">昨日</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">上周</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">上月</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">本月</el-tag>&nbsp;&nbsp;
+                    <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="getDataList">查询</el-button>
+                    <el-button type="primary" @click="initForm">重置</el-button>
+                </el-form-item>
             </el-row>
-        
+
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
@@ -81,7 +81,6 @@
         <!--分页 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
-    <!-- 编辑or详情弹窗 -->
 </div>
 </template>
 
@@ -115,9 +114,7 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [
-                {}
-            ] //表格数据
+            tableData: [{}] //表格数据
         };
     },
 
