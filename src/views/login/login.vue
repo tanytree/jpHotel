@@ -1,13 +1,20 @@
 <template>
     <div class="register-index">
         
+          <div style="position: absolute;left:360px;color:#fff">
+                  <h1 style="font-size: 56px;">大仓集团酒店管理系统</h1>
+                  <h3 style="font-size: 40px;">管理酒店更轻松</h3>
+        </div>
+        <div class="register-body" style="width:544px;position: absolute;right:200px" v-if="loginType=='login'">
+            <div v-if="!forget" class="title" >欢迎登录大仓集团酒店管理系统</div>
             <el-page-header v-if="forget" @back="forget=false;forgetStep=1" title="返回登录"></el-page-header>
             <div class="body-info">
-                <div class="body-l" v-if="!forget">
+                <div class="body-l"  v-if="!forget">
                     <el-form
                             :model="loginForm"
                             size="small"
                             validate-on-rule-change
+                             
                             :rules="dataRule"
                             ref="loginForm"
                     >
