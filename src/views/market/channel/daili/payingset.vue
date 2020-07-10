@@ -131,39 +131,39 @@
             </el-form-item> -->
 
             <el-row>
-                <el-col style="height:40px" :span="12">
+                <el-col style="height:40px;margin-top:20px" :span="12">
                     <el-form-item label="基本工资:">
                         <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col style="height:40px" :span="12"  >
+                <el-col style="height:40px;margin-top:20px" :span="12"  >
                     <el-form-item label="社保补助:">
                       <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col style="height:40px" :span="12">
+                <el-col style="height:40px;margin-top:20px" :span="12">
                     <el-form-item label="其他:">
                         <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col style="height:40px" :span="12"  >
+                <el-col style="height:40px;margin-top:20px" :span="12"  >
                     <el-form-item label="保密工资:">
                         <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
-                 <el-col style="height:40px" :span="12">
+                 <el-col style="height:40px;margin-top:20px" :span="12">
                     <el-form-item label="岗位工资:">
                         <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col style="height:40px" :span="12"  >
+                <el-col style="height:40px;margin-top:20px" :span="12"  >
                     <el-form-item label="绩效工资:">
                         <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col style="height:40px" :span="12">
+                <el-col style="height:30px;margin-top:20px" :span="12">
                     <el-form-item label="奖金:">
                         <el-input style="width:120px" v-model="form.name" placeholder="请输入"></el-input>
                     </el-form-item>

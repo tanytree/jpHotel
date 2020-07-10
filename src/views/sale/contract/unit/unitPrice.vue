@@ -13,7 +13,7 @@
              <el-input style="width:120px" v-model="form.name"></el-input>
            </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="5">
           <el-form-item label="状态:">
             <el-select v-model="form.orderType" style="width:100px">
               <el-option label="当前课程" value="1"></el-option>
@@ -24,7 +24,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="4">
+        <el-col :span="5">
           <el-form-item label="所属门店:">
             <el-select v-model="form.orderType" style="width:100px">
               <el-option label="当前课程" value="1"></el-option>
@@ -48,6 +48,7 @@
     </el-form>
 
      <!--表格数据 -->
+     <div>
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column prop="enterName" label="规则名称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="状态" show-overflow-tooltip></el-table-column>
@@ -61,127 +62,141 @@
                 </template>
             </el-table-column>
         </el-table>
+      </div>
         <!-- 新增 -->
-        <el-dialog title="新增" :visible.sync="newupdata">
-              <el-form ref="discountform" :model="updataform" label-width="80px">
-                <el-row>
-                    <el-form-item label="规则名称">
-                      <el-input v-model="updataform.name" ></el-input>
-                    </el-form-item>
-                    <el-form-item label="状态:">
-                      <el-radio-group v-model="updataform.resource">
-                        <el-radio label="启用"></el-radio>
-                        <el-radio label="禁用"></el-radio>
-                      </el-radio-group>
-                    </el-form-item>
-                </el-row>
+        <div>
+          <el-dialog title="新增" :visible.sync="newupdata">
+                <el-form ref="discountform" :model="updataform" :rules="rules" label-width="80px">
+                  <el-row>
+                    <el-col :span="8">
+                      <el-form-item label="规则名称" prop="name">
+                        <el-input v-model="updataform.name" ></el-input>
+                      </el-form-item>
+                    </el-col>
+                      
+                    <el-col :span="8">
+                      <el-form-item label="状态:">
+                        <el-radio-group v-model="updataform.resource">
+                          <el-radio label="启用"></el-radio>
+                          <el-radio label="禁用"></el-radio>
+                        </el-radio-group>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
 
-                <el-row>
-                  <el-form-item label="入职日期">
-                      <el-date-picker v-model="updataform.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                      <span style="margin:0 5px">-</span>
-                      <el-date-picker v-model="updataform.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                  </el-form-item>
-                </el-row>
-                <el-row>
-                  <el-form-item label="选择日期">
-                      <el-checkbox :indeterminate="updataform.isIndeterminate" v-model="updataform.checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-
-                      <el-checkbox-group v-model="updataform.checkedCities" @change="handleCheckedCitiesChange">
-                        <el-checkbox v-for="city in updataform.cities" :label="city" :key="city">{{city}}</el-checkbox>
-                      </el-checkbox-group>
-                  </el-form-item>
-                </el-row>
-                <el-row>
-                  <el-form-item>
-                    <el-form-item label="折扣率">
-                      <el-input style="width:240px" v-model="updataform.name" ></el-input>
-                      <span>实际价格=门市价*折扣率</span>
+                  <el-row>
+                    <el-form-item label="选择时间"  prop="date1">
+                        <el-date-picker v-model="updataform.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <span style="margin:0 5px">至</span>
+                        <el-date-picker v-model="updataform.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
+                  </el-row>
+                  <el-row>
+                    <el-form-item label="选择星期">
+                        <el-checkbox :indeterminate="updataform.isIndeterminate" v-model="updataform.checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+
+                        <el-checkbox-group v-model="updataform.checkedCities" @change="handleCheckedCitiesChange">
+                          <el-checkbox v-for="city in updataform.cities" :label="city" :key="city">{{city}}</el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                  </el-row>
+                  <el-row>
                     <el-form-item>
-                      <el-radio-group v-model="updataform.resource">
-                        <el-radio label="向上取整"></el-radio>
-                        <el-radio label="向下取整"></el-radio>
-                        <el-radio label="四舍五入（取整）"></el-radio>
-                        <el-radio label="保持不变"></el-radio>
-                      </el-radio-group>
+                      <el-form-item label="折扣率"  prop="name">
+                        <el-input style="width:240px" v-model="updataform.name" ></el-input>
+                        <span style="margin-left:5px">实际价格=门市价*折扣率</span>
+                      </el-form-item>
+                      <el-form-item>
+                        <el-radio-group v-model="updataform.resource">
+                          <el-radio label="向上取整"></el-radio>
+                          <el-radio label="向下取整"></el-radio>
+                          <el-radio label="四舍五入（取整）"></el-radio>
+                          <el-radio label="保持不变"></el-radio>
+                        </el-radio-group>
+                      </el-form-item>
                     </el-form-item>
+                  </el-row>
+                  <el-divider></el-divider>
+
+                  
+                  
+                  <el-form-item>
+
+                    <el-button type="primary" >确定</el-button>
+                    <el-button @click="newupdata = false">取消</el-button>
                   </el-form-item>
-                </el-row>
-                <el-divider></el-divider>
+                </el-form>
 
-                
-                
-                <el-form-item>
-
-                  <el-button type="primary" >确定</el-button>
-                  <el-button @click="newupdata = false">取消</el-button>
-                </el-form-item>
-              </el-form>
-
-      </el-dialog>
+          </el-dialog>
+        </div>
 
       <!-- 修改 -->
+      <div>
+        <el-dialog title="修改" :visible.sync="updatas">
+                <el-form ref="discountform" :rules="rules" :model="updata" label-width="80px">
+                  <el-row>
+                    <el-col :span="8">
+                      <el-form-item label="规则名称"  prop="name">
+                        <el-input v-model="updata.name" ></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                      <el-form-item label="状态:">
+                        <el-radio-group v-model="updata.resource">
+                          <el-radio label="启用"></el-radio>
+                          <el-radio label="禁用"></el-radio>
+                        </el-radio-group>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
 
-       <el-dialog title="修改" :visible.sync="updatas">
-              <el-form ref="discountform" :model="updata" label-width="80px">
-                <el-row>
-                    <el-form-item label="规则名称">
-                      <el-input v-model="updata.name" ></el-input>
+                  <el-row>
+                    <el-form-item label="选择日期"   prop="date1" >
+                        <el-date-picker v-model="updata.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <span style="margin:0 5px">-</span>
+                        <el-date-picker v-model="updata.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
-                    <el-form-item label="状态:">
-                      <el-radio-group v-model="updata.resource">
-                        <el-radio label="启用"></el-radio>
-                        <el-radio label="禁用"></el-radio>
-                      </el-radio-group>
-                    </el-form-item>
-                </el-row>
+                  </el-row>
+                  <el-row>
+                    <el-form-item label="选择日期">
+                        <el-checkbox :indeterminate="updata.isIndeterminate" v-model="updata.checkAll" @change="handleCheckAllChanges">全选</el-checkbox>
 
-                <el-row>
-                  <el-form-item label="入职日期">
-                      <el-date-picker v-model="updata.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                      <span style="margin:0 5px">-</span>
-                      <el-date-picker v-model="updata.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                  </el-form-item>
-                </el-row>
-                <el-row>
-                  <el-form-item label="选择日期">
-                      <el-checkbox :indeterminate="updata.isIndeterminate" v-model="updata.checkAll" @change="handleCheckAllChanges">全选</el-checkbox>
-
-                      <el-checkbox-group v-model="updata.checkedCities" @change="handleCheckedCitiesChanges">
-                        <el-checkbox v-for="city in updata.cities" :label="city" :key="city">{{city}}</el-checkbox>
-                      </el-checkbox-group>
-                  </el-form-item>
-                </el-row>
-                <el-row>
-                  <el-form-item>
-                    <el-form-item label="折扣率">
-                      <el-input style="width:240px" v-model="updata.name" ></el-input>
-                      <span>实际价格=门市价*折扣率</span>
+                        <el-checkbox-group v-model="updata.checkedCities" @change="handleCheckedCitiesChanges">
+                          <el-checkbox v-for="city in updata.cities" :label="city" :key="city">{{city}}</el-checkbox>
+                        </el-checkbox-group>
                     </el-form-item>
+                  </el-row>
+                  <el-row>
                     <el-form-item>
-                      <el-radio-group v-model="updata.resource">
-                        <el-radio label="向上取整"></el-radio>
-                        <el-radio label="向下取整"></el-radio>
-                        <el-radio label="四舍五入（取整）"></el-radio>
-                        <el-radio label="保持不变"></el-radio>
-                      </el-radio-group>
+                      <el-form-item label="折扣率" prop="name">
+                        <el-input style="width:240px" v-model="updata.name"  prop="name"></el-input>
+                        <span>实际价格=门市价*折扣率</span>
+                      </el-form-item>
+                      <el-form-item>
+                        <el-radio-group v-model="updata.resource">
+                          <el-radio label="向上取整"></el-radio>
+                          <el-radio label="向下取整"></el-radio>
+                          <el-radio label="四舍五入（取整）"></el-radio>
+                          <el-radio label="保持不变"></el-radio>
+                        </el-radio-group>
+                      </el-form-item>
                     </el-form-item>
+                  </el-row>
+                  <el-divider></el-divider>
+
+                  
+                  
+                  <el-form-item>
+
+                    <el-button type="primary" >确定</el-button>
+                    <el-button @click="updatas = false" >取消</el-button>
                   </el-form-item>
-                </el-row>
-                <el-divider></el-divider>
+                </el-form>
 
-                
-                
-                <el-form-item>
-
-                  <el-button type="primary" >确定</el-button>
-                  <el-button @click="updatas = false" >取消</el-button>
-                </el-form-item>
-              </el-form>
-
-      </el-dialog>
+        </el-dialog>
+      </div>
             <!-- 查看 -->
+      <div>
         <el-dialog title="查看" :visible.sync="checkrules">
           <el-row>
               <label >规则名称：</label>
@@ -209,6 +224,7 @@
             <el-button @click="checkrules = false">关闭</el-button>
           </div>
         </el-dialog>
+      </div>
   
   
   
@@ -259,7 +275,15 @@ export default {
         cities: cityOptions,
         isIndeterminate: true
       },
-      tableData: [{}] //表格数据
+      tableData: [{}], //表格数据
+      rules: {
+          name: [
+            { required: true, trigger: 'blur' },
+          ],
+          date1: [
+            { type: 'date',trigger: 'change'}
+          ],
+          },
     };
   },
   created() {

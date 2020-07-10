@@ -1,7 +1,6 @@
 <template>
     <div class="register-index">
-        <div class="register-body" v-if="loginType=='login'">
-            <div v-if="!forget" class="title">欢迎登录管理后台</div>
+        
             <el-page-header v-if="forget" @back="forget=false;forgetStep=1" title="返回登录"></el-page-header>
             <div class="body-info">
                 <div class="body-l" v-if="!forget">
@@ -13,7 +12,7 @@
                             ref="loginForm"
                     >
                         <el-form-item prop="storesNum">
-                            <el-select v-model="loginForm.storesNum" placeholder="请选择门店列表">
+                            <el-select style="width:344px" v-model="loginForm.storesNum" placeholder="请选择门店列表">
                                 <el-option
                                     v-for="item in storeList"
                                     :key="item.storesNum"
@@ -27,12 +26,14 @@
                                     prefix-icon="el-icon-s-custom"
                                     placeholder="请输入账号"
                                     v-model="loginForm.account"
+                                    style="width:344px"
                                     maxlength="18"
                             ></el-input>
                         </el-form-item>
                         <el-form-item prop="password">
                             <el-input
                                     type="password"
+                                    style="width:344px"
                                     prefix-icon="el-icon-lock"
                                     placeholder="请输入密码，长度为6 - 18个字符"
                                     v-model.trim="loginForm.password"
@@ -46,7 +47,7 @@
                         <!--              </div>-->
                         <!--            </el-form-item>-->
                         <el-form-item>
-                            <el-button style="width:100%" type="primary" @click="clickLoginBtn()">登录</el-button>
+                            <el-button style="width:344px" type="primary" @click="clickLoginBtn()">登录</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -101,13 +102,13 @@
                         <el-button style="margin-top:30px" type="primary" @click="checkVertify()">登录</el-button>
                     </div>
                 </div>
-                <div class="line"></div>
-                <div class="body-l body-r">
+                <!-- <div class="line"></div> -->
+                <!-- <div class="body-l body-r">
                     <div class="ma">
                         <img src="@/assets/images/login/registerQr.png" alt/>
                     </div>
                     <!--          <div class="detail">扫码二维码，下载指点社区</div>-->
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div class="register-body" v-else>
@@ -383,6 +384,7 @@ export default {
             background-color: #ffffff;
             width: 650px;
             padding: 50px;
+            text-align: center;
             min-height: 360px;
             border-radius: 6px;
 

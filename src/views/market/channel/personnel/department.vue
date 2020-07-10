@@ -38,11 +38,11 @@
     <div>
       <!-- 添加部门 -->
       <el-dialog title="添加部门" :visible.sync="adddepart" width='30%'>
-        <el-form >
+        <el-form :rules="rules">
           <el-row > 
             大仓集团第二酒店:
           </el-row>
-          <el-form-item label="部门名称" hide-required-asterisk>
+          <el-form-item label="部门名称:" style="margin-left:10px;margin-top:30px" prop="name">
             <el-input style="width:200px"  autocomplete="off"></el-input>
           </el-form-item>
 
@@ -57,11 +57,11 @@
     <div>
       <!--编辑 -->
       <el-dialog title="编辑部门" :visible.sync="editdepart" width='30%'>
-        <el-form >
+        <el-form  :rules="rules">
           <el-row > 
             大仓集团第二酒店:
           </el-row>
-          <el-form-item label="部门名称" hide-required-asterisk>
+          <el-form-item label="部门名称:" style="margin-left:10px;margin-top:30px" prop="name">
             <el-input style="width:200px"  autocomplete="off"></el-input>
           </el-form-item>
 
@@ -102,7 +102,11 @@ export default {
                 isChild:true
             }]
           }
-        ],
+        ],rules: {
+          name: [
+            { required: true, trigger: 'blur' },
+          ]
+          },
      
     }
    },

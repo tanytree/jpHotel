@@ -15,7 +15,7 @@
             </el-breadcrumb>
         </div>
         <div style="margin-left:20px">
-             <el-form :model="newvip" :inline="true" class="top-body" size="small" label-width="100px">
+             <el-form :model="newvip" :inline="true" :rules="rules" class="top-body" size="small" label-width="100px">
           <el-row>
            <h3>基本信息</h3>
           </el-row>
@@ -30,15 +30,22 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item label="购买价格" prop="name">
+            <el-form-item label="购买价格" >
               <el-input v-model="newvip.name" style="width:264px" placeholder="大于等于1的整数"></el-input>
             </el-form-item>
           </el-row>
           <el-row>
-             <el-form-item label="有效期" prop="resource">
+             <el-form-item label="有效期" >
                <el-radio-group  v-model="newvip.resource">
                  <el-radio label="永久"></el-radio>
-                 <el-radio label="开日期起"></el-radio>
+                 <!-- <el-form-item> -->
+                 <el-radio label="开卡日期起"></el-radio>
+                    <el-date-picker
+                        v-model="newvip.startTime"
+                        value-format="yyyy-MM-dd"
+                        type="date"
+                        ></el-date-picker>
+                 <!-- </el-form-item> -->
                </el-radio-group>
              </el-form-item>
 
@@ -74,8 +81,14 @@ export default {
          newvip:{
           checked:false,
           resource:"",
-          name:""
-         }
+          name:"",
+          startTime:''
+         },
+         rules: {
+          name: [
+            { required: true, trigger: 'blur' },
+          ]
+          },
         };
     },
 

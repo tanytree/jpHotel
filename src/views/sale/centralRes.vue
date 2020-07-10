@@ -10,38 +10,41 @@
   <div>
     <el-row>
       <el-col :span="20">
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" inline size="small" :model="form" :rules="rules" label-width="100px">
           <el-col :span="8">
-            <div class="grid-content">
-              <el-form-item label="预抵时间：">
+              <!-- <el-form-item label="预抵时间:" prop="name" >
                 <el-date-picker
                   v-model="form.startTime"
                   value-format="yyyy-MM-dd"
-                  type="date"
-                  style="width:140px"
+                  type="date"                  
                   placeholder="选择日期"
                 ></el-date-picker>
-              </el-form-item>
-            </div>
+              </el-form-item> -->
+              <el-form-item label="预抵时间:" prop="date1">
+                    <el-date-picker
+                      v-model="form.startTime"
+                      value-format="yyyy-MM-dd"
+                      type="date"
+                      placeholder="选择日期"
+                    ></el-date-picker>
+                  </el-form-item>
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="入住天数:">
+            <el-form-item label="入住天数:" prop="name">
               <el-input-number v-model="form.nums" @change="handleChange" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <div class="grid-content">
-              <el-form-item label="预离时间：" prop="resource">
+              <el-form-item label="预离时间:" prop="date1">
                 <el-date-picker
                   v-model="form.endTime"
                   value-format="yyyy-MM-dd"
                   type="date"
-                  style="width:140px"
+                  
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
-            </div>
           </el-col>
           <el-col :span="8">
             <el-form-item label="位置筛选:">
@@ -62,7 +65,7 @@
             </el-form-item>
           </el-col>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -165,7 +168,7 @@
     <el-dialog title="预定" :visible.sync="dialogFormVisible" width="80%" >
       <div>
         <el-row>
-          <el-form inline size="small" label-width="120px">
+          <el-form inline size="small" label-width="120px" :rules="rules">
             <el-row>
                 <el-form-item label="客人类型:">
                       <el-radio-group v-model="checkInForm.content">
@@ -173,13 +176,13 @@
                         <el-radio label="会员"></el-radio>
                         <el-radio label="单位"></el-radio>
                       </el-radio-group>
-                      <el-button @click="registerme=true">注册会员</el-button>
+                      <el-button @click="registerme=true" style="margin-left:5px">注册会员</el-button>
                 </el-form-item>
             </el-row>
             <el-row>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="预抵时间:">
+                  <el-form-item label="预抵时间:" prop="date1">
                     <el-date-picker
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
@@ -193,7 +196,7 @@
 
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="入住天数:">
+                  <el-form-item label="入住天数:" prop="name">
                     <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label></el-input-number>
                   </el-form-item>
                 </div>
@@ -201,7 +204,7 @@
 
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="预离时间:">
+                  <el-form-item label="预离时间:" prop="date1">
                     <el-date-picker
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
@@ -214,7 +217,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="保留时间:">
+                  <el-form-item label="保留时间:" prop="date1">
                     <el-date-picker
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
@@ -228,7 +231,7 @@
 
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="预订人:">
+                  <el-form-item label="预订人:" prop="name">
                     <el-input style="width:140px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
                   </el-form-item>
                 </div>
@@ -240,9 +243,12 @@
                   </el-form-item>
                 </div>
               </el-col>
-              <el-col :span="6">
+             
+            </el-row>
+            <el-row>
+               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="入住类型:">
+                  <el-form-item label="入住类型:" prop="name">
                     <el-select style="width:140px" v-model="checkInForm.enterStatus">
                       <el-option label="全部" value="3">全部</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
@@ -253,7 +259,7 @@
               </el-col>
                <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="入住类型:">
+                  <el-form-item label="订单来源:" prop="name">
                     <el-select style="width:140px" v-model="checkInForm.enterStatus">
                       <el-option label="全部" value="3">全部</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
@@ -262,8 +268,6 @@
                   </el-form-item>
                 </div>
               </el-col>
-            </el-row>
-            <el-row>
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="销售员：">
@@ -404,9 +408,10 @@
         </el-row>
       </div>
 
-      <div slot="footer" class="dialog-footer">
+    
+      <div slot="footer" class="dialog-footer" style="text-align: center;">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">预定</el-button>
       </div>
     </el-dialog>
 
@@ -486,7 +491,7 @@
                       
                       <el-col :span="6">
                         <div class="grid-content">
-                          <el-form-item label="预抵时间:">
+                          <el-form-item label="预抵时间:" prop="date1">
                             <el-date-picker
                               v-model="checkInForm.startTime"
                               value-format="yyyy-MM-dd"
@@ -627,8 +632,16 @@ export default {
         startTime: "", //开始时间
         endTime: "", //结束时间
         nums: 1,
-        type: []
+        // type: []
       },
+      rules: {
+          name: [
+            { required: true, trigger: 'blur' },
+          ],
+          date1: [
+            { type: 'date', trigger: 'change' }
+          ],
+          },
        loading: false,
        checked:false,
             showEdit: false,

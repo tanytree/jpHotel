@@ -42,23 +42,22 @@
         </el-table>
 
         <!-- 编辑折扣 -->
-        <el-dialog title="编辑折扣" :visible.sync="discount">
-              <el-form ref="discountform" :model="form" label-width="80px">
+        <el-dialog title="编辑折扣" :visible.sync="discount" width="450px">
+              <el-form ref="discountform" :model="form" label-width="80px" :rules="rules">
                 
-                <el-form-item label="是否折扣:">
+                <el-form-item label="是否折扣:" style="margin:0 auto;">
                   <el-radio-group v-model="discountform.resource">
                     <el-radio label="是"></el-radio>
                     <el-radio label="否"></el-radio>
                   </el-radio-group>
                 </el-form-item>
-                <el-form-item label="折扣比例">
-                  <el-input v-model="discountform.name" placeholder="请填写"></el-input>
+                <el-form-item label="折扣比例" style="margin:0 auto;" prop="name">
+                  <el-input v-model="discountform.name" style="width:200px" placeholder="请填写"></el-input>
                 </el-form-item>
                     <el-divider></el-divider>
 
-                
-                
-                <el-form-item>
+              
+                <el-form-item >
 
                   <el-button type="primary" >确定</el-button>
                   <el-button @click="discount = false">取消</el-button>
@@ -88,7 +87,12 @@ export default {
       status: "",
       form: {},
       discountform:{},
-      tableData: [{}] //表格数据
+      tableData: [{}], //表格数据
+      rules: {
+          name: [
+            { required: true, trigger: 'blur' },
+          ]
+          }, 
     };
   },
   created() {
@@ -109,6 +113,7 @@ export default {
   width: 30px;
   height: 30px;
   vertical-align: middle;
+  
 }
 .top-close {
   display: flex;

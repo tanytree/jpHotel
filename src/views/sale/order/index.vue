@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-10 13:58:24
- * @LastEditors: Dana
- * @LastEditTime: 2020-04-28 16:15:46
- * @FilePath: /cloudAdmin/src/views/sale/order/index.vue
+ * @LastEditors:魏轩
+ * @LastEditTime: 
+ * @FilePath: 
  -->
 <template>
   <div id="page1">

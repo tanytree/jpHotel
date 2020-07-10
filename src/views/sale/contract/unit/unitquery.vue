@@ -12,27 +12,27 @@
         <!-- 查询部分 -->
         <el-form inline size="small">
             <el-form-item label="单位名称">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input style="width:140px" v-model="searchForm.content"></el-input>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select style="width:140px" v-model="searchForm.enterStatus">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="是否共享">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select style="width:140px" v-model="searchForm.enterStatus">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="联系人">
-                <el-input v-model="searchForm.content"></el-input>
+            <el-form-item   label="联系人">
+                <el-input style="width:140px" v-model="searchForm.content"></el-input>
             </el-form-item>
             <el-form-item label="手机号">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input style="width:140px" v-model="searchForm.content"></el-input>
             </el-form-item>
             <el-form-item label="所属门店">
                 <el-select v-model="searchForm.enterStatus">
@@ -57,18 +57,12 @@
                 <el-form-item label="至">
                     <el-input style="width:70px" v-model="searchForm.content"></el-input>
                 </el-form-item>
-            </el-form-item>
-
-
-
-            
-         
-       
+            </el-form-item>       
             <el-form-item>
                 <el-button type="primary" @click="getDataList">查询</el-button>
                 <el-button type="primary" @click="initForm">重置</el-button>
             </el-form-item>
-            <el-row>
+            <el-row style="float:right">
                 <el-form-item>
                     <el-button plain>新增</el-button>
                     <el-button type="primary">批量设置</el-button>

@@ -12,7 +12,7 @@
         <el-row>
           <el-tabs v-model="activeThree">
             <el-tab-pane label="待开票" name="a">
-              <div style="text-align: left;">
+              <div style="text-align: left;margin-bottom:10px ;">
                 <span>发票类型：</span>
                 <el-button>不限</el-button>
                 <el-button>增值税专用发票</el-button>
@@ -256,18 +256,43 @@
                     :visible.sync="detailsBill"
                   >
                     <el-row style="margin:10px 20px">
-                      <el-col :span="12">
-                        <el-col :span="12">
+                      <el-col :span="12" >
+                        <el-col :span="12" style="margin-bottom: 10px;">
                           <span style="color:#888888">客户名称：</span>tom
                         </el-col>
-                        <el-col :span="12">
-                          <span style="color:#888888">客户名称：</span>tom
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">房间号:</span>tom
                         </el-col>
-                        <el-col :span="12">
-                          <span style="color:#888888">客户名称：</span>tom
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">电话号码:</span>tom
                         </el-col>
-                        <el-col :span="12">
-                          <span style="color:#888888">客户名称：</span>tom
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">电子邮箱:</span>tom
+                        </el-col>
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">发票类型:</span>tom
+                        </el-col>
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">发票号码:</span>tom
+                        </el-col> 
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">税号:</span>tom
+                        </el-col>
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">开票金额:</span>tom
+                        </el-col>
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">电子邮箱:</span>tom
+                        </el-col>
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">税金:</span>tom
+                        </el-col>
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">账户类型:</span>tom
+                        </el-col>
+
+                        <el-col :span="12" style="margin-bottom: 10px;">
+                          <span style="color:#888888">开票时间:</span>tom
                         </el-col>
                         <el-col>
                           <span style="color:#888888">备注：</span>

@@ -125,10 +125,10 @@
          <el-dialog title="新增留言" style="text-align:left" :visible.sync="newNote">
            <el-form ref="noteForm" :model="noteForm" label-width="80px">
              <el-form-item label="房间号：">
-               <el-input v-model="noteForm.room"></el-input>
+               <el-input style="width:200px" v-model="noteForm.room"></el-input>
              </el-form-item>
              <el-form-item label="留言内容">
-               <el-input type="textarea" v-model="noteForm.desc"></el-input>
+               <el-input type="textarea" style="width:500px"  v-model="noteForm.desc"></el-input>
              </el-form-item>
              <el-form-item>
                <el-button style="width:80px;" type="primary" @click="noteSubmit">确定</el-button>
