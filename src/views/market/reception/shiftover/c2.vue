@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-06 15:35:24
+ * @LastEditTime: 2020-07-10 17:41:33
  * @FilePath: /jiudian/src/views/market/reception/shiftover/c2.vue
  -->
 
@@ -10,7 +10,7 @@
 <div>
     <div>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-row>
                 <el-form-item label="交班模式">
                     <el-tag>全部</el-tag>&nbsp;&nbsp;
@@ -20,12 +20,12 @@
                 </el-form-item>
             </el-row>
             <el-form-item label="班次时间">
-                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                 <span>至</span>
-                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="当班人">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width200"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="getDataList">查询</el-button>

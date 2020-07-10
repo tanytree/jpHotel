@@ -104,11 +104,11 @@ http.adornData = (data = {}, openDefultdata = true, contentType = 'form') => {
     console.log(store.state)
     var defaults = {
         // 't': new Date().getTime()
-        userId: store.state.user.userId,
-      accessToken: store.state.user.token,
-        currentUserId: store.state.user.userId,
+        userId: store.state.user.id,
+        accessToken: store.state.user.token,
+        currentUserId: store.state.user.id,
         // coId: store.state.company.id,
-        // token: store.state.user.token,
+        token: store.state.user.token,
       // group_id:"",
     }
 

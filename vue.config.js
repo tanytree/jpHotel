@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-02-04 15:51:25
- * @LastEditors: Dana
- * @LastEditTime: 2020-05-08 16:08:25
- * @FilePath: /cloudAdmin/vue.config.js
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-10 10:44:36
+ * @FilePath: /jiudian/vue.config.js
  */
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
@@ -107,7 +107,7 @@ module.exports = {
     port: 8008,
     proxy: {
       '/api': {
-        target: 'https://www.iif2f.com/public/index.php',
+        target: 'http://115.29.143.91:8886/',
         // target: 'https://www.i2b2b.com/public/index.php',
         ws: true,
         changeOrigin: true,

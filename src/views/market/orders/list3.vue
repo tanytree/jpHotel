@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-05 17:34:08
+ * @LastEditTime: 2020-07-10 16:53:35
  * @FilePath: /jiudian/src/views/market/orders/list3.vue
  -->
 
@@ -10,15 +10,15 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-form-item label="房间号">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="客人姓名">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="商品类别">
-                <el-select v-model="searchForm.enterStatus">
+                <el-select v-model="searchForm.enterStatus" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="正常" value="1"></el-option>
                     <el-option label="挂失" value="2"></el-option>
@@ -26,7 +26,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="商品名称">
-                <el-input v-model="searchForm.content"></el-input>
+                <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="getDataList">查询</el-button>

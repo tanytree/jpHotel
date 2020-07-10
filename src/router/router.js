@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-09 15:02:33
+ * @LastEditTime: 2020-07-10 10:08:46
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -71,6 +71,13 @@ export default new Router({
                     name: 'PayMg',
                     component: () =>
                         import ('@/views/Boss/PayMg')
+                },
+                {
+                    path: '/storeManagement',
+                    name: 'storeManagement',
+                    meta: { title: '门店管理', pid: "13" },
+                    component: () =>
+                        import ('@/views/Boss/StoreManagement/index')
                 },
                 //管理部
                 {

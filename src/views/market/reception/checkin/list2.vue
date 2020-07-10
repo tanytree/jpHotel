@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-06 17:05:52
+ * @LastEditTime: 2020-07-10 17:39:51
  * @FilePath: /jiudian/src/views/market/reception/checkin/list2.vue
  -->
 
@@ -10,7 +10,7 @@
 <div>
     <el-row>
         <h3>入住信息</h3>
-        <el-form inline size="small" label-width="120px">
+        <el-form inline size="small" label-width="100px">
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
@@ -34,7 +34,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="证件类型：">
-                            <el-select v-model="checkInForm.enterStatus">
+                            <el-select v-model="checkInForm.enterStatus" class="width200">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
@@ -45,7 +45,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="证件号：">
-                            <el-input v-model="checkInForm.content"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -54,7 +54,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="计费规则：">
-                            <el-select v-model="checkInForm.enterStatus">
+                            <el-select v-model="checkInForm.enterStatus" class="width200">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
@@ -65,14 +65,14 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="订单来源：">
-                            <el-input v-model="checkInForm.content"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.enterStatus">
+                            <el-select v-model="checkInForm.enterStatus" class="width200">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
@@ -83,7 +83,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="外部订单号：">
-                            <el-input v-model="checkInForm.content"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -92,14 +92,14 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="手机号：">
-                            <el-input v-model="checkInForm.content"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="客源类型：" prop="resource">
-                            <el-input type="input" v-model="checkInForm.content" style="width:200px">
+                            <el-input type="input" v-model="checkInForm.content"  class="width200">
                                 <template slot="append">…</template>
                             </el-input>
                         </el-form-item>
@@ -108,7 +108,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="入住类型：">
-                            <el-select v-model="checkInForm.enterStatus">
+                            <el-select v-model="checkInForm.enterStatus" class="width200">
                                 <el-option label="正常" value="1"></el-option>
                                 <el-option label="不正常" value="2"></el-option>
                             </el-select>
@@ -122,7 +122,7 @@
                 <el-col :span="24">
                     <div class="grid-content">
                         <el-form-item label="订单备注">
-                            <el-input v-model="checkInForm.content"></el-input>
+                            <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>

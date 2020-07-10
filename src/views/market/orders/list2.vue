@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-05 17:27:55
+ * @LastEditTime: 2020-07-10 16:51:13
  * @FilePath: /jiudian/src/views/market/orders/list2.vue
  -->
 
@@ -10,7 +10,7 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-row>
                 <el-form-item label="订单类型">
                     <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
@@ -56,40 +56,40 @@
             </el-row>
             <el-row>
                 <el-form-item label="订单来源">
-                    <el-select v-model="searchForm.enterStatus">
+                    <el-select v-model="searchForm.enterStatus" class="width150">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="客源类别">
-                    <el-select v-model="searchForm.enterStatus">
+                    <el-select v-model="searchForm.enterStatus" class="width150">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="房型">
-                    <el-select v-model="searchForm.enterStatus">
+                    <el-select v-model="searchForm.enterStatus" class="width150">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="外部订单">
-                    <el-input v-model="searchForm.content"></el-input>
+                    <el-input v-model="searchForm.content" class="width150"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
 
                 <el-form-item label="姓名">
-                    <el-input v-model="searchForm.content"></el-input>
+                    <el-input v-model="searchForm.content" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item label="房间号">
-                    <el-input v-model="searchForm.content"></el-input>
+                    <el-input v-model="searchForm.content" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item label="订单号">
-                    <el-select v-model="searchForm.enterStatus">
+                    <el-select v-model="searchForm.enterStatus" class="width150">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>

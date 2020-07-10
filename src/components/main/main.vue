@@ -198,7 +198,7 @@
                         {name: this.$t('tabName[0].children[1].name'), id: "11", icon: "market/nav02.png", value: "DepartmentCharge"},
                         {name: this.$t('tabName[0].children[2].name'), id: "12", icon: "market/nav03.png", value: "PersonMg"},
                         {name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg",},
-                        {name: this.$t('tabName[0].children[4].name'), id: "14", icon: "market/nav05.png", value: "PayMg",}
+                        {name: this.$t('tabName[0].children[4].name'), id: "14", icon: "market/nav05.png", value: "storeManagement",}
                     ]
                 },
                 {

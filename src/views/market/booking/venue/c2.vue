@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 10:18:11
+ * @LastEditTime: 2020-07-10 17:43:49
  * @FilePath: /jiudian/src/views/market/booking/venue/c2.vue
  -->
 
@@ -10,7 +10,7 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
+        <el-form inline size="small" label-width="80px">
             <el-row>
                 <el-form-item label="会议时间">
                     <el-tag type="success">当天</el-tag>&nbsp;&nbsp;
@@ -19,29 +19,29 @@
                     <el-tag type="success">近七天</el-tag>&nbsp;&nbsp;
                     <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
                     <el-form-item label="">
-                        <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                         <span style="margin:0 5px">-</span>
-                        <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
                 </el-form-item>
             </el-row>
             <el-row>
                 <el-form-item label="登记时间">
-                    <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                    <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                     <span style="margin:0 5px">-</span>
-                    <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                    <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
             </el-row>
             <el-row>
                 <el-form-item label="订单来源">
-                    <el-select v-model="searchForm.enterStatus">
+                    <el-select v-model="searchForm.enterStatus" class="width200">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="客源类别">
-                    <el-select v-model="searchForm.enterStatus">
+                    <el-select v-model="searchForm.enterStatus" class="width200">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>
@@ -49,15 +49,14 @@
                 </el-form-item>
             </el-row>
             <el-row>
-
                 <el-form-item label="预订人">
-                    <el-input v-model="searchForm.content"></el-input>
+                    <el-input v-model="searchForm.content" class="width200"></el-input>
                 </el-form-item>
                 <el-form-item label="房间号">
-                    <el-input v-model="searchForm.content"></el-input>
+                    <el-input v-model="searchForm.content" class="width200"></el-input>
                 </el-form-item>
                 <el-form-item label="订单号">
-                    <el-select v-model="searchForm.enterStatus">
+                    <el-select v-model="searchForm.enterStatus" class="width200">
                         <el-option label="全部" value="3">全部</el-option>
                         <el-option label="已认证" value="1">已认证</el-option>
                         <el-option label="未认证" value="2">未认证</el-option>
