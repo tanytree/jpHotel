@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-23 15:49:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 19:27:14
+ * @LastEditTime: 2020-07-13 22:29:26
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
@@ -54,9 +54,11 @@
                 <!-- <collapse :employeesList="employeesList"></collapse> -->
                 <employees :employee="employeesList" @getEmployeesDetails="getEmployeesDetails" @getEmployeesDetailsEdit="getEmployeesDetailsEdit" @getEmployeesDelete="getEmployeesDelete"></employees>
             </div>
-            <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination> -->
-
+            <div class="bottomPage">
+                    <el-pagination class="" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="employeesForm.pageIndex" :page-sizes="[20, 50, 100, 200]" :page-size="employeesForm.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+                    </div>
         </div>
+
     </div>
     <el-dialog :visible.sync="addChildDepartShow" title="添加子部门" width="600px">
         <el-form :model="departMentForm">
@@ -233,6 +235,7 @@ export default {
     },
     data() {
         return {
+            listTotal: 0,
             departmentList: [],
             employeesList: [],
             departMentForm: {
@@ -251,7 +254,7 @@ export default {
                 searchType: 1,
                 content: "",
                 pageIndex: 1,
-                pageSize: 999
+                pageSize: 20
             },
             departSetAndAddTitle: "",
             departSetAndAddShow: false,
@@ -953,6 +956,17 @@ export default {
                     this.$message.error(res.message);
                 }
             });
+        },
+        /**每页数 */
+        handleSizeChange(val) {
+            this.employeesForm.pageSize = val;
+            this.employeesForm.page = 1;
+            this.employees_list(this.activeLeftDepartMent.id);
+        },
+        /**当前页 */
+        handleCurrentChange(val) {
+            this.employeesForm.pageIndex = val;
+            this.employees_list(this.activeLeftDepartMent.id);
         }
     }
 };
@@ -1036,44 +1050,58 @@ export default {
         height: 100%;
         border-radius: 20px;
         background: #fff;
+        position: relative;
 
-        .hd {
-            height: 80px;
-            border-bottom: 1px solid #eee;
+        .warp {
+            position: relative;
+            height: 100%;
+            .collapseWrap {
+                position: absolute;
+                top: 80px;
+                bottom: 70px;
+                width: 100%;
+                overflow: auto;
+            }
+            .hd {
+                height: 80px;
+                border-bottom: 1px solid #eee;
 
-            .hdWrap {
-                padding: 0 20px;
+                .hdWrap {
+                    padding: 0 20px;
 
-                .btns {
-                    line-height: 80px;
-                    height: 100%;
-                }
-
-                .searchInfo {
-                    width: 40%;
-                    height: 100%;
-
-                    h3 {
-                        font-size: 18px;
+                    .btns {
                         line-height: 80px;
-                        font-weight: normal;
-                        padding: 0;
-                        margin: 0;
-                        text-align: left;
-                        display: block;
+                        height: 100%;
+                    }
 
-                        .nums {
-                            font-size: 16px;
-                            margin-left: 10px;
+                    .searchInfo {
+                        width: 40%;
+                        height: 100%;
 
-                            em {
-                                font-style: normal;
+                        h3 {
+                            font-size: 18px;
+                            line-height: 80px;
+                            font-weight: normal;
+                            padding: 0;
+                            margin: 0;
+                            text-align: left;
+                            display: block;
+
+                            .nums {
+                                font-size: 16px;
+                                margin-left: 10px;
+
+                                em {
+                                    font-style: normal;
+                                }
                             }
                         }
                     }
                 }
             }
+            .bottomPage{position: absolute;bottom: 0;left: 0;right:50px;text-align:center}
         }
+
     }
 
     .leftPart {
