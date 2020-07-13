@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 17:09:50
+ * @LastEditTime: 2020-07-13 19:33:36
  * @FilePath: /jiudian/src/views/Boss/StoreManagement/list.vue
  -->
 
@@ -31,7 +31,7 @@
         </el-table>
         <div style="margin-top:10px"></div>
         <!--分页 -->
-        <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination> -->
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
     <el-dialog :title="addUserForm.type=='add'?'添加门店':'修改门店'" :visible.sync="setUserFormVisible" class="setUserForm" width="600px">
@@ -266,13 +266,13 @@ export default {
         },
         /**每页数 */
         handleSizeChange(val) {
-            this.searchForm.page_num = val;
+            this.searchForm.pageSize = val;
             this.searchForm.page = 1;
             this.getDataList();
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.page = val;
+            this.searchForm.pageIndex = val;
             this.getDataList();
         }
     }
