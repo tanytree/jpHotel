@@ -1,14 +1,14 @@
 <!--
  * @Date: 2020-03-23 15:49:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 19:16:04
+ * @LastEditTime: 2020-07-13 19:27:14
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
 <div class="organization">
     <div class="fl leftPart">
         <div class="hd">
-            <h2>{{company.enterName}}</h2>
+            <h2>{{user.storesInfo.storesName}}</h2>
         </div>
         <div class="wrap">
             <div class="innerWrap">
@@ -294,6 +294,7 @@ export default {
     computed: {
         ...mapState({
             token: state => state.user.token,
+            user: state => state.user,
             userId: state => state.user.id,
             plat_source: state => state.config.plat_source,
             company: state => state.company,
