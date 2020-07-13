@@ -1,28 +1,28 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-06 09:47:28
- * @FilePath: /jiudian/src/views/market/reception/list1.vue
+ * @LastEditTime: 2020-07-13 17:47:42
+ * @FilePath: /jiudian/src/views/market/reception/checkin.vue
  -->
 
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="普通入住" name="first">
-                <list1></list1>
+                <normal></normal>
             </el-tab-pane>
             <el-tab-pane label="时租入住" name="second">
-                <list2></list2>
+                <hour></hour>
             </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
-import list1 from "./checkin/list1";
-import list2 from "./checkin/list2";
+import normal from "./checkin/normal";
+import hour from "./checkin/hour";
 
 export default {
-  components: { list1, list2},
+  components: { normal, hour},
   data() {
     return {
       activeName: "first" //第一个默认启动

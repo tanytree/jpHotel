@@ -105,7 +105,7 @@ http.adornData = (data = {}, openDefultdata = true, contentType = 'form') => {
         userId: store.state.user.id,
         accessToken: store.state.user.token,
         token: store.state.user.token,
-        storesNum: store.state.user.storesInfo.storesNum,
+        storesNum: store.state.user.storesInfo && store.state.user.storesInfo.storesNum?store.state.user.storesInfo.storesNum:''
     }
     data = openDefultdata ? merge(defaults, data) : data
     return contentType === 'json' ? JSON.stringify(data) : objToParams(data)

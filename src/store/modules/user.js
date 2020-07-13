@@ -21,7 +21,9 @@ const state = {
   userName:"",
   userType: '',
   userAuth: '',
-  storesInfo: {},
+  storesInfo: {
+    storesNum:''
+  },
 }
 
 const mutations = {

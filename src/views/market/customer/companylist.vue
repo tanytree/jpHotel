@@ -1,40 +1,40 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 21:31:29
- * @FilePath: /jiudian/src/views/market/customer/list4.vue
+ * @LastEditTime: 2020-07-13 17:21:17
+ * @FilePath: /jiudian/src/views/market/customer/companylist.vue
  -->
 
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="单位管理" name="first">
-                <c1></c1>
+                <company></company>
             </el-tab-pane>
             <el-tab-pane label="收款查询" name="second">
-                <c2></c2>
+                <collection></collection>
             </el-tab-pane>
             <el-tab-pane label="账套管理" name="third">
-                <c3></c3>
+                <bill></bill>
             </el-tab-pane>
             <el-tab-pane label="账务处理" name="four">
-                <c4></c4>
+                <accounts></accounts>
             </el-tab-pane>
             <el-tab-pane label="服务查询" name="five">
-                <c5></c5>
+                <service></service>
             </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
-import c1 from "./company/c1";
-import c2 from "./company/c2";
-import c3 from "./company/c3";
-import c4 from "./company/c4";
-import c5 from "./company/c5";
+import company from "./company/com";
+import collection from "./company/collection";
+import bill from "./company/bill";
+import accounts from "./company/accounts";
+import service from "./company/service";
 
 export default {
-  components: { c1, c2,c3,c4,c5},
+  components: { company, collection,bill,accounts,service},
   data() {
     return {
       activeName: "first" //第一个默认启动
