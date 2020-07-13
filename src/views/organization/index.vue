@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-23 15:49:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 16:54:44
+ * @LastEditTime: 2020-07-13 19:16:04
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
@@ -44,7 +44,7 @@
                                 </span>
                             </h3>
                             <div>
-                                <el-input placeholder="请输入内容" @keyup.enter.native="employees_list(activeLeftDepartMent.id)" v-model="employeesForm.content" prefix-icon="el-icon-search"></el-input>
+                                <el-input placeholder="请输入内容" @keyup.native="employees_list(activeLeftDepartMent.id)" v-model="employeesForm.content" prefix-icon="el-icon-search"></el-input>
                             </div>
                         </div>
                     </div>
