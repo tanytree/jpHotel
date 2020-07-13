@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 16:12:18
- * @FilePath: /jiudian/src/views/Boss/StoreManagement/list1.vue
+ * @LastEditTime: 2020-07-13 10:08:21
+ * @FilePath: /jiudian/src/views/Boss/StoreManagement/list.vue
  -->
 
 <template>
@@ -140,49 +140,28 @@ export default {
             this.searchForm.filterHeader = false;
             console.log(JSON.stringify(this.searchForm))
             this.loading = true;
-            stores_list(this.searchForm).then(res => {
-                    this.loading = false
-                    if (res.code == 200) {
-                        this.tableData = res.data;
-                        this.listTotal = res.data.total;
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                })
-                .catch(err => {
-                    this.$message.error(err.message);
-                });
+
+            this.$F.doRequest(null, '/pms/freeuser/stores_list', this.searchForm, (res) => {
+                console.log(res)
+                this.loading = false;
+                this.tableData = res;
+            })
+
         },
         /**添加项目 */
         submitItem() {
             console.log(this.addUserForm)
             if (this.addUserForm.type == 'add') {
                 this.addUserForm.userType = 3
-                freeuserlogin(this.addUserForm).then(res => {
-                        this.loading = false
-                        if (res.code == 200) {
-                            this.setUserFormVisible = false
-                            this.initForm()
-                        } else {
-                            this.$message.error(res.message);
-                        }
-                    })
-                    .catch(err => {
-                        this.$message.error(err.message);
-                    })
+                this.$F.doRequest(null, '/pms/freeuser/login', this.addUserForm, (res) => {
+                    this.setUserFormVisible = false
+                    this.initForm()
+                })
             } else {
-                edit_stores_user(this.addUserForm).then(res => {
-                        this.loading = false
-                        if (res.code == 200) {
-                            this.setUserFormVisible = false
-                            this.initForm()
-                        } else {
-                            this.$message.error(res.message);
-                        }
-                    })
-                    .catch(err => {
-                        this.$message.error(err.message);
-                    })
+                this.$F.doRequest(null, '/pms/workuser/edit_stores_user', this.addUserForm, (res) => {
+                    this.setUserFormVisible = false
+                    this.initForm()
+                })
             }
         },
         /**编辑 */
@@ -198,6 +177,16 @@ export default {
         /**新增 */
         addItem(row) {
             // 加载组件
+            this.addUserForm = {
+                type: 'add', //区分是添加还是编辑
+                userName: '',
+                account: '',
+                password: '',
+                storesNum: '0000000000',
+                storesName: '',
+                storesAddress: '',
+                departmentIds: ''
+            }
             this.addUserForm.type = 'add'
             this.setUserFormVisible = true;
             //   组件加载完成调用组件内initdata 方法
@@ -207,7 +196,7 @@ export default {
         editItem(row) {
             for (let k in this.addUserForm) {
                 console.log(k)
-                this.addUserForm[k] = row[k]?row[k]:''
+                this.addUserForm[k] = row[k] ? row[k] : ''
             }
             // 加载组件
             this.addUserForm.type = 'edit'
@@ -215,39 +204,33 @@ export default {
             //   组件加载完成调用组件内initdata 方法
 
         },
-        deleteNow(id){
-          delete_stores_user({'accountId':id}).then(res => {
-                        this.loading = false
-                        if (res.code == 200) {
-                            this.initForm()
-                        } else {
-                            this.$message.error(res.message);
-                        }
-                    })
-                    .catch(err => {
-                        this.$message.error(err.message);
-                    })
+        deleteNow(id) {
+            this.$F.doRequest(null, '/pms/workuser/delete_stores_user', {
+                'accountId': id
+            }, (res) => {
+                this.loading = false
+                this.initForm()
+            })
         },
-        deleteItem(row){
-          this.$confirm('请确认删除此用户?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+        deleteItem(row) {
+            this.$confirm('请确认删除此用户?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
 
-          this.deleteNow(row.accountId)
-          // this.$message({
-          //   type: 'success',
-          //   message: '删除成功!'
-          // });
-        }).catch(() => {
-          // this.$message({
-          //   type: 'info',
-          //   message: '已取消删除'
-          // });          
-        });
+                this.deleteNow(row.accountId)
+                // this.$message({
+                //   type: 'success',
+                //   message: '删除成功!'
+                // });
+            }).catch(() => {
+                // this.$message({
+                //   type: 'info',
+                //   message: '已取消删除'
+                // });          
+            });
         },
-        
 
         /**多选 */
         handleSelectionChange(val) {
