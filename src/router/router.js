@@ -108,21 +108,6 @@ export default new Router({
                     component: () =>
                         import ('@/views/manager/priceSystem/main')
                 },
-                //售后部 当前课程/活动项目
-                {
-                    path: '/currentCourse',
-                    name: 'currentCourse',
-                    meta: { title: 'currentCourse' },
-                    component: () =>
-                        import ('@/views/afterSales/currentCourse')
-                },
-                {
-                    path: '/activityProject',
-                    name: 'activityProject',
-                    meta: { title: 'activityProject' },
-                    component: () =>
-                        import ('@/views/afterSales/activityProject')
-                },
                 //财务部
                 {
                     path: '/income',

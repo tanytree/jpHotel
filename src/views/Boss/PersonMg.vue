@@ -402,13 +402,14 @@
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+        height: 0;
 		background-color: #ffffff;
 
 		.components-edit {
 			display: flex;
 			flex-direction: column;
 			flex: 1;
-
+            height: 0;
 			.delate-item {
 				display: flex;
 				align-items: center;
