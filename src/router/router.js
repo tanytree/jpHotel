@@ -115,34 +115,6 @@ export default new Router({
                     component: () =>
                         import ('@/views/finance/main')
                 },
-                {
-                    path: '/companyInfo',
-                    name: 'companyInfo',
-                    meta: { title: 'company' },
-                    component: () =>
-                        import ('@/views/company/info')
-                },
-                {
-                    path: '/company',
-                    name: 'company',
-                    meta: { title: 'company' },
-                    component: () =>
-                        import ('@/views/company')
-                },
-                {
-                    path: '/created',
-                    name: 'created',
-                    meta: { title: 'company' },
-                    component: () =>
-                        import ('@/views/company/created')
-                },
-                {
-                    path: '/storeList',
-                    name: 'storeList',
-                    meta: { title: 'company' },
-                    component: () =>
-                        import ('@/views/company/list')
-                },
                 /**前台部 */
                 {
                     name: 'product',
@@ -742,22 +714,6 @@ export default new Router({
                     component: () =>
                         import ('@/views/purchase/online/procurement')
                 },
-                /**IT部 */
-                {
-                    path: '/interface',
-                    name: 'interface',
-                    meta: { title: '第三方接口' },
-                    component: () =>
-                        import ('@/views/internet/interface/index')
-                },
-                {
-                    path: '/bindOfficial',
-                    name: 'bindOfficial',
-                    meta: { title: '第三方绑定' },
-                    component: () =>
-                        import ('@/views/internet/interface/wechat/bindOfficial')
-                }
-
             ]
         },
         {

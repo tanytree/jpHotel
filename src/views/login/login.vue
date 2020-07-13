@@ -46,7 +46,7 @@
                         <!--              </div>-->
                         <!--            </el-form-item>-->
                         <el-form-item>
-                            <el-button style="width:100%" type="primary" @click="clickLoginBtn()">登录</el-button>
+                            <el-button style="width:100%" type="primary" @click="clickLoginBtn()" v-loading="loading">登录</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -136,7 +136,6 @@
                                 <el-button
                                         size="small"
                                         style="width:100%"
-<!--                                        @click="getVertify"-->
                                         v-if="sendAuthCode"
                                 >获取验证码
                                 </el-button>
@@ -190,6 +189,7 @@ export default {
       }
     }
     return {
+      loading: false,
       storeList: [],
       isCheck: false,
       forgetStep: 1, // 忘记密码步骤
@@ -280,21 +280,16 @@ export default {
       this.$refs['loginForm'].validate(valid => {
         if (valid) {
           this.$F.merge(params, this.loginForm)
-          request('/pms/freeuser/login', params, 'post', false).then((res) => {
-            if (res.code == 200) {
-              sessionStorage.account = this.loginForm.account
-              sessionStorage.password = this.loginForm.password
-              this.userIsLogin(res)
-            } else {
-              this.$message.error(res.message)
-            }
+          this.$F.doRequest(this, '/pms/freeuser/login', params, (res) => {
+            sessionStorage.account = this.loginForm.account
+            sessionStorage.password = this.loginForm.password
+            this.userIsLogin({
+              data: res
+            })
           })
         }
       })
-    },
-  },
-  mounted: {
-
+    }
   }
 }
 </script>

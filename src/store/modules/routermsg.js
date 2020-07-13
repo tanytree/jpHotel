@@ -13,7 +13,12 @@ const state = {
             value: "product",
             id: '1',
             children: [
-                {name: "管理员管理", id: "11", icon: "manager/nav01.png", value: "manager"},
+                {
+                    name: "管理员管理",
+                    id: "11",
+                    icon: "manager/nav01.png",
+                    value: "manager"
+                },
                 //tttt
                 // { name: "首页", id: "10", icon: "market/nav01.png", value: "market" },
                 // // { name: "产品管理", id: "11", icon: "market/nav02.png", value: "product" },
