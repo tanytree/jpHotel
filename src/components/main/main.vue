@@ -265,8 +265,8 @@
               value: "product",
               id: 'a367289c90e34614a308917f5726bd04',
               children: [
-                {name: this.$t('tabName[5].children[0].name'), id: "51", icon: "market/nav01.png", value: "channel"},
-                {name: this.$t('tabName[5].children[1].name'), id: "52", icon: "market/nav02.png", value: "channelFenxiao"},
+                {name: this.$t('tabName[5].children[0].name'), id: "51", icon: "market/nav01.png", value: "personnelManager"},
+                {name: this.$t('tabName[5].children[1].name'), id: "52", icon: "market/nav02.png", value: "employeeList"},
                 {name: this.$t('tabName[5].children[2].name'), id: "53", icon: "market/nav03.png", value: "channelDaili"},
                 {name: this.$t('tabName[5].children[3  ].name'), id: "54", icon: "market/nav03.png", value: "channelSetting"}
               ]
