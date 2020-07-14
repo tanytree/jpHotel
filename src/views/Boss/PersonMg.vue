@@ -8,19 +8,19 @@
 						<el-row>
 							<el-form class="demo-form-inline" inline size="small">
 								<el-form-item label="员工名称:">
-									<el-input v-model="form.name" class="row-width"></el-input>
+									<el-input v-model="form.content" class="row-width"></el-input>
 								</el-form-item>
 								<el-form-item label="入职时间:" class="margin-l">
 									<el-col :span="11">
-										<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" class="row-width"></el-date-picker>
+										<el-date-picker type="date" placeholder="选择日期" v-model="form.inStartTime" class="row-width"></el-date-picker>
 									</el-col>
 									<el-col class="line" :span="2">-</el-col>
 									<el-col :span="11">
-										<el-time-picker placeholder="选择时间" v-model="form.date2" class="row-width"></el-time-picker>
+										<el-time-picker placeholder="选择时间" v-model="form.inEndTime" class="row-width"></el-time-picker>
 									</el-col>
 								</el-form-item>
 								<el-form-item label="所在部门:" class="margin-l">
-									<el-select v-model="form.categoryid" placeholder="请选择部门" class="row-width">
+									<el-select v-model="form.departmentId_name" placeholder="请选择部门" class="row-width">
 										<el-option label="区域一" value="shanghai"></el-option>
 										<el-option label="区域二" value="beijing"></el-option>
 									</el-select>
@@ -130,55 +130,63 @@
 		<el-dialog title="添加员工" :visible.sync="dialogAdd" :close-on-click-modal="false" center>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-form-item label="员工状态">
-					<el-radio-group v-model="ruleForm.resource">
-						<el-radio label="正式工"></el-radio>
-						<el-radio label="实习工"></el-radio>
-						<el-radio label="试用期"></el-radio>
+					<el-radio-group v-model="ruleForm.userStatus" @change="changeRedio">
+						<el-radio label="1">正式工</el-radio>
+						<el-radio label="2">实习工</el-radio>
+						<el-radio label="3">试用期</el-radio>
 					</el-radio-group>
 				</el-form-item>
 				<el-row class="demo-form-inline">
 					<el-col>
-						<el-form-item label="姓名" prop="name">
-							<el-input v-model="ruleForm.name"></el-input>
+						<el-form-item label="姓名" prop="userName">
+							<el-input v-model="ruleForm.userName"></el-input>
 						</el-form-item>
 						<el-form-item label="证件类型">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-select v-model="ruleForm.idcardType" placeholder="请选择证件类型" style="width: 100%;" @change="select_idcardType">
+								<el-option label="身份证" value="1"></el-option>
+								<el-option label="护照" value="2"></el-option>
+								<el-option label="驾驶证" value="3"></el-option>
+							</el-select>
 						</el-form-item>
 						<el-form-item label="所属部门" prop="name">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-select v-model="ruleForm.departmentId" placeholder="请选择所属部门" style="width: 100%;" @change="select_departmentId">
+								<el-option label="身份证" value="1"></el-option>
+								<el-option label="护照" value="2"></el-option>
+								<el-option label="驾驶证" value="3"></el-option>
+							</el-select>
 						</el-form-item>
 						<el-form-item label="工号">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.worknum"></el-input>
 						</el-form-item>
 						<el-form-item label="企业邮箱">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.email"></el-input>
 						</el-form-item>
 						<el-form-item label="入职时间">
 						    <el-col :span="24">
 						      <el-form-item>
-						        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+						        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.inTime" style="width: 100%;"></el-date-picker>
 						      </el-form-item>
 						    </el-col>
 						  </el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="联系电话">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.userPhone"></el-input>
 						</el-form-item>
 						<el-form-item label="证件号">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.idcard"></el-input>
 						</el-form-item>
 						<el-form-item label="职位">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.position"></el-input>
 						</el-form-item>
 						<el-form-item label="银行账户">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.bankcard"></el-input>
 						</el-form-item>
 						<el-form-item label="分机号">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.extension"></el-input>
 						</el-form-item>
 						<el-form-item label="关联后台账号">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.associatedAccount"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -293,16 +301,22 @@
 </template>
 
 <script>
+	import { request } from '@/utils/request'
 	export default {
 		data() {
 			return {
 				activeName: 'first',
 				active_second_name: '',
 				form: {
-					keyword1: '',
-					categoryid: '',
-					date1: '',
-					date2: '',
+					content: '', //检索关键字 支持姓名、账户、手机号、工号、邮箱查询
+					departmentId: '', //部门id 通过“人事部”-“部门管理”--“部门列表”接口获取id
+					departmentId_name: '',
+					workingState: '2', // 工作状态  1离职  2在职  int选填
+					inStartTime: '',
+					inEndTime: '',
+					pageIndex:1,
+					pageSize: 5,
+					paging:true
 				},
 				pageIndex: 1,
 				pageSize: 10,
@@ -313,40 +327,59 @@
 				dialogDetail: false, //订单详情/查看详情
 				dialogGone: false, // 办理离职
 				dialogZheng: false, //转正
-				tableData: [{
-					name: '张十三',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}, {
-					name: '张十三',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}],
+				tableData: [],
 				ruleForm: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
+					userStatus: '1', // 1正式工 2实习期 3试用期  int必填
+					userName: '',
+					userPhone: '',
+					idcardType: '',
+					idcard: '',
+					departmentId: '',
+					position:'',
+					worknum:'',
+					bankcard:'',
+					email:'',
+					extension:'',
+					inTime:'',
+					associatedAccount:'',
+					remark:'',
+					employeeId:'' //员工id，改值不为空视为编辑
 				},
 				rules: {
-					name: [{
+					userName: [{
 							required: true,
-							message: '请输入姓名',
+							message: '请选择姓名',
 							trigger: 'blur'
 						}
 					]
 				}
 			};
+		},
+		watch:{
+			//人员管理和离职状态切换
+			activeName() {
+				switch (this.activeName) {
+					case 'second':
+						this.form.workingState = 1 //离职状态
+						this.form.departmentId =  ''
+						this.form.departmentId_name =  ''
+						this.tableData = []
+						this.form.page = 1
+						this.getTabList()
+					break
+					default:
+						this.form.workingState = 2 //全职状态
+						this.tableData = []
+						this.form.page = 1
+						this.getTabList()
+					break
+				}
+			}
+		},
+		computed:{
+		},
+		created() {
+			this.getTabList()
 		},
 		methods: {
 			popup (type) {
@@ -365,12 +398,21 @@
 					break
 				}
 			},
-			// // 切换
-			// changeTab(index) {
-			// 	let that = this;
-			// 	that.currentIndex = index;
-			// },
-			// 分页
+			// 选择证件类型
+			select_idcardType(e) {
+				this.ruleForm.idcardType = e
+			},
+			// 人员管理 - 获取列表
+			getTabList () {
+				let params = this.form
+				params.storesNum = JSON.parse(sessionStorage.getItem('userData')).menuList[0].id,
+				request('/pms/employee/employee_list', params, 'post', false).then((res) => {
+				  if (res.code == 200) {
+				  } else {
+				    this.$message.error(res.message)
+				  }
+				})
+			},
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
 			},

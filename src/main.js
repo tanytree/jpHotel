@@ -9,7 +9,7 @@ import App from './App.vue'
 import router from './router/router.js'
 import ElementUI from 'element-ui';
 import { isAuth, formatDate, hasRole } from '@/utils'
-import httpRequest from '@/utils/httpRequest'
+import httpRequest from '@/utils/httpRequest' 
 import store from '@/store'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/css/index.css';

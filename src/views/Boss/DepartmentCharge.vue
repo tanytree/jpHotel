@@ -52,33 +52,23 @@
 		data() {
 			return {
 				activeName: 'first',
-				tableData: [{
-					name: '管理部',
-					people: '王小虎'
-				},{
-					name: '管理部',
-					people: '王小虎'
-				},{
-					name: '管理部',
-					people: '王小虎'
-				}],
-				list: [{
-					radio:false,
-					name:"张三",
-					phone:"1838****0000"
-				},{
-					radio:false,
-					name:"张三",
-					phone:"1838****0000"
-				},{
-					radio:false,
-					name:"张三",
-					phone:"1838****0000"
-				}],
+				tableData: [],
 				dialogTableVisible: false
 			}
 		},
+		created() {
+			this.get_tableDate()
+		},
 		methods: {
+			get_tableDate() {
+				let params ={
+					type:1,
+					departmentHeader :true
+				}
+				this.$F.doRequest(this, '/pms/role/menu_list', params, (res) => {
+				  
+				})
+			},
 			handleClick() {
 				this.dialogTableVisible = true
 			}
