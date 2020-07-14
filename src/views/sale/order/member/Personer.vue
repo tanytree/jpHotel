@@ -10,7 +10,7 @@
       <el-row>
 
         <el-col :span="5">
-          <el-form-item label="订单类型">
+          <el-form-item label="会员类型:">
             <el-select v-model="form.orderType" style="width:100px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>

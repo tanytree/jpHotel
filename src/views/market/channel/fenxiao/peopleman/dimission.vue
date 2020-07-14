@@ -9,9 +9,9 @@
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
       <el-row>
 
-        <el-col :span="4">
+        <el-col :span="6">
           <el-form-item label="所属门店">
-            <el-select v-model="form.orderType" style="width:100px">
+            <el-select v-model="form.orderType" style="width:160px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
               <el-option label="场地预定" value="2"></el-option>
@@ -19,9 +19,9 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="5">
+        <el-col :span="6">
           <el-form-item label="员工名称">
-            <el-input style="width:120px" v-model="form.name"></el-input>
+            <el-input style="width:160px" v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
         <el-form-item label="离职日期">

@@ -18,7 +18,7 @@
        </el-form-item>
         <el-form-item label="折扣比例：" prop="name">
           <el-input style="width:200px" v-model="ruleForm.name"  placeholder="0到1之间的数"></el-input>
-          <span style="color:#666666">抵扣金额=实际房费*抵扣比例</span>
+          <span style="color:#666666;margin-left:5px;">抵扣金额=实际房费*抵扣比例</span>
         </el-form-item>
       </el-row>
 

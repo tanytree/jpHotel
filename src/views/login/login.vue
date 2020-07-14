@@ -113,7 +113,7 @@
                 <!-- <div class="body-l body-r">
                     <div class="ma">
                         <img src="@/assets/images/login/registerQr.png" alt/>
-                    </div>
+                    </div>-->
                     <!--          <div class="detail">扫码二维码，下载指点社区</div>-->
                 <!-- </div> -->
             </div>
@@ -423,9 +423,9 @@ export default {
             padding: 20px 0;
         }
 
-        .el-form-item {
+        // .el-form-item {
             // margin-bottom: 10px;
-        }
+        // }
     }
 
     .register-body .body-info .line {

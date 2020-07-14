@@ -39,12 +39,15 @@
                <el-radio-group  v-model="newvip.resource">
                  <el-radio label="永久"></el-radio>
                  <!-- <el-form-item> -->
-                 <el-radio label="开卡日期起"></el-radio>
+                 <el-row>
+                    <el-radio label="开卡日期起"></el-radio>
                     <el-date-picker
                         v-model="newvip.startTime"
                         value-format="yyyy-MM-dd"
                         type="date"
-                        ></el-date-picker>
+                        >
+                    </el-date-picker>
+                 </el-row>
                  <!-- </el-form-item> -->
                </el-radio-group>
              </el-form-item>
