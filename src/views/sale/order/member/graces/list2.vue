@@ -50,8 +50,8 @@
          </el-radio-group>
        </el-form-item>
         <el-form-item label="折扣比例：" prop="name">
-          <el-input style="width:200px" v-model="ruleForm.name" placeholder="0到1之间的数"></el-input>
-          <span style="color:#666666">获取积分=实际商品费*获取比例*换算比例</span>
+          <el-input style="width:200px;" v-model="ruleForm.name" placeholder="0到1之间的数"></el-input>
+          <span style="color:#666666;margin-left:5px;">获取积分=实际商品费*获取比例*换算比例</span>
         </el-form-item>
       </el-row>
       <el-form-item>

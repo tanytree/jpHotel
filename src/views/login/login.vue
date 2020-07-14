@@ -1,25 +1,19 @@
 <template>
     <div class="register-index">
-        
-          <div style="position: absolute;left:360px;color:#fff">
-                  <h1 style="font-size: 56px;">大仓集团酒店管理系统</h1>
-                  <h3 style="font-size: 40px;">管理酒店更轻松</h3>
-        </div>
-        <div class="register-body" style="width:544px;position: absolute;right:200px" v-if="loginType=='login'">
-            <div v-if="!forget" class="title" >欢迎登录大仓集团酒店管理系统</div>
+        <div class="register-body" v-if="loginType=='login'">
+            <div v-if="!forget" class="title">欢迎登录管理后台</div>
             <el-page-header v-if="forget" @back="forget=false;forgetStep=1" title="返回登录"></el-page-header>
             <div class="body-info">
-                <div class="body-l"  v-if="!forget">
+                <div class="body-l" v-if="!forget">
                     <el-form
                             :model="loginForm"
                             size="small"
                             validate-on-rule-change
-                             
                             :rules="dataRule"
                             ref="loginForm"
                     >
                         <el-form-item prop="storesNum">
-                            <el-select style="width:344px" v-model="loginForm.storesNum" placeholder="请选择门店列表">
+                            <el-select v-model="loginForm.storesNum" placeholder="请选择门店列表">
                                 <el-option
                                     v-for="item in storeList"
                                     :key="item.storesNum"
@@ -33,14 +27,12 @@
                                     prefix-icon="el-icon-s-custom"
                                     placeholder="请输入账号"
                                     v-model="loginForm.account"
-                                    style="width:344px"
                                     maxlength="18"
                             ></el-input>
                         </el-form-item>
                         <el-form-item prop="password">
                             <el-input
                                     type="password"
-                                    style="width:344px"
                                     prefix-icon="el-icon-lock"
                                     placeholder="请输入密码，长度为6 - 18个字符"
                                     v-model.trim="loginForm.password"
@@ -54,7 +46,7 @@
                         <!--              </div>-->
                         <!--            </el-form-item>-->
                         <el-form-item>
-                            <el-button style="width:344px" type="primary" @click="clickLoginBtn()">登录</el-button>
+                            <el-button style="width:100%" type="primary" @click="clickLoginBtn()" v-loading="loading">登录</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -79,7 +71,7 @@
                                 ></el-input>
                             </el-form-item>
                             <el-form-item>
-                                <el-button style="width:100%" type="primary" @click="forgetNext()">下一步</el-button>
+<!--                                <el-button style="width:100%" type="primary" @click="forgetNext()">下一步</el-button>-->
                             </el-form-item>
                         </el-form>
                     </div>
@@ -93,7 +85,7 @@
                                 <el-button
                                         size="small"
                                         style="width:100%"
-                                        @click="getVertify"
+<!--                                        @click="getVertify"-->
                                         v-if="sendAuthCode"
                                 >获取验证码
                                 </el-button>
@@ -106,16 +98,16 @@
                                 </el-button>
                             </el-col>
                         </el-row>
-                        <el-button style="margin-top:30px" type="primary" @click="checkVertify()">登录</el-button>
+<!--                        <el-button style="margin-top:30px" type="primary" @click="checkVertify()">登录</el-button>-->
                     </div>
                 </div>
-                <!-- <div class="line"></div> -->
-                <!-- <div class="body-l body-r">
+                <div class="line"></div>
+                <div class="body-l body-r">
                     <div class="ma">
                         <img src="@/assets/images/login/registerQr.png" alt/>
-                    </div>
+                    </div>-->
                     <!--          <div class="detail">扫码二维码，下载指点社区</div>-->
-                <!-- </div> -->
+                </div>
             </div>
         </div>
         <div class="register-body" v-else>
@@ -144,7 +136,6 @@
                                 <el-button
                                         size="small"
                                         style="width:100%"
-                                        @click="getVertify"
                                         v-if="sendAuthCode"
                                 >获取验证码
                                 </el-button>
@@ -175,9 +166,9 @@
 </template>
 
 <script>
-import { request } from '@/utils/request'
-import { mapState, mapActions } from 'vuex'
-import routermsg from '../../store/modules/routermsg'
+  import { request } from '@/utils/request'
+  import { mapState, mapActions } from 'vuex'
+  import routermsg from '../../store/modules/routermsg'
 
 export default {
   computed: {
@@ -198,6 +189,7 @@ export default {
       }
     }
     return {
+      loading: false,
       storeList: [],
       isCheck: false,
       forgetStep: 1, // 忘记密码步骤
@@ -246,9 +238,9 @@ export default {
   },
 
   created() {
-    this.$F.doRequest(null, '/pms/freeuser/stores_list', {}, (data) => {
+    this.$F.doRequest(null, '/pms/freeuser/stores_list', {filterHeader: true}, (data) => {
       this.storeList = data;
-      this.storeList = [{storesNum: '0000000000', storesName: '总部后台'}]
+      // this.storeList = [{storesNum: '0000000000', storesName: '总部后台'}]
       this.loginForm.storesNum = data[0].storesNum
     })
   },
@@ -260,6 +252,9 @@ export default {
     }),
 
     userIsLogin (data) {
+      data.data.storesInfo = this.storeList.filter((item) => {
+        return item.storesNum == this.loginForm.storesNum
+      })[0];
       this.saveuser(data)
       const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg)
       this.routeractions(routeArray)
@@ -285,92 +280,16 @@ export default {
       this.$refs['loginForm'].validate(valid => {
         if (valid) {
           this.$F.merge(params, this.loginForm)
-          debugger
-          request('/pms/freeuser/login', params, 'post', false).then((res) => {
-            debugger
-            if (res.code == 200) {
-              sessionStorage.account = this.loginForm.account
-              sessionStorage.password = this.loginForm.password
-              this.userIsLogin(res)
-            } else {
-              this.$message.error(res.message)
-            }
+          this.$F.doRequest(this, '/pms/freeuser/login', params, (res) => {
+            sessionStorage.account = this.loginForm.account
+            sessionStorage.password = this.loginForm.password
+            this.userIsLogin({
+              data: res
+            })
           })
-        }
-      })
-    },
-    /** 忘记密码第二步 */
-    forgetNext () {
-      this.$refs['forgetForm'].validate(valid => {
-        if (valid) {
-          this.forgetStep = 2
-        }
-      })
-    },
-    /** 获取验证码 */
-    getVertify () {
-      send_verify({
-        plat_source: this.plat_source,
-        phoneNumber: this.forgetForm.phoneNumber,
-        key: this.msgKey
-      }).then(res => {
-        if (res.code == 200) {
-          this.sendAuthCode = false
-          this.auth_time = 60
-          var auth_timetimer = setInterval(() => {
-            this.auth_time--
-            if (this.auth_time <= 0) {
-              this.sendAuthCode = true
-              clearInterval(auth_timetimer)
-            }
-          }, 1000)
-        } else {
-          this.$message.error(res.message)
-        }
-      })
-    },
-    /** 验证验证码 */
-    checkVertify () {
-      verify_check({
-        plat_source: this.plat_source,
-        verify: this.verify,
-        phoneNumber: this.forgetForm.phoneNumber,
-        checkType: '1'
-      }).then(res => {
-        if (res.code == 200) {
-          reset_password({
-            plat_source: this.plat_source,
-            phoneNumber: this.forgetForm.phoneNumber,
-            password: this.forgetForm.password
-          }).then(data => {
-            if (data.code == 200) {
-              // this.userIsLogin(res);
-              login({
-                plat_source: this.plat_source,
-                loginType: '2',
-                account: this.forgetForm.account,
-                password: this.forgetForm.password
-              }).then(res => {
-                if (res.code == 200) {
-                  sessionStorage.account = this.forgetForm.account
-                  sessionStorage.password = this.forgetForm.password
-                  this.userIsLogin(res)
-                } else {
-                  this.$message.error(res.message)
-                }
-              })
-            } else {
-              this.$message.error(data.message)
-            }
-          })
-        } else {
-          this.$message.error(res.message)
         }
       })
     }
-  },
-  mounted: {
-
   }
 }
 </script>
@@ -423,9 +342,9 @@ export default {
             padding: 20px 0;
         }
 
-        .el-form-item {
+        // .el-form-item {
             // margin-bottom: 10px;
-        }
+        // }
     }
 
     .register-body .body-info .line {

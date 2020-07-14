@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-06 10:10:45
+ * @LastEditTime: 2020-07-13 17:41:12
  * @FilePath: /jiudian/src/views/market/reception/index.vue
  -->
 
@@ -9,25 +9,25 @@
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="入住办理" name="first">
-        <list1 />
+        <checkin />
       </el-tab-pane>
       <el-tab-pane label="前台报表" name="second">
-        <list2 />
+        <reportform />
       </el-tab-pane>
       <el-tab-pane label="前台交班" name="third">
-        <list3 />
+        <shiftover />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import list1 from "./list1";
-import list2 from "./list2";
-import list3 from "./list3";
+import checkin from "./checkin";
+import reportform from "./reportform";
+import shiftover from "./shiftover";
 
 export default {
-  components: { list1, list2, list3 },
+  components: { checkin, reportform, shiftover },
   data() {
     return {
       activeName: "first" //第一个默认启动

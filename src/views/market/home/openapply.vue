@@ -20,10 +20,10 @@
                 <el-button>增值税电子发票</el-button>
               </div>
               <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                <el-form-item label="客户名称">
+                <el-form-item label="客户名称：">
                   <el-input v-model="formInline.user"></el-input>
                 </el-form-item>
-                <el-form-item label="房间号">
+                <el-form-item label="房间号:">
                   <el-input v-model="formInline.hostel"></el-input>
                 </el-form-item>
                 <el-form-item>

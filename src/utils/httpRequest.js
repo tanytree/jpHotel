@@ -101,22 +101,15 @@ http.adornParams = (params = {}, openDefultParams = true) => {
  */
 http.adornData = (data = {}, openDefultdata = true, contentType = 'form') => {
     data = merge({platSource: '1005'}, data)
-    // var defaults = {
-    //     // 't': new Date().getTime()
-    //     userId: JSON.parse(sessionStorage.getItem('userData')).user.id,
-    //     accessToken: JSON.parse(sessionStorage.getItem('userData')).token.accessToken,
-    //     // currentUserId: JSON.parse(sessionStorage.getItem('userData')).token.accessToken,
-    //     token: JSON.parse(sessionStorage.getItem('userData')).token.accessToken,
-    //   // group_id:"",
-    // }
-    // data = openDefultdata ? merge(defaults, data) : data,
-	debugger
-	let session_data = JSON.parse(sessionStorage.getItem('userData'))
-	if(session_data != '' && session_data!= null) {
-		data.userId = JSON.parse(sessionStorage.getItem('userData')).user.id
-		data.accessToken = JSON.parse(sessionStorage.getItem('userData')).token.accessToken
-		data.token = JSON.parse(sessionStorage.getItem('userData')).token.accessToken
-	}
+    var defaults = {
+        // 't': new Date().getTime()
+        userId: JSON.parse(sessionStorage.getItem('userData')).user.id,
+        accessToken: JSON.parse(sessionStorage.getItem('userData')).token.accessToken,
+        currentUserId: JSON.parse(sessionStorage.getItem('userData')).token.accessToken,
+        token: JSON.parse(sessionStorage.getItem('userData')).token.accessToken,
+      // group_id:"",
+    }
+    data = openDefultdata ? merge(defaults, data) : data
     return contentType === 'json' ? JSON.stringify(data) : objToParams(data)
 }
 

@@ -130,7 +130,12 @@
                         </div>
                     </el-row>                
                 </div>
-               
+               <el-row class="fixedFoot">
+                  <div class="wrap">
+                    <el-button type="primary">保存</el-button>
+                    <el-button>返回</el-button>
+                  </div>
+                </el-row>
             </el-row>
  </div>
 </template>
@@ -159,6 +164,22 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.fixedFoot {
+  text-align: right;
+  position: fixed;
+  bottom: 0;
+  left: 200px;
+  right: 20px;
+  background: #fff;
+  border-top: 1px solid #eee;
+  z-index: 9;
+}
+.fixedFoot .wrap {
+  padding: 10px 20px;
+}
+.fixedFoot .wrap button {
+  margin-left: 20px;
+}
  .duty{
   border:1px solid #1B80FF;
   font-size: 12px;

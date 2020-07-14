@@ -93,21 +93,29 @@ export default {
     }
   },
   created() {
-    let userData = sessionStorage.userData;
-    let companyInfo = sessionStorage.companyInfo;
-    if (companyInfo && JSON.parse(companyInfo)) {
-      this.companyInit(JSON.parse(companyInfo));
+    // let userData = sessionStorage.userData;
+    // let companyInfo = sessionStorage.companyInfo;
+    // if (companyInfo && JSON.parse(companyInfo)) {
+    //   this.companyInit(JSON.parse(companyInfo));
+    // }
+    // if (userData && JSON.parse(userData)) {
+    //   let data = JSON.parse(userData);
+    //   this.saveuser({ data: data });
+    // }
+    // 在页面加载时读取sessionStorage
+    if (sessionStorage.getItem('store')) {
+      this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem('store'))))
     }
-    if (userData && JSON.parse(userData)) {
-      let data = JSON.parse(userData);
-      this.saveuser({ data: data });
-    }
+    // 在页面刷新时将store保存到sessionStorage里
+    window.addEventListener('beforeunload', () => {
+      sessionStorage.setItem('store', JSON.stringify(this.$store.state))
+    })
   },
   watch: {
     $route(to, from) {
       //console.log(to,from)
       if (from.name == "login" && to.name != "login") {
-        this.refresh();
+        // this.refresh();
       } else {
         this.fetchData();
       }
