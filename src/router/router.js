@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-14 09:36:06
+ * @LastEditTime: 2020-07-14 16:46:16
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -326,11 +326,11 @@ export default new Router({
                         import ('@/views/market/personnelManager')
                 },
                 {
-                    path: '/channelFenxiao',
-                    name: 'channelFenxiao',
+                    path: '/employeeList',
+                    name: 'employeeList',
                     meta: { title: '人员管理' },
                     component: () =>
-                        import ('@/views/market/personnelManager/fenxiao/channelFenxiao')
+                        import ('@/views/market/personnelManager/employeeList')
                 },
                 {
                     path: '/channelDaili',
