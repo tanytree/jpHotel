@@ -2,10 +2,10 @@
   <div class="mainheader" height="40px">
     <div class="leftHead">
       <!--      <el-dropdown>-->
-      <!--        <span class="el-dropdownBox">-->
-      <!--          <span class="enterName">{{company.enterName}}</span>-->
-      <!--          <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-      <!--        </span>-->
+              <span class="el-dropdownBox">
+                <span class="enterName">{{user.storesInfo.storesName}}</span>
+<!--                <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+              </span>
       <!--        <el-dropdown-menu slot="dropdown">-->
       <!--          <el-dropdown-item-->
       <!--            class="itemel"-->

@@ -39,11 +39,15 @@ const $F = {
     },
 
     doRequest($instance, url, params, callback) {
-        if ($instance)
+        if ($instance) {
             $instance.dataListLoading = true;
+            $instance.loading = true;
+        }
         request(url, params).then((res) => {
-            if ($instance)
+            if ($instance) {
                 $instance.dataListLoading = false;
+                $instance.loading = false;
+            }
             if (res.code === 200) {
                 callback(res.data);
             } else {

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-21 11:38:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-09 13:49:39
+ * @LastEditTime: 2020-07-13 16:29:21
  * @FilePath: /jiudian/src/views/organization/components/employees.vue
 --> 
 <template>
@@ -14,14 +14,14 @@
               <div class="liCell">
                 <div class="text-left">
                   <img src="@/assets/images/people.png" />
-                  {{item.name}}
+                  {{item.userName}}
                 </div>
               </div>
               <div class="liCell">
-                <div class="text-left">{{item.phone}}</div>
+                <div class="text-left">{{item.account}}</div>
               </div>
               <div class="liCell">
-                <div class="text-left">{{item.roleCName}}</div>
+                <div class="text-left">{{item.userType==1?"员工":''}}</div>
               </div>
               <div class="liCell">
                 <div class="text-right">
@@ -31,13 +31,16 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="getDeaprtmentEdit(item)">
+                编辑部门
+              </el-dropdown-item>
               <el-dropdown-item @click.native="getDetailEdit(item)">
                 编辑员工
               </el-dropdown-item>
               <el-dropdown-item @click.native="getDetail(item)">
                 查看资料
               </el-dropdown-item>
-              <el-dropdown-item>
+              <el-dropdown-item @click.native="deleteItem(item)">
                 删除员工
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -72,11 +75,28 @@ export default {
     getDetail(item){
       this.$emit('getEmployeesDetails',item)
     },
-
-    getDetailEdit(item){
+    getDetailEdit(data){
+      let item = data
+      item.editType = 1
       this.$emit('getEmployeesDetailsEdit',item)
+    },
+    getDeaprtmentEdit(data){
+        let item = data
+              item.editType = 2
+            this.$emit('getEmployeesDetailsEdit',item)
+
+    },
+    deleteItem(item){
+      this.$confirm('确定删除此成员？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$emit('getEmployeesDelete',item)
+        }).catch(() => {
+          console.log('取消')      
+        });
     }
-    
   }
 };
 </script>
@@ -111,9 +131,7 @@ export default {
         &:last-child .liWrap{
           border: 0;
         }
-        &:first-child .liWrap{
-          border: 0;
-        }
+        
       }
     }
     .liCell > div {

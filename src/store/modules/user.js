@@ -20,14 +20,18 @@ const state = {
   nickname: "",
   userName:"",
   userType: '',
-  userAuth: ''
+  userAuth: '',
+  storesInfo: {
+    storesNum:''
+  },
 }
 
 const mutations = {
   /**登录保存用户信息 */
   SAVE_USERS: (state, data) => {
+    state.storesInfo = data.storesInfo;
     state.token = data.token.accessToken;
-    sessionStorage.accessToken=data.token.accessToken;
+    sessionStorage.accessToken = data.token.accessToken;
     Object.assign(state, data.user)
     state.storeList = data.belongTo || [];
   },

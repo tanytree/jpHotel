@@ -1,26 +1,26 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 09:58:07
- * @FilePath: /jiudian/src/views/Boss/storeManagement/index.vue
+ * @LastEditTime: 2020-07-13 09:50:14
+ * @FilePath: /jiudian/src/views/Boss/StoreManagement/index.vue
  -->
 
 <template>
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="门店管理" name="first">
-        <list1 />
+        <list />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import list1 from "./list1";
+import list from "./list";
 
 
 export default {
-  components: { list1 },
+  components: { list },
   data() {
     return {
       activeName: "first" //第一个默认启动
