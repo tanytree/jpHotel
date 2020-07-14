@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 10:08:46
+ * @LastEditTime: 2020-07-14 09:36:06
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -319,96 +319,34 @@ export default new Router({
                 },
                 /**人事部 */ // 渠道管理
                 {
-                    path: '/channel',
-                    name: 'channel',
+                    path: '/personnelManager',
+                    name: 'personnelManager',
                     meta: { title: '首页' },
                     component: () =>
-                        import ('@/views/market/channel')
+                        import ('@/views/market/personnelManager')
                 },
                 {
                     path: '/channelFenxiao',
                     name: 'channelFenxiao',
                     meta: { title: '人员管理' },
                     component: () =>
-                        import ('@/views/market/channel/fenxiao/channelFenxiao')
+                        import ('@/views/market/personnelManager/fenxiao/channelFenxiao')
                 },
                 {
                     path: '/channelDaili',
                     name: 'channelDaili',
                     meta: { title: '薪酬管理' },
                     component: () =>
-                        import ('@/views/market/channel/daili/channelDaili')
+                        import ('@/views/market/personnelManager/daili/channelDaili')
                 },
                 {
                     path: '/channelSetting',
                     name: 'channelSetting',
                     meta: { title: '渠道管理' },
                     component: () =>
-                        import ('@/views/market/channel/setting/channelSetting')
+                        import ('@/views/market/personnelManager/setting/channelSetting')
                 },
-                {
-                    path: '/channelHehuo',
-                    name: 'channelHehuo',
-                    meta: { title: '渠道管理' },
-                    component: () =>
-                        import ('@/views/market/channel/hehuo/channelHehuo')
-                },
-                {
-                    path: '/price',
-                    name: 'price',
-                    meta: { title: '价格管理' },
-                    component: () =>
-                        import ('@/views/market/price')
-                },
-                {
-                    path: '/dataState',
-                    name: 'dataState',
-                    meta: { title: '数据统计' },
-                    component: () =>
-                        import ('@/views/market/dataState')
-                },
-                {
-                    path: '/dianpu',
-                    name: 'dianpu',
-                    meta: { title: '数据统计' },
-                    component: () =>
-                        import ('@/views/market/dataState/tab6Se1')
-                },
-                {
-                    path: '/guanggao',
-                    name: 'guanggao',
-                    meta: { title: '数据统计' },
-                    component: () =>
-                        import ('@/views/market/dataState/tab6Se2')
-                },
-                {
-                    path: '/qudao',
-                    name: 'qudao',
-                    meta: { title: '数据统计' },
-                    component: () =>
-                        import ('@/views/market/dataState/tab6Se3')
-                },
-                {
-                    path: '/address',
-                    name: 'address',
-                    meta: { title: '数据统计' },
-                    component: () =>
-                        import ('@/views/market/address')
-                },
-                {
-                    path: '/receiveAd',
-                    name: 'receiveAd',
-                    meta: { title: '数据统计' },
-                    component: () =>
-                        import ('@/views/market/address/receiveAd')
-                },
-                {
-                    path: '/returnAd',
-                    name: 'returnAd',
-                    meta: { title: '数据统计' },
-                    component: () =>
-                        import ('@/views/market/address/returnAd')
-                },
+                
 
                 //企划部      /**销售部 */
                 {
