@@ -47,10 +47,10 @@
 			<el-tab-pane :label="boss_second_title" name="second">
 				<div class="second-body">
 					<div class="title">
-						<span>总办部</span>
+						<span>{{select_title}}</span>
 					</div>
 					<div class="row-body">
-						<div class="row-line">
+						<div class="row-line" v-for="(value, index) in peopleList" :key="index">
 							<div class="row-item">
 								<img class="row-img" src="../../assets/images/caigou/kuai01.png" alt="">
 								<span class="default-text">章欣</span>
@@ -81,12 +81,37 @@
 			return {
 				activeName: 'first',
 				boss_first_title: '报表',
-				boss_second_title: '员工权限',
 				active_second_name: 'one',
-				first_title: '首页'
+				first_title: '首页',
+				boss_second_title: '员工权限',
+				select_title:'',
+				peopleList:[]
 			}
 		},
+		created() {
+			this.select_title = JSON.parse(sessionStorage.getItem('menul')).name
+			this.get_tableDate()
+		},
 		methods: {
+			//获取各部门人员列表
+			get_tableDate() {
+				let params ={
+					departmentId:JSON.parse(sessionStorage.getItem('userData')).user.id,
+					searchType :1,
+					pageIndex:1,
+					pageSize:10
+				}
+				this.$F.doRequest(this, '/pms/role/menu_list', params, (res) => {
+					if (res != null && res != '') {
+						res.forEach((value) =>{
+							if (value.header != null && value.header != '') {
+								value.header_name = value.header.userName
+							}
+						})
+					}
+					this.peopleList = res
+				})
+			},
 			handleCommand(command) {
 				debugger
 				this.$router.push({name:"indexDesign"})
