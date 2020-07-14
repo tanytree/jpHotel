@@ -1,13 +1,13 @@
 <!--
  * @Date: 2020-03-10 13:58:24
- * @LastEditors: Dana
- * @LastEditTime: 2020-04-28 16:15:46
- * @FilePath: /cloudAdmin/src/views/sale/order/index.vue
+ * @LastEditors:魏轩
+ * @LastEditTime: 
+ * @FilePath: 
  -->
 <template>
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="会员管理类型" name="first">
+      <el-tab-pane label="会员类型管理" name="first">
         <Personer   />
       </el-tab-pane>
       <el-tab-pane label="会员变更规则" name="second">

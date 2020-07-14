@@ -4,18 +4,22 @@
  * @LastEditTime: 2020-07-07 10:20:16
  * @FilePath: /jiudian/src/assets/languages/ri.js
  */
-module.exports = {
+import bossLang from './boss/bossRi'
+import commons from "./commons/commonsRi";
+
+export default {
     language: {
         name: '日本語'
     },
-
-    tabName: [{
+    //这里以后不用 数据都是从后台返回
+  tabName: [{
             name: '社長室',
             children: [
                 { name: "最初のページ" },
                 { name: "部門長" },
                 { name: "従業員の管理" },
                 { name: "給与管理" },
+                { name: "门店管理" },
             ]
         },
         {
@@ -87,5 +91,9 @@ module.exports = {
                 { name: "薪酬管理" },
             ]
         }
-    ]
+    ],
+    commons: commons,
+    //总经理办公室
+    boss: bossLang,
+
 }

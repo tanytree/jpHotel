@@ -37,8 +37,8 @@
       </el-row>
       
     </el-form>
-
-     <!--表格数据 -->
+      <div>
+        <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column prop="enterName" label="所属门店" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="员工姓名" show-overflow-tooltip></el-table-column>
@@ -48,7 +48,7 @@
             <el-table-column prop="enterType" label="离职时间" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">详情</el-button>
+                    <el-button type="text" size="mini" @click="details=true">详情</el-button>
                     <el-button type="text" size="mini">重新入职</el-button>
                     <el-button type="text" size="mini">删除</el-button>
                 </template>
@@ -58,6 +58,92 @@
         <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
     
+      </div>
+      <!-- 查看资料 -->
+      <div>
+          <el-dialog title="查看资料" :visible.sync="details" width="500px" >
+        <el-from>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">姓名:</el-col>
+            <el-col :span="14">张三</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">联系电话:</el-col>
+            <el-col :span="14">111111</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">所属门店:</el-col>
+            <el-col :span="14">大仓集团第一酒店</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">所属部门:</el-col>
+            <el-col :span="14">总办</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">职位:</el-col>
+            <el-col :span="14">总经理</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">银行账户:</el-col>
+            <el-col :span="14">999999999999</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">企业邮箱:</el-col>
+            <el-col :span="14">111@qq.com</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">后台账号:</el-col>
+            <el-col :span="14">8888888888</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">工号:</el-col>
+            <el-col :span="14">0933</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">分机号:</el-col>
+            <el-col :span="14">77777</el-col>
+          </el-row>
+          <el-row style="margin:10px 0"> 
+            <el-col :span="8">入职时间:</el-col>
+            <el-col :span="14">3019-7-1</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">证件类型:</el-col>
+            <el-col :span="14">护照</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">证件号:</el-col>
+            <el-col :span="14">8888</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">转正日期:</el-col>
+            <el-col :span="14">大仓集团第一酒店</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">备注:</el-col>
+            <el-col :span="14">暂无</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">离职时间:</el-col>
+            <el-col :span="14">22222</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">离职原因:</el-col>
+            <el-col :span="14">暂无</el-col>
+          </el-row>
+          <el-row style="margin:10px 0">
+            <el-col :span="8">离职文件:</el-col>
+            <el-col :span="14"><el-button>预览  </el-button></el-col>
+          </el-row>
+        </el-from>
+          
+
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="details = false">关闭</el-button>
+          </div>
+      </el-dialog>
+      </div>
+     
   </div>
 </template>
 <script>
@@ -69,6 +155,7 @@
 export default {
   data() {
     return {
+      details: false,
       loading: false,
       pageIndex: 1,
       pageSize: 8,
@@ -112,6 +199,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+//  .el-dialog__header {
+//     background: red;
+// }
+
 .goodsImg {
   width: 30px;
   height: 30px;

@@ -6,13 +6,13 @@
  */
 const state = {
     msgKey: "a5b4c18cc837456092804e400b5019c9",//短信发送秘钥
-    plat_source: "1006",//1001android 1002ios 1003pad 1004h5 1005webchat 1006PC端 1007内部平台
+    plat_source: "1005",//1001android 1002ios 1003pad 1004h5 1005webchat 1005PC端 1007内部平台
     logisticList: [
         { name: "中通快递", value: "ZTO" },
         { name: "申通快递", value: "STO" },
         { name: "圆通速递", value: "YTO" },
-        // { name: "顺丰速运", value: "SF" }, 
-        // { name: "百世快递", value: "HTKY" }, 
+        // { name: "顺丰速运", value: "SF" },
+        // { name: "百世快递", value: "HTKY" },
         // { name: "韵达速递", value: "YD" },
         // { name: "邮政快递包裹", value: "YZPY" },
         // { name: "EMS", value: "EMS" },
@@ -20,7 +20,7 @@ const state = {
         // { name: "京东快递", value: "JD" },
         // { name: "优速快递", value: "UC" },
         // { name: "德邦快递", value: "DBL" },
-        // { name: "宅急送", value: "ZJS" } 
+        // { name: "宅急送", value: "ZJS" }
     ],
     routermsg: [],
     enterprisesTypes: [

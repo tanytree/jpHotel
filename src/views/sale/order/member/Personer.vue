@@ -25,7 +25,7 @@
           
         </el-form-item>
         <el-form-item style="float:right">
-          <el-button  type="primary">重置</el-button>/
+          <el-button  type="primary" @click="Newdata">+新增</el-button>
           <!-- @click="resetForm"  -->
         </el-form-item>
       </el-row>
@@ -79,7 +79,9 @@ export default {
   },
   methods: {
 
- 
+ Newdata(){
+   this.$router.push('/newdetail')
+ }
 
   }
 };

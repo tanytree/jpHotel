@@ -1,0 +1,742 @@
+
+<!--
+
+ * @LastEditors: 魏轩
+
+ * 
+ -->
+<template>
+  <div>
+    <!-- 物品寄存 -->
+    <el-form :model="leftLuggage" ref="leftLuggage" label-width="100px" class="demo-ruleForm">
+      <el-row>
+        <label>留言类型：</label>
+        <el-button>不限</el-button>
+        <el-button>我的留言</el-button>
+        <el-button>他人留言</el-button>
+      </el-row>
+      <el-row style="margin-top:20px">
+        <el-row>
+          <el-col :span="5">
+            <el-form-item label="客户名称：">
+              <el-input v-model="noteForm.name"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="房间号：">
+              <el-input v-model="noteForm.room"></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="5">
+            <el-form-item label="领取编号：">
+              <el-input v-model="noteForm.num"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="寄放日期：">
+              <div class="block">
+                <el-date-picker v-model="noteForm.time" type="daterange" range-separator="至"></el-date-picker>
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-col :span="5">
+          <el-form-item label="物品名称:">
+            <el-input v-model="noteForm.goodsname"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="6">
+          <el-form-item>
+            <el-button style="width:60px;text-align: center;" type="primary">查询</el-button>
+            <el-button style="width:60px;text-align: center;">重置</el-button>
+          </el-form-item>
+        </el-col>
+        <el-col :span="5" style="float:right">
+          <el-form-item>
+            <el-button type="primary" @click="newCheck=true">新增寄存</el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+
+    <div>
+      <el-table :data="checkTables" style="width: 100%">
+        <!--:data="tableData"  -->
+        <el-table-column label="客户名称" width="80">
+          <template slot-scope="scope">{{scope.row.name}}</template>
+        </el-table-column>
+        <el-table-column label="房间号" width="80">
+          <template slot-scope="scope">{{scope.row.roomnum}}</template>
+        </el-table-column>
+        <el-table-column label="手机号" width="100">
+          <template slot-scope="scope">{{scope.row.phonenum}}</template>
+        </el-table-column>
+        <el-table-column label="物品名称" width="80">
+          <template slot-scope="scope">{{scope.row.goodsname}}</template>
+        </el-table-column>
+        <el-table-column label="寄放时间" width="120">
+          <template slot-scope="scope">{{scope.row.leavetime}}</template>
+        </el-table-column>
+        <el-table-column label="领取时间" width="120">
+          <template slot-scope="scope">{{scope.row.gettime}}</template>
+        </el-table-column>
+        <el-table-column label="领取编号" width="180">
+          <template slot-scope="scope">{{scope.row.getnum}}</template>
+        </el-table-column>
+        <el-table-column label="状态" width="80">
+          <template slot-scope="scope">{{scope.row.status}}</template>
+        </el-table-column>
+        <el-table-column label="操作人" width="80">
+          <template slot-scope="scope">{{scope.row.operator}}</template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="primary" style="width:60px;">领取</el-button>
+            <el-button
+              size="mini"
+              style="width:60px;"
+              type="text"
+              @click="noteDdetail(scope.$index, scope.row),checkdetail=true"
+            >详情</el-button>
+            <el-button size="mini" type="text">作废</el-button>
+            <el-button size="mini" type="text" @click="checkPatch=true">寄存补打</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+        ></el-pagination>
+      </div>
+    </div>
+
+    <!-- newCheck新增寄存 -->
+    <div>
+      <el-dialog title="新增寄存" style="text-align:left" :visible.sync="newCheck">
+        <el-form ref="newCheckForm" :model="newCheckForm" label-width="80px">
+          <el-col :span="8">
+            <el-form-item label="客户姓名:">
+              <el-input v-model="newCheckForm.name"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="房间号：">
+              <el-input v-model="newCheckForm.roomnum"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="手机号：">
+              <el-input v-model="newCheckForm.phoennum"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="物品名称:">
+              <el-input v-model="newCheckForm.goodsname"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="14">
+            <el-form-item label="备注：">
+              <el-input v-model="newCheckForm.remark"></el-input>
+            </el-form-item>
+          </el-col>
+          <!-- <el-form-item>
+                <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                <el-button>取消</el-button>
+          </el-form-item>-->
+        </el-form>
+
+        <div slot="footer" class="dialog-footer" style="text-align:center">
+          <el-button style="width:80px;" @click="newCheck = false">取消</el-button>
+          <el-button style="width:110px;">保存并打印</el-button>
+          <el-button style="width:80px;" type="primary" @click="Save">保存</el-button>
+        </div>
+      </el-dialog>
+    </div>
+
+    <!-- 新增寄存 详情 -->
+    <div>
+      
+      <el-dialog title="详情" style="text-align:left" :visible.sync="checkdetail">
+        <el-row style="margin:10px 20px">
+          <el-col :span="12">
+            <el-col :span="12">
+              <span style="color:#888888">客户名称：</span>tom
+            </el-col>
+            <el-col :span="12">
+              <span style="color:#888888">房间号：</span>tom
+            </el-col>
+            <el-col :span="12">
+              <span style="color:#888888">电话号码：</span>tom
+            </el-col>
+            <el-col :span="12">
+              <span style="color:#888888">物品名称：</span>tom
+            </el-col>
+            <el-col :span="12">
+              <span style="color:#888888">领取编号：</span>tom
+            </el-col>
+            <el-col :span="12">
+              <span style="color:#888888">领取状态：</span>tom
+            </el-col>
+            <el-col :span="12">
+              <span style="color:#888888">寄存时间：</span>tom
+            </el-col>
+            <el-col :span="12">
+              <span style="color:#888888">领取时间：</span>tom
+            </el-col>
+            <el-col>
+              <span style="color:#888888">备注：</span>
+            </el-col>
+          </el-col>
+        </el-row>
+
+        <div slot="footer" class="dialog-footer" style="text-align:center">
+          <el-button style="width:80px;" @click="checkdetail = false">关闭</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <!-- checkPatch  寄存补打-->
+    <div>
+      <el-dialog title="寄存补打" style="text-align:left" width="650px" :visible.sync="checkPatch">
+        <el-row style="margin:10px 20px">
+          <h2 style="text-align:center">大仓集团第一酒店物品寄存领取单</h2>
+          <el-row style="border-bottom:1px solid #333;padding-bottom:10px;margin-bottom:10px;">
+            <label>打印时间：</label>2020-04-04 14.01
+          </el-row>
+
+          <el-row style="border-bottom:1px solid #333;padding-bottom:10px;margin-bottom:10px;">
+            <p>
+              <label>物品名称：</label>行李箱
+            </p>
+            <label>领取编号:</label>555515646465
+          </el-row>
+          <el-row style="margin-bottom:10px">
+            <label>寄存时间:</label>2020-04-04 14.01
+          </el-row>
+          <el-row style="color:red;margin-bottom:10px">请您务必保管好此票，凭此票 领取东西</el-row>
+          <el-row >
+            <span>前台电话：888888</span>
+            <span>酒店地址：蜀山区</span>
+          </el-row>
+        </el-row>
+
+        <div slot="footer" class="dialog-footer" style="text-align:center">
+          <el-button style="width:80px;" @click="checkPatch = false">取消</el-button>
+          <el-button style="width:80px;" type="primary">打印</el-button>
+        </div>
+      </el-dialog>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      num: 1,
+      currentPage4: 4, //分页当前所在页数的位置
+      stayoernum: "1", //续住天数
+      stayoerchecked: false, //续住  勾选
+      tableData: [
+        //待开票表格字段
+        {
+          name: "王小虎",
+          roomNum: 12,
+          phonenum: 1111111,
+          billType: "增值税电子发票",
+          invoiceTitle: "全购网络技术有限公司",
+          invoiceAmount: 150,
+          taxes: 0,
+          billNum: 5545554
+        }
+      ],
+      billList: [], //点击开票按钮的数据
+      tableDatas: [
+        //已开票表格
+        {
+          clientName: "tom",
+          roomNum: 12,
+          phonenum: 1111111,
+          billType: "增值税电子发票",
+          invoiceTitle: "全购网络技术有限公司",
+          invoiceAmount: 150,
+          taxes: 0,
+          billNum: 5545554,
+          time: "2020/1/10",
+          operator: "张三"
+        },
+        {
+          clientName: "tom",
+          roomNum: 12,
+          phonenum: 1111111,
+          billType: "增值税电子发票",
+          invoiceTitle: "全购网络技术有限公司",
+          invoiceAmount: 150,
+          taxes: 0,
+          billNum: 5545554,
+          time: "2020/1/10",
+          operator: "张三"
+        }
+      ],
+      print: false, //催押
+      batch: false,
+      detailsBill: false, //已开票  详情
+      awaitBill: false, //待开票
+      checkdetail: false, //物品寄存 详情
+      editBill: false, //已开票  编辑
+      newCheck: false, //新增寄存按钮
+      checkPatch: false, //寄存补打 按钮
+      hosteldis: false, //
+      stayoer: false, //续住
+      yokeplate: false, //联房
+      roomchange: false, //换房
+      mackcade: false, //制卡
+      dirty: false, // 置脏
+      formInline: {
+        //待开票
+        user: "",
+        hostel: ""
+      },
+      notedetail: false, // 留言详情
+      newNote: false, //新增留言按钮
+      // 留言内容
+      messageContents: [
+        {
+          content: "身份和骄傲股市的看法",
+          room: "A100",
+          employee: "刘洋",
+          time: "2020/10/10"
+        }
+      ],
+      // 新增留言
+      noteForm: {
+        room: "",
+        desc: ""
+      },
+      billForm: {
+        resource: "" //单选按钮
+      },
+      formLabelWidth: "120px",
+      form: {
+        //催押
+        roomname: "",
+        peoplename: "",
+        phonenum: ""
+      },
+      // 留言管理
+      noteForm: {
+        content: "",
+        room: "",
+        staff: "",
+        value2: ""
+      },
+      // 物品寄存
+      leftLuggage: {
+        name: "",
+        room: "",
+        num: "",
+        time: "",
+        goodsname: ""
+      },
+      // 新增 寄存
+      newCheckForm: {
+        name: "",
+        roomnum: "",
+        phoennum: "",
+        goodsname: "",
+        remark: ""
+      },
+      // 物品寄存表格
+      checkTables: [
+        {
+          name: "噢噢噢噢",
+          roomnum: "a14",
+          phonenum: 111111,
+          goodsname: "行李箱",
+          leavetime: 222,
+          gettime: 222,
+          getnum: 55555,
+          status: "待领取",
+          operator: "张三"
+        }
+      ],
+      hosteldata: [{}],
+      display: true,
+      activeName: "one",
+      roomStatus: {
+        dong: "", //楼栋
+        tag: "" //楼层
+      },
+      Oswitch: false,
+      input: "", //搜索框
+      checked1: false,
+      checked2: false,
+      checked3: false,
+      items: [
+        {
+          type: "success",
+          label: "空净(20)"
+        },
+        {
+          type: "info",
+          label: "空脏(20)"
+        },
+        {
+          type: "danger",
+          label: "空脏(20)"
+        },
+        {
+          type: "warning",
+          label: "空脏(20)"
+        },
+        {
+          type: "warning",
+          label: "空脏(20)"
+        }
+      ],
+      roomList: [
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#27ae76"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "单间",
+          bgColor: "#276bba"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "单间",
+          bgColor: "#b07b2e"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#276bba"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#c0512b"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#276bba"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#276bba"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#276bba"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#c0512b"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#276bba"
+        },
+        {
+          hao: "A001",
+          status: 1,
+          status_name: "标准间",
+          bgColor: "#276bba"
+        }
+      ],
+      checked: false,
+      activeThree: "a",
+      currentPage3: "",
+      value1: "" //时间
+      // value2: '',
+      // value3: ''
+    };
+  },
+  methods: {
+    hostelmess() {
+      this.hosteldis = true;
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    // 待开票
+    handleEdit(index, row) {
+      // console.log(index, row);
+      this.billList = row;
+      console.log(this.billList, 11111);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+    },
+    // 已开票
+    details(index, row) {
+      // console.log(index, row.time);
+      console.log(row, 1111);
+    },
+    openEdit(index, row) {
+      console.log(index, row);
+    },
+    openDelete(index, row) {
+      console.log(index, row);
+    },
+    editSubmit() {
+      console.log(111);
+    },
+    // 账单详情
+    Edit() {
+      console.log("submit!");
+    },
+    // 留言详情
+    noteDdetail(index, row) {
+      console.log(index, row);
+    },
+    // 留言删除
+    noteDelete(index, row) {
+      console.log(index, row);
+    },
+    // 新增留言
+    noteSubmit() {
+      console.log("新增留言");
+      this.newNote = false;
+    },
+    // 新增寄存
+    Save() {
+      console.log("新增寄存保存");
+      this.newCheck = false;
+    },
+
+    // 员工管理
+    handleCommand(command) {
+      // this.$message('click on item ' + command);
+      if (command == "jurisdiction") {
+        // alert(11111)
+        this.display = !this.display;
+      }
+    },
+    management() {
+      this.display = !this.display;
+    },
+    // 查询按钮
+    onSubmit() {
+      console.log("submit!");
+    },
+    // 重置
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    // 催交重置
+    resetForms(formNames) {
+      this.$refs[formNames].resetFields();
+    },
+    // 批量置脏/置净
+    resetbatch(formbatch) {
+      this.$refs[formbatch].resetFields();
+    },
+    // 批量置脏/置净
+    batchForm() {
+      console.log("批量置脏/置净");
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="less" scoped>
+.el-dialog__header {
+  background-color: #c8d8f1 !important;
+}
+.card {
+  border: 1px solid #ccc;
+  margin: 0 5px;
+  line-height: 30px;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 3px;
+}
+.inco {
+  border: 1px solid #333;
+  background: #666;
+  color: #fff;
+}
+.search {
+  width: 137px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+.fangtai {
+  left: 180px;
+  top: 300px;
+  width: 36px;
+  height: 25px;
+  color: rgba(30, 30, 30, 1);
+  // font-size: 18px;
+  text-align: left;
+  font-family: PingFangSC-Regular;
+}
+.all {
+  // left: 230px;
+  // top: 303px;
+  margin-left: 10px;
+  width: 51px;
+  height: 20px;
+  color: rgba(153, 153, 153, 1);
+  font-size: 12px;
+  text-align: left;
+  font-family: PingFangSC-Regular;
+}
+.duty {
+  border: 1px solid #1b80ff;
+  font-size: 12px;
+  padding: 3px 10px;
+}
+.rescet {
+  border-radius: 0;
+  width: 28px;
+  height: 20px;
+  color: rgba(153, 153, 153, 1);
+  font-size: 12px;
+  text-align: left;
+  border: 1px solid #ccc;
+  font-family: PingFangSC-Regular;
+  float: right;
+}
+.el-checkbox.is-bordered {
+  border: none;
+}
+
+.tag-width {
+  width: 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.margin-l {
+  margin-left: 8px;
+}
+
+.tag-margin {
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.row-width {
+  width: 100px;
+}
+
+.demo-form-inline {
+  display: flex;
+  align-items: center;
+}
+
+.font {
+  font-size: 13px;
+}
+
+.tag-top {
+  margin-top: 10px;
+}
+
+.tag-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  margin-top: 10px;
+}
+
+.box-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: auto;
+  padding: 10px 20px;
+}
+
+.fix-circle {
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+}
+
+// 下拉标题
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+}
+
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+
+// ========
+.second-body {
+  .title {
+    border-bottom: 1px solid #e4e7ed;
+    span {
+      display: flex;
+      padding: 15px 0px;
+      font-weight: bolder;
+    }
+  }
+  .row-body {
+    .row-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0px;
+      border-bottom: 1px solid #e5e5e5;
+      .row-item {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        .row-img {
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          background-color: #f2f2f2;
+        }
+        .default-text {
+          padding: 0px 15px;
+        }
+        .active-facus {
+          border: 1px solid #126eff;
+          padding: 3px 15px;
+          border-radius: 5px;
+          color: #126eff;
+        }
+      }
+    }
+  }
+}
+</style>

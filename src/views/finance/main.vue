@@ -7,10 +7,13 @@
 <template>
     <div>
         <el-tabs class="pageTab padding bg" v-model="activeName">
-            <el-tab-pane label="收入图表" name="chart">
+            <el-tab-pane label="财务慨览" name="chart">
                 <incomeStatus/>
             </el-tab-pane>
-            <el-tab-pane label="收入账单" name="check">
+            <el-tab-pane label="记一笔" name="check">
+                <bill/>
+            </el-tab-pane>
+            <el-tab-pane label="员工权限" name="check">
                 <bill/>
             </el-tab-pane>
         </el-tabs>

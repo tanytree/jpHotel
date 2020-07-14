@@ -4,7 +4,7 @@
             <pageHeader @calRouter="calRouter" :language='language'/>
         </el-header>
         <el-container class="main-container">
-            <el-aside v-if="menul.children && menul.children.length>0&&routerCompany!=='company'" class="mainAside">
+            <el-aside v-if="menul.children && menul.children.length > 0" class="mainAside">
                 <div class="side-menu-wrapper">
                     <div class="topNav">
                         <img :src="require(`@/assets/images/${menul.icon}.png`)" alt/>
@@ -27,7 +27,7 @@
                     </div>
                 </el-header>
                 <div class="main-content">
-                    <div class="pageTab el-tabs el-tabs--top" v-if="subMenul.children&&subMenul.children.length>0&&routerCompany!=='company'">
+                    <div class="pageTab el-tabs el-tabs--top" v-if="subMenul.children&&subMenul.children.length > 0">
                         <div class="el-tabs__header is-top">
                             <div class="el-tabs__nav-wrap is-top">
                                 <div class="el-tabs__nav-scroll">
@@ -68,7 +68,7 @@
                 routesmap: state => state.routermsg.routermsg,
                 token: state => state.user.token,
                 userId: state => state.user.id,
-                companyList: state => state.user.companyList,
+                storeList: state => state.user.storeList,
             })
         },
         data() {
@@ -82,7 +82,6 @@
                 menul: [],
                 subMenul: [],
                 parentMenu: {},
-                company: {},
                 siderflg: false,
 
                 language: 'zh'
@@ -171,7 +170,6 @@
                 }
                 this.routerCompany = "";
 
-
                 if (this.$route.meta) {
                     if (this.$route.meta.title) {
                         this.routerCompany = this.$route.meta.title;
@@ -183,9 +181,14 @@
                 }
             }
         },
-        created() {
-            this.calRouter();
-        },
+      created () {
+        this.calRouter()
+        this.$forceUpdate()
+      },
+      // mounted () {
+      //   this.menulfuc(this.routermsg[0])
+      //   this.toSection(this.menul.children[0])
+      // },
         activated() {
             //   debugger
             this.routeractions([
@@ -198,7 +201,8 @@
                         {name: this.$t('tabName[0].children[0].name'), id: "10", icon: "sales/nav01.png", value: "bossIndex"},
                         {name: this.$t('tabName[0].children[1].name'), id: "11", icon: "market/nav02.png", value: "DepartmentCharge"},
                         {name: this.$t('tabName[0].children[2].name'), id: "12", icon: "market/nav03.png", value: "PersonMg"},
-                        {name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg",}
+                        {name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg",},
+                        {name: this.$t('tabName[0].children[4].name'), id: "14", icon: "market/nav05.png", value: "storeManagement",}
                     ]
                 },
                 {
@@ -252,7 +256,7 @@
                         {name: this.$t('tabName[4].children[0].name'), id: "47", icon: "market/nav01.png", value: "salemain"},
                         {name: this.$t('tabName[4].children[1].name'), id: "48", icon: "market/nav02.png", value: "saleOrder"},
                         {name: this.$t('tabName[4].children[2].name'), id: "49", icon: "market/nav03.png", value: "saleContract"},
-                        {name: this.$t('tabName[4].children[3].name'), id: "49", icon: "market/nav03.png", value: "contracted"}
+                        {name: this.$t('tabName[4].children[3].name'), id: "50", icon: "market/nav03.png", value: "contracted"}
                     ]
                 },
                 {
@@ -261,25 +265,30 @@
                     value: "product",
                     id: '6',
                     children: [
-                        {name: this.$t('tabName[5].children[0].name'), id: "50", icon: "market/nav01.png", value: "channel"},
-                        {name: this.$t('tabName[5].children[1].name'), id: "51", icon: "market/nav02.png", value: "channelFenxiao"},
-                        {name: this.$t('tabName[5].children[2].name'), id: "52", icon: "market/nav03.png", value: "channelDaili"},
-                        {name: this.$t('tabName[5].children[3  ].name'), id: "53", icon: "market/nav03.png", value: "channelSetting"}
+                        {name: this.$t('tabName[5].children[0].name'), id: "51", icon: "market/nav01.png", value: "channel"},
+                        {name: this.$t('tabName[5].children[1].name'), id: "52", icon: "market/nav02.png", value: "channelFenxiao"},
+                        {name: this.$t('tabName[5].children[2].name'), id: "53", icon: "market/nav03.png", value: "channelDaili"},
+                        {name: this.$t('tabName[5].children[3  ].name'), id: "54", icon: "market/nav03.png", value: "channelSetting"}
                     ]
                 }
             ]);
             // this.$i18n.locale = 'zh';
-            this.company = this.companyList[0];
             this.menulfuc(this.routesmap[0])
             this.toSection(this.menul.children[0])
 
 
         },
         watch: {
-            // $route(to, from) {
-            // 	this.calRouter();
-            // 	this.toSection()
-            // }
+            $route(to, from) {
+              if (to.name == 'main') {
+                this.calRouter();
+                this.$nextTick(()=> {
+                  this.menulfuc(this.routermsg[0])
+                  this.toSection(this.menul.children[0])
+                  this.$forceUpdate()
+                })
+              }
+            }
         }
     };
 </script>
@@ -386,10 +395,15 @@
     }
 
     .main-content {
-        flex: 1;
-        height: 0;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: auto;
         background-color: #f5f5f5;
         display: block;
+        border: 1px solid transparent;
 
         > .main-inner {
             width: 100%;

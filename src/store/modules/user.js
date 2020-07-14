@@ -10,7 +10,7 @@ const state = {
   userId: "",
   token: "",
   name: '',
-  companyList: [],//所在公司集合
+  storeList: [],//所有门店集合
   roles: [],
   db: '',
   tenantId: '',
@@ -20,16 +20,20 @@ const state = {
   nickname: "",
   userName:"",
   userType: '',
-  userAuth: ''
+  userAuth: '',
+  storesInfo: {
+    storesNum:''
+  },
 }
 
 const mutations = {
   /**登录保存用户信息 */
   SAVE_USERS: (state, data) => {
+    state.storesInfo = data.storesInfo;
     state.token = data.token.accessToken;
-    sessionStorage.accessToken=data.token.accessToken;
+    sessionStorage.accessToken = data.token.accessToken;
     Object.assign(state, data.user)
-    state.companyList = data.belongTo || [];
+    state.storeList = data.belongTo || [];
   },
   // 全局token
   SET_TOKEN: (state, token) => {

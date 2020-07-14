@@ -37,35 +37,351 @@
         <el-form-item style="float:right">
           <el-button   type="primary">下载模板</el-button>
           <el-button   type="primary">批量导入</el-button>
-          <el-button   type="primary">添加员工</el-button>
+          <el-button   type="primary" @click="adddstaff=true">添加员工</el-button>
           
         </el-form-item>
       </el-row>
       
     </el-form>
+        <div>
+            <!--表格数据 -->
+          <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+              <el-table-column prop="enterName" label="所属门店" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="createTime" label="员工姓名" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="enterType" label="入职时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="enterType" label="职位 " show-overflow-tooltip></el-table-column>
+              <el-table-column prop="enterType" label="工号" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="enterType" label="所在部门" show-overflow-tooltip></el-table-column>
+              <el-table-column label="操作" width="220">
+                  <template slot-scope="{row}">
+                      <el-button type="text" size="mini" @click="editstaff=true">修改</el-button>
+                      <el-button type="text" size="mini">详情</el-button>
+                      <el-button type="text" size="mini" @click="dimission=true">办理离职</el-button>
+                      <el-button type="text" size="mini" @click="correct=true">转正</el-button>
+                      <el-button type="text" size="mini">删除</el-button>
+                  </template>
+              </el-table-column>
+          </el-table>
 
-     <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="所属门店" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="员工姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="入职时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="职位 " show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="工号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="所在部门" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作" width="220">
-                <template slot-scope="{row}">
-                    <el-button type="text" size="mini">修改</el-button>
-                    <el-button type="text" size="mini">详情</el-button>
-                    <el-button type="text" size="mini">办理离职</el-button>
-                    <el-button type="text" size="mini">转正</el-button>
-                    <el-button type="text" size="mini">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+          <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
+                
+        </div>
 
-        <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
-    
+         <div>
+            <!-- 添加员工 -->
+            <el-dialog title="添加员工" :visible.sync="adddstaff" >
+              <el-form :model="form" :inline="true"  :required="true" class="top-body" label-width="120px" size="small">
+                  <el-row>
+                    <el-form-item label="所属门店:">
+                      <el-select v-model="form.orderType" >
+                        <el-option label="当前课程" value="1"></el-option>
+                        <el-option label="演出" value="3"></el-option>
+                        <el-option label="场地预定" value="2"></el-option>
+                        <el-option label="活动项目课程" value="4"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="姓名:" >
+                        <el-input style="width:200px" placeholder="请输入姓名"  autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="联系电话:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="证件类型:">
+                      <el-select v-model="form.orderType" placeholder="请选择证件类型" >
+                        <el-option label="当前课程" value="1"></el-option>
+                        <el-option label="演出" value="3"></el-option>
+                        <el-option label="场地预定" value="2"></el-option>
+                        <el-option label="活动项目课程" value="4"></el-option>
+                      </el-select>
+                    </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="证件号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="所属部门:">
+                      <el-select v-model="form.orderType" placeholder="请选择证件类型">
+                        <el-option label="当前课程" value="1"></el-option>
+                        <el-option label="演出" value="3"></el-option>
+                        <el-option label="场地预定" value="2"></el-option>
+                        <el-option label="活动项目课程" value="4"></el-option>
+                      </el-select>
+                    </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="  职位:" >
+                        &nbsp;&nbsp;<el-input style="width:200px" placeholder="请填写职位"  autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="工号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="银行卡号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="企业邮箱:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="分机号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                      <el-col :span="12">
+                        <div class="grid-content">
+                          <el-form-item label="入职时间:">
+                            <el-date-picker
+                              v-model="form.startTime"
+                              value-format="yyyy-MM-dd"
+                              type="date"
+                              style="width:140px"
+                              placeholder="选择日期"
+                            ></el-date-picker>
+                          </el-form-item>
+                        </div>
+                      </el-col>
+
+                      <el-col :span="12">
+                        <el-form-item label="关联后台账号:" >
+                          <el-input style="width:200px" placeholder="请输入正确的后台账号"  autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                  </el-row>
+
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="adddstaff = false">取 消</el-button>
+                <el-button type="primary">确定</el-button>
+              </div>
+            </el-dialog>
+          </div>
+
+
+          <div>
+            <!-- 添加员工 -->
+            <el-dialog title="编辑员工" :visible.sync="editstaff" >
+              <el-form :model="form" :inline="true"  :required="true" class="top-body" label-width="120px" size="small">
+                  <el-row>
+                    <el-form-item label="所属门店:">
+                      <el-select v-model="form.orderType" >
+                        <el-option label="当前课程" value="1"></el-option>
+                        <el-option label="演出" value="3"></el-option>
+                        <el-option label="场地预定" value="2"></el-option>
+                        <el-option label="活动项目课程" value="4"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="姓名:" >
+                        <el-input style="width:200px" placeholder="请输入姓名"  autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="联系电话:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="证件类型:">
+                      <el-select v-model="form.orderType" placeholder="请选择证件类型" >
+                        <el-option label="当前课程" value="1"></el-option>
+                        <el-option label="演出" value="3"></el-option>
+                        <el-option label="场地预定" value="2"></el-option>
+                        <el-option label="活动项目课程" value="4"></el-option>
+                      </el-select>
+                    </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="证件号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="所属部门:">
+                      <el-select v-model="form.orderType" placeholder="请选择证件类型">
+                        <el-option label="当前课程" value="1"></el-option>
+                        <el-option label="演出" value="3"></el-option>
+                        <el-option label="场地预定" value="2"></el-option>
+                        <el-option label="活动项目课程" value="4"></el-option>
+                      </el-select>
+                    </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="  职位:" >
+                        &nbsp;&nbsp;<el-input style="width:200px" placeholder="请填写职位"  autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="工号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="银行卡号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="企业邮箱:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="分机号:" >
+                        <el-input style="width:200px"   autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                      <el-col :span="12">
+                        <div class="grid-content">
+                          <el-form-item label="入职时间:">
+                            <el-date-picker
+                              v-model="form.startTime"
+                              value-format="yyyy-MM-dd"
+                              type="date"
+                              style="width:140px"
+                              placeholder="选择日期"
+                            ></el-date-picker>
+                          </el-form-item>
+                        </div>
+                      </el-col>
+
+                      <el-col :span="12">
+                        <el-form-item label="关联后台账号:" >
+                          <el-input style="width:200px" placeholder="请输入正确的后台账号"  autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                  </el-row>
+
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="editstaff = false">取 消</el-button>
+                <el-button type="primary">确定</el-button>
+              </div>
+            </el-dialog>
+          </div>
+
+          <div>
+            <!-- 办理离职 -->
+             <el-dialog title="办理离职" :visible.sync="dimission" width="500px">
+                  <el-form>
+                 
+                   <el-row>
+                      <el-col >
+                        <div class="grid-content">
+                          <el-form-item label="离职时间:">
+                            <el-date-picker
+                              v-model="form.startTime"
+                              value-format="yyyy-MM-dd"
+                              type="date"
+                              style="width:305px"
+                              placeholder="选择日期"
+                            ></el-date-picker>
+                          </el-form-item>
+                        </div>
+                      </el-col>
+                    </el-row>
+
+                    <el-row>
+                      <el-col >
+                        <el-form-item label="离职原因:" >
+                          <el-input style="width:305px"  autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                      <el-col >
+                        <el-form-item label="离职文件:" >
+                          <el-input placeholder="请选择" style="width:220px" autocomplete="off"></el-input><el-button>选择文件</el-button>
+                        </el-form-item>
+                    </el-col>
+
+                  </el-row>
+                </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dimission = false">关闭</el-button>
+                    <el-button type="primary">确定</el-button>
+
+                  </div>
+                </el-dialog>
+          </div>
+
+          <div>
+            <!-- 转正 -->
+             <el-dialog title="转正" :visible.sync="correct" width="500px">
+                  <el-form>
+                 
+                   <el-row>
+                      <el-col >
+                        <div class="grid-content">
+                          <el-form-item label="转正时间:">
+                            <el-date-picker
+                              v-model="form.startTime"
+                              value-format="yyyy-MM-dd"
+                              type="date"
+                              style="width:305px"
+                              placeholder="选择日期"
+                            ></el-date-picker>
+                          </el-form-item>
+                        </div>
+                      </el-col>
+                    </el-row>
+
+                  
+                </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="correct = false">关闭</el-button>
+                    <el-button type="primary">确定</el-button>
+
+                  </div>
+                </el-dialog>
+          </div>
+
+
+
   </div>
 </template>
 <script>
@@ -77,6 +393,10 @@
 export default {
   data() {
     return {
+      correct:false,
+      dimission:false,
+      editstaff:false,
+      adddstaff:false,
       loading: false,
       pageIndex: 1,
       pageSize: 8,

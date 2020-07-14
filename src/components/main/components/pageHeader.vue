@@ -2,14 +2,14 @@
   <div class="mainheader" height="40px">
     <div class="leftHead">
       <!--      <el-dropdown>-->
-      <!--        <span class="el-dropdownBox">-->
-      <!--          <span class="enterName">{{company.enterName}}</span>-->
-      <!--          <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-      <!--        </span>-->
+              <span class="el-dropdownBox">
+                <span class="enterName">{{user.storesInfo.storesName}}</span>
+<!--                <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+              </span>
       <!--        <el-dropdown-menu slot="dropdown">-->
       <!--          <el-dropdown-item-->
       <!--            class="itemel"-->
-      <!--            v-for="(item,index) in companyList"-->
+      <!--            v-for="(item,index) in storeList"-->
       <!--            :key="index"-->
       <!--            @click.native="selectCompany(item)"-->
       <!--          >-->
@@ -31,10 +31,7 @@
     </div>
 
     <div class="header_right">
-      <!-- <span class="itemTxt rightItem">
-        <img src="@/assets/images/topBanner/zuzhi.png" alt />
-        组织架构
-      </span>
+      <!--
       <span class="itemTxt rightItem">
         <img src="@/assets/images/topBanner/shengpi.png" alt />
         审批
@@ -62,6 +59,10 @@
           <el-option label="日文" value="ri"> </el-option>
         </el-select> -->
 			</span>
+      <span class="itemTxt rightItem" @click="itemClick('organization')">
+        <img src="@/assets/images/topBanner/zuzhi.png" alt />
+        人员管理
+      </span>
       <span class="itemTxt logoout">
 				<el-dropdown>
 					<span class="userInfo">
@@ -130,6 +131,9 @@
           })
           .catch(res => {});
       },
+      itemClick(name){
+      this.$router.push('/' + name)
+    },
     }
   };
 </script>

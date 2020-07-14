@@ -12,6 +12,16 @@
                             :rules="dataRule"
                             ref="loginForm"
                     >
+                        <el-form-item prop="storesNum">
+                            <el-select v-model="loginForm.storesNum" placeholder="请选择门店列表">
+                                <el-option
+                                    v-for="item in storeList"
+                                    :key="item.storesNum"
+                                    :label="item.storesName"
+                                    :value="item.storesNum">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
                         <el-form-item prop="account">
                             <el-input
                                     prefix-icon="el-icon-s-custom"
@@ -36,7 +46,7 @@
                         <!--              </div>-->
                         <!--            </el-form-item>-->
                         <el-form-item>
-                            <el-button style="width:100%" type="primary" @click="clickLoginBtn()">登录</el-button>
+                            <el-button style="width:100%" type="primary" @click="clickLoginBtn()" v-loading="loading">登录</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -61,7 +71,7 @@
                                 ></el-input>
                             </el-form-item>
                             <el-form-item>
-                                <el-button style="width:100%" type="primary" @click="forgetNext()">下一步</el-button>
+<!--                                <el-button style="width:100%" type="primary" @click="forgetNext()">下一步</el-button>-->
                             </el-form-item>
                         </el-form>
                     </div>
@@ -75,7 +85,7 @@
                                 <el-button
                                         size="small"
                                         style="width:100%"
-                                        @click="getVertify"
+<!--                                        @click="getVertify"-->
                                         v-if="sendAuthCode"
                                 >获取验证码
                                 </el-button>
@@ -88,7 +98,7 @@
                                 </el-button>
                             </el-col>
                         </el-row>
-                        <el-button style="margin-top:30px" type="primary" @click="checkVertify()">登录</el-button>
+<!--                        <el-button style="margin-top:30px" type="primary" @click="checkVertify()">登录</el-button>-->
                     </div>
                 </div>
                 <div class="line"></div>
@@ -126,7 +136,6 @@
                                 <el-button
                                         size="small"
                                         style="width:100%"
-                                        @click="getVertify"
                                         v-if="sendAuthCode"
                                 >获取验证码
                                 </el-button>
@@ -144,7 +153,7 @@
                         <el-checkbox v-model="isCheck">同意指点地球村用户协议和隐私政策</el-checkbox>
                     </el-form-item>
                     <el-form-item style="text-align: center;">
-                        <el-button type="primary" @click="registerAccount" style="width:70%">注册</el-button>
+                        <el-button type="primary" style="width:70%">注册</el-button>
                     </el-form-item>
                 </el-form>
                 <p style="margin:5px 0 5px">
@@ -157,245 +166,132 @@
 </template>
 
 <script>
-    import {request} from "@/utils/request";
-    import {mapState, mapActions} from "vuex";
-    import routermsg from '../../store/modules/routermsg'
+  import { request } from '@/utils/request'
+  import { mapState, mapActions } from 'vuex'
+  import routermsg from '../../store/modules/routermsg'
 
-    export default {
-        computed: {
-            ...mapState({
-                msgKey: state => state.config.msgKey,
-                routermsg: state => state.routermsg.routermsg,
-                plat_source: state => state.config.plat_source
+export default {
+  computed: {
+    ...mapState({
+      msgKey: state => state.config.msgKey,
+      routermsg: state => state.routermsg.routermsg,
+      plat_source: state => state.config.plat_source
+    })
+  },
+  data () {
+    var validatePass = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入新密码'))
+      } else if (value.toString().length < 6 || value.toString().length > 18) {
+        callback(new Error('密码长度为6 - 18个字符'))
+      } else {
+        callback()
+      }
+    }
+    return {
+      loading: false,
+      storeList: [],
+      isCheck: false,
+      forgetStep: 1, // 忘记密码步骤
+      forget: false, // 忘记密码
+      loginType: 'login', // 登录-注册
+      verify: '', // 验证码
+      sendAuthCode: true /* 布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */,
+      auth_time: 0 /* 倒计时 计数器 */,
+      loginForm: {
+        storesNum: '0000000000',
+        account: 'admin',
+        password: 'admin123456'
+      },
+      forgetForm: {
+        nickname: '',
+        regType: '1',
+        password: '',
+        phoneNumber: ''
+      },
+
+      dataRule: {
+        storesNum: {
+          required: true,
+          message: '请先选择门店',
+          trigger: 'blur'
+        },
+        nickname: {
+          required: true,
+          message: '账号不得为空',
+          trigger: 'blur'
+        },
+        account: {
+          required: true,
+          message: '账号不得为空',
+          trigger: 'blur'
+        },
+        password: [
+          {
+            required: true,
+            validator: validatePass,
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
+  },
+
+  created() {
+    this.$F.doRequest(null, '/pms/freeuser/stores_list', {filterHeader: true}, (data) => {
+      this.storeList = data;
+      // this.storeList = [{storesNum: '0000000000', storesName: '总部后台'}]
+      this.loginForm.storesNum = data[0].storesNum
+    })
+  },
+  methods: {
+    ...mapActions({
+      saveuser: 'user/saveuser',
+      routeractions: 'routermsg/routeractions',
+      companyInit: 'company/companyInit'
+    }),
+
+    userIsLogin (data) {
+      data.data.storesInfo = this.storeList.filter((item) => {
+        return item.storesNum == this.loginForm.storesNum
+      })[0];
+      this.saveuser(data)
+      const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg)
+      this.routeractions(routeArray)
+      let url = 'main'
+      // if (data.data && data.data.belongTo.length > 0) {
+      //   this.companyInit(data.data.belongTo[0]);
+      //   url = "main";
+      // }
+      this.$forceUpdate()
+      this.$router.push({ path: '/main' })
+      // this.$router.push({
+      //   name: url
+      // });
+    },
+
+    loginAction () {
+      this.$router.push({
+        name: 'main'
+      })
+    },
+
+    clickLoginBtn (params = {loginType: 5}) {
+      this.$refs['loginForm'].validate(valid => {
+        if (valid) {
+          this.$F.merge(params, this.loginForm)
+          this.$F.doRequest(this, '/pms/freeuser/login', params, (res) => {
+            sessionStorage.account = this.loginForm.account
+            sessionStorage.password = this.loginForm.password
+            this.userIsLogin({
+              data: res
             })
-        },
-        data() {
-            var validatePass = (rule, value, callback) => {
-                if (!value) {
-                    callback(new Error("请输入新密码"));
-                } else if (value.toString().length < 6 || value.toString().length > 18) {
-                    callback(new Error("密码长度为6 - 18个字符"));
-                } else {
-                    callback();
-                }
-            };
-            var checkphone = (rule, value, callback) => {
-                let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
-                if (value == "") {
-                    callback(new Error("请输入手机号"));
-                } else if (!phoneReg.test(value)) {
-                    //引入methods中封装的检查手机格式的方法
-                    callback(new Error("请输入正确的手机号!"));
-                } else {
-                    callback();
-                }
-            };
-            return {
-                isCheck: false,
-                forgetStep: 1, //忘记密码步骤
-                forget: false, //忘记密码
-                loginType: "login", //登录-注册
-                verify: "", //验证码
-                sendAuthCode: true /*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */,
-                auth_time: 0 /*倒计时 计数器*/,
-                loginForm: {
-                    password: "EdtTest",
-                    account: "EdtTest"
-                },
-                forgetForm: {
-                    nickname: "",
-                    regType: "1",
-                    password: "",
-                    phoneNumber: ""
-                },
-
-                dataRule: {
-                    phoneNumber: {
-                        required: true,
-                        validator: checkphone,
-
-                        trigger: "blur"
-                    },
-                    nickname: {
-                        required: true,
-                        message: "账号不得为空",
-                        trigger: "blur"
-                    },
-                    account: {
-                        required: true,
-                        message: "账号不得为空",
-                        trigger: "blur"
-                    },
-                    password: [
-                        {
-                            required: true,
-                            validator: validatePass,
-                            trigger: "blur"
-                        }
-                    ]
-                }
-            };
-        },
-
-        methods: {
-            ...mapActions({
-                saveuser: "user/saveuser",
-                routeractions: "routermsg/routeractions",
-                companyInit: "company/companyInit"
-            }),
-
-
-            userIsLogin(data) {
-                this.saveuser(data);
-                const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg);
-                this.routeractions(routeArray);
-                let url = "main";
-                // if (data.data && data.data.belongTo.length > 0) {
-                //   this.companyInit(data.data.belongTo[0]);
-                //   url = "main";
-                // }
-                this.$forceUpdate();
-                this.$router.push({path: '/main'})
-                // this.$router.push({
-                //   name: url
-                // });
-            },
-
-            loginAction() {
-                this.$router.push({
-                    name: "main"
-                });
-            },
-            /**注册账号 */
-            registerAccount() {
-                this.$refs["forgetForm"].validate(valid => {
-                    verify_check({
-                        plat_source: this.plat_source,
-                        verify: this.verify,
-                        phoneNumber: this.forgetForm.phoneNumber,
-                        checkType: "1"
-                    }).then(res1 => {
-                        if (res1.code == 200) {
-                            this.$http({
-                                url: this.$http.systemUrl("/home/freeuser/register"),
-                                method: "post",
-                                data: this.$http.adornData(this.forgetForm)
-                            }).then(res => {
-                                if (res.code == 200) {
-                                    login({
-                                        plat_source: this.plat_source,
-                                        loginType: "2",
-                                        account: this.forgetForm.phoneNumber,
-                                        password: this.forgetForm.password
-                                    }).then(res2 => {
-                                        if (res2.code == 200) {
-                                            sessionStorage.account = this.forgetForm.phoneNumber;
-                                            sessionStorage.password = this.forgetForm.password;
-                                            this.userIsLogin(res2);
-                                        } else {
-                                            this.$message.error(res2.message);
-                                        }
-                                    });
-                                } else {
-                                    this.$message.error(res.message);
-                                }
-                            });
-                        } else {
-                            this.$message.error(res1.message);
-                        }
-                    });
-                });
-            },
-            clickLoginBtn() {
-                this.$refs["loginForm"].validate(valid => {
-                    if (valid) {
-                        console.log(request);
-                        request('/edt/freeadmin/edt_login', {
-                            account: this.loginForm.account,
-                            password: this.loginForm.password
-                        }, 'post', false).then((res) => {
-                            if (res.code == 200) {
-                                sessionStorage.account = this.loginForm.account;
-                                sessionStorage.password = this.loginForm.password;
-                                this.userIsLogin(res);
-                            } else {
-                                this.$message.error(res.message);
-                            }
-                        });
-                    }
-                });
-            },
-            /**忘记密码第二步 */
-            forgetNext() {
-                this.$refs["forgetForm"].validate(valid => {
-                    if (valid) {
-                        this.forgetStep = 2;
-                    }
-                });
-            },
-            /**获取验证码 */
-            getVertify() {
-                send_verify({
-                    plat_source: this.plat_source,
-                    phoneNumber: this.forgetForm.phoneNumber,
-                    key: this.msgKey
-                }).then(res => {
-                    if (res.code == 200) {
-                        this.sendAuthCode = false;
-                        this.auth_time = 60;
-                        var auth_timetimer = setInterval(() => {
-                            this.auth_time--;
-                            if (this.auth_time <= 0) {
-                                this.sendAuthCode = true;
-                                clearInterval(auth_timetimer);
-                            }
-                        }, 1000);
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                });
-            },
-            /**验证验证码 */
-            checkVertify() {
-                verify_check({
-                    plat_source: this.plat_source,
-                    verify: this.verify,
-                    phoneNumber: this.forgetForm.phoneNumber,
-                    checkType: "1"
-                }).then(res => {
-                    if (res.code == 200) {
-                        reset_password({
-                            plat_source: this.plat_source,
-                            phoneNumber: this.forgetForm.phoneNumber,
-                            password: this.forgetForm.password
-                        }).then(data => {
-                            if (data.code == 200) {
-                                // this.userIsLogin(res);
-                                login({
-                                    plat_source: this.plat_source,
-                                    loginType: "2",
-                                    account: this.forgetForm.account,
-                                    password: this.forgetForm.password
-                                }).then(res => {
-                                    if (res.code == 200) {
-                                        sessionStorage.account = this.forgetForm.account;
-                                        sessionStorage.password = this.forgetForm.password;
-                                        this.userIsLogin(res);
-                                    } else {
-                                        this.$message.error(res.message);
-                                    }
-                                });
-                            } else {
-                                this.$message.error(data.message);
-                            }
-                        });
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                });
-            }
+          })
         }
-    };
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -414,6 +310,7 @@
             background-color: #ffffff;
             width: 650px;
             padding: 50px;
+            text-align: center;
             min-height: 360px;
             border-radius: 6px;
 
@@ -510,5 +407,8 @@
     .register-body .body-info .body-l .detail {
         font-size: 15px;
         padding-top: 10px;
+    }
+    .body-info .el-form .el-select {
+        width: 100%;
     }
 </style>

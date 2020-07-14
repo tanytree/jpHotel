@@ -101,17 +101,12 @@ http.adornParams = (params = {}, openDefultParams = true) => {
  */
 http.adornData = (data = {}, openDefultdata = true, contentType = 'form') => {
     data = merge({platSource: '1005'}, data)
-    console.log(store.state)
     var defaults = {
-        // 't': new Date().getTime()
-        userId: store.state.user.userId,
-      accessToken: store.state.user.token,
-        currentUserId: store.state.user.userId,
-        // coId: store.state.company.id,
-        // token: store.state.user.token,
-      // group_id:"",
+        userId: store.state.user.id,
+        accessToken: store.state.user.token,
+        token: store.state.user.token,
+        storesNum: store.state.user.storesInfo && store.state.user.storesInfo.storesNum?store.state.user.storesInfo.storesNum:''
     }
-
     data = openDefultdata ? merge(defaults, data) : data
     return contentType === 'json' ? JSON.stringify(data) : objToParams(data)
 }

@@ -12,7 +12,8 @@
 					<el-tab-pane :label="first_title" name="one">
 						<div class="first-body">
 							<div class="title">
-								<span>前台部报表</span>
+<!--								<span>前台部报表</span>-->
+								<span>{{$t('boss.test')}}</span>
 							</div>
 							<div class="content-body">
 								<div class="body-item">
