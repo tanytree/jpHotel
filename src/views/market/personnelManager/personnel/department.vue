@@ -1,4 +1,4 @@
-<template>
+    <template>
 <div>
     <div>
         <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='false' :tree-props="{children: 'departmentList', hasChildren: 'hasChildren'}">

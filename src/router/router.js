@@ -622,6 +622,12 @@ export default new Router({
                     component: () =>
                         import ('@/views/purchase/online/procurement')
                 },
+                {
+                    path: '/menuAssert',
+                    name: 'menuAssert',
+                    component: () =>
+                        import ('@/views/menuAssert/menuAssert')
+                },
             ]
         },
         {

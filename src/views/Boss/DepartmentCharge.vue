@@ -80,9 +80,9 @@
 					departmentHeader :true
 				}
 				this.$F.doRequest(this, '/pms/role/menu_list', params, (res) => {
-					if (res != null && res != '') {
+					if (res) {
 						res.forEach((value) =>{
-							if (value.header != null && value.header != '') {
+							if (value.header) {
 								value.header_name = value.header.userName
 							}
 						})
@@ -94,7 +94,7 @@
 			get_dialogList() {
 				let params = this.dialog_info
 				this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (res) => {
-					if (res.hotelUserList != null && res != '') {
+					if (res) {
 						res.hotelUserList.forEach((value) =>{
 							value.checked = false
 						})
