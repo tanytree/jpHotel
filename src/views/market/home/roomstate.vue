@@ -229,7 +229,7 @@
                         style="width:80px;margin-left:20px"
                         type="primary"
                         @click="batchForm('batchform')"
-                      >提交</el-button>
+                      >查询</el-button>
                       <el-button style="width:80px" @click="resetbatch('batchform')">重置</el-button>
                     </el-form-item>
                   </el-col>
@@ -251,16 +251,16 @@
                     <el-row>
                       <el-row>
                         <span>请选择需要置脏/置净的房间</span>
-                        <span>已选（1）</span>
+                        <span style="color:red;margin-left:5px">已选（1）</span>
                         <el-form-item style="float:right">
                           <el-checkbox v-model="checked">全选</el-checkbox>
                         </el-form-item>
                       </el-row>
 
                       <el-form-item>
-                        <el-row>
+                        <el-row style="background:#D9DDE2">
                           <el-form-item>
-                            <el-checkbox v-model="checked">博超精选酒店（蜀山区）3层</el-checkbox>
+                            <el-checkbox v-model="checked" >博超精选酒店（蜀山区）3层</el-checkbox>
                           </el-form-item>
                         </el-row>
                         <el-row>
@@ -280,7 +280,7 @@
                       </el-form-item>
 
                       <el-form-item>
-                        <el-row>
+                        <el-row style="background:#D9DDE2">
                           <el-form-item>
                             <el-checkbox v-model="checked">博超精选酒店（蜀山区）3层</el-checkbox>
                           </el-form-item>
@@ -343,7 +343,7 @@
                       style="width:80px;margin-left:20px"
                       type="primary"
                       @click="submitForm('form')"
-                    >提交</el-button>
+                    >查询</el-button>
                     <el-button style="width:80px" @click="resetForms('form')">重置</el-button>
                   </el-form-item>
                 </el-col>
@@ -550,7 +550,7 @@
                 备注：
                 <span>提醒客户起床</span>
               </label>
-              <el-button type="text">修改</el-button>
+              <el-button type="text" @click="remark=true">修改</el-button>
             </el-row>
             <el-row style="margin-top:10px">
               <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
@@ -824,17 +824,15 @@
               <el-form>
             <el-row>
               <el-col :span="12">
-              <el-col :span="6">房间号：A100</el-col>
-              <el-col :span="6">客人姓名：战三</el-col>
-              <el-col :span="6">房价：300</el-col>
-              <el-col :span="6" style="margin-top:-10px">
-               <!-- <el-form-item label="换房原因："> -->
-                 换房原因:
-                  <el-input style="width:100px"></el-input>
-               <!-- </el-form-item> -->
-                 
-              </el-col>
-             
+                <el-col :span="5">房间号：A100</el-col>
+                <el-col :span="5">客人姓名：战三</el-col>
+                <el-col :span="5">房价：300</el-col>
+                <el-col :span="9" style="margin-top:-10px">
+                <el-form-item label="换房原因:">
+                    <el-input style="width:112px;" ></el-input>
+                  </el-form-item>
+                  
+                </el-col>
               </el-col>
               
             </el-row>
@@ -973,6 +971,22 @@
         </el-card>
       </el-dialog>
     </div>
+
+    <!-- 修改备注 -->
+    <div>
+      <el-dialog title="修改备注" :visible.sync="remark" width="600px">
+           <el-form>
+              <el-form-item label="备注:">
+                  <el-input type="textarea" style="width:400px"></el-input>
+              </el-form-item>
+              <el-form-item style="text-align: center;">
+                <el-button >取消</el-button>
+                <el-button  type="primary">确定</el-button>
+              </el-form-item>
+
+           </el-form>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -980,6 +994,7 @@
 export default {
   data() {
     return {
+      remark:false,
       num: 1,
       currentPage4: 4, //分页当前所在页数的位置
       stayoernum: "1", //续住天数

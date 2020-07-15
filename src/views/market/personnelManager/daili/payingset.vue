@@ -10,15 +10,15 @@
       <el-row>
 
         
-        <el-col :span="7">
+        <el-col :span="5">
           <el-form-item label="员工名称">
-            <el-input style="width:184px" v-model="form.name"></el-input>
+            <el-input style="width:120px" v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
 
-        <el-col :span="7">
+        <el-col :span="5">
           <el-form-item label="所属门店">
-            <el-select v-model="form.orderType" style="width:184px">
+            <el-select v-model="form.orderType" style="width:100px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
               <el-option label="场地预定" value="2"></el-option>
@@ -115,7 +115,7 @@
                 </el-col>
             </el-row>
           </el-form>
-          <div slot="footer" class="dialog-footer" style="text-align:center">
+          <div slot="footer" class="dialog-footer">
             <el-button @click="detail = false">关 闭</el-button>
           </div>
         </el-dialog>
@@ -183,7 +183,7 @@
                 </el-col>
             </el-row>
           </el-form>
-          <div slot="footer" class="dialog-footer" style="text-align:center">
+          <div slot="footer" class="dialog-footer">
             <el-button @click="setting = false">取消</el-button>
             <el-button type="primary">确 定</el-button>
           </div>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-23 15:49:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 22:29:26
+ * @LastEditTime: 2020-07-14 09:45:11
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
@@ -218,17 +218,6 @@ import {
     mapState,
     mapActions
 } from "vuex";
-// import {
-//   department_list,
-//   employees_list,
-//   employees_edit,
-//   department_delete,
-//   department_edit,
-//   department_detail,
-//   enterprise_department_distribution
-// } from "@/utils/api/organization";
-// import { public_dict_list,enterprise_edit_role } from "@/utils/api/login";
-
 export default {
     components: {
         employees,

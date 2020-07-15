@@ -54,10 +54,10 @@
                 <el-button style="width:60px;">重置</el-button>
               </el-form-item>
             </el-col>
-            <el-col>
-              <el-form-item>
-              <el-button type="primary" @click="newNote=true">新增留言</el-button>
-            </el-form-item> 
+            <el-col :span="6" >
+              <el-form-item style="margin-left:-100px">
+                <el-button type="primary" @click="newNote=true">新增留言</el-button>
+              </el-form-item> 
             </el-col>
           </el-row>
         </el-form>
@@ -107,13 +107,13 @@
         <div>
           <el-dialog title="详情" style="text-align:left" :visible.sync="notedetail">
             <el-row>
-              <label>房间号：</label>A1001
+              <el-col :span="3">房间号：</el-col><el-col :span="12">A1001</el-col>
             </el-row>
             <el-row>
-              <label>员工留言：</label>张三
+              <el-col :span="3">员工留言：</el-col><el-col :span="12">张三</el-col>
             </el-row>
             <el-row>
-              <label>留言内容：</label>挖空房间爱读书卡还款
+              <el-col :span="3">留言内容：</el-col><el-col :span="12">挖空房间爱读书卡还款</el-col>
             </el-row>
             <div slot="footer" class="dialog-footer" style="text-align:center">
               <el-button style="width:80px;" type="primary" @click="notedetail = false">关闭</el-button>
@@ -130,7 +130,7 @@
              <el-form-item label="留言内容">
                <el-input type="textarea" style="width:500px"  v-model="noteForm.desc"></el-input>
              </el-form-item>
-             <el-form-item>
+             <el-form-item style="text-align:center">
                <el-button style="width:80px;" type="primary" @click="noteSubmit">确定</el-button>
                <el-button style="width:80px;" @click="newNote = false">取消</el-button>
              </el-form-item>

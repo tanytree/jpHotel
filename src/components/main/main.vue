@@ -191,87 +191,87 @@
       // },
         activated() {
             //   debugger
-            this.routeractions([
-                {
-                    name: this.$t('tabName[0].name'), // 总办
-                    icon: "icon06",
-                    value: "product",
-                    id: '1',
-                    children: [
-                        {name: this.$t('tabName[0].children[0].name'), id: "10", icon: "sales/nav01.png", value: "bossIndex"},
-                        {name: this.$t('tabName[0].children[1].name'), id: "11", icon: "market/nav02.png", value: "DepartmentCharge"},
-                        {name: this.$t('tabName[0].children[2].name'), id: "12", icon: "market/nav03.png", value: "PersonMg"},
-                        {name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg",},
-                        {name: this.$t('tabName[0].children[4].name'), id: "14", icon: "market/nav05.png", value: "storeManagement",}
-                    ]
-                },
-                {
-                    name: this.$t('tabName[1].name'), // 管理部
-                    icon: "icon09",
-                    value: "product",
-                    id: '2',
-                    children: [
-                        {name: this.$t('tabName[1].children[0].name'), id: "20", icon: "market/nav01.png", value: "managerIndex"},
-                        {name: this.$t('tabName[1].children[1].name'), id: "21", icon: "market/nav02.png", value: "guestCenter"},
-                        {name: this.$t('tabName[1].children[2].name'), id: "22", icon: "market/nav03.png", value: "guestRoom_2"},
-                        {name: this.$t('tabName[1].children[3].name'), id: "23", icon: "market/nav04.png", value: "priceSystem"},
-                        {name: this.$t('tabName[1].children[4].name'), id: "24", icon: "market/nav04.png", value: "advert",}
-                    ]
-                },
-                {
-                    name: this.$t('tabName[2].name'), // 财务部
-                    icon: "icon08",
-                    value: "product",
-                    id: '3',
-                    children: [
-                        {name: this.$t('tabName[2].children[0].name'), id: "30", icon: "market/nav01.png", value: "finance"},
-                        {name: this.$t('tabName[2].children[1].name'), id: "31", icon: "market/nav02.png", value: "product"},
-                        {name: this.$t('tabName[2].children[2].name'), id: "32", icon: "market/nav03.png", value: "promotion"},
-                        {name: this.$t('tabName[2].children[3].name'), id: "33", icon: "market/nav04.png", value: "advert"},
-                        {name: this.$t('tabName[2].children[4].name'), id: "34", icon: "market/nav04.png", value: "advert",},
-                        {name: this.$t('tabName[2].children[5].name'), id: "35", icon: "market/nav04.png", value: "advert",}
-                    ]
-                },
-                {
-                    name: this.$t('tabName[3].name'), // 前台部
-                    icon: "icon04",
-                    value: "product",
-                    id: '4',
-                    children: [
-                        { name: this.$t('tabName[3].children[0].name'), id: "40", icon: "market/nav01.png", value: "market" },
-                        { name: this.$t('tabName[3].children[1].name'), id: "41", icon: "market/nav02.png", value: "reception" },
-                        { name: this.$t('tabName[3].children[2].name'), id: "42", icon: "market/nav03.png", value: "booking" },
-                        { name: this.$t('tabName[3].children[3].name'), id: "43", icon: "market/nav04.png", value: "orders"},
-                        { name: this.$t('tabName[3].children[4].name'), id: "44", icon: "market/nav04.png", value: "customer", },
-                        { name: this.$t('tabName[3].children[5].name'), id: "45", icon: "market/nav04.png", value: "nightaudit", },
-                        { name: this.$t('tabName[3].children[6].name'), id: "46", icon: "market/nav04.png", value: "advert", }
-                    ]
-                },
-                {
-                    name: this.$t('tabName[4].name'), // 企划部
-                    icon: "icon04",
-                    value: "product",
-                    id: '5',
-                    children: [
-                        {name: this.$t('tabName[4].children[0].name'), id: "47", icon: "market/nav01.png", value: "salemain"},
-                        {name: this.$t('tabName[4].children[1].name'), id: "48", icon: "market/nav02.png", value: "saleOrder"},
-                        {name: this.$t('tabName[4].children[2].name'), id: "49", icon: "market/nav03.png", value: "saleContract"},
-                        {name: this.$t('tabName[4].children[3].name'), id: "50", icon: "market/nav03.png", value: "contracted"}
-                    ]
-                },
-                {
-                    name: this.$t('tabName[5].name'), // 人事部
-                    icon: "icon05",
-                    value: "product",
-                    id: '6',
-                    children: [
-                        {name: this.$t('tabName[5].children[0].name'), id: "51", icon: "market/nav01.png", value: "channel"},
-                        {name: this.$t('tabName[5].children[1].name'), id: "52", icon: "market/nav02.png", value: "channelFenxiao"},
-                        {name: this.$t('tabName[5].children[2].name'), id: "53", icon: "market/nav03.png", value: "channelDaili"},
-                        {name: this.$t('tabName[5].children[3  ].name'), id: "54", icon: "market/nav03.png", value: "channelSetting"}
-                    ]
-                }
-            ]);
+          this.routeractions([
+            {
+              name: this.$t('tabName[0].name'), // 总办
+              icon: "icon06",
+              value: "product",
+              id: 'a367289c90e34614a308917f5726bd01',
+              children: [
+                {name: this.$t('tabName[0].children[0].name'), id: "10", icon: "sales/nav01.png", value: "bossIndex"},
+                {name: this.$t('tabName[0].children[1].name'), id: "11", icon: "market/nav02.png", value: "DepartmentCharge"},
+                {name: this.$t('tabName[0].children[2].name'), id: "12", icon: "market/nav03.png", value: "PersonMg"},
+                {name: this.$t('tabName[0].children[3].name'), id: "13", icon: "market/nav04.png", value: "PayMg",},
+                {name: this.$t('tabName[0].children[4].name'), id: "14", icon: "market/nav05.png", value: "storeManagement",}
+              ]
+            },
+            {
+              name: this.$t('tabName[1].name'), // 管理部
+              icon: "icon09",
+              value: "product",
+              id: 'a367289c90e34614a308917f5726bd05',
+              children: [
+                {name: this.$t('tabName[1].children[0].name'), id: "20", icon: "market/nav01.png", value: "managerIndex"},
+                {name: this.$t('tabName[1].children[1].name'), id: "21", icon: "market/nav02.png", value: "guestCenter"},
+                {name: this.$t('tabName[1].children[2].name'), id: "22", icon: "market/nav03.png", value: "guestRoom_2"},
+                {name: this.$t('tabName[1].children[3].name'), id: "23", icon: "market/nav04.png", value: "priceSystem"},
+                {name: this.$t('tabName[1].children[4].name'), id: "24", icon: "market/nav04.png", value: "advert",}
+              ]
+            },
+            {
+              name: this.$t('tabName[2].name'), // 财务部
+              icon: "icon08",
+              value: "product",
+              id: 'a367289c90e34614a308917f5726bd03',
+              children: [
+                {name: this.$t('tabName[2].children[0].name'), id: "30", icon: "market/nav01.png", value: "finance"},
+                {name: this.$t('tabName[2].children[1].name'), id: "31", icon: "market/nav02.png", value: "product"},
+                {name: this.$t('tabName[2].children[2].name'), id: "32", icon: "market/nav03.png", value: "promotion"},
+                {name: this.$t('tabName[2].children[3].name'), id: "33", icon: "market/nav04.png", value: "advert"},
+                {name: this.$t('tabName[2].children[4].name'), id: "34", icon: "market/nav04.png", value: "advert",},
+                {name: this.$t('tabName[2].children[5].name'), id: "35", icon: "market/nav04.png", value: "advert",}
+              ]
+            },
+            {
+              name: this.$t('tabName[3].name'), // 前台部
+              icon: "icon04",
+              value: "product",
+              id: 'a367289c90e34614a308917f5726bd06',
+              children: [
+                { name: this.$t('tabName[3].children[0].name'), id: "40", icon: "market/nav01.png", value: "market" },
+                { name: this.$t('tabName[3].children[1].name'), id: "41", icon: "market/nav02.png", value: "reception" },
+                { name: this.$t('tabName[3].children[2].name'), id: "42", icon: "market/nav03.png", value: "booking" },
+                { name: this.$t('tabName[3].children[3].name'), id: "43", icon: "market/nav04.png", value: "orders"},
+                { name: this.$t('tabName[3].children[4].name'), id: "44", icon: "market/nav04.png", value: "customer", },
+                { name: this.$t('tabName[3].children[5].name'), id: "45", icon: "market/nav04.png", value: "nightaudit", },
+                { name: this.$t('tabName[3].children[6].name'), id: "46", icon: "market/nav04.png", value: "advert", }
+              ]
+            },
+            {
+              name: this.$t('tabName[4].name'), // 企划部
+              icon: "icon04",
+              value: "product",
+              id: 'a367289c90e34614a308917f5726bd02',
+              children: [
+                {name: this.$t('tabName[4].children[0].name'), id: "47", icon: "market/nav01.png", value: "salemain"},
+                {name: this.$t('tabName[4].children[1].name'), id: "48", icon: "market/nav02.png", value: "saleOrder"},
+                {name: this.$t('tabName[4].children[2].name'), id: "49", icon: "market/nav03.png", value: "saleContract"},
+                {name: this.$t('tabName[4].children[3].name'), id: "50", icon: "market/nav03.png", value: "contracted"}
+              ]
+            },
+            {
+              name: this.$t('tabName[5].name'), // 人事部
+              icon: "icon05",
+              value: "product",
+              id: 'a367289c90e34614a308917f5726bd04',
+              children: [
+                {name: this.$t('tabName[5].children[0].name'), id: "51", icon: "market/nav01.png", value: "personnelManager"},
+                {name: this.$t('tabName[5].children[1].name'), id: "52", icon: "market/nav02.png", value: "employeeList"},
+                {name: this.$t('tabName[5].children[2].name'), id: "53", icon: "market/nav03.png", value: "channelDaili"},
+                {name: this.$t('tabName[5].children[3  ].name'), id: "54", icon: "market/nav03.png", value: "channelSetting"}
+              ]
+            }
+          ]);
             // this.$i18n.locale = 'zh';
             this.menulfuc(this.routesmap[0])
             this.toSection(this.menul.children[0])

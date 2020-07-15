@@ -120,7 +120,7 @@
 
                   
                   
-                  <el-form-item>
+                  <el-form-item style="text-align:right">
 
                     <el-button type="primary" >确定</el-button>
                     <el-button @click="newupdata = false">取消</el-button>
@@ -186,7 +186,7 @@
 
                   
                   
-                  <el-form-item>
+                  <el-form-item style="text-align:right">
 
                     <el-button type="primary" >确定</el-button>
                     <el-button @click="updatas = false" >取消</el-button>
@@ -199,28 +199,28 @@
       <div>
         <el-dialog title="查看" :visible.sync="checkrules">
           <el-row>
-              <label >规则名称：</label>
-              <span>规则2</span>
+              <el-col :span="6">规则名称：</el-col>
+              <el-col :span="18">规则2</el-col>
           </el-row> 
           <el-row>
-              <label >状态：</label>
-              <span>禁用</span>
+              <el-col :span="6" >状态：</el-col>
+              <el-col :span="18">禁用</el-col>
           </el-row>
           <el-row>
-              <label >时间：</label>
-              <span>2020-04-17至2021-04-17</span>
+              <el-col :span="6">时间：</el-col>
+              <el-col :span="18">2020-04-17至2021-04-17</el-col>
           </el-row>
           <el-row>
-              <label >星期：</label>
-              <span>每天</span>
+              <el-col :span="6" >星期：</el-col>
+              <el-col :span="18">每天</el-col>
           </el-row> 
           <el-row>
-              <label >折扣率：</label>
-              <span>0.9（向上取整）</span>
+              <el-col :span="6" >折扣率：</el-col>
+              <el-col :span="18">0.9（向上取整）</el-col>
           </el-row>
           
 
-          <div slot="footer" class="dialog-footer">
+          <div slot="footer" class="dialog-footer" style="text-align:center">
             <el-button @click="checkrules = false">关闭</el-button>
           </div>
         </el-dialog>

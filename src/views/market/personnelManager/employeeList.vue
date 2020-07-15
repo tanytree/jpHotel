@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-01-04 15:46:19
- * @LastEditors: Dana
- * @LastEditTime: 2020-03-31 15:47:45
- * @FilePath: /cloudAdmin/src/views/market/channel/index.vue
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-14 16:52:29
+ * @FilePath: /jiudian/src/views/market/personnelManager/employeeList.vue
  -->
 <template>
   <el-tabs class="pageTab" v-model="activeName">

@@ -128,7 +128,7 @@
                        <el-col >
                         <el-form-item label="手动独立升级:">
                           支付费用
-                          <el-input style="width:200px" v-model="newform.name"></el-input>日元 
+                          <el-input style="width:200px;;margin:0 5px" v-model="newform.name"></el-input>日元 
                           <span style="color:#666666;margin-left:10px">支付费用可直接升级</span>
                         </el-form-item>
                     </el-col>
