@@ -225,7 +225,7 @@
               id: 'a367289c90e34614a308917f5726bd03',
               children: [
                 {name: this.$t('tabName[2].children[0].name'), id: "30", icon: "market/nav01.png", value: "finance"},
-                {name: this.$t('tabName[2].children[1].name'), id: "31", icon: "market/nav02.png", value: "product"},
+                {name: this.$t('tabName[2].children[1].name'), id: "31", icon: "market/nav02.png", value: "account"},
                 {name: this.$t('tabName[2].children[2].name'), id: "32", icon: "market/nav03.png", value: "promotion"},
                 {name: this.$t('tabName[2].children[3].name'), id: "33", icon: "market/nav04.png", value: "advert"},
                 {name: this.$t('tabName[2].children[4].name'), id: "34", icon: "market/nav04.png", value: "advert",},
@@ -400,7 +400,6 @@
         left: 0;
         right: 0;
         bottom: 0;
-        overflow-y: auto;
         background-color: #f5f5f5;
         display: block;
         border: 1px solid transparent;

@@ -46,7 +46,7 @@
   .bg-grey{
     background-color:#666
   }
-  
+
   /*padding*/
   .padding{
     padding:30px
@@ -113,14 +113,14 @@
   .width200{width:200px}
   .width150{width:150px}
   .width100{width:100px}
-  
+
   .ovh{overflow: hidden;}
   .fr{float: right;}
     .fl{float: left;}
   .flex {
     display: flex;
   }
-  
+
   .flex>* {
     flex: 1;
     display: flex;
@@ -283,8 +283,14 @@ li {
 .el-card {
     height: 100%;
 
+    &.is-never-shadow {
+        border: 0;
+    }
+
     .el-card__body {
         height: 100%;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -329,7 +335,7 @@ li {
 
 .el-button {
     font-size: 12px;
-    border-radius: 8px;
+    border-radius: 5px;
 
 
     &.el-button--text {
@@ -350,5 +356,32 @@ li {
 
 .boss-index {
     height: 100%;
+}
+
+.el-dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    .el-dialog__body {
+        flex: 1;
+        overflow: auto;
+    }
+}
+
+.el-table {
+    &.el-table--small {
+        font-size: 14px;
+    }
+    .default th{
+        background: #D9DDE2;
+        border-color: #d5d5d5;
+        color: #1e1e1e;
+    }
 }
 
