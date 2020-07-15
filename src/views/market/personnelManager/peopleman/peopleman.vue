@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-14 18:15:21
+ * @LastEditTime: 2020-07-14 23:00:33
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/peopleman.vue
  -->
  <template>
@@ -57,7 +57,7 @@
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="editstaff=true">修改</el-button>
                     <el-button type="text" size="mini">详情</el-button>
-                    <el-button type="text" size="mini" @click="dimission=true">办理离职</el-button>
+                    <el-button type="text" size="mini" @click="dimissionClick(row)">办理离职</el-button>
                     <el-button type="text" size="mini" @click="becoming(row)" v-if="row.userStatus!=1">转正</el-button>
                     <el-button type="text" size="mini" @click="deleteItem(row)">删除</el-button>
                 </template>
@@ -290,7 +290,7 @@
 
     <div>
         <!-- 办理离职 -->
-        <el-dialog title="办理离职" :visible.sync="dimission" width="500px">
+        <el-dialog title="办理离职" :visible.sync="dimission" width="500px" class="dimission">
             <el-form>
                 <el-row>
                     <el-col>
@@ -311,15 +311,20 @@
                 <el-row>
                     <el-col>
                         <el-form-item label="离职文件:">
-                            <el-input placeholder="请选择" v-model="itemCtrlForm.outDataUrl" style="width:220px" autocomplete="off"></el-input>
-                            <el-button>选择文件</el-button>
+                           <el-input v-model="itemCtrlForm.outDataUrl" placeholder="离职文件" :disabled="true" style="width:300px">
+                    <template slot="append">
+                        <el-upload class="upload-demo" :action='action' :data="uploadData" :show-file-list="false" :on-success="handleSuccess" :before-upload="beforeUpload">
+                            <el-button size="small" type="primary">点击上传</el-button>
+                        </el-upload>
+                    </template>
+                </el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dimission = false">关闭</el-button>
-                <el-button type="primary">确定</el-button>
+                <el-button type="primary" @click="dimissionPost">确定</el-button>
 
             </div>
         </el-dialog>
@@ -344,7 +349,6 @@
             <div slot="footer" class="dialog-footer">
                 <el-button @click="correct = false">关闭</el-button>
                 <el-button type="primary" @click="becomingPost">确定</el-button>
-
             </div>
         </el-dialog>
     </div>
@@ -353,6 +357,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+import httpRequest from "@/utils/httpRequest";
 export default {
     data() {
         return {
@@ -368,7 +374,12 @@ export default {
             dataListLoading: false,
             dataListSelections: [],
             status: "",
-
+            action: httpRequest.systemUrl( "/pms/upload/upload_img"),
+            uploadData: {
+                imgModel: 2,
+                platSource: 1005
+            },
+            fileList: [],
             listTotal: 0,
             storeList: [],
             searchForm: {
@@ -399,7 +410,18 @@ export default {
             tableData: [{}] //表格数据
         };
     },
+    computed: {
+    ...mapState({
+      token: state => state.user.token,
+      userId: state => state.user.id,
+      storesNum:state => state.user.storesInfo.storesNum 
+    })
+  },
     created() {
+      this.uploadData.userId = this.userId
+      this.uploadData.accessToken = this.token
+      this.uploadData.token = this.token
+      this.uploadData.storesNum = this.storesNum
         this.$F.doRequest(null, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
@@ -471,10 +493,38 @@ export default {
             }
             this.itemCtrlHandle(params)
         },
+        dimissionClick(item){
+            this.itemCtrlForm.employeeId = item.id
+            this.itemCtrlForm.operType = 2;
+            this.dimission = true;
+        },
+        dimissionPost() {
+            let params = {
+                employeeId: this.itemCtrlForm.employeeId,
+                operType: this.itemCtrlForm.operType,
+                outTime: this.itemCtrlForm.outTime,
+                outReason: this.itemCtrlForm.outReason,
+                outDataUrl:this.itemCtrlForm.outDataUrl
+            }
+            if (!this.itemCtrlForm.outTime) {
+                this.$message.error('请选择离职日期');
+                return
+            }
+            if (!this.itemCtrlForm.outReason) {
+                this.$message.error('请填写离职原因');
+                return
+            }
+            if (!this.itemCtrlForm.outDataUrl) {
+                this.$message.error('请上传离职文件');
+                return
+            }
+            this.itemCtrlHandle(params)
+        },
         itemCtrlHandle(params) {
-
             this.$F.doRequest(null, '/pms/employee/oper_employee', params, (res) => {
                 this.getDataList()
+                this.dimission = false;
+                this.correct = false;
                 this.$forceUpdate();
             })
         },
@@ -504,7 +554,20 @@ export default {
             this.searchForm.pageIndex = val;
             this.getDataList();
             console.log(222)
-        }
+        },
+        handleSuccess(res, file) {
+            this.itemCtrlForm.outDataUrl = res.data;
+        },
+        changeHandleSuccess(res, file) {
+            this.itemCtrlForm.outDataUrl = res.data;
+        },
+        beforeUpload(file) {
+            const isLt2M = file.size / 1024 / 1024 < 8;
+            if (!isLt2M) {
+                this.$message.error("上传文件大小不能超过 8MB!");
+            }
+            return isLt2M;
+        },
 
     }
 };
@@ -564,5 +627,15 @@ export default {
             letter-spacing: 2px;
         }
     }
+}
+</style>
+<style scoped>
+.dimission>>>.el-upload {
+    overflow: initial;
+    outline: none;
+}
+
+.dimission>>>.el-upload-list {
+    display: none;
 }
 </style>

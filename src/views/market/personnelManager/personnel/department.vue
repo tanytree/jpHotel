@@ -1,7 +1,7 @@
 <template>
 <div>
     <div>
-        <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="storesNum" border :default-expand-all='false' :tree-props="{children: 'departmentList', hasChildren: 'hasChildren'}">
+        <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='false' :tree-props="{children: 'departmentList', hasChildren: 'hasChildren'}">
             <el-table-column prop="storesName" label="门店名称" width="300">
                 <template slot-scope="scope">
                     {{scope.row.storesName || scope.row.name}}
@@ -40,25 +40,7 @@ export default {
     data() {
         return {
             adddepart: false,
-            tableData: [{
-                id: 3,
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄',
-                children: [{
-                    id: 31,
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄',
-                    isChild: true
-                }, {
-                    id: 32,
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄',
-                    isChild: true
-                }]
-            }],
+            tableData: [],
             addAndEditForm: {
                 type: 'add',
                 storeName: '',
@@ -89,6 +71,7 @@ export default {
             this.$F.doRequest(null, '/pms/department/department_store_list', this.searchForm, (res) => {
                 let data = res;
                 for (let k in data) {
+                    data[k].id = k;
                     if (data[k].departmentList.length) {
                         data[k].hasChildren = false
                         for (let j in data[k].departmentList) {
@@ -101,6 +84,7 @@ export default {
                     }
                 }
                 this.tableData = data;
+                console.log( this.tableData)
                 that.$forceUpdate();
             })
         },
