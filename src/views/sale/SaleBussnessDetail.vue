@@ -6,7 +6,7 @@
  -->
 <template>
   <!--统一的编辑和新增 -->
-  <el-dialog :close-on-click-modal="false" width="700px" :visible.sync="visible" title="编辑">
+  <el-dialog top="0" :close-on-click-modal="false" width="700px" :visible.sync="visible" title="编辑">
     <div style="padding-bottom:8px">
       <div style="font-size:16px;color:#000;">{{editForm.co_name}}</div>
       <span>{{editForm.industry_name}}</span>

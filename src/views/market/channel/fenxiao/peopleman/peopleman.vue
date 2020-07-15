@@ -2,7 +2,7 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
  <template>
   <div class="sec1">
@@ -39,10 +39,10 @@
           <el-button   type="primary">下载模板</el-button>
           <el-button   type="primary">批量导入</el-button>
           <el-button   type="primary" @click="adddstaff=true">添加员工</el-button>
-          
+
         </el-form-item>
       </el-row>
-      
+
     </el-form>
         <div>
             <!--表格数据 -->
@@ -66,12 +66,12 @@
 
           <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
-                
+
         </div>
 
          <div>
             <!-- 添加员工 -->
-            <el-dialog title="添加员工" :visible.sync="adddstaff" >
+            <el-dialog top="0" title="添加员工" :visible.sync="adddstaff" >
               <el-form :model="form" :inline="true"  :required="true" class="top-body" label-width="120px" size="small">
                   <el-row>
                     <el-form-item label="所属门店:">
@@ -189,7 +189,7 @@
 
           <div>
             <!-- 添加员工 -->
-            <el-dialog title="编辑员工" :visible.sync="editstaff" >
+            <el-dialog top="0" title="编辑员工" :visible.sync="editstaff" >
               <el-form :model="form" :inline="true"  :required="true" class="top-body" label-width="120px" size="small">
                   <el-row>
                     <el-form-item label="所属门店:">
@@ -306,9 +306,9 @@
 
           <div>
             <!-- 办理离职 -->
-             <el-dialog title="办理离职" :visible.sync="dimission" width="500px">
+             <el-dialog top="0" title="办理离职" :visible.sync="dimission" width="500px">
                   <el-form>
-                 
+
                    <el-row>
                       <el-col >
                         <div class="grid-content">
@@ -352,9 +352,9 @@
 
           <div>
             <!-- 转正 -->
-             <el-dialog title="转正" :visible.sync="correct" width="500px">
+             <el-dialog top="0" title="转正" :visible.sync="correct" width="500px">
                   <el-form>
-                 
+
                    <el-row>
                       <el-col >
                         <div class="grid-content">
@@ -371,7 +371,7 @@
                       </el-col>
                     </el-row>
 
-                  
+
                 </el-form>
                   <div slot="footer" class="dialog-footer">
                     <el-button @click="correct = false">关闭</el-button>
@@ -433,7 +433,7 @@ export default {
             // this.getDataList();
             console.log(222)
         }
- 
+
 
   }
 };

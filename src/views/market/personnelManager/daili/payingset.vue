@@ -2,14 +2,14 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
  <template>
   <div class="sec1">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
       <el-row>
 
-        
+
         <el-col :span="5">
           <el-form-item label="员工名称">
             <el-input style="width:120px" v-model="form.name"></el-input>
@@ -26,14 +26,14 @@
             </el-select>
           </el-form-item>
         </el-col>
-        
+
 
         <el-form-item >
           <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
-          
+
         </el-form-item>
       </el-row>
-      
+
     </el-form>
     <div>
          <!--表格数据 -->
@@ -55,7 +55,7 @@
     </div>
     <!-- 薪酬详情 -->
     <div>
-        <el-dialog :title="'查看-'+'张三'" :visible.sync="detail">
+        <el-dialog top="0" :title="'查看-'+'张三'" :visible.sync="detail">
           <el-form :model="form" label-width="120px">
               <h4>基本工资：</h4>
             <!-- <el-form-item label="活动名称" :label-width="formLabelWidth">
@@ -123,7 +123,7 @@
     </div>
     <!-- 薪酬设置 -->
     <div>
-        <el-dialog :title="'酬薪设置-'+'张三'" :visible.sync="setting">
+        <el-dialog top="0" :title="'酬薪设置-'+'张三'" :visible.sync="setting">
           <el-form :model="form" label-width="120px">
               <h4>基本工资：</h4>
             <!-- <el-form-item label="活动名称" :label-width="formLabelWidth">
@@ -188,8 +188,8 @@
             <el-button type="primary">确 定</el-button>
           </div>
         </el-dialog>
-    </div>  
-    
+    </div>
+
   </div>
 </template>
 <script>
@@ -236,7 +236,7 @@ export default {
             // this.getDataList();
             console.log(222)
         }
- 
+
 
   }
 };

@@ -6,7 +6,7 @@
  -->
 <template>
   <!--统一的编辑和新增 -->
-  <el-dialog :close-on-click-modal="false" :visible.sync="visible" title="编辑">
+  <el-dialog top="0" :close-on-click-modal="false" :visible.sync="visible" title="编辑" >
     <el-form label-width="80px">
       <el-form-item label="主要内容">
         <el-input></el-input>

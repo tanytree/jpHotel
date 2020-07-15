@@ -62,7 +62,7 @@
 			</el-tabs>
 		</el-row>
 		<!-- 修改库存 -->
-		<el-dialog title="修改库存" :visible.sync="dialogChangeA" :close-on-click-modal="false">
+		<el-dialog top="0" title="修改库存" :visible.sync="dialogChangeA" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
 					<el-col :span="18">
@@ -78,7 +78,7 @@
 			</span>
 		</el-dialog>
 		<!-- 商品入库 -->
-		<el-dialog title="商品入库" :visible.sync="dialogInfo_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="商品入库" :visible.sync="dialogInfo_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" style="display: flex;justify-content: space-between;align-items: center;">
 					<el-col :span="18">
@@ -142,7 +142,7 @@
 			</span>
 		</el-dialog>
 		<!-- 批量添加商品 -->
-		<el-dialog title="批量添加商品" :visible.sync="dialogStock_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="批量添加商品" :visible.sync="dialogStock_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-row>
 					<el-form class="demo-form-inline" inline size="small">

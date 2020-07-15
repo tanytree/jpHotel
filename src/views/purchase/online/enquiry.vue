@@ -21,13 +21,13 @@
       <div style="margin-top:10px"></div>
       <el-button
         type="danger"
-        size="mini"
+        size="medium"
         @click="deleteHandle()"
         :disabled="multipleSelection.length <= 0"
       >批量删除</el-button>
       <div style="margin-top:10px"></div>
       <el-table
-        size="mini"
+        size="medium"
         ref="multipleTable"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
         :data="tableData"

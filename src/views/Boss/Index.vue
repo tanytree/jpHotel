@@ -73,7 +73,7 @@
 			</el-tab-pane>
 		</el-tabs>
 		<!-- 订单详情/查看详情 -->
-		<el-dialog title="查看资料" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
+		<el-dialog top="0" title="查看资料" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
 			<el-row class="padding-item">
 				<el-col span="8">姓名:</el-col><el-col span="14">张三</el-col>
 			</el-row>

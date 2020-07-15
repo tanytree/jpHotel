@@ -55,7 +55,7 @@
           layout="total,  prev, pager, next, jumper"
         ></el-pagination>
     </el-card>
-    <el-dialog title="详情" v-if="dialogTableVisible" :visible.sync="dialogTableVisible">
+    <el-dialog top="0" title="详情" v-if="dialogTableVisible" :visible.sync="dialogTableVisible">
       <div >
         <div class="partOne" style="margin:0">基本信息</div>
         <ul>
@@ -117,8 +117,8 @@ export default {
         phone: "", //联系电话
         level: "", //会员等级
         applyType: 1 ,//审核状态  会员信息页面传1
-        content:"",   //模糊查询 
-        balances:"",  //模糊查询 
+        content:"",   //模糊查询
+        balances:"",  //模糊查询
       }
     };
   },
@@ -132,7 +132,7 @@ export default {
       this.userInformation = row;
       this.dialogTableVisible = true;
     },
-   
+
     /**删除 */
     deleteHandle(data) {
       var ids =
@@ -222,7 +222,7 @@ export default {
       this.$F.merge(params, {
         pageIndex: this.pageIndex,
         pageSize: this.pageSize
-       
+
       });
       this.$F.merge(params, this.form);
       this.$F.doRequest(
@@ -238,7 +238,7 @@ export default {
     //请求会员等级区间接口
     memberLive(params = {}) {
       this.$F.merge(params, {
-       
+
       });
       this.$F.merge(params);
       this.$F.doRequest(
@@ -248,8 +248,8 @@ export default {
         data => {
           this.levelData = data;
           console.log(this.levelData);
-          
-          
+
+
         }
       );
     },
@@ -289,7 +289,7 @@ font-size: 14px;
 }
 .partOne{
   margin-top: 20px;
-  
+
 color: rgba(51, 51, 51, 1);
 font-size: 16px;
 

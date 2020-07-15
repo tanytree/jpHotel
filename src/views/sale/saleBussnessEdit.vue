@@ -7,7 +7,7 @@
 
 <template>
   <!--统一的编辑和新增 -->
-  <el-dialog :close-on-click-modal="false" width="700px" :visible.sync="visible" title="编辑">
+  <el-dialog top="0" :close-on-click-modal="false" width="700px" :visible.sync="visible" title="编辑">
     <el-form ref="editForm" :model="editForm" label-width="80px">
       <el-form-item label="公司名称">
         <el-input v-model="editForm.co_name"></el-input>

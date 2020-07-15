@@ -1,7 +1,7 @@
 <!--
- * @Date: 
+ * @Date:
  * @LastEditors: 魏轩
- * @LastEditTime: 2020-07-06 
+ * @LastEditTime: 2020-07-06
  * @FilePath: jiudian\src\views\sale\centralRes.vue
  -->
 
@@ -16,7 +16,7 @@
                 <el-date-picker
                   v-model="form.startTime"
                   value-format="yyyy-MM-dd"
-                  type="date"                  
+                  type="date"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item> -->
@@ -41,7 +41,7 @@
                   v-model="form.endTime"
                   value-format="yyyy-MM-dd"
                   type="date"
-                  
+
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
@@ -56,7 +56,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="所属酒店:"> 
+            <el-form-item label="所属酒店:">
               <el-select style="width: 220px;" v-model="form.region" placeholder="请选择">
                 <el-option label="全部" value="3">全部</el-option>
                 <el-option label="已认证" value="1">已认证</el-option>
@@ -135,7 +135,7 @@
         </el-table>
       </el-row>
 
-      <el-row style="margin-top:20px"> 
+      <el-row style="margin-top:20px">
         <label>大仓集团第一酒店（地址：安徽省合肥市蜀山区）</label>
         <el-table :data="tableData" style="width: 100%;margin-top:10px"  :header-cell-style="{background:'#D9DDE2',color:'#606266'}">
           <el-table-column label="房型" width="180">
@@ -180,7 +180,7 @@
 
     <!-- 预定 -->
 
-    <el-dialog title="预定" :visible.sync="dialogFormVisible" width="100%" >
+    <el-dialog top="0" title="预定" :visible.sync="dialogFormVisible" width="100%" >
       <div>
         <el-row>
           <el-form inline size="small" label-width="100px" :rules="rules">
@@ -274,7 +274,7 @@
                   </el-form-item>
                 </div>
               </el-col>
-             
+
             </el-row>
             <el-row>
                <el-col :span="6">
@@ -440,7 +440,7 @@
         </el-row>
       </div>
 
-    
+
       <div slot="footer" class="dialog-footer" style="text-align: center;">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">预定</el-button>
@@ -448,7 +448,7 @@
     </el-dialog>
 
     <!-- 注册会员 -->
-    <el-dialog title="会员注册" :visible.sync="registerme" width="100%" >
+    <el-dialog top="0" title="会员注册" :visible.sync="registerme" width="100%" >
             <el-row>
                 <el-form inline size="small" label-width="100px">
                     <el-row>
@@ -521,7 +521,7 @@
                               </el-radio-group>
                             </el-form-item>
                         </el-col>
-                        
+
                         <el-col :span="6">
                           <div class="grid-content">
                             <el-form-item label="生日:" prop="date1">
@@ -544,9 +544,9 @@
                           </div>
                         </el-col>
                       </el-row>
-                      
+
                       <el-row>
-                        
+
                         <el-col :span="6">
                           <div class="grid-content">
                             <el-form-item label="国籍:">
@@ -792,9 +792,9 @@ export default {
         handleCurrentChange(val) {
             this.checkInForm.page = val;
             this.getDataList();
-        },        
+        },
         handleChange(){
-            
+
         }
   }
 };
@@ -809,7 +809,7 @@ export default {
     background: #fff;
     border-top: 1px solid #eee;
     z-index: 9;
-    
+
 }
 
 .fixedFoot .wrap {

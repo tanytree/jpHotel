@@ -93,7 +93,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog title="转为会员" :visible.sync="setMemberFormVisible" class="setMemberForm">
+    <el-dialog top="0" title="转为会员" :visible.sync="setMemberFormVisible" class="setMemberForm">
         <el-form :model="detailForm" label-width="80px" size="mini">
             <el-row class="row">
                 <el-row class="cell">
@@ -320,7 +320,7 @@ export default {
             });
         },
 
-    
+
 
         /**多选 */
         handleSelectionChange(val) {

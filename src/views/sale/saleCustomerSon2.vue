@@ -61,7 +61,7 @@
           layout="total,  prev, pager, next, jumper"
       ></el-pagination>
     </el-card>
-    <el-dialog title="审核" :visible.sync="checkButton"  width="746px">
+    <el-dialog top="0" title="审核" :visible.sync="checkButton"  width="746px">
       <el-radio-group v-model="bulletApplyType" style="text-align:center">
         <el-radio :label="1">通过</el-radio>
         <el-radio :label="2">未通过</el-radio>

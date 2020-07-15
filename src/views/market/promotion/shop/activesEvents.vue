@@ -6,7 +6,7 @@
  -->
 <template>
   <div>
-    <el-dialog :visible.sync="urlShowDialogVisible">
+    <el-dialog top="0" :visible.sync="urlShowDialogVisible">
       <img width="100%" :src="dialogImageUrl" alt />
     </el-dialog>
     <el-card class="active-events">
@@ -157,7 +157,7 @@
         <el-button size="small" @click="visible = false">取消</el-button>
         <el-button size="small" type="primary" @click="activeSubmit()">确定</el-button>
       </span>
-      <el-dialog width="60%" height="70%" title="选择课程" :visible.sync="innerVisible" append-to-body>
+      <el-dialog top="0" width="60%" height="70%" title="选择课程" :visible.sync="innerVisible" append-to-body>
         <el-form inline class="top-body" size="small">
           <el-row>
             <el-col :span="8">

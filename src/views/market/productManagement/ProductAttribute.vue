@@ -5,7 +5,7 @@
  * @FilePath: /cloudAdmin/src/views/market/productManagement/ProductAttribute.vue
  -->
 <template>
-  <el-dialog width="500px" title="修改" :close-on-click-modal="false" :visible.sync="visible">
+  <el-dialog top="0" width="500px" title="修改" :close-on-click-modal="false" :visible.sync="visible">
     <el-form :model="form" ref="ruleForm" :rules="rules" label-width="100px" prop="title">
       <el-form-item label="属性名称：" prop="title">
         <el-input v-model="form.title" placeholder="例如：材质"></el-input>

@@ -51,7 +51,7 @@
 			</div>
 		</el-row>
 		<!-- 按列批量修改 -->
-		<el-dialog title="按列批量修改" :visible.sync="dialogAdd_kinds" :close-on-click-modal="false">
+		<el-dialog top="0" title="按列批量修改" :visible.sync="dialogAdd_kinds" :close-on-click-modal="false">
 			<el-row class="demo-form-inline">
 				<el-checkbox-group v-model="checkList" style="line-height: 30px;">
 				    <el-checkbox label="硬件"></el-checkbox>
@@ -87,7 +87,7 @@
 			</span>
 		</el-dialog>
 		<!-- 修改 -->
-		<el-dialog title="修改" :visible.sync="dialogChange_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="修改" :visible.sync="dialogChange_show" :close-on-click-modal="false">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row class="demo-form-inline">
 					<el-col>

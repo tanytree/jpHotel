@@ -3,7 +3,7 @@
 
  * @LastEditors: 魏轩
 
- * 
+ *
  -->
 <template>
   <div>
@@ -121,7 +121,7 @@
 
     <!-- newCheck新增寄存 -->
     <div>
-      <el-dialog title="新增寄存" style="text-align:left" :visible.sync="newCheck">
+      <el-dialog top="0" title="新增寄存" style="text-align:left" :visible.sync="newCheck">
         <el-form ref="newCheckForm" :model="newCheckForm" label-width="80px">
           <el-col :span="8">
             <el-form-item label="客户姓名:">
@@ -164,8 +164,8 @@
 
     <!-- 新增寄存 详情 -->
     <div>
-      
-      <el-dialog title="详情" style="text-align:left" :visible.sync="checkdetail">
+
+      <el-dialog top="0" title="详情" style="text-align:left" :visible.sync="checkdetail">
         <el-row style="margin:10px 20px">
           <el-col :span="12">
             <el-col :span="12">
@@ -205,7 +205,7 @@
     </div>
     <!-- checkPatch  寄存补打-->
     <div>
-      <el-dialog title="寄存补打" style="text-align:left" width="650px" :visible.sync="checkPatch">
+      <el-dialog top="0" title="寄存补打" style="text-align:left" width="650px" :visible.sync="checkPatch">
         <el-row style="margin:10px 20px">
           <h2 style="text-align:center">大仓集团第一酒店物品寄存领取单</h2>
           <el-row style="border-bottom:1px solid #333;padding-bottom:10px;margin-bottom:10px;">

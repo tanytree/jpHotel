@@ -6,7 +6,7 @@
  -->
 <template>
   <!--统一的编辑和新增 -->
-  <el-dialog :close-on-click-modal="false" :visible.sync="visible" :title="editForm.title">
+  <el-dialog top="0" :close-on-click-modal="false" :visible.sync="visible" :title="editForm.title">
     <el-form label-width="120px">
       <div v-if="id=='1'">
         <el-form-item label="是否能补签">

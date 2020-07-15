@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<!-- 新增一级分类 -->
-		<el-dialog title="新增一级分类" :visible.sync="first_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="新增一级分类" :visible.sync="first_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
 					<el-col :span="20">
@@ -39,7 +39,7 @@
 			</span>
 		</el-dialog>
 		<!-- 新增二级分类 -->
-		<el-dialog title="新增一级分类" :visible.sync="second_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="新增一级分类" :visible.sync="second_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
 					<el-col :span="20">

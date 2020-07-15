@@ -127,7 +127,7 @@
 			</el-tab-pane>
 		</el-tabs>
 		<!-- 添加员工 -->
-		<el-dialog title="添加员工" :visible.sync="dialogAdd" :close-on-click-modal="false" center>
+		<el-dialog top="0" title="添加员工" :visible.sync="dialogAdd" :close-on-click-modal="false" center>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-form-item label="员工状态">
 					<el-radio-group v-model="ruleForm.userStatus" @change="changeRedio">
@@ -197,7 +197,7 @@
 			  </span>
 		</el-dialog>
 		<!-- 订单详情/查看详情 -->
-		<el-dialog title="查看资料" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
+		<el-dialog top="0" title="查看资料" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
 			<el-row class="padding-item">
 				<el-col span="8">姓名</el-col><el-col span="14">张三</el-col>
 			</el-row>
@@ -251,7 +251,7 @@
 			</span>
 		</el-dialog>
 		<!-- 办理离职 -->
-		<el-dialog title="办理离职" :visible.sync="dialogGone" :close-on-click-modal="false">
+		<el-dialog top="0" title="办理离职" :visible.sync="dialogGone" :close-on-click-modal="false">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row class="demo-form-inline">
 					<el-col>
@@ -278,7 +278,7 @@
 			  </span>
 		</el-dialog>
 		<!-- 转正 -->
-		<el-dialog title="转正" :visible.sync="dialogZheng" :close-on-click-modal="false">
+		<el-dialog top="0" title="转正" :visible.sync="dialogZheng" :close-on-click-modal="false">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row class="demo-form-inline">
 					<el-col>

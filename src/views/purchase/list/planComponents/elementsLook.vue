@@ -1,6 +1,6 @@
 <template>
 	<div class="">
-		<el-dialog :title="title" :visible.sync="dialogLookVisible" :before-close="handleClose" :append-to-body="true">
+		<el-dialog top="0" :title="title" :visible.sync="dialogLookVisible" :before-close="handleClose" :append-to-body="true">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<div class="message">
 					<div class="title">供货方信息</div>
@@ -221,34 +221,34 @@
 		color: #999999;
 		border-bottom: 1px #f7f7f7 solid;
 	}
-	
+
 	.padd-line {
 		padding: 10px 0px;
 	}
-	
+
 	.info {
 		.info-item {
 			display: flex;
 		}
 	}
-	
+
 	.el-form-item__label {
 		text-align: left;
 	}
-	
+
 	.el-select {
 		min-width: 500px;
 	}
-	
+
 	.el-input {
 		max-width: 500px;
 		min-width: 200px;
 	}
-	
+
 	.el-dialog__body {
 		padding: 0px !important;
 	}
-	
+
 	.message {
 		padding: 10px 0px;
 		.input {
@@ -291,7 +291,7 @@
 			}
 		}
 	}
-	
+
 	.message+.message {
 		border-top: 1px #f7f7f7 solid;
 	}

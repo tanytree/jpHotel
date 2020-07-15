@@ -98,7 +98,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog title="新增单位" :visible.sync="setCompanyFormVisible" class="setCompanyForm">
+    <el-dialog top="0" title="新增单位" :visible.sync="setCompanyFormVisible" class="setCompanyForm">
         <el-form :model="addCompanyForm" label-width="100px" size="mini">
             <el-row class="row">
                 <el-row class="cell">
@@ -243,7 +243,7 @@
             <el-button type="primary" @click="setCompanyFormVisible=false">确认</el-button>
         </div>
     </el-dialog>
-    <el-dialog title="批量设置" :visible.sync="setBatchFormVisible" class="setBatchForm" width="1200px">
+    <el-dialog top="0" title="批量设置" :visible.sync="setBatchFormVisible" class="setBatchForm" width="1200px">
         <el-form :model="addCompanyForm" label-width="100px" size="mini">
             <el-row class="row">
                 <el-row class="cell">

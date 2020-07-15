@@ -60,7 +60,7 @@
         </div>
 
     </div>
-    <el-dialog :visible.sync="addChildDepartShow" title="添加子部门" width="600px">
+    <el-dialog top="0" :visible.sync="addChildDepartShow" title="添加子部门" width="600px">
         <el-form :model="departMentForm">
             <el-form-item label="上级部门" class="require" v-if="isAddChild">
                 <el-input style="width:200px" disabled v-model="departMentForm.fartherName"></el-input>
@@ -75,7 +75,7 @@
         </span>
     </el-dialog>
 
-    <el-dialog :visible.sync="departSetAndAddShow" :title="departSetAndAddTitle" width="800px">
+    <el-dialog top="0" :visible.sync="departSetAndAddShow" :title="departSetAndAddTitle" width="800px">
         <el-form :model="departMentForm">
             <el-form-item label="上级部门" class="require" v-if="isAddChild">
                 <el-input style="width:200px" disabled v-model="departMentForm.fartherName"></el-input>
@@ -124,7 +124,7 @@
             <el-button size="small" type="primary" @click="departMentAddNow">确定</el-button>
         </span>
     </el-dialog>
-    <el-dialog :visible.sync="selectIconAndColorShow" title="选择图标" width="600px">
+    <el-dialog top="0" :visible.sync="selectIconAndColorShow" title="选择图标" width="600px">
         <div class="iconAndColorDia">
             <div class="row">
                 <h3>图标</h3>
@@ -152,7 +152,7 @@
             <el-button size="small" type="primary" @click="iconAndColorChange()">确定</el-button>
         </span>
     </el-dialog>
-    <el-dialog :visible.sync="employeesDetailsShow" title="查看资料" width="600px">
+    <el-dialog top="0" :visible.sync="employeesDetailsShow" title="查看资料" width="600px">
         <el-form :model="employeesDetails" label-width="100px">
             <el-form-item label="姓名" class>
                 <el-input style="width:300px" disabled v-model="employeesDetails.name"></el-input>
@@ -179,7 +179,7 @@
         <el-button size="small" type="primary" @click="iconAndColorChange()">确定</el-button>
       </span>-->
     </el-dialog>
-    <el-dialog :visible.sync="employeesDetailsEditShow" :title="addAndEditForm.type=='add'?'添加成员':'编辑成员'" width="600px">
+    <el-dialog top="0" :visible.sync="employeesDetailsEditShow" :title="addAndEditForm.type=='add'?'添加成员':'编辑成员'" width="600px">
         <el-form :model="addAndEditForm" label-width="100px">
             <template v-if="addAndEditForm.type=='add'||(addAndEditForm.editType&&addAndEditForm.editType==1)">
                 <el-form-item label="人员名称：" class="require">

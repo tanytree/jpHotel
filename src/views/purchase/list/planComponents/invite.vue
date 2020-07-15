@@ -1,6 +1,6 @@
 <template>
 	<div class="">
-		<el-dialog :title="title" :visible.sync="dialogInviteVisible" :before-close="handleClose" :append-to-body="true">
+		<el-dialog top="0" :title="title" :visible.sync="dialogInviteVisible" :before-close="handleClose" :append-to-body="true">
 			<div class="tag-list">
 				<el-radio v-model="radio" label="1">接受 <span>(接受后，报价将进入合同管理页面，进行双方审批)</span></el-radio>
 				<el-radio v-model="radio" label="2">拒绝</el-radio>

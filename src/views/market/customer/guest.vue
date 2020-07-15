@@ -75,7 +75,7 @@
                     <el-button type="text" size="mini">客史</el-button>
                     <el-button type="text" size="mini">详情</el-button>
                     <el-button type="text" size="mini">修改</el-button>
-                    
+
                 </template>
 
             </el-table-column>
@@ -85,7 +85,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog title="登记外宾" :visible.sync="setForeignFormVisible" class="setForeignForm" width="1200px">
+    <el-dialog top="0" title="登记外宾" :visible.sync="setForeignFormVisible" class="setForeignForm" width="1200px">
         <el-form :model="foreignForm" label-width="80px" size="mini">
             <el-row class="row">
                 <el-row class="cell">

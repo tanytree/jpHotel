@@ -14,7 +14,7 @@
 				</el-table>
 			</el-tab-pane>
 		</el-tabs>
-		<el-dialog title="设为负责人" :visible.sync="dialogTableVisible" :close-on-click-modal="false" @close ="closeDialog">
+		<el-dialog top="0" title="设为负责人" :visible.sync="dialogTableVisible" :close-on-click-modal="false" @close ="closeDialog">
 			<el-col :span="5" class="col-title">{{dialog_info.title}}</el-col>
 			<el-row>
 				<el-input placeholder="请输入内容" v-model="dialog_info.content" class="input-with-select">

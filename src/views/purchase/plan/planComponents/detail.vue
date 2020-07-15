@@ -1,6 +1,6 @@
 <template>
 	<div class="">
-		<el-dialog :title="title" :visible.sync="dialogDetailVisible" :before-close="handleClose" :append-to-body="true">
+		<el-dialog top="0" :title="title" :visible.sync="dialogDetailVisible" :before-close="handleClose" :append-to-body="true">
 			<el-table :data="tableData" style="width: 100%" height="300" >
 				<el-table-column fixed prop="name" label="产品名称" width="150px">
 				</el-table-column>

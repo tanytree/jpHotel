@@ -133,7 +133,7 @@
 			</el-tab-pane>
 		</el-tabs>
 		<!-- 薪酬修改-->
-		<el-dialog title="薪酬修改" :visible.sync="dialogAdd" :close-on-click-modal="false">
+		<el-dialog top="0" title="薪酬修改" :visible.sync="dialogAdd" :close-on-click-modal="false">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row>
 					<el-form-item label="基本工资:"></el-form-item>
@@ -238,7 +238,7 @@
 			</span>
 		</el-dialog>
 		<!-- /查看详情/薪资设置 备注:是一样的内容,查看详情是只要让input变成不可点击, 薪资设置是可以修改输入-->
-		<el-dialog title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
+		<el-dialog top="0" title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row>
 					<el-form-item label="基本工资:"></el-form-item>
@@ -297,7 +297,7 @@
 			</span> -->
 		</el-dialog>
 		<!-- 办理离职 -->
-		<el-dialog title="办理离职" :visible.sync="dialogGone" :close-on-click-modal="false">
+		<el-dialog top="0" title="办理离职" :visible.sync="dialogGone" :close-on-click-modal="false">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row class="demo-form-inline">
 					<el-col>
@@ -324,7 +324,7 @@
 			</span>
 		</el-dialog>
 		<!-- 转正 -->
-		<el-dialog title="转正" :visible.sync="dialogZheng" :close-on-click-modal="false">
+		<el-dialog top="0" title="转正" :visible.sync="dialogZheng" :close-on-click-modal="false">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row class="demo-form-inline">
 					<el-col>

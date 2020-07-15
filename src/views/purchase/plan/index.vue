@@ -25,7 +25,7 @@
         :data="tableData"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
         @selection-change="handleSelectionChange"
-        size="mini"
+        size="medium"
       >
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="title" label="采购计划" show-overflow-tooltip></el-table-column>
@@ -52,7 +52,7 @@
         :total="listTotal"
       ></el-pagination>
     </el-card>
-    <el-dialog :title="title" :visible.sync="dialogFormVisible" :append-to-body="true">
+    <el-dialog top="0" :title="title" :visible.sync="dialogFormVisible" :append-to-body="true">
       <el-form :model="editForm" label-width="80px" size="small">
         <el-form-item label="计划名称">
           <el-input v-model="editForm.title" autocomplete="off" style="width: 400px;"></el-input>
@@ -149,7 +149,7 @@ export default {
         url: this.$http.adornUrl("/purchase/plan/edit_plan_info"),
         method: "post",
         data: this.$http.adornData(this.editForm)
-      }).then(res => { 
+      }).then(res => {
         if (res.code == 200) {
           this.getDataList();
           this.$message.success(res.message);

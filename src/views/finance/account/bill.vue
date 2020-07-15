@@ -46,7 +46,7 @@
       <el-table
         :data="tableList"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-        size="mini"
+        size="medium"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55"></el-table-column>

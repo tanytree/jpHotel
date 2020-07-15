@@ -21,7 +21,7 @@
 					</span>
 				</div>
 			</el-upload>
-			<el-dialog :visible.sync="dialogVisible">
+			<el-dialog top="0" :visible.sync="dialogVisible">
 				<img width="100%" :src="dialogImageUrl" alt="">
 			</el-dialog>
 		</el-row>
@@ -117,7 +117,7 @@
 				},
 				dialogAdd_kinds: false,
 				dialogAdd_thing: false,
-	
+
 				activeFive: 'five_a',
 				beiYong_show: true,
 				five_redioList: [{
@@ -131,7 +131,7 @@
 					radio: false
 				}],
 				five_money: '',
-	
+
 				seven_redioList: [{
 					name: '寄存单',
 					radio: true
@@ -151,7 +151,7 @@
 					name: '餐饮消费单',
 					radio: false
 				}],
-	
+
 				dialogImageUrl: '',
 				dialogVisible: false,
 				disabled: false,

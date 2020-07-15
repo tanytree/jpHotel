@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :visible.sync="urlShowDialogVisible">
+    <el-dialog top="0" :visible.sync="urlShowDialogVisible">
       <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
     <el-form ref="form" :model="form" label-width="80px" size="small" :rules="rules">

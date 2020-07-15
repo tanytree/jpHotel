@@ -33,7 +33,7 @@
         :data="tableData"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
         @selection-change="handleSelectionChange"
-        size="mini"
+        size="medium"
       >
         <el-table-column type="selection" width="55"></el-table-column>
         <!-- <el-table-column type="index" label="序号"></el-table-column> -->
@@ -69,7 +69,7 @@
         :total="listTotal"
       ></el-pagination>
     </el-card>
-    <el-dialog :visible.sync="addShow" title="添加清单">
+    <el-dialog top="0" :visible.sync="addShow" title="添加清单">
       <el-card>
         <router-link to="/onlineEnquiry" style="color:#409EFF">
           <h5>前往在线询盘</h5>

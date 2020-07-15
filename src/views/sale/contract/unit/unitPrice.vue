@@ -2,7 +2,7 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
  <template>
   <div class="sec1">
@@ -37,14 +37,14 @@
 
         <el-form-item >
           <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
-          
+
         </el-form-item>
         <el-form-item style="float:right">
           <el-button   type="primary" @click="newupdata=true">+新增</el-button>
           <!-- @click="resetForm" -->
         </el-form-item>
       </el-row>
-      
+
     </el-form>
 
      <!--表格数据 -->
@@ -65,7 +65,7 @@
       </div>
         <!-- 新增 -->
         <div>
-          <el-dialog title="新增" :visible.sync="newupdata">
+          <el-dialog top="0" title="新增" :visible.sync="newupdata">
                 <el-form ref="discountform" :model="updataform" :rules="rules" label-width="80px">
                   <el-row>
                     <el-col :span="8">
@@ -73,7 +73,7 @@
                         <el-input v-model="updataform.name" ></el-input>
                       </el-form-item>
                     </el-col>
-                      
+
                     <el-col :span="8">
                       <el-form-item label="状态:">
                         <el-radio-group v-model="updataform.resource">
@@ -118,8 +118,8 @@
                   </el-row>
                   <el-divider></el-divider>
 
-                  
-                  
+
+
                   <el-form-item style="text-align:right">
 
                     <el-button type="primary" >确定</el-button>
@@ -132,7 +132,7 @@
 
       <!-- 修改 -->
       <div>
-        <el-dialog title="修改" :visible.sync="updatas">
+        <el-dialog top="0" title="修改" :visible.sync="updatas">
                 <el-form ref="discountform" :rules="rules" :model="updata" label-width="80px">
                   <el-row>
                     <el-col :span="8">
@@ -184,8 +184,8 @@
                   </el-row>
                   <el-divider></el-divider>
 
-                  
-                  
+
+
                   <el-form-item style="text-align:right">
 
                     <el-button type="primary" >确定</el-button>
@@ -197,11 +197,11 @@
       </div>
             <!-- 查看 -->
       <div>
-        <el-dialog title="查看" :visible.sync="checkrules">
+        <el-dialog top="0" title="查看" :visible.sync="checkrules">
           <el-row>
               <el-col :span="6">规则名称：</el-col>
               <el-col :span="18">规则2</el-col>
-          </el-row> 
+          </el-row>
           <el-row>
               <el-col :span="6" >状态：</el-col>
               <el-col :span="18">禁用</el-col>
@@ -213,21 +213,21 @@
           <el-row>
               <el-col :span="6" >星期：</el-col>
               <el-col :span="18">每天</el-col>
-          </el-row> 
+          </el-row>
           <el-row>
               <el-col :span="6" >折扣率：</el-col>
               <el-col :span="18">0.9（向上取整）</el-col>
           </el-row>
-          
+
 
           <div slot="footer" class="dialog-footer" style="text-align:center">
             <el-button @click="checkrules = false">关闭</el-button>
           </div>
         </el-dialog>
       </div>
-  
-  
-  
+
+
+
   </div>
 </template>
 <script>
@@ -291,7 +291,7 @@ export default {
     // this.fetchGoodList();
   },
   methods: {
-    // 新增 
+    // 新增
       handleCheckAllChange(val) {
         this.updataform.checkedCities = val ? cityOptions : [];
         this.updataform.isIndeterminate = false;
@@ -311,7 +311,7 @@ export default {
         this.updata.checkAll = checkedCount === this.updata.cities.length;
         this.updata.isIndeterminate = checkedCount > 0 && checkedCount < this.updata.cities.length;
       }
- 
+
 
   }
 };

@@ -28,7 +28,7 @@
                 </el-form-item>
             </el-form>
             <el-table
-                    size="mini"
+                    size="medium"
                     :data="tableData"
                     :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
             >
@@ -57,7 +57,7 @@
                     :total="listTotal"
             ></el-pagination>
         </el-card>
-        <el-dialog :close-on-click-modal="false" :visible.sync="detailVisibal" title="详情">
+        <el-dialog top="0" :close-on-click-modal="false" :visible.sync="detailVisibal" title="详情">
             <el-form label-width="80px">
                 <el-form-item label="用户名称">{{drawDetail.agent_name}}</el-form-item>
                 <el-form-item label="提现金额">{{drawDetail.price}}</el-form-item>
@@ -67,7 +67,7 @@
                 <el-form-item label="审核说明">{{drawDetail.remarks}}</el-form-item>
             </el-form>
         </el-dialog>
-        <el-dialog :close-on-click-modal="false" :visible.sync="editVisibal">
+        <el-dialog top="0" :close-on-click-modal="false" :visible.sync="editVisibal">
             <el-form>
                 <el-form-item label="选择审核结果">
                     <el-radio-group v-model="applyForm.type">

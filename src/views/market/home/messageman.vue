@@ -3,7 +3,7 @@
 
  * @LastEditors:魏轩
 
- * 
+ *
  -->
 <template>
   <div>
@@ -11,7 +11,7 @@
       <!-- 留言管理 -->
       <div>
         <el-form :model="noteForm"  ref="noteForm" label-width="100px" class="demo-ruleForm">
-         
+
           <el-row>
             <label>留言类型：</label>
             <el-button>不限</el-button>
@@ -28,15 +28,15 @@
                  <el-form-item label="房间号：">
                     <el-input v-model="noteForm.room" ></el-input>
                   </el-form-item>
-            </el-col>  
-                 
+            </el-col>
+
             <el-col :span="4">
                   <el-form-item label="留言员工：">
                     <el-input v-model="noteForm.staff" ></el-input>
                   </el-form-item>
             </el-col>
               <el-col :span="7">
-                <el-form-item label="留言时间："> 
+                <el-form-item label="留言时间：">
                     <div class="block">
                       <!-- <span class="demonstration">留言时间：</span> -->
                       <el-date-picker
@@ -57,7 +57,7 @@
             <el-col :span="6" >
               <el-form-item style="margin-left:-100px">
                 <el-button type="primary" @click="newNote=true">新增留言</el-button>
-              </el-form-item> 
+              </el-form-item>
             </el-col>
           </el-row>
         </el-form>
@@ -105,7 +105,7 @@
 
         <!-- 留言详情 -->
         <div>
-          <el-dialog title="详情" style="text-align:left" :visible.sync="notedetail">
+          <el-dialog top="0" title="详情" style="text-align:left" :visible.sync="notedetail">
             <el-row>
               <el-col :span="3">房间号：</el-col><el-col :span="12">A1001</el-col>
             </el-row>
@@ -122,7 +122,7 @@
         </div>
         <!-- 新增留言 -->
         <div>
-         <el-dialog title="新增留言" style="text-align:left" :visible.sync="newNote">
+         <el-dialog top="0" title="新增留言" style="text-align:left" :visible.sync="newNote">
            <el-form ref="noteForm" :model="noteForm" label-width="80px">
              <el-form-item label="房间号：">
                <el-input style="width:200px" v-model="noteForm.room"></el-input>
@@ -136,7 +136,7 @@
              </el-form-item>
            </el-form>
          </el-dialog>
-         
+
         </div>
 
 
@@ -453,7 +453,7 @@ export default {
           this.display=!this.display;
 
         }
-      },   
+      },
       management(){
           this.display=!this.display;;
       },
@@ -493,13 +493,13 @@ export default {
   font-size: 14px;
   border-radius: 4px;
   padding: 3px;
-  
+
 }
 .inco {
   border: 1px solid #333;
   background: #666;
   color: #fff;
-  
+
 }
 .search {
   width: 137px !important;
@@ -531,7 +531,7 @@ export default {
   border:1px solid #1B80FF;
   font-size: 12px;
   padding: 3px 10px;
-  
+
 }
 .rescet {
   border-radius: 0;

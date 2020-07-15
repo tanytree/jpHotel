@@ -414,7 +414,7 @@
 							</span>
 						</div>
 					</el-upload>
-					<el-dialog :visible.sync="dialogVisible">
+					<el-dialog top="0" :visible.sync="dialogVisible">
 						<img width="100%" :src="dialogImageUrl" alt="">
 					</el-dialog>
 				</el-row>
@@ -542,7 +542,7 @@
 			</el-tab-pane>
 		</el-tabs>
 		<!-- 损物赔偿-新增/修改类型 -->
-		<el-dialog title="新增类型" :visible.sync="dialogAdd_kinds" :close-on-click-modal="false">
+		<el-dialog top="0" title="新增类型" :visible.sync="dialogAdd_kinds" :close-on-click-modal="false">
 			<el-form :model="fourForm" :rules="fourrules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row class="demo-form-inline">
 					<el-col>
@@ -558,7 +558,7 @@
 			</span>
 		</el-dialog>
 		<!-- 损物赔偿-新增/修改物品 -->
-		<el-dialog title="新增" :visible.sync="dialogAdd_thing" :close-on-click-modal="false">
+		<el-dialog top="0" title="新增" :visible.sync="dialogAdd_thing" :close-on-click-modal="false">
 			<el-form :model="fourForm" :rules="fourrules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row>
 					<el-form-item label="物品类型:" prop="name">

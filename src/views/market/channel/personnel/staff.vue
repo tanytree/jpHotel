@@ -2,7 +2,7 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
  <template>
   <div class="sec1">
@@ -29,14 +29,14 @@
             <span style="margin:0 5px">-</span>
             <el-date-picker v-model="form.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
         </el-form-item>
-        
+
 
         <el-form-item >
           <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
-          
+
         </el-form-item>
       </el-row>
-      
+
     </el-form>
 
      <!--表格数据 -->
@@ -59,7 +59,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
       </div>
         <!-- 查看资料 -->
-      <el-dialog title="查看资料" :visible.sync="details" width="500px" >
+      <el-dialog top="0" title="查看资料" :visible.sync="details" width="500px" >
         <el-from>
           <el-row style="margin:10px 0">
             <el-col :span="8">姓名:</el-col>
@@ -105,7 +105,7 @@
             <el-col :span="8">分机号:</el-col>
             <el-col :span="14">77777</el-col>
           </el-row>
-          <el-row style="margin:10px 0"> 
+          <el-row style="margin:10px 0">
             <el-col :span="8">入职时间:</el-col>
             <el-col :span="14">3019-7-1</el-col>
           </el-row>
@@ -126,7 +126,7 @@
             <el-col :span="14">暂无</el-col>
           </el-row>
         </el-from>
-          
+
 
           <div slot="footer" class="dialog-footer" style="text-align:center">
             <el-button @click="details = false">关闭</el-button>
@@ -179,7 +179,7 @@ export default {
             // this.getDataList();
             console.log(222)
         }
- 
+
 
   }
 };

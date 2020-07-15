@@ -2,7 +2,7 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
  <template>
   <div class="sec1">
@@ -22,10 +22,10 @@
 
         <el-form-item >
           <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
-          
+
         </el-form-item>
       </el-row>
-      
+
     </el-form>
 
      <!--表格数据 -->
@@ -42,9 +42,9 @@
         </el-table>
 
         <!-- 编辑折扣 -->
-        <el-dialog title="编辑折扣" :visible.sync="discount" width="450px">
+        <el-dialog top="0" title="编辑折扣" :visible.sync="discount" width="450px">
               <el-form ref="discountform" :model="form" label-width="80px" :rules="rules">
-                
+
                 <el-form-item label="是否折扣:" style="margin:0 auto;">
                   <el-radio-group v-model="discountform.resource">
                     <el-radio label="是"></el-radio>
@@ -56,7 +56,7 @@
                 </el-form-item>
                     <el-divider></el-divider>
 
-              
+
                 <el-form-item >
 
                   <el-button type="primary" >确定</el-button>
@@ -92,7 +92,7 @@ export default {
           name: [
             { required: true, trigger: 'blur' },
           ]
-          }, 
+          },
     };
   },
   created() {
@@ -101,7 +101,7 @@ export default {
   },
   methods: {
 
- 
+
 
   }
 };
@@ -113,7 +113,7 @@ export default {
   width: 30px;
   height: 30px;
   vertical-align: middle;
-  
+
 }
 .top-close {
   display: flex;

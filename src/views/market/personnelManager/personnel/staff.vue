@@ -38,7 +38,7 @@
 
     <!--表格数据 -->
     <div>
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
             <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip>
                 <template slot-scope="scope" v-if="scope.row.storesNum">
                     {{F_storeName(scope.row.storesNum)}}
@@ -60,7 +60,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
     <!-- 查看资料 -->
-    <el-dialog title="查看资料" :visible.sync="details" width="500px">
+    <el-dialog top="0" title="查看资料" :visible.sync="details" width="500px">
         <el-form :model="detailsData">
             <el-row style="margin:10px 0">
                 <el-col :span="8">姓名:</el-col>

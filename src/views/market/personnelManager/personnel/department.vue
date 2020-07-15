@@ -19,7 +19,7 @@
         </el-table>
     </div>
     <!-- 添加部门 -->
-    <el-dialog :title="addAndEditForm.type=='add'?'添加部门':'编辑部门'" :visible.sync="adddepart" width='30%'>
+    <el-dialog top="0" :title="addAndEditForm.type=='add'?'添加部门':'编辑部门'" :visible.sync="adddepart" width='30%'>
         <el-form :rules="rules" :model="addAndEditForm" ref="adddepart">
             <el-row>
                 {{addAndEditForm.storeName}}:

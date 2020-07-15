@@ -1,6 +1,6 @@
 <template>
 	<div class="">
-		<el-dialog :title="title" :visible.sync="dialogFormVisible " :before-close="Close" :append-to-body ="true">
+		<el-dialog top="0" :title="title" :visible.sync="dialogFormVisible " :before-close="Close" :append-to-body ="true">
 			<el-radio-group v-model="radio_status">
 				<div class="radio-status">
 					<el-radio :label="0" v-for="(value,index) in selectList" :key="index" style="padding: 20px;">{{ value.way }}</el-radio>

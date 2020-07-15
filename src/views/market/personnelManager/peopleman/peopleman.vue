@@ -46,7 +46,7 @@
     </el-form>
     <div>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
             <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip>
                 <template slot-scope="scope" v-if="scope.row.storesNum">
                     {{F_storeName(scope.row.storesNum)}}
@@ -77,7 +77,7 @@
     </div>
     <div>
         <!-- 添加员工 -->
-        <el-dialog :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff">
+        <el-dialog top="0" :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff">
             <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" :inline="true" :required="true" class="top-body" label-width="100px" size="small">
                 <el-row>
                     <el-col :span="12"  v-if="isPersonnelManager">
@@ -192,7 +192,7 @@
 
     <div>
         <!-- 办理离职 -->
-        <el-dialog title="办理离职" :visible.sync="dimission" width="500px" class="dimission">
+        <el-dialog top="0" title="办理离职" :visible.sync="dimission" width="500px" class="dimission">
             <el-form>
                 <el-row>
                     <el-col>
@@ -234,7 +234,7 @@
 
     <div>
         <!-- 转正 -->
-        <el-dialog title="转正" :visible.sync="correct" width="500px">
+        <el-dialog top="0" title="转正" :visible.sync="correct" width="500px">
             <el-form>
 
                 <el-row>
@@ -255,7 +255,7 @@
         </el-dialog>
     </div>
     <!-- 查看资料 -->
-    <el-dialog title="查看详情" :visible.sync="details" width="500px">
+    <el-dialog top="0" title="查看详情" :visible.sync="details" width="500px">
         <el-form :model="detailsData">
             <el-row style="margin:10px 0">
                 <el-col :span="8">姓名:</el-col>

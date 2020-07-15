@@ -7,7 +7,7 @@
 
 <template>
   <!--统一的编辑和新增 -->
-  <el-dialog width="600px" :visible.sync="visible" title="编辑">
+  <el-dialog top="0" width="600px" :visible.sync="visible" title="编辑">
     <el-form label-width="80px">
       <el-form-item label="活动名称">
         <el-input v-model="editForm.title"></el-input>

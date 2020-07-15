@@ -60,7 +60,7 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
 
-      <el-dialog :title="handleTitle" width="650px" @close="formClose" :visible.sync="visible">
+      <el-dialog top="0" :title="handleTitle" width="650px" @close="formClose" :visible.sync="visible">
         <el-form ref="editForm" size="small" :rules="rules" :model="editForm" label-width="120px">
           <el-form-item label="轮播图标题" prop="title">
             <el-input v-model="editForm.title"></el-input>

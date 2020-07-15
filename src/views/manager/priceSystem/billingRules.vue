@@ -331,7 +331,7 @@
 			</el-row>
 		</el-row>
 		<!-- 设置 -->
-		<el-dialog title="设置" :visible.sync="dialogsit" :close-on-click-modal="false">
+		<el-dialog top="0" title="设置" :visible.sync="dialogsit" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
 					<el-col :span="18">

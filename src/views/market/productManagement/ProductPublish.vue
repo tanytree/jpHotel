@@ -1,6 +1,6 @@
 <template>
     <div class="flexP">
-      <el-dialog :visible.sync="urlShowDialogVisible">
+      <el-dialog top="0" :visible.sync="urlShowDialogVisible">
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
         <el-steps :active="active" align-center>

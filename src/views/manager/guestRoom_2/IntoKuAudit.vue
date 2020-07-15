@@ -130,7 +130,7 @@
 		<el-row style="margin-top: 30px;" v-if="currentIndex ==2">
 		</el-row>
 		<!-- 入库单明细 -->
-		<el-dialog title="入库单明细" :visible.sync="dialogDetail_show01" :close-on-click-modal="false">
+		<el-dialog top="0" title="入库单明细" :visible.sync="dialogDetail_show01" :close-on-click-modal="false">
 			<el-row :gutter="20" style="line-height: 30px;">
 				<el-col :span="8" class="demo-form-inline">
 					<el-col :span="9" style="color: #898B8E;">入库单号:</el-col>
@@ -184,7 +184,7 @@
 			</span>
 		</el-dialog>
 		<!-- 修改商品入库 和库存管理修改库存一样 -->
-		<el-dialog title="修改商品入库" :visible.sync="dialogInfo_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="修改商品入库" :visible.sync="dialogInfo_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" style="display: flex;justify-content: space-between;align-items: center;">
 					<el-col :span="18">
@@ -248,7 +248,7 @@
 			</span>
 		</el-dialog>
 		<!-- 批量添加商品 -->
-		<el-dialog title="批量添加商品" :visible.sync="dialogStock_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="批量添加商品" :visible.sync="dialogStock_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-row>
 					<el-form class="demo-form-inline" inline size="small">
@@ -290,7 +290,7 @@
 			</span>
 		</el-dialog>
 		<!-- 入库审核 -->
-		<el-dialog title="入库审核" :visible.sync="dialogExam_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="入库审核" :visible.sync="dialogExam_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
 					<el-col :span="20">
