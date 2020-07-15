@@ -5,31 +5,32 @@
 * @Last Modified time: 2020-03-11 16:59:58
 */
 <template>
-    <div>
-        <el-tabs class="pageTab padding bg" v-model="activeName">
-            <el-tab-pane label="财务慨览" name="chart">
+    <div class="boss-index">
+        <el-tabs class="pageTab" v-model="activeName">
+            <el-tab-pane label="财务慨览" name="overView">
                 <incomeStatus/>
             </el-tab-pane>
-            <el-tab-pane label="记一笔" name="check">
-                <bill/>
+            <el-tab-pane label="记一笔" name="record">
+                <record />
             </el-tab-pane>
-            <el-tab-pane label="员工权限" name="check">
-                <bill/>
+            <el-tab-pane label="员工权限" name="authority">
+                <authority />
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
-    import incomeStatus from './incomeStatus'
-    import bill from './bill'
+    import incomeStatus from './index/incomeStatus'
+    import authority from './index/authority'
+    import record from './index/record'
     import { mapState, mapActions } from 'vuex'
 
     export default {
-        components: { incomeStatus, bill },
+        components: { incomeStatus, authority, record },
         data () {
             return {
-                activeName: 'chart'
+                activeName: 'overView'
             }
         },
         methods: {}

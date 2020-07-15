@@ -346,7 +346,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/market/personnelManager/setting/channelSetting')
                 },
-                
+
 
                 //企划部      /**销售部 */
                 {
@@ -516,28 +516,10 @@ export default new Router({
                         import ('@/views/finance/account')
                 },
                 {
-                    path: '/accountzj',
-                    name: 'accountzj',
-                    component: () =>
-                        import ('@/views/finance/account/accountzj')
-                },
-                {
                     path: '/accountbill',
                     name: 'accountbill',
                     component: () =>
                         import ('@/views/finance/account/bill')
-                },
-                {
-                    path: '/accounttx',
-                    name: 'accounttx',
-                    component: () =>
-                        import ('@/views/finance/account/accounttx')
-                },
-                {
-                    path: '/accountjf',
-                    name: 'accountjf',
-                    component: () =>
-                        import ('@/views/finance/account/accountjf')
                 },
                 {
                     path: '/billjf',
