@@ -21,7 +21,7 @@
 					<el-button slot="append" icon="el-icon-search"></el-button>
 				</el-input>
 				<el-row>
-					<ul class="infinite-list" v-infinite-scroll="loadMore" style="overflow:auto">
+					<ul class="infinite-list" style="overflow:auto">
 						<el-row class="list" v-for="(value,index) in peopleList " :key='index'>
 							<div @click="changeRedio(value,index)">
 								<el-col class="item">
@@ -102,7 +102,7 @@
 					}
 				})
 			},
-			// 改变选中的人
+			// 弹框--改变选中的人
 			changeRedio(value, index) {
 				this.peopleList.forEach((item) =>{
 					item.checked = false
@@ -149,9 +149,6 @@
 				this.dialog_info.header = value.header
 				this.get_dialogList()
 				this.dialogTableVisible = true
-			},
-			loadMore() {
-				debugger
 			}
 		}
 	}

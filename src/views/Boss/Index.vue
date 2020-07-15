@@ -1,5 +1,5 @@
 /*
-* @Author: 黄栋 广告管理
+* @Author: 何丽梅 员工权限
 * @Date: 2020-03-10 13:45:16
 * @Last Modified by: cindy
 * @Last Modified time: 2020-03-11 16:59:58
@@ -53,11 +53,11 @@
 						<div class="row-line" v-for="(value, index) in peopleList" :key="index">
 							<div class="row-item">
 								<img class="row-img" src="../../assets/images/caigou/kuai01.png" alt="">
-								<span class="default-text">章欣</span>
-								<span class="active-facus">总经理</span>
+								<span class="default-text">{{value.userName}}</span>
+								<!-- <span class="active-facus">{{value.userName}}</span> -->
 							</div>
-							<div class="row-item">
-								<el-dropdown @command="handleCommand">
+							<div class="row-item" @click="routerPath(value, index)">
+								<el-dropdown trigger="click" @command="handleCommand">
 									<span class="el-dropdown-link">
 										操作<i class="el-icon-arrow-down el-icon--right"></i>
 									</span>
@@ -72,6 +72,60 @@
 				</div>
 			</el-tab-pane>
 		</el-tabs>
+		<!-- 订单详情/查看详情 -->
+		<el-dialog title="查看资料" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
+			<el-row class="padding-item">
+				<el-col span="8">姓名:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">状态:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">联系电话:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">所属部门:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">职位:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">银行账户:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">联系电话:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">企业邮箱:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">后台账号:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">工号:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">分机号:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">入职时间:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">证件类型:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">证件号:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">转正日期:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<el-row class="padding-item">
+				<el-col span="8">备注:</el-col><el-col span="14">张三</el-col>
+			</el-row>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogVisible = false">关闭</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
@@ -85,7 +139,10 @@
 				first_title: '首页',
 				boss_second_title: '员工权限',
 				select_title:'',
-				peopleList:[]
+				peopleList:[],
+				dialogDetail:false,
+				select_info: {}, //点击中的选中信息
+				detailInfo: {}, //点击选中项的详情
 			}
 		},
 		created() {
@@ -96,25 +153,42 @@
 			//获取各部门人员列表
 			get_tableDate() {
 				let params ={
-					departmentId:JSON.parse(sessionStorage.getItem('userData')).user.id,
-					searchType :1,
+					departmentId:JSON.parse(sessionStorage.getItem('menul')).id,
 					pageIndex:1,
 					pageSize:10
 				}
-				this.$F.doRequest(this, '/pms/role/menu_list', params, (res) => {
-					if (res != null && res != '') {
-						res.forEach((value) =>{
+				this.$F.doRequest(this, '/pms/employee/employee_list', params, (res) => {
+					if (res.hotelUserList != null && res.hotelUserList != '') {
+						res.hotelUserList.forEach((value) =>{
 							if (value.header != null && value.header != '') {
 								value.header_name = value.header.userName
 							}
 						})
 					}
-					this.peopleList = res
+					this.peopleList = res.hotelUserList
 				})
 			},
+			//获取人员信息资料
+			get_peopleInfo() {
+				let params ={
+					employeeId:this.select_info.id
+				}
+				this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
+					this.detailInfo = res
+				})
+			},
+			// 作用是--ab分别跳到哪
 			handleCommand(command) {
-				debugger
-				this.$router.push({name:"indexDesign"})
+				if (command == 'a') {
+					this.dialogDetail = true
+					this.get_peopleInfo()
+				} else {
+					this.$router.push({name:"indexDesign"})
+				}
+			},
+			// 作用是--点击获取当前点击的信息
+			routerPath(value,index) {
+				this.select_info = value
 			}
 		}
 	}
@@ -122,6 +196,9 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+	.padding-item {
+		padding-bottom: 8px;
+	}
 	.boss-index {
 		height: 100%;
 
