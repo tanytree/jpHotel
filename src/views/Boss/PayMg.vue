@@ -3,137 +3,128 @@
 		<!--薪酬管理-->
 		<el-tabs class="pageTab" v-model="activeName">
 			<el-tab-pane label="薪酬管理" name="first">
-				<el-tabs v-model="active_second_name" type="card">
-					<div class="content">
-						<el-row>
-							<el-form class="demo-form-inline" inline size="small">
-								<el-form-item label="员工名称:">
-									<el-input v-model="form.name" class="row-width"></el-input>
-								</el-form-item>
-								<el-form-item label="工资月份:" class="margin-l">
-									<el-col :span="11">
-										<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" class="row-width"></el-date-picker>
-									</el-col>
-								</el-form-item>
-								<el-form-item label="员工状态:" class="margin-l">
-									<el-select v-model="form.categoryid" placeholder="请选择状态" class="row-width">
-										<el-option label="区域一" value="shanghai"></el-option>
-										<el-option label="区域二" value="beijing"></el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item>
-									<el-button type="primary">查询</el-button>
-								</el-form-item>
-							</el-form>
-						</el-row>
-						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" height="100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
-							 @selection-change="handleSelectionChange">
-								<!-- <el-table-column prop="name" label="部门" show-overflow-tooltip></el-table-column> -->
-								<el-table-column prop="name" label="职位"></el-table-column>
-								<el-table-column prop="name" label="姓名"></el-table-column>
-								<el-table-column prop="name" label="员工状态"></el-table-column>
-								<el-table-column prop="name" label="工号"></el-table-column>
-								<el-table-column prop="name" label="工资月份"></el-table-column>
-								<el-table-column label="基本工资">
-									<el-table-column prop="name" label="基础工资"></el-table-column>
-									<el-table-column prop="name" label="社保补助"></el-table-column>
-									<el-table-column prop="name" label="其他"></el-table-column>
-									<el-table-column prop="name" label="保密工资"></el-table-column>
-								</el-table-column>
-								<el-table-column prop="name" label="岗位工资"></el-table-column>
-								<el-table-column type="name" label="绩效工资"></el-table-column>
-								<el-table-column prop="name" label="奖金"></el-table-column>
-								<el-table-column prop="name" label="工资月份"></el-table-column>
-								<el-table-column label="补贴">
-									<el-table-column prop="name" label="餐补"></el-table-column>
-									<el-table-column prop="name" label="房补"></el-table-column>
-								</el-table-column>
-								<el-table-column label="出勤">
-									<el-table-column prop="name" label="应出勤天数"></el-table-column>
-									<el-table-column prop="name" label="实际出勤天数"></el-table-column>
-									<el-table-column prop="name" label="出勤工资应发"></el-table-column>
-									<el-table-column prop="name" label="保密工资"></el-table-column>
-								</el-table-column>
-								<el-table-column label="扣款">
-									<el-table-column prop="name" label="迟到扣款"></el-table-column>
-									<el-table-column prop="name" label="社保扣款"></el-table-column>
-									<el-table-column prop="name" label="个税扣款"></el-table-column>
-								</el-table-column>
-								<el-table-column prop="name" label="应发工资"></el-table-column>
-								<el-table-column type="name" label="实发工资"></el-table-column>
-								<el-table-column prop="name" label="当月报销费用"></el-table-column>
-								<el-table-column prop="name" label="实发工资"></el-table-column>
-								<el-table-column fixed="right" label="操作" width="160">
-									<template slot-scope="scope">
-										<el-button type="text" size="small" @click="popup('change')">员工详情</el-button>
-										<el-button type="text" size="small" @click="popup('change')">修改</el-button>
-									</template>
-								</el-table-column>
-							</el-table>
-							<div class="block">
-								<div class="page-all">
-									共
-									<span style="font-weight:600;font-size: 14px;">400</span>条记录
-								</div>
-								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-								 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+				<div class="content">
+					<el-row>
+						<el-form class="demo-form-inline" inline size="small">
+							<el-form-item label="员工名称:">
+								<el-input v-model="form_1.content" class="row-width"></el-input>
+							</el-form-item>
+							<el-form-item label="工资月份:" class="margin-l">
+								<el-col :span="11">
+									<el-date-picker v-model="form_1.payTime" type="month" placeholder="选择月"></el-date-picker>
+								</el-col>
+							</el-form-item>
+							<el-form-item label="员工状态:" class="margin-l">
+								<el-select v-model="form_1.userStatus" placeholder="请选择状态" class="row-width">
+									<el-option label="正式工" value="1"></el-option>
+									<el-option label="实习期" value="2"></el-option>
+									<el-option label="试用期" value="3"></el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item>
+								<el-button type="primary" @click="get_salary_mg_list">查询</el-button>
+							</el-form-item>
+						</el-form>
+					</el-row>
+					<div class="components-edit">
+						<el-table ref="multipleTable" :data="tableData_1" height="100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}">
+							<el-table-column prop="position" label="职位"></el-table-column>
+							<el-table-column prop="userName" label="姓名"></el-table-column>
+							<el-table-column prop="userStatus" label="员工状态"></el-table-column>
+							<el-table-column prop="worknum" label="工号"></el-table-column>
+							<el-table-column prop="payTime" label="工资月份"></el-table-column>
+							<el-table-column label="基本工资">
+								<el-table-column prop="baseWage" label="基础工资"></el-table-column>
+								<el-table-column prop="socialBenefits" label="社保补助"></el-table-column>
+								<el-table-column prop="otherWage" label="其他"></el-table-column>
+								<el-table-column prop="secretWage" label="保密工资"></el-table-column>
+							</el-table-column>
+							<el-table-column prop="jobsWage" label="岗位工资"></el-table-column>
+							<el-table-column prop="performance" label="绩效工资"></el-table-column>
+							<el-table-column prop="bonus" label="奖金"></el-table-column>
+							<el-table-column label="补贴">
+								<el-table-column prop="mealSubsidies" label="餐补"></el-table-column>
+								<el-table-column prop="houseSubsidies" label="房补"></el-table-column>
+							</el-table-column>
+							<el-table-column label="出勤">
+								<el-table-column prop="demandJobDay" label="应出勤天数"></el-table-column>
+								<el-table-column prop="realJobDay" label="实际出勤天数"></el-table-column>
+								<el-table-column prop="jobsDemandWage" label="出勤工资应发"></el-table-column>
+							</el-table-column>
+							<el-table-column label="扣款">
+								<el-table-column prop="lateDeductions" label="迟到扣款"></el-table-column>
+								<el-table-column prop="socialDeduction" label="社保扣款"></el-table-column>
+								<el-table-column prop="taxDeduction" label="个税扣款"></el-table-column>
+							</el-table-column>
+							<el-table-column prop="shouldPay" label="应发工资"></el-table-column>
+							<el-table-column prop="realPay" label="实发工资"></el-table-column>
+							<el-table-column prop="submitMoney" label="当月报销费用"></el-table-column>
+							<el-table-column prop="name" label="总实发工资"></el-table-column>
+							<el-table-column fixed="right" label="操作" width="160">
+								<template slot-scope="scope">
+									<el-button type="text" size="small" @click="popup('ch_detail', scope)">员工详情</el-button>
+									<el-button type="text" size="small" @click="popup('ch_change', scope)">修改</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<div class="block">
+							<div class="page-all">
+								共
+								<span style="font-weight:600;font-size: 14px;">400</span>条记录
 							</div>
+							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form_1.pageIndex"
+							 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
 						</div>
 					</div>
-				</el-tabs>
+				</div>
 			</el-tab-pane>
 			<!-- 薪酬设置 -->
 			<el-tab-pane label="薪酬设置" name="second">
-				<el-tabs v-model="active_second_name" type="card">
-					<div class="content">
-						<el-row>
-							<el-form class="demo-form-inline" inline size="small">
-								<el-form-item label="员工名称:">
-									<el-input v-model="form.name" class="row-width"></el-input>
-								</el-form-item>
-								<el-form-item label="所在部门:" class="margin-l">
-									<el-select v-model="form.categoryid" placeholder="请选择所在部门" class="row-width">
-										<el-option label="区域一" value="shanghai"></el-option>
-										<el-option label="区域二" value="beijing"></el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item class="margin-l">
-									<el-button type="primary">查询</el-button>
-								</el-form-item>
-							</el-form>
-						</el-row>
-						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" height="100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
-							 @selection-change="handleSelectionChange">
-								<!-- <el-table-column type="index" label="序号" width="50"></el-table-column> -->
-								<el-table-column prop="name" label="员工姓名"></el-table-column>
-								<el-table-column prop="time" label="状态"></el-table-column>
-								<el-table-column prop="job" label="职位"></el-table-column>
-								<el-table-column prop="job" label="工号"></el-table-column>
-								<el-table-column prop="job" label="所在部门"></el-table-column>
-								<el-table-column label="操作" width="200">
-									<template slot-scope="scope">
-										<el-button type="text" size="small" @click="popup('detail')">查看</el-button>
-										<el-button type="text" size="small">薪资设置</el-button>
-									</template>
-								</el-table-column>
-							</el-table>
-							<div class="block">
-								<div class="page-all">
-									共
-									<span style="font-weight:600;font-size: 14px;">400</span>条记录
-								</div>
-								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-								 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+				<div class="content">
+					<el-row>
+						<el-form class="demo-form-inline" inline size="small">
+							<el-form-item label="员工名称:">
+								<el-input v-model="form_2.content" class="row-width"></el-input>
+							</el-form-item>
+							<el-form-item label="所在部门:" class="margin-l">
+								<el-select v-model="form_2.departmentId" placeholder="请选择所在部门" style="width: 150px;">
+									<el-option label="区域一" value="shanghai"></el-option>
+									<el-option label="区域二" value="beijing"></el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item class="margin-l">
+								<el-button type="primary">查询</el-button>
+							</el-form-item>
+						</el-form>
+					</el-row>
+					<div class="components-edit">
+						<el-table ref="multipleTable" :data="tableData_2" height="100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}">
+							<el-table-column prop="userName" label="员工姓名"></el-table-column>
+							<el-table-column prop="userStatus" label="状态"></el-table-column>
+							<el-table-column prop="position" label="职位"></el-table-column>
+							<el-table-column prop="worknum" label="工号"></el-table-column>
+							<el-table-column prop="name" label="所在部门"></el-table-column>
+							<el-table-column label="操作" width="200">
+								<template slot-scope="scope">
+									<el-button type="text" size="small" @click="popup('set_detail',scope)">查看</el-button>
+									<el-button type="text" size="small" @click="popup('set_change',scope)">薪资设置</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<div class="block">
+							<div class="page-all">
+								共
+								<span style="font-weight:600;font-size: 14px;">400</span>条记录
 							</div>
+							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form_2.pageIndex"
+							 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
 						</div>
 					</div>
-				</el-tabs>
+				</div>
 			</el-tab-pane>
 		</el-tabs>
-		<!-- 薪酬修改-->
-		<el-dialog title="薪酬修改" :visible.sync="dialogAdd" :close-on-click-modal="false">
+		<!-- 薪酬修改 / 查看-->
+		<el-dialog :title="salary_change_title" :visible.sync="dialogAdd" :close-on-click-modal="false">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row>
 					<el-form-item label="基本工资:"></el-form-item>
@@ -141,27 +132,30 @@
 				<el-row class="demo-form-inline">
 					<el-col>
 						<el-form-item label="基本工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.baseWage" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="其他:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.otherWage" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="岗位工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.jobsWage" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="奖金:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.bonus" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="社保补助:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.socialBenefits" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="保密工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.secretWage" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="绩效工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.performance" :disabled="iss_disabled"></el-input>
+						</el-form-item>
+						<el-form-item label="工资月份:" prop="payTime">
+							<el-date-picker v-model="ruleForm.payTime" type="month" placeholder="选择月" :disabled="iss_disabled"></el-date-picker>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -171,12 +165,12 @@
 				<el-row class="demo-form-inline">
 					<el-col>
 						<el-form-item label="房补:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.houseSubsidies" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="餐补:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.mealSubsidies" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -186,15 +180,18 @@
 				<el-row class="demo-form-inline">
 					<el-col>
 						<el-form-item label="应出勤天数:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.demandJobDay" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="出勤工资应发:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.jobsDemandWage" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="实际出勤天数:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.realJobDay" :disabled="iss_disabled"></el-input>
+						</el-form-item>
+						<el-form-item label="发放日期:">
+							<el-date-picker v-model="ruleForm.sendTime" type="date" placeholder="选择日期"></el-date-picker>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -204,69 +201,73 @@
 				<el-row class="demo-form-inline">
 					<el-col>
 						<el-form-item label="迟到扣款:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.lateDeductions" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="社保扣款:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.socialDeduction" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="个人扣税:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.taxDeduction" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
 				<el-row class="demo-form-inline">
 					<el-col>
 						<el-form-item label="应发工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.shouldPay" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="实发工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.realPay" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="当月报销费用:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="ruleForm.submitMoney" :disabled="iss_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
 			</el-form>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+			<span slot="footer" class="dialog-footer" v-if="iss_disabled">
+				<el-button @click="dialogAdd = false">关 闭</el-button>
+			</span>
+			<span slot="footer" class="dialog-footer" v-else>
+				<el-button @click="dialogAdd = false">取 消</el-button>
+				<el-button type="primary" @click="changeSalaryDefine('ruleForm')">确 定</el-button>
 			</span>
 		</el-dialog>
-		<!-- /查看详情/薪资设置 备注:是一样的内容,查看详情是只要让input变成不可点击, 薪资设置是可以修改输入-->
-		<el-dialog title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
-			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+		<!-- 薪酬设置 / 查看-->
+		<el-dialog :title="salary_set_title" :visible.sync="dialogsalary_set" :close-on-click-modal="false">
+			<el-form :model="setFrom" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row>
 					<el-form-item label="基本工资:"></el-form-item>
 				</el-row>
 				<el-row class="demo-form-inline">
 					<el-col>
 						<el-form-item label="基本工资:">
-							<el-input v-model="ruleForm.name" ></el-input>
+							<el-input v-model="setFrom.baseWage" :disabled="is_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="其他:">
-							<el-input v-model="ruleForm.name" ></el-input>
+							<el-input v-model="setFrom.otherWage" :disabled="is_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="岗位工资:">
-							<el-input v-model="ruleForm.name" ></el-input>
+							<el-input v-model="setFrom.jobsWage" :disabled="is_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="奖金:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="setFrom.bonus" :disabled="is_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="社保补助:">
-							<el-input v-model="ruleForm.name" ></el-input>
+							<el-input v-model="setFrom.socialBenefits" :disabled="is_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="保密工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="setFrom.secretWage" :disabled="is_disabled"></el-input>
 						</el-form-item>
 						<el-form-item label="绩效工资:">
-							<el-input v-model="ruleForm.name"></el-input>
+							<el-input v-model="setFrom.performance" :disabled="is_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -276,71 +277,22 @@
 				<el-row class="demo-form-inline">
 					<el-col>
 						<el-form-item label="房补:">
-							<el-input v-model="ruleForm.name" :disabled="true"></el-input>
+							<el-input v-model="setFrom.houseSubsidies" :disabled="is_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col class="margin-l">
 						<el-form-item label="餐补:">
-							<el-input v-model="ruleForm.name" :disabled="true"></el-input>
+							<el-input v-model="setFrom.mealSubsidies" :disabled="is_disabled"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
 			</el-form>
-			<!-- 查看详情按钮 -->
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false">关闭</el-button>
+			<span slot="footer" class="dialog-footer" v-if="is_disabled">
+				<el-button @click="dialogsalary_set = false">关 闭</el-button>
 			</span>
-			<!-- 薪资设置是按钮 -->
-			<!-- <span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false">取消</el-button>
-				<el-button @click="dialogVisible = false" type="primary">确认</el-button>
-			</span> -->
-		</el-dialog>
-		<!-- 办理离职 -->
-		<el-dialog title="办理离职" :visible.sync="dialogGone" :close-on-click-modal="false">
-			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-				<el-row class="demo-form-inline">
-					<el-col>
-						<el-form-item label="离职时间" prop="name">
-							<el-col :span="24">
-								<el-form-item>
-									<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-								</el-form-item>
-							</el-col>
-						</el-form-item>
-						<el-form-item label="离职原因">
-							<el-input v-model="ruleForm.name"></el-input>
-						</el-form-item>
-						<el-form-item label="离职文件">
-							<el-select v-model="ruleForm.region" placeholder="请选择文件" style="width: 85%;"></el-select>
-							<el-button @click.prevent="removeDomain(domain)" style="width: 15%;">选择文件</el-button>
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-			</span>
-		</el-dialog>
-		<!-- 转正 -->
-		<el-dialog title="转正" :visible.sync="dialogZheng" :close-on-click-modal="false">
-			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-				<el-row class="demo-form-inline">
-					<el-col>
-						<el-form-item label="转正时间" prop="name">
-							<el-col :span="24">
-								<el-form-item>
-									<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-								</el-form-item>
-							</el-col>
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+			<span slot="footer" class="dialog-footer" v-else>
+				<el-button @click="dialogsalary_set = false">取 消</el-button>
+				<el-button type="primary" @click="setSalaryDefine">确 定</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -351,77 +303,171 @@
 		data() {
 			return {
 				activeName: 'first',
-				active_second_name: '',
-				form: {
-					keyword1: '',
-					categoryid: '',
-					date1: '',
-					date2: '',
+				form_1: {
+					content: '',
+					userStatus: '',
+					payTime: '',
+					pageIndex: 1,
+					pageSize: 10,
+					paging: true,
 				},
-				pageIndex: 1,
-				pageSize: 10,
-				keyword: "",
-				currentPage1: 1,
-
-				dialogAdd: false, // 修改薪酬
-				dialogDetail: false, //订单详情/查看详情
-				dialogGone: false, // 办理离职
-				dialogZheng: false, //转正
-				tableData: [{
-					name: '张十三',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}, {
-					name: '张十三',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
+				form_2: {
+					content: '',
+					departmentId: '',
+					pageIndex: 1,
+					pageSize: 10,
+					paging: true,
+				},
+				tableData_1: [{
+					position: ''
 				}],
+				tableData_2: [{
+					position: ''
+				}],
+				dialogAdd: false, // 修改薪酬
+				salary_change_title: '', // 薪酬修改/查看弹框标题
+				iss_disabled: false, //判断是修改还是查看,查看就是true,不可修改模式
+				change_salary_info: {},
 				ruleForm: {
-					name: '3000',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
+					employeeId: '',
+					payTime: '',
+					sendTime: '',
+					demandJobDay: '',
+					realJobDay: '',
+					jobsDemandWage: '',
+					lateDeductions: '',
+					socialDeduction: '',
+					taxDeduction: '',
+					shouldPay: '',
+					realPay: '',
+					submitMoney: '',
+					baseWage: '',
+					socialBenefits: '',
+					otherWage: '',
+					secretWage: '',
+					jobsWage: '',
+					performance: '',
+					bonus: '',
+					houseSubsidies: '',
+					mealSubsidies: ''
 				},
 				rules: {
-					name: [{
+					payTime: [{
 						required: true,
-						message: '请输入姓名',
+						message: '请选择发放月份',
 						trigger: 'blur'
 					}]
+				},
+				dialogsalary_set: false, // 薪资设置
+				salary_set_title: '', // 薪酬设置/查看弹框标题
+				is_disabled: false, //判断是修改还是查看,查看就是true,不可修改模式
+				set_salary_info: {},
+				setFrom: {
+					employeeId: '',
+					baseWage: '',
+					socialBenefits: '',
+					otherWage: '',
+					secretWage: '',
+					jobsWage: '',
+					performance: '',
+					bonus: '',
+					houseSubsidies: '',
+					mealSubsidies: ''
 				}
 			};
 		},
+		watch: {
+			activeName() {
+				if (this.activeName == 'first') {
+					this.get_salary_mg_list()
+				} else {
+					this.get_salary_set_list()
+				}
+			}
+		},
+		created() {
+			this.get_salary_mg_list()
+		},
 		methods: {
-			popup(type) {
+			popup(type, value) {
 				switch (type) {
-					case 'change':
+					case 'ch_detail':
+						this.salary_change_title = '查看'
+						this.iss_disabled = true;
 						this.dialogAdd = true;
+						this.change_salary_info = value
 						break
-					case 'detail':
-						this.dialogDetail = true;
+					case 'ch_change':
+						this.salary_change_title = '薪资修改'
+						this.iss_disabled = false;
+						this.dialogAdd = true;
+						this.change_salary_info = value
 						break
-					case 'zheng':
-						this.dialogZheng = true;
+					case 'set_detail': // 薪资设置-查看
+						this.salary_set_title = '查看'
+						this.is_disabled = true;
+						this.dialogsalary_set = true;
+						this.set_salary_info = value
 						break
-					case 'gone':
-						this.dialogGone = true;
+					case 'set_change': // 薪资设置-设置
+						this.salary_set_title = '薪资设置'
+						this.is_disabled = false;
+						this.dialogsalary_set = true;
+						this.set_salary_info = value
 						break
 				}
 			},
-			// 切换
-			changeTab(index) {
-				let that = this;
-				that.currentIndex = index;
+			// 确定-- 薪酬管理
+			changeSalaryDefine(ruleForm) {
+				this.setFrom.employeeId = this.set_salary_info.id
+				let params = this.setFrom
+				this.$refs[ruleForm].validate((valid) => {
+					if (valid) {
+						alert('submit!');
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+				this.$F.doRequest(this, '/pms/wage/set_month_wage', params, (res) => {
+					this.$F.doRequest(this, '/pms/wage/set_employee_wage', params, (res) => {
+						this.$message({
+							message: '修改成功!',
+							type: 'success'
+						});
+					})
+				})
+			},
+			// 确认--薪资设置
+			setSalaryDefine() {
+				this.setFrom.employeeId = this.set_salary_info.id
+				let params = this.setFrom
+				this.$F.doRequest(this, '/pms/wage/set_employee_wage', params, (res) => {
+					this.$message({
+						message: '设置成功!',
+						type: 'success'
+					});
+				})
+			},
+			//薪资管理列表
+			get_salary_mg_list() {
+				let params = this.form_1
+				this.$F.doRequest(this, '/pms/wage/month_wage_list', params, (res) => {
+					res.wageList.forEach((value) => {
+						value = Object.assign(value.employee, value.wage, value.employee.department)
+					})
+					// this.tableData = res
+				})
+			},
+			//薪资设置列表
+			get_salary_set_list() {
+				let params = this.form_2
+				this.$F.doRequest(this, '/pms/employee/employee_list', params, (res) => {
+					res.wageList.forEach((value) => {
+						value = Object.assign(value.employee, value.wage, value.employee.department)
+					})
+					// this.tableData = res
+				})
 			},
 			// 分页
 			handleSizeChange(val) {
