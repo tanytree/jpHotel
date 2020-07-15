@@ -7,30 +7,23 @@
  <template>
 <div class="sec1">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
-        <el-row>
-            <el-col :span="5" v-if="isPersonnelManager">
-                <el-form-item label="所属门店">
-                    <el-select v-model="searchForm.storesNum" class="width150">
-                        <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-            </el-col>
-            <el-col :span="5">
-                <el-form-item label="员工名称">
-                    <el-input class="width150" v-model="searchForm.content"></el-input>
-                </el-form-item>
-            </el-col>
-            <el-form-item label="入职日期">
-                <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                <span style="margin:0 5px">-</span>
-                <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-            </el-form-item>
-            <el-form-item>
-                <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
-            </el-form-item>
-        </el-row>
-
+        <el-form-item label="所属门店">
+            <el-select v-model="searchForm.storesNum">
+                <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="员工名称">
+            <el-input v-model="searchForm.content"></el-input>
+        </el-form-item>
+        <el-form-item label="入职日期">
+            <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+            <span style="margin:0 5px">-</span>
+            <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+            <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
+        </el-form-item>
     </el-form>
     <div>
         <!--表格数据 -->

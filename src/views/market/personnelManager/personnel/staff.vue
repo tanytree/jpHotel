@@ -11,7 +11,7 @@
 
             <el-col :span="5">
                 <el-form-item label="所属门店">
-                    <el-select v-model="searchForm.storesNum" class="width150">
+                    <el-select v-model="searchForm.storesNum">
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                         </el-option>
                     </el-select>
@@ -19,7 +19,7 @@
             </el-col>
             <el-col :span="5">
                 <el-form-item label="员工名称">
-                    <el-input  class="width150" v-model="searchForm.content"></el-input>
+                    <el-input v-model="searchForm.content"></el-input>
                 </el-form-item>
             </el-col>
             <el-form-item label="入职日期">
