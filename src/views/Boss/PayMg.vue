@@ -123,13 +123,8 @@
 				</div>
 			</el-tab-pane>
 		</el-tabs>
-<<<<<<< HEAD
 		<!-- 薪酬修改 / 查看-->
 		<el-dialog :title="salary_change_title" :visible.sync="dialogAdd" :close-on-click-modal="false">
-=======
-		<!-- 薪酬修改-->
-		<el-dialog top="0" title="薪酬修改" :visible.sync="dialogAdd" :close-on-click-modal="false">
->>>>>>> bb23272308ad393249aa933ea8c3b504d532ac93
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 				<el-row>
 					<el-form-item label="基本工资:"></el-form-item>
@@ -242,16 +237,10 @@
 				<el-button type="primary" @click="changeSalaryDefine('ruleForm')">确 定</el-button>
 			</span>
 		</el-dialog>
-<<<<<<< HEAD
 
 		<!-- 薪酬设置 / 查看-->
 		<el-dialog :title="salary_set_title" :visible.sync="dialogsalary_set" :close-on-click-modal="false">
 			<el-form :model="setFrom" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-=======
-		<!-- /查看详情/薪资设置 备注:是一样的内容,查看详情是只要让input变成不可点击, 薪资设置是可以修改输入-->
-		<el-dialog top="0" title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
-			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
->>>>>>> bb23272308ad393249aa933ea8c3b504d532ac93
 				<el-row>
 					<el-form-item label="基本工资:"></el-form-item>
 				</el-row>
@@ -301,63 +290,9 @@
 			<span slot="footer" class="dialog-footer" v-if="is_disabled">
 				<el-button @click="dialogsalary_set = false">关 闭</el-button>
 			</span>
-<<<<<<< HEAD
 			<span slot="footer" class="dialog-footer" v-else>
 				<el-button @click="dialogsalary_set = false">取 消</el-button>
 				<el-button type="primary" @click="setSalaryDefine">确 定</el-button>
-=======
-			<!-- 薪资设置是按钮 -->
-			<!-- <span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false">取消</el-button>
-				<el-button @click="dialogVisible = false" type="primary">确认</el-button>
-			</span> -->
-		</el-dialog>
-		<!-- 办理离职 -->
-		<el-dialog top="0" title="办理离职" :visible.sync="dialogGone" :close-on-click-modal="false">
-			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-				<el-row class="demo-form-inline">
-					<el-col>
-						<el-form-item label="离职时间" prop="name">
-							<el-col :span="24">
-								<el-form-item>
-									<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-								</el-form-item>
-							</el-col>
-						</el-form-item>
-						<el-form-item label="离职原因">
-							<el-input v-model="ruleForm.name"></el-input>
-						</el-form-item>
-						<el-form-item label="离职文件">
-							<el-select v-model="ruleForm.region" placeholder="请选择文件" style="width: 85%;"></el-select>
-							<el-button @click.prevent="removeDomain(domain)" style="width: 15%;">选择文件</el-button>
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-			</span>
-		</el-dialog>
-		<!-- 转正 -->
-		<el-dialog top="0" title="转正" :visible.sync="dialogZheng" :close-on-click-modal="false">
-			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-				<el-row class="demo-form-inline">
-					<el-col>
-						<el-form-item label="转正时间" prop="name">
-							<el-col :span="24">
-								<el-form-item>
-									<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-								</el-form-item>
-							</el-col>
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
->>>>>>> bb23272308ad393249aa933ea8c3b504d532ac93
 			</span>
 		</el-dialog>
 	</div>
