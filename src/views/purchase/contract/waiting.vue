@@ -46,7 +46,7 @@
         :data="tableData"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
         @selection-change="handleSelectionChange"
-        size="mini"
+        size="medium"
       >
         <!-- <el-table-column type="selection" width="55"></el-table-column> -->
         <el-table-column type="index" label="序号"></el-table-column>

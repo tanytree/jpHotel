@@ -43,7 +43,7 @@
         ></el-pagination>
       </div>
     </div>
-    <el-dialog title="投放详情" :close-on-click-modal="false" width="700px" :visible.sync="visible">
+    <el-dialog top="0" title="投放详情" :close-on-click-modal="false" width="700px" :visible.sync="visible">
       <el-form size="small" label-width="110px" :model="detail" class="demo-form-inline">
         <el-form-item label="广告连接">
           <el-input v-model="detail.link_url"></el-input>

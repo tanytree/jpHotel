@@ -96,14 +96,14 @@
           ></el-pagination>
         </div>
       </div>
-      <el-dialog title="收货地址" :close-on-click-modal="false" :visible.sync="addressShow">
+      <el-dialog top="0" title="收货地址" :close-on-click-modal="false" :visible.sync="addressShow">
         <el-form size="small">
           <el-form-item label>{{addressInfo.name}} {{addressInfo.phone}}</el-form-item>
           <el-form-item label>{{addressInfo.address}}</el-form-item>
         </el-form>
       </el-dialog>
 
-      <el-dialog title="立即发货" :close-on-click-modal="false" :visible.sync="postShow">
+      <el-dialog top="0" title="立即发货" :close-on-click-modal="false" :visible.sync="postShow">
         <el-form
           :model="editform"
           validate-on-rule-change
@@ -130,7 +130,7 @@
           <el-button type="primary" @click="dataFormSubmit">确定</el-button>
         </span>
       </el-dialog>
-      <el-dialog title="物流信息" :close-on-click-modal="false" :visible.sync="tracesShow">
+      <el-dialog top="0" title="物流信息" :close-on-click-modal="false" :visible.sync="tracesShow">
         <el-timeline reverse>
           <el-timeline-item
             v-for="(activity, index) in Traces"

@@ -5,7 +5,7 @@
  * @FilePath: /cloudAdmin/src/views/market/promotion/member/components/priseSet.vue
  -->
 <template>
-  <el-dialog width="800px" :close-on-click-modal="false" :visible.sync="visible" title="编辑">
+  <el-dialog top="0" width="800px" :close-on-click-modal="false" :visible.sync="visible" title="编辑">
     <el-form size="mini" inline label-position="right">
       <el-table ref="multipleTable" :data="prizeList" size="mini">
         <el-table-column label="奖品名称" width="120px">

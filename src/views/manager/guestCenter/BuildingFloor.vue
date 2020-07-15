@@ -53,7 +53,7 @@
 			</el-row>
 		</el-row>
 		<!-- 新增楼栋 -->
-		<el-dialog title="新增楼栋" :visible.sync="addDong_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="新增楼栋" :visible.sync="addDong_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
 					<el-col :span="20">
@@ -74,7 +74,7 @@
 			</span>
 		</el-dialog>
 		<!-- 新增楼层 -->
-		<el-dialog title="新增楼层" :visible.sync="addCeng_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="新增楼层" :visible.sync="addCeng_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
 					<el-col :span="20">

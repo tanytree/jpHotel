@@ -6,7 +6,7 @@
  -->
 <template>
   <!--统一的编辑和新增 -->
-  <el-dialog width="700px" :close-on-click-modal="false" :visible.sync="visible" title="签到送积分" class="signset">
+  <el-dialog top="0" width="700px" :close-on-click-modal="false" :visible.sync="visible" title="签到送积分" class="signset">
     <el-form label-width="130px" size="small">
       <el-form-item label="每日签到积分">
         <el-input v-model="form.everydayScores"></el-input>

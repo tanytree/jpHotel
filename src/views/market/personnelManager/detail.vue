@@ -5,7 +5,7 @@
  * @FilePath: /cloudAdmin/src/views/market/channel/detail.vue
  -->
 <template>
-  <el-dialog title="详情" :visible.sync="visible">
+  <el-dialog top="0" title="详情" :visible.sync="visible">
     <el-form size="mini" label-width="110px">
       <el-form-item :label="titleName+'名称'">
         <el-input v-model="dataForm.agent_name"></el-input>

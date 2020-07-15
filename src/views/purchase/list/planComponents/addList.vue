@@ -1,6 +1,6 @@
 <template>
 	<div class="">
-		<el-dialog :title="title" :visible.sync="dialogFormVisible" :before-close="handleClose" :append-to-body="true">
+		<el-dialog top="0" :title="title" :visible.sync="dialogFormVisible" :before-close="handleClose" :append-to-body="true">
 			<div class="tag-list">
 				<div class="tag-item" v-for="(value,index) in tagList" :key="index" @click="toTag(index)">
 					<div class="name">

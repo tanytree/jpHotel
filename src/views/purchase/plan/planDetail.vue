@@ -61,8 +61,8 @@
       ></el-pagination>
     </el-card>
     <!--详情-->
-    <el-dialog :visible.sync="dialogDetailVisible">
-      <el-table ref="multipleTable" :data="goodsDeatil.option" size="mini" border>
+    <el-dialog top="0" :visible.sync="dialogDetailVisible">
+      <el-table ref="multipleTable" :data="goodsDeatil.option" size="medium" border>
         <el-table-column prop="title" label="产品名称"></el-table-column>
         <el-table-column label="产品规格">
           <template slot-scope="{row}">

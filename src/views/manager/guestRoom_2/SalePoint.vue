@@ -41,7 +41,7 @@
 						<el-table-column prop="job" label="默认购买数量"></el-table-column>
 						<el-table-column prop="job" label="库存"></el-table-column>
 						<el-table-column label="操作" width="150">
-							<template slot-scope="scope">	
+							<template slot-scope="scope">
 								<el-button type="text" size="small" @click="popup('changeTab')">修改</el-button>
 								<el-popconfirm title="确定下架该商品？" @onConfirm="onConfirm">
 									<el-button slot="reference" type="text" size="mini" @click="deleteRow(scope.row)">下架</el-button>
@@ -61,7 +61,7 @@
 			</div>
 		</el-row>
 		<!-- 售卖点管理 -->
-		<el-dialog title="售卖点管理" :visible.sync="dialogSale_show" :close-on-click-modal="false">
+		<el-dialog top="0" title="售卖点管理" :visible.sync="dialogSale_show" :close-on-click-modal="false">
 			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
 			 @selection-change="handleSelectionChange">
 				<el-table-column prop="name" label="售卖点名称"></el-table-column>
@@ -69,7 +69,7 @@
 				<el-table-column prop="job_status" label="允许签单到单位"></el-table-column>
 				<el-table-column prop="job" label="状态"></el-table-column>
 				<el-table-column label="操作" width="200">
-					<template slot-scope="scope">	
+					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="popup('bin')">禁用</el-button>
 						<el-button type="text" size="small" @click="popup('change')">修改</el-button>
 						<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
@@ -84,7 +84,7 @@
 			</span>
 		</el-dialog>
 		<!-- 新增售卖点 -->
-		<el-dialog title="新增售卖点" :visible.sync="dialogAdd_change" :close-on-click-modal="false">
+		<el-dialog top="0" title="新增售卖点" :visible.sync="dialogAdd_change" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="threeForm" :rules="threerules" ref="ruleForm" label-width="150px">
 					<el-col :span="18">
@@ -122,7 +122,7 @@
 			</span>
 		</el-dialog>
 		<!-- 修改商品上级信息 -->
-		<el-dialog title="修改商品上级信息" :visible.sync="dialogTab_change" :close-on-click-modal="false">
+		<el-dialog top="0" title="修改商品上级信息" :visible.sync="dialogTab_change" :close-on-click-modal="false">
 			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
 			 @selection-change="handleSelectionChange">
 				<el-table-column prop="name" label="商品名称"></el-table-column>
@@ -164,7 +164,7 @@
 				pageSize: 10,
 				keyword: "",
 				currentPage1: 1,
-				
+
 				tableData: [{
 					name: '',
 					time: '2020-5-20',

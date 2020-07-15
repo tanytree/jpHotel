@@ -2,7 +2,7 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
  <template>
   <div class="sec1">
@@ -29,18 +29,18 @@
             </el-select>
           </el-form-item>
         </el-col>
-       
+
 
         <el-form-item >
           <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
-          
+
         </el-form-item>
         <el-form-item style="float:right">
           <el-button  type="primary" @click="newvip=true">+新增</el-button>
           <!-- @click="resetForm"  -->
         </el-form-item>
       </el-row>
-      
+
     </el-form>
 
      <!--表格数据 -->
@@ -65,7 +65,7 @@
         </el-table>
 
         <!-- 详情 -->
-        <el-dialog title="会员详情" :visible.sync="details">
+        <el-dialog top="0" title="会员详情" :visible.sync="details">
             <el-row>
                 <el-col :span="8">起始会员类型：<span>黄金卡</span></el-col>
                 <el-col :span="8">目标会员类型：<span>黄金卡</span></el-col>
@@ -94,7 +94,7 @@
           </el-dialog>
 
             <!-- 新增 -->
-            <el-dialog title="会员类型升降级配置" :visible.sync="newvip" width="70%">
+            <el-dialog top="0" title="会员类型升降级配置" :visible.sync="newvip" width="70%">
               <el-form :model="newform" :inline="true" :rules="rules" class="top-body" size="small" label-width="130px">
                 <el-row>
                   <el-row>
@@ -128,7 +128,7 @@
                        <el-col >
                         <el-form-item label="手动独立升级:">
                           支付费用
-                          <el-input style="width:200px;;margin:0 5px" v-model="newform.name"></el-input>日元 
+                          <el-input style="width:200px;;margin:0 5px" v-model="newform.name"></el-input>日元
                           <span style="color:#666666;margin-left:10px">支付费用可直接升级</span>
                         </el-form-item>
                     </el-col>
@@ -155,7 +155,7 @@
                         </el-row>
                       </el-checkbox-group>
                     </el-form-item>
-                        
+
                     </el-form-item>
                   </el-row>
                   <el-row>
@@ -169,9 +169,9 @@
                       </el-col>
                   </el-row>
 
-                  
+
                 </el-row>
-                
+
               </el-form>
               <div slot="footer" class="dialog-footer" center>
                 <el-button @click="newvip= false">取消  </el-button>
@@ -210,7 +210,7 @@ export default {
           name: [
             { required: true, trigger: 'blur' },
           ]
-          }, 
+          },
     };
   },
   created() {
@@ -219,7 +219,7 @@ export default {
   },
   methods: {
 
- 
+
 
   }
 };
@@ -231,7 +231,7 @@ export default {
   width: 30px;
   height: 30px;
   vertical-align: middle;
-  
+
 }
 ul li{
   list-style:disc;

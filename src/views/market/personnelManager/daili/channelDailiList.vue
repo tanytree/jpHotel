@@ -47,7 +47,7 @@
       ></el-pagination>
 
       <!-- 等级修改 -->
-      <el-dialog title="等级修改" :close-on-click-modal="false" :visible.sync="visible">
+      <el-dialog top="0" title="等级修改" :close-on-click-modal="false" :visible.sync="visible">
         <el-form ref="addform" :model="addform" label-width="120px">
           <el-form-item required label="当前等级">{{editLevel}}</el-form-item>
           <el-form-item required label="选择等级">
@@ -69,7 +69,7 @@
       </el-dialog>
       <!-- 等级修改 -->
       <!-- 新增分销商 -->
-      <el-dialog title="新增" :close-on-click-modal="false" :visible.sync="addVisible">
+      <el-dialog top="0" title="新增" :close-on-click-modal="false" :visible.sync="addVisible">
         <el-form ref="addform" :model="addform" label-width="120px">
           <el-form-item required label="分销商名称">
             <el-input v-model="addform.name"></el-input>

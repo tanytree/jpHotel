@@ -1,4 +1,4 @@
-<template>
+    <template>
 <div>
     <div>
         <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='false' :tree-props="{children: 'departmentList', hasChildren: 'hasChildren'}">
@@ -19,7 +19,7 @@
         </el-table>
     </div>
     <!-- 添加部门 -->
-    <el-dialog :title="addAndEditForm.type=='add'?'添加部门':'编辑部门'" :visible.sync="adddepart" width='30%'>
+    <el-dialog top="0" :title="addAndEditForm.type=='add'?'添加部门':'编辑部门'" :visible.sync="adddepart" width='30%'>
         <el-form :rules="rules" :model="addAndEditForm" ref="adddepart">
             <el-row>
                 {{addAndEditForm.storeName}}:

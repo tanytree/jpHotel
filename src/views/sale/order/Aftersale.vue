@@ -200,7 +200,7 @@
       </div>
     </el-dialog>
     <!-- 点击立即处理弹框 -->
-    <el-dialog title="立即处理" v-if="dealWithBullet" :visible.sync="dealWithBullet" width="40%">
+    <el-dialog top="0" title="立即处理" v-if="dealWithBullet" :visible.sync="dealWithBullet" width="40%">
       <el-radio-group v-model="refundStatus">
         <el-radio :label="1">同意申请</el-radio>
         <div style="margin:20px 0;"></div>
@@ -354,7 +354,7 @@ export default {
       this.pageIndex = 1;
       this.fetchGoodList();
     },
-  
+
     /**获取列表数据 */
     fetchGoodList(params = {}) {
       console.log(this.pageIndex);

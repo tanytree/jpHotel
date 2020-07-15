@@ -1,6 +1,6 @@
 <template>
 	<div class="">
-		<el-dialog :title="title" :visible.sync="dialogFormVisible" :before-close="handleClose" :append-to-body="true">
+		<el-dialog top="0" :title="title" :visible.sync="dialogFormVisible" :before-close="handleClose" :append-to-body="true">
 			<el-form :model="form">
 				<el-form-item label="计划名称" :label-width="formLabelWidth">
 					<el-input v-model="form.title" autocomplete="off" style="width: 400px;"></el-input>
@@ -79,7 +79,7 @@
 			isSave() {
 				this.$emit('update:dialogFormVisible', false);
 				this.$emit('isSave', this.form);
-				
+
 			}
 		}
 	};

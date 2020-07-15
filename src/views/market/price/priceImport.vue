@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="导入价格" :close-on-click-modal="false" :visible.sync="visible">
+  <el-dialog top="0" title="导入价格" :close-on-click-modal="false" :visible.sync="visible">
     <el-upload
       v-if="!uploadDone"
       action="https://www.i2b2b.com/public/index.php/market/goods_price/add_goods_excel_price"

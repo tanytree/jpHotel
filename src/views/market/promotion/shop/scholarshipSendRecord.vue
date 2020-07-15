@@ -36,7 +36,7 @@
       <el-button @click="resetForm(true)">重置</el-button>
     </el-form-item>
     <el-table
-      size="mini"
+      size="medium"
       :data="tableData"
       v-loading="dataListLoading"
       :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"

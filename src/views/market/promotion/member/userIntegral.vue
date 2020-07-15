@@ -14,7 +14,7 @@
         </el-breadcrumb>
       </div>
       <el-card>
-        <el-table :data="integralGet" size="mini">
+        <el-table :data="integralGet" size="medium">
           <el-table-column prop="title" label="积分获取"></el-table-column>
           <el-table-column prop="content" label="权益内容"></el-table-column>
           <el-table-column label="操作" align="right">
@@ -33,7 +33,7 @@
           </el-table-column>
         </el-table>
         <div style="margin-top:10px"></div>
-        <el-table :data="integralUse" size="mini">
+        <el-table :data="integralUse" size="medium">
           <el-table-column prop="title" label="积分用途"></el-table-column>
           <el-table-column prop="content" label="权益内容"></el-table-column>
           <el-table-column label="操作" align="right">

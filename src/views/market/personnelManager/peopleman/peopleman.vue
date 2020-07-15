@@ -7,46 +7,49 @@
  <template>
 <div class="sec1">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
-        <el-row>
+        <el-form-item label="所属门店">
+            <el-select v-model="searchForm.storesNum">
+                <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="员工名称">
+            <el-input v-model="searchForm.content"></el-input>
+        </el-form-item>
+        <el-form-item label="入职日期">
+            <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+            <span style="margin:0 5px">-</span>
+            <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="所属部门:" v-if="!isPersonnelManager">
+            <el-select v-model="searchForm.departmentId" placeholder="请选择部门" class="width200">
+                <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item>
+            <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
+        </el-form-item>
+        <el-form-item style="float:right">
+            <el-button type="primary">下载模板</el-button>
+            <el-button type="primary">批量导入</el-button>
+            <el-button type="primary" @click="addItem">添加员工</el-button>
 
-            <el-col :span="5" v-if="isPersonnelManager">
-                <el-form-item label="所属门店">
-                    <el-select v-model="searchForm.storesNum" class="width150">
-                        <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-            </el-col>
-            <el-col :span="5">
-                <el-form-item label="员工名称">
-                    <el-input class="width150" v-model="searchForm.content"></el-input>
-                </el-form-item>
-            </el-col>
-            <el-form-item label="入职日期">
-                <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                <span style="margin:0 5px">-</span>
-                <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-            </el-form-item>
-            <el-form-item label="所属部门:" v-if="!isPersonnelManager">
-                <el-select v-model="searchForm.departmentId" placeholder="请选择部门" class="width200">
-                    <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item>
-                <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
-            </el-form-item>
-            <el-form-item style="float:right">
-                <el-button type="primary">下载模板</el-button>
-                <el-button type="primary">批量导入</el-button>
-                <el-button type="primary" @click="addItem">添加员工</el-button>
+        </el-form-item>
+<!--        <el-row>-->
 
-            </el-form-item>
-        </el-row>
+<!--            <el-col :span="5" v-if="isPersonnelManager">-->
+<!--                -->
+<!--            </el-col>-->
+<!--            <el-col :span="5">-->
+<!--                -->
+<!--            </el-col>-->
+<!--            -->
+<!--        </el-row>-->
 
     </el-form>
     <div>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
             <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip>
                 <template slot-scope="scope" v-if="scope.row.storesNum">
                     {{F_storeName(scope.row.storesNum)}}
@@ -77,7 +80,7 @@
     </div>
     <div>
         <!-- 添加员工 -->
-        <el-dialog :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff">
+        <el-dialog top="0" :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff">
             <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" :inline="true" :required="true" class="top-body" label-width="100px" size="small">
                 <el-row>
                     <el-col :span="12"  v-if="isPersonnelManager">
@@ -192,7 +195,7 @@
 
     <div>
         <!-- 办理离职 -->
-        <el-dialog title="办理离职" :visible.sync="dimission" width="500px" class="dimission">
+        <el-dialog top="0" title="办理离职" :visible.sync="dimission" width="500px" class="dimission">
             <el-form>
                 <el-row>
                     <el-col>
@@ -234,7 +237,7 @@
 
     <div>
         <!-- 转正 -->
-        <el-dialog title="转正" :visible.sync="correct" width="500px">
+        <el-dialog top="0" title="转正" :visible.sync="correct" width="500px">
             <el-form>
 
                 <el-row>
@@ -255,7 +258,7 @@
         </el-dialog>
     </div>
     <!-- 查看资料 -->
-    <el-dialog title="查看详情" :visible.sync="details" width="500px">
+    <el-dialog top="0" title="查看详情" :visible.sync="details" width="500px">
         <el-form :model="detailsData">
             <el-row style="margin:10px 0">
                 <el-col :span="8">姓名:</el-col>

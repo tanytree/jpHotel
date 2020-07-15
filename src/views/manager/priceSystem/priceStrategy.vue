@@ -196,7 +196,7 @@
 			</el-row>
 		</el-row>
 		<!-- 查看 -->
-		<el-dialog title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false">
+		<el-dialog top="0" title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false">
 			<el-row style="line-height: 30px;">
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">规则名称:</el-col><el-col span="14">张三</el-col>

@@ -102,7 +102,7 @@
 						</div>
 					</el-upload>
 				</el-col>
-				<el-dialog :visible.sync="dialogVisible">
+				<el-dialog top="0" :visible.sync="dialogVisible">
 					<img width="100%" :src="dialogImageUrl" alt="">
 				</el-dialog>
 			</el-row>

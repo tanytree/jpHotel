@@ -72,7 +72,7 @@
                 </div>
             </div>
         </el-card>
-        <el-dialog title="修改流水账" :visible.sync="editVisible" width="30%" top="0" :before-close="handleClose" class="editBox">
+        <el-dialog top="0" title="修改流水账" :visible.sync="editVisible" width="30%" :before-close="handleClose" class="editBox">
             <el-form size="small" :model="edit" label-width="100px" :rules="editRule">
                 <el-form-item label="账户：" prop="account">
                     <el-select v-model="edit.type" clearable placeholder="请选择">
@@ -91,7 +91,7 @@
                 <el-button type="primary" class="submit" @click="">确 定</el-button>
             </div>
         </el-dialog>
-        <el-dialog title="审核" :visible.sync="examineVisible" width="30%" top="0" :before-close="handleClose" class="editBox">
+        <el-dialog top="0" title="审核" :visible.sync="examineVisible" width="30%" :before-close="handleClose" class="editBox">
             <el-form size="small" :model="examine" label-width="90px" :rules="examineRule">
                 <el-form-item label="审核：" prop="account">
                     <el-radio-group v-model="examine.type">

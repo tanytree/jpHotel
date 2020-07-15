@@ -103,7 +103,7 @@
         </div>
       </div>
     </el-card>
-    <el-dialog title="查看" v-if="lookBullet" :visible.sync="lookBullet">
+    <el-dialog top="0" title="查看" v-if="lookBullet" :visible.sync="lookBullet">
       <div class="shareTitle">分享标题</div>
       <div class="publishPeople">发布人：{{lookRow.edtUser.nickName}}</div>
       <div>
@@ -112,7 +112,7 @@
       <div class="publishTime">发布时间：{{lookRow.createTime}}</div>
     </el-dialog>
 
-    <el-dialog title="审核" :visible.sync="auditBullet">
+    <el-dialog top="0" title="审核" :visible.sync="auditBullet">
       <el-radio-group v-model="radio" class="radioGroup">
         <el-radio :label="1" style="margin-right:40px">通过</el-radio>
         <el-radio :label="2">未通过</el-radio>

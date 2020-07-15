@@ -238,7 +238,7 @@ export default {
   },
 
   created() {
-    this.$F.doRequest(null, '/pms/freeuser/stores_list', {filterHeader: true}, (data) => {
+    this.$F.doRequest(this, '/pms/freeuser/stores_list', {filterHeader: true}, (data) => {
       this.storeList = data;
       // this.storeList = [{storesNum: '0000000000', storesName: '总部后台'}]
       this.loginForm.storesNum = data[0].storesNum
@@ -256,8 +256,37 @@ export default {
         return item.storesNum == this.loginForm.storesNum
       })[0];
       this.saveuser(data)
-      const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg)
-      this.routeractions(routeArray)
+      debugger
+      // const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg)
+
+      var array = {
+        "id":"menuAssert",
+        "menuTitle":"维护菜单（开发用）",
+        "menuAliasTitle":"维护菜单",
+        "japanese":"维护菜单",
+        "parentMenuId":null,
+        "icon":"icon06",
+        "path":"",
+        "menuLevel":1,
+        "menuType":1,
+        "status":1,
+        "menuorder":1,
+        "childList":[
+          {
+            "id": "menuAssert2",
+            "createTime": "2020-07-05 15:01:00",
+            "updateTime": "2020-07-05 15:01:00",
+            "menuTitle": "首页",
+            "menuAliasTitle": null,
+            "japanese": "ホームページ",
+            "parentMenuId": "menuAssert",
+            "icon": "boss/nav01.png",
+            "path": "menuAssert",
+          }
+        ]
+      }
+      data.data.menuList.push(array);
+      this.routeractions(data.data.menuList);
       let url = 'main'
       // if (data.data && data.data.belongTo.length > 0) {
       //   this.companyInit(data.data.belongTo[0]);

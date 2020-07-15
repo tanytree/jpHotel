@@ -56,7 +56,7 @@
         ></el-pagination>
       </div>
     </div>
-    <el-dialog title="修改" :close-on-click-modal="false" :visible.sync="visible">
+    <el-dialog top="0" title="修改" :close-on-click-modal="false" :visible.sync="visible">
       <el-input v-model="editPrice" placeholder="请输入"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="visible = false">取消</el-button>

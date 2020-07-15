@@ -6,7 +6,7 @@
  -->
 <template>
   <div>
-    <el-dialog :visible.sync="urlShowDialogVisible">
+    <el-dialog top="0" :visible.sync="urlShowDialogVisible">
       <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
     <div slot="header" class="clearfix">
@@ -169,7 +169,7 @@
       </el-tab-pane>
     </el-tabs>
 
-    <el-dialog width="1000px" @close="editFormClose" title="编辑活动商品" :visible.sync="amendBullet">
+    <el-dialog top="0" width="1000px" @close="editFormClose" title="编辑活动商品" :visible.sync="amendBullet">
       <el-form label-width="100px" class="editForm" :model="editForm" ref="editForm" :rules="rules">
         <el-form-item label="产品名称" prop="goodsTitle">
           <el-input v-model="editForm.goodsTitle"></el-input>

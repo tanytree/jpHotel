@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="价格编辑" width="920px" :close-on-click-modal="false" :visible.sync="visible">
+  <el-dialog top="0" title="价格编辑" width="920px" :close-on-click-modal="false" :visible.sync="visible">
     <el-table border size="mini" :data="dataList">
       <el-table-column prop="title" label="规格" show-overflow-tooltip></el-table-column>
       <el-table-column label="零售价">

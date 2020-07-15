@@ -163,7 +163,7 @@
         </el-row>
     </template>
 
-    <el-dialog :title="cardForm.titleName" :visible.sync="setCardFormVisible" class="setCardForm">
+    <el-dialog top="0" :title="cardForm.titleName" :visible.sync="setCardFormVisible" class="setCardForm">
         <el-form :model="detailForm" :label-width="formLabelWidth">
             <el-form-item label="" class="require" label-width="80px">
                 原卡号：3296592769 姓名：张三 会员类型：白金卡

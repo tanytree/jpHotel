@@ -106,7 +106,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="添加回复" :close-on-click-modal="false" :visible.sync="addBullet">
+    <el-dialog top="0" title="添加回复" :close-on-click-modal="false" :visible.sync="addBullet">
       <textarea
         v-model="replyContent"
         style="margin:0 auto;width:100%;height:335px;padding:20px;resize:none;"

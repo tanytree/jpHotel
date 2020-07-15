@@ -7,7 +7,7 @@
 
 <template>
   <!--统一的编辑和新增 -->
-  <el-dialog :close-on-click-modal="false" :visible.sync="visible" title="详情">
+  <el-dialog top="0" :close-on-click-modal="false" :visible.sync="visible" title="详情">
     <el-form size="small" label-width="80px">
       <el-row v-for="item in formData.list" :key="item.order_id">
         <el-col :span="8">

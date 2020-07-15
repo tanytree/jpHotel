@@ -14,7 +14,7 @@
 				</el-table>
 			</el-tab-pane>
 		</el-tabs>
-		<el-dialog title="设为负责人" :visible.sync="dialogTableVisible" :close-on-click-modal="false" @close ="closeDialog">
+		<el-dialog top="0" title="设为负责人" :visible.sync="dialogTableVisible" :close-on-click-modal="false" @close ="closeDialog">
 			<el-col :span="5" class="col-title">{{dialog_info.title}}</el-col>
 			<el-row>
 				<el-input placeholder="请输入内容" v-model="dialog_info.content" class="input-with-select">
@@ -80,9 +80,9 @@
 					departmentHeader :true
 				}
 				this.$F.doRequest(this, '/pms/role/menu_list', params, (res) => {
-					if (res != null && res != '') {
+					if (res) {
 						res.forEach((value) =>{
-							if (value.header != null && value.header != '') {
+							if (value.header) {
 								value.header_name = value.header.userName
 							}
 						})
@@ -94,7 +94,7 @@
 			get_dialogList() {
 				let params = this.dialog_info
 				this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (res) => {
-					if (res.hotelUserList != null && res != '') {
+					if (res) {
 						res.hotelUserList.forEach((value) =>{
 							value.checked = false
 						})

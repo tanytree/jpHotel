@@ -3,7 +3,7 @@
 
  * @LastEditors: 魏轩
 
- * 
+ *
  -->
 <template>
   <div>
@@ -207,7 +207,7 @@
           <!-- <el-button>批量置脏/置净</el-button>  -->
           <el-button @click="batch = true">批量置脏/置净</el-button>
 
-          <el-dialog title="批量置脏/置净" width="700px" :visible.sync="batch">
+          <el-dialog top="0" title="批量置脏/置净" width="700px" :visible.sync="batch">
             <el-row style="margin:10px 20px">
               <el-row style="text-align:center; margin-bottom: 10px;">
                 <el-button>批量置脏</el-button>
@@ -317,7 +317,7 @@
             <i class="el-icon-message-solid"></i>催押
           </el-button>
             <!-- 催押 -->
-          <el-dialog title="当前催交" width="1160px" :visible.sync="print">
+          <el-dialog top="0" title="当前催交" width="1160px" :visible.sync="print">
             <el-form :model="form">
               <!-- :model="form" -->
               <el-row>
@@ -482,7 +482,7 @@
 
     <!-- 房间信息 -->
     <div>
-      <el-dialog :visible.sync="hosteldis" width="50%">
+      <el-dialog top="0" :visible.sync="hosteldis" width="50%">
         <!-- <span>这是一段信息</span> -->
         <el-row style="font-size:18px">A01房间--全天房</el-row>
         <el-tabs type="border-card" style="margin-top:10px">
@@ -593,7 +593,7 @@
     </div>
     <!-- 续住 -->
     <div>
-      <el-dialog title="续住" :visible.sync="stayoer" width="80%">
+      <el-dialog top="0" title="续住" :visible.sync="stayoer" width="80%">
         <el-alert title="如果需要提前离店，需要在续住天数中输入负数" type="error" :closable="false" show-icon></el-alert>
         <el-table :data="tableData" style="width: 100%">
           <el-table-column label="房间号" width="100">
@@ -635,8 +635,8 @@
       </el-dialog>
     </div>
     <!-- 联房 -->
-    <div> 
-      <el-dialog title="联房" :visible.sync="yokeplate" width="60%">
+    <div>
+      <el-dialog top="0" title="联房" :visible.sync="yokeplate" width="60%">
         <el-card>
           <el-col :span="16">
             <el-row>
@@ -748,7 +748,7 @@
     </div>
     <!-- 换房 -->
     <div>
-      <el-dialog title="换房" :visible.sync="roomchange" width="80%">
+      <el-dialog top="0" title="换房" :visible.sync="roomchange" width="80%">
         <!-- <el-card>
           <el-form>
             <el-row>
@@ -831,10 +831,10 @@
                 <el-form-item label="换房原因:">
                     <el-input style="width:112px;" ></el-input>
                   </el-form-item>
-                  
+
                 </el-col>
               </el-col>
-              
+
             </el-row>
           </el-form>
         <h3>房间信息</h3>
@@ -940,7 +940,7 @@
     </div>
     <!-- 制卡 -->
     <div>
-      <el-dialog title="房卡操作" :visible.sync="mackcade" width="60%">
+      <el-dialog top="0" title="房卡操作" :visible.sync="mackcade" width="60%">
         <el-card>
           <el-form>
             <el-row>
@@ -951,7 +951,7 @@
                     <el-button>清卡</el-button>
                     <el-button>读卡</el-button>
                 </el-col>
-                
+
               </el-form-item>
             </el-row>
 
@@ -974,7 +974,7 @@
 
     <!-- 修改备注 -->
     <div>
-      <el-dialog title="修改备注" :visible.sync="remark" width="600px">
+      <el-dialog top="0" title="修改备注" :visible.sync="remark" width="600px">
            <el-form>
               <el-form-item label="备注:">
                   <el-input type="textarea" style="width:400px"></el-input>
@@ -1132,9 +1132,9 @@ export default {
 
     };
   },
-  methods: {    
+  methods: {
         handleChange(){
-            
+
         },
     hostelmess() {
       this.hosteldis = true;
@@ -1172,7 +1172,7 @@ export default {
 <style lang="less" scoped>
 .el-dialog__header {
   background-color: #c8d8f1 !important;
-  
+
 }
 .card {
   border: 1px solid #ccc;
@@ -1188,7 +1188,7 @@ export default {
   color: #fff;
 }
 .search {
-  
+
   width: 137px !important;
   height: 30px !important;
   line-height: 30px !important;

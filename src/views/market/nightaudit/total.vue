@@ -48,7 +48,7 @@
     <el-row>
         <el-button type="primary">夜审</el-button>
     </el-row>
-    <el-dialog :visible.sync="recordShow" title="选择企业" width="600px" class="dialogCom">
+    <el-dialog top="0" :visible.sync="recordShow" title="选择企业" width="600px" class="dialogCom">
  <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
             <el-table-column prop="enterName" label="夜审时间（自然日）"></el-table-column>

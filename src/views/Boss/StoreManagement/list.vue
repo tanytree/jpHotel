@@ -18,7 +18,7 @@
             </el-row>
         </el-form>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
             <el-table-column prop="storesName" label="门店名称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="userName" label="门店经理" show-overflow-tooltip></el-table-column>
             <el-table-column prop="storesAddress" label="门店地址" show-overflow-tooltip></el-table-column>
@@ -34,7 +34,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog :title="addUserForm.type=='add'?'添加门店':'修改门店'" :visible.sync="setUserFormVisible" class="setUserForm" width="600px">
+    <el-dialog top="0" :title="addUserForm.type=='add'?'添加门店':'修改门店'" :visible.sync="setUserFormVisible" class="setUserForm" width="600px">
         <el-form ref="editForm" :model="addUserForm" :rules="rules" label-width="100px" size="mini">
             <el-row class="row">
                 <el-row class="cell">
@@ -177,7 +177,7 @@ export default {
             console.log(this.addUserForm)
              this.addUserForm.userType = 3
             if (this.addUserForm.type == 'add') {
-               
+
                 this.$F.doRequest(null, '/pms/workuser/add_login_user', this.addUserForm, (res) => {
                     this.setUserFormVisible = false
                     this.initForm()
@@ -256,7 +256,7 @@ export default {
                 // this.$message({
                 //   type: 'info',
                 //   message: '已取消删除'
-                // });          
+                // });
             });
         },
 

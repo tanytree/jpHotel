@@ -48,7 +48,7 @@
       </el-tabs>
 
     </el-card>
-    <el-dialog :title="dialogTitle" width="650px" @close="formClose" :visible.sync="visible">
+    <el-dialog top="0" :title="dialogTitle" width="650px" @close="formClose" :visible.sync="visible">
       <el-form ref="form" size="small" :rules="dataRule" :model="form" label-width="120px">
         <el-form-item label="奖学金标题" prop="awardsTitle">
           <el-input v-model="form.awardsTitle"></el-input>
