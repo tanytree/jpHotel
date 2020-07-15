@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-14 16:46:16
+ * @LastEditTime: 2020-07-15 14:53:35
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -64,7 +64,7 @@ export default new Router({
                     path: '/person-mg',
                     name: 'PersonMg',
                     component: () =>
-                        import ('@/views/Boss/PersonMg')
+                        import ('@/views/market/personnelManager/employeeList')
                 },
                 {
                     path: '/pay-mg',
@@ -388,18 +388,6 @@ export default new Router({
                     name: 'contractback',
                     component: () =>
                         import ('@/views/sale/contract/back')
-                },
-                {
-                    path: '/agreementOrder',
-                    name: 'agreementOrder',
-                    component: () =>
-                        import ('@/views/sale/order/Agreement')
-                },
-                {
-                    path: '/aftersaleOrder',
-                    name: 'aftersaleOrder',
-                    component: () =>
-                        import ('@/views/sale/order/Aftersale')
                 },
                 {
                     path: '/orderInfo',
