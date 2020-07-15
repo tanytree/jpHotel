@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-15 10:55:54
+ * @LastEditTime: 2020-07-15 15:56:42
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/peopleman.vue
  -->
  <template>
@@ -9,7 +9,7 @@
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
         <el-row>
 
-            <el-col :span="5">
+            <el-col :span="5" v-if="isPersonnelManager">
                 <el-form-item label="所属门店">
                     <el-select v-model="searchForm.storesNum" class="width150">
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -27,14 +27,18 @@
                 <span style="margin:0 5px">-</span>
                 <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
-
+            <el-form-item label="所属部门:" v-if="!isPersonnelManager">
+                <el-select v-model="searchForm.departmentId" placeholder="请选择部门" class="width200">
+                    <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item>
                 <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
             </el-form-item>
             <el-form-item style="float:right">
                 <el-button type="primary">下载模板</el-button>
                 <el-button type="primary">批量导入</el-button>
-                <el-button type="primary" @click="adddstaff=true">添加员工</el-button>
+                <el-button type="primary" @click="addItem">添加员工</el-button>
 
             </el-form-item>
         </el-row>
@@ -50,6 +54,11 @@
             </el-table-column>
             <el-table-column prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="inTime" label="入职时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="position" label="在职状态 " show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{scope.row.userStatus | F_userStatus}}
+                </template>
+            </el-table-column>
             <el-table-column prop="position" label="职位 " show-overflow-tooltip></el-table-column>
             <el-table-column prop="worknum" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="department.name" label="所在部门" show-overflow-tooltip></el-table-column>
@@ -71,7 +80,7 @@
         <el-dialog :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff">
             <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" :inline="true" :required="true" class="top-body" label-width="100px" size="small">
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="12"  v-if="isPersonnelManager">
                         <el-form-item label="所属门店:">
                             <el-select v-model="addAndEditForm.storesNum" class="width200">
                                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -260,7 +269,7 @@
                 <el-col :span="8">联系电话:</el-col>
                 <el-col :span="14">{{detailsData.userPhone}}</el-col>
             </el-row>
-            <el-row style="margin:10px 0">
+            <el-row style="margin:10px 0"  v-if="isPersonnelManager">
                 <el-col :span="8">所属门店:</el-col>
                 <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
             </el-row>
@@ -331,6 +340,7 @@ import httpRequest from "@/utils/httpRequest";
 export default {
     data() {
         return {
+            isPersonnelManager: true,
             correct: false,
             dimission: false,
             editstaff: false,
@@ -448,7 +458,13 @@ export default {
             storesNum: state => state.user.storesInfo.storesNum
         })
     },
-    created() {
+    mounted() {
+        if (this.$route.name == 'employeeList') {
+            this.isPersonnelManager = true
+        } else {
+            this.isPersonnelManager = false
+        }
+
         this.uploadData.userId = this.userId
         this.uploadData.accessToken = this.token
         this.uploadData.token = this.token
@@ -458,7 +474,9 @@ export default {
         }, (data) => {
             this.storeList = data;
             this.initForm();
+
             this.department_list()
+
         })
     },
     methods: {
@@ -603,6 +621,12 @@ export default {
             setTimeout(() => {
                 this.adddstaff = true
             }, 300)
+        },
+        addItem(){
+            for(let k in this.addAndEditForm){
+                this.addAndEditForm[k] = ''
+            }
+            this.adddstaff = true
         },
         /**每页数 */
         handleSizeChange(val) {

@@ -1,15 +1,14 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-15 11:58:13
+ * @LastEditTime: 2020-07-15 15:56:51
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/dimission.vue
  -->
  <template>
 <div class="sec1">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
         <el-row>
-
-            <el-col :span="5">
+            <el-col :span="5" v-if="isPersonnelManager">
                 <el-form-item label="所属门店">
                     <el-select v-model="searchForm.storesNum" class="width150">
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -27,7 +26,6 @@
                 <span style="margin:0 5px">-</span>
                 <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
-
             <el-form-item>
                 <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
             </el-form-item>
@@ -75,7 +73,7 @@
                 <el-col :span="8">联系电话:</el-col>
                 <el-col :span="14">{{detailsData.userPhone}}</el-col>
             </el-row>
-            <el-row style="margin:10px 0">
+            <el-row style="margin:10px 0" v-if="isPersonnelManager">
                 <el-col :span="8">所属门店:</el-col>
                 <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
             </el-row>
@@ -128,21 +126,14 @@
                 <el-col :span="14">{{detailsData.remark}}</el-col>
             </el-row>
         </el-form>
-
         <div slot="footer" class="dialog-footer">
             <el-button @click="details = false">关闭</el-button>
         </div>
     </el-dialog>
-
 </div>
 </template>
 
 <script>
-// import {
-//   get_goods_list,
-//   edit_goods_status,
-//   del_goods_info
-// } from "@/utils/api/market";
 export default {
     data() {
         return {
@@ -155,10 +146,11 @@ export default {
             dataListLoading: false,
             dataListSelections: [],
             status: "",
-
+            
+            isPersonnelManager:true,
             listTotal: 0,
             storeList: [],
-            detailsData:'',
+            detailsData: '',
             searchForm: {
                 storesNum: '',
                 content: '',
@@ -179,7 +171,30 @@ export default {
             tableData: [{}] //表格数据
         };
     },
-    created() {
+    filters: {
+        F_userStatus(value) {
+            let enums = {
+                '1': '正式工',
+                '2': '实习期',
+                '3': '试用期'
+            }
+            return value && enums[value] ? enums[value] : '其它'
+        },
+        F_idcardType(value) {
+            let enums = {
+                '1': '身份证',
+                '2': '护照',
+                '3': '驾驶证'
+            }
+            return value && enums[value] ? enums[value] : '其它'
+        }
+    },
+    mounted() {
+        if (this.$route.name == 'employeeList') {
+            this.isPersonnelManager = true
+        } else {
+            this.isPersonnelManager = false
+        }
         this.$F.doRequest(null, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
