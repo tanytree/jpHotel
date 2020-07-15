@@ -4,7 +4,7 @@
             <pageHeader @calRouter="calRouter" :language='language'/>
         </el-header>
         <el-container class="main-container">
-            <el-aside v-if="menul.children && menul.children.length > 0" class="mainAside">
+            <el-aside v-if="menul.children && menul.children.length > 0&&routerCompany!=='company'" class="mainAside">
                 <div class="side-menu-wrapper">
                     <div class="topNav">
                         <img :src="require(`@/assets/images/${menul.icon}.png`)" alt/>
@@ -280,7 +280,7 @@
         },
         watch: {
             $route(to, from) {
-              if (to.name == 'main') {
+              if (to.name == 'main' || to.name == 'organization') {
                 this.calRouter();
                 this.$nextTick(()=> {
                   this.menulfuc(this.routermsg[0])

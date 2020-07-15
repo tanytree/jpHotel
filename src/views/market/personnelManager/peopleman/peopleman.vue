@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-14 23:00:33
+ * @LastEditTime: 2020-07-15 15:56:42
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/peopleman.vue
  -->
  <template>
@@ -9,7 +9,7 @@
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
         <el-row>
 
-            <el-col :span="5">
+            <el-col :span="5" v-if="isPersonnelManager">
                 <el-form-item label="所属门店">
                     <el-select v-model="searchForm.storesNum" class="width150">
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -27,14 +27,18 @@
                 <span style="margin:0 5px">-</span>
                 <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
-
+            <el-form-item label="所属部门:" v-if="!isPersonnelManager">
+                <el-select v-model="searchForm.departmentId" placeholder="请选择部门" class="width200">
+                    <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item>
                 <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
             </el-form-item>
             <el-form-item style="float:right">
                 <el-button type="primary">下载模板</el-button>
                 <el-button type="primary">批量导入</el-button>
-                <el-button type="primary" @click="adddstaff=true">添加员工</el-button>
+                <el-button type="primary" @click="addItem">添加员工</el-button>
 
             </el-form-item>
         </el-row>
@@ -50,13 +54,18 @@
             </el-table-column>
             <el-table-column prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="inTime" label="入职时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="position" label="在职状态 " show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{scope.row.userStatus | F_userStatus}}
+                </template>
+            </el-table-column>
             <el-table-column prop="position" label="职位 " show-overflow-tooltip></el-table-column>
             <el-table-column prop="worknum" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="department.name" label="所在部门" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="editstaff=true">修改</el-button>
-                    <el-button type="text" size="mini">详情</el-button>
+                    <el-button type="text" size="mini" @click="editItem(row)">修改</el-button>
+                    <el-button type="text" size="mini" @click="detailsHandle(row)">详情</el-button>
                     <el-button type="text" size="mini" @click="dimissionClick(row)">办理离职</el-button>
                     <el-button type="text" size="mini" @click="becoming(row)" v-if="row.userStatus!=1">转正</el-button>
                     <el-button type="text" size="mini" @click="deleteItem(row)">删除</el-button>
@@ -68,86 +77,90 @@
     </div>
     <div>
         <!-- 添加员工 -->
-        <el-dialog title="添加员工" :visible.sync="adddstaff">
-            <el-form :model="form" :inline="true" :required="true" class="top-body" label-width="120px" size="small">
+        <el-dialog :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff">
+            <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" :inline="true" :required="true" class="top-body" label-width="100px" size="small">
                 <el-row>
-                    <el-form-item label="所属门店:">
-                        <el-select v-model="form.orderType">
-                            <el-option label="当前课程" value="1"></el-option>
-                            <el-option label="演出" value="3"></el-option>
-                            <el-option label="场地预定" value="2"></el-option>
-                            <el-option label="活动项目课程" value="4"></el-option>
-                        </el-select>
-                    </el-form-item>
+                    <el-col :span="12"  v-if="isPersonnelManager">
+                        <el-form-item label="所属门店:">
+                            <el-select v-model="addAndEditForm.storesNum" class="width200">
+                                <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="所属部门:">
+                            <el-select v-model="addAndEditForm.departmentId" placeholder="请选择部门" class="width200">
+                                <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="姓名:">
-                            <el-input style="width:200px" placeholder="请输入姓名" autocomplete="off"></el-input>
+                            <el-input class="width200" placeholder="请输入姓名" autocomplete="off" v-model="addAndEditForm.userName"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="联系电话:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
+                            <el-input class="width200" autocomplete="off" v-model="addAndEditForm.userPhone"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="证件类型:">
-                            <el-select v-model="form.orderType" placeholder="请选择证件类型">
-                                <el-option label="当前课程" value="1"></el-option>
-                                <el-option label="演出" value="3"></el-option>
-                                <el-option label="场地预定" value="2"></el-option>
-                                <el-option label="活动项目课程" value="4"></el-option>
+                            <el-select v-model="addAndEditForm.idcardType" placeholder="请选择证件类型" class="width200">
+                                <el-option label="身份证" :value="1"></el-option>
+                                <el-option label="护照" :value="2"></el-option>
+                                <el-option label="驾驶证" :value="3"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="证件号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
+                            <el-input v-model="addAndEditForm.idcard" class="width200" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="所属部门:">
-                            <el-select v-model="form.orderType" placeholder="请选择证件类型">
-                                <el-option label="当前课程" value="1"></el-option>
-                                <el-option label="演出" value="3"></el-option>
-                                <el-option label="场地预定" value="2"></el-option>
-                                <el-option label="活动项目课程" value="4"></el-option>
+                        <el-form-item label="员工状态:">
+                            <el-select v-model="addAndEditForm.userStatus" placeholder="请选状态" class="width200">
+                                <el-option label=正式工 :value="1" :key="1"></el-option>
+                                <el-option label="实习期" :value="2" :key="2"></el-option>
+                                <el-option label="试用期" :value="3" :key="3"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="  职位:">
-                            &nbsp;&nbsp;<el-input style="width:200px" placeholder="请填写职位" autocomplete="off"></el-input>
+                        <el-form-item label="职位:">
+                            <el-input v-model="addAndEditForm.position" class="width200" placeholder="请填写职位" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="工号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
+                            <el-input v-model="addAndEditForm.worknum" class="width200" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="银行卡号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
+                            <el-input v-model="addAndEditForm.bankcard" class="width200" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="企业邮箱:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
+                            <el-input v-model="addAndEditForm.email" class="width200" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="分机号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
+                            <el-input v-model="addAndEditForm.extension" class="width200" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -156,14 +169,14 @@
                     <el-col :span="12">
                         <div class="grid-content">
                             <el-form-item label="入职时间:">
-                                <el-date-picker v-model="form.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                                <el-date-picker v-model="addAndEditForm.inTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
 
                     <el-col :span="12">
                         <el-form-item label="关联后台账号:">
-                            <el-input style="width:200px" placeholder="请输入正确的后台账号" autocomplete="off"></el-input>
+                            <el-input v-model="addAndEditForm.associatedAccount" class="width200" placeholder="请输入正确的后台账号" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
 
@@ -172,118 +185,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="adddstaff = false">取 消</el-button>
-                <el-button type="primary">确定</el-button>
-            </div>
-        </el-dialog>
-    </div>
-
-    <div>
-        <!-- 添加员工 -->
-        <el-dialog title="编辑员工" :visible.sync="editstaff">
-            <el-form :model="form" :inline="true" :required="true" class="top-body" label-width="120px" size="small">
-                <el-row>
-                    <el-form-item label="所属门店:">
-                        <el-select v-model="form.orderType">
-                            <el-option label="当前课程" value="1"></el-option>
-                            <el-option label="演出" value="3"></el-option>
-                            <el-option label="场地预定" value="2"></el-option>
-                            <el-option label="活动项目课程" value="4"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="姓名:">
-                            <el-input style="width:200px" placeholder="请输入姓名" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="联系电话:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="证件类型:">
-                            <el-select v-model="form.orderType" placeholder="请选择证件类型">
-                                <el-option label="当前课程" value="1"></el-option>
-                                <el-option label="演出" value="3"></el-option>
-                                <el-option label="场地预定" value="2"></el-option>
-                                <el-option label="活动项目课程" value="4"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="证件号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="所属部门:">
-                            <el-select v-model="form.orderType" placeholder="请选择证件类型">
-                                <el-option label="当前课程" value="1"></el-option>
-                                <el-option label="演出" value="3"></el-option>
-                                <el-option label="场地预定" value="2"></el-option>
-                                <el-option label="活动项目课程" value="4"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="  职位:">
-                            &nbsp;&nbsp;<el-input style="width:200px" placeholder="请填写职位" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="工号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="银行卡号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="企业邮箱:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="分机号:">
-                            <el-input style="width:200px" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12">
-                        <div class="grid-content">
-                            <el-form-item label="入职时间:">
-                                <el-date-picker v-model="form.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-
-                    <el-col :span="12">
-                        <el-form-item label="关联后台账号:">
-                            <el-input style="width:200px" placeholder="请输入正确的后台账号" autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                </el-row>
-
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="editstaff = false">取 消</el-button>
-                <el-button type="primary">确定</el-button>
+                <el-button type="primary" @click="addAndEditPost">确定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -311,13 +213,13 @@
                 <el-row>
                     <el-col>
                         <el-form-item label="离职文件:">
-                           <el-input v-model="itemCtrlForm.outDataUrl" placeholder="离职文件" :disabled="true" style="width:300px">
-                    <template slot="append">
-                        <el-upload class="upload-demo" :action='action' :data="uploadData" :show-file-list="false" :on-success="handleSuccess" :before-upload="beforeUpload">
-                            <el-button size="small" type="primary">点击上传</el-button>
-                        </el-upload>
-                    </template>
-                </el-input>
+                            <el-input v-model="itemCtrlForm.outDataUrl" placeholder="离职文件" :disabled="true" style="width:300px">
+                                <template slot="append">
+                                    <el-upload class="upload-demo" :action='action' :data="uploadData" :show-file-list="false" :on-success="handleSuccess" :before-upload="beforeUpload">
+                                        <el-button size="small" type="primary">点击上传</el-button>
+                                    </el-upload>
+                                </template>
+                            </el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -352,20 +254,98 @@
             </div>
         </el-dialog>
     </div>
+    <!-- 查看资料 -->
+    <el-dialog title="查看详情" :visible.sync="details" width="500px">
+        <el-form :model="detailsData">
+            <el-row style="margin:10px 0">
+                <el-col :span="8">姓名:</el-col>
+                <el-col :span="14">{{detailsData.userName}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">状态:</el-col>
+                <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">联系电话:</el-col>
+                <el-col :span="14">{{detailsData.userPhone}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0"  v-if="isPersonnelManager">
+                <el-col :span="8">所属门店:</el-col>
+                <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">所属部门:</el-col>
+                <el-col :span="14">{{detailsData.department?detailsData.department.name:''}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">职位:</el-col>
+                <el-col :span="14">{{detailsData.position}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">银行账户:</el-col>
+                <el-col :span="14">{{detailsData.bankcard}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">企业邮箱:</el-col>
+                <el-col :span="14">{{detailsData.email}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">后台账号:</el-col>
+                <el-col :span="14">{{detailsData.associatedAccount}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">工号:</el-col>
+                <el-col :span="14">{{detailsData.worknum}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">分机号:</el-col>
+                <el-col :span="14">{{detailsData.extension}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">入职时间:</el-col>
+                <el-col :span="14">{{detailsData.inTime}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">证件类型:</el-col>
+                <el-col :span="14">{{detailsData.idcardType | F_idcardType}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">证件号:</el-col>
+                <el-col :span="14">{{detailsData.idcard}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">转正日期:</el-col>
+                <el-col :span="14">{{detailsData.positiveTime}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">备注:</el-col>
+                <el-col :span="14">{{detailsData.remark}}</el-col>
+            </el-row>
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="details = false">关闭</el-button>
+        </div>
+    </el-dialog>
 
 </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import {
+    mapState,
+    mapActions
+} from "vuex";
 import httpRequest from "@/utils/httpRequest";
 export default {
     data() {
         return {
+            isPersonnelManager: true,
             correct: false,
             dimission: false,
             editstaff: false,
             adddstaff: false,
+            details: false,
             loading: false,
             pageIndex: 1,
             pageSize: 8,
@@ -374,7 +354,7 @@ export default {
             dataListLoading: false,
             dataListSelections: [],
             status: "",
-            action: httpRequest.systemUrl( "/pms/upload/upload_img"),
+            action: httpRequest.systemUrl("/pms/upload/upload_img"),
             uploadData: {
                 imgModel: 2,
                 platSource: 1005
@@ -382,6 +362,8 @@ export default {
             fileList: [],
             listTotal: 0,
             storeList: [],
+            departmentList: [],
+            detailsData: '',
             searchForm: {
                 storesNum: '',
                 content: '',
@@ -407,26 +389,94 @@ export default {
                 outReason: '',
                 outDataUrl: ''
             },
+            addAndEditForm: {
+                storesNum: '',
+                userStatus: '',
+                userName: '',
+                userPhone: '',
+                idcardType: '',
+                idcard: '',
+                departmentId: '',
+                position: '',
+                worknum: '',
+                bankcard: '',
+                email: '',
+                extension: '',
+                inTime: '',
+                associatedAccount: '',
+                remark: '',
+                employeeId: ''
+            },
+            rules: {
+                storesNum: [{
+                    required: true,
+                    trigger: 'blur',
+                    message: '请选择门店',
+                }, ],
+                userName: [{
+                    required: true,
+                    trigger: 'blur',
+                    message: '请输入员工名称',
+                }, ],
+                departmentId: [{
+                    required: true,
+                    trigger: 'blur',
+                    message: '请选择部门',
+                }, ],
+                userStatus: [{
+                    required: true,
+                    trigger: 'blur',
+                    message: '请选择部门',
+                }, ]
+            },
             tableData: [{}] //表格数据
         };
     },
+    filters: {
+        F_userStatus(value) {
+            let enums = {
+                '1': '正式工',
+                '2': '实习期',
+                '3': '试用期'
+            }
+            return value && enums[value] ? enums[value] : '其它'
+        },
+        F_idcardType(value) {
+            let enums = {
+                '1': '身份证',
+                '2': '护照',
+                '3': '驾驶证'
+            }
+            return value && enums[value] ? enums[value] : '其它'
+        }
+
+    },
     computed: {
-    ...mapState({
-      token: state => state.user.token,
-      userId: state => state.user.id,
-      storesNum:state => state.user.storesInfo.storesNum 
-    })
-  },
-    created() {
-      this.uploadData.userId = this.userId
-      this.uploadData.accessToken = this.token
-      this.uploadData.token = this.token
-      this.uploadData.storesNum = this.storesNum
+        ...mapState({
+            token: state => state.user.token,
+            userId: state => state.user.id,
+            storesNum: state => state.user.storesInfo.storesNum
+        })
+    },
+    mounted() {
+        if (this.$route.name == 'employeeList') {
+            this.isPersonnelManager = true
+        } else {
+            this.isPersonnelManager = false
+        }
+
+        this.uploadData.userId = this.userId
+        this.uploadData.accessToken = this.token
+        this.uploadData.token = this.token
+        this.uploadData.storesNum = this.storesNum
         this.$F.doRequest(null, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
             this.storeList = data;
             this.initForm();
+
+            this.department_list()
+
         })
     },
     methods: {
@@ -442,6 +492,14 @@ export default {
                 pageSize: 10, //页数
             };
             this.getDataList();
+        },
+        department_list() {
+            let that = this;
+
+            this.$F.doRequest(null, '/pms/department/department_list', '', (res) => {
+                this.departmentList = res;
+                that.$forceUpdate();
+            })
         },
         getDataList() {
             let that = this;
@@ -493,7 +551,7 @@ export default {
             }
             this.itemCtrlHandle(params)
         },
-        dimissionClick(item){
+        dimissionClick(item) {
             this.itemCtrlForm.employeeId = item.id
             this.itemCtrlForm.operType = 2;
             this.dimission = true;
@@ -504,7 +562,7 @@ export default {
                 operType: this.itemCtrlForm.operType,
                 outTime: this.itemCtrlForm.outTime,
                 outReason: this.itemCtrlForm.outReason,
-                outDataUrl:this.itemCtrlForm.outDataUrl
+                outDataUrl: this.itemCtrlForm.outDataUrl
             }
             if (!this.itemCtrlForm.outTime) {
                 this.$message.error('请选择离职日期');
@@ -528,6 +586,20 @@ export default {
                 this.$forceUpdate();
             })
         },
+        addAndEditPost() {
+            this.$refs.addAndEditForm.validate((valid) => {
+                if (valid) {
+                    this.$F.doRequest(null, '/pms/employee/edit_employee', this.addAndEditForm, (res) => {
+                        this.getDataList()
+                        this.adddstaff = false
+                        this.$forceUpdate();
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
         getDetails(item) {
             let params = {
                 employeeId: item.id,
@@ -535,12 +607,26 @@ export default {
             }
             this.$F.doRequest(null, '/pms/employee/detail_employee', params, (res) => {
                 this.detailsData = res
+                this.addAndEditForm = res
+                this.addAndEditForm.employeeId = res.id
                 this.$forceUpdate();
             })
         },
         detailsHandle(item) {
             this.getDetails(item)
             this.details = true
+        },
+        editItem(item) {
+            this.getDetails(item)
+            setTimeout(() => {
+                this.adddstaff = true
+            }, 300)
+        },
+        addItem(){
+            for(let k in this.addAndEditForm){
+                this.addAndEditForm[k] = ''
+            }
+            this.adddstaff = true
         },
         /**每页数 */
         handleSizeChange(val) {

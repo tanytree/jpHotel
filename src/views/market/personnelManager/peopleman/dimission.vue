@@ -1,15 +1,14 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-14 17:24:17
+ * @LastEditTime: 2020-07-15 15:56:51
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/dimission.vue
  -->
  <template>
 <div class="sec1">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
         <el-row>
-
-            <el-col :span="5">
+            <el-col :span="5" v-if="isPersonnelManager">
                 <el-form-item label="所属门店">
                     <el-select v-model="searchForm.storesNum" class="width150">
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -27,7 +26,6 @@
                 <span style="margin:0 5px">-</span>
                 <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
-
             <el-form-item>
                 <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
             </el-form-item>
@@ -49,9 +47,9 @@
             <el-table-column prop="department.name" label="所在部门" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="details=true">详情</el-button>
-                    <el-button type="text" size="mini">重新入职</el-button>
-                    <el-button type="text" size="mini">删除</el-button>
+                    <el-button type="text" size="mini" @click="detailsHandle(row)">详情</el-button>
+                    <el-button type="text" size="mini" @click="reconsider(row)">重新入职</el-button>
+                    <el-button type="text" size="mini" @click="deleteItem(row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -61,100 +59,81 @@
 
     </div>
     <!-- 查看资料 -->
-    <div>
-        <el-dialog title="查看资料" :visible.sync="details" width="500px">
-            <el-from>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">姓名:</el-col>
-                    <el-col :span="14">张三</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">联系电话:</el-col>
-                    <el-col :span="14">111111</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">所属门店:</el-col>
-                    <el-col :span="14">大仓集团第一酒店</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">所属部门:</el-col>
-                    <el-col :span="14">总办</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">职位:</el-col>
-                    <el-col :span="14">总经理</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">银行账户:</el-col>
-                    <el-col :span="14">999999999999</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">企业邮箱:</el-col>
-                    <el-col :span="14">111@qq.com</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">后台账号:</el-col>
-                    <el-col :span="14">8888888888</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">工号:</el-col>
-                    <el-col :span="14">0933</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">分机号:</el-col>
-                    <el-col :span="14">77777</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">入职时间:</el-col>
-                    <el-col :span="14">3019-7-1</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">证件类型:</el-col>
-                    <el-col :span="14">护照</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">证件号:</el-col>
-                    <el-col :span="14">8888</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">转正日期:</el-col>
-                    <el-col :span="14">大仓集团第一酒店</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">备注:</el-col>
-                    <el-col :span="14">暂无</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">离职时间:</el-col>
-                    <el-col :span="14">22222</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">离职原因:</el-col>
-                    <el-col :span="14">暂无</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">离职文件:</el-col>
-                    <el-col :span="14">
-                        <el-button>预览 </el-button>
-                    </el-col>
-                </el-row>
-            </el-from>
-
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="details = false">关闭</el-button>
-            </div>
-        </el-dialog>
-    </div>
-
+    <el-dialog title="查看详情" :visible.sync="details" width="500px">
+        <el-form :model="detailsData">
+            <el-row style="margin:10px 0">
+                <el-col :span="8">姓名:</el-col>
+                <el-col :span="14">{{detailsData.userName}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">状态:</el-col>
+                <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">联系电话:</el-col>
+                <el-col :span="14">{{detailsData.userPhone}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0" v-if="isPersonnelManager">
+                <el-col :span="8">所属门店:</el-col>
+                <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">所属部门:</el-col>
+                <el-col :span="14">{{detailsData.department?detailsData.department.name:''}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">职位:</el-col>
+                <el-col :span="14">{{detailsData.position}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">银行账户:</el-col>
+                <el-col :span="14">{{detailsData.bankcard}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">企业邮箱:</el-col>
+                <el-col :span="14">{{detailsData.email}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">后台账号:</el-col>
+                <el-col :span="14">{{detailsData.associatedAccount}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">工号:</el-col>
+                <el-col :span="14">{{detailsData.worknum}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">分机号:</el-col>
+                <el-col :span="14">{{detailsData.extension}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">入职时间:</el-col>
+                <el-col :span="14">{{detailsData.inTime}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">证件类型:</el-col>
+                <el-col :span="14">{{detailsData.idcardType | F_idcardType}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">证件号:</el-col>
+                <el-col :span="14">{{detailsData.idcard}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">转正日期:</el-col>
+                <el-col :span="14">{{detailsData.positiveTime}}</el-col>
+            </el-row>
+            <el-row style="margin:10px 0">
+                <el-col :span="8">备注:</el-col>
+                <el-col :span="14">{{detailsData.remark}}</el-col>
+            </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="details = false">关闭</el-button>
+        </div>
+    </el-dialog>
 </div>
 </template>
 
 <script>
-// import {
-//   get_goods_list,
-//   edit_goods_status,
-//   del_goods_info
-// } from "@/utils/api/market";
 export default {
     data() {
         return {
@@ -167,9 +146,11 @@ export default {
             dataListLoading: false,
             dataListSelections: [],
             status: "",
-
+            
+            isPersonnelManager:true,
             listTotal: 0,
             storeList: [],
+            detailsData: '',
             searchForm: {
                 storesNum: '',
                 content: '',
@@ -190,7 +171,30 @@ export default {
             tableData: [{}] //表格数据
         };
     },
-    created() {
+    filters: {
+        F_userStatus(value) {
+            let enums = {
+                '1': '正式工',
+                '2': '实习期',
+                '3': '试用期'
+            }
+            return value && enums[value] ? enums[value] : '其它'
+        },
+        F_idcardType(value) {
+            let enums = {
+                '1': '身份证',
+                '2': '护照',
+                '3': '驾驶证'
+            }
+            return value && enums[value] ? enums[value] : '其它'
+        }
+    },
+    mounted() {
+        if (this.$route.name == 'employeeList') {
+            this.isPersonnelManager = true
+        } else {
+            this.isPersonnelManager = false
+        }
         this.$F.doRequest(null, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
@@ -198,7 +202,7 @@ export default {
             this.initForm();
         })
     },
-     methods: {
+    methods: {
         initForm() {
             this.searchForm = {
                 content: '',
@@ -243,6 +247,56 @@ export default {
         detailsHandle(item) {
             this.getDetails(item)
             this.details = true
+        },
+        deleteItem(item) {
+            let params = {
+                employeeId: item.id,
+                operType: 3,
+            }
+            this.$confirm('请确认是否删除?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.itemCtrlHandle(params)
+            }).catch(() => {
+
+            });
+        },
+        getDetails(item) {
+            let params = {
+                employeeId: item.id,
+                account: item.associatedAccount
+            }
+            this.$F.doRequest(null, '/pms/employee/detail_employee', params, (res) => {
+                this.detailsData = res
+                this.$forceUpdate();
+            })
+        },
+        detailsHandle(item) {
+            this.getDetails(item)
+            this.details = true
+        },
+        reconsider(item) {
+            let params = {
+                employeeId: item.id,
+                operType: 4,
+            }
+            this.$confirm('请确认重新入职?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.itemCtrlHandle(params)
+            }).catch(() => {
+
+            });
+        },
+        itemCtrlHandle(params) {
+            this.$F.doRequest(null, '/pms/employee/oper_employee', params, (res) => {
+                this.getDataList()
+                this.$forceUpdate();
+            })
         },
         /**每页数 */
         handleSizeChange(val) {
