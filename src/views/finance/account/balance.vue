@@ -14,19 +14,28 @@
                     <el-button type="primary" class="submit">导出</el-button>
                 </div>
             </el-form>
-            <el-table :data="tableData" size="small" :span-method="objectSpanMethod" border height="100%" header-row-class-name="default">
+            <el-table :data="tableData" size="small" border height="100%" header-row-class-name="default"
+                default-expand-all :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+            >
                 <el-table-column header-align="center" prop="code" label="科目编码" width="120"></el-table-column>
                 <el-table-column header-align="center" prop="name" label="科目名称" width="180"></el-table-column>
-                <el-table-column header-align="center" prop="period" label="方向" width="180"></el-table-column>
-                <el-table-column label="期初余额">
-                    <el-table-column prop="province" label="借方" width="120"></el-table-column>
-                    <el-table-column prop="city" label="贷方" width="120"></el-table-column>
+                <el-table-column header-align="center" prop="direct" label="方向" width="180"></el-table-column>
+                <el-table-column header-align="center" label="期初余额">
+                    <el-table-column header-align="center" prop="province" label="借方" width="140"></el-table-column>
+                    <el-table-column header-align="center" prop="city" label="贷方" width="140"></el-table-column>
                 </el-table-column>
-                <el-table-column header-align="center" prop="abstract" label="摘要"></el-table-column>
-                <el-table-column header-align="center" prop="debit" label="借方" width="180"></el-table-column>
-                <el-table-column header-align="center" prop="credit" label="贷方" width="180"></el-table-column>
-                <el-table-column header-align="center" prop="direct" label="方向" width="120"></el-table-column>
-                <el-table-column header-align="center" align="right" prop="balance" label="余额" width="180"></el-table-column>
+                <el-table-column header-align="center" label="本期发生额">
+                    <el-table-column header-align="center" prop="province" label="借方" width="140"></el-table-column>
+                    <el-table-column header-align="center" prop="city" label="贷方" width="140"></el-table-column>
+                </el-table-column>
+                <el-table-column header-align="center" label="本年累计发生额">
+                    <el-table-column header-align="center" prop="province" label="借方" width="140"></el-table-column>
+                    <el-table-column header-align="center" prop="city" label="贷方" width="140"></el-table-column>
+                </el-table-column>
+                <el-table-column header-align="center" label="期末余额">
+                    <el-table-column header-align="center" prop="province" label="借方" width="140"></el-table-column>
+                    <el-table-column header-align="center" prop="city" label="贷方" width="140"></el-table-column>
+                </el-table-column>
             </el-table>
         </el-card>
     </div>
@@ -41,7 +50,7 @@
                 form: {type: 1,},
                 type: [{value: 1, label: '2020年第4期'}],
                 tableData: [
-                    {code: '1001', name: '库存现金', period: '202004', abstract: '期初余额', debit: '', credit: '', direct: '借', balance: '1000.00'}
+                    {code: '1001', name: '库存现金', direct: '借',}
                 ],
             };
         },

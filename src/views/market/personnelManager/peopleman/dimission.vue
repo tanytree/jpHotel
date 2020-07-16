@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-15 15:56:51
+ * @LastEditTime: 2020-07-16 14:57:32
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/dimission.vue
  -->
  <template>
@@ -188,7 +188,7 @@ export default {
         } else {
             this.isPersonnelManager = false
         }
-        this.$F.doRequest(null, '/pms/freeuser/stores_list', {
+        this.$F.doRequest(this, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
             this.storeList = data;
@@ -212,7 +212,7 @@ export default {
         getDataList() {
             let that = this;
 
-            this.$F.doRequest(null, '/pms/employee/employee_list', this.searchForm, (res) => {
+            this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
                 this.tableData = res.employeesList;
                 this.listTotal = res.page.count
                 that.$forceUpdate();
@@ -232,7 +232,7 @@ export default {
                 employeeId: item.id,
                 account: item.associatedAccount
             }
-            this.$F.doRequest(null, '/pms/employee/detail_employee', params, (res) => {
+            this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
                 this.detailsData = res
                 this.$forceUpdate();
             })
@@ -261,7 +261,7 @@ export default {
                 employeeId: item.id,
                 account: item.associatedAccount
             }
-            this.$F.doRequest(null, '/pms/employee/detail_employee', params, (res) => {
+            this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
                 this.detailsData = res
                 this.$forceUpdate();
             })
@@ -286,7 +286,7 @@ export default {
             });
         },
         itemCtrlHandle(params) {
-            this.$F.doRequest(null, '/pms/employee/oper_employee', params, (res) => {
+            this.$F.doRequest(this, '/pms/employee/oper_employee', params, (res) => {
                 this.getDataList()
                 this.$forceUpdate();
             })

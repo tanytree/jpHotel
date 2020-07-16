@@ -44,7 +44,7 @@
     export default {
         data() {
             return {
-                form: {type: 1,},
+                form: {type: 1,}, subject: '',
                 type: [{value: 1, label: '2020年第4期'}],
                 tableData: [{date: '2020-04-01', abs: '期初余额', debit: '', credit: '', direct: '借', balance: '1000.00'}],
                 treeData: [

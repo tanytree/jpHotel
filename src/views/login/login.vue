@@ -199,9 +199,9 @@ export default {
       sendAuthCode: true /* 布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */,
       auth_time: 0 /* 倒计时 计数器 */,
       loginForm: {
-        storesNum: '0000000000',
-        account: 'admin',
-        password: 'admin123456'
+        storesNum: '7859296128',
+        account: 'cindy',
+        password: '123456'
       },
       forgetForm: {
         nickname: '',
@@ -241,7 +241,7 @@ export default {
     this.$F.doRequest(this, '/pms/freeuser/stores_list', {filterHeader: true}, (data) => {
       this.storeList = data;
       // this.storeList = [{storesNum: '0000000000', storesName: '总部后台'}]
-      this.loginForm.storesNum = data[0].storesNum
+      // this.loginForm.storesNum = data[0].storesNum
     })
   },
   methods: {

@@ -106,6 +106,9 @@
   .margin-tb-40{
     margin: 40px 0;
   }
+  .margin-b-20 {
+      margin-bottom: 20px;
+  }
   .text-right{text-align: right;}
   .text-left{text-align: left;}
   .text-center{text-align: center;}
@@ -379,9 +382,34 @@ li {
         font-size: 14px;
     }
     .default th{
-        background: #D9DDE2;
+        background: #D9DDE2!important;
         border-color: #d5d5d5;
         color: #1e1e1e;
+    }
+}
+
+.term {
+    background: #fafafa;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    &.line {
+        .el-form-item {
+            margin-bottom: 0;
+        }
+    }
+
+    .export {
+        float: right;
+    }
+
+    .el-input, .el-select {
+        width: 160px
+    }
+
+    .line {
+        margin: 0 10px;
     }
 }
 

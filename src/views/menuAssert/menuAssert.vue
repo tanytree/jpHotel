@@ -60,13 +60,14 @@
       submit() {
         this.dialogTableVisible = false;
         let params = {
-          id: this.selected.id,
+          menuId: this.selected.id,
           icon: this.selected.icon,
           path: this.selected.path,
         }
-        // this.$F.doRequest(this, '/pms/freeuser/stores_list', params, (data) => {
-        //   this.dialogTableVisible = false;
-        // })
+        this.$F.doRequest(this, '/pms/freeuser/update_menu', params, (data) => {
+          this.dialogTableVisible = false;
+          this.$message.success('success');
+        })
       },
     }
   };

@@ -95,7 +95,6 @@
       },
       //点击左侧导航
       toSection(item) {
-        // debugger
         if (item.path) {
           this.subMenul = item;
           sessionStorage.sectionid = item.id;
@@ -115,7 +114,6 @@
         }
       },
       toPage(item) {
-        debugger
         console.log('item====', item)
         this.pageId = item.id;
         sessionStorage.pageId = item.id;

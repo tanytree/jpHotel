@@ -68,7 +68,7 @@ export default {
         },
         getDataList() {
             let that = this;
-            this.$F.doRequest(null, '/pms/department/department_store_list', this.searchForm, (res) => {
+            this.$F.doRequest(this, '/pms/department/department_store_list', this.searchForm, (res) => {
                 let data = res;
                 for (let k in data) {
                     data[k].id = k;
@@ -111,7 +111,7 @@ export default {
                 type: 'warning'
             }).then(() => {
 
-                this.$F.doRequest(null, '/pms/department/delete_department', {
+                this.$F.doRequest(this, '/pms/department/delete_department', {
                     'departmentId': item.id
                 }, (res) => {
                     console.log(res)
@@ -127,7 +127,7 @@ export default {
         submitFn() {
             this.$refs.adddepart.validate((valid) => {
                 if (valid) {
-                    this.$F.doRequest(null, '/pms/department/edit_department', this.addAndEditForm, (res) => {
+                    this.$F.doRequest(this, '/pms/department/edit_department', this.addAndEditForm, (res) => {
                         console.log(res)
                         this.initForm()
                         this.adddepart = false

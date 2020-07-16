@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-15 14:53:35
+ * @LastEditTime: 2020-07-16 09:34:00
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -64,7 +64,7 @@ export default new Router({
                     path: '/person-mg',
                     name: 'PersonMg',
                     component: () =>
-                        import ('@/views/market/personnelManager/employeeList')
+                        import ('@/views/Boss/PersonMg')
                 },
                 {
                     path: '/pay-mg',
@@ -504,23 +504,22 @@ export default new Router({
                         import ('@/views/finance/account')
                 },
                 {
-                    path: '/accountbill',
-                    name: 'accountbill',
+                    path: '/bill',
+                    name: 'bill',
                     component: () =>
-                        import ('@/views/finance/account/bill')
+                        import ('@/views/finance/bill')
                 },
                 {
-                    path: '/billjf',
-                    name: 'billjf',
-                    meta: { title: '村积分账单' },
+                    path: '/report',
+                    name: 'report',
                     component: () =>
-                        import ('@/views/finance/account/billjf')
+                        import ('@/views/finance/report')
                 },
                 {
-                    path: '/withDraw',
-                    name: 'withDraw',
+                    path: '/invoice',
+                    name: 'invoice',
                     component: () =>
-                        import ('@/views/finance/withDraw')
+                        import ('@/views/finance/invoice')
                 },
                 /**采购部 */
                 {
