@@ -127,7 +127,7 @@
 				<el-row :gutter="22" style="padding: 20px 0px;">
 					<el-col :span="2" style="font-size: 14px;">房型图片:</el-col>
 					<el-col :span="20">
-						<el-upload list-type="picture-card" 
+						<el-upload list-type="picture-card"
 							action="aa"
 							ref="upload"
 							:auto-upload="false"
@@ -173,6 +173,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
 	export default {
 		data() {
 			return {
@@ -260,18 +261,13 @@
 			// 房屋/会议 删除
 			houseConfirm_delete() {},
 			// 保存
-			saveInfo() {
-				this.formData = new FormData()
-				let img_list = this.$refs.upload.uploadFiles;
-				this.formData.append('files', img_list);
-				this.formData.append('imgModel', "1");
-				let config = {
-					headers: {'Content-Type':'multipart/form-data'}
-				}
-				this.$F.doRequest(this, '/pms/upload/batch_upload_img', this.formData, (res) => {
-					debugger
-				})
-			},
+          saveInfo () {
+            this.formData = new FormData()
+            let imgList = this.$refs.upload.uploadFiles || [];
+            this.$F.doUploadBatch(this, imgList, (data) => {
+                debugger
+            })
+          },
 			// 获取 房间类型类型列表
 			get_house_list() {
 				let params = Object.assign({}, this.form)

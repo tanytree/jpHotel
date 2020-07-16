@@ -115,80 +115,15 @@ export default new Router({
                     component: () =>
                         import ('@/views/finance/main')
                 },
-                /**前台部 */
-                {
-                    name: 'product',
-                    path: '/product',
-                    meta: { title: '产品管理', pid: "11" },
-                    component: () =>
-                        import ('@/views/market/productManagement')
-                },
-                {
-                    path: '/promotion',
-                    name: 'promotion',
-                    meta: { title: '促销管理', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/promotion')
-                },
+                /**管理部 */
                 {
                     path: '/market',
                     name: 'market',
-                    meta: { title: '营销部首页' },
+                    meta: { title: '管理部首页' },
                     component: () =>
                         import ('@/views/market/main')
                 },
-                {
-                    path: '/customer',
-                    name: 'customer',
-                    meta: { title: '客户管理', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/customer'),
-                        // children:[
-                        //     {
-                        //         path: 'detail',
-                        //         name: 'customerdetails',
-                        //         meta: { title: '客户详情', pid: "13" },
-                        //         component: () =>
-                        //             import ('@/views/market/customer/children/detail')
-                        //     },
 
-                        // ]
-                },
-                {
-                    path: '/customerdetails',
-                    name: 'customerdetails',
-                    meta: { title: '客户详情', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/customer/children/detail')
-                },
-                {
-                    path: '/customeredit',
-                    name: 'customeredit',
-                    meta: { title: '客户编辑', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/customer/children/detail')
-                },
-                {
-                    path: '/customerhistory',
-                    name: 'customerhistory',
-                    meta: { title: '客史记录', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/customer/children/history')
-                },
-                {
-                    path: '/historydetail',
-                    name: 'historydetail',
-                    meta: { title: '客史详情', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/customer/children/historydetail')
-                },
-                {
-                    path: '/companydetail',
-                    name: 'companydetail',
-                    meta: { title: '单位详情', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/customer/children/companydetail')
-                },
                 {
                     path: '/nightaudit',
                     name: 'nightaudit',
@@ -232,91 +167,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/market/authSet')
                 },
-                {
-                    path: '/userIntegral',
-                    name: 'userIntegral',
-                    meta: { title: '积分管理', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/member/userIntegral')
-                },
-                {
-                    path: '/userActivity',
-                    name: 'userActivity',
-                    meta: { title: '活动管理', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/member/userActivity')
-                },
-                {
-                    path: '/winningList',
-                    name: 'winningList',
-                    meta: { title: '中奖名单', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/member/winningList')
-                },
 
-                {
-                    path: '/scholarship',
-                    name: 'scholarship',
-                    meta: { title: '奖学金管理', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/shop/scholarship')
-                },
-                {
-                    path: '/cert',
-                    name: 'cert',
-                    meta: { title: '证书管理', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/shop/cert')
-                },
-                {
-                    path: '/activesEvents',
-                    name: 'activesEvents',
-                    meta: { title: '活动项目', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/shop/activesEvents')
-                },
-                {
-                    path: '/customerMarketing',
-                    name: 'customerMarketing',
-                    meta: { title: '会员营销', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/member/customer')
-                },
-                {
-                    path: '/slideshow',
-                    name: 'slideshow',
-                    meta: { title: '限时抢购', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/slideshow/slideshow')
-                },
-                {
-                    path: '/featurePublish',
-                    name: 'featurePublish',
-                    meta: { title: '限时抢购发布', pid: "12" },
-                    component: () =>
-                        import ('@/views/market/promotion/slideshow/publish')
-                },
-                {
-                    path: '/advertList',
-                    name: 'advertList',
-                    meta: { title: '广告商管理', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/advert/advertList')
-                },
-                {
-                    path: '/advertSet',
-                    name: 'advertSet',
-                    meta: { title: '投放广告', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/advert/advertSet')
-                },
-                {
-                    path: '/groupManage',
-                    name: 'groupManage',
-                    meta: { title: '村入驻管理', pid: "13" },
-                    component: () =>
-                        import ('@/views/market/advert/groupManage')
-                },
                 /**人事部 */ // 渠道管理
                 {
                     path: '/personnelManager',
