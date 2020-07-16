@@ -220,7 +220,12 @@
                         <el-form-item label="离职文件:">
                             <el-input v-model="itemCtrlForm.outDataUrl" placeholder="离职文件" :disabled="true" style="width:300px">
                                 <template slot="append">
-                                    <el-upload class="upload-demo" :action='action' :data="uploadData" :show-file-list="false" :on-success="handleSuccess" :before-upload="beforeUpload">
+                                    <el-upload class="upload-demo"
+                                               :action='action'
+                                               :data="uploadData"
+                                               :show-file-list="false"
+                                               :on-success="handleSuccess"
+                                               :before-upload="beforeUpload">
                                         <el-button size="small" type="primary">点击上传</el-button>
                                     </el-upload>
                                 </template>

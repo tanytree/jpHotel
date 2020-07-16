@@ -198,6 +198,14 @@ export default new Router({
                         import ('@/views/market/personnelManager/setting/channelSetting')
                 },
 
+                {
+                    path: '/customer',
+                    name: 'customer',
+                    meta: { title: '客户管理', pid: "13" },
+                    component: () =>
+                        import ('@/views/market/customer'),
+                },
+
 
                 //企划部      /**销售部 */
                 {
@@ -221,25 +229,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/sale/order/member/graces/new')
                 },
-                {
-                    path: '/saleContract',
-                    name: 'saleContract',
-                    meta: { title: '单位管理', pid: "25" },
-                    component: () =>
-                        import ('@/views/sale/contract/index')
-                },
-                {
-                    path: '/contracted',
-                    name: 'contracted',
-                    component: () =>
-                        import ('@/views/sale/contract/finish')
-                },
-                {
-                    path: '/contractback',
-                    name: 'contractback',
-                    component: () =>
-                        import ('@/views/sale/contract/back')
-                },
+
                 {
                     path: '/orderInfo',
                     name: 'orderInfo',
@@ -261,12 +251,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/sale/approval/preSale')
                 },
-                {
-                    path: '/approvalContract',
-                    name: 'approvalContract',
-                    component: () =>
-                        import ('@/views/sale/approval/contract')
-                },
+
                 //我的报价
                 {
                     path: '/offerStart',
@@ -322,23 +307,6 @@ export default new Router({
                     component: () =>
                         import ('@/views/sale/SaleBussness')
                 },
-                {
-                    path: '/contractdetail',
-                    name: 'contractdetail',
-                    meta: { title: '合同详情' },
-                    component: () =>
-                        import ('@/views/sale/contract/detail')
-                },
-                {
-                    path: '/contractinfo',
-                    name: 'contractinfo',
-                    meta: { title: '合同要素' },
-                    component: () =>
-                        import ('@/views/sale/contract/fileinfo')
-                },
-
-
-
                 /**财务部 */
                 {
                     path: '/finance',
@@ -347,7 +315,13 @@ export default new Router({
                         import ('@/views/finance/main')
                 },
 
-
+                {
+                    path: '/saleContract',
+                    name: 'saleContract',
+                    meta: { title: '单位管理', pid: "25" },
+                    component: () =>
+                        import ('@/views/sale/contract/index')
+                },
                 {
                     path: '/account',
                     name: 'account',
@@ -372,106 +346,6 @@ export default new Router({
                     component: () =>
                         import ('@/views/finance/invoice')
                 },
-                /**采购部 */
-                {
-                    path: '/purchaseMain',
-                    name: 'purchaseMain',
-                    meta: { title: '采购首页' },
-                    component: () =>
-                        import ('@/views/purchase/main')
-                },
-                {
-                    path: '/purchasePlan',
-                    name: 'purchasePlan',
-                    meta: { title: '采购计划' },
-                    component: () =>
-                        import ('@/views/purchase/plan')
-                },
-                {
-                    path: '/planDetail',
-                    name: 'planDetail',
-                    meta: { title: '计划详情' },
-                    component: () =>
-                        import ('@/views/purchase/plan/planDetail')
-                },
-                {
-                    path: '/planDetailEdit',
-                    name: 'planDetailEdit',
-                    meta: { title: '添加商品' },
-                    component: () =>
-                        import ('@/views/purchase/plan/planDetailEdit')
-                },
-                {
-                    path: '/purchaseList',
-                    name: 'purchaseList',
-                    meta: { title: '采购清单' },
-                    component: () =>
-                        import ('@/views/purchase/list')
-                },
-                {
-                    path: '/contract',
-                    name: 'contract',
-                    meta: { title: '合同管理' },
-                    component: () =>
-                        import ('@/views/purchase/contract/index')
-                },
-                {
-                    path: '/onlineEnquiry',
-                    name: 'onlineEnquiry',
-                    meta: { title: '在线询盘' },
-                    component: () =>
-                        import ('@/views/purchase/online/enquiry')
-                },
-                {
-                    path: '/enquiryDetail',
-                    name: 'enquiryDetail',
-                    meta: { title: '新增询盘' },
-                    component: () =>
-                        import ('@/views/purchase/online/enquiryDetail')
-                },
-
-                {
-                    path: '/contractFinish',
-                    name: 'contractFinish',
-                    component: () =>
-                        import ('@/views/purchase/contract/finish')
-                },
-                {
-                    path: '/contractWaiting',
-                    name: 'contractWaiting',
-                    component: () =>
-                        import ('@/views/purchase/contract/waiting')
-                },
-                {
-                    path: '/orderContract',
-                    name: 'orderContract',
-                    component: () =>
-                        import ('@/views/purchase/order/contract')
-                },
-                {
-                    path: '/orderEnterprise',
-                    name: 'orderEnterprise',
-                    component: () =>
-                        import ('@/views/purchase/order/enterprise')
-                },
-                {
-                    path: '/orderAgent',
-                    name: 'orderAgent',
-                    component: () =>
-                        import ('@/views/purchase/order/agent')
-                },
-                {
-                    path: '/supplier',
-                    name: 'supplier',
-                    component: () =>
-                        import ('@/views/purchase/supplier/index')
-                },
-                {
-                    path: '/onlineProcurement',
-                    name: 'onlineProcurement',
-                    component: () =>
-                        import ('@/views/purchase/online/procurement')
-                },
                 {
                     path: '/menuAssert',
                     name: 'menuAssert',
@@ -480,6 +354,7 @@ export default new Router({
                 },
             ]
         },
+
         {
             path: '/404',
             name: '404',
