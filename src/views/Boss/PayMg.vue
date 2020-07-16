@@ -88,8 +88,7 @@
 							</el-form-item>
 							<el-form-item label="所在部门:" class="margin-l">
 								<el-select v-model="form_2.departmentId" placeholder="请选择所在部门" style="width: 150px;">
-									<el-option label="区域一" value="shanghai"></el-option>
-									<el-option label="区域二" value="beijing"></el-option>
+									<el-option :label="value.name" :value="value.id" v-for="(value, index) in departmentList" :key="index"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item class="margin-l">
@@ -306,7 +305,7 @@
 				form_1: {
 					content: '',
 					userStatus: '',
-					payTime: '',
+					payTime: new Date().toJSON(),
 					pageIndex: 1,
 					pageSize: 10,
 					paging: true,
@@ -358,6 +357,7 @@
 						trigger: 'blur'
 					}]
 				},
+				departmentList: [],
 				dialogsalary_set: false, // 薪资设置
 				salary_set_title: '', // 薪酬设置/查看弹框标题
 				is_disabled: false, //判断是修改还是查看,查看就是true,不可修改模式
@@ -387,6 +387,7 @@
 		},
 		created() {
 			this.get_salary_mg_list()
+			this.get_department_list()
 		},
 		methods: {
 			popup(type, value) {
@@ -449,8 +450,15 @@
 					});
 				})
 			},
+			//获取部门列表
+			get_department_list() {
+				this.$F.doRequest(this, '/pms/department/department_list', {}, (res) => {
+					this.departmentList = res
+				})
+			},
 			//薪资管理列表
 			get_salary_mg_list() {
+				this.form_1.payTime = this.form_1.payTime.substring(0,7)
 				let params = this.form_1
 				this.$F.doRequest(this, '/pms/wage/month_wage_list', params, (res) => {
 					res.wageList.forEach((value) => {

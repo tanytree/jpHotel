@@ -1,6 +1,6 @@
 <!--
  * @Date: 2020-02-15 21:08:27
- * @LastEditors: Dana
+ * @LastEditors: 何丽梅
  * @LastEditTime: 2020-04-27 11:14:21
  * @FilePath: /cloudAdmin/src/views/market/productManagement/index.vue
  -->
@@ -28,7 +28,6 @@
     import BuildingFloor from './BuildingFloor'
     import RoomNews from './RoomNews'
 	import RoomLock from './RoomLock'
-    // import httpRequest from '@/utils/httpRequest'
     import { mapState, mapActions } from "vuex";
     export default {
         components: { HouseMaintain,BuildingFloor,RoomNews,RoomLock},
@@ -39,7 +38,7 @@
         },
         data () {
             return {
-                activeName: 'second' //第一个默认启动
+                activeName: 'first' //第一个默认启动
             }
         },
         created () {

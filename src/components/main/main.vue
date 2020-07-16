@@ -95,7 +95,7 @@
       },
       //点击左侧导航
       toSection(item) {
-        debugger
+        // debugger
         if (item.path) {
           this.subMenul = item;
           sessionStorage.sectionid = item.id;
