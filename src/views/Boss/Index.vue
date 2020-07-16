@@ -45,31 +45,7 @@
 				</el-tabs>
 			</el-tab-pane>
 			<el-tab-pane :label="boss_second_title" name="second">
-				<div class="second-body">
-					<div class="title">
-						<span>{{select_title}}</span>
-					</div>
-					<div class="row-body">
-						<div class="row-line" v-for="(value, index) in peopleList" :key="index">
-							<div class="row-item">
-								<img class="row-img" src="../../assets/images/caigou/kuai01.png" alt="">
-								<span class="default-text">{{value.userName}}</span>
-								<!-- <span class="active-facus">{{value.userName}}</span> -->
-							</div>
-							<div class="row-item" @click="routerPath(value, index)">
-								<el-dropdown trigger="click" @command="handleCommand">
-									<span class="el-dropdown-link">
-										操作<i class="el-icon-arrow-down el-icon--right"></i>
-									</span>
-									<el-dropdown-menu slot="dropdown">
-										<el-dropdown-item command="a">查看资料</el-dropdown-item>
-										<el-dropdown-item command="b">权限设置</el-dropdown-item>
-									</el-dropdown-menu>
-								</el-dropdown>
-							</div>
-						</div>
-					</div>
-				</div>
+                <EmployeeRights />
 			</el-tab-pane>
 		</el-tabs>
 		<!-- 订单详情/查看详情 -->
@@ -130,7 +106,9 @@
 </template>
 
 <script>
+  import EmployeeRights from "@/components/employeeRights";
 	export default {
+      components: { EmployeeRights },
 		data() {
 			return {
 				activeName: 'first',

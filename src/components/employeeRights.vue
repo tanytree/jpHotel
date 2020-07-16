@@ -1,7 +1,7 @@
 <template>
 <div class="boss-index">
     <div v-if="listVisible" class="author">
-        <div class="title">人事部</div>
+        <div class="title"> {{$i18n.locale == 'ri' ? firstMenuInfo.japanese : (firstMenuInfo.menuAliasTitle || firstMenuInfo.menuTitle)}}</div>
         <ul class="list">
             <li v-for="(item, index) in tableData" :key="index">
                 <div class="left">
@@ -66,6 +66,7 @@ export default {
     components: {
     },
     name: "",
+
     data() {
         return {
             listVisible: true,
@@ -73,6 +74,7 @@ export default {
             tableData: [],
             listTotal: 0,
             menuList: [],
+          firstMenuInfo: [],
             authors: [{
                     name: '章欣',
                     post: '部门负责人',
@@ -157,27 +159,26 @@ export default {
         }
     },
     created() {
-        console.log(this.$route)
         this.initForm();
-
     },
     methods: {
         initForm() {
+            this.firstMenuInfo = JSON.parse(sessionStorage.menul);
             this.searchForm = {
-                departmentId: '',
+                departmentId: this.firstMenuInfo.id,
                 searchType: 1,
                 content: "",
                 pageIndex: 1,
-                pageSize: 10
+                pageSize: 10,
+
             };
             this.getDataList();
         },
         getDataList() {
             let that = this;
-
             this.$F.doRequest(this, '/pms/workuser/login_user_list', this.searchForm, (res) => {
                 this.tableData = res.hotelUserList;
-                this.listTotal = res.page.count
+                this.listTotal = this.tableData.length
                 that.$forceUpdate();
             })
         },

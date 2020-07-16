@@ -4,14 +4,14 @@
             <pageHeader @calRouter="calRouter" :language='language'/>
         </el-header>
         <el-container class="main-container">
-            <el-aside v-if="menul.childList && menul.childList.length > 0 &&routerCompany!=='company'" class="mainAside">
+            <el-aside v-if="menul.childList && menul.childList.length > 0 &&routerCompany !== 'company'" class="mainAside">
                 <div class="side-menu-wrapper">
                     <div class="topNav">
                         <img :src="require(`@/assets/images/${menul.icon}.png`)" alt/>
                         {{$i18n.locale == 'ri' ? menul.japanese : (menul.menuAliasTitle || menul.menuTitle)}}
                     </div>
                     <ul class="el-menu">
-                        <li class="el-menu-item" v-for="(item) in menul.childList" :key="item.id" :class="sectionid==item.id?'is-active':''"
+                        <li class="el-menu-item" v-for="(item) in menul.childList" :key="item.id" :class="sectionid==item.id ? 'is-active':''"
                             @click="toSection(item)">
                             <img v-if="item.icon" :src="require(`@/assets/images/${item.icon}`)" alt/>
                             {{$i18n.locale == 'ri' ? item.japanese : (item.menuAliasTitle || item.menuTitle)}}
@@ -112,16 +112,6 @@
         } else {
           this.$message.error('Request does not exist');
         }
-      },
-      toPage(item) {
-        console.log('item====', item)
-        this.pageId = item.id;
-        sessionStorage.pageId = item.id;
-        if (this.$route.name == item.path) {
-          return false;
-        }
-        this.$router.push(item.path);
-        sessionStorage.pagePath = item.path;
       },
       // 注销
       logout() {

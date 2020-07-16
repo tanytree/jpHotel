@@ -11,7 +11,7 @@
         <Centralres   />
       </el-tab-pane>
       <el-tab-pane label="员工权限" name="forth">
-        <Employeerights />
+        <EmployeeRights />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -19,10 +19,9 @@
 
 <script>
 import Centralres from "./centralRes";
-import Employeerights from "./EmployeeRights";
-
+import EmployeeRights from "@/components/employeeRights";
 export default {
-  components: { Centralres, Employeerights },
+  components: { Centralres, EmployeeRights },
   data() {
     return {
       activeName: "first" //第一个默认启动

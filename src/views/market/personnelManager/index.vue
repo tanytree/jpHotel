@@ -2,7 +2,7 @@
  * @Date: 2020-01-04 15:46:19
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
 <template>
   <el-tabs class="pageTab" v-model="activeName">
@@ -16,7 +16,7 @@
       <Department />
     </el-tab-pane>
     <el-tab-pane label="员工权限" name="4">
-      <Limist />
+      <employeeRights />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -25,10 +25,10 @@
 import Staff from "./personnel/staff";
 import Wage from "./personnel/wage";
 import Department from "./personnel/department";
-import Limist from "./personnel/limist";
+import employeeRights from "@/components/employeeRights";
 
 export default {
-  components: { Staff, Wage, Department, Limist },
+  components: { Staff, Wage, Department, employeeRights },
   data() {
     return {
       activeName: "1" //第一个默认启动

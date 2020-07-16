@@ -14,7 +14,7 @@
                 <record />
             </el-tab-pane>
             <el-tab-pane label="员工权限" name="authority">
-                <authority />
+                <employeeRights />
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -24,10 +24,11 @@
     import incomeStatus from './index/incomeStatus'
     import authority from './index/authority'
     import record from './index/record'
+    import employeeRights from "@/components/employeeRights";
     import { mapState, mapActions } from 'vuex'
 
     export default {
-        components: { incomeStatus, authority, record },
+        components: { incomeStatus, authority, record, employeeRights },
         data () {
             return {
                 activeName: 'overView'
