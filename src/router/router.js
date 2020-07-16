@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-15 14:53:35
+ * @LastEditTime: 2020-07-16 09:34:00
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -64,7 +64,7 @@ export default new Router({
                     path: '/person-mg',
                     name: 'PersonMg',
                     component: () =>
-                        import ('@/views/market/personnelManager/employeeList')
+                        import ('@/views/Boss/PersonMg')
                 },
                 {
                     path: '/pay-mg',
