@@ -114,7 +114,6 @@
         }
       },
       toPage(item) {
-        debugger
         console.log('item====', item)
         this.pageId = item.id;
         sessionStorage.pageId = item.id;

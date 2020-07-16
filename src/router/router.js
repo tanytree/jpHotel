@@ -504,23 +504,22 @@ export default new Router({
                         import ('@/views/finance/account')
                 },
                 {
-                    path: '/accountbill',
-                    name: 'accountbill',
+                    path: '/bill',
+                    name: 'bill',
                     component: () =>
-                        import ('@/views/finance/account/bill')
+                        import ('@/views/finance/bill')
                 },
                 {
-                    path: '/billjf',
-                    name: 'billjf',
-                    meta: { title: '村积分账单' },
+                    path: '/report',
+                    name: 'report',
                     component: () =>
-                        import ('@/views/finance/account/billjf')
+                        import ('@/views/finance/report')
                 },
                 {
-                    path: '/withDraw',
-                    name: 'withDraw',
+                    path: '/invoice',
+                    name: 'invoice',
                     component: () =>
-                        import ('@/views/finance/withDraw')
+                        import ('@/views/finance/invoice')
                 },
                 /**采购部 */
                 {
