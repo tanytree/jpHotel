@@ -5,7 +5,7 @@
         <ul class="list">
             <li v-for="(item, index) in tableData" :key="index">
                 <div class="left">
-                    <el-avatar :size="40" fit="cover" src="@/assets/images/people.png"></el-avatar>
+                    <el-avatar :size="40" fit="cover" :src="require('@/assets/images/people.png')"></el-avatar>
                     <div class="avatarName">{{item.userName}}</div>
                     <el-tag v-if="item.position" effect="plain">{{item.position}}</el-tag>
                 </div>
@@ -21,14 +21,15 @@
             </li>
         </ul>
     </div>
+    <!-- <authors ref="authors" v-if="!listVisible"></authors> -->
     <div v-if="!listVisible" class="author setting">
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item><a @click="back">员工权限</a></el-breadcrumb-item>
             <el-breadcrumb-item>权限设置</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="avatar">
-            <el-avatar :size="40" fit="cover" :src="cur.avatar"></el-avatar>
-            <div class="avatarName">{{cur.name}}</div>
+            <el-avatar :size="40" fit="cover" :src="require('@/assets/images/people.png')"></el-avatar>
+            <div class="avatarName">{{cur.userName}}</div>
         </div>
         <div class="content">
             <div class="title"><span>具体权限设置（人事部）</span> <span class="tip">开启后就拥有该项权限</span></div>
@@ -53,8 +54,8 @@
             </div>
         </div>
         <div class="setBtn">
-            <el-button class="submit">保存</el-button>
-            <el-button class="cancel">返回</el-button>
+            <el-button class="submit" @click="saveChange">保存</el-button>
+            <el-button class="cancel" @click="listVisible=true">返回</el-button>
         </div>
     </div>
 </div>
@@ -62,6 +63,8 @@
 
 <script>
 export default {
+    components: {
+    },
     name: "",
     data() {
         return {
@@ -69,7 +72,7 @@ export default {
             searchForm: {},
             tableData: [],
             listTotal: 0,
-            menuList:[],
+            menuList: [],
             authors: [{
                     name: '章欣',
                     post: '部门负责人',
@@ -156,87 +159,119 @@ export default {
     created() {
         console.log(this.$route)
         this.initForm();
-        this.getMenu_list()
 
     },
     methods: {
         initForm() {
             this.searchForm = {
-                content: '',
-                workingState: '',
                 departmentId: '',
-                inStartTime: '',
-                inEndTime: '',
-                paging: true,
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
+                searchType: 1,
+                content: "",
+                pageIndex: 1,
+                pageSize: 10
             };
             this.getDataList();
         },
         getDataList() {
             let that = this;
 
-            this.$F.doRequest(null, '/pms/employee/employee_list', this.searchForm, (res) => {
-                this.tableData = res.employeesList;
+            this.$F.doRequest(this, '/pms/workuser/login_user_list', this.searchForm, (res) => {
+                this.tableData = res.hotelUserList;
                 this.listTotal = res.page.count
                 that.$forceUpdate();
             })
         },
         getMenu_list() {
-          let params = {
-              departmentId:sessionStorage.getItem('partmentId'),
-              type:3,
-              departmentHeader:false
-          }
+            let params = {
+                departmentId: sessionStorage.getItem('partmentId'),
+                type: 2,
+                departmentHeader: false
+            }
             let that = this;
-            this.$F.doRequest(null, '/pms/role/menu_list', params, (res) => {
-               this.menuList = res[3].childList
+            this.$F.doRequest(this, '/pms/role/menu_list', params, (res) => {
+                this.menuList = res
+                for (let i in this.menuList) {
+                    this.menuList[i].checkAll = false;
+                    this.menuList[i].isIndeterminate = false;
+                    for (let k in this.menuList[i].childList) {
+                        this.menuList[i].childList.choose = false
+                    }
+                }
                 that.$forceUpdate();
             })
         },
-
-
-
-
 
         handleCommand(command, item) {
             console.log(item);
             if (command == 'set') {
                 this.listVisible = false;
                 this.cur = item;
+
+                this.$nextTick(() => {
+                    this.getMenu_list()
+                    // this.$refs.authors.initForm();
+                });
             }
         },
         back() {
             this.listVisible = true;
         },
         checkAllChange(val, item) {
-            item.child.map(s => {
+            console.log(this.menuList)
+            console.log(item)
+            item.childList.map(s => {
                 if (val) {
                     s.choose = true;
                 } else {
                     s.choose = false;
                 }
             })
+            this.$forceUpdate()
             item.isIndeterminate = false;
         },
         changeSet(val, item) {
             let arr = [];
-            item.child.map(i => {
+            item.childList.map(i => {
                 if (i.choose) {
                     arr.push(i)
                 }
             })
-            if (arr.length == 0 || arr.length == item.child.length) {
+            if (arr.length == 0 || arr.length == item.childList.length) {
                 item.isIndeterminate = false;
             } else {
                 item.isIndeterminate = true;
             }
-            if (arr.length == item.child.length) {
+            if (arr.length == item.childList.length) {
                 item.checkAll = true;
             } else {
                 item.checkAll = false;
             }
-        }
+            this.$forceUpdate()
+        },
+        saveChange() {
+            let idArr = [];
+            for (let k in this.menuList) {
+                for (let i in this.menuList[k].childList) {
+                    if (this.menuList[k].childList[i].choose) {
+                        idArr.push(this.menuList[k].childList[i].id)
+                    }
+                }
+            }
+            console.log(idArr)
+            let params = {
+                disUserId: this.cur.id,
+                departmentId: sessionStorage.getItem('partmentId'),
+                menuIds: idArr.toString()
+            }
+            this.$F.doRequest(this, '/pms/workuser/set_user_menu', params, (res) => {
+                this.$message({
+                    message: '设置成功',
+                    type: 'success'
+                });
+                this.listVisible = true
+                that.$forceUpdate();
+            })
+        },
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-16 10:20:57
+ * @LastEditTime: 2020-07-16 14:59:17
  * @FilePath: /jiudian/src/views/Boss/StoreManagement/list.vue
  -->
 
@@ -159,7 +159,7 @@ export default {
         getDataList() {
             console.log(JSON.stringify(this.searchForm))
             this.loading = true;
-            this.$F.doRequest(null, '/pms/workuser/login_user_list', this.searchForm, (res) => {
+            this.$F.doRequest(this, '/pms/workuser/login_user_list', this.searchForm, (res) => {
                 console.log(res)
                 this.loading = false;
                 this.tableData = res.hotelUserList;
@@ -176,12 +176,12 @@ export default {
              this.addUserForm.userType = 3
             if (this.addUserForm.type == 'add') {
 
-                this.$F.doRequest(null, '/pms/workuser/add_login_user', this.addUserForm, (res) => {
+                this.$F.doRequest(this, '/pms/workuser/add_login_user', this.addUserForm, (res) => {
                     this.setUserFormVisible = false
                     this.initForm()
                 })
             } else {
-                this.$F.doRequest(null, '/pms/workuser/edit_stores_user', this.addUserForm, (res) => {
+                this.$F.doRequest(this, '/pms/workuser/edit_stores_user', this.addUserForm, (res) => {
                     this.setUserFormVisible = false
                     this.initForm()
                 })
@@ -231,7 +231,7 @@ export default {
 
         },
         deleteNow(id) {
-            this.$F.doRequest(null, '/pms/workuser/delete_stores_user', {
+            this.$F.doRequest(this, '/pms/workuser/delete_stores_user', {
                 'accountId': id
             }, (res) => {
                 this.loading = false

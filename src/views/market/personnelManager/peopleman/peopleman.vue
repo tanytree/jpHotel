@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-16 10:50:32
+ * @LastEditTime: 2020-07-16 14:57:40
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/peopleman.vue
  -->
  <template>
@@ -481,7 +481,7 @@ export default {
         this.uploadData.accessToken = this.token
         this.uploadData.token = this.token
         this.uploadData.storesNum = this.storesNum
-        this.$F.doRequest(null, '/pms/freeuser/stores_list', {
+        this.$F.doRequest(this, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
             this.storeList = data;
@@ -508,7 +508,7 @@ export default {
             let params = {
                 storesNum: storesNum
             }
-            this.$F.doRequest(null, '/pms/department/department_list', params, (res) => {
+            this.$F.doRequest(this, '/pms/department/department_list', params, (res) => {
                 this.departmentList = res;
                 that.$forceUpdate();
             })
@@ -516,7 +516,7 @@ export default {
         getDataList() {
             let that = this;
 
-            this.$F.doRequest(null, '/pms/employee/employee_list', this.searchForm, (res) => {
+            this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
                 this.tableData = res.employeesList;
                 this.listTotal = res.page.count
                 that.$forceUpdate();
@@ -591,7 +591,7 @@ export default {
             this.itemCtrlHandle(params)
         },
         itemCtrlHandle(params) {
-            this.$F.doRequest(null, '/pms/employee/oper_employee', params, (res) => {
+            this.$F.doRequest(this, '/pms/employee/oper_employee', params, (res) => {
                 this.getDataList()
                 this.dimission = false;
                 this.correct = false;
@@ -601,7 +601,7 @@ export default {
         addAndEditPost() {
             this.$refs.addAndEditForm.validate((valid) => {
                 if (valid) {
-                    this.$F.doRequest(null, '/pms/employee/edit_employee', this.addAndEditForm, (res) => {
+                    this.$F.doRequest(this, '/pms/employee/edit_employee', this.addAndEditForm, (res) => {
                         this.getDataList()
                         this.adddstaff = false
                         this.$forceUpdate();
@@ -617,7 +617,7 @@ export default {
                 employeeId: item.id,
                 account: item.associatedAccount
             }
-            this.$F.doRequest(null, '/pms/employee/detail_employee', params, (res) => {
+            this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
                 this.detailsData = res
                 this.addAndEditForm = res
                 this.addAndEditForm.employeeId = res.id
@@ -652,7 +652,7 @@ export default {
                     this.optionsSearchForm.storesNum = this.storesNum
                 }
                 this.vloading = true;
-                this.$F.doRequest(null, '/pms/workuser/login_user_list', this.optionsSearchForm, (res) => {
+                this.$F.doRequest(this, '/pms/workuser/login_user_list', this.optionsSearchForm, (res) => {
                     console.log(res)
                     this.vloading = false;
                     this.options = res.hotelUserList;

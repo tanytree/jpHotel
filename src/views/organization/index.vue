@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-23 15:49:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-14 09:45:11
+ * @LastEditTime: 2020-07-16 14:58:04
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
@@ -407,7 +407,7 @@ export default {
             let params = {
                 accountId: item.id
             }
-            this.$F.doRequest(null, '/pms/workuser/delete_login_user', params, (res) => {
+            this.$F.doRequest(this, '/pms/workuser/delete_login_user', params, (res) => {
                 this.employees_list(this.activeLeftDepartMent.id);
                 this.$forceUpdate();
             })
@@ -459,7 +459,7 @@ export default {
             }
             let params = JSON.parse(JSON.stringify(this.addAndEditForm))
             params.departmentIds = params.departmentIds.toString()
-            this.$F.doRequest(null, url, params, (res) => {
+            this.$F.doRequest(this, url, params, (res) => {
                 this.employees_list(this.activeLeftDepartMent.id);
                 this.employeesDetailsEditShow = false
                 this.$forceUpdate();
@@ -486,7 +486,7 @@ export default {
                 // storesNum:'00000000',
                 type: 3,
             };
-            this.$F.doRequest(null, '/pms/role/menu_list', params, (res) => {
+            this.$F.doRequest(this, '/pms/role/menu_list', params, (res) => {
                 this.departmentList = res;
                 console.log(this.departmentList)
                 if (res.length) {
@@ -500,7 +500,7 @@ export default {
         employees_list(id) {
             let that = this;
             this.employeesForm.departmentId = id;
-            this.$F.doRequest(null, '/pms/workuser/login_user_list', this.employeesForm, (res) => {
+            this.$F.doRequest(this, '/pms/workuser/login_user_list', this.employeesForm, (res) => {
                 this.employeesList = res.hotelUserList;
             })
         },
