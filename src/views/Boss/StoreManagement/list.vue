@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 19:33:36
+ * @LastEditTime: 2020-07-16 10:20:57
  * @FilePath: /jiudian/src/views/Boss/StoreManagement/list.vue
  -->
 
@@ -107,7 +107,6 @@ export default {
             loading: false,
             setUserFormVisible: false,
             searchForm: {
-                storesNum: '0000000000',
                 searchType:2,
                 pageIndex:1,
                 pageSize:20
@@ -117,7 +116,6 @@ export default {
                 userName: '',
                 account: '',
                 password: '',
-                storesNum: '0000000000',
                 storesName: '',
                 storesAddress: '',
                 departmentIds: ''
