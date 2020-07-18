@@ -32,7 +32,7 @@
             <div class="avatarName">{{cur.userName}}</div>
         </div>
         <div class="content">
-            <div class="title"><span>具体权限设置（人事部）</span> <span class="tip">开启后就拥有该项权限</span></div>
+            <div class="title"><span>具体权限设置（ {{$i18n.locale == 'ri' ? firstMenuInfo.japanese : (firstMenuInfo.menuAliasTitle || firstMenuInfo.menuTitle)}}）</span> <span class="tip">开启后就拥有该项权限</span></div>
             <div class="inner">
                 <div v-for="(item, index) in menuList" :key="index" class="checkItem">
                     <div class="label">
