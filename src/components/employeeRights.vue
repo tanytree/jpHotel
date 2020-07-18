@@ -62,9 +62,23 @@
 </template>
 
 <script>
+function setArr(arr, newArr) {
+    newArr = newArr || [];
+    arr.forEach(item => {
+        (item.id || item.id == 0) && newArr.push(item.id);
+        item.childList && setArr(item.childList, newArr);
+    })
+    return newArr;
+}
+function setArrChoose(arr, str) {
+    arr.forEach(item => {
+        (item.id && str.indexOf(item.id) != -1) && (item.choose = true);
+        item.childList && setArrChoose(item.childList, str);
+    })
+}
+
 export default {
-    components: {
-    },
+    components: {},
     name: "",
 
     data() {
@@ -74,7 +88,7 @@ export default {
             tableData: [],
             listTotal: 0,
             menuList: [],
-          firstMenuInfo: [],
+            firstMenuInfo: [],
             authors: [{
                     name: '章欣',
                     post: '部门负责人',
@@ -198,10 +212,48 @@ export default {
                         this.menuList[i].childList.choose = false
                     }
                 }
+                this.getUser_role(this.cur.id)
                 that.$forceUpdate();
             })
         },
-
+        getUser_role(id) {
+            let that = this;
+            this.$F.doRequest(this, '/pms/freeuser/user_role', {
+                userId: id
+            }, (res) => {
+                //以下代码请在理解后改动
+                let userRole = res.menuList;
+                let currentUserRole = [];
+                let departmentId = sessionStorage.getItem('partmentId');
+                for (let k in userRole) {
+                    if (departmentId = userRole[k].id) {
+                        currentUserRole = userRole[k]
+                    }
+                }
+                let ids = [];
+                let thisIds = setArr(currentUserRole.childList, ids)
+                if (thisIds.length) {
+                    // console.log(thisIds)
+                    let str = JSON.stringify(thisIds)
+                    let newMenuList = setArrChoose(this.menuList, str)
+                    for(let k in this.menuList){
+                        let cItem = this.menuList[k];
+                        let checkNum = 0;
+                        for(let i in cItem.childList){
+                            (cItem.childList[i].choose) && (checkNum++)
+                        }
+                        (checkNum>0) && (cItem.isIndeterminate = true)
+                        if(checkNum && (checkNum == cItem.childList.length) ){
+                            cItem.checkAll = true
+                            cItem.isIndeterminate = false
+                        }
+                        
+                    }
+                }
+                // console.log(this.menuList);
+                that.$forceUpdate();
+            })
+        },
         handleCommand(command, item) {
             console.log(item);
             if (command == 'set') {
@@ -219,7 +271,6 @@ export default {
         },
         checkAllChange(val, item) {
             console.log(this.menuList)
-            console.log(item)
             item.childList.map(s => {
                 if (val) {
                     s.choose = true;
@@ -227,8 +278,10 @@ export default {
                     s.choose = false;
                 }
             })
-            this.$forceUpdate()
             item.isIndeterminate = false;
+            this.$forceUpdate()
+            console.log(item)
+
         },
         changeSet(val, item) {
             let arr = [];
@@ -247,6 +300,7 @@ export default {
             } else {
                 item.checkAll = false;
             }
+            console.log(item)
             this.$forceUpdate()
         },
         saveChange() {
