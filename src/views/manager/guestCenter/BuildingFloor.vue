@@ -2,18 +2,17 @@
 <template>
 	<div id="page1">
 		<el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
-			<el-col :span="2.5">大仓集团**酒店</el-col>
-			<el-col :span="2">共有2间酒店</el-col>
+			<el-col :span="2.5">{{hotel_name || ''}}</el-col>
+			<el-col :span="2">共有{{dongList.length || ''}}栋楼</el-col>
 		</el-row>
 		<el-row style="padding: 20px 0px;">
 			<el-radio-group v-model="selectRedio">
-				<el-radio-button :label="value.index" v-for="(value, index) in dongList" :key="index" @change="changeSelect">{{value.name}}</el-radio-button>
+				<el-radio-button :label="value.id" v-for="(value, index) in dongList" :key="index">{{value.name}}</el-radio-button>
 			</el-radio-group>
 		</el-row>
 		<el-row :gutter="20" class="demo-form-inline" style="background-color: #e6eaed;padding: 10px 0px;">
-			<el-col :span="6">楼层1共有<span style="color: #126EFF;">6</span>层 共有房间: <span style="color: #126EFF;">6</span>间</el-col>
+			<el-col :span="6">{{currentDong}}共有<span style="color: #126EFF;">{{cengList.length}}</span>层 共有房间: <span style="color: #126EFF;">{{tableData.length}}</span>间</el-col>
 			<el-col :span="6">
-				<!-- 这里可以用面包屑,但是面包屑似乎没有点击事件只是路由跳转,需要后面写的人自己研究 -->
 				<el-button type="text">修改</el-button>
 				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
 				<el-button type="text">删除</el-button>
@@ -29,74 +28,73 @@
 		</el-row>
 		<el-row style="margin-top: 20px;margin-left: 40px;">
 			<el-row v-for="(value, index) in cengList" :key="index">
-				<el-popover placement="right" width="400" trigger="hover">
+				<el-popover placement="right" width="400" trigger="hover" @show="showroom_list(value)">
+					<el-button slot="reference">{{value.name}}</el-button>
 					<el-row>
 						<el-row :gutter="20" style="border-bottom: 1px solid #e5e5e5;padding: 10px 0px;">
-							<el-col span="10">楼栋1栋{{value}}</el-col>
-							<el-col span="14" style="display: flex;justify-content: flex-end;">
-								<el-button type="text">修改</el-button>
+							<el-col :span="10">{{value.building.name}}{{value.name}}</el-col>
+							<el-col :span="14" style="display: flex;justify-content: flex-end;">
+								<el-button type="text" @click="popup('changeCeng',value)">修改</el-button>
 								<el-button type="text">删除</el-button>
 							</el-col>
 						</el-row>
-						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-						 @selection-change="handleSelectionChange">
-							<el-table-column prop="name" label="房型"></el-table-column>
-							<el-table-column prop="name" label="房间数"></el-table-column>
+						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+							<el-table-column prop="roomTypeId" label="房型"></el-table-column>
+							<el-table-column prop="houseNum" label="房间数"></el-table-column>
 						</el-table>
 						<el-row style="padding:20px 0px 10px 0px;">楼层备注:</el-row>
-						<el-row>
-							<el-input placeholder="请输入内容" v-model="ruleForm.name"></el-input>
+						<el-row v-if="!selectRedio">
+							<el-input placeholder="请输入内容" v-model="value.building.remark"></el-input>
 						</el-row>
 					</el-row>
-					<el-button slot="reference">{{value}}</el-button>
 				</el-popover>
 			</el-row>
 		</el-row>
 		<!-- 新增楼栋 -->
 		<el-dialog top="0" title="新增楼栋" :visible.sync="addDong_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
+				<el-form :model="ruleForm_dong" :rules="rules" ref="ruleForm_dong" label-width="150px">
 					<el-col :span="20">
 						<el-form-item label="楼栋名称:" prop="name">
-							<el-input placeholder="请输入内容" v-model="ruleForm.name"></el-input>
+							<el-input placeholder="请输入楼栋名称" v-model="ruleForm_dong.name"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="楼栋备注:">
-							<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.name"></el-input>
+							<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm_dong.remark"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-form>
 			</el-row>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+				<el-button type="primary" @click="defineDong">确 定</el-button>
 			</span>
 		</el-dialog>
 		<!-- 新增楼层 -->
 		<el-dialog top="0" title="新增楼层" :visible.sync="addCeng_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
+				<el-form :model="ruleForm_ceng" :rules="rules" ref="ruleForm_ceng" label-width="150px">
 					<el-col :span="20">
 						<el-form-item label="楼层:" prop="name">
-							<el-input placeholder="请输入内容" v-model="ruleForm.name"></el-input>
+							<el-input placeholder="请输入内容" v-model="ruleForm_ceng.floor"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="楼层名称:" prop="name">
-							<el-input placeholder="请输入内容" v-model="ruleForm.name"></el-input>
+							<el-input placeholder="请输入内容" v-model="ruleForm_ceng.name"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
-						<el-form-item label="楼栋备注:">
-							<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.name"></el-input>
+						<el-form-item label="楼层备注:">
+							<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm_ceng.remark"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-form>
 			</el-row>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+				<el-button type="primary" @click="defineCeng">确 定</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -105,8 +103,6 @@
 <script>
 	import HouseMaintain from './HouseMaintain'
 	import BuildingFloor from './BuildingFloor'
-	// import ProductCategory from './ProductCategory'
-	// import httpRequest from '@/utils/httpRequest'
 	import {
 		mapState,
 		mapActions
@@ -123,51 +119,56 @@
 		},
 		data() {
 			return {
-				selectRedio: 0,
-				activeName: 'second', //第一个默认启动
+				selectRedio: '',
+				hotel_name: '',
 				addDong_show: false,
 				addCeng_show: false,
-				ruleForm: {
+				ruleForm_dong: {
 					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
+					hotelBuildingId: '',
+					remark: '',
+				},
+				ruleForm_ceng:{
+					buildingId:'',// 楼栋id
+					buildingFloorId: '',//楼层id
+					name: '', //楼层名称
+					floor:'', //楼层数字
+					remark:''
 				},
 				rules: {
 					name: [{
 						required: true,
-						message: '请输入姓名',
+						message: '请输入楼栋名称',
 						trigger: 'blur'
 					}]
 				},
-				cengList: ['2层', '3层', '4层', '5层', '6层', '7层'],
-				tableData: [{
-					name: '会议厅'
-				}, {
-					name: '标准厅'
-				}],
-				dongList: [{
-					index: 0,
-					name: '楼栋1'
-				}, {
-					index: 1,
-					name: '楼栋2'
-				}, {
-					index: 2,
-					name: '楼栋3'
-				}, {
-					index: 3,
-					name: '楼栋4'
-				}]
+				currentDong: '',
+				dongList: [], //楼栋列表
+				cengList: [], // 楼层列表
+				roomList:[],
+				tableData: [],
 			}
 		},
-		created() {},
+		created() {
+			this.hotel_name = JSON.parse(sessionStorage.getItem('userData')).storesInfo.storesName
+			this.get_dong_list()
+		},
+		watch: {
+			selectRedio() {
+				if (this.dongList.length != 0) {
+					this.dongList.forEach((value) =>{
+						if (value.id == this.selectRedio) {
+							this.currentDong = value.name
+						}
+					})
+					this.get_ceng_list()
+					this.get_room_list()
+				}
+			},
+		},
 		methods: {
-			popup(type) {
+			popup(type, value) {
+				debugger
 				switch (type) {
 					case 'addDong':
 						this.addDong_show = true
@@ -175,7 +176,74 @@
 					case 'addCeng':
 						this.addCeng_show = true
 						break
+					case 'changeCeng':
+						this.addCeng_show = true
+						this.ruleForm_ceng = value
+						break
 				}
+			},
+			// 添加楼栋--确认
+			defineDong() {
+				let params = Object.assign({}, this.ruleForm_dong)
+				this.$F.doRequest(this, '/pms/hotel/hotel_building_save', params, (res) => {
+					this.get_dong_list()
+					this.addDong_show = false
+					this.$message({
+					  message: '新增成功',
+					  type: 'success'
+					});
+				})
+			},
+			// 添加楼层 -- 确认
+			defineCeng() {
+				if (this.ruleForm_ceng.id) {
+					this.ruleForm_ceng.buildingFloorId = this.ruleForm_ceng.id
+				}
+				this.ruleForm_ceng.buildingId = this.selectRedio
+				let params = Object.assign({}, this.ruleForm_ceng)
+				this.$F.doRequest(this, '/pms/hotel/hotel_building_floor_save', params, (res) => {
+					this.get_ceng_list()
+					this.addCeng_show = false
+					this.$message({
+					  message: '新增成功',
+					  type: 'success'
+					});
+				})
+			},
+			// 点击哪层展示哪层的房间信息
+			showroom_list(value) {
+				this.get_room_list(value.id)
+			},
+			// 获取 房间列表
+			get_room_list(buildingFloorId) {
+				let params = {
+					buildingId: this.selectRedio,
+					buildingFloorId: buildingFloorId,
+					pageSize:20,
+					pageIndex:1
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_room_list', params, (res) => {
+					// debugger
+					this.tableData = res.list
+				})
+			},
+			// 获取 楼层列表
+			get_ceng_list() {
+				let params = {
+					buildingId: this.selectRedio
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_building_floor_list', params, (res) => {
+					this.cengList = res
+				})
+			},
+			// 获取 楼栋列表
+			get_dong_list() {
+				this.$F.doRequest(this, '/pms/hotel/hotel_building_list', {}, (res) => {
+					this.dongList = res
+					this.selectRedio = this.dongList[0].id
+					this.currentDong = this.dongList[0].name
+					this.get_ceng_list()
+				})
 			},
 			// 前移
 			forward() {

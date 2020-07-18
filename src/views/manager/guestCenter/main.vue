@@ -6,8 +6,8 @@
  -->
 <template>
     <div id="page1">
-        <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="房屋维护" name="first">
+        <el-tabs class="pageTab" v-model="activeName">
+            <el-tab-pane label="房型维护" name="first">
                 <HouseMaintain ref="HouseMaintain"/>
             </el-tab-pane>
             <el-tab-pane label="楼栋楼层" name="second" >
@@ -17,7 +17,7 @@
                 <RoomNews ref="RoomNews"/>
             </el-tab-pane>
 			<el-tab-pane label="房锁维护" name="fouth">
-			    <RoomLock ref="RoomLock"/>
+			    <!-- <RoomLock ref="RoomLock"/> -->
 			</el-tab-pane>
         </el-tabs>
     </div>

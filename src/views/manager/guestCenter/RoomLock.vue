@@ -71,8 +71,7 @@
 			</el-row>
 			<el-row>
 				<!-- 这里看设计图，因为不一样，根据列不一样展示下拉，输入框，或者单选 -->
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-				 @selection-change="handleSelectionChange">
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column prop="name" label="名称" width="150"></el-table-column>
 					<el-table-column prop="name" label="设置值">
 						<template slot-scope="name">
