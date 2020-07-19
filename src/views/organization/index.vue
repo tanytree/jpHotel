@@ -5,7 +5,7 @@
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
-<div class="organization">
+<div class="organization" v-loading="loading">
     <div class="fl leftPart">
         <div class="hd">
             <h2>{{user.storesInfo.storesName}}</h2>
@@ -71,7 +71,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="addChildDepartShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="departMentAddNow">确定</el-button>
+            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">确定</el-button>
         </span>
     </el-dialog>
 
@@ -121,7 +121,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="clearDepartMentForm;departSetAndAddShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="departMentAddNow">确定</el-button>
+            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">确定</el-button>
         </span>
     </el-dialog>
     <el-dialog top="0" :visible.sync="selectIconAndColorShow" title="选择图标" width="600px">
@@ -204,7 +204,7 @@
             </template>
         </el-form>
         <span slot="footer" class="dialog-footer">
-            <el-button size="small" type="primary" @click="employeesDetailsEditChange()">保存</el-button>
+            <el-button size="small" type="primary" @click="employeesDetailsEditChange()" v-loading="loading">保存</el-button>
             <el-button size="small" @click="employeesDetailsEditShow = false">取消</el-button>
         </span>
     </el-dialog>
@@ -224,6 +224,7 @@ export default {
     },
     data() {
         return {
+          loading: false,
             listTotal: 0,
             departmentList: [],
             employeesList: [],
@@ -414,6 +415,7 @@ export default {
         },
         employeesDetailsEditChange() {
             let url = '';
+            debugger
             if (this.addAndEditForm.type == 'add') {
 
                 if (!this.addAndEditForm.userName) {
@@ -459,6 +461,7 @@ export default {
             }
             let params = JSON.parse(JSON.stringify(this.addAndEditForm))
             params.departmentIds = params.departmentIds.toString()
+          debugger
             this.$F.doRequest(this, url, params, (res) => {
                 this.employees_list(this.activeLeftDepartMent.id);
                 this.employeesDetailsEditShow = false

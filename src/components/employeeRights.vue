@@ -1,6 +1,6 @@
 <template>
 <div class="boss-index">
-    <div v-if="listVisible" class="author">
+    <div v-if="listVisible" class="author" v-loading="loading">
         <div class="title"> {{$i18n.locale == 'ri' ? firstMenuInfo.japanese : (firstMenuInfo.menuAliasTitle || firstMenuInfo.menuTitle)}}</div>
         <ul class="list">
             <li v-for="(item, index) in tableData" :key="index">
@@ -22,7 +22,7 @@
         </ul>
     </div>
     <!-- <authors ref="authors" v-if="!listVisible"></authors> -->
-    <div v-if="!listVisible" class="author setting">
+    <div v-if="!listVisible" class="author setting" v-loading="loading">
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item><a @click="back">员工权限</a></el-breadcrumb-item>
             <el-breadcrumb-item>权限设置</el-breadcrumb-item>
@@ -83,6 +83,7 @@ export default {
 
     data() {
         return {
+          loading: false,
             listVisible: true,
             searchForm: {},
             tableData: [],
@@ -221,6 +222,7 @@ export default {
             this.$F.doRequest(this, '/pms/freeuser/user_role', {
                 userId: id
             }, (res) => {
+              debugger
                 //以下代码请在理解后改动
                 let userRole = res.menuList;
                 let currentUserRole = [];
@@ -247,7 +249,7 @@ export default {
                             cItem.checkAll = true
                             cItem.isIndeterminate = false
                         }
-                        
+
                     }
                 }
                 // console.log(this.menuList);

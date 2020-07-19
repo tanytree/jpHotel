@@ -166,11 +166,15 @@
       $route(to, from) {
         if (to.name == 'main' || to.name == 'organization') {
           this.calRouter();
-          this.$nextTick(()=> {
-            this.menulfuc(this.routermsg[0])
-            this.toSection(this.menul.childList[0])
-            this.$forceUpdate()
-          })
+          if (to.name == 'main') {
+            this.$nextTick(()=> {
+              if (this.routermsg) {
+                this.menulfuc(this.routermsg[0])
+              }
+              this.toSection(this.menul.childList[0])
+              this.$forceUpdate()
+            })
+          }
         }
       }
     }
