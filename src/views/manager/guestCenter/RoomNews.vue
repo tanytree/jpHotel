@@ -44,7 +44,7 @@
 				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column type="selection" width="55"></el-table-column>
 					<el-table-column prop="houseNum" label="房间号"></el-table-column>
-					<el-table-column prop="time" label="房型名称"></el-table-column>
+					<el-table-column prop="roomTypeId_name" label="房型名称"></el-table-column>
 					<el-table-column prop="buildingId" label="楼栋">
                         <template slot-scope="{row}">
                             <span>

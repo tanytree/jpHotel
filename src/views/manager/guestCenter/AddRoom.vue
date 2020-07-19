@@ -22,7 +22,7 @@
 					</el-col>
 					<el-col :span="8">
 						<el-form-item label="楼栋:" prop="buildingId">
-							<el-select v-model="selectFrom.buildingId" :placeholder="selectFrom.buildingId_name"  style="width: 100%;">
+							<el-select v-model="selectFrom.buildingId" :placeholder="selectFrom.buildingId_name"  style="width: 100%;" :disabled="true">
 								<el-option :label="value.name" :value="value.id" v-for="(value, index) in dongList" :key="index"></el-option>
 							</el-select>
 						</el-form-item>
@@ -159,22 +159,6 @@
         },
         data () {
             return {
-				// selectFrom: {
-				// 	name: '',
-				// 	buildingId: '',
-				// 	buildingFloorId:'',
-				// 	roomTypeId:'',
-				// 	houseNum:'',
-				// 	extension:'',
-				// 	roomIcon:'',
-				// 	toward:1,
-				// 	roadFlag:1,
-				// 	windowFlag:1,
-				// 	smokeFlag:1,
-				// 	noiseFlag:1,
-				// 	temperatureFlag:1,
-				// 	remark:'备注', //为什么备注是必选
-				// },
 				rules: {
 					roomTypeId: [{required: true,message: '请选择房型',trigger: 'blur'}],
 					buildingId: [{required: true,message: '请选择楼栋',trigger: 'blur'}],
@@ -250,29 +234,17 @@
 				fileList: [],
 				dialogImageUrl: '',
 				dialogVisible: false,
-				disabled: false
+				disabled: false,
             }
         },
-		watch:{
-			buildingId() {
-				this.get_ceng_list()
-			}
-		},
-		computed:{
-			buildingId() {
-				return this.selectFrom.buildingId
-			}
-		},
         created () {
 			this.selectFrom.buildingId = this.selectRedio
+			this.get_ceng_list()
         },
         methods: {
 			// 获取联级选择--房屋类型
 			handleChange(value) {
-				// console.log(value,value[1])
-				// debugger
 				this.selectFrom.roomTypeId = value[1]
-				
 			},
 			// 选择的图片
 			uploadFile(file) {
@@ -320,13 +292,16 @@
 			},
 			//切换到房屋信息
 			back() {
-				this.add_show = false
-				this.$emit('changeShow',this.add_show)
+				let status = false
+				this.$emit('changeShow',status)
 			},
 			// 获取 楼层列表
 			get_ceng_list() {
-				let params = {
-					buildingId: this.selectFrom.buildingId
+				let params = {}
+				if (this.selectFrom.id) {
+					params.buildingId = this.selectFrom.buildingId
+				} else {
+					params.buildingId = this.selectRedio
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_building_floor_list', params, (res) => {
 					this.cengList = res
