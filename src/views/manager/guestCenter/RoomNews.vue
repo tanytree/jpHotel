@@ -48,8 +48,24 @@
 					<el-table-column type="selection" width="55"></el-table-column>
 					<el-table-column prop="houseNum" label="房间号"></el-table-column>
 					<el-table-column prop="time" label="房型名称"></el-table-column>
-					<el-table-column prop="buildingId" label="楼栋"></el-table-column>
-					<el-table-column prop="buildingFloorId" label="楼层"></el-table-column>
+					<el-table-column prop="buildingId" label="楼栋">
+                        <template slot-scope="{row}">
+                            <span>
+                                {{dongList.filter((item)=>{
+                                  return item.id == row.buildingId
+                                })[0].name}}
+                            </span>
+                        </template>
+                    </el-table-column>
+					<el-table-column prop="buildingFloorId" label="楼层">
+                        <template slot-scope="{row}">
+                            <span>
+                                {{cengList.filter((item)=>{
+                                  return item.id == row.buildingFloorId
+                                })[0].name}}
+                            </span>
+                        </template>
+                    </el-table-column>
 					<el-table-column prop="extension" label="电话分机"></el-table-column>
 					<el-table-column prop="toward" label="朝向"></el-table-column>
 					<el-table-column prop="roadFlag" label="是否靠马路"></el-table-column>
@@ -233,7 +249,7 @@
 						})
 						console.log(this.roomType)
 					}
-					
+
 				})
 			},
 			houseConfirm_delete(value) {
