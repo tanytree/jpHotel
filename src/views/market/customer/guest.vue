@@ -53,7 +53,7 @@
                 <el-button type="primary" @click="initForm">重置</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary" @click="setForeignFormVisible=true">登记外宾</el-button>
+                <el-button type="primary" @click="addAndEditItemClick('addd')">登记外宾</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -106,7 +106,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog top="0" title="登记外宾" :visible.sync="setForeignFormVisible" class="setForeignForm" width="1200px">
+    <el-dialog top="0" :title="foreignForm.type=='add'?'登记外宾':'编辑外宾'" :visible.sync="setForeignFormVisible" class="setForeignForm" width="1200px">
         <el-form :model="foreignForm" label-width="80px" size="mini" :rules="rules" ref="setForeignForm">
             <el-row class="row">
                 <el-row class="cell">
@@ -346,6 +346,10 @@ export default {
             }, (res) => {
                 this.nationality = res.employeesList;
             })
+        },
+        addAndEditItemClick(type){
+            this.foreignForm.type = type
+            this.setForeignFormVisible=true
         },
         addItem(formName) {
             this.$refs[formName].validate((valid) => {
