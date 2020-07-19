@@ -16,18 +16,15 @@
 					<el-col :span="14">
 						<el-form class="demo-form-inline" inline size="small">
 							<el-form-item label="楼层全称:" class="margin-l">
-								<el-select v-model="form.buildingFloorId" placeholder="请选择部门" style="width: 120px">
+								<el-select v-model="form.buildingFloorId" style="width: 120px">
 									<el-option :label="value.name" :value="value.id" v-for="(value, index) in cengList" :key="index"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="房型:">
-								<el-select v-model="form.roomTypeId" placeholder="请选择部门" style="width: 120px">
-									<el-option :label="value.label" :value="value.value" v-for="(value, index) in roomType" :key="index"></el-option>
-								</el-select>
-								<!-- <el-cascader v-model="form.roomTypeId" :options="roomType" @expand-change="expand_change" style="width: 120px"></el-cascader> -->
+								<el-cascader v-model="form.roomTypeId" :options="roomType" @change="handleChange" style="width: 180px"></el-cascader>
 							</el-form-item>
 							<el-form-item label="房间号:" class="margin-l">
-								<el-input v-model="form.houseNum" style="width: 120px"></el-input>
+								<el-input v-model="form.houseNum" :placeholder="form.houseNum_name" style="width: 120px"></el-input>
 							</el-form-item>
 							<el-form-item>
 								<el-button type="primary" size="mini" style="width: 80px;" @click="search_list()">查询</el-button>
@@ -161,13 +158,13 @@
 				}],
 				selectFrom: {},
 				add_show: false,
-				roomType: [{ // 房型类型
-					label: '客房类型',
-					value: '1',
+				roomType: [{
+					label:'客房',
+					value:'1',
 					children:[]
-				}, {
-					label: '会议室房型',
-					value: '2',
+				},{
+					label:'会议厅',
+					value:'2',
 					children:[]
 				}]
 			}
@@ -181,21 +178,27 @@
 		created() {
 			this.hotel_name = JSON.parse(sessionStorage.getItem('userData')).storesInfo.storesName
 			this.get_dong_list()
+			this.get_room_type_list()
 		},
 		methods: {
 			addRoom(type, value) {
+				debugger
 				switch (type) {
 					case 'add':
 						this.selectFrom = {
 							name: '',
 							buildingId: '',
+							buildingId_name:'',
 							buildingFloorId:'',
+							buildingFloorId_name:'',
 							roomTypeId:'',
+							roomTypeId_name:'',
 							houseNum:'',
 							extension:'',
 							roomIcon:'',
 							toward:1,
 							roadFlag:1,
+							state:1,
 							windowFlag:1,
 							smokeFlag:1,
 							noiseFlag:1,
@@ -207,17 +210,27 @@
 					case 'change':
 						this.add_show = true
 						this.selectFrom = value
+						debugger
 						break;
 				}
 			},
 			search_list() {
 				this.get_room_list()
 			},
+			// 获取联级选择--房屋类型
+			handleChange(value) {
+				this.form.roomTypeId = value[1]
+			},
 			// 获取 楼层房间列表
 			get_room_list() {
 				this.form.buildingId = this.selectRedio
 				let params = this.form
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_list', params, (res) => {
+					res.list.forEach((item, index) =>{
+						item.buildingId_name = item.hotelBuilding.name
+						item.buildingFloorId_name = item.hotelBuildingFloor.name
+						item.roomTypeId_name = item.hotelRoomType.houseName
+					})
 					this.tableData = res.list
 				})
 			},
@@ -243,29 +256,21 @@
 				})
 			},
 			// 选择--获取房型
-			expand_change(e) {
-				let params = {
-					roomType:e[0],
-					pageIndex:1,
-					pageSize:20
-				}
-				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
-					debugger
-					if(res.list.length !=0) {
-						let arr_list = res.list
-						arr_list.forEach((item) =>{
-							item.label = item.houseName
-							item.value = item.id
-						})
-						this.roomType.forEach((item,index) =>{
-							debugger
-							if (item.value == params.roomType) {
-								item.children.splice(0,1,arr_list)
-							}
-						})
-						console.log(this.roomType)
-					}
-
+			get_room_type_list() {
+				// debugger
+				this.$F.doRequest(this, '/pms/hotel/room_type_list', {}, (res) => {
+					// debugger
+					res.roomtype.forEach((item, index) =>{
+						item.label = item.houseName
+						item.value = item.id
+						this.roomType[0].children.push(item)
+					})
+					res.meetingtype.forEach((item, index) =>{
+						item.label = item.houseName
+						item.value = item.id
+						this.roomType[1].children.push(item)
+					})
+					console.log(this.roomType)
 				})
 			},
 			houseConfirm_delete(value) {

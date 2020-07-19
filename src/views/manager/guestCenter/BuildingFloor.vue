@@ -11,7 +11,7 @@
 			</el-radio-group>
 		</el-row>
 		<el-row :gutter="20" class="demo-form-inline" style="background-color: #e6eaed;padding: 10px 0px;">
-			<el-col :span="6">{{currentDong}}共有<span style="color: #126EFF;">{{cengList.length}}</span>层 共有房间: <span style="color: #126EFF;">{{tableData.length}}</span>间</el-col>
+			<el-col :span="6">{{currentDong}}共有<span style="color: #126EFF;">{{dongInfo.buildingTotal}}</span>层 共有房间: <span style="color: #126EFF;">{{dongInfo.roomTotal}}</span>间</el-col>
 			<el-col :span="6">
 				<el-button type="text">修改</el-button>
 				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
@@ -147,6 +147,7 @@
 				cengList: [], // 楼层列表
 				roomList:[],
 				tableData: [],
+				dongInfo:{},//每栋楼层和房间信息
 			}
 		},
 		created() {
@@ -163,6 +164,7 @@
 					})
 					this.get_ceng_list()
 					this.get_room_list()
+					this.get_current_ceng_info()
 				}
 			},
 		},
@@ -214,16 +216,14 @@
 			showroom_list(value) {
 				this.get_room_list(value.id)
 			},
-			// 获取 房间列表
+			// 获取 房间房型列表
 			get_room_list(buildingFloorId) {
 				let params = {
 					buildingId: this.selectRedio,
 					buildingFloorId: buildingFloorId,
-					pageSize:20,
-					pageIndex:1
 				}
-				this.$F.doRequest(this, '/pms/hotel/hotel_room_list', params, (res) => {
-					// debugger
+				this.$F.doRequest(this, '/pms/hotel/gethotel_building_room_type_total', params, (res) => {
+					debugger
 					this.tableData = res.list
 				})
 			},
@@ -236,6 +236,15 @@
 					this.cengList = res
 				})
 			},
+			// 获取 当前楼栋楼层数房间数信息
+			get_current_ceng_info() {
+				let params = {
+					buildingId: this.selectRedio
+				}
+				this.$F.doRequest(this, '/pms/hotel/gethotel_building_room_total', params, (res) => {
+					this.dongInfo = res
+				})
+			},
 			// 获取 楼栋列表
 			get_dong_list() {
 				this.$F.doRequest(this, '/pms/hotel/hotel_building_list', {}, (res) => {
@@ -243,6 +252,7 @@
 					this.selectRedio = this.dongList[0].id
 					this.currentDong = this.dongList[0].name
 					this.get_ceng_list()
+					this.get_current_ceng_info()
 				})
 			},
 			// 前移

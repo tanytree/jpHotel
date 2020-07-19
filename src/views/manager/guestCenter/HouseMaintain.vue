@@ -86,7 +86,7 @@
 								<el-input v-model="ruleForm.marketPrice" style="width: 200px;"></el-input>
 							</el-form-item>
 						</el-col>
-						<el-col :span="9">
+						<el-col :span="9" v-if="active_tag == 'one'">
 							<el-form-item label="优惠价:" prop="discountPrice">
 								<el-row style="display: flex;align-items: center;">
 									<el-input v-model="ruleForm.discountPrice" style="width: 200px;"></el-input>
@@ -94,17 +94,23 @@
 								</el-row>
 							</el-form-item>
 						</el-col>
-						<el-col :span="6">
+						<el-col :span="6" v-if="active_tag == 'one'">
 							<el-form-item label="可入住数:" prop="checkinNum">
 								<el-input v-model="ruleForm.checkinNum" style="width: 200px;"></el-input>
 							</el-form-item>
 						</el-col>
-						<el-col :span="6">
+						<!-- 床位数/座位 -->
+						<el-col :span="6" v-if="active_tag == 'one'">
 							<el-form-item label="床位数:" prop="bedNum">
 								<el-input v-model="ruleForm.bedNum" style="width: 200px;"></el-input>
 							</el-form-item>
 						</el-col>
-						<el-col :span="8">
+						<el-col :span="6" v-if="active_tag == 'two'">
+							<el-form-item label="座位数:" prop="bedNum">
+								<el-input v-model="ruleForm.bedNum" style="width: 200px;"></el-input>
+							</el-form-item>
+						</el-col>
+						<el-col :span="8" v-if="active_tag == 'one'">
 							<el-form-item label="床宽(cm):" prop="bedSizeH">
 								<el-row style="display: flex;align-items: center;">
 									<el-input v-model="ruleForm.bedSizeW" placeholder="纵向宽" style="width: 100px;" />
@@ -113,7 +119,7 @@
 								</el-row>
 							</el-form-item>
 						</el-col>
-						<el-col :span="12">
+						<el-col :span="12" v-if="active_tag == 'one'">
 							<el-form-item label="房屋面积(㎡):" prop="houseSizeW">
 								<el-row style="display: flex;align-items: center;">
 									<el-input v-model="ruleForm.houseSizeW" placeholder="房屋面积纵向" style="width: 100%;" />
@@ -122,7 +128,7 @@
 								</el-row>
 							</el-form-item>
 						</el-col>
-						<el-col :span="6">
+						<el-col :span="6" v-if="active_tag == 'one'">
 							<el-form-item label="床型:" prop="bedType">
 								<el-input v-model="ruleForm.bedType" style="width: 200px;"></el-input>
 							</el-form-item>
@@ -309,7 +315,7 @@
 				let params = {
 					roomTypeId: this.selectedInfo.id
 				}
-				this.$F.doRequest(this, '/pms/hotel/hotel_room_delete', params, (res) => {
+				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_delete', params, (res) => {
 					this.$message({
 					  message: '删除成功',
 					  type: 'success'

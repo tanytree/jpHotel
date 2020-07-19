@@ -17,21 +17,19 @@
 				<el-form :model="selectFrom" :rules="rules" ref="selectFrom" label-width="100px">
 					<el-col :span="8">
 						<el-form-item label="房型:" prop="roomTypeId">
-							<el-select v-model="selectFrom.roomTypeId" placeholder="请选择房型"  style="width: 100%;">
-								<el-option :label="value.label" :value="value.value" v-for="(value, index) in roomType" :key="index"></el-option>
-							</el-select>
+							<el-cascader v-model="selectFrom.roomTypeId" :options="roomType" @change="handleChange" :placeholder="selectFrom.roomTypeId_name"  style="width: 100%;"></el-cascader>
 						</el-form-item>
 					</el-col>
 					<el-col :span="8">
 						<el-form-item label="楼栋:" prop="buildingId">
-							<el-select v-model="selectFrom.buildingId" :placeholder="currentDong"  style="width: 100%;">
+							<el-select v-model="selectFrom.buildingId" :placeholder="selectFrom.buildingId_name"  style="width: 100%;">
 								<el-option :label="value.name" :value="value.id" v-for="(value, index) in dongList" :key="index"></el-option>
 							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="8">
 						<el-form-item label="楼层:" prop="buildingFloorId">
-							<el-select v-model="selectFrom.buildingFloorId" placeholder="请选择楼层"  style="width: 100%;">
+							<el-select v-model="selectFrom.buildingFloorId" :placeholder="selectFrom.buildingFloorId_name"  style="width: 100%;">
 								<el-option :label="value.name" :value="value.id" v-for="(value, index) in cengList" :key="index"></el-option>
 							</el-select>
 						</el-form-item>
@@ -113,16 +111,15 @@
 							</el-col>
 						</el-row>
 					</el-form-item>
-					<!-- 接口里没有这字段 -->
-					<!-- <el-form-item label="状态:" prop="name">
+					<el-form-item label="状态:" prop="name">
 						<el-row :gutter="20" class="row-center">
-							<el-col :span="2">
-								<el-radio-group v-model="selectFrom.smokeFlag">
-								   <el-radio :label="value.status" v-for="(value, index) in smokeFlagList" :key="index">{{value.name}}</el-radio>
+							<el-col :span="20">
+								<el-radio-group v-model="selectFrom.state">
+								   <el-radio :label="value.status" v-for="(value, index) in stateList" :key="index">{{value.name}}</el-radio>
 								 </el-radio-group>
 							</el-col>
 						</el-row>
-					</el-form-item> -->
+					</el-form-item>
 					<el-form-item label="是否噪音房:" prop="noiseFlag">
 						<el-row :gutter="20" class="row-center">
 							<el-col :span="20">
@@ -212,7 +209,21 @@
 					name:'否',
 					status:2
 				}],
-				smokeFlagList: [{
+				noiseFlagList: [{
+					name:'是',
+					status:1
+				},{
+					name:'否',
+					status:2
+				}],
+				smokeFlagList:[{
+					name:'是',
+					status:1
+				},{
+					name:'否',
+					status:2
+				}],
+				stateList: [{
 					name:'是',
 					status:1
 				},{
@@ -256,6 +267,13 @@
 			this.selectFrom.buildingId = this.selectRedio
         },
         methods: {
+			// 获取联级选择--房屋类型
+			handleChange(value) {
+				// console.log(value,value[1])
+				// debugger
+				this.selectFrom.roomTypeId = value[1]
+				
+			},
 			// 选择的图片
 			uploadFile(file) {
 				this.formData.append('uploadFile', file.file);
@@ -264,13 +282,13 @@
 			handlePictureCardPreview(file) {
 				this.dialogImageUrl = file.url;
 				this.dialogVisible = true;
-			
 			},
 			handleRemove(file) {
 				console.log(file);
 			},
 			// 保存
 			saveInfo(ruleForm) {
+				debugger
 				if (this.selectFrom.id) {
 					this.selectFrom.roomId = this.selectFrom.id
 				}
