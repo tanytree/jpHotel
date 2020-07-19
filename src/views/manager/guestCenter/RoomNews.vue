@@ -67,10 +67,26 @@
                         </template>
                     </el-table-column>
 					<el-table-column prop="extension" label="电话分机"></el-table-column>
-					<el-table-column prop="toward" label="朝向"></el-table-column>
-					<el-table-column prop="roadFlag" label="是否靠马路"></el-table-column>
-					<el-table-column prop="windowFlag" label="是否有窗"></el-table-column>
-					<el-table-column prop="state" label="状态"></el-table-column>
+					<el-table-column prop="toward" label="朝向">
+                    </el-table-column>
+					<el-table-column prop="roadFlag" label="是否靠马路">
+                        <template slot-scope="{row}">
+                            <span v-if="row.roadFlag == 1">是</span>
+                            <span v-if="row.roadFlag == 0">否</span>
+                        </template>
+                    </el-table-column>
+					<el-table-column prop="windowFlag" label="是否有窗">
+                        <template slot-scope="{row}">
+                            <span v-if="row.windowFlag == 1">是</span>
+                            <span v-if="row.windowFlag == 0">否</span>
+                        </template>
+                    </el-table-column>
+					<el-table-column prop="state" label="状态">
+                        <template slot-scope="{row}">
+                            <span v-if="row.state == 1">启用</span>
+                            <span v-if="row.state == 0">禁用</span>
+                        </template>
+                    </el-table-column>
 					<el-table-column label="操作" width="200">
 						<template slot-scope="scope">
 							<el-button type="text" size="small" @click="popup('detail')">禁用</el-button>
