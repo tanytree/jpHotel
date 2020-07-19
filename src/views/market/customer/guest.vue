@@ -117,10 +117,11 @@
                     </el-col>
                     <el-col :span="6" class="col">
                         <el-form-item label="性别" class="" prop="sex">
-                            <el-select v-model="foreignForm.sex" class="width150">
-                                <el-option label="男" :value="1"></el-option>
-                                <el-option label="女" :value="2"></el-option>
-                            </el-select>
+                             <el-radio-group v-model="foreignForm.sex">
+                                <el-radio :label="1">男</el-radio>
+                                <el-radio :label="2">女</el-radio>
+                                <el-radio :label="3">保密</el-radio>
+                            </el-radio-group>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6" class="col">
