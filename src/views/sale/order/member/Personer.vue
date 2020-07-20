@@ -2,139 +2,150 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
- <template>
-  <div class="sec1">
-    <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
-      <el-row>
+<template>
+    <div>
+        <div class="sec1" v-if="!secondShow">
+            <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
+                <el-form-item label="会员类型:">
+                    <el-select v-model="form.id">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option
+                            v-for="item in tableData"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="getMemberList(form)" type="primary">查询</el-button>
+                </el-form-item>
+                <el-form-item style="float:right">
+                    <el-button type="primary" @click="Newdata()">+新增</el-button>
+                    <!-- @click="resetForm"  -->
+                </el-form-item>
+            </el-form>
 
-        <el-col :span="5">
-          <el-form-item label="会员类型:">
-            <el-select v-model="form.orderType" style="width:100px">
-              <el-option label="当前课程" value="1"></el-option>
-              <el-option label="演出" value="3"></el-option>
-              <el-option label="场地预定" value="2"></el-option>
-              <el-option label="活动项目课程" value="4"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
+            <!--表格数据 -->
+            <el-table ref="multipleTable" v-loading="loading" :data="tableData"
+                      :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
+                <el-table-column prop="name" label="会员类型" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="level" label="对应等级" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="duration" label="有效期 " show-overflow-tooltip>
+                    <template slot-scope="{row}">
+                        <span v-if="row.duration == '9999'">永久</span>
+                        <span v-else>{{row.duration}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="updateTime" label="修改时间" show-overflow-tooltip>
+                    <template slot-scope="{row}">
+                        <span>{{row.createTime || row.updateTime}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="updateId" label="修改人" show-overflow-tooltip>
 
-        <el-form-item >
-          <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
-          
-        </el-form-item>
-        <el-form-item style="float:right">
-          <el-button  type="primary" @click="Newdata">+新增</el-button>
-          <!-- @click="resetForm"  -->
-        </el-form-item>
-      </el-row>
-      
-    </el-form>
 
-     <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="会员类型" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="对应等级" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="有效期 " show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="修改时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="修改人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="创建人" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作" width="220">
-                <template slot-scope="{row}">
-                    <el-button type="text" size="mini">禁用</el-button>
-                    <el-button type="text" size="mini">删除</el-button>
-                    <el-button type="text" size="mini">修改</el-button>
-                    <el-button type="text" size="mini">启用</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-  </div>
+                </el-table-column>
+                <el-table-column prop="creatorId" label="创建人" show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column label="操作" width="220">
+                    <template slot-scope="{row}">
+                        <el-button type="text" size="mini" v-if="row.statu == 1">禁用</el-button>
+                        <el-button type="text" size="mini" v-if="row.statu == 2">启用</el-button>
+                        <el-button type="text" size="mini" @click="onDelete(row)">删除</el-button>
+                        <el-button type="text" size="mini" @click="Newdata(row, 'edit')">修改</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div v-if="secondShow">
+            <NewDetail @addShowFunc="addShowFunc" :selected="selected"/>
+        </div>
+    </div>
 </template>
 <script>
-import {
-  get_goods_list,
-  edit_goods_status,
-  del_goods_info
-} from "@/utils/api/market";
-export default {
-  data() {
-    return {
-      loading: false,
-      pageIndex: 1,
-      pageSize: 8,
-      totalPage: 0,
-      showTop: false,
-      dataListLoading: false,
-      dataListSelections: [],
-      status: "",
-      form: {},
-      tableData: [{}] //表格数据
-    };
-  },
-  created() {
-    // this.resetForm();
-    // this.fetchGoodList();
-  },
-  methods: {
+  import NewDetail from './graces/new'
 
- Newdata(){
-   this.$router.push('/newdetail')
- }
+  export default {
+    components: { NewDetail },
+    data () {
+      return {
+        secondShow: false,
+        loading: false,
+        pageIndex: 1,
+        pageSize: 8,
+        totalPage: 0,
+        showTop: false,
+        dataListLoading: false,
+        dataListSelections: [],
+        status: '',
+        form: {
+          id: '',
+          // name: '',
+          pageIndex: 1,
+          pageSize: 10,
+          paging: true
+        },
+        tableData: [{}], //表格数据
+        selected: {},
+      }
+    },
+    created () {
+      this.getMemberList()
+    },
+    methods: {
+      onDelete (row) {
+        this.$confirm(`是否删除【${row.name}】？`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(res => {
+          this.$F.doRequest(this, '/pms/membertype/delete', { id: row.id }, (res) => {
+            this.$message.success('Delete Success')
+            this.getMemberList()
+          })
+        })
+      },
 
+      addShowFunc (flag) {
+        this.getMemberList()
+        this.secondShow = flag
+      },
+
+      getMemberList (params = {}) {
+        // this.$F.merge(params, { storesNum: '' })
+        this.$F.merge(params, this.form)
+        this.$F.doRequest(this, '/pms/membertype/list', params, (res) => {
+          this.tableData = res.list
+          this.$forceUpdate()
+        })
+      },
+      Newdata (row = {}, type) {
+        this.selected = row;
+        if (type) {
+          this.selected =  {
+            name: row.name,
+            level: row.level,
+            prices: row.prices,
+            interests: row.interests,
+            duration: row.duration,
+            id: row.id
+          }
+        }
+        this.secondShow = true;
+        // this.$router.push('/newdetail')
+      }
+
+    }
   }
-};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.goodsImg {
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
-}
-.top-close {
-  display: flex;
-  align-items: center;
-  float: right;
-  cursor: pointer;
-  padding-right: 10px;
-  padding-top: 20px;
-  font-size: 14px;
-  i {
-    margin-left: 8px;
-  }
-}
-.shopStatus {
-  color: rgba(9, 109, 217, 1);
-  font-size: 12px;
-}
-.top-body {
-  background-color: #f2f2f2;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: rgba(250, 250, 250, 1);
-}
-
-.components-edit {
-  margin-top: 10px;
-
-  .components-table {
-    border: 1px solid #e6e6e6;
-  }
-  .block {
-    padding: 10px 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .page-all {
-      font-size: 12px;
-      color: #666666;
-      letter-spacing: 2px;
-    }
-  }
-}
 </style>
 
 

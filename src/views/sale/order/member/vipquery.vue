@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 魏轩
- * @LastEditTime: 
- * @FilePath: 
+ * @LastEditTime:
+ * @FilePath:
  -->
 
 <template>
@@ -10,8 +10,8 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small">
-            <el-form-item label="开卡门店">
+        <el-form inline size="small" label-width="100px">
+            <el-form-item label="开卡门店" >
                 <el-select v-model="searchForm.enterStatus">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
