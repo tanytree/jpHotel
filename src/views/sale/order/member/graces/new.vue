@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
- * @LastEditors:魏轩
- * @LastEditTime:
- * @FilePath: 
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-20 17:38:52
+ * @FilePath: /jiudian/src/views/sale/order/member/graces/new.vue
  -->
 <template>
 <div>
@@ -15,7 +15,7 @@
             </el-breadcrumb>
         </div>
         <div style="margin-left:20px">
-             <el-form :model="newvip" :inline="true" :rules="rules" class="top-body" size="small" label-width="100px">
+             <el-form :model="newvip" :inline="true" :rules="rules" ref="newvip" class="top-body" size="small" label-width="100px">
           <el-row>
            <h3>基本信息</h3>
           </el-row>
@@ -25,24 +25,24 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item label="等级:" prop="name">
-              <el-input v-model="newvip.name" style="width:264px"></el-input>
+            <el-form-item label="等级:" prop="level">
+              <el-input v-model="newvip.level" style="width:264px"></el-input>
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item label="购买价格" >
-              <el-input v-model="newvip.name" style="width:264px" placeholder="大于等于1的整数"></el-input>
+              <el-input v-model="newvip.prices" style="width:264px" placeholder="大于等于1的整数"></el-input>
             </el-form-item>
           </el-row>
           <el-row>
              <el-form-item label="有效期" >
-               <el-radio-group  v-model="newvip.resource">
-                 <el-radio label="永久"></el-radio>
+               <el-radio-group  v-model="newvip.duration">
+                 <el-radio label="永久" :value="9999"></el-radio>
                  <!-- <el-form-item> -->
                  <el-row>
                     <el-radio label="开卡日期起"></el-radio>
                     <el-date-picker
-                        v-model="newvip.startTime"
+                        v-model="newvip.duration"
                         value-format="yyyy-MM-dd"
                         type="date"
                         >
@@ -56,12 +56,12 @@
           <el-row>
              <h3>配置权益</h3>
              <el-form-item >
-                 <el-checkbox v-model="newvip.checked">入住免押金</el-checkbox>
+                 <el-checkbox v-model="newvip.interests">入住免押金</el-checkbox>
              </el-form-item>
           </el-row>
           <el-divider></el-divider>
            <el-form-item>
-              <el-button type="primary">保存</el-button>
+              <el-button type="primary" @click="addItem('newvip')">保存</el-button>
               <el-button @click="cancel">取消</el-button>
            </el-form-item>
           
@@ -82,14 +82,21 @@ export default {
     data() {
         return {
          newvip:{
-          checked:false,
-          resource:"",
           name:"",
-          startTime:''
+          level:'',
+          prices:'',
+          interests:'',
+          duration:''
          },
          rules: {
           name: [
-            { required: true, trigger: 'blur' },
+            { required: true, trigger: 'blur', message: '请输入会员类型名称'},
+          ],
+          level: [
+            { required: true, trigger: 'blur' , message: '请输入会员类型等级'},
+          ],
+          prices: [
+            { required: true, trigger: 'blur' , message: '请输入购买价格'},
           ]
           },
         };
@@ -98,6 +105,19 @@ export default {
     mounted() {},
 
     methods: {
+        addItem(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$F.doRequest(this, '/pms/membertype/edit', this.newvip, (res) => {
+                        console.log(res)
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+
+        },
       cancel(){
        this.$router.push('/saleOrder')
       }

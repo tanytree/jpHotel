@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-08 16:20:28
+ * @LastEditTime: 2020-07-20 14:22:14
  * @FilePath: /jiudian/src/views/market/customer/children/history.vue
  -->
 
@@ -17,7 +17,7 @@
             </el-breadcrumb>
         </div>
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form inline size="small" label-width="100px">
             <h3>客史记录-张三</h3>
             <el-form-item label="发生门店：">
                 <el-input v-model="searchForm.content" class="width150"></el-input>

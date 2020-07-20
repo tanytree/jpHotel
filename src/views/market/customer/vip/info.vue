@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-08 15:31:13
+ * @LastEditTime: 2020-07-20 16:01:22
  * @FilePath: /jiudian/src/views/market/customer/vip/info.vue
  -->
 
@@ -12,49 +12,45 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-form-item label="开卡门店">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
+                <el-select v-model="searchForm.storesNum" class="width150">
+                    <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="发展途径">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
+                <el-select v-model="searchForm.getWay" class="width150">
+                    <el-option label="线上" :value="1">已认证</el-option>
+                    <el-option label="线下" :value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="会员类型">
-                <el-select v-model="searchForm.enterStatus" class="width150">
+                <el-select v-model="searchForm.memberTypeId" class="width150">
                     <el-option label="全部" value="3">全部</el-option>
                     <el-option label="已认证" value="1">已认证</el-option>
                     <el-option label="未认证" value="2">未认证</el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="手机号">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.mobile" class="width150"></el-input>
             </el-form-item>
             <br />
             <el-form-item label="卡号">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.memberCard" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="姓名">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.name" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="正常" value="1"></el-option>
-                    <el-option label="挂失" value="2"></el-option>
-                    <el-option label="停用" value="3"></el-option>
+                <el-select v-model="searchForm.state" class="width150">
+                    <el-option label="正常" :value="1"></el-option>
+                    <el-option label="已挂失" :value="2"></el-option>
+                    <el-option label="待启用" :value="3"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="黑名单">
                 <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="是" value="1"></el-option>
-                    <el-option label="否" value="2"></el-option>
+                    <el-option label="否" :value="1"></el-option>
+                    <el-option label="是" :value="2"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -64,7 +60,7 @@
             <el-row>
                 <el-form-item>
                     <el-button plain>读会员卡</el-button>
-                    <el-button type="primary">新增会员</el-button>
+                    <el-button type="primary" @click="handleAdd">新增会员</el-button>
                 </el-form-item>
             </el-row>
             <el-row>
@@ -75,20 +71,20 @@
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="卡号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="姓名" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="idcard" label="卡号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
             <el-table-column label="会员类型" show-overflow-tooltip>
-                <!-- <template slot-scope="{row}">
-                {{row.tradeLevelOne}} - {{row.tradeLevelTwo}}
-            </template> -->
+                <template slot-scope="{row}">
+                    {{row.memberTypeId}}
+                </template>
             </el-table-column>
-            <el-table-column prop="enterType" label="手机号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="剩余积分" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="开卡门店" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="发展途径" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="开卡日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="是否黑名单" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="mobile" label="手机号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="score" label="剩余积分" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="state" label="状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="state" label="开卡门店" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="getWay" label="发展途径" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" label="开卡日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="isBlacklist" label="是否黑名单" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
@@ -133,58 +129,75 @@ export default {
             showEdit: false,
             showDetail: false,
             searchForm: {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
+                id: '',
+                getWay: '',
+                memberTypeId: '',
+                mobile: '',
+                memberCard: '',
+                name: '',
+                state: '',
+                isBlacklist: '',
+                paging: true,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [
-                {}
-            ] //表格数据
+            tableData: [{}] //表格数据
         };
     },
 
     mounted() {
-        // this.initForm();
+        this.initForm();
+        this.stores_list()
     },
     methods: {
         initForm() {
             this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
+                id: '',
+                getWay: '',
+                memberTypeId: '',
+                mobile: '',
+                memberCard: '',
+                name: '',
+                state: '',
+                isBlacklist: '',
+                paging: true,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
             };
             this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
             this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
+            this.$F.doRequest(this, '/pms/hotelmember/list', this.searchForm, (res) => {
                 this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
-            });
+                this.tableData = res.list;
+                this.listTotal = res.page.count
+            })
         },
-        handleDetail(item){
-            this.$router.push({name:'customerdetails'})
+        stores_list() {
+            this.$F.doRequest(this, '/pms/freeuser/stores_list', {}, (data) => {
+                this.storeList = data;
+            })
         },
-        handleEdit(item){
-            this.$router.push({name:'customeredit'})
+
+        handleAdd(item) {
+            this.$router.push({
+                name: 'customeradd'
+            })
+        },
+        handleDetail(item) {
+            this.$router.push({
+                name: 'customerdetails'
+            })
+        },
+        handleEdit(item) {
+            this.$router.push({
+                name: 'customeredit'
+            })
         },
         /**编辑 */
         editRowItem(row) {

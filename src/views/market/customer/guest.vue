@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-18 23:35:05
+ * @LastEditTime: 2020-07-20 20:45:11
  * @FilePath: /jiudian/src/views/market/customer/guest.vue
  -->
 
@@ -19,9 +19,8 @@
             </el-form-item>
             <el-form-item label="宾客籍贯">
                 <el-select v-model="searchForm.nationality" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="增加" value="1"></el-option>
-                    <el-option label="扣除" value="2"></el-option>
+                    <el-option v-for="item in nationalityList" :key="item.id" :label="$i18n.locale == 'ri' ?item.jName:item.cName" :value="item.id">
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="签证种类">
@@ -53,7 +52,7 @@
                 <el-button type="primary" @click="initForm">重置</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary" @click="addAndEditItemClick('addd')">登记外宾</el-button>
+                <el-button type="primary" @click="addAndEditItemClick('add')">登记外宾</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -67,7 +66,7 @@
             <el-table-column prop="phone" label="手机号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="nationality" label="宾客籍贯" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    {{row.nationality}}
+                    {{F_nationality(row.nationality)}}
                 </template>
             </el-table-column>
             <el-table-column prop="idcardType" label="证件类型" show-overflow-tooltip>
@@ -96,8 +95,8 @@
             <el-table-column label="操作" width="160">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini">客史</el-button>
-                    <el-button type="text" size="mini">详情</el-button>
-                    <el-button type="text" size="mini">修改</el-button>
+                    <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
+                    <el-button type="text" size="mini" @click="addAndEditItemClick('edit',row)">修改</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -117,7 +116,7 @@
                     </el-col>
                     <el-col :span="6" class="col">
                         <el-form-item label="性别" class="" prop="sex">
-                             <el-radio-group v-model="foreignForm.sex">
+                            <el-radio-group v-model="foreignForm.sex">
                                 <el-radio :label="1">男</el-radio>
                                 <el-radio :label="2">女</el-radio>
                                 <el-radio :label="3">保密</el-radio>
@@ -157,9 +156,8 @@
                     <el-col :span="6" class="col">
                         <el-form-item label="宾客国籍" class="" prop="nationality">
                             <el-select v-model="foreignForm.nationality" class="width150">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option v-for="item in nationalityList" :key="item.id" :label="$i18n.locale == 'ri' ?item.jName:item.cName" :value="item.id">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -306,6 +304,7 @@ export default {
     },
     mounted() {
         this.stores_list()
+        this.nationality()
         this.initForm();
     },
     methods: {
@@ -330,7 +329,6 @@ export default {
                 this.loading = false
                 this.tableData = res.list;
                 this.listTotal = res.page.count
-                that.$forceUpdate();
             })
         },
         stores_list() {
@@ -339,21 +337,35 @@ export default {
             })
         },
         nationality() {
-            let that = this;
-
-            this.$F.doRequest(this, '/pms/system/public_dict', {
-                type: 1
-            }, (res) => {
-                this.nationality = res.employeesList;
+            this.$F.doRequest(this, '/pms/system/country_list', {}, (res) => {
+                this.nationalityList = res;
             })
         },
-        addAndEditItemClick(type){
+        addAndEditItemClick(type, row) {
             this.foreignForm.type = type
-            this.setForeignFormVisible=true
+            if (type == 'add') {
+                for (let k in this.foreignForm) {
+                    this.foreignForm[k] = ''
+                }
+                this.setForeignFormVisible = true
+            } else {
+                this.$F.doRequest(this, '/pms/foreignguest/findone', {
+                    id: row.id
+                }, (res) => {
+                    for (let k in this.foreignForm) {
+                        this.foreignForm[k] = res[k]
+                    }
+                    this.foreignForm.id = res.id
+                    this.setForeignFormVisible = true
+                })
+            }
         },
         addItem(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    // if(){
+
+                    // }
                     this.$F.doRequest(this, '/pms/foreignguest/edit', this.foreignForm, (res) => {
                         this.getDataList()
                         this.setForeignFormVisible = false;
@@ -373,6 +385,23 @@ export default {
                 }
             }
             return '未知门店'
+        },
+        F_nationality(v) {
+            let that = this
+            for (let k in that.nationalityList) {
+                if (that.nationalityList[k].id == v) {
+                    return this.$i18n.locale == 'ri' ? that.nationalityList[k].jName : that.nationalityList[k].cName
+                }
+            }
+            return '未知'
+        },
+        handleDetail(item) {
+            this.$router.push({
+                name: 'foreignDetail',
+                query: {
+                    id: item.id
+                }
+            })
         },
         /**编辑 */
         editRowItem(row) {

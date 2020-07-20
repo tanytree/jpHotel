@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-16 09:34:00
+ * @LastEditTime: 2020-07-20 15:48:47
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -201,9 +201,52 @@ export default new Router({
                 {
                     path: '/customer',
                     name: 'customer',
-                    meta: { title: '客户管理', pid: "13" },
+                    meta: { title: '客户管理'},
                     component: () =>
                         import ('@/views/market/customer'),
+                },
+                {
+                    path: '/customerdetails',
+                    name: 'customerdetails',
+                    meta: { title: '客户详情' },
+                    component: () =>
+                        import ('@/views/market/customer/children/detail'),
+                },
+
+                {
+                    path: '/customeredit',
+                    name: 'customeredit',
+                    meta: { title: '客户编辑' },
+                    component: () =>
+                        import ('@/views/market/customer/children/detail'),
+                },
+                {
+                    path: '/customeradd',
+                    name: 'customeradd',
+                    meta: { title: '添加客户' },
+                    component: () =>
+                        import ('@/views/market/customer/children/detail'),
+                },
+                {
+                    path: '/historydetail',
+                    name: 'historydetail',
+                    meta: { title: '客史详情' },
+                    component: () =>
+                        import ('@/views/market/customer/children/historydetail'),
+                },
+                {
+                    path: '/customerhistory',
+                    name: 'customerhistory',
+                    meta: { title: '客户历史' },
+                    component: () =>
+                        import ('@/views/market/customer/children/history'),
+                },
+                {
+                    path: '/foreignDetail',
+                    name: 'foreignDetail',
+                    meta: { title: '外宾详情' },
+                    component: () =>
+                        import ('@/views/market/customer/children/foreignDetail'),
                 },
 
 
