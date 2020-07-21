@@ -7,10 +7,10 @@
                         <div class="margin-b-20">
                             <el-form-item label="发票类型：">
                                 <el-radio-group v-model="invoiceForm.cate">
-                                    <el-radio-button value="all" label="不限"></el-radio-button>
-                                    <el-radio-button value="speVat" label="增值税专用发票"></el-radio-button>
-                                    <el-radio-button value="defVat" label="增值税普通发票"></el-radio-button>
-                                    <el-radio-button value="eleVat" label="增值税电子发票"></el-radio-button>
+                                    <el-radio-button value="all" label="all">不限</el-radio-button>
+                                    <el-radio-button value="speVat" label="speVat">增值税专用发票</el-radio-button>
+                                    <el-radio-button value="defVat" label="defVat">增值税普通发票</el-radio-button>
+                                    <el-radio-button value="eleVat" label="eleVat">增值税电子发票</el-radio-button>
                                 </el-radio-group>
                             </el-form-item>
                         </div>
@@ -27,7 +27,7 @@
                             <el-button type="primary" class="submit">重置</el-button>
                         </el-form-item>
                     </el-form>
-                    <el-table v-if="item.name=='sub'" :data="tableData" size="small" border height="100%" header-row-class-name="default">
+                    <el-table :data="tableData" size="small" border height="100%" header-row-class-name="default">
                         <el-table-column header-align="center" prop="customer" label="客户名称" width="180"></el-table-column>
                         <el-table-column header-align="center" prop="roomNum" label="房间号"></el-table-column>
                         <el-table-column header-align="center" prop="phone" label="电话号码"></el-table-column>
@@ -58,7 +58,7 @@
         name: "",
         data() {
             return {
-                activeName: 'invoice', invoiceForm: {}, tableData: []
+                activeName: 'invoice', invoiceForm: {cate: 'all', strDate: '', endDate: '', name: ''}, tableData: []
             }
         },
         methods: {

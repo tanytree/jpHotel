@@ -107,9 +107,13 @@
             removeTab(targetName) {
                 const index = this.reportNav.findIndex(s => s.path == targetName);
                 this.reportNav = this.reportNav.filter(s => s.path != targetName);
-                if(this.reportName == 'targetName') {
+                if(this.reportNav.length === 0) {
+                    this.reportName = 'home'
+                }
+                if(this.reportName == targetName) {
                     this.reportName = this.reportNav[index-1].path;
                 }
+
             },
             group(array, length) {
                 let index = 0;

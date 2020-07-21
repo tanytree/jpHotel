@@ -139,6 +139,9 @@
                 cateData: [],accountData: []
             }
         },
+        mounted() {
+            this.activeName = 'sub'
+        },
         methods: {
             tabChange(tab) {
                 if(tab.name == 'sub') {
