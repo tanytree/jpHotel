@@ -1,7 +1,7 @@
 <template>
     <el-container class="mainPage">
         <el-header class="mainHeader" height="40px">
-            <pageHeader @calRouter="calRouter" :language='language'/>
+            <pageHeader @calRouter="calRouter" :language='language' />
         </el-header>
         <el-container class="main-container">
             <el-aside v-if="menul.childList && menul.childList.length > 0 &&routerCompany !== 'company'" class="mainAside">
@@ -113,6 +113,8 @@
           this.$message.error('Request does not exist');
         }
       },
+
+
       // 注销
       logout() {
         this.modelShow = false;

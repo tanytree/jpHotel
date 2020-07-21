@@ -98,16 +98,19 @@
         language: '日本語',
       }
     },
-    watch: {
-    },
-    activated() {
-      this.language = this.$F.getLangDesc(localStorage.getItem('locale') || 'ri');
+
+    mounted() {
+      let locale = sessionStorage.locale;
+      locale = (locale && locale != 'undefined') ? locale : 'ri'
+      this.language = this.$F.getLangDesc(locale);
+      sessionStorage.locale = locale;
+      this.$i18n.locale = locale;
     },
     methods: {
       ...mapActions({}),
       toggleLang(lang) {
         this.$i18n.locale = lang;
-        localStorage.setItem('locale', lang)
+        sessionStorage.locale = lang;
         let langDesc = this.$F.getLangDesc(lang);
         this.language = langDesc;
         this.$forceUpdate();
@@ -115,7 +118,7 @@
           message: `切换为${langDesc}成功`,
           type: 'success'
         })
-        // this.$emit('calRouter', lang)
+        // this.$emit('toSection', JSON.parse(sessionStorage.subMenul))
       },
 
       modelShowfuc() {

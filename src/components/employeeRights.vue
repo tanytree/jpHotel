@@ -21,7 +21,6 @@
             </li>
         </ul>
     </div>
-    <!-- <authors ref="authors" v-if="!listVisible"></authors> -->
     <div v-if="!listVisible" class="author setting" v-loading="loading">
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item><a @click="back">员工权限</a></el-breadcrumb-item>
@@ -90,87 +89,7 @@ export default {
             listTotal: 0,
             menuList: [],
             firstMenuInfo: [],
-            authors: [{
-                    name: '章欣',
-                    post: '部门负责人',
-                    avatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-                },
-                {
-                    name: '王子文',
-                    post: '',
-                    avatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-                },
-                {
-                    name: '章欣',
-                    post: '研发一部负责人',
-                    avatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-                },
-            ],
             cur: {},
-            setData: [{
-                    label: '首页',
-                    isIndeterminate: true,
-                    checkAll: false,
-                    child: [{
-                        name: '财务概览',
-                        choose: true
-                    }, {
-                        name: '记一笔',
-                        choose: false
-                    }]
-                },
-                {
-                    label: '统计分析管理',
-                    isIndeterminate: true,
-                    checkAll: false,
-                    child: [{
-                        name: '流水账',
-                        choose: true
-                    }, {
-                        name: '总账',
-                        choose: false
-                    }, {
-                        name: '明细账',
-                        choose: false
-                    }, {
-                        name: '科目余额表',
-                        choose: false
-                    }]
-                },
-                {
-                    label: '凭证',
-                    isIndeterminate: true,
-                    checkAll: false,
-                    child: [{
-                        name: '录凭证',
-                        choose: true
-                    }, {
-                        name: '查凭证',
-                        choose: false
-                    }, {
-                        name: '设置',
-                        choose: false
-                    }]
-                },
-                {
-                    label: '报表系统',
-                    isIndeterminate: false,
-                    checkAll: true,
-                    child: [{
-                        name: '报表',
-                        choose: true
-                    }]
-                },
-                {
-                    label: '发票管理',
-                    isIndeterminate: false,
-                    checkAll: true,
-                    child: [{
-                        name: '已开发票',
-                        choose: true
-                    }]
-                },
-            ],
         }
     },
     created() {
@@ -227,9 +146,11 @@ export default {
                 let userRole = res.menuList;
                 let currentUserRole = [];
                 let departmentId = sessionStorage.getItem('partmentId');
+                debugger
                 for (let k in userRole) {
-                    if (departmentId = userRole[k].id) {
-                        currentUserRole = userRole[k]
+                    if (departmentId == userRole[k].id) {
+                        currentUserRole = userRole[k];
+                        break;
                     }
                 }
                 let ids = [];

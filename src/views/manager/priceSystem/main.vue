@@ -5,7 +5,7 @@
  * @FilePath: /cloudAdmin/src/views/market/productManagement/index.vue
  -->
 <template>
-    <div id="page1">
+    <div id="page1" class="boss-index">
         <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="价格策略" name="first">
                 <priceStrategy ref="priceStrategy"/>

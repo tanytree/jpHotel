@@ -259,7 +259,7 @@
     methods: {
       //禁用/启用
       changeStatus(row, val) {
-        this.$F.doRequest(this, '/pms/membertype/enable_disable', { id: row.id, state: val}, (res) => {
+        this.$F.doRequest(this, '/pms/membertypeupdate/enable_disable', { id: row.id, state: val}, (res) => {
           this.$message.success('Success');
         })
       },

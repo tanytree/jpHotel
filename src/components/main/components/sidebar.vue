@@ -12,7 +12,6 @@
   </div>
 </template>
 <script>
-import { getRouterKey } from "@/utils/auth";
 export default {
   name: "esMenu",
   props: ["childrenroutemsg"],
