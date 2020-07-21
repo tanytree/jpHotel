@@ -1,8 +1,8 @@
 /*
  * @Date: 2019-12-12 11:15:44
- * @LastEditors: Dana
- * @LastEditTime: 2020-04-20 10:13:44
- * @FilePath: /cloudAdmin/src/main.js
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-21 10:32:31
+ * @FilePath: /jiudian/src/main.js
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -18,13 +18,12 @@ import i18n from './utils/i18n.js'
 import utils from '@/utils/publicJS';
 import Video from 'video.js'
 import Distpicker from 'v-distpicker'
-
-
-
+import filters from '@/utils/filter.js'
 
 import 'video.js/dist/video-js.css'
 import VideoPlayer from 'vue-video-player'
 
+Vue.use(filters)
 
 Vue.use(VueI18n)
 //业务组件

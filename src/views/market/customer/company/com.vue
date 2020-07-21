@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-09 17:45:49
- * @FilePath: /jiudian/src/views/market/customer/company/c1.vue
+ * @LastEditTime: 2020-07-21 18:06:56
+ * @FilePath: /jiudian/src/views/market/customer/company/com.vue
  -->
 
 <template>
@@ -65,18 +65,22 @@
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="所属门店" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="手机号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="价格策略" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="合同号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="挂账额度" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="已用额度" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="总消费" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="contactName" label="姓名" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="contactPhone" label="手机号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterStrategyId" label="价格策略" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="contractNum" label="合同号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="usedLimit" label="已用额度" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="totalLimit" label="总消费" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="预收款余额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="销售员" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="是否共享" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="status" label="状态" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.status==1?'正常':'已删除'}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="salesId" label="销售员" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="shareFlag" label="是否共享" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
@@ -99,22 +103,22 @@
     </el-card>
     <!-- 编辑or详情弹窗 -->
     <el-dialog top="0" title="新增单位" :visible.sync="setCompanyFormVisible" class="setCompanyForm">
-        <el-form :model="addCompanyForm" label-width="100px" size="mini">
+        <el-form :model="addCompanyForm" ref="addCompanyForm" :rules="rules" label-width="100px" size="mini">
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="单位名称：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                        <el-form-item label="单位名称：" prop="enterName">
+                            <el-input v-model="addCompanyForm.enterName"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="联系人：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                        <el-form-item label="联系人：" prop="contactName">
+                            <el-input v-model="addCompanyForm.contactName"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="手机号：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                        <el-form-item label="手机号：" prop="contactPhone">
+                            <el-input v-model="addCompanyForm.contactPhone"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -122,8 +126,8 @@
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="价格策略：">
-                            <el-select v-model="addCompanyForm.name">
+                        <el-form-item label="价格策略：" prop="enterStrategyId">
+                            <el-select v-model="addCompanyForm.enterStrategyId">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
@@ -135,8 +139,8 @@
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="计费规则：">
-                            <el-select v-model="addCompanyForm.name">
+                        <el-form-item label="计费规则：" prop="enterStrategyId">
+                            <el-select v-model="addCompanyForm.ruleAlldayId">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
@@ -144,16 +148,14 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="挂帐额度：">
-                            白金卡
+                        <el-form-item label="挂帐额度：" prop="creditLimit">
+                            <el-input v-model="addCompanyForm.creditLimit"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="" label-width="0">
-                            <el-radio-group v-model="radio">
-                                <el-radio :label="3">集团共享</el-radio>
-                                <el-radio :label="6">停用</el-radio>
-                            </el-radio-group>
+                            <el-checkbox v-model="addCompanyForm.shareFlag">集团共享</el-checkbox>
+                            <el-checkbox v-model="addCompanyForm.state">停用</el-checkbox>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -163,28 +165,27 @@
                 <el-row class="cell">
                     <el-col :span="8" class="col">
                         <el-form-item label="生效日期：">
-                            <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="searchForm.effectiveStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="失效日期：">
-                            <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="searchForm.effectiveEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row class="cell">
                     <el-col :span="8" class="col">
                         <el-form-item label="发展途径：">
-                            <el-select v-model="addCompanyForm.name">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                            <el-select v-model="addCompanyForm.getWay">
+                                <el-option label="线上" :value="1"></el-option>
+                                <el-option label="线下" :value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="销售员：">
-                            <el-select v-model="addCompanyForm.name">
+                            <el-select v-model="addCompanyForm.salesId">
                                 <el-option label="全部" value="3">全部</el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
@@ -198,41 +199,41 @@
                 <el-row class="cell">
                     <el-col :span="8" class="col">
                         <el-form-item label="银行账号：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                            <el-input v-model="addCompanyForm.bankCard"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="税号：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                            <el-input v-model="addCompanyForm.taxNum"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="电话：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                            <el-input v-model="addCompanyForm.taxNum"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row class="cell">
                     <el-col :span="8" class="col">
                         <el-form-item label="合同号：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                            <el-input v-model="addCompanyForm.contractNum"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="邮箱：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                            <el-input v-model="addCompanyForm.email"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="地址：">
-                            <el-input v-model="addCompanyForm.name"></el-input>
+                            <el-input v-model="addCompanyForm.email"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row class="cell">
                     <el-col :span="12" class="col">
                         <el-form-item label="备注：">
-                            <el-input type="textarea" v-model="addCompanyForm.name"></el-input>
+                            <el-input type="textarea" v-model="addCompanyForm.remark"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -264,7 +265,7 @@
                     </el-col>
                     <el-col :span="6" class="col">
                         <el-form-item label="" label-width="50px">
-                            <el-radio-group v-model="radio">
+                            <el-radio-group v-model="addCompanyForm.name">
                                 <el-radio :label="3">一键启用</el-radio>
                                 <el-radio :label="6">一键禁用</el-radio>
                             </el-radio-group>
@@ -399,45 +400,95 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [{}], //表格数据
+            tableData: [], //表格数据
             setCompanyFormVisible: false,
             setBatchFormVisible: false,
             addCompanyForm: {
-                name: ''
+                enterName: '',
+                contactName: '',
+                contactPhone: '',
+                enterStrategyId: '',
+                ruleAlldayId: '',
+                creditLimit: '',
+                shareFlag: '',
+                state: '',
+                effectiveStartTime: '',
+                effectiveEndTime: '',
+                getWay: '',
+                salesId: '',
+                bankCard: '',
+                taxNum: '',
+                contractNum: '',
+                email: '',
+                remark: ''
+            },
+            rules: {
+                enterName: [{
+                    required: true,
+                    message: '请输入单位名称',
+                    trigger: 'blur'
+                }, ],
+                contactName: [{
+                    required: true,
+                    message: '请填写联系人',
+                    trigger: 'blur'
+                }, ],
+                contactPhone: [{
+                    required: true,
+                    message: '请输入手机号',
+                    trigger: 'blur'
+                }, ],
+                enterStrategyId: [{
+                    required: true,
+                    message: '请选择价格策略',
+                    trigger: 'change'
+                }, ],
+                ruleAlldayId: [{
+                    required: true,
+                    message: '请选择计费规则',
+                    trigger: 'change'
+                }, ],
+                creditLimit: [{
+                    required: true,
+                    message: '请输入挂账额度',
+                    trigger: 'blur'
+                }, ],
+
             }
+
         };
     },
 
     mounted() {
-        // this.initForm();
+        this.initForm();
     },
     methods: {
         initForm() {
             this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                id: '',
+                enterName: '',
+                state: 1,
+                shareFlag: '',
+                contactName: '',
+                contactPhone: '',
+                salesId: '',
+                startCreditLimit: '',
+                endCreditLimit: '',
+                paging: false,
+                salesFlag: 1,
+                pageIndex: 1,
+                pageSize: 10
             };
             this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
-            this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
+            this.loading = true
+            this.$F.doRequest(this, '/pms/hotelenter/list', this.searchForm, (res) => {
                 this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
-            });
+                this.tableData = res.list;
+                this.listTotal = res.page.count
+            })
         },
         handleDetail() {
             this.$router.push('/companydetail')

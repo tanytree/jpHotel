@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-20 16:01:22
+ * @LastEditTime: 2020-07-21 15:19:42
  * @FilePath: /jiudian/src/views/market/customer/vip/info.vue
  -->
 
@@ -25,9 +25,7 @@
             </el-form-item>
             <el-form-item label="会员类型">
                 <el-select v-model="searchForm.memberTypeId" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
+                       <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="手机号">
@@ -48,7 +46,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="黑名单">
-                <el-select v-model="searchForm.enterStatus" class="width150">
+                <el-select v-model="searchForm.isBlacklist" class="width150">
                     <el-option label="否" :value="1"></el-option>
                     <el-option label="是" :value="2"></el-option>
                 </el-select>
@@ -75,16 +73,32 @@
             <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
             <el-table-column label="会员类型" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    {{row.memberTypeId}}
+                    {{F_memberTypeId(row.memberTypeId)}}
                 </template>
             </el-table-column>
             <el-table-column prop="mobile" label="手机号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="score" label="剩余积分" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="state" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="state" label="开卡门店" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="getWay" label="发展途径" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="state" label="状态" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.state | F_cardState}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="storesNum" label="开卡门店" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_storeName(row.storesNum)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="getWay" label="发展途径" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.getWay==1?'线上':'线下'}}
+                </template>
+            </el-table-column>
             <el-table-column prop="createTime" label="开卡日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isBlacklist" label="是否黑名单" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="isBlacklist" label="是否黑名单" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.isBlacklist==2?'是':'否'}}
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
@@ -95,7 +109,7 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>收卡费</el-dropdown-item>
-                            <el-dropdown-item>拉黑</el-dropdown-item>
+                            <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!=2">拉黑</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </template>
@@ -106,6 +120,17 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
+    <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow">
+        <el-form :model="setBlackForm">
+            <el-form-item label="拉黑备注：" class="require">
+                <el-input type="textarea" v-model="setBlackForm.remark" autocomplete="off" style="width:400px"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="setBlackShow = false">取 消</el-button>
+            <el-button type="primary" @click="addblacklist">确 定</el-button>
+        </div>
+    </el-dialog>
 </div>
 </template>
 
@@ -144,13 +169,20 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [{}] //表格数据
+            tableData: [{}], //表格数据
+            storeList: '',
+            smembertypeList: '',
+            setBlackForm: {
+                remark: ''
+            },
+            setBlackShow: false
         };
     },
 
     mounted() {
         this.initForm();
         this.stores_list()
+        this.smembertype_list()
     },
     methods: {
         initForm() {
@@ -183,7 +215,18 @@ export default {
                 this.storeList = data;
             })
         },
-
+        smembertype_list() {
+            let params = {
+                name: '',
+                pageIndex: 1,
+                pageSize: 10,
+                paging: false,
+                id: ''
+            }
+            this.$F.doRequest(this, '/pms/membertype/list', params, (data) => {
+                this.smembertypeList = data.list;
+            })
+        },
         handleAdd(item) {
             this.$router.push({
                 name: 'customeradd'
@@ -191,33 +234,65 @@ export default {
         },
         handleDetail(item) {
             this.$router.push({
-                name: 'customerdetails'
+                name: 'customerdetails',
+                query: {
+                    id: item.id
+                }
             })
         },
         handleEdit(item) {
             this.$router.push({
-                name: 'customeredit'
+                name: 'customeredit',
+                query: {
+                    id: item.id
+                }
             })
         },
-        /**编辑 */
-        editRowItem(row) {
-            // 加载组件
-            this.showEdit = true;
-            //   组件加载完成调用组件内initdata 方法
-            this.$nextTick(() => {
-                //   可能没有详情接口的直接传row显示
-                this.refs.editRef.initdata(row.id);
-            });
+        handelblacklist(row) {
+            this.setBlackForm.id = row.id
+            this.setBlackShow = true
+        },
+        addblacklist() {
+            if (!this.setBlackForm.remark) {
+                this.$message.error('请输入备注信息');
+                return
+            }
+            this.$F.doRequest(this, '/pms/hotelmember/addblacklist', this.setBlackForm, (data) => {
+                this.setBlackShow = false
+                this.getDataList()
+                this.$message({
+                    message: '操作成功',
+                    type: 'success'
+                });
+            })
         },
 
-        handelRowItem(row) {
-            // 加载组件
-            this.showDetail = true;
-            //   组件加载完成调用组件内initdata 方法
-            this.$nextTick(() => {
-                //   可能没有详情接口的直接传row显示
-                this.refs.detailRef.initdata(row.id);
-            });
+        F_memberTypeId(v) {
+            let that = this
+            for (let k in that.smembertypeList) {
+                if (that.smembertypeList[k].id == v) {
+                    return that.smembertypeList[k].name
+                }
+            }
+            return ''
+        },
+        F_storeName(v) {
+            let that = this
+            for (let k in that.storeList) {
+                if (that.storeList[k].storesNum == v) {
+                    return that.storeList[k].storesName
+                }
+            }
+            return '未知门店'
+        },
+        F_nationality(v) {
+            let that = this
+            for (let k in that.nationalityList) {
+                if (that.nationalityList[k].id == v) {
+                    return this.$i18n.locale == 'ri' ? that.nationalityList[k].jName : that.nationalityList[k].cName
+                }
+            }
+            return '未知'
         },
 
         /**多选 */

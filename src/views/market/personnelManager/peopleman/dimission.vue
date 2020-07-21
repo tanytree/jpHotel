@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-16 14:57:32
+ * @LastEditTime: 2020-07-21 10:36:03
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/dimission.vue
  -->
  <template>
@@ -165,22 +165,8 @@ export default {
         };
     },
     filters: {
-        F_userStatus(value) {
-            let enums = {
-                '1': '正式工',
-                '2': '实习期',
-                '3': '试用期'
-            }
-            return value && enums[value] ? enums[value] : '其它'
-        },
-        F_idcardType(value) {
-            let enums = {
-                '1': '身份证',
-                '2': '护照',
-                '3': '驾驶证'
-            }
-            return value && enums[value] ? enums[value] : '其它'
-        }
+       
+        
     },
     mounted() {
         if (this.$route.name == 'employeeList') {

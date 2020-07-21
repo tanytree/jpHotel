@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-20 20:45:11
+ * @LastEditTime: 2020-07-21 10:34:33
  * @FilePath: /jiudian/src/views/market/customer/guest.vue
  -->
 
@@ -270,36 +270,7 @@ export default {
         };
     },
     filters: {
-        F_visaType(value) {
-            let enums = {
-                '1': '普通签证',
-                '2': '外交签证',
-                '3': '公务签证'
-            }
-            return value && enums[value] ? enums[value] : '其它'
-        },
-        F_sex(value) {
-            let enums = {
-                '1': '男',
-                '2': '女',
-            }
-            return value && enums[value] ? enums[value] : '其它'
-        },
-        F_state(value) {
-            let enums = {
-                '1': '启用',
-                '2': '禁用'
-            }
-            return value && enums[value] ? enums[value] : '其它'
-        },
-        F_idcardType(value) {
-            let enums = {
-                '1': '身份证',
-                '2': '护照',
-                '3': '驾驶证'
-            }
-            return value && enums[value] ? enums[value] : '其它'
-        }
+        
 
     },
     mounted() {
