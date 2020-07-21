@@ -38,7 +38,7 @@
                   :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
             <el-table-column prop="startTypeId" label="会员起始类型" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    {{memberTypeList.length > 0 ? memberTypeList.filter((item)=>{
+                    {{memberTypeList.length == 0 ? memberTypeList.filter((item)=>{
                       return item.id == row.startTypeId;
                     })[0].name : ''}}
                 </template>
@@ -46,7 +46,7 @@
             <el-table-column prop="createTime" label="变更方式" show-overflow-tooltip></el-table-column>
             <el-table-column prop="endTypeId" label="目标会员类型" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    {{memberTypeList.length > 0 ? memberTypeList.filter((item)=>{
+                    {{memberTypeList.length == 0 ? memberTypeList.filter((item)=>{
                     return item.id == row.endTypeId;
                     })[0].name : ''}}
                 </template>
@@ -202,9 +202,9 @@
   } from '@/utils/api/market'
 
   export default {
+    props: ['memberTypeList'], //会员类型列表
     data () {
       return {
-        memberTypeList: [],  //会员列表
         newvip: false,
         details: false,
         loading: false,
@@ -214,9 +214,9 @@
         dataListSelections: [],
         status: '',
         form: {
-          name: '',
+          // name: '',
           startTypeId: '', //会员类型
-          state: '1',  //会员状态
+          state: '',  //会员状态
           pageIndex: 1,
           pageSize: 10,
           paging: true
@@ -242,8 +242,7 @@
         }
       }
     },
-    created () {
-      this.getMemberTypeList();
+    mounted () {
       this.getMemberTypeUpdateList();
     },
     methods: {
@@ -262,11 +261,6 @@
         this.$F.doRequest(this, '/pms/membertypeupdate/list', params, (res) => {
           this.tableData = res.list;
           this.totalPage = res.page.count;
-        })
-      },
-      getMemberTypeList () {
-        this.$F.doRequest(this, '/pms/membertype/list', {pageIndex: 1, pageSize: 10, paging: false}, (res) => {
-          this.memberTypeList = res.list;
         })
       }
     }
