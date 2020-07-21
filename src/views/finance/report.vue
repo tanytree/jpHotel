@@ -158,6 +158,7 @@
                 flex-direction: column;
                 flex-wrap: wrap;
                 padding: 20px 30px;
+                min-width: 220px;
 
                 &:first-child {
                     padding-left: 0;

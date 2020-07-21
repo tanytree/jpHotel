@@ -26,5 +26,8 @@
 </script>
 
 <style scoped>
-
+    .boss-index {
+        flex: 1;
+        height: 0;
+    }
 </style>

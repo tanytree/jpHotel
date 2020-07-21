@@ -1,39 +1,41 @@
 <template>
 	<!-- 房型维护 -->
-	<el-row>
+	<el-row class="boss-index">
 		<el-tabs v-model="active_tag" v-if="tab_show">
 			<el-tab-pane label="客房房型" name="one">
-				<el-row :gutter="20">
-					<el-col style="display: flex;justify-content: flex-end;margin: 10px 0px;">
-						<el-button type="primary" style="width: 100px;" size="small" @click="addHouse('house','')">新增</el-button>
-					</el-col>
-				</el-row>
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}">
-					<el-table-column prop="houseName" label="房型名称"></el-table-column>
-					<el-table-column prop="marketPrice" label="门市价"></el-table-column>
-					<el-table-column prop="bedNum" label="床位数"></el-table-column>
-					<el-table-column prop="checkinNum" label="可入住人"></el-table-column>
-					<el-table-column prop="status" label="状态"></el-table-column>
-					<el-table-column prop="remark" label="备注"></el-table-column>
-					<el-table-column label="操作" width="200">
-						<template slot-scope="scope">
-							<el-button type="text" size="small">禁用</el-button>
-							<el-button type="text" size="small" @click="addHouse('change', scope.row)">修改</el-button>
-							<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="houseConfirm_delete">
-								<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
-							</el-popconfirm>
-						</template>
-					</el-table-column>
-				</el-table>
-                <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="form.pageIndex"
-                    :page-sizes="[10, 20, 50, 100]"
-                    :page-size="form.pageSize"
-                    :total="form.totalSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                ></el-pagination>
+				<el-container direction="vertical" class="boss-index">
+					<el-row :gutter="20">
+						<el-col style="display: flex;justify-content: flex-end;margin: 10px 0px;">
+							<el-button type="primary" style="width: 100px;" size="small" @click="addHouse('house','')">新增</el-button>
+						</el-col>
+					</el-row>
+					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
+						<el-table-column prop="houseName" label="房型名称"></el-table-column>
+						<el-table-column prop="marketPrice" label="门市价"></el-table-column>
+						<el-table-column prop="bedNum" label="床位数"></el-table-column>
+						<el-table-column prop="checkinNum" label="可入住人"></el-table-column>
+						<el-table-column prop="status" label="状态"></el-table-column>
+						<el-table-column prop="remark" label="备注"></el-table-column>
+						<el-table-column label="操作" width="200">
+							<template slot-scope="scope">
+								<el-button type="text" size="small">禁用</el-button>
+								<el-button type="text" size="small" @click="addHouse('change', scope.row)">修改</el-button>
+								<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="houseConfirm_delete">
+									<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
+								</el-popconfirm>
+							</template>
+						</el-table-column>
+					</el-table>
+					<el-pagination
+							@size-change="handleSizeChange"
+							@current-change="handleCurrentChange"
+							:current-page="form.pageIndex"
+							:page-sizes="[10, 20, 50, 100]"
+							:page-size="form.pageSize"
+							:total="form.totalSize"
+							layout="total, sizes, prev, pager, next, jumper"
+					></el-pagination>
+				</el-container>
 			</el-tab-pane>
 			<el-tab-pane label="会客厅房型" name="two">
 				<el-row :gutter="20">
