@@ -94,7 +94,7 @@
         selected: {},
       }
     },
-    created () {
+    mounted () {
       this.getMemberList()
     },
     methods: {

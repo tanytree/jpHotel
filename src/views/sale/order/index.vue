@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-10 13:58:24
  * @LastEditors:魏轩
- * @LastEditTime: 
- * @FilePath: 
+ * @LastEditTime:
+ * @FilePath:
  -->
 <template>
   <div id="page1">
@@ -11,13 +11,13 @@
         <Personer   />
       </el-tab-pane>
       <el-tab-pane label="会员变更规则" name="second">
-        <Aftersale />
+        <Aftersale :memberTypeList="memberTypeList" />
       </el-tab-pane>
       <el-tab-pane label="会员价格" name="thirdly">
-        <Memberprice />
+        <Memberprice  :memberTypeList="memberTypeList"/>
       </el-tab-pane>
       <el-tab-pane label="会员查询" name="forth">
-        <Vipquery />
+        <Vipquery  :memberTypeList="memberTypeList"/>
       </el-tab-pane>
       <el-tab-pane label="积分设置" name="fifth">
         <Intergtal />
@@ -37,13 +37,16 @@ export default {
   components: { Personer, Aftersale,Memberprice,Vipquery,Intergtal },
   data() {
     return {
+      memberTypeList: [],
       activeName: "first" //第一个默认启动
     };
   },
   methods: {
     //二级tab切片
     handleClick(tab, event) {
-      console.log(tab, event);
+      this.$F.doRequest(this, '/pms/membertype/list', {pageIndex: 1, pageSize: 10, paging: false}, (res) => {
+        this.memberTypeList = res.list;
+      })
     },
   }
 };

@@ -11,17 +11,20 @@
 
         <el-col :span="5">
           <el-form-item label="会员类型：">
-            <el-select v-model="form.orderType" style="width:100px">
-              <el-option label="当前课程" value="1"></el-option>
-              <el-option label="演出" value="3"></el-option>
-              <el-option label="场地预定" value="2"></el-option>
-              <el-option label="活动项目课程" value="4"></el-option>
-            </el-select>
+              <el-select v-model="form.id">
+                  <el-option label="全部" value=""></el-option>
+                  <el-option
+                      v-for="item in memberTypeList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                  </el-option>
+              </el-select>
           </el-form-item>
         </el-col>
 
         <el-form-item >
-          <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
+          <el-button @click="getMemberTypeUpdateList()"  type="primary">查询</el-button>
 
         </el-form-item>
       </el-row>
@@ -29,38 +32,48 @@
     </el-form>
 
      <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="会员类型" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="折扣比例" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="修改时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
+            <el-table-column prop="enterName" label="会员类型" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{memberTypeList.length > 0 ? memberTypeList.filter((item)=>{
+                    return item.id == row.id;
+                    })[0].name : ''}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="discount" label="折扣比例" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" label="修改时间" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <span> {{row.updateTime || row.createTime}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="updateId" label="修改人" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <span>{{row.creatorId || row.updateId}}</span>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini"  @click="discount=true">编辑折扣</el-button>
+                    <el-button type="text" size="mini"  @click="discountEdit(row)">编辑折扣</el-button>
                 </template>
             </el-table-column>
         </el-table>
 
         <!-- 编辑折扣 -->
-        <el-dialog top="0" title="编辑折扣" :visible.sync="discount" width="450px">
-              <el-form ref="discountform" :model="form" label-width="80px" :rules="rules">
-
+        <el-dialog top="0" title="编辑折扣" :visible.sync="discountVisable" width="450px" @close="discountFormClose('discountForm')">
+              <el-form ref="discountForm" :model="discountForm" label-width="80px" :rules="rules">
                 <el-form-item label="是否折扣:" style="margin:0 auto;">
-                  <el-radio-group v-model="discountform.resource">
-                    <el-radio label="是"></el-radio>
-                    <el-radio label="否"></el-radio>
+                  <el-radio-group v-model="discountForm.discountStatus">
+                    <el-radio label="1">是</el-radio>
+                    <el-radio label="2">否</el-radio>
                   </el-radio-group>
                 </el-form-item>
-                <el-form-item label="折扣比例" style="margin:0 auto;" prop="name">
-                  <el-input v-model="discountform.name" style="width:200px" placeholder="请填写"></el-input>
+                <el-form-item label="折扣比例" style="margin:0 auto;" prop="discount">
+                  <el-input v-model="discountForm.discount" style="width:200px" placeholder="请填写"></el-input>
                 </el-form-item>
                     <el-divider></el-divider>
-
-
                 <el-form-item >
-
-                  <el-button type="primary" >确定</el-button>
-                  <el-button @click="discount = false">取消</el-button>
+                  <el-button type="primary" v-loading="loading" @click="edidSave('discountForm')">确定</el-button>
+<!--                  <el-button @click="discountFormClose('discountForm')">取消</el-button>-->
                 </el-form-item>
               </el-form>
 
@@ -68,41 +81,71 @@
   </div>
 </template>
 <script>
-import {
-  get_goods_list,
-  edit_goods_status,
-  del_goods_info
-} from "@/utils/api/market";
+
 export default {
+  props: ['memberTypeList'], //会员类型列表
   data() {
     return {
-      discount:false,
+      discountVisable:false,
       loading: false,
-      pageIndex: 1,
-      pageSize: 8,
       totalPage: 0,
       showTop: false,
       dataListLoading: false,
       dataListSelections: [],
       status: "",
-      form: {},
-      discountform:{},
+      form: {
+        id: '',
+        pageIndex: 1,
+        pageSize: 10,
+        paging: true
+      },
+      discountForm: {
+        discountStatus: "1", //1:是 2： 否
+        discount: '',
+      },
       tableData: [{}], //表格数据
       rules: {
-          name: [
+        discount: [
             { required: true, trigger: 'blur' },
           ]
-          },
+      },
+      selected: {}
     };
   },
-  created() {
-    // this.resetForm();
-    // this.fetchGoodList();
+  mounted() {
+    this.getMemberTypeUpdateList();
   },
   methods: {
+    discountEdit(row) {
+      this.selected = row;
+      this.discountVisable = true;
+    },
+    discountFormClose(formName) {
+      this.$refs[formName].resetFields();
+      this.discountVisable = false;
+    },
 
+    //会员类型价格列表
+    getMemberTypeUpdateList(params = {}) {
+      this.$F.merge(params, this.form);
+      this.$F.doRequest(this, '/pms/membertype/list', params, (res) => {
+        this.tableData = res.list;
+        this.totalPage = res.page.count;
+      })
+    },
 
-
+    edidSave(formName, params = {}) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          params.id = this.selected.id;
+          this.$F.merge(params, this.discountForm);
+          this.$F.doRequest(this, '/pms/membertype/editprices', params, (res) => {
+            this.selected.discount = params.discount;
+            this.discountFormClose(formName);
+          })
+        }
+      });
+    }
   }
 };
 </script>
