@@ -36,12 +36,13 @@
                     </el-row>
                     <el-row>
                         <el-form-item label="购买价格">
-                            <el-input v-model="newvip.prices" style="width:264px" placeholder="大于等于1的整数"></el-input>
+                            <el-input v-model.number="newvip.prices" min="0" style="width:264px"
+                                      placeholder="大于等于1的整数"></el-input>
                         </el-form-item>
                     </el-row>
                     <el-row>
                         <el-form-item label="有效期">
-                            <el-radio-group v-model="durationType">
+                            <el-radio-group v-model="durationType" @change="durationchange">
                                 <el-radio label="1">永久</el-radio>
                                 <el-row style="margin-top: 10px">
                                     <el-radio label="2">开卡日期起</el-radio>
@@ -59,13 +60,15 @@
                     <el-row>
                         <h3>配置权益</h3>
                         <el-form-item>
-                            <el-checkbox @change="interestsChange" :checked="newvip.interests">入住免押金</el-checkbox>
+                            <el-checkbox @change="interestsChange" :checked="newvip.interests == 1 ? true : false">
+                                入住免押金
+                            </el-checkbox>
                         </el-form-item>
                     </el-row>
                     <el-divider></el-divider>
                     <el-form-item>
-                        <el-button type="primary" @click="addItem('newvip')">保存</el-button>
-                        <el-button @click="cancel">取消</el-button>
+                        <el-button type="primary" @click="editItem('newvip')">保存</el-button>
+                        <el-button @click="back()">取消</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -73,72 +76,88 @@
     </div>
 </template>
 <script>
-  export default {
-    props: ['selected'],
-    data () {
-      return {
-        durationType: "1",  //1永久  2固定日期
-        newvip: {
-          name: '',
-          level: '',
-          prices: '',
-          interests: '',
-          duration: ''
-        },
-        rules: {
-          name: [
-            { required: true, trigger: 'blur', message: '请输入会员类型名称' },
-          ],
-          level: [
-            { required: true, trigger: 'blur', message: '请输入会员类型等级' },
-          ],
-          prices: [
-            { required: true, trigger: 'blur', message: '请输入购买价格' },
-          ]
-        },
+export default {
+  props: ['selected'],
+  data () {
+    return {
+      memberTypeList: [],
+      durationType: '1', // 1永久  2固定日期
+      newvip: {
+        name: '',
+        level: '',
+        prices: '',
+        interests: '',
+        duration: ''
+      },
+      rules: {
+        name: [
+          { required: true, trigger: 'blur', message: '请输入会员类型名称' }
+        ],
+        level: [
+          { required: true, trigger: 'blur', message: '请输入会员类型等级' }
+
+        ],
+        prices: [
+          { required: true, trigger: 'blur', message: '请输入购买价格' }
+        ]
+      }
+    }
+  },
+
+  mounted () {
+    this.$F.merge(this.newvip, this.selected)
+    console.log(this.newvip)
+    if (this.newvip.duration != 9999) {
+      this.durationType = '2'
+    }
+    this.getMemberTypeList()
+  },
+
+  methods: {
+    durationchange (val) {
+      if (val == 2) {
+        this.newvip.duration = ''
+      } else {
+        this.newvip.duration = '9999'
       }
     },
-
-    created () {
-      this.$F.merge(this.newvip, this.selected);
-      console.log( this.newvip)
-      if (this.newvip.duration != 9999) {
-        this.durationType = "2"
-      }
-      debugger
+    interestsChange (value) {
+      this.newvip.interests = value ? 1 : 0
+    },
+    back () {
+      this.$emit('addShowFunc', false)
     },
 
-    methods: {
-      interestsChange(value) {
-        debugger
-        this.newvip.interests = value ? 1 : 0;
-      },
-      back () {
-        this.$emit('addShowFunc', false);
-      },
-
-      addItem (formName) {
-        this.$refs[formName].validate((valid) => {
-          console.log(this.newvip)
-          if (valid) {
+    editItem (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var array = this.memberTypeList.filter((row) => {
+            return (row.level == this.newvip.level && row.id != this.newvip.id)
+          })
+          if (array.length == 0) {
             this.$F.doRequest(this, '/pms/membertype/edit', this.newvip, (res) => {
-              this.$message.success("edit success");
-              setTimeout(()=> {
-                this.back();
+              this.$message.success('edit success')
+              setTimeout(() => {
+                this.back()
               }, 1000)
             })
           } else {
-            console.log('error submit!!')
-            return false
+            this.$message.error('Level can not repeat')
           }
-        })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
 
-      },
-      cancel () {
-        this.$router.push('/saleOrder')
-      }
+    getMemberTypeList () {
+      this.$F.doRequest(this, '/pms/membertype/list', { pageIndex: 1, pageSize: 10, paging: false }, (res) => {
+        this.memberTypeList = res.list
+      })
     }
   }
+}
 </script>
 
 <style scoped>

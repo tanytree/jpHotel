@@ -38,20 +38,24 @@
                   :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
             <el-table-column prop="startTypeId" label="会员起始类型" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    {{memberTypeList.length == 0 ? memberTypeList.filter((item)=>{
-                      return item.id == row.startTypeId;
+                    {{memberTypeList.filter((item)=>{
+                    return item.id == row.startTypeId;
+                    }).length > 0 ? memberTypeList.filter((item)=>{
+                    return item.id == row.startTypeId;
                     })[0].name : ''}}
                 </template>
             </el-table-column>
             <el-table-column prop="createTime" label="变更方式" show-overflow-tooltip></el-table-column>
             <el-table-column prop="endTypeId" label="目标会员类型" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    {{memberTypeList.length == 0 ? memberTypeList.filter((item)=>{
+                    {{memberTypeList.filter((item)=>{
+                    return item.id == row.endTypeId;
+                    }).length > 0 ? memberTypeList.filter((item)=>{
                     return item.id == row.endTypeId;
                     })[0].name : ''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="enterType" label="等级变更 " show-overflow-tooltip>
+            <el-table-column prop="updateType" label="等级变更 " show-overflow-tooltip>
                 <template slot-scope="{row}">
                    <span>{{row.updateType == 1 ? "升级" : "降级"}}</span>
                 </template>
@@ -65,14 +69,21 @@
             <el-table-column prop="creatorId" label="创建人" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="状态" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    <span>{{row.state == 1 ? "启用" : "禁用"}}</span>
+                    <el-switch
+                        style="margin-left:10px;"
+                        v-model="row.state"
+                        :active-value="1"
+                        :inactive-value="2"
+                        :active-text="row.state == 1 ? '启用' : '禁用'"
+                        @change="val=>changeStatus(row, val)"
+                    ></el-switch>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="details=true">详情</el-button>
                     <el-button type="text" size="mini" v-if="row.statu == 1">禁用</el-button>
-                    <el-button type="text" size="mini">删除</el-button>
+                    <el-button type="text" size="mini"  @click="onDelete(row)">删除</el-button>
                     <el-button type="text" size="mini">修改</el-button>
                     <el-button type="text" size="mini" v-if="row.statu == 2">启用</el-button>
                 </template>
@@ -246,6 +257,27 @@
       this.getMemberTypeUpdateList();
     },
     methods: {
+      //禁用/启用
+      changeStatus(row, val) {
+        this.$F.doRequest(this, '/pms/membertype/enable_disable', { id: row.id, state: val}, (res) => {
+          this.$message.success('Success');
+        })
+      },
+
+      onDelete (row) {
+        debugger
+        this.$confirm(`是否删除【${row.name}】？`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(res => {
+          this.$F.doRequest(this, '/pms/membertypeupdate/delete', { id: row.id }, (res) => {
+            this.$message.success('Delete Success');
+            this.form.pageIndex = 1;
+            this.getMemberTypeUpdateList();
+          })
+        })
+      },
       editItem(row) {
         var params = this.$F.deepClone(this.newForm);
         params.orderContent = JSON.stringify(params.orderContent);
@@ -260,6 +292,11 @@
         this.$F.merge(params, this.form);
         this.$F.doRequest(this, '/pms/membertypeupdate/list', params, (res) => {
           this.tableData = res.list;
+          // this.tableData.forEach((tableItem) => {
+          //   this.memberTypeList.filter((row)=>{
+          //     return row.id == row.startTypeId;
+          //   })[0].name;
+          // })
           this.totalPage = res.page.count;
         })
       }

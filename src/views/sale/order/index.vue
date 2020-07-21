@@ -8,7 +8,7 @@
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="会员类型管理" name="first">
-        <Personer   />
+        <Personer :memberTypeList="memberTypeList"/>
       </el-tab-pane>
       <el-tab-pane label="会员变更规则" name="second">
         <Aftersale :memberTypeList="memberTypeList" />
@@ -41,13 +41,22 @@ export default {
       activeName: "first" //第一个默认启动
     };
   },
+
+  mounted() {
+    this.getMemberTypeList();
+  },
+
   methods: {
     //二级tab切片
     handleClick(tab, event) {
+      this.getMemberTypeList();
+    },
+
+    getMemberTypeList() {
       this.$F.doRequest(this, '/pms/membertype/list', {pageIndex: 1, pageSize: 10, paging: false}, (res) => {
         this.memberTypeList = res.list;
       })
-    },
+    }
   }
 };
 </script>

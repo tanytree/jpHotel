@@ -64,6 +64,7 @@
 export default {
   data() {
    return {
+     loading: false,
     ruleForm: {
       chamber_discount_flag: "1",
       house_discount_flag: "1",

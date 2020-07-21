@@ -25,14 +25,15 @@
 						</template>
 					</el-table-column>
 				</el-table>
-				<!-- <div class="block">
-					<div class="page-all">
-						共
-						<span style="font-weight:600;font-size: 14px;">{{form.totalSize}}</span>条记录
-					</div>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
-					 :page-size="form.pageSize" layout=" sizes, prev, pager, next, jumper" :total="form.totalSize"></el-pagination>
-				</div> -->
+                <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="form.pageIndex"
+                    :page-sizes="[10, 20, 50, 100]"
+                    :page-size="form.pageSize"
+                    :total="form.totalSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                ></el-pagination>
 			</el-tab-pane>
 			<el-tab-pane label="会客厅房型" name="two">
 				<el-row :gutter="20">
@@ -46,7 +47,7 @@
 					<el-table-column prop="bedNum" label="座位数"></el-table-column>
 					<el-table-column prop="status" label="状态"></el-table-column>
 					<el-table-column prop="remark" label="备注"></el-table-column>
-					<el-table-column label="操作" width="300">
+					<el-table-column label="操作" width="250">
 						<template slot-scope="scope">
 							<el-button type="text" size="small">禁用</el-button>
 							<el-button type="text" size="small" @click="addHouse('change', scope.row)">修改</el-button>
@@ -56,14 +57,15 @@
 						</template>
 					</el-table-column>
 				</el-table>
-				<!-- <div class="block">
-					<div class="page-all">
-						共
-						<span style="font-weight:600;font-size: 14px;">400</span>条记录
-					</div>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
-					 :page-size="form.pageSize" layout=" sizes, prev, pager, next, jumper" :total="form.totalSize"></el-pagination>
-				</div> -->
+                <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="form.pageIndex"
+                    :page-sizes="[10, 20, 50, 100]"
+                    :page-size="form.pageSize"
+                    :total="form.totalSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                ></el-pagination>
 			</el-tab-pane>
 		</el-tabs>
 		<div class="infinite-list-wrapper" style="height: 500px; overflow-y:auto; overflow-x: hidden;" v-if="!tab_show">

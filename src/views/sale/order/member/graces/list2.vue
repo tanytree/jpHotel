@@ -64,6 +64,7 @@
   export default {
     data () {
       return {
+        loading: false,
         ruleForm: {
           house_get_flag: '2',
           house_get_ratio: '2',

@@ -12,7 +12,7 @@
                     <el-select v-model="form.id">
                         <el-option label="全部" value=""></el-option>
                         <el-option
-                            v-for="item in tableData"
+                            v-for="item in memberTypeList"
                             :key="item.id"
                             :label="item.name"
                             :value="item.id">
@@ -32,7 +32,7 @@
             <el-table ref="multipleTable" v-loading="loading" :data="tableData"
                       :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
                 <el-table-column prop="name" label="会员类型" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+<!--                <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>-->
                 <el-table-column prop="level" label="对应等级" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="duration" label="有效期 " show-overflow-tooltip>
                     <template slot-scope="{row}">
@@ -45,17 +45,24 @@
                         <span>{{row.createTime || row.updateTime}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="updateId" label="修改人" show-overflow-tooltip>
-
-
+                <el-table-column prop="updateName" label="修改人" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="creatorId" label="创建人" show-overflow-tooltip>
-
+                <el-table-column prop="createName" label="创建人" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="state" label="状态" show-overflow-tooltip>
+                    <template slot-scope="{row}">
+                        <el-switch
+                            style="margin-left:10px;"
+                            v-model="row.state"
+                            :active-value="1"
+                            :inactive-value="2"
+                            :active-text="row.state == 1 ? '启用' : '禁用'"
+                            @change="val=>changeStatus(row, val)"
+                        ></el-switch>
+                    </template>
                 </el-table-column>
                 <el-table-column label="操作" width="220">
                     <template slot-scope="{row}">
-                        <el-button type="text" size="mini" v-if="row.statu == 1">禁用</el-button>
-                        <el-button type="text" size="mini" v-if="row.statu == 2">启用</el-button>
                         <el-button type="text" size="mini" @click="onDelete(row)">删除</el-button>
                         <el-button type="text" size="mini" @click="Newdata(row, 'edit')">修改</el-button>
                     </template>
@@ -63,15 +70,15 @@
             </el-table>
         </div>
         <div v-if="secondShow">
-            <NewDetail @addShowFunc="addShowFunc" :selected="selected"/>
+            <NewDetail @addShowFunc="addShowFunc" :selected="selected" :memberTypeList="memberTypeList"/>
         </div>
     </div>
 </template>
 <script>
   import NewDetail from './graces/new'
-
   export default {
     components: { NewDetail },
+    props: ['memberTypeList'], //会员类型列表
     data () {
       return {
         secondShow: false,
@@ -95,9 +102,16 @@
       }
     },
     mounted () {
+      console.log(this.memberTypeList);
       this.getMemberList()
     },
     methods: {
+      //禁用/启用
+      changeStatus(row, val) {
+        this.$F.doRequest(this, '/pms/membertype/enable_disable', { id: row.id, state: val}, (res) => {
+          this.$message.success('Success');
+        })
+      },
       onDelete (row) {
         this.$confirm(`是否删除【${row.name}】？`, '提示', {
           confirmButtonText: '确定',

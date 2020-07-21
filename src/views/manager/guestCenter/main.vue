@@ -5,7 +5,7 @@
  * @FilePath: /cloudAdmin/src/views/market/productManagement/index.vue
  -->
 <template>
-    <div id="page1">
+    <div id="page1" class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
             <el-tab-pane label="房型维护" name="first">
                 <HouseMaintain ref="HouseMaintain"/>
