@@ -1,17 +1,19 @@
 <template>
     <el-container class="mainPage">
         <el-header class="mainHeader" height="40px">
-            <pageHeader @calRouter="calRouter" :language='language' />
+            <pageHeader @calRouter="calRouter" :language='language'/>
         </el-header>
         <el-container class="main-container">
-            <el-aside v-if="menul.childList && menul.childList.length > 0 &&routerCompany !== 'company'" class="mainAside">
+            <el-aside v-if="menul.childList && menul.childList.length > 0 &&routerCompany !== 'company'"
+                      class="mainAside">
                 <div class="side-menu-wrapper">
                     <div class="topNav">
                         <img :src="require(`@/assets/images/${menul.icon}.png`)" alt/>
                         {{$i18n.locale == 'ri' ? menul.japanese : (menul.menuAliasTitle || menul.menuTitle)}}
                     </div>
                     <ul class="el-menu">
-                        <li class="el-menu-item" v-for="(item) in menul.childList" :key="item.id" :class="sectionid==item.id ? 'is-active':''"
+                        <li class="el-menu-item" v-for="(item) in menul.childList" :key="item.id"
+                            :class="sectionid==item.id ? 'is-active':''"
                             @click="toSection(item)">
                             <img v-if="item.icon" :src="require(`@/assets/images/${item.icon}`)" alt/>
                             {{$i18n.locale == 'ri' ? item.japanese : (item.menuAliasTitle || item.menuTitle)}}
@@ -21,7 +23,8 @@
             </el-aside>
             <el-container class="mainContainer">
                 <el-header class="layHeader">
-                    <div class="header-item" v-for="item in menuList" :key="item.name" @click="menulfuc(item)" :class="partmentId == item.id?'itemactive':''">
+                    <div class="header-item" v-for="item in menuList" :key="item.name" @click="menulfuc(item)"
+                         :class="partmentId == item.id?'itemactive':''">
                         <img :src="require(`@/assets/images/${item.icon}.png`)" alt/>
                         <div> {{$i18n.locale == 'ri' ? item.japanese : (item.menuAliasTitle || item.menuTitle)}}</div>
                     </div>
@@ -40,13 +43,14 @@
     </el-container>
 </template>
 <script>
-  import {removeToken} from "@/utils/auth";
-  import esMenu from "./components/sidebar";
-  import pageHeader from "./components/pageHeader";
-  import {mapState, mapActions} from "vuex";
+  import { removeToken } from '@/utils/auth'
+  import esMenu from './components/sidebar'
+  import pageHeader from './components/pageHeader'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
-    name: "Main",
+    name: 'Main',
+    inject:['reload'],
     components: {
       esMenu,
       pageHeader
@@ -60,94 +64,99 @@
         storeList: state => state.user.storeList,
       })
     },
-    data() {
+    data () {
       return {
-        routerCompany: "",
+        routerCompany: '',
         modelShow: false,
-        partmentId: "", //部门ID
-        sectionid: "", //左侧导航ID
-        pageId: "", //页面ID
-        theme: "light",
+        partmentId: '', //部门ID
+        sectionid: '', //左侧导航ID
+        pageId: '', //页面ID
+        theme: 'light',
         menul: [],
         subMenul: [],
         parentMenu: {},
         siderflg: false,
 
         language: 'zh'
-      };
+      }
     },
-    onShow() {
+    onShow () {
     },
     methods: {
       ...mapActions({
-        routeractions: "routermsg/routeractions",
+        routeractions: 'routermsg/routeractions',
       }),
 
-      menulfuc(item) {
-        this.routerCompany = "";
-        this.menul = item;
-        sessionStorage.menul = JSON.stringify(item);
-        this.partmentId = item.id;
-        this.sectionid = "";
-        sessionStorage.partmentId = item.id;
+      refresh() {
+        this.reload();
+      },
+
+      menulfuc (item) {
+        this.routerCompany = ''
+        this.menul = item
+        sessionStorage.menul = JSON.stringify(item)
+        this.partmentId = item.id
+        this.sectionid = ''
+        sessionStorage.partmentId = item.id
         this.toSection(this.menul.childList[0])
-        this.$forceUpdate();
+        this.$forceUpdate()
       },
       //点击左侧导航
-      toSection(item) {
+      toSection (item) {
         if (item.path) {
-          this.subMenul = item;
-          sessionStorage.sectionid = item.id;
-          sessionStorage.subMenul = JSON.stringify(item);
-          this.sectionid = item.id;
+          this.subMenul = item
+          sessionStorage.sectionid = item.id
+          sessionStorage.subMenul = JSON.stringify(item)
+          this.sectionid = item.id
           if (item.childList && item.childList.length > 0) {
-            this.pageId = item.childList[0].id;
-            sessionStorage.pageId = item.childList[0].id;
+            this.pageId = item.childList[0].id
+            sessionStorage.pageId = item.childList[0].id
           }
-          sessionStorage.pagePath = item.path;
+          sessionStorage.pagePath = item.path
           if (this.$route.name == item.path) {
-            return false;
-          } else
-            this.$router.push({name: item.path});
+            return false
+          } else {
+            sessionStorage.currentPath = item.path;
+            this.$router.push({ name: item.path })
+          }
         } else {
-          this.$message.error('Request does not exist');
+          this.$message.error('Request does not exist')
         }
       },
-
 
       // 注销
-      logout() {
-        this.modelShow = false;
-        removeToken();
-        localStorage.clear();
-        sessionStorage.clear();
-        this.$router.push("/");
+      logout () {
+        this.modelShow = false
+        removeToken()
+        localStorage.clear()
+        sessionStorage.clear()
+        this.$router.push('/')
       },
       // 处理路由
-      calRouter(language) {
+      calRouter (language) {
         this.language = language
-        this.$forceUpdate();
-        this.partmentId = sessionStorage.partmentId || "";
-        this.sectionid = sessionStorage.sectionid || "";
-        this.pageId = sessionStorage.pageId || "";
+        this.$forceUpdate()
+        this.partmentId = sessionStorage.partmentId || ''
+        this.sectionid = sessionStorage.sectionid || ''
+        this.pageId = sessionStorage.pageId || ''
         if (sessionStorage.subMenul) {
-          this.subMenul = JSON.parse(sessionStorage.subMenul) || {};
+          this.subMenul = JSON.parse(sessionStorage.subMenul) || {}
         }
         if (sessionStorage.menul) {
-          this.menul = JSON.parse(sessionStorage.menul) || {};
+          this.menul = JSON.parse(sessionStorage.menul) || {}
         }
         if (sessionStorage.pagePath) {
           // this.$router.push(sessionStorage.pagePath);
         }
-        this.routerCompany = "";
+        this.routerCompany = ''
 
         if (this.$route.meta) {
           if (this.$route.meta.title) {
-            this.routerCompany = this.$route.meta.title;
+            this.routerCompany = this.$route.meta.title
           }
           if (this.$route.meta.pid) {
-            this.sectionid = this.$route.meta.pid;
-            sessionStorage.sectionid = this.sectionid;
+            this.sectionid = this.$route.meta.pid
+            sessionStorage.sectionid = this.sectionid
           }
         }
       }
@@ -160,16 +169,22 @@
     //   this.menulfuc(this.routermsg[0])
     //   this.toSection(this.menul.childList[0])
     // },
-    activated() {
-      this.menulfuc(this.menuList[0])
-      this.toSection(this.menul.childList[0])
+    mounted () {
+        debugger
+      if (sessionStorage.menul && sessionStorage.menul != 'undefined') {
+        this.menulfuc(JSON.parse(sessionStorage.menul));
+        this.toSection(JSON.parse(sessionStorage.subMenul))
+      } else {
+        this.menulfuc(this.menuList[0]);
+        this.toSection(this.menul.childList[0])
+      }
     },
     watch: {
-      $route(to, from) {
+      $route (to, from) {
         if (to.name == 'main' || to.name == 'organization') {
-          this.calRouter();
+          this.calRouter()
           if (to.name == 'main') {
-            this.$nextTick(()=> {
+            this.$nextTick(() => {
               if (this.routermsg) {
                 this.menulfuc(this.routermsg[0])
               }
@@ -180,7 +195,7 @@
         }
       }
     }
-  };
+  }
 </script>
 <style lang="less" scoped>
     .mainPage {

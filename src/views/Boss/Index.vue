@@ -7,12 +7,12 @@
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane :label="$i18n.locale == 'ri' ? $F.filterThirdMenu('boss', 'stores-overview').japanese : ($F.filterThirdMenu('boss', 'stores-overview').menuAliasTitle || $F.filterThirdMenu('boss', 'stores-overview').menuTitle)"
+            <el-tab-pane :label="$F.filterThirdMenu('boss', 'stores-overview').thirdMenu"
                          name="stores-overview"
                          v-if="$F.filterThirdMenu('boss', 'stores-overview', true)">
                 <EmployeeRights/>
             </el-tab-pane>
-            <el-tab-pane :label="$i18n.locale == 'ri' ? $F.filterThirdMenu('boss', 'boss-report').japanese : ($F.filterThirdMenu('boss', 'boss-report').menuAliasTitle || $F.filterThirdMenu('boss', 'boss-report').menuTitle)"
+            <el-tab-pane :label="$F.filterThirdMenu('boss', 'boss-report').thirdMenu"
                          name="boss-report"
                          v-if="$F.filterThirdMenu('boss', 'boss-report', true)">
                 <el-tabs v-model="active_second_name" type="card">
@@ -51,7 +51,7 @@
                     </el-tab-pane>
                 </el-tabs>
             </el-tab-pane>
-            <el-tab-pane :label="$i18n.locale == 'ri' ? $F.filterThirdMenu('boss', 'staff-rights').japanese : ($F.filterThirdMenu('boss', 'staff-rights').menuAliasTitle || $F.filterThirdMenu('boss', 'staff-rights').menuTitle)" name="staff-rights"
+            <el-tab-pane :label="$F.filterThirdMenu('boss', 'staff-rights').thirdMenu"
                          v-if="$F.filterThirdMenu('boss', 'staff-rights', true)">
                 <EmployeeRights/>
             </el-tab-pane>
@@ -152,7 +152,8 @@ export default {
   mounted () {
     this.select_title = JSON.parse(sessionStorage.getItem('menul')).name
     this.get_tableDate();
-    // this.activeName = $F.filterThirdMenu('boss', 'stores-overview')
+    let menu = this.$F.filterThirdMenu('boss', 'stores-overview', false, true)
+    this.activeName = menu.path;
   },
   methods: {
     // 获取各部门人员列表

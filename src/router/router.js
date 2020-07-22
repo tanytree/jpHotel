@@ -119,7 +119,10 @@ export default new Router({
                 {
                     path: '/market',
                     name: 'market',
-                    meta: { title: '管理部首页' },
+                    meta: {
+                        title: '管理部首页',
+
+                    },
                     component: () =>
                         import ('@/views/market/main')
                 },

@@ -5,7 +5,7 @@
  *
  -->
 <template>
-<div>
+<div v-loading="loading">
     <!-- 房间动态 -->
     <el-row>
         <el-col :span="5">
@@ -104,7 +104,7 @@
             <el-row>
                 <el-row>
                     <el-checkbox-group v-model="searchForm.personRoom"  @change="handleChange">
-                        <el-checkbox v-for="(item,index) in personRoom" :label="item.eName" :key="index">{{$i18n.locale == 'ri'? item.japanese:item.name}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in personRoom" :label="item.eName" :key="index">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                     <el-divider></el-divider>
                 </el-row>
@@ -1157,20 +1157,16 @@ export default {
         },
         getChannel() {
             return new Promise((resolve, reject) => {
-                this.$F.doRequest(this, '/pms/system/public_dict', {
-                    type: 1
-                }, (res) => {
-                    this.dict_channel = res
-                    resolve(res)
-                })
+              this.$F.getPublicDictByType(this, 1, (res) => {
+                this.dict_channel = res
+                resolve(res)
+              })
             })
 
         },
         getPersonRoom() {
             return new Promise((resolve, reject) => {
-                this.$F.doRequest(this, '/pms/system/public_dict', {
-                    type: 7
-                }, (res) => {
+                this.$F.getPublicDictByType(this, 7, (res) => {
                     this.dict_personRoom = res;
                     this.personRoom = res
                     resolve(res)
@@ -1180,12 +1176,10 @@ export default {
         },
         getRoomStatus() {
             return new Promise((resolve, reject) => {
-                this.$F.doRequest(this, '/pms/system/public_dict', {
-                    type: 15
-                }, (res) => {
-                    // this.dict_roomStatus= res
-                    resolve(res)
-                })
+              this.$F.getPublicDictByType(this, 15, (res) => {
+                // this.dict_roomStatus= res
+                resolve(res)
+              })
             })
 
         },
@@ -1236,7 +1230,7 @@ export default {
               this.searchForm.buildingFloorId = ''
               this.get_hotel_building_floor_list(e)
               this.getDataList()
-            
+
         },
         floorSelectChange(e) {
             console.log(e)
