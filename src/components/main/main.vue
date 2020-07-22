@@ -293,6 +293,7 @@
         background-color: #f5f5f5;
         display: block;
         border: 1px solid transparent;
+        overflow-y: auto;
 
         > .main-inner {
             width: 100%;
