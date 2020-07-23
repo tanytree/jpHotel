@@ -17,6 +17,13 @@ module.exports = {
     F_state: {
         '1': '启用',
         '2': '禁用'
-    }
+    },
+
+    userRoleList: [
+        {label: '超级用户', value: 0},
+        {label: '普通用户', value: 1},
+        {label: '部门负责人', value: 2},
+        {label: '门店经理', value: 3},
+    ]
 }
 

@@ -4,7 +4,11 @@
 			<el-tab-pane label="负责人授权" name="first">
 				<el-table :data="tableData" style="width: 100%" tooltip-effect="dark" :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}">
 					<el-table-column prop="menuTitle" label="部门名称"></el-table-column>
-					<el-table-column prop="header_name" label="负责人" width="800">
+					<el-table-column label="负责人">
+                        <template slot-scope="{row}">
+                            <span v-if="row.header_name">{{row.header_name}}</span>
+                            <span v-else>暂无</span>
+                        </template>
 					</el-table-column>
 					<el-table-column label="操作">
 						<template slot-scope="scope">

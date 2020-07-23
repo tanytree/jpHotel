@@ -8,5 +8,11 @@ module.exports = {
     queryBtn: '検索',
     resetBtn: '重置',
     exportBtn: 'リセット',
+    userRoleList: [
+        {label: 'リセット', value: 0},
+        {label: 'リセット', value: 1},
+        {label: 'リセット', value: 2},
+        {label: 'リセット', value: 3},
+    ]
 }
 
