@@ -94,7 +94,7 @@ export default {
             cur: {},
         }
     },
-    created() {
+    mounted() {
         this.initForm();
     },
     methods: {

@@ -214,36 +214,40 @@
           this.refs.editRef.initdata(row.id)
         })
       },
+
+      retForm() {
+        this.$refs['editForm'].resetFields();
+      },
       /**新增 */
       addItem (row) {
-        // 加载组件
-        this.addUserForm = {
-          type: 'add', //区分是添加还是编辑
-          userName: '',
-          account: '',
-          password: '',
-          storesNum: '0000000000',
-          storesName: '',
-          storesAddress: '',
-          departmentIds: ''
-        }
-        this.addUserForm.type = 'add'
-        this.setUserFormVisible = true
-        //   组件加载完成调用组件内initdata 方法
-
+        this.setUserFormVisible = true;
+        this.$nextTick(() => {
+          this.retForm();
+          this.addUserForm = {
+            type: 'add', //区分是添加还是编辑
+            userName: '',
+            account: '',
+            password: '',
+            storesNum: '0000000000',
+            storesName: '',
+            storesAddress: '',
+            departmentIds: ''
+          }
+          this.addUserForm.type = 'add'
+        })
       },
       /**新增 */
       editItem (row) {
-        for (let k in this.addUserForm) {
-          console.log(k)
-          this.addUserForm[k] = row[k] ? row[k] : ''
-        }
-        this.addUserForm.accountId = row.id
-        // 加载组件
-        this.addUserForm.type = 'edit'
-        this.setUserFormVisible = true
-        //   组件加载完成调用组件内initdata 方法
-
+        this.setUserFormVisible = true;
+        this.$nextTick(() => {
+          this.retForm();
+          for (let k in this.addUserForm) {
+            console.log(k)
+            this.addUserForm[k] = row[k] ? row[k] : ''
+          }
+          this.addUserForm.accountId = row.id
+          this.addUserForm.type = 'edit'
+        })
       },
       deleteNow (id) {
         this.$F.doRequest(this, '/pms/workuser/delete_stores_user', {

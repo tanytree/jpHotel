@@ -5,10 +5,11 @@
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/peopleman.vue
  -->
  <template>
-<div class="sec1">
+<div class="sec1 boss-index">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
         <el-form-item label="所属门店">
             <el-select v-model="searchForm.storesNum">
+                <el-option label="全部" value="">全部</el-option>
                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                 </el-option>
             </el-select>
@@ -35,21 +36,10 @@
             <el-button type="primary" @click="addItem">添加员工</el-button>
 
         </el-form-item>
-        <!--        <el-row>-->
-
-        <!--            <el-col :span="5" v-if="isPersonnelManager">-->
-        <!--                -->
-        <!--            </el-col>-->
-        <!--            <el-col :span="5">-->
-        <!--                -->
-        <!--            </el-col>-->
-        <!--            -->
-        <!--        </el-row>-->
-
     </el-form>
     <div>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" tooltip-effect="dark" header-row-class-name="default" size="medium">
             <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip>
                 <template slot-scope="scope" v-if="scope.row.storesNum">
                     {{F_storeName(scope.row.storesNum)}}
@@ -59,7 +49,7 @@
             <el-table-column prop="inTime" label="入职时间" show-overflow-tooltip></el-table-column>
             <el-table-column prop="position" label="在职状态 " show-overflow-tooltip>
                 <template slot-scope="scope">
-                    {{scope.row.userStatus | F_userStatus}}
+                    {{$t('commons.userStatus')[scope.row.userStatus || '']}}
                 </template>
             </el-table-column>
             <el-table-column prop="position" label="职位 " show-overflow-tooltip></el-table-column>
@@ -80,11 +70,11 @@
     </div>
     <div>
         <!-- 添加员工 -->
-        <el-dialog top="0" :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff">
+        <el-dialog top="0" :title="addAndEditForm.employeeId?'编辑员工':'添加员工'" :visible.sync="adddstaff" @close="addAndEditFormClose">
             <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" :inline="true" :required="true" class="top-body" label-width="100px" size="small">
                 <el-row>
                     <el-col :span="12" v-if="isPersonnelManager" class="">
-                        <el-form-item label="所属门店:" prop="storesNum">
+                        <el-form-item label="所属门店:" prop="storesNum" v-if="storesNum == '0000000000'">
                             <el-select v-model="addAndEditForm.storesNum" class="width200" @change="changeStore($event)">
                                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                                 </el-option>
@@ -92,10 +82,10 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="所属部门:" class="" prop="departmentId">
-                            <el-select v-model="addAndEditForm.departmentId" placeholder="请选择部门" class="width200">
-                                <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                            </el-select>
+                        <el-form-item label="员工状态:" prop="userStatus">
+                            <el-radio-group v-model="addAndEditForm.userStatus">
+                                <el-radio  v-for="(label, value) in $t('commons.userStatus')" :label="value" :key="value">{{label}}</el-radio>
+                            </el-radio-group>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -115,9 +105,7 @@
                     <el-col :span="12">
                         <el-form-item label="证件类型:">
                             <el-select v-model="addAndEditForm.idcardType" placeholder="请选择证件类型" class="width200">
-                                <el-option label="身份证" :value="1"></el-option>
-                                <el-option label="护照" :value="2"></el-option>
-                                <el-option label="驾驶证" :value="3"></el-option>
+                                <el-option v-for="(label, value) in $t('commons.idCardType')" :label="label" :value="value" :key="value"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -129,11 +117,9 @@
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="员工状态:" prop="userStatus">
-                            <el-select v-model="addAndEditForm.userStatus" placeholder="请选状态" class="width200">
-                                <el-option label=正式工 :value="1" :key="1"></el-option>
-                                <el-option label="实习期" :value="2" :key="2"></el-option>
-                                <el-option label="试用期" :value="3" :key="3"></el-option>
+                        <el-form-item label="所属部门:" class="" prop="departmentId">
+                            <el-select v-model="addAndEditForm.departmentId" placeholder="请选择部门" class="width200">
+                                <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -189,7 +175,7 @@
 
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="adddstaff = false">取 消</el-button>
+                <el-button @click="addAndEditFormClose()">取 消</el-button>
                 <el-button type="primary" @click="addAndEditPost">确定</el-button>
             </div>
         </el-dialog>
@@ -273,7 +259,7 @@
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">状态:</el-col>
-                <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
+                <el-col :span="14">{{$t('commons.userStatus')[detailsData.userStatus || '']}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">联系电话:</el-col>
@@ -317,7 +303,7 @@
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">证件类型:</el-col>
-                <el-col :span="14">{{detailsData.idcardType | F_idcardType}}</el-col>
+                <el-col :span="14">{{$t('commons.idCardType')[detailsData.idcardType || '']}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">证件号:</el-col>
@@ -327,6 +313,7 @@
                 <el-col :span="8">转正日期:</el-col>
                 <el-col :span="14">{{detailsData.positiveTime}}</el-col>
             </el-row>
+
             <el-row style="margin:10px 0">
                 <el-col :span="8">备注:</el-col>
                 <el-col :span="14">{{detailsData.remark}}</el-col>
@@ -374,7 +361,7 @@ export default {
             listTotal: 0,
             storeList: [],
             departmentList: [],
-            detailsData: '',
+            detailsData: {},
             searchForm: {
                 storesNum: '',
                 content: '',
@@ -442,17 +429,15 @@ export default {
             },
             options: [],
             optionsSearchForm: {
-                searchType: 2,
+                searchType: 1,
                 pageIndex: 1,
-                pageSize: 20
+                pageSize: 20,
+                paging: false
             },
             tableData: [{}] //表格数据
         };
     },
-    filters: {
-        
 
-    },
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -466,7 +451,6 @@ export default {
         } else {
             this.isPersonnelManager = false
         }
-
         this.uploadData.userId = this.userId
         this.uploadData.accessToken = this.token
         this.uploadData.token = this.token
@@ -482,6 +466,7 @@ export default {
     methods: {
         initForm() {
             this.searchForm = {
+                storesNum: '',
                 content: '',
                 workingState: '',
                 departmentId: '',
@@ -495,10 +480,7 @@ export default {
         },
         department_list(storesNum = this.storesNum) {
             let that = this;
-            let params = {
-                storesNum: storesNum
-            }
-            this.$F.doRequest(this, '/pms/department/department_list', params, (res) => {
+            this.$F.doRequest(null, '/pms/department/department_list', {storesNum: storesNum}, (res) => {
                 this.departmentList = res;
                 that.$forceUpdate();
             })
@@ -588,12 +570,18 @@ export default {
                 this.$forceUpdate();
             })
         },
+
+        addAndEditFormClose() {
+            this.$refs['addAndEditForm'].resetFields();
+            this.adddstaff = false;
+        },
+
         addAndEditPost() {
             this.$refs.addAndEditForm.validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/employee/edit_employee', this.addAndEditForm, (res) => {
-                        this.getDataList()
-                        this.adddstaff = false
+                        this.getDataList();
+                        this.addAndEditFormClose();
                         this.$forceUpdate();
                     })
                 } else {
@@ -618,6 +606,8 @@ export default {
             this.getDetails(item)
             this.details = true
         },
+
+
         editItem(item) {
             this.getDetails(item)
             setTimeout(() => {
@@ -628,22 +618,24 @@ export default {
             for (let k in this.addAndEditForm) {
                 this.addAndEditForm[k] = ''
             }
-            this.adddstaff = true
+            this.addAndEditForm.userStatus = '1';
+            this.addAndEditForm.storesNum = this.storesNum;
+            this.adddstaff = true;
         },
         changeStore(v) {
-            console.log(v)
-            this.department_list(v)
+            this.department_list(v);
+            this.addAndEditForm.associatedAccount = '';
             this.addAndEditForm.departmentId = ''
-            this.optionsSearchForm.storesNum = v
+            this.options = [];
+            this.optionsSearchForm.storesNum = v;
         },
-        remoteMethod(query) {
-            if (query !== '') {
-                if (!this.optionsSearchForm.storesNum) {
+        remoteMethod(content) {
+            if (content !== '') {
+                this.optionsSearchForm.content = content;
+                if (!this.optionsSearchForm.storesNum)
                     this.optionsSearchForm.storesNum = this.storesNum
-                }
                 this.vloading = true;
-                this.$F.doRequest(this, '/pms/workuser/login_user_list', this.optionsSearchForm, (res) => {
-                    console.log(res)
+                this.$F.doRequest(null, '/pms/workuser/login_user_list', this.optionsSearchForm, (res) => {
                     this.vloading = false;
                     this.options = res.hotelUserList;
                 })

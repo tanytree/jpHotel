@@ -51,7 +51,9 @@
                 </div>
                 <div class="collapseWrap">
                     <!-- <collapse :employeesList="employeesList"></collapse> -->
-                    <employees :employee="employeesList" @getEmployeesDetails="getEmployeesDetails"
+                    <employees :employee="employeesList"
+                               @getEmployeesDetails="getEmployeesDetails"
+                               @getDetails="getDetails"
                                @getEmployeesDetailsEdit="getEmployeesDetailsEdit"
                                @getEmployeesDelete="getEmployeesDelete"></employees>
                 </div>
@@ -77,6 +79,83 @@
             <el-button size="small" @click="addChildDepartShow = false">取消</el-button>
             <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">确定</el-button>
         </span>
+        </el-dialog>
+
+
+
+        <!-- 查看资料 -->
+        <el-dialog top="0" title="查看详情" :visible.sync="details" width="500px">
+            <el-form :model="detailsData">
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">姓名:</el-col>
+                    <el-col :span="14">{{detailsData.userName}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">状态:</el-col>
+                    <el-col :span="14">{{$t('commons.userStatus')[detailsData.userStatus || '']}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">联系电话:</el-col>
+                    <el-col :span="14">{{detailsData.userPhone}}</el-col>
+                </el-row>
+<!--                <el-row style="margin:10px 0" v-if="isPersonnelManager">-->
+<!--                    <el-col :span="8">所属门店:</el-col>-->
+<!--                    <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>-->
+<!--                </el-row>-->
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">所属部门:</el-col>
+                    <el-col :span="14">{{detailsData.department?detailsData.department.name:''}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">职位:</el-col>
+                    <el-col :span="14">{{detailsData.position}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">银行账户:</el-col>
+                    <el-col :span="14">{{detailsData.bankcard}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">企业邮箱:</el-col>
+                    <el-col :span="14">{{detailsData.email}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">后台账号:</el-col>
+                    <el-col :span="14">{{detailsData.associatedAccount}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">工号:</el-col>
+                    <el-col :span="14">{{detailsData.worknum}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">分机号:</el-col>
+                    <el-col :span="14">{{detailsData.extension}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">入职时间:</el-col>
+                    <el-col :span="14">{{detailsData.inTime}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">证件类型:</el-col>
+                    <el-col :span="14">{{$t('commons.idCardType')[detailsData.idcardType || '']}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">证件号:</el-col>
+                    <el-col :span="14">{{detailsData.idcard}}</el-col>
+                </el-row>
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">转正日期:</el-col>
+                    <el-col :span="14">{{detailsData.positiveTime}}</el-col>
+                </el-row>
+
+                <el-row style="margin:10px 0">
+                    <el-col :span="8">备注:</el-col>
+                    <el-col :span="14">{{detailsData.remark}}</el-col>
+                </el-row>
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="details = false">关闭</el-button>
+            </div>
         </el-dialog>
 
         <el-dialog top="0" :visible.sync="departSetAndAddShow" :title="departSetAndAddTitle" width="800px">
@@ -250,7 +329,9 @@
     },
     data () {
       return {
-
+        isPersonnelManager: false,
+        detailsData: {},
+        details: false,
         deptOptions: [],
         checkAll: false,
         isIndeterminate: true,
@@ -336,11 +417,28 @@
       console.log()
       this.department_list()
       this.fetchStoresUserCount()
+      if (this.$route.name == 'employeeList') {
+        this.isPersonnelManager = true
+      } else {
+        this.isPersonnelManager = false
+      }
       // this.publicDictListIcon();
       // this.publicDictListColor();
       // this.publicDictListSetDepartmentList();
     },
     methods: {
+      getDetails(item) {
+        debugger
+        let params = {
+          // employeeId: item.id,
+          account: item.account
+        }
+        this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
+          debugger
+          this.detailsData = res
+          this.details = true;
+        })
+      },
       passwordChange () {
         this.addAndEditForm.passwordChange = true
       },
@@ -1003,6 +1101,19 @@
       },
       next () {
         if (this.active++ > 2) this.active = 0
+      },
+
+      getLoginDetails(item) {
+        let params = {
+          // employeeId: item.id,
+          account: item.id
+        }
+        this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
+          this.detailsData = res
+          this.addAndEditForm = res
+          this.addAndEditForm.employeeId = res.id
+          this.$forceUpdate();
+        })
       },
       dataFormSubmit () {
         user_enterprise({

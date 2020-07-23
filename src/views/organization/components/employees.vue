@@ -40,7 +40,7 @@
                                             <el-dropdown-item @click.native="getDetailEdit(item)">
                                                 编辑员工
                                             </el-dropdown-item>
-                                            <el-dropdown-item @click.native="getDetail(item)">
+                                            <el-dropdown-item @click.native="getDetails(item)">
                                                 查看资料
                                             </el-dropdown-item>
                                             <el-dropdown-item @click.native="deleteItem(item)">
@@ -88,6 +88,9 @@
         item.editType = 2
         this.$emit('getEmployeesDetailsEdit', item)
 
+      },
+      getDetails (data) {
+        this.$emit('getDetails', data)
       },
       deleteItem (item) {
         this.$confirm('确定删除此成员？', '提示', {

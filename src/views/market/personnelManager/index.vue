@@ -6,20 +6,22 @@
  -->
 <template>
     <el-tabs class="pageTab" v-model="activeName">
+        <!--人员查询-->
         <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'query-staff').thirdMenu" name="query-staff"
                      v-if="$F.filterThirdMenu('personnelManager', 'query-staff', true)">
             <Staff/>
         </el-tab-pane>
-
+        <!--工资查询-->
         <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'query-wage').thirdMenu" name="query-wage"
                      v-if="$F.filterThirdMenu('personnelManager', 'query-wage', true)">
             <Wage/>
         </el-tab-pane>
-
+        <!--部门管理    -->
         <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'department-manager').thirdMenu" name="department-manager"
                      v-if="$F.filterThirdMenu('personnelManager', 'department-manager', true)">
             <Department/>
         </el-tab-pane>
+        <!--员工权限-->
         <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'staff-rights').thirdMenu" name="staff-rights"
                      v-if="$F.filterThirdMenu('personnelManager', 'staff-rights', true)">
             <employeeRights/>

@@ -7,11 +7,13 @@
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
+            <!-- 门店慨然-->
             <el-tab-pane :label="$F.filterThirdMenu('boss', 'stores-overview').thirdMenu"
                          name="stores-overview"
                          v-if="$F.filterThirdMenu('boss', 'stores-overview', true)">
                 <EmployeeRights/>
             </el-tab-pane>
+            <!-- 报表-->
             <el-tab-pane :label="$F.filterThirdMenu('boss', 'boss-report').thirdMenu"
                          name="boss-report"
                          v-if="$F.filterThirdMenu('boss', 'boss-report', true)">
@@ -51,11 +53,11 @@
                     </el-tab-pane>
                 </el-tabs>
             </el-tab-pane>
+            <!-- 员工权限-->
             <el-tab-pane :label="$F.filterThirdMenu('boss', 'staff-rights').thirdMenu"
                          v-if="$F.filterThirdMenu('boss', 'staff-rights', true)">
                 <EmployeeRights/>
             </el-tab-pane>
-
         </el-tabs>
         <!-- 订单详情/查看详情 -->
         <el-dialog top="0" title="查看资料" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
