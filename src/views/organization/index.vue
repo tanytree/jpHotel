@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-23 15:49:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-16 14:58:04
+ * @LastEditTime: 2020-07-24 10:32:53
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
@@ -277,11 +277,25 @@
         <el-dialog top="0" :visible.sync="employeesDetailsEditShow"
                    :title="addAndEditForm.type=='add'?'添加成员': (addAndEditForm.editType == 2 ? '编辑部门' : '编辑成员')"
                    width="600px">
-            <el-form :model="addAndEditForm" label-width="100px">
+            <el-form :model="addAndEditForm" label-width="100px" size="small">
                 <template v-if="addAndEditForm.type=='add'||(addAndEditForm.editType && addAndEditForm.editType==1)">
-                    <el-form-item label="人员名称：" class="require">
-                        <el-input style="width:300px" v-model="addAndEditForm.userName"></el-input>
-                    </el-form-item>
+                    <el-row>
+                        <el-col :span="10">
+                            <el-form-item label="人员名称：" class="require">
+                                <el-input  v-model="addAndEditForm.userName"></el-input>
+                            </el-form-item>
+
+                        </el-col>
+                        <el-col :span="14">
+                            <el-form-item label="销售人员：" class="">
+                                <el-radio-group v-model="addAndEditForm.salesFlag">
+                                    <el-radio :label="1">是</el-radio>
+                                    <el-radio :label="2">否</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
+
+                        </el-col>
+                    </el-row>
                     <el-form-item label="人员账号：" class="require">
                         <el-input style="width:300px" v-model="addAndEditForm.account"></el-input>
                     </el-form-item>
@@ -386,6 +400,7 @@
         },
         addAndEditForm: {
           type: 'add',
+          salesFlag:'',
           accountId: '',
           userName: '',
           account: '',
@@ -550,6 +565,7 @@
         this.addAndEditForm.userType = 1
         this.addAndEditForm.accountId = item.id
         this.addAndEditForm.type = 'edit'
+        this.addAndEditForm.salesFlag = item.salesFlag
         this.addAndEditForm.editType = item.editType
         this.employeesDetailsEditShow = true
         console.log(this.addAndEditForm)
