@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Dana
- * @LastEditTime: 2020-07-07 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-24 15:51:51
+ * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
     queryBtn: '查询',
@@ -36,6 +36,31 @@ module.exports = {
         "1": '身份证',
         "2": '护照',
         "3": '驾驶证'
-    }
+    },
+    //订单来源
+    orderSource:{
+        "1": '前台',
+        "2": '销售推荐',
+        "3": '渠道订单',
+        "10": '其它'
+    },
+    //正常免费
+    checkinType:{
+        "1": '正常',
+        "2": '免费'
+    },
+    //客户类型
+    guestType:{
+        "1": '散客',
+        "2": '会员',
+        "3": '单位'
+    },
+    //朝向
+    toward:{
+        "1": '朝南',
+        "2": '朝北',
+        "3": '朝东',
+        "4": '朝西'
+    },
 }
 

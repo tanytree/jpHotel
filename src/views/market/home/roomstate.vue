@@ -11,9 +11,18 @@
         <el-col :span="5">
             <div>
                 <div>
-                    <el-input v-model="input" class="search" placeholder="姓名/房号" size="mini"></el-input>
-                    <span class="card">身份证</span>
-                    <span class="card">房卡</span>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-input v-model="searchForm.keyword" class="search" placeholder="姓名/房号" size="mini" @keyup.native="handleChange"></el-input>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-checkbox-group v-model="searchForm.checkInType" size="mini" @change="handleChange">
+                                <el-checkbox-button label="1" >身份证</el-checkbox-button>
+                                <el-checkbox-button label="2">房卡</el-checkbox-button>
+                            </el-checkbox-group>
+                        </el-col>
+                    </el-row>
+
                 </div>
                 <!-- <div  style="border-bottom: 1px dashed #ccc;"></div> -->
             </div>
@@ -32,7 +41,7 @@
                 <div style="margin-top:10px">
                     <el-row>
                         <el-col>
-                            <el-checkbox-group v-model="searchForm.roomStatus"  @change="handleChange">
+                            <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
                                 <el-checkbox v-for="(item,index) in roomStatus" :key="index" :label="item.value">
                                     <el-tag :type="item.type" effect="plain" size="mini">{{ item.name }}</el-tag>
                                 </el-checkbox>
@@ -52,7 +61,7 @@
 
                 <el-row style="margin-top:12px">
                     <el-col>
-                        <el-checkbox-group v-model="searchForm.roomTypeId"  @change="handleChange">
+                        <el-checkbox-group v-model="searchForm.roomTypeId" @change="handleChange">
                             <el-checkbox style="width:100%;position: relative;margin-top:10px" v-for="item of roomTypeId" :key="item.roomTypeId" :label="item.roomTypeId">
                                 {{item.houseName}}
                                 <span style="position: absolute;right:0">{{item.reserveCount}}/{{item.total}}</span>
@@ -103,7 +112,7 @@
         <el-col :span="19" style="padding-left:25px" v-loading="loading">
             <el-row>
                 <el-row>
-                    <el-checkbox-group v-model="searchForm.personRoom"  @change="handleChange">
+                    <el-checkbox-group v-model="searchForm.personRoom" @change="handleChange">
                         <el-checkbox v-for="(item,index) in personRoom" :label="item.eName" :key="index">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                     <el-divider></el-divider>
@@ -113,7 +122,7 @@
             <el-row v-for="(item, index) in roomList" :key="index">
                 <el-row :gutter="20" style="margin-top: 10px;">
                     <el-col :span="5">
-                        {{item.building.name}}
+                        {{item.building?item.building.name:''}}
                         <span>{{item.floor}}</span>层
                     </el-col>
                     <el-col :span="1" :offset="0.5" style="color: #999;">
@@ -121,7 +130,7 @@
                     </el-col>
                 </el-row>
                 <el-row :gutter="20" style="margin-top: 10px;">
-                    <el-col @click.native="hostelmess()" :span="4" class="tag-margin" :style="`height:120px;background:${F_roomStatusColor(room.roomStatus)};cursor: pointer;`" v-for="(room, i) in item.roomList" :key="i">
+                    <el-col @click.native="hostelmess(room)" :span="4" class="tag-margin" :style="`height:120px;background:${F_roomStatusColor(room.roomStatus)};cursor: pointer;`" v-for="(room, i) in item.roomList" :key="i">
                         <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;">
                             <el-col :span="3">{{room.houseNum}}</el-col>
                             <el-col :span="8" :offset="2">{{room.hotelRoomType.houseName}}</el-col>
@@ -132,39 +141,20 @@
                         </el-row>
                         <!-- 清扫图标后期加 -->
                         <div class="placeIcon text-center" v-if="room.roomStatus==2 || room.roomStatus==5">
-                          <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')" />
-                          <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')" />
+                            <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')" />
+                            <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')" />
                         </div>
                     </el-col>
                 </el-row>
             </el-row>
-            <!-- <el-row>
-                <el-row :gutter="20" style="margin-top: 10px;">
-                    <el-col :span="5">大仓集团第一酒店 1层</el-col>
-                    <el-col :span="1" :offset="0.5" style="color: #999;">
-                        <span style="color: #126eff;">9</span>/12
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20" style="margin-top: 10px;">
-                    <el-col :span="4" class="tag-margin" :style="`height:120px;background:${value.bgColor}`" v-for="(value, index) in roomList" :key="index">
-                        <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;">
-                            <el-col :span="3">A001</el-col>
-                            <el-col :span="8" :offset="2">标准间</el-col>
-                        </el-row>
-                    </el-col>
-                </el-row>
-            </el-row> -->
             <el-row>
-                <!-- <el-button>批量置脏/置净</el-button>  -->
                 <el-button @click="batch = true">批量置脏/置净</el-button>
-
                 <el-dialog top="0" title="批量置脏/置净" width="700px" :visible.sync="batch">
                     <el-row style="margin:10px 20px">
                         <el-row style="text-align:center; margin-bottom: 10px;">
                             <el-button>批量置脏</el-button>
                             <el-button>批量置净</el-button>
                         </el-row>
-
                         <el-form>
                             <el-row>
                                 <el-col :span="16">
@@ -173,7 +163,6 @@
                                         <el-input autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-col>
-
                                 <el-col :span="8">
                                     <el-form-item>
                                         <el-button style="width:80px;margin-left:20px" type="primary" @click="batchForm('batchform')">查询</el-button>
@@ -266,7 +255,6 @@
                 <!-- 催押 -->
                 <el-dialog top="0" title="当前催交" width="1160px" :visible.sync="print">
                     <el-form :model="form">
-                        <!-- :model="form" -->
                         <el-row>
                             <el-col :span="6">
                                 <el-form-item label="房间号：">
@@ -425,15 +413,15 @@
 
     <!-- 房间信息 -->
     <div>
-        <el-dialog top="0" :visible.sync="hosteldis" width="50%">
+        <el-dialog top="0" :visible.sync="hosteldis" width="50%" title="房间详情">
             <!-- <span>这是一段信息</span> -->
-            <el-row style="font-size:18px">A01房间--全天房</el-row>
+            <el-row style="font-size:18px">{{currentRoom.houseNum}}房间--{{currentRoom.hotelRoomType?currentRoom.hotelRoomType.houseName:''}}</el-row>
             <el-tabs type="border-card" style="margin-top:10px">
-                <el-tab-pane label="入住信息">
+                <el-tab-pane label="入住信息" v-if="currentRoom.roomStatus==3||currentRoom.roomStatus==4">
                     <el-row>
                         <el-col :span="8">
                             入住时间：
-                            <span>5465465</span>
+                            <span>{{currentRoom.createTime}}</span>
                         </el-col>
                         <el-col :span="8">
                             入住类型：
@@ -441,23 +429,35 @@
                         </el-col>
                         <el-col :span="8">
                             消费合计：
+                            <span>{{currentRoom.total}}</span>
+                        </el-col>
+                        <el-col :span="8">
+                            预离时间：
                             <span>5465465</span>
                         </el-col>
                         <el-col :span="8">
-                            入住时间：
-                            <span>5465465</span>
-                        </el-col>
-                        <el-col :span="8">
-                            入住类型：
+                            制卡数量：
                             <span>正常</span>
                         </el-col>
                         <el-col :span="8">
-                            消费合计：
+                            余额：
+                            <span>5465465</span>
+                        </el-col>
+                        <el-col :span="8">
+                            入住天数：
+                            <span>5465465</span>
+                        </el-col>
+                        <el-col :span="8">
+                            付款合计：
+                            <span>5465465</span>
+                        </el-col>
+                        <el-col :span="8">
+                            联房余额：
                             <span>5465465</span>
                         </el-col>
                     </el-row>
 
-                    <el-table :data="hosteldata" style="width: 100%">
+                    <el-table :data="currentRoom.livingPersonList" style="width: 100%">
                         <!-- <el-table-column
                           label="日期"
                           width="180">
@@ -469,16 +469,16 @@
                         <el-table-column label="姓名" width="100">
                             <template slot-scope="scope">{{scope.row.name}}</template>
                         </el-table-column>
-                        <el-table-column label="手机号" width="150">
-                            <template slot-scope="scope">{{scope.row.phonenum}}</template>
+                        <el-table-column label="手机号" width="">
+                            <template slot-scope="scope">{{scope.row.mobile}}</template>
                         </el-table-column>
-                        <el-table-column label="性别" width="50">
+                        <el-table-column label="性别" width="">
+                            <template slot-scope="scope">{{scope.row.sex | F_sex}}</template>
+                        </el-table-column>
+                        <el-table-column label="客源类型" width="">
                             <template slot-scope="scope">{{scope.row.sex}}</template>
                         </el-table-column>
-                        <el-table-column label="客源" width="50">
-                            <template slot-scope="scope">{{scope.row.sex}}</template>
-                        </el-table-column>
-                        <el-table-column label="同来客" width="80">
+                        <el-table-column label="同来客" width="">
                             <template slot-scope="scope">{{scope.row.sex}}</template>
                         </el-table-column>
                         <el-table-column label="操作">
@@ -491,13 +491,13 @@
                     <el-row>
                         <label>
                             备注：
-                            <span>提醒客户起床</span>
+                            <span>{{currentRoom.remark}}</span>
                         </label>
                         <el-button type="text" @click="remark=true">修改</el-button>
                     </el-row>
                     <el-row style="margin-top:10px">
                         <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
-                        <el-button style="width:60px;" @click="yokeplate=true">联房</el-button>
+                        <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
                         <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
                         <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
                         <el-button style="width:60px;">置脏</el-button>
@@ -506,29 +506,40 @@
                 <el-tab-pane label="房间信息">
                     <el-row>
                         <el-col :span="8">
-                            入住时间：
-                            <span>5465465</span>
+                            门市价：
+                            <span>{{currentRoom.extension}}</span>
                         </el-col>
                         <el-col :span="8">
-                            入住类型：
-                            <span>正常</span>
+                            窗户：
+                            <span>{{currentRoom.windowFlag | F_is1or2}}</span>
                         </el-col>
                         <el-col :span="8">
-                            消费合计：
-                            <span>5465465</span>
+                            靠马路：
+                            <span>{{currentRoom.roadFlag | F_is1or2}}</span>
                         </el-col>
                         <el-col :span="8">
-                            入住时间：
-                            <span>5465465</span>
+                            噪音房：
+                            <span>{{currentRoom.noiseFlag | F_is1or2}}</span>
                         </el-col>
                         <el-col :span="8">
-                            入住类型：
-                            <span>正常</span>
+                            无烟房：
+                            <span>{{currentRoom.smokeFlag | F_is1or2}}</span>
                         </el-col>
                         <el-col :span="8">
-                            消费合计：
-                            <span>5465465</span>
+                            高温房：
+                            <span>{{currentRoom.temperatureFlag | F_is1or2}}</span>
                         </el-col>
+                        <el-col :span="8">
+                            朝向：
+                            <span>{{currentRoom.toward | F_toward}}</span>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8">
+                            房间备注：
+                            <span>{{currentRoom.remark}}</span>
+                        </el-col>
+
                     </el-row>
                 </el-tab-pane>
             </el-tabs>
@@ -1080,10 +1091,10 @@ export default {
             activeThree: "a",
             currentPage3: "",
             value1: "", //时间
-            loading:false,
+            loading: false,
             searchForm: {
                 keyword: '',
-                checkInType: '',
+                checkInType: [],
                 state: 1,
                 roomStatus: [],
                 roomTypeId: [],
@@ -1096,8 +1107,10 @@ export default {
             roomStatus,
             roomTypeId: '',
             channel: '',
+            iconDesList: '',
             hotel_building_list: '',
             hotel_building_floor_list: '',
+            currentRoom: '',
 
         };
     },
@@ -1127,6 +1140,7 @@ export default {
         await this.getChannel()
         await this.getPersonRoom()
         // await this.getRoomStatus()
+        await this.getIconDes()
         this.realtime_room_statistics()
         this.get_hotel_building_list()
         this.initForm();
@@ -1136,7 +1150,7 @@ export default {
         initForm() {
             this.searchForm = {
                 keyword: '',
-                checkInType: '',
+                checkInType: [],
                 state: 1,
                 roomStatus: [],
                 roomTypeId: [],
@@ -1157,10 +1171,10 @@ export default {
         },
         getChannel() {
             return new Promise((resolve, reject) => {
-              this.$F.getPublicDictByType(this, 1, (res) => {
-                this.dict_channel = res
-                resolve(res)
-              })
+                this.$F.getPublicDictByType(this, 1, (res) => {
+                    this.dict_channel = res
+                    resolve(res)
+                })
             })
 
         },
@@ -1176,12 +1190,20 @@ export default {
         },
         getRoomStatus() {
             return new Promise((resolve, reject) => {
-              this.$F.getPublicDictByType(this, 15, (res) => {
-                // this.dict_roomStatus= res
-                resolve(res)
-              })
+                this.$F.getPublicDictByType(this, 15, (res) => {
+                    // this.dict_roomStatus= res
+                    resolve(res)
+                })
             })
-
+        },
+        //获取图标说明
+        getIconDes() {
+            return new Promise((resolve, reject) => {
+                this.$F.getPublicDictByType(this, 15, (res) => {
+                    this.iconDesList = res
+                    resolve(res)
+                })
+            })
         },
         realtime_room_statistics() {
             let that = this
@@ -1226,10 +1248,10 @@ export default {
         },
         buildingSelectChange(e) {
             console.log(e)
-              this.searchForm.buildingId = e
-              this.searchForm.buildingFloorId = ''
-              this.get_hotel_building_floor_list(e)
-              this.getDataList()
+            this.searchForm.buildingId = e
+            this.searchForm.buildingFloorId = ''
+            this.get_hotel_building_floor_list(e)
+            this.getDataList()
 
         },
         floorSelectChange(e) {
@@ -1237,7 +1259,7 @@ export default {
             this.searchForm.buildingFloorId = e;
             this.getDataList()
         },
-        clearnSelectAttr(attr){
+        clearnSelectAttr(attr) {
             this.searchForm[attr] = '';
             this.getDataList()
         },
@@ -1254,8 +1276,17 @@ export default {
         handleChange(e) {
             this.getDataList()
         },
-        hostelmess() {
+        hostelmess(room) {
             this.hosteldis = true;
+            this.currentRoom = room
+        },
+        yokeplateHandle(item) {
+            this.yokeplate = true;
+            this.$F.doRequest(this, '/pms/checkin/check_in_room_join', {
+                roomId: item.id
+            }, (res) => {
+                this.hotel_building_floor_list = res
+            })
         },
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
@@ -1548,5 +1579,8 @@ export default {
 .roomSelect ul li:last-child {
     border-bottom: 0;
 }
-.placeIcon{margin-top:25px}
+
+.placeIcon {
+    margin-top: 25px
+}
 </style>
