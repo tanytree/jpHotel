@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-23 15:49:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-16 14:58:04
+ * @LastEditTime: 2020-07-24 10:15:03
  * @FilePath: /jiudian/src/views/organization/index.vue
  -->
 <template>
@@ -55,8 +55,8 @@
                 <employees :employee="employeesList" @getEmployeesDetails="getEmployeesDetails" @getEmployeesDetailsEdit="getEmployeesDetailsEdit" @getEmployeesDelete="getEmployeesDelete"></employees>
             </div>
             <div class="bottomPage">
-                    <el-pagination class="" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="employeesForm.pageIndex" :page-sizes="[20, 50, 100, 200]" :page-size="employeesForm.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-                    </div>
+                <el-pagination class="" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="employeesForm.pageIndex" :page-sizes="[20, 50, 100, 200]" :page-size="employeesForm.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+            </div>
         </div>
 
     </div>
@@ -180,11 +180,25 @@
       </span>-->
     </el-dialog>
     <el-dialog top="0" :visible.sync="employeesDetailsEditShow" :title="addAndEditForm.type=='add'?'添加成员':'编辑成员'" width="600px">
-        <el-form :model="addAndEditForm" label-width="100px">
+        <el-form :model="addAndEditForm" label-width="100px" size="small">
             <template v-if="addAndEditForm.type=='add'||(addAndEditForm.editType&&addAndEditForm.editType==1)">
-                <el-form-item label="人员名称：" class="require">
-                    <el-input style="width:300px" v-model="addAndEditForm.userName"></el-input>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="10">
+                        <el-form-item label="人员名称：" class="require">
+                            <el-input  v-model="addAndEditForm.userName"></el-input>
+                        </el-form-item>
+
+                    </el-col>
+                    <el-col :span="14">
+                        <el-form-item label="销售人员：" class="">
+                            <el-radio-group v-model="addAndEditForm.salesFlag">
+                                <el-radio :label="1">是</el-radio>
+                                <el-radio :label="2">否</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+
+                    </el-col>
+                </el-row>
                 <el-form-item label="人员账号：" class="require">
                     <el-input style="width:300px" v-model="addAndEditForm.account"></el-input>
                 </el-form-item>
@@ -224,7 +238,7 @@ export default {
     },
     data() {
         return {
-          loading: false,
+            loading: false,
             listTotal: 0,
             departmentList: [],
             employeesList: [],
@@ -274,6 +288,7 @@ export default {
             },
             addAndEditForm: {
                 type: 'add',
+                salesFlag:'',
                 accountId: '',
                 userName: '',
                 account: '',
@@ -401,6 +416,7 @@ export default {
             this.addAndEditForm.accountId = item.id
             this.addAndEditForm.type = 'edit'
             this.addAndEditForm.editType = item.editType
+            this.addAndEditForm.salesFlag = item.salesFlag
             this.employeesDetailsEditShow = true;
             console.log(this.addAndEditForm)
         },
@@ -461,7 +477,7 @@ export default {
             }
             let params = JSON.parse(JSON.stringify(this.addAndEditForm))
             params.departmentIds = params.departmentIds.toString()
-          debugger
+            debugger
             this.$F.doRequest(this, url, params, (res) => {
                 this.employees_list(this.activeLeftDepartMent.id);
                 this.employeesDetailsEditShow = false
@@ -1047,6 +1063,7 @@ export default {
         .warp {
             position: relative;
             height: 100%;
+
             .collapseWrap {
                 position: absolute;
                 top: 80px;
@@ -1054,6 +1071,7 @@ export default {
                 width: 100%;
                 overflow: auto;
             }
+
             .hd {
                 height: 80px;
                 border-bottom: 1px solid #eee;
@@ -1091,7 +1109,14 @@ export default {
                     }
                 }
             }
-            .bottomPage{position: absolute;bottom: 0;left: 0;right:50px;text-align:center}
+
+            .bottomPage {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 50px;
+                text-align: center
+            }
         }
 
     }
