@@ -8,7 +8,7 @@
                     <el-avatar :size="40" fit="cover" :src="require('@/assets/images/people.png')"></el-avatar>
                     <div class="avatarName">{{item.userName}}</div>
                     <el-tag v-for="role in $t('commons.userRoleList')" :key="role.value" :label="role.value"
-                         v-if="role.value == item.userType && item.userType == 2">{{role.label}}
+                         v-if="item.userRole && role.value == item.userRole.userStatus && item.userRole.userStatus == 2">{{role.label}}
                     </el-tag>
                 </div>
                 <el-dropdown trigger="click" @command="(e) => handleCommand(e, item)">
@@ -17,7 +17,7 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="see">查看资料</el-dropdown-item>
-                        <el-dropdown-item command="set">权限设置</el-dropdown-item>
+                        <el-dropdown-item command="set" v-if="item.userRole.userStatus != 2">权限设置</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </li>

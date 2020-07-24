@@ -276,7 +276,7 @@
         </el-dialog>
         <el-dialog top="0" :visible.sync="employeesDetailsEditShow"
                    :title="addAndEditForm.type=='add'?'添加成员': (addAndEditForm.editType == 2 ? '编辑部门' : '编辑成员')"
-                   width="600px">
+                   width="600px" @close="itemClose()">
             <el-form :model="addAndEditForm" label-width="100px" size="small">
                 <template v-if="addAndEditForm.type=='add'||(addAndEditForm.editType && addAndEditForm.editType==1)">
                     <el-row>
@@ -322,8 +322,8 @@
                 </template>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" type="primary" @click="employeesDetailsEditChange()">保存</el-button>
-            <el-button size="small" @click="employeesDetailsEditShow = false">取消</el-button>
+            <el-button size="small" type="primary" @click="employeesDetailsEditChange()" v-loading="loading">保存</el-button>
+            <el-button size="small" @click="itemClose">取消</el-button>
         </span>
         </el-dialog>
         <!-- <add-employees :employeesSetting="employeesSetting" @getInviteShow="getInviteShow" @enterprise_department_distributionFn="enterprise_department_distributionFn"></add-employees> -->
@@ -406,6 +406,7 @@
           account: '',
           password: '',
           userType: 1,
+          salesFlag: 1,
           departmentIds: []
         },
         //门店下总人数
@@ -429,7 +430,6 @@
     created () {
     },
     mounted () {
-      console.log()
       this.department_list()
       this.fetchStoresUserCount()
       if (this.$route.name == 'employeeList') {
@@ -443,13 +443,11 @@
     },
     methods: {
       getDetails(item) {
-        debugger
         let params = {
           // employeeId: item.id,
           account: item.account
         }
         this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
-          debugger
           this.detailsData = res
           this.details = true;
         })
@@ -550,9 +548,7 @@
       },
 
       getEmployeesDetailsEdit (item) {
-        debugger
         this.getUser_role(item.id)
-
         for (let k in this.addAndEditForm) {
           this.addAndEditForm[k] = item[k] ? item[k] : ''
         }
@@ -581,7 +577,6 @@
       },
       employeesDetailsEditChange () {
         let url = ''
-        debugger
         if (this.addAndEditForm.type == 'add') {
 
           if (!this.addAndEditForm.userName) {
@@ -630,7 +625,6 @@
         if (!params.passwordChange) {
           delete params['password']
         }
-        debugger
         this.addAndEditForm.passwordChange = false
         this.$F.doRequest(this, url, params, (res) => {
           this.employees_list(this.activeLeftDepartMent.id)
@@ -644,7 +638,7 @@
 
       getUser_role (id) {
         let that = this
-        this.$F.doRequest(this, '/pms/freeuser/user_role', {
+        this.$F.doRequest(null, '/pms/freeuser/user_role', {
           userId: id
         }, (res) => {
           this.addAndEditForm.departmentIds = []
@@ -670,7 +664,8 @@
 
       fetchStoresUserCount () {
         this.$F.doRequest(this, '/pms/workuser/stores_user_count', { departmentId: '3213' }, (res) => {
-          this.storesUserCount = res.userCount
+          this.storesUserCount = res.userCount;
+          this.$forceUpdate();
         })
       },
 
@@ -731,15 +726,28 @@
             this.$message.error(err.message)
           })
       },
-      addItemHandle () {
+
+      itemInit() {
         this.addAndEditForm = {
           accountId: '',
           userName: '',
           account: '',
           password: '',
           userType: 1,
-          departmentIds: []
+          departmentIds: [],
+          salesFlag: 1
         }
+      },
+
+      itemClose() {
+        debugger
+        this.employeesDetailsEditShow = false;
+        this.itemInit();
+      },
+
+      addItemHandle () {
+        this.checkAll = false;
+        this.isIndeterminate = true;
         this.employeesDetailsEditShow = true
         this.addAndEditForm.type = 'add'
       },

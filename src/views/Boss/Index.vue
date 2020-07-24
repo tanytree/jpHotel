@@ -17,41 +17,7 @@
             <el-tab-pane :label="$F.filterThirdMenu('boss', 'boss-report').thirdMenu"
                          name="boss-report"
                          v-if="$F.filterThirdMenu('boss', 'boss-report', true)">
-                <el-tabs v-model="active_second_name" type="card">
-                    <el-tab-pane :label="first_title" name="one">
-                        <div class="first-body">
-                            <div class="title">
-                                <span>前台部报表</span>
-<!--                                 <span>{{$t('commons.F_sex')}}</span>-->
-                            </div>
-                            <div class="content-body">
-                                <div class="body-item">
-                                    <div class="item-tag">
-                                        <div class="item">营业日报</div>
-                                        <div class="item">营业月报</div>
-                                        <div class="item">营业年报</div>
-                                        <div class="item">现金流明细表</div>
-                                        <div class="item">迷你吧销售报表</div>
-                                    </div>
-                                    <div class="item-tag">
-                                        <div class="item">会员卡积分明细报表</div>
-                                        <div class="item">交班报表(前台部)</div>
-                                        <div class="item">结账汇总报表</div>
-                                        <div class="item">结账明细报表</div>
-                                        <div class="item">宾客账务余额报表</div>
-                                    </div>
-                                    <div class="item-tag">
-                                        <div class="item">会员卡积分兑换报表</div>
-                                        <div class="item">单位挂账明细表</div>
-                                        <div class="item">单位挂账汇总表</div>
-                                        <div class="item">销售员业绩明细表</div>
-                                        <div class="item">销售员业绩汇总表</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </el-tab-pane>
-                </el-tabs>
+                <Report></Report>
             </el-tab-pane>
             <!-- 员工权限-->
             <el-tab-pane :label="$F.filterThirdMenu('boss', 'staff-rights').thirdMenu"
@@ -134,8 +100,9 @@
 
 <script>
 import EmployeeRights from '@/components/employeeRights'
+import Report from '@/views/finance/report/main'
 export default {
-  components: { EmployeeRights },
+  components: { EmployeeRights, Report },
   data () {
     return {
       activeName: 'boss-report',

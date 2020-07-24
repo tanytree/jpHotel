@@ -2,58 +2,7 @@
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
             <el-tab-pane label="报表" name="report">
-                <div class="boss-index">
-                    <el-card shadow="never">
-                        <el-tabs v-model="reportName" type="card" @tab-remove="removeTab">
-                            <el-tab-pane label="首页" name="home">
-                                <div class="reportHome">
-                                    <div class="title">前台部报表</div>
-                                    <div class="listBox">
-                                        <ul v-for="(item, index) in arr" :key="index">
-                                            <li v-for="(son, i) in item" :key="index + '_' + i" @click="addReport(son)"><img src="../../assets/images/star.png" alt="" width="20"><span>{{son.title}}</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </el-tab-pane>
-                            <el-tab-pane v-if="reportNav.length > 0" v-for="(pane, $index) in reportNav" closable :key="$index" :label="pane.title" :name="pane.path">
-                                <div class="report">
-                                    <el-form ref="form" size="small" inline :model="form" class="term line">
-                                        <div class="inline" v-if="pane.path == 'day'">
-                                            <el-form-item label="营业时间：">
-                                                <el-date-picker type="date" v-model="form.date"></el-date-picker>
-                                            </el-form-item>
-                                        </div>
-                                        <div class="inline" v-if="pane.path == 'month'">
-                                            <el-form-item label="营业时间：">
-                                                <el-date-picker type="date" v-model="form.strDate"></el-date-picker>
-                                                <span class="line">至</span>
-                                                <el-time-picker type="date" v-model="form.endDate"></el-time-picker>
-                                            </el-form-item>
-                                            <el-form-item>
-                                                <el-radio-group v-model="form.cate">
-                                                    <el-radio-button value="curMonth" label="本月"></el-radio-button>
-                                                    <el-radio-button value="lastMonth" label="上月"></el-radio-button>
-                                                </el-radio-group>
-                                            </el-form-item>
-                                        </div>
-                                        <el-form-item>
-                                            <el-button type="primary" class="submit">查询</el-button>
-                                            <el-button type="primary" class="submit">打印</el-button>
-                                            <el-button type="primary" class="submit">导出</el-button>
-                                        </el-form-item>
-                                    </el-form>
-                                    <div class="reportTitle">{{pane.title}}</div>
-                                    <div class="subTip">营业时间：{{strTime}} 至 {{endTime}}</div>
-                                    <reportTable :type="pane.path" :reportData="reportData" />
-                                    <div class="formula">
-                                        <div class="red">计算公式：</div>
-                                        <div>1.非房费收入包含损物赔偿、迷你吧、其他、会员卡</div>
-                                    </div>
-                                </div>
-                            </el-tab-pane>
-                        </el-tabs>
-                    </el-card>
-                </div>
+                <MainContainer></MainContainer>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -61,12 +10,7 @@
 
 <script>
     import { mapState, mapActions } from 'vuex'
-    import {
-        get_withdraw_list,
-        get_withdraw_info,
-        withdrawapply
-    } from '@/utils/api/finance'
-    import reportTable from './report/table'
+    import MainContainer from './report/main'
 
     export default {
         data () {
@@ -99,7 +43,7 @@
                 ]
             }
         },
-        components: {reportTable},
+        components: {MainContainer},
         mounted () {
             this.arr = this.group(this.reports, 5);
         },

@@ -3,7 +3,7 @@
 
  * @LastEditors: 董林
 
- * 
+ *
  -->
 <template>
   <div>
@@ -31,15 +31,11 @@
 
 
       </el-tab-pane>
-      <!-- 员工管理 -->
-      <el-tab-pane label="员工管理" name="five">
-          <Employee />
-
+    <!-- 员工权限-->
+      <el-tab-pane :label="$F.filterThirdMenu('frontOffice', 'staff-rights').thirdMenu"
+                 v-if="$F.filterThirdMenu('frontOffice', 'staff-rights', true)">
+        <EmployeeRights/>
       </el-tab-pane>
-        
-
-
-
     </el-tabs>
   </div>
 </template>
@@ -49,9 +45,9 @@ import Roomstate from "./home/roomstate";
 import Openapply from "./home/openapply";
 import Messageman from "./home/messageman";
 import Goods from "./home/goods";
-import Employee from "./home/employee";
+import EmployeeRights from '@/components/employeeRights'
 export default {
-  components: { Roomstate, Openapply, Messageman, Goods,Employee },
+  components: { Roomstate, Openapply, Messageman, Goods,EmployeeRights },
   data() {
      return {
       activeName: "one" ,//第一个默认启动

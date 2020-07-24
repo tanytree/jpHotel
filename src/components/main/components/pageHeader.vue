@@ -4,46 +4,10 @@
             <!--      <el-dropdown>-->
             <span class="el-dropdownBox">
                 <span class="enterName">{{user.storesInfo.storesName}}</span>
-                <!--                <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
               </span>
-            <!--        <el-dropdown-menu slot="dropdown">-->
-            <!--          <el-dropdown-item-->
-            <!--            class="itemel"-->
-            <!--            v-for="(item,index) in storeList"-->
-            <!--            :key="index"-->
-            <!--            @click.native="selectCompany(item)"-->
-            <!--          >-->
-            <!--            <div class="itemComang" :class="[item.enterCode==company.enterCode?'activeC':'']">-->
-            <!--              <span-->
-            <!--                class="itemSpam"-->
-            <!--                :class="[item.default==1?'active':'']"-->
-            <!--              >{{item.default==1?"默认":""}}</span>-->
-            <!--              {{item.enterName}}-->
-            <!--            </div>-->
-            <!--          </el-dropdown-item>-->
-            <!--          <el-dropdown-item @click.native="joinCompany">-->
-            <!--            <span class="itemSpam"></span>-->
-            <!--            <i class="el-icon-plus"></i>创建/加入企业-->
-            <!--          </el-dropdown-item>-->
-            <!--        </el-dropdown-menu>-->
-            <!--      </el-dropdown>-->
-            <!--      <span class="itemTxt" @click="toNext('companyInfo')">企业管理</span>-->
         </div>
 
         <div class="header_right">
-            <!--
-            <span class="itemTxt rightItem">
-              <img src="@/assets/images/topBanner/shengpi.png" alt />
-              审批
-            </span>
-            <span class="itemTxt rightItem">
-              <img src="@/assets/images/topBanner/xiaoxi.png" alt />
-              消息
-            </span>
-            <span class="itemTxt rightItem">
-              <img src="@/assets/images/topBanner/gonggao.png" alt />
-              公告
-            </span>-->
             <span class="itemTxt rightItem">
 				<el-dropdown>
 					<span class="el-dropdown-link">
@@ -87,6 +51,7 @@
     mapState,
     mapActions
   } from 'vuex'
+  import { getLanguage, setLanguage } from '@/utils/auth'
 
   export default {
     // props:['language'],
@@ -103,8 +68,7 @@
     },
 
     mounted () {
-      let locale = sessionStorage.locale
-      locale = (locale && locale != 'undefined') ? locale : 'ri'
+      let locale = getLanguage() || 'zh';
       this.language = this.$F.getLangDesc(locale)
       sessionStorage.locale = locale
       this.$i18n.locale = locale
@@ -112,6 +76,7 @@
     methods: {
       ...mapActions({}),
       toggleLang (lang) {
+        setLanguage(lang);
         this.$i18n.locale = lang
         sessionStorage.locale = lang
         let langDesc = this.$F.getLangDesc(lang)
@@ -121,15 +86,9 @@
           message: `切换为${langDesc}成功`,
           type: 'success'
         })
-        // debugger
         // this.reload();
         // this.$router.go(0)
         window.location.reload()
-        // setTimeout(() => {
-        //   debugger
-        //   this.$router.push({ name: sessionStorage.currentPath, params: { action: 'refresh' } })
-        //   // this.$emit('toSection', JSON.parse(sessionStorage.subMenul))
-        // }, 1000)
       },
 
       modelShowfuc () {
