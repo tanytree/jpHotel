@@ -13,7 +13,7 @@
                     </div>
                     <ul class="el-menu">
                         <li class="el-menu-item" v-for="(item) in menul.childList" :key="item.id"
-                            :class="sectionid==item.id ? 'is-active':''"
+                            :class="sectionid == item.id &&routerCompany !== 'company' ? 'is-active':''"
                             @click="toSection(item)">
                             <img v-if="item.icon" :src="require(`@/assets/images/${item.icon}`)" alt/>
                             {{$i18n.locale == 'ri' ? item.japanese : (item.menuAliasTitle || item.menuTitle)}}
@@ -24,7 +24,7 @@
             <el-container class="mainContainer">
                 <el-header class="layHeader">
                     <div class="header-item" v-for="item in menuList" :key="item.name" @click="menulfuc(item)"
-                         :class="partmentId == item.id?'itemactive':''">
+                         :class="partmentId == item.id &&routerCompany !== 'company' ?'itemactive':''">
                         <img :src="require(`@/assets/images/${item.icon}.png`)" alt/>
                         <div> {{$i18n.locale == 'ri' ? item.japanese : (item.menuAliasTitle || item.menuTitle)}}</div>
                     </div>
@@ -50,7 +50,7 @@
 
   export default {
     name: 'Main',
-    inject:['reload'],
+    inject: ['reload'],
     components: {
       esMenu,
       pageHeader
@@ -87,8 +87,8 @@
         routeractions: 'routermsg/routeractions',
       }),
 
-      refresh() {
-        this.reload();
+      refresh () {
+        this.reload()
       },
 
       menulfuc (item) {
@@ -116,7 +116,7 @@
           if (this.$route.name == item.path) {
             return false
           } else {
-            sessionStorage.currentPath = item.path;
+            sessionStorage.currentPath = item.path
             this.$router.push({ name: item.path })
           }
         } else {
@@ -170,12 +170,11 @@
     //   this.toSection(this.menul.childList[0])
     // },
     mounted () {
-        debugger
       if (sessionStorage.menul && sessionStorage.menul != 'undefined') {
-        this.menulfuc(JSON.parse(sessionStorage.menul));
+        this.menulfuc(JSON.parse(sessionStorage.menul))
         this.toSection(JSON.parse(sessionStorage.subMenul))
       } else {
-        this.menulfuc(this.menuList[0]);
+        this.menulfuc(this.menuList[0])
         this.toSection(this.menul.childList[0])
       }
     },

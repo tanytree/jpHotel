@@ -8,10 +8,10 @@
 <div class="sec1">
     <el-form :model="searchForm" :inline="true" class="top-body" size="small" label-width="100px">
         <el-row>
-
             <el-col :span="5">
                 <el-form-item label="所属门店">
                     <el-select v-model="searchForm.storesNum">
+                        <el-option label="全部" value="">全部</el-option>
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                         </el-option>
                     </el-select>
@@ -68,7 +68,7 @@
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">状态:</el-col>
-                <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
+                <el-col :span="14">{{$t('commons.userStatus')[detailsData.userStatus || '']}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">联系电话:</el-col>
@@ -112,7 +112,7 @@
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">证件类型:</el-col>
-                <el-col :span="14">{{detailsData.idcardType | F_idcardType}}</el-col>
+                <el-col :span="14">{{$t('commons.idCardType')[detailsData.idcardType || '']}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">证件号:</el-col>
@@ -166,21 +166,22 @@ export default {
         };
     },
     filters: {
-        
+
 
     },
-    created() {
-        this.$F.doRequest(this, '/pms/freeuser/stores_list', {
+    mounted() {
+        this.$F.doRequest(null, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
             this.storeList = data;
-            this.initForm();
         })
+        this.initForm();
 
     },
     methods: {
         initForm() {
             this.searchForm = {
+                storesNum: '',
                 content: '',
                 workingState: '',
                 departmentId: '',
@@ -194,7 +195,6 @@ export default {
         },
         getDataList() {
             let that = this;
-
             this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
                 this.tableData = res.employeesList;
                 this.listTotal = res.page.count

@@ -7,7 +7,9 @@
                 <div class="left">
                     <el-avatar :size="40" fit="cover" :src="require('@/assets/images/people.png')"></el-avatar>
                     <div class="avatarName">{{item.userName}}</div>
-                    <el-tag v-if="item.position" effect="plain">{{item.position}}</el-tag>
+                    <el-tag v-for="role in $t('commons.userRoleList')" :key="role.value" :label="role.value"
+                         v-if="role.value == item.userType && item.userType == 2">{{role.label}}
+                    </el-tag>
                 </div>
                 <el-dropdown trigger="click" @command="(e) => handleCommand(e, item)">
                     <span class="el-dropdown-link">
@@ -92,7 +94,7 @@ export default {
             cur: {},
         }
     },
-    created() {
+    mounted() {
         this.initForm();
     },
     methods: {
@@ -127,6 +129,7 @@ export default {
                 this.menuList = res
                 for (let i in this.menuList) {
                     this.menuList[i].checkAll = false;
+
                     this.menuList[i].isIndeterminate = false;
                     for (let k in this.menuList[i].childList) {
                         this.menuList[i].childList.choose = false
@@ -141,7 +144,6 @@ export default {
             this.$F.doRequest(this, '/pms/freeuser/user_role', {
                 userId: id
             }, (res) => {
-              debugger
                 //以下代码请在理解后改动
                 let userRole = res.menuList;
                 let currentUserRole = [];
