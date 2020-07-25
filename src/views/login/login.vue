@@ -18,8 +18,9 @@
                     <el-form-item prop="password">
                         <el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码，长度为6 - 18个字符" v-model.trim="loginForm.password" @keyup.enter.native="clickLoginBtn()"></el-input>
                     </el-form-item>
-                    <el-form-item>
-                        <el-button style="width:50%" type="primary" @click="clickLoginBtn()" v-loading="loading">登录</el-button>
+                    <el-form-item class="login-btns">
+<!--                        <el-button style="width:50%" type="primary" @click="clickLoginBtn()" v-loading="loading">登录</el-button>-->
+                        <el-button type="primary"  v-loading="loading" @click="clickLoginBtn()">登录</el-button>
                         <el-select v-model="language" @change="onLanguageChange">
                             <el-option label="中文" value="zh"></el-option>
                             <el-option label="日文" value="ri"></el-option>
@@ -186,6 +187,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    /*.login-btns {*/
+    /*    display: flex;*/
+    /*    flex-direction: column;*/
+    /*    .el-button {*/
+    /*        flex: 1;*/
+    /*    }*/
+    /*    .el-select {*/
+    /*        flex: 1;*/
+    /*    }*/
+    /*}*/
     .register-index {
         background: url(../../assets/images/login/background.png) no-repeat;
         width: 100%;

@@ -43,7 +43,7 @@
                                             <el-dropdown-item @click.native="getDetails(item)">
                                                 查看资料
                                             </el-dropdown-item>
-                                            <el-dropdown-item @click.native="deleteItem(item)">
+                                            <el-dropdown-item @click.native="deleteItem(item)" style="color: red">
                                                 删除员工
                                             </el-dropdown-item>
                                         </el-dropdown-menu>

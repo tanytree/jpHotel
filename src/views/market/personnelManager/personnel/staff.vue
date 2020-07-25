@@ -59,84 +59,17 @@
         <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
-    <!-- 查看资料 -->
-    <el-dialog top="0" title="查看资料" :visible.sync="details" width="500px">
-        <el-form :model="detailsData">
-            <el-row style="margin:10px 0">
-                <el-col :span="8">姓名:</el-col>
-                <el-col :span="14">{{detailsData.userName}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">状态:</el-col>
-                <el-col :span="14">{{$t('commons.userStatus')[detailsData.userStatus || '']}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">联系电话:</el-col>
-                <el-col :span="14">{{detailsData.userPhone}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">所属门店:</el-col>
-                <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">所属部门:</el-col>
-                <el-col :span="14">{{detailsData.department?detailsData.department.name:''}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">职位:</el-col>
-                <el-col :span="14">{{detailsData.position}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">银行账户:</el-col>
-                <el-col :span="14">{{detailsData.bankcard}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">企业邮箱:</el-col>
-                <el-col :span="14">{{detailsData.email}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">后台账号:</el-col>
-                <el-col :span="14">{{detailsData.associatedAccount}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">工号:</el-col>
-                <el-col :span="14">{{detailsData.worknum}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">分机号:</el-col>
-                <el-col :span="14">{{detailsData.extension}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">入职时间:</el-col>
-                <el-col :span="14">{{detailsData.inTime}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">证件类型:</el-col>
-                <el-col :span="14">{{$t('commons.idCardType')[detailsData.idcardType || '']}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">证件号:</el-col>
-                <el-col :span="14">{{detailsData.idcard}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">转正日期:</el-col>
-                <el-col :span="14">{{detailsData.positiveTime}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">备注:</el-col>
-                <el-col :span="14">{{detailsData.remark}}</el-col>
-            </el-row>
-        </el-form>
-
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="details = false">关闭</el-button>
-        </div>
-    </el-dialog>
+    <!-- 查看资料组件 -->
+    <LoginDetail ref="loginDetail"></LoginDetail>
 </div>
 </template>
 
 <script>
+  import LoginDetail from '@/components/staff/loginDetail'
 export default {
+  components: {
+    LoginDetail
+  },
     data() {
         return {
             details: false,
@@ -210,16 +143,11 @@ export default {
             }
             return '未知门店'
         },
+
         getDetails(item) {
-            let params = {
-                employeeId: item.id,
-                account: item.associatedAccount
-            }
-            this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
-                this.detailsData = res
-                this.$forceUpdate();
-            })
+            this.$refs.loginDetail.getDetails('', item.id);
         },
+
         detailsHandle(item) {
             this.getDetails(item)
             this.details = true

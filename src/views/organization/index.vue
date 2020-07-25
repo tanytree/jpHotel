@@ -52,7 +52,6 @@
                 <div class="collapseWrap">
                     <!-- <collapse :employeesList="employeesList"></collapse> -->
                     <employees :employee="employeesList"
-                               @getEmployeesDetails="getEmployeesDetails"
                                @getDetails="getDetails"
                                @getEmployeesDetailsEdit="getEmployeesDetailsEdit"
                                @getEmployeesDelete="getEmployeesDelete"></employees>
@@ -81,82 +80,8 @@
         </span>
         </el-dialog>
 
-
-
-        <!-- 查看资料 -->
-        <el-dialog top="0" title="查看详情" :visible.sync="details" width="500px">
-            <el-form :model="detailsData">
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">姓名:</el-col>
-                    <el-col :span="14">{{detailsData.userName}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">状态:</el-col>
-                    <el-col :span="14">{{$t('commons.userStatus')[detailsData.userStatus || '']}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">联系电话:</el-col>
-                    <el-col :span="14">{{detailsData.userPhone}}</el-col>
-                </el-row>
-<!--                <el-row style="margin:10px 0" v-if="isPersonnelManager">-->
-<!--                    <el-col :span="8">所属门店:</el-col>-->
-<!--                    <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>-->
-<!--                </el-row>-->
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">所属部门:</el-col>
-                    <el-col :span="14">{{detailsData.department?detailsData.department.name:''}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">职位:</el-col>
-                    <el-col :span="14">{{detailsData.position}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">银行账户:</el-col>
-                    <el-col :span="14">{{detailsData.bankcard}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">企业邮箱:</el-col>
-                    <el-col :span="14">{{detailsData.email}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">后台账号:</el-col>
-                    <el-col :span="14">{{detailsData.associatedAccount}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">工号:</el-col>
-                    <el-col :span="14">{{detailsData.worknum}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">分机号:</el-col>
-                    <el-col :span="14">{{detailsData.extension}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">入职时间:</el-col>
-                    <el-col :span="14">{{detailsData.inTime}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">证件类型:</el-col>
-                    <el-col :span="14">{{$t('commons.idCardType')[detailsData.idcardType || '']}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">证件号:</el-col>
-                    <el-col :span="14">{{detailsData.idcard}}</el-col>
-                </el-row>
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">转正日期:</el-col>
-                    <el-col :span="14">{{detailsData.positiveTime}}</el-col>
-                </el-row>
-
-                <el-row style="margin:10px 0">
-                    <el-col :span="8">备注:</el-col>
-                    <el-col :span="14">{{detailsData.remark}}</el-col>
-                </el-row>
-            </el-form>
-
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="details = false">关闭</el-button>
-            </div>
-        </el-dialog>
+        <!-- 查看资料组件 -->
+        <LoginDetail ref="loginDetail"></LoginDetail>
 
         <el-dialog top="0" :visible.sync="departSetAndAddShow" :title="departSetAndAddTitle" width="800px">
             <el-form :model="departMentForm">
@@ -332,6 +257,7 @@
 
 <script>
   import employees from './components/employees'
+  import LoginDetail from '@/components/staff/loginDetail'
   import {
     mapState,
     mapActions
@@ -340,6 +266,7 @@
   export default {
     components: {
       employees,
+      LoginDetail
     },
     data () {
       return {
@@ -411,7 +338,6 @@
         },
         //门店下总人数
         storesUserCount: 0,
-
       }
     },
     computed: {
@@ -443,14 +369,7 @@
     },
     methods: {
       getDetails(item) {
-        let params = {
-          // employeeId: item.id,
-          account: item.account
-        }
-        this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
-          this.detailsData = res
-          this.details = true;
-        })
+        this.$refs.loginDetail.getDetails(item.account);
       },
       passwordChange () {
         this.addAndEditForm.passwordChange = true
@@ -534,19 +453,10 @@
       getInviteShow (v) {
         this.employeesSetting.isShow = v
       },
-      getEmployeesDetails (item) {
-        this.$alert('该成员暂无资料（资料需要在员工管理添加，然后绑定该成员的后台账号即可）', '提示', {
-          confirmButtonText: '关闭',
-          callback: action => {
-            // this.$message({
-            //   type: 'info',
-            //   message: `action: ${ action }`
-            // });
-          }
-        })
-        // this.employeesDetailsShow = true;
-      },
 
+      getEmployeesDetails() {
+
+      },
       getEmployeesDetailsEdit (item) {
         this.getUser_role(item.id)
         for (let k in this.addAndEditForm) {
@@ -740,7 +650,6 @@
       },
 
       itemClose() {
-        debugger
         this.employeesDetailsEditShow = false;
         this.itemInit();
       },

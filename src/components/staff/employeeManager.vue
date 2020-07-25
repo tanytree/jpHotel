@@ -7,7 +7,7 @@
  <template>
 <div class="sec1 boss-index">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
-        <el-form-item label="所属门店">
+        <el-form-item label="所属门店" v-if="storesNum == '0000000000'">
             <el-select v-model="searchForm.storesNum">
                 <el-option label="全部" value="">全部</el-option>
                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">

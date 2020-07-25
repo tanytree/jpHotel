@@ -6,24 +6,24 @@
  -->
 <template>
   <el-tabs class="pageTab" v-model="activeName">
-    <el-tab-pane label="人员管理" name="1">
-      <Peopleman />
+    <el-tab-pane label="人员管理" name="employeeManager">
+      <EmployeeManager />
     </el-tab-pane>
-    <el-tab-pane label="已离职员工" name="2">
+    <el-tab-pane label="已离职员工" name="dimission">
       <Dimission />
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
-import Peopleman from "./peopleman/peopleman";
-import Dimission from "./peopleman/dimission";
+import EmployeeManager from "@/components/staff/employeeManager";
+import Dimission from "@/components/staff/dimission";
 
 export default {
-  components: { Peopleman, Dimission },
+  components: { EmployeeManager, Dimission },
   data() {
     return {
-      activeName: "1" //第一个默认启动
+      activeName: "employeeManager" //第一个默认启动
     };
   },
 
