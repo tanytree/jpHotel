@@ -161,8 +161,8 @@
     //   this.toSection(this.menul.childList[0])
     // },
     activated() {
-      this.menulfuc(this.menuList[0])
-      this.toSection(this.menul.childList[0])
+      // this.menulfuc(this.menuList[0])
+      // this.toSection(this.menul.childList[0])
     },
     watch: {
       $route(to, from) {

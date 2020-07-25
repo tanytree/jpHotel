@@ -38,12 +38,13 @@
 				</el-container>
 			</el-tab-pane>
 			<el-tab-pane label="会客厅房型" name="two">
+				<el-container direction="vertical" class="boss-index">
 				<el-row :gutter="20">
 					<el-col :span="6" :offset="20">
 						<el-button type="primary" style="width: 100px;" size="small" @click="addHouse('house', '')">新增</el-button>
 					</el-col>
 				</el-row>
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column prop="houseName" label="房型名称"></el-table-column>
 					<el-table-column prop="marketPrice" label="门市价"></el-table-column>
 					<el-table-column prop="bedNum" label="座位数"></el-table-column>
@@ -68,6 +69,7 @@
                     :total="form.totalSize"
                     layout="total, sizes, prev, pager, next, jumper"
                 ></el-pagination>
+				</el-container>
 			</el-tab-pane>
 		</el-tabs>
 		<div class="infinite-list-wrapper" style="height: 500px; overflow-y:auto; overflow-x: hidden;" v-if="!tab_show">
@@ -194,7 +196,7 @@
 				form: {
 					pageIndex: 1,
 					pageSize: 10,
-					totalSize: '',
+					totalSize: 0,
 					roomType: 1 //房屋类型  1客房类型  2会议室房型
 				},
 				ruleForm: {
@@ -383,10 +385,13 @@
 				this.get_house_list()
 			},
 			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
+				this.form.pageSize = val;
+				this.form.pageIndex = 1;
+				this.get_house_list();
 			},
 			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
+				this.form.pageIndex = 1;
+				this.get_house_list();
 			}
 		}
 	}

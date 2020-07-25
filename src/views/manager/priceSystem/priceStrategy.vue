@@ -60,8 +60,7 @@
 						</el-form>
 					</el-row>
 					<div class="components-edit">
-						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-						 @selection-change="handleSelectionChange">
+						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 							<el-table-column prop="name" label="规则名称"></el-table-column>
 							<el-table-column prop="time" label="状态"></el-table-column>
 							<el-table-column prop="job_status" label="备注"></el-table-column>
@@ -69,8 +68,8 @@
 								<template slot-scope="scope">
 									<el-button type="text" size="small" @click="popup('detail')">查看</el-button>
 									<el-button type="text" size="small" @click="popup('change')">修改</el-button>
-									<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
-										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
+									<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteRow(scope.row)">
+										<el-button slot="reference" type="text" size="small">删除</el-button>
 									</el-popconfirm>
 									<el-button type="text" size="small" @click="popup('changerili')">修改日历</el-button>
 								</template>
@@ -132,8 +131,7 @@
 					</el-col>
 				</el-form>
 			</el-row>
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-			 @selection-change="handleSelectionChange">shu
+			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="name" label="房型"></el-table-column>
 				<el-table-column prop="name" label="门市价"></el-table-column>
 				<el-table-column prop="name" label="调价方式">
@@ -214,8 +212,7 @@
 					<el-col span="4" style="color: #898B8E;">折扣率:</el-col><el-col span="14">张三</el-col>
 				</el-row>
 			</el-row>
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-			 @selection-change="handleSelectionChange">
+			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="name" label="房型"></el-table-column>
 				<el-table-column prop="time" label="门市价"></el-table-column>
 				<el-table-column prop="job_status" label="调价方式"></el-table-column>

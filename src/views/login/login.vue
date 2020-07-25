@@ -205,7 +205,7 @@ export default {
                 return item.storesNum == this.loginForm.storesNum
             })[0];
             this.saveuser(data)
-            debugger
+            // debugger
             // const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg)
 
             var array = {

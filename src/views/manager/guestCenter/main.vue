@@ -17,7 +17,7 @@
                 <RoomNews ref="RoomNews"/>
             </el-tab-pane>
 			<el-tab-pane label="房锁维护" name="fouth">
-			    <!-- <RoomLock ref="RoomLock"/> -->
+			    <RoomLock ref="RoomLock"/>
 			</el-tab-pane>
         </el-tabs>
     </div>

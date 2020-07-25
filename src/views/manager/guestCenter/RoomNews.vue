@@ -41,7 +41,8 @@
 						</el-row>
 					</el-col>
 				</el-row>
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+				<el-container direction="vertical" class="boss-index">
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column type="selection" width="55"></el-table-column>
 					<el-table-column prop="houseNum" label="房间号"></el-table-column>
 					<el-table-column prop="roomTypeId_name" label="房型名称"></el-table-column>
@@ -102,6 +103,7 @@
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
 					 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
 				</div> -->
+				</el-container>
 			</el-row>
 		</el-row>
 		<el-row v-if="add_show">
@@ -132,6 +134,7 @@
 		},
 		data() {
 			return {
+				hotel_name: '',
 				selectRedio: 0,
 				currentDong: '',
 				form: {
@@ -210,7 +213,6 @@
 					case 'change':
 						this.add_show = true
 						this.selectFrom = value
-						debugger
 						break;
 				}
 			},

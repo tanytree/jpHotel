@@ -170,7 +170,6 @@
 		},
 		methods: {
 			popup(type, value) {
-				debugger
 				switch (type) {
 					case 'addDong':
 						this.addDong_show = true
@@ -223,7 +222,6 @@
 					buildingFloorId: buildingFloorId,
 				}
 				this.$F.doRequest(this, '/pms/hotel/gethotel_building_room_type_total', params, (res) => {
-					debugger
 					this.tableData = res.list
 				})
 			},
