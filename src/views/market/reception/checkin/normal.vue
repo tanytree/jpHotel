@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-24 18:21:48
+ * @LastEditTime: 2020-07-25 21:52:24
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -192,8 +192,8 @@
                 <el-col :span="7">
                     <div class="grid-content">
                         <el-row>
-                            <el-button>自动排房</el-button>&nbsp;&nbsp;
-                            <el-button>添加入住人</el-button>&nbsp;&nbsp;
+                            <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
+                            <el-button @click="liveInPersonShow=true">添加入住人</el-button>&nbsp;&nbsp;
                             <el-button>制卡</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />
@@ -276,7 +276,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="rowRoomShow = false">取消</el-button>
-            <el-button size="small" type="primary">确定</el-button>
+            <el-button size="small" type="primary" @click="db_row_houses">确定</el-button>
         </span>
     </el-dialog>
     <el-dialog top="0" :visible.sync="guestTypeShow" class="guestTypeDia" title="排房" width="500px">
@@ -293,6 +293,37 @@
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="guestTypeShow = false">取消</el-button>
             <el-button size="small" type="primary" @click="guestTypeShow = false">确定</el-button>
+        </span>
+    </el-dialog>
+    <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="60%">
+        <el-table :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='false' :tree-props="{children: 'departmentList', hasChildren: 'hasChildren'}">
+            <el-table-column prop="storesName" label="房号/房型" width="200">
+                <template slot-scope="scope">
+                    <!-- {{scope.row.storesName || scope.row.name}} -->
+                </template>
+            </el-table-column>
+            <el-table-column prop="groupName" label="房价">
+            </el-table-column>
+            <el-table-column prop="groupName" label="姓名">
+            </el-table-column>
+            <el-table-column prop="groupName" label="证件类型">
+            </el-table-column>
+            <el-table-column prop="groupName" label="证件号码">
+            </el-table-column>
+            <el-table-column prop="groupName" label="性别">
+            </el-table-column>
+            <el-table-column prop="groupName" label="手机号">
+            </el-table-column>
+            <el-table-column label="操作" width="140">
+                <template slot-scope="{row}">
+                    <el-button type="primary" v-if="row.isChild" size="mini" @click="deleteItem(row)">删除</el-button>
+                    <el-button type="text" v-if="row.isChild" size="mini" @click="deleteItem(row)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" @click="liveInPersonShow = false">取消</el-button>
+            <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button>
         </span>
     </el-dialog>
 </div>
@@ -319,6 +350,7 @@ export default {
             rowRoomShow: false,
             showDetail: false,
             guestTypeShow: false,
+            liveInPersonShow: false,
             getRoomsForm: {
                 changeType: 1,
                 bedCountL: '',
@@ -343,7 +375,8 @@ export default {
                 channel: '',
                 checkinType: '',
                 remark: '',
-                checkInId: '2c9f404b737ef3800173803fe61f0002'
+                // checkInId: '2c9f404b737ef3800173803fe61f0002'
+                checkInId: ''
             },
             rules: {
                 name: [{
@@ -413,7 +446,8 @@ export default {
                 livingRoomStatus: '',
                 pageIndex: 1,
                 pageSize: 9999
-            }
+            },
+            liveInPersonData: [{}]
         };
     },
 
@@ -561,15 +595,15 @@ export default {
             }
             console.log(this.waitingRoom)
         },
-        activeRoomCheck(id){
-            
+        activeRoomCheck(id) {
+
             for (let k in this.waitingRoom) {
                 if (this.waitingRoom[k].roomTypeId == id) {
                     return true
                 }
             }
             return false
-                
+
         },
 
         rowRoomByItem(item, index) {
@@ -597,12 +631,20 @@ export default {
         },
         //手动排房确定
         db_row_houses() {
+            if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
+                this.$message.error('排房数量超过订房数量');
+                return
+            }
+            let ids = [];
+            this.rowRoomCurrentItem.roomsArr.map((item) => {
+                ids.push(item.id);
+            })
             let params = {
                 checkinRoomType: 1,
                 roomTypeId: this.rowRoomCurrentItem.roomTypeId,
                 checkinId: this.checkInForm.checkInId,
                 checkinReserveId: '',
-                roomId: this.rowRoomCurrentItem.roomsArr,
+                roomId: ids,
                 reservePrice: this.rowRoomCurrentItem.todayPrice,
                 realPrice: this.rowRoomCurrentItem.price
             }
@@ -611,8 +653,60 @@ export default {
                     message: '排房成功',
                     type: 'success'
                 });
+                this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
                 this.rowRoomShow = false
+                this.$forceUpdate()
             })
+        },
+        //自动排房确定
+        page_row_houses() {
+            if (this.waitingRoom.length < 1) {
+                this.$message.error('请选择房型后操作');
+                return
+            }
+            let roomTypeId = [],
+                number = 0;
+            for (let k in this.waitingRoom) {
+                number += this.waitingRoom[k].num
+                roomTypeId.push(this.waitingRoom[k].roomTypeId);
+            }
+            let params = {
+                checkinRoomType: 1,
+                roomTypeId: roomTypeId,
+                checkinId: this.checkInForm.checkInId,
+                rowHousesTotal: number,
+                checkinReserveId: ''
+            }
+            let setRooms = (key, item) => {
+                console.log(key)
+                console.log(item)
+                for (let k in this.waitingRoom) {
+                    if (this.waitingRoom[k].roomTypeId == key) {
+                        if (!this.waitingRoom[k].roomsArr) {
+                            this.waitingRoom[k].roomsArr = []
+                        }
+                        this.waitingRoom[k].roomsArr.push({
+                            houseNum: item.houseNum,
+                            id: item.id
+                        })
+                    }
+                }
+            }
+
+            this.$F.doRequest(this, '/pms/checkin/page_row_houses', params, (res) => {
+                let data = res
+                this.$message({
+                    message: '排房成功',
+                    type: 'success'
+                });
+                for (let k in data) {
+                    for (let j in data[k]) {
+                        setRooms(k, data[k][j])
+                    }
+                }
+                this.$forceUpdate()
+            })
+
         },
         rowRoomCurrentListItemAdd(item) {
             if (!this.rowRoomCurrentItem.roomsArr) {
