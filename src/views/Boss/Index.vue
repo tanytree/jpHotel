@@ -7,55 +7,23 @@
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane :label="$i18n.locale == 'ri' ? $F.filterThirdMenu('boss', 'stores-overview').japanese : ($F.filterThirdMenu('boss', 'stores-overview').menuAliasTitle || $F.filterThirdMenu('boss', 'stores-overview').menuTitle)"
+            <!-- 门店慨然-->
+            <el-tab-pane :label="$F.filterThirdMenu('boss', 'stores-overview').thirdMenu"
                          name="stores-overview"
                          v-if="$F.filterThirdMenu('boss', 'stores-overview', true)">
                 <EmployeeRights/>
             </el-tab-pane>
-            <el-tab-pane :label="$i18n.locale == 'ri' ? $F.filterThirdMenu('boss', 'boss-report').japanese : ($F.filterThirdMenu('boss', 'boss-report').menuAliasTitle || $F.filterThirdMenu('boss', 'boss-report').menuTitle)"
+            <!-- 报表-->
+            <el-tab-pane :label="$F.filterThirdMenu('boss', 'boss-report').thirdMenu"
                          name="boss-report"
                          v-if="$F.filterThirdMenu('boss', 'boss-report', true)">
-                <el-tabs v-model="active_second_name" type="card">
-                    <el-tab-pane :label="first_title" name="one">
-                        <div class="first-body">
-                            <div class="title">
-                                <span>前台部报表</span>
-<!--                                 <span>{{$t('commons.F_sex')}}</span>-->
-                            </div>
-                            <div class="content-body">
-                                <div class="body-item">
-                                    <div class="item-tag">
-                                        <div class="item">营业日报</div>
-                                        <div class="item">营业月报</div>
-                                        <div class="item">营业年报</div>
-                                        <div class="item">现金流明细表</div>
-                                        <div class="item">迷你吧销售报表</div>
-                                    </div>
-                                    <div class="item-tag">
-                                        <div class="item">会员卡积分明细报表</div>
-                                        <div class="item">交班报表(前台部)</div>
-                                        <div class="item">结账汇总报表</div>
-                                        <div class="item">结账明细报表</div>
-                                        <div class="item">宾客账务余额报表</div>
-                                    </div>
-                                    <div class="item-tag">
-                                        <div class="item">会员卡积分兑换报表</div>
-                                        <div class="item">单位挂账明细表</div>
-                                        <div class="item">单位挂账汇总表</div>
-                                        <div class="item">销售员业绩明细表</div>
-                                        <div class="item">销售员业绩汇总表</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </el-tab-pane>
-                </el-tabs>
+                <Report></Report>
             </el-tab-pane>
-            <el-tab-pane :label="$i18n.locale == 'ri' ? $F.filterThirdMenu('boss', 'staff-rights').japanese : ($F.filterThirdMenu('boss', 'staff-rights').menuAliasTitle || $F.filterThirdMenu('boss', 'staff-rights').menuTitle)" name="staff-rights"
+            <!-- 员工权限-->
+            <el-tab-pane :label="$F.filterThirdMenu('boss', 'staff-rights').thirdMenu"
                          v-if="$F.filterThirdMenu('boss', 'staff-rights', true)">
                 <EmployeeRights/>
             </el-tab-pane>
-
         </el-tabs>
         <!-- 订单详情/查看详情 -->
         <el-dialog top="0" title="查看资料" :visible.sync="dialogDetail" :close-on-click-modal="false" center width="500px">
@@ -132,8 +100,9 @@
 
 <script>
 import EmployeeRights from '@/components/employeeRights'
+import Report from '@/views/finance/report/main'
 export default {
-  components: { EmployeeRights },
+  components: { EmployeeRights, Report },
   data () {
     return {
       activeName: 'boss-report',
@@ -152,7 +121,8 @@ export default {
   mounted () {
     this.select_title = JSON.parse(sessionStorage.getItem('menul')).name
     this.get_tableDate();
-    // this.activeName = $F.filterThirdMenu('boss', 'stores-overview')
+    let menu = this.$F.filterThirdMenu('boss', 'stores-overview', false, true)
+    this.activeName = menu.path;
   },
   methods: {
     // 获取各部门人员列表

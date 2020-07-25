@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-21 16:56:31
+ * @LastEditTime: 2020-07-22 14:11:35
  * @FilePath: /jiudian/src/views/market/customer/children/detail.vue
  -->
 <template>
@@ -510,7 +510,7 @@ export default {
                                 payWay: this.cardForm.payWay,
                                 payPrices: this.cardForm.payPrices
                             }
-                            url = '/pms/hotelmember/enable_disable';
+                            url = '/pms/hotelmember/change_type';
                         } else {
                             params = {
                                 id: this.detailForm.id,

@@ -23,9 +23,11 @@
 			<el-tab-pane label="打印管理" name="g" >
 			    <printingMg ref="printingMg"/>
 			</el-tab-pane>
-			<el-tab-pane label="员工权限" name="h" >
-			    <personAuth ref="personAuth"/>
-			</el-tab-pane>
+            <!-- 员工权限-->
+            <el-tab-pane :label="$F.filterThirdMenu('manager', 'staff-rights').thirdMenu"
+                         v-if="$F.filterThirdMenu('manager', 'staff-rights', true)">
+                <EmployeeRights/>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -38,10 +40,10 @@
 	import shiftSite from './shiftSite'
 	import hotelServices from './hotelServices'
 	import printingMg from './printingMg'
-    import personAuth from './personAuth'
+    import EmployeeRights from '@/components/employeeRights'
     import { mapState, mapActions } from "vuex";
     export default {
-        components: { roomStatus,nightSite,billMainten,damageCompensate,shiftSite,hotelServices,printingMg,personAuth},
+        components: { roomStatus,nightSite,billMainten,damageCompensate,shiftSite,hotelServices,printingMg,EmployeeRights},
         computed: {
             ...mapState({
                 user: state => state.user

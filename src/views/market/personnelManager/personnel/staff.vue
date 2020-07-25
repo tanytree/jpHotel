@@ -8,10 +8,10 @@
 <div class="sec1">
     <el-form :model="searchForm" :inline="true" class="top-body" size="small" label-width="100px">
         <el-row>
-
             <el-col :span="5">
                 <el-form-item label="所属门店">
                     <el-select v-model="searchForm.storesNum">
+                        <el-option label="全部" value="">全部</el-option>
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                         </el-option>
                     </el-select>
@@ -59,84 +59,17 @@
         <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
-    <!-- 查看资料 -->
-    <el-dialog top="0" title="查看资料" :visible.sync="details" width="500px">
-        <el-form :model="detailsData">
-            <el-row style="margin:10px 0">
-                <el-col :span="8">姓名:</el-col>
-                <el-col :span="14">{{detailsData.userName}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">状态:</el-col>
-                <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">联系电话:</el-col>
-                <el-col :span="14">{{detailsData.userPhone}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">所属门店:</el-col>
-                <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">所属部门:</el-col>
-                <el-col :span="14">{{detailsData.department?detailsData.department.name:''}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">职位:</el-col>
-                <el-col :span="14">{{detailsData.position}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">银行账户:</el-col>
-                <el-col :span="14">{{detailsData.bankcard}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">企业邮箱:</el-col>
-                <el-col :span="14">{{detailsData.email}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">后台账号:</el-col>
-                <el-col :span="14">{{detailsData.associatedAccount}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">工号:</el-col>
-                <el-col :span="14">{{detailsData.worknum}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">分机号:</el-col>
-                <el-col :span="14">{{detailsData.extension}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">入职时间:</el-col>
-                <el-col :span="14">{{detailsData.inTime}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">证件类型:</el-col>
-                <el-col :span="14">{{detailsData.idcardType | F_idcardType}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">证件号:</el-col>
-                <el-col :span="14">{{detailsData.idcard}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">转正日期:</el-col>
-                <el-col :span="14">{{detailsData.positiveTime}}</el-col>
-            </el-row>
-            <el-row style="margin:10px 0">
-                <el-col :span="8">备注:</el-col>
-                <el-col :span="14">{{detailsData.remark}}</el-col>
-            </el-row>
-        </el-form>
-
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="details = false">关闭</el-button>
-        </div>
-    </el-dialog>
+    <!-- 查看资料组件 -->
+    <LoginDetail ref="loginDetail"></LoginDetail>
 </div>
 </template>
 
 <script>
+  import LoginDetail from '@/components/staff/loginDetail'
 export default {
+  components: {
+    LoginDetail
+  },
     data() {
         return {
             details: false,
@@ -166,21 +99,22 @@ export default {
         };
     },
     filters: {
-        
+
 
     },
-    created() {
-        this.$F.doRequest(this, '/pms/freeuser/stores_list', {
+    mounted() {
+        this.$F.doRequest(null, '/pms/freeuser/stores_list', {
             filterHeader: true
         }, (data) => {
             this.storeList = data;
-            this.initForm();
         })
+        this.initForm();
 
     },
     methods: {
         initForm() {
             this.searchForm = {
+                storesNum: '',
                 content: '',
                 workingState: '',
                 departmentId: '',
@@ -194,7 +128,6 @@ export default {
         },
         getDataList() {
             let that = this;
-
             this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
                 this.tableData = res.employeesList;
                 this.listTotal = res.page.count
@@ -210,16 +143,11 @@ export default {
             }
             return '未知门店'
         },
+
         getDetails(item) {
-            let params = {
-                employeeId: item.id,
-                account: item.associatedAccount
-            }
-            this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
-                this.detailsData = res
-                this.$forceUpdate();
-            })
+            this.$refs.loginDetail.getDetails('', item.id);
         },
+
         detailsHandle(item) {
             this.getDetails(item)
             this.details = true

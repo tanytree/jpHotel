@@ -60,12 +60,12 @@ export default new Router({
                     component: () =>
                         import ('@/views/Boss/DepartmentCharge')
                 },
-                {
-                    path: '/person-mg',
-                    name: 'PersonMg',
-                    component: () =>
-                        import ('@/views/Boss/PersonMg')
-                },
+                // {
+                //     path: '/person-mg',
+                //     name: 'PersonMg',
+                //     component: () =>
+                //         import ('@/views/Boss/PersonMg')
+                // },
                 {
                     path: '/pay-mg',
                     name: 'PayMg',
@@ -119,7 +119,10 @@ export default new Router({
                 {
                     path: '/market',
                     name: 'market',
-                    meta: { title: '管理部首页' },
+                    meta: {
+                        title: '管理部首页',
+
+                    },
                     component: () =>
                         import ('@/views/market/main')
                 },
@@ -181,7 +184,7 @@ export default new Router({
                     name: 'employeeList',
                     meta: { title: '人员管理' },
                     component: () =>
-                        import ('@/views/market/personnelManager/employeeList')
+                        import ('@/components/staff/employeeList')
                 },
                 {
                     path: '/channelDaili',

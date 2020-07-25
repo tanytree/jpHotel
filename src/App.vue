@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <keep-alive>
-      <router-view />
+      <router-view  v-if='isRouterAlive'/>
     </keep-alive>
   </div>
 </template>
@@ -61,6 +61,12 @@ import { getRouterKey, removeToken } from "@/utils/auth";
 
 import { mapState, mapActions } from "vuex";
 export default {
+  name: 'app',
+  provide(){
+    return{
+      reload:this.reload
+    }
+  },
   created() {},
   data() {
     return {
@@ -82,13 +88,22 @@ export default {
       //   // })
       // }
     },
+
+    reload(){
+      debugger
+      this.isRouterAlive = false ;
+      this.$nextTick(function(){
+        this.isRouterAlive = true ;
+      })
+    },
+
     refresh() {
       this.isRouterAlive = false;
       setTimeout(() => {
         // 强制重新渲染
-        this.isRefresh = true;
-        this.isRouterAlive = true;
-        this.$router.go(0);
+        //this.isRefresh = true;
+        //this.isRouterAlive = true;
+        //this.$router.go(0);
       }, 1000);
     }
   },
@@ -113,12 +128,14 @@ export default {
   },
   watch: {
     $route(to, from) {
-      //console.log(to,from)
-      if (from.name == "login" && to.name != "login") {
-        // this.refresh();
-      } else {
-        this.fetchData();
-      }
+      // if (to && to.params && to.params.action) {
+      //   this.refresh();
+      // }
+      // if (from.name == "login" && to.name != "login") {
+      //
+      // } else {
+      //   this.fetchData();
+      // }
     }
   }
 };

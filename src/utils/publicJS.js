@@ -4,7 +4,7 @@ import { request } from '@/utils/request'
 import merge from 'lodash/merge'
 
 // eslint-disable-next-line no-unused-vars
-var code2Table = {}
+var publicDict = {}
 const uploadUrl = 'http://115.29.143.91:8887'
 const platSource = '1005'
 // eslint-disable-next-line no-unused-vars
@@ -101,28 +101,51 @@ const $F = {
         return isImage && isLt2M
     },
 
+    getPublicDictByType ($instance, type, callback, forceRefresh) {
+        var data = publicDict[type];
+        if (data && !forceRefresh) {
+            data.forEach((dict) => {
+                dict.name = sessionStorage.locale == 'ri' ? dict.japanese : dict.name;
+            })
+            callback(data);
+            return;
+        }
+        let url = '/pms/system/public_dict'
+        this.doRequest($instance, url, { type: type }, (data)=> {
+            if (data && data.length > 0) {
+                data.forEach((dict) => {
+                    dict.name = sessionStorage.locale == 'ri' ? dict.japanese : dict.name;
+                })
+            }
+            callback(data || []);
+        })
+    },
+
     parseObjectBykey (object, key) {
         if (object[key] && typeof (object[key]) === 'string') {
             object[key] = JSON.parse(object[key])
         }
     },
-    filterThirdMenu: function (firstLevelMenuName, thirdMenuPath, showFlag) {
+    filterThirdMenu: function (firstLevelMenuName, thirdMenuPath, showFlag, fetchFirstThird) {
         if (sessionStorage.subMenul) {
             let thirdMenuList = JSON.parse(sessionStorage.subMenul).childList || []
             if (thirdMenuList.length > 0) {
+                if (fetchFirstThird) {
+                    return thirdMenuList[0]
+                }
                 if (tabsName[firstLevelMenuName] && tabsName[firstLevelMenuName][thirdMenuPath]) {
                     return showFlag ? tabsName[firstLevelMenuName][thirdMenuPath].path : tabsName[firstLevelMenuName][thirdMenuPath]
                 }
                 let menul = thirdMenuList.filter((menul) => {
+                    menul.thirdMenu = sessionStorage.locale == 'ri' ? menul.japanese : (menul.menuAliasTitle || menul.menuTitle)
                     return menul.path == thirdMenuPath
                 })
-                debugger;
                 tabsName[firstLevelMenuName] = tabsName[firstLevelMenuName] || {}
                 tabsName[firstLevelMenuName][thirdMenuPath] = menul[0] || {}
                 if (showFlag) {
-                    return menul.length > 0;
+                    return menul.length > 0
                 } else {
-                    return tabsName[firstLevelMenuName][thirdMenuPath] ;
+                    return tabsName[firstLevelMenuName][thirdMenuPath]
                 }
             }
         }
