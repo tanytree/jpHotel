@@ -65,7 +65,7 @@
 </template>
 
 <script>
-  import LoginDetail from '@/components/staff/loginDetail'
+  import LoginDetail from '@/components/employee/loginDetail'
 export default {
   components: {
     LoginDetail

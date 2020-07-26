@@ -7,7 +7,7 @@
  <template>
 <div class="sec1">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
-        <el-form-item label="所属门店">
+        <el-form-item label="所属门店" v-if="storesNum == $F.getHQCode()">
             <el-select v-model="searchForm.storesNum">
                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                 </el-option>
@@ -127,7 +127,18 @@
 </template>
 
 <script>
+  import {
+    mapState,
+    mapActions
+  } from "vuex";
 export default {
+  computed: {
+    ...mapState({
+      token: state => state.user.token,
+      userId: state => state.user.id,
+      storesNum: state => state.user.storesInfo.storesNum
+    })
+  },
     data() {
         return {
             details: false,
@@ -164,22 +175,17 @@ export default {
             tableData: [{}] //表格数据
         };
     },
-    filters: {
-       
-        
-    },
+
     mounted() {
-        if (this.$route.name == 'employeeList') {
-            this.isPersonnelManager = true
-        } else {
-            this.isPersonnelManager = false
-        }
-        this.$F.doRequest(this, '/pms/freeuser/stores_list', {
+        this.isPersonnelManager = this.$route.name == 'employeeList';
+        if (this.storesNum == this.$F.getHQCode()) {
+          this.$F.doRequest(this, '/pms/freeuser/stores_list', {
             filterHeader: true
-        }, (data) => {
+          }, (data) => {
             this.storeList = data;
             this.initForm();
-        })
+          })
+        }
     },
     methods: {
         initForm() {
@@ -197,7 +203,8 @@ export default {
         },
         getDataList() {
             let that = this;
-
+            if (this.searchForm != this.$F.getHQCode())
+                this.searchForm.storesNum = this.storesNum;
             this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
                 this.tableData = res.employeesList;
                 this.listTotal = res.page.count

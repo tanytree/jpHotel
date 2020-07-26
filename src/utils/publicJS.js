@@ -13,7 +13,12 @@ const languageObject = {
     'ri': '日本語',
     'zh': '中文'
 }
+const HQcode = '0000000000';
 const $F = {
+    //获取总部后台的代码code
+    getHQCode() {
+        return HQcode;
+    },
     getLangDesc (langKey) {
         return languageObject[langKey]
     },

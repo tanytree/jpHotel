@@ -228,7 +228,7 @@
             userName: '',
             account: '',
             password: '',
-            storesNum: '0000000000',
+            storesNum: this.$F.getHQCode(),
             storesName: '',
             storesAddress: '',
             departmentIds: ''

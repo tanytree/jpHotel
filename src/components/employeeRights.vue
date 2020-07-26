@@ -59,10 +59,13 @@
             <el-button class="cancel" @click="listVisible=true">返回</el-button>
         </div>
     </div>
+    <!-- 查看资料组件 -->
+    <LoginDetail ref="loginDetail"></LoginDetail>
 </div>
 </template>
 
 <script>
+  import LoginDetail from '@/components/employee/loginDetail'
 function setArr(arr, newArr) {
     newArr = newArr || [];
     arr.forEach(item => {
@@ -79,7 +82,7 @@ function setArrChoose(arr, str) {
 }
 
 export default {
-    components: {},
+    components: {LoginDetail},
     name: "",
 
     data() {
@@ -148,7 +151,6 @@ export default {
                 let userRole = res.menuList;
                 let currentUserRole = [];
                 let departmentId = sessionStorage.getItem('partmentId');
-                debugger
                 for (let k in userRole) {
                     if (departmentId == userRole[k].id) {
                         currentUserRole = userRole[k];
@@ -189,6 +191,8 @@ export default {
                     this.getMenu_list()
                     // this.$refs.authors.initForm();
                 });
+            } else {
+              this.$refs.loginDetail.getDetails(item.account);
             }
         },
         back() {

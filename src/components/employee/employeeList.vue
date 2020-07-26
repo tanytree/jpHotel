@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import EmployeeManager from "@/components/staff/employeeManager";
-import Dimission from "@/components/staff/dimission";
+import EmployeeManager from "@/components/employee/employeeManager";
+import Dimission from "@/components/employee/dimission";
 
 export default {
   components: { EmployeeManager, Dimission },

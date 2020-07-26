@@ -184,7 +184,7 @@ export default new Router({
                     name: 'employeeList',
                     meta: { title: '人员管理' },
                     component: () =>
-                        import ('@/components/staff/employeeList')
+                        import ('@/components/employee/employeeList')
                 },
                 {
                     path: '/channelDaili',

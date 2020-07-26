@@ -222,7 +222,7 @@
                         </el-col>
                     </el-row>
                     <el-form-item label="人员账号：" class="require">
-                        <el-input style="width:300px" v-model="addAndEditForm.account"></el-input>
+                        <el-input style="width:300px" v-model="addAndEditForm.account" :disabled="addAndEditForm.type !='add'"></el-input>
                     </el-form-item>
                     <el-form-item label="登录密码：" class="require">
                         <el-input style="width:300px" v-model="addAndEditForm.password" type="password"
@@ -257,7 +257,7 @@
 
 <script>
   import employees from './components/employees'
-  import LoginDetail from '@/components/staff/loginDetail'
+  import LoginDetail from '@/components/employee/loginDetail'
   import {
     mapState,
     mapActions

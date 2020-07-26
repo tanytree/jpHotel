@@ -7,7 +7,7 @@
  <template>
 <div class="sec1 boss-index">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
-        <el-form-item label="所属门店" v-if="storesNum == '0000000000'">
+        <el-form-item label="所属门店" v-if="storesNum == $F.getHQCode()">
             <el-select v-model="searchForm.storesNum">
                 <el-option label="全部" value="">全部</el-option>
                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -74,7 +74,7 @@
             <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" :inline="true" :required="true" class="top-body" label-width="100px" size="small">
                 <el-row>
                     <el-col :span="12" v-if="isPersonnelManager" class="">
-                        <el-form-item label="所属门店:" prop="storesNum" v-if="storesNum == '0000000000'">
+                        <el-form-item label="所属门店:" prop="storesNum" v-if="storesNum == $F.getHQCode()">
                             <el-select v-model="addAndEditForm.storesNum" class="width200" @change="changeStore($event)">
                                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                                 </el-option>
@@ -262,7 +262,7 @@ import {
     mapActions
 } from "vuex";
 import httpRequest from "@/utils/httpRequest";
-import LoginDetail from '@/components/staff/loginDetail'
+import LoginDetail from '@/components/employee/loginDetail'
 export default {
   components: {
     LoginDetail
@@ -420,7 +420,9 @@ export default {
         },
         getDataList() {
             let that = this;
-
+            debugger
+            if (this.storesNum != this.$F.getHQCode())
+              this.searchForm.storesNum = this.storesNum;
             this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
                 this.tableData = res.employeesList;
                 this.listTotal = res.page.count
@@ -531,6 +533,7 @@ export default {
             this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
                 this.detailsData = res
                 this.addAndEditForm = res
+                this.addAndEditForm.userStatus = this.addAndEditForm.userStatus.toString();
                 this.addAndEditForm.employeeId = res.id
                 this.$forceUpdate();
             })

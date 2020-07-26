@@ -83,9 +83,9 @@
 				forget: false, // 忘记密码
 				loginType: 'login', // 登录-注册
 				loginForm: {
-					storesNum: '7859296128',
-					account: 'cindy',
-					password: '123456'
+					storesNum: '',
+					account: '',
+					password: ''
 				},
 				dataRule: {
 					storesNum: {

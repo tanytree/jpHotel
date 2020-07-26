@@ -74,7 +74,7 @@
             <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" :inline="true" :required="true" class="top-body" label-width="100px" size="small">
                 <el-row>
                     <el-col :span="12" v-if="isPersonnelManager" class="">
-                        <el-form-item label="所属门店:" prop="storesNum" v-if="storesNum == '0000000000'">
+                        <el-form-item label="所属门店:" prop="storesNum" v-if="storesNum == $F.getHQCode()">
                             <el-select v-model="addAndEditForm.storesNum" class="width200" @change="changeStore($event)">
                                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                                 </el-option>
@@ -262,7 +262,7 @@ import {
     mapActions
 } from "vuex";
 import httpRequest from "@/utils/httpRequest";
-import LoginDetail from '@/components/staff/loginDetail'
+import LoginDetail from '@/components/employee/loginDetail'
 export default {
   components: {
     LoginDetail

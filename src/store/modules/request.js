@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true;
 // create an axios instance
 const service = axios.create({
     // baseURL: process.env.BASE_PATH, // url = base url + request url
-  baseURL: 'http://xxyweeds.top:8895/',
+    baseURL: 'http://xxyweeds.top:8895/',
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 200000 // request timeout
 })
