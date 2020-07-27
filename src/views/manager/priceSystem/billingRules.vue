@@ -105,10 +105,7 @@
 						<el-row>
 							<el-form class="demo-form-inline" inline size="small">
 								<el-form-item label="会员类型:">
-									<el-input v-model="ruleForm.name" class="row-width"></el-input>
-								</el-form-item>
-								<el-form-item label="状态:" class="margin-l">
-									<el-select v-model="ruleForm.name" placeholder="请选择部门" class="row-width">
+									<el-select v-model="ruleForm_r.memberId" placeholder="请选择部门" class="row-width">
 										<el-option label="区域一" value="shanghai"></el-option>
 										<el-option label="区域二" value="beijing"></el-option>
 									</el-select>
@@ -201,34 +198,34 @@
 				</el-form>
 			</el-row>
 			<el-table ref="multipleTable" :data="allForm.roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-				<el-table-column prop="name" label="房型"></el-table-column>
+				<el-table-column prop="houseName" label="房型"></el-table-column>
 				<el-table-column prop="name" label="起步价">
-					<template slot-scope="row">
+					<template slot-scope="scope">
 						<el-row class="demo-form-inline">
-							<el-input v-model="row.startPrice"></el-input>
+							<el-input v-model="scope.row.startPrice"></el-input>
 						</el-row>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="每小时加收">
-					<template slot-scope="row">
+					<template slot-scope="scope">
 						<el-row class="demo-form-inline">
-							<el-input v-model="row.hourAddPrice"></el-input>
+							<el-input v-model="scope.row.hourAddPrice"></el-input>
 						</el-row>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="封顶费">
-					<template slot-scope="row">
-						<el-input v-model="row.topPrice"></el-input>
+					<template slot-scope="scope">
+						<el-input v-model="scope.row.topPrice"></el-input>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="备注">
-					<template slot-scope="row">
-						<el-input v-model="row.remark"></el-input>
+					<template slot-scope="scope">
+						<el-input v-model="scope.row.remark"></el-input>
 					</template>
 				</el-table-column>
 			</el-table>
 			<el-row style="padding: 20px 0px;">
-				<el-button type="primary" style="width: 80px;" @click="saveInfo">保存</el-button>
+				<el-button type="primary" style="width: 80px;" @click="saveInfo_d">保存</el-button>
 				<el-button style="width: 80px;margin-left: 20px;" @click="back_1">返回</el-button>
 			</el-row>
 		</el-row>
@@ -238,99 +235,106 @@
 				<el-page-header @back="back_2" content=""></el-page-header>
 			</el-row>
 			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
+				<el-form :model="ruleForm_h" :rules="rules_h" ref="ruleForm" label-width="200px" style="display: flex;flex-direction: column;align-items: flex-start;">
 					<el-col :span="20" style="display: flex;align-items: center;">
 						<el-form-item label="规则名称:">
-							<el-select v-model="ruleForm.name" placeholder="请选择租房规则">
+							<el-input v-model="ruleForm_h.ruleName" style="width: 120px" />
+							<!-- <el-select v-model="ruleForm_h.ruleName" placeholder="请选择租房规则">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
-							</el-select>
+							</el-select> -->
 						</el-form-item>
-						<el-checkbox v-model="ruleForm.name" class="margin-l" style="margin-bottom: 20px;">启用</el-checkbox>
+						<el-checkbox v-model="ruleForm_h.state" class="margin-l" style="margin-bottom: 20px;">启用</el-checkbox>
 					</el-col>
 					<el-col :span="20" style="margin-bottom: 20px;">
-						<el-checkbox v-model="ruleForm.name" class="margin-l">指定办理入住时间段:</el-checkbox>
-						<el-date-picker v-model="ruleForm.name" type="datetimerange" range-separator="至" start-placeholder="开始日期"
-						 end-placeholder="结束日期">
-						</el-date-picker>
+						<el-checkbox v-model="ruleForm_h.name" class="margin-l">指定办理入住时间段:</el-checkbox>
+						<el-date-picker
+						      v-model="ruleForm_h.startTime"
+						      type="date"
+						      placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+						    </el-date-picker>-
+							<el-date-picker
+							      v-model="ruleForm_h.endTime"
+							      type="date"
+							      placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+							    </el-date-picker>
 					</el-col>
 					<el-col :span="20" style="margin-bottom: 20px;">
 						<el-form-item label="起步收费:" prop="name">
 							<el-col>
-								入住<el-input v-model="ruleForm.name" style="width: 70px;margin: 0px 10px;"></el-input>分钟后收起步费,入住
-								<el-input v-model="ruleForm.name" style="width: 70px;margin: 0px 10px;"></el-input>分钟后收时租房全价
+								入住<el-input v-model="ruleForm_h.checkinStartMinute" style="width: 70px;margin: 0px 10px;"></el-input>分钟后收起步费,入住
+								<el-input v-model="ruleForm_h.checkinStartHourhouse" style="width: 70px;margin: 0px 10px;"></el-input>分钟后收时租房全价
 							</el-col>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="超时收费:" prop="name">
 							<el-col :span="20">
-								超过<el-input v-model="ruleForm.name" style="width: 70px; margin: 0px 10px;"></el-input>分钟后收费,
-								超过<el-input v-model="ruleForm.name" style="width: 70px; margin: 0px 10px;"></el-input>分钟后转全日租
+								超过<el-input v-model="ruleForm_h.outtimeMinute" style="width: 70px; margin: 0px 10px;"></el-input>分钟后收费,
+								超过<el-input v-model="ruleForm_h.outtimeAllday" style="width: 70px; margin: 0px 10px;"></el-input>分钟后转全日租
 							</el-col>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="超时收费规则:" prop="name">
-							<el-radio-group v-model="ruleForm.name" class="margin-l">
-								<el-radio :label="1">半日租加收</el-radio>
-								<el-radio :label="2">每小时加收</el-radio>
+							<el-radio-group v-model="ruleForm_h.outtimeRule" class="margin-l">
+								<el-radio label="1">半日租加收</el-radio>
+								<el-radio label="2">每小时加收</el-radio>
 							</el-radio-group>
-							<el-checkbox v-model="ruleForm.name" class="margin-l">夹收封顶</el-checkbox>
+							<el-checkbox v-model="ruleForm_h.outtimeRuleCaps" class="margin-l">夹收封顶</el-checkbox>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="备注:">
 							<el-col>
-								<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.name"></el-input>
+								<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.remark"></el-input>
 							</el-col>
 						</el-form-item>
 					</el-col>
 				</el-form>
 			</el-row>
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-			 @selection-change="handleSelectionChange">shu
-				<el-table-column prop="name" label="房型"></el-table-column>
-				<el-table-column prop="name" label="全价">
-					<template slot-scope="name">
+			<el-table ref="multipleTable" :data="ruleForm_h.roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+				<el-table-column prop="houseName" label="房型"></el-table-column>
+				<el-table-column  label="全价">
+					<template slot-scope="scope">
 						<el-row class="demo-form-inline">
-							<el-input v-model="value"></el-input>
+							<el-input v-model="scope.row.allPrice"></el-input>
 						</el-row>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="起步价">
-					<template slot-scope="name">
+					<template slot-scope="scope">
 						<el-row class="demo-form-inline">
-							<el-input v-model="value"></el-input>
+							<el-input v-model="scope.row.startPrice"></el-input>
 						</el-row>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="每小时加收">
-					<template slot-scope="name">
+					<template slot-scope="scope">
 						<el-row class="demo-form-inline">
-							<el-input v-model="value"></el-input>
+							<el-input v-model="scope.row.hourAddPrice"></el-input>
 						</el-row>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="封顶费">
-					<template slot-scope="name">
-						<el-input v-model="value"></el-input>
+					<template slot-scope="scope">
+						<el-input v-model="scope.row.topPrice"></el-input>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="预收房费">
-					<template slot-scope="name">
-						<el-input v-model="value"></el-input>
+					<template slot-scope="scope">
+						<el-input v-model="scope.row.advancePrice"></el-input>
 					</template>
 				</el-table-column>
 				<el-table-column prop="name" label="备注">
-					<template slot-scope="name">
-						<el-input v-model="value"></el-input>
+					<template slot-scope="scope">
+						<el-input v-model="scope.row.allPrice"></el-input>
 					</template>
 				</el-table-column>
 			</el-table>
 			<el-row style="padding: 20px 0px;">
-				<el-button type="primary" style="width: 80px;">保存</el-button>
-				<el-button style="width: 80px;margin-left: 20px;">返回</el-button>
+				<el-button type="primary" style="width: 80px;" @click="saveInfo_h">保存</el-button>
+				<el-button style="width: 80px;margin-left: 20px;" @click="tab2_show = false">返回</el-button>
 			</el-row>
 		</el-row>
 		<!-- 设置 -->
@@ -379,15 +383,15 @@
 				tableData_b: [],
 				tableData: [],
 				allForm: {
-					priceModel: 1,
+					priceModel: '1',
 					ruleName: '',
 					checkinStartMinute: '',
 					checkinStartHourhouse: '',
 					checkoutTime: '',
 					outtimeMinute: '',
 					outtimeAllday: '',
-					outtimeRule: '',
-					outtimeRuleCaps: '',
+					outtimeRule: '2',
+					outtimeRuleCaps: true,
 					remark: '',
 					roomStrategyJson: [],
 				},
@@ -399,12 +403,31 @@
 					pageSize: 10,
 					totalSize: 0
 				},
-				rules: {
+				ruleForm_h:{
+					ruleName: 1,
+					checkinStartMinute: '',
+					checkinStartHourhouse: '',
+					outtimeMinute: '',
+					outtimeAllday: '',
+					startTime: '',
+					endTime: '',
+					outtimeRule: '2',
+					outtimeRuleCaps: true,
+					remark: '',
+					state: true,
+					roomStrategyJson: [],
+				},
+				rules_h: {
 					name: [{
 						required: true,
 						message: '请输入姓名',
 						trigger: 'blur'
 					}]
+				},
+				ruleForm_r: {
+					memberId: '',
+					pageIndex:1,
+					pageSize: 10
 				},
 				dialogsit: false,
 				priceModelList: [{
@@ -433,7 +456,7 @@
 						this.get_hotel_rule_hour_list()
 						break
 					case 'c':
-						this.dialogsit = true;
+						this.get_hotel_rule_hour_list()
 						break
 				}
 			}
@@ -443,13 +466,15 @@
 		},
 		methods: {
 			popup(type) {
-				debugger
+				// debugger
 				switch (type) {
 					case 'addA':
 						this.tab1_show = false;
+						this.get_hotel_room_type_list()
 						break
 					case 'addB':
 						this.tab2_show = false;
+						this.get_hotel_room_type_list()
 						break
 					case 'sit':
 						this.dialogsit = true;
@@ -459,6 +484,56 @@
 			// 查询
 			searchBtn() {
 				this.get_hotel_rule_allday_list()
+			},
+			// 全天房保存
+			saveInfo_d() {
+				let params = Object.assign({} ,this.allForm)
+				if (params.outtimeRuleCaps) {
+					params.outtimeRuleCaps = 1
+				} else {
+					params.outtimeRuleCaps = 2
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_save', params, (res) => {
+					
+				})
+			},
+			// 时租房保存
+			saveInfo_h() {
+				let params = Object.assign({} ,this.ruleForm_h)
+				if (params.outtimeRuleCaps) {
+					params.outtimeRuleCaps = 1
+				} else {
+					params.outtimeRuleCaps = 2
+				}
+				if (params.state) {
+					params.state = 1
+				} else {
+					params.state = 2
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_save', params, (res) => {
+					
+				})
+			},
+			// 获取 全部房型
+			get_hotel_room_type_list() {
+				let params = {
+					roomType:3,
+					paging:false,
+					pageIndex:1,
+					pageSize:999
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
+					if (res.list.length != 0) {
+						res.list.forEach(item =>{
+							item.startPrice = ''
+							item.hourAddPrice = ''
+							item.topPrice = ''
+							item.remark = ''
+						})
+						this.allForm.roomStrategyJson = res.list
+						this.ruleForm_h.roomStrategyJson = res.list
+					}
+				})
 			},
 			// 获取 计费规则全天房计费列表
 			get_hotel_rule_allday_list() {
