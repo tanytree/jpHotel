@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-21 10:32:31
+ * @LastEditTime: 2020-07-27 17:56:57
  * @FilePath: /jiudian/src/main.js
  */
 import Vue from 'vue'

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-24 15:51:51
+ * @LastEditTime: 2020-07-27 16:41:43
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -61,6 +61,11 @@ module.exports = {
         "2": '朝北',
         "3": '朝东',
         "4": '朝西'
+    },
+    //制卡状态
+    markCard:{
+        "1": '未制卡',
+        "2": '已制卡'
     },
 }
 

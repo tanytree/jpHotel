@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-24 20:06:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-23 11:27:28
+ * @LastEditTime: 2020-07-27 17:28:28
  * @FilePath: /jiudian/src/utils/filter.js
  */ 
 /****************** 全局过滤器 ******************/
@@ -142,7 +142,7 @@ const filters = {
 			'4': '朝西',
 		}
 		return value && enums[value] ? enums[value] : ''
-	}, 
+	}
 
 }
 

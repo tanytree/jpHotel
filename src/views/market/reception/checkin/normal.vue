@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-27 15:55:48
+ * @LastEditTime: 2020-07-27 18:34:17
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -208,7 +208,7 @@
                         <el-row>
                             <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
                             <el-button @click="live_in_person_list"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
-                            <el-button>制卡</el-button>&nbsp;&nbsp;
+                            <el-button @click="liveCard_in_person_list"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />
                         <el-row class="roomSelect">
@@ -406,6 +406,29 @@
             <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
         </span>
     </el-dialog>
+    <el-dialog top="0" title="房卡操作" :visible.sync="mackcade" width="60%">
+        <el-row>
+            <span>共一间&nbsp;&nbsp;本次已制卡数：0</span>
+            <el-col :span="8" style="float:right">
+                <el-button @click="make_card_status">制卡</el-button>
+                <el-button>清卡</el-button>
+                <el-button>读卡</el-button>
+            </el-col>
+        </el-row>
+        <el-table ref="multipleTable" :data="liveCardData" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column prop="name" label="房间号" width="200">
+                <template slot-scope="{row}">
+                    {{row.room?row.room.houseNum:''}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="name" label="本次制卡状态">
+                <template slot-scope="{row}">
+                    {{F_markCard(row.markCard)}}
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-dialog>
 </div>
 </template>
 
@@ -414,6 +437,7 @@ import {
     mapState,
     mapActions
 } from "vuex";
+const vm = window.vm;
 export default {
     props: ['operCheckinType'],
     computed: {
@@ -430,10 +454,12 @@ export default {
             num: 1,
             loading: false,
             liveLoading: false,
+            liveCardLoading: false,
             rowRoomShow: false,
             showDetail: false,
             guestTypeShow: false,
             liveInPersonShow: false,
+            mackcade: false,
             getRoomsForm: {
                 changeType: 1,
                 bedCountL: '',
@@ -536,16 +562,15 @@ export default {
                 pageIndex: 1,
                 pageSize: 9999
             },
-            liveInPersonData: []
+            liveInPersonData: [],
+            liveCardData:[],
         };
     },
-
     mounted() {
-
+        console.log(this.$t('commons.markCard'))
         this.checkInForm.operCheckinType = this.operCheckinType
         this.hotel_rule_hour_list()
         this.initForm();
-
     },
     watch: {
         operCheckinType() {
@@ -633,70 +658,68 @@ export default {
             })
         },
         hotel_check_in(type) {
-            let ajax = () =>{
+            let ajax = () => {
                 this.$F.doRequest(this, '/pms/checkin/hotel_check_in', this.checkInForm, (data) => {
-                this.checkInForm.checkinId = data.checkinId
-                if (type == 1) {
-                    console.log('沉浸式提交')
-                } else if(type == 2){
-                    this.$message({
-                        message: '办理成功',
-                        type: 'success'
-                    });
-                    window.setTimeout(()=>{
-                        this.$router.push('/orderdetail?id=' + data.checkinId)
-                    },2000)
-                }else if(type == 3){
-                    this.$message({
-                        message: '办理成功',
-                        type: 'success'
-                    });
-                    for(let k in this.checkInForm){
-                        if(k!='operCheckinType'){
-                            this.checkInForm[k] = ''
+                    this.checkInForm.checkinId = data.checkinId
+                    if (type == 1) {
+                        console.log('沉浸式提交')
+                    } else if (type == 2) {
+                        this.$message({
+                            message: '办理成功',
+                            type: 'success'
+                        });
+                        window.setTimeout(() => {
+                            this.$router.push('/orderdetail?id=' + data.checkinId)
+                        }, 2000)
+                    } else if (type == 3) {
+                        this.$message({
+                            message: '办理成功',
+                            type: 'success'
+                        });
+                        for (let k in this.checkInForm) {
+                            if (k != 'operCheckinType') {
+                                this.checkInForm[k] = ''
+                            }
                         }
-                    }
-                    this.waitingRoom = []
-                    this.liveInPersonData = []
+                        this.waitingRoom = []
+                        this.liveInPersonData = []
 
-                }
-            })
+                    }
+                })
             }
-            if(type == 2 || type == 3){
-                if(!this.waitingRoom.length){
+            if (type == 2 || type == 3) {
+                if (!this.waitingRoom.length) {
                     this.$message.error('请选择房型')
                     return false
                 }
-                for(let k in this.waitingRoom){
-                    if(!this.waitingRoom[k].roomsArr){
+                for (let k in this.waitingRoom) {
+                    if (!this.waitingRoom[k].roomsArr) {
                         this.$message.error('请选择房间')
-                    return false
+                        return false
                     }
-                    if(this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num){
+                    if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
                         this.$message.error('请选择房间')
-                    return false
+                        return false
                     }
                 }
-                if(!this.liveInPersonData.length){
+                if (!this.liveInPersonData.length) {
                     this.$message.error('请添加入住人')
                     this.live_in_person_list()
                     return false
                 }
-                
-                for(let k in this.liveInPersonData){
-                    if(!this.liveInPersonData[k].personList.length){
-                    this.$message.error('请添加入住人')
-                    this.live_in_person_list()
-                    return false
+
+                for (let k in this.liveInPersonData) {
+                    if (!this.liveInPersonData[k].personList.length) {
+                        this.$message.error('请添加入住人')
+                        this.live_in_person_list()
+                        return false
                     }
                 }
                 ajax()
-            }else{
+            } else {
                 ajax()
             }
 
-
-            
         },
         /**编辑 */
         editRowItem(row) {
@@ -922,16 +945,31 @@ export default {
             return false
         },
         //获取入住人
+        liveCard_in_person_list() {
+            let params = {
+                type: 3,
+                checkinId: this.checkInForm.checkInId,
+                pageIndex: 1,
+                pageSize: 999
+            };
+            this.liveCardLoading = true;
+            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
+                this.liveCardData = res.checkInRoomList
+                this.liveCardLoading = false
+                this.mackcade = true
+                this.$forceUpdate()
+            })
+        },
         live_in_person_list() {
 
             let flag = false;
             console.log(this.waitingRoom)
-            for(let k in this.waitingRoom){
-                if(this.waitingRoom[k].roomsArr && this.waitingRoom[k].roomsArr.length){
+            for (let k in this.waitingRoom) {
+                if (this.waitingRoom[k].roomsArr && this.waitingRoom[k].roomsArr.length) {
                     flag = true
                 }
             }
-            if(!flag){
+            if (!flag) {
                 this.$message.error('请排房后操作');
                 return
             }
@@ -979,7 +1017,7 @@ export default {
                 this.liveInPersonData = data
                 this.$forceUpdate()
             })
-        },
+        }, 
         //添加入住人
         editItem_live_in_person(item) {
             if (!item.name) {
@@ -1074,8 +1112,36 @@ export default {
         cancel_live_in_person(item) {
             item.edit = false
             this.$forceUpdate()
-        }
-
+        },
+        make_card_status() {
+            let arr = []
+            if(!this.multipleSelection.length){
+                this.$message.error('至少选择一间房间')
+                return
+            }
+            this.multipleSelection.forEach(element => {
+                arr.push(element.id)
+            });
+            let params = {
+                checkInRoomIds: arr,
+            };
+            this.$F.doRequest(this, '/pms/checkin/make_card_status', params, (res) => {
+                this.$message({
+                    message: '制卡成功',
+                    type: 'success'
+                });
+                this.liveCard_in_person_list()
+                this.$forceUpdate()
+            })
+        },
+        F_markCard(value) {
+            let enums = this.$t('commons.markCard')
+            return value && enums[value] ? enums[value] : ''
+        },
+        handleSelectionChange(val) {
+        this.multipleSelection = val;
+        console.log(val)
+      }
     }
 };
 </script>
