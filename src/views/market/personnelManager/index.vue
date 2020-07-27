@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-01-04 15:46:19
- * @LastEditors: 魏轩
- * @LastEditTime:
- * @FilePath:
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-07-26 22:22:25
+ * @FilePath: /jiudian/src/views/market/personnelManager/index.vue
  -->
 <template>
     <el-tabs class="pageTab" v-model="activeName">

@@ -495,13 +495,7 @@
                         </label>
                         <el-button type="text" @click="remark=true">修改</el-button>
                     </el-row>
-                    <el-row style="margin-top:10px">
-                        <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
-                        <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
-                        <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
-                        <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
-                        <el-button style="width:60px;">置脏</el-button>
-                    </el-row>
+                   
                 </el-tab-pane>
                 <el-tab-pane label="房间信息">
                     <el-row>
@@ -542,6 +536,13 @@
 
                     </el-row>
                 </el-tab-pane>
+                 <el-row style="margin-top:10px">
+                        <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
+                        <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
+                        <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
+                        <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
+                        <el-button style="width:60px;">置脏</el-button>
+                    </el-row>
             </el-tabs>
         </el-dialog>
     </div>
