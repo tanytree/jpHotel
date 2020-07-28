@@ -1,18 +1,18 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 17:37:28
+ * @LastEditTime: 2020-07-28 10:04:18
  * @FilePath: /jiudian/src/views/market/booking/index.vue
  -->
 
 <template>
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="普通预订" name="first">
-        <normal />
+      <el-tab-pane label="普通预订" name="b1">
+        <normal :operCheckinType="activeName" />
       </el-tab-pane>
-      <el-tab-pane label="时租房预订" name="second">
-        <hour />
+      <el-tab-pane label="时租房预订" name="b2">
+        <normal :operCheckinType="activeName" />
       </el-tab-pane>
       <el-tab-pane label="会场预订" name="third">
         <hall />
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import normal from "./normal";
+import normal from "@/views/market/reception/checkin/normal";
 import hour from "./hour";
 import hall from "./hall";
 
@@ -30,7 +30,7 @@ export default {
   components: { normal, hour, hall },
   data() {
     return {
-      activeName: "first" //第一个默认启动
+      activeName: "b1" //第一个默认启动
     };
   },
   mounted() {},

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-27 16:41:43
+ * @LastEditTime: 2020-07-28 11:50:30
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -67,5 +67,12 @@ module.exports = {
         "1": '未制卡',
         "2": '已制卡'
     },
+    bedCount:{
+        "0": '全部',
+        "1": '单床',
+        "2": '双床',
+        "3": '三床'
+  
+    }
 }
 
