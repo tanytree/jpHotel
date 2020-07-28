@@ -234,14 +234,7 @@
 				activName: 'a',
 				tab1_show: true, //切片一的跳转
 				tab2_show:true,//切片二的跳转
-				tableData: [{
-					name: '',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}],
+				tableData: [],
 				pickerOptions: {
 					disabledDate(time) {
 						return time.getTime() > Date.now();
@@ -370,6 +363,24 @@
 				        value: ''
 			};
 		},
+		watch:{
+			activName() {
+				switch (this.activName) {
+					case 'a':
+						// this.get_hotel_rule_allday_list()
+						break
+					case 'b':
+						this.get_price_enter_strategy_list()
+						break
+					case 'c':
+						// this.get_hotel_rule_hour_list()
+						break
+				}
+			}
+		},
+		created() {
+			this.get_price_enter_strategy_list()
+		},
 		methods: {
 			popup(type) {
 				debugger
@@ -384,6 +395,14 @@
 						this.tab2_show = false;
 						break
 				}
+			},
+			// 获取 价格策略单位列表
+			get_price_enter_strategy_list() {
+				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_list', {}, (res) => {
+					if (res.length != 0) {
+						
+					}
+				})
 			},
 			back_1() {
 				this.tab1_show = true;

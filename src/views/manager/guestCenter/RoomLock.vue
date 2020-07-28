@@ -174,9 +174,8 @@
 							<el-input v-model="ruleForm.hotelRoomLock.lockP7"></el-input>
 						</el-form-item>
 						<el-form-item label="硬件:">
-							<el-select v-model="ruleForm.hotelRoomLock.hardware" style="width: 120px">
-								<el-option placeholder="请选择硬件" :label="value.name" :value="value.id" v-for="(value, index) in hardwareList"
-								 :key="index"></el-option>
+							<el-select v-model="ruleForm.hotelRoomLock.hardware" :placeholder="ruleForm.hotelRoomLock.hardware" style="width: 120px">
+								<el-option :label="value.label" :value="value.label"  v-for="(value, index) in hardwareList" :key="index"></el-option>
 							</el-select>
 						</el-form-item>
 					</el-col>
@@ -274,9 +273,9 @@
 						lockP6: '',
 						lockP7: '',
 						lockP8: '',
-						hardware: '双峰',
-						cardNumber: '',
-					},
+						hardware: '',
+						cardNumber: ''
+					}
 				},
 				is_openOpposite: [{ // 是否反开
 					name: '是',
@@ -286,7 +285,7 @@
 					status: 2
 				}],
 				hardwareList: [{ // 硬件类型列表
-					name: '双峰'
+					label: '双峰'
 				}]
 			}
 		},
@@ -309,7 +308,6 @@
 						this.dialogChange_show = true
 						this.isDisable = true
 						this.ruleForm = value
-						// debugger
 						break
 				}
 			},
@@ -317,11 +315,13 @@
 			defineSingle() {
 				let params =  Object.assign({},this.ruleForm.hotelRoomLock)
 				params.roomIds = this.ruleForm.id
+				params.status = 1
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_lock_save', params, (res) => {
 					this.$message({
 					  message: '保存成功',
 					  type: 'success'
 					});
+					this.dialogChange_show = false
 				})
 			},
 			// 获取 楼栋列表
