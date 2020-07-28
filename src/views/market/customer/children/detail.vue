@@ -534,16 +534,9 @@ export default {
             });
         },
         smembertype_list() {
-            let params = {
-                name: '',
-                pageIndex: 1,
-                pageSize: 10,
-                paging: false,
-                id: ''
-            }
-            this.$F.doRequest(this, '/pms/membertype/list', params, (data) => {
-                this.smembertypeList = data.list;
-            })
+          this.$F.fetchMemberTypeList(params, (res) => {
+            this.smembertypeList = res.list;
+          })
         },
         login_user_list() {
             let params = {

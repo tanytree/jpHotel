@@ -487,7 +487,7 @@ export default {
             this.$F.doRequest(this, '/pms/hotelenter/list', this.searchForm, (res) => {
                 this.loading = false
                 this.tableData = res.list;
-                this.listTotal = res.page.count
+                this.listTotal = (res.page || {}).count || 0
             })
         },
         handleDetail() {

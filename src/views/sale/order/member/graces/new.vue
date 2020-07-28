@@ -152,7 +152,7 @@ export default {
     },
 
     getMemberTypeList () {
-      this.$F.doRequest(this, '/pms/membertype/list', { pageIndex: 1, pageSize: 10, paging: false }, (res) => {
+      this.$F.fetchMemberTypeList({}, (res) => {
         this.memberTypeList = res.list
       })
     }

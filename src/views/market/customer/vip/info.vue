@@ -19,8 +19,7 @@
             </el-form-item>
             <el-form-item label="发展途径">
                 <el-select v-model="searchForm.getWay" class="width150">
-                    <el-option label="线上" :value="1">已认证</el-option>
-                    <el-option label="线下" :value="2">未认证</el-option>
+                    <el-option v-for="(label, value) in $t('frontOffice.getWay')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="会员类型">
@@ -40,15 +39,12 @@
             </el-form-item>
             <el-form-item label="状态">
                 <el-select v-model="searchForm.state" class="width150">
-                    <el-option label="正常" :value="1"></el-option>
-                    <el-option label="已挂失" :value="2"></el-option>
-                    <el-option label="待启用" :value="3"></el-option>
+                    <el-option v-for="(label, value) in $t('frontOffice.state')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="黑名单">
                 <el-select v-model="searchForm.isBlacklist" class="width150">
-                    <el-option label="否" :value="1"></el-option>
-                    <el-option label="是" :value="2"></el-option>
+                    <el-option v-for="(label, value) in $t('frontOffice.isBlacklist')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -171,7 +167,7 @@ export default {
             multipleSelection: [], //多选
             tableData: [{}], //表格数据
             storeList: '',
-            smembertypeList: '',
+            smembertypeList: [],
             setBlackForm: {
                 remark: ''
             },
@@ -182,7 +178,9 @@ export default {
     mounted() {
         this.initForm();
         this.stores_list()
-        this.smembertype_list()
+        this.$F.fetchMemberTypeList({}, (res) => {
+          this.smembertypeList = res.list;
+        })
     },
     methods: {
         initForm() {
@@ -215,18 +213,7 @@ export default {
                 this.storeList = data;
             })
         },
-        smembertype_list() {
-            let params = {
-                name: '',
-                pageIndex: 1,
-                pageSize: 10,
-                paging: false,
-                id: ''
-            }
-            this.$F.doRequest(this, '/pms/membertype/list', params, (data) => {
-                this.smembertypeList = data.list;
-            })
-        },
+
         handleAdd(item) {
             this.$router.push({
                 name: 'customeradd'

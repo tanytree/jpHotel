@@ -128,7 +128,7 @@ export default {
     //会员类型价格列表
     getMemberTypeUpdateList(params = {}) {
       this.$F.merge(params, this.form);
-      this.$F.doRequest(this, '/pms/membertype/list', params, (res) => {
+      this.$F.fetchMemberTypeList(params, (res) => {
         this.tableData = res.list;
         this.totalPage = res.page.count;
       })
