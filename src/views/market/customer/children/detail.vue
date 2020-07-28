@@ -6,12 +6,13 @@
  -->
 <template>
 <div>
-    <el-card>
+    <el-card v-loading="loading">
         <!-- 头部导航 -->
         <div slot="header" class="clearfix">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/customer' }">客户详情</el-breadcrumb-item>
-                <el-breadcrumb-item>3296592769-张三-白金卡</el-breadcrumb-item>
+                <el-breadcrumb-item v-if="type != 'add'"> {{detailForm.memberCard}}-{{detailForm.name}}-{{F_memberTypeId(detailForm.memberTypeId)}}</el-breadcrumb-item>
+                <el-breadcrumb-item v-else> 新增会员</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="bodyInfo">
@@ -43,15 +44,15 @@
                                 <el-row class="cell">
                                     <template v-if="type=='add'">
                                         <el-col :span="8" class="col">
-                                            <el-form-item label="会员卡号" prop="memberCard">
-                                                <el-input v-model="detailForm.memberCard" v-if="type!='detail'"></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="8" class="col">
                                             <el-form-item label="会员类型" prop="memberTypeId">
                                                 <el-select v-model="detailForm.memberTypeId" v-if="type!='detail'" class="">
                                                     <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                                 </el-select>
+                                            </el-form-item>
+                                        </el-col>
+                                        <el-col :span="8" class="col">
+                                            <el-form-item label="会员卡号" prop="memberCard">
+                                                <el-input v-model="detailForm.memberCard" v-if="type!='detail'"></el-input>
                                             </el-form-item>
                                         </el-col>
                                     </template>
@@ -71,9 +72,7 @@
                                     <el-col :span="8" class="col">
                                         <el-form-item label="证件类型" prop="idcardType">
                                             <el-select v-model="detailForm.idcardType" v-if="type!='detail'" class="">
-                                                <el-option label="身份证" :value="1"></el-option>
-                                                <el-option label="护照" :value="2"></el-option>
-                                                <el-option label="驾驶证" :value="3"></el-option>
+                                                <el-option v-for="(label, value) in $t('commons.idCardType')" :label="label" :value="value" :key="value"></el-option>
                                             </el-select>
                                             <template v-if="type=='detail'">{{detailForm.idcardType | F_idcardType}}</template>
 
@@ -204,8 +203,7 @@
                                     <el-col :span="8" class="col">
                                         <el-form-item label="发展途径" prop="getWay">
                                             <el-select v-model="detailForm.getWay" v-if="type!='detail'">
-                                                <el-option label="线上" :value="1"></el-option>
-                                                <el-option label="线下" :value="2"></el-option>
+                                                <el-option v-for="(value, key) in $t('frontOffice.getWay')" :label="value" :key="value" :value="key"></el-option>
                                             </el-select>
                                             <template v-if="type=='detail'">{{detailForm.mobile}}</template>
 
@@ -232,11 +230,11 @@
             </div>
         </div>
     </el-card>
-    <template v-if="type!='detail'">
+    <template v-if="type != 'detail'">
         <el-row style="height:60px"></el-row>
         <el-row class="fixedFoot">
             <div class="wrap">
-                <el-button type="primary" @click="addItem('detailForm')">保存</el-button>
+                <el-button type="primary" @click="addItem('detailForm')" v-loading="loading">保存</el-button>
                 <el-button @click="$router.go(-1)">返回</el-button>
             </div>
         </el-row>
@@ -343,10 +341,11 @@ export default {
     },
     data() {
         return {
+            loading: false,
             type: 'edit',
             setCardFormVisible: false,
             formLabelWidth: '120px',
-            nationalityList: '',
+            nationalityList: [],
             storeList: '',
             smembertypeList: '',
             salesList: '',
@@ -363,7 +362,7 @@ export default {
             rules: {
                 name: [{
                     required: true,
-                    message: '请输入外宾姓名',
+                    message: '请输入姓名',
                     trigger: 'blur'
                 }, ],
                 sex: [{
@@ -424,8 +423,8 @@ export default {
 
     },
     mounted() {
-        console.log(this.$route)
         this.detailForm.id = this.$route.query.id ? this.$route.query.id : ''
+      debugger
         if (this.$route.name == 'customeradd') {
             this.type = 'add'
         } else if (this.$route.name == 'customeredit') {
@@ -448,7 +447,12 @@ export default {
             this.$F.doRequest(this, '/pms/hotelmember/findone', {
                 id: id
             }, (res) => {
-                this.detailForm = res
+              for(var key in res){//遍历json对象的每个key/value对,p为key
+                if (res[key] && typeof(res[key]) == "number") {
+                  res[key] = res[key].toString();
+                }
+              }
+              this.detailForm = res;
             })
         },
         setCardFormBtnClick(v) {
@@ -534,13 +538,13 @@ export default {
             });
         },
         smembertype_list() {
-          this.$F.fetchMemberTypeList(params, (res) => {
+          this.$F.fetchMemberTypeList({}, (res) => {
             this.smembertypeList = res.list;
           })
         },
         login_user_list() {
             let params = {
-                searchType: 2,
+                searchType: 1,
                 paging: false,
                 salesFlag: 1,
                 content: '',
@@ -548,7 +552,7 @@ export default {
                 pageIndex: 1,
                 pageSize: 10
             }
-            this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (data) => {
+            this.$F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
                 this.salesList = data.hotelUserList;
             })
         },
@@ -568,17 +572,17 @@ export default {
                 pageIndex: 1,
                 pageSize: 10
             }
-            this.$F.doRequest(this, '/pms/hotelenter/list', params, (data) => {
+            this.$F.doRequest(null, '/pms/hotelenter/list', params, (data) => {
                 this.hotelenterList = data.list
             })
         },
         stores_list() {
-            this.$F.doRequest(this, '/pms/freeuser/stores_list', {}, (data) => {
+            this.$F.doRequest(null, '/pms/freeuser/stores_list', {}, (data) => {
                 this.storeList = data;
             })
         },
         nationality() {
-            this.$F.doRequest(this, '/pms/system/country_list', {}, (res) => {
+            this.$F.fetchNationality((res) => {
                 this.nationalityList = res;
             })
         },
@@ -587,12 +591,12 @@ export default {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/hotelmember/edit', this.detailForm, (res) => {
                         this.$message({
-                            message: '操作成功',
+                            message: 'success',
                             type: 'success'
                         });
                         setTimeout(() => {
                             this.$router.go(-1)
-                        }, 2000)
+                        }, 1200)
                     })
                 } else {
                     console.log('error submit!!');

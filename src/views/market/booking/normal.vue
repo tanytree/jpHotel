@@ -330,9 +330,9 @@ export default {
         handleCurrentChange(val) {
             this.checkInForm.page = val;
             this.getDataList();
-        },        
+        },
         handleChange(){
-            
+
         }
 
     }

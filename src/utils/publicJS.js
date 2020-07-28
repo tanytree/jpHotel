@@ -13,11 +13,12 @@ const languageObject = {
     'ri': '日本語',
     'zh': '中文'
 }
-const HQcode = '0000000000'
+const HQCODE = '0000000000'  //总部账号定义
+var NATIONALITYLIST = []  //国籍列表
 const $F = {
     //获取总部后台的代码code
     getHQCode () {
-        return HQcode
+        return HQCODE
     },
     getLangDesc (langKey) {
         return languageObject[langKey]
@@ -167,9 +168,21 @@ const $F = {
             id: ''
         }
         merge(params, requestParams)
-        this.doRequest(this, '/pms/membertype/list', params, (data) => {
+        this.doRequest(null, '/pms/membertype/list', params, (data) => {
             callback(data)
         })
     },
+    //获取国籍list
+    fetchNationality (callback) {
+        if (NATIONALITYLIST.length > 0) {
+            callback(NATIONALITYLIST)
+            return;
+        }
+        this.doRequest(null, '/pms/system/country_list', {}, (data) => {
+            NATIONALITYLIST = data;
+            callback(NATIONALITYLIST)
+        })
+    },
+
 }
 export default $F

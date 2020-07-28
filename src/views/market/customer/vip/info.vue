@@ -8,22 +8,25 @@
 <template>
 <!-- 统一的列表格式 -->
 <div>
-    <el-card>
+    <el-card v-if="showPageType == 'main'">
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-form-item label="开卡门店">
                 <el-select v-model="searchForm.storesNum" class="width150">
+                    <el-option label="全部" value=""></el-option>
                     <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                     </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="发展途径">
                 <el-select v-model="searchForm.getWay" class="width150">
+                    <el-option label="全部" value=""></el-option>
                     <el-option v-for="(label, value) in $t('frontOffice.getWay')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="会员类型">
                 <el-select v-model="searchForm.memberTypeId" class="width150">
+                       <el-option label="全部" value=""></el-option>
                        <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
@@ -39,11 +42,13 @@
             </el-form-item>
             <el-form-item label="状态">
                 <el-select v-model="searchForm.state" class="width150">
+                    <el-option label="全部" value=""></el-option>
                     <el-option v-for="(label, value) in $t('frontOffice.state')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="黑名单">
                 <el-select v-model="searchForm.isBlacklist" class="width150">
+                    <el-option label="全部" value=""></el-option>
                     <el-option v-for="(label, value) in $t('frontOffice.isBlacklist')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
@@ -146,21 +151,11 @@ export default {
     },
     data() {
         return {
+            showPageType: 'main',   //页面显示类型
             loading: false,
             showEdit: false,
             showDetail: false,
             searchForm: {
-                id: '',
-                getWay: '',
-                memberTypeId: '',
-                mobile: '',
-                memberCard: '',
-                name: '',
-                state: '',
-                isBlacklist: '',
-                paging: true,
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
 
             },
             listTotal: 0, //总条数
@@ -185,6 +180,7 @@ export default {
     methods: {
         initForm() {
             this.searchForm = {
+                // storesNum: '',
                 id: '',
                 getWay: '',
                 memberTypeId: '',
