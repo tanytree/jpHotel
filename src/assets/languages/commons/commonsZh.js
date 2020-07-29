@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-28 11:50:30
+ * @LastEditTime: 2020-07-29 10:49:06
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -72,7 +72,19 @@ module.exports = {
         "1": '单床',
         "2": '双床',
         "3": '三床'
-  
+    },
+    //入住状态
+    checkinState:{
+        "1": '入住中',
+        "2": '已退房'
+    },
+    //入住状态
+    billType:{
+        "1": '已结',
+        "2": '挂账',
+        "3": '冲调',
+        "4": '走结',
+        "5": '反结'
     }
 }
 
