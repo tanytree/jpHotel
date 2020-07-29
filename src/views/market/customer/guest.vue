@@ -13,6 +13,7 @@
         <el-form inline size="small" label-width="80px">
             <el-form-item label="登记门店">
                 <el-select v-model="searchForm.storesNum">
+                    <el-option label="全部" value=""></el-option>
                     <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                     </el-option>
                 </el-select>
@@ -204,6 +205,7 @@ export default {
             showEdit: false,
             showDetail: false,
             searchForm: {
+                storesNum: '',
                 nationality: '',
                 visaType: '',
                 name: '',
@@ -281,6 +283,7 @@ export default {
     methods: {
         initForm() {
             this.searchForm = {
+                storesNum: '',
                 nationality: '',
                 visaType: '',
                 name: '',

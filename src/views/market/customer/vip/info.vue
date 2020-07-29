@@ -33,6 +33,13 @@
             <el-form-item label="手机号">
                 <el-input v-model="searchForm.mobile" class="width150"></el-input>
             </el-form-item>
+            <el-form-item label="是否注销">
+                <el-select v-model="searchForm.status" class="width150">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="正常" value="1"></el-option>
+                    <el-option label="已注销" value="2"></el-option>
+                </el-select>
+            </el-form-item>
             <br />
             <el-form-item label="卡号">
                 <el-input v-model="searchForm.memberCard" class="width150"></el-input>
@@ -70,7 +77,7 @@
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="idcard" label="卡号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
             <el-table-column label="会员类型" show-overflow-tooltip>
                 <template slot-scope="{row}">
@@ -100,6 +107,11 @@
                     {{row.isBlacklist==2?'是':'否'}}
                 </template>
             </el-table-column>
+            <el-table-column prop="isBlacklist" label="是否注销" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.status == 1?'否':'是'}}
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
@@ -109,8 +121,8 @@
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>收卡费</el-dropdown-item>
-                            <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!=2">拉黑</el-dropdown-item>
+                            <el-dropdown-item @click.native="setCardVisible = true">收卡费</el-dropdown-item>
+                            <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!= 2">拉黑</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </template>
@@ -121,15 +133,42 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow">
-        <el-form :model="setBlackForm">
-            <el-form-item label="拉黑备注：" class="require">
-                <el-input type="textarea" v-model="setBlackForm.remark" autocomplete="off" style="width:400px"></el-input>
+    <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
+        <el-form :model="setBlackForm" ref="setBlackForm">
+            <el-form-item label="拉黑备注：" prop="blackRemark">
+                <el-input type="textarea" v-model="setBlackForm.remark" autocomplete="off" style="width:80%"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="setBlackShow = false">取 消</el-button>
             <el-button type="primary" @click="addblacklist">确 定</el-button>
+        </div>
+    </el-dialog>
+    <el-dialog top="0" title="补收卡费" :visible.sync="setCardVisible" width="470px">
+        <el-form :model="cardForm" ref="cardForm">
+            <el-form-item label="" class="require" label-width="80px">
+                卡号：{{cardForm.memberCard}} 姓名：{{cardForm.name}} 会员类型：{{F_memberTypeId(cardForm.memberTypeId)}}
+            </el-form-item>
+            <el-form-item label="补收类型" class="" prop="memberTypeId">
+                <el-radio-group v-model="cardForm.type">
+                    <el-radio :label="3">卡费</el-radio>
+                    <el-radio :label="6">升级卡</el-radio>
+                    <el-radio :label="9">补卡费</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="支付方式" class="" prop="payWay">
+                <el-select v-model="cardForm.payWay" style="width:300px">
+                    <el-option label="现金" :value="1"></el-option>
+                    <el-option label="微信" :value="2"></el-option>
+                    <el-option label="支付宝" :value="3"></el-option>
+                    <el-option label="银联" :value="4"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="支付费用" class="" prop="payPrices">
+                <el-input style="width:300px" v-model="cardForm.payPrices" placeholder=""></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="setCardFrormChange('cardForm')">确认</el-button>
         </div>
     </el-dialog>
 </div>
@@ -151,12 +190,15 @@ export default {
     },
     data() {
         return {
+          setCardVisible: false,
+            cardForm: {},
             showPageType: 'main',   //页面显示类型
             loading: false,
             showEdit: false,
             showDetail: false,
             searchForm: {
-
+              status: '',
+              storesNum: ''
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -166,7 +208,14 @@ export default {
             setBlackForm: {
                 remark: ''
             },
-            setBlackShow: false
+            setBlackShow: false,
+            setBlackRules: {
+              blackRemark: [{
+                required: true,
+                message: 'not emply',
+                trigger: 'change'
+              }]
+            }
         };
     },
 
@@ -180,7 +229,8 @@ export default {
     methods: {
         initForm() {
             this.searchForm = {
-                // storesNum: '',
+                status: '',
+                storesNum: '',
                 id: '',
                 getWay: '',
                 memberTypeId: '',
@@ -238,13 +288,13 @@ export default {
         addblacklist() {
             if (!this.setBlackForm.remark) {
                 this.$message.error('请输入备注信息');
-                return
+                return;
             }
             this.$F.doRequest(this, '/pms/hotelmember/addblacklist', this.setBlackForm, (data) => {
                 this.setBlackShow = false
                 this.getDataList()
                 this.$message({
-                    message: '操作成功',
+                    message: 'success',
                     type: 'success'
                 });
             })

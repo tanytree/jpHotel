@@ -29,7 +29,7 @@
 								</el-form-item>
 							</el-form>
 						</el-row>
-						
+
 						<div class="components-edit">
 							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 								<el-table-column prop="name" label="规则名称"></el-table-column>
@@ -487,14 +487,17 @@
 			},
 			// 全天房保存
 			saveInfo_d() {
-				let params = Object.assign({} ,this.allForm)
+				// let params = Object.assign({} ,this.allForm)
+                let params = this.$F.deepClone(this.allForm);
 				if (params.outtimeRuleCaps) {
 					params.outtimeRuleCaps = 1
 				} else {
 					params.outtimeRuleCaps = 2
 				}
+				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
+				debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_save', params, (res) => {
-					
+
 				})
 			},
 			// 时租房保存
@@ -511,7 +514,7 @@
 					params.state = 2
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_save', params, (res) => {
-					
+
 				})
 			},
 			// 获取 全部房型
