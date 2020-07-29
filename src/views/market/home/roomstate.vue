@@ -419,7 +419,7 @@
             <!-- <span>这是一段信息</span> -->
             <!-- <el-row style="font-size:18px">{{currentRoom.houseNum}}房间-{{currentRoom.hotelRoomType?currentRoom.hotelRoomType.houseName:''}}</el-row> -->
             <el-tabs type="border-card" style="margin-top:10px">
-                <el-tab-pane label="入住信息" v-if="currentRoom.roomStatus==3||currentRoom.roomStatus==4">
+                <el-tab-pane :label="currentRoom.checkInRoomType==1?'入住信息':'预订信息'" v-if="currentRoom.checkInRoomType==1||currentRoom.roomStatus==2">
                     <el-row>
                         <el-col :span="8">
                             入住时间：
@@ -458,7 +458,6 @@
                             <span>5465465</span>
                         </el-col>
                     </el-row>
-
                     <el-table :data="currentRoom.livingPersonList" style="width: 100%">
                         <!-- <el-table-column
                           label="日期"
@@ -478,10 +477,10 @@
                             <template slot-scope="scope">{{scope.row.sex | F_sex}}</template>
                         </el-table-column>
                         <el-table-column label="客源类型" width="">
-                            <template slot-scope="scope">{{scope.row.sex}}</template>
+                            <template slot-scope="scope">{{F_guestType(scope.row.checkIn.guestType)}}</template>
                         </el-table-column>
                         <el-table-column label="同来客" width="">
-                            <template slot-scope="scope">{{scope.row.sex}}</template>
+                            <template slot-scope="scope">{{currentRoom.livingPersonList.length-1}}</template>
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
@@ -982,8 +981,9 @@ let roomStatus = [{
     name: '维修',
     value: '5'
 }]
-
+import myMixin from '@/utils/filterMixin';
 export default {
+    mixins: [myMixin],
     data() {
         return {
             remark: false,
