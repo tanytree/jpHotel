@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-28 23:05:02
+ * @LastEditTime: 2020-07-29 10:04:19
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -18,11 +18,11 @@
                     <div class="grid-content">
                         <el-form-item label="入住人：" prop="name">
                             <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:100px" @change="changeName">
-                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.name">
-                                    <el-row>
+                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
+                                    <el-row style="width:300px">
                                         <el-col :span="8">{{item.name}}</el-col>
                                         <el-col :span="8">{{item.mobile}}</el-col>
-                                        <el-col :span="8">{{item.idcard}}</el-col>
+                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
                                     </el-row>
                                 </el-option>
                             </el-select>&nbsp;&nbsp;&nbsp;
@@ -156,10 +156,25 @@
         </el-form>
         <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px" v-if="operCheckinType=='b1' || operCheckinType=='b2'|| operCheckinType=='b3'">
             <el-row>
-                <el-col :span="6">
+                <!-- <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="预订人：" prop="name">
                             <el-input v-model="checkInForm.name" class="width200"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col> -->
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="入住人：" prop="name">
+                            <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
+                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
+                                    <el-row style="width:300px">
+                                        <el-col :span="8">{{item.name}}</el-col>
+                                        <el-col :span="8">{{item.mobile}}</el-col>
+                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
+                                    </el-row>
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -218,7 +233,7 @@
                 <el-col :span="6" v-if="operCheckinType=='b1'">
                     <div class="grid-content">
                         <el-form-item label="入住天数：" prop="checkinDays">
-                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :min="1" :max="10"></el-input-number>
+                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :min="0"></el-input-number>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -333,7 +348,6 @@
                                                     <div style="text-align: right">
 
                                                         <el-input placeholder="" size="mini" style="width:60px" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
-
                                                         <em>{{v.todayPrice}}</em>
                                                     </div>
                                                 </el-col>
@@ -341,7 +355,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </el-col>
                         </el-row>
                     </div>
@@ -606,8 +619,9 @@ export default {
             guestTypeShow: false,
             liveInPersonShow: false,
             mackcade: false,
-            nameLoading:false,
-            options:[],
+            nameLoading: false,
+            options: [],
+            baseInfo: '',
             getRoomsForm: {
                 changeType: 1,
                 bedCount: '',
@@ -1413,27 +1427,42 @@ export default {
             console.log(val)
         },
         remoteMethod(query) {
-        if (query !== '') {
-            let params = {
-                name:query,
-               searchType: 1,
-                pageIndex: 1,
-                pageSize: 999,
-                paging: false
+            if (query !== '') {
+                let params = {
+                    name: query,
+                    searchType: 1,
+                    pageIndex: 1,
+                    pageSize: 999,
+                    paging: false
+                }
+                this.nameLoading = true;
+                this.$F.doRequest(this, '/pms/checkin/checkin_order_list', params, (res) => {
+                    this.nameLoading = false
+                    this.options = res.roomPersonList
+                    this.$forceUpdate()
+                })
+            } else {
+                this.options = [];
             }
-          this.nameLoading = true;
-            this.$F.doRequest(this, '/pms/checkin/checkin_order_list', params, (res) => {
-                this.nameLoading = false
-                this.options = res.roomPersonList
-                this.$forceUpdate()
-            })
-        } else {
-          this.options = [];
+        },
+        changeName(e) {
+            console.log(e)
+            if (e.id) {
+                this.baseInfo = e;
+                this.checkInForm.guestType = e.guestType
+                this.checkInForm.idcard = e.idcard
+                this.checkInForm.idcardType = e.idcardType.toString()
+                this.checkInForm.mobile = e.mobile
+                this.checkInForm.orderSource = e.orderSource.toString()
+                this.checkInForm.orderType = e.orderType.toString()
+                this.checkInForm.sex = e.sex.toString()
+                this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : ''
+                this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : ''
+            } else {
+                this.checkInForm.name = e.name
+            }
+
         }
-      },
-      changeName(e){
-          console.log(e)
-      }
     }
 };
 </script>
