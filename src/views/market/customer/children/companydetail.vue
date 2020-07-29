@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-09 15:45:57
+ * @LastEditTime: 2020-07-29 17:09:36
  * @FilePath: /jiudian/src/views/market/customer/children/companydetail.vue
  -->
 <template>
@@ -10,7 +10,7 @@
         <!-- 头部导航 -->
         <div slot="header" class="clearfix">
             <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: '/customerhistory' }">单位管理</el-breadcrumb-item>
+                <el-breadcrumb-item @click.native="$router.go(-1)">单位管理</el-breadcrumb-item>
                 <el-breadcrumb-item>详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -25,7 +25,7 @@
                                         <div class="item">
                                             <div class="box">
                                                 <div class="thisItem">挂账总额</div>
-                                                <div class="thisItem"><span class="text-red">2000</span></div>
+                                                <div class="thisItem"><span class="text-red">{{detailForm.creditLimit}}</span></div>
                                                 <div class="thisItem">
                                                     <span class="text-blue">查询</span>
                                                     <span class="text-blue">处理</span>
@@ -62,17 +62,17 @@
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="单位名称：">
-                                            111111
+                                            {{detailForm.enterName}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="联系人：">
-                                            白金卡
+                                            {{detailForm.contactName}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="手机号：">
-
+                                            {{detailForm.mobile}}
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
@@ -81,7 +81,7 @@
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="价格策略：">
-                                            111111
+                                            {{setStrategyName(detailForm.enterStrategyId)}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
@@ -95,20 +95,22 @@
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="计费规则：">
-                                            111111
+                                            {{setAlldayName(detailForm.ruleAlldayId)}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="挂帐额度：">
-                                            白金卡
+                                            {{detailForm.creditLimit}}
                                         </el-form-item>
                                     </el-col>
-                                    <el-col :span="6" class="col">
+                                    <el-col :span="3" class="col">
                                         <el-form-item label="" label-width="0">
-                                            <el-radio-group v-model="radio">
-                                                <el-radio :label="3">集团共享</el-radio>
-                                                <el-radio :label="6">停用</el-radio>
-                                            </el-radio-group>
+                                            <el-checkbox disabled v-model="detailForm.shareFlag">集团共享</el-checkbox>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="3" class="col">
+                                        <el-form-item label="" label-width="0">
+                                            <el-checkbox disabled v-model="detailForm.state">停用</el-checkbox>
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
@@ -118,21 +120,24 @@
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="生效日期：">
+                                            {{detailForm.effectiveStartTime}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="失效日期：">
+                                            {{detailForm.effectiveEndTime}}
                                         </el-form-item>
                                     </el-col>
-                                    
                                 </el-row>
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="发展途径：">
+                                            {{detailForm.getWay}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="销售员：">
+                                            {{setSalesIdName(detailForm.salesId)}}
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
@@ -141,35 +146,42 @@
                             <el-row class="row">
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
-                                        <el-form-item label="销售员">
+                                        <el-form-item label="银行账号：">
+                                            {{detailForm.bankCard}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="税号：">
+                                            {{detailForm.taxNum}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="电话：">
+                                            {{detailForm.mobile}}
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="合同号：">
+                                            {{detailForm.contractNum}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="邮箱：">
+                                            {{detailForm.email}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
                                         <el-form-item label="地址：">
+                                            {{detailForm.address}}
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="备注：">
+                                            {{detailForm.remark}}
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
@@ -213,38 +225,29 @@ export default {
             },
             detailForm: {
                 name: ''
-            }
+            },
+            strategyList: []
         };
     },
-
     mounted() {
         console.log(this.$route)
         let id = this.$route.query.id
-        this.type = this.$route.name == 'customeredit' ? 'edit' : 'detail'
-        // this.get_user_enterprise(id)
+        this.findone(id)
+        this.hotel_price_enter_strategy_list()
+        this.hotel_rule_allday_list()
     },
 
     methods: {
-        get_user_enterprise(id) {
-            // 加载组件
-            let params = {
-                token: this.token,
-                userId: this.userId,
-                plat_source: this.plat_source,
-                enterCode: id
-            }
-            get_user_enterprise(params).then(res => {
-                    if (res.code == 200) {
-                        this.detailDialogFormVisible = true;
-                        this.detailData = res.data
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                })
-                .catch(err => {
-                    this.$message.error(err.message);
-                });
-
+        /**单位详情 */
+        findone(id) {
+            this.$F.doRequest(this, '/pms/hotelenter/findone', {
+                id: id
+            }, (res) => {
+                let data = res;
+                data.shareFlag = data.shareFlag == 1 ? true : false
+                data.state = data.state == 1 ? true : false
+                this.detailForm = data
+            })
         },
         setCardFormBtnClick(v) {
             let enums = {
@@ -256,8 +259,50 @@ export default {
             this.cardForm.type = v
             this.cardForm.titleName = v && enums[v] ? enums[v] : '其它'
             this.setCardFormVisible = true
-        }
-
+        },
+        /**价格策略单位列表 */
+        hotel_price_enter_strategy_list() {
+            this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_list', {}, (res) => {
+                this.strategyList = res
+            })
+        },
+        /**计费规则全天房计费列表 */
+        hotel_rule_allday_list() {
+            let params = {
+                ruleName: '',
+                priceModel: '',
+                state: 1,
+                pageIndex: 1,
+                pageSize: 999
+            }
+            this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_list', params, (res) => {
+                this.alldayList = res
+            })
+        },
+        setStrategyName(id) {
+            for (let k in this.strategyList) {
+                if (this.strategyList[k].id == id) {
+                    return this.strategyList[k].ruleName
+                }
+            }
+            return ''
+        },
+        setAlldayName(id) {
+            for (let k in this.alldayList) {
+                if (this.alldayList[k].id == id) {
+                    return this.alldayList[k].ruleName
+                }
+            }
+            return ''
+        },
+        setSalesIdName(id) {
+            for (let k in this.salesList) {
+                if (this.salesList[k].id == id) {
+                    return this.salesList[k].userName
+                }
+            }
+            return ''
+        },
     }
 };
 </script>

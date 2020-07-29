@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 11:30:54
+ * @LastEditTime: 2020-07-29 13:25:16
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -120,6 +120,7 @@
             <el-table-column prop="" label="状态" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     {{F_checkinState(row.state)}}
+                </template>
             </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">

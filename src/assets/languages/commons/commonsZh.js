@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 10:49:06
+ * @LastEditTime: 2020-07-29 17:22:08
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -85,6 +85,16 @@ module.exports = {
         "3": '冲调',
         "4": '走结',
         "5": '反结'
+    },
+    //单位是否停用
+    comState:{
+        "1": '正常',
+        "2": '停用'
+    },
+    //集团内是否共享
+    comShareFlag:{
+        "1": '是',
+        "2": '否'
     }
 }
 

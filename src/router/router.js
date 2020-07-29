@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-20 15:48:47
+ * @LastEditTime: 2020-07-29 14:56:45
  * @FilePath: /jiudian/src/router/router.js
  */
 import Vue from 'vue'
@@ -250,6 +250,13 @@ export default new Router({
                     meta: { title: '外宾详情' },
                     component: () =>
                         import ('@/views/market/customer/children/foreignDetail'),
+                },
+                {
+                    path: '/companydetail',
+                    name: 'companydetail',
+                    meta: { title: '单位详情' },
+                    component: () =>
+                        import ('@/views/market/customer/children/companydetail'),
                 },
 
 
