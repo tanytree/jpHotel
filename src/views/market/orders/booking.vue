@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 16:49:19
- * @FilePath: /jiudian/src/views/market/orders/list1.vue
+ * @LastEditTime: 2020-07-29 13:25:16
+ * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
 <template>
@@ -47,16 +47,12 @@
             <el-row>
                 <el-form-item label="入住类型">
                     <el-select v-model="searchForm.enterStatus" class="width150">
-                        <el-option label="全部" value="3">全部</el-option>
-                        <el-option label="已认证" value="1">已认证</el-option>
-                        <el-option label="未认证" value="2">未认证</el-option>
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="订单来源">
                     <el-select v-model="searchForm.enterStatus" class="width150">
-                        <el-option label="全部" value="3">全部</el-option>
-                        <el-option label="已认证" value="1">已认证</el-option>
-                        <el-option label="未认证" value="2">未认证</el-option>
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="团队名称">
@@ -67,9 +63,8 @@
                 </el-form-item>
             </el-row>
             <el-row>
-
                 <el-form-item label="预订人">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                    <el-input v-model="searchForm.name" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item label="手机号">
                     <el-input v-model="searchForm.content" class="width150"></el-input>
@@ -94,22 +89,39 @@
                     <el-button type="primary" @click="initForm">重置</el-button>
                     <el-button type="primary" @click="initForm">导出</el-button>
                 </el-form-item>
-                 <el-form-item style="float:right">
-                <el-button type="text" icon="el-icon-arrow-up">收起</el-button>
-            </el-form-item>
+                <el-form-item style="float:right">
+                    <el-button type="text" icon="el-icon-arrow-up">收起</el-button>
+                </el-form-item>
             </el-row>
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="预订人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="预订时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="抵离时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="name" label="预订人" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="checkinTime" label="预订时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="抵离时间" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <div>
+                        <span>抵</span>{{row.checkinTime}}
+                    </div>
+                    <div>
+                        <span>离</span>{{row.checkoutTime}}
+                    </div>
+                </template>
+            </el-table-column>
             <el-table-column prop="enterType" label="房型（房号）" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="订金" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="总房费" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="订单来源" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="订单来源" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_orderSource(row.orderSource)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="" label="状态" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_checkinState(row.state)}}
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handelDetail(row)">详情</el-button>
@@ -136,7 +148,9 @@ import {
     mapState,
     mapActions
 } from "vuex";
+import myMixin from '@/utils/filterMixin';
 export default {
+    mixins: [myMixin],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -151,13 +165,13 @@ export default {
             showEdit: false,
             showDetail: false,
             searchForm: {
+                mobile: '',
+                idcard: '',
+                name: '',
                 searchType: 1,
-                content: '',
-                enterStatus: '',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                paging: true
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -166,37 +180,31 @@ export default {
     },
 
     mounted() {
-        // this.initForm();
+        this.initForm();
     },
     methods: {
         initForm() {
             this.searchForm = {
+                mobile: '',
+                idcard: '',
+                name: '',
                 searchType: 1,
-                content: '',
-                enterStatus: '',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                paging: true
             };
             this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
             this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
+            this.$F.doRequest(this, '/pms/checkin/checkin_order_list', this.searchForm, (res) => {
                 this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
-            });
+                this.tableData = res.roomPersonList;
+                this.listTotal = res.page.count
+            })
         },
-        handelDetail(item){
+        handelDetail(item) {
             this.$router.push('/orderdetail')
         },
         /**编辑 */
@@ -226,13 +234,13 @@ export default {
         },
         /**每页数 */
         handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
+            this.searchForm.pageSize = val;
+            this.searchForm.pageIndex = 1;
             this.getDataList();
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.page = val;
+            this.searchForm.pageIndex = val;
             this.getDataList();
         }
     }

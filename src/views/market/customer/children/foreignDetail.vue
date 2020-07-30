@@ -115,7 +115,7 @@ export default {
         };
     },
     filters: {
-        
+
 
     },
     mounted() {
@@ -154,11 +154,10 @@ export default {
             })
         },
         nationality() {
-            this.$F.doRequest(this, '/pms/system/country_list', {}, (res) => {
-                this.nationalityList = res;
-            })
+          this.$F.fetchNationality((res) => {
+            this.nationalityList = res;
+          })
         },
-
     }
 };
 </script>

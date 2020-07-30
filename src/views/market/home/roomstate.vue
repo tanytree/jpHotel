@@ -17,7 +17,7 @@
                         </el-col>
                         <el-col :span="12">
                             <el-checkbox-group v-model="searchForm.checkInType" size="mini" @change="handleChange">
-                                <el-checkbox-button label="1" >身份证</el-checkbox-button>
+                                <el-checkbox-button label="1">身份证</el-checkbox-button>
                                 <el-checkbox-button label="2">房卡</el-checkbox-button>
                             </el-checkbox-group>
                         </el-col>
@@ -119,7 +119,8 @@
                 </el-row>
 
             </el-row>
-            <el-row v-for="(item, index) in roomList" :key="index">
+            <template v-for="(item, index) in roomList">
+            <el-row :key="index" v-if="item.floorRoomCount>0">
                 <el-row :gutter="20" style="margin-top: 10px;">
                     <el-col :span="5">
                         {{item.building?item.building.name:''}}
@@ -147,6 +148,7 @@
                     </el-col>
                 </el-row>
             </el-row>
+            </template>
             <el-row>
                 <el-button @click="batch = true">批量置脏/置净</el-button>
                 <el-dialog top="0" title="批量置脏/置净" width="700px" :visible.sync="batch">
@@ -413,11 +415,11 @@
 
     <!-- 房间信息 -->
     <div>
-        <el-dialog top="0" :visible.sync="hosteldis" width="50%" title="房间详情">
+        <el-dialog top="0" :visible.sync="hosteldis" width="50%" :title="`${currentRoom.houseNum}房间-${currentRoom.hotelRoomType?currentRoom.hotelRoomType.houseName:''}`">
             <!-- <span>这是一段信息</span> -->
-            <el-row style="font-size:18px">{{currentRoom.houseNum}}房间--{{currentRoom.hotelRoomType?currentRoom.hotelRoomType.houseName:''}}</el-row>
+            <!-- <el-row style="font-size:18px">{{currentRoom.houseNum}}房间-{{currentRoom.hotelRoomType?currentRoom.hotelRoomType.houseName:''}}</el-row> -->
             <el-tabs type="border-card" style="margin-top:10px">
-                <el-tab-pane label="入住信息" v-if="currentRoom.roomStatus==3||currentRoom.roomStatus==4">
+                <el-tab-pane :label="currentRoom.checkInRoomType==1?'入住信息':'预订信息'" v-if="currentRoom.checkInRoomType==1||currentRoom.roomStatus==2">
                     <el-row>
                         <el-col :span="8">
                             入住时间：
@@ -456,7 +458,6 @@
                             <span>5465465</span>
                         </el-col>
                     </el-row>
-
                     <el-table :data="currentRoom.livingPersonList" style="width: 100%">
                         <!-- <el-table-column
                           label="日期"
@@ -476,10 +477,10 @@
                             <template slot-scope="scope">{{scope.row.sex | F_sex}}</template>
                         </el-table-column>
                         <el-table-column label="客源类型" width="">
-                            <template slot-scope="scope">{{scope.row.sex}}</template>
+                            <template slot-scope="scope">{{F_guestType(scope.row.checkIn.guestType)}}</template>
                         </el-table-column>
                         <el-table-column label="同来客" width="">
-                            <template slot-scope="scope">{{scope.row.sex}}</template>
+                            <template slot-scope="scope">{{currentRoom.livingPersonList.length-1}}</template>
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
@@ -495,7 +496,7 @@
                         </label>
                         <el-button type="text" @click="remark=true">修改</el-button>
                     </el-row>
-                   
+
                 </el-tab-pane>
                 <el-tab-pane label="房间信息">
                     <el-row>
@@ -536,14 +537,15 @@
 
                     </el-row>
                 </el-tab-pane>
-                 <el-row style="margin-top:10px">
-                        <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
-                        <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
-                        <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
-                        <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
-                        <el-button style="width:60px;">置脏</el-button>
-                    </el-row>
+
             </el-tabs>
+            <el-row style="margin-top:10px">
+                <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
+                <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
+                <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
+                <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
+                <el-button style="width:60px;">置脏</el-button>
+            </el-row>
         </el-dialog>
     </div>
     <!-- 续住 -->
@@ -979,8 +981,9 @@ let roomStatus = [{
     name: '维修',
     value: '5'
 }]
-
+import myMixin from '@/utils/filterMixin';
 export default {
+    mixins: [myMixin],
     data() {
         return {
             remark: false,

@@ -13,11 +13,12 @@ const languageObject = {
     'ri': '日本語',
     'zh': '中文'
 }
-const HQcode = '0000000000';
+const HQCODE = '0000000000'  //总部账号定义
+var NATIONALITYLIST = []  //国籍列表
 const $F = {
     //获取总部后台的代码code
-    getHQCode() {
-        return HQcode;
+    getHQCode () {
+        return HQCODE
     },
     getLangDesc (langKey) {
         return languageObject[langKey]
@@ -107,22 +108,22 @@ const $F = {
     },
 
     getPublicDictByType ($instance, type, callback, forceRefresh) {
-        var data = publicDict[type];
+        var data = publicDict[type]
         if (data && !forceRefresh) {
             data.forEach((dict) => {
-                dict.name = sessionStorage.locale == 'ri' ? dict.japanese : dict.name;
+                dict.name = sessionStorage.locale == 'ri' ? dict.japanese : dict.name
             })
-            callback(data);
-            return;
+            callback(data)
+            return
         }
         let url = '/pms/system/public_dict'
-        this.doRequest($instance, url, { type: type }, (data)=> {
+        this.doRequest($instance, url, { type: type }, (data) => {
             if (data && data.length > 0) {
                 data.forEach((dict) => {
-                    dict.name = sessionStorage.locale == 'ri' ? dict.japanese : dict.name;
+                    dict.name = sessionStorage.locale == 'ri' ? dict.japanese : dict.name
                 })
             }
-            callback(data || []);
+            callback(data || [])
         })
     },
 
@@ -155,6 +156,33 @@ const $F = {
             }
         }
         return null
-    }
+    },
+
+    //获取会员类型列表 这里封装统一方法 很多地方用到
+    fetchMemberTypeList (requestParams = {}, callback) {
+        let params = {
+            name: '',
+            pageIndex: 1,
+            pageSize: 10,
+            paging: false,
+            id: ''
+        }
+        merge(params, requestParams)
+        this.doRequest(null, '/pms/membertype/list', params, (data) => {
+            callback(data)
+        })
+    },
+    //获取国籍list
+    fetchNationality (callback) {
+        if (NATIONALITYLIST.length > 0) {
+            callback(NATIONALITYLIST)
+            return;
+        }
+        this.doRequest(null, '/pms/system/country_list', {}, (data) => {
+            NATIONALITYLIST = data;
+            callback(NATIONALITYLIST)
+        })
+    },
+
 }
 export default $F

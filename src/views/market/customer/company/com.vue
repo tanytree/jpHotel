@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-22 09:33:30
+ * @LastEditTime: 2020-07-29 17:25:21
  * @FilePath: /jiudian/src/views/market/customer/company/com.vue
  -->
 
@@ -12,48 +12,42 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-form-item label="单位名称">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.enterName" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
+                <el-select v-model="searchForm.state" class="width150">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.comState')" :label="item" :key="index"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="是否共享">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
+                <el-select v-model="searchForm.shareFlag" class="width150">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.comShareFlag')" :label="item" :key="index"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="联系人">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.contactName" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="手机号">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.contactPhone" class="width150"></el-input>
             </el-form-item>
             <br />
             <el-form-item label="销售员">
-                <el-select v-model="searchForm.enterStatus" class="width150">
-                    <el-option label="全部" value="3">全部</el-option>
-                    <el-option label="已认证" value="1">已认证</el-option>
-                    <el-option label="未认证" value="2">未认证</el-option>
+                <el-select v-model="searchForm.salesId" class="width150">
+                    <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="挂账额度">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.startCreditLimit" class="width150"></el-input>
             </el-form-item>
             <el-form-item label="已用额度">
-                <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-input v-model="searchForm.endCreditLimit" class="width150"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="getDataList">查询</el-button>
                 <el-button type="primary" @click="initForm">重置</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary" @click="setCompanyFormVisible=true">+新增</el-button>
+                <el-button type="primary" @click="addAndEditItem('add')">+新增</el-button>
                 <el-button type="primary" @click="setBatchFormVisible=true">批量设置</el-button>
             </el-form-item>
             <el-row>
@@ -68,7 +62,11 @@
             <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
             <el-table-column prop="contactName" label="姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="contactPhone" label="手机号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStrategyId" label="价格策略" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterStrategyId" label="价格策略" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{setStrategyName(row.enterStrategyId)}}
+                </template>
+            </el-table-column>
             <el-table-column prop="contractNum" label="合同号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
             <el-table-column prop="usedLimit" label="已用额度" show-overflow-tooltip></el-table-column>
@@ -79,19 +77,27 @@
                     {{row.status==1?'正常':'已删除'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="salesId" label="销售员" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="shareFlag" label="是否共享" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="salesId" label="销售员" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{setSalesIdName(row.salesId)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="shareFlag" label="是否共享" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.shareFlag==1?'是':'否'}}
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
-                    <el-button type="text" size="mini">修改</el-button>
-                    <el-dropdown>
-                        <span class="el-dropdown-link">
+                    <el-button type="text" size="mini" @click="addAndEditItem('edit',row)">修改</el-button>
+                    <el-dropdown szie="mini">
+                        <span class="el-dropdown-link" style="font-size:12px">
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>禁用</el-dropdown-item>
-                            <el-dropdown-item>删除</el-dropdown-item>
+                            <el-dropdown-item @click.native="disableItem(row)">禁用</el-dropdown-item>
+                            <el-dropdown-item @click.native="delItem(row)">删除</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </template>
@@ -102,7 +108,7 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog top="0" title="新增单位" :visible.sync="setCompanyFormVisible" class="setCompanyForm">
+    <el-dialog top="0" :title="addCompanyForm.type=='add'?'新增单位':'编辑单位'" :visible.sync="setCompanyFormVisible" class="setCompanyForm">
         <el-form :model="addCompanyForm" ref="addCompanyForm" :rules="rules" label-width="100px" size="mini">
             <el-row class="row">
                 <el-row class="cell">
@@ -128,9 +134,7 @@
                     <el-col :span="8" class="col">
                         <el-form-item label="价格策略：" prop="enterStrategyId">
                             <el-select v-model="addCompanyForm.enterStrategyId">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option :label="item.ruleName" :value="item.id" v-for="(item,index) of strategyList" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -139,11 +143,9 @@
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="计费规则：" prop="enterStrategyId">
+                        <el-form-item label="计费规则：" prop="">
                             <el-select v-model="addCompanyForm.ruleAlldayId">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option :label="item.ruleName" :value="item.id" v-for="(item,index) of alldayList" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -153,7 +155,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="" label-width="0">
+                        <el-form-item label="" label-width="20px">
                             <el-checkbox v-model="addCompanyForm.shareFlag">集团共享</el-checkbox>
                             <el-checkbox v-model="addCompanyForm.state">停用</el-checkbox>
                         </el-form-item>
@@ -165,12 +167,12 @@
                 <el-row class="cell">
                     <el-col :span="8" class="col">
                         <el-form-item label="生效日期：">
-                            <el-date-picker v-model="searchForm.effectiveStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="addCompanyForm.effectiveStartTime" value-format="yyyy-MM-dd" type="date" style="width:100%" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="失效日期：">
-                            <el-date-picker v-model="searchForm.effectiveEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="addCompanyForm.effectiveEndTime" value-format="yyyy-MM-dd" type="date" style="width:100%" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -186,9 +188,7 @@
                     <el-col :span="8" class="col">
                         <el-form-item label="销售员：">
                             <el-select v-model="addCompanyForm.salesId">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -226,7 +226,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                         <el-form-item label="地址：">
-                            <el-input v-model="addCompanyForm.email"></el-input>
+                            <el-input v-model="addCompanyForm.address"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -241,7 +241,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="setCompanyFormVisible=false">关闭</el-button>
-            <el-button type="primary" @click="setCompanyFormVisible=false">确认</el-button>
+            <el-button type="primary" @click="hotelenterAddAndEdit">确认</el-button>
         </div>
     </el-dialog>
     <el-dialog top="0" title="批量设置" :visible.sync="setBatchFormVisible" class="setBatchForm" width="1200px">
@@ -285,10 +285,8 @@
                     </el-col>
                     <el-col :span="6" class="col">
                         <el-form-item label="销售员：">
-                            <el-select v-model="addCompanyForm.name">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                            <el-select v-model="addCompanyForm.salesId">
+                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -348,9 +346,7 @@
                 <el-table-column prop="enterType" label="销售员" show-overflow-tooltip>
                     <template slot-scope="{row}">
                         <el-select v-model="addCompanyForm.name" size="mini">
-                            <el-option label="全部" value="3">全部</el-option>
-                            <el-option label="已认证" value="1">已认证</el-option>
-                            <el-option label="未认证" value="2">未认证</el-option>
+                            <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -401,9 +397,14 @@ export default {
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [], //表格数据
+            strategyList: [],
+            alldayList: [],
+            salesList: [],
             setCompanyFormVisible: false,
             setBatchFormVisible: false,
             addCompanyForm: {
+                id: '',
+                type: '',
                 enterName: '',
                 contactName: '',
                 contactPhone: '',
@@ -461,21 +462,23 @@ export default {
 
     mounted() {
         this.initForm();
+        this.hotel_price_enter_strategy_list()
+        this.hotel_rule_allday_list()
+        this.login_user_list()
     },
     methods: {
         initForm() {
             this.searchForm = {
                 id: '',
                 enterName: '',
-                state: 1,
+                state: '',
                 shareFlag: '',
                 contactName: '',
                 contactPhone: '',
                 salesId: '',
                 startCreditLimit: '',
                 endCreditLimit: '',
-                paging: false,
-                salesFlag: 1,
+                paging: true,
                 pageIndex: 1,
                 pageSize: 10
             };
@@ -487,11 +490,138 @@ export default {
             this.$F.doRequest(this, '/pms/hotelenter/list', this.searchForm, (res) => {
                 this.loading = false
                 this.tableData = res.list;
-                this.listTotal = res.page.count
+                this.listTotal = (res.page || {}).count || 0
             })
         },
-        handleDetail() {
-            this.$router.push('/companydetail')
+        /**价格策略单位列表 */
+        hotel_price_enter_strategy_list() {
+            this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_list', {}, (res) => {
+                this.strategyList = res
+            })
+        },
+        /**计费规则全天房计费列表 */
+        hotel_rule_allday_list() {
+            let params = {
+                ruleName: '',
+                priceModel: '',
+                state: 1,
+                pageIndex: 1,
+                pageSize: 999
+            }
+            this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_list', params, (res) => {
+                this.alldayList = res
+            })
+        },
+        /**新增编辑单位 */
+        hotelenterAddAndEdit() {
+            this.$refs.addCompanyForm.validate((valid) => {
+                if (valid) {
+                    let params = {};
+                    Object.assign(params, this.addCompanyForm);
+                    params.shareFlag = params.shareFlag ? 1 : 2
+                    params.state = params.state ? 1 : 2
+                    this.$F.doRequest(this, '/pms/hotelenter/edit', params, (res) => {
+                        this.setCompanyFormVisible = false
+                        this.$message({
+                            message: '操作成功',
+                            type: 'success'
+                        });
+                        this.getDataList()
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+
+        },
+        handleDetail(item) {
+            this.$router.push('/companydetail?id=' + item.id)
+        },
+        disableItem(item) {
+            this.$confirm('确认删除该单位', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/hotelenter/enable_disable', {
+                    id: item.id
+                }, (res) => {
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
+                    this.getDataList()
+                })
+            }).catch(() => {
+
+            });
+        },
+        delItem(item) {
+            this.$confirm('确认删除该单位', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/hotelenter/delete', {
+                    id: item.id
+                }, (res) => {
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
+                    this.getDataList()
+                })
+            }).catch(() => {});
+        },
+        addAndEditItem(type, item) {
+            this.setCompanyFormVisible = true
+            this.addCompanyForm.type = type
+            if (item) {
+                for (let k in this.addCompanyForm) {
+                    this.addCompanyForm[k] = item[k]
+                }
+                this.addCompanyForm.shareFlag = item.shareFlag == 1 ? true : false
+                this.addCompanyForm.state = item.state == 1 ? true : false
+            }
+        },
+        login_user_list() {
+            let params = {
+                searchType: 1,
+                paging: false,
+                salesFlag: 1,
+                content: '',
+                departmentId: '',
+                pageIndex: 1,
+                pageSize: 10
+            }
+            this.$F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
+                this.salesList = data.hotelUserList;
+            })
+        },
+        setStrategyName(id) {
+            for (let k in this.strategyList) {
+                if (this.strategyList[k].id == id) {
+                    return this.strategyList[k].ruleName
+                }
+            }
+            return ''
+        },
+        setAlldayName(id) {
+            for (let k in this.alldayList) {
+                if (this.alldayList[k].id == id) {
+                    return this.alldayList[k].ruleName
+                }
+            }
+            return ''
+        },
+        setSalesIdName(id) {
+            for (let k in this.salesList) {
+                if (this.salesList[k].id == id) {
+                    return this.salesList[k].userName
+                }
+            }
+            return ''
         },
         /**编辑 */
         editRowItem(row) {

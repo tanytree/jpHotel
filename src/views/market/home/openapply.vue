@@ -3,7 +3,7 @@
 
  * @LastEditors: 魏轩
 
- * 
+ *
  -->
 <template>
   <div>
@@ -274,7 +274,7 @@
                         </el-col>
                         <el-col :span="12" style="margin-bottom: 10px;">
                           <span style="color:#888888">发票号码:</span>tom
-                        </el-col> 
+                        </el-col>
                         <el-col :span="12" style="margin-bottom: 10px;">
                           <span style="color:#888888">税号:</span>tom
                         </el-col>
@@ -605,7 +605,7 @@ export default {
       ],
       checked: false,
       activeThree: "a",
-      currentPage3:'',
+      currentPage3: 1,
        value1: '',//时间
       // value2: '',
       // value3: ''
@@ -675,7 +675,7 @@ export default {
           this.display=!this.display;
 
         }
-      },   
+      },
       management(){
           this.display=!this.display;;
       },
@@ -715,13 +715,13 @@ export default {
   font-size: 14px;
   border-radius: 4px;
   padding: 3px;
-  
+
 }
 .inco {
   border: 1px solid #333;
   background: #666;
   color: #fff;
-  
+
 }
 .search {
   width: 137px !important;
@@ -753,7 +753,7 @@ export default {
   border:1px solid #1B80FF;
   font-size: 12px;
   padding: 3px 10px;
-  
+
 }
 .rescet {
   border-radius: 0;

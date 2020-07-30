@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-27 16:41:43
+ * @LastEditTime: 2020-07-29 17:22:08
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -67,5 +67,34 @@ module.exports = {
         "1": '未制卡',
         "2": '已制卡'
     },
+    bedCount:{
+        "0": '全部',
+        "1": '单床',
+        "2": '双床',
+        "3": '三床'
+    },
+    //入住状态
+    checkinState:{
+        "1": '入住中',
+        "2": '已退房'
+    },
+    //入住状态
+    billType:{
+        "1": '已结',
+        "2": '挂账',
+        "3": '冲调',
+        "4": '走结',
+        "5": '反结'
+    },
+    //单位是否停用
+    comState:{
+        "1": '正常',
+        "2": '停用'
+    },
+    //集团内是否共享
+    comShareFlag:{
+        "1": '是',
+        "2": '否'
+    }
 }
 

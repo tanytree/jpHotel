@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-27 18:34:17
+ * @LastEditTime: 2020-07-29 10:04:19
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -9,13 +9,23 @@
 <!-- 统一的列表格式 -->
 <div>
     <el-row>
-        <h3>入住信息</h3>
-        <el-form inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
+        <h3 v-if="operCheckinType=='a1' || operCheckinType=='a2'">入住信息</h3>
+        <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">预订信息</h3>
+        <h3 v-if="operCheckinType=='b3'">会议登记信息</h3>
+        <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="入住人：" prop="name">
-                            <el-input v-model="checkInForm.name" style="width:100px"></el-input> &nbsp;&nbsp;
+                            <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:100px" @change="changeName">
+                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
+                                    <el-row style="width:300px">
+                                        <el-col :span="8">{{item.name}}</el-col>
+                                        <el-col :span="8">{{item.mobile}}</el-col>
+                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
+                                    </el-row>
+                                </el-option>
+                            </el-select>&nbsp;&nbsp;&nbsp;
                             <el-button type="primary" size="small">扫脸入住</el-button>
                         </el-form-item>
                     </div>
@@ -47,7 +57,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <template v-if="checkInForm.operCheckinType==1">
+                <template v-if="operCheckinType=='a1'">
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="入住时间：" prop="checkinTime">
@@ -63,7 +73,7 @@
                         </div>
                     </el-col>
                 </template>
-                <template v-if="checkInForm.operCheckinType==2">
+                <template v-if="operCheckinType=='a2'">
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="计费规则：" prop="ruleHourId">
@@ -144,6 +154,160 @@
                 </el-col>
             </el-row>
         </el-form>
+        <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px" v-if="operCheckinType=='b1' || operCheckinType=='b2'|| operCheckinType=='b3'">
+            <el-row>
+                <!-- <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="预订人：" prop="name">
+                            <el-input v-model="checkInForm.name" class="width200"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col> -->
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="入住人：" prop="name">
+                            <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
+                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
+                                    <el-row style="width:300px">
+                                        <el-col :span="8">{{item.name}}</el-col>
+                                        <el-col :span="8">{{item.mobile}}</el-col>
+                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
+                                    </el-row>
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="手机号：">
+                            <el-input v-model="checkInForm.mobile" class="width200"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="订单来源" prop="orderSource">
+                            <el-select v-model="checkInForm.orderSource" class="width200">
+                                <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6" v-if="operCheckinType!='b3'">
+                    <div class="grid-content">
+                        <el-form-item label="入住类型" prop="checkinType">
+                            <el-select v-model="checkInForm.checkinType" class="width200">
+                                <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6" v-if="operCheckinType=='b3'">
+                    <div class="grid-content">
+                        <el-form-item label="销售员：">
+                            <el-select v-model="checkInForm.salesId" class="width200">
+                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="6">
+                    <div class="grid-content" v-if="operCheckinType=='b2'">
+                        <el-form-item label="计费规则：" prop="ruleHourId">
+                            <el-select v-model="checkInForm.ruleHourId" class="width200">
+                                <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">
+                            <el-date-picker v-model="checkInForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6" v-if="operCheckinType=='b1'">
+                    <div class="grid-content">
+                        <el-form-item label="入住天数：" prop="checkinDays">
+                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :min="0"></el-input-number>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="预离时间：" prop="checkoutTime">
+                            <el-date-picker v-model="checkInForm.checkoutTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="保留时间：" prop="keepTime">
+                            <el-date-picker v-model="checkInForm.keepTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                        </el-form-item>
+                    </div>
+                </el-col>
+
+            </el-row>
+            <el-row>
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <el-form-item label="客源类型：" prop="guestType">
+                            <el-input type="input" :value="guestTypeSwitch(checkInForm.guestType)" class="width200">
+                                <template slot="append"><span @click="guestTypeShow=true">…</span></template>
+                            </el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+
+                <el-col :span="6" v-if="operCheckinType!='b3'">
+                    <div class="grid-content">
+                        <el-form-item label="销售员：">
+                            <el-select v-model="checkInForm.salesId" class="width200">
+                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="6" v-if="operCheckinType!='b3'">
+                    <div class="grid-content">
+                        <el-form-item label="外部订单号：">
+                            <el-input v-model="checkInForm.thirdOrdernum" class="width200"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <template v-if="operCheckinType=='b3'">
+                    <el-col :span="6">
+                        <div class="grid-content">
+                            <el-form-item label="会议名称：" prop="meetingName">
+                                <el-input v-model="checkInForm.meetingName" class="width200"></el-input>
+                            </el-form-item>
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content">
+                            <el-form-item label="单位名称：" prop="enterName">
+                                <el-input v-model="checkInForm.enterName" class="width200"></el-input>
+                            </el-form-item>
+                        </div>
+                    </el-col>
+                </template>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <div class="grid-content">
+                        <el-form-item label="订单备注：">
+                            <el-input style="100%" type="textarea" v-model="checkInForm.remark"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+
+            </el-row>
+        </el-form>
     </el-row>
     <el-row style="margin-bottom:60px">
         <h3>房间信息</h3>
@@ -157,13 +321,7 @@
                                 <el-radio :label="2" border>不可改房价</el-radio>
                             </el-radio-group>
                             <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px" @change="getDataList">
-                                <el-option label="1床" :value="1"></el-option>
-                                <el-option label="2床" :value="2"></el-option>
-                                <el-option label="3床" :value="4"></el-option>
-                                <el-option label="4床" :value="4"></el-option>
-                                <el-option label="5床" :value="5"></el-option>
-                                <el-option label="6床" :value="6"></el-option>
-                                <el-option label="7床" :value="7"></el-option>
+                                <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-row>
                         <br />
@@ -190,7 +348,6 @@
                                                     <div style="text-align: right">
 
                                                         <el-input placeholder="" size="mini" style="width:60px" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
-
                                                         <em>{{v.todayPrice}}</em>
                                                     </div>
                                                 </el-col>
@@ -198,7 +355,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </el-col>
                         </el-row>
                     </div>
@@ -207,7 +363,7 @@
                     <div class="grid-content">
                         <el-row>
                             <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
-                            <el-button @click="live_in_person_list"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
+                            <el-button @click="live_in_person_list" v-if="operCheckinType != 'b3'"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
                             <el-button @click="liveCard_in_person_list"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />
@@ -240,7 +396,10 @@
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
-                                                            <em>{{v.num}}间</em>
+                                                            <el-button type="text" style="color:#666">
+                                                                {{v.num}}间
+                                                            </el-button>
+
                                                         </div>
                                                     </el-col>
                                                 </el-row>
@@ -408,14 +567,14 @@
     </el-dialog>
     <el-dialog top="0" title="房卡操作" :visible.sync="mackcade" width="60%">
         <el-row>
-            <span>共一间&nbsp;&nbsp;本次已制卡数：0</span>
+            <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
             <el-col :span="8" style="float:right">
                 <el-button @click="make_card_status">制卡</el-button>
                 <el-button>清卡</el-button>
                 <el-button>读卡</el-button>
             </el-col>
         </el-row>
-        <el-table ref="multipleTable" :data="liveCardData" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
+        <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="name" label="房间号" width="200">
                 <template slot-scope="{row}">
@@ -460,9 +619,12 @@ export default {
             guestTypeShow: false,
             liveInPersonShow: false,
             mackcade: false,
+            nameLoading: false,
+            options: [],
+            baseInfo: '',
             getRoomsForm: {
                 changeType: 1,
-                bedCountL: '',
+                bedCount: '',
             },
             salesList: '',
             ruleHourList: '',
@@ -475,6 +637,8 @@ export default {
                 memberCard: '',
                 checkinTime: '',
                 checkoutTime: '',
+                keepTime: '',
+                checkinDays: '',
                 salesId: '',
                 thirdOrdernum: '',
                 mobile: '',
@@ -485,8 +649,10 @@ export default {
                 channel: '',
                 checkinType: '',
                 remark: '',
-                // checkInId: '2c9f404b737ef3800173803fe61f0002'
-                checkInId: ''
+                // checkInId: '2c9f404b73939b040173947c555b000c',
+                // checkInReserveId: '2c9f404b738f2f5d017393748ad60009',
+                checkInId: '',
+                checkInReserveId: ''
             },
             rules: {
                 name: [{
@@ -517,6 +683,16 @@ export default {
                 checkoutTime: [{
                     required: true,
                     message: '请选择预离时间',
+                    trigger: 'change'
+                }, ],
+                keepTime: [{
+                    required: true,
+                    message: '请选择保留时间',
+                    trigger: 'change'
+                }, ],
+                checkinDays: [{
+                    required: true,
+                    message: '请输入入住天数',
                     trigger: 'change'
                 }, ],
                 guestType: [{
@@ -563,38 +739,68 @@ export default {
                 pageSize: 9999
             },
             liveInPersonData: [],
-            liveCardData:[],
+            liveCardData: '',
         };
     },
     mounted() {
         console.log(this.$t('commons.markCard'))
-        this.checkInForm.operCheckinType = this.operCheckinType
         this.hotel_rule_hour_list()
         this.initForm();
     },
     watch: {
         operCheckinType() {
-            this.checkInForm.operCheckinType = this.operCheckinType
+            let menu = {
+                a1: 1,
+                a2: 2,
+                b1: 1,
+                b2: 2,
+                b3: 3
+            }
+            this.checkInForm.operCheckinType = menu[this.operCheckinType]
             console.log(this.checkInForm)
         },
         checkInForm: {
             handler(n, o) {
                 console.log(n)
-                let arr = [
-                    'name', 'sex', 'idcardType', 'idcard', 'checkinTime', 'checkoutTime', 'guestType', 'orderSource', 'checkinType'
-                ]
-                if (!this.checkInForm.checkinId) {
+                let arr = [];
+                if (this.operCheckinType == 'a1') {
+                    arr = [
+                        'name', 'sex', 'idcardType', 'idcard', 'checkinTime', 'checkoutTime', 'guestType', 'orderSource', 'checkinType'
+                    ]
+                }
+                if (this.operCheckinType == 'a2') {
+                    arr = [
+                        'name', 'sex', 'idcardType', 'idcard', 'ruleHourId', 'guestType', 'orderSource', 'checkinType'
+                    ]
+                }
+
+                if (this.operCheckinType == 'b1') {
+                    arr = [
+                        'name', 'guestType', 'orderSource', 'checkinType', 'checkinTime', 'checkoutTime', 'keepTime', 'checkinDays',
+                    ]
+                }
+                if (this.operCheckinType == 'b2') {
+                    arr = [
+                        'name', 'guestType', 'orderSource', 'checkinTime', 'checkoutTime', 'keepTime', 'ruleHourId'
+                    ]
+                }
+                if (this.operCheckinType == 'b3') {
+                    arr = [
+                        'name', 'checkinTime', 'checkoutTime', 'keepTime', 'guestType', 'orderSource'
+                    ]
+                }
+
+                if (!this.checkInForm.checkInId) {
                     let len = 0;
                     for (let k in arr) {
                         if (this.checkInForm[arr[k]] != '') {
                             len++
                         }
                     }
-
                     if (len == arr.length) {
                         window.setTimeout(() => {
 
-                            this.hotel_check_in()
+                            this.hotel_check_in(1)
 
                         }, 2000)
 
@@ -610,7 +816,8 @@ export default {
         initForm() {
             this.getRoomsForm = {
                 changeType: 1,
-                bedCountL: '',
+                bedCount: '',
+                roomType: this.operCheckinType == 'b3' ? 2 : 1
             };
             this.getDataList();
         },
@@ -658,11 +865,29 @@ export default {
             })
         },
         hotel_check_in(type) {
+            let url = ''
+            let operCheckinType = this.operCheckinType
+            if (operCheckinType == 'a1' || operCheckinType == 'a2') {
+                url = '/pms/checkin/hotel_check_in'
+            } else {
+                url = '/pms/reserve/reserve_check_in'
+            }
             let ajax = () => {
-                this.$F.doRequest(this, '/pms/checkin/hotel_check_in', this.checkInForm, (data) => {
-                    this.checkInForm.checkinId = data.checkinId
+                this.$F.doRequest(this, url, this.checkInForm, (data) => {
                     if (type == 1) {
+                        if (operCheckinType == 'a1' || operCheckinType == 'a2') {
+                            console.log(data.checkinId)
+                            this.checkInForm.checkInId = data.checkinId
+                        } else {
+                            alert(22)
+                            this.checkInForm.checkInId = data.checkInReserveId
+                            this.checkInForm.checkInReserveId = data.checkInReserveId
+                        }
+                        this.$forceUpdate()
+                        console.log(this.checkInForm)
                         console.log('沉浸式提交')
+                        console.log(this.operCheckinType)
+                        console.log(operCheckinType)
                     } else if (type == 2) {
                         this.$message({
                             message: '办理成功',
@@ -688,6 +913,10 @@ export default {
                 })
             }
             if (type == 2 || type == 3) {
+                if (!this.checkInForm.checkInId) {
+                    this.$message.error('请输入入住信息后操作')
+                    return false
+                }
                 if (!this.waitingRoom.length) {
                     this.$message.error('请选择房型')
                     return false
@@ -702,20 +931,38 @@ export default {
                         return false
                     }
                 }
-                if (!this.liveInPersonData.length) {
-                    this.$message.error('请添加入住人')
-                    this.live_in_person_list()
-                    return false
-                }
-
-                for (let k in this.liveInPersonData) {
-                    if (!this.liveInPersonData[k].personList.length) {
+                if (this.operCheckinType != 'b3') {
+                    if (!this.liveInPersonData.length) {
                         this.$message.error('请添加入住人')
                         this.live_in_person_list()
                         return false
                     }
+                    for (let k in this.liveInPersonData) {
+                        if (!this.liveInPersonData[k].personList.length) {
+                            this.$message.error('请添加入住人')
+                            this.live_in_person_list()
+                            return false
+                        }
+                    }
                 }
-                ajax()
+                if (this.liveCardData == '') {
+                    this.$message.error('请制卡')
+                    this.liveCard_in_person_list()
+                    return false
+                }
+                if (this.liveCardData.unfinished > 0) {
+                    this.$message.error('请制卡')
+                    this.liveCard_in_person_list()
+                    return false
+                }
+                this.$refs.checkInForm.validate((valid) => {
+                    if (valid) {
+                        ajax()
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             } else {
                 ajax()
             }
@@ -829,7 +1076,7 @@ export default {
                 checkinRoomType: 1,
                 roomTypeId: this.rowRoomCurrentItem.roomTypeId,
                 checkinId: this.checkInForm.checkInId,
-                checkinReserveId: '',
+                checkinReserveId: this.checkInForm.checkInId,
                 roomId: ids,
                 reservePrice: this.rowRoomCurrentItem.todayPrice,
                 realPrice: this.rowRoomCurrentItem.price
@@ -846,6 +1093,10 @@ export default {
         },
         //自动排房确定
         page_row_houses() {
+            if (!this.checkInForm.checkInId) {
+                this.$message.error('请输入入住信息后操作')
+                return false
+            }
             if (this.waitingRoom.length < 1) {
                 this.$message.error('请选择房型后操作');
                 return
@@ -861,7 +1112,7 @@ export default {
                 roomTypeId: roomTypeId,
                 checkinId: this.checkInForm.checkInId,
                 rowHousesTotal: number,
-                checkinReserveId: ''
+                checkinReserveId: this.checkInForm.checkInId
             }
             let setRooms = (key, item) => {
                 console.log(key)
@@ -899,7 +1150,7 @@ export default {
                 checkinRoomType: 1,
                 roomTypeId: item.roomTypeId,
                 checkinId: this.checkInForm.checkInId,
-                checkinReserveId: '',
+                checkinReserveId: this.checkInForm.checkInId,
                 roomId: id
             };
             this.$F.doRequest(this, '/pms/checkin/delete_db_row_houses', params, (res) => {
@@ -946,6 +1197,24 @@ export default {
         },
         //获取入住人
         liveCard_in_person_list() {
+            if (!this.checkInForm.checkInId) {
+                this.$message.error('请输入入住信息后操作')
+                return false
+            }
+            if (this.operCheckinType != 'b3') {
+                if (!this.liveInPersonData.length) {
+                    this.$message.error('请添加入住人')
+                    this.live_in_person_list()
+                    return false
+                }
+                for (let k in this.liveInPersonData) {
+                    if (!this.liveInPersonData[k].personList.length) {
+                        this.$message.error('请添加入住人')
+                        this.live_in_person_list()
+                        return false
+                    }
+                }
+            }
             let params = {
                 type: 3,
                 checkinId: this.checkInForm.checkInId,
@@ -954,14 +1223,30 @@ export default {
             };
             this.liveCardLoading = true;
             this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
-                this.liveCardData = res.checkInRoomList
+                // this.liveCardData = res.checkInRoomList
+                this.liveCardData = res
+                this.liveCardData.done = 0;
+                this.liveCardData.unfinished = 0;
+                let list = res.checkInRoomList;
+                for (let k in list) {
+                    if (list[k].markCard == 2) {
+                        this.liveCardData.done++
+                    }
+                    if (list[k].markCard == 1) {
+                        this.liveCardData.unfinished++
+                    }
+                }
+
                 this.liveCardLoading = false
                 this.mackcade = true
                 this.$forceUpdate()
             })
         },
         live_in_person_list() {
-
+            if (!this.checkInForm.checkInId) {
+                this.$message.error('请输入入住信息后操作')
+                return false
+            }
             let flag = false;
             console.log(this.waitingRoom)
             for (let k in this.waitingRoom) {
@@ -973,7 +1258,6 @@ export default {
                 this.$message.error('请排房后操作');
                 return
             }
-
             let params = {
                 type: 1,
                 checkinId: this.checkInForm.checkInId,
@@ -1017,7 +1301,7 @@ export default {
                 this.liveInPersonData = data
                 this.$forceUpdate()
             })
-        }, 
+        },
         //添加入住人
         editItem_live_in_person(item) {
             if (!item.name) {
@@ -1115,7 +1399,7 @@ export default {
         },
         make_card_status() {
             let arr = []
-            if(!this.multipleSelection.length){
+            if (!this.multipleSelection.length) {
                 this.$message.error('至少选择一间房间')
                 return
             }
@@ -1139,9 +1423,46 @@ export default {
             return value && enums[value] ? enums[value] : ''
         },
         handleSelectionChange(val) {
-        this.multipleSelection = val;
-        console.log(val)
-      }
+            this.multipleSelection = val;
+            console.log(val)
+        },
+        remoteMethod(query) {
+            if (query !== '') {
+                let params = {
+                    name: query,
+                    searchType: 1,
+                    pageIndex: 1,
+                    pageSize: 999,
+                    paging: false
+                }
+                this.nameLoading = true;
+                this.$F.doRequest(this, '/pms/checkin/checkin_order_list', params, (res) => {
+                    this.nameLoading = false
+                    this.options = res.roomPersonList
+                    this.$forceUpdate()
+                })
+            } else {
+                this.options = [];
+            }
+        },
+        changeName(e) {
+            console.log(e)
+            if (e.id) {
+                this.baseInfo = e;
+                this.checkInForm.guestType = e.guestType
+                this.checkInForm.idcard = e.idcard
+                this.checkInForm.idcardType = e.idcardType.toString()
+                this.checkInForm.mobile = e.mobile
+                this.checkInForm.orderSource = e.orderSource.toString()
+                this.checkInForm.orderType = e.orderType.toString()
+                this.checkInForm.sex = e.sex.toString()
+                this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : ''
+                this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : ''
+            } else {
+                this.checkInForm.name = e.name
+            }
+
+        }
     }
 };
 </script>
@@ -1193,7 +1514,7 @@ export default {
     font-style: normal;
     font-size: 12px;
     color: #999;
-    text-decoration: line-through;
+    /* text-decoration: line-through; */
     margin-left: 5px;
 }
 

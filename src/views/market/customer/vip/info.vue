@@ -8,28 +8,37 @@
 <template>
 <!-- 统一的列表格式 -->
 <div>
-    <el-card>
+    <el-card v-if="showPageType == 'main'">
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-form-item label="开卡门店">
                 <el-select v-model="searchForm.storesNum" class="width150">
+                    <el-option label="全部" value=""></el-option>
                     <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                     </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="发展途径">
                 <el-select v-model="searchForm.getWay" class="width150">
-                    <el-option label="线上" :value="1">已认证</el-option>
-                    <el-option label="线下" :value="2">未认证</el-option>
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="(label, value) in $t('frontOffice.getWay')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="会员类型">
                 <el-select v-model="searchForm.memberTypeId" class="width150">
+                       <el-option label="全部" value=""></el-option>
                        <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="手机号">
                 <el-input v-model="searchForm.mobile" class="width150"></el-input>
+            </el-form-item>
+            <el-form-item label="是否注销">
+                <el-select v-model="searchForm.status" class="width150">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="正常" value="1"></el-option>
+                    <el-option label="已注销" value="2"></el-option>
+                </el-select>
             </el-form-item>
             <br />
             <el-form-item label="卡号">
@@ -40,15 +49,14 @@
             </el-form-item>
             <el-form-item label="状态">
                 <el-select v-model="searchForm.state" class="width150">
-                    <el-option label="正常" :value="1"></el-option>
-                    <el-option label="已挂失" :value="2"></el-option>
-                    <el-option label="待启用" :value="3"></el-option>
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="(label, value) in $t('frontOffice.state')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="黑名单">
                 <el-select v-model="searchForm.isBlacklist" class="width150">
-                    <el-option label="否" :value="1"></el-option>
-                    <el-option label="是" :value="2"></el-option>
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="(label, value) in $t('frontOffice.isBlacklist')" :label="label" :value="value" :key="value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -69,7 +77,7 @@
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="idcard" label="卡号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
             <el-table-column label="会员类型" show-overflow-tooltip>
                 <template slot-scope="{row}">
@@ -99,6 +107,11 @@
                     {{row.isBlacklist==2?'是':'否'}}
                 </template>
             </el-table-column>
+            <el-table-column prop="isBlacklist" label="是否注销" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.status == 1?'否':'是'}}
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
@@ -108,8 +121,8 @@
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>收卡费</el-dropdown-item>
-                            <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!=2">拉黑</el-dropdown-item>
+                            <el-dropdown-item @click.native="setCardVisible = true">收卡费</el-dropdown-item>
+                            <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!= 2">拉黑</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </template>
@@ -120,15 +133,42 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow">
-        <el-form :model="setBlackForm">
-            <el-form-item label="拉黑备注：" class="require">
-                <el-input type="textarea" v-model="setBlackForm.remark" autocomplete="off" style="width:400px"></el-input>
+    <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
+        <el-form :model="setBlackForm" ref="setBlackForm">
+            <el-form-item label="拉黑备注：" prop="blackRemark">
+                <el-input type="textarea" v-model="setBlackForm.remark" autocomplete="off" style="width:80%"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="setBlackShow = false">取 消</el-button>
             <el-button type="primary" @click="addblacklist">确 定</el-button>
+        </div>
+    </el-dialog>
+    <el-dialog top="0" title="补收卡费" :visible.sync="setCardVisible" width="470px">
+        <el-form :model="cardForm" ref="cardForm">
+            <el-form-item label="" class="require" label-width="80px">
+                卡号：{{cardForm.memberCard}} 姓名：{{cardForm.name}} 会员类型：{{F_memberTypeId(cardForm.memberTypeId)}}
+            </el-form-item>
+            <el-form-item label="补收类型" class="" prop="memberTypeId">
+                <el-radio-group v-model="cardForm.type">
+                    <el-radio :label="3">卡费</el-radio>
+                    <el-radio :label="6">升级卡</el-radio>
+                    <el-radio :label="9">补卡费</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="支付方式" class="" prop="payWay">
+                <el-select v-model="cardForm.payWay" style="width:300px">
+                    <el-option label="现金" :value="1"></el-option>
+                    <el-option label="微信" :value="2"></el-option>
+                    <el-option label="支付宝" :value="3"></el-option>
+                    <el-option label="银联" :value="4"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="支付费用" class="" prop="payPrices">
+                <el-input style="width:300px" v-model="cardForm.payPrices" placeholder=""></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="setCardFrormChange('cardForm')">确认</el-button>
         </div>
     </el-dialog>
 </div>
@@ -150,43 +190,47 @@ export default {
     },
     data() {
         return {
+          setCardVisible: false,
+            cardForm: {},
+            showPageType: 'main',   //页面显示类型
             loading: false,
             showEdit: false,
             showDetail: false,
             searchForm: {
-                id: '',
-                getWay: '',
-                memberTypeId: '',
-                mobile: '',
-                memberCard: '',
-                name: '',
-                state: '',
-                isBlacklist: '',
-                paging: true,
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-
+              status: '',
+              storesNum: ''
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [{}], //表格数据
             storeList: '',
-            smembertypeList: '',
+            smembertypeList: [],
             setBlackForm: {
                 remark: ''
             },
-            setBlackShow: false
+            setBlackShow: false,
+            setBlackRules: {
+              blackRemark: [{
+                required: true,
+                message: 'not emply',
+                trigger: 'change'
+              }]
+            }
         };
     },
 
     mounted() {
         this.initForm();
         this.stores_list()
-        this.smembertype_list()
+        this.$F.fetchMemberTypeList({}, (res) => {
+          this.smembertypeList = res.list;
+        })
     },
     methods: {
         initForm() {
             this.searchForm = {
+                status: '',
+                storesNum: '',
                 id: '',
                 getWay: '',
                 memberTypeId: '',
@@ -215,18 +259,7 @@ export default {
                 this.storeList = data;
             })
         },
-        smembertype_list() {
-            let params = {
-                name: '',
-                pageIndex: 1,
-                pageSize: 10,
-                paging: false,
-                id: ''
-            }
-            this.$F.doRequest(this, '/pms/membertype/list', params, (data) => {
-                this.smembertypeList = data.list;
-            })
-        },
+
         handleAdd(item) {
             this.$router.push({
                 name: 'customeradd'
@@ -255,13 +288,13 @@ export default {
         addblacklist() {
             if (!this.setBlackForm.remark) {
                 this.$message.error('请输入备注信息');
-                return
+                return;
             }
             this.$F.doRequest(this, '/pms/hotelmember/addblacklist', this.setBlackForm, (data) => {
                 this.setBlackShow = false
                 this.getDataList()
                 this.$message({
-                    message: '操作成功',
+                    message: 'success',
                     type: 'success'
                 });
             })

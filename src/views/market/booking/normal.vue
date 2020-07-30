@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 17:42:46
- * @FilePath: /jiudian/src/views/market/booking/list1.vue
+ * @LastEditTime: 2020-07-28 14:55:19
+ * @FilePath: /jiudian/src/views/market/booking/normal.vue
  -->
 
 <template>
@@ -330,9 +330,9 @@ export default {
         handleCurrentChange(val) {
             this.checkInForm.page = val;
             this.getDataList();
-        },        
+        },
         handleChange(){
-            
+
         }
 
     }

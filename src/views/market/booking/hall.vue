@@ -1,15 +1,15 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 09:50:02
- * @FilePath: /jiudian/src/views/market/booking/list3.vue
+ * @LastEditTime: 2020-07-28 13:24:42
+ * @FilePath: /jiudian/src/views/market/booking/hall.vue
  -->
 
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="会场预订" name="first"> 
-                <c1></c1>
+            <el-tab-pane label="会场预订" name="b3"> 
+                <normal :operCheckinType="activeName" ></normal>
             </el-tab-pane>
             <el-tab-pane label="会议核销" name="second">
                 <c2></c2>
@@ -18,14 +18,16 @@
   </div>
 </template>
 <script>
+import normal from "@/views/market/reception/checkin/normal";
+
 import c1 from "./venue/c1";
 import c2 from "./venue/c2";
 
 export default {
-  components: { c1, c2},
+  components: { c1, c2,normal},
   data() {
     return {
-      activeName: "first" //第一个默认启动
+      activeName: "b3" //第一个默认启动
     };
   },
   mounted() {},
