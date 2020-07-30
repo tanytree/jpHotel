@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 11:22:01
+ * @LastEditTime: 2020-07-29 21:55:54
  * @FilePath: /jiudian/src/views/market/orders/orderlist.vue
  -->
 
@@ -52,7 +52,6 @@
                         <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
                 </el-form-item>
-
             </el-row>
             <el-row>
                 <el-form-item label="订单来源">

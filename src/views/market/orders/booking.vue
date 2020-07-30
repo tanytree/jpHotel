@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 13:25:16
+ * @LastEditTime: 2020-07-29 21:56:07
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -188,7 +188,7 @@ export default {
                 mobile: '',
                 idcard: '',
                 name: '',
-                searchType: 1,
+                searchType: 2,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true

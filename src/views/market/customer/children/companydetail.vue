@@ -1,11 +1,11 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 17:09:36
+ * @LastEditTime: 2020-07-30 09:55:09
  * @FilePath: /jiudian/src/views/market/customer/children/companydetail.vue
  -->
 <template>
-<div>
+<div v-loading="loading">
     <el-card>
         <!-- 头部导航 -->
         <div slot="header" class="clearfix">
@@ -14,7 +14,7 @@
                 <el-breadcrumb-item>详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="bodyInfo">
+        <div class="bodyInfo" v-if="!loading">
             <div class="mianInfo">
                 <div class="thisOrderInfo">
                     <div class="wrap">
@@ -132,7 +132,7 @@
                                 <el-row class="cell">
                                     <el-col :span="6" class="col">
                                         <el-form-item label="发展途径：">
-                                            {{detailForm.getWay}}
+                                            {{detailForm.getWay==1?'线上':'线下'}}
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6" class="col">
@@ -215,6 +215,7 @@ export default {
     },
     data() {
         return {
+            loading:false,
             type: 'edit',
             setCardFormVisible: false,
             formLabelWidth: '120px',
@@ -226,28 +227,35 @@ export default {
             detailForm: {
                 name: ''
             },
-            strategyList: []
+            strategyList: [],
+            alldayList: [],
+            salesList: []
         };
     },
-    mounted() {
+    async mounted() {
         console.log(this.$route)
         let id = this.$route.query.id
-        this.findone(id)
+        await this.findone(id)
         this.hotel_price_enter_strategy_list()
         this.hotel_rule_allday_list()
+        this.login_user_list()
     },
-
     methods: {
         /**单位详情 */
         findone(id) {
+             return new Promise((resolve, reject) => {
+            this.loading = true
             this.$F.doRequest(this, '/pms/hotelenter/findone', {
                 id: id
             }, (res) => {
+                this.loading = false
                 let data = res;
                 data.shareFlag = data.shareFlag == 1 ? true : false
                 data.state = data.state == 1 ? true : false
                 this.detailForm = data
+                resolve(res)
             })
+             })
         },
         setCardFormBtnClick(v) {
             let enums = {
@@ -276,7 +284,21 @@ export default {
                 pageSize: 999
             }
             this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_list', params, (res) => {
-                this.alldayList = res
+                this.alldayList = res.list
+            })
+        },
+        login_user_list() {
+            let params = {
+                searchType: 1,
+                paging: false,
+                salesFlag: 1,
+                content: '',
+                departmentId: '',
+                pageIndex: 1,
+                pageSize: 10
+            }
+            this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (data) => {
+                this.salesList = data.hotelUserList;
             })
         },
         setStrategyName(id) {
@@ -293,7 +315,7 @@ export default {
                     return this.alldayList[k].ruleName
                 }
             }
-            return ''
+            return ' '
         },
         setSalesIdName(id) {
             for (let k in this.salesList) {
@@ -301,7 +323,7 @@ export default {
                     return this.salesList[k].userName
                 }
             }
-            return ''
+            return ' '
         },
     }
 };
