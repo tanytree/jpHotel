@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-21 15:19:42
+ * @LastEditTime: 2020-07-30 13:33:53
  * @FilePath: /jiudian/src/views/market/customer/vip/info.vue
  -->
 
@@ -117,7 +117,7 @@
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
                     <el-button type="text" size="mini" @click="handleEdit(row)">修改</el-button>
                     <el-dropdown>
-                        <span class="el-dropdown-link">
+                        <span class="el-dropdown-link" style="font-size:12px">
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 21:56:07
+ * @LastEditTime: 2020-07-30 13:46:19
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -205,7 +205,7 @@ export default {
             })
         },
         handelDetail(item) {
-            this.$router.push('/orderdetail')
+            this.$router.push('/bookingDetail')
         },
         /**编辑 */
         editRowItem(row) {
