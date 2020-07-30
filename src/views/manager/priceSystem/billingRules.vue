@@ -493,7 +493,9 @@
 				} else {
 					params.outtimeRuleCaps = 2
 				}
-				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_save', params, (res) => {
+				let par = JSON.stringify(params)
+				debugger
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_save', par, (res) => {
 					
 				})
 			},
