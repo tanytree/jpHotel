@@ -25,10 +25,10 @@
                   <el-option label="日文" value="ri"> </el-option>
                 </el-select> -->
 			</span>
-            <span class="itemTxt rightItem" @click="itemClick('organization')">
-        <img src="@/assets/images/topBanner/zuzhi.png" alt/>
-        人员管理
-      </span>
+            <span class="itemTxt rightItem" @click="itemClick('organization')" v-if="(user.userType == 3 && user.storesNum != $F.getHQCode()) || (user.account == 'admin' && user.storesNum == $F.getHQCode())">
+                <img src="@/assets/images/topBanner/zuzhi.png" alt/>
+                人员管理
+              </span>
             <span class="itemTxt logoout">
 				<el-dropdown>
 					<span class="userInfo">
@@ -60,7 +60,7 @@
         user: state => state.user,
       })
     },
-    inject:['reload'],
+    inject: ['reload'],
     data () {
       return {
         language: '日本語',
@@ -69,14 +69,15 @@
 
     mounted () {
       let locale = getLanguage() || 'zh';
-      this.language = this.$F.getLangDesc(locale)
-      sessionStorage.locale = locale
-      this.$i18n.locale = locale
+      this.language = this.$F.getLangDesc(locale);
+      sessionStorage.locale = locale;
+      this.$i18n.locale = locale;
+      console.log(this.user);
     },
     methods: {
       ...mapActions({}),
       toggleLang (lang) {
-        setLanguage(lang);
+        setLanguage(lang)
         this.$i18n.locale = lang
         sessionStorage.locale = lang
         let langDesc = this.$F.getLangDesc(lang)
@@ -86,9 +87,9 @@
           message: `切换为${langDesc}成功`,
           type: 'success'
         })
-        // this.reload();
+        this.reload()
         // this.$router.go(0)
-        window.location.reload()
+        // window.location.reload()
       },
 
       modelShowfuc () {
@@ -114,9 +115,12 @@
 
 <style lang="less">
     .itemComang {
-        &.activeC {
-            color: rgba(59, 135, 255, 1);
-        }
+
+    &
+    .activeC {
+        color: rgba(59, 135, 255, 1);
+    }
+
     }
 
     .itemSpam {
@@ -129,11 +133,13 @@
         line-height: 24px;
         font-size: 12px;
 
-        &.active {
-            background-color: rgba(59, 135, 255, 1);
-            font-family: PingFangSC-Regular;
-            color: #fff;
-        }
+    &
+    .active {
+        background-color: rgba(59, 135, 255, 1);
+        font-family: PingFangSC-Regular;
+        color: #fff;
+    }
+
     }
 
     .itemel {
@@ -152,29 +158,31 @@
         align-items: center;
         justify-content: space-between;
 
-        .el-dropdownBox {
-            color: #fff;
-            padding-right: 20px;
-            cursor: pointer;
-            width: 140px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+    .el-dropdownBox {
+        color: #fff;
+        padding-right: 20px;
+        cursor: pointer;
+        width: 140px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-            .enterName {
-                width: 100px;
-                text-overflow: ellipsis;
-                display: inline-block;
-                overflow: hidden;
-                height: 30px;
-                line-height: 30px;
-            }
-        }
+    .enterName {
+        width: 100px;
+        text-overflow: ellipsis;
+        display: inline-block;
+        overflow: hidden;
+        height: 30px;
+        line-height: 30px;
+    }
 
-        .leftHead {
-            display: flex;
-            align-items: center;
-        }
+    }
+
+    .leftHead {
+        display: flex;
+        align-items: center;
+    }
+
     }
 
     .itemTxt {
@@ -188,33 +196,35 @@
         align-items: center;
         line-height: 1;
 
-        .rightItem {
-            display: flex;
-            align-items: center;
-            line-height: 1;
+    .rightItem {
+        display: flex;
+        align-items: center;
+        line-height: 1;
 
-            img {
-                width: 22px;
-                height: 22px;
-                margin: 0 10px;
-            }
-        }
+    img {
+        width: 22px;
+        height: 22px;
+        margin: 0 10px;
+    }
 
-        .logoout {
-            margin-left: 40px;
-        }
+    }
 
-        .userInfo {
-            color: #ffffff;
-            display: flex;
-            align-items: center;
+    .logoout {
+        margin-left: 40px;
+    }
 
-            img {
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                margin-right: 10px;
-            }
-        }
+    .userInfo {
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+
+    img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    }
     }
 </style>

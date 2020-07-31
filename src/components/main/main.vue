@@ -21,7 +21,9 @@
 			</el-aside>
 			<el-container class="mainContainer">
 				<el-header class="layHeader">
-					<div class="header-item" v-for="item in menuList" :key="item.name" @click="menulfuc(item)" :class="partmentId == item.id &&routerCompany !== 'company' ?'itemactive':''">
+					<div class="header-item" v-for="item in menuList" :key="item.name"
+                         @click="menulfuc(item)"
+                         :class="partmentId == item.id && routerCompany !== 'company' ?'itemactive':''">
 						<img :src="require(`@/assets/images/${item.icon}.png`)" alt />
 						<div> {{$i18n.locale == 'ri' ? item.japanese : (item.menuAliasTitle || item.menuTitle)}}</div>
 					</div>
@@ -93,14 +95,18 @@
 			},
 
 			menulfuc(item) {
-				this.routerCompany = ''
-				this.menul = item
-				sessionStorage.menul = JSON.stringify(item)
-				this.partmentId = item.id
-				this.sectionid = ''
-				sessionStorage.partmentId = item.id
-				this.toSection(this.menul.childList[0])
-				this.$forceUpdate()
+              if (item.childList && item.childList.length > 0) {
+                this.menul = item
+                this.routerCompany = ''
+                sessionStorage.menul = JSON.stringify(item)
+                  this.partmentId = item.id
+                  this.sectionid = ''
+                  sessionStorage.partmentId = item.id
+                  this.toSection(this.menul.childList[0])
+                  this.$forceUpdate()
+                } else {
+                  this.$message.warning('no menus');
+                }
 			},
 			//点击左侧导航
 			toSection(item) {

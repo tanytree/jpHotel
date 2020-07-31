@@ -120,14 +120,14 @@ export default {
     this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
   },
   mounted () {
-    this.select_title = JSON.parse(sessionStorage.getItem('menul')).name
+    // this.select_title = JSON.parse(sessionStorage.getItem('menul')).name
     this.get_tableDate();
   },
   methods: {
     // 获取各部门人员列表
     get_tableDate () {
       let params = {
-        departmentId: JSON.parse(sessionStorage.getItem('menul')).id,
+        departmentId: JSON.parse(sessionStorage.getItem('menul') || '{}').id,
         pageIndex: 1,
         pageSize: 10
       }
