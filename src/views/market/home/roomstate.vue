@@ -365,43 +365,45 @@
                 <!-- 图标 -->
                 <el-popover placement="top-start" width="840" trigger="hover">
                     <!-- <p>hdfkhajkghgh</p> -->
-                    <div>
+                    <div class="icondesc">
                         <h3>图标说明</h3>
-                        <el-col :span="4">
+                        <el-col :span="4" class="item">
                             <span class="inco">钟</span>
                             <span>钟点房</span>
                         </el-col>
-                        <el-col :span="4">
+                        <el-col :span="4" class="item">
                             <span class="inco">免</span>
                             <span>免费房</span>
                         </el-col>
-                        <el-col :span="4">
+                        <el-col :span="4" class="item">
                             <span class="inco">午</span>
                             <span>午夜房</span>
                         </el-col>
-                        <el-col :span="4">
+                        <el-col :span="4" class="item">
                             <span class="inco">订</span>
                             <span>预定房</span>
                         </el-col>
-                        <el-col :span="4">
+                        <el-col :span="4" class="item">
                             <span class="inco">离</span>
                             <span>今日预离</span>
                         </el-col>
-                        <el-col :span="4">
-                            <span class="inco">免</span>
-                            <span>免费房</span>
+                        <el-col :span="4" class="item">
+                            <span class="inco">长</span>
+                            <span>长租房</span>
                         </el-col>
-                        <el-col :span="4" style="margin-top:5px">
-                            <span class="inco">午</span>
-                            <span>午夜房</span>
+                        <el-col :span="4" class="item">
+                            <span class="inco i_img">
+                              <img :src="require('@/assets/images/frontdesk/minClearn.png')" />
+                            </span>
+                            <span>脏房</span>
                         </el-col>
-                        <el-col :span="4" style="margin-top:5px">
-                            <span class="inco">订</span>
-                            <span>预定房</span>
+                        <el-col :span="4" class="item">
+                            <span class="inco i_img"><img :src="require('@/assets/images/frontdesk/minFix.png')" /></span>
+                            <span>维修房</span>
                         </el-col>
-                        <el-col :span="4" style="margin-top:5px">
-                            <span class="inco">离</span>
-                            <span>今日预离</span>
+                        <el-col :span="4" class="item">
+                            <span class="inco i_img"><img :src="require('@/assets/images/frontdesk/lian.png')" /></span>
+                            <span>联房</span>
                         </el-col>
                     </div>
 
@@ -1338,19 +1340,32 @@ export default {
     padding: 3px;
 }
 
+.icondesc span{
+  vertical-align: middle;
+}
+.icondesc .item{margin: 0 0 10px 0;}
 .inco {
     border: 1px solid #333;
     background: #666;
     color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    margin-right: 4px;
 }
-
+.inco.i_img{
+  background: none;
+  border:0
+}
+.inco.i_img img{width: 100%;height: 100%;}
 .search {
-
     width: 137px !important;
     height: 30px !important;
     line-height: 30px !important;
 }
-
 .fangtai {
     left: 180px;
     top: 300px;
