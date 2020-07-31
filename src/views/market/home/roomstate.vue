@@ -40,13 +40,13 @@
           </el-tag>-->
                 <div style="margin-top:10px">
                     <el-row>
-                        <el-col>
-                            <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
-                                <el-checkbox v-for="(item,index) in roomStatus" :key="index" :label="item.value">
+                        <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
+                            <el-col :span="12" v-for="(item,index) in roomStatus" :key="index" style="margin-bottom:5px">
+                                <el-checkbox :label="item.value">
                                     <el-tag :type="item.type" effect="plain" size="mini">{{ item.name }}</el-tag>
                                 </el-checkbox>
-                            </el-checkbox-group>
-                        </el-col>
+                            </el-col>
+                        </el-checkbox-group>
                     </el-row>
                     <div style="border-bottom: 1px dashed #ccc;margin:10px 0"></div>
                 </div>
@@ -63,7 +63,7 @@
                     <el-col>
                         <el-checkbox-group v-model="searchForm.roomTypeId" @change="handleChange">
                             <el-checkbox style="width:100%;position: relative;margin-top:10px" v-for="item of roomTypeId" :key="item.roomTypeId" :label="item.roomTypeId">
-                                {{item.houseName}}
+                                {{item.houseName?item.houseName:'未知'}}
                                 <span style="position: absolute;right:0">{{item.reserveCount}}/{{item.total}}</span>
                             </el-checkbox>
                         </el-checkbox-group>
@@ -101,7 +101,7 @@
                 <div style="margin-top:10px">
                     <el-checkbox-group v-model="searchForm.channel" @change="handleChange">
                         <el-checkbox style="width:100%;position: relative;margin-top:10px" v-for="item of channel" :key="item.channel" :label="item.channel">
-                            {{item.name}}
+                            {{item.name?item.name:'未知'}}
                             <span style="position: absolute;right:0">{{item.total}}</span>
                         </el-checkbox>
                     </el-checkbox-group>
@@ -120,34 +120,34 @@
 
             </el-row>
             <template v-for="(item, index) in roomList">
-            <el-row :key="index" v-if="item.floorRoomCount>0">
-                <el-row :gutter="20" style="margin-top: 10px;">
-                    <el-col :span="5">
-                        {{item.building?item.building.name:''}}
-                        <span>{{item.floor}}</span>层
-                    </el-col>
-                    <el-col :span="1" :offset="0.5" style="color: #999;">
-                        <span style="color: #126eff;">{{item.reserveFloorRoomCount}}</span>/{{item.floorRoomCount}}
-                    </el-col>
+                <el-row :key="index" v-if="item.floorRoomCount>0">
+                    <el-row :gutter="20" style="margin-top: 10px;">
+                        <el-col :span="5">
+                            {{item.building?item.building.name:''}}
+                            <span>{{item.floor}}</span>层
+                        </el-col>
+                        <el-col :span="1" :offset="0.5" style="color: #999;">
+                            <span style="color: #126eff;">{{item.reserveFloorRoomCount}}</span>/{{item.floorRoomCount}}
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20" style="margin-top: 10px;">
+                        <el-col @click.native="hostelmess(room)" :span="4" class="tag-margin" :style="`height:120px;background:${F_roomStatusColor(room.roomStatus)};cursor: pointer;`" v-for="(room, i) in item.roomList" :key="i">
+                            <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;">
+                                <el-col :span="3">{{room.houseNum}}</el-col>
+                                <el-col :span="8" :offset="2">{{room.hotelRoomType.houseName}}</el-col>
+                            </el-row>
+                            <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;" v-if="room.livingPersonList.length&&(room.roomStatus==3 || room.roomStatus==4)">
+                                <el-col :span="8">{{room.livingPersonList[0].name}}</el-col>
+                                <el-col :span="8" :offset="2">{{room.livingPersonList[0].sex | F_sex}}</el-col>
+                            </el-row>
+                            <!-- 清扫图标后期加 -->
+                            <div class="placeIcon text-center" v-if="room.roomStatus==2 || room.roomStatus==5">
+                                <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')" />
+                                <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')" />
+                            </div>
+                        </el-col>
+                    </el-row>
                 </el-row>
-                <el-row :gutter="20" style="margin-top: 10px;">
-                    <el-col @click.native="hostelmess(room)" :span="4" class="tag-margin" :style="`height:120px;background:${F_roomStatusColor(room.roomStatus)};cursor: pointer;`" v-for="(room, i) in item.roomList" :key="i">
-                        <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;">
-                            <el-col :span="3">{{room.houseNum}}</el-col>
-                            <el-col :span="8" :offset="2">{{room.hotelRoomType.houseName}}</el-col>
-                        </el-row>
-                        <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;" v-if="room.livingPersonList.length&&(room.roomStatus==3 || room.roomStatus==4)">
-                            <el-col :span="8">{{room.livingPersonList[0].name}}</el-col>
-                            <el-col :span="8" :offset="2">{{room.livingPersonList[0].sex | F_sex}}</el-col>
-                        </el-row>
-                        <!-- 清扫图标后期加 -->
-                        <div class="placeIcon text-center" v-if="room.roomStatus==2 || room.roomStatus==5">
-                            <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')" />
-                            <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')" />
-                        </div>
-                    </el-col>
-                </el-row>
-            </el-row>
             </template>
             <el-row>
                 <el-button @click="batch = true">批量置脏/置净</el-button>
@@ -393,7 +393,7 @@
                         </el-col>
                         <el-col :span="4" class="item">
                             <span class="inco i_img">
-                              <img :src="require('@/assets/images/frontdesk/minClearn.png')" />
+                                <img :src="require('@/assets/images/frontdesk/minClearn.png')" />
                             </span>
                             <span>脏房</span>
                         </el-col>
@@ -546,7 +546,8 @@
                 <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
                 <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
                 <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
-                <el-button style="width:60px;">置脏</el-button>
+                <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null' ||currentRoom.roomStatus==null ||currentRoom.roomStatus==1 || currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
+                <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4"  @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
             </el-row>
         </el-dialog>
     </div>
@@ -1217,12 +1218,11 @@ export default {
                 // this.personRoom = res.personRoomList
                 this.roomTypeId = res.roomTypeList
                 this.channel = res.channelList
-
                 this.channel.forEach(element => {
                     element.name = checkIdInDict(element.channel, this.dict_channel)
                 });
                 // this.personRoom.forEach(element => {
-                //   element.name = checkIdInDict(element.personRoomType,this.dict_personRoom)
+                //     element.name = checkIdInDict(element.personRoomType, this.dict_personRoom)
                 // });
 
                 function checkIdInDict(id, arr) {
@@ -1233,10 +1233,9 @@ export default {
                     }
                     return ''
                 }
-
                 // console.log(this.channel)
                 // console.log(this.roomStatus)
-                // console.log(this.personRoom)
+                console.log(this.personRoom)
             })
         },
         get_hotel_building_list() {
@@ -1278,6 +1277,53 @@ export default {
                 '5': '#27AE76'
             }
             return enums[value] ? enums[value] : '#276BBA'
+        },
+        //         let roomStatus = [{
+        //     type: "success",
+        //     name: '空净',
+        //     value: '1'
+        // }, {
+        //     type: "danger",
+        //     name: '空脏',
+        //     value: '2'
+        // }, {
+        //     type: "",
+        //     name: '住静',
+        //     value: '3'
+        // }, {
+        //     type: "warning",
+        //     name: '住脏',
+        //     value: '4'
+        // }, {
+        //     type: "info",
+        //     name: '维修',
+        //     value: '5'
+        // }]
+        handleOperRoomStatus(s,item) {
+          console.log(s)
+            let status = '';
+            if (s == 1 || s == null || s == 'null') {
+                status = 2
+            }
+            if (s == 3) {
+                status = 4
+            }
+            if (s == 2) {
+                status = 1
+            }
+            if (s == 4) {
+                status = 3
+            }
+            this.$F.doRequest(this, '/pms/hotel/oper_room_status', {
+                roomIds: item.id,
+                roomStatus: status
+            }, (res) => {
+              this.hosteldis = false
+                this.$message({
+                    message: '操作成功',
+                    type: 'success'
+                });
+            })
         },
         handleChange(e) {
             this.getDataList()
@@ -1340,10 +1386,14 @@ export default {
     padding: 3px;
 }
 
-.icondesc span{
-  vertical-align: middle;
+.icondesc span {
+    vertical-align: middle;
 }
-.icondesc .item{margin: 0 0 10px 0;}
+
+.icondesc .item {
+    margin: 0 0 10px 0;
+}
+
 .inco {
     border: 1px solid #333;
     background: #666;
@@ -1356,16 +1406,23 @@ export default {
     text-align: center;
     margin-right: 4px;
 }
-.inco.i_img{
-  background: none;
-  border:0
+
+.inco.i_img {
+    background: none;
+    border: 0
 }
-.inco.i_img img{width: 100%;height: 100%;}
+
+.inco.i_img img {
+    width: 100%;
+    height: 100%;
+}
+
 .search {
     width: 137px !important;
     height: 30px !important;
     line-height: 30px !important;
 }
+
 .fangtai {
     left: 180px;
     top: 300px;

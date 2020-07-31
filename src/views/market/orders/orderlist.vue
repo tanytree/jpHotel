@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 21:55:54
+ * @LastEditTime: 2020-07-31 17:05:05
  * @FilePath: /jiudian/src/views/market/orders/orderlist.vue
  -->
 
@@ -13,26 +13,26 @@
         <el-form inline size="small" label-width="80px">
             <el-row>
                 <el-form-item label="订单类型">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">在住订单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">今日预离</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">历史订单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">走结订单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">反结订单</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">在住订单</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">今日预离</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">历史订单</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">走结订单</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">反结订单</el-tag>&nbsp;&nbsp;
                 </el-form-item>
             </el-row>
             <el-row>
                 <el-form-item label="预离日期">
-                    <el-tag type="success">当天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">昨天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">明天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">后三天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">近三天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">近七天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">上月</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">本月</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">下月</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">当天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">昨天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">明天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">后三天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">近三天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">近七天</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">上月</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">本月</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">下月</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp;
                     <el-form-item label="">
                         <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                         <span style="margin:0 5px">-</span>
@@ -42,10 +42,10 @@
             </el-row>
             <el-row>
                 <el-form-item label="入住方式">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">全天房</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">钟点房</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">午夜房</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">全天房</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">钟点房</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">午夜房</el-tag>&nbsp;&nbsp;
                     <el-form-item label="入住日期">
                         <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                         <span style="margin:0 5px">-</span>
@@ -76,7 +76,6 @@
                 </el-form-item>
             </el-row>
             <el-row>
-
                 <el-form-item label="姓名">
                     <el-input v-model="searchForm.name" class="width150"></el-input>
                 </el-form-item>

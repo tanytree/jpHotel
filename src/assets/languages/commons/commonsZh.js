@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 17:22:08
+ * @LastEditTime: 2020-07-31 18:31:21
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -41,7 +41,7 @@ module.exports = {
     orderSource:{
         "1": '前台',
         "2": '销售推荐',
-        "3": '渠道订单',
+        // "3": '渠道订单',
         "10": '其它'
     },
     //正常免费
@@ -78,6 +78,18 @@ module.exports = {
         "1": '入住中',
         "2": '已退房'
     },
+    //预订状态
+    reserveState:{
+        "0": '不限',
+        "1": '预定中',
+        "2": '已确认',
+        "3": '拒单',
+        "4": 'NOSHOW',
+        "5": '未入住',
+        "6": '已入驻',
+        "7": '离店',
+        "8": '已取消'
+    },
     //入住状态
     billType:{
         "1": '已结',
@@ -85,6 +97,12 @@ module.exports = {
         "3": '冲调',
         "4": '走结',
         "5": '反结'
+    },
+    //预订类型
+    operCheckinType:{
+        "1": '普通预订',
+        "2": '时租房预订',
+        "3": '会场预订'
     },
     //单位是否停用
     comState:{

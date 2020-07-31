@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-30 13:46:19
+ * @LastEditTime: 2020-07-31 18:00:20
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -13,53 +13,56 @@
         <el-form inline size="small" label-width="80px">
             <el-row>
                 <el-form-item label="订单状态">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">未入住</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">取消</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">离店</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">待确认</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">拒单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">已入驻</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">NOSHOW</el-tag>&nbsp;&nbsp;
+                    <div class="tagList">
+                        <template v-for="(item,key,index) of $t('commons.reserveState')">
+                            <el-tag class="tag" :type="searchForm.state==key?'':'info'" :key="index" @click="stateClick(key)">{{item}}</el-tag>
+                        </template>
+                    </div>
                 </el-form-item>
             </el-row>
             <el-row>
                 <el-form-item label="预抵日期">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">上周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">今日</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">本周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">下周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">上周</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">今日</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">本周</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">下周</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp;
+                </el-form-item>
+                <el-form-item label="">
+                    <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="预订日期">
-                    <el-tag type="success">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">上周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">今日</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">本周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">下周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="success">自定义</el-tag>&nbsp;&nbsp;
+                <el-form-item label="预订日期：">
+                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">上周</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">今日</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">本周</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">下周</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp;
+                </el-form-item>
+                <el-form-item label="">
+                    <el-date-picker v-model="searchForm.createTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
 
             </el-row>
             <el-row>
-                <el-form-item label="入住类型">
-                    <el-select v-model="searchForm.enterStatus" class="width150">
+                <el-form-item label="入住类型：">
+                    <el-select v-model="searchForm.checkinType" class="width150">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="订单来源">
-                    <el-select v-model="searchForm.enterStatus" class="width150">
+                    <el-select v-model="searchForm.orderSource" class="width150">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="团队名称">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                    <el-input v-model="searchForm.enterName" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item label="预定单号">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                    <el-input v-model="searchForm.orderNum" class="width150"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
@@ -67,22 +70,20 @@
                     <el-input v-model="searchForm.name" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item label="手机号">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                    <el-input v-model="searchForm.mobile" class="width150"></el-input>
                 </el-form-item>
-                <el-form-item label="房类">
+                <el-form-item label="房型">
                     <el-select v-model="searchForm.enterStatus" class="width150">
-                        <el-option label="全部" value="3">全部</el-option>
-                        <el-option label="已认证" value="1">已认证</el-option>
-                        <el-option label="未认证" value="2">未认证</el-option>
+                        <el-option :label="item.houseName?item.houseName:'未知'" :value="item.roomTypeId" v-for="(item,index) of roomTypeList" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="外部订单">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-form-item label="房间号">
+                    <el-input v-model="searchForm.houseNum" class="width150"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="预订人">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                <el-form-item label="外部单号">
+                    <el-input v-model="searchForm.thirdOrdernum" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getDataList">查询</el-button>
@@ -98,19 +99,28 @@
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column prop="name" label="预订人" show-overflow-tooltip></el-table-column>
             <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="checkinTime" label="预订时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="" label="抵离时间" show-overflow-tooltip>
+            <el-table-column prop="createTime" label="预订时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="抵离时间" width="200">
                 <template slot-scope="{row}">
-                    <div>
-                        <span>抵</span>{{row.checkinTime}}
-                    </div>
-                    <div>
-                        <span>离</span>{{row.checkoutTime}}
+                    <div class="box">
+                        <div class="item">
+                            <div>
+                                <span class="text-blue">抵</span>{{row.checkinTime}}
+                            </div>
+                            <div>
+                                <span class="text-red">离</span>{{row.checkoutTime}}
+                            </div>
+                        </div>
+                        <div class="item">{{row.checkinDays}}天</div>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="enterType" label="房型（房号）" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="订金" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="operCheckinType" label="房型（房号）" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_operCheckinType(row.operCheckinType)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="deposit" label="订金" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="总房费" show-overflow-tooltip></el-table-column>
             <el-table-column prop="" label="订单来源" show-overflow-tooltip>
                 <template slot-scope="{row}">
@@ -119,19 +129,21 @@
             </el-table-column>
             <el-table-column prop="" label="状态" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    {{F_checkinState(row.state)}}
+                    {{F_reserveState(row.state)}}
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handelDetail(row)">详情</el-button>
-                    <el-button type="text" size="mini">订金</el-button>
-                    <el-button type="text" size="mini">NOSHOW</el-button>
-                    <el-button type="text" size="mini">取消</el-button>
-                    <el-button type="text" size="mini">接受</el-button>
-                    <el-button type="text" size="mini">拒单</el-button>
-                    <el-button type="text" size="mini">恢复</el-button>
-                    <el-button type="text" size="mini">撤销</el-button>
+                    <template v-if="row.state!=7">
+                        <el-button type="text" size="mini">订金</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==5" @click="handleNoshow(row)">NOSHOW</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==5" @click="handleCancel(row)">取消</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==1" @click="handleAccept(row)">接受</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==1" @click="handleRefuse(row)">拒单</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==8" @click="handleReset(row)">恢复</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==4" @click="handleReset(row)">撤销</el-button>
+                    </template>
                 </template>
             </el-table-column>
         </el-table>
@@ -140,6 +152,41 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
+    <el-dialog top="0" title="NOSHOW" :visible.sync="noShowDiaShow" width="600px" center>
+        <el-form :model="currentItem" style="margin-top:-20px" size="mini">
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="预订单号：" class="">
+                        {{currentItem.orderNum}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="预订人：" class="">
+                        {{currentItem.name}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="账务服务：" class="">
+                        NOSHOW房费
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="金额：" class="">
+                        <el-input type="text" disabled v-model="currentItem.deposit" style="width:150px"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="备注：" class="">
+                        <el-input type="textarea" v-model="currentItem.remark" style="width:450px"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="noShowDiaShow = false">取 消</el-button>
+            <el-button type="primary" @click="confirmNoshow">确 定</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -162,33 +209,53 @@ export default {
     data() {
         return {
             loading: false,
-            showEdit: false,
+            noShowDiaShow: false,
             showDetail: false,
             searchForm: {
+                operCheckinType: '',
+                enterName: '',
+                houseNum: '',
+                thirdOrdernum: '',
+                orderNum: '',
                 mobile: '',
-                idcard: '',
                 name: '',
-                searchType: 1,
+                orderSource: '',
+                checkinType: '',
+                checkinTime: '',
+                createTime: '',
+                state: '',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [{}] //表格数据
+            tableData: [], //表格数据
+            roomTypeList: [],
+            currentItem: {},
+
         };
     },
 
     mounted() {
         this.initForm();
+        this.realtime_room_statistics()
     },
     methods: {
         initForm() {
             this.searchForm = {
+                operCheckinType: '',
+                enterName: '',
+                houseNum: '',
+                thirdOrdernum: '',
+                orderNum: '',
                 mobile: '',
-                idcard: '',
                 name: '',
-                searchType: 2,
+                orderSource: '',
+                checkinType: '',
+                checkinTime: '',
+                createTime: '',
+                state: '',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true
@@ -198,14 +265,126 @@ export default {
         /**获取表格数据 */
         getDataList() {
             this.loading = true;
-            this.$F.doRequest(this, '/pms/checkin/checkin_order_list', this.searchForm, (res) => {
+            this.$F.doRequest(this, '/pms/reserve/reserve_order_list', this.searchForm, (res) => {
                 this.loading = false
-                this.tableData = res.roomPersonList;
+                this.tableData = res.resreveList;
                 this.listTotal = res.page.count
             })
         },
+        realtime_room_statistics() {
+            let that = this
+            this.$F.doRequest(this, '/pms/realtime/realtime_room_statistics', this.searchForm, (res) => {
+                this.roomTypeList = res.roomTypeList
+
+            })
+        },
+        stateClick(key) {
+            this.searchForm.state = key
+        },
+        handleNoshow(item) {
+            this.currentItem = item;
+            this.noShowDiaShow = true
+        },
         handelDetail(item) {
             this.$router.push('/bookingDetail')
+        },
+        confirmNoshow() {
+            let params = {
+                checkInReserveId: this.currentItem.id,
+                state: 4
+            }
+            this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                this.noShowDiaShow = false
+                this.getDataList()
+                this.$message({
+                    message: '操作成功',
+                    type: 'success'
+                });
+            })
+        },
+        handleCancel(item) {
+            let params = {
+                checkInReserveId: item.id,
+                state: 8
+            }
+            this.$confirm('请确认是否取消?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                    this.getDataList()
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
+                })
+            }).catch(() => {
+
+            });
+        },
+        handleAccept(item) {
+            let params = {
+                checkInReserveId: item.id,
+                state: 2
+            }
+            this.$confirm('请确认是否接受?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                    this.getDataList()
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
+                })
+            }).catch(() => {
+
+            });
+        },
+        handleRefuse(item) {
+            let params = {
+                checkInReserveId: item.id,
+                state: 3
+            }
+            this.$confirm('请确认是否拒绝?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                    this.getDataList()
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
+                })
+            }).catch(() => {
+
+            });
+        },
+        handleReset(item) {
+            let params = {
+                checkInReserveId: item.id,
+                state: 1
+            }
+            this.$confirm('请确认您的操作?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                    this.getDataList()
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
+                })
+            }).catch(() => {
+
+            });
         },
         /**编辑 */
         editRowItem(row) {
@@ -246,3 +425,9 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.tagList .tag {
+    margin-right: 5px
+}
+</style>

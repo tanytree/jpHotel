@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-29 10:04:19
+ * @LastEditTime: 2020-07-31 18:30:22
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -879,7 +879,6 @@ export default {
                             console.log(data.checkinId)
                             this.checkInForm.checkInId = data.checkinId
                         } else {
-                            alert(22)
                             this.checkInForm.checkInId = data.checkInReserveId
                             this.checkInForm.checkInReserveId = data.checkInReserveId
                         }
@@ -908,7 +907,6 @@ export default {
                         }
                         this.waitingRoom = []
                         this.liveInPersonData = []
-
                     }
                 })
             }
@@ -957,6 +955,7 @@ export default {
                 }
                 this.$refs.checkInForm.validate((valid) => {
                     if (valid) {
+                        console.log(this.checkInForm)
                         ajax()
                     } else {
                         console.log('error submit!!');
@@ -964,6 +963,7 @@ export default {
                     }
                 });
             } else {
+                console.log(this.checkInForm)
                 ajax()
             }
 
@@ -1236,7 +1236,6 @@ export default {
                         this.liveCardData.unfinished++
                     }
                 }
-
                 this.liveCardLoading = false
                 this.mackcade = true
                 this.$forceUpdate()
@@ -1447,8 +1446,9 @@ export default {
         },
         changeName(e) {
             console.log(e)
-            if (e.id) {
+            if (e.name) {
                 this.baseInfo = e;
+                this.checkInForm.name = e.name
                 this.checkInForm.guestType = e.guestType
                 this.checkInForm.idcard = e.idcard
                 this.checkInForm.idcardType = e.idcardType.toString()
@@ -1459,7 +1459,7 @@ export default {
                 this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : ''
                 this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : ''
             } else {
-                this.checkInForm.name = e.name
+                this.checkInForm.name = e
             }
 
         }
