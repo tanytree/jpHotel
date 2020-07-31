@@ -75,6 +75,13 @@ const $F = {
             $instance.dataListLoading = true
             $instance.loading = true
         }
+        params = this.deepClone(params);
+        for (let key in params) {
+            let value = params[key];
+            if (value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') {
+                delete params[key];
+            }
+        }
         request(url, params).then((res) => {
             if ($instance) {
                 $instance.dataListLoading = false
