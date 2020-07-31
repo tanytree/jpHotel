@@ -6,25 +6,19 @@
  -->
 <template>
     <el-tabs class="pageTab" v-model="activeName">
-        <!--人员查询-->
-        <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'query-staff').thirdMenu" name="query-staff"
-                     v-if="$F.filterThirdMenu('personnelManager', 'query-staff', true)">
-            <Staff/>
-        </el-tab-pane>
-        <!--工资查询-->
-        <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'query-wage').thirdMenu" name="query-wage"
-                     v-if="$F.filterThirdMenu('personnelManager', 'query-wage', true)">
-            <Wage/>
-        </el-tab-pane>
-        <!--部门管理    -->
-        <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'department-manager').thirdMenu" name="department-manager"
-                     v-if="$F.filterThirdMenu('personnelManager', 'department-manager', true)">
-            <Department/>
-        </el-tab-pane>
-        <!--员工权限-->
-        <el-tab-pane :label="$F.filterThirdMenu('personnelManager', 'staff-rights').thirdMenu" name="staff-rights"
-                     v-if="$F.filterThirdMenu('personnelManager', 'staff-rights', true)">
-            <employeeRights/>
+
+        <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                     :name="item.path"
+                     :key="item.path"
+                     v-if="$F.filterThirdMenu('market', item.path, true)">
+            <!-- 人员查询-->
+            <Staff v-if="item.path == 'query-staff'"/>
+            <!-- 工资查询-->
+            <Wage v-if="item.path == 'query-wage'"/>
+            <!-- 部门管理-->
+            <Department v-if="item.path == 'department-manager'"/>
+            <!-- 员工权限-->
+            <employeeRights v-if="item.path == 'staff-rights'"/>
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -37,16 +31,18 @@
 
   export default {
     components: { Staff, Wage, Department, employeeRights },
-    mounted () {
-      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
-    },
     data () {
       return {
-        activeName: '1' //第一个默认启动
+        menuList: [],
+        activeName: '' //第一个默认启动
       }
     },
-
-    created () {
+    created() {
+      if (sessionStorage.subMenul) {
+        this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
+        this.$forceUpdate()
+      }
+      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
     },
     methods: {}
   }

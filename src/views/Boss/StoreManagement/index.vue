@@ -8,9 +8,12 @@
 <template>
   <div id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="门店管理" name="first">
-        <list />
-      </el-tab-pane>
+        <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                     :name="item.path"
+                     :key="item.path"
+                     v-if="$F.filterThirdMenu('boss', item.path, true)">
+            <list />
+        </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -23,10 +26,19 @@ export default {
   components: { list },
   data() {
     return {
-      activeName: "first" //第一个默认启动
+      activeName: "" //第一个默认启动
     };
   },
-  mounted() {},
+  created() {
+    if (sessionStorage.subMenul) {
+      this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
+      this.$forceUpdate()
+    }
+    this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
+  },
+  mounted() {
+    this.activeName = this.$F.filterThirdMenu('boss', 'storeManagement', false, true).path;
+  },
   methods: {
     //二级tab切片
     handleClick(tab, event) {

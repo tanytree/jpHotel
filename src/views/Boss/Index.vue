@@ -7,22 +7,16 @@
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <!-- 门店慨然-->
-            <el-tab-pane :label="$F.filterThirdMenu('boss', 'stores-overview').thirdMenu"
-                         name="stores-overview"
-                         v-if="$F.filterThirdMenu('boss', 'stores-overview', true)">
-                <EmployeeRights/>
-            </el-tab-pane>
-            <!-- 报表-->
-            <el-tab-pane :label="$F.filterThirdMenu('boss', 'boss-report').thirdMenu"
-                         name="boss-report"
-                         v-if="$F.filterThirdMenu('boss', 'boss-report', true)">
-                <Report></Report>
-            </el-tab-pane>
-            <!-- 员工权限-->
-            <el-tab-pane :label="$F.filterThirdMenu('boss', 'staff-rights').thirdMenu"
-                         v-if="$F.filterThirdMenu('boss', 'staff-rights', true)">
-                <EmployeeRights/>
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('sale', item.path, true)">
+                <!-- 门店慨然-->
+                <EmployeeRights v-if="item.path == 'stores-overview'"/>
+                <!-- 报表-->
+                <Report v-if="item.path == 'boss-report'"/>
+                <!-- 员工权限-->
+                <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
         </el-tabs>
         <!-- 订单详情/查看详情 -->
@@ -118,11 +112,16 @@ export default {
       }
     }
   },
+  created() {
+    if (sessionStorage.subMenul) {
+      this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
+      this.$forceUpdate()
+    }
+    this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
+  },
   mounted () {
     this.select_title = JSON.parse(sessionStorage.getItem('menul')).name
     this.get_tableDate();
-    let menu = this.$F.filterThirdMenu('boss', 'stores-overview', false, true)
-    this.activeName = menu.path;
   },
   methods: {
     // 获取各部门人员列表

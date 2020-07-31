@@ -7,13 +7,14 @@
 <template>
     <div id="page1">
         <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane :label="$F.filterThirdMenu('sale', 'central-reservation').thirdMenu" name="central-reservation"
-                         v-if="$F.filterThirdMenu('sale', 'central-reservation', true)">
-                <Centralres/>
-            </el-tab-pane>
-            <el-tab-pane :label="$F.filterThirdMenu('sale', 'staff-rights').thirdMenu" name="staff-rights"
-                         v-if="$F.filterThirdMenu('sale', 'staff-rights', true)">
-                <EmployeeRights/>
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('sale', item.path, true)">
+                <!-- 中央预定-->
+                <Centralres v-if="item.path == 'central-reservation'"/>
+                <!-- 员工权限-->
+                <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -29,6 +30,13 @@
       return {
         activeName: '' //第一个默认启动
       }
+    },
+    created() {
+      if (sessionStorage.subMenul) {
+        this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
+        this.$forceUpdate()
+      }
+      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
     },
     mounted () {
       let menu = this.$F.filterThirdMenu(null, null, false, true)

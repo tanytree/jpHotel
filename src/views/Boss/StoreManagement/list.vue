@@ -59,7 +59,7 @@
                     <el-row class="cell">
                         <el-col :span="18" class="col">
                             <el-form-item label="登录账号：" prop="account" class="">
-                                <el-input v-model="addUserForm.account"></el-input>
+                                <el-input v-model="addUserForm.account" :disabled="addUserForm.type != 'add'"> </el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>

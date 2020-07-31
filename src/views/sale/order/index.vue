@@ -5,63 +5,70 @@
  * @FilePath:
  -->
 <template>
-  <div id="page1">
-    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="会员类型管理" name="first">
-        <Personer :memberTypeList="memberTypeList"/>
-      </el-tab-pane>
-      <el-tab-pane label="会员变更规则" name="second">
-        <Aftersale :memberTypeList="memberTypeList" />
-      </el-tab-pane>
-      <el-tab-pane label="会员价格" name="thirdly">
-        <Memberprice  :memberTypeList="memberTypeList"/>
-      </el-tab-pane>
-      <el-tab-pane label="会员查询" name="forth">
-        <Vipquery  :memberTypeList="memberTypeList"/>
-      </el-tab-pane>
-      <el-tab-pane label="积分设置" name="fifth">
-        <Intergtal />
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+    <div id="page1">
+        <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('sale', item.path, true)">
+                <!--            &lt;!&ndash; 会员类型管理&ndash;&gt;-->
+                <MemberTypeManager v-if="item.path == 'MemberTypeManager'" :memberTypeList="memberTypeList"/>
+                <!--            &lt;!&ndash; 会员变更规则&ndash;&gt;-->
+                <Aftersale v-if="item.path == 'member-change'" :memberTypeList="memberTypeList"/>
+                <!--            &lt;!&ndash; 会员价格&ndash;&gt;-->
+                <Memberprice v-if="item.path == 'member-price'" :memberTypeList="memberTypeList"/>
+                <!--            &lt;!&ndash; 会员查询&ndash;&gt;-->
+                <Vipquery v-if="item.path == 'member-query'" :memberTypeList="memberTypeList"/>
+                <!--            &lt;!&ndash; 积分设置&ndash;&gt;-->
+                <Intergtal v-if="item.path == 'member-integral-set'" :memberTypeList="memberTypeList"/>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
 </template>
 
 <script>
-import Personer from "./member/Personer";
-import Aftersale from "./member/changeRules";
-import Memberprice from "./member/memberPrice";
-import Vipquery  from "./member/vipquery"
-import Intergtal from "./member/integtal"
+  import MemberTypeManager from './member/Personer'
+  import Aftersale from './member/changeRules'
+  import Memberprice from './member/memberPrice'
+  import Vipquery from './member/vipquery'
+  import Intergtal from './member/integtal'
 
-export default {
-  components: { Personer, Aftersale,Memberprice,Vipquery,Intergtal },
-  data() {
-    return {
-      memberTypeList: [],
-      activeName: "first" //第一个默认启动
-    };
-  },
-
-  mounted() {
-    this.getMemberTypeList();
-
-  },
-
-  methods: {
-    //二级tab切片
-    handleClick(tab, event) {
-      this.getMemberTypeList();
+  export default {
+    components: { MemberTypeManager, Aftersale, Memberprice, Vipquery, Intergtal },
+    data () {
+      return {
+        menuList: [],
+        memberTypeList: [],
+        activeName: '' //第一个默认启动
+      }
     },
 
-    getMemberTypeList() {
-      this.$F.fetchMemberTypeList({}, (res) => {
-        this.memberTypeList = res.list;
-      })
+    created() {
+      if (sessionStorage.subMenul) {
+        this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
+        this.$forceUpdate()
+      }
+      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
+    },
+    mounted () {
+      this.getMemberTypeList()
+    },
+
+    methods: {
+      //二级tab切片
+      handleClick (tab, event) {
+        this.getMemberTypeList()
+      },
+
+      getMemberTypeList () {
+        this.$F.fetchMemberTypeList({}, (res) => {
+          this.memberTypeList = res.list
+        })
+      }
     }
   }
-};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" >
+<style lang="less">
 </style>

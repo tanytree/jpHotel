@@ -102,7 +102,7 @@ export default {
     },
     methods: {
         initForm() {
-            this.firstMenuInfo = JSON.parse(sessionStorage.menul);
+            this.firstMenuInfo = JSON.parse(sessionStorage.menul || '{}');
             this.searchForm = {
                 departmentId: this.firstMenuInfo.id,
                 searchType: 1,
@@ -253,7 +253,7 @@ export default {
                     type: 'success'
                 });
                 this.listVisible = true
-                that.$forceUpdate();
+                this.$forceUpdate();
             })
         },
     }

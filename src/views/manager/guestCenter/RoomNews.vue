@@ -1,6 +1,6 @@
 <!-- 房屋信息 -->
 <template>
-	<div id="page1">
+	<div id="page1" class="boss-index">
 		<el-row v-if="!add_show">
 			<el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
 				<el-col :span="2.5">{{hotel_name || ''}}</el-col>
@@ -17,6 +17,7 @@
 						<el-form class="demo-form-inline" inline size="small">
 							<el-form-item label="楼层全称:" class="margin-l">
 								<el-select v-model="form.buildingFloorId" style="width: 120px">
+                                    <el-option label="全部" value="">全部</el-option>
 									<el-option :label="value.name" :value="value.id" v-for="(value, index) in cengList" :key="index"></el-option>
 								</el-select>
 							</el-form-item>
@@ -66,6 +67,9 @@
                     </el-table-column>
 					<el-table-column prop="extension" label="电话分机"></el-table-column>
 					<el-table-column prop="toward" label="朝向">
+                        <template slot-scope="{row}">
+                            <span>{{$t('commons.toward')[row.toward]}}</span>
+                        </template>
                     </el-table-column>
 					<el-table-column prop="roadFlag" label="是否靠马路">
                         <template slot-scope="{row}">
@@ -229,6 +233,7 @@
 				let params = this.form
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_list', params, (res) => {
 					res.list.forEach((item, index) =>{
+
 						item.buildingId_name = item.hotelBuilding.name
 						item.buildingFloorId_name = item.hotelBuildingFloor.name
 						item.roomTypeId_name = item.hotelRoomType.houseName

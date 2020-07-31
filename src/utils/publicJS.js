@@ -70,7 +70,7 @@ const $F = {
         })
     },
 
-    doRequest ($instance, url, params, callback) {
+    doRequest ($instance, url, params = {}, callback) {
         if ($instance) {
             $instance.dataListLoading = true
             $instance.loading = true
