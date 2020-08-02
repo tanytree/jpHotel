@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-row v-if="tab1_show && tab2_show">
+		<el-row v-if="tab1_show && tab2_show && unit_show">
 			<el-tabs v-model="activName">
 				<el-tab-pane label="会员" name="a">
 					<el-row :gutter="20">
@@ -19,7 +19,7 @@
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border default-expand-all
+							<el-table :data="tableData_a" style="width: 100%;margin-bottom: 20px;" row-key="id" border default-expand-all
 							 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
 								<el-table-column prop="date" label="房型/房价">
 								</el-table-column>
@@ -41,16 +41,16 @@
 					<el-row>
 						<el-form class="demo-form-inline" inline size="small">
 							<el-form-item label="规则名称:">
-								<el-input v-model="ruleForm.name" class="row-width"></el-input>
+								<el-input v-model="ruleForm.ruleName" class="row-width"></el-input>
 							</el-form-item>
 							<el-form-item label="状态:" class="margin-l">
-								<el-select v-model="ruleForm.name" placeholder="请选择部门" class="row-width">
-									<el-option label="区域一" value="shanghai"></el-option>
-									<el-option label="区域二" value="beijing"></el-option>
+								<el-select v-model="ruleForm.state" placeholder="请选择状态" class="row-width">
+									<el-option label="1" value="启用"></el-option>
+									<el-option label="2" value="禁用"></el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item>
-								<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
+								<el-button type="primary" style="width: 100px;" size="mini" @click="get_price_enter_strategy_list">查询</el-button>
 							</el-form-item>
 							<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
 								<el-row style="display: flex;justify-content: flex-end;flex: 1;">
@@ -60,33 +60,38 @@
 						</el-form>
 					</el-row>
 					<div class="components-edit">
-						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-							<el-table-column prop="name" label="规则名称"></el-table-column>
-							<el-table-column prop="time" label="状态"></el-table-column>
-							<el-table-column prop="job_status" label="备注"></el-table-column>
+						<el-table ref="multipleTable" :data="tableData_b" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+							<el-table-column prop="ruleName" label="规则名称"></el-table-column>
+							<el-table-column label="状态">
+								<template slot-scope="{row}">
+									<span>{{row.state ? '启用':'禁用'}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="ruleName" label="备注"></el-table-column>
 							<el-table-column label="操作" width="350">
 								<template slot-scope="scope">
 									<el-button type="text" size="small" @click="popup('detail')">查看</el-button>
 									<el-button type="text" size="small" @click="popup('change')">修改</el-button>
-									<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteRow(scope.row)">
+									<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="get_price_enter_strategy_delete(scope.row)">
 										<el-button slot="reference" type="text" size="small">删除</el-button>
 									</el-popconfirm>
 									<el-button type="text" size="small" @click="popup('changerili')">修改日历</el-button>
 								</template>
 							</el-table-column>
 						</el-table>
-						<div class="block">
+						<!-- <div class="block">
 							<div class="page-all">
 								共
 								<span style="font-weight:600;font-size: 14px;">400</span>条记录
 							</div>
 							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
 							 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
-						</div>
+						</div> -->
 					</div>
 				</el-tab-pane>
 			</el-tabs>
 		</el-row>
+		<!-- 批量调价 -->
 		<el-row v-if="!tab1_show">
 			<el-row style="padding: 20px 0px;">
 				<el-page-header @back="back_1" content=""></el-page-header>
@@ -173,7 +178,7 @@
 				<!-- 点击直接议价 -->
 				<div class="components-edit">
 					<el-table ref="multipleTable" :data="tableData_other" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-			 @selection-change="handleSelectionChange">
+					 @selection-change="handleSelectionChange">
 						<el-table-column prop="date" label="房型/房价">
 						</el-table-column>
 						<el-table-column prop="name" label="4-18 周三">
@@ -197,19 +202,24 @@
 		<el-dialog top="0" title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false">
 			<el-row style="line-height: 30px;">
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">规则名称:</el-col><el-col span="14">张三</el-col>
+					<el-col span="4" style="color: #898B8E;">规则名称:</el-col>
+					<el-col span="14">张三</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">状态:</el-col><el-col span="14">张三</el-col>
+					<el-col span="4" style="color: #898B8E;">状态:</el-col>
+					<el-col span="14">张三</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">时间:</el-col><el-col span="14">张三</el-col>
+					<el-col span="4" style="color: #898B8E;">时间:</el-col>
+					<el-col span="14">张三</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">星期:</el-col><el-col span="14">张三</el-col>
+					<el-col span="4" style="color: #898B8E;">星期:</el-col>
+					<el-col span="14">张三</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">折扣率:</el-col><el-col span="14">张三</el-col>
+					<el-col span="4" style="color: #898B8E;">折扣率:</el-col>
+					<el-col span="14">张三</el-col>
 				</el-row>
 			</el-row>
 			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
@@ -230,10 +240,13 @@
 	export default {
 		data() {
 			return {
-				dialogDetail:false, //查看弹窗
+				dialogDetail: false, //查看弹窗
 				activName: 'a',
 				tab1_show: true, //切片一的跳转
-				tab2_show:true,//切片二的跳转
+				tab2_show: true, //切片二的跳转
+				unit_show : true, // 单位-添加
+				tableData_a: [],
+				tableData_b: [],
 				tableData: [],
 				pickerOptions: {
 					disabledDate(time) {
@@ -317,9 +330,9 @@
 				}],
 				tableData_other: [{
 					date: '标准间'
-				},{
+				}, {
 					date: '单间'
-				},{
+				}, {
 					date: '小型会议室'
 				}],
 				ruleForm: {
@@ -345,25 +358,26 @@
 				kinds: ['全选', '白金卡', '黄金卡', '白银卡'],
 				checkedKinds: ['白金卡'],
 				options: [{
-				          value: '选项1',
-				          label: '黄金糕'
-				        }, {
-				          value: '选项2',
-				          label: '双皮奶'
-				        }, {
-				          value: '选项3',
-				          label: '蚵仔煎'
-				        }, {
-				          value: '选项4',
-				          label: '龙须面'
-				        }, {
-				          value: '选项5',
-				          label: '北京烤鸭'
-				        }],
-				        value: ''
-			};
+					value: '选项1',
+					label: '黄金糕'
+				}, {
+					value: '选项2',
+					label: '双皮奶'
+				}, {
+					value: '选项3',
+					label: '蚵仔煎'
+				}, {
+					value: '选项4',
+					label: '龙须面'
+				}, {
+					value: '选项5',
+					label: '北京烤鸭'
+				}],
+				value: '',
+				selectInfo: {}
+			}
 		},
-		watch:{
+		watch: {
 			activName() {
 				switch (this.activName) {
 					case 'a':
@@ -382,7 +396,7 @@
 			this.get_price_enter_strategy_list()
 		},
 		methods: {
-			popup(type) {
+			popup(type, value) {
 				debugger
 				switch (type) {
 					case 'adjust':
@@ -394,13 +408,32 @@
 					case 'changerili':
 						this.tab2_show = false;
 						break
+					case 'add':
+						this.tab1_show = false;
+						break
 				}
+			},
+			// 单位列表-删除
+			get_price_enter_strategy_delete(value) {
+				let params = {
+					id: value.id
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_delete', params, (res) => {
+					this.get_price_enter_strategy_list()
+					this.$message({
+					  message: '删除成功',
+					  type: 'success'
+					});
+				})
 			},
 			// 获取 价格策略单位列表
 			get_price_enter_strategy_list() {
-				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_list', {}, (res) => {
+				let params = {
+					status:1
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_list', params, (res) => {
 					if (res.length != 0) {
-						
+						this.tableData_b = res
 					}
 				})
 			},

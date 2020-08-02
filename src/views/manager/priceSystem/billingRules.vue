@@ -31,29 +31,34 @@
 						</el-row>
 
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-								<el-table-column prop="name" label="规则名称"></el-table-column>
-								<el-table-column prop="time" label="计费模式"></el-table-column>
+							<el-table ref="multipleTable" :data="tableData_a" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+								<el-table-column prop="ruleName" label="规则名称"></el-table-column>
+								<el-table-column prop="priceModel" label="计费模式"></el-table-column>
 								<el-table-column prop="job_status" label="规则详情"></el-table-column>
-								<el-table-column prop="time" label="状态"></el-table-column>
-								<el-table-column prop="job_status" label="备注"></el-table-column>
+								<el-table-column prop="time" label="状态">
+									<template slot-scope="{row}">
+										<span>{{row.state ? '启用':'禁用'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop="remark" label="备注"></el-table-column>
 								<el-table-column label="操作" width="200">
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup('changeA')">修改</el-button>
-										<el-button type="text" size="small" @click="popup('bin')">禁用</el-button>
-										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteRow(scope.row)">
+										<el-button type="text" size="small" @click="stop_d(scope.row)">{{scope.row.state==1? '禁用':'启用'}}</el-button>
+										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteRow_d(scope.row)">
 											<el-button slot="reference" type="text" size="small">删除</el-button>
 										</el-popconfirm>
 									</template>
 								</el-table-column>
 							</el-table>
 							<div class="block">
-								<div class="page-all">
+								<!-- <div class="page-all">
 									共
 									<span style="font-weight:600;font-size: 14px;">{{ruleForm.totalSize}}</span>条记录
-								</div>
+								</div> -->
 								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="ruleForm.pageIndex"
-								 :page-sizes="[100, 200, 300, 400]" :page-size="ruleForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="ruleForm.totalSize"></el-pagination>
+								 :page-sizes="[10, 20, 30, 40]" :page-size="ruleForm.pageSize" layout=" sizes, prev, pager, next, jumper"
+								 :total="ruleForm.totalSize"></el-pagination>
 							</div>
 						</div>
 					</el-row>
@@ -65,12 +70,12 @@
 								<el-form-item label="规则名称:">
 									<el-input v-model="ruleForm.name" class="row-width"></el-input>
 								</el-form-item>
-								<el-form-item label="状态:" class="margin-l">
+								<!-- <el-form-item label="状态:" class="margin-l">
 									<el-select v-model="ruleForm.name" placeholder="请选择部门" class="row-width">
 										<el-option label="区域一" value="shanghai"></el-option>
 										<el-option label="区域二" value="beijing"></el-option>
 									</el-select>
-								</el-form-item>
+								</el-form-item> -->
 								<el-form-item>
 									<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
 								</el-form-item>
@@ -82,21 +87,34 @@
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-								<el-table-column prop="name" label="规则名称"></el-table-column>
-								<el-table-column prop="job_status" label="规则详情"></el-table-column>
-								<el-table-column prop="time" label="状态"></el-table-column>
-								<el-table-column prop="job_status" label="备注"></el-table-column>
+							<el-table ref="multipleTable" :data="tableData_b" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+								<el-table-column prop="ruleName" label="规则名称"></el-table-column>
+								<el-table-column prop="ruleName" label="规则详情"></el-table-column>
+								<el-table-column label="状态">
+									<template slot-scope="{row}">
+										<span>{{row.state ? '启用':'禁用'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop="remark" label="备注"></el-table-column>
 								<el-table-column label="操作" width="200">
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup('changeA')">修改</el-button>
-										<el-button type="text" size="small" @click="popup('bin')">禁用</el-button>
-										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteRow(scope.row)">
+										<el-button type="text" size="small" @click="stop_h(scope.row)">{{scope.row.state==1? '禁用':'启用'}}</el-button>
+										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteRow_h(scope.row)">
 											<el-button slot="reference" type="text" size="small">删除</el-button>
 										</el-popconfirm>
 									</template>
 								</el-table-column>
 							</el-table>
+							<div class="block">
+								<!-- <div class="page-all">
+									共
+									<span style="font-weight:600;font-size: 14px;">{{ruleForm.totalSize}}</span>条记录
+								</div> -->
+								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="ruleForm.pageIndex"
+								 :page-sizes="[10, 20, 30, 40]" :page-size="ruleForm.pageSize" layout=" sizes, prev, pager, next, jumper"
+								 :total="ruleForm.totalSize"></el-pagination>
+							</div>
 						</div>
 					</el-row>
 				</el-tab-pane>
@@ -105,21 +123,22 @@
 						<el-row>
 							<el-form class="demo-form-inline" inline size="small">
 								<el-form-item label="会员类型:">
-									<el-select v-model="ruleForm_r.memberId" placeholder="请选择部门" class="row-width">
-										<el-option label="区域一" value="shanghai"></el-option>
-										<el-option label="区域二" value="beijing"></el-option>
-									</el-select>
+									<el-input v-model="ruleForm_r.name" class="row-width"></el-input>
 								</el-form-item>
 								<el-form-item>
-									<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
+									<el-button type="primary" style="width: 100px;" size="mini" @click="get_hotel_rule_member_price_list">查询</el-button>
 								</el-form-item>
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData_a" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+							<el-table ref="multipleTable" :data="tableData_c" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 								<el-table-column prop="name" label="会员类型"></el-table-column>
-								<el-table-column prop="job_status" label="计费规则"></el-table-column>
-								<el-table-column prop="time" label="状态"></el-table-column>
+								<el-table-column prop="priceModel" label="计费规则"></el-table-column>
+								<el-table-column prop="time" label="状态">
+									<template slot-scope="{row}">
+										<span>{{row.state ? '启用':'禁用'}}</span>
+									</template>
+								</el-table-column>
 								<el-table-column label="操作" width="200">
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup('sit')">设置</el-button>
@@ -247,17 +266,10 @@
 						<el-checkbox v-model="ruleForm_h.state" class="margin-l" style="margin-bottom: 20px;">启用</el-checkbox>
 					</el-col>
 					<el-col :span="20" style="margin-bottom: 20px;">
-						<el-checkbox v-model="ruleForm_h.name" class="margin-l">指定办理入住时间段:</el-checkbox>
-						<el-date-picker
-						      v-model="ruleForm_h.startTime"
-						      type="date"
-						      placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
-						    </el-date-picker>-
-							<el-date-picker
-							      v-model="ruleForm_h.endTime"
-							      type="date"
-							      placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
-							    </el-date-picker>
+						<el-checkbox v-model="ruleForm_h.name" class="margin-l">指定办理入住时间段==:</el-checkbox>
+						<el-time-picker v-model="ruleForm_h.startTime" arrow-control  :picker-options="{selectableRange: '00:00:00 - 24:59:60'}" placeholder="选择时间"></el-time-picker>-
+						<el-time-picker v-model="ruleForm_h.endTime" arrow-control  :picker-options="{selectableRange: '00:00:00 - 24:59:60'}" placeholder="选择时间">
+						</el-time-picker>
 					</el-col>
 					<el-col :span="20" style="margin-bottom: 20px;">
 						<el-form-item label="起步收费:" prop="name">
@@ -287,7 +299,7 @@
 					<el-col :span="20">
 						<el-form-item label="备注:">
 							<el-col>
-								<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.remark"></el-input>
+								<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm_h.remark"></el-input>
 							</el-col>
 						</el-form-item>
 					</el-col>
@@ -295,7 +307,7 @@
 			</el-row>
 			<el-table ref="multipleTable" :data="ruleForm_h.roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="houseName" label="房型"></el-table-column>
-				<el-table-column  label="全价">
+				<el-table-column label="全价">
 					<template slot-scope="scope">
 						<el-row class="demo-form-inline">
 							<el-input v-model="scope.row.allPrice"></el-input>
@@ -328,7 +340,7 @@
 				</el-table-column>
 				<el-table-column prop="name" label="备注">
 					<template slot-scope="scope">
-						<el-input v-model="scope.row.allPrice"></el-input>
+						<el-input v-model="scope.row.remark"></el-input>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -348,10 +360,10 @@
 					</el-col>
 					<el-col :span="18">
 						<el-form-item label="状态:">
-							 <el-radio-group v-model="radio">
-							    <el-radio :label="3">启用</el-radio>
-							    <el-radio :label="6">禁用</el-radio>
-							  </el-radio-group>
+							<el-radio-group v-model="radio">
+								<el-radio :label="3">启用</el-radio>
+								<el-radio :label="6">禁用</el-radio>
+							</el-radio-group>
 						</el-form-item>
 					</el-col>
 					<el-col :span="18">
@@ -381,7 +393,7 @@
 				activName: 'a',
 				tableData_a: [],
 				tableData_b: [],
-				tableData: [],
+				tableData_c: [],
 				allForm: {
 					priceModel: '1',
 					ruleName: '',
@@ -403,7 +415,7 @@
 					pageSize: 10,
 					totalSize: 0
 				},
-				ruleForm_h:{
+				ruleForm_h: {
 					ruleName: 1,
 					checkinStartMinute: '',
 					checkinStartHourhouse: '',
@@ -426,27 +438,27 @@
 				},
 				ruleForm_r: {
 					memberId: '',
-					pageIndex:1,
+					pageIndex: 1,
 					pageSize: 10
 				},
 				dialogsit: false,
 				priceModelList: [{
 					name: '固定时间退房模式',
 					key: '1'
-				},{
+				}, {
 					name: '24小时退房模式',
 					key: '2'
 				}],
 				statelList: [{
 					name: '启动',
 					key: '1'
-				},{
+				}, {
 					name: '禁用',
 					key: '2'
 				}]
 			};
 		},
-		watch:{
+		watch: {
 			activName() {
 				switch (this.activName) {
 					case 'a':
@@ -456,7 +468,7 @@
 						this.get_hotel_rule_hour_list()
 						break
 					case 'c':
-						this.get_hotel_rule_hour_list()
+						this.get_hotel_rule_member_price_list()
 						break
 				}
 			}
@@ -487,21 +499,72 @@
 			},
 			// 全天房保存
 			saveInfo_d() {
-				// let params = Object.assign({} ,this.allForm)
-                let params = this.$F.deepClone(this.allForm);
+				let roomStrategyJson = []
+				let obj = {}
+				this.allForm.roomStrategyJson.forEach(item => {
+					obj = {}
+					obj.roomTypeId = item.id
+					obj.startPrice = item.startPrice
+					obj.hourAddPrice = item.hourAddPrice
+					obj.topPrice = item.topPrice
+					obj.remark = item.remark
+					roomStrategyJson.push(obj)
+				})
+				this.allForm.roomStrategyJson = roomStrategyJson
+				let params = this.$F.deepClone(this.allForm);
 				if (params.outtimeRuleCaps) {
 					params.outtimeRuleCaps = 1
 				} else {
 					params.outtimeRuleCaps = 2
 				}
 				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_save', params, (res) => {})
+			},
+			deleteRow_d(item) {
+				let params =  {
+					id: item.id,
+					status:2
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_delete', params, (res) => {
+					this.get_hotel_rule_allday_list()
+					this.$message({
+					  message: '删除成功',
+					  type: 'success'
+					});
+				})
+			},
+			stop_d(item) {
 				debugger
-				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_save', params, (res) => {
+				let params =  {
+					id: item.id
+				}
+				if (item.state ===1) {
+					params.state = 2
+				} else {
+					params.state = 1
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_delete', params, (res) => {
+					this.get_hotel_rule_allday_list()
 				})
 			},
 			// 时租房保存
 			saveInfo_h() {
-				let params = Object.assign({} ,this.ruleForm_h)
+				let roomStrategyJson = []
+				let obj = {}
+				this.ruleForm_h.roomStrategyJson.forEach(item => {
+					debugger
+					obj = {}
+					obj.roomTypeId = item.id
+					obj.allPrice = item.allPrice
+					obj.startPrice = item.startPrice
+					obj.hourAddPrice = item.hourAddPrice
+					obj.topPrice = item.topPrice
+					obj.advancePrice = item.advancePrice
+					obj.remark = item.remark
+					roomStrategyJson.push(obj)
+				})
+				this.ruleForm_h.roomStrategyJson = roomStrategyJson
+				let params = this.$F.deepClone(this.ruleForm_h);
 				if (params.outtimeRuleCaps) {
 					params.outtimeRuleCaps = 1
 				} else {
@@ -512,26 +575,56 @@
 				} else {
 					params.state = 2
 				}
+				debugger
+				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_save', params, (res) => {
 
+				})
+			},
+			deleteRow_h(item) {
+				let params =  {
+					id: item.id,
+					status:2
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_delete', params, (res) => {
+					this.get_hotel_rule_hour_list()
+					this.$message({
+					  message: '删除成功',
+					  type: 'success'
+					});
+				})
+			},
+			stop_h(item) {
+				debugger
+				let params =  {
+					id: item.id
+				}
+				if (item.state ===1) {
+					params.state = 2
+				} else {
+					params.state = 1
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_delete', params, (res) => {
+					this.get_hotel_rule_hour_list()
 				})
 			},
 			// 获取 全部房型
 			get_hotel_room_type_list() {
 				let params = {
-					roomType:3,
-					paging:false,
-					pageIndex:1,
-					pageSize:999
+					roomType: 3,
+					paging: false,
+					pageIndex: 1,
+					pageSize: 999
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
 					if (res.list.length != 0) {
-						res.list.forEach(item =>{
+						res.list.forEach(item => {
 							item.startPrice = ''
 							item.hourAddPrice = ''
 							item.topPrice = ''
 							item.remark = ''
 						})
+						debugger
 						this.allForm.roomStrategyJson = res.list
 						this.ruleForm_h.roomStrategyJson = res.list
 					}
@@ -539,19 +632,44 @@
 			},
 			// 获取 计费规则全天房计费列表
 			get_hotel_rule_allday_list() {
-				let params = Object.assign({} ,this.ruleForm)
+				let params = Object.assign({}, this.ruleForm)
+				params.status = 2
+				let arr_list = []
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_list', params, (res) => {
 					if (res.list.length != 0) {
-						this.tableData_a = res.list
+						res.list.forEach(item =>{
+							if (item.status == 1) {
+								arr_list.push(item)
+							}
+						})
+						this.tableData_a = arr_list
+						this.ruleForm.totalSize = res.totalSize
 					}
 				})
 			},
 			// 获取 计费规则时租房计费列表
 			get_hotel_rule_hour_list() {
-				let params = Object.assign({} ,this.ruleForm)
+				let params = Object.assign({}, this.ruleForm)
+				params.status = 2
+				let arr_list = []
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_list', params, (res) => {
 					if (res.list.length != 0) {
+						res.list.forEach(item =>{
+							if (item.status == 1) {
+								arr_list.push(item)
+							}
+						})
 						this.tableData_b = res.list
+						this.ruleForm.totalSize = res.totalSize
+					}
+				})
+			},
+			// 获取 计费规则时租房计费列表
+			get_hotel_rule_member_price_list() {
+				let params = Object.assign({}, this.ruleForm_r)
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_member_price_list', params, (res) => {
+					if (res.list.length != 0) {
+						this.tableData_c = res.list
 					}
 				})
 			},
@@ -563,10 +681,37 @@
 			},
 			// 分页
 			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
+				switch (this.activName) {
+					case 'a':
+						this.ruleForm.pageSize = val;
+						this.ruleForm.pageIndex = 1;
+						this.get_hotel_rule_allday_list();
+						break
+					case 'b':
+						this.ruleForm.pageSize = val;
+						this.ruleForm.pageIndex = 1;
+						this.get_hotel_rule_hour_list();
+						break
+					case 'c':
+						this.get_hotel_rule_member_price_list()
+						break
+				}
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
+				switch (this.activName) {
+					case 'a':
+						this.ruleForm.pageIndex = val;
+						this.get_hotel_rule_allday_list();
+						break
+					case 'b':
+						this.ruleForm.pageIndex = val;
+						this.get_hotel_rule_hour_list();
+						break
+					case 'c':
+						this.get_hotel_rule_member_price_list()
+						break
+				}
 			}
 		}
 	};
