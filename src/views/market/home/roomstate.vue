@@ -43,7 +43,7 @@
                         <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
                             <el-col :span="12" v-for="(item,index) in $t('commons.roomStatus')" :key="index" style="margin-bottom:5px">
                                 <el-checkbox :label="item.value">
-                                    <el-tag :type="item.type" effect="plain" size="mini">{{ item.name }}</el-tag>
+                                    <el-tag :type="item.type" effect="plain" size="mini">{{ item.name + ' ' + F_roomStatus(item.value) }}</el-tag>
                                 </el-checkbox>
                             </el-col>
                         </el-checkbox-group>
@@ -955,7 +955,7 @@ export default {
             checked1: false,
             checked2: false,
             checked3: false,
-
+            roomStatusList: [],  //房态
             roomList: [],
             checked: false,
             activeThree: "a",
@@ -984,7 +984,7 @@ export default {
         };
     },
     filters: {
-        
+
         F_roomStatusColor(value) {
             let enums = {
                 '1': '#276BBA',
@@ -1006,7 +1006,6 @@ export default {
         this.initForm();
     },
     methods: {
-
         initForm() {
             this.searchForm = {
                 keyword: '',
@@ -1023,9 +1022,7 @@ export default {
         },
         /**获取表格数据 */
         getDataList() {
-            this.loading = true
             this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', this.searchForm, (res) => {
-                this.loading = false
                 this.roomList = res.floorList;
             })
         },
@@ -1078,6 +1075,8 @@ export default {
                     '6': 'orders_night', //午夜房
                     '7': 'orders_free' //免费
                 }
+                debugger;
+                this.roomStatusList = res.roomStatusList;
                 this.personRoom = res.personRoomList
                 this.roomTypeId = res.roomTypeList
                 this.channel = res.channelList
@@ -1140,15 +1139,24 @@ export default {
             this.getDataList()
         },
         F_roomStatusColor(value) {
-            let enums = {
-                '1': '#27AE76',
-                '2': '#C0512B',
-                '3': '#276BBA',
-                '4': '#C0512B',
-                '5': '#27AE76'
-            }
-            return enums[value] ? enums[value] : '#276BBA'
-        },
+        let enums = {
+          '1': '#27AE76',
+          '2': '#C0512B',
+          '3': '#276BBA',
+          '4': '#C0512B',
+          '5': '#27AE76'
+        }
+        return enums[value] ? enums[value] : '#276BBA'
+      },
+
+      F_roomStatus(value) {
+        let enums = this.roomStatusList;
+        var array = enums.filter((item)=> {
+          return item.roomStatus == value;
+        })
+        return array.length > 0 ? array[0].total : 0;
+      },
+
         handleOperRoomStatus(s, item) {
             console.log(s)
             let status = '';

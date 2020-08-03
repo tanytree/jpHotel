@@ -17,7 +17,7 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="see">查看资料</el-dropdown-item>
-                        <el-dropdown-item command="set" v-if="item.userRole.userStatus != 2">权限设置</el-dropdown-item>
+                        <el-dropdown-item command="set" v-if="item.userRole && item.userRole.userStatus != 2 && item.account != user.account">权限设置</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </li>
@@ -65,6 +65,10 @@
 </template>
 
 <script>
+  import {
+    mapState,
+    mapActions
+  } from 'vuex'
   import LoginDetail from '@/components/employee/loginDetail'
 function setArr(arr, newArr) {
     newArr = newArr || [];
@@ -82,7 +86,13 @@ function setArrChoose(arr, str) {
 }
 
 export default {
+
     components: {LoginDetail},
+      computed: {
+        ...mapState({
+          user: state => state.user,
+        })
+      },
     name: "",
 
     data() {
@@ -97,7 +107,7 @@ export default {
             cur: {},
         }
     },
-    mounted() {
+    created() {
         this.initForm();
     },
     methods: {

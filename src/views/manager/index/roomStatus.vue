@@ -3,9 +3,12 @@
 		<el-row class="demo-form-inline">
 			<div class="tag-group">
 				<span class="tag-group__title">房态:</span>
-				<el-tag v-for="(item, i) in roomInfo.roomStatusList" :key="i" :type="item.type" effect="plain" class="tag-width margin-l">
-					{{ item.roomStatus }}
-				</el-tag>
+                <el-tag effect="plain" class="tag-width2 margin-l2">
+                    {{ '全部' + '(' + F_roomStatus('', 'total') + ')' }}
+                </el-tag>
+                <el-tag v-for="(item,index) in $t('commons.roomStatus')" :key="index" :type="item.type" effect="plain" class="tag-width2 margin-l2">
+                    {{ item.name + '(' + F_roomStatus(item.value) + ')' }}
+                </el-tag>
 			</div>
 			<el-form class="demo-form-inline" inline size="small" style="margin-left: 100px;">
 				<el-form-item label="楼层楼栋:" class="margin-l">
@@ -22,8 +25,11 @@
 		<el-row class="demo-form-inline">
 			<div class="tag-group">
 				<span class="tag-group__title">房型:</span>
-				<el-tag v-for="(item, i) in roomInfo.roomTypeList" :key="i" :type="item.type" effect="plain" class="tag-width margin-l">
-					{{ item.label }}
+                <el-tag effect="plain" class="tag-width2 margin-l2">
+                    {{ '全部' + '(' + F_roomStatus('roomType', 'total') + ')' }}
+                </el-tag>
+				<el-tag v-for="(item, i) in roomInfo.roomTypeList" :key="i" :type="item.roomTypeId" effect="plain" class="tag-width2 margin-l2">
+                    {{ (item.houseName || '未知') + '(' + item.total + ')' }}
 				</el-tag>
 			</div>
 		</el-row>
@@ -62,7 +68,7 @@
 				dongList: [],
 				cengList: [],
 				selectRedio: '',
-				roomInfo: {},
+				roomInfo: {},  //筛选区 房间信息
 				rooms_list_info: {},
 				roomList: [{
 						hao: 'A001',
@@ -129,6 +135,7 @@
 			this.get_dong_list()
 		},
 		methods: {
+
 			// 获取  实时房态
 			get_realtime_room_statistics(value) {
 				this.$F.doRequest(this, '/pms/realtime/realtime_room_statistics', {}, (res) => {
@@ -137,7 +144,7 @@
 					// 		item.info = 'info'
 					// 	})
 					// }
-					// this.roomInfo = res
+					this.roomInfo = res
 					this.get_realtime_hotel_room_list()
 				})
 			},
@@ -145,6 +152,7 @@
 			get_realtime_hotel_room_list() {
 				let params = Object.assign({}, this.form)
 				this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', params, (res) => {
+				  debugger
 					if(res.floorList.length != 0) {
 						res.floorList.forEach(item => {
 							item.hotel_name = JSON.parse(sessionStorage.getItem('userData')).storesInfo.storesName
@@ -186,9 +194,47 @@
 					this.cengList = res
 				})
 			},
+
+          F_roomStatus(value, type) {
+            let enums = this.roomInfo.roomStatusList || [];
+            if (type == 'total') {
+              var total = 0;
+              if (value == 'roomType')
+                enums = this.roomInfo.roomTypeList || [];
+              enums.forEach((item)=> {
+                total += item.total;
+              })
+              return total;
+            } else {
+              var array = enums.filter((item)=> {
+                return item.roomStatus == value;
+              })
+              return array.length > 0 ? array[0].total : 0;
+            }
+
+          },
 		}
 	}
 </script>
 
-<style>
+<style lang="less" scoped>
+    .tag-width2 {
+        width: 80px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .margin-l2 {
+         /*margin-left: 8px;*/
+    }
+
+    .tag-margin2 {
+        margin-right: 8px;
+        margin-top: 8px;
+    }
+
+    .row-width2 {
+        width: 120px;
+    }
+
 </style>
