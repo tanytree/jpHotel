@@ -1278,27 +1278,6 @@ export default {
             }
             return enums[value] ? enums[value] : '#276BBA'
         },
-        //         let roomStatus = [{
-        //     type: "success",
-        //     name: '空净',
-        //     value: '1'
-        // }, {
-        //     type: "danger",
-        //     name: '空脏',
-        //     value: '2'
-        // }, {
-        //     type: "",
-        //     name: '住静',
-        //     value: '3'
-        // }, {
-        //     type: "warning",
-        //     name: '住脏',
-        //     value: '4'
-        // }, {
-        //     type: "info",
-        //     name: '维修',
-        //     value: '5'
-        // }]
         handleOperRoomStatus(s,item) {
           console.log(s)
             let status = '';
@@ -1323,6 +1302,7 @@ export default {
                     message: '操作成功',
                     type: 'success'
                 });
+                this.getDataList()
             })
         },
         handleChange(e) {
