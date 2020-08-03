@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-28 10:04:18
+ * @LastEditTime: 2020-08-03 10:34:20
  * @FilePath: /jiudian/src/views/market/booking/index.vue
  -->
 
@@ -14,7 +14,7 @@
       <el-tab-pane label="时租房预订" name="b2">
         <normal :operCheckinType="activeName" />
       </el-tab-pane>
-      <el-tab-pane label="会场预订" name="third">
+      <el-tab-pane label="会场预订" name="b3">
         <hall />
       </el-tab-pane>
     </el-tabs>
