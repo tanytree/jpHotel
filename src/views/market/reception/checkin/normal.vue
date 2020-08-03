@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 10:50:52
+ * @LastEditTime: 2020-08-03 11:20:36
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -744,19 +744,13 @@ export default {
     },
     mounted() {
         console.log(this.$t('commons.markCard'))
+        this.handleOperCheckinType()
         this.hotel_rule_hour_list()
         this.initForm();
     },
     watch: {
         operCheckinType() {
-            let menu = {
-                a1: 1,
-                a2: 2,
-                b1: 1,
-                b2: 2,
-                b3: 3
-            }
-            this.checkInForm.operCheckinType = menu[this.operCheckinType]
+            this.handleOperCheckinType()
             console.log(this.checkInForm)
         },
         checkInForm: {
@@ -1470,6 +1464,16 @@ export default {
                 this.checkInForm.name = e
             }
 
+        },
+        handleOperCheckinType(){
+            let menu = {
+                a1: 1,
+                a2: 2,
+                b1: 1,
+                b2: 2,
+                b3: 3
+            }
+            this.checkInForm.operCheckinType = menu[this.operCheckinType]
         }
     }
 };
