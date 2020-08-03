@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-31 18:00:20
+ * @LastEditTime: 2020-08-03 10:23:16
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -138,9 +138,9 @@
                     <template v-if="row.state!=7">
                         <el-button type="text" size="mini">订金</el-button>
                         <el-button type="text" size="mini" v-if="row.state==5" @click="handleNoshow(row)">NOSHOW</el-button>
-                        <el-button type="text" size="mini" v-if="row.state==5" @click="handleCancel(row)">取消</el-button>
-                        <el-button type="text" size="mini" v-if="row.state==1" @click="handleAccept(row)">接受</el-button>
-                        <el-button type="text" size="mini" v-if="row.state==1" @click="handleRefuse(row)">拒单</el-button>
+                        <el-button type="text" size="mini" @click="handleCancel(row)">取消</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==1&&row.orderSource==3" @click="handleAccept(row)">接受</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==1&&row.orderSource==3" @click="handleRefuse(row)">拒单</el-button>
                         <el-button type="text" size="mini" v-if="row.state==8" @click="handleReset(row)">恢复</el-button>
                         <el-button type="text" size="mini" v-if="row.state==4" @click="handleReset(row)">撤销</el-button>
                     </template>
@@ -368,7 +368,7 @@ export default {
         handleReset(item) {
             let params = {
                 checkInReserveId: item.id,
-                state: 1
+                state: 2
             }
             this.$confirm('请确认您的操作?', '提示', {
                 confirmButtonText: '确定',

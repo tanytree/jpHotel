@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-31 18:30:22
+ * @LastEditTime: 2020-08-03 10:32:38
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -789,7 +789,7 @@ export default {
                         'name', 'checkinTime', 'checkoutTime', 'keepTime', 'guestType', 'orderSource'
                     ]
                 }
-
+                alert(this.operCheckinType)
                 if (!this.checkInForm.checkInId) {
                     let len = 0;
                     for (let k in arr) {
@@ -881,12 +881,21 @@ export default {
                         } else {
                             this.checkInForm.checkInId = data.checkInReserveId
                             this.checkInForm.checkInReserveId = data.checkInReserveId
+                            this.$F.doRequest(this, '/pms/reserve/reserve_oper', {
+                                checkInReserveId: data.checkInReserveId,
+                                state:2
+                            }, (data) => {
+                                console.log('预订单直接转为确认状态')
+                            })
                         }
                         this.$forceUpdate()
                         console.log(this.checkInForm)
                         console.log('沉浸式提交')
                         console.log(this.operCheckinType)
                         console.log(operCheckinType)
+                        
+
+
                     } else if (type == 2) {
                         this.$message({
                             message: '办理成功',
