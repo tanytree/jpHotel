@@ -12,13 +12,13 @@
 			</div>
 			<el-form class="demo-form-inline" inline size="small" style="margin-left: 100px;">
 				<el-form-item label="楼层楼栋:" class="margin-l">
-					<el-select v-model="form.buildingId" placeholder="楼层" class="row-width">
+					<el-select v-model="form.buildingId" placeholder="楼层" class="row-width" @change="dongChange">
 						<el-option :label="value.name" :value="value.id" v-for="(value, index) in dongList" :key="index"></el-option>
 					</el-select>
-					<el-select v-model="form.buildingFloorId" placeholder="楼层" class="row-width" style="margin-left: 10px;">
+					<el-select v-model="form.buildingFloorId" placeholder="楼层" class="row-width" style="margin-left: 10px;"  @change="cengChange">
 						<el-option :label="value.name" :value="value.id" v-for="(value, index) in cengList" :key="index"></el-option>
 					</el-select>
-					<el-button plain style="width: 100px;margin-left: 30px;">重置</el-button>
+					<el-button plain style="width: 100px;margin-left: 30px;" @click="reset">重置</el-button>
 				</el-form-item>
 			</el-form>
 		</el-row>
@@ -33,24 +33,36 @@
 				</el-tag>
 			</div>
 		</el-row>
-		<el-row>
-			<div v-for="(item, i) in rooms_list_info.floorList" :key="i">
-				<el-row :gutter="20" style="margin-top: 10px;">
-					<el-col :span="4">{{item.hotel_name}} {{item.floor}}层</el-col>
-					<el-col :span="1" :offset="0.5" style="color: #999;"><span style="color: #126eff;">{{item.reserveFloorRoomCount}}</span>/{{item.floorRoomCount}}</el-col>
-				</el-row>
-				<el-row :gutter="20" style="margin-top: 10px;">
-					<el-col :span="4" class="tag-margin" :style="`height:120px;background:${value.bgColor}`" v-for="(value, index) in item.roomList"
-					 :key="index">
-						<el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;">
-							<el-col :span="3">{{value.houseNum}}</el-col>
-							<el-col :span="8" :offset="2">{{value.hotelRoomType.houseName}}</el-col>
-						</el-row>
-						<!-- 清扫图标后期加 -->
-					</el-col>
-				</el-row>
-			</div>
-		</el-row>
+        <template v-for="(item, index) in rooms_list_info.floorList">
+            <el-row :key="index" v-if="item.floorRoomCount>0">
+                <el-row :gutter="20" style="margin-top: 10px;">
+                    <el-col :span="5">
+                        {{item.building?item.building.name:''}}
+                        <span>{{item.floor}}</span>层
+                    </el-col>
+                    <el-col :span="1" :offset="0.5" style="color: #999;">
+                        <span style="color: #126eff;">{{item.reserveFloorRoomCount}}</span>/{{item.floorRoomCount}}
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20" style="margin-top: 10px;">
+                    <el-col @click.native="hostelmess(room)" :span="4" class="tag-margin" :style="`height:120px;background:${F_roomStatusColor(room.roomStatus)};cursor: pointer;`" v-for="(room, i) in item.roomList" :key="i">
+                        <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;">
+                            <el-col :span="3">{{room.houseNum}}</el-col>
+                            <el-col :span="8" :offset="2">{{room.hotelRoomType.houseName}}</el-col>
+                        </el-row>
+                        <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;" v-if="room.livingPersonList.length&&(room.roomStatus==3 || room.roomStatus==4)">
+                            <el-col :span="8">{{room.livingPersonList[0].name}}</el-col>
+                            <el-col :span="8" :offset="2">{{room.livingPersonList[0].sex | F_sex}}</el-col>
+                        </el-row>
+                        <!-- 清扫图标后期加 -->
+                        <div class="placeIcon text-center" v-if="room.roomStatus==2 || room.roomStatus==5">
+                            <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')" />
+                            <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')" />
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-row>
+        </template>
 	</div>
 </template>
 
@@ -59,139 +71,71 @@
 		data() {
 			return {
 				activeName: 'one',
-				form: {
-					roomStatus: '',
-					roomTypeId: '',
-					buildingId: '',
-					buildingFloorId: ''
-				},
+				form: {},
 				dongList: [],
 				cengList: [],
-				selectRedio: '',
 				roomInfo: {},  //筛选区 房间信息
-				rooms_list_info: {},
-				roomList: [{
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#27ae76'
-					},
-					{
-						hao: 'A001',
-						status: 1,
-						status_name: '单间',
-						bgColor: '#276bba'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '单间',
-						bgColor: '#b07b2e'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#276bba'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#c0512b'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#276bba'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#276bba'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#276bba'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#c0512b'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#276bba'
-					}, {
-						hao: 'A001',
-						status: 1,
-						status_name: '标准间',
-						bgColor: '#276bba'
-					}
-				]
+				rooms_list_info: [],
+				roomList: []
 			}
 		},
-		created() {
+		mounted() {
 			this.get_realtime_room_statistics()
-			this.get_dong_list()
+			this.get_dong_list();
+            this.get_realtime_hotel_room_list()
+            this.initForm();
 		},
 		methods: {
-
+		  initForm(){
+            this.form = {
+              roomStatus: '',
+                roomTypeId: '',
+                buildingId: '',
+                buildingFloorId: ''
+            }
+          },
+          reset() {
+            this.initForm();
+            this.get_realtime_hotel_room_list();
+          },
 			// 获取  实时房态
-			get_realtime_room_statistics(value) {
+			get_realtime_room_statistics() {
 				this.$F.doRequest(this, '/pms/realtime/realtime_room_statistics', {}, (res) => {
-					// if(res.roomStatusList.length != 0) {
-					// 	res.forEach(item => {
-					// 		item.info = 'info'
-					// 	})
-					// }
 					this.roomInfo = res
-					this.get_realtime_hotel_room_list()
 				})
 			},
 			// 获取 实时房间列表
 			get_realtime_hotel_room_list() {
 				let params = Object.assign({}, this.form)
 				this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', params, (res) => {
-				  debugger
-					if(res.floorList.length != 0) {
-						res.floorList.forEach(item => {
-							item.hotel_name = JSON.parse(sessionStorage.getItem('userData')).storesInfo.storesName
-							if (item.roomList.length != 0) {
-								item.roomList.forEach(value =>{
-									switch(value.hotelRoomType.roomType) {
-										case 1:
-										value.bgColor = '#276bba'
-										break
-										case 2:
-										value.bgColor = '#c0512b'
-										break
-										case 3:
-										value.bgColor = '#b07b2e'
-										break
-									}
-								})
-							}
-						})
-					}
-					this.rooms_list_info = res
+					this.rooms_list_info = res;
+					this.$forceUpdate();
 				})
 			},
+            dongChange(id) {
+              this.get_ceng_list(id);
+              this.get_realtime_hotel_room_list();
+            },
 			// 获取 楼栋列表
 			get_dong_list() {
 				this.$F.doRequest(this, '/pms/hotel/hotel_building_list', {}, (res) => {
 					this.dongList = res
-					this.selectRedio = this.dongList[0].id
-					this.currentDong = this.dongList[0].name
-					this.get_ceng_list()
+					this.get_ceng_list(this.dongList[0].id)
 				})
 			},
+
+          cengChange() {
+		    this.get_realtime_hotel_room_list();
+          },
 			// 获取 楼层列表
-			get_ceng_list() {
+			get_ceng_list(id) {
 				let params = {
-					buildingId: this.selectRedio
+					buildingId: id
 				}
+                this.cengList = [];
+				this.form.buildingFloorId = '';
 				this.$F.doRequest(this, '/pms/hotel/hotel_building_floor_list', params, (res) => {
-					this.cengList = res
+					this.cengList = res || [];
 				})
 			},
 
@@ -212,6 +156,16 @@
               return array.length > 0 ? array[0].total : 0;
             }
 
+          },
+          F_roomStatusColor(value) {
+            let enums = {
+              '1': '#27AE76',
+              '2': '#C0512B',
+              '3': '#276BBA',
+              '4': '#C0512B',
+              '5': '#27AE76'
+            }
+            return enums[value] ? enums[value] : '#276BBA'
           },
 		}
 	}
