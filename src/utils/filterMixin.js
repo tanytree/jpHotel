@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-29 10:27:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-31 14:36:17
+ * @LastEditTime: 2020-08-03 16:30:57
  * @FilePath: /jiudian/src/utils/filterMixin.js
  */ 
 let mixin = {
@@ -37,8 +37,11 @@ let mixin = {
         F_billType(value) {
             let enums = this.$t('commons.billType')
             return value && enums[value] ? enums[value] : ''
-        }
-
+        },
+        F_roomStatus(value) {
+            let enums = this.$t('commons.F_roomStatus')
+            return value && enums[value] ? enums[value] : ''
+        },
 
         
     

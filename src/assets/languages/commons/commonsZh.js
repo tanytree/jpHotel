@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-31 18:31:21
+ * @LastEditTime: 2020-08-03 16:41:55
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -54,6 +54,34 @@ module.exports = {
         "1": '散客',
         "2": '会员',
         "3": '单位'
+    },
+    roomStatus: [{
+        type: "success",
+        name: '空净',
+        value: '1'
+    }, {
+        type: "danger",
+        name: '空脏',
+        value: '2'
+    }, {
+        type: "",
+        name: '住静',
+        value: '3'
+    }, {
+        type: "warning",
+        name: '住脏',
+        value: '4'
+    }, {
+        type: "info",
+        name: '维修',
+        value: '5'
+    }],
+    F_roomStatus:{
+        '1': '空净',
+        '2': '空脏',
+        '3': '住静',
+        '4': '住脏',
+        '5': '维修'
     },
     //朝向
     toward:{

@@ -31,7 +31,7 @@
             <div>
                 <div style="margin-top:20px">
                     <span class="fangtai">房态</span>
-                    <span class="all">全部100</span>
+                    <!-- <span class="all">全部100</span> -->
                     <span class="rescet" @click="clearnSelectAttr('roomStatus')">重置</span>
                 </div>
                 <!-- <div class="tag-width margin-l"> -->
@@ -41,7 +41,7 @@
                 <div style="margin-top:10px">
                     <el-row>
                         <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
-                            <el-col :span="12" v-for="(item,index) in roomStatus" :key="index" style="margin-bottom:5px">
+                            <el-col :span="12" v-for="(item,index) in $t('commons.roomStatus')" :key="index" style="margin-bottom:5px">
                                 <el-checkbox :label="item.value">
                                     <el-tag :type="item.type" effect="plain" size="mini">{{ item.name }}</el-tag>
                                 </el-checkbox>
@@ -149,107 +149,8 @@
                 </el-row>
             </template>
             <el-row>
-                <el-button @click="batch = true">批量置脏/置净</el-button>
-                <el-dialog top="0" title="批量置脏/置净" width="700px" :visible.sync="batch">
-                    <el-row style="margin:10px 20px">
-                        <el-row style="text-align:center; margin-bottom: 10px;">
-                            <el-button>批量置脏</el-button>
-                            <el-button>批量置净</el-button>
-                        </el-row>
-                        <el-form>
-                            <el-row>
-                                <el-col :span="16">
-                                    <el-form-item label="选择房间" :label-width="formLabelWidth">
-                                        <!-- <el-input v-model="form.name" autocomplete="off"></el-input> -->
-                                        <el-input autocomplete="off"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-form-item>
-                                        <el-button style="width:80px;margin-left:20px" type="primary" @click="batchForm('batchform')">查询</el-button>
-                                        <el-button style="width:80px" @click="resetbatch('batchform')">重置</el-button>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="8">
-                                    <el-checkbox v-model="checked">全部 120</el-checkbox>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-checkbox v-model="checked">催押 20</el-checkbox>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-checkbox v-model="checked">欠费 120</el-checkbox>
-                                </el-col>
-                            </el-row>
-
-                            <el-row style="margin-top:10px">
-                                <el-card>
-                                    <el-row>
-                                        <el-row>
-                                            <span>请选择需要置脏/置净的房间</span>
-                                            <span style="color:red;margin-left:5px">已选（1）</span>
-                                            <el-form-item style="float:right">
-                                                <el-checkbox v-model="checked">全选</el-checkbox>
-                                            </el-form-item>
-                                        </el-row>
-
-                                        <el-form-item>
-                                            <el-row style="background:#D9DDE2">
-                                                <el-form-item>
-                                                    <el-checkbox v-model="checked">博超精选酒店（蜀山区）3层</el-checkbox>
-                                                </el-form-item>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                            </el-row>
-                                        </el-form-item>
-
-                                        <el-form-item>
-                                            <el-row style="background:#D9DDE2">
-                                                <el-form-item>
-                                                    <el-checkbox v-model="checked">博超精选酒店（蜀山区）3层</el-checkbox>
-                                                </el-form-item>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                                <el-col :span="6">
-                                                    <el-checkbox v-model="checked">A101（住净）</el-checkbox>
-                                                </el-col>
-                                            </el-row>
-                                        </el-form-item>
-                                    </el-row>
-                                </el-card>
-                            </el-row>
-                        </el-form>
-                    </el-row>
-                    <div slot="footer" class="dialog-footer" style="text-align:center">
-                        <el-button style="width:80px;" @click="batch = false">取 消</el-button>
-                        <el-button style="width:80px;" type="primary" @click="batch = false">确 定</el-button>
-                    </div>
-                </el-dialog>
-
+                <el-button @click="batchRoomHaldel">批量置脏/置净</el-button>
                 <el-button>打印房态盘</el-button>
-
                 <el-button type="primary" @click="print = true">
                     <i class="el-icon-message-solid"></i>催押
                 </el-button>
@@ -941,6 +842,7 @@
             </el-form>
         </el-dialog>
     </div>
+    <roomStatusHandle ref="roomStatusHandle" @initForm="initForm"  />
 </div>
 </template>
 
@@ -983,8 +885,12 @@ let roomStatus = [{
     name: '维修',
     value: '5'
 }]
+import roomStatusHandle from "./roomStatus";
 import myMixin from '@/utils/filterMixin';
 export default {
+  components: {
+        roomStatusHandle
+    },
     mixins: [myMixin],
     data() {
         return {
@@ -1050,49 +956,7 @@ export default {
             checked2: false,
             checked3: false,
 
-            roomList: [{
-                    hao: "A001",
-                    status: 1,
-                    status_name: "标准间",
-                    bgColor: "#27ae76"
-                },
-                {
-                    hao: "A001",
-                    status: 1,
-                    status_name: "单间",
-                    bgColor: "#276bba"
-                },
-                {
-                    hao: "A001",
-                    status: 1,
-                    status_name: "单间",
-                    bgColor: "#b07b2e"
-                },
-                {
-                    hao: "A001",
-                    status: 1,
-                    status_name: "标准间",
-                    bgColor: "#276bba"
-                },
-                {
-                    hao: "A001",
-                    status: 1,
-                    status_name: "标准间",
-                    bgColor: "#c0512b"
-                },
-                {
-                    hao: "A001",
-                    status: 1,
-                    status_name: "标准间",
-                    bgColor: "#276bba"
-                },
-                {
-                    hao: "A001",
-                    status: 1,
-                    status_name: "标准间",
-                    bgColor: "#276bba"
-                }
-            ],
+            roomList: [],
             checked: false,
             activeThree: "a",
             currentPage3: "",
@@ -1110,7 +974,6 @@ export default {
                 personRoom: []
             },
             personRoom: '',
-            roomStatus,
             roomTypeId: '',
             channel: '',
             iconDesList: '',
@@ -1121,16 +984,7 @@ export default {
         };
     },
     filters: {
-        F_roomStatus(value) {
-            let enums = {
-                '1': '空净',
-                '2': '空脏',
-                '3': '住静',
-                '4': '住脏',
-                '5': '维修'
-            }
-            return value && enums[value] ? enums[value] : ''
-        },
+        
         F_roomStatusColor(value) {
             let enums = {
                 '1': '#276BBA',
@@ -1361,6 +1215,9 @@ export default {
         // 批量置脏/置净
         batchForm() {
             console.log("批量置脏/置净");
+        },
+        batchRoomHaldel(){
+          this.$refs.roomStatusHandle.init();
         }
     }
 };
