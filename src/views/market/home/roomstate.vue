@@ -113,11 +113,10 @@
             <el-row>
                 <el-row>
                     <el-checkbox-group v-model="searchForm.personRoom" @change="handleChange">
-                        <el-checkbox v-for="(item,index) in personRoom" :label="item.eName" :key="index">{{item.name}}</el-checkbox>
+                        <el-checkbox v-for="(item,index) in personRoom" :value="item.eName" :label="item.eName" :key="index">{{item.name}}({{item.total}})</el-checkbox>
                     </el-checkbox-group>
                     <el-divider></el-divider>
                 </el-row>
-
             </el-row>
             <template v-for="(item, index) in roomList">
                 <el-row :key="index" v-if="item.floorRoomCount>0">
@@ -547,7 +546,7 @@
                 <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
                 <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
                 <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null' ||currentRoom.roomStatus==null ||currentRoom.roomStatus==1 || currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
-                <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4"  @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
+                <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
             </el-row>
         </el-dialog>
     </div>
@@ -1215,21 +1214,39 @@ export default {
         realtime_room_statistics() {
             let that = this
             this.$F.doRequest(this, '/pms/realtime/realtime_room_statistics', this.searchForm, (res) => {
-                // this.personRoom = res.personRoomList
+                let menu = {
+                    '0': 'orders_today_out', //今日预离
+                    '1': 'orders_individual', //散客
+                    '2': 'orders_member', //会员
+                    '3': 'orders_enter', //单位
+                    //'4':'',//
+                    '5': 'orders_clock', //钟点房
+                    '6': 'orders_night', //午夜房
+                    '7': 'orders_free' //免费
+                }
+                this.personRoom = res.personRoomList
                 this.roomTypeId = res.roomTypeList
                 this.channel = res.channelList
                 this.channel.forEach(element => {
                     element.name = checkIdInDict(element.channel, this.dict_channel)
                 });
-                // this.personRoom.forEach(element => {
-                //     element.name = checkIdInDict(element.personRoomType, this.dict_personRoom)
-                // });
-
-                function checkIdInDict(id, arr) {
+                this.personRoom.forEach(element => {
+                    element.eName = menu[element.personRoomType]
+                    element.name = checkIdInDict(element.eName, this.dict_personRoom, 'icon')
+                });
+                function checkIdInDict(id, arr, eName) {
                     for (let k in arr) {
-                        if (arr[k].dictNum == id) {
-                            return that.$i18n.locale == 'ri' ? arr[k].japanese : arr[k].name
+                        if (eName) {
+                            if (arr[k].eName == id) {
+                                return that.$i18n.locale == 'ri' ? arr[k].japanese : arr[k].name
+                            }
+                        } else {
+                            if (arr[k].dictNum == id) {
+                                return that.$i18n.locale == 'ri' ? arr[k].japanese : arr[k].name
+                            }
+
                         }
+
                     }
                     return ''
                 }
@@ -1278,8 +1295,8 @@ export default {
             }
             return enums[value] ? enums[value] : '#276BBA'
         },
-        handleOperRoomStatus(s,item) {
-          console.log(s)
+        handleOperRoomStatus(s, item) {
+            console.log(s)
             let status = '';
             if (s == 1 || s == null || s == 'null') {
                 status = 2
@@ -1297,7 +1314,7 @@ export default {
                 roomIds: item.id,
                 roomStatus: status
             }, (res) => {
-              this.hosteldis = false
+                this.hosteldis = false
                 this.$message({
                     message: '操作成功',
                     type: 'success'
