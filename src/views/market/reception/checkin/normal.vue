@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 10:32:38
+ * @LastEditTime: 2020-08-03 10:50:52
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -789,8 +789,7 @@ export default {
                         'name', 'checkinTime', 'checkoutTime', 'keepTime', 'guestType', 'orderSource'
                     ]
                 }
-                alert(this.operCheckinType)
-                if (!this.checkInForm.checkInId) {
+                if (!this.checkInForm.checkInId && arr.length) {
                     let len = 0;
                     for (let k in arr) {
                         if (this.checkInForm[arr[k]] != '') {

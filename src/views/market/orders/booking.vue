@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 10:23:16
+ * @LastEditTime: 2020-08-03 10:43:01
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -10,7 +10,7 @@
 <div>
     <el-card>
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form inline size="small" label-width="100px">
             <el-row>
                 <el-form-item label="订单状态">
                     <div class="tagList">
