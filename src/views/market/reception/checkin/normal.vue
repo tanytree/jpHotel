@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-04 17:20:47
+ * @LastEditTime: 2020-08-04 18:15:59
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -1126,16 +1126,20 @@ export default {
             }
             let roomTypeId = [],
                 number = 0;
-            for (let k in this.waitingRoom) {
-                number += this.waitingRoom[k].num
-                roomTypeId.push(this.waitingRoom[k].roomTypeId);
-            }
+            this.waitingRoom.forEach(element => {
+                 number += element.num
+                 roomTypeId.push(element.roomTypeId);
+            });
             let params = {
                 checkinRoomType: 1,
                 roomTypeId: roomTypeId,
-                checkinId: this.checkInForm.checkInId,
-                rowHousesTotal: number,
-                checkinReserveId: this.checkInForm.checkInId
+                rowHousesTotal: number
+            }
+            if(this.operCheckinType == 'a1' || this.operCheckinType == 'a2'){
+                params.checkinId = this.checkInForm.checkInId
+            }
+            if(this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3'){
+                params.checkinReserveId = this.checkInForm.checkInId
             }
             let setRooms = (key, item) => {
                 console.log(key)
@@ -1152,7 +1156,6 @@ export default {
                     }
                 }
             }
-
             this.$F.doRequest(this, '/pms/checkin/page_row_houses', params, (res) => {
                 let data = res
                 this.$message({
@@ -1160,9 +1163,12 @@ export default {
                     type: 'success'
                 });
                 for (let k in data) {
-                    for (let j in data[k]) {
-                        setRooms(k, data[k][j])
-                    }
+                    // for (let j in data[k]) {
+                    //     setRooms(k, data[k][j])
+                    // }
+                    data[k].forEach(element => {
+                        setRooms(k, element)
+                    });
                 }
                 this.$forceUpdate()
             })
