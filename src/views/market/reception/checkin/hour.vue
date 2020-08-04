@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 17:39:51
- * @FilePath: /jiudian/src/views/market/reception/checkin/list2.vue
+ * @LastEditTime: 2020-08-04 16:23:06
+ * @FilePath: /jiudian/src/views/market/reception/checkin/hour.vue
  -->
 
 <template>
@@ -15,8 +15,8 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="入住人：">
-                            <el-input v-model="checkInForm.content" style="width:100px"></el-input> &nbsp;&nbsp;
-                            <el-button type="primary" size="small">扫脸入住</el-button>
+                            <el-input v-model="checkInForm.content" style="width:200px"></el-input> &nbsp;&nbsp;
+                            <!-- <el-button type="primary" size="small">扫脸入住</el-button> -->
                         </el-form-item>
                     </div>
                 </el-col>

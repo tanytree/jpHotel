@@ -140,9 +140,9 @@
                                 <el-col :span="8" :offset="2">{{room.livingPersonList[0].sex | F_sex}}</el-col>
                             </el-row>
                             <!-- 清扫图标后期加 -->
-                            <div class="placeIcon text-center" v-if="room.roomStatus==2 || room.roomStatus==5">
+                            <div class="placeIcon text-center">
                                 <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')" />
-                                <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')" />
+                                <img v-if="room.roomStatus==2||room.roomStatus==4" :src="require('@/assets/images/frontdesk/clearn.png')" />
                             </div>
                         </el-col>
                     </el-row>
@@ -321,7 +321,7 @@
             <!-- <span>这是一段信息</span> -->
             <!-- <el-row style="font-size:18px">{{currentRoom.houseNum}}房间-{{currentRoom.hotelRoomType?currentRoom.hotelRoomType.houseName:''}}</el-row> -->
             <el-tabs type="border-card" style="margin-top:10px">
-                <el-tab-pane :label="currentRoom.checkInRoomType==1?'入住信息':'预订信息'" v-if="currentRoom.checkInRoomType==1||currentRoom.roomStatus==2">
+                <el-tab-pane :label="currentRoom.checkInRoomType==1?'入住信息':'预订信息'" v-if="currentRoom.checkInRoomType==1||currentRoom.checkInRoomType==2">
                     <el-row>
                         <el-col :span="8">
                             入住时间：
@@ -442,12 +442,27 @@
 
             </el-tabs>
             <el-row style="margin-top:10px">
-                <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
-                <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
-                <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
-                <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
-                <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null' ||currentRoom.roomStatus==null ||currentRoom.roomStatus==1 || currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
-                <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
+                <template v-if="currentRoom.checkInRoomType==1">
+                    <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
+                    <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
+                    <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
+                    <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
+                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
+                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2||currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
+                </template>
+                <template v-else-if="currentRoom.checkInRoomType==2">
+                    <el-button style="width:60px;">入住</el-button>
+                    <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
+                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>
+                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1|| currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
+                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
+                </template>
+                <template v-else>
+                    <el-button style="width:60px;" @click="stayoer=true">入住</el-button>
+                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>
+                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null' ||currentRoom.roomStatus==null ||currentRoom.roomStatus==1 || currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
+                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
+                </template>
             </el-row>
         </el-dialog>
     </div>
@@ -492,118 +507,6 @@
                 <el-button style="width:80px;">取消</el-button>
                 <el-button style="width:80px;" type="primary">确定</el-button>
             </div>
-        </el-dialog>
-    </div>
-    <!-- 联房 -->
-    <div>
-        <el-dialog top="0" title="联房" :visible.sync="yokeplate" width="60%">
-            <el-card>
-                <el-col :span="16">
-                    <el-row>
-                        <el-input style="width:334px" placeholder="姓名/房号"></el-input>
-                    </el-row>
-                    <el-row style="margin-top:10px">
-                        选择列表(100)
-                        <span>点击选择房间</span>
-                    </el-row>
-                    <el-card style="text-align:center">
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="4" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="4" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="4" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="4" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="5" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                        <el-col :span="4" style="margin-top:10px">
-                            <el-tag style="padding:0 30px">标签一</el-tag>
-                        </el-col>
-                    </el-card>
-                </el-col>
-                <el-col :span="8" style="padding-left:5px;margin-top:50px">
-                    <el-row>
-                        联房列表 现有联房
-                        <span>5</span>间
-                    </el-row>
-
-                    <el-card style="padding-bottom:5px;">
-                        <el-col :span="12">
-                            <el-tag>标签一</el-tag>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-tag>标签一</el-tag>
-                        </el-col>
-                    </el-card>
-                </el-col>
-            </el-card>
-            <el-row style="margin-top:10px">
-                <el-button>取消</el-button>
-                <el-button type="primary">确定</el-button>
-            </el-row>
         </el-dialog>
     </div>
     <!-- 换房 -->
@@ -842,7 +745,8 @@
             </el-form>
         </el-dialog>
     </div>
-    <roomStatusHandle ref="roomStatusHandle" @initForm="initForm"  />
+    <roomStatusHandle ref="roomStatusHandle" @initForm="initForm" />
+    <unitedRoomHandle ref="unitedRoomHandle" />
 </div>
 </template>
 
@@ -885,11 +789,13 @@ let roomStatus = [{
     name: '维修',
     value: '5'
 }]
-import roomStatusHandle from "./roomStatus";
+import unitedRoomHandle from "./unitedRoomHandle";
+import roomStatusHandle from "./roomStatusHandle";
 import myMixin from '@/utils/filterMixin';
 export default {
-  components: {
-        roomStatusHandle
+    components: {
+        roomStatusHandle,
+        unitedRoomHandle
     },
     mixins: [myMixin],
     data() {
@@ -955,7 +861,7 @@ export default {
             checked1: false,
             checked2: false,
             checked3: false,
-            roomStatusList: [],  //房态
+            roomStatusList: [], //房态
             roomList: [],
             checked: false,
             activeThree: "a",
@@ -1087,6 +993,7 @@ export default {
                     element.eName = menu[element.personRoomType]
                     element.name = checkIdInDict(element.eName, this.dict_personRoom, 'icon')
                 });
+
                 function checkIdInDict(id, arr, eName) {
                     for (let k in arr) {
                         if (eName) {
@@ -1139,23 +1046,23 @@ export default {
             this.getDataList()
         },
         F_roomStatusColor(value) {
-        let enums = {
-          '1': '#27AE76',
-          '2': '#C0512B',
-          '3': '#276BBA',
-          '4': '#C0512B',
-          '5': '#27AE76'
-        }
-        return enums[value] ? enums[value] : '#276BBA'
-      },
+            let enums = {
+                '1': '#27AE76',
+                '2': '#C0512B',
+                '3': '#276BBA',
+                '4': '#C0512B',
+                '5': '#27AE76'
+            }
+            return enums[value] ? enums[value] : '#276BBA'
+        },
 
-      F_roomStatus(value) {
-        let enums = this.roomStatusList;
-        var array = enums.filter((item)=> {
-          return item.roomStatus == value;
-        })
-        return array.length > 0 ? array[0].total : 0;
-      },
+        F_roomStatus(value) {
+            let enums = this.roomStatusList;
+            var array = enums.filter((item) => {
+                return item.roomStatus == value;
+            })
+            return array.length > 0 ? array[0].total : 0;
+        },
 
         handleOperRoomStatus(s, item) {
             console.log(s)
@@ -1192,12 +1099,24 @@ export default {
             this.currentRoom = room
         },
         yokeplateHandle(item) {
-            this.yokeplate = true;
-            this.$F.doRequest(this, '/pms/checkin/check_in_room_join', {
-                roomId: item.id
-            }, (res) => {
-                this.hotel_building_floor_list = res
-            })
+            this.$refs.unitedRoomHandle.init(item.id);
+        },
+        handleFix(item) {
+            this.$confirm('请确认房间维修', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/hotel/oper_room_status', {
+                    roomStatus: 5,
+                    roomIds: item.id
+                }, (res) => {
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
+                })
+            }).catch(() => {});
         },
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
@@ -1224,8 +1143,8 @@ export default {
         batchForm() {
             console.log("批量置脏/置净");
         },
-        batchRoomHaldel(){
-          this.$refs.roomStatusHandle.init();
+        batchRoomHaldel() {
+            this.$refs.roomStatusHandle.init();
         }
     }
 };

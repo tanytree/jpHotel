@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 11:20:36
+ * @LastEditTime: 2020-08-04 17:20:47
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -17,7 +17,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="入住人：" prop="name">
-                            <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:100px" @change="changeName">
+                            <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
                                 <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
                                     <el-row style="width:300px">
                                         <el-col :span="8">{{item.name}}</el-col>
@@ -25,8 +25,9 @@
                                         <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
                                     </el-row>
                                 </el-option>
-                            </el-select>&nbsp;&nbsp;&nbsp;
-                            <el-button type="primary" size="small">扫脸入住</el-button>
+                            </el-select>
+                            <!-- &nbsp;&nbsp;&nbsp;
+                            <el-button type="primary" size="small">扫脸入住</el-button> -->
                         </el-form-item>
                     </div>
                 </el-col>
@@ -61,14 +62,14 @@
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="入住时间：" prop="checkinTime">
-                                <el-date-picker v-model="checkInForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                                <el-date-picker v-model="checkInForm.checkinTime" disabled type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="预离时间：" prop="checkoutTime">
-                                <el-date-picker v-model="checkInForm.checkoutTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
@@ -226,7 +227,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -240,14 +241,14 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="预离时间：" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="保留时间：" prop="keepTime">
-                            <el-date-picker v-model="checkInForm.keepTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.keepTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -375,7 +376,7 @@
                                             <div class="wrap">
                                                 <el-row class="row">
                                                     <el-col :span="14">
-                                                        <span>{{v.roomTypeName}}</span>
+                                                        <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span>
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
@@ -390,7 +391,7 @@
                                                     <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
                                                     <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
                                                 </el-row> -->
-                                                <el-row class="row">
+                                                <!-- <el-row class="row">
                                                     <el-col :span="14">
                                                         <el-button type="text" size="mini">可订{{v.reserveTotal}}</el-button>
                                                     </el-col>
@@ -402,7 +403,7 @@
 
                                                         </div>
                                                     </el-col>
-                                                </el-row>
+                                                </el-row> -->
                                             </div>
                                         </div>
                                     </div>
@@ -456,7 +457,7 @@
             <el-button size="small" type="primary" @click="db_row_houses">确定</el-button>
         </span>
     </el-dialog>
-    <el-dialog top="0" :visible.sync="guestTypeShow" class="guestTypeDia" title="排房" width="500px">
+    <el-dialog top="0" :visible.sync="guestTypeShow" class="guestTypeDia" title="客源类型" width="500px">
         <el-form :model="checkInForm" style="margin-top:-20px">
             <el-form-item label="客人类型:" class="" style="margin-bottom:0">
                 <el-radio-group v-model="checkInForm.guestType">
@@ -473,7 +474,7 @@
         </span>
     </el-dialog>
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
-        <el-table :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='false' :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+        <el-table :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='true' :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
             <el-table-column label="房号/房型" width="200">
                 <template slot-scope="scope">
                     {{scope.row.isChild?'':scope.row.room?scope.row.room.houseNum:''}}
@@ -592,6 +593,22 @@
 </template>
 
 <script>
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "H+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
 import {
     mapState,
     mapActions
@@ -744,6 +761,9 @@ export default {
     },
     mounted() {
         console.log(this.$t('commons.markCard'))
+        if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
+            this.checkInForm.checkinTime = new Date().Format("yyyy-MM-dd HH:mm:ss")
+        }
         this.handleOperCheckinType()
         this.hotel_rule_hour_list()
         this.initForm();
@@ -783,10 +803,13 @@ export default {
                         'name', 'checkinTime', 'checkoutTime', 'keepTime', 'guestType', 'orderSource'
                     ]
                 }
+                console.log(this.operCheckinType)
+                console.log(arr)
                 if (!this.checkInForm.checkInId && arr.length) {
                     let len = 0;
                     for (let k in arr) {
-                        if (this.checkInForm[arr[k]] != '') {
+                        if (this.checkInForm[arr[k]] != '' && this.checkInForm[arr[k]] != 'undefined' && this.checkInForm[arr[k]] != undefined) {
+                            console.log(this.checkInForm[arr[k]])
                             len++
                         }
                     }
@@ -876,7 +899,7 @@ export default {
                             this.checkInForm.checkInReserveId = data.checkInReserveId
                             this.$F.doRequest(this, '/pms/reserve/reserve_oper', {
                                 checkInReserveId: data.checkInReserveId,
-                                state:2
+                                state: 2
                             }, (data) => {
                                 console.log('预订单直接转为确认状态')
                             })
@@ -886,8 +909,6 @@ export default {
                         console.log('沉浸式提交')
                         console.log(this.operCheckinType)
                         console.log(operCheckinType)
-                        
-
 
                     } else if (type == 2) {
                         this.$message({
@@ -1465,7 +1486,7 @@ export default {
             }
 
         },
-        handleOperCheckinType(){
+        handleOperCheckinType() {
             let menu = {
                 a1: 1,
                 a2: 2,

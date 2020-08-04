@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 18:25:43
- * @FilePath: /jiudian/src/views/market/home/roomStatus.vue
+ * @LastEditTime: 2020-08-04 16:44:51
+ * @FilePath: /jiudian/src/views/market/home/roomStatusHandle.vue
  -->
 <template>
 <el-dialog top="0" title="批量置脏/置净" width="700px" :visible.sync="visible">
@@ -98,7 +98,7 @@ export default {
         chooseNum() {
             let num = 0;
             for (let k in this.roomList) {
-                num += this.roomList[k].checkedItems.length
+                num += his.roomList[k].checkedItems? this.roomList[k].checkedItems.length : 0
             }
             return num
         }
