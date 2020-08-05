@@ -61,7 +61,7 @@
                 <el-form-item label="团队名称">
                     <el-input v-model="searchForm.enterName" class="width150"></el-input>
                 </el-form-item>
-                <el-form-item label="预定单号">
+                <el-form-item label="预订单号">
                     <el-input v-model="searchForm.orderNum" class="width150"></el-input>
                 </el-form-item>
             </el-row>

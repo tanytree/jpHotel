@@ -14,7 +14,7 @@
             <el-select v-model="form.orderType" style="width:150px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
-              <el-option label="场地预定" value="2"></el-option>
+              <el-option label="场地预订" value="2"></el-option>
               <el-option label="活动项目课程" value="4"></el-option>
             </el-select>
           </el-form-item>
@@ -34,7 +34,7 @@
             <el-select v-model="form.orderType" style="width:150px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
-              <el-option label="场地预定" value="2"></el-option>
+              <el-option label="场地预订" value="2"></el-option>
               <el-option label="活动项目课程" value="4"></el-option>
             </el-select>
           </el-form-item>
@@ -44,7 +44,7 @@
             <el-select v-model="form.orderType" style="width:150px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
-              <el-option label="场地预定" value="2"></el-option>
+              <el-option label="场地预订" value="2"></el-option>
               <el-option label="活动项目课程" value="4"></el-option>
             </el-select>
           </el-form-item>

@@ -133,7 +133,7 @@
                           </el-col>
                         </div>
                     </el-row>
-                    <!-- 预定管理 -->
+                    <!-- 预订管理 -->
                     <el-row style="margin-top:30px">
                         <span>预订管理</span>
                         <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
@@ -187,7 +187,7 @@
                         </div>
                     </el-row>
 
-                    <!-- 预定管理 -->
+                    <!-- 预订管理 -->
                     <el-row style="margin-top:30px">
                         <span>预订管理</span>
                         <el-checkbox style="margin-left:30px">全部开启</el-checkbox>

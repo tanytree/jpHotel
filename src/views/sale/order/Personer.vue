@@ -18,7 +18,7 @@
             <el-select v-model="form.orderType" style="width:100px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
-              <el-option label="场地预定" value="2"></el-option>
+              <el-option label="场地预订" value="2"></el-option>
               <el-option label="活动项目课程" value="4"></el-option>
             </el-select>
           </el-form-item>
@@ -96,7 +96,7 @@
             <template slot-scope="{row}">
               <div v-if="row.modelType==1">当前课程</div>
               <div v-else-if="row.modelType==3">演出门票</div>
-              <div v-else-if="row.modelType==2">场地预定</div>
+              <div v-else-if="row.modelType==2">场地预订</div>
               <div v-else>活动项目课程</div>
             </template>
           </el-table-column>

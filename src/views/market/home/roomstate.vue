@@ -281,7 +281,7 @@
                         </el-col>
                         <el-col :span="4" class="item">
                             <span class="inco">订</span>
-                            <span>预定房</span>
+                            <span>预订房</span>
                         </el-col>
                         <el-col :span="4" class="item">
                             <span class="inco">离</span>
