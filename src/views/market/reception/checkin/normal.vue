@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-04 18:15:59
+ * @LastEditTime: 2020-08-05 11:14:14
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -17,7 +17,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="入住人：" prop="name">
-                            <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
+                            <!-- <el-select v-model="checkInForm.name" filterable remote placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName" @blur="selectBlur">
                                 <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
                                     <el-row style="width:300px">
                                         <el-col :span="8">{{item.name}}</el-col>
@@ -25,7 +25,9 @@
                                         <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
                                     </el-row>
                                 </el-option>
-                            </el-select>
+                            </el-select> -->
+
+                            <el-autocomplete style="width:200px" v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
                             <!-- &nbsp;&nbsp;&nbsp;
                             <el-button type="primary" size="small">扫脸入住</el-button> -->
                         </el-form-item>
@@ -167,7 +169,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="入住人：" prop="name">
-                            <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
+                            <!-- <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
                                 <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
                                     <el-row style="width:300px">
                                         <el-col :span="8">{{item.name}}</el-col>
@@ -175,7 +177,9 @@
                                         <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
                                     </el-row>
                                 </el-option>
-                            </el-select>
+                            </el-select> -->
+                            <el-autocomplete style="width:200px" v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
+
                         </el-form-item>
                     </div>
                 </el-col>
@@ -1127,18 +1131,18 @@ export default {
             let roomTypeId = [],
                 number = 0;
             this.waitingRoom.forEach(element => {
-                 number += element.num
-                 roomTypeId.push(element.roomTypeId);
+                number += element.num
+                roomTypeId.push(element.roomTypeId);
             });
             let params = {
                 checkinRoomType: 1,
                 roomTypeId: roomTypeId,
                 rowHousesTotal: number
             }
-            if(this.operCheckinType == 'a1' || this.operCheckinType == 'a2'){
+            if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
                 params.checkinId = this.checkInForm.checkInId
             }
-            if(this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3'){
+            if (this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3') {
                 params.checkinReserveId = this.checkInForm.checkInId
             }
             let setRooms = (key, item) => {
@@ -1454,24 +1458,24 @@ export default {
             this.multipleSelection = val;
             console.log(val)
         },
-        remoteMethod(query) {
-            if (query !== '') {
-                let params = {
-                    name: query,
-                    searchType: 1,
-                    pageIndex: 1,
-                    pageSize: 999,
-                    paging: false
-                }
-                this.nameLoading = true;
-                this.$F.doRequest(this, '/pms/checkin/checkin_order_list', params, (res) => {
-                    this.nameLoading = false
-                    this.options = res.roomPersonList
-                    this.$forceUpdate()
-                })
-            } else {
-                this.options = [];
+        remoteMethod(query, cb) {
+            let params = {
+                name: query,
+                searchType: 1,
+                pageIndex: 1,
+                pageSize: 999,
+                paging: false
             }
+            this.nameLoading = true;
+            this.$F.doRequest(this, '/pms/checkin/checkin_order_list', params, (res) => {
+                this.nameLoading = false
+                this.options = res.roomPersonList
+                this.options.forEach(element => {
+                    element.value = element.name + '   /   ' + ( element.mobile?'手机号：' + element.mobile + '   /   ':'' )   + '身份证后四位：'+ element.idcard.slice(-4)
+                });
+                cb(this.options)
+                this.$forceUpdate()
+            })
         },
         changeName(e) {
             console.log(e)
@@ -1492,6 +1496,24 @@ export default {
             }
 
         },
+        querySearchAsync(queryString, cb) {
+            var restaurants = this.restaurants;
+            var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                cb(results);
+            }, 3000 * Math.random());
+        },
+        createStateFilter(queryString) {
+            return (state) => {
+                return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            };
+        },
+        handleSelect(item) {
+            console.log(item);
+        },
+
         handleOperCheckinType() {
             let menu = {
                 a1: 1,
@@ -1501,11 +1523,18 @@ export default {
                 b3: 3
             }
             this.checkInForm.operCheckinType = menu[this.operCheckinType]
-        }
+        },
+        selectBlur(e) {
+            console.log(e)
+            this.checkInForm.name = e.target.value
+        },
     }
 };
 </script>
+<style>
+.popper-class{width: 350px!important;}
 
+</style>
 <style scoped>
 .fixedFoot {
     text-align: right;

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-04 16:44:51
+ * @LastEditTime: 2020-08-05 09:44:41
  * @FilePath: /jiudian/src/views/market/home/roomStatusHandle.vue
  -->
 <template>
@@ -98,7 +98,7 @@ export default {
         chooseNum() {
             let num = 0;
             for (let k in this.roomList) {
-                num += his.roomList[k].checkedItems? this.roomList[k].checkedItems.length : 0
+                num += this.roomList[k].checkedItems? this.roomList[k].checkedItems.length : 0
             }
             return num
         }
