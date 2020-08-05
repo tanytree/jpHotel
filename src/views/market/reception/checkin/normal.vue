@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-05 17:13:10
+ * @LastEditTime: 2020-08-05 18:11:42
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -71,7 +71,7 @@
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="预离时间：" prop="checkoutTime">
-                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
@@ -231,21 +231,21 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6" v-if="operCheckinType=='b1'">
                     <div class="grid-content">
                         <el-form-item label="入住天数：" prop="checkinDays">
-                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :min="0"></el-input-number>
+                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="预离时间：" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -616,6 +616,13 @@ Date.prototype.Format = function (fmt) {
     return fmt;
 }
 
+function getDaysBetween(dateString1, dateString2) {
+    var startDate = Date.parse(dateString1);
+    var endDate = Date.parse(dateString2);
+    var days = (endDate - startDate) / (1 * 24 * 60 * 60 * 1000);
+    // alert(days);
+    return days;
+}
 import {
     mapState,
     mapActions
@@ -643,7 +650,7 @@ export default {
                 disabledDate: time => {
                     if (this.checkInForm.checkinTime != "" && this.checkInForm.checkinTime) {
                         let timeStr = new Date(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
-                        if (this.operCheckinType == 'b2') {
+                        if (this.operCheckinType == 'b2') { //时租预订
                             return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
                         }
                         return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr;
@@ -658,7 +665,7 @@ export default {
                 disabledDate: time => {
                     if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
                         let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
-                        if (this.operCheckinType == 'b2') {
+                        if (this.operCheckinType == 'b2') { //时租预订
                             return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
                         }
                         return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
@@ -698,7 +705,7 @@ export default {
                 checkinTime: '',
                 checkoutTime: '',
                 keepTime: '',
-                checkinDays: '',
+                checkinDays: 0,
                 salesId: '',
                 thirdOrdernum: '',
                 mobile: '',
@@ -1587,6 +1594,32 @@ export default {
                 this.$router.replace('/orderdetail?id=' + this.checkInForm.checkinId)
             } else {
                 this.mackcade = false
+            }
+        },
+        satrtTimeChange(e) {
+            let day = 0
+            if (this.checkInForm.checkoutTime != '') {
+                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
+                this.checkInForm.checkinDays = day
+            }
+        },
+        endTimeChange(e) {
+            let day = 0
+            if (this.checkInForm.checkinTime != '') {
+                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
+                this.checkInForm.checkinDays = day
+            }
+        },
+        checkinDaysChange(e) {
+            console.log(e)
+            if (this.checkInForm.checkinTime == '') {
+                this.$message.error('请选着到店时间')
+                this.checkInForm.checkinDays = 0
+                return
+            } else {
+                var date = new Date(this.checkInForm.checkinTime);
+                date.setDate(date.getDate() + e);
+                this.checkInForm.checkoutTime = date
             }
         }
     }
