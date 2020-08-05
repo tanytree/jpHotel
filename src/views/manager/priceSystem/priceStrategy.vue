@@ -18,21 +18,19 @@
 								</el-form-item>
 							</el-form>
 						</el-row>
-						<div class="components-edit">
-							<el-table :data="tableData_a" style="width: 100%;margin-bottom: 20px;" row-key="id" border default-expand-all
-							 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-								<el-table-column prop="date" label="房型/房价">
-								</el-table-column>
-								<el-table-column prop="name" label="4-18 周三">
-								</el-table-column>
-								<el-table-column prop="name" label="4-19 周四">
-								</el-table-column>
-								<el-table-column prop="name" label="4-19 周四">
-								</el-table-column>
-								<el-table-column prop="name" label="4-19 周四">
-								</el-table-column>
-								<el-table-column prop="name" label="4-19 周四">
-								</el-table-column>
+						<div class="components-edit member-price">
+							<el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;"row-key="id"
+                                      default-expand-all
+                                      header-row-class-name="default"
+                                      :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}">
+                                <el-table-column v-for="(item, index) in memberTableHeads" :key="index" :label="item.dateStr + '' + item.weekDay">
+                                    <template slot-scope="{row, $index}">
+                                        <span v-if="index === 0">{{row.name || row.houseName}}</span>
+                                        <span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="priceClick(row, item)">
+                                            {{row.marketPrice}}
+                                        </span>
+                                    </template>
+                                </el-table-column>
 							</el-table>
 						</div>
 					</el-row>
@@ -101,7 +99,7 @@
 					<el-col :span="20">
 						<el-form-item label="会员类型:" prop="name">
 							<el-checkbox-group v-model="checkedKinds" @change="handleCheckedCitiesChange">
-								<el-checkbox v-for="(item, index) in kinds" :label="item" :key="item">{{item}}</el-checkbox>
+								<el-checkbox v-for="(item, index) in memberTableData.memberTypeList" :label="item.id" :key="index">{{item.name}}</el-checkbox>
 							</el-checkbox-group>
 						</el-form-item>
 					</el-col>
@@ -112,21 +110,21 @@
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="选择时间:" prop="name">
-							<el-date-picker v-model="rules.name" type="daterange" align="right" unlink-panels range-separator="至"
+							<el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" unlink-panels range-separator="至"
 							 start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions">
 							</el-date-picker>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="选择星期:" prop="name">
-							<el-checkbox-group v-model="checkedKinds" @change="handleCheckedCitiesChange">
-								<el-checkbox v-for="(item, index) in kinds" :label="item" :key="item">{{item}}</el-checkbox>
+							<el-checkbox-group v-model="weekDayKinds" @change="handleWeekDayChange">
+								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
 							</el-checkbox-group>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="折扣率:" prop="name">
-							<el-radio-group v-model="radio">
+							<el-radio-group v-model="batchEditPriceForm.discounts">
 								<el-radio :label="1">向上取整</el-radio>
 								<el-radio :label="2">向下取整</el-radio>
 								<el-radio :label="3">四舍五入(取整)</el-radio>
@@ -136,14 +134,15 @@
 					</el-col>
 				</el-form>
 			</el-row>
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-				<el-table-column prop="name" label="房型"></el-table-column>
-				<el-table-column prop="name" label="门市价"></el-table-column>
+			<el-table ref="multipleTable" :data="memberTableData.memberTypeList[0].roomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+				<el-table-column prop="houseName" label="房型"></el-table-column>
+				<el-table-column prop="marketPrice" label="门市价"></el-table-column>
 				<el-table-column prop="name" label="调价方式">
 					<template slot-scope="name">
 						<el-row class="demo-form-inline">
 							<el-select v-model="value" placeholder="请选择" style="width: 150px;">
-								<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+								<el-option label="折扣率" value="1"></el-option>
+								<el-option label="一口价" value="2"></el-option>
 							</el-select>
 							<el-input v-model="value" style="width: 100px;margin-right: 5px;"></el-input> 日元
 						</el-row>
@@ -233,13 +232,54 @@
 				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
 			</span>
 		</el-dialog>
+
+        <el-dialog top="0" title="修改房价" :visible.sync="editPriceDialog" :close-on-click-modal="false" width="30%" class="editPriceDialog">
+            <el-form ref="discountForm" :model="editPriceForm" label-width="120px">
+                <el-form-item label="当前选中:">
+                    <span>{{editPriceForm.name + '  ' + editPriceForm.houseName}}</span>
+                </el-form-item>
+                <el-form-item label="当前日期">
+                    <span>{{editPriceForm.dateStr}}</span>
+                </el-form-item>
+                <el-form-item label="门市价">
+                    <span>{{editPriceForm.marketPrice}}</span>
+                </el-form-item>
+                <el-form-item label="会员价">
+                    <span>{{editPriceForm.prices}} <span class="tip">(折扣为{{editPriceForm.discount}})</span></span>
+                </el-form-item>
+                <el-form-item label="新会员价">
+                    <el-input v-model="editPriceForm.prices" style="width:200px"></el-input> <span class="tip">如果没有新会员价就按会员价</span>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+				<el-button @click="editPriceDialog = false">取 消</el-button>
+				<el-button type="primary" @click="editPriceDialog = false">确 定</el-button>
+			</span>
+        </el-dialog>
 	</div>
 </template>
 
 <script>
 	export default {
+
 		data() {
 			return {
+			  batchEditPriceForm: {
+			    time: '', //开始日期跟结束日期在一起
+                memberTypeId: '',
+                channel: '',
+                startTime: '',
+                endTime: '',
+                weeks:'',
+                discounts: 4,
+                roomStrategyJson: [],
+              },
+              weekDayKinds: ['1'],
+              dictChannels: [], //渠道
+              editPriceDialog: false,  //修改房价dialog
+              editPriceForm: {},
+			  memberTableHeads: [],
+              memberTableData: {memberTypeList: [], dateList: []},
 				dialogDetail: false, //查看弹窗
 				activName: 'a',
 				tab1_show: true, //切片一的跳转
@@ -258,76 +298,21 @@
 							picker.$emit('pick', new Date());
 						}
 					}, {
-						text: '昨天',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24);
-							picker.$emit('pick', date);
-						}
-					}, {
-						text: '一周前',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-							picker.$emit('pick', date);
-						}
-					}]
+                      text: '前十五天',
+                      onClick(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
+                        picker.$emit('pick', date);
+                      }
+                    }, {
+                      text: '后十五天',
+                      onClick(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
+                        picker.$emit('pick', date);
+                      }
+                    }]
 				},
-				tableData: [{
-					id: 3,
-					date: '白金卡',
-					name: '',
-					address: '',
-					children: [{
-						id: 31,
-						date: '标准房',
-						name: '100'
-					}, {
-						id: 32,
-						date: '单间',
-						name: '100'
-					}, {
-						id: 32,
-						date: '小型会议',
-						name: '100'
-					}]
-				}, {
-					id: 3,
-					date: '黄金卡',
-					name: '',
-					address: '',
-					children: [{
-						id: 31,
-						date: '标准房',
-						name: '100'
-					}, {
-						id: 32,
-						date: '单间',
-						name: '100'
-					}, {
-						id: 32,
-						date: '小型会议',
-						name: '100'
-					}]
-				}, {
-					id: 3,
-					date: '黑金卡',
-					name: '',
-					address: '',
-					children: [{
-						id: 31,
-						date: '标准房',
-						name: '100'
-					}, {
-						id: 32,
-						date: '单间',
-						name: '100'
-					}, {
-						id: 32,
-						date: '小型会议',
-						name: '100'
-					}]
-				}],
 				tableData_other: [{
 					date: '标准间'
 				}, {
@@ -357,6 +342,17 @@
 				dialogStock_show: false, // 修改库存
 				kinds: ['全选', '白金卡', '黄金卡', '白银卡'],
 				checkedKinds: ['白金卡'],
+                weekDays: [
+                  {label: '全部',value: ''},
+                  {label: '周一',value: '1'},
+                  {label: '周二',value: '2'},
+                  {label: '周三',value: '3'},
+                  {label: '周四',value: '4'},
+                  {label: '周五',value: '5'},
+                  {label: '周六',value: '6'},
+                  {label: '周日',value: '7'},
+                  ],
+
 				options: [{
 					value: '选项1',
 					label: '黄金糕'
@@ -377,6 +373,18 @@
 				selectInfo: {}
 			}
 		},
+        mounted() {
+		  this.get_hotel_price_room_type_list();
+		  //获取渠道
+          // this.$F.getPublicDictByType(null, 1, (res) => {
+          //   this.dictChannels = res;
+          //   debugger
+          // })
+		  // this.$F.fetchMemberTypeList({}, (res) => {
+          //
+          // })
+          // this.get_price_enter_strategy_list()
+        },
 		watch: {
 			activName() {
 				switch (this.activName) {
@@ -392,12 +400,75 @@
 				}
 			}
 		},
-		created() {
-			this.get_price_enter_strategy_list()
-		},
+
+
 		methods: {
+		  //选择日期change事件
+          handleWeekDayChange(value) {
+            this.weekDayKinds = value;
+            debugger
+            if (value.length == 0)
+              this.weekDayKinds = [];
+
+            if (value.length == 8 || value[value.length - 1] === '') {
+              this.weekDayKinds = [];
+              this.weekDays.forEach(week => {
+                this.weekDayKinds.push(week.value);
+              })
+
+            } else {
+              let $index = 999;
+              this.weekDayKinds.forEach((week, index) => {
+                if (week === '') {
+                  $index = index;
+                }
+              })
+              if ($index != 999) {
+                this.weekDayKinds.splice($index, 1);
+              }
+            }
+          },
+		  //点击修改房价
+          priceClick(row, item, params = {}) {
+            let memberTypeObject = {}, roomObject = {}, flag = true;
+            for (let i = 0; i < this.memberTableData.memberTypeList.length; i++) {
+              if (! flag)
+                break;
+              let member = this.memberTableData.memberTypeList[i];
+              for (let j = 0; j < member.roomTypeList.length; j++) {
+                let room = member.roomTypeList[j];
+                if (room.id == row.id) {
+                  roomObject = room;
+                  memberTypeObject = member;
+                  flag = false
+                  break;
+                }
+              }
+            }
+            this.$F.merge(this.editPriceForm, memberTypeObject);
+            this.$F.merge(this.editPriceForm, roomObject);
+            this.editPriceForm.dateStr = item.dateStr;
+            this.editPriceDialog = true;
+          },
+
+          // 会员 价格策略单位列表
+          get_hotel_price_room_type_list() {
+            let params = {
+              strategyTime: '2020-08-04',
+              priceCalend:1,  // 检索类型 1会员价格日历 2单位价格日历
+              timeType:1,  // 检索类型 1会员价格日历 2单位价格日历
+            }
+            this.$F.doRequest(this, '/pms/hotel/hotel_price_room_type_list', params, (res) => {
+              this.memberTableData = res;
+              this.memberTableHeads = res.dateList;
+              this.memberTableHeads.unshift({
+                "dateStr":"房价",
+                "weekDay":""
+              });
+              this.$forceUpdate();
+            })
+          },
 			popup(type, value) {
-				debugger
 				switch (type) {
 					case 'adjust':
 						this.tab1_show = false;
@@ -454,6 +525,10 @@
 </script>
 
 <style lang="less" scoped>
+    .editPriceDialog .tip {
+        font-size: 12px;
+        color: #b1b1b1;
+    }
 	.margin-l {
 		margin-left: 15px;
 	}
@@ -511,4 +586,8 @@
 			margin-left: 10px;
 		}
 	}
+
+    .member-price .el-table .cell {
+        cursor: pointer !important;
+    }
 </style>

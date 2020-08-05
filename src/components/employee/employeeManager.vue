@@ -412,15 +412,13 @@ export default {
             this.getDataList();
         },
         department_list(storesNum = this.storesNum) {
-            let that = this;
             this.$F.doRequest(null, '/pms/department/department_list', {storesNum: storesNum}, (res) => {
-                this.departmentList = res;
-                that.$forceUpdate();
-            })
+            this.departmentList = res;
+            this.$forceUpdate();
+          })
         },
         getDataList() {
             let that = this;
-            debugger
             if (this.storesNum != this.$F.getHQCode())
               this.searchForm.storesNum = this.storesNum;
             this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
