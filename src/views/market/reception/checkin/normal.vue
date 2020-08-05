@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-05 18:11:42
+ * @LastEditTime: 2020-08-05 22:56:10
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -817,6 +817,19 @@ export default {
         } else {
             this.typeText = '预订'
         }
+        // if (this.operCheckinType == 'b1') {
+        //     this.checkInForm.checkinTime = new Date().Format('yyyy-MM-dd HH:mm:ss')
+        //     this.checkInForm.checkinDays = 1
+        //     let date = new Date(this.checkInForm.checkinTime);
+        //     date.setDate(date.getDate() + this.checkInForm.checkinDays);
+        //     this.checkInForm.checkoutTime = date
+        // } else {
+        //     for (let k in this.checkInForm) {
+        //         if (k !== 'operCheckinType') {
+        //             this.checkInForm[k] = ''
+        //         }
+        //     }
+        // }
         this.handleOperCheckinType()
         this.hotel_rule_hour_list()
         this.initForm();
@@ -840,7 +853,6 @@ export default {
                         'name', 'sex', 'idcardType', 'idcard', 'ruleHourId', 'guestType', 'orderSource', 'checkinType'
                     ]
                 }
-
                 if (this.operCheckinType == 'b1') {
                     arr = [
                         'name', 'guestType', 'orderSource', 'checkinType', 'checkinTime', 'checkoutTime', 'keepTime', 'checkinDays',
@@ -1575,6 +1587,19 @@ export default {
                 b3: 3
             }
             this.checkInForm.operCheckinType = menu[this.operCheckinType]
+            if (this.operCheckinType == 'b1') {
+                this.checkInForm.checkinTime = new Date().Format('yyyy-MM-dd HH:mm:ss')
+                this.checkInForm.checkinDays = 1
+                let date = new Date(this.checkInForm.checkinTime);
+                date.setDate(date.getDate() + this.checkInForm.checkinDays);
+                this.checkInForm.checkoutTime = date
+            } else {
+                for (let k in this.checkInForm) {
+                    if (k !== 'operCheckinType') {
+                        this.checkInForm[k] = ''
+                    }
+                }
+            }
         },
         selectBlur(e) {
             console.log(e)
