@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-05 11:14:14
+ * @LastEditTime: 2020-08-05 12:00:10
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -670,10 +670,10 @@ export default {
                 channel: '',
                 checkinType: '',
                 remark: '',
-                // checkInId: '2c9f404b73939b040173947c555b000c',
-                // checkInReserveId: '2c9f404b738f2f5d017393748ad60009',
-                checkInId: '',
-                checkInReserveId: ''
+                checkInId: '2c9f404b73939b040173947c555b000c',
+                checkInReserveId: '2c9f404b738f2f5d017393748ad60009',
+                // checkInId: '',
+                // checkInReserveId: ''
             },
             rules: {
                 name: [{
@@ -1313,6 +1313,13 @@ export default {
                         checkInPersonId: '',
                         // hasChildren: false
                     }
+                    if (k == 0 && data[k].personList.length < 1) {
+                        data[k].params.name = this.baseInfo.name
+                        data[k].params.idcardType = this.baseInfo.idcardType.toString()
+                        data[k].params.idcard = this.baseInfo.idcard
+                        data[k].params.sex = this.baseInfo.sex.toString()
+                        data[k].params.mobile = this.baseInfo.mobile
+                    }
                     if (data[k].personList && data[k].personList.length) {
                         // data[k].params = data[k].personList[0]
                         data[k].children = []
@@ -1471,7 +1478,7 @@ export default {
                 this.nameLoading = false
                 this.options = res.roomPersonList
                 this.options.forEach(element => {
-                    element.value = element.name + '   /   ' + ( element.mobile?'手机号：' + element.mobile + '   /   ':'' )   + '身份证后四位：'+ element.idcard.slice(-4)
+                    element.value = element.name + '   /   ' + (element.mobile ? '手机号：' + element.mobile + '   /   ' : '') + '身份证后四位：' + element.idcard.slice(-4)
                 });
                 cb(this.options)
                 this.$forceUpdate()
@@ -1496,23 +1503,6 @@ export default {
             }
 
         },
-        querySearchAsync(queryString, cb) {
-            var restaurants = this.restaurants;
-            var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-                cb(results);
-            }, 3000 * Math.random());
-        },
-        createStateFilter(queryString) {
-            return (state) => {
-                return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
-        },
-        handleSelect(item) {
-            console.log(item);
-        },
 
         handleOperCheckinType() {
             let menu = {
@@ -1531,9 +1521,11 @@ export default {
     }
 };
 </script>
-<style>
-.popper-class{width: 350px!important;}
 
+<style>
+.popper-class {
+    width: 350px !important;
+}
 </style>
 <style scoped>
 .fixedFoot {
