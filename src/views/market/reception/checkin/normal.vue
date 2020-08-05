@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-05 12:00:10
+ * @LastEditTime: 2020-08-05 17:13:10
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -64,14 +64,14 @@
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="入住时间：" prop="checkinTime">
-                                <el-date-picker v-model="checkInForm.checkinTime" disabled type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
+                                <el-date-picker v-model="checkInForm.checkinTime" disabled type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="satrtTime"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="预离时间：" prop="checkoutTime">
-                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
+                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
@@ -231,7 +231,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -245,14 +245,14 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="预离时间：" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="保留时间：" prop="keepTime">
-                            <el-date-picker v-model="checkInForm.keepTime" type="datetime" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.keepTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -425,7 +425,7 @@
     <el-row class="fixedFoot">
         <div class="wrap">
             <el-button type="primary" @click="hotel_check_in(2)">保存</el-button>
-            <el-button @click="hotel_check_in(3)">保存后继续办理新入住</el-button>
+            <el-button @click="hotel_check_in(3)">保存后继续办理新{{typeText}}</el-button>
         </div>
     </el-row>
 
@@ -566,11 +566,11 @@
             </el-table-column>
         </el-table>
         <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="liveInPersonShow = false">取消</el-button>
+            <el-button size="small" @click="liveInPersonCancel">取消</el-button>
             <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
         </span>
     </el-dialog>
-    <el-dialog top="0" title="房卡操作" :visible.sync="mackcade" width="60%">
+    <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
         <el-row>
             <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
             <el-col :span="8" style="float:right">
@@ -592,6 +592,9 @@
                 </template>
             </el-table-column>
         </el-table>
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" @click="mackcadeCancel">取消</el-button>
+        </span>
     </el-dialog>
 </div>
 </template>
@@ -631,7 +634,43 @@ export default {
     },
     data() {
         return {
+            afterToday: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天 
+                }
+            },
+            leaveTime: {
+                disabledDate: time => {
+                    if (this.checkInForm.checkinTime != "" && this.checkInForm.checkinTime) {
+                        let timeStr = new Date(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                        if (this.operCheckinType == 'b2') {
+                            return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
+                        }
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr;
+                    } else if (this.checkInForm.checkinTime == "") {
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                    } else {
+                        return "";
+                    }
+                }
+            },
+            satrtTime: {
+                disabledDate: time => {
+                    if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
+                        let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                        if (this.operCheckinType == 'b2') {
+                            return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
+                        }
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
+                    } else if (this.checkInForm.checkoutTime == "") {
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                    } else {
+                        return "";
+                    }
+                }
+            },
             num: 1,
+            isSubmitErr: false,
             loading: false,
             liveLoading: false,
             liveCardLoading: false,
@@ -670,10 +709,10 @@ export default {
                 channel: '',
                 checkinType: '',
                 remark: '',
-                checkInId: '2c9f404b73939b040173947c555b000c',
-                checkInReserveId: '2c9f404b738f2f5d017393748ad60009',
-                // checkInId: '',
-                // checkInReserveId: ''
+                // checkInId: '2c9f404b73939b040173947c555b000c',
+                // checkInReserveId: '2c9f404b738f2f5d017393748ad60009',
+                checkInId: '',
+                checkInReserveId: ''
             },
             rules: {
                 name: [{
@@ -761,12 +800,15 @@ export default {
             },
             liveInPersonData: [],
             liveCardData: '',
+            typeText: '入住'
         };
     },
     mounted() {
         console.log(this.$t('commons.markCard'))
         if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
             this.checkInForm.checkinTime = new Date().Format("yyyy-MM-dd HH:mm:ss")
+        } else {
+            this.typeText = '预订'
         }
         this.handleOperCheckinType()
         this.hotel_rule_hour_list()
@@ -885,6 +927,7 @@ export default {
             })
         },
         hotel_check_in(type) {
+            this.isSubmitErr = false //
             let url = ''
             let operCheckinType = this.operCheckinType
             if (operCheckinType == 'a1' || operCheckinType == 'a2') {
@@ -915,6 +958,37 @@ export default {
                         console.log(operCheckinType)
 
                     } else if (type == 2) {
+
+                        if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
+                            if (!this.liveInPersonData.length) {
+                                this.isSubmitErr = true
+                                this.$message.error('请添加入住人')
+                                this.live_in_person_list()
+                                return false
+                            }
+                            for (let k in this.liveInPersonData) {
+                                if (!this.liveInPersonData[k].personList.length) {
+                                    this.isSubmitErr = true
+                                    this.$message.error('请添加入住人')
+                                    this.live_in_person_list()
+                                    return false
+                                }
+                            }
+
+                            if (this.liveCardData == '') {
+                                this.isSubmitErr = true
+                                this.$message.error('请制卡')
+                                this.liveCard_in_person_list()
+                                return false
+                            }
+                            if (this.liveCardData.unfinished > 0) {
+                                this.isSubmitErr = true
+                                this.$message.error('请制卡')
+                                this.liveCard_in_person_list()
+                                return false
+                            }
+                        }
+
                         this.$message({
                             message: '办理成功',
                             type: 'success'
@@ -937,6 +1011,7 @@ export default {
                     }
                 })
             }
+
             if (type == 2 || type == 3) {
                 if (!this.checkInForm.checkInId) {
                     this.$message.error('请输入入住信息后操作')
@@ -946,40 +1021,19 @@ export default {
                     this.$message.error('请选择房型')
                     return false
                 }
-                for (let k in this.waitingRoom) {
-                    if (!this.waitingRoom[k].roomsArr) {
-                        this.$message.error('请选择房间')
-                        return false
-                    }
-                    if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
-                        this.$message.error('请选择房间')
-                        return false
-                    }
-                }
-                if (this.operCheckinType != 'b3') {
-                    if (!this.liveInPersonData.length) {
-                        this.$message.error('请添加入住人')
-                        this.live_in_person_list()
-                        return false
-                    }
-                    for (let k in this.liveInPersonData) {
-                        if (!this.liveInPersonData[k].personList.length) {
-                            this.$message.error('请添加入住人')
-                            this.live_in_person_list()
+                if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
+                    for (let k in this.waitingRoom) {
+                        if (!this.waitingRoom[k].roomsArr) {
+                            this.$message.error('请选择房间')
+                            return false
+                        }
+                        if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
+                            this.$message.error('请选择房间')
                             return false
                         }
                     }
                 }
-                if (this.liveCardData == '') {
-                    this.$message.error('请制卡')
-                    this.liveCard_in_person_list()
-                    return false
-                }
-                if (this.liveCardData.unfinished > 0) {
-                    this.$message.error('请制卡')
-                    this.liveCard_in_person_list()
-                    return false
-                }
+
                 this.$refs.checkInForm.validate((valid) => {
                     if (valid) {
                         console.log(this.checkInForm)
@@ -995,6 +1049,7 @@ export default {
             }
 
         },
+
         /**编辑 */
         editRowItem(row) {
             // 加载组件
@@ -1518,6 +1573,22 @@ export default {
             console.log(e)
             this.checkInForm.name = e.target.value
         },
+        liveInPersonCancel() {
+            if (this.isSubmitErr) {
+                this.isSubmitErr = false
+                this.$router.replace('/orderdetail?id=' + this.checkInForm.checkinId)
+            } else {
+                this.liveInPersonShow = false
+            }
+        },
+        mackcadeCancel() {
+            if (this.isSubmitErr) {
+                this.isSubmitErr = false
+                this.$router.replace('/orderdetail?id=' + this.checkInForm.checkinId)
+            } else {
+                this.mackcade = false
+            }
+        }
     }
 };
 </script>
