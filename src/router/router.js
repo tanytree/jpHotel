@@ -70,7 +70,7 @@ export default new Router({
                     path: '/pay-mg',
                     name: 'PayMg',
                     component: () =>
-                        import ('@/views/Boss/PayMg')
+                        import ('@/components/payMG')
                 },
                 {
                     path: '/storeManagement',

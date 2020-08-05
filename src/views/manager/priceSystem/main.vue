@@ -30,7 +30,7 @@
         },
         data () {
             return {
-                activeName: 'second' //第一个默认启动
+                activeName: 'first' //第一个默认启动
             }
         },
         created () {

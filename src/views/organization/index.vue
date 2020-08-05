@@ -363,9 +363,6 @@
       } else {
         this.isPersonnelManager = false
       }
-      // this.publicDictListIcon();
-      // this.publicDictListColor();
-      // this.publicDictListSetDepartmentList();
     },
     methods: {
       getDetails(item) {
@@ -659,65 +656,6 @@
         this.isIndeterminate = true;
         this.employeesDetailsEditShow = true
         this.addAndEditForm.type = 'add'
-      },
-
-      publicDictListIcon () {
-        public_dict_list({
-          plat_source: this.plat_source,
-          dictNum: '83'
-        })
-          .then(res => {
-            if (res.code == 200) {
-              this.iconList = res.data
-            } else {
-              this.$message.error(res.message)
-            }
-            console.log(res)
-          })
-          .catch(err => {
-            this.$message.error(err.message)
-          })
-      },
-      publicDictListColor () {
-        public_dict_list({
-          plat_source: this.plat_source,
-          dictNum: '102'
-        })
-          .then(res => {
-            if (res.code == 200) {
-              this.colorList = res.data
-            } else {
-              this.$message.error(res.message)
-            }
-            console.log(res)
-          })
-          .catch(err => {
-            this.$message.error(err.message)
-          })
-      },
-      publicDictListSetDepartmentList () {
-        let that = this
-        public_dict_list({
-          plat_source: this.plat_source,
-          dictNum: '51'
-        })
-          .then(res => {
-            if (res.code == 200) {
-              that.setDepartmentList = res.data
-              that.setDepartmentListNum = {}
-              for (let k in this.setDepartmentList) {
-                that.setDepartmentListNum[that.setDepartmentList[k].eName] = that.setDepartmentList[k].childList.length
-              }
-              console.log('aaaaaaaaaaa')
-
-              console.log(that.setDepartmentListNum)
-            } else {
-              this.$message.error(res.message)
-            }
-          })
-          .catch(err => {
-            this.$message.error(err.message)
-          })
       },
 
       iconSelectFn (item) {
