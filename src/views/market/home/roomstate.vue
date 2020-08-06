@@ -931,6 +931,7 @@ export default {
         /**获取表格数据 */
         getDataList() {
             this.roomloading = true
+            this.roomList = []
             return new Promise((resolve, reject) => {
                 this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', this.searchForm, (res) => {
                     this.roomloading = false
