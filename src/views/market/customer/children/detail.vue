@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 10:51:12
+ * @LastEditTime: 2020-08-06 11:54:50
  * @FilePath: /jiudian/src/views/market/customer/children/detail.vue
  -->
 <template>
@@ -519,7 +519,8 @@ operType: [{
                         } else {
                             params = {
                                 id: this.detailForm.id,
-                                remark: this.cardForm.remark
+                                remark: this.cardForm.remark,
+                                state:2
                             }
                             url = '/pms/hotelmember/enable_disable';
                         }
