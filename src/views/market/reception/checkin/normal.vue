@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 09:52:13
+ * @LastEditTime: 2020-08-06 14:14:30
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -325,7 +325,7 @@
                                 <el-radio :label="1" border>可改房价</el-radio>
                                 <el-radio :label="2" border>不可改房价</el-radio>
                             </el-radio-group>
-                            <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px" @change="getDataList">
+                            <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
                                 <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-row>
