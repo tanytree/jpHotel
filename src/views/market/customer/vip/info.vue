@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 10:56:18
+ * @LastEditTime: 2020-08-06 13:47:01
  * @FilePath: /jiudian/src/views/market/customer/vip/info.vue
  -->
 
@@ -26,8 +26,8 @@
             </el-form-item>
             <el-form-item label="会员类型">
                 <el-select v-model="searchForm.memberTypeId" class="width150">
-                       <el-option label="全部" value=""></el-option>
-                       <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="手机号">
@@ -116,7 +116,7 @@
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
                     <el-button type="text" size="mini" @click="handleEdit(row)" v-if="row.state!=2">修改</el-button>
-                    <el-button type="text" size="mini" @click="handleEdit(row)" v-if="row.state==2">恢复</el-button>
+                    <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state==2">恢复</el-button>
                     <el-dropdown>
                         <span class="el-dropdown-link" style="font-size:12px">
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
@@ -191,15 +191,15 @@ export default {
     },
     data() {
         return {
-          setCardVisible: false,
+            setCardVisible: false,
             cardForm: {},
-            showPageType: 'main',   //页面显示类型
+            showPageType: 'main', //页面显示类型
             loading: false,
             showEdit: false,
             showDetail: false,
             searchForm: {
-              status: '',
-              storesNum: ''
+                status: '',
+                storesNum: ''
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -211,11 +211,11 @@ export default {
             },
             setBlackShow: false,
             setBlackRules: {
-              blackRemark: [{
-                required: true,
-                message: 'not emply',
-                trigger: 'change'
-              }]
+                blackRemark: [{
+                    required: true,
+                    message: 'not emply',
+                    trigger: 'change'
+                }]
             }
         };
     },
@@ -224,7 +224,7 @@ export default {
         this.initForm();
         this.stores_list()
         this.$F.fetchMemberTypeList({}, (res) => {
-          this.smembertypeList = res.list;
+            this.smembertypeList = res.list;
         })
     },
     methods: {
@@ -281,6 +281,29 @@ export default {
                     id: item.id
                 }
             })
+        },
+        handleRecovery(item) {
+            let params = {
+                id: item.id,
+                remark: '',
+                state: 1
+            }
+
+            this.$prompt('请输入恢复原因', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                inputPattern: /\S/,
+                inputErrorMessage: '不能为空'
+            }).then(({
+                value
+            }) => {
+                params.remark = value
+                this.$F.doRequest(this, '/pms/hotelmember/enable_disable', params, (data) => {
+                    this.getDataList()
+                })
+            }).catch(() => {
+                console.log('cancel')
+            });
         },
         handelblacklist(row) {
             this.setBlackForm.id = row.id
