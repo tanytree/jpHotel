@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 11:54:50
+ * @LastEditTime: 2020-08-06 14:43:19
  * @FilePath: /jiudian/src/views/market/customer/children/detail.vue
  -->
 <template>
@@ -254,10 +254,13 @@
             </template>
             <template v-if="cardForm.type==2">
                 <el-form-item label="修改为" class="" prop="memberTypeId">
-                    <el-select v-model="cardForm.memberTypeId" style="width:300px">
-                        <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                    <el-select v-model="cardForm.memberTypeId" style="width:300px" @change="memberTypeIdChange">
+                        <template v-for="item in smembertypeList">
+                            <el-option v-if="item.id!=detailForm.memberTypeId" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                        </template>
                     </el-select>
                 </el-form-item>
+                <template v-if="cardForm.payPrices">
                 <el-form-item label="支付方式" class="" prop="payWay">
                     <el-select v-model="cardForm.payWay" style="width:300px">
                         <el-option label="现金" :value="1"></el-option>
@@ -267,8 +270,9 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="支付费用" class="" prop="payPrices">
-                    <el-input style="width:300px" v-model="cardForm.payPrices" placeholder=""></el-input>
+                    <el-input style="width:300px" v-model="cardForm.payPrices" disabled placeholder=""></el-input>
                 </el-form-item>
+                </template>
                 <el-form-item label="修改原因" class="" prop="remark">
                     <el-input style="width:300px" type="textarea" v-model="cardForm.remark" placeholder=""></el-input>
                 </el-form-item>
@@ -425,7 +429,7 @@ operType: [{
     },
     mounted() {
         this.detailForm.id = this.$route.query.id ? this.$route.query.id : ''
-        debugger
+        // debugger
         if (this.$route.name == 'customeradd') {
             this.type = 'add'
         } else if (this.$route.name == 'customeredit') {
@@ -605,7 +609,15 @@ operType: [{
                     return false;
                 }
             });
-
+        },
+        memberTypeIdChange(e){
+            let that = this
+            console.log(e)
+             for (let k in that.smembertypeList) {
+                if (that.smembertypeList[k].id == e) {
+                    this.cardForm.payPrices = that.smembertypeList[k].prices || ''
+                }
+            }
         },
         F_memberTypeId(v) {
             let that = this
