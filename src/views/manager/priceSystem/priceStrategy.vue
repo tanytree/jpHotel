@@ -11,7 +11,7 @@
 									<el-date-picker v-model="ruleForm.name" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions">
 									</el-date-picker>
 								</el-form-item>
-								<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
+								<el-form-item class="form-inline-flex">
 									<el-row>
 										<el-button type="primary" @click="popup('adjust')" style="width: 100px;" size="mini">批量调价</el-button>
 									</el-row>
@@ -41,7 +41,7 @@
 							<el-form-item label="规则名称:">
 								<el-input v-model="ruleForm.ruleName" class="row-width"></el-input>
 							</el-form-item>
-							<el-form-item label="状态:" class="margin-l">
+							<el-form-item label="状态:" class="margin-l-15">
 								<el-select v-model="ruleForm.state" placeholder="请选择状态" class="row-width">
 									<el-option label="1" value="启用"></el-option>
 									<el-option label="2" value="禁用"></el-option>
@@ -50,8 +50,8 @@
 							<el-form-item>
 								<el-button type="primary" style="width: 100px;" size="mini" @click="get_price_enter_strategy_list">查询</el-button>
 							</el-form-item>
-							<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
-								<el-row style="display: flex;justify-content: flex-end;flex: 1;">
+							<el-form-item class="form-inline-flex">
+								<el-row class="form-inline-flex">
 									<el-button type="primary" @click="popup('add')" style="width: 100px;" size="mini">新增</el-button>
 								</el-row>
 							</el-form-item>
@@ -529,21 +529,12 @@
         font-size: 12px;
         color: #b1b1b1;
     }
-	.margin-l {
-		margin-left: 15px;
-	}
-
 	.row-width {
 		width: 120px;
 	}
 
 	.padding-item {
 		padding-bottom: 5px;
-	}
-
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
 	}
 
 	.btn-click {

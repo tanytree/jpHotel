@@ -554,10 +554,6 @@ export default {
   justify-content: center;
 }
 
-.margin-l {
-  margin-left: 8px;
-}
-
 .tag-margin {
   margin-right: 8px;
   margin-top: 8px;
@@ -565,11 +561,6 @@ export default {
 
 .row-width {
   width: 100px;
-}
-
-.demo-form-inline {
-  display: flex;
-  align-items: center;
 }
 
 .font {

@@ -9,12 +9,12 @@
 								<el-form-item label="规则名称:">
 									<el-input v-model="ruleForm.ruleName" class="row-width"></el-input>
 								</el-form-item>
-								<el-form-item label="计费模式:" class="margin-l">
+								<el-form-item label="计费模式:" class="margin-l-15">
 									<el-select v-model="ruleForm.priceModel" style="width: 120px">
 										<el-option :label="value.name" :value="value.key" v-for="(value, index) in priceModelList" :key="index"></el-option>
 									</el-select>
 								</el-form-item>
-								<el-form-item label="状态:" class="margin-l">
+								<el-form-item label="状态:" class="margin-l-15">
 									<el-select v-model="ruleForm.state" style="width: 120px">
 										<el-option :label="value.name" :value="value.key" v-for="(value, index) in statelList" :key="index"></el-option>
 									</el-select>
@@ -22,7 +22,7 @@
 								<el-form-item>
 									<el-button type="primary" style="width: 100px;" size="mini" @click="searchBtn">查询</el-button>
 								</el-form-item>
-								<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
+								<el-form-item class="form-inline-flex">
 									<el-row>
 										<el-button type="primary" @click="popup('addA')" style="width: 100px;" size="mini">新增</el-button>
 									</el-row>
@@ -70,7 +70,7 @@
 								<el-form-item label="规则名称:">
 									<el-input v-model="ruleForm.name" class="row-width"></el-input>
 								</el-form-item>
-								<!-- <el-form-item label="状态:" class="margin-l">
+								<!-- <el-form-item label="状态:" class="margin-l-15">
 									<el-select v-model="ruleForm.name" placeholder="请选择部门" class="row-width">
 										<el-option label="区域一" value="shanghai"></el-option>
 										<el-option label="区域二" value="beijing"></el-option>
@@ -79,7 +79,7 @@
 								<el-form-item>
 									<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
 								</el-form-item>
-								<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
+								<el-form-item class="form-inline-flex">
 									<el-row>
 										<el-button type="primary" @click="popup('addB')" style="width: 100px;" size="mini">新增</el-button>
 									</el-row>
@@ -196,11 +196,11 @@
 						<el-form-item label="超时收费:" prop="name">
 							<el-col :span="20">
 								超过<el-input v-model="allForm.outtimeMinute" style="width: 70px; margin: 0px 10px;"></el-input>分钟后收费,
-								按 <el-radio-group v-model="allForm.outtimeRule" class="margin-l">
+								按 <el-radio-group v-model="allForm.outtimeRule" class="margin-l-15">
 									<el-radio label="1">半日租加收</el-radio>
 									<el-radio label="2">每小时加收</el-radio>
 								</el-radio-group>
-								<el-checkbox v-model="allForm.outtimeRuleCaps" class="margin-l">夹收封顶</el-checkbox>
+								<el-checkbox v-model="allForm.outtimeRuleCaps" class="margin-l-15">夹收封顶</el-checkbox>
 							</el-col>
 							<el-col :span="20">
 								超过<el-input v-model="allForm.outtimeAllday" style="width: 70px;margin: 0px 10px;"></el-input>分钟后收全日租
@@ -263,10 +263,10 @@
 								<el-option label="区域二" value="beijing"></el-option>
 							</el-select> -->
 						</el-form-item>
-						<el-checkbox v-model="ruleForm_h.state" class="margin-l" style="margin-bottom: 20px;">启用</el-checkbox>
+						<el-checkbox v-model="ruleForm_h.state" class="margin-l-15" style="margin-bottom: 20px;">启用</el-checkbox>
 					</el-col>
 					<el-col :span="20" style="margin-bottom: 20px;">
-						<el-checkbox v-model="ruleForm_h.name" class="margin-l">指定办理入住时间段==:</el-checkbox>
+						<el-checkbox v-model="ruleForm_h.name" class="margin-l-15">指定办理入住时间段==:</el-checkbox>
 						<el-time-picker v-model="ruleForm_h.startTime" arrow-control  :picker-options="{selectableRange: '00:00:00 - 24:59:60'}" placeholder="选择时间"></el-time-picker>-
 						<el-time-picker v-model="ruleForm_h.endTime" arrow-control  :picker-options="{selectableRange: '00:00:00 - 24:59:60'}" placeholder="选择时间">
 						</el-time-picker>
@@ -289,11 +289,11 @@
 					</el-col>
 					<el-col :span="20">
 						<el-form-item label="超时收费规则:" prop="name">
-							<el-radio-group v-model="ruleForm_h.outtimeRule" class="margin-l">
+							<el-radio-group v-model="ruleForm_h.outtimeRule" class="margin-l-15">
 								<el-radio label="1">半日租加收</el-radio>
 								<el-radio label="2">每小时加收</el-radio>
 							</el-radio-group>
-							<el-checkbox v-model="ruleForm_h.outtimeRuleCaps" class="margin-l">夹收封顶</el-checkbox>
+							<el-checkbox v-model="ruleForm_h.outtimeRuleCaps" class="margin-l-15">夹收封顶</el-checkbox>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
@@ -367,7 +367,7 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="18">
-						<el-form-item label="计费规则:" class="margin-l">
+						<el-form-item label="计费规则:" class="margin-l-15">
 							<el-select v-model="ruleForm.name" placeholder="请选择计费规则" style="width: 100%;">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
@@ -718,9 +718,6 @@
 </script>
 
 <style lang="less" scoped>
-	.margin-l {
-		margin-left: 15px;
-	}
 
 	.row-width {
 		width: 120px;
@@ -728,11 +725,6 @@
 
 	.padding-item {
 		padding-bottom: 5px;
-	}
-
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
 	}
 
 	.btn-click {

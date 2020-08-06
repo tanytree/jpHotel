@@ -275,8 +275,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
-	}
+
 </style>

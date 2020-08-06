@@ -28,7 +28,7 @@
 								<el-form-item label="物品名称:">
 									<el-input v-model="fourForm.name" class="row-width"></el-input>
 								</el-form-item>
-								<el-form-item label="物品类型:" class="margin-l">
+								<el-form-item label="物品类型:" class="margin-l-15">
 									<el-select v-model="fourForm.name" placeholder="请选择状态" class="row-width">
 										<el-option label="区域一" value="shanghai"></el-option>
 										<el-option label="区域二" value="beijing"></el-option>

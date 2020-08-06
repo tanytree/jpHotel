@@ -41,7 +41,9 @@
                 <el-table-column header-align="center" label="操作" width="100">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-                        <el-button type="text" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+                            <el-button slot="reference" type="text">删除</el-button>
+                        </el-popconfirm>
                         <el-button type="text" icon="el-icon-shopping-cart-full" @click="handleExamine(scope.$index, scope.row)">冲销</el-button>
                     </template>
                 </el-table-column>
@@ -84,7 +86,7 @@
 
             },
 
-            handleDelete(index, row) {
+            handleDelete(row) {
 
             },
             handleExamine(index, row) {
