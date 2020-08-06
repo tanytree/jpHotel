@@ -148,7 +148,8 @@
                     </el-row>
                 </el-row>
             </template>
-            <el-row>
+            <el-row style="height:60px;width:100%"></el-row>
+            <el-row style="position:fixed;bottom:20px;left:calc(20.83333% + 320px);width:100%">
                 <el-button @click="batchRoomHaldel">批量置脏/置净</el-button>
                 <el-button>打印房态盘</el-button>
                 <el-button type="primary" @click="print = true">
