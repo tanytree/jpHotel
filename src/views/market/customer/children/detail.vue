@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 10:42:01
+ * @LastEditTime: 2020-08-06 10:51:12
  * @FilePath: /jiudian/src/views/market/customer/children/detail.vue
  -->
 <template>
@@ -525,7 +525,7 @@ operType: [{
                         }
                     }
                     this.$F.doRequest(this, url, params, (data) => {
-                        if (this.cardForm.type != 3) {
+                        if (this.cardForm.type != 3 || this.cardForm.type != 4) {
                             this.setCardFormVisible = false
                             this.findone(this.detailForm.id)
                         } else {
