@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 16:41:55
+ * @LastEditTime: 2020-08-06 17:23:52
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
@@ -128,9 +128,9 @@ module.exports = {
     },
     //预订类型
     operCheckinType:{
-        "1": '普通预订',
-        "2": '时租房预订',
-        "3": '会场预订'
+        "1": '普通房',
+        "2": '时租房',
+        "3": '会场'
     },
     //单位是否停用
     comState:{

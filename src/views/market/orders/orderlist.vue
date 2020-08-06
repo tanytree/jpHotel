@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-31 17:05:05
+ * @LastEditTime: 2020-08-06 17:42:55
  * @FilePath: /jiudian/src/views/market/orders/orderlist.vue
  -->
 
@@ -129,7 +129,7 @@
             </el-table-column>
             <el-table-column label="操作" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">详情</el-button>
+                    <el-button type="text" size="mini" @click="handelDetail(row)">详情</el-button>
                     <el-button type="text" size="mini">结账</el-button>
                     <el-button type="text" size="mini">开发票</el-button>
                     <el-dropdown>
@@ -211,6 +211,9 @@ export default {
                 this.tableData = res.roomPersonList;
                 this.listTotal = res.page.count
             })
+        },
+        handelDetail(item) {
+            this.$router.push('/orderdetail')
         },
         /**编辑 */
         editRowItem(row) {

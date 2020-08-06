@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 14:43:19
+ * @LastEditTime: 2020-08-06 16:25:34
  * @FilePath: /jiudian/src/views/market/customer/children/detail.vue
  -->
 <template>
@@ -261,17 +261,17 @@
                     </el-select>
                 </el-form-item>
                 <template v-if="cardForm.payPrices">
-                <el-form-item label="支付方式" class="" prop="payWay">
-                    <el-select v-model="cardForm.payWay" style="width:300px">
-                        <el-option label="现金" :value="1"></el-option>
-                        <el-option label="微信" :value="2"></el-option>
-                        <el-option label="支付宝" :value="3"></el-option>
-                        <el-option label="银联" :value="4"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="支付费用" class="" prop="payPrices">
-                    <el-input style="width:300px" v-model="cardForm.payPrices" disabled placeholder=""></el-input>
-                </el-form-item>
+                    <el-form-item label="支付方式" class="" prop="payWay">
+                        <el-select v-model="cardForm.payWay" style="width:300px">
+                            <el-option label="现金" :value="1"></el-option>
+                            <el-option label="微信" :value="2"></el-option>
+                            <el-option label="支付宝" :value="3"></el-option>
+                            <el-option label="银联" :value="4"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="支付费用" class="" prop="payPrices">
+                        <el-input style="width:300px" v-model="cardForm.payPrices" disabled placeholder=""></el-input>
+                    </el-form-item>
                 </template>
                 <el-form-item label="修改原因" class="" prop="remark">
                     <el-input style="width:300px" type="textarea" v-model="cardForm.remark" placeholder=""></el-input>
@@ -415,7 +415,7 @@ export default {
                     message: '请选择支付方式',
                     trigger: 'change'
                 }, ],
-operType: [{
+                operType: [{
                     required: true,
                     message: '请选择操作类型',
                     trigger: 'change'
@@ -524,7 +524,7 @@ operType: [{
                             params = {
                                 id: this.detailForm.id,
                                 remark: this.cardForm.remark,
-                                state:2
+                                state: 2
                             }
                             url = '/pms/hotelmember/enable_disable';
                         }
@@ -610,10 +610,10 @@ operType: [{
                 }
             });
         },
-        memberTypeIdChange(e){
+        memberTypeIdChange(e) {
             let that = this
             console.log(e)
-             for (let k in that.smembertypeList) {
+            for (let k in that.smembertypeList) {
                 if (that.smembertypeList[k].id == e) {
                     this.cardForm.payPrices = that.smembertypeList[k].prices || ''
                 }

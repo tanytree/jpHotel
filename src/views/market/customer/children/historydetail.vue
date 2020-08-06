@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-08 16:53:11
+ * @LastEditTime: 2020-08-06 16:33:58
  * @FilePath: /jiudian/src/views/market/customer/children/historydetail.vue
  -->
 <template>
@@ -142,48 +142,124 @@ export default {
     },
     data() {
         return {
+            loading: false,
             type: 'edit',
             setCardFormVisible: false,
             formLabelWidth: '120px',
+            nationalityList: [],
+            storeList: '',
+            smembertypeList: '',
+            salesList: '',
+            hotelenterList: '',
             cardForm: {
                 titleName: '',
                 type: '',
-                name: ''
+                name: '',
             },
             detailForm: {
+                id: '',
                 name: ''
+            },
+            rules: {
+                name: [{
+                    required: true,
+                    message: '请输入姓名',
+                    trigger: 'blur'
+                }, ],
+                sex: [{
+                    required: true,
+                    message: '请选择性别',
+                    trigger: 'change'
+                }, ],
+                idcardType: [{
+                    required: true,
+                    message: '请选择证件类型',
+                    trigger: 'change'
+                }, ],
+                idcard: [{
+                    required: true,
+                    message: '请填入证件编号',
+                    trigger: 'blur'
+                }, ],
+                mobile: [{
+                    required: true,
+                    message: '请输入手机号',
+                    trigger: 'blur'
+                }, ],
+                memberCard: [{
+                    required: true,
+                    message: '请输入会员卡号',
+                    trigger: 'blur'
+                }, ],
+                memberTypeId: [{
+                    required: true,
+                    message: '请选择会员类型',
+                    trigger: 'change'
+                }, ],
+                state: [{
+                    required: true,
+                    message: '请选择是否立即发卡',
+                    trigger: 'change'
+                }, ],
+                remark: [{
+                    required: true,
+                    message: '请填写备注',
+                    trigger: 'blur'
+                }, ],
+                payPrices: [{
+                    required: true,
+                    message: '请填写支付金额',
+                    trigger: 'blur'
+                }, ],
+                payWay: [{
+                    required: true,
+                    message: '请选择支付方式',
+                    trigger: 'change'
+                }, ],
+                operType: [{
+                    required: true,
+                    message: '请选择操作类型',
+                    trigger: 'change'
+                }, ],
+
             }
         };
     },
+    filters: {
 
+    },
     mounted() {
-        console.log(this.$route)
-        let id = this.$route.query.id
-        this.type = this.$route.name == 'customeredit' ? 'edit' : 'detail'
-        // this.get_user_enterprise(id)
+        this.detailForm.id = this.$route.query.id ? this.$route.query.id : ''
+        // debugger
+        if (this.$route.name == 'customeradd') {
+            this.type = 'add'
+        } else if (this.$route.name == 'customeredit') {
+            this.type = 'edit'
+        } else {
+            this.type = 'detail'
+        }
+        if (this.$route.query.id) {
+            this.findone(this.$route.query.id)
+        }
+        this.stores_list()
+        this.nationality()
+        this.login_user_list()
+        this.hotelenter_list()
+        this.smembertype_list()
     },
 
     methods: {
-        get_user_enterprise(id) {
-            // 加载组件
-            let params = {
-                token: this.token,
-                userId: this.userId,
-                plat_source: this.plat_source,
-                enterCode: id
-            }
-            get_user_enterprise(params).then(res => {
-                    if (res.code == 200) {
-                        this.detailDialogFormVisible = true;
-                        this.detailData = res.data
-                    } else {
-                        this.$message.error(res.message);
+        findone(id) {
+            this.$F.doRequest(this, '/pms/hotelmember/findone', {
+                id: id
+            }, (res) => {
+                for (var key in res) { //遍历json对象的每个key/value对,p为key
+                    if (res[key] && typeof (res[key]) == "number") {
+                        res[key] = res[key].toString();
                     }
-                })
-                .catch(err => {
-                    this.$message.error(err.message);
-                });
-
+                }
+                this.detailForm = res;
+            })
         },
         setCardFormBtnClick(v) {
             let enums = {
@@ -195,6 +271,199 @@ export default {
             this.cardForm.type = v
             this.cardForm.titleName = v && enums[v] ? enums[v] : '其它'
             this.setCardFormVisible = true
+        },
+        setCardFrormChange(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    let params = {},
+                        url = '';
+                    if (this.cardForm.type == 1) {
+                        url = '/pms/hotelmember/changecard';
+                        params = {
+                            id: this.detailForm.id,
+                            remark: this.cardForm.remark,
+                            memberCard: this.cardForm.memberCard,
+                            state: this.cardForm.state ? 1 : 3
+                        }
+                    }
+                    if (this.cardForm.type == 2) {
+                        url = '/pms/hotelmember/change_type';
+                        params = {
+                            memberId: this.detailForm.id,
+                            remark: this.cardForm.remark,
+                            oldTypeId: this.detailForm.memberTypeId,
+                            newTypeId: this.cardForm.memberTypeId,
+                            operType: 1,
+                            oldCardNum: this.detailForm.memberCard,
+                            cardNum: this.detailForm.memberCard,
+                            payWay: this.cardForm.payWay,
+                            payPrices: this.cardForm.payPrices
+                        }
+                    }
+                    if (this.cardForm.type == 3) {
+                        url = '/pms/hotelmember/delete';
+                        params = {
+                            id: this.detailForm.id,
+                            remark: this.cardForm.remark,
+                        }
+                    }
+                    if (this.cardForm.type == 4) {
+                        if (this.cardForm.operType == 2) {
+                            params = {
+                                memberId: this.detailForm.id,
+                                remark: this.cardForm.remark,
+                                oldTypeId: this.detailForm.memberTypeId,
+                                newTypeId: this.detailForm.memberTypeId,
+                                operType: 2,
+                                oldCardNum: this.detailForm.memberCard,
+                                cardNum: this.cardForm.memberCard,
+                                payWay: this.cardForm.payWay,
+                                payPrices: this.cardForm.payPrices
+                            }
+                            url = '/pms/hotelmember/change_type';
+                        } else {
+                            params = {
+                                id: this.detailForm.id,
+                                remark: this.cardForm.remark,
+                                state: 2
+                            }
+                            url = '/pms/hotelmember/enable_disable';
+                        }
+                    }
+                    this.$F.doRequest(this, url, params, (data) => {
+                        if (this.cardForm.type != 3 || this.cardForm.type != 4) {
+                            this.setCardFormVisible = false
+                            this.findone(this.detailForm.id)
+                        } else {
+                            this.$router.go(-1)
+                        }
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        smembertype_list() {
+            this.$F.fetchMemberTypeList({}, (res) => {
+                this.smembertypeList = res.list;
+            })
+        },
+        login_user_list() {
+            let params = {
+                searchType: 1,
+                paging: false,
+                salesFlag: 1,
+                content: '',
+                departmentId: '',
+                pageIndex: 1,
+                pageSize: 10
+            }
+            this.$F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
+                this.salesList = data.hotelUserList;
+            })
+        },
+        hotelenter_list() {
+            let params = {
+                id: '',
+                enterName: '',
+                state: 1,
+                shareFlag: '',
+                contactName: '',
+                contactPhone: '',
+                salesId: '',
+                startCreditLimit: '',
+                endCreditLimit: '',
+                paging: false,
+                salesFlag: 1,
+                pageIndex: 1,
+                pageSize: 10
+            }
+            this.$F.doRequest(null, '/pms/hotelenter/list', params, (data) => {
+                this.hotelenterList = data.list
+            })
+        },
+        stores_list() {
+            this.$F.doRequest(null, '/pms/freeuser/stores_list', {}, (data) => {
+                this.storeList = data;
+            })
+        },
+        nationality() {
+            this.$F.fetchNationality((res) => {
+                this.nationalityList = res;
+            })
+        },
+        addItem(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$F.doRequest(this, '/pms/hotelmember/edit', this.detailForm, (res) => {
+                        this.$message({
+                            message: 'success',
+                            type: 'success'
+                        });
+                        setTimeout(() => {
+                            this.$router.go(-1)
+                        }, 1200)
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        memberTypeIdChange(e) {
+            let that = this
+            console.log(e)
+            for (let k in that.smembertypeList) {
+                if (that.smembertypeList[k].id == e) {
+                    this.cardForm.payPrices = that.smembertypeList[k].prices || ''
+                }
+            }
+        },
+        F_memberTypeId(v) {
+            let that = this
+            for (let k in that.smembertypeList) {
+                if (that.smembertypeList[k].id == v) {
+                    return that.smembertypeList[k].name
+                }
+            }
+            return ''
+        },
+        F_storeName(v) {
+            let that = this
+            for (let k in that.storeList) {
+                if (that.storeList[k].storesNum == v) {
+                    return that.storeList[k].storesName
+                }
+            }
+            return ''
+        },
+        F_nationality(v) {
+            let that = this
+            for (let k in that.nationalityList) {
+                if (that.nationalityList[k].id == v) {
+                    return this.$i18n.locale == 'ri' ? that.nationalityList[k].jName : that.nationalityList[k].cName
+                }
+            }
+            return ''
+        },
+        F_salesId(v) {
+            let that = this
+            for (let k in that.salesList) {
+                if (that.salesList[k].id == v) {
+                    return that.salesList[k].userName
+                }
+            }
+            return ''
+        },
+        F_enterId(v) {
+            let that = this
+            for (let k in that.hotelenterList) {
+                if (that.hotelenterList[k].id == v) {
+                    return that.hotelenterList[k].enterName
+                }
+            }
+            return ''
         }
 
     }

@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Dana
- * @LastEditTime: 2020-07-07 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-08-06 15:49:59
+ * @FilePath: /jiudian/src/assets/languages/commons/commonsRi.js
  */
 module.exports = {
     queryBtn: '検索',
@@ -41,7 +41,7 @@ module.exports = {
     orderSource:{
         "1": '前台',
         "2": '销售推荐',
-        "3": '渠道订单',
+        // "3": '渠道订单',
         "10": '其它'
     },
     //正常免费
