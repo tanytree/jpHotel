@@ -447,13 +447,13 @@
                     <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
                     <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
                     <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
-                    <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
+                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>
                     <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
                     <el-button style="width:60px;" v-if="currentRoom.roomStatus==2||currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
                 </template>
                 <template v-else-if="currentRoom.checkInRoomType==2">
                     <el-button style="width:60px;">入住</el-button>
-                    <el-button style="width:60px;" @click="mackcade=true">制卡</el-button>
+                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>
                     <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>
                     <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1|| currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏</el-button>
                     <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
@@ -704,30 +704,31 @@
     </div>
     <!-- 制卡 -->
     <div>
-        <el-dialog top="0" title="房卡操作" :visible.sync="mackcade" width="60%">
-            <el-card>
-                <el-form>
-                    <el-row>
-                        <el-form-item>
-                            <span>共一间&nbsp;&nbsp;本次已制卡数：0</span>
-                            <el-col :span="8" style="float:right">
-                                <el-button>制卡</el-button>
-                                <el-button>清卡</el-button>
-                                <el-button>读卡</el-button>
-                            </el-col>
-
-                        </el-form-item>
-                    </el-row>
-
-                    <el-form-item>
-                        <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%">
-                            <el-table-column type="selection" width="55"></el-table-column>
-                            <el-table-column prop="name" label="房间号" width="200"></el-table-column>
-                            <el-table-column prop="name" label="本次制卡状态"></el-table-column>
-                        </el-table>
-                    </el-form-item>
-                </el-form>
-            </el-card>
+        <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
+            <el-row>
+                <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
+                <el-col :span="8" style="float:right">
+                    <el-button @click="make_card_status">制卡</el-button>
+                    <el-button>清卡</el-button>
+                    <el-button>读卡</el-button>
+                </el-col>
+            </el-row>
+            <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
+                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column prop="name" label="房间号" width="200">
+                    <template slot-scope="{row}">
+                        {{row.room?row.room.houseNum:''}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="name" label="本次制卡状态">
+                    <template slot-scope="{row}">
+                        {{F_markCard(row.markCard)}}
+                    </template>
+                </el-table-column>
+            </el-table>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="small" @click="mackcadeCancel">取消</el-button>
+            </span>
         </el-dialog>
     </div>
 
@@ -888,6 +889,9 @@ export default {
             hotel_building_list: '',
             hotel_building_floor_list: '',
             currentRoom: '',
+            liveCardData: [],
+            liveCardLoading: false,
+            multipleSelection: []
 
         };
     },
@@ -1153,7 +1157,74 @@ export default {
         },
         batchRoomHaldel() {
             this.$refs.roomStatusHandle.init();
-        }
+        },
+        //获取制卡房间表
+        liveCard_in_person_list(item) {
+            console.log(item)
+            if(!item.livingPersonList.length){
+              this.$message.error('暂无入住人，请添加入住人后操作')
+              return
+            }
+            let params = {
+                type: 3,
+                checkinId: item.livingPersonList[0].checkinId,
+                pageIndex: 1,
+                pageSize: 999
+            };
+            this.liveCardLoading = true;
+            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
+                // this.liveCardData = res.checkInRoomList
+                this.liveCardData = res
+                this.liveCardData.done = 0;
+                this.liveCardData.unfinished = 0;
+                let list = res.checkInRoomList;
+                for (let k in list) {
+                    if (list[k].markCard == 2) {
+                        this.liveCardData.done++
+                    }
+                    if (list[k].markCard == 1) {
+                        this.liveCardData.unfinished++
+                    }
+                }
+                this.liveCardLoading = false
+                this.mackcade = true
+                this.$forceUpdate()
+            })
+        },
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
+            console.log(val)
+        },
+        mackcadeCancel() {
+
+            this.mackcade = false
+
+        },
+        make_card_status() {
+            let arr = []
+            if (!this.multipleSelection.length) {
+                this.$message.error('至少选择一间房间')
+                return
+            }
+            this.multipleSelection.forEach(element => {
+                arr.push(element.id)
+            });
+            let params = {
+                checkInRoomIds: arr,
+            };
+            this.$F.doRequest(this, '/pms/checkin/make_card_status', params, (res) => {
+                this.$message({
+                    message: '制卡成功',
+                    type: 'success'
+                });
+                this.liveCard_in_person_list()
+                this.$forceUpdate()
+            })
+        },
+        F_markCard(value) {
+            let enums = this.$t('commons.markCard')
+            return value && enums[value] ? enums[value] : ''
+        },
     }
 };
 </script>

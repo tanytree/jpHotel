@@ -7,8 +7,7 @@
                 <div class="left">
                     <el-avatar :size="40" fit="cover" :src="require('@/assets/images/people.png')"></el-avatar>
                     <div class="avatarName">{{item.userName}}</div>
-                    <el-tag v-for="role in $t('commons.userRoleList')" :key="role.value" :label="role.value"
-                         v-if="item.userRole && role.value == item.userRole.userStatus && item.userRole.userStatus == 2">{{role.label}}
+                    <el-tag v-for="role in $t('commons.userRoleList')" :key="role.value" :label="role.value" v-if="item.userRole && role.value == item.userRole.userStatus && item.userRole.userStatus == 2">{{role.label}}
                     </el-tag>
                 </div>
                 <el-dropdown trigger="click" @command="(e) => handleCommand(e, item)">
@@ -65,11 +64,12 @@
 </template>
 
 <script>
-  import {
+import {
     mapState,
     mapActions
-  } from 'vuex'
-  import LoginDetail from '@/components/employee/loginDetail'
+} from 'vuex'
+import LoginDetail from '@/components/employee/loginDetail'
+
 function setArr(arr, newArr) {
     newArr = newArr || [];
     arr.forEach(item => {
@@ -78,6 +78,7 @@ function setArr(arr, newArr) {
     })
     return newArr;
 }
+
 function setArrChoose(arr, str) {
     arr.forEach(item => {
         (item.id && str.indexOf(item.id) != -1) && (item.choose = true);
@@ -87,17 +88,19 @@ function setArrChoose(arr, str) {
 
 export default {
 
-    components: {LoginDetail},
-      computed: {
+    components: {
+        LoginDetail
+    },
+    computed: {
         ...mapState({
-          user: state => state.user,
+            user: state => state.user,
         })
-      },
+    },
     name: "",
 
     data() {
         return {
-          loading: false,
+            loading: false,
             listVisible: true,
             searchForm: {},
             tableData: [],
@@ -173,14 +176,14 @@ export default {
                     // console.log(thisIds)
                     let str = JSON.stringify(thisIds)
                     let newMenuList = setArrChoose(this.menuList, str)
-                    for(let k in this.menuList){
+                    for (let k in this.menuList) {
                         let cItem = this.menuList[k];
                         let checkNum = 0;
-                        for(let i in cItem.childList){
+                        for (let i in cItem.childList) {
                             (cItem.childList[i].choose) && (checkNum++)
                         }
-                        (checkNum>0) && (cItem.isIndeterminate = true)
-                        if(checkNum && (checkNum == cItem.childList.length) ){
+                        (checkNum > 0) && (cItem.isIndeterminate = true)
+                        if (checkNum && (checkNum == cItem.childList.length)) {
                             cItem.checkAll = true
                             cItem.isIndeterminate = false
                         }
@@ -202,7 +205,7 @@ export default {
                     // this.$refs.authors.initForm();
                 });
             } else {
-              this.$refs.loginDetail.getDetails(item.account);
+                this.$refs.loginDetail.getDetails(item.account);
             }
         },
         back() {
