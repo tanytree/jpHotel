@@ -1,75 +1,64 @@
 <template>
-	<div>
-		<el-row>
-			<el-tabs v-model="activName">
-				<el-tab-pane label="商品库存统计" name="a">
-					<el-row :gutter="20">
-						<el-row>
-							<el-form class="demo-form-inline" inline size="small">
-								<el-form-item label="商品名称:">
-									<el-input v-model="ruleForm.name" class="row-width"></el-input>
-								</el-form-item>
-								<el-form-item label="库存状态:" class="margin-l-15">
-									<el-select v-model="ruleForm.name" placeholder="请选择部门" class="row-width">
-										<el-option label="区域一" value="shanghai"></el-option>
-										<el-option label="区域二" value="beijing"></el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item>
-									<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
-									<el-button type="primary" style="width: 100px;" size="mini">重置</el-button>
-								</el-form-item>
-								<el-form-item class="form-inline-flex">
-									<el-row>
-										<el-button @click="popup('add')" style="width: 100px;" size="mini">导出</el-button>
-									</el-row>
-								</el-form-item>
-							</el-form>
-						</el-row>
-						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-								<el-table-column prop="name" label="商品名称"></el-table-column>
-								<el-table-column prop="time" label="库存预警数量"></el-table-column>
-								<el-table-column prop="job_status" label="库存量"></el-table-column>
-								<el-table-column label="操作" width="100">
-									<template slot-scope="scope">
-										<el-button type="text" size="small" @click="popup('changeA')">修改库存</el-button>
-									</template>
-								</el-table-column>
-							</el-table>
-							<div class="block">
-								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
-							</div>
-						</div>
-					</el-row>
-				</el-tab-pane>
-				<el-tab-pane label="入库审核" name="b">
-					<el-row :gutter="20" style="display: flex;justify-content: center;align-items: center;">
-						<div class="btn-click" @click="popup('info')">
-							<div style="display: flex;justify-content: center;align-items: center;">
-								<i class="el-icon-download"></i>
-								<span>商品入库</span>
-							</div>
-						</div>
-					</el-row>
-				</el-tab-pane>
-			</el-tabs>
-		</el-row>
-		<!-- 修改库存 -->
-		<el-dialog top="0" title="修改库存" :visible.sync="dialogChangeA" :close-on-click-modal="false">
-			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
-					<el-col :span="18">
-						<el-form-item label="库存数量:" prop="name">
-							<el-input v-model="ruleForm.name"></el-input>
+	<div class="boss-index">
+		<el-tabs v-model="activeName" class="tabCenter">
+			<el-tab-pane label="商品库存统计" name="count">
+				<div class="content">
+					<el-form class="term line demo-form-inline" inline size="small" v-model="form">
+						<el-form-item label="商品名称:">
+							<el-input v-model="form.name"></el-input>
 						</el-form-item>
-					</el-col>
-				</el-form>
-			</el-row>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-			</span>
+						<el-form-item label="库存状态:" class="margin-l-15">
+							<el-select v-model="form.status">
+								<el-option label="全部" value="all"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" class="submit" @click="search">查询</el-button>
+							<el-button class="grey" @click="reset">重置</el-button>
+						</el-form-item>
+						<el-form-item class="form-inline-flex">
+							<el-button @click="popup('add')" class="white">导出</el-button>
+						</el-form-item>
+					</el-form>
+					<div class="components-edit">
+						<el-table ref="multipleTable" :data="list" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+							<el-table-column prop="name" label="商品名称"></el-table-column>
+							<el-table-column prop="inventoryWarning" label="库存预警数量"></el-table-column>
+							<el-table-column prop="inventoryCount" label="库存量"></el-table-column>
+							<el-table-column label="操作" width="100">
+								<template slot-scope="scope">
+									<el-button type="text" size="small" @click="popup('changeStock', scope.row)">修改库存</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<div class="block">
+							<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
+						</div>
+					</div>
+				</div>
+			</el-tab-pane>
+			<el-tab-pane label="入库审核" name="examine">
+				<el-row :gutter="20" style="display: flex;justify-content: center;align-items: center;">
+					<div class="btn-click" @click="popup('info')">
+						<div style="display: flex;justify-content: center;align-items: center;">
+							<img src="../../../assets/images/house.png" alt="">
+							<span>商品入库</span>
+						</div>
+					</div>
+				</el-row>
+			</el-tab-pane>
+		</el-tabs>
+		<!-- 修改库存 -->
+		<el-dialog top="0" title="修改库存" :visible.sync="changeStockVisible" :close-on-click-modal="false">
+			<el-form :model="stock" :rules="rules" ref="ruleForm" label-width="150px">
+				<el-form-item label="库存数量:" prop="name">
+					<el-input v-model="stock.count"></el-input>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="changeStockVisible = false">取 消</el-button>
+				<el-button type="primary" @click="submit('stockNum')">确 定</el-button>
+			</div>
 		</el-dialog>
 		<!-- 商品入库 -->
 		<el-dialog top="0" title="商品入库" :visible.sync="dialogInfo_show" :close-on-click-modal="false">
@@ -177,16 +166,10 @@
 	export default {
 		data() {
 			return {
-				activName: 'a',
-				pageSize: 10, currentPage: 1, total: 0,
-				tableData: [{
-					name: '',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}],
+				activeName: 'count',
+				form: {name: '', status: 'all'},
+				tableData: [],
+				stock: {count: ''},
 				ruleForm: {
 					name: '',
 					region: '',
@@ -198,24 +181,26 @@
 					desc: ''
 				},
 				rules: {
-					name: [{
-						required: true,
-						message: '请输入姓名',
-						trigger: 'blur'
-					}]
+					count: [{required: true, message: '请输入库存', trigger: 'blur'}]
 				},
-				dialogChangeA: false,
+				changeStockVisible: false,
 				dialogInfo_show: false, //商品入库弹框
 				dialogStock_show:false, // 修改库存
 			};
 		},
+		props: {
+			list: Array, category: Array, total: Number, pageSize: Number, currentPage: Number, initData: Function
+		},
+		mounted() {
+		},
 		methods: {
-			popup(type) {
-				debugger
+			popup(type, row) {
+				if(type == 'changeStock') {
+					this.stock.id = row.id;
+					this.stock.count = row.inventoryCount;
+					this.changeStockVisible = true;
+				}
 				switch (type) {
-					case 'changeA':
-						this.dialogChangeA = true;
-						break
 					case 'info':
 						this.dialogInfo_show = true;
 						break
@@ -224,17 +209,28 @@
 						break
 				}
 			},
-			// // 切换
-			// changeTab(index) {
-			// 	let that = this;
-			// 	that.currentIndex = index;
-			// },
-			// 分页
+			search() {
+				this.getHotelGoodsData(this.form.name, this.form.category, this.form.status)
+			},
+			reset() {
+				this.form = {name: '', status: 'all', category: ''}
+			},
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
+			},
+			submit(type) {
+				if(type == 'stockNum') {
+					this.$F.doRequest(this, '/pms/hotelgoods/upcounts', {
+						id: this.stock.id,
+						counts: this.stock.count
+					}, (res) => {
+						this.changeStockVisible = false
+						this.initData()
+					})
+				}
 			}
 		}
 	};

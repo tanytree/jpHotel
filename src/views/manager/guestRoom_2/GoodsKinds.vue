@@ -7,7 +7,7 @@
 				<el-button class="cancel" @click="addCategory">新增一级分组</el-button>
 			</div>
 			<div class="accountBtm">
-				<el-tree :props="treeProps" :data="treeData" node-key="id" ref="treeType" default-expand-all>
+				<el-tree :props="treeProps" :data="list" node-key="id" ref="treeType" default-expand-all>
 					<span class="custom-tree-node" slot-scope="{node, data}">
 						<span>{{ node.label }}</span>
 						<span>
@@ -21,16 +21,16 @@
 			</div>
 		</div>
 		<!-- 新增分类 -->
-		<el-dialog :title="cateTitle" :visible.sync="cateVisible" top="0" :close-on-click-modal="false">
-			<el-form label-position="right" label-width="50px" size='medium'>
+		<el-dialog :title="cateTitle" :visible.sync="cateVisible" top="0" width="600px" :close-on-click-modal="false">
+			<el-form label-position="right" label-width="120px" size='medium'>
 				<el-form-item label="一级分类名称：">
-					<el-input :disabled="category.categoryLevel==2 || category.categoryLevel==3 ? true: false" v-model="category.province"></el-input>
+					<el-input :disabled="category.categoryLevel==2 || category.categoryLevel==3 ? true: false" v-model="category.first"></el-input>
 				</el-form-item>
 				<el-form-item v-if="category.categoryLevel==2 || category.categoryLevel==3" label="二级分类名称：">
-					<el-input :disabled="category.categoryLevel==3 ? true: false" v-model="category.city"></el-input>
+					<el-input :disabled="category.categoryLevel==3 ? true: false" v-model="category.second"></el-input>
 				</el-form-item>
-				<el-form-item v-if="category.categoryLevel==3" label="三级级分类名称：">
-					<el-input v-model="category.county"></el-input>
+				<el-form-item v-if="category.categoryLevel==3" label="三级分类名称：">
+					<el-input v-model="category.third"></el-input>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -47,78 +47,41 @@
 			return {
 				areaActive: 'category',
 				treeProps: {children: 'child', label: 'name'},
-				treeData: [], isexpand: true, allTree: [],
+				isexpand: true, allTree: [],
 				cateVisible: false,
 				cateTitle: '', add: true,
-				category: {id: '', categoryLevel: '', province: '', city: '', county: ''},
+				category: {id: '', categoryLevel: '', first: '', second: '', third: '', pCategoryId: ''},
 			};
 		},
+		props: {
+			list: Array, initData: Function
+		},
 		mounted() {
-			this.queryCategory()
 		},
 		methods: {
-			queryCategory: function() {
-				var a = this;
-				this.$F.doRequest(this, '/pms/hotelcategory/list', {}, (res) => {
-					a.allTree = res.list;
-					a.treeData = a.getTreeItem(res.list);
-				})
-			},
-			getTreeItem: function (arr) {
-				let newarr = []
-				arr.sort(this.compare('categoryOrder'))
-				newarr = arr.filter(father => {
-					const branchArr = arr.filter((child) => {
-						if (father.id == child.pCategoryId ) child._hasParent = true;
-						return father.id == child.pCategoryId;
-					});
-					if (branchArr.length > 0) father.child = branchArr;
-					return !father._hasParent;
-				})
-
-				newarr = newarr.filter((item) => {
-					return !item._hasParent;
-				})
-				return newarr;
-			},
-			compare: function (attr, rev){
-				if(rev ==  undefined){
-					rev = 1;
-				} else {
-					rev = (rev) ? 1 : -1;
-				}
-				return function(a,b){
-					a = a[attr];
-					b = b[attr];
-					if(a < b){
-						return rev * -1;
-					}
-					if(a > b){
-						return rev * 1;
-					}
-					return 0;
-				}
-			},
 			addCategory() {
 				this.cateVisible = true;
 				this.category.categoryLevel = 1;
+				this.category.pCategoryId = 0;
+				this.category.first = '';
 				this.cateTitle = '新增一级分类';
 				this.add = true;
 			},
 			addSecond(node, data) {
 				this.cateVisible = true;
 				this.category.categoryLevel = 2;
-				this.category.province = data.name;
-				this.category.id = data.id;
+				this.category.pCategoryId = data.id;
+				this.category.first = data.name;
+				this.category.second = '';
 				this.cateTitle = '新增二级分类';
 				this.add = true;
 			},
 			addThird(node, data) {
 				this.cateVisible = true;
 				this.category.categoryLevel = 3;
-				this.category.province = node.parent.data.name;
-				this.category.city = data.name;
-				this.category.id = data.id;
+				this.category.pCategoryId = data.id;
+				this.category.first = node.parent.data.name;
+				this.category.second = data.name;
 				this.cateTitle = '新增三级分类';
 				this.add = true;
 			},
@@ -132,11 +95,11 @@
 				this.cateVisible = true;
 				this.cateTitle = '修改分类';
 				if(data.categoryLevel == 1) {
-					this.category = {id: data.id, categoryLevel: data.categoryLevel, province: data.name, city: '**', county: '**'}
+					this.category = {id: data.id, categoryLevel: data.categoryLevel, first: data.name, second: '**', third: '**', pCategoryId: data.pCategoryId}
 				} else if (data.categoryLevel == 2) {
-					this.category = {id: data.id, categoryLevel: data.categoryLevel, province: node.parent.data.name, city: data.name, county: '**'}
+					this.category = {id: data.id, categoryLevel: data.categoryLevel, first: node.parent.data.name, second: data.name, third: '**', pCategoryId: data.pCategoryId}
 				} else {
-					this.category = {id: data.id, categoryLevel: data.categoryLevel, province: node.parent.parent.data.name, city: node.parent.data.name, county: data.name}
+					this.category = {id: data.id, categoryLevel: data.categoryLevel, first: node.parent.parent.data.name, second: node.parent.data.name, third: data.name, pCategoryId: data.pCategoryId}
 				}
 				this.add = false;
 			},
@@ -150,63 +113,33 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					$.ajax({
-						url: serverName + '/region/address/delete',
-						type: 'post',
-						data: {
-							token: token, id: data.id,
-						},
-						dataType: 'json',
-						success: function(res) {
-							if(res.code === 0) {
-								a.$message.success('删除轮地区成功');
-								a.queryCategory();
-							} else {
-								a.$message.error(res.message);
-							}
-						}
+					this.$F.doRequest(this, '/pms/hotelcategory/delete', {id: data.id}, (res) => {
+						this.initData();
 					})
 				})
 			},
 			submit: function () {
-				var a = this;
-				var name = a.category.categoryLevel==1 ? a.category.province : a.category.categoryLevel == 2 ? a.category.city : a.category.county;
+				const a = this;
+				let param = {};
+				const name = a.category.categoryLevel==1 ? a.category.first : a.category.categoryLevel == 2 ? a.category.second : a.category.third;
 				if(a.add) {
-					$.ajax({
-						url: serverName + '/region/address/add',
-						type: 'post',
-						data: {token: token, name: name, parentid: a.category.id, type: ''},
-						dataType: 'json',
-						success: function(res) {
-							if(res.code === 0) {
-								a.$message.success('添加地区成功');
-								a.queryCategory();
-								a.cateVisible = false;
-								a.category = {};
-							} else {
-								a.$message.error(res.message);
-							}
-						},
-					})
+					param = {
+						name: name,
+						categoryLevel: this.category.categoryLevel,
+						pCategoryId: this.category.pCategoryId
+					}
 				} else {
-					$.ajax({
-						url: serverName + '/region/address/edit',
-						type: 'post',
-						data: {token: token, id: a.category.id, name: name, type: ''},
-						dataType: 'json',
-						success: function(res) {
-							if(res.code === 0) {
-								a.$message.success('修改地区成功');
-								a.queryCategory();
-								a.cateVisible = false;
-								a.category = {};
-							} else {
-								a.$message.error(res.message);
-							}
-						},
-					})
+					param = {
+						id: this.category.id,
+						name: name,
+						categoryLevel: this.category.categoryLevel,
+						pCategoryId: this.category.pCategoryId
+					}
 				}
-
+				this.$F.doRequest(this, '/pms/hotelcategory/edit', param, (res) => {
+					this.initData();
+					this.cateVisible = false;
+				})
 			},
 		}
 	};

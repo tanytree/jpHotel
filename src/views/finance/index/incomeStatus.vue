@@ -7,7 +7,7 @@
 <template>
     <div class="income">
         <el-card shadow="never">
-            <el-tabs v-model="activeName" @tab-click="tabChange" class="incomes">
+            <el-tabs v-model="activeName" @tab-click="tabChange" class="tabCenter">
                 <el-tab-pane v-for="item in paneArr" :key="item.name" :label="item.label" :name="item.name">
                     <div class="chart-top">
                         <p>{{item.tip}} {{date.strDate}} 至 {{date.endDate}}</p>
@@ -176,26 +176,6 @@
 
         .el-card__body {
             padding: 10px;
-        }
-    }
-    .incomes {
-        .el-tabs__nav-scroll {
-            display: flex;
-            justify-content: center;
-        }
-        .el-tabs__item {
-            font-size: 16px;
-
-            &.is-active {
-                color: #126eff;
-            }
-        }
-        .chart-top {
-            text-align: center;
-
-            .submit {
-                padding: 8px 20px;
-            }
         }
     }
     .chart-box {
