@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-05 22:56:10
+ * @LastEditTime: 2020-08-06 09:52:13
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -1387,12 +1387,27 @@ export default {
                         checkInPersonId: '',
                         // hasChildren: false
                     }
+                    //将登记人添加为入住人
                     if (k == 0 && data[k].personList.length < 1) {
-                        data[k].params.name = this.baseInfo.name
-                        data[k].params.idcardType = this.baseInfo.idcardType.toString()
-                        data[k].params.idcard = this.baseInfo.idcard
-                        data[k].params.sex = this.baseInfo.sex.toString()
-                        data[k].params.mobile = this.baseInfo.mobile
+                        // data[k].params.name = this.baseInfo.name
+                        // data[k].params.idcardType = this.baseInfo.idcardType.toString()
+                        // data[k].params.idcard = this.baseInfo.idcard
+                        // data[k].params.sex = this.baseInfo.sex.toString()
+                        // data[k].params.mobile = this.baseInfo.mobile
+                        let params = {
+                            checkinRoomId: data[k].checkinRoomId,
+                            name: this.baseInfo.name,
+                            idcardType: this.baseInfo.idcardType,
+                            idcard: this.baseInfo.idcard,
+                            sex: this.baseInfo.sex,
+                            mobile: this.baseInfo.mobile,
+                            checkinId: this.checkInForm.checkInId,
+                            checkInPersonId: ''
+                        };
+                        this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
+                            this.live_in_person_list()
+                            this.$forceUpdate()
+                        })
                     }
                     if (data[k].personList && data[k].personList.length) {
                         // data[k].params = data[k].personList[0]
