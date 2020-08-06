@@ -109,7 +109,7 @@
             </div>
         </el-col>
 
-        <el-col :span="19" style="padding-left:25px" v-loading="loading">
+        <el-col :span="19" style="padding-left:25px" v-loading="roomloading">
             <el-row>
                 <el-row>
                     <el-checkbox-group v-model="searchForm.personRoom" @change="handleChange">
@@ -868,7 +868,8 @@ export default {
             activeThree: "a",
             currentPage3: "",
             value1: "", //时间
-            loading: false,
+            loading: true,
+            roomloading: true,
             searchForm: {
                 keyword: '',
                 checkInType: [],
@@ -929,8 +930,13 @@ export default {
         },
         /**获取表格数据 */
         getDataList() {
-            this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', this.searchForm, (res) => {
-                this.roomList = res.floorList;
+            this.roomloading = true
+            return new Promise((resolve, reject) => {
+                this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', this.searchForm, (res) => {
+                    this.roomloading = false
+                    this.roomList = res.floorList;
+                    resolve(res)
+                })
             })
         },
         getChannel() {
@@ -982,7 +988,7 @@ export default {
                     '6': 'orders_night', //午夜房
                     '7': 'orders_free' //免费
                 }
-                debugger;
+                // debugger;
                 this.roomStatusList = res.roomStatusList;
                 this.personRoom = res.personRoomList
                 this.roomTypeId = res.roomTypeList
