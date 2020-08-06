@@ -3,12 +3,12 @@
 
  * @LastEditors: 魏轩1
 
- * 
+ *
  -->
 <template>
   <div>
       <!-- 员工管理 -->
-    
+
           <div v-if="display">
           <h4>前台部</h4>
           <el-divider></el-divider>
@@ -268,7 +268,7 @@
                         </div>
                     </el-row>
 
-                
+
                 </div>
             </el-row>
 
@@ -593,7 +593,7 @@ export default {
           this.display=!this.display;
 
         }
-      },   
+      },
       management(){
           this.display=!this.display;;
       },
@@ -633,13 +633,13 @@ export default {
   font-size: 14px;
   border-radius: 4px;
   padding: 3px;
-  
+
 }
 .inco {
   border: 1px solid #333;
   background: #666;
   color: #fff;
-  
+
 }
 .search {
   width: 137px !important;
@@ -671,7 +671,7 @@ export default {
   border:1px solid #1B80FF;
   font-size: 12px;
   padding: 3px 10px;
-  
+
 }
 .rescet {
   border-radius: 0;
@@ -694,10 +694,6 @@ export default {
   justify-content: center;
 }
 
-.margin-l {
-  margin-left: 8px;
-}
-
 .tag-margin {
   margin-right: 8px;
   margin-top: 8px;
@@ -705,11 +701,6 @@ export default {
 
 .row-width {
   width: 100px;
-}
-
-.demo-form-inline {
-  display: flex;
-  align-items: center;
 }
 
 .font {

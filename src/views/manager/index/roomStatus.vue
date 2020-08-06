@@ -11,7 +11,7 @@
                 </el-tag>
 			</div>
 			<el-form class="demo-form-inline" inline size="small" style="margin-left: 100px;">
-				<el-form-item label="楼层楼栋:" class="margin-l">
+				<el-form-item label="楼层楼栋:" class="margin-l-15">
 					<el-select v-model="form.buildingId" placeholder="楼层" class="row-width" @change="dongChange">
 						<el-option :label="value.name" :value="value.id" v-for="(value, index) in dongList" :key="index"></el-option>
 					</el-select>

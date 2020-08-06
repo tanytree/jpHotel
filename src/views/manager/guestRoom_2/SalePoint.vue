@@ -10,30 +10,44 @@
 		<el-row style="margin-top: 30px;">
 			<div class="content">
 				<el-row>
-					<el-form class="demo-form-inline" inline size="small">
+					<el-form class="term line demo-form-inline" inline size="small">
 						<el-form-item label="商品名称:">
 							<el-input v-model="form.keyword1" class="row-width"></el-input>
 						</el-form-item>
-						<el-form-item label="商品分类:" class="margin-l">
+						<el-form-item label="商品分类:" class="margin-l-15">
 							<el-select v-model="form.keyword1" placeholder="请选择部门" class="row-width">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
 							</el-select>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
-							<el-button type="primary" style="width: 100px;" size="mini">重置</el-button>
+							<el-button type="primary" size="mini" class="submit" @click="search">查询</el-button>
+							<el-button type="primary" size="mini" class="cancel" @click="reset">重置</el-button>
 						</el-form-item>
-						<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
-							<el-row>
-								<el-button type="primary" @click="popup('add')" style="width: 100px;" size="mini">上架商品</el-button>
-							</el-row>
+						<el-form-item class="form-inline-flex">
+
+						</el-form-item>
+					</el-form>
+					<el-form class="term line demo-form-inline" v-model="form" inline size="small">
+						<el-form-item label="商品名称:">
+							<el-input v-model="form.name"></el-input>
+						</el-form-item>
+						<el-form-item label="商品分类:">
+							<el-select v-model="form.category">
+								<el-option  v-for="(item, index) in category" :key="index" :label="item.name" :value="item.id"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" class="submit" @click="search">查询</el-button>
+							<el-button class="grey" @click="reset">重置</el-button>
+						</el-form-item>
+						<el-form-item class="form-inline-flex">
+							<el-button type="primary" @click="popup('add')" size="mini" class="submit">上架商品</el-button>
 						</el-form-item>
 					</el-form>
 				</el-row>
 				<div class="components-edit">
-					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-					 @selection-change="handleSelectionChange">
+					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column prop="name" label="商品名称"></el-table-column>
 						<el-table-column prop="time" label="默认零售价(日元)"></el-table-column>
 						<el-table-column prop="job_status" label="员工价(日元)"></el-table-column>
@@ -43,27 +57,21 @@
 						<el-table-column label="操作" width="150">
 							<template slot-scope="scope">
 								<el-button type="text" size="small" @click="popup('changeTab')">修改</el-button>
-								<el-popconfirm title="确定下架该商品？" @onConfirm="onConfirm">
-									<el-button slot="reference" type="text" size="mini" @click="deleteRow(scope.row)">下架</el-button>
+								<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+									<el-button slot="reference" type="text">删除</el-button>
 								</el-popconfirm>
 							</template>
 						</el-table-column>
 					</el-table>
 					<div class="block">
-						<div class="page-all">
-							共
-							<span style="font-weight:600;font-size: 14px;">400</span>条记录
-						</div>
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-						 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 					</div>
 				</div>
 			</div>
 		</el-row>
 		<!-- 售卖点管理 -->
 		<el-dialog top="0" title="售卖点管理" :visible.sync="dialogSale_show" :close-on-click-modal="false">
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-			 @selection-change="handleSelectionChange">
+			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="name" label="售卖点名称"></el-table-column>
 				<el-table-column prop="time" label="允许签单到房间"></el-table-column>
 				<el-table-column prop="job_status" label="允许签单到单位"></el-table-column>
@@ -72,8 +80,8 @@
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="popup('bin')">禁用</el-button>
 						<el-button type="text" size="small" @click="popup('change')">修改</el-button>
-						<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
-							<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
+						<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+							<el-button slot="reference" size="small" type="text">删除</el-button>
 						</el-popconfirm>
 					</template>
 				</el-table-column>
@@ -123,8 +131,7 @@
 		</el-dialog>
 		<!-- 修改商品上级信息 -->
 		<el-dialog top="0" title="修改商品上级信息" :visible.sync="dialogTab_change" :close-on-click-modal="false">
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-			 @selection-change="handleSelectionChange">
+			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="name" label="商品名称"></el-table-column>
 				<el-table-column prop="time" label="成本价"></el-table-column>
 				<el-table-column prop="job_status" label="员工价">
@@ -157,14 +164,9 @@
 			return {
 				typeList: ['迷你吧', '商品兑换', '售卖点', '售卖点3'],
 				tabPosition: '迷你吧',
-				form: {
-					keyword1: '',
-				},
-				pageIndex: 1,
-				pageSize: 10,
-				keyword: "",
-				currentPage1: 1,
-
+				form: {name: '', category: ''},
+				total: 0, pageSize: 10, currentPage: 1,
+				category: {},
 				tableData: [{
 					name: '',
 					time: '2020-5-20',
@@ -204,17 +206,20 @@
 					break
 				}
 			},
-			// // 切换
-			// changeTab(index) {
-			// 	let that = this;
-			// 	that.currentIndex = index;
-			// },
-			// 分页
+			search() {
+				this.getHotelGoodsData(this.form.name, this.form.category, this.form.status)
+			},
+			reset() {
+				this.form = {name: '', status: 'all', category: ''}
+			},
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
+			},
+			handleDelete(row) {
+
 			}
 		}
 	};
@@ -228,8 +233,5 @@
 	.btn-margin +.btn-margin {
 		margin-left: 10px;
 	}
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
-	}
+
 </style>

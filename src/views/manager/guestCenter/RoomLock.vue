@@ -14,7 +14,7 @@
 			<el-container direction="vertical" class="boss-index">
 			<el-row :gutter="20" class="demo-form-inline">
 				<el-col :span="10" :offset="14">
-					<el-row style="display: flex;justify-content: flex-end;flex: 1;margin-bottom: 20px;">
+					<el-row class="form-inline-flex" style="margin-bottom: 20px;">
 						<el-button type="primary" size="mini" @click="popup('addPie')">按列批量修改</el-button>
 					</el-row>
 				</el-col>
@@ -179,7 +179,7 @@
 							</el-select>
 						</el-form-item>
 					</el-col>
-					<el-col class="margin-l">
+					<el-col class="margin-l-15">
 						<el-form-item label="楼栋">
 							<el-input v-model="ruleForm.hotelBuilding.name" :disabled="isDisable"></el-input>
 						</el-form-item>
@@ -360,11 +360,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
-	}
-
 	.row-width {
 		width: 120px;
 	}

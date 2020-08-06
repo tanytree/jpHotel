@@ -1,130 +1,104 @@
 <template>
-	<div>
+	<div class="boss-index">
 		<!--商品管理-->
-		<el-tabs v-model="active_second_name" v-if="tab_show">
-			<div class="content">
-				<el-row>
-					<el-form class="demo-form-inline" inline size="small">
-						<el-form-item label="商品名称:">
-							<el-input v-model="form.keyword1" class="row-width"></el-input>
-						</el-form-item>
-						<el-form-item label="商品状态:" class="margin-l">
-							<el-select v-model="form.keyword1" placeholder="请选择部门" class="row-width">
-								<el-option label="区域一" value="shanghai"></el-option>
-								<el-option label="区域二" value="beijing"></el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item label="商品分类:" class="margin-l">
-							<el-select v-model="form.keyword1" placeholder="请选择部门" class="row-width">
-								<el-option label="区域一" value="shanghai"></el-option>
-								<el-option label="区域二" value="beijing"></el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item>
-							<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
-							<el-button type="primary" style="width: 100px;" size="mini">重置</el-button>
-						</el-form-item>
-						<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
-							<el-row style="display: flex;justify-content: flex-end;flex: 1;">
-								<el-button @click="submitForm('dynamicValidateForm')" style="width: 100px;" size="mini">下载模板</el-button>
-								<el-button @click="addDomain" style="width: 100px;" size="mini">导入</el-button>
-								<el-button type="primary" @click="popup('add')" style="width: 100px;" size="mini">添加商品</el-button>
-							</el-row>
-						</el-form-item>
-					</el-form>
-				</el-row>
-				<div class="components-edit">
-					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-					 @selection-change="handleSelectionChange">
-						<el-table-column prop="name" label="商品名称"></el-table-column>
-						<el-table-column prop="time" label="默认零售价(日元)"></el-table-column>
-						<el-table-column prop="job_status" label="成本价(日元)"></el-table-column>
-						<el-table-column prop="job" label="库存预警数量"></el-table-column>
-						<el-table-column label="操作" width="350">
-							<template slot-scope="scope">
-								<el-button type="text" size="small" @click="popup('bin')">禁用</el-button>
-								<el-button type="text" size="small" @click="popup('change')">修改</el-button>
-								<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
-									<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
-								</el-popconfirm>
-							</template>
-						</el-table-column>
-					</el-table>
-					<div class="block">
-						<div class="page-all">
-							共
-							<span style="font-weight:600;font-size: 14px;">400</span>条记录
-						</div>
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-						 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
-					</div>
+		<div class="content" v-if="tab_show">
+			<el-form class="term line demo-form-inline" v-model="form" inline size="small">
+				<el-form-item label="商品名称:">
+					<el-input v-model="form.name"></el-input>
+				</el-form-item>
+				<el-form-item label="商品状态:">
+					<el-select v-model="form.status">
+						<el-option label="全部" value="all"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="商品分类:">
+					<el-select v-model="form.category">
+						<el-option  v-for="(item, index) in category" :key="index" :label="item.name" :value="item.id"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary" class="submit" @click="search">查询</el-button>
+					<el-button class="grey" @click="reset">重置</el-button>
+				</el-form-item>
+				<el-form-item class="form-inline-flex">
+					<el-row class="form-inline-flex">
+						<el-button class="white" @click="downModel('dynamicValidateForm')">下载模板</el-button>
+						<el-button class="white" @click="importModel">导入</el-button>
+						<el-button @click="popup('add')" class="submit">添加商品</el-button>
+					</el-row>
+				</el-form-item>
+			</el-form>
+			<div class="components-edit">
+				<el-table ref="multipleTable" :data="tableData" border height="100%" header-row-class-name="default" size="small">
+					<el-table-column prop="name" label="商品名称"></el-table-column>
+					<el-table-column prop="retailPrice" label="默认零售价(日元)"></el-table-column>
+					<el-table-column prop="costPrice" label="成本价(日元)"></el-table-column>
+					<el-table-column prop="inventoryWarning" label="库存预警数量"></el-table-column>
+					<el-table-column label="操作" width="350">
+						<template slot-scope="scope">
+							<el-button type="text" size="small" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? '禁用' : '启用'}}</el-button>
+							<el-button type="text" size="small" @click="popup('change', scope.row)">修改</el-button>
+							<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+								<el-button slot="reference" type="text">删除</el-button>
+							</el-popconfirm>
+						</template>
+					</el-table-column>
+				</el-table>
+				<div class="block">
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 				</div>
 			</div>
-		</el-tabs>
-		<el-row v-if="!tab_show">
-				<el-row style="padding: 20px 0px;">
-					<el-page-header @back="back" content=""></el-page-header>
-				</el-row>
-				<el-row :gutter="20">
-					<el-form :model="threeForm" :rules="threerules" ref="ruleForm" label-width="100px">
-						<el-col :span="8">
-							<el-form-item label="商品名称:" prop="name">
-								<el-input v-model="threeForm.name"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="8">
-							<el-form-item label="所属分类:" prop="name">
-								<el-input v-model="threeForm.name"></el-input>
-							</el-form-item>
-						</el-col>
-					</el-form>
-				</el-row>
-				<el-row :gutter="20">
-					<el-form :model="threeForm" :rules="threerules" ref="ruleForm" label-width="100px">
-						<el-col :span="16">
-							<el-form-item label="商品描述:">
-								<el-input type="textarea" :rows="3" v-model="threeForm.name"></el-input>
-							</el-form-item>
-						</el-col>
-					</el-form>
-				</el-row>
-				<el-row :gutter="22" style="padding: 20px 0px;">
-					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-					 @selection-change="handleSelectionChange">
-						<el-table-column prop="name" label="默认零售价">
-							<template slot-scope="name">
-								<el-input v-model="name"></el-input>
-							</template>
-						</el-table-column>
-						<el-table-column prop="name" label="成本价">
-							<template slot-scope="name">
-								<el-input v-model="name"></el-input>
-							</template>
-						</el-table-column>
-						<el-table-column prop="name" label="默认员工价">
-							<template slot-scope="name">
-								<el-input v-model="name"></el-input>
-							</template>
-						</el-table-column>
-						<el-table-column prop="name" label="默认购买数量">
-							<template slot-scope="name">
-								<el-input v-model="name"></el-input>
-							</template>
-						</el-table-column>
-						<el-table-column prop="name" label="库存预警数量">
-							<template slot-scope="name">
-								<el-input v-model="name"></el-input>
-							</template>
-						</el-table-column>
-					</el-table>
-				</el-row>
-				<el-row style="padding: 20px 0px;">
-					<el-button type="primary" style="width: 80px;" @click="submit('save')">保存</el-button>
-					<el-button type="primary" style="width: 150px;" @click="submit('add')">保存并继续添加</el-button>
-					<el-button style="width: 80px;margin-left: 20px;" @click="submit('back')">返回</el-button>
-				</el-row>
-			</el-row>
-		</el-row>
+		</div>
+		<div class="content" v-if="!tab_show">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item><a @click="back">商品管理</a></el-breadcrumb-item>
+				<el-breadcrumb-item>修改商品</el-breadcrumb-item>
+			</el-breadcrumb>
+			<el-form :model="rowData" size="small" :rules="threerules" ref="rowForm" label-width="100px">
+				<el-col :span="8">
+					<el-form-item label="商品名称:" prop="name">
+						<el-input v-model="rowData.name"></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="8">
+					<el-form-item label="所属分类:" prop="categoryId">
+						<el-select v-model="rowData.categoryId">
+							<el-option  v-for="(item, index) in category" :key="index" :label="item.name" :value="item.id"></el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="16">
+					<el-form-item label="商品描述:">
+						<el-input type="textarea" :rows="3" v-model="rowData.remark"></el-input>
+					</el-form-item>
+				</el-col>
+			</el-form>
+			<div class="flex_1">
+				<el-form :model="rowData" size="small" inline :rules="threerules" ref="priceForm" label-position="top" class="price">
+					<el-form-item prop="retailPrice" label="默认零售价">
+						<el-input v-model="rowData.retailPrice" class="row-width"></el-input>
+					</el-form-item>
+					<el-form-item prop="costPrice" label="成本价">
+						<el-input v-model="rowData.costPrice" class="row-width"></el-input>
+					</el-form-item>
+					<el-form-item prop="employeePrice" label="默认员工价">
+						<el-input v-model="rowData.employeePrice" class="row-width"></el-input>
+					</el-form-item>
+					<el-form-item prop="buyCount" label="默认购买数量">
+						<el-input v-model="rowData.buyCount" class="row-width"></el-input>
+					</el-form-item>
+					<el-form-item prop="inventoryWarning" label="库存预警数量">
+						<el-input v-model="rowData.inventoryWarning" class="row-width"></el-input>
+					</el-form-item>
+				</el-form>
+			</div>
+
+			<div class="footer">
+				<el-button type="primary" size="small" class="submit" @click="submit('edit')">修改</el-button>
+				<el-button type="primary" size="small" class="submit" @click="submit()">保存并继续添加</el-button>
+				<el-button size="small" class="cancel" @click="back">返回</el-button>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -132,49 +106,77 @@
 	export default {
 		data() {
 			return {
+				category: [],
 				form: {
-					keyword1: '',
+					name: '', status: 'all', category: ''
 				},
-				pageIndex: 1,
-				pageSize: 10,
-				keyword: "",
-				currentPage1: 1,
-				
-				tableData: [{
-					name: '',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}],
-				threeForm: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
-				},
+				pageSize: 10, currentPage: 1, total: 0,
+
+				tableData: [],
+				rowData: {name: '', categoryId: '', remark: '', retailPrice: '', costPrice: '', employeePrice: '', buyCount: '', inventoryWarning: ''},
 				threerules: {
-					name: [{
-							required: true,
-							message: '请输入姓名',
-							trigger: 'blur'
-						}
-					]
+					name: [{required: true, message: '请输入产品名称', trigger: 'blur'}],
+					categoryId: [{required: true, message: '请选择产品分类', trigger: 'change'}],
+					retailPrice: [{required: true, message: '请输入产品零售价', trigger: 'blur'}],
+					costPrice: [{required: true, message: '请输入产品成本价', trigger: 'blur'}],
+					employeePrice: [{required: true, message: '请输入产品员工价', trigger: 'blur'}],
+					buyCount: [{required: true, message: '请输入产品购买数量', trigger: 'blur'}],
+					inventoryWarning: [{required: true, message: '请输入产品预警数量', trigger: 'blur'}],
 				},
-				tab_show:true,
+				tab_show: true,
 			};
 		},
+		mounted() {
+			this.getCategoryData()
+			this.getHotelGoodsData();
+		},
 		methods: {
-			popup(type) {
-				switch(type) {
-					case 'add':
+			getHotelGoodsData(name, categoryId, state) {
+				const params = {
+					name: name,
+					categoryId: categoryId,
+					state: state
+				}
+				this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {
+					this.tableData = res.list;
+					if(res.page) {
+						this.pageSize = res.page.pageSize;
+						this.currentPage = res.page.pageIndex;
+						this.total = res.page.count;
+					} else {
+						this.pageSize = 0;
+						this.currentPage = 1;
+						this.total = 0;
+					}
+
+				})
+			},
+			getCategoryData() {
+				this.$F.doRequest(this, '/pms/hotelcategory/list', {}, (res) => {
+					this.category = res.list
+
+				})
+			},
+			search() {
+				this.getHotelGoodsData(this.form.name, this.form.category, this.form.status)
+			},
+			reset() {
+				this.form = {name: '', status: 'all', category: ''}
+			},
+			popup(type, row) {
+				if(type == 'add') {
 					this.tab_show = false
-					break
+				} else if (type == 'bin') {
+					this.$F.doRequest(this, '/pms/hotelgoods/up_status', {
+						id: row.id,
+						state: row.state == 1 ? 2 : 1
+					}, (res) => {
+						this.$message.success(res.success);
+						this.getHotelGoodsData()
+					})
+				} else if (type == 'change') {
+					this.tab_show = false;
+					this.rowData = row;
 				}
 			},
 			//切换到商品管理
@@ -182,53 +184,51 @@
 				this.tab_show = true
 			},
 			submit (type) {
-				debugger
-				switch(type) {
-					case 'save':
-					//数据清空保存
-					this.tab_show = true
-					break
-					case 'add':
-					//数据清空继续添加
-					this.tab_show = false
-					break
-					case 'back':
-					//数据清空返回
-					this.tab_show = true
-					break
+				const param = {name: this.rowData.name, categoryId: this.rowData.categoryId, remark: this.rowData.remark, retailPrice: this.rowData.retailPrice, costPrice: this.rowData.costPrice, employeePrice: this.rowData.employeePrice, buyCount: this.rowData.buyCount, inventoryWarning: this.rowData.inventoryWarning}
+				if(type == 'edit') {
+					param.id = this.rowData.id
 				}
+				this.$F.doRequest(this, '/pms/hotelgoods/edit', param, (res) => {
+					this.$message.success(res.success);
+					this.getHotelGoodsData();
+					if(type='edit') {
+						this.tab_show = true;
+					} else {
+						this.tab_show = false;
+					}
+				})
 			},
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
-			}
+			},
+			downModel() {},
+			importModel() {},
+			handleDelete(row) {
+				this.$F.doRequest(this, '/pms/hotelgoods/up_status', {
+					id: row.id,
+					state: ''
+				}, (res) => {
+					this.$message.success(res.success);
+					this.getHotelGoodsData()
+				})
+			},
 		}
 	};
 </script>
 
-<style lang="less" scoped>
-	.margin-l {
-		margin-left: 15px;
-	}
-
+<style lang="less">
 	.row-width {
 		width: 120px;
 	}
-	.padding-item {
-		padding-bottom: 5px;
-	}
-
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
-	}
 
 	.content {
+		height: 100%;
+		padding: 10px;
 		display: flex;
 		flex-direction: column;
-		flex: 1;
 		background-color: #ffffff;
 
 		.components-edit {
@@ -236,73 +236,37 @@
 			flex-direction: column;
 			flex: 1;
 
-			.delate-item {
-				display: flex;
-				align-items: center;
-				padding: 10px 0px;
-
-				.delate {
-					padding: 6px 10px;
-					border: 1px solid #999999;
-					border-radius: 5px;
-					margin-right: 10px;
-				}
-
-				.delate-select {
-					margin-left: 20px;
-				}
-			}
-
 			.block {
-				padding: 10px 20px;
 				display: flex;
 				align-items: center;
-				justify-content: space-between;
-
-				.page-all {
-					display: flex;
-					width: 200px;
-					font-size: 12px;
-					color: #666666;
-					letter-spacing: 2px;
-				}
 			}
 		}
 
-		.dateBox {
-			width: 140px;
+		.footer {
+			padding-top: 20px;
+			border-top: 1px solid #E2E2E2;
 		}
-
-		i {
-			font-size: 12px;
-		}
-
-		.search-part {
+		.price {
+			border: 1px solid #e2e2e2;
+			margin-bottom: 20px;
 			display: flex;
-			align-items: center;
-			border: 1px solid #999999;
-			border-radius: 5px;
-			height: 40px;
+			flex-direction: row;
 
-			input {
-				border: none;
-				border-radius: 5px;
-				padding: 10px 10px;
-			}
+			.el-form-item {
+				flex: 1;
+				margin: 0;
 
-			span {
-				background-color: #dfdfdf;
-				height: 100%;
-				border-top-right-radius: 5px;
-				border-bottom-right-radius: 5px;
-				width: 50px;
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-			}
+				.el-form-item__label {
+					padding: 0 20px;
+					display: block;
+					background-color: #D9DDE2;
+					padding-bottom: 0;
+					line-height: 40px;
+				}
 
-			.el-select {
-				width: 120px;
+				.el-form-item__content {
+					padding: 15px;
+				}
 			}
 		}
 	}

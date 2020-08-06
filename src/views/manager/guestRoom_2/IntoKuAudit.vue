@@ -17,10 +17,10 @@
 							<el-option label="区域二" value="beijing"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="商品状态:" class="margin-l">
+					<el-form-item label="商品状态:" class="margin-l-15">
 						<el-input v-model="form.keyword1" class="row-width"></el-input>
 					</el-form-item>
-					<el-form-item label="申请日期:" class="margin-l">
+					<el-form-item label="申请日期:" class="margin-l-15">
 						<el-col :span="11">
 							<el-date-picker type="date" placeholder="选择日期" v-model="form.keyword1" class="row-width"></el-date-picker>
 						</el-col>
@@ -29,7 +29,7 @@
 							<el-time-picker placeholder="选择时间" v-model="form.keyword1" class="row-width"></el-time-picker>
 						</el-col>
 					</el-form-item>
-					<el-form-item label="入库内容:" class="margin-l">
+					<el-form-item label="入库内容:" class="margin-l-15">
 						<el-input v-model="form.keyword1" class="row-width"></el-input>
 					</el-form-item>
 					<el-form-item>
@@ -39,8 +39,7 @@
 				</el-form>
 			</el-row>
 			<div class="components-edit">
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-				 @selection-change="handleSelectionChange">
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column prop="name" label="单号"></el-table-column>
 					<el-table-column prop="name" label="申请日期"></el-table-column>
 					<el-table-column prop="name" label="入库仓库"></el-table-column>
@@ -53,19 +52,14 @@
 							<el-button type="text" size="small" @click="popup('detail')">明细</el-button>
 							<el-button type="text" size="small" @click="popup('change')">修改</el-button>
 							<el-button type="text" size="small" @click="popup('exam')">审核</el-button>
-							<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
-								<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
+							<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+								<el-button slot="reference" type="text">删除</el-button>
 							</el-popconfirm>
 						</template>
 					</el-table-column>
 				</el-table>
 				<div class="block">
-					<div class="page-all">
-						共
-						<span style="font-weight:600;font-size: 14px;">400</span>条记录
-					</div>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-					 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 				</div>
 			</div>
 		</el-row>
@@ -78,10 +72,10 @@
 							<el-option label="区域二" value="beijing"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="制单人:" class="margin-l">
+					<el-form-item label="制单人:" class="margin-l-15">
 						<el-input v-model="form.keyword1" class="row-width"></el-input>
 					</el-form-item>
-					<el-form-item label="申请日期:" class="margin-l">
+					<el-form-item label="申请日期:" class="margin-l-15">
 						<el-col :span="11">
 							<el-date-picker type="date" placeholder="选择日期" v-model="form.keyword1" class="row-width"></el-date-picker>
 						</el-col>
@@ -90,7 +84,7 @@
 							<el-time-picker placeholder="选择时间" v-model="form.keyword1" class="row-width"></el-time-picker>
 						</el-col>
 					</el-form-item>
-					<el-form-item label="入库内容:" class="margin-l">
+					<el-form-item label="入库内容:" class="margin-l-15">
 						<el-input v-model="form.keyword1" class="row-width"></el-input>
 					</el-form-item>
 					<el-form-item>
@@ -100,8 +94,7 @@
 				</el-form>
 			</el-row>
 			<div class="components-edit">
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-				 @selection-change="handleSelectionChange">
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column prop="name" label="单号"></el-table-column>
 					<el-table-column prop="time" label="申请日期"></el-table-column>
 					<el-table-column prop="job" label="入库类型"></el-table-column>
@@ -110,19 +103,14 @@
 					<el-table-column label="操作" width="200">
 						<template slot-scope="scope">
 							<el-button type="text" size="small" @click="popup('detail')">明细</el-button>
-							<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
-								<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
+							<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+								<el-button slot="reference" type="text">删除</el-button>
 							</el-popconfirm>
 						</template>
 					</el-table-column>
 				</el-table>
 				<div class="block">
-					<div class="page-all">
-						共
-						<span style="font-weight:600;font-size: 14px;">400</span>条记录
-					</div>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-					 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 				</div>
 			</div>
 		</el-row>
@@ -173,8 +161,7 @@
 					<el-col :span="17">张三</el-col>
 				</el-col>
 			</el-row>
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-			 @selection-change="handleSelectionChange">
+			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="name" label="商品名称"></el-table-column>
 				<el-table-column prop="time" label="成本价"></el-table-column>
 				<el-table-column prop="job" label="入库数量"></el-table-column>
@@ -201,8 +188,7 @@
 				</el-form>
 			</el-row>
 			<el-row>
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-				 @selection-change="handleSelectionChange">
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column prop="name" label="商品名称"></el-table-column>
 					<el-table-column prop="time" label="成本价"></el-table-column>
 					<el-table-column prop="job_status" label="入库数量">
@@ -212,8 +198,8 @@
 					</el-table-column>
 					<el-table-column label="操作" width="100">
 						<template slot-scope="scope">
-							<el-popconfirm title="确定要移除？" @onConfirm="onConfirm">
-								<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">移除</el-button>
+							<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+								<el-button slot="reference" type="text">删除</el-button>
 							</el-popconfirm>
 						</template>
 					</el-table-column>
@@ -255,7 +241,7 @@
 						<el-form-item label="商品名称:">
 							<el-input v-model="ruleForm.name"></el-input>
 						</el-form-item>
-						<el-form-item label="商品分类:" class="margin-l">
+						<el-form-item label="商品分类:" class="margin-l-15">
 							<el-select v-model="ruleForm.name" placeholder="请选择商品分类">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
@@ -267,20 +253,14 @@
 					</el-form>
 				</el-row>
 				<div class="components-edit">
-					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-					 @selection-change="handleSelectionChange">
+					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column type="selection" width="55"></el-table-column>
 						<el-table-column prop="name" label="商品名称"></el-table-column>
 						<el-table-column prop="time" label="商品类别"></el-table-column>
 						<el-table-column prop="job_status" label="成本价"></el-table-column>
 					</el-table>
 					<div class="block">
-						<div class="page-all">
-							共
-							<span style="font-weight:600;font-size: 14px;">400</span>条记录
-						</div>
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-						 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 					</div>
 				</div>
 			</el-row>
@@ -320,6 +300,7 @@
 		data() {
 			return {
 				currentIndex: 0,
+				pageSize: 10, currentPage: 1, total: 0,
 				btnList: [{
 					name: '待审核入库单',
 					num: '2'
@@ -399,7 +380,10 @@
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
-			}
+			},
+			handleDelete(row) {
+
+			},
 		}
 	};
 </script>
@@ -407,15 +391,6 @@
 <style lang="less" scoped>
 	.row-width {
 		width: 120px;
-	}
-
-	.margin-l {
-		margin-left: 15px;
-	}
-
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
 	}
 
 	.btn-item {

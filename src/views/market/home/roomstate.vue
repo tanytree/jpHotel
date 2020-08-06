@@ -81,7 +81,7 @@
                             </el-option>
 
                         </el-select>
-                        <el-select v-model="searchForm.buildingFloorId" placeholder="楼层" class="row-width margin-l" @change="floorSelectChange">
+                        <el-select v-model="searchForm.buildingFloorId" placeholder="楼层" class="row-width margin-l-8" @change="floorSelectChange">
 
                             <el-option v-for="item in hotel_building_floor_list" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
@@ -1262,10 +1262,6 @@ export default {
     justify-content: center;
 }
 
-.margin-l {
-    margin-left: 8px;
-}
-
 .tag-margin {
     margin-right: 8px;
     margin-top: 8px;
@@ -1273,11 +1269,6 @@ export default {
 
 .row-width {
     width: 100px;
-}
-
-.demo-form-inline {
-    display: flex;
-    align-items: center;
 }
 
 .font {

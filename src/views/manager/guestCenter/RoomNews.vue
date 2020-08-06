@@ -15,7 +15,7 @@
 				<el-row :gutter="20" class="demo-form-inline">
 					<el-col :span="14">
 						<el-form class="demo-form-inline" inline size="small">
-							<el-form-item label="楼层全称:" class="margin-l">
+							<el-form-item label="楼层全称:" class="margin-l-15">
 								<el-select v-model="form.buildingFloorId" style="width: 120px">
                                     <el-option label="全部" value="">全部</el-option>
 									<el-option :label="value.name" :value="value.id" v-for="(value, index) in cengList" :key="index"></el-option>
@@ -24,7 +24,7 @@
 							<el-form-item label="房型:">
 								<el-cascader v-model="form.roomTypeId" :options="roomType" @change="handleChange" style="width: 180px"></el-cascader>
 							</el-form-item>
-							<el-form-item label="房间号:" class="margin-l">
+							<el-form-item label="房间号:" class="margin-l-15">
 								<el-input v-model="form.houseNum" :placeholder="form.houseNum_name" style="width: 120px"></el-input>
 							</el-form-item>
 							<el-form-item>
@@ -33,7 +33,7 @@
 						</el-form>
 					</el-col>
 					<el-col :span="10">
-						<el-row style="display: flex;justify-content: flex-end;flex: 1;margin-bottom: 20px;">
+						<el-row class="form-inline-flex" style="margin-bottom: 20px;">
 							<el-button type="primary" size="mini" @click="addRoom('add', '')">新增房间</el-button>
 							<el-button type="primary" size="mini">批量启用</el-button>
 							<el-button type="primary" size="mini" @click="popup('change')">批量禁用</el-button>
@@ -308,11 +308,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
-	}
-
 	.row-width {
 		width: 120px;
 	}

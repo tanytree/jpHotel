@@ -1,20 +1,18 @@
 <template>
-	<div>
+	<div class="boss-index">
 		<!-- 具体参照黄工的营销部-产品管理部-店铺产品分类 -->
 		<div class="goodsType">
-			<div class="accountTop goodsTop" style="margin-bottom: 20px;">
-				<el-button class="defaultBtn" icon="fas fa-caret-right" @click="expanded">折叠全部</el-button>
-				<el-button class="defaultBtn" @click="addFirst">新增一级分组</el-button>
+			<div class="goodsTop" style="margin-bottom: 20px;">
+				<el-button class="cancel" icon="fas fa-caret-right" @click="expanded">折叠全部</el-button>
+				<el-button class="cancel" @click="addCategory">新增一级分组</el-button>
 			</div>
 			<div class="accountBtm">
-				<el-tree :props="treeProps" :data="tableData" node-key="id" ref="treeType" :default-expand-all="expand_all">
+				<el-tree :props="treeProps" :data="treeData" node-key="id" ref="treeType" default-expand-all>
 					<span class="custom-tree-node" slot-scope="{node, data}">
+						<span>{{ node.label }}</span>
 						<span>
-							{{ node.label }}
-							<!-- <img v-if="data.thumb" class="thumb" :src="data.thumb" /> -->
-						</span>
-						<span>
-							<el-button class="btn-text" type="text" v-if="data.level == 1" size="mini" @click="() => addSecond(node, data)" @click.stop>新增二级分组</el-button>
+							<el-button class="btn-text" type="text" v-if="data.categoryLevel == 1" size="mini" @click="() => addSecond(node, data)" @click.stop>新增二级分类</el-button>
+							<el-button class="btn-text" type="text" v-if="data.categoryLevel == 2" size="mini" @click="() => addThird(node, data)" @click.stop>新增三级分类</el-button>
 							<el-button class="btn-text" type="text" size="mini" @click="() => editNode(node, data)" @click.stop>编辑</el-button>
 							<el-button class="btn-text" type="text" size="mini" @click="() => deleteNode(data)" @click.stop>删除</el-button>
 						</span>
@@ -22,42 +20,23 @@
 				</el-tree>
 			</div>
 		</div>
-		<!-- 新增一级分类 -->
-		<el-dialog top="0" title="新增一级分类" :visible.sync="first_show" :close-on-click-modal="false">
-			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
-					<el-col :span="20">
-						<el-form-item label="一级分类名称:" prop="name">
-							<el-input placeholder="请输入内容" v-model="ruleForm.name"></el-input>
-						</el-form-item>
-					</el-col>
-				</el-form>
-			</el-row>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-			</span>
-		</el-dialog>
-		<!-- 新增二级分类 -->
-		<el-dialog top="0" title="新增一级分类" :visible.sync="second_show" :close-on-click-modal="false">
-			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px">
-					<el-col :span="20">
-						<el-form-item label="上级分类:">
-							<el-input placeholder="请输入内容" v-model="ruleForm.name" disabled="true"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="20">
-						<el-form-item label="二级分类名称:" prop="name">
-							<el-input placeholder="请输入内容" v-model="ruleForm.name" disabled="true"></el-input>
-						</el-form-item>
-					</el-col>
-				</el-form>
-			</el-row>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-			</span>
+		<!-- 新增分类 -->
+		<el-dialog :title="cateTitle" :visible.sync="cateVisible" top="0" :close-on-click-modal="false">
+			<el-form label-position="right" label-width="50px" size='medium'>
+				<el-form-item label="一级分类名称：">
+					<el-input :disabled="category.categoryLevel==2 || category.categoryLevel==3 ? true: false" v-model="category.province"></el-input>
+				</el-form-item>
+				<el-form-item v-if="category.categoryLevel==2 || category.categoryLevel==3" label="二级分类名称：">
+					<el-input :disabled="category.categoryLevel==3 ? true: false" v-model="category.city"></el-input>
+				</el-form-item>
+				<el-form-item v-if="category.categoryLevel==3" label="三级级分类名称：">
+					<el-input v-model="category.county"></el-input>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button type="primary" class="blueBtn mini" @click="submit">确认</el-button>
+				<el-button class="defaultBtn mini" @click="cateVisible = false">取消</el-button>
+			</div>
 		</el-dialog>
 	</div>
 </template>
@@ -66,139 +45,221 @@
 	export default {
 		data() {
 			return {
-				first_show:false,
-				second_show:false,
-				expand_all: true,
-				tableData: [{
-					id: 1,
-					label: '零食',
-					children: [{
-						id: 4,
-						label: '二级 1-1',
-						children: [{
-							id: 9,
-							label: '三级 1-1-1'
-						}, {
-							id: 10,
-							label: '三级 1-1-2'
-						}]
-					}]
-				}, {
-					id: 2,
-					label: '纸巾',
-					children: [{
-						id: 5,
-						label: '二级 2-1'
-					}, {
-						id: 6,
-						label: '二级 2-2'
-					}]
-				}, {
-					id: 3,
-					label: '冰箱饮料',
-					children: [{
-						id: 7,
-						label: '二级 3-1'
-					}, {
-						id: 8,
-						label: '二级 3-2'
-					}]
-				}],
-				ruleForm: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
-				},
-				rules: {
-					name: [{
-						required: true,
-						message: '请输入姓名',
-						trigger: 'blur'
-					}]
-				},
+				areaActive: 'category',
+				treeProps: {children: 'child', label: 'name'},
+				treeData: [], isexpand: true, allTree: [],
+				cateVisible: false,
+				cateTitle: '', add: true,
+				category: {id: '', categoryLevel: '', province: '', city: '', county: ''},
 			};
 		},
+		mounted() {
+			this.queryCategory()
+		},
 		methods: {
-			addFirst() {
-				this.first_show =true
+			queryCategory: function() {
+				var a = this;
+				this.$F.doRequest(this, '/pms/hotelcategory/list', {}, (res) => {
+					a.allTree = res.list;
+					a.treeData = a.getTreeItem(res.list);
+				})
 			},
-			addSecond() {
-				this.second_show =true
+			getTreeItem: function (arr) {
+				let newarr = []
+				arr.sort(this.compare('categoryOrder'))
+				newarr = arr.filter(father => {
+					const branchArr = arr.filter((child) => {
+						if (father.id == child.pCategoryId ) child._hasParent = true;
+						return father.id == child.pCategoryId;
+					});
+					if (branchArr.length > 0) father.child = branchArr;
+					return !father._hasParent;
+				})
+
+				newarr = newarr.filter((item) => {
+					return !item._hasParent;
+				})
+				return newarr;
 			},
-			expanded() {
-				for (
-				  var i = 0;
-				  i < this.$refs.treeType.store._getAllNodes().length;
-				  i++
-				) {
-				  this.$refs.treeType.store._getAllNodes()[i].expanded = !this.expand_all;
-				  // this.expand_all = !this.expand_all
+			compare: function (attr, rev){
+				if(rev ==  undefined){
+					rev = 1;
+				} else {
+					rev = (rev) ? 1 : -1;
 				}
-			}
+				return function(a,b){
+					a = a[attr];
+					b = b[attr];
+					if(a < b){
+						return rev * -1;
+					}
+					if(a > b){
+						return rev * 1;
+					}
+					return 0;
+				}
+			},
+			addCategory() {
+				this.cateVisible = true;
+				this.category.categoryLevel = 1;
+				this.cateTitle = '新增一级分类';
+				this.add = true;
+			},
+			addSecond(node, data) {
+				this.cateVisible = true;
+				this.category.categoryLevel = 2;
+				this.category.province = data.name;
+				this.category.id = data.id;
+				this.cateTitle = '新增二级分类';
+				this.add = true;
+			},
+			addThird(node, data) {
+				this.cateVisible = true;
+				this.category.categoryLevel = 3;
+				this.category.province = node.parent.data.name;
+				this.category.city = data.name;
+				this.category.id = data.id;
+				this.cateTitle = '新增三级分类';
+				this.add = true;
+			},
+			expanded: function() {
+				this.isexpand = !this.isexpand;
+				for(var i = 0; i < this.$refs.treeType.store._getAllNodes().length; i++){
+					this.$refs.treeType.store._getAllNodes()[i].expanded = this.isexpand;
+				}
+			},
+			editNode: function(node, data) {
+				this.cateVisible = true;
+				this.cateTitle = '修改分类';
+				if(data.categoryLevel == 1) {
+					this.category = {id: data.id, categoryLevel: data.categoryLevel, province: data.name, city: '**', county: '**'}
+				} else if (data.categoryLevel == 2) {
+					this.category = {id: data.id, categoryLevel: data.categoryLevel, province: node.parent.data.name, city: data.name, county: '**'}
+				} else {
+					this.category = {id: data.id, categoryLevel: data.categoryLevel, province: node.parent.parent.data.name, city: node.parent.data.name, county: data.name}
+				}
+				this.add = false;
+			},
+
+			//删除
+			deleteNode: function(data) {
+				var a = this;
+
+				this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					$.ajax({
+						url: serverName + '/region/address/delete',
+						type: 'post',
+						data: {
+							token: token, id: data.id,
+						},
+						dataType: 'json',
+						success: function(res) {
+							if(res.code === 0) {
+								a.$message.success('删除轮地区成功');
+								a.queryCategory();
+							} else {
+								a.$message.error(res.message);
+							}
+						}
+					})
+				})
+			},
+			submit: function () {
+				var a = this;
+				var name = a.category.categoryLevel==1 ? a.category.province : a.category.categoryLevel == 2 ? a.category.city : a.category.county;
+				if(a.add) {
+					$.ajax({
+						url: serverName + '/region/address/add',
+						type: 'post',
+						data: {token: token, name: name, parentid: a.category.id, type: ''},
+						dataType: 'json',
+						success: function(res) {
+							if(res.code === 0) {
+								a.$message.success('添加地区成功');
+								a.queryCategory();
+								a.cateVisible = false;
+								a.category = {};
+							} else {
+								a.$message.error(res.message);
+							}
+						},
+					})
+				} else {
+					$.ajax({
+						url: serverName + '/region/address/edit',
+						type: 'post',
+						data: {token: token, id: a.category.id, name: name, type: ''},
+						dataType: 'json',
+						success: function(res) {
+							if(res.code === 0) {
+								a.$message.success('修改地区成功');
+								a.queryCategory();
+								a.cateVisible = false;
+								a.category = {};
+							} else {
+								a.$message.error(res.message);
+							}
+						},
+					})
+				}
+
+			},
 		}
 	};
 </script>
 
-<style lang="less" scoped>
-	.goodsType .el-tree .el-tree-node {
-		background-color: #fff;
-		margin-bottom: 0;
-		border-radius: 6px;
-	}
+<style lang="less">
 
-	.goodsType .custom-tree-node {
-		flex: 1;
+	.goodsType {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		font-size: 14px;
-		padding-right: 8px;
-	}
+		flex-direction: column;
+		background-color: #E4E7EA;
+		border-radius: 8px;
+		padding: 20px;
+		margin: 0 20px;
+		max-height: 100%;
 
-	.custom-tree-node span {
-		display: flex;
-		align-items: center;
-	}
+		.el-tree {
+			background: transparent;
 
-	.goodsType .el-tree-node__content {
-		height: 54px;
-		border-bottom: 1px solid #dfdfdf;
-		color: #333;
-	}
-	.btn-text {
-		font-size: 13px;
-		font-weight: bolder;
-	}
+			& > .el-tree-node {
+				background-color: #fff;
+				margin-bottom: 20px;
+				border-radius: 6px;
+			}
 
-	.el-upload {
-		border: 1px dashed #d9d9d9;
-		border-radius: 6px;
-		cursor: pointer;
-		position: relative;
-		overflow: hidden;
-	}
+			.custom-tree-node {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				font-size: 14px;
+				padding-right: 8px;
+			}
 
-	.avatar-uploader .el-upload:hover {
-		border-color: #409eff;
-	}
+			.el-tree-node__content {
+				height: 54px;
+				border-bottom: 1px solid #dfdfdf;
+				color: #333;
+			}
+		}
 
-	.avatar-uploader-icon {
-		font-size: 28px;
-		color: #8c939d;
-		width: 40px;
-		height: 40px;
-		line-height: 40px;
-		text-align: center;
-	}
+		.goodsTop {
+			padding: 20px;
+			display: flex;
+			flex-direction: row;
+			background-color: #fff;
+			border-radius: 6px;
+			margin-bottom: 20px;
+		}
 
-	.avatar {
-		width: 40px;
-		height: 40px;
-		display: block;
+		.accountBtm {
+			padding: 0;
+			overflow: auto;
+		}
 	}
 </style>

@@ -12,12 +12,12 @@
 				<el-row class="demo-form-inline">
 					<div class="tag-group">
 						<span class="tag-group__title">房态:</span>
-						<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l">
+						<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l-8">
 							{{ item.label }}
 						</el-tag>
 					</div>
 					<el-form class="demo-form-inline" inline size="small" style="margin-left: 100px;">
-						<el-form-item label="楼层楼栋:" class="margin-l">
+						<el-form-item label="楼层楼栋:" class="margin-l-8">
 							<el-select v-model="roomStatus.dong" placeholder="楼栋" class="row-width">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
@@ -33,7 +33,7 @@
 				<el-row class="demo-form-inline">
 					<div class="tag-group">
 						<span class="tag-group__title">房型:</span>
-						<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l">
+						<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l-8">
 							{{ item.label }}
 						</el-tag>
 					</div>
@@ -267,7 +267,7 @@
 										<el-form-item label="物品名称:">
 											<el-input v-model="fourForm.name" class="row-width"></el-input>
 										</el-form-item>
-										<el-form-item label="物品类型:" class="margin-l">
+										<el-form-item label="物品类型:" class="margin-l-8">
 											<el-select v-model="fourForm.name" placeholder="请选择状态" class="row-width">
 												<el-option label="区域一" value="shanghai"></el-option>
 												<el-option label="区域二" value="beijing"></el-option>
@@ -834,10 +834,6 @@
 		justify-content: center;
 	}
 
-	.margin-l {
-		margin-left: 8px;
-	}
-
 	.tag-margin {
 		margin-right: 8px;
 		margin-top: 8px;
@@ -845,11 +841,6 @@
 
 	.row-width {
 		width: 120px;
-	}
-
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
 	}
 
 	.font {

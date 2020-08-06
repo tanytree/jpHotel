@@ -9,7 +9,7 @@
 								<el-form-item label="商品名称:">
 									<el-input v-model="ruleForm.name" class="row-width"></el-input>
 								</el-form-item>
-								<el-form-item label="库存状态:" class="margin-l">
+								<el-form-item label="库存状态:" class="margin-l-15">
 									<el-select v-model="ruleForm.name" placeholder="请选择部门" class="row-width">
 										<el-option label="区域一" value="shanghai"></el-option>
 										<el-option label="区域二" value="beijing"></el-option>
@@ -19,7 +19,7 @@
 									<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
 									<el-button type="primary" style="width: 100px;" size="mini">重置</el-button>
 								</el-form-item>
-								<el-form-item style="display: flex;justify-content: flex-end;flex: 1;">
+								<el-form-item class="form-inline-flex">
 									<el-row>
 										<el-button @click="popup('add')" style="width: 100px;" size="mini">导出</el-button>
 									</el-row>
@@ -27,8 +27,7 @@
 							</el-form>
 						</el-row>
 						<div class="components-edit">
-							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-							 @selection-change="handleSelectionChange">
+							<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 								<el-table-column prop="name" label="商品名称"></el-table-column>
 								<el-table-column prop="time" label="库存预警数量"></el-table-column>
 								<el-table-column prop="job_status" label="库存量"></el-table-column>
@@ -39,12 +38,7 @@
 								</el-table-column>
 							</el-table>
 							<div class="block">
-								<div class="page-all">
-									共
-									<span style="font-weight:600;font-size: 14px;">400</span>条记录
-								</div>
-								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-								 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 							</div>
 						</div>
 					</el-row>
@@ -95,8 +89,7 @@
 				</el-form>
 			</el-row>
 			<el-row>
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-				 @selection-change="handleSelectionChange">
+				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 					<el-table-column prop="name" label="商品名称"></el-table-column>
 					<el-table-column prop="time" label="成本价"></el-table-column>
 					<el-table-column prop="job_status" label="入库数量">
@@ -149,7 +142,7 @@
 						<el-form-item label="商品名称:">
 							<el-input v-model="ruleForm.name"></el-input>
 						</el-form-item>
-						<el-form-item label="商品分类:" class="margin-l">
+						<el-form-item label="商品分类:" class="margin-l-15">
 							<el-select v-model="ruleForm.name" placeholder="请选择商品分类">
 								<el-option label="区域一" value="shanghai"></el-option>
 								<el-option label="区域二" value="beijing"></el-option>
@@ -161,20 +154,14 @@
 					</el-form>
 				</el-row>
 				<div class="components-edit">
-					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-					 @selection-change="handleSelectionChange">
+					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column type="selection" width="55"></el-table-column>
 						<el-table-column prop="name" label="商品名称"></el-table-column>
 						<el-table-column prop="time" label="商品类别"></el-table-column>
 						<el-table-column prop="job_status" label="成本价"></el-table-column>
 					</el-table>
 					<div class="block">
-						<div class="page-all">
-							共
-							<span style="font-weight:600;font-size: 14px;">400</span>条记录
-						</div>
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-						 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 					</div>
 				</div>
 			</el-row>
@@ -191,6 +178,7 @@
 		data() {
 			return {
 				activName: 'a',
+				pageSize: 10, currentPage: 1, total: 0,
 				tableData: [{
 					name: '',
 					time: '2020-5-20',
@@ -253,21 +241,12 @@
 </script>
 
 <style lang="less" scoped>
-	.margin-l {
-		margin-left: 15px;
-	}
-
 	.row-width {
 		width: 120px;
 	}
 
 	.padding-item {
 		padding-bottom: 5px;
-	}
-
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
 	}
 
 	.btn-click {
