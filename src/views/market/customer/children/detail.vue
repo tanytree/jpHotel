@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-22 14:11:35
+ * @LastEditTime: 2020-08-06 10:42:01
  * @FilePath: /jiudian/src/views/market/customer/children/detail.vue
  -->
 <template>
@@ -109,20 +109,16 @@
                                 <el-row class="cell">
                                     <el-col :span="8" class="col">
                                         <el-form-item label="性别" prop="sex">
-                                            <el-radio-group v-model="detailForm.sex" v-if="type!='detail'">
-                                                <el-radio :label="1">男</el-radio>
-                                                <el-radio :label="2">女</el-radio>
-                                                <el-radio :label="3">保密</el-radio>
+                                            <el-radio-group v-model="detailForm.sex" v-show="type!='detail'">
+                                                <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
                                             </el-radio-group>
                                             <template v-if="type=='detail'">{{detailForm.sex | F_sex}}</template>
-
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="8" class="col">
                                         <el-form-item label="生日" prop="birthday">
                                             <el-date-picker v-model="detailForm.birthday" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-if="type!='detail'"></el-date-picker>
                                             <template v-if="type=='detail'">{{detailForm.birthday}}</template>
-
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="8" class="col">
@@ -283,7 +279,7 @@
                 </el-form-item>
             </template>
             <template v-if="cardForm.type==4">
-                <el-form-item label="操作类型" class="">
+                <el-form-item label="操作类型" class="" prop="operType">
                     <el-radio-group v-model="cardForm.operType">
                         <el-radio :label="2">挂失并补卡</el-radio>
                         <el-radio :label="3">仅挂失</el-radio>
@@ -415,6 +411,11 @@ export default {
                     message: '请选择支付方式',
                     trigger: 'change'
                 }, ],
+operType: [{
+                    required: true,
+                    message: '请选择操作类型',
+                    trigger: 'change'
+                }, ],
 
             }
         };
@@ -424,7 +425,7 @@ export default {
     },
     mounted() {
         this.detailForm.id = this.$route.query.id ? this.$route.query.id : ''
-      debugger
+        debugger
         if (this.$route.name == 'customeradd') {
             this.type = 'add'
         } else if (this.$route.name == 'customeredit') {
@@ -447,12 +448,12 @@ export default {
             this.$F.doRequest(this, '/pms/hotelmember/findone', {
                 id: id
             }, (res) => {
-              for(var key in res){//遍历json对象的每个key/value对,p为key
-                if (res[key] && typeof(res[key]) == "number") {
-                  res[key] = res[key].toString();
+                for (var key in res) { //遍历json对象的每个key/value对,p为key
+                    if (res[key] && typeof (res[key]) == "number") {
+                        res[key] = res[key].toString();
+                    }
                 }
-              }
-              this.detailForm = res;
+                this.detailForm = res;
             })
         },
         setCardFormBtnClick(v) {
@@ -489,7 +490,7 @@ export default {
                             newTypeId: this.cardForm.memberTypeId,
                             operType: 1,
                             oldCardNum: this.detailForm.memberCard,
-                            cardNum:this.detailForm.memberCard,
+                            cardNum: this.detailForm.memberCard,
                             payWay: this.cardForm.payWay,
                             payPrices: this.cardForm.payPrices
                         }
@@ -538,9 +539,9 @@ export default {
             });
         },
         smembertype_list() {
-          this.$F.fetchMemberTypeList({}, (res) => {
-            this.smembertypeList = res.list;
-          })
+            this.$F.fetchMemberTypeList({}, (res) => {
+                this.smembertypeList = res.list;
+            })
         },
         login_user_list() {
             let params = {
