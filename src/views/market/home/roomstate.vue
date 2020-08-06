@@ -1510,4 +1510,8 @@ export default {
 .placeIcon {
     margin-top: 25px
 }
+.el-select {
+    display: inline-block;
+}
+
 </style>
