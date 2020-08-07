@@ -43,6 +43,11 @@
         },
         data() {
             return {
+                searchForm: {
+                    pageIndex: 1,
+                    pageSize: 10,
+                    paging: true
+                },
                 activeName: 'first', //第一个默认启动
                 goodsList: [], goodsTotal: 0, goodsSize: 0, goodsPage: 1,
                 salesList: [], salesTotal: 0, salesSize: 0, salesPage: 1,
@@ -70,6 +75,7 @@
                     categoryId: categoryId,
                     state: state
                 }
+                this.$F.merge(params, this.searchForm);
                 this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {
                     this.goodsList = res.list;
                     if (res.page) {
@@ -84,7 +90,8 @@
                 })
             },
             getCategoryData() {
-                this.$F.doRequest(this, '/pms/hotelcategory/list', {}, (res) => {
+
+                this.$F.doRequest(this, '/pms/hotelcategory/list', this.searchForm, (res) => {
                     // this.category = res.list;
                     this.category = this.getTreeItem(res.list);
                 })
