@@ -79,10 +79,8 @@
                         <el-select v-model="searchForm.buildingId" placeholder="楼栋" class="row-width" @change="buildingSelectChange">
                             <el-option v-for="item in hotel_building_list" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
-
                         </el-select>
                         <el-select v-model="searchForm.buildingFloorId" placeholder="楼层" class="row-width margin-l-8" @change="floorSelectChange">
-
                             <el-option v-for="item in hotel_building_floor_list" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
@@ -97,7 +95,6 @@
                     <span class="fangtai">渠道</span>
                     <span class="rescet" @click="clearnSelectAttr('channel')">重置</span>
                 </div>
-
                 <div style="margin-top:10px">
                     <el-checkbox-group v-model="searchForm.channel" @change="handleChange">
                         <el-checkbox style="width:100%;position: relative;margin-top:10px" v-for="item of channel" :key="item.channel" :label="item.channel">

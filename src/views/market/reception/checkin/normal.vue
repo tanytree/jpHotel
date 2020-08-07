@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 14:14:30
+ * @LastEditTime: 2020-08-07 09:46:00
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -1803,5 +1803,8 @@ export default {
     bottom: 0;
     background: rgba(0, 0, 0, 0.66);
     color: #fff
+}
+.el-select {
+    display: inline-block;
 }
 </style>
