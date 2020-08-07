@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 18:19:40
+ * @LastEditTime: 2020-08-07 16:43:41
  * @FilePath: /jiudian/src/views/market/customer/history.vue
  -->
 
@@ -95,8 +95,8 @@
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item @click.native="handleEdit(row)">修改</el-dropdown-item>
-                            <el-dropdown-item @click.native="setMemberFormVisible=true">转为会员</el-dropdown-item>
+                            <!-- <el-dropdown-item @click.native="handleEdit(row)">修改</el-dropdown-item> -->
+                            <el-dropdown-item v-if="!row.memberCard" @click.native="changeIntoMember(row)">转为会员</el-dropdown-item>
                             <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!= 2">拉黑</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -108,106 +108,136 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog top="0" title="转为会员" :visible.sync="setMemberFormVisible" class="setMemberForm" width="60%">
-        <el-form :model="detailForm" label-width="80px" size="mini">
+    <el-dialog top="0" :title="detailForm.type=='add'?'转为会员':'详情'" :visible.sync="setMemberFormVisible" class="setMemberForm" width="60%">
+        <el-form :model="detailForm" :rules="detailForm.type=='add'?rules:{}" ref="setMemberForm" label-width="100px" size="mini">
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="姓名" class="require">
-                            <el-input v-model="detailForm.name" class="width200"></el-input>
+                        <el-form-item label="姓名：" class="" prop="name">
+                            <el-input v-model="detailForm.name" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.name}}</template>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="电话" class="require">
-                            <el-input v-model="detailForm.name" class="width200"></el-input>
+                        <el-form-item label="电话：" class="" prop="mobile">
+                            <el-input v-model="detailForm.mobile" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.mobile}}</template>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="证件类型" class="require">
-                            <el-select v-model="detailForm.name" class="width200">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                        <el-form-item label="证件类型：" class="" prop="idcardType">
+                            <el-select v-model="detailForm.idcardType" class="width200" v-if="detailForm.type=='add'">
+                                <el-option v-for="(label, value) in $t('commons.idCardType')" :label="label" :value="value" :key="value"></el-option>
                             </el-select>
+                            <template v-else>{{detailForm.idcardType | F_idcardType}}</template>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="证件号" class="require">
-                            <el-input v-model="detailForm.name" class="width200"></el-input>
-                        </el-form-item>
-                    </el-col>
-                     <el-col :span="8" class="col">
-                        <el-form-item label="会员卡号" class="require">
-                            <el-input v-model="detailForm.name" class="width200"></el-input>
+                        <el-form-item label="证件号：" class="" prop="idcard">
+                            <el-input v-model="detailForm.idcard" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.idcard}}</template>
+
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="会员类型" class="require">
-                            <el-select v-model="detailForm.name" class="width200">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                        <el-form-item label="会员卡号：" class="" prop="memberCard">
+                            <el-input v-model="detailForm.memberCard" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.memberCard}}</template>
+
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8" class="col">
+                        <el-form-item label="会员类型：" class="" prop="memberTypeId">
+                            <el-select v-model="detailForm.memberTypeId" class="width200" v-if="detailForm.type=='add'">
+                                <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id">
+                                </el-option>
                             </el-select>
+                            <template v-else>{{F_memberTypeId(detailForm.memberTypeId)}}</template>
+
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row class="cell">
-                   
-                    
+
                 </el-row>
             </el-row>
             <el-divider></el-divider>
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="性别">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="性别：">
+                            <el-radio-group v-model="detailForm.sex" v-if="detailForm.type=='add'">
+                                <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
+                            </el-radio-group>
+                            <template v-else>{{detailForm.sex | F_sex}}</template>
+
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="生日">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="生日：">
+                            <el-date-picker v-model="detailForm.birthday" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" class="width200" v-if="detailForm.type=='add'"></el-date-picker>
+                            <template v-else>{{detailForm.birthday}}</template>
+
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="邮箱">
-                            <el-input v-model="detailForm.name"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row class="cell">
-                    <el-col :span="8" class="col">
-                        <el-form-item label="国籍">
-                            <el-input v-model="detailForm.name"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8" class="col">
-                        <el-form-item label="地址">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="邮箱：">
+                            <el-input v-model="detailForm.email" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.email}}</template>
+
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="车牌号">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="国籍：">
+                            <el-select v-model="detailForm.nationality" class="width200" v-if="detailForm.type=='add'">
+                                <el-option v-for="item in nationalityList" :key="item.id" :label="$i18n.locale == 'ri' ?item.jName:item.cName" :value="item.id">
+                                </el-option>
+                            </el-select>
+                            <template v-else>{{F_nationality(detailForm.nationality)}}</template>
+
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="爱好">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="地址：">
+                            <el-input v-model="detailForm.address" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.address}}</template>
+
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="所属单位">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="车牌号：">
+                            <el-input v-model="detailForm.carNum" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.carNum}}</template>
+
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="备注">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="爱好：">
+                            <el-input v-model="detailForm.hobby" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.hobby}}</template>
+
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row class="cell">
+                    <el-col :span="8" class="col">
+                        <el-form-item label="所属单位：">
+                            <el-select v-model="detailForm.enterId" class="width200" v-if="detailForm.type=='add'">
+                                <el-option v-for="item in hotelenterList" :key="item.id" :label="item.enterName" :value="item.id">
+                                </el-option>
+                            </el-select>
+                            <template v-else>{{F_enterId(detailForm.enterId)}}</template>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8" class="col">
+                        <el-form-item label="备注：">
+                            <el-input type="textarea" v-model="detailForm.remark" class="width200" v-if="detailForm.type=='add'"></el-input>
+                            <template v-else>{{detailForm.remark}}</template>
+
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -216,17 +246,21 @@
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="销售员">
-                            <el-input v-model="detailForm.name"></el-input>
+                        <el-form-item label="销售员：">
+                            <el-select v-model="detailForm.salesId" v-if="detailForm.type=='add'">
+                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                            </el-select>
+                            <template v-else>{{F_salesId(detailForm.salesId)}}</template>
+
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="发展途径">
-                            <el-select v-model="detailForm.name">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                        <el-form-item label="发展途径：">
+                            <el-select v-model="detailForm.getWay" v-if="detailForm.type=='add'">
+                                <el-option v-for="(value, key) in $t('frontOffice.getWay')" :label="value" :key="value" :value="key"></el-option>
                             </el-select>
+                            <template v-else>{{F_getWay(detailForm.getWay)}}</template>
+
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -234,16 +268,20 @@
             <el-row class="row">
                 <el-row class="cell">
                     <el-col :span="8" class="col">
-                        <el-form-item label="立即发卡">
-                            <el-checkbox v-model="detailForm.name"></el-checkbox>
+                        <el-form-item label="立即发卡：" prop="state">
+                            <el-radio-group v-model="detailForm.state" v-if="detailForm.type=='add'">
+                                <el-radio label="1">是</el-radio>
+                                <el-radio label="2">待启用</el-radio>
+                            </el-radio-group>
+                            <template v-else>{{detailForm.state==1?'是':'待启用'}}</template>
                         </el-form-item>
                     </el-col>
                 </el-row>
             </el-row>
         </el-form>
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer" class="dialog-footer" v-if="detailForm.type=='add'">
             <el-button @click="setMemberFormVisible=false">关闭</el-button>
-            <el-button type="primary" @click="setMemberFormVisible=false">确认</el-button>
+            <el-button type="primary" @click="addItem('setMemberForm')">确认</el-button>
         </div>
     </el-dialog>
     <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
@@ -295,11 +333,74 @@ export default {
             tableData: [], //表格数据
             storeList: [],
             nationalityList: [],
-            smembertypeList: '',
+            smembertypeList: [],
             salesList: '',
             hotelenterList: '',
             detailForm: {
                 name: ''
+            },
+            rules: {
+                name: [{
+                    required: true,
+                    message: '请输入姓名',
+                    trigger: 'blur'
+                }, ],
+                sex: [{
+                    required: true,
+                    message: '请选择性别',
+                    trigger: 'change'
+                }, ],
+                idcardType: [{
+                    required: true,
+                    message: '请选择证件类型',
+                    trigger: 'change'
+                }, ],
+                idcard: [{
+                    required: true,
+                    message: '请填入证件编号',
+                    trigger: 'blur'
+                }, ],
+                mobile: [{
+                    required: true,
+                    message: '请输入手机号',
+                    trigger: 'blur'
+                }, ],
+                memberCard: [{
+                    required: true,
+                    message: '请输入会员卡号',
+                    trigger: 'blur'
+                }, ],
+                memberTypeId: [{
+                    required: true,
+                    message: '请选择会员类型',
+                    trigger: 'change'
+                }, ],
+                state: [{
+                    required: true,
+                    message: '请选择是否立即发卡',
+                    trigger: 'change'
+                }, ],
+                remark: [{
+                    required: true,
+                    message: '请填写备注',
+                    trigger: 'blur'
+                }, ],
+                payPrices: [{
+                    required: true,
+                    message: '请填写支付金额',
+                    trigger: 'blur'
+                }, ],
+                payWay: [{
+                    required: true,
+                    message: '请选择支付方式',
+                    trigger: 'change'
+                }, ],
+                operType: [{
+                    required: true,
+                    message: '请选择操作类型',
+                    trigger: 'change'
+                }, ],
+
             },
             setBlackForm: {
                 remark: ''
@@ -311,12 +412,17 @@ export default {
                     message: 'not emply',
                     trigger: 'change'
                 }]
-            }
+            },
+            currentItem: '',
         };
     },
     mounted() {
         this.initForm();
         this.stores_list()
+        this.smembertype_list()
+        this.login_user_list()
+        this.hotelenter_list()
+        this.nationality()
     },
     methods: {
         initForm() {
@@ -407,20 +513,72 @@ export default {
                 this.nationalityList = res;
             })
         },
+
+        changeIntoMember(item) {
+            let data = {
+                name: '',
+                memberTypeId: '',
+                idcardType: '',
+                idcard: '',
+                mobile: '',
+                sex: '',
+                email: '',
+                salesId: '',
+            }
+            for (var key in item) {
+                if (item[key] && typeof (item[key]) == "number") {
+                    item[key] = item[key].toString();
+                }
+            }
+            for (var key in data) {
+                this.detailForm[key] = item[key]
+            }
+            this.detailForm.type = 'add'
+            this.setMemberFormVisible = true
+        },
+        addItem(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$F.doRequest(this, '/pms/hotelmember/edit', this.detailForm, (res) => {
+                        this.$message({
+                            message: '操作成功',
+                            type: 'success'
+                        });
+                        this.setMemberFormVisible = false
+                        this.getDataList()
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
         handleDetail(item) {
-            this.$router.push({
-                'name': 'historydetail'
-            })
+            this.detailForm = item
+            this.detailForm.type = 'detail'
+            this.setMemberFormVisible = true
         },
         handleHistory(item) {
             this.$router.push({
-                'name': 'customerhistory',query:{'idcard':item.idcard}
+                'name': 'customerhistory',
+                query: {
+                    'idcard': item.idcard
+                }
             })
         },
         handleEdit(item) {
             this.$router.push({
                 name: 'customeredit'
             })
+        },
+        F_memberTypeId(v) {
+            let that = this
+            for (let k in that.smembertypeList) {
+                if (that.smembertypeList[k].id == v) {
+                    return that.smembertypeList[k].name
+                }
+            }
+            return ''
         },
         F_storeName(v) {
             let that = this
@@ -429,7 +587,34 @@ export default {
                     return that.storeList[k].storesName
                 }
             }
-            return '未知门店'
+            return ''
+        },
+        F_nationality(v) {
+            let that = this
+            for (let k in that.nationalityList) {
+                if (that.nationalityList[k].id == v) {
+                    return this.$i18n.locale == 'ri' ? that.nationalityList[k].jName : that.nationalityList[k].cName
+                }
+            }
+            return ''
+        },
+        F_salesId(v) {
+            let that = this
+            for (let k in that.salesList) {
+                if (that.salesList[k].id == v) {
+                    return that.salesList[k].userName
+                }
+            }
+            return ''
+        },
+        F_enterId(v) {
+            let that = this
+            for (let k in that.hotelenterList) {
+                if (that.hotelenterList[k].id == v) {
+                    return that.hotelenterList[k].enterName
+                }
+            }
+            return ''
         },
         /**多选 */
         handleSelectionChange(val) {
@@ -449,6 +634,7 @@ export default {
     }
 };
 </script>
+
 <style lang="less" scoped>
 .el-select {
     display: inline-block;
