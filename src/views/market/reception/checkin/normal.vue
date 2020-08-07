@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 10:16:16
+ * @LastEditTime: 2020-08-07 11:42:17
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -108,7 +108,7 @@
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="手机号：">
+                        <el-form-item label="手机号：" prop="mobile">
                             <el-input v-model="checkInForm.mobile" class="width200"></el-input>
                         </el-form-item>
                     </div>
@@ -185,7 +185,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="手机号：">
+                        <el-form-item label="手机号：" prop="prop">
                             <el-input v-model="checkInForm.mobile" class="width200"></el-input>
                         </el-form-item>
                     </div>
@@ -556,8 +556,7 @@
                     <el-button type="text" size="mini" @click="editItem_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">保存</el-button>
                     <el-button type="text" size="mini" @click="cancel_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">取消</el-button>
                     <el-button type="text" size="mini" @click="edit_live_in_person(scope.row.isChild?scope.row:scope.row.params)" v-if="scope.row.isChild&&!scope.row.edit">编辑</el-button>
-                    <el-button type="text" size="mini" @click="del_live_in_person(scope.row)" v-if="scope.row.isChild">删除</el-button>
-
+                    <el-button type="text" size="mini" @click="del_live_in_person(scope.row)" v-if="scope.row.isChild && !scope.row.isIndex0">删除{{scope.$index}}</el-button>
                     <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addItem_live_in_person(scope.$index,scope.row.params)">
                         <template v-if="scope.row.children.length">+同来宾客</template>
                         <template v-else>+入住人</template>
@@ -731,6 +730,10 @@ export default {
                     required: true,
                     message: '请选择性别',
                     trigger: 'blur'
+                }, ], mobile: [{
+                    required: true,
+                    message: '请输入手机号',
+                    trigger: 'blur'
                 }, ],
                 idcardType: [{
                     required: true,
@@ -845,27 +848,27 @@ export default {
                 let arr = [];
                 if (this.operCheckinType == 'a1') {
                     arr = [
-                        'name', 'sex', 'idcardType', 'idcard', 'checkinTime', 'checkoutTime', 'guestType', 'orderSource', 'checkinType'
+                        'name', 'sex', 'idcardType', 'idcard', 'checkinTime', 'checkoutTime', 'guestType', 'orderSource', 'checkinType','mobile'
                     ]
                 }
                 if (this.operCheckinType == 'a2') {
                     arr = [
-                        'name', 'sex', 'idcardType', 'idcard', 'ruleHourId', 'guestType', 'orderSource', 'checkinType'
+                        'name', 'sex', 'idcardType', 'idcard', 'ruleHourId', 'guestType', 'orderSource', 'checkinType','mobile'
                     ]
                 }
                 if (this.operCheckinType == 'b1') {
                     arr = [
-                        'name', 'guestType', 'orderSource', 'checkinType', 'checkinTime', 'checkoutTime', 'keepTime', 'checkinDays',
+                        'name', 'guestType', 'orderSource', 'checkinType', 'checkinTime', 'checkoutTime', 'keepTime', 'checkinDays','mobile'
                     ]
                 }
                 if (this.operCheckinType == 'b2') {
                     arr = [
-                        'name', 'guestType', 'orderSource', 'checkinTime', 'checkoutTime', 'keepTime', 'ruleHourId'
+                        'name', 'guestType', 'orderSource', 'checkinTime', 'checkoutTime', 'keepTime', 'ruleHourId','mobile'
                     ]
                 }
                 if (this.operCheckinType == 'b3') {
                     arr = [
-                        'name', 'checkinTime', 'checkoutTime', 'keepTime', 'guestType', 'orderSource'
+                        'name', 'checkinTime', 'checkoutTime', 'keepTime', 'guestType', 'orderSource','mobile'
                     ]
                 }
                 console.log(this.operCheckinType)
@@ -1375,7 +1378,8 @@ export default {
                 this.liveLoading = false
                 let data = res.checkInRoomList
                 this.liveInPersonShow = true
-                for (let k in data) {
+                for (let k=0;k<data.length;k++) {
+                    console.log(k)
                     data[k].params = {
                         checkinRoomId: data[k].room ? data[k].room.id : '',
                         name: '',
@@ -1388,19 +1392,14 @@ export default {
                         // hasChildren: false
                     }
                     //将登记人添加为入住人
-                    if (k == 0 && data[k].personList.length < 1) {
-                        // data[k].params.name = this.baseInfo.name
-                        // data[k].params.idcardType = this.baseInfo.idcardType.toString()
-                        // data[k].params.idcard = this.baseInfo.idcard
-                        // data[k].params.sex = this.baseInfo.sex.toString()
-                        // data[k].params.mobile = this.baseInfo.mobile
+                    if (k && data[k].personList.length < 1) {
                         let params = {
-                            checkinRoomId: data[k].checkinRoomId,
-                            name: this.baseInfo.name,
-                            idcardType: this.baseInfo.idcardType,
-                            idcard: this.baseInfo.idcard,
-                            sex: this.baseInfo.sex,
-                            mobile: this.baseInfo.mobile,
+                            checkinRoomId: data[k].roomId,
+                            name: this.checkInForm.name,
+                            idcardType: this.checkInForm.idcardType,
+                            idcard: this.checkInForm.idcard,
+                            sex: this.checkInForm.sex,
+                            mobile: this.checkInForm.mobile,
                             checkinId: this.checkInForm.checkInId,
                             checkInPersonId: ''
                         };
@@ -1417,6 +1416,11 @@ export default {
                             element.idcardType = element.idcardType.toString()
                             element.isChild = true
                             element.edit = false
+                            if(index>0){
+                            element.isIndex0 = false
+                            }else{
+                                element.isIndex0 = true
+                            }
                             data[k].children.push(element)
                         });
                         // data[k].hasChildren = true
@@ -1468,6 +1472,8 @@ export default {
             })
         },
         addItem_live_in_person(i, item) {
+            console.log(item)
+            return
             if (!item.name) {
                 this.$message.error('请填写姓名');
                 return
