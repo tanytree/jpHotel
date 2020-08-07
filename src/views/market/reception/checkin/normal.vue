@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 09:46:00
+ * @LastEditTime: 2020-08-07 10:16:16
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -1615,6 +1615,11 @@ export default {
                     }
                 }
             }
+            if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
+                this.checkInForm.checkinTime = new Date().Format("yyyy-MM-dd HH:mm:ss")
+            } else {
+                this.typeText = '预订'
+            }
         },
         selectBlur(e) {
             console.log(e)
@@ -1804,6 +1809,7 @@ export default {
     background: rgba(0, 0, 0, 0.66);
     color: #fff
 }
+
 .el-select {
     display: inline-block;
 }
