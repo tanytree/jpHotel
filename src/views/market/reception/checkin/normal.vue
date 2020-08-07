@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 11:42:17
+ * @LastEditTime: 2020-08-07 11:53:51
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -1392,7 +1392,7 @@ export default {
                         // hasChildren: false
                     }
                     //将登记人添加为入住人
-                    if (k && data[k].personList.length < 1) {
+                    if (data[k].personList.length < 1) {
                         let params = {
                             checkinRoomId: data[k].roomId,
                             name: this.checkInForm.name,
