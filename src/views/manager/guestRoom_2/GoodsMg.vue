@@ -8,13 +8,12 @@
 				</el-form-item>
 				<el-form-item label="商品状态:">
 					<el-select v-model="form.status">
-						<el-option label="全部" value="all"></el-option>
+						<el-option label='启用' value="1"></el-option>
+						<el-option label='禁用' value="2"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="商品分类:">
-					<el-select v-model="form.category">
-						<el-option  v-for="(item, index) in category" :key="index" :label="item.name" :value="item.id"></el-option>
-					</el-select>
+					<el-cascader v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" class="submit" @click="search">查询</el-button>
@@ -29,7 +28,7 @@
 				</el-form-item>
 			</el-form>
 			<div class="components-edit">
-				<el-table ref="multipleTable" :data="tableData" border height="100%" header-row-class-name="default" size="small">
+				<el-table ref="multipleTable" :data="list" border height="100%" header-row-class-name="default" size="small" :row-style="hideRow">
 					<el-table-column prop="name" label="商品名称"></el-table-column>
 					<el-table-column prop="retailPrice" label="默认零售价(日元)"></el-table-column>
 					<el-table-column prop="costPrice" label="成本价(日元)"></el-table-column>
@@ -38,9 +37,10 @@
 						<template slot-scope="scope">
 							<el-button type="text" size="small" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? '禁用' : '启用'}}</el-button>
 							<el-button type="text" size="small" @click="popup('change', scope.row)">修改</el-button>
-							<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" onConfirm="handleDelete(scope.row)">
+							<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="handleDelete(scope.row)">
 								<el-button slot="reference" type="text">删除</el-button>
 							</el-popconfirm>
+							<el-button type="text" size="small" disabled @click="openDetail(scope.row)">详情</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -62,9 +62,7 @@
 				</el-col>
 				<el-col :span="8">
 					<el-form-item label="所属分类:" prop="categoryId">
-						<el-select v-model="rowData.categoryId">
-							<el-option  v-for="(item, index) in category" :key="index" :label="item.name" :value="item.id"></el-option>
-						</el-select>
+						<el-cascader v-model="rowData.categoryId" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
 					</el-form-item>
 				</el-col>
 				<el-col :span="16">
@@ -94,8 +92,8 @@
 			</div>
 
 			<div class="footer">
-				<el-button type="primary" size="small" class="submit" @click="submit('edit')">修改</el-button>
-				<el-button type="primary" size="small" class="submit" @click="submit()">保存并继续添加</el-button>
+				<el-button type="primary" v-if="edit" size="small" class="submit" @click="submit">修改</el-button>
+				<el-button type="primary" v-if="!edit" size="small" class="submit" @click="submit">保存并继续添加</el-button>
 				<el-button size="small" class="cancel" @click="back">返回</el-button>
 			</div>
 		</div>
@@ -106,13 +104,10 @@
 	export default {
 		data() {
 			return {
-				category: [],
 				form: {
-					name: '', status: 'all', category: ''
+					name: '', status: '', category: []
 				},
-				pageSize: 10, currentPage: 1, total: 0,
-
-				tableData: [],
+				categoryProps: {value: 'id', label: 'name', children: 'child'},
 				rowData: {name: '', categoryId: '', remark: '', retailPrice: '', costPrice: '', employeePrice: '', buyCount: '', inventoryWarning: ''},
 				threerules: {
 					name: [{required: true, message: '请输入产品名称', trigger: 'blur'}],
@@ -123,78 +118,64 @@
 					buyCount: [{required: true, message: '请输入产品购买数量', trigger: 'blur'}],
 					inventoryWarning: [{required: true, message: '请输入产品预警数量', trigger: 'blur'}],
 				},
-				tab_show: true,
+				tab_show: true, edit: true,
 			};
 		},
+		props: {
+			list: Array, category: Array, total: Number, pageSize: Number, currentPage: Number, initData: Function
+		},
 		mounted() {
-			this.getCategoryData()
-			this.getHotelGoodsData();
 		},
 		methods: {
-			getHotelGoodsData(name, categoryId, state) {
-				const params = {
-					name: name,
-					categoryId: categoryId,
-					state: state
-				}
-				this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {
-					this.tableData = res.list;
-					if(res.page) {
-						this.pageSize = res.page.pageSize;
-						this.currentPage = res.page.pageIndex;
-						this.total = res.page.count;
-					} else {
-						this.pageSize = 0;
-						this.currentPage = 1;
-						this.total = 0;
-					}
-
-				})
-			},
-			getCategoryData() {
-				this.$F.doRequest(this, '/pms/hotelcategory/list', {}, (res) => {
-					this.category = res.list
-
-				})
-			},
 			search() {
-				this.getHotelGoodsData(this.form.name, this.form.category, this.form.status)
+				this.initData(this.form.name, this.form.category, this.form.status)
 			},
 			reset() {
-				this.form = {name: '', status: 'all', category: ''}
+				this.form = {name: '', status: '', category: ''}
+			},
+			casChange(value) {
+				this.rowData.categoryId = value[value.length-1]
+			},
+			hideRow({row, rowIndex}) {
+				if(row.status !== 1) {
+					return {display: 'none'}
+				}
 			},
 			popup(type, row) {
 				if(type == 'add') {
+					this.edit = false
 					this.tab_show = false
 				} else if (type == 'bin') {
 					this.$F.doRequest(this, '/pms/hotelgoods/up_status', {
 						id: row.id,
 						state: row.state == 1 ? 2 : 1
 					}, (res) => {
-						this.$message.success(res.success);
-						this.getHotelGoodsData()
+						this.$message.success('success');
+						this.initData()
 					})
 				} else if (type == 'change') {
+					this.edit = true;
 					this.tab_show = false;
 					this.rowData = row;
 				}
 			},
 			//切换到商品管理
 			back() {
-				this.tab_show = true
+				this.tab_show = true;
+				this.initData();
 			},
-			submit (type) {
+			submit () {
 				const param = {name: this.rowData.name, categoryId: this.rowData.categoryId, remark: this.rowData.remark, retailPrice: this.rowData.retailPrice, costPrice: this.rowData.costPrice, employeePrice: this.rowData.employeePrice, buyCount: this.rowData.buyCount, inventoryWarning: this.rowData.inventoryWarning}
-				if(type == 'edit') {
+				if(this.edit) {
 					param.id = this.rowData.id
 				}
 				this.$F.doRequest(this, '/pms/hotelgoods/edit', param, (res) => {
-					this.$message.success(res.success);
-					this.getHotelGoodsData();
-					if(type='edit') {
+					this.initData();
+					if(this.edit) {
 						this.tab_show = true;
 					} else {
 						this.tab_show = false;
+						this.rowData = {name: '', categoryId: '', remark: '', retailPrice: '', costPrice: '', employeePrice: '', buyCount: '', inventoryWarning: ''};
 					}
 				})
 			},
@@ -204,17 +185,31 @@
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
 			},
-			downModel() {},
-			importModel() {},
+			downModel() {
+				this.$F.doRequest(this, '/pms/hotelgoods/download', {}, (res) => {
+					this.$message.success('下载成功');
+				})
+			},
+			importModel() {
+				this.$F.doRequest(this, '/pms/hotelgoods/upload', {filename: ''}, (res) => {
+					this.$message.success('导入成功');
+				})
+			},
 			handleDelete(row) {
 				this.$F.doRequest(this, '/pms/hotelgoods/up_status', {
 					id: row.id,
 					state: ''
 				}, (res) => {
-					this.$message.success(res.success);
-					this.getHotelGoodsData()
+					this.$message.success('success');
+					this.initData()
 				})
 			},
+			openDetail(row) {
+				this.$F.doRequest(this, '/pms/hotelgoods/list', {
+					id: row.id,
+				}, (res) => {
+				})
+			}
 		}
 	};
 </script>
