@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 23:14:37
- * @FilePath: /jiudian/src/views/market/nightaudit/list5.vue
+ * @LastEditTime: 2020-08-07 17:05:49
+ * @FilePath: /jiudian/src/views/market/nightaudit/verify.vue
  -->
 
 <template>
@@ -74,35 +74,22 @@ export default {
     },
 
     mounted() {
-        // this.initForm();
+        this.initForm();
     },
     methods: {
         initForm() {
             this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                pageing: false
             };
             this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
-            this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
-                this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
-            });
+            this.$F.doRequest(this, '/pms/checkin/pretrial_order_list', this.searchForm, (data) => {
+                this.tableData = data;
+            })
         },
         /**编辑 */
         editRowItem(row) {

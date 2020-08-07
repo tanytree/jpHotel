@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-04 23:14:13
- * @FilePath: /jiudian/src/views/market/nightaudit/list2.vue
+ * @LastEditTime: 2020-08-07 17:15:38
+ * @FilePath: /jiudian/src/views/market/nightaudit/notyet.vue
  -->
 
 <template>
@@ -70,35 +70,37 @@ export default {
     },
 
     mounted() {
-        // this.initForm();
+        this.initForm();
     },
     methods: {
         initForm() {
             this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
+                operCheckinType: '',
+                enterName: '',
+                houseNum: '',
+                thirdOrdernum: '',
+                orderNum: '',
+                mobile: '',
+                name: '',
+                orderSource: '',
+                checkinType: '',
+                checkinTime: '',
+                createTime: '',
+                state: 9,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                paging: true
             };
             this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
             this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
+            this.$F.doRequest(this, '/pms/reserve/reserve_order_list', this.searchForm, (res) => {
                 this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
-            });
+                this.tableData = res.resreveList;
+                this.listTotal = res.page.count
+            })
         },
         /**编辑 */
         editRowItem(row) {
@@ -110,7 +112,6 @@ export default {
                 this.refs.editRef.initdata(row.id);
             });
         },
-
         handelRowItem(row) {
             // 加载组件
             this.showDetail = true;
@@ -120,20 +121,19 @@ export default {
                 this.refs.detailRef.initdata(row.id);
             });
         },
-
         /**多选 */
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
         /**每页数 */
         handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
+            this.searchForm.pageSize = val;
+            this.searchForm.pageIndex = 1;
             this.getDataList();
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.page = val;
+            this.searchForm.pageIndex = val;
             this.getDataList();
         }
     }
