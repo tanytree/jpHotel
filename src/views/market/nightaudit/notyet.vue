@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 17:15:38
+ * @LastEditTime: 2020-08-09 15:51:29
  * @FilePath: /jiudian/src/views/market/nightaudit/notyet.vue
  -->
 
@@ -11,15 +11,38 @@
     <el-card>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
-            <el-table-column type="index" label="预订人"></el-table-column>
-            <el-table-column prop="enterName" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="预定时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="抵离时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="订金" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="订单来源" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="入住类型" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="预定订单" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="name" label="预订人"></el-table-column>
+            <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" label="预定时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" label="抵离时间" width="300">
+                <template slot-scope="{row}">
+                    <div class="box">
+                        <div class="item">
+                            <div>
+                                <span class="text-blue">抵</span>{{row.checkinTime}}
+                            </div>
+                            <div>
+                                <span class="text-red">离</span>{{row.checkoutTime}}
+                            </div>
+                        </div>
+                        <div class="item">{{row.checkinDays}}天</div>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="deposit" label="订金" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="orderSource" label="订单来源" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="state" label="状态">
+                <template slot-scope="{row}">
+                    {{F_checkinState(row.state)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="checkinType" label="入住类型" show-overflow-tooltip>
+                                <template slot-scope="{row}">
+                    {{F_checkinType(row.checkinType)}}
+                </template>
+
+            </el-table-column>
+            <el-table-column prop="reserveOrderNum" label="预定单号" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini">详情</el-button>
@@ -39,8 +62,9 @@ import {
     mapState,
     mapActions
 } from "vuex";
-
+import myMixin from '@/utils/filterMixin';
 export default {
+    mixins: [myMixin],
     computed: {
         ...mapState({
             token: state => state.user.token,

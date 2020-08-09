@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-29 10:27:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 16:21:35
+ * @LastEditTime: 2020-08-09 15:43:05
  * @FilePath: /jiudian/src/utils/filterMixin.js
  */ 
 let mixin = {
@@ -44,6 +44,10 @@ let mixin = {
         },
         F_getWay(value) {
             let enums = this.$t('frontOffice.getWay')
+            return value && enums[value] ? enums[value] : ''
+        },
+        F_checkinType(value) {
+            let enums = this.$t('commons.checkinType')
             return value && enums[value] ? enums[value] : ''
         },
 

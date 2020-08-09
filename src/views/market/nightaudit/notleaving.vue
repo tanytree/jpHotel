@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 17:20:17
+ * @LastEditTime: 2020-08-09 15:57:47
  * @FilePath: /jiudian/src/views/market/nightaudit/notleaving.vue
  -->
 
@@ -11,15 +11,35 @@
     <el-card>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
-            <el-table-column type="index" label="客人名称"></el-table-column>
-            <el-table-column prop="enterName" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="入住时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStatus" label="预离时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStatus" label="房间号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStatus" label="客源类别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStatus" label="总消费" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStatus" label="在住状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterStatus" label="结账状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="name" label="客人名称"></el-table-column>
+            <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="checkinTime" label="入住时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="checkoutTime" label="预离时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="房间号" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.hotelCheckInRoom?row.hotelCheckInRoom.houseNum:''}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="guestType" label="客源类别" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_guestType(row.guestType)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="consumeTotalPrice" label="总消费" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.memberObject?row.memberObject.consumeTotalPrice:''}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="state" label="在住状态" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_checkinState(row.state)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="billType" label="结账状态" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_billType(row.billType)}}
+                </template>
+            </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini">详情</el-button>
@@ -39,7 +59,9 @@ import {
     mapState,
     mapActions
 } from "vuex";
+import myMixin from '@/utils/filterMixin';
 export default {
+    mixins: [myMixin],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -78,7 +100,7 @@ export default {
                 idcard: '',
                 name: '',
                 searchType: 2,
-                outType:1,
+                outType: 1,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true
