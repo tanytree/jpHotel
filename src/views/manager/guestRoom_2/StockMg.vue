@@ -9,7 +9,8 @@
 						</el-form-item>
 						<el-form-item label="库存状态:" class="margin-l-15">
 							<el-select v-model="form.status">
-								<el-option label="全部" value="all"></el-option>
+								<el-option label='启用' value="1"></el-option>
+								<el-option label='禁用' value="2"></el-option>
 							</el-select>
 						</el-form-item>
 						<el-form-item>
@@ -21,7 +22,7 @@
 						</el-form-item>
 					</el-form>
 					<div class="components-edit">
-						<el-table ref="multipleTable" :data="list" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+						<el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
 							<el-table-column prop="name" label="商品名称"></el-table-column>
 							<el-table-column prop="inventoryWarning" label="库存预警数量"></el-table-column>
 							<el-table-column prop="inventoryCount" label="库存量"></el-table-column>
@@ -50,7 +51,7 @@
 		</el-tabs>
 		<!-- 修改库存 -->
 		<el-dialog top="0" title="修改库存" :visible.sync="changeStockVisible" :close-on-click-modal="false">
-			<el-form :model="stock" :rules="rules" ref="ruleForm" label-width="150px">
+			<el-form :model="stock" :rules="rules" label-width="150px">
 				<el-form-item label="库存数量:" prop="name">
 					<el-input v-model="stock.count"></el-input>
 				</el-form-item>
@@ -61,103 +62,86 @@
 			</div>
 		</el-dialog>
 		<!-- 商品入库 -->
-		<el-dialog top="0" title="商品入库" :visible.sync="dialogInfo_show" :close-on-click-modal="false">
-			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" style="display: flex;justify-content: space-between;align-items: center;">
-					<el-col :span="18">
-						<el-form-item label="入库类型:" prop="name">
-							<el-select v-model="ruleForm.name" placeholder="请选择入库类型">
-								<el-option label="区域一" value="shanghai"></el-option>
-								<el-option label="区域二" value="beijing"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
-					<el-col style="display: flex;justify-content: flex-end;margin-bottom: 20px;">
-						<el-button type="primary" @click="popup('addPi')" size="mini">批量添加商品</el-button>
-					</el-col>
-				</el-form>
-			</el-row>
-			<el-row>
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+		<el-dialog top="0" title="商品入库" :visible.sync="goodsInVisible" width="1000px" class="goodin" :close-on-click-modal="false">
+			<el-form :model="goodInForm" :rules="rules" size="small" label-width="100px" class="demo-form-inline">
+				<el-form-item label="入库类型:" prop="name">
+					<el-select v-model="goodInForm.type" placeholder="请选择入库类型">
+						<el-option label="区域一" value="shanghai"></el-option>
+						<el-option label="区域二" value="beijing"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item class="form-inline-flex">
+					<el-button type="primary" class="submit" @click="popup('addPi')">批量添加商品</el-button>
+				</el-form-item>
+			</el-form>
+			<el-card shadow="never">
+				<el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
 					<el-table-column prop="name" label="商品名称"></el-table-column>
-					<el-table-column prop="time" label="成本价"></el-table-column>
-					<el-table-column prop="job_status" label="入库数量">
-						<template slot-scope="job_status">
-							<el-input v-model="ruleForm.name"></el-input>
+					<el-table-column prop="costPrice" label="成本价"></el-table-column>
+					<el-table-column label="入库数量">
+						<template slot-scope="scope">
+							<el-input v-model="scope.row.inventoryCount" size="small"></el-input>
 						</template>
 					</el-table-column>
 					<el-table-column label="操作" width="100">
 						<template slot-scope="scope">
-							<el-popconfirm title="确定要移除？" @onConfirm="onConfirm">
-								<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">移除</el-button>
+							<el-popconfirm title="确定要移除？" @onConfirm="goodsDelete(scope.row)">
+								<el-button slot="reference" type="text" size="small">移除</el-button>
 							</el-popconfirm>
 						</template>
 					</el-table-column>
 				</el-table>
-			</el-row>
-			<el-row :gutter="22" style="margin-top: 30px;">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
-					<el-row :gutter="22">
-						<el-col :span="11">
-							<el-form-item label="经办人:" prop="name">
-								<el-input v-model="ruleForm.name"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="11">
-							<el-form-item label="申请日期:" prop="name">
-								<el-date-picker v-model="ruleForm.name" type="date" placeholder="选择日期"></el-date-picker>
-							</el-form-item>
-						</el-col>
-					</el-row>
-					<el-row :gutter="22">
-						<el-col :span="22">
-							<el-form-item label="入库备注:">
-								<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.name"></el-input>
-							</el-form-item>
-						</el-col>
-					</el-row>
-				</el-form>
-			</el-row>
-			<span slot="footer" class="dialog-footer">
+			</el-card>
+
+			<el-form :model="goodInForm" size="small" :rules="rules" ref="goodInForm" label-width="100px">
+				<el-col :span="8">
+					<el-form-item label="经办人:" prop="person">
+						<el-input v-model="goodInForm.person"></el-input>
+					</el-form-item>
+					<el-form-item label="申请日期:" prop="date">
+						<el-date-picker v-model="goodInForm.date" type="date" placeholder="选择日期"></el-date-picker>
+					</el-form-item>
+				</el-col>
+				<el-col :span="16">
+					<el-form-item label="入库备注:">
+						<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="goodInForm.remark"></el-input>
+					</el-form-item>
+				</el-col>
+			</el-form>
+
+			<div slot="footer" class="dialog-footer">
 				<el-button @click="centerDialogVisible = false">取 消</el-button>
 				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-			</span>
+			</div>
 		</el-dialog>
 		<!-- 批量添加商品 -->
-		<el-dialog top="0" title="批量添加商品" :visible.sync="dialogStock_show" :close-on-click-modal="false">
-			<el-row :gutter="20">
-				<el-row>
-					<el-form class="demo-form-inline" inline size="small">
-						<el-form-item label="商品名称:">
-							<el-input v-model="ruleForm.name"></el-input>
-						</el-form-item>
-						<el-form-item label="商品分类:" class="margin-l-15">
-							<el-select v-model="ruleForm.name" placeholder="请选择商品分类">
-								<el-option label="区域一" value="shanghai"></el-option>
-								<el-option label="区域二" value="beijing"></el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item>
-							<el-button type="primary" style="width: 100px;" size="mini">查询</el-button>
-						</el-form-item>
-					</el-form>
-				</el-row>
-				<div class="components-edit">
-					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-						<el-table-column type="selection" width="55"></el-table-column>
-						<el-table-column prop="name" label="商品名称"></el-table-column>
-						<el-table-column prop="time" label="商品类别"></el-table-column>
-						<el-table-column prop="job_status" label="成本价"></el-table-column>
-					</el-table>
-					<div class="block">
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
-					</div>
+		<el-dialog top="0" title="批量添加商品" width="1000px" :visible.sync="addGoodsVisible" :close-on-click-modal="false">
+			<el-form v-model="addGoods" class="demo-form-inline" inline size="small">
+				<el-form-item label="商品名称:">
+					<el-input v-model="addGoods.name"></el-input>
+				</el-form-item>
+				<el-form-item label="商品分类:" class="margin-l-15">
+					<el-cascader v-model="addGoods.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary" class="submit" @click="search">查询</el-button>
+				</el-form-item>
+			</el-form>
+			<div class="components-edit">
+				<el-table ref="multipleTable" :data="list" tooltip-effect="dark" height="250px" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+					<el-table-column type="selection" width="55"></el-table-column>
+					<el-table-column prop="name" label="商品名称"></el-table-column>
+					<el-table-column prop="time" label="商品类别"></el-table-column>
+					<el-table-column prop="job_status" label="成本价"></el-table-column>
+				</el-table>
+				<div class="block">
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 				</div>
-			</el-row>
-			<span slot="footer" class="dialog-footer">
+			</div>
+			<div slot="footer" class="dialog-footer">
 				<el-button @click="centerDialogVisible = false">取 消</el-button>
 				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-			</span>
+			</div>
 		</el-dialog>
 	</div>
 </template>
@@ -168,24 +152,16 @@
 			return {
 				activeName: 'count',
 				form: {name: '', status: 'all'},
-				tableData: [],
 				stock: {count: ''},
-				ruleForm: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
-				},
+				goodInForm: {type: '', person: '', date: '', remark: ''},
+				addGoods: {name: '', categoryId: ''},
+				categoryProps: {value: 'id', label: 'name', children: 'child'},
 				rules: {
 					count: [{required: true, message: '请输入库存', trigger: 'blur'}]
 				},
 				changeStockVisible: false,
-				dialogInfo_show: false, //商品入库弹框
-				dialogStock_show:false, // 修改库存
+				goodsInVisible: false, //商品入库弹框
+				addGoodsVisible:false, // 修改库存
 			};
 		},
 		props: {
@@ -202,10 +178,10 @@
 				}
 				switch (type) {
 					case 'info':
-						this.dialogInfo_show = true;
+						this.goodsInVisible = true;
 						break
 					case 'addPi':
-						this.dialogStock_show = true;
+						this.addGoodsVisible = true;
 						break
 				}
 			},
@@ -214,6 +190,9 @@
 			},
 			reset() {
 				this.form = {name: '', status: 'all', category: ''}
+			},
+			casChange(value) {
+				this.rowData.categoryId = value[value.length-1]
 			},
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
@@ -231,20 +210,15 @@
 						this.initData()
 					})
 				}
-			}
+			},
+			goodsDelete() {
+
+			},
 		}
 	};
 </script>
 
 <style lang="less" scoped>
-	.row-width {
-		width: 120px;
-	}
-
-	.padding-item {
-		padding-bottom: 5px;
-	}
-
 	.btn-click {
 		height: 200px;
 		width: 300px;
@@ -283,6 +257,12 @@
 			font-size: 20px;
 			color: #fff;
 			margin-left: 10px;
+		}
+	}
+	.goodin {
+		.el-card {
+			border: 1px solid #c2c2c2;
+			margin-bottom: 20px;
 		}
 	}
 </style>

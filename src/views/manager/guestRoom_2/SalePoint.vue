@@ -2,8 +2,8 @@
 	<div class="boss-index">
 		<div class="content">
 			<div class="radioBox">
-				<el-radio-group v-model="tabPosition" size="medium">
-					<el-radio-button :label="item.id" v-for="(item, index) in typeList" :disabled="item.hide" :key="index" class="btn-margin">{{item.name}}</el-radio-button>
+				<el-radio-group v-model="sellId" size="medium">
+					<el-radio-button :label="item.id" v-for="(item, index) in salePoint" :disabled="item.state == 2" :key="index" class="btn-margin">{{item.name}}</el-radio-button>
 				</el-radio-group>
 				<el-button type="text" @click="manageSale">管理售卖点</el-button>
 			</div>
@@ -25,7 +25,7 @@
 			</el-form>
 			<div class="components-edit">
 				<el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
-					<el-table-column prop="name" label="商品名称"></el-table-column>
+					<el-table-column prop="goodsName" label="商品名称"></el-table-column>
 					<el-table-column prop="retailPrice" label="默认零售价(日元)"></el-table-column>
 					<el-table-column prop="employeePrice" label="员工价(日元)"></el-table-column>
 					<el-table-column prop="costPrice" label="成本价(日元)"></el-table-column>
@@ -33,8 +33,8 @@
 					<el-table-column prop="inventoryCount" label="库存"></el-table-column>
 					<el-table-column label="操作" width="150">
 						<template slot-scope="scope">
-							<el-button type="text" size="small" @click="popup('sale')">修改</el-button>
-							<el-button type="text" size="small" @click="offShelf">下架</el-button>
+							<el-button type="text" size="small" @click="popup('sale', scope.row)">修改</el-button>
+							<el-button type="text" size="small" @click="offShelf(scope.row)">下架</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -45,12 +45,12 @@
 		</div>
 
 		<!-- 售卖点管理 -->
-		<el-dialog top="0" :visible.sync="salePointVisible" width="1000px" :close-on-click-modal="false">
+		<el-dialog top="0" title="管理售卖点" :visible.sync="salePointVisible" width="1000px" :close-on-click-modal="false">
 			<div slot="title" class="dialog-header">
 				<span class="title">售卖点管理</span>
 				<el-button class="submit" size="small" @click="popup('add')">新增</el-button>
 			</div>
-			<el-table ref="multipleTable" :data="salePoint" height="100%" header-row-class-name="default" size="small">
+			<el-table ref="multipleTable" :data="salePoint" height="100%" style="min-height: 250px" header-row-class-name="default" size="small">
 				<el-table-column prop="name" label="售卖点名称"></el-table-column>
 				<el-table-column label="允许签单到房间">
 					<template slot-scope="scope">{{scope.row.allowRoom == 1 ? '是' : '否'}}</template>
@@ -103,29 +103,29 @@
 		</el-dialog>
 
 		<!-- 修改商品上级信息 -->
-		<el-dialog top="0" title="修改商品上级信息" :visible.sync="onshelfVisible" :close-on-click-modal="false">
-			<el-table ref="multipleTable" :data="shelfData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-				<el-table-column prop="name" label="商品名称"></el-table-column>
-				<el-table-column prop="time" label="成本价"></el-table-column>
-				<el-table-column prop="job_status" label="员工价">
-					<template slot-scope="job_status">
-						<el-input v-model="threeForm.name"></el-input>
-					</template>
-				</el-table-column>
-				<el-table-column prop="job_status" label="零售价">
-					<template slot-scope="job_status">
-						<el-input v-model="threeForm.name"></el-input>
-					</template>
-				</el-table-column>
-				<el-table-column prop="job_status" label="默认购买数量">
-					<template slot-scope="job_status">
-						<el-input v-model="threeForm.name" style="width: 200px;"></el-input>
-					</template>
-				</el-table-column>
-			</el-table>
+		<el-dialog top="0" title="修改商品上级信息" :visible.sync="onshelfVisible" width="800px" :close-on-click-modal="false">
+			<div class="flex_1">
+				<el-form :model="rowData" size="small" inline :rules="threerules" ref="priceForm" label-position="top" class="price">
+					<el-form-item prop="goodsName" label="商品名称">
+						<span class="row-width">{{rowData.goodsName}}</span>
+					</el-form-item>
+					<el-form-item prop="costPrice" label="成本价">
+						<span class="row-width">{{rowData.costPrice}}</span>
+					</el-form-item>
+					<el-form-item prop="employeePrice" label="员工价">
+						<el-input v-model="rowData.employeePrice" class="row-width"></el-input>
+					</el-form-item>
+					<el-form-item prop="inventoryWarning" label="零售价">
+						<el-input v-model="rowData.retailPrice" class="row-width"></el-input>
+					</el-form-item>
+					<el-form-item prop="buyCount" label="默认购买数量">
+						<el-input v-model="rowData.buyCount" class="row-width"></el-input>
+					</el-form-item>
+				</el-form>
+			</div>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+				<el-button @click="onshelfVisible = false">取 消</el-button>
+				<el-button type="primary" @click="submit('onshelf')">确 定</el-button>
 			</span>
 		</el-dialog>
 		<!-- 上架商品 -->
@@ -142,23 +142,23 @@
 					<el-button class="grey" @click="reset">重置</el-button>
 				</el-form-item>
 			</el-form>
-			<el-table ref="multipleTable" :data="shelfData" height="100%" header-row-class-name="default" size="small" @selection-change="shelfSelect">
+			<el-table ref="multipleTable" :data="shelfData" height="100%" style="min-height: 250px" header-row-class-name="default" size="small" @selection-change="shelfSelect">
 				<el-table-column type="selection" width="70"></el-table-column>
 				<el-table-column prop="name" label="商品名称"></el-table-column>
 				<el-table-column prop="costPrice" label="成本价" width="200"></el-table-column>
 				<el-table-column label="员工价" width="150">
 					<template slot-scope="scope">
-						<el-input v-model="scope.row.employeePrice" :disabled="scope.row.dis"></el-input>
+						<el-input v-model="scope.row.employeePrice" :disabled="scope.row.his" size="small"></el-input>
 					</template>
 				</el-table-column>
 				<el-table-column label="零售价" width="150">
 					<template slot-scope="scope">
-						<el-input v-model="scope.row.retailPrice" :disabled="scope.row.dis"></el-input>
+						<el-input v-model="scope.row.retailPrice" :disabled="scope.row.his" size="small"></el-input>
 					</template>
 				</el-table-column>
 				<el-table-column label="默认购买数量" width="250">
 					<template slot-scope="scope">
-						<el-input v-model="scope.row.buyCount" :disabled="scope.row.dis" style="width: 200px;"></el-input>
+						<el-input v-model="scope.row.buyCount" :disabled="scope.row.his" size="small" style="width: 200px;"></el-input>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -177,12 +177,17 @@
 	export default {
 		data() {
 			return {
-				typeList: [],
-				tabPosition: 'mini',
+				pageForm: {
+					pageIndex: 1,
+					pageSize: 10,
+					paging: true
+				},
+				sellId: '', sellName: '',
 				form: {name: '', category: ''},
 				categoryProps: {value: 'id', label: 'name', children: 'child'},
 				salePoint: [], shelfData: [],
 				point: {name: '', allowEnter: 1, allowRoom: 1, state: 1},
+				rowData: {goodsName: '',},
 				salePointVisible:false,
 				editPointVisible:false, editPointTitle: '新增售卖点', pointType: true,
 				onshelfVisible:false,
@@ -198,19 +203,21 @@
 						trigger: 'blur'
 					}]
 				},
-				radio: false
+				selection: [],
 			};
 		},
 		props: {
 			list: Array, category: Array, total: Number, pageSize: Number, currentPage: Number, initData: Function
 		},
 		mounted() {
-			this.getManageData();
+			this.getManageData(this.pageForm)
 		},
 		methods: {
-			getManageData() {
-				this.$F.doRequest(this, '/pms/hotelgoodsSelling/list', {}, (res) => {
-					this.salePoint = res.list
+			getManageData(obj) {
+				this.$F.doRequest(this, '/pms/hotelgoodsSelling/list', obj, (res) => {
+					this.salePoint = res.list.reverse();
+					this.sellId = res.list[0].id;
+					this.sellName = res.list[0].name;
 				})
 			},
 			manageSale() {
@@ -224,22 +231,31 @@
 				})
 			},
 			getShelfData() {
-				this.$F.doRequest(this, '/pms/sellinglog/listusable', {
-					sellId: ''
-				}, (res) => {
-
+				const params = {
+					sellId: this.sellId
+				};
+				this.$F.merge(params, this.pageForm);
+				this.$F.doRequest(this, '/pms/sellinglog/listusable', params, (res) => {
+					res.list.map(item => {
+						item.his = true;
+					})
+					this.shelfData = res.list
 				})
 			},
 			shelf() {
 				this.shelfVisible = true;
 				this.getShelfData()
 			},
-			shelfSelect() {
-
+			shelfSelect(val) {
+				val.map(item => {
+					item.his = false;
+				})
+				this.selection = val
 			},
 			popup (type, row) {
 				if (type == 'sale') {
 					this.onshelfVisible = true;
+					this.rowData = row;
 				} else if(type == 'state') {
 					this.$F.doRequest(this, '/pms/hotelgoodsSelling/updateSellingState', {
 						id: row.id,
@@ -255,10 +271,17 @@
 				} else if (type == 'add') {
 					this.editPointVisible = true;
 					this.editPointTitle = '新增售卖点';
-					this.pointType = true
+					this.pointType = true;
+					this.point = {name: '', allowEnter: 1, allowRoom: 1, state: 1}
 				}
 			},
-			offShelf() {},
+			offShelf(row) {
+				this.$F.doRequest(this, '/pms/sellinglog/delete', {
+					id: row.id,
+				}, (res) => {
+					this.initData()
+				})
+			},
 			search() {
 				this.getHotelGoodsData(this.form.name, this.form.category, this.form.status)
 			},
@@ -272,14 +295,17 @@
 				console.log(`每页 ${val} 条`);
 			},
 			handleCurrentChange(val) {
+				this.searchForm.pageIndex = val;
 				console.log(`当前页: ${val}`);
 			},
 			submit(type) {
-				if (type == 'shself') {
-					this.$F.doRequest(this, '/pms/hotelgoods/up_status', {
-						id: row.id,
-						state: row.state == 1 ? 2 : 1
-					}, (res) => {
+				if (type == 'shelf') {
+					const params = {
+						sellId: this.sellId,
+						sellName: this.sellName,
+						content: JSON.stringify(this.selection),
+					}
+					this.$F.doRequest(this, '/pms/sellinglog/add', params, (res) => {
 						this.$message.success('success');
 						this.initData()
 					})
@@ -296,6 +322,17 @@
 						})
 					}
 
+				} else if (type == 'onshelf') {
+					const params = {
+						retailPrice: this.rowData.retailPrice,
+						employeePrice: this.rowData.employeePrice,
+						buyCount: this.rowData.buyCount,
+					}
+					this.$F.doRequest(this, '/pms/sellinglog/edit', params, (res) => {
+						this.onshelfVisible = false;
+						this.$message.success('success');
+						this.initData()
+					})
 				}
 			}
 		}
@@ -303,6 +340,9 @@
 </script>
 
 <style lang="less">
+	.el-radio-button + .el-radio-button {
+		margin-left: 10px;
+	}
 	.radioBox {
 		display: flex;
 		justify-content: center;

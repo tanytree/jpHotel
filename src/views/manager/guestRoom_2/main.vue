@@ -20,7 +20,7 @@
                 <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" />
             </el-tab-pane>
             <el-tab-pane label="入库审核" name="fifth">
-                <IntoKuAudit ref="IntoKuAudit"/>
+                <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :total="auditTotal" :pageSize="auditSize" :currentPage="auditPage" :initData="getAuditData"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -43,7 +43,7 @@
         },
         data() {
             return {
-                searchForm: {
+                pageForm: {
                     pageIndex: 1,
                     pageSize: 10,
                     paging: true
@@ -51,31 +51,33 @@
                 activeName: 'first', //第一个默认启动
                 goodsList: [], goodsTotal: 0, goodsSize: 0, goodsPage: 1,
                 salesList: [], salesTotal: 0, salesSize: 0, salesPage: 1,
+                auditList: [], auditTotal: 0, auditSize: 0, auditPage: 1,
                 category: [], cateTotal: 0, cateSize: 0, catePage: 1,
             }
         },
         mounted() {
-            const obj = {name: 'first'}
+            const obj = {name: 'first'};
+            this.getCategoryData();
             this.tabChange(obj)
         },
         methods: {
             tabChange(tab) {
-                this.getCategoryData();
                 if(tab.name == 'first' || tab.name == 'fouth') {
-                    this.getHotelGoodsData();
+                    this.getHotelGoodsData(this.pageForm);
                 } else if (tab.name == 'second') {
-                    this.getSellingData();
+                    this.getSellingData(this.pageForm);
+                    this.$refs['SalePoint'].getManageData(this.pageForm)
                 } else if (tab.name == 'fifth') {
-
+                    this.getAuditData(this.pageForm);
                 }
             },
-            getHotelGoodsData(name, categoryId, state) {
+            getHotelGoodsData(obj, name, categoryId, state) {
                 const params = {
                     goodsName: name,
                     categoryId: categoryId,
-                    state: state
+                    state: state,
                 }
-                this.$F.merge(params, this.searchForm);
+                this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {
                     this.goodsList = res.list;
                     if (res.page) {
@@ -90,8 +92,7 @@
                 })
             },
             getCategoryData() {
-
-                this.$F.doRequest(this, '/pms/hotelcategory/list', this.searchForm, (res) => {
+                this.$F.doRequest(this, '/pms/hotelcategory/list', {}, (res) => {
                     // this.category = res.list;
                     this.category = this.getTreeItem(res.list);
                 })
@@ -131,12 +132,13 @@
                     return 0;
                 }
             },
-            getSellingData(name, categoryId, sellId) {
+            getSellingData(obj, name, categoryId, sellId) {
                 const params = {
                     goodsName: name,
                     categoryId: categoryId,
-                    sellId: sellId
+                    sellId: sellId,
                 }
+                this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/sellinglog/list', params, (res) => {
                     this.salesList = res.list;
                     if(res.page) {
@@ -151,6 +153,30 @@
 
                 })
             },
+            getAuditData(obj, authStatus, soteageType, creatorName, startDate, endDate, content) {
+                const params = {
+                    authStatus: authStatus,
+                    soteageType: soteageType,
+                    creatorName: creatorName,
+                    startDate: startDate,
+                    endDate: endDate,
+                    content: content
+                }
+                this.$F.merge(params, obj);
+                this.$F.doRequest(this, '/pms/hotelstorage/list', params, (res) => {
+                    this.auditList = res.list;
+                    if(res.page) {
+                        this.auditSize = res.page.pageSize;
+                        this.auditPage = res.page.pageIndex;
+                        this.auditTotal = res.page.count;
+                    } else {
+                        this.auditSize = 10;
+                        this.auditPage = 1;
+                        this.auditTotal = res.list.length;
+                    }
+
+                })
+            }
         }
     }
 </script>

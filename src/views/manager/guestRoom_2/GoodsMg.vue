@@ -28,18 +28,19 @@
 				</el-form-item>
 			</el-form>
 			<div class="components-edit">
-				<el-table ref="multipleTable" :data="list" border height="100%" header-row-class-name="default" size="small" :row-style="hideRow">
+				<el-table ref="multipleTable" :data="list" border height="100%" header-row-class-name="default" size="small">
 					<el-table-column prop="name" label="商品名称"></el-table-column>
 					<el-table-column prop="retailPrice" label="默认零售价(日元)"></el-table-column>
 					<el-table-column prop="costPrice" label="成本价(日元)"></el-table-column>
 					<el-table-column prop="inventoryWarning" label="库存预警数量"></el-table-column>
 					<el-table-column label="操作" width="350">
 						<template slot-scope="scope">
-							<el-button type="text" size="small" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? '禁用' : '启用'}}</el-button>
-							<el-button type="text" size="small" @click="popup('change', scope.row)">修改</el-button>
-							<el-popconfirm title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="handleDelete(scope.row)">
+							<el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? '禁用' : '启用'}}</el-button>
+							<el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('change', scope.row)">修改</el-button>
+							<el-popconfirm v-if="scope.row.status == 1" title="确认删除？" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="handleDelete(scope.row)">
 								<el-button slot="reference" type="text">删除</el-button>
 							</el-popconfirm>
+							<el-button v-if="scope.row.status == 2" type="text" size="small" disabled>已失效</el-button>
 							<el-button type="text" size="small" disabled @click="openDetail(scope.row)">详情</el-button>
 						</template>
 					</el-table-column>
@@ -240,29 +241,6 @@
 		.footer {
 			padding-top: 20px;
 			border-top: 1px solid #E2E2E2;
-		}
-		.price {
-			border: 1px solid #e2e2e2;
-			margin-bottom: 20px;
-			display: flex;
-			flex-direction: row;
-
-			.el-form-item {
-				flex: 1;
-				margin: 0;
-
-				.el-form-item__label {
-					padding: 0 20px;
-					display: block;
-					background-color: #D9DDE2;
-					padding-bottom: 0;
-					line-height: 40px;
-				}
-
-				.el-form-item__content {
-					padding: 15px;
-				}
-			}
 		}
 	}
 </style>
