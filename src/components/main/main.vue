@@ -315,7 +315,7 @@
 		bottom: 0;
 		background-color: #f5f5f5;
 		display: block;
-		overflow-y: hidden;
+		overflow-y: auto;
 
 		>.main-inner {
 			width: 100%;
