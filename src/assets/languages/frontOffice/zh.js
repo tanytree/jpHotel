@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-27 16:41:43
- * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
+ * @LastEditTime: 2020-08-10 14:29:59
+ * @FilePath: /jiudian/src/assets/languages/frontOffice/zh.js
  */
 module.exports = {
     //发展途径
@@ -22,5 +22,20 @@ module.exports = {
         "1": '否',
         "2": '是'
     },
+    priceType: {
+        "1": '订金',
+        "2": '押金',
+        "3": '收款',
+        "4": '退款',
+        "5": '加收全天房费',
+        "6": '加收半天房费',
+        "7": '损物赔偿',
+        "8": '迷你吧',
+        "9": '完全冲调',
+        "10": '部分冲调',
+        "11": '免单',
+        "12": '房费',
+        "100": '其他'
+    }
 }
 

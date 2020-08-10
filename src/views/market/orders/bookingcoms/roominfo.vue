@@ -1,26 +1,38 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-30 16:01:23
+ * @LastEditTime: 2020-08-10 17:13:46
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/roominfo.vue
  -->
 <template>
-<div class="base">
-    <el-row class="clearfix">
+<div class="base" v-if="checkinInfo">
+    <el-row class="clearfix" style="margin-bottom:-15px;padding-top:15px">
         <el-col :span="12">
-             <el-row>
-            <el-col :span="8">
-                <p>预订单号：YU21R0422025</p>
-            </el-col>
-            <el-col :span="8">
-                <p>订单来源：前台</p>
-            </el-col>
-             </el-row>
+            <el-row>
+                <el-col :span="8">
+                    <p>预订单号：{{checkinInfo.reserveOrderNum}}</p>
+                </el-col>
+                <el-col :span="8">
+                    <p>订单来源：{{F_orderSource(checkinInfo.orderSource)}}</p>
+                </el-col>
+            </el-row>
         </el-col>
         <el-col :span="12">
             <div class="fr">
-                <el-button plain size="mini">批量入住</el-button>
-                <el-button plain size="mini">修改订单</el-button>
+                <el-button plain size="mini" @click="liveInPersonShow=true">入住</el-button>
+                <el-button plain size="mini">修改预留</el-button>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <el-dropdown split-button type="primary" size="mini">
+                    更多操作
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>改价</el-dropdown-item>
+                        <el-dropdown-item>取消预留</el-dropdown-item>
+                        <el-dropdown-item @click.native="liveCard_in_person_list">操作房卡</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
             </div>
         </el-col>
     </el-row>
@@ -29,13 +41,13 @@
         <h4>基本信息</h4>
         <el-row>
             <el-col :span="8">
-                <p>订单号：YU21R0422025</p>
+                <p>订单号：{{checkinInfo.reserveOrderNum}}</p>
             </el-col>
             <el-col :span="8">
-                <p>订单来源：前台</p>
+                <p>订单来源：{{F_orderSource(checkinInfo.orderSource)}}</p>
             </el-col>
             <el-col :span="8">
-                <p>入住类型：正常</p>
+                <p>入住状态：{{F_checkinState(checkinInfo.state)}}</p>
             </el-col>
         </el-row>
     </el-row>
@@ -43,39 +55,38 @@
         <h4>客房信息</h4>
         <el-row>
             <el-col :span="3">
-                <p>房型：标准间
+                <p>房型：{{currentRoom.roomTypeName}}</p>
+            </el-col>
+            <el-col :span="3">
+                <p>房价总计：{{currentRoom.totalRoomPrice}}元
                 </p>
             </el-col>
             <el-col :span="3">
-                <p>房价总计：100元
-                </p>
-            </el-col>
-            <el-col :span="3">
-                <p>制卡信息：未制卡
+                <p>制卡信息：{{currentRoom.markCard==1?'已制卡':'未制卡'}}
                 </p>
             </el-col>
             <el-col :span="5">
-                <p>预抵时间：2020/04/20 20:00
+                <p>预抵时间：{{checkinInfo.checkinTime}}
                 </p>
             </el-col>
             <el-col :span="5">
-                <p>预离时间：2020/04/26 12:00
+                <p>预离时间：{{checkinInfo.checkoutTime}}
                 </p>
             </el-col>
         </el-row>
     </el-row>
 
-    <el-row>
+    <el-row v-if="currentRoom.personList">
         <h4>客户信息</h4>
         <el-row>
             <el-col :span="8">
-                <p>客户名：张三</p>
+                <p>客户名：{{checkinInfo.name}}</p>
             </el-col>
             <el-col :span="8">
-                <p>客户类别：会员</p>
+                <p>客户类别：{{checkinInfo.memberCard?'会员':'非会员'}}</p>
             </el-col>
             <el-col :span="8">
-                <p>会员类别：白金卡</p>
+                <p>会员类别：</p>
             </el-col>
         </el-row>
     </el-row>
@@ -83,10 +94,43 @@
         <h4>计费规则</h4>
         <el-row>
             <el-col :span="8">
-                <p>计费规则：会员入住</p>
+                <p>计费规则：{{F_ruleHour(checkinInfo.ruleHourId)}}</p>
             </el-col>
         </el-row>
     </el-row>
+    <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
+        <customer></customer>
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" @click="liveInPersonShow=false">取消</el-button>
+            <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
+        </span>
+    </el-dialog>
+    <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
+        <el-row>
+            <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
+            <el-col :span="8" style="float:right">
+                <el-button @click="make_card_status">制卡</el-button>
+                <el-button>清卡</el-button>
+                <el-button>读卡</el-button>
+            </el-col>
+        </el-row>
+        <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column prop="name" label="房间号" width="200">
+                <template slot-scope="{row}">
+                    {{row.room?row.room.houseNum:''}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="name" label="本次制卡状态">
+                <template slot-scope="{row}">
+                    {{F_markCard(row.markCard)}}
+                </template>
+            </el-table-column>
+        </el-table>
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" @click="mackcade=false">取消</el-button>
+        </span>
+    </el-dialog>
 
 </div>
 </template>
@@ -96,8 +140,14 @@ import {
     mapState,
     mapActions
 } from "vuex";
+import myMixin from '@/utils/filterMixin';
+import customer from './customer'
 export default {
-
+    components: {
+        customer
+    },
+    mixins: [myMixin],
+    props: ['checkinInfo', 'currentRoom'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -109,6 +159,9 @@ export default {
     data() {
         return {
             loading: false,
+            liveInPersonShow: false,
+            mackcade:false,
+            liveCardLoading:false,
             checkType: 'customer',
             activeName: 'first',
             detail: {
@@ -125,86 +178,92 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [] //表格数据
+            tableData: [], //表格数据
+            ruleHourList: [],
+            liveCardData: []
         };
     },
 
     mounted() {
         let id = this.$route.query.id
-        // this.get_user_enterprise(id)
+        this.hotel_rule_hour_list()
     },
 
     methods: {
-        get_user_enterprise(id) {
-            // 加载组件
+        //计费规则时租房计费列表
+        hotel_rule_hour_list() {
             let params = {
-                token: this.token,
-                userId: this.userId,
-                plat_source: this.plat_source,
-                enterCode: id
+                ruleName: "",
+                priceModel: 2,
+                state: 1,
+                pageIndex: 1,
+                pageSize: 999
             }
-            get_user_enterprise(params).then(res => {
-                    if (res.code == 200) {
-                        this.detailDialogFormVisible = true;
-                        this.detailData = res.data
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                })
-                .catch(err => {
-                    this.$message.error(err.message);
-                });
-
+            this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_list', params, (res) => {
+                this.ruleHourList = res.list
+            })
         },
-        initForm() {
-            this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
-            };
-            this.getDataList();
-        },
-        /**获取表格数据 */
-        getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
-            this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
-                this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
+        F_ruleHour(id) {
+            for (let k in this.ruleHourList) {
+                if (id == this.ruleHourList[k].id) {
+                    return this.ruleHourList[k].ruleName
                 }
-            });
+            }
+            return ''
         },
-
-        /**多选 */
+         //获取入住人
+        liveCard_in_person_list() {
+            let params = {
+                type: 3,
+                checkinId: this.$route.query.id,
+                pageIndex: 1,
+                pageSize: 999
+            };
+            this.liveCardLoading = true;
+            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
+                // this.liveCardData = res.checkInRoomList
+                this.liveCardData = res
+                this.liveCardData.done = 0;
+                this.liveCardData.unfinished = 0;
+                let list = res.checkInRoomList;
+                for (let k in list) {
+                    if (list[k].markCard == 2) {
+                        this.liveCardData.done++
+                    }
+                    if (list[k].markCard == 1) {
+                        this.liveCardData.unfinished++
+                    }
+                }
+                this.liveCardLoading = false
+                this.mackcade = true
+                this.$forceUpdate()
+            })
+        },
+        make_card_status() {
+            let arr = []
+            if (!this.multipleSelection.length) {
+                this.$message.error('至少选择一间房间')
+                return
+            }
+            this.multipleSelection.forEach(element => {
+                arr.push(element.id)
+            });
+            let params = {
+                checkInRoomIds: arr,
+            };
+            this.$F.doRequest(this, '/pms/checkin/make_card_status', params, (res) => {
+                this.$message({
+                    message: '制卡成功',
+                    type: 'success'
+                });
+                this.liveCard_in_person_list()
+                this.$forceUpdate()
+            })
+        },
         handleSelectionChange(val) {
             this.multipleSelection = val;
+            console.log(val)
         },
-        /**每页数 */
-        handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
-            this.getDataList();
-        },
-        /**当前页 */
-        handleCurrentChange(val) {
-            this.searchForm.page = val;
-            this.getDataList();
-        },
-        handleClick() {
-
-        },
-        checkTypeHandle(v) {
-            this.checkType = v
-        }
 
     }
 };

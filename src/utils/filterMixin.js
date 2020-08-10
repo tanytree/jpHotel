@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-29 10:27:21
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-09 15:43:05
+ * @LastEditTime: 2020-08-10 17:02:15
  * @FilePath: /jiudian/src/utils/filterMixin.js
  */ 
 let mixin = {
@@ -48,6 +48,14 @@ let mixin = {
         },
         F_checkinType(value) {
             let enums = this.$t('commons.checkinType')
+            return value && enums[value] ? enums[value] : ''
+        },
+        F_priceType(value) {
+            let enums = this.$t('frontOffice.priceType')
+            return value && enums[value] ? enums[value] : ''
+        },
+        F_markCard(value) {
+            let enums = this.$t('commons.markCard')
             return value && enums[value] ? enums[value] : ''
         },
 

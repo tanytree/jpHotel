@@ -1,22 +1,22 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-30 15:22:42
+ * @LastEditTime: 2020-08-10 17:30:58
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
  -->
 <template>
-<div class="base">
+<div class="base" v-if="checkinInfo">
     <el-row class="clearfix">
         <div class="fr">
-            <el-button plain>批量入住</el-button>
+            <el-button plain @click="liveInPersonShow=true">批量入住</el-button>
             <el-button plain>修改订单</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary">
                 更多操作
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>排房</el-dropdown-item>
                     <el-dropdown-item>更改客源</el-dropdown-item>
-                    <el-dropdown-item>取消预订</el-dropdown-item>
-                    <el-dropdown-item>NOSHOW</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -24,33 +24,95 @@
     <el-row>
         <h4>基本信息</h4>
         <el-row>
-            <el-col :span="8"><p>订单号：YU21R0422025</p></el-col>
-            <el-col :span="8"><p>订单来源：前台</p></el-col>
-            <el-col :span="8"><p>入住类型：正常</p></el-col>
-            <el-col :span="8"><p>抵离时间：2020/04/20 20:48 - 2020/04/26 12:00</p></el-col>
-            <el-col :span="8"><p>保留时间：2020/04/20 20:48</p></el-col>
+            <el-col :span="8">
+                <p>订单号：{{checkinInfo.reserveOrderNum?checkinInfo.reserveOrderNum:''}}</p>
+            </el-col>
+            <el-col :span="8">
+                <p>订单来源：{{F_orderSource(checkinInfo.orderSource)}}</p>
+            </el-col>
+            <el-col :span="8">
+                <p>入住类型：{{F_checkinType(checkinInfo.checkinType)}}</p>
+            </el-col>
+            <el-col :span="8">
+                <p>抵离时间：{{checkinInfo.checkinTime}} - {{checkinInfo.checkoutTime}}</p>
+            </el-col>
+            <el-col :span="8">
+                <p>保留时间：{{checkinInfo.keepTime}}</p>
+            </el-col>
         </el-row>
     </el-row>
 
     <el-row>
         <h4>预订房型</h4>
         <el-row>
-            <el-col :span="24"><p>未入住（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button></p></el-col>
-            <el-col :span="24"><p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button></p></el-col>
+            <el-col :span="24" v-for="(item,key,index) of roomTypeList" :key="index">
+                <p>{{checkKey(key)}}（{{item.length}}间）；房型：<el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
+                </p>
+            </el-col>
+            <!-- <el-col :span="24">
+                <p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button>
+                </p>
+            </el-col> -->
         </el-row>
     </el-row>
-
     <el-row>
         <h4>销售信息</h4>
         <el-row>
-            <el-col :span="8"><p>外部订单号：无</p></el-col>
-            <el-col :span="8"><p>销售员：张三</p></el-col>
+            <el-col :span="8">
+                <p>外部订单号：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
+            </el-col>
+            <el-col :span="8">
+                <p>销售员：{{checkinInfo.salesId}}</p>
+            </el-col>
         </el-row>
         <el-row>
-            <el-col :span="12"><p>订单备注：无</p></el-col>
+            <el-col :span="12">
+                <p>订单备注：{{checkinInfo.remark}}</p>
+            </el-col>
         </el-row>
     </el-row>
-
+    <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
+        <customer></customer>
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" @click="liveInPersonShow=false">取消</el-button>
+            <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
+        </span>
+    </el-dialog>
+ <el-dialog top="0" title="NOSHOW" :visible.sync="noShowDiaShow" width="600px" center>
+        <el-form :model="currentItem" style="margin-top:-20px" size="mini">
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="预订单号：" class="">
+                        {{currentItem.orderNum}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="预订人：" class="">
+                        {{currentItem.name}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="账务服务：" class="">
+                        NOSHOW房费
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="金额：" class="">
+                        <el-input type="text" disabled v-model="currentItem.deposit" style="width:150px"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="备注：" class="">
+                        <el-input type="textarea" v-model="currentItem.remark" style="width:450px"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="noShowDiaShow = false">取 消</el-button>
+            <el-button type="primary" @click="confirmNoshow">确 定</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -59,8 +121,14 @@ import {
     mapState,
     mapActions
 } from "vuex";
+import myMixin from '@/utils/filterMixin';
+import customer from './customer'
 export default {
-
+    components: {
+        customer
+    },
+    mixins: [myMixin],
+    props: ['checkinInfo', 'roomInfo'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -69,26 +137,38 @@ export default {
             plat_source: state => state.config.plat_source
         })
     },
+    watch: {
+        roomInfo: {
+            handler(n, o) {
+                console.log(n)
+                n.forEach(element => {
+                    if (element.personList.length) {
+                        if (!this.roomTypeList[element.roomTypeId + 'checkIn']) {
+                            this.roomTypeList[element.roomTypeId + 'checkIn'] = []
+                        }
+                        this.roomTypeList[element.roomTypeId + 'checkIn'].push(element)
+                    } else {
+                        if (!this.roomTypeList[element.roomTypeId + 'notYet']) {
+                            this.roomTypeList[element.roomTypeId + 'notYet'] = []
+                        }
+                        this.roomTypeList[element.roomTypeId + 'notYet'].push(element)
+                    }
+                });
+                console.log(this.roomTypeList)
+            },
+            //   immediate: true,  
+            deep: true
+        }
+    },
     data() {
         return {
             loading: false,
-            checkType: 'customer',
+            liveInPersonShow: false,
+            noShowDiaShow: false,
             activeName: 'first',
-            detail: {
-                text: ''
-            },
-            searchForm: {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
-            },
-            listTotal: 0, //总条数
-            multipleSelection: [], //多选
-            tableData: [] //表格数据
+            roomTypeList: {},
+            currentItem:{}
+
         };
     },
 
@@ -98,76 +178,54 @@ export default {
     },
 
     methods: {
-        get_user_enterprise(id) {
-            // 加载组件
-            let params = {
-                token: this.token,
-                userId: this.userId,
-                plat_source: this.plat_source,
-                enterCode: id
+        checkKey(key) {
+            console.log(key)
+            if (key.indexOf('checkIn') != -1) {
+                return '已排房'
             }
-            get_user_enterprise(params).then(res => {
-                    if (res.code == 200) {
-                        this.detailDialogFormVisible = true;
-                        this.detailData = res.data
-                    } else {
-                        this.$message.error(res.message);
-                    }
+            if (key.indexOf('notYet') != -1) {
+                return '未排房'
+            }
+        },
+        handleCancel() {
+            let params = {
+                checkInReserveId:this.$route.query.id || '',
+                state: 8
+            }
+            this.$confirm('请确认是否取消?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                    this.$router.go(-1)
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    });
                 })
-                .catch(err => {
-                    this.$message.error(err.message);
-                });
+            }).catch(() => {
 
-        },
-        initForm() {
-            this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
-            };
-            this.getDataList();
-        },
-        /**获取表格数据 */
-        getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
-            this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
-                this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
             });
         },
-
-        /**多选 */
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
+        confirmNoshow() {
+            let params = {
+                checkInReserveId: this.currentItem.id,
+                state: 4
+            }
+            this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                this.noShowDiaShow = false
+                this.$message({
+                    message: '操作成功',
+                    type: 'success'
+                });
+                this.$router.go(-1)
+            })
         },
-        /**每页数 */
-        handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
-            this.getDataList();
+        handleNoshow() {
+            this.currentItem = this.checkinInfo;
+            this.noShowDiaShow = true
         },
-        /**当前页 */
-        handleCurrentChange(val) {
-            this.searchForm.page = val;
-            this.getDataList();
-        },
-        handleClick() {
-
-        },
-        checkTypeHandle(v) {
-            this.checkType = v
-        }
 
     }
 };
@@ -177,10 +235,13 @@ export default {
 .detailTab {
     border: 0
 }
+
 .detailTab>>>.el-tabs__header {
     margin: 0;
 }
 </style>
 <style lang="less" scoped>
-    .base p{font-size:12px}
+.base p {
+    font-size: 12px
+}
 </style>

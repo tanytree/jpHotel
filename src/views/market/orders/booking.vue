@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 10:43:01
+ * @LastEditTime: 2020-08-10 09:25:19
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -286,7 +286,7 @@ export default {
             this.noShowDiaShow = true
         },
         handelDetail(item) {
-            this.$router.push('/bookingDetail')
+            this.$router.push('/bookingDetail?id='+item.id)
         },
         confirmNoshow() {
             let params = {

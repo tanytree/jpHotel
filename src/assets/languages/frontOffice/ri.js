@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Dana
- * @LastEditTime: 2020-07-07 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-08-10 14:30:47
+ * @FilePath: /jiudian/src/assets/languages/frontOffice/ri.js
  */
 module.exports = {
     //发展途径
@@ -11,11 +11,31 @@ module.exports = {
         "2": '线下'
     },
 
-    // state        卡状态 1正常(已发卡)  2已挂失 3.待启用
+    // state 卡状态 1正常(已发卡) 2已挂失 3.待启用
     state: {
         "1": '正常(已发卡)',
         "2": '已挂失',
         "3": "待启用"
+    },
+    // 是否黑名单 1否 2是 Integer非必填
+    isBlacklist: {
+        "1": '否',
+        "2": '是'
+    },
+    priceType: {
+        "1": '订金',
+        "2": '押金',
+        "3": '收款',
+        "4": '退款',
+        "5": '加收全天房费',
+        "6": '加收半天房费',
+        "7": '损物赔偿',
+        "8": '迷你吧',
+        "9": '完全冲调',
+        "10": '部分冲调',
+        "11": '免单',
+        "12": '房费',
+        "100": '其他'
     }
 }
 

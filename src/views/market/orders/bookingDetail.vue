@@ -1,12 +1,11 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-30 16:29:31
+ * @LastEditTime: 2020-08-10 16:10:20
  * @FilePath: /jiudian/src/views/market/orders/bookingDetail.vue
  -->
 <template>
-<div>
-
+<div v-loading="loading">
     <div class="el-card">
         <div class="el-card__header">
             <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -16,29 +15,28 @@
         </div>
     </div>
     <div class="bodyInfo margin-t-10">
-
         <div class="aside">
             <ul>
-                <li>
+                <li @click="isOrder=true;currentRoom={}">
                     <p>预订单信息</p>
-                    
                 </li>
-                <li>
-                    <p>A006 房型：标准间</p>
-                    <span class="ok">已排房</span>
+                <li v-for="(item,index) of detailData.inRoomList" :key="index" :class="currentRoom.id==item.id?'active':''" @click="showRoomInfo(item)">
+                    <p>{{item.houseNum}} 房型：{{item.roomTypeName}}</p>
+                    <span class="ok" v-if="item.personList.length">已排房</span>
+                    <span class="no" v-else>未排房</span>
                 </li>
-                <li>
+                <!-- <li>
                     <p>张三 房型：总统套房</p>
                     <span class="no">未排房</span>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="rightContent">
-            <el-row>
+            <el-row v-if="isOrder">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane label="订单基本信息" name="first">
                         <div class="tabWrap">
-                            <sbase></sbase>
+                            <sbase :checkinInfo="detailData.checkIn" :roomInfo="detailData.inRoomList"></sbase>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="客人信息" name="second">
@@ -48,13 +46,13 @@
                     </el-tab-pane>
                     <el-tab-pane label="财务明细" name="third">
                         <div class="tabWrap">
-                            <finance></finance>
+                            <finance :detailData="detailData"></finance>
                         </div>
                     </el-tab-pane>
                 </el-tabs>
             </el-row>
-            <el-row>
-                <roominfo></roominfo>
+            <el-row v-else>
+                <roominfo :currentRoom="currentRoom" :checkinInfo="detailData.checkIn"></roominfo>
             </el-row>
         </div>
 
@@ -71,7 +69,9 @@ import roominfo from './bookingcoms/roominfo'
 import sbase from './bookingcoms/base'
 import customer from './bookingcoms/customer'
 import finance from './bookingcoms/finance'
+import myMixin from '@/utils/filterMixin';
 export default {
+    mixins: [myMixin],
     components: {
         roominfo,
         sbase,
@@ -89,101 +89,39 @@ export default {
     data() {
         return {
             loading: false,
-            checkType: 'customer',
+            isOrder: true,
             activeName: 'first',
-            detail: {
-                text: ''
-            },
-            searchForm: {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
-            },
-            listTotal: 0, //总条数
-            multipleSelection: [], //多选
-            tableData: [] //表格数据
+            detailData: {},
+            currentRoom:{}
+            
         };
     },
 
     mounted() {
         let id = this.$route.query.id
-        // this.get_user_enterprise(id)
+        this.getDetail(id)
     },
 
     methods: {
-        get_user_enterprise(id) {
+        getDetail(id) {
             // 加载组件
             let params = {
-                token: this.token,
-                userId: this.userId,
-                plat_source: this.plat_source,
-                enterCode: id
+                reserveId:id
             }
-            get_user_enterprise(params).then(res => {
-                    if (res.code == 200) {
-                        this.detailDialogFormVisible = true;
-                        this.detailData = res.data
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                })
-                .catch(err => {
-                    this.$message.error(err.message);
-                });
-
-        },
-        initForm() {
-            this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
-            };
-            this.getDataList();
-        },
-        /**获取表格数据 */
-        getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
             this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
+            this.$F.doRequest(this, '/pms/checkin/reserve_check_in_detail', params, (res) => {
                 this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
-            });
+                this.detailData = res
+            })
         },
 
-        /**多选 */
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
-        },
-        /**每页数 */
-        handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
-            this.getDataList();
-        },
-        /**当前页 */
-        handleCurrentChange(val) {
-            this.searchForm.page = val;
-            this.getDataList();
-        },
-        handleClick() {
+         handleClick() {
+                
 
         },
-        checkTypeHandle(v) {
-            this.checkType = v
+        showRoomInfo(item){
+            this.currentRoom = item
+            this.isOrder = false
         }
 
     }
@@ -202,7 +140,11 @@ export default {
 <style lang="less" scoped>
 .bodyInfo {
     overflow: hidden;
-    .tabWrap{padding:0 20px}
+
+    .tabWrap {
+        padding: 0 20px
+    }
+
     .aside {
         background: #fff;
         min-height: 800px;
@@ -210,6 +152,7 @@ export default {
         margin-bottom: -5000px;
         padding-bottom: 5000px;
         width: 280px;
+        margin-right: 10px;
 
         li {
             width: 100%;
@@ -219,17 +162,34 @@ export default {
             border-right: 3px solid #fff;
             overflow: hidden;
             position: relative;
+
             p {
                 font-size: 14px;
                 padding-left: 40px;
                 margin: 0;
             }
-            span{position: absolute;top: -20px;left: -43px;bottom: 0;font-size:12px;
-                height: 60px;width: 100px;text-align: center;color:#fff;line-height: 8;
-                transform:rotate(-45deg)
+
+            span {
+                position: absolute;
+                top: -20px;
+                left: -43px;
+                bottom: 0;
+                font-size: 12px;
+                height: 60px;
+                width: 100px;
+                text-align: center;
+                color: #fff;
+                line-height: 8;
+                transform: rotate(-45deg)
             }
-            span.ok{background: #34B069;}
-            span.no{background: #D7552F;}
+
+            span.ok {
+                background: #34B069;
+            }
+
+            span.no {
+                background: #D7552F;
+            }
 
             &:hover,
             &.active {
@@ -241,6 +201,7 @@ export default {
     }
 
     .rightContent {
+        padding:0 10px;
         background: #fff;
         overflow: hidden;
         margin-bottom: -5000px;
