@@ -29,44 +29,33 @@
                 <el-button @click="getMemberTypeUpdateList()" type="primary">查询</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary" @click="newvip=true">+新增</el-button>
+                <el-button type="primary" @click="popup('add')">+新增</el-button>
                 <!-- @click="resetForm"  -->
             </el-form-item>
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData"
                   :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
-            <el-table-column prop="startTypeId" label="会员起始类型" show-overflow-tooltip>
-                <template slot-scope="{row}">
-                    {{memberTypeList.filter((item)=>{
-                    return item.id == row.startTypeId;
-                    }).length > 0 ? memberTypeList.filter((item)=>{
-                    return item.id == row.startTypeId;
-                    })[0].name : ''}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="createTime" label="变更方式" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="endTypeId" label="目标会员类型" show-overflow-tooltip>
-                <template slot-scope="{row}">
-                    {{memberTypeList.filter((item)=>{
-                    return item.id == row.endTypeId;
-                    }).length > 0 ? memberTypeList.filter((item)=>{
-                    return item.id == row.endTypeId;
-                    })[0].name : ''}}
-                </template>
+            <el-table-column prop="startTypeName" label="会员起始类型" show-overflow-tooltip>
+
             </el-table-column>
             <el-table-column prop="updateType" label="等级变更 " show-overflow-tooltip>
                 <template slot-scope="{row}">
-                   <span>{{row.updateType == 1 ? "升级" : "降级"}}</span>
+                    <span>{{row.updateType == 1 ? "升级" : "降级"}}</span>
                 </template>
             </el-table-column>
+
+            <el-table-column prop="endTypeName" label="目标会员类型" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="changeLevel" label="等级变更" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="修改时间" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     {{row.updateTime || row.createTime}}
                 </template>
             </el-table-column>
-            <el-table-column prop="updateId" label="修改人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="creatorId" label="创建人" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="updateName" label="修改人" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createName" label="创建人" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="状态" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <el-switch
@@ -84,7 +73,7 @@
                     <el-button type="text" size="mini" @click="details=true">详情</el-button>
                     <el-button type="text" size="mini" v-if="row.statu == 1">禁用</el-button>
                     <el-button type="text" size="mini"  @click="onDelete(row)">删除</el-button>
-                    <el-button type="text" size="mini">修改</el-button>
+                    <el-button type="text" size="mini" @click="popup('update', row)">修改</el-button>
                     <el-button type="text" size="mini" v-if="row.statu == 2">启用</el-button>
                 </template>
             </el-table-column>
@@ -120,7 +109,7 @@
         </el-dialog>
 
         <!-- 新增 -->
-        <el-dialog top="0" title="会员类型升降级配置" :visible.sync="newvip" width="70%">
+        <el-dialog top="0" title="会员类型升降级配置" :visible.sync="newvipVisable" width="50%" >
             <el-form :model="newForm" :inline="true" :rules="rules" class="top-body" size="small" label-width="130px">
                 <el-row>
                     <el-row>
@@ -185,21 +174,21 @@
                             </el-form-item>
                         </el-form-item>
                     </el-row>
-                    <el-row>
-                        <el-col>
-                            <el-form-item label="自动升级满足条件:">
-                                <el-radio-group v-model="newForm.name">
-                                    <el-radio label="任意"></el-radio>
-                                    <el-radio label="全部已选"></el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+<!--                    <el-row>-->
+<!--                        <el-col>-->
+<!--                            <el-form-item label="自动升级满足条件:">-->
+<!--                                <el-radio-group v-model="newForm.name">-->
+<!--                                    <el-radio label="任意"></el-radio>-->
+<!--                                    <el-radio label="全部已选"></el-radio>-->
+<!--                                </el-radio-group>-->
+<!--                            </el-form-item>-->
+<!--                        </el-col>-->
+<!--                    </el-row>-->
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
-                <el-button @click="newvip= false">取消</el-button>
-                <el-button type="primary" @click="editItem">确定</el-button>
+                <el-button @click="newvipVisable = false">取消</el-button>
+                <el-button type="primary" @click="editItem" v-loading="loading">确定</el-button>
             </div>
         </el-dialog>
 
@@ -216,12 +205,11 @@
     props: ['memberTypeList'], //会员类型列表
     data () {
       return {
-        newvip: false,
+        newvipVisable: false,
         details: false,
         loading: false,
         pageTotal: 0,
         showTop: false,
-        dataListLoading: false,
         dataListSelections: [],
         status: '',
         form: {
@@ -240,7 +228,7 @@
             consumption: '',
           }
         },
-        tableData: [{}],//表格数据
+        tableData: [],//表格数据
         rules: {
           name: [
             { required: true, trigger: 'blur' },
@@ -257,6 +245,28 @@
       this.getMemberTypeUpdateList();
     },
     methods: {
+      popup(type, value) {
+        switch (type) {
+          case 'update':
+            this.newForm = value;
+            this.$F.parseObjectBykey(this.newForm, 'orderContent');
+            this.newvipVisable = true;
+            break
+          case 'add':
+            this.newForm = {
+                updateType: '1',
+                  orderContent: {
+                    cumulativeCheckInPrice: '',
+                    ontimeCheckInPrice: '',
+                    consumption: '',
+                }
+            };
+            this.newvipVisable = true;
+            break
+          case 'ch_change':
+            break
+        }
+      },
       //禁用/启用
       changeStatus(row, val) {
         this.$F.doRequest(this, '/pms/membertypeupdate/enable_disable', { id: row.id, state: val}, (res) => {
@@ -265,8 +275,7 @@
       },
 
       onDelete (row) {
-        debugger
-        this.$confirm(`是否删除【${row.name}】？`, '提示', {
+        this.$confirm(`是否确定删除？`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -282,22 +291,43 @@
         var params = this.$F.deepClone(this.newForm);
         params.orderContent = JSON.stringify(params.orderContent);
         this.$F.doRequest(this, '/pms/membertypeupdate/edit', params, (res) => {
+          this.newvipVisable = false;
           this.$message.success("edit success");
           setTimeout(()=> {
             this.getMemberTypeUpdateList({pageIndex: 1});
           }, 1000)
         })
       },
-      getMemberTypeUpdateList(params = {}) {
+      getMemberTypeUpdateList() {
+        if (this.memberTypeList.length > 0) {
+          this.fetchRuleList(this.memberTypeList);
+        } else {
+          this.$F.fetchMemberTypeList({}, (memberTypeList) => {
+            this.fetchRuleList(memberTypeList.list);
+          })
+        }
+      },
+
+      fetchRuleList(memberTypeList, params = {}) {
         this.$F.merge(params, this.form);
         this.$F.doRequest(this, '/pms/membertypeupdate/list', params, (res) => {
           this.tableData = res.list;
-          // this.tableData.forEach((tableItem) => {
-          //   this.memberTypeList.filter((row)=>{
-          //     return row.id == row.startTypeId;
-          //   })[0].name;
-          // })
+          this.tableData.forEach((tableItem) => {
+            var startLevel = '', endLevel = '';
+            memberTypeList.filter((item)=>{
+              if (item.id == tableItem.startTypeId) {
+                tableItem.startTypeName = item.name;
+                startLevel = item.level;
+              }
+              if (item.id == tableItem.endTypeId) {
+                tableItem.endTypeName = item.name;
+                endLevel = item.level;
+              }
+            })
+            tableItem.changeLevel = `${startLevel}->${endLevel}`;
+          })
           this.totalPage = res.page.count;
+          this.$forceUpdate()
         })
       }
     }

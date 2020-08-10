@@ -3,37 +3,38 @@
 		<el-row v-if="tab1_show && tab2_show && unit_show">
 			<el-tabs v-model="activName">
 				<el-tab-pane label="会员" name="a">
-					<el-row :gutter="20">
-						<el-row>
-							<el-form class="demo-form-inline" inline size="small">
-								<!-- 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 -->
-								<el-form-item label="选择时间:">
-									<el-date-picker v-model="ruleForm.name" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions">
-									</el-date-picker>
-								</el-form-item>
-								<el-form-item class="form-inline-flex">
-									<el-row>
-										<el-button type="primary" @click="popup('adjust')" style="width: 100px;" size="mini">批量调价</el-button>
-									</el-row>
-								</el-form-item>
-							</el-form>
-						</el-row>
-						<div class="components-edit member-price">
-							<el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;"row-key="id"
-                                      default-expand-all
-                                      header-row-class-name="default"
-                                      :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}">
-                                <el-table-column v-for="(item, index) in memberTableHeads" :key="index" :label="item.dateStr + '' + item.weekDay">
-                                    <template slot-scope="{row, $index}">
-                                        <span v-if="index === 0">{{row.name || row.houseName}}</span>
-                                        <span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="priceClick(row, item)">
-                                            {{row.marketPrice}}
-                                        </span>
-                                    </template>
-                                </el-table-column>
-							</el-table>
-						</div>
-					</el-row>
+                    <Member></Member>
+<!--					<el-row :gutter="20">-->
+<!--						<el-row>-->
+<!--							<el-form class="demo-form-inline" inline size="small">-->
+<!--								&lt;!&ndash; 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 &ndash;&gt;-->
+<!--								<el-form-item label="选择时间:">-->
+<!--									<el-date-picker v-model="ruleForm.name" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions">-->
+<!--									</el-date-picker>-->
+<!--								</el-form-item>-->
+<!--								<el-form-item class="form-inline-flex">-->
+<!--									<el-row>-->
+<!--										<el-button type="primary" @click="popup('adjust')" style="width: 100px;" size="mini">批量调价</el-button>-->
+<!--									</el-row>-->
+<!--								</el-form-item>-->
+<!--							</el-form>-->
+<!--						</el-row>-->
+<!--						<div class="components-edit member-price">-->
+<!--							<el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;"row-key="id"-->
+<!--                                      default-expand-all-->
+<!--                                      header-row-class-name="default"-->
+<!--                                      :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}">-->
+<!--                                <el-table-column v-for="(item, index) in memberTableHeads" :key="index" :label="item.dateStr + '' + item.weekDay">-->
+<!--                                    <template slot-scope="{row, $index}">-->
+<!--                                        <span v-if="index === 0">{{row.name || row.houseName}}</span>-->
+<!--                                        <span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="priceClick(row, item)">-->
+<!--                                            {{row.marketPrice}}-->
+<!--                                        </span>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--							</el-table>-->
+<!--						</div>-->
+<!--					</el-row>-->
 				</el-tab-pane>
 				<el-tab-pane label="单位" name="b">
 					<el-row>
@@ -90,75 +91,7 @@
 			</el-tabs>
 		</el-row>
 		<!-- 批量调价 -->
-		<el-row v-if="!tab1_show">
-			<el-row style="padding: 20px 0px;">
-				<el-page-header @back="back_1" content=""></el-page-header>
-			</el-row>
-			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
-					<el-col :span="20">
-						<el-form-item label="会员类型:" prop="name">
-							<el-checkbox-group v-model="checkedKinds" @change="handleCheckedCitiesChange">
-								<el-checkbox v-for="(item, index) in memberTableData.memberTypeList" :label="item.id" :key="index">{{item.name}}</el-checkbox>
-							</el-checkbox-group>
-						</el-form-item>
-					</el-col>
-					<el-col :span="20">
-						<el-form-item label="渠道:" prop="name">
-							<el-button plain size="mini">线下</el-button>
-						</el-form-item>
-					</el-col>
-					<el-col :span="20">
-						<el-form-item label="选择时间:" prop="name">
-							<el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" unlink-panels range-separator="至"
-							 start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions">
-							</el-date-picker>
-						</el-form-item>
-					</el-col>
-					<el-col :span="20">
-						<el-form-item label="选择星期:" prop="name">
-							<el-checkbox-group v-model="weekDayKinds" @change="handleWeekDayChange">
-								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
-							</el-checkbox-group>
-						</el-form-item>
-					</el-col>
-					<el-col :span="20">
-						<el-form-item label="折扣率:" prop="name">
-							<el-radio-group v-model="batchEditPriceForm.discounts">
-								<el-radio :label="1">向上取整</el-radio>
-								<el-radio :label="2">向下取整</el-radio>
-								<el-radio :label="3">四舍五入(取整)</el-radio>
-								<el-radio :label="4">保持不变</el-radio>
-							</el-radio-group>
-						</el-form-item>
-					</el-col>
-				</el-form>
-			</el-row>
-			<el-table ref="multipleTable" :data="memberTableData.memberTypeList[0].roomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-				<el-table-column prop="houseName" label="房型"></el-table-column>
-				<el-table-column prop="marketPrice" label="门市价"></el-table-column>
-				<el-table-column prop="name" label="调价方式">
-					<template slot-scope="name">
-						<el-row class="demo-form-inline">
-							<el-select v-model="value" placeholder="请选择" style="width: 150px;">
-								<el-option label="折扣率" value="1"></el-option>
-								<el-option label="一口价" value="2"></el-option>
-							</el-select>
-							<el-input v-model="value" style="width: 100px;margin-right: 5px;"></el-input> 日元
-						</el-row>
-					</template>
-				</el-table-column>
-				<el-table-column prop="name" label="调价后">
-					<template slot-scope="name">
-						<el-input v-model="value" :disabled="true"></el-input>
-					</template>
-				</el-table-column>
-			</el-table>
-			<el-row style="padding: 20px 0px;">
-				<el-button type="primary" style="width: 80px;">保存</el-button>
-				<el-button style="width: 80px;margin-left: 20px;">返回</el-button>
-			</el-row>
-		</el-row>
+
 		<!-- 价格日历 -->
 		<el-row v-if="!tab2_show">
 			<el-row style="padding: 20px 0px;">
@@ -248,22 +181,26 @@
                     <span>{{editPriceForm.prices}} <span class="tip">(折扣为{{editPriceForm.discount}})</span></span>
                 </el-form-item>
                 <el-form-item label="新会员价">
-                    <el-input v-model="editPriceForm.prices" style="width:200px"></el-input> <span class="tip">如果没有新会员价就按会员价</span>
+                    <el-input v-model="editPriceForm.customPrice" style="width:200px"></el-input> <span class="tip">如果没有新会员价就按会员价</span>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
 				<el-button @click="editPriceDialog = false">取 消</el-button>
-				<el-button type="primary" @click="editPriceDialog = false">确 定</el-button>
+				<el-button type="primary" @click="editPriceDialog = false" v-loading="loading">确 定</el-button>
 			</span>
         </el-dialog>
 	</div>
 </template>
 
 <script>
+    import Member from './type/member';
 	export default {
-
+      components: {
+          Member
+        },
 		data() {
 			return {
+			  loading: false,
 			  batchEditPriceForm: {
 			    time: '', //开始日期跟结束日期在一起
                 memberTypeId: '',
@@ -277,7 +214,10 @@
               weekDayKinds: ['1'],
               dictChannels: [], //渠道
               editPriceDialog: false,  //修改房价dialog
-              editPriceForm: {},
+              editPriceForm: {
+                priceCalend: 1, // 修改定价位置  1会员日历单日定价  2单位日历单日定价  String必填
+                customPrice: '',
+              },
 			  memberTableHeads: [],
               memberTableData: {memberTypeList: [], dateList: []},
 				dialogDetail: false, //查看弹窗
@@ -300,6 +240,7 @@
 					}, {
                       text: '前十五天',
                       onClick(picker) {
+
                         const date = new Date();
                         date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
                         picker.$emit('pick', date);
@@ -352,23 +293,6 @@
                   {label: '周六',value: '6'},
                   {label: '周日',value: '7'},
                   ],
-
-				options: [{
-					value: '选项1',
-					label: '黄金糕'
-				}, {
-					value: '选项2',
-					label: '双皮奶'
-				}, {
-					value: '选项3',
-					label: '蚵仔煎'
-				}, {
-					value: '选项4',
-					label: '龙须面'
-				}, {
-					value: '选项5',
-					label: '北京烤鸭'
-				}],
 				value: '',
 				selectInfo: {}
 			}
@@ -448,6 +372,8 @@
             this.$F.merge(this.editPriceForm, memberTypeObject);
             this.$F.merge(this.editPriceForm, roomObject);
             this.editPriceForm.dateStr = item.dateStr;
+            console.log(this.editPriceForm);
+            debugger
             this.editPriceDialog = true;
           },
 
@@ -508,9 +434,7 @@
 					}
 				})
 			},
-			back_1() {
-				this.tab1_show = true;
-			},
+
 			back_2() {
 				this.tab2_show = true;
 			},

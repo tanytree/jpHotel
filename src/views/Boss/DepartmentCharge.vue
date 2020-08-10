@@ -45,7 +45,7 @@
                         </el-row>
                     </ul>
                     <el-row>
-                        <el-col class="selected">已选择: {{dialog_info.selected_name}}</el-col>
+                        <el-col class="selected">已选择: {{dialog_info.selected_name || (dialog_info.header && dialog_info.header.account) || '暂无'}}</el-col>
                     </el-row>
                 </el-row>
             </el-row>
@@ -109,14 +109,18 @@
         })
       },
       // 弹框 -- 获取人员列表
-      get_dialogList () {
+      get_dialogList (item) {
         let params = this.dialog_info
         this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (res) => {
           if (res) {
             res.hotelUserList.forEach((value) => {
-              value.checked = false
+              if (item.header_name == value.account)
+                value.checked = true
+              else
+                value.checked = false
             })
             this.peopleList = res.hotelUserList
+            debugger
           }
         })
       },
@@ -165,7 +169,7 @@
         this.dialog_info.departmentId = value.id
         this.dialog_info.title = value.menuTitle
         this.dialog_info.header = value.header
-        this.get_dialogList()
+        this.get_dialogList(value)
         this.dialogTableVisible = true
       }
     }
@@ -197,7 +201,7 @@
         width: 30px;
         border-radius: 50%;
         background-color: #8C939D;
-        margin: 20px;
+        margin: 10px 20px 10px 30px;
 
     }
 
@@ -213,7 +217,8 @@
     }
     .selected {
         padding: 10px 0px;
-        font-size: 13px;
+        font-size: 14px;
+        font-weight: 800;
         border-top: 1px solid #E4E7ED;
     }
 </style>

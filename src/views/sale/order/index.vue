@@ -14,11 +14,12 @@
                 <!--            &lt;!&ndash; 会员类型管理&ndash;&gt;-->
                 <MemberTypeManager v-if="item.path == 'MemberTypeManager'" :memberTypeList="memberTypeList"/>
                 <!--            &lt;!&ndash; 会员变更规则&ndash;&gt;-->
-                <Aftersale v-if="item.path == 'member-change'" :memberTypeList="memberTypeList"/>
+                <ChangeRules v-if="item.path == 'member-change'" :memberTypeList="memberTypeList"/>
                 <!--            &lt;!&ndash; 会员价格&ndash;&gt;-->
                 <Memberprice v-if="item.path == 'member-price'" :memberTypeList="memberTypeList"/>
                 <!--            &lt;!&ndash; 会员查询&ndash;&gt;-->
-                <Vipquery v-if="item.path == 'member-query'" :memberTypeList="memberTypeList"/>
+<!--                <Vipquery v-if="item.path == 'member-query'" :memberTypeList="memberTypeList"/>-->
+                <Member v-if="item.path == 'member-query'"/>
                 <!--            &lt;!&ndash; 积分设置&ndash;&gt;-->
                 <Intergtal v-if="item.path == 'member-integral-set'" :memberTypeList="memberTypeList"/>
             </el-tab-pane>
@@ -28,13 +29,14 @@
 
 <script>
   import MemberTypeManager from './member/Personer'
-  import Aftersale from './member/changeRules'
+  import ChangeRules from './member/changeRules'
   import Memberprice from './member/memberPrice'
-  import Vipquery from './member/vipquery'
+  // import Vipquery from './member/vipquery'
+  import Member from '@/views/market/customer/member'
   import Intergtal from './member/integtal'
 
   export default {
-    components: { MemberTypeManager, Aftersale, Memberprice, Vipquery, Intergtal },
+    components: { MemberTypeManager, ChangeRules, Memberprice, Member, Intergtal },
     data () {
       return {
         menuList: [],

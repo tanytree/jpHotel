@@ -107,7 +107,7 @@ module.exports = {
     port: 8008,
     proxy: {
       '/api': {
-        target: 'http://115.29.143.91:8886/',
+        target: 'http://39.104.116.153:8886/',
         // target: 'https://www.i2b2b.com/public/index.php',
         ws: true,
         changeOrigin: true,

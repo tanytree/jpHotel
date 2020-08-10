@@ -12,7 +12,7 @@
                     <el-select v-model="form.id">
                         <el-option label="全部" value=""></el-option>
                         <el-option
-                            v-for="item in memberTypeList"
+                            v-for="item in tableData"
                             :key="item.id"
                             :label="item.name"
                             :value="item.id">
@@ -145,7 +145,7 @@
             name: row.name,
             level: row.level,
             prices: row.prices,
-            interests: row.interests,
+            interests: row.interests ,
             duration: row.duration,
             id: row.id
           }

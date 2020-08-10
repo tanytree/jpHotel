@@ -7,6 +7,7 @@
  <template>
 <div class="sec1 boss-index">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
+
         <el-form-item label="所属门店" v-if="storesNum == $F.getHQCode()">
             <el-select v-model="searchForm.storesNum">
                 <el-option label="全部" value="">全部</el-option>
@@ -40,7 +41,7 @@
     <div>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" tooltip-effect="dark" header-row-class-name="default" size="medium">
-            <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip>
+            <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip v-if="storesNum == $F.getHQCode()">
                 <template slot-scope="scope" v-if="scope.row.storesNum">
                     {{F_storeName(scope.row.storesNum)}}
                 </template>
@@ -52,7 +53,11 @@
                     {{$t('commons.userStatus')[scope.row.userStatus || '']}}
                 </template>
             </el-table-column>
-            <el-table-column prop="position" label="职位 " show-overflow-tooltip></el-table-column>
+            <el-table-column prop="position" label="职位 " show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <span>{{row.position || '暂无'}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="worknum" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="department.name" label="所在部门" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="300">
@@ -84,7 +89,7 @@
                     <el-col :span="12">
                         <el-form-item label="员工状态:" prop="userStatus">
                             <el-radio-group v-model="addAndEditForm.userStatus">
-                                <el-radio  v-for="(label, value) in $t('commons.userStatus')" :label="value" :key="value">{{label}}</el-radio>
+                                <el-radio  v-for="(value, key) in $t('commons.userStatus')" :label="key" :key="key">{{value}}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-col>
@@ -105,7 +110,7 @@
                     <el-col :span="12">
                         <el-form-item label="证件类型:">
                             <el-select v-model="addAndEditForm.idcardType" placeholder="请选择证件类型" class="width200">
-                                <el-option v-for="(label, value) in $t('commons.idCardType')" :label="label" :value="value" :key="value"></el-option>
+                                <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -156,7 +161,7 @@
                 <el-row>
                     <el-col :span="12">
                         <div class="grid-content">
-                            <el-form-item label="入职时间:">
+                            <el-form-item label="入职时间:" prop="inTime">
                                 <el-date-picker v-model="addAndEditForm.inTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                             </el-form-item>
                         </div>
@@ -183,7 +188,7 @@
 
     <div>
         <!-- 办理离职 -->
-        <el-dialog top="0" title="办理离职" :visible.sync="dimission" width="500px" class="dimission">
+        <el-dialog top="0" title="办理离职" :visible.sync="dimission" width="500px" class="dimission" @close="dimissionClose">
             <el-form>
                 <el-row>
                     <el-col>
@@ -204,7 +209,7 @@
                 <el-row>
                     <el-col>
                         <el-form-item label="离职文件:">
-                            <el-input v-model="itemCtrlForm.outDataUrl" placeholder="离职文件" :disabled="true" style="width:300px">
+                            <el-input v-model="itemCtrlForm.outDataUrlShow" placeholder="离职文件" :disabled="true" style="width:300px">
                                 <template slot="append">
                                     <el-upload class="upload-demo"
                                                :action='action'
@@ -221,8 +226,8 @@
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dimission = false">关闭</el-button>
-                <el-button type="primary" @click="dimissionPost">确定</el-button>
+                <el-button @click="dimissionClose">关闭</el-button>
+                <el-button type="primary" @click="dimissionPost" v-loading="loading">确定</el-button>
 
             </div>
         </el-dialog>
@@ -251,7 +256,7 @@
         </el-dialog>
     </div>
     <!-- 查看资料组件 -->
-    <LoginDetail ref="loginDetail"></LoginDetail>
+    <LoginDetail ref="loginDetail" :storeList="storeList"></LoginDetail>
 
 </div>
 </template>
@@ -293,18 +298,7 @@ export default {
             listTotal: 0,
             storeList: [],
             departmentList: [],
-            detailsData: {},
-            searchForm: {
-                storesNum: '',
-                content: '',
-                workingState: '',
-                departmentId: '',
-                inStartTime: '',
-                inEndTime: '',
-                paging: true,
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-            },
+            searchForm: { },
             form: {
                 orderType: '',
                 name: '',
@@ -317,7 +311,8 @@ export default {
                 positiveTime: '',
                 outTime: '',
                 outReason: '',
-                outDataUrl: ''
+                outDataUrl: '',
+                outDataUrlShow: ''
             },
             addAndEditForm: {
                 storesNum: '',
@@ -357,7 +352,12 @@ export default {
                     required: true,
                     trigger: 'blur',
                     message: '请选择员工状态',
-                }, ]
+                }],
+                  inTime: [{
+                    required: true,
+                    trigger: 'blur',
+                    message: '请输入入职时间',
+                  } ]
             },
             options: [],
             optionsSearchForm: {
@@ -377,8 +377,8 @@ export default {
             storesNum: state => state.user.storesInfo.storesNum
         })
     },
-    mounted() {
 
+    mounted() {
         if (this.$route.name == 'employeeList') {
             this.isPersonnelManager = true
         } else {
@@ -388,20 +388,22 @@ export default {
         this.uploadData.accessToken = this.token
         this.uploadData.token = this.token
         this.uploadData.storesNum = this.storesNum
+      if (this.storesNum == this.$F.getHQCode()) {
         this.$F.doRequest(this, '/pms/freeuser/stores_list', {
-            filterHeader: true
+          filterHeader: true
         }, (data) => {
-            this.storeList = data;
-            this.initForm();
-            this.department_list()
+          this.storeList = data;
         })
+      }
+      this.initForm();
+      this.department_list()
     },
     methods: {
         initForm() {
             this.searchForm = {
+                workingState: 2,     //工作状态  1离职  2在职  int选填
                 storesNum: '',
                 content: '',
-                workingState: '',
                 departmentId: '',
                 inStartTime: '',
                 inEndTime: '',
@@ -418,13 +420,12 @@ export default {
           })
         },
         getDataList() {
-            let that = this;
             if (this.storesNum != this.$F.getHQCode())
               this.searchForm.storesNum = this.storesNum;
             this.$F.doRequest(this, '/pms/employee/employee_list', this.searchForm, (res) => {
                 this.tableData = res.employeesList;
                 this.listTotal = res.page.count
-                that.$forceUpdate();
+                this.$forceUpdate();
             })
         },
         F_storeName(v) {
@@ -454,6 +455,7 @@ export default {
         becoming(item) {
             this.itemCtrlForm.employeeId = item.id
             this.itemCtrlForm.operType = 1;
+            this.itemCtrlForm.positiveTime = '';
             this.correct = true;
         },
         becomingPost() {
@@ -472,6 +474,18 @@ export default {
             this.itemCtrlForm.employeeId = item.id
             this.itemCtrlForm.operType = 2;
             this.dimission = true;
+        },
+
+        dimissionClose() {
+          this.itemCtrlForm = {
+              employeeId: '',
+              operType: '',
+              positiveTime: '',
+              outTime: '',
+              outReason: '',
+              outDataUrl: '',
+              outDataUrlShow: ''
+          };
         },
         dimissionPost() {
             let params = {
@@ -499,6 +513,7 @@ export default {
             this.$F.doRequest(this, '/pms/employee/oper_employee', params, (res) => {
                 this.getDataList()
                 this.dimission = false;
+                this.dimissionClose()
                 this.correct = false;
                 this.$forceUpdate();
             })
@@ -524,20 +539,24 @@ export default {
             });
         },
         getDetails(item) {
-            let params = {
-                employeeId: item.id,
-                account: item.associatedAccount
-            }
-            this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
-                this.detailsData = res
-                this.addAndEditForm = res
-                this.addAndEditForm.userStatus = this.addAndEditForm.userStatus.toString();
-                this.addAndEditForm.employeeId = res.id
-                this.$forceUpdate();
-            })
+            item = this.$F.deepClone(item);
+            this.$F.formatJsonNumberToString(item);
+            this.addAndEditForm = item
+            this.addAndEditForm.employeeId = item.id
+            // let params = {
+            //     employeeId: item.id,
+            //     account: item.associatedAccount
+            // }
+            // this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
+            //     this.$F.formatJsonNumberToString(res);
+            //     this.addAndEditForm = res
+            //     this.addAndEditForm.userStatus = this.addAndEditForm.userStatus.toString();
+            //     this.addAndEditForm.employeeId = res.id
+            //     this.$forceUpdate();
+            // })
         },
         detailsHandle(item) {
-            this.$refs.loginDetail.getDetails(item.associatedAccount, item.id);
+            this.$refs.loginDetail.getDetails(item.associatedAccount, item.id, item);
         },
 
         editItem(item) {
@@ -590,9 +609,11 @@ export default {
         },
         handleSuccess(res, file) {
             this.itemCtrlForm.outDataUrl = res.data;
+            this.itemCtrlForm.outDataUrlShow = file.name;
         },
         changeHandleSuccess(res, file) {
             this.itemCtrlForm.outDataUrl = res.data;
+            this.itemCtrlForm.outDataUrlShow = file.name;
         },
         beforeUpload(file) {
             const isLt2M = file.size / 1024 / 1024 < 8;

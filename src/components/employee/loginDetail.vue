@@ -5,7 +5,7 @@
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/peopleman.vue
  -->
 <template>
-    <el-dialog top="0" title="查看详情" :visible.sync="details" width="500px">
+    <el-dialog top="0" title="查看详情" :visible.sync="details" width="500px" v-loading="loading">
         <el-form :model="detailsData">
             <el-row style="margin:10px 0">
                 <el-col :span="8">姓名:</el-col>
@@ -19,7 +19,7 @@
                 <el-col :span="8">联系电话:</el-col>
                 <el-col :span="14">{{detailsData.userPhone || '暂无'}}</el-col>
             </el-row>
-            <el-row style="margin:10px 0" v-if="isPersonnelManager">
+            <el-row style="margin:10px 0" v-if="isPersonnelManager && storesNum == $F.getHQCode()">
                 <el-col :span="8">所属门店:</el-col>
                 <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
             </el-row>
@@ -29,7 +29,7 @@
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">职位:</el-col>
-                <el-col :span="14">{{detailsData.position}}</el-col>
+                <el-col :span="14">{{detailsData.position || '暂无'}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
                 <el-col :span="8">银行账户:</el-col>
@@ -89,9 +89,11 @@
     props: ['account', 'employeeId', 'storeList'],
     data () {
       return {
+        loading: false,
         isPersonnelManager: false,
         detailsData: {},
-        details: false
+        details: false,
+        storesNum2:'', //如果是总部后台 可以查看其他门店的员工， 这个时候要传当前门店过来， 如不是总部后台 则门店信息不要显示
       }
     },
 
@@ -104,7 +106,6 @@
     },
     mounted () {
       this.isPersonnelManager = this.$route.name == 'employeeList'
-      // this.getDetails()
     },
     methods: {
       //当未查询到该成员 提示信息
@@ -112,26 +113,26 @@
         this.$alert('该成员暂无资料（资料需要在员工管理添加，然后绑定该成员的后台账号即可）', '提示', {
           confirmButtonText: '关闭',
           callback: action => {
-            // this.$message({
-            //   type: 'info',
-            //   message: `action: ${ action }`
-            // });
           }
         })
-        // this.employeesDetailsShow = true;
       },
-      getDetails (account, employeeId) {
-        let params = {
-          employeeId: employeeId|| '',
-          account: account || ''
+      getDetails (account, employeeId, item) {
+        if (item) {
+          this.details = true;
+          this.detailsData = item;
+        } else {
+          let params = {
+            employeeId: employeeId || '',
+            account: account || ''
+          }
+          this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
+            if (res) {
+              this.details = true;
+              this.detailsData = res;
+            } else
+              this.getEmployeesDetails();
+          })
         }
-        this.$F.doRequest(this, '/pms/employee/detail_employee', params, (res) => {
-          if (res) {
-            this.details = true;
-            this.detailsData = res;
-          } else
-            this.getEmployeesDetails();
-        })
       },
 
       F_storeName (v) {

@@ -102,9 +102,10 @@
 			</span>
             <span slot="footer" class="dialog-footer" v-else>
 				<el-button @click="dialogsalary_set = false">取 消</el-button>
-				<el-button type="primary" @click="setSalarySubmit">确 定</el-button>
+				<el-button type="primary" @click="setSalarySubmit" v-loading="loading">确 定</el-button>
 			</span>
         </el-dialog>
+
     </div>
 </template>
 
@@ -151,7 +152,6 @@
 		methods: {
           // 确认--薪资设置
           setSalarySubmit() {
-            debugger
             this.setForm.employeeId = this.set_salary_info.id
             let params = this.setForm
             this.$F.doRequest(this, '/pms/wage/set_employee_wage', params, (res) => {
@@ -164,9 +164,13 @@
           },
 
           // 查看员工薪资
-          employeeDetails() {
+          employeeDetails(type) {
             this.$F.doRequest(this, '/pms/wage/detail_employee_wage', {employeeId: this.set_salary_info.id}, (res) => {
-              debugger
+              if (type == 'show' && (!res || JSON.stringify(res) == '{}')) {
+                this.$message.info('no set');
+                return;
+              }
+              this.dialogsalary_set = true;
               this.setForm = res;
             })
           },
@@ -175,14 +179,12 @@
 					case 'set_detail': // 薪资设置-查看
 						this.salary_set_title = '查看'
 						this.is_disabled = true;
-						this.dialogsalary_set = true;
 						this.set_salary_info = value
-                        this.employeeDetails();
+                        this.employeeDetails('show');
 						break
 					case 'set_change': // 薪资设置-设置
 						this.salary_set_title = '薪资设置'
 						this.is_disabled = false;
-						this.dialogsalary_set = true;
 						this.setForm = {};
 						this.set_salary_info = value
                         this.employeeDetails();
@@ -204,6 +206,13 @@
 					this.departmentList = res
 				})
 			},
+          // 分页
+          handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+          },
+          handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+          }
 
 		}
 	};

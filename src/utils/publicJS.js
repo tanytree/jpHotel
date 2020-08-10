@@ -5,7 +5,7 @@ import merge from 'lodash/merge'
 
 // eslint-disable-next-line no-unused-vars
 var publicDict = {}
-const uploadUrl = 'http://115.29.143.91:8887'
+const uploadUrl = 'http://39.104.116.153:8887'
 const platSource = '1005'
 // eslint-disable-next-line no-unused-vars
 var tabsName = {}
@@ -28,18 +28,25 @@ const $F = {
         return uploadUrl
     },
 
-    deepClone (obj) {
-        let newObject = obj.constructor === Array ? [] : {}
-        if (typeof obj !== 'object') {
-            return
-        } else if (window.JSON) {
-            newObject = JSON.parse(JSON.stringify(obj)) // 还原
-        } else {
+    deepClone (obj, copyObject) {
+        if (copyObject) {
             for (let i in obj) {
-                newObject[i] = typeof obj[i] === 'object' ? this.deepClone(obj[i]) : obj[i]
+                copyObject[i] = obj[i];
             }
+        } else {
+            let newObject = obj.constructor === Array ? [] : {}
+            if (typeof obj !== 'object') {
+                return
+            } else if (window.JSON) {
+                newObject = JSON.parse(JSON.stringify(obj)) // 还原
+            } else {
+                for (let i in obj) {
+                    newObject[i] = typeof obj[i] === 'object' ? this.deepClone(obj[i]) : obj[i]
+                }
+            }
+            return newObject
         }
-        return newObject
+
     },
 
     doUploadBatch ($instance, imgList = [], callback) {
@@ -78,7 +85,7 @@ const $F = {
         params = this.deepClone(params);
         for (let key in params) {
             let value = params[key];
-            if (value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') {
+            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum') {
                 delete params[key];
             }
         }
@@ -132,6 +139,14 @@ const $F = {
             }
             callback(data || [])
         })
+    },
+
+    formatJsonNumberToString(object) {
+        for(var p in object){//遍历json对象的每个key/value对,p为key
+            if (object[p] && typeof(object[p] == 'number')) {
+                object[p] = object[p] + '';
+            }
+        }
     },
 
     parseObjectBykey (object, key) {

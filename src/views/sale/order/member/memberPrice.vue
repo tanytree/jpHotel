@@ -40,15 +40,25 @@
                     })[0].name : ''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="discount" label="折扣比例" show-overflow-tooltip></el-table-column>
+            <el-table-column label="是否折扣" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <span v-if="row.discountStatus == 1">是</span>
+                    <span v-else>否</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="折扣比例" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <span> {{row.discount || '-'}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="createTime" label="修改时间" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <span> {{row.updateTime || row.createTime}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="updateId" label="修改人" show-overflow-tooltip>
+            <el-table-column label="修改人" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    <span>{{row.creatorId || row.updateId}}</span>
+                    <span>{{row.updateName || row.createName}}</span>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="220">
@@ -60,7 +70,7 @@
 
         <!-- 编辑折扣 -->
         <el-dialog top="0" title="编辑折扣" :visible.sync="discountVisable" width="450px" @close="discountFormClose('discountForm')">
-              <el-form ref="discountForm" :model="discountForm" label-width="80px" :rules="rules">
+              <el-form ref="discountForm" :model="discountForm" label-width="80px">
                 <el-form-item label="是否折扣:" style="margin:0 auto;">
                   <el-radio-group v-model="discountForm.discountStatus">
                     <el-radio label="1">是</el-radio>
@@ -68,15 +78,13 @@
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="折扣比例" style="margin:0 auto;" prop="discount">
-                  <el-input v-model="discountForm.discount" style="width:200px" placeholder="请填写"></el-input>
-                </el-form-item>
-                    <el-divider></el-divider>
-                <el-form-item >
-                  <el-button type="primary" v-loading="loading" @click="edidSave('discountForm')">确定</el-button>
-<!--                  <el-button @click="discountFormClose('discountForm')">取消</el-button>-->
+                  <el-input v-model="discountForm.discount" style="width:100%" placeholder="请填写"></el-input>
                 </el-form-item>
               </el-form>
-
+            <div slot="footer" class="dialog-footer" right>
+                <el-button type="primary" v-loading="loading" @click="editSave('discountForm')">确定</el-button>
+                <el-button @click="discountFormClose('discountForm')">取消</el-button>
+            </div>
           </el-dialog>
   </div>
 </template>
@@ -103,13 +111,13 @@ export default {
         discountStatus: "1", //1:是 2： 否
         discount: '',
       },
+      selected: {},
       tableData: [{}], //表格数据
       rules: {
         discount: [
-            { required: true, trigger: 'blur' },
+            { required: true, trigger: 'change' },
           ]
       },
-      selected: {}
     };
   },
   mounted() {
@@ -117,11 +125,21 @@ export default {
   },
   methods: {
     discountEdit(row) {
+      this.$F.formatJsonNumberToString(row)
       this.selected = row;
+      this.discountForm = this.$F.deepClone(row);
+      // this.discountForm = row;
+      this.$F.merge(this.discountForm, {
+        discountStatus: "1"
+      })
       this.discountVisable = true;
     },
     discountFormClose(formName) {
-      this.$refs[formName].resetFields();
+      // this.$refs[formName].resetFields();
+      this.discountForm = {
+        discountStatus: "1", //1:是 2： 否
+          discount: '',
+      }
       this.discountVisable = false;
     },
 
@@ -134,17 +152,18 @@ export default {
       })
     },
 
-    edidSave(formName, params = {}) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          params.id = this.selected.id;
-          this.$F.merge(params, this.discountForm);
-          this.$F.doRequest(this, '/pms/membertype/editprices', params, (res) => {
-            this.selected.discount = params.discount;
-            this.discountFormClose(formName);
-          })
-        }
-      });
+    editSave(formName, params = {}) {
+      if (!this.discountForm.discount) {
+        this.$message.info('discount is required');
+        return;
+      }
+      params.id = this.discountForm.id;
+      this.$F.merge(params, this.discountForm);
+      this.$F.doRequest(this, '/pms/membertype/editprices', params, (res) => {
+        this.discountForm.discount = params.discount;
+        this.$F.deepClone(this.discountForm, this.selected);
+        this.discountFormClose(formName);
+      })
     }
   }
 };

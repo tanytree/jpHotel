@@ -46,13 +46,13 @@
                                 <el-radio label="1">永久</el-radio>
                                 <el-row style="margin-top: 10px">
                                     <el-radio label="2">开卡日期起</el-radio>
-                                    <el-date-picker
+                                    <el-date-pickerinterests
                                         v-if="durationType == 2"
                                         v-model="newvip.duration"
                                         value-format="yyyy-MM-dd"
                                         type="date"
                                         placeholder="选择日期">
-                                    </el-date-picker>
+                                    </el-date-pickerinterests>
                                 </el-row>
                             </el-radio-group>
                         </el-form-item>
@@ -60,7 +60,7 @@
                     <el-row>
                         <h3>配置权益</h3>
                         <el-form-item>
-                            <el-checkbox @change="interestsChange" :checked="newvip.interests == 1 ? true : false">
+                            <el-checkbox @change="interestsChange" v-model="newvip.interests == 1">
                                 入住免押金
                             </el-checkbox>
                         </el-form-item>
@@ -107,6 +107,7 @@ export default {
   mounted () {
     this.$F.merge(this.newvip, this.selected)
     console.log(this.newvip)
+    debugger
     if (this.newvip.duration != 9999) {
       this.durationType = '2'
     }
@@ -135,6 +136,8 @@ export default {
             return (row.level == this.newvip.level && row.id != this.newvip.id)
           })
           if (array.length == 0) {
+            console.log(this.newvip)
+            debugger
             this.$F.doRequest(this, '/pms/membertype/edit', this.newvip, (res) => {
               this.$message.success('edit success')
               setTimeout(() => {

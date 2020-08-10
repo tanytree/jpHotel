@@ -6,7 +6,7 @@
  -->
 <template>
     <div id="page1" class="boss-index">
-        <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
+        <el-tabs class="pageTab" v-model="activeName">
             <el-tab-pane label="价格策略" name="first">
                 <priceStrategy ref="priceStrategy"/>
             </el-tab-pane>

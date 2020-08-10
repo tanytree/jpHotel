@@ -16,7 +16,7 @@
                 </el-form-item>
             </el-row>
             <el-form-item>
-                <el-button type="primary" v-loading="loading" @click="save('ruleForm')">保存</el-button>
+                <el-button type="primary" v-loading="loading2" @click="save('ruleForm')">保存</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -25,7 +25,7 @@
   export default {
     data () {
       return {
-        loading: false,
+        loading2: false,
         ruleForm: {
           integralSetDetail: '',
         },
@@ -45,8 +45,10 @@
       save (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.loading2 = true;
             this.$F.doRequest(this, '/pms/hotelparam/integralconvert', this.ruleForm, (res) => {
               this.$message.success('Success')
+              this.loading2 = false;
             })
           }
         })

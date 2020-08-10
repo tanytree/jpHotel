@@ -34,7 +34,6 @@
 
 <script>
     import echarts from 'echarts'
-    import {get_finance_count} from '@/utils/api/finance'
     import {mapState, mapActions} from 'vuex'
 
     export default {
@@ -57,21 +56,7 @@
             // this.initChartLine()
         },
         methods: {
-            getChartData() {
-                get_finance_count({
-                    type: this.activeName,
-                    year: '',
-                    month: '',
-                    day: ''
-                }).then(res => {
-                    if (res.code == 200) {
-                        this.dataList = res.data;
-                        this.initChartLine()
-                    } else {
-                        this.$message.error(res.message)
-                    }
-                })
-            },
+
             tabChange() {
                 var dataArr = []
                 var data = new Date()
@@ -107,7 +92,7 @@
                     // this.form.day = dataArr.join(',')
                 }
                 this.dataArr = dataArr
-                this.getChartData()
+                // this.getChartData()
                 // console.log(dataArr);
             },
             // 折线图
