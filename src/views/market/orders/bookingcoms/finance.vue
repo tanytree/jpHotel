@@ -1,12 +1,12 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-10 14:35:03
+ * @LastEditTime: 2020-08-10 17:58:06
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/finance.vue
  -->
 <template>
 <div class="finance">
-        <el-row class="clearfix">
+    <el-row class="clearfix">
         <div class="">
             <el-button type="primary" size="mini">交订金</el-button>
             <el-button type="primary" size="mini">退订金</el-button>
@@ -14,10 +14,16 @@
             <el-button type="primary" size="mini">打印</el-button>
         </div>
     </el-row>
-        <el-row class="clearfix padding-tb-20">
+    <el-row class="clearfix padding-tb-20">
+        <el-col :span="4">
             <span>付款合计：<em class="text-green">{{detailData.payPrice}}</em></span>
+        </el-col>
+        <el-col :span="4">
             <span>消费合计：<em class="text-red">{{detailData.consumePrice}}</em></span>
+        </el-col>
+        <el-col :span="4">
             <span>平衡数：100</span>
+        </el-col>
     </el-row>
     <!--表格数据 -->
     <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
@@ -86,7 +92,7 @@ export default {
     methods: {
         consume_order_list() {
             let params = {
-                state:'',
+                state: '',
                 checkInId: this.$route.query.id
             };
             this.$F.doRequest(this, '/pms/consume/consume_order_list', params, (res) => {
