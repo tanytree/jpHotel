@@ -1,76 +1,54 @@
 <template>
-	<div>
-		<el-row>
-			<el-col style="font-size: 13px; font-weight: bolder;">酒店图片</el-col>
-		</el-row>
-		<el-row style="padding: 20px 0px;">
-			<el-upload action="#" list-type="picture-card" :auto-upload="false" :multiple="true">
-				<i slot="default" class="el-icon-plus"></i>
-				<div slot="file" slot-scope="{file}">
-					<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-					<span class="el-upload-list__item-actions">
-						<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-							<i class="el-icon-zoom-in"></i>
+	<div class="boss-index">
+		<div class="content">
+			<div class="hotelTitle">酒店图片</div>
+			<div class="box uploadBox">
+				<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile" multiple accept="image/png,image/gif,image/jpg,image/jpeg">
+					<i slot="default" class="el-icon-plus"></i>
+					<div slot="file" slot-scope="{file}">
+						<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+						<span class="el-upload-list__item-actions">
+							<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+								<i class="el-icon-zoom-in"></i>
+							</span>
+							<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
+								<i class="el-icon-delete"></i>
+							</span>
 						</span>
-						<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
-							<i class="el-icon-download"></i>
-						</span>
-						<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
-							<i class="el-icon-delete"></i>
-						</span>
-					</span>
-				</div>
-			</el-upload>
-			<el-dialog top="0" :visible.sync="dialogVisible">
-				<img width="100%" :src="dialogImageUrl" alt="">
-			</el-dialog>
-		</el-row>
-		<el-row style="border-top: 1px solid #e5e5e5;padding: 20px 0px;">
-			<el-col style="font-size: 13px; font-weight: bolder;">酒店信息</el-col>
-		</el-row>
-		<el-row :gutter="20">
-			<el-form :model="threeForm" :rules="threerules" ref="ruleForm" label-width="100px">
-				<el-col :span="8">
-					<el-form-item label="酒店名称:" prop="name">
-						<el-input v-model="threeForm.name" style="width: 200px;"></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :span="8">
-					<el-form-item label="酒店地址:" prop="name">
-						<el-input v-model="threeForm.name" style="width: 200px;"></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :span="8">
-					<el-form-item label="前台电话:" prop="name">
-						<el-input v-model="threeForm.name" style="width: 200px;"></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :span="8">
-					<el-form-item label="入住时间:" prop="name">
-						<el-date-picker v-model="threeForm.name" type="datetime" placeholder="选择日期时间" align="right" :picker-options="pickerOptions"
-						 style="width: 200px;"></el-date-picker>
-					</el-form-item>
-				</el-col>
-				<el-col :span="8">
-					<el-form-item label="退房时间:" prop="name">
-						<el-date-picker v-model="threeForm.name" type="datetime" placeholder="选择日期时间" align="right" :picker-options="pickerOptions"
-						 style="width: 200px;"></el-date-picker>
-					</el-form-item>
-				</el-col>
+					</div>
+				</el-upload>
+				<el-dialog top="0" :visible.sync="dialogVisible">
+					<img width="100%" :src="dialogImageUrl" alt="">
+				</el-dialog>
+			</div>
+			<div class="hotelTitle">酒店信息</div>
+			<el-form :model="hotelData" :rules="hotelRule" class="box" inline size="small" ref="ruleForm" label-width="100px">
+				<el-form-item label="酒店名称：" prop="name">
+					<el-input v-model="hotelData.name"></el-input>
+				</el-form-item>
+				<el-form-item label="酒店地址：" prop="address">
+					<el-input v-model="hotelData.address"></el-input>
+				</el-form-item>
+				<el-form-item label="前台电话：" prop="phone">
+					<el-input v-model="hotelData.phone"></el-input>
+				</el-form-item>
+				<el-form-item label="入住时间：" prop="startTime">
+					<el-date-picker v-model="hotelData.startTime" type="datetime"></el-date-picker>
+				</el-form-item>
+				<el-form-item label="退房时间：" prop="endTime">
+					<el-date-picker v-model="hotelData.endTime" type="datetime"></el-date-picker>
+				</el-form-item>
 			</el-form>
-		</el-row>
-		<el-row style="border-top: 1px solid #e5e5e5;padding: 20px 0px;">
-			<el-col style="font-size: 13px; font-weight: bolder;">酒店简介</el-col>
-		</el-row>
-		<el-row :gutter="22" class="demo-form-inline">
-			<el-col :span="2" style="font-size: 14px;">酒店简介:</el-col>
-			<el-col :span="20">
-				<el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="five_money" style="width: 100%;"></el-input>
-			</el-col>
-		</el-row>
-		<el-row>
-			<el-button type="primary" style="width: 80px;">保存</el-button>
-		</el-row>
+			<div class="hotelTitle">酒店简介</div>
+			<el-form :model="hotelData" :rules="hotelRule" class="box" size="small" ref="ruleForm" label-width="100px">
+				<el-form-item label="酒店简介：" prop="remark">
+					<el-input type="textarea" :rows="5" placeholder="请输入简介" v-model="hotelData.remark"></el-input>
+				</el-form-item>
+			</el-form>
+		</div>
+		<div class="footer">
+			<el-button type="primary" class="submit" @click="submit">保存</el-button>
+		</div>
 	</div>
 </template>
 
@@ -78,141 +56,91 @@
 	export default {
 		data() {
 			return {
-				threeForm: {
-					name: '',
-					kinds: ''
+				hotelRule: {
+					name: [{ required: true, message: '请输入酒店名称', trigger: 'blur' }],
+					address: [{ required: true, message: '请输入酒店地址', trigger: 'blur' }],
+					phone: [{ type: 'date', required: true, message: '请输入电话', trigger: 'blur' }],
+					startTime: [{ type: 'date', required: true, message: '请选择入住时间', trigger: 'change' }],
+					endTime: [{ type: 'date', required: true, message: '请选择离店时间', trigger: 'change' }],
+					remark: [{ required: true, message: '请输入酒店简介', trigger: 'blur' }],
 				},
-				threerules: {
-					name: [{
-						required: true,
-						message: '请输入活动名称',
-						trigger: 'blur'
-					}]
-				},
-				activeFour: 'four_a',
-				four_tableData: [{
-					name: '张十三',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}, {
-					name: '张十三',
-					time: '2020-5-20',
-					job_status: '实习期',
-					job: '普通员工',
-					number: '11223',
-					parts: '销售部'
-				}],
-				fourForm: {
-					name: ''
-				},
-				fourrules: {
-					name: [{
-						required: true,
-						message: '请输入活动名称',
-						trigger: 'blur'
-					}]
-				},
-				dialogAdd_kinds: false,
-				dialogAdd_thing: false,
-
-				activeFive: 'five_a',
-				beiYong_show: true,
-				five_redioList: [{
-					name: '现金流模式',
-					radio: true
-				}, {
-					name: '实收模式',
-					radio: false
-				}, {
-					name: '应收模式',
-					radio: false
-				}],
-				five_money: '',
-
-				seven_redioList: [{
-					name: '寄存单',
-					radio: true
-				}, {
-					name: '预收款单',
-					radio: false
-				}, {
-					name: '定金单',
-					radio: false
-				}, {
-					name: '商品消费单',
-					radio: true
-				}, {
-					name: '入住消费单',
-					radio: false
-				}, {
-					name: '餐饮消费单',
-					radio: false
-				}],
-
 				dialogImageUrl: '',
 				dialogVisible: false,
 				disabled: false,
-				pickerOptions: {
-					shortcuts: [{
-						text: '今天',
-						onClick(picker) {
-							picker.$emit('pick', new Date());
-						}
-					}, {
-						text: '昨天',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24);
-							picker.$emit('pick', date);
-						}
-					}, {
-						text: '一周前',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-							picker.$emit('pick', date);
-						}
-					}]
-				},
 			}
 		},
+		props: {hotelData: Object, initData: Function},
 		methods: {
-			popup_thing() {
-				this.dialogAdd_thing = true;
+			uploadFile(file) {
+				this.formData.append('uploadFile', file.file);
 			},
-			popup_kinds() {
-				this.dialogAdd_kinds = true;
-			},
-			// 交班模式选择,非现金流时不显示备用金
-			changeRedio_five(value, index) {
-				debugger
-				this.five_redioList.forEach((value, index) => {
-					value.redio = false
-				})
-				this.five_redioList[index].redio = true
-				if (this.five_redioList[0].redio == true) {
-					this.beiYong_show = true
-				} else {
-					this.beiYong_show = false
-				}
-			},
-			//上传图片
-			handleRemove(file) {
-				console.log(file);
-			},
+			// 选择图片--放大
 			handlePictureCardPreview(file) {
 				this.dialogImageUrl = file.url;
 				this.dialogVisible = true;
 			},
-			handleDownload(file) {
+			handleRemove(file) {
 				console.log(file);
-			}
+			},
+			// 保存
+			submit() {
+				if (this.hotelData.id) {
+					this.hotelData.roomId = this.hotelData.id
+				}
+				this.formData = new FormData()
+				let imgList = this.$refs.upload.uploadFiles || [];
+				if (imgList.length == 0) {
+					return this.$message({
+						message: '请选择房屋图片',
+						type: 'warn'
+					});
+				}
+				this.$refs['hotelRule'].validate((valid) => {
+					if (valid) {
+						this.$F.doUploadBatch(this, imgList, (data) => {
+							this.hotelData.imgPath = data
+							let params = Object.assign({}, this.hotelData)
+							this.$F.doRequest(this, '/pms/hotelservice/edit', params, (res) => {
+								this.initData()
+								this.$message({message: '保存成功', type: 'success'});
+							})
+						})
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
 		}
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.boss-index {
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+
+		.content {
+			flex: 1;
+
+			.hotelTitle {
+				font-size: 16px;
+				font-weight: bold;
+				color: #333333;
+				line-height: 30px;
+				margin-bottom: 20px;
+			}
+			.box + .hotelTitle {
+				border-top: 1px solid #e2e2e2;
+				padding-top: 20px;
+			}
+		}
+
+		.footer {
+			border-top: 1px solid #e2e2e2;
+			line-height: 60px;
+			padding: 0 20px;
+		}
+	}
 </style>

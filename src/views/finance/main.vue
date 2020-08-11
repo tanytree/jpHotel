@@ -7,10 +7,7 @@
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
-                         :name="item.path"
-                         :key="item.path"
-                         v-if="$F.filterThirdMenu('finance', item.path, true)">
+            <el-tab-pane>
                 <!-- 财务慨览-->
                 <incomeStatus v-if="item.path == 'overView'"/>
                 <!-- 记一笔-->

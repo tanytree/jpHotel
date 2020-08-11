@@ -5,11 +5,11 @@
 * @Last Modified time: 2020-03-11 16:59:58
 */
 <template>
-	<div>
+	<div class="boss-index">
 		<el-tabs class="pageTab" v-model="activeName">
 			<!-- 房间动态 -->
 			<el-tab-pane label="房间动态" name="one">
-				<el-row class="demo-form-inline">
+				<div class="demo-form-inline">
 					<div class="tag-group">
 						<span class="tag-group__title">房态:</span>
 						<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l-8">
@@ -29,16 +29,16 @@
 							<el-button plain style="width: 100px;" size="mini">重置</el-button>
 						</el-form-item>
 					</el-form>
-				</el-row>
-				<el-row class="demo-form-inline">
+				</div>
+				<div class="demo-form-inline">
 					<div class="tag-group">
 						<span class="tag-group__title">房型:</span>
 						<el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" class="tag-width margin-l-8">
 							{{ item.label }}
 						</el-tag>
 					</div>
-				</el-row>
-				<el-row>
+				</div>
+				<div>
 					<el-row :gutter="20" style="margin-top: 10px;">
 						<el-col :span="4">大仓集团第一酒店 3层</el-col>
 						<el-col :span="1" :offset="0.5" style="color: #999;"><span style="color: #126eff;">9</span>/12</el-col>
@@ -53,8 +53,8 @@
 							<!-- 清扫图标后期加 -->
 						</el-col>
 					</el-row>
-				</el-row>
-				<el-row>
+				</div>
+				<div>
 					<el-row :gutter="20" style="margin-top: 10px;">
 						<el-col :span="4">大仓集团第一酒店 1层</el-col>
 						<el-col :span="1" :offset="0.5" style="color: #999;"><span style="color: #126eff;">9</span>/12</el-col>
@@ -69,41 +69,41 @@
 							<!-- 清扫图标后期加 -->
 						</el-col>
 					</el-row>
-				</el-row>
+				</div>
 			</el-tab-pane>
 			<!-- 夜审设置 -->
 			<el-tab-pane label="夜审设置" name="two" class="font">
-				<el-row :gutter="20" class="tag-top">
+				<div class="tag-top">
 					<el-col :span="2">
 						<el-checkbox v-model="checked">处理应到未到</el-checkbox>
 					</el-col>
 					<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
-				</el-row>
-				<el-row :gutter="20" class="tag-top">
+				</div>
+				<div class="tag-top">
 					<el-col :span="2">
 						<el-checkbox v-model="checked">处理应离未离</el-checkbox>
 					</el-col>
 					<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
-				</el-row>
-				<el-row :gutter="20" class="tag-top">
+				</div>
+				<div class="tag-top">
 					<el-col :span="2">
 						<el-checkbox v-model="checked">处理走结订单</el-checkbox>
 					</el-col>
 					<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
-				</el-row>
-				<el-row :gutter="20" class="tag-top">
+				</div>
+				<div class="tag-top">
 					<el-col :span="2">
 						<el-checkbox v-model="checked">夜审房间状态OD</el-checkbox>
 					</el-col>
 					<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
-				</el-row>
-				<el-row :gutter="20" class="tag-top">
+				</div>
+				<div class="tag-top">
 					<el-col :span="2">
 						<el-checkbox v-model="checked">夜审自动交班</el-checkbox>
 					</el-col>
 					<el-col :span="8" offset="1" style="color: #888888;">如果勾选,则不处理应到未到订单将无法处理</el-col>
-				</el-row>
-				<el-row :gutter="20" class="tag-top" style="padding: 20px 0px;">
+				</div>
+				<div class="tag-top" style="padding: 20px 0px;">
 					<el-col :span="2">夜审方式:</el-col>
 					<el-col :span="4">
 						<el-radio v-model="radio" label="1">手动夜审+自动夜审</el-radio>
@@ -114,26 +114,24 @@
 					<el-col :span="3">
 						<el-radio v-model="radio" label="1" offset="1">自动夜审</el-radio>
 					</el-col>
-				</el-row>
-				<el-row :gutter="18" class="demo-form-inline" style="padding: 20px 0px;">
+				</div>
+				<div class="demo-form-inline" style="padding: 20px 0px;">
 					<el-col :span="2.5">允许夜审时间段:</el-col>
 					<el-col :span="6">
 						<el-time-picker is-range v-model="two.time" range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间"
 						 placeholder="选择时间范围" style="width: 400px;">
 						</el-time-picker>
 					</el-col>
-				</el-row>
-				<el-row :gutter="18" class="demo-form-inline" style="padding: 20px 0px;">
+				</div>
+				<div class="demo-form-inline" style="padding: 20px 0px;">
 					<el-col :span="2.5">自动夜审时间:</el-col>
 					<el-col :span="4.5">
 						<el-time-picker v-model="two.time" :picker-options="{selectableRange: '18:30:00 - 20:30:00'}" placeholder="任意时间点">
 						</el-time-picker>
 					</el-col>
 					<el-col :span="8" offset="0.5" style="color: #888888;">系统将在设定的夜审时间五分钟内自动执行夜审</el-col>
-				</el-row>
-				<el-row>
-					<el-button type="primary" style="width: 80px;">保存</el-button>
-				</el-row>
+				</div>
+				<el-button type="primary" style="width: 80px;">保存</el-button>
 			</el-tab-pane>
 			<!-- 发票维护 -->
 			<el-tab-pane label="发票维护" name="three">

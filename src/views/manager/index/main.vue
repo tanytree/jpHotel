@@ -6,22 +6,22 @@
                 <roomStatus ref="roomStatus"/>
             </el-tab-pane>
             <el-tab-pane label="夜审设置" name="b" >
-                <nightSite ref="nightSite"/>
+                <nightSite ref="nightSite" :findOne="findOne" :initData="getFindOneData"/>
             </el-tab-pane>
-			<el-tab-pane label="发票维护" name="c" >
+			<!--<el-tab-pane label="发票维护" name="c" >
 			    <billMainten ref="billMainten"/>
-			</el-tab-pane>
+			</el-tab-pane>-->
 			<el-tab-pane label="损物赔偿" name="d" >
-			    <damageCompensate ref="damageCompensate"/>
+			    <damageCompensate ref="damageCompensate" :list="damageData" :initData="getDamageTypeData"/>
 			</el-tab-pane>
 			<el-tab-pane label="交班设置" name="e" >
-			    <shiftSite ref="shiftSite"/>
+			    <shiftSite ref="shiftSite" />
 			</el-tab-pane>
-			<el-tab-pane label="酒店服务" name="f" >
-			    <hotelServices ref="hotelServices"/>
+			<el-tab-pane label="酒店服务" name="hotel" >
+			    <hotelServices ref="hotelServices" :hotelData="hotelData" :initData="getHotelServiceData"/>
 			</el-tab-pane>
-			<el-tab-pane label="打印管理" name="g" >
-			    <printingMg ref="printingMg"/>
+			<el-tab-pane label="打印管理" name="print" >
+			    <printingMg ref="printingMg" :printData="printData" :initData="getPrintParamData"/>
 			</el-tab-pane>
             <!-- 员工权限-->
             <el-tab-pane :label="$F.filterThirdMenu('manager', 'staff-rights').thirdMenu"
@@ -51,8 +51,16 @@
         },
         data () {
             return {
+				pageForm: {
+					pageIndex: 1,
+					pageSize: 10,
+					paging: true
+				},
                 activeName: 'a', //第一个默认启动
-
+				findOne: {arriveStatus: 1, leaveStatus: 2, leaveOrder: 1, isOd: 1, trialType: 1, state: 1, trialStartTime: "", trialEndTime: "", trialAutoTime: ""},
+				damageData: [],
+                hotelData: {imgPath: '', name: '', address: '', phone: '', startTime: '', endTime: '', remark: ''},
+                printData: [],
             }
         },
         created () {
@@ -60,7 +68,49 @@
         activated () {
         },
         methods: {
-			handleClick() {}
+			handleClick(tab) {
+				this.activeName = tab.name;
+				if(tab.name == 'b') {
+					this.getFindOneData();
+				} else if (tab.name == 'd') {
+					this.getDamageTypeData();
+				} else if (tab.name == 'hotel') {
+				    this.getHotelServiceData()
+				} else if (tab.name == 'print') {
+				    this.getPrintParamData()
+                }
+			},
+			getFindOneData() {
+				this.$F.doRequest(this, '/pms/nighttrial/findone', {}, (res) => {
+					res.arriveStatus = res.arriveStatus == 1 ? true : false;
+					res.leaveStatus = res.leaveStatus == 1 ? true : false;
+					res.leaveOrder = res.leaveOrder == 1 ? true : false;
+					res.isOd = res.isOd == 1 ? true : false;
+					res.trialType = res.trialType == 1 ? true : false;
+					this.findOne = res;
+				})
+			},
+			getDamageTypeData(id, name, status) {
+				const params = {
+					id: id,
+					name: name,
+					status: status,
+				}
+				this.$F.merge(params, this.pageForm);
+				this.$F.doRequest(this, '/pms/hoteldamagetype/list', params, (res) => {
+					this.damageData = res.list
+				})
+			},
+            getHotelServiceData() {
+                this.$F.doRequest(this, '/pms/hotelservice/findone', {}, (res) => {
+                    this.hotelData = res;
+                })
+            },
+            getPrintParamData() {
+                this.$F.doRequest(this, '/pms/documentsparams/list', {}, (res) => {
+                    this.printData = res.list;
+                })
+            }
         }
     }
 </script>
@@ -87,7 +137,30 @@
 	}
 
 	.tag-top {
-		margin-top: 10px;
+		padding: 10px;
+		display: flex;
+
+		.label {
+			line-height: 30px;
+			margin-right: 20px;
+
+			.el-checkbox {
+				color: #1e1e1e;
+				font-size: 16px;
+
+				.el-checkbox__label {
+					font-size: 16px;
+				}
+			}
+		}
+		.value {
+			margin-right: 20px;
+		}
+		.tips {
+			line-height: 30px;
+			font-size: 16px;
+			color: #888888;
+		}
 	}
 
 	.tag-group {

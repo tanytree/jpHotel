@@ -4,9 +4,9 @@
 			<div class="room-title">大仓集团酒店管理系统</div>
 			<div class="room-name">管理酒店更轻松</div>
 		</div>
-		<div class="register-body" v-if="loginType=='login'">
+		<div class="register-body" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" v-if="loginType=='login'">
 			<div v-if="!forget" class="title">欢迎登录大仓集团酒店管理系统</div>
-			<el-page-header v-if="forget" @back="forget=false;forgetStep=1" title="返回登录"></el-page-header>
+			<el-page-header v-if="forget" @back="() => {this.forget=false;this.forgetStep=1}" title="返回登录"></el-page-header>
 			<div class="body-info">
 				<div class="body-l" v-if="!forget">
 					<el-form :model="loginForm" size="small" validate-on-rule-change :rules="dataRule" ref="loginForm">
@@ -20,16 +20,16 @@
 							<el-input prefix-icon="el-icon-s-custom" placeholder="请输入账号" v-model="loginForm.account" maxlength="18"></el-input>
 						</el-form-item>
 						<el-form-item prop="password">
-							<el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码，长度为6 - 18个字符" v-model.trim="loginForm.password"
-							 @keyup.enter.native="clickLoginBtn()"></el-input>
+							<el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码，长度为6 - 18个字符" v-model.trim="loginForm.password" @keyup.enter.native="clickLoginBtn()"></el-input>
 						</el-form-item>
 						<el-form-item class="login-btns">
-							<!--                        <el-button style="width:50%" type="primary" @click="clickLoginBtn()" v-loading="loading">登录</el-button>-->
-							<el-button type="primary" v-loading="loading" @click="clickLoginBtn()">登录</el-button>
-							<el-select v-model="language" @change="onLanguageChange" style="width: 80px;">
-								<el-option label="中文" value="zh"></el-option>
-								<el-option label="日文" value="ri"></el-option>
-							</el-select>
+							<div class="btn">
+								<el-button type="primary" class="submit" @click="clickLoginBtn()">登录</el-button>
+								<el-select v-model="language" @change="onLanguageChange" style="width: 80px;">
+									<el-option label="中文" value="zh"></el-option>
+									<el-option label="日文" value="ri"></el-option>
+								</el-select>
+							</div>
 						</el-form-item>
 					</el-form>
 				</div>
@@ -243,23 +243,10 @@
 </script>
 
 <style lang="less" scoped>
-	/*.login-btns {*/
-	/*    display: flex;*/
-	/*    flex-direction: column;*/
-	/*    .el-button {*/
-	/*        flex: 1;*/
-	/*    }*/
-	/*    .el-select {*/
-	/*        flex: 1;*/
-	/*    }*/
-	/*}*/
-	.login-btns {
+	.login-btns .btn {
 		display: flex;
-		align-items: center;
-		button {
-			width: 150px;
-			margin-right: 20px;
-		}
+		flex-direction: row;
+		justify-content: space-between;
 	}
 	.body-r {
 		color: #FFFFFF;
@@ -353,11 +340,6 @@
 	.register-body .body-info .body-l .tag button {
 		border: none;
 		background-color: inherit;
-	}
-
-	.register-body .body-info .body-l .submit {
-		display: flex;
-		// padding: 20px 0px;
 	}
 
 	.register-body .body-info .body-r {
