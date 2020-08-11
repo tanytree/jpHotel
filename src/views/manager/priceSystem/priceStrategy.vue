@@ -6,7 +6,7 @@
 					<Member></Member>
 				</el-tab-pane>
 				<el-tab-pane label="单位" name="b">
-					<unitList></unitList>
+					<unitList :tab1_show="unit_show"></unitList>
 				</el-tab-pane>
 			</el-tabs>
 		</el-row>
@@ -22,7 +22,19 @@
 		},
 		data() {
 			return {
-				activName: 'a',
+				activName: 'b'
+			}
+		},
+		watch:{
+			activName() {
+				// debugger
+				switch (this.activName) {
+					case 'a':
+					break;
+					case 'b':
+					this.unit_show = true
+					break;
+				}
 			}
 		},
 		mounted() {

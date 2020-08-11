@@ -8,8 +8,8 @@
 					</el-form-item>
 					<el-form-item label="状态:" class="margin-l-15">
 						<el-select v-model="searchForm.state" placeholder="请选择状态" class="row-width">
-							<el-option label="1" value="启用"></el-option>
-							<el-option label="2" value="禁用"></el-option>
+							<el-option label="启用" value="1"></el-option>
+							<el-option label="禁用" value="2"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -33,8 +33,8 @@
 					<el-table-column prop="ruleName" label="备注"></el-table-column>
 					<el-table-column label="操作" width="350">
 						<template slot-scope="scope">
-							<el-button type="text" size="small" @click="popup('detail')">查看</el-button>
-							<el-button type="text" size="small" @click="popup('change')">修改</el-button>
+							<el-button type="text" size="small" @click="popup('see', scope.row)">查看</el-button>
+							<el-button type="text" size="small" @click="popup('change', scope.row)">修改</el-button>
 							<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="get_price_enter_strategy_delete(scope.row)">
 								<el-button slot="reference" type="text" size="small">删除</el-button>
 							</el-popconfirm>
@@ -60,8 +60,8 @@
 						<el-col :span="10">
 							<el-form-item label="状态:">
 								<el-radio-group v-model="ruleForm.state">
-								   <el-radio label="1">启用</el-radio>
-								   <el-radio label="0">禁用</el-radio>
+								   <el-radio :label="1">启用</el-radio>
+								   <el-radio :label="0">禁用</el-radio>
 								 </el-radio-group>
 							</el-form-item>
 						</el-col>
@@ -130,34 +130,37 @@
 			<el-row style="line-height: 30px;">
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">规则名称:</el-col>
-					<el-col span="14">张三</el-col>
+					<el-col span="14">{{detail_info.ruleName}}</el-col>
 				</el-row>
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">状态:</el-col>
-					<el-col span="14">张三</el-col>
+					<el-col span="14">{{detail_info.state==1? '启用':'禁用'}}</el-col>
 				</el-row>
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">时间:</el-col>
-					<el-col span="14">张三</el-col>
+					<el-col span="14">{{detail_info.createTime}}</el-col>
 				</el-row>
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">星期:</el-col>
-					<el-col span="14">张三</el-col>
+					<el-col span="14">{{detail_info.weeks}}</el-col>
 				</el-row>
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">折扣率:</el-col>
-					<el-col span="14">张三</el-col>
+					<el-col span="14">{{detail_info.discounts_name}}</el-col>
 				</el-row>
 			</el-row>
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-				<el-table-column prop="name" label="房型"></el-table-column>
-				<el-table-column prop="time" label="门市价"></el-table-column>
-				<el-table-column prop="job_status" label="调价方式"></el-table-column>
-				<el-table-column prop="job" label="调价后"></el-table-column>
+			<el-table ref="multipleTable" :data="detail_info.hotelPriceRoomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+				<el-table-column prop="houseName" label="房型"></el-table-column>
+				<el-table-column prop="marketPrice" label="门市价"></el-table-column>
+				<el-table-column prop="job_status" label="调价方式">
+					<template slot-scope="{row}">
+						<span>{{row.adjustType ? '折扣率':'一口价'}}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="adjustPrice" label="调价后"></el-table-column>
 			</el-table>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+				<el-button @click="dialogDetail = false">关 闭</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -165,6 +168,7 @@
 
 <script>
 	export default {
+		props: ['tab1_show'],
 		data() {
 			return {
 				tab1_show: true,
@@ -180,7 +184,7 @@
 					endTime: '',
 					weeks: [],
 					discounts: '1',
-					state: '1',
+					state: 1,
 					roomStrategyJson: []
 				},
 				rules: {
@@ -197,19 +201,21 @@
 				  {label: '周六',value: '6'},
 				  {label: '周日',value: '7'},
 				  ],
-				  dialogDetail: false
+				  dialogDetail: false,
+				  detail_info: {}
 			}
 		},
 		mounted() {
+			this.tableData = []
+			this.ruleForm.roomStrategyJson = []
 			this.get_price_enter_strategy_list();
 		},
 
 		methods: {
-			//保存批量修改房价
+			//单位-增加-修改
 			onSave() {
 				console.log(this.ruleForm);
 				let params = this.$F.deepClone(this.ruleForm);
-				debugger
 				params.startTime = params.time[0];
 				params.endTime = params.time[1];
 				params.weeks = params.weeks.join(',');
@@ -237,13 +243,19 @@
 				this.ruleForm.weeks = value;
 				if (value.length == 0)
 					this.ruleForm.weeks = [];
-
-				if (value.length == 8 || value[value.length - 1] === '') {
-					this.ruleForm.weeks = [];
-					this.weekDays.forEach(week => {
-						this.ruleForm.weeks.push(week.value);
-					})
-
+					// console.log(value== "")
+					// debugger
+					// let i = typeof(value)
+				if (value.length == 8 || value== "") {
+					// debugger
+					if (value.length == 8) {
+						this.ruleForm.weeks = [];
+					} else {
+						this.ruleForm.weeks = value;
+						this.weekDays.forEach(week => {
+							this.ruleForm.weeks.push(week.value);
+						})
+					}
 				} else {
 					let $index = 999;
 					this.ruleForm.weeks.forEach((week, index) => {
@@ -257,23 +269,34 @@
 				}
 			},
 			popup(type, value) {
-				debugger
 				switch (type) {
 					case 'add':
 						this.tab1_show = false;
+						this.allForm.ruleForm = null
+						this.ruleForm.roomStrategyJson = []
 						this.get_hotel_price_room_type_list()
+						break
+					case 'see':
+						this.dialogDetail = true;
+						this.hotel_price_enter_strategy_detail(value)
+						break
+					case 'change':
+						this.tab1_show = false;
+						this.hotel_price_enter_strategy_detail(value)
 						break
 				}
 			},
 			// 单位--房型
 			get_hotel_price_room_type_list() {
 			  let params = {
-			    strategyTime: '2020-08-04',
-			    priceCalend:1,  // 检索类型 1会员价格日历 2单位价格日历
-			    timeType:1,  // 检索类型 1会员价格日历 2单位价格日历
+			    pageIndex: 1,
+			    pageSize:99,
+				totalSize:0,
+			    roomType:3,  // 房屋类型  1客房类型  2会议室房型 3全部
 			  }
-			  this.$F.doRequest(this, '/pms/hotel/hotel_price_room_type_list', params, (res) => {
-			    res.memberTypeList[0].roomTypeList.forEach(item => {
+			  this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
+				  // debugger
+			    res.list.forEach(item => {
 			      this.ruleForm.roomStrategyJson.push({
 			        roomTypeId: item.id,
 			        marketPrice: item.marketPrice,
@@ -283,13 +306,40 @@
 			        adjustPrice: ''
 			      })
 			    })
-			    // this.memberTableHeads = res.dateList;
-			    // this.memberTableHeads.unshift({
-			    //   "dateStr":"房价",
-			    //   "weekDay":""
-			    // });
 			    this.$forceUpdate();
 			  })
+			},
+			// 单位列表-查看-修改详情
+			hotel_price_enter_strategy_detail(value) {
+				let params = {
+					id: value.id
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_detail', params, (res) => {
+					debugger
+					switch(res.discounts) {
+						case '1':
+						res.discounts_name =  '向上取整'
+						break;
+						case '2':
+						res.discounts_name =  '向下取整'
+						break;
+						case '3':
+						res.discounts_name =  '四舍五入(取整)'
+						break;
+						case '4':
+						res.discounts_name =  '保持不变'
+						break;
+					}
+					
+					this.detail_info = res
+					this.ruleForm = res
+					let time_arr = []
+					time_arr.push(this.ruleForm.startTime)
+					time_arr.push(this.ruleForm.endTime)
+					this.ruleForm.time = time_arr
+					this.ruleForm.weeks = this.ruleForm.weeks.split(',')
+					this.ruleForm.roomStrategyJson =  this.ruleForm.hotelPriceRoomTypeList
+				})
 			},
 			// 单位列表-删除
 			get_price_enter_strategy_delete(value) {

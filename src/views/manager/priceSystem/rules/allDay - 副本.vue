@@ -3,7 +3,65 @@
 		<el-row v-if="tab1_show && tab2_show">
 			<el-tabs v-model="activName">
 				<el-tab-pane label="全天房计费" name="a">
-					<allDay></allDay>
+					<el-row :gutter="20">
+						<el-row>
+							<el-form class="demo-form-inline" inline size="small">
+								<el-form-item label="规则名称:">
+									<el-input v-model="ruleForm.ruleName" class="row-width"></el-input>
+								</el-form-item>
+								<el-form-item label="计费模式:" class="margin-l-15">
+									<el-select v-model="ruleForm.priceModel" style="width: 120px">
+										<el-option :label="value.name" :value="value.key" v-for="(value, index) in priceModelList" :key="index"></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="状态:" class="margin-l-15">
+									<el-select v-model="ruleForm.state" style="width: 120px">
+										<el-option :label="value.name" :value="value.key" v-for="(value, index) in statelList" :key="index"></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item>
+									<el-button type="primary" style="width: 100px;" size="mini" @click="searchBtn">查询</el-button>
+								</el-form-item>
+								<el-form-item class="form-inline-flex">
+									<el-row>
+										<el-button type="primary" @click="popup('addA')" style="width: 100px;" size="mini">新增</el-button>
+									</el-row>
+								</el-form-item>
+							</el-form>
+						</el-row>
+
+						<div class="components-edit">
+							<el-table ref="multipleTable" :data="tableData_a" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+								<el-table-column prop="ruleName" label="规则名称"></el-table-column>
+								<el-table-column prop="priceModel" label="计费模式"></el-table-column>
+								<el-table-column prop="job_status" label="规则详情"></el-table-column>
+								<el-table-column prop="time" label="状态">
+									<template slot-scope="{row}">
+										<span>{{row.state ? '启用':'禁用'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop="remark" label="备注"></el-table-column>
+								<el-table-column label="操作" width="200">
+									<template slot-scope="scope">
+										<el-button type="text" size="small" @click="popup('changeA')">修改</el-button>
+										<el-button type="text" size="small" @click="stop_d(scope.row)">{{scope.row.state==1? '禁用':'启用'}}</el-button>
+										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="deleteRow_d(scope.row)">
+											<el-button slot="reference" type="text" size="small">删除</el-button>
+										</el-popconfirm>
+									</template>
+								</el-table-column>
+							</el-table>
+							<div class="block">
+								<!-- <div class="page-all">
+									共
+									<span style="font-weight:600;font-size: 14px;">{{ruleForm.totalSize}}</span>条记录
+								</div> -->
+								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="ruleForm.pageIndex"
+								 :page-sizes="[10, 20, 30, 40]" :page-size="ruleForm.pageSize" layout=" sizes, prev, pager, next, jumper"
+								 :total="ruleForm.totalSize"></el-pagination>
+							</div>
+						</div>
+					</el-row>
 				</el-tab-pane>
 				<el-tab-pane label="时租房计费" name="b">
 					<el-row :gutter="20">
@@ -327,11 +385,7 @@
 </template>
 
 <script>
-	import allDay from './rules/allDay';
 	export default {
-		components: {
-			allDay
-		},
 		data() {
 			return {
 				tab1_show: true,
