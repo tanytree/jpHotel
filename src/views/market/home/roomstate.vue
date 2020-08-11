@@ -132,7 +132,7 @@
                                 <el-col :span="3">{{room.houseNum}}</el-col>
                                 <el-col :span="8" :offset="2">{{room.hotelRoomType.houseName}}</el-col>
                             </el-row>
-                            <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;" v-if="room.livingPersonList.length&&(room.roomStatus==3 || room.roomStatus==4)">
+                            <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;" v-if="room.livingPersonList && room.livingPersonList.length && (room.roomStatus==3 || room.roomStatus==4)">
                                 <el-col :span="10">{{room.livingPersonList[0].name}}</el-col>
                                 <el-col :span="10" :offset="2">{{room.livingPersonList[0].sex | F_sex}}</el-col>
                             </el-row>
@@ -380,7 +380,7 @@
                             <template slot-scope="scope">{{F_guestType(scope.row.checkIn.guestType)}}</template>
                         </el-table-column>
                         <el-table-column label="同来客" width="">
-                            <template slot-scope="scope">{{currentRoom.livingPersonList.length-1}}</template>
+                            <template slot-scope="scope">{{currentRoom.livingPersonList ? currentRoom.livingPersonList.length-1 : ''}}</template>
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
@@ -1158,7 +1158,7 @@ export default {
         //获取制卡房间表
         liveCard_in_person_list(item) {
             console.log(item)
-            if(!item.livingPersonList.length){
+            if(!item.livingPersonList || !item.livingPersonList.length){
               this.$message.error('暂无入住人，请添加入住人后操作')
               return
             }
