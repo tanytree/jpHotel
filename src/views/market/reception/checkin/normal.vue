@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 11:53:51
+ * @LastEditTime: 2020-08-11 15:51:03
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -988,15 +988,7 @@ export default {
                                 this.live_in_person_list()
                                 return false
                             }
-                            for (let k in this.liveInPersonData) {
-                                if (!this.liveInPersonData[k].personList.length) {
-                                    this.isSubmitErr = true
-                                    this.$message.error('请添加入住人')
-                                    this.live_in_person_list()
-                                    return false
-                                }
-                            }
-
+                            
                             if (this.liveCardData == '') {
                                 this.isSubmitErr = true
                                 this.$message.error('请制卡')
@@ -1044,7 +1036,7 @@ export default {
                     return false
                 }
                 if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
-                    for (let k in this.waitingRoom) {
+                    for (let k= 0;k < this.waitingRoom.length;k++) {
                         if (!this.waitingRoom[k].roomsArr) {
                             this.$message.error('请选择房间')
                             return false
@@ -1317,13 +1309,13 @@ export default {
                     this.live_in_person_list()
                     return false
                 }
-                for (let k in this.liveInPersonData) {
-                    if (!this.liveInPersonData[k].personList.length) {
-                        this.$message.error('请添加入住人')
-                        this.live_in_person_list()
-                        return false
-                    }
-                }
+                // for (let k in this.liveInPersonData) {
+                //     if (!this.liveInPersonData[k].personList.length) {
+                //         this.$message.error('请添加入住人')
+                //         this.live_in_person_list()
+                //         return false
+                //     }
+                // }
             }
             let params = {
                 type: 3,
@@ -1634,7 +1626,7 @@ export default {
         liveInPersonCancel() {
             if (this.isSubmitErr) {
                 this.isSubmitErr = false
-                this.$router.replace('/orderdetail?id=' + this.checkInForm.checkinId)
+                this.$router.replace('/orderdetail?id=' + this.checkInForm.checkInId)
             } else {
                 this.liveInPersonShow = false
             }
@@ -1642,7 +1634,7 @@ export default {
         mackcadeCancel() {
             if (this.isSubmitErr) {
                 this.isSubmitErr = false
-                this.$router.replace('/orderdetail?id=' + this.checkInForm.checkinId)
+                this.$router.replace('/orderdetail?id=' + this.checkInForm.checkInId)
             } else {
                 this.mackcade = false
             }
