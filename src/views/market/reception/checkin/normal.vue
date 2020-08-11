@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-11 16:00:04
+ * @LastEditTime: 2020-08-11 18:14:36
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -1200,9 +1200,18 @@ export default {
             let roomTypeId = [],
                 number = 0;
             this.waitingRoom.forEach(element => {
-                number += element.num
-                roomTypeId.push(element.roomTypeId);
+                let thisNum = element.num - (element.roomsArr?element.roomsArr.length:0)
+                number += thisNum
+                if(thisNum>0){
+                    for(let i = 0;i<thisNum;i++){
+                        roomTypeId.push(element.roomTypeId);
+                    }
+                }
             });
+            if (number < 1) {
+                return
+            }
+
             let params = {
                 checkinRoomType: 1,
                 roomTypeId: roomTypeId,
