@@ -1,103 +1,85 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 17:24:18
+ * @LastEditTime: 2020-08-11 17:26:45
  * @FilePath: /jiudian/src/views/market/orders/coms/c1.vue
 --> 
 <template>
 <div class="roomDetails">
     <div class="hd">
         <div class="tit">
-            <h3>入住信息（房间：A001 前台）</h3><span>订单号：98247690457045976</span>
+            <el-button type="" size="mini" class="fr" @click="liveCard_in_person_list">操作房卡</el-button>
+            <h3>入住信息（房间：{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>订单号：{{detailData.checkIn.orderNum}}</span>
         </div>
         <div class="customerInfo">
             <el-row class="row">
                 <el-col :span="4">
-                    入住方式：全天房
+                    入住方式：{{F_operCheckinType(detailData.checkIn.operCheckinType)}}
                 </el-col>
                 <el-col :span="4">
-                    房型：标准间
+                    房型：{{currentRoom.roomTypeName}}
                 </el-col>
                 <el-col :span="12">
-                    入离时间：2020-04-15 11:00 - 2020-04-18 12:00
+                    入离时间：{{detailData.checkIn.checkinTime}} - {{detailData.checkIn.checkoutTime}}
                 </el-col>
             </el-row>
             <el-row class="row">
                 <el-col :span="4">
-                    房价合计：200
+                    房价合计：{{detailData.checkIn.realPrice}}
                 </el-col>
                 <el-col :span="4">
-                    入住类型：正常
+                    入住类型：{{F_checkinType(detailData.checkIn.checkinType)}}
                 </el-col>
                 <el-col :span="6">
-                    外部订单号：020695482609458
+                    外部订单号：{{detailData.checkIn.thirdOrdernum}}
                 </el-col>
                 <el-col :span="6">
-                    备注：无
+                    备注：{{detailData.checkIn.remark}}
                 </el-col>
             </el-row>
         </div>
     </div>
     <div class="cost margin-t-10">
         <div class="wrap">
-            <span class="fee">应收：20.00</span>
+            <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
+            <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
             <div class="costNum">
-                <el-row>消费合计：<span class="text-red">22000</span></el-row>
-                <el-row>付款合计：<span class="text-green">3000</span></el-row>
+                <el-row>消费合计：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                <el-row>付款合计：<span class="text-green">{{detailData.payPrice}}</span></el-row>
             </div>
         </div>
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <!-- 查询部分 -->
-            <el-form inline size="small">
-                <el-row>
-                    <el-form-item label="">
-                        <el-button type="primary" size="mini">入账</el-button>
-                        <el-button type="primary" size="mini">挂账</el-button>
-                        <el-button type="primary" size="mini">迷你吧</el-button>
-                        <el-button type="primary" size="mini">结账</el-button>
-                        <el-button type="primary" size="mini">开发票</el-button>
-                        <el-button type="primary" size="mini">打印</el-button>
-                        <el-button type="primary" size="mini">冲调</el-button>
-                        <el-button type="primary" size="mini">部分结账</el-button>
-                        <el-button type="primary" size="mini">撤销结账</el-button>
-                        <el-button type="primary" size="mini">撤销退房</el-button>
-                    </el-form-item>
-                </el-row>
-                <el-form-item label="账务类别：">
-                    <el-button plain size="mini">所有账务</el-button>
-                    <el-button plain size="mini">未结账务</el-button>
-                    <el-button plain size="mini">已结账务</el-button>
-                </el-form-item>
-                <el-form-item class="fr">
-                    <el-button type="primary">导出</el-button>
-                </el-form-item>
-            </el-form>
-            <!--表格数据 -->
-            <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
-                <el-table-column type="selection" width="55">
-                </el-table-column>
-                <el-table-column prop="enterName" label="消费时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="createTime" label="房间号" show-overflow-tooltip></el-table-column>
-                <el-table-column label="账务项目" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="enterType" label="状态" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="消费" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="操作人" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="备注" show-overflow-tooltip></el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="{row}">
-                        <el-button type="text" size="mini">移除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div style="margin-top:10px"></div>
-            <!--分页 -->
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+            <finance :currentRoom="currentRoom"  />
         </div>
     </div>
+    <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
+        <el-row>
+            <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
+            <el-col :span="8" style="float:right">
+                <el-button @click="make_card_status">制卡</el-button>
+                <el-button>清卡</el-button>
+                <el-button>读卡</el-button>
+            </el-col>
+        </el-row>
+        <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column prop="name" label="房间号" width="200">
+                <template slot-scope="{row}">
+                    {{row.room?row.room.houseNum:''}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="name" label="本次制卡状态">
+                <template slot-scope="{row}">
+                    {{F_markCard(row.markCard)}}
+                </template>
+            </el-table-column>
+        </el-table>
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" @click="mackcade=false">取消</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -106,11 +88,14 @@ import {
     mapState,
     mapActions
 } from "vuex";
-// import {
-//     get_user_enterprise
-// } from "@/utils/api/company";
-
+import finance from './finance'
+import myMixin from '@/utils/filterMixin';
 export default {
+    mixins: [myMixin],
+    props: ['detailData', 'currentRoom'],
+    components: {
+        finance
+    },
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -122,6 +107,8 @@ export default {
     data() {
         return {
             loading: false,
+            mackcade: false,
+            liveCardLoading: false,
             detail: {
                 text: ''
             },
@@ -136,7 +123,8 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [] //表格数据
+            tableData: [], //表格数据
+            liveCardData: []
         };
     },
 
@@ -194,10 +182,58 @@ export default {
                 }
             });
         },
-
-        /**多选 */
+        //获取入住人
+        liveCard_in_person_list() {
+            let params = {
+                type: 3,
+                checkinId: this.$route.query.id,
+                pageIndex: 1,
+                pageSize: 999
+            };
+            this.liveCardLoading = true;
+            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
+                // this.liveCardData = res.checkInRoomList
+                this.liveCardData = res
+                this.liveCardData.done = 0;
+                this.liveCardData.unfinished = 0;
+                let list = res.checkInRoomList;
+                for (let k in list) {
+                    if (list[k].markCard == 2) {
+                        this.liveCardData.done++
+                    }
+                    if (list[k].markCard == 1) {
+                        this.liveCardData.unfinished++
+                    }
+                }
+                this.liveCardLoading = false
+                this.mackcade = true
+                this.$forceUpdate()
+            })
+        },
+        make_card_status() {
+            let arr = []
+            if (!this.multipleSelection.length) {
+                this.$message.error('至少选择一间房间')
+                return
+            }
+            this.multipleSelection.forEach(element => {
+                arr.push(element.id)
+            });
+            let params = {
+                checkInRoomIds: arr,
+            };
+            this.$F.doRequest(this, '/pms/checkin/make_card_status', params, (res) => {
+                this.$message({
+                    message: '制卡成功',
+                    type: 'success'
+                });
+                this.liveCard_in_person_list()
+                this.$forceUpdate()
+            })
+        },
         handleSelectionChange(val) {
             this.multipleSelection = val;
+            console.log(val)
         },
         /**每页数 */
         handleSizeChange(val) {

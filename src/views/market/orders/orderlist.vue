@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 17:42:55
+ * @LastEditTime: 2020-08-11 09:35:52
  * @FilePath: /jiudian/src/views/market/orders/orderlist.vue
  -->
 
@@ -213,7 +213,7 @@ export default {
             })
         },
         handelDetail(item) {
-            this.$router.push('/orderdetail')
+            this.$router.push('/orderdetail?id=' + item.id)
         },
         /**编辑 */
         editRowItem(row) {

@@ -1,69 +1,24 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 17:24:07
+ * @LastEditTime: 2020-08-11 11:43:56
  * @FilePath: /jiudian/src/views/market/orders/coms/c2.vue
 --> 
 <template>
 <div class="roomDetails">
     <div class="cost margin-t-10">
         <div class="wrap">
-            <span class="fee">应收：20.00</span>
+            <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
+            <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
             <div class="costNum">
-                <el-row>消费合计：<span class="text-red">22000</span></el-row>
-                <el-row>付款合计：<span class="text-green">3000</span></el-row>
+                <el-row>消费合计：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                <el-row>付款合计：<span class="text-green">{{detailData.payPrice}}</span></el-row>
             </div>
         </div>
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <!-- 查询部分 -->
-            <el-form inline size="small">
-                <el-row>
-                    <el-form-item label="">
-                        <el-button type="primary" size="mini">入账</el-button>
-                        <el-button type="primary" size="mini">挂账</el-button>
-                        <el-button type="primary" size="mini">迷你吧</el-button>
-                        <el-button type="primary" size="mini">结账</el-button>
-                        <el-button type="primary" size="mini">开发票</el-button>
-                        <el-button type="primary" size="mini">打印</el-button>
-                        <el-button type="primary" size="mini">冲调</el-button>
-                        <el-button type="primary" size="mini">部分结账</el-button>
-                        <el-button type="primary" size="mini">撤销结账</el-button>
-                        <el-button type="primary" size="mini">撤销退房</el-button>
-                    </el-form-item>
-                </el-row>
-                <el-form-item label="账务类别：">
-                    <el-button plain size="mini">所有账务</el-button>
-                    <el-button plain size="mini">未结账务</el-button>
-                    <el-button plain size="mini">已结账务</el-button>
-                </el-form-item>
-                <el-form-item class="fr">
-                    <el-button type="primary">导出</el-button>
-                </el-form-item>
-            </el-form>
-            <!--表格数据 -->
-            <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
-                <el-table-column type="selection" width="55">
-                </el-table-column>
-                <el-table-column prop="enterName" label="消费时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="createTime" label="房间号" show-overflow-tooltip></el-table-column>
-                <el-table-column label="账务项目" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="enterType" label="状态" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="消费" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="操作人" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="备注" show-overflow-tooltip></el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="{row}">
-                        <el-button type="text" size="mini">移除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div style="margin-top:10px"></div>
-            <!--分页 -->
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+            <finance />
         </div>
     </div>
 </div>
@@ -74,11 +29,14 @@ import {
     mapState,
     mapActions
 } from "vuex";
-// import {
-//     get_user_enterprise
-// } from "@/utils/api/company";
-
+import myMixin from '@/utils/filterMixin';
+import finance from './finance'
 export default {
+    components:{
+        finance
+    },
+    mixins: [myMixin],
+    props: ['detailData'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -89,7 +47,7 @@ export default {
     },
     data() {
         return {
-            loading:false,
+            loading: false,
             detail: {
                 text: ''
             },
@@ -110,74 +68,43 @@ export default {
 
     mounted() {
         let id = this.$route.query.id
-        // this.get_user_enterprise(id)
+        this.consume_order_list()
     },
 
     methods: {
-        get_user_enterprise(id) {
-            // 加载组件
+        consume_order_list(state='') {
             let params = {
-                token: this.token,
-                userId: this.userId,
-                plat_source: this.plat_source,
-                enterCode: id
-            }
-            get_user_enterprise(params).then(res => {
-                    if (res.code == 200) {
-                        this.detailDialogFormVisible = true;
-                        this.detailData = res.data
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                })
-                .catch(err => {
-                    this.$message.error(err.message);
-                });
-
-        },
-        initForm() {
-            this.searchForm = {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                state: state,
+                checkInId: this.$route.query.id
             };
-            this.getDataList();
-        },
-        /**获取表格数据 */
-        getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
-            this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
-                this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
-                }
-            });
+            this.$F.doRequest(this, '/pms/consume/consume_order_list', params, (res) => {
+                this.tableData = res.consumeOrderList
+                this.$forceUpdate()
+            })
         },
 
-        /**多选 */
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
+        consume_move(item) {
+            let params = {
+                orderId: item.id
+            };
+            this.$confirm('请确认是否删除该项?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/consume/consume_move', params, (res) => {
+                    this.$message({
+                        type: 'success',
+                        message: '移除成功!'
+                    });
+                    this.consume_order_list()
+                })
+
+            }).catch(() => {
+
+            });
+
         },
-        /**每页数 */
-        handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
-            this.getDataList();
-        },
-        /**当前页 */
-        handleCurrentChange(val) {
-            this.searchForm.page = val;
-            this.getDataList();
-        }
 
     }
 };
