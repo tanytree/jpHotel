@@ -7,6 +7,7 @@
 import bossLang from "./boss/bossZh";
 import commons from "./commons/commonsZh";
 import frontOffice from './frontOffice/zh'
+import login from './login/zh'
 export default {
     language: {
         name: '中文'
@@ -17,4 +18,7 @@ export default {
     boss: bossLang,
     //前台部
     frontOffice: frontOffice,
+
+    //登录模块
+    login: login,
 }

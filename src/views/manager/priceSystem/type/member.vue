@@ -17,7 +17,7 @@
             </el-row>
             <div class="components-edit member-price">
 <!--                row-key="id"-->
-                <el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;"
+                <el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id"
                           default-expand-all
                           header-row-class-name="default"
                           :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}">
@@ -230,11 +230,17 @@
             params.startTime = params.time[0];
             params.endTime = params.time[1];
             params.memberTypeId = params.memberTypeId.join(',');
+            params.weeks.forEach((item, index) => {
+              if (!item) {
+                params.weeks.splice(index, 1);
+              }
+            })
             params.weeks = params.weeks.join(',');
+            params.roomStrategyJson.forEach(item => {
+              item.adjustType = parseInt(item.adjustType);
+            })
             params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
-            debugger
             this.$F.doRequest(this, '/pms/hotel/hotel_price_member_strategy_save', params, (res) => {
-              debugger
             })
           },
           priceBlur(row, index) {
@@ -319,7 +325,7 @@
           // 会员 价格策略单位列表
           get_hotel_price_room_type_list() {
             let params = {
-              strategyTime: '2020-08-04',
+              strategyTime: '2020-08-11',
               priceCalend:1,  // 检索类型 1会员价格日历 2单位价格日历
               timeType:1,  // 检索类型 1会员价格日历 2单位价格日历
             }

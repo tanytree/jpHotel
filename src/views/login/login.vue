@@ -1,33 +1,33 @@
 <template>
 	<div class="register-index">
 		<div class="body-r">
-			<div class="room-title">大仓集团酒店管理系统</div>
-			<div class="room-name">管理酒店更轻松</div>
+			<div class="room-title">{{this.$t('login.roomTitle')}}</div>
+			<div class="room-name">{{this.$t('login.roomName')}}</div>
 		</div>
 		<div class="register-body" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" v-if="loginType=='login'">
-			<div v-if="!forget" class="title">欢迎登录大仓集团酒店管理系统</div>
+			<div v-if="!forget" class="title">{{this.$t('login.title')}}</div>
 			<el-page-header v-if="forget" @back="() => {this.forget=false;this.forgetStep=1}" title="返回登录"></el-page-header>
 			<div class="body-info">
 				<div class="body-l" v-if="!forget">
 					<el-form :model="loginForm" size="small" validate-on-rule-change :rules="dataRule" ref="loginForm">
 						<el-form-item prop="storesNum">
-							<el-select v-model="loginForm.storesNum" placeholder="请选择门店列表">
+							<el-select v-model="loginForm.storesNum" :placeholder="$t('login.storesNumSelectTip')">
 								<el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
 								</el-option>
 							</el-select>
 						</el-form-item>
 						<el-form-item prop="account">
-							<el-input prefix-icon="el-icon-s-custom" placeholder="请输入账号" v-model="loginForm.account" maxlength="18"></el-input>
+							<el-input prefix-icon="el-icon-s-custom" :placeholder="$t('commons.pleaseEnter') + ' ID'" v-model="loginForm.account" maxlength="18"></el-input>
 						</el-form-item>
 						<el-form-item prop="password">
-							<el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码，长度为6 - 18个字符" v-model.trim="loginForm.password" @keyup.enter.native="clickLoginBtn()"></el-input>
+							<el-input type="password" prefix-icon="el-icon-lock" :placeholder="$t('commons.pleaseEnter') + $t('commons.passwordDesc')" v-model.trim="loginForm.password" @keyup.enter.native="clickLoginBtn()"></el-input>
 						</el-form-item>
 						<el-form-item class="login-btns">
 							<div class="btn">
-								<el-button type="primary" class="submit" @click="clickLoginBtn()">登录</el-button>
-								<el-select v-model="language" @change="onLanguageChange" style="width: 80px;">
+								<el-button type="primary" class="submit" @click="clickLoginBtn()" style="width: 100px;">{{this.$t('login.loginBtn')}}</el-button>
+								<el-select v-model="language" @change="onLanguageChange" style="width: 100px;">
 									<el-option label="中文" value="zh"></el-option>
-									<el-option label="日文" value="ri"></el-option>
+									<el-option label="日本语" value="ri"></el-option>
 								</el-select>
 							</div>
 						</el-form-item>
@@ -67,7 +67,7 @@
 		data() {
 			var validatePass = (rule, value, callback) => {
 				if (!value) {
-					callback(new Error('请输入新密码'))
+					callback(new Error(this.parent.$t('commons.pleaseEnter') + this.parent.$t('commons.passwordDesc')))
 				} else if (value.toString().length < 6 || value.toString().length > 18) {
 					callback(new Error('密码长度为6 - 18个字符'))
 				} else {
@@ -90,23 +90,21 @@
 				dataRule: {
 					storesNum: {
 						required: true,
-						message: '请先选择门店',
-						trigger: 'blur'
-					},
-					nickname: {
-						required: true,
-						message: '账号不得为空',
-						trigger: 'blur'
+						// message: this.$t('login.storesNumSelectTip'),
+						message: this.$t('Please enter'),
+						trigger: 'change'
 					},
 					account: {
 						required: true,
-						message: '账号不得为空',
-						trigger: 'blur'
+						// message: this.$t('commons.pleaseEnter') + ' ID',
+						message: 'Please enter the' + ' ID',
+						trigger: 'change'
 					},
 					password: [{
 						required: true,
-						validator: validatePass,
-						trigger: 'blur'
+						// message: this.$t('commons.pleaseEnter') + this.$t('commons.passwordDesc'),
+						message: 'Please enter the' + ' password',
+						trigger: 'change'
 					}]
 				}
 			}
@@ -118,6 +116,7 @@
 				this.storeList = data;
 			})
 			this.language = getLanguage() || 'zh';
+            this.$i18n.locale = this.language;
 		},
 		methods: {
 			...mapActions({
@@ -127,6 +126,8 @@
 
 			onLanguageChange() {
 				setLanguage(this.language);
+                this.$i18n.locale = this.language;
+                sessionStorage.locale = this.language;
 			},
 
 			userIsLogin(data) {

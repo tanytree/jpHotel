@@ -8,6 +8,8 @@ module.exports = {
     queryBtn: '検索',
     resetBtn: '重置',
     exportBtn: 'リセット',
+    pleaseEnter: '入力してください',
+    passwordDesc: 'パスワード',
     F_sex: {
         '1': '男',
         '2': '女',

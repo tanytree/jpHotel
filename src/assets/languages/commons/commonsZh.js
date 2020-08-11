@@ -8,6 +8,8 @@ module.exports = {
     queryBtn: '查询',
     resetBtn: '重置',
     exportBtn: '导出',
+    pleaseEnter: '请输入',
+    passwordDesc: '密码',
     F_sex: {
         '1': '男',
         '2': '女',

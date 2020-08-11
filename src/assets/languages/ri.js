@@ -7,6 +7,7 @@
 import bossLang from './boss/bossRi'
 import commons from "./commons/commonsRi";
 import frontOffice from "./frontOffice/ri";
+import login from './login/ri'
 
 export default {
     language: {
@@ -17,5 +18,8 @@ export default {
     boss: bossLang,
     //前台部
     frontOffice: frontOffice,
+
+    //登录模块
+    login: login,
 
 }

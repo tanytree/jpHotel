@@ -268,9 +268,9 @@
 				let imgList = this.$refs.upload.uploadFiles || [];
 				if (imgList.length == 0) {
 					return this.$message({
-								  message: '请选择房屋图片',
-								  type: 'warn'
-								});
+                      message: '请选择房屋图片',
+                      type: 'warn'
+                    });
 				}
 				this.$refs[ruleForm].validate((valid) => {
 					if (valid) {
