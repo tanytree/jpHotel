@@ -2,7 +2,7 @@
 	<div class="boss-index">
 		<div class="content">
 			<div class="hotelTitle">酒店图片</div>
-			<div class="box uploadBox">
+			<div class="hotelBox uploadBox">
 				<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile" multiple accept="image/png,image/gif,image/jpg,image/jpeg">
 					<i slot="default" class="el-icon-plus"></i>
 					<div slot="file" slot-scope="{file}">
@@ -22,7 +22,7 @@
 				</el-dialog>
 			</div>
 			<div class="hotelTitle">酒店信息</div>
-			<el-form :model="hotelData" :rules="hotelRule" class="box" inline size="small" ref="ruleForm" label-width="100px">
+			<el-form :model="hotelData" :rules="hotelRule" class="hotelBox" size="small" ref="ruleForm" label-width="100px">
 				<el-form-item label="酒店名称：" prop="name">
 					<el-input v-model="hotelData.name"></el-input>
 				</el-form-item>
@@ -40,9 +40,9 @@
 				</el-form-item>
 			</el-form>
 			<div class="hotelTitle">酒店简介</div>
-			<el-form :model="hotelData" :rules="hotelRule" class="box" size="small" ref="ruleForm" label-width="100px">
+			<el-form :model="hotelData" :rules="hotelRule" class="hotelBox area" size="small" ref="ruleForm" label-width="100px">
 				<el-form-item label="酒店简介：" prop="remark">
-					<el-input type="textarea" :rows="5" placeholder="请输入简介" v-model="hotelData.remark"></el-input>
+					<el-input type="textarea" resize="none" :rows="5" placeholder="请输入简介" v-model="hotelData.remark"></el-input>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -60,8 +60,8 @@
 					name: [{ required: true, message: '请输入酒店名称', trigger: 'blur' }],
 					address: [{ required: true, message: '请输入酒店地址', trigger: 'blur' }],
 					phone: [{ type: 'date', required: true, message: '请输入电话', trigger: 'blur' }],
-					startTime: [{ type: 'date', required: true, message: '请选择入住时间', trigger: 'change' }],
-					endTime: [{ type: 'date', required: true, message: '请选择离店时间', trigger: 'change' }],
+					startTime: [{ type: 'date', required: true, message: '请选择入住时间', trigger: 'blur' }],
+					endTime: [{ type: 'date', required: true, message: '请选择离店时间', trigger: 'blur' }],
 					remark: [{ required: true, message: '请输入酒店简介', trigger: 'blur' }],
 				},
 				dialogImageUrl: '',
@@ -95,7 +95,7 @@
 						type: 'warn'
 					});
 				}
-				this.$refs['hotelRule'].validate((valid) => {
+				this.$refs['ruleForm'].validate((valid) => {
 					if (valid) {
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.hotelData.imgPath = data
@@ -128,12 +128,33 @@
 				font-size: 16px;
 				font-weight: bold;
 				color: #333333;
-				line-height: 30px;
 				margin-bottom: 20px;
 			}
-			.box + .hotelTitle {
+			.hotelBox + .hotelTitle {
 				border-top: 1px solid #e2e2e2;
 				padding-top: 20px;
+			}
+			.hotelBox {
+				margin-bottom: 20px;
+
+				&.area .el-form-item {
+					width: 100%;
+					display: block;
+				}
+
+				.el-form-item {
+					width: 30%;
+					display: inline-block;
+					margin-right: 10px;
+
+					.el-input {
+						display: block;
+						width: 240px;
+					}
+					.el-textarea {
+						display: block;
+					}
+				}
 			}
 		}
 

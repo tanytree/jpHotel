@@ -39,7 +39,7 @@
 						</el-form-item>
 					</el-form>
 					<el-table ref="multipleTable" :data="damageData" border height="100%" header-row-class-name="default" size="small">
-						<el-table-column prop="damageTypeId" label="物品类型"></el-table-column>
+						<el-table-column prop="damageTypeName" label="物品类型"></el-table-column>
 						<el-table-column prop="name" label="物品名称"></el-table-column>
 						<el-table-column prop="damagePrice" label="赔偿单价"></el-table-column>
 						<el-table-column prop="state" label="状态"></el-table-column>

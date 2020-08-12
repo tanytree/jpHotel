@@ -4,87 +4,74 @@
 			<el-tab-pane label="交班模式" name="handover">
 				<div class="content">
 					<div class="manage">
-						<div class="tag-top">
-							<div class="handTitle"><span class="square"></span> 前台部交班设置</div>
-							<el-form v-model="handData" size="small">
-								<el-row :gutter="20">
+						<div class="manage-item" v-for="(item, index) in handData" :key="index">
+							<div class="handTitle"><span class="square"></span> {{item.handoverType == 1 ? '前台部' : item.handoverType == 2 ? '餐饮部' : '商店部'}}交班设置</div>
+							<el-form size="small" inline label-position="left">
+								<div>
 									<el-form-item label="交班模式：">
-										<el-radio-group v-model="handData.handoverStatus">
+										<el-radio-group v-model="item.handoverStatus">
 											<el-radio :label="1">现金流模式</el-radio>
 											<el-radio :label="2">实收模式</el-radio>
 											<el-radio :label="3">应收模式</el-radio>
 										</el-radio-group>
 									</el-form-item>
-									<el-form-item label="备用金：">
-										<el-input v-model="handData.pettyCash"></el-input>
+									<el-form-item label="备用金：" v-if="item.handoverType == 1">
+										<el-input v-model="item.pettyCash"></el-input>
 									</el-form-item>
-								</el-row>
-								<el-form-item label="模式说明：">
-									<el-input type="textarea" v-model="handData.pettyCash"></el-input>
+								</div>
+								<el-form-item label="模式说明：" class="inline">
+									<el-input type="textarea" resize="none" :rows="3" v-model="item.remark"></el-input>
 								</el-form-item>
 							</el-form>
 						</div>
-						<div class="demo-form-inline">
-							<div class="handTitle"><span class="square"></span> 前台部交班设置</div>
-							<el-col :span="8">
-								<el-input v-model="five_money" placeholder="请输入备用金"></el-input>
-							</el-col>
-							<el-col :span="8" :offset="0.5" style="color: #888888;">日元</el-col>
-						</div>
-						<div class="demo-form-inline" style="padding: 20px 0px;">
-							<el-col :span="3">模式说明:</el-col>
-							<el-col :span="8">
-								<el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="five_money"></el-input>
-							</el-col>
-						</div>
 					</div>
 					<div class="footer">
-						<el-button type="primary" class="submit" @click="submit">保存</el-button>
+						<el-button type="primary" class="submit" @click="submit('hand')">保存</el-button>
 					</div>
 				</div>
 			</el-tab-pane>
 			<el-tab-pane label="班次管理" name="handManage">
-				<el-row :gutter="24" class="demo-form-inline">
-					<el-col :span="2" :offset="22">
-						<!-- 直接添加一行表格 -->
-						<el-button type="primary" size="small" style="width: 80px; margin-bottom: 18px;" @click="popup_thing">+ 新增</el-button>
-					</el-col>
-				</el-row>
-				<el-row>
-					<el-table ref="multipleTable" :data="four_tableData" border height="100%" header-row-class-name="default" size="small">
-						<el-table-column prop="name" label="班次名称">
-							<template slot-scope="name">
-								<el-input v-model="five_money"></el-input>
-							</template>
-						</el-table-column>
-						<el-table-column prop="name" label="开始时间">
-							<template slot-scope="name">
-								<el-time-select v-model="five_money" :picker-options="{start: '08:30',step: '00:15',end: '18:30'}"
-								 placeholder="选择时间"></el-time-select>
-							</template>
-						</el-table-column>
-						<el-table-column prop="name" label="结束时间">
-							<template slot-scope="name">
-								<el-time-select v-model="five_money" :picker-options="{start: '08:30',step: '00:15',end: '18:30'}"
-								 placeholder="选择时间"></el-time-select>
-							</template>
-						</el-table-column>
+				<div class="content">
+					<div class="demo-form-inline">
+						<el-radio-group v-model="handType.id" size="small" @change="radioChange">
+							<el-radio-button v-for="(item, index) in handData" :key="index" :label="item.id">{{item.handoverType == 1 ? '前台部' : item.handoverType == 2 ? '餐饮部' : '商店部'}}班次</el-radio-button>
+						</el-radio-group>
+						<el-button type="primary" class="submit" size="small" @click="popup_thing">新增</el-button>
+					</div>
+					<el-table ref="multipleTable" :data="manageData" border height="100%" header-row-class-name="default" size="small">
+						<el-table-column prop="name" label="班次名称"></el-table-column>
+						<el-table-column prop="startTime" label="开始时间"></el-table-column>
+						<el-table-column prop="endTime" label="结束时间"></el-table-column>
 						<el-table-column label="操作" width="150">
 							<template slot-scope="scope">
 								<el-button type="text" size="small" @click="popup_thing(scope.row)">编辑</el-button>
-								<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
+								<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm(scope.row)">
 									<el-button slot="reference" type="text" size="small">删除</el-button>
 								</el-popconfirm>
 							</template>
 						</el-table-column>
 					</el-table>
 					<div class="block">
-						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageForm.pageIndex" :page-size="pageForm.pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
 					</div>
-				</el-row>
-				<el-row>
-					<el-button type="primary" style="width: 80px;">保存</el-button>
-				</el-row>
+				</div>
+				<el-dialog top="0" :title="addTypeTitle" :visible.sync="addTypeVisible" :close-on-click-modal="false">
+					<el-form :model="typeData" label-width="100px" class="demo-ruleForm">
+						<el-form-item label="班次名称" prop="name">
+							<el-input v-model="typeData.name"></el-input>
+						</el-form-item>
+						<el-form-item label="开始时间" prop="startTime">
+							<el-time-picker v-model="typeData.startTime" format="HH:mm" value-format="HH:mm"></el-time-picker>
+						</el-form-item>
+						<el-form-item label="结束时间" prop="endTime">
+							<el-time-picker v-model="typeData.endTime" format="HH:mm" value-format="HH:mm"></el-time-picker>
+						</el-form-item>
+					</el-form>
+					<div slot="footer" class="dialog-footer">
+						<el-button class="white" @click="addTypeVisible = false">取 消</el-button>
+						<el-button class="submit" type="primary" @click="saveInfo">确 定</el-button>
+					</div>
+				</el-dialog>
 			</el-tab-pane>
 		</el-tabs>
 	</div>
@@ -94,93 +81,105 @@
 	export default {
 		data() {
 			return {
-				activeName: 'handover',
-				handData: {},
-				four_tableData: [
-					{
-						name: '张十三',
-						time: '2020-5-20',
-						job_status: '实习期',
-						job: '普通员工',
-						number: '11223',
-						parts: '销售部'
-					}, {
-						name: '张十三',
-						time: '2020-5-20',
-						job_status: '实习期',
-						job: '普通员工',
-						number: '11223',
-						parts: '销售部'
-					}
-				],
-
-				five_redioList: [{
-					name: '现金流模式',
-					radio: true
-				}, {
-					name: '实收模式',
-					radio: false
-				}, {
-					name: '应收模式',
-					radio: false
-				}],
-				five_money: '',
-
-				dialogImageUrl: '',
-				dialogVisible: false,
+				activeName: 'handover', handType: {},
+				pageForm: {
+					pageIndex: 1,
+					pageSize: 10,
+					paging: true
+				},
+				total: 0, manageData: [],
+				addTypeVisible: false,
+				typeData: {}, addTypeTitle: '',
 			}
 		},
 		props: {
-			list: Array, category: Array, total: Number, pageSize: Number, currentPage: Number, initData: Function
+			handData: Array, initData: Function
 		},
 		methods: {
 			changeTab(tab) {
-				if(tab.name == 'type') {
+				this.activeName = tab.name;
+				if(tab.name == 'handover') {
 					this.initData()
 				} else {
+					this.handType = this.$F.deepClone(this.handData[0]);
 					this.getDamageData()
 				}
 			},
-			popup_thing() {
-				this.dialogAdd_thing = true;
+			radioChange(val) {
+				this.handType = this.$F.deepClone(this.handData.find(item => item.id === val))
+				this.getDamageData()
+			},
+			getDamageData() {
+				const params = {
+					id: this.handType.id,
+					handoverStatus: this.handType.handoverStatus,
+					pettyCash: this.handType.pettyCash,
+					handoverType: this.handType.handoverType,
+					state: this.handType.state,
+					status: this.handType.status
+				}
+				this.$F.merge(params, this.pageForm);
+				this.$F.doRequest(this, '/pms/handoverlog/list', params, (res) => {
+					this.manageData = res.list;
+					this.pageForm = {pageIndex: res.page.pageIndex, pageSize: res.page.pageSize, paging: true}
+					this.total = res.page.count;
+				})
+			},
+			popup_thing(row) {
+				this.addTypeVisible = true;
+				if(row.id) {
+					this.typeData = row;
+					this.addTypeTitle = '编辑'
+				} else {
+					this.typeData = {name: '', startTime: '', endTime: ''};
+					this.addTypeTitle = '新增'
+				}
+			},
+			saveInfo() {
+				const params = {
+					id: this.typeData.id,
+					name: this.typeData.name,
+					handoverType: this.handType.handoverType,
+					startTime: this.typeData.startTime,
+					endTime: this.typeData.endTime
+				}
+				this.$F.doRequest(this, '/pms/handoverlog/edit', params, (res) => {
+					this.addTypeVisible = false;
+					this.getDamageData()
+				})
 			},
 			popup_kinds() {
 				this.dialogAdd_kinds = true;
 			},
-			// 交班模式选择,非现金流时不显示备用金
-			changeRedio_five(value, index) {
-				debugger
-				this.five_redioList.forEach((value, index) => {
-					value.redio = false
-				})
-				this.five_redioList[index].redio = true
-				if (this.five_redioList[0].redio == true) {
-					this.beiYong_show = true
-				} else {
-					this.beiYong_show = false
-				}
-			},
-			//上传图片
-			handleRemove(file) {
-				console.log(file);
-			},
-			handlePictureCardPreview(file) {
-				this.dialogImageUrl = file.url;
-				this.dialogVisible = true;
-			},
-			handleDownload(file) {
-				console.log(file);
-			},
-			handleSelectionChange() {},
+
 			handleSizeChange() {},
 			handleCurrentChange() {},
-			onConfirm() {},
-			submit() {}
+			onConfirm(row) {
+				this.$F.doRequest(this, '/pms/handoverlog/delete', {id: row.id}, (res) => {
+					this.getDamageData()
+				})
+			},
+			submit(type) {
+				if(type == 'hand') {
+					const params = [];
+					let obj = {};
+					this.handData.map(item => {
+						obj = {handoverStatus: item.handoverStatus, pettyCash: item.pettyCash, handoverType: item.handoverType}
+						params.push(obj);
+					})
+					this.$F.doRequest(this, '/pms/handover/edit', params, (res) => {
+						this.initData()
+						this.$message({message: '保存成功', type: 'success'});
+					})
+				} else {
+
+				}
+			}
 		}
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.tabCenter {
 		padding: 10px;
 
@@ -189,9 +188,37 @@
 			display: flex;
 			flex-direction: column;
 
+			.demo-form-inline {
+				justify-content: space-between;
+				margin-bottom: 20px;
+			}
+
 			.manage {
 				flex: 1;
 				height: 0;
+				overflow: auto;
+
+				.handTitle {
+					color: #1E1E1E;
+					margin-bottom: 12px;
+
+					.square {
+						height: 13px;
+						width: 3px;
+						border-radius: 5px;
+						background: #126EFF;
+						display: inline-block;
+						margin-right: 10px;
+					}
+				}
+				.el-form-item.inline {
+					width: 100%;
+					margin-right: 0;
+
+					.el-form-item__content {
+						width: 1000px;
+					}
+				}
 			}
 
 			.footer {

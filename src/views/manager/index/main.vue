@@ -14,8 +14,8 @@
 			<el-tab-pane label="损物赔偿" name="d" >
 			    <damageCompensate ref="damageCompensate" :list="damageData" :initData="getDamageTypeData"/>
 			</el-tab-pane>
-			<el-tab-pane label="交班设置" name="e" >
-			    <shiftSite ref="shiftSite" />
+			<el-tab-pane label="交班设置" name="hand" >
+			    <shiftSite ref="shiftSite" :handData="handData" :initData="getHandOverData" />
 			</el-tab-pane>
 			<el-tab-pane label="酒店服务" name="hotel" >
 			    <hotelServices ref="hotelServices" :hotelData="hotelData" :initData="getHotelServiceData"/>
@@ -60,7 +60,7 @@
 				findOne: {arriveStatus: 1, leaveStatus: 2, leaveOrder: 1, isOd: 1, trialType: 1, state: 1, trialStartTime: "", trialEndTime: "", trialAutoTime: ""},
 				damageData: [],
                 hotelData: {imgPath: '', name: '', address: '', phone: '', startTime: '', endTime: '', remark: ''},
-                printData: [],
+                printData: [],handData: [],
             }
         },
         created () {
@@ -78,6 +78,8 @@
 				    this.getHotelServiceData()
 				} else if (tab.name == 'print') {
 				    this.getPrintParamData()
+                } else if (tab.name == 'hand') {
+				    this.getHandOverData()
                 }
 			},
 			getFindOneData() {
@@ -109,6 +111,12 @@
             getPrintParamData() {
                 this.$F.doRequest(this, '/pms/documentsparams/list', {}, (res) => {
                     this.printData = res.list;
+                })
+            },
+            getHandOverData() {
+                this.$F.doRequest(this, '/pms/handover/list', {}, (res) => {
+                    this.handData = res;
+                    console.log(this.handData)
                 })
             }
         }
