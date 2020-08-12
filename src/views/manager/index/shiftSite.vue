@@ -161,12 +161,14 @@
 			},
 			submit(type) {
 				if(type == 'hand') {
-					const params = [];
-					let obj = {};
+					let arr = [];
 					this.handData.map(item => {
-						obj = {handoverStatus: item.handoverStatus, pettyCash: item.pettyCash, handoverType: item.handoverType}
-						params.push(obj);
+						const obj = {handoverStatus: item.handoverStatus, pettyCash: item.pettyCash, handoverType: item.handoverType}
+						arr.push(obj);
 					})
+					const params = {
+						content: JSON.stringify(arr)
+					};
 					this.$F.doRequest(this, '/pms/handover/edit', params, (res) => {
 						this.initData()
 						this.$message({message: '保存成功', type: 'success'});

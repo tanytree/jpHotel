@@ -52,7 +52,7 @@ const $F = {
     doUploadBatch ($instance, imgList = [], callback) {
         let formData = new FormData()
         imgList.forEach((file) => {
-            formData.append('files', file.raw, file.raw.name)
+            formData.append('files', file.raw, file.raw.name || '')
         })
         formData.append('imgModel', '2')
         formData.append('platSource', platSource)

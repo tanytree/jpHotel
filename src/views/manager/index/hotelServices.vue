@@ -3,7 +3,7 @@
 		<div class="content">
 			<div class="hotelTitle">酒店图片</div>
 			<div class="hotelBox uploadBox">
-				<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile" multiple accept="image/png,image/gif,image/jpg,image/jpeg">
+				<el-upload list-type="picture-card" action="aa" ref="upload" :file-list="hotelData.files" :auto-upload="false" multiple accept="image/png,image/gif,image/jpg,image/jpeg">
 					<i slot="default" class="el-icon-plus"></i>
 					<div slot="file" slot-scope="{file}">
 						<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
@@ -17,7 +17,7 @@
 						</span>
 					</div>
 				</el-upload>
-				<el-dialog top="0" :visible.sync="dialogVisible">
+				<el-dialog title="图片" top="0" :visible.sync="dialogVisible">
 					<img width="100%" :src="dialogImageUrl" alt="">
 				</el-dialog>
 			</div>
@@ -72,7 +72,7 @@
 		props: {hotelData: Object, initData: Function},
 		methods: {
 			uploadFile(file) {
-				this.formData.append('uploadFile', file.file);
+				// this.formData.append('uploadFile', file.file);
 			},
 			// 选择图片--放大
 			handlePictureCardPreview(file) {
@@ -80,29 +80,28 @@
 				this.dialogVisible = true;
 			},
 			handleRemove(file) {
-				console.log(file);
+				this.hotelData.files = this.hotelData.files.filter(item => item.url != file.url);
+				this.$refs.upload.uploadFiles = this.$F.deepClone(this.hotelData.files);
 			},
 			// 保存
 			submit() {
-				if (this.hotelData.id) {
-					this.hotelData.roomId = this.hotelData.id
+				const a = this;
+				if (a.hotelData.id) {
+					a.hotelData.roomId = a.hotelData.id
 				}
-				this.formData = new FormData()
-				let imgList = this.$refs.upload.uploadFiles || [];
+				a.formData = new FormData()
+				let imgList = a.$refs.upload.uploadFiles || [];
 				if (imgList.length == 0) {
-					return this.$message({
-						message: '请选择房屋图片',
-						type: 'warn'
-					});
+					return a.$message.warning('请选择房屋图片');
 				}
-				this.$refs['ruleForm'].validate((valid) => {
+				a.$refs['ruleForm'].validate((valid) => {
 					if (valid) {
-						this.$F.doUploadBatch(this, imgList, (data) => {
-							this.hotelData.imgPath = data
-							let params = Object.assign({}, this.hotelData)
-							this.$F.doRequest(this, '/pms/hotelservice/edit', params, (res) => {
-								this.initData()
-								this.$message({message: '保存成功', type: 'success'});
+						a.$F.doUploadBatch(a, imgList, (data) => {
+							a.hotelData.imgPath = data
+							let params = Object.assign({}, a.hotelData)
+							a.$F.doRequest(a, '/pms/hotelservice/edit', params, (res) => {
+								a.initData()
+								a.$message({message: '保存成功', type: 'success'});
 							})
 						})
 					} else {
