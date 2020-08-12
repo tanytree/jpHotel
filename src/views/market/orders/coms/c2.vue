@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-11 11:43:56
+ * @LastEditTime: 2020-08-12 14:39:21
  * @FilePath: /jiudian/src/views/market/orders/coms/c2.vue
 --> 
 <template>
@@ -18,7 +18,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance />
+            <finance :detailData="detailData" />
         </div>
     </div>
 </div>

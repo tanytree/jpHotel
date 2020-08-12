@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-11 18:14:36
+ * @LastEditTime: 2020-08-12 13:19:50
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -636,7 +636,6 @@ export default {
             msgKey: state => state.config.msgKey,
             plat_source: state => state.config.plat_source
         })
-
     },
     data() {
         return {

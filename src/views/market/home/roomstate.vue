@@ -8,7 +8,8 @@
 <div v-loading="loading">
     <!-- 房间动态 -->
     <el-row>
-        <el-col :span="5">
+        <el-col :span="6">
+            <div style="overflow: auto;max-height: 600px;">
             <div>
                 <div>
                     <el-row>
@@ -104,10 +105,11 @@
                     </el-checkbox-group>
                 </div>
             </div>
+            </div>
         </el-col>
 
-        <el-col :span="19" style="padding-left:25px" v-loading="roomloading">
-            <el-row>
+        <el-col :span="18" v-loading="roomloading">
+            <el-row style="padding-left:25px">
                 <el-row>
                     <el-checkbox-group v-model="searchForm.personRoom" @change="handleChange">
                         <el-checkbox v-for="(item,index) in personRoom" :value="item.eName" :label="item.eName" :key="index">{{item.name}}({{item.total}})</el-checkbox>
@@ -115,6 +117,7 @@
                     <el-divider></el-divider>
                 </el-row>
             </el-row>
+            <div style="overflow-y: auto;max-height: 600px;padding-left:25px">
             <template v-for="(item, index) in roomList">
                 <el-row :key="index" v-if="item.floorRoomCount>0">
                     <el-row :gutter="20" style="margin-top: 10px;">
@@ -145,6 +148,7 @@
                     </el-row>
                 </el-row>
             </template>
+            </div>
             <el-row style="height:60px;width:100%"></el-row>
             <el-row style="position:fixed;bottom:20px;left:calc(20.83333% + 320px);width:100%">
                 <el-button @click="batchRoomHaldel">批量置脏/置净</el-button>
