@@ -6,10 +6,11 @@
  */
 module.exports = {
     title: '欢迎登录大仓集团酒店管理系统',
-    storesNumSelectTip: '请选择门店列表',
     loginBtn: '登录',
+    sTip: '请选择门店列表',
     roomTitle: '大仓集团酒店管理系统',
     roomName: '管理酒店更轻松',
     passwordEnterTip: '请输入密码',
+    storesTip: '门店'
 }
 

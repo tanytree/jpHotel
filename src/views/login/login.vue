@@ -1,17 +1,17 @@
 <template>
 	<div class="register-index">
 		<div class="body-r">
-			<div class="room-title">{{this.$t('login.roomTitle')}}</div>
-			<div class="room-name">{{this.$t('login.roomName')}}</div>
+			<div class="room-title">{{$F.translate('大仓集团酒店管理系统', '大倉グループホテル管理システム')}}</div>
+			<div class="room-name">{{$t('login.roomName')}}</div>
 		</div>
-		<div class="register-body" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" v-if="loginType=='login'">
-			<div v-if="!forget" class="title">{{this.$t('login.title')}}</div>
+		<div class="register-body" v-loading="loading" v-if="loginType=='login'">
+			<div v-if="!forget" class="title">{{$t('login.title')}}</div>
 			<el-page-header v-if="forget" @back="() => {this.forget=false;this.forgetStep=1}" title="返回登录"></el-page-header>
 			<div class="body-info">
 				<div class="body-l" v-if="!forget">
 					<el-form :model="loginForm" size="small" validate-on-rule-change :rules="dataRule" ref="loginForm">
 						<el-form-item prop="storesNum">
-							<el-select v-model="loginForm.storesNum" :placeholder="$t('login.storesNumSelectTip')">
+							<el-select v-model="loginForm.storesNum" :placeholder="$t('login.sTip')">
 								<el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
 								</el-option>
 							</el-select>
@@ -54,8 +54,6 @@
 		mapState,
 		mapActions
 	} from 'vuex'
-	import routermsg from '../../store/modules/routermsg'
-
 	export default {
 		computed: {
 			...mapState({
@@ -75,7 +73,7 @@
 				}
 			}
 			return {
-				language: 'zh', //语言类型  zh中文  ri日文
+				language: 'ri', //语言类型  zh中文  ri日文
 				loading: false,
 				storeList: [],
 				isCheck: false,
@@ -90,34 +88,42 @@
 				dataRule: {
 					storesNum: {
 						required: true,
-						// message: this.$t('login.storesNumSelectTip'),
-						message: this.$t('Please enter'),
+						message: this.$F.translate('请选择门店列表', '店舗先選択'),
 						trigger: 'change'
 					},
 					account: {
 						required: true,
-						// message: this.$t('commons.pleaseEnter') + ' ID',
-						message: 'Please enter the' + ' ID',
+						message: this.$F.translate('请输入 ID', '入力してください ID'),
 						trigger: 'change'
 					},
 					password: [{
 						required: true,
-						// message: this.$t('commons.pleaseEnter') + this.$t('commons.passwordDesc'),
-						message: 'Please enter the' + ' password',
+                      message: this.$F.translate('请输入密码', '入力してくださいパスワード'),
+						// message: 'Please enter the' + ' password',
 						trigger: 'change'
 					}]
 				}
 			}
 		},
-		mounted() {
-			this.$F.doRequest(this, '/pms/freeuser/stores_list', {
-				filterHeader: true
-			}, (data) => {
-				this.storeList = data;
-			})
-			this.language = getLanguage() || 'zh';
-            this.$i18n.locale = this.language;
-		},
+
+      mounted() {
+        this.language = getLanguage() || 'ri';
+        this.$i18n.locale = this.language;
+        this.$F.doRequest(this, '/pms/freeuser/stores_list', {
+          filterHeader: true
+        }, (data) => {
+          this.storeList = data;
+        })
+      },
+		// mounted() {
+		// 	this.$F.doRequest(this, '/pms/freeuser/stores_list', {
+		// 		filterHeader: true
+		// 	}, (data) => {
+		// 		this.storeList = data;
+		// 	})
+		// 	this.language = getLanguage() || 'zh';
+        //     this.$i18n.locale = this.language;
+		// },
 		methods: {
 			...mapActions({
 				saveuser: 'user/saveuser',

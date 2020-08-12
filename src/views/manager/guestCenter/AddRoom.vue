@@ -51,27 +51,51 @@
 			</el-row>
 			<el-row style="padding: 20px 0px;">
 				<el-col style="font-size: 13px;width: 130px;text-align: right;margin-right: 20px;"><span style="color: red;">*</span>房间图片:</el-col>
-				<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile"
-				 multiple :on-preview="handlePictureCardPreview" :on-remove="handleRemove" accept="image/png,image/gif,image/jpg,image/jpeg">
-					<i slot="default" class="el-icon-plus"></i>
-					<div slot="file" slot-scope="{file}">
-						<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-						<span class="el-upload-list__item-actions">
+
+                <el-upload list-type="picture-card" action="aa"
+                           ref="upload"
+                           :file-list="files"
+                           :auto-upload="false"
+                           multiple
+                           accept="image/png,image/gif,image/jpg,image/jpeg">
+                    <i slot="default" class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                        <span class="el-upload-list__item-actions">
 							<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
 								<i class="el-icon-zoom-in"></i>
-							</span>
-							<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
-								<i class="el-icon-download"></i>
 							</span>
 							<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
 								<i class="el-icon-delete"></i>
 							</span>
 						</span>
-					</div>
-				</el-upload>
-				<el-dialog top="0" :visible.sync="dialogVisible">
-					<img width="100%" :src="dialogImageUrl" alt="">
-				</el-dialog>
+                    </div>
+                </el-upload>
+                <el-dialog title="图片" top="0" :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
+
+<!--				<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile"-->
+<!--				 multiple :on-preview="handlePictureCardPreview" :on-remove="handleRemove" accept="image/png,image/gif,image/jpg,image/jpeg">-->
+<!--					<i slot="default" class="el-icon-plus"></i>-->
+<!--					<div slot="file" slot-scope="{file}">-->
+<!--						<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">-->
+<!--						<span class="el-upload-list__item-actions">-->
+<!--							<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">-->
+<!--								<i class="el-icon-zoom-in"></i>-->
+<!--							</span>-->
+<!--							<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">-->
+<!--								<i class="el-icon-download"></i>-->
+<!--							</span>-->
+<!--							<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">-->
+<!--								<i class="el-icon-delete"></i>-->
+<!--							</span>-->
+<!--						</span>-->
+<!--					</div>-->
+<!--				</el-upload>-->
+<!--				<el-dialog top="0" :visible.sync="dialogVisible">-->
+<!--					<img width="100%" :src="dialogImageUrl" alt="">-->
+<!--				</el-dialog>-->
 			</el-row>
 			<el-row>
 				<el-form :model="selectFrom" :rules="rules" ref="selectFrom" label-width="150px">
@@ -159,6 +183,7 @@
         },
         data () {
             return {
+                files: [],
 				rules: {
 					roomTypeId: [{required: true,message: '请选择房型',trigger: 'blur'}],
 					buildingId: [{required: true,message: '请选择楼栋',trigger: 'blur'}],
@@ -230,7 +255,6 @@
 				}],
 				cengList:[],
 				formData: {},
-				files: {},
 				fileList: [],
 				dialogImageUrl: '',
 				dialogVisible: false,
@@ -238,7 +262,14 @@
             }
         },
         created () {
-			this.selectFrom.buildingId = this.selectRedio
+			this.selectFrom.buildingId = this.selectRedio;
+          this.files = []
+          if (this.selectFrom.roomIcon) {
+            const arr = this.selectFrom.roomIcon.split(',')
+            arr.map(i => {
+              this.files.push( {url: i})
+            })
+          }
 			this.get_ceng_list()
         },
         methods: {
@@ -256,14 +287,14 @@
 				this.dialogVisible = true;
 			},
 			handleRemove(file) {
-				console.log(file);
+              this.files = this.files.filter(item => item.url != file.url);
+              this.$refs.upload.uploadFiles = this.$F.deepClone(this.files);
 			},
 			// 保存
 			saveInfo(ruleForm) {
 				debugger
-				if (this.selectFrom.id) {
+				if (this.selectFrom.id)
 					this.selectFrom.roomId = this.selectFrom.id
-				}
 				this.formData = new FormData()
 				let imgList = this.$refs.upload.uploadFiles || [];
 				if (imgList.length == 0) {
@@ -279,9 +310,10 @@
 							let params = Object.assign({}, this.selectFrom)
 							this.$F.doRequest(this, '/pms/hotel/hotel_room_save', params, (res) => {
 								this.$message({
-								  message: '保存成功',
+								  message: 'Save success',
 								  type: 'success'
 								});
+								this.back();
 							})
 						})
 					} else {

@@ -147,24 +147,43 @@
 				<el-row :gutter="22" style="padding: 20px 0px;">
 					<el-col :span="2" style="font-size: 14px;">房型图片:</el-col>
 					<el-col :span="20">
-						<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile"
-						 multiple :on-preview="handlePictureCardPreview" :on-remove="handleRemove" accept="image/png,image/gif,image/jpg,image/jpeg">
-							<i slot="default" class="el-icon-plus"></i>
-							<div slot="file" slot-scope="{file}">
-								<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-								<span class="el-upload-list__item-actions">
-									<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-										<i class="el-icon-zoom-in"></i>
-									</span>
-									<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
-										<i class="el-icon-download"></i>
-									</span>
-									<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
-										<i class="el-icon-delete"></i>
-									</span>
-								</span>
-							</div>
-						</el-upload>
+                        <el-upload list-type="picture-card" action="aa"
+                                   ref="upload"
+                                   :file-list="files"
+                                   :auto-upload="false"
+                                   multiple
+                                   accept="image/png,image/gif,image/jpg,image/jpeg">
+                            <i slot="default" class="el-icon-plus"></i>
+                            <div slot="file" slot-scope="{file}">
+                                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                                <span class="el-upload-list__item-actions">
+							<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+								<i class="el-icon-zoom-in"></i>
+							</span>
+							<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
+								<i class="el-icon-delete"></i>
+							</span>
+						</span>
+                            </div>
+                        </el-upload>
+<!--						<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile"-->
+<!--						 multiple :on-preview="handlePictureCardPreview" :on-remove="handleRemove" accept="image/png,image/gif,image/jpg,image/jpeg">-->
+<!--							<i slot="default" class="el-icon-plus"></i>-->
+<!--							<div slot="file" slot-scope="{file}">-->
+<!--								<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">-->
+<!--								<span class="el-upload-list__item-actions">-->
+<!--									<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">-->
+<!--										<i class="el-icon-zoom-in"></i>-->
+<!--									</span>-->
+<!--									<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">-->
+<!--										<i class="el-icon-download"></i>-->
+<!--									</span>-->
+<!--									<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">-->
+<!--										<i class="el-icon-delete"></i>-->
+<!--									</span>-->
+<!--								</span>-->
+<!--							</div>-->
+<!--						</el-upload>-->
 					</el-col>
 					<el-dialog top="0" :visible.sync="dialogVisible">
 						<img width="100%" :src="dialogImageUrl" alt="">
@@ -265,7 +284,7 @@
 				},
 				selectedInfo:{}, // 选中的某条
 				formData: {},
-				files: {},
+				files: [],
 				fileList: [],
 				dialogImageUrl: '',
 				dialogVisible: false,
@@ -286,11 +305,11 @@
 			},
 		},
 		created() {
+
 			this.get_house_list()
 		},
 		methods: {
 			addHouse(type, value) {
-				debugger
 				switch (type) {
 					case 'house':
 						this.ruleForm = {}
@@ -299,7 +318,13 @@
 					case 'change':
 						this.tab_show = false
 						this.ruleForm = value
-						let img_list = value.houseIcon.split(',')
+                        this.files = [];
+                        if (value.houseIcon) {
+                            const arr = value.houseIcon.split(',')
+                            arr.map(i => {
+                                this.files.push( {url: i})
+                            })
+                        }
 						break;
 				}
 			},
@@ -314,7 +339,8 @@
 
 			},
 			handleRemove(file) {
-				console.log(file);
+              this.files = this.files.filter(item => item.url != file.url);
+              this.$refs.upload.uploadFiles = this.$F.deepClone(this.files);
 			},
 			// 房屋/会议 删除
 			houseConfirm_delete(value) {
@@ -356,9 +382,10 @@
 							let params = Object.assign({}, this.ruleForm)
 							this.$F.doRequest(this, '/pms/hotel/hotel_room_type_save', params, (res) => {
 								this.$message({
-								  message: '增加成功',
+								  message: 'Save success',
 								  type: 'success'
 								});
+                                this.tab_show = true
 							})
 						})
 					} else {
@@ -370,6 +397,7 @@
 			// 获取 房间类型类型列表
 			get_house_list() {
 				let params = Object.assign({}, this.form)
+                debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
 					this.tableData = res.list
 					this.form.totalSize = res.totalSize

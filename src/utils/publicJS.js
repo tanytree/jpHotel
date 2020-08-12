@@ -10,12 +10,16 @@ const platSource = '1005'
 // eslint-disable-next-line no-unused-vars
 var tabsName = {}
 const languageObject = {
-    'ri': '日本語',
+    'ri': '日本语',
     'zh': '中文'
 }
 const HQCODE = '0000000000'  //总部账号定义
 var NATIONALITYLIST = []  //国籍列表
 const $F = {
+    translate (zh, ri) {
+       return sessionStorage.locale == 'zh' ? zh : ri;
+    },
+
     //获取总部后台的代码code
     getHQCode () {
         return HQCODE
@@ -50,10 +54,19 @@ const $F = {
     },
 
     doUploadBatch ($instance, imgList = [], callback) {
-        let formData = new FormData()
+        let formData = new FormData();
+        let newImageList = [];
         imgList.forEach((file) => {
-            formData.append('files', file.raw, file.raw.name || '')
+            if (file.raw && file.raw.name)
+                formData.append('files', file.raw, file.raw.name);
+            else
+                newImageList.push(file.url);
         })
+        debugger
+        if (newImageList.length == imgList.length) {
+            callback(newImageList.join(','))
+            return;
+        }
         formData.append('imgModel', '2')
         formData.append('platSource', platSource)
         if ($instance) {
@@ -68,7 +81,8 @@ const $F = {
             }
         ).then(res => {
             if (res.data.code === 200) {
-                callback(res.data.data)
+                let array = newImageList.concat(res.data.data.split(','));
+                callback(array.join(','))
             } else {
                 if ($instance) {
                     $instance.$message.error(res.message || res.data.message)

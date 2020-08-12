@@ -3,7 +3,12 @@
 		<div class="content">
 			<div class="hotelTitle">酒店图片</div>
 			<div class="hotelBox uploadBox">
-				<el-upload list-type="picture-card" action="aa" ref="upload" :file-list="hotelData.files" :auto-upload="false" multiple accept="image/png,image/gif,image/jpg,image/jpeg">
+				<el-upload list-type="picture-card" action="aa"
+                           ref="upload"
+                           :file-list="hotelData.files"
+                           :auto-upload="false"
+                           multiple
+                           accept="image/png,image/gif,image/jpg,image/jpeg">
 					<i slot="default" class="el-icon-plus"></i>
 					<div slot="file" slot-scope="{file}">
 						<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">

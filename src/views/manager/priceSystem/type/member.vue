@@ -17,7 +17,8 @@
             </el-row>
             <div class="components-edit member-price">
 <!--                row-key="id"-->
-                <el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id"
+                <el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;"
+                          row-key="id2"
                           default-expand-all
                           header-row-class-name="default"
                           :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}">
@@ -25,8 +26,8 @@
                         <template slot-scope="{row, $index}">
                             <span v-if="index === 0">{{row.name || row.houseName}}</span>
                             <span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="priceClick(row, item)">
-                                            {{row.marketPrice}}
-                                        </span>
+                                {{row.marketPrice}}
+                            </span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -330,8 +331,18 @@
               timeType:1,  // 检索类型 1会员价格日历 2单位价格日历
             }
             this.$F.doRequest(this, '/pms/hotel/hotel_price_room_type_list', params, (res) => {
-              this.memberTableData = res;
+              let index = 1;
+              res.memberTypeList.forEach(memberType => {
+                index += 1;
+                memberType.id2 = index;
+                memberType.roomTypeList.forEach(roomType => {
+                  index += 1;
+                  roomType.id2 = index;
+                });
+              });
               debugger
+              this.memberTableData = res;
+              console.log(this.memberTableData);
               this.batchEditPriceForm.roomStrategyJson = [];
               this.memberTableData.memberTypeList[0].roomTypeList.forEach(item => {
                 this.batchEditPriceForm.roomStrategyJson.push({

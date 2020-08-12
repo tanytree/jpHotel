@@ -50,7 +50,7 @@
                             <el-col :span="3">{{room.houseNum}}</el-col>
                             <el-col :span="8" :offset="2">{{room.hotelRoomType.houseName}}</el-col>
                         </el-row>
-                        <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;" v-if="room.livingPersonList.length&&(room.roomStatus==3 || room.roomStatus==4)">
+                        <el-row style="color: #FFFFFF;font-size: 13px;margin-top: 10px;" v-if="room.livingPersonList && room.livingPersonList.length&&(room.roomStatus==3 || room.roomStatus==4)">
                             <el-col :span="8">{{room.livingPersonList[0].name}}</el-col>
                             <el-col :span="8" :offset="2">{{room.livingPersonList[0].sex | F_sex}}</el-col>
                         </el-row>

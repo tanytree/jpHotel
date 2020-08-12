@@ -11,7 +11,7 @@ import login from './login/ri'
 
 export default {
     language: {
-        name: '日本語'
+        name: '日本语'
     },
     commons: commons,
     //总经理办公室

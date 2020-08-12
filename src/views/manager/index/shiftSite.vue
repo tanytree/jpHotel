@@ -15,7 +15,7 @@
 											<el-radio :label="3">应收模式</el-radio>
 										</el-radio-group>
 									</el-form-item>
-									<el-form-item label="备用金：" v-if="item.handoverType == 1">
+									<el-form-item label="备用金：" v-if="item.handoverStatus == 1">
 										<el-input v-model="item.pettyCash"></el-input>
 									</el-form-item>
 								</div>
@@ -38,7 +38,7 @@
 						</el-radio-group>
 						<el-button type="primary" class="submit" size="small" @click="popup_thing">新增</el-button>
 					</div>
-					<el-table ref="multipleTable" :data="manageData" border height="100%" header-row-class-name="default" size="small">
+					<el-table ref="multipleTable" :data="manageData" border height="100%" header-row-class-name="default" size="small" v-loading="loading">
 						<el-table-column prop="name" label="班次名称"></el-table-column>
 						<el-table-column prop="startTime" label="开始时间"></el-table-column>
 						<el-table-column prop="endTime" label="结束时间"></el-table-column>
@@ -87,6 +87,7 @@
 					pageSize: 10,
 					paging: true
 				},
+                loading: false,
 				total: 0, manageData: [],
 				addTypeVisible: false,
 				typeData: {}, addTypeTitle: '',
@@ -98,9 +99,10 @@
 		methods: {
 			changeTab(tab) {
 				this.activeName = tab.name;
-				if(tab.name == 'handover') {
-					this.initData()
-				} else {
+              debugger
+              if(tab.name == 'handover') {
+                  this.initData()
+                } else {
 					this.handType = this.$F.deepClone(this.handData[0]);
 					this.getDamageData()
 				}
@@ -111,12 +113,12 @@
 			},
 			getDamageData() {
 				const params = {
-					id: this.handType.id,
-					handoverStatus: this.handType.handoverStatus,
-					pettyCash: this.handType.pettyCash,
+					// id: this.handType.id,
+					// handoverStatus: this.handType.handoverStatus,
+					// pettyCash: this.handType.pettyCash,
 					handoverType: this.handType.handoverType,
-					state: this.handType.state,
-					status: this.handType.status
+					// state: this.handType.state,
+					// status: this.handType.status
 				}
 				this.$F.merge(params, this.pageForm);
 				this.$F.doRequest(this, '/pms/handoverlog/list', params, (res) => {
@@ -162,12 +164,13 @@
 			submit(type) {
 				if(type == 'hand') {
 					let arr = [];
-					this.handData.map(item => {
-						const obj = {handoverStatus: item.handoverStatus, pettyCash: item.pettyCash, handoverType: item.handoverType}
-						arr.push(obj);
-					})
+					// debugger
+					// this.handData.map(item => {
+					// 	const obj = {handoverStatus: item.handoverStatus, pettyCash: item.pettyCash, handoverType: item.handoverType}
+					// 	arr.push(obj);
+					// })
 					const params = {
-						content: JSON.stringify(arr)
+						content: JSON.stringify(this.handData)
 					};
 					this.$F.doRequest(this, '/pms/handover/edit', params, (res) => {
 						this.initData()

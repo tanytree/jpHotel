@@ -106,12 +106,14 @@
             getHotelServiceData() {
                 this.$F.doRequest(this, '/pms/hotelservice/findone', {}, (res) => {
                     this.hotelData = res;
-                    this.hotelData.files = []
-                    const arr = this.hotelData.imgPath.split(',')
-                    arr.map(i => {
-                        const obj = {url: i};
-                        this.hotelData.files.push(obj)
-                    })
+                    if (res && Object.keys(res).length > 0) {
+                      this.hotelData.files = []
+                      const arr = this.hotelData.imgPath.split(',')
+                      arr.map(i => {
+                        this.hotelData.files.push( {url: i})
+                      })
+                    } else
+                      this.hotelData.files = []
                 })
             },
             getPrintParamData() {
