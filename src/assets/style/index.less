@@ -358,6 +358,12 @@ li {
     }
 }
 
+.el-form.inline {
+    .el-form-item {
+        margin-bottom: 0;
+    }
+}
+
 .card10 {
     .el-card__header {
         padding: 10px;
@@ -453,22 +459,29 @@ li {
         color: #126EFF;
         border: 1px solid #126EFF;
     }
-
     &.submit {
         background: #126EFF;
         color: #fff;
     }
-
     &.grey {
         background: #F7F8FA;
         color: #1e1e1e;
         border: 1px solid #999;
     }
-
     &.white {
         background: #fff;
         border: 1px solid #d4d4d4;
         color: #1e1e1e;
+    }
+    &.disabled {
+        border: 1px solid #ccc;
+        color: #aaa;
+        background: #fff;
+    }
+    &.delete {
+        background: #555;
+        color: #fff;
+        border: 1px solid #555;
     }
 }
 
