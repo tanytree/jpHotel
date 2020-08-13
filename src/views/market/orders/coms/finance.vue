@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 17:22:15
+ * @LastEditTime: 2020-08-13 18:36:17
  * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
@@ -17,7 +17,7 @@
                 <el-button type="primary" size="mini" @click="openInvoiceHandle">开发票</el-button>
                 <el-button type="primary" size="mini">打印</el-button>
                 <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
-                <el-button type="primary" size="mini" @click="someAccountsShow=true">部分结账</el-button>
+                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
                 <el-button type="primary" size="mini">撤销结账</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true">走结</el-button>
             </el-form-item>
@@ -373,60 +373,7 @@
         </div>
     </el-dialog>
     <!--部分结账-->
-    <el-dialog title="部分结账" :visible.sync="someAccountsShow" width="800px">
-        <el-form :model="consumeOperForm" ref="someAccounts" :rules="rules" size="mini" label-width="100px">
-            <p>选择账务：自动计费、已冲调、已结的账务不可部分结账</p>
-            <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                <el-table-column label="账务项目" show-overflow-tooltip>
-                    <template slot-scope="{row}">
-                        {{F_priceType(row.priceType)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
-            </el-table>
-            <el-row class="padding-tb-10">
-                <el-col :span="3">
-                    总消费：100
-                </el-col>
-                <el-col :span="3">
-                    总支付：610
-                </el-col>
-                <el-col :span="3">
-                    应退：400
-                </el-col>
-            </el-row>
-            <el-form-item label="" label-width="0">
-                <el-button type="primary" size="mini">收款</el-button>
-                <el-button type="primary" size="mini">挂账</el-button>
-                <el-button type="primary" size="mini">免单</el-button>
-                <el-button type="primary" size="mini">退款</el-button>
-            </el-form-item>
-            <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                <el-table-column label="账务项目" show-overflow-tooltip>
-                    <template slot-scope="{row}">
-                        {{F_priceType(row.priceType)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="consumePrice" label="退款" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="{row}">
-                        <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="checkOutShow=false">取消</el-button>
-            <el-button type="primary" @click="consume_oper(2,'onAccount')">结账</el-button>
-        </div>
-    </el-dialog>
+    <someAccounts ref="someAccounts" />
     <!--迷你吧-->
     <consumeGoods ref="consumeGoods" />
 </div>
@@ -439,10 +386,11 @@ import {
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
 import consumeGoods from './consumeGoods'
+import someAccounts from './someAccounts'
 export default {
     mixins: [myMixin],
     props: ['currentRoom', 'detailData'],
-    components: {consumeGoods},
+    components: {consumeGoods,someAccounts},
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -543,7 +491,6 @@ export default {
                     message: '请输入备注',
                     trigger: 'blur'
                 }, ],
-
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -551,13 +498,13 @@ export default {
             hoteldamagetypeList: [],
             hoteldamageList: [],
             hotelenterList: [], //挂账企业列表
-            destructionList: [], //冲调的账务
+            destructionList: [] //冲调的账务
         };
     },
 
     mounted() {
         let id = this.$route.query.id
-        this.consume_order_list(),
+        this.consume_order_list()
             this.hoteldamagetype_list()
     },
 
@@ -833,6 +780,9 @@ let params = {
         },
         consumeGoodsHandle(){
              this.$refs.consumeGoods.init(this.$route.query.id);
+        },
+        someAccountsHandle(){
+             this.$refs.someAccounts.init(this.$route.query.id);
         },
         /**多选 */
         handleSelectionChange(val) {
