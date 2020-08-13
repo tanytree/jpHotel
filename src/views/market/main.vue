@@ -10,7 +10,7 @@
                 <Roomstate/>
             </el-tab-pane>
             <!-- 开票申请 -->
-            <el-tab-pane label="开票申请" name="two" class="bg">
+            <el-tab-pane label="开票记录" name="two" class="bg">
                 <Openapply/>
             </el-tab-pane>
             <!-- 留言管理 -->
