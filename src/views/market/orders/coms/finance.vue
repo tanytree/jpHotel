@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 15:51:55
+ * @LastEditTime: 2020-08-13 17:22:15
  * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
@@ -23,7 +23,7 @@
             </el-form-item>
         </el-row>
         <el-form-item label="账务类别：">
-            <el-button plain size="mini" @click="consume_order_list">所有账务</el-button>
+            <el-button plain size="mini" @click="consume_order_list('')">所有账务</el-button>
             <el-button plain size="mini" @click="consume_order_list(1)">未结账务</el-button>
             <el-button plain size="mini" @click="consume_order_list(2)">已结账务</el-button>
         </el-form-item>
@@ -44,7 +44,7 @@
         </el-table-column>
         <el-table-column prop="state" label="状态" show-overflow-tooltip>
             <template slot-scope="{row}">
-                {{row.state==1?'已结':'未结'}}
+                {{row.state==1?'未结':'已结'}}
             </template>
         </el-table-column>
         <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
@@ -205,7 +205,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="knotShow=false">关闭</el-button>
-            <el-button type="primary" @click="consume_oper(3,'knot')">确认</el-button>
+            <el-button type="primary" @click="out_check_in">确认</el-button>
         </div>
     </el-dialog>
     <!--开发票-->
@@ -260,7 +260,7 @@
         </div>
     </el-dialog>
     <!--结账退款-->
-    <el-dialog title="结账退房" :visible.sync="checkOutShow" width="800px">
+    <el-dialog title="退房结账" :visible.sync="checkOutShow" width="800px">
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -273,19 +273,6 @@
                     入住人：{{currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
-            <el-row v-else>
-                <template v-if="detailData&&detailData.inRoomList">
-                    <el-col :span="8">
-                        房型：{{detailData.inRoomList[0].roomTypeName}}
-                    </el-col>
-                    <el-col :span="8">
-                        房间号：{{detailData.inRoomList[0].houseNum}}
-                    </el-col>
-                    <el-col :span="8">
-                        入住人：{{detailData.inRoomList[0].personList[0].name}}
-                    </el-col>
-                </template>
-            </el-row>
             <br />
             <div class="cost margin-t-10" v-if="detailData">
                 <div class="wrap" style="background:#efefef">
@@ -297,10 +284,11 @@
                     </div>
                 </div>
             </div>
+            <br />
             <el-form-item label="" label-width="0">
                 <el-checkbox v-model="consumeOperForm.name">可用200积分抵扣20日元</el-checkbox>
             </el-form-item>
-            <el-form-item label="收款方式：">
+            <el-form-item label="收款方式：" prop="payType">
                 <el-radio-group v-model="consumeOperForm.payType">
                     <el-radio :label="1" :value="1">现金</el-radio>
                     <el-radio :label="2" :value="2">银行卡</el-radio>
@@ -327,7 +315,7 @@
     </el-dialog>
     <!--冲调-->
     <el-dialog title="冲调" :visible.sync="destructionShow" width="800px">
-        <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
+        <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
                     房型：{{currentRoom.roomTypeName}}
@@ -366,22 +354,22 @@
                 <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
             </el-table>
-            <el-form-item label="冲调方式：">
+            <el-form-item label="冲调方式：" prop="priceType">
                 <el-radio-group v-model="consumeOperForm.priceType">
                     <el-radio :label="9" :value="9">完全冲调</el-radio>
                     <el-radio :label="10" :value="10">部分冲调</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="冲调金额：">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input><em>注意：冲调金额小于原账金额</em>
+            <el-form-item label="冲调金额：" prop="consumePrice">
+                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input><em style="margin-left:10px;color:#888">注意：冲调金额小于原账金额</em>
             </el-form-item>
-            <el-form-item label="冲调原因：">
+            <el-form-item label="冲调原因：" prop="remark">
                 <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="checkOutShow=false">取消</el-button>
-            <el-button type="primary" @click="consume_oper(2,'onAccount')">确认</el-button>
+            <el-button @click="destructionShow=false">取消</el-button>
+            <el-button type="primary" @click="consume_oper(3,'destruction')">确认</el-button>
         </div>
     </el-dialog>
     <!--部分结账-->
@@ -441,7 +429,6 @@
     </el-dialog>
     <!--迷你吧-->
     <consumeGoods ref="consumeGoods" />
-
 </div>
 </template>
 
@@ -541,6 +528,22 @@ export default {
                     message: '请输入金额',
                     trigger: 'blur'
                 }, ],
+                payType: [{
+                    required: true,
+                    message: '请选择支付方式',
+                    trigger: 'change'
+                }, ],
+                priceType: [{
+                    required: true,
+                    message: '请选择冲调方式',
+                    trigger: 'change'
+                }, ],
+                remark: [{
+                    required: true,
+                    message: '请输入备注',
+                    trigger: 'blur'
+                }, ],
+
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -591,11 +594,11 @@ export default {
             /** 
              * 1.入账
              * 2.挂账
-             * 3.走结
+             * 3.冲调
              * 
              * **/
-            if (type != 3) {
-                let params = this.consumeOperForm
+            let params = this.consumeOperForm
+          
                 params.checkInId = this.$route.query.id
                 if (this.currentRoom) {
                     params.roomId = this.currentRoom.id
@@ -609,7 +612,7 @@ export default {
                         return
                     }
                 }
-            }
+            
             //入账
             if (type == 1) {
                 params.state = 2
@@ -639,19 +642,10 @@ export default {
                 params.payType = 1 //挂账无需支付方式
                 params.state = 1
             }
-            //走结
-            if (type == 3) {
-                let params = {
-                    checkInId: this.$route.query.id,
-                    billType: 4
-                }
-                this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
-                    this.knotShow = false
-                    this.consume_order_list()
-                })
-                return
+            if(type == 3){
+                params.state = 1
+                params.orderId = this.destructionList[0].id
             }
-
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
@@ -664,7 +658,17 @@ export default {
                     return false;
                 }
             });
+        },
+        out_check_in(){
 
+let params = {
+                    checkInId: this.$route.query.id,
+                    billType: 4
+                }
+                this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                    this.knotShow = false
+                    this.consume_order_list()
+                })
         },
         //开发票按钮点击
         openInvoiceHandle() {
