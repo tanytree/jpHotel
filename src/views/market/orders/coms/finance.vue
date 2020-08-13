@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 13:56:26
+ * @LastEditTime: 2020-08-13 15:51:55
  * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
@@ -12,7 +12,7 @@
             <el-form-item label="">
                 <el-button type="primary" size="mini" @click="entryShow=true">入账</el-button>
                 <el-button type="primary" size="mini" @click="onAccountShow=true">挂账</el-button>
-                <el-button type="primary" size="mini">迷你吧</el-button>
+                <el-button type="primary" size="mini" @click="consumeGoodsHandle">迷你吧</el-button>
                 <el-button type="primary" size="mini" @click="checkOutShow=true">退房结账</el-button>
                 <el-button type="primary" size="mini" @click="openInvoiceHandle">开发票</el-button>
                 <el-button type="primary" size="mini">打印</el-button>
@@ -440,23 +440,7 @@
         </div>
     </el-dialog>
     <!--迷你吧-->
-    <el-dialog title="迷你吧" :visible.sync="consumeGoodsShow" width="900">
-        <el-form :model="consumeOperForm" ref="consumeGoods" size="mini">
-            <el-form-item label="">
-                <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio :label="1" :value="1">现金</el-radio>
-                    <el-radio :label="2" :value="2">银行卡</el-radio>
-                    <el-radio :label="3" :value="3">支付宝</el-radio>
-                    <el-radio :label="4" :value="4">微信</el-radio>
-                    <el-radio :label="5" :value="5">会员卡</el-radio>
-                </el-radio-group>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="consumeGoodsShow = false">取消</el-button>
-            <el-button type="primary" @click="consumeGoodsShow = false">确认</el-button>
-        </div>
-    </el-dialog>
+    <consumeGoods ref="consumeGoods" />
 
 </div>
 </template>
@@ -467,10 +451,11 @@ import {
     mapActions
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
+import consumeGoods from './consumeGoods'
 export default {
     mixins: [myMixin],
     props: ['currentRoom', 'detailData'],
-
+    components: {consumeGoods},
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -490,7 +475,8 @@ export default {
             openInvoiceShow: false,
             checkOutShow: false,
             destructionShow: false,
-            someAccountsShow:false,
+            someAccountsShow: false,
+            consumeGoodsShow: false,
             checkType: 'customer',
             activeName: 'first',
             detail: {
@@ -840,6 +826,9 @@ export default {
             this.destructionList = this.multipleSelection
             this.destructionShow = true
             this.$forceUpdate()
+        },
+        consumeGoodsHandle(){
+             this.$refs.consumeGoods.init(this.$route.query.id);
         },
         /**多选 */
         handleSelectionChange(val) {
