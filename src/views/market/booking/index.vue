@@ -1,12 +1,12 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 10:34:20
+ * @LastEditTime: 2020-08-13 09:11:35
  * @FilePath: /jiudian/src/views/market/booking/index.vue
  -->
 
 <template>
-  <div id="page1">
+  <div id="page1" class="boss-index">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="普通预订" name="b1">
         <normal :operCheckinType="activeName" />

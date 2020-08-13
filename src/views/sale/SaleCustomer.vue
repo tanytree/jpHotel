@@ -1,11 +1,11 @@
 <!--
  * @Date: 2020-03-10 13:58:24
- * @LastEditors: Dana
- * @LastEditTime: 2020-04-28 16:15:46
- * @FilePath: /cloudAdmin/src/views/sale/order/index.vue
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-08-13 09:12:23
+ * @FilePath: /jiudian/src/views/sale/SaleCustomer.vue
  -->
 <template>
-  <div id="page1">
+  <div id="page1" class="boss-index">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="会员信息" name="first">
         <Personer   />

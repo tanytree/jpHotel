@@ -1,12 +1,12 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 17:41:12
+ * @LastEditTime: 2020-08-13 09:12:09
  * @FilePath: /jiudian/src/views/market/reception/index.vue
  -->
 
 <template>
-  <div id="page1">
+  <div id="page1" class="boss-index">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="入住办理" name="first">
         <checkin />

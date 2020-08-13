@@ -1,12 +1,12 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 17:33:10
+ * @LastEditTime: 2020-08-13 09:11:55
  * @FilePath: /jiudian/src/views/market/nightaudit/index.vue
  -->
 
 <template>
-  <div id="page1">
+  <div id="page1" class="boss-index">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="首页" name="first">
         <total @getCurrentItem="getCurrentItem" />
