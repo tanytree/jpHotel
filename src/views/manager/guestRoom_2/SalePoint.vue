@@ -356,10 +356,12 @@
 		}
 
 		.el-radio-button:first-child .el-radio-button__inner {
-			border-radius: 20px 0 0 20px;
+			border-top-left-radius: 20px;
+			border-bottom-left-radius: 20px;
 		}
 		.el-radio-button:last-child .el-radio-button__inner {
-			border-radius: 0 20px 20px 0;
+			border-top-right-radius: 20px;
+			border-bottom-right-radius: 20px;
 		}
 		.el-radio-button__inner {
 			border: 1px solid #d0d0d0;

@@ -7,11 +7,14 @@
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane>
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('finance', item.path, true)">
                 <!-- 财务慨览-->
-                <incomeStatus v-if="item.path == 'overView'"/>
+                <incomeStatus v-if="item.path == 'overView'" :list="list" :init="getFinancialData"/>
                 <!-- 记一笔-->
-                <record v-if="item.path == ''"/>
+                <record v-if="item.path == 'makeNote'"/>
                 <!-- 员工权限-->
                 <employeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -20,28 +23,41 @@
 </template>
 
 <script>
-  import incomeStatus from './index/incomeStatus'
-  import authority from './index/authority'
-  import record from './index/record'
-  import employeeRights from '@/components/employeeRights'
-  import { mapState, mapActions } from 'vuex'
+    import incomeStatus from './index/incomeStatus'
+    import authority from './index/authority'
+    import record from './index/record'
+    import employeeRights from '@/components/employeeRights'
+    import {mapState, mapActions} from 'vuex'
 
-  export default {
-    components: { incomeStatus, authority, record, employeeRights },
-    data () {
-      return {
-        activeName: 'overView'
-      }
-    },
-    created () {
-      if (sessionStorage.subMenul) {
-        this.menuList = JSON.parse(sessionStorage.subMenul).childList || []
-        this.$forceUpdate()
-      }
-      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path
-    },
-    methods: {}
-  }
+    export default {
+        components: {incomeStatus, authority, record, employeeRights},
+        data() {
+            return {
+                activeName: 'overView'
+            }
+        },
+        created() {
+            if (sessionStorage.subMenul) {
+                this.menuList = JSON.parse(sessionStorage.subMenul).childList || []
+                this.$forceUpdate()
+            }
+            this.activeName = this.$F.filterThirdMenu(null, null, false, true).path
+        },
+        methods: {
+            getFinancialData(type, str, end) {
+                const params = {
+                    searchType: type,
+                    startTime: str,
+                    endTime: end
+                }
+                this.$F.doRequest(this, '/pms/remeber/financial_charts', params, (res) => {
+                    this.onshelfVisible = false;
+                    this.$message.success('success');
+                    this.initData()
+                })
+            }
+        }
+    }
 </script>
 
 <style lang="scss">
@@ -51,10 +67,10 @@
 
     .bg {
 
-    .el-tab-pane {
-        background: #E2E2E2;
-        border-radius: 6px;
-    }
+        .el-tab-pane {
+            background: #E2E2E2;
+            border-radius: 6px;
+        }
 
     }
 </style>
