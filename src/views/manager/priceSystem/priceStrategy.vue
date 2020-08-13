@@ -22,7 +22,8 @@
 		},
 		data() {
 			return {
-				activName: 'b'
+				activName: 'b',
+				unit_show: true
 			}
 		},
 		watch:{
@@ -32,7 +33,7 @@
 					case 'a':
 					break;
 					case 'b':
-					this.unit_show = true
+					// this.unit_show = true
 					break;
 				}
 			}

@@ -50,10 +50,10 @@
 				<el-page-header @back="back_1" content=""></el-page-header>
 			</el-row>
 			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" >
 					<el-row>
 						<el-col :span="5">
-							<el-form-item label="规则名称:" prop="ruleName">
+							<el-form-item label="规则名称:" prop="ruleName" style="display: flex;align-items: center;">
 								<el-input v-model="ruleForm.ruleName"></el-input>
 							</el-form-item>
 						</el-col>
