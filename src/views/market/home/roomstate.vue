@@ -142,7 +142,7 @@
                             <!-- 清扫图标后期加 -->
                             <div class="placeIcon text-center">
                                 <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')" />
-                                <img v-if="room.roomStatus==2||room.roomStatus==4" :src="require('@/assets/images/frontdesk/clearn.png')" />
+                                <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')" />
                             </div>
                         </el-col>
                     </el-row>
@@ -903,7 +903,7 @@ export default {
                 '1': '#276BBA',
                 '2': '#C0512B',
                 '3': '#276BBA',
-                '4': '#C0512B',
+                '4': '#e6a23c',
                 '5': '#27AE76'
             }
             return enums[value] ? enums[value] : '#276BBA'

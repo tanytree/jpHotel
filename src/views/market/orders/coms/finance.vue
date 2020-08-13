@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-12 21:23:38
+ * @LastEditTime: 2020-08-13 13:56:26
  * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
@@ -13,13 +13,12 @@
                 <el-button type="primary" size="mini" @click="entryShow=true">入账</el-button>
                 <el-button type="primary" size="mini" @click="onAccountShow=true">挂账</el-button>
                 <el-button type="primary" size="mini">迷你吧</el-button>
-                <el-button type="primary" size="mini">结账</el-button>
-                <el-button type="primary" size="mini" @click="openInvoiceShow=true">开发票</el-button>
+                <el-button type="primary" size="mini" @click="checkOutShow=true">退房结账</el-button>
+                <el-button type="primary" size="mini" @click="openInvoiceHandle">开发票</el-button>
                 <el-button type="primary" size="mini">打印</el-button>
-                <el-button type="primary" size="mini">冲调</el-button>
-                <el-button type="primary" size="mini">部分结账</el-button>
+                <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
+                <el-button type="primary" size="mini" @click="someAccountsShow=true">部分结账</el-button>
                 <el-button type="primary" size="mini">撤销结账</el-button>
-                <el-button type="primary" size="mini">撤销退房</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true">走结</el-button>
             </el-form-item>
         </el-row>
@@ -244,7 +243,7 @@
             <el-row>
                 <el-col :span="8">
                     <el-form-item label="日期：" prop="invoiceTime">
-                        <el-date-picker class="width150" v-model="openInvoiceForm.invoiceTime" type="date" placeholder="选择日期">
+                        <el-date-picker style="width:150px" v-model="openInvoiceForm.invoiceTime" type="date" placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
@@ -257,7 +256,205 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="openInvoiceShow = false">取消</el-button>
-            <el-button type="primary" @click="consume_oper(4,'openInvoice')">确定</el-button>
+            <el-button type="primary" @click="openInvoiceSubmit('openInvoice')">确定</el-button>
+        </div>
+    </el-dialog>
+    <!--结账退款-->
+    <el-dialog title="结账退房" :visible.sync="checkOutShow" width="800px">
+        <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
+            <el-row v-if="currentRoom">
+                <el-col :span="8">
+                    房型：{{currentRoom.roomTypeName}}
+                </el-col>
+                <el-col :span="8">
+                    房间号：{{currentRoom.houseNum}}
+                </el-col>
+                <el-col :span="8">
+                    入住人：{{currentRoom.personList[0].name}}
+                </el-col>
+            </el-row>
+            <el-row v-else>
+                <template v-if="detailData&&detailData.inRoomList">
+                    <el-col :span="8">
+                        房型：{{detailData.inRoomList[0].roomTypeName}}
+                    </el-col>
+                    <el-col :span="8">
+                        房间号：{{detailData.inRoomList[0].houseNum}}
+                    </el-col>
+                    <el-col :span="8">
+                        入住人：{{detailData.inRoomList[0].personList[0].name}}
+                    </el-col>
+                </template>
+            </el-row>
+            <br />
+            <div class="cost margin-t-10" v-if="detailData">
+                <div class="wrap" style="background:#efefef">
+                    <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
+                    <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
+                    <div class="costNum">
+                        <el-row>消费合计：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                        <el-row>付款合计：<span class="text-green">{{detailData.payPrice}}</span></el-row>
+                    </div>
+                </div>
+            </div>
+            <el-form-item label="" label-width="0">
+                <el-checkbox v-model="consumeOperForm.name">可用200积分抵扣20日元</el-checkbox>
+            </el-form-item>
+            <el-form-item label="收款方式：">
+                <el-radio-group v-model="consumeOperForm.payType">
+                    <el-radio :label="1" :value="1">现金</el-radio>
+                    <el-radio :label="2" :value="2">银行卡</el-radio>
+                    <el-radio :label="3" :value="3">支付宝</el-radio>
+                    <el-radio :label="4" :value="4">微信</el-radio>
+                    <el-radio :label="5" :value="5">会员卡</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="金额：" class="" prop="consumePrice">
+                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="备注：">
+                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="打印单据：">
+                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
+            </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="checkOutShow=false">关闭</el-button>
+            <el-button type="primary" @click="consume_oper(2,'onAccount')">确认</el-button>
+        </div>
+    </el-dialog>
+    <!--冲调-->
+    <el-dialog title="冲调" :visible.sync="destructionShow" width="800px">
+        <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
+            <el-row v-if="currentRoom">
+                <el-col :span="8">
+                    房型：{{currentRoom.roomTypeName}}
+                </el-col>
+                <el-col :span="8">
+                    房间号：{{currentRoom.houseNum}}
+                </el-col>
+                <el-col :span="8">
+                    入住人：{{currentRoom.personList[0].name}}
+                </el-col>
+            </el-row>
+            <el-row v-else>
+                <template v-if="detailData&&detailData.inRoomList">
+                    <el-col :span="8">
+                        房型：{{detailData.inRoomList[0].roomTypeName}}
+                    </el-col>
+                    <el-col :span="8">
+                        房间号：{{detailData.inRoomList[0].houseNum}}
+                    </el-col>
+                    <el-col :span="8">
+                        入住人：{{detailData.inRoomList[0].personList[0].name}}
+                    </el-col>
+                </template>
+            </el-row>
+            <br />
+            <p>正在冲调的账务</p>
+            <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+                <el-table-column label="账务项目" show-overflow-tooltip>
+                    <template slot-scope="{row}">
+                        {{F_priceType(row.priceType)}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+            </el-table>
+            <el-form-item label="冲调方式：">
+                <el-radio-group v-model="consumeOperForm.priceType">
+                    <el-radio :label="9" :value="9">完全冲调</el-radio>
+                    <el-radio :label="10" :value="10">部分冲调</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="冲调金额：">
+                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input><em>注意：冲调金额小于原账金额</em>
+            </el-form-item>
+            <el-form-item label="冲调原因：">
+                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="checkOutShow=false">取消</el-button>
+            <el-button type="primary" @click="consume_oper(2,'onAccount')">确认</el-button>
+        </div>
+    </el-dialog>
+    <!--部分结账-->
+    <el-dialog title="部分结账" :visible.sync="someAccountsShow" width="800px">
+        <el-form :model="consumeOperForm" ref="someAccounts" :rules="rules" size="mini" label-width="100px">
+            <p>选择账务：自动计费、已冲调、已结的账务不可部分结账</p>
+            <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+                <el-table-column label="账务项目" show-overflow-tooltip>
+                    <template slot-scope="{row}">
+                        {{F_priceType(row.priceType)}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+            </el-table>
+            <el-row class="padding-tb-10">
+                <el-col :span="3">
+                    总消费：100
+                </el-col>
+                <el-col :span="3">
+                    总支付：610
+                </el-col>
+                <el-col :span="3">
+                    应退：400
+                </el-col>
+            </el-row>
+            <el-form-item label="" label-width="0">
+                <el-button type="primary" size="mini">收款</el-button>
+                <el-button type="primary" size="mini">挂账</el-button>
+                <el-button type="primary" size="mini">免单</el-button>
+                <el-button type="primary" size="mini">退款</el-button>
+            </el-form-item>
+            <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+                <el-table-column label="账务项目" show-overflow-tooltip>
+                    <template slot-scope="{row}">
+                        {{F_priceType(row.priceType)}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="consumePrice" label="退款" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+                <el-table-column label="操作">
+                    <template slot-scope="{row}">
+                        <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="checkOutShow=false">取消</el-button>
+            <el-button type="primary" @click="consume_oper(2,'onAccount')">结账</el-button>
+        </div>
+    </el-dialog>
+    <!--迷你吧-->
+    <el-dialog title="迷你吧" :visible.sync="consumeGoodsShow" width="900">
+        <el-form :model="consumeOperForm" ref="consumeGoods" size="mini">
+            <el-form-item label="">
+                <el-radio-group v-model="consumeOperForm.payType">
+                    <el-radio :label="1" :value="1">现金</el-radio>
+                    <el-radio :label="2" :value="2">银行卡</el-radio>
+                    <el-radio :label="3" :value="3">支付宝</el-radio>
+                    <el-radio :label="4" :value="4">微信</el-radio>
+                    <el-radio :label="5" :value="5">会员卡</el-radio>
+                </el-radio-group>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="consumeGoodsShow = false">取消</el-button>
+            <el-button type="primary" @click="consumeGoodsShow = false">确认</el-button>
         </div>
     </el-dialog>
 
@@ -291,6 +488,9 @@ export default {
             onAccountShow: false,
             knotShow: false,
             openInvoiceShow: false,
+            checkOutShow: false,
+            destructionShow: false,
+            someAccountsShow:false,
             checkType: 'customer',
             activeName: 'first',
             detail: {
@@ -305,25 +505,24 @@ export default {
                 startTime: "", //考试时件
                 endTime: "" //结束时间
             },
-
             consumeOperForm: {
                 priceType: '',
                 payType: '',
-                name:''
+                name: ''
             },
-            openInvoiceForm:{
-                roomNum:'',
-                name:'',
-                checkInId:'',
-                mobile:'',
-                consumePrice:'',
-                prices:'',
-                invoicePrice:'',
-                companyName:'',
-                projectName:'',
-                invoiceTime:'',
-                remark:'',
-                invoiceId:''
+            openInvoiceForm: {
+                roomNum: '',
+                name: '',
+                checkInId: '',
+                mobile: '',
+                consumePrice: '',
+                prices: '',
+                invoicePrice: '',
+                companyName: '',
+                projectName: '',
+                invoiceTime: '',
+                remark: '',
+                invoiceId: ''
             },
             rules: {
                 consumePrice: [{
@@ -363,6 +562,7 @@ export default {
             hoteldamagetypeList: [],
             hoteldamageList: [],
             hotelenterList: [], //挂账企业列表
+            destructionList: [], //冲调的账务
         };
     },
 
@@ -406,7 +606,6 @@ export default {
              * 1.入账
              * 2.挂账
              * 3.走结
-             * 4.结账
              * 
              * **/
             if (type != 3) {
@@ -466,11 +665,50 @@ export default {
                 })
                 return
             }
+
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
                         this.entryShow = false
                         this.onAccountShow = false
+                        this.consume_order_list()
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+
+        },
+        //开发票按钮点击
+        openInvoiceHandle() {
+            this.openInvoiceForm.checkInId = this.$route.query.id
+            if (this.currentRoom) {
+                this.openInvoiceForm.name = this.currentRoom.name
+                this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice
+                this.openInvoiceForm.invoicePrice = ''
+                this.openInvoiceForm.roomNum = this.currentRoom.houseNum
+                this.openInvoiceForm.mobile = this.currentRoom.mobile
+            } else {
+                if (this.detailData.inRoomList.length) {
+                    this.openInvoiceForm.name = this.detailData.inRoomList[0].name
+                    this.openInvoiceForm.consumePrice = this.detailData.inRoomList[0].roomMarkPrice
+                    this.openInvoiceForm.invoicePrice = ''
+                    this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum
+                    this.openInvoiceForm.mobile = this.detailData.inRoomList[0].mobile
+                } else {
+                    this.$message.error('暂无入住人');
+                    return
+                }
+            }
+            this.openInvoiceShow = true
+        },
+        //开发票提交
+        openInvoiceSubmit(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$F.doRequest(this, '/pms/invoice/open_invoice', this.openInvoiceForm, (res) => {
+                        this.openInvoiceShow = false
                         this.consume_order_list()
                     })
                 } else {
@@ -583,6 +821,26 @@ export default {
             console.log(e)
             // this.hoteldamage_list()
         },
+        destructionHandle() {
+            if (this.multipleSelection.length < 1) {
+                this.$message.error('请选择需要操作的账务');
+                return
+            }
+            if (this.multipleSelection.length > 1) {
+                this.$message.error('仅能选择一条账务冲调');
+                return
+            }
+            for (let k in this.multipleSelection) {
+                if (this.multipleSelection[k].billingType == 1) {
+                    this.$message.error('自动计费项目不能冲调');
+                    return
+                }
+
+            }
+            this.destructionList = this.multipleSelection
+            this.destructionShow = true
+            this.$forceUpdate()
+        },
         /**多选 */
         handleSelectionChange(val) {
             this.multipleSelection = val;
@@ -614,5 +872,29 @@ export default {
 <style lang="less" scoped>
 .base p {
     font-size: 12px
+}
+
+.cost {
+    background: #fff;
+
+    .wrap {
+        padding: 20px 15px;
+
+        span.fee {
+            font-size: 26px;
+            color: #DC3E3E;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 50px;
+        }
+
+        .costNum {
+            display: inline-block;
+            font-size: 16px;
+            vertical-align: middle;
+            border-left: 1px solid #eee;
+            padding-left: 50px;
+        }
+    }
 }
 </style>

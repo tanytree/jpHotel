@@ -1,13 +1,12 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-11 14:11:55
+ * @LastEditTime: 2020-08-13 11:15:26
  * @FilePath: /jiudian/src/views/market/orders/detail.vue
  -->
 <template>
-<div v-loading="loading">
-
-    <div class="el-card">
+<div class="boss-index ov-y">
+    <div class="el-card" style="height:auto">
         <div class="el-card__header">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/orders' }">订单管理</el-breadcrumb-item>
@@ -15,7 +14,7 @@
             </el-breadcrumb>
         </div>
     </div>
-    <div class="bodyInfo margin-t-10">
+    <div class="bodyInfo margin-t-10"  v-loading="loading">
         <el-row :gutter="20">
             <el-col :span="6">
                 <div class="grid-content">
