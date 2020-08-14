@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-14 12:01:59
+ * @LastEditTime: 2020-08-14 16:41:29
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/finance.vue
  -->
 <template>
@@ -79,9 +79,9 @@
     <!--交订金-->
     <el-dialog title="交订金" :visible.sync="depositShow">
         <el-form :model="consumeOperForm" ref="deposit" :rules="rules" size="mini" label-width="100px">
-            <el-row>
-                <el-col :span="8">预订单号：YU21R0422025</el-col>
-                <el-col :span="8">预订人：张三</el-col>
+            <el-row v-if="detailData">
+                <el-col :span="8" v-if="detailData.checkIn">预订单号：{{detailData.checkIn.reserveOrderNum}}</el-col>
+                <el-col :span="8" v-if="detailData.checkIn">预订人：{{detailData.checkIn.name}}</el-col>
             </el-row>
             <br />
             <el-form-item label="付款项目：">
@@ -107,9 +107,9 @@
     <!--退订金-->
     <el-dialog title="退订金" :visible.sync="refundShow">
         <el-form :model="consumeOperForm" ref="refund" :rules="rules" size="mini" label-width="100px">
-            <el-row>
-                <el-col :span="8">预订单号：YU21R0422025</el-col>
-                <el-col :span="8">预订人：张三</el-col>
+            <el-row v-if="detailData">
+                <el-col :span="8" v-if="detailData.checkIn">预订单号：{{detailData.checkIn.reserveOrderNum}}</el-col>
+                <el-col :span="8" v-if="detailData.checkIn">预订人：{{detailData.checkIn.name}}</el-col>
             </el-row>
             <br />
             <el-form-item label="付款项目：">
@@ -162,7 +162,6 @@ import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
     props: ['detailData'],
-
     computed: {
         ...mapState({
             token: state => state.user.token,

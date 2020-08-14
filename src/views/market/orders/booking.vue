@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-14 13:53:21
+ * @LastEditTime: 2020-08-14 16:19:54
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -136,7 +136,7 @@
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="handelDetail(row)">详情</el-button>
                     <template v-if="row.state!=7">
-                        <el-button type="text" size="mini">订金</el-button>
+                        <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">订金</el-button>
                         <el-button type="text" size="mini" v-if="row.state==5" @click="handleNoshow(row)">NOSHOW</el-button>
                         <el-button type="text" size="mini" @click="handleCancel(row)">取消</el-button>
                         <el-button type="text" size="mini" v-if="row.state==1&&row.orderSource==3" @click="handleAccept(row)">接受</el-button>
@@ -187,6 +187,52 @@
             <el-button type="primary" @click="confirmNoshow">确 定</el-button>
         </span>
     </el-dialog>
+    <!--交订金-->
+    <el-dialog title="交订金" :visible.sync="depositShow">
+        <el-form :model="consumeOperForm" ref="deposit" size="mini" label-width="100px">
+            <el-row>
+                <el-col :span="8">预订单号：{{currentItem.reserveOrderNum}}</el-col>
+                <el-col :span="8">预订人：{{currentItem.name}}</el-col>
+            </el-row>
+            <br />
+            <el-form-item label="付款项目：">
+                <el-radio-group v-model="consumeOperForm.priceType">
+                    <el-radio-button :label="1" :value="1">订金</el-radio-button>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="金额：">
+                <el-input class="width100" v-model="consumeOperForm.payPrice" :autofocus="true" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="备注：">
+                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="打印单据：">
+                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="deposit = false">关闭</el-button>
+            <el-button type="primary" @click="consume_oper(1,'deposit')">结算</el-button>
+        </div>
+    </el-dialog>
+    <el-dialog title="选择结算方式" :visible.sync="payTypeShow">
+        <el-form :model="consumeOperForm" size="mini">
+            <el-form-item label="">
+                <el-radio-group v-model="consumeOperForm.payType">
+                    <el-radio :label="1" :value="1">现金</el-radio>
+                    <el-radio :label="2" :value="2">银行卡</el-radio>
+                    <el-radio :label="3" :value="3">支付宝</el-radio>
+                    <el-radio :label="4" :value="4">微信</el-radio>
+                    <el-radio :label="5" :value="5">会员卡</el-radio>
+                </el-radio-group>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="payTypeShow = false">关闭</el-button>
+            <el-button type="primary" @click="payTypeShow = false">结算</el-button>
+        </div>
+    </el-dialog>
+
 </div>
 </template>
 
@@ -211,6 +257,8 @@ export default {
             loading: false,
             noShowDiaShow: false,
             showDetail: false,
+            depositShow: false,
+            payTypeShow: false,
             searchForm: {
                 operCheckinType: '',
                 enterName: '',
@@ -233,6 +281,11 @@ export default {
             tableData: [], //表格数据
             roomTypeList: [],
             currentItem: {},
+            consumeOperForm: {
+                priceType: '',
+                payType: '',
+                name: ''
+            },
 
         };
     },
@@ -285,8 +338,12 @@ export default {
             this.currentItem = item;
             this.noShowDiaShow = true
         },
+        handleDeposit(item) {
+            this.currentItem = item;
+            this.depositShow = true
+        },
         handelDetail(item) {
-            this.$router.push('/bookingDetail?id='+item.id)
+            this.$router.push('/bookingDetail?id=' + item.id)
         },
         confirmNoshow() {
             let params = {
@@ -384,6 +441,71 @@ export default {
                 })
             }).catch(() => {
 
+            });
+        },
+        consume_oper(type, formName) {
+            /** 
+             * 1.订金
+             * 2.退订金
+             * 
+             * **/
+            let params = this.consumeOperForm
+
+            params.checkinReserveId = this.currentItem.id
+
+            if (this.currentItem.checkInRoomList.length) {
+                params.roomId = this.currentItem.checkInRoomList[0].id
+                params.roomNum = this.currentItem.checkInRoomList[0].houseNum
+            } else {
+                this.$message.error('请优先排房，添加入住人');
+                return
+            }
+
+            //订金，退订金
+            if (type == 1 || type == 2) { //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
+                params.state = 2
+                if (!params.priceType) {
+                    this.$message.error('请选择付款项目');
+                    return
+                }
+                if (params.priceType == 1 && !params.payType) {
+                    this.payTypeShow = true
+                    return
+                }
+                if (params.priceType == 1) {
+                    if (params.payPrice < 0 || params.payPrice == 0) {
+                        this.$message.error('请输入大于0的金额');
+                        return
+                    }
+                }
+                if (params.priceType == 4) {
+                    // params.priceType == 1
+                    if (params.consumePrice > 0 || params.consumePrice == 0) {
+                        this.$message.error('请输入为负数金额');
+                        return
+                    }
+                }
+            }
+            //冲调
+            if (type == 3) { //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
+                params.state = 2
+
+                // params.priceType == 1
+                if (params.consumePrice > 0 || params.consumePrice == 0) {
+                    this.$message.error('请输入为负数金额');
+                    return
+                }
+            }
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
+                        this.depositShow = false
+                        this.getDataList()
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
             });
         },
         /**编辑 */
