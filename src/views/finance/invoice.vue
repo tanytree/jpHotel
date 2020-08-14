@@ -1,8 +1,18 @@
+/*
+* @Author: Dana 统计分析管理
+* @Date: 2020-03-10 13:45:16
+* @Last Modified by: Dana
+* @Last Modified time: 2020-03-11 16:59:58
+*/
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane label="已开发票" name="invoice">
-                <div class="invoiceBox">
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('finance', item.path, true)">
+                <!-- 报表-->
+                <div class="invoiceBox" v-if="item.path == 'invoice' ">
                     <el-form size="small" inline :model="invoiceForm" class="term line">
                         <div class="margin-b-20">
                             <el-form-item label="发票类型：">
@@ -50,56 +60,45 @@
                 </div>
             </el-tab-pane>
         </el-tabs>
-        <el-dialog top="0" title="详情" :visible.sync="detailVisible" width="40%" :before-close="handleClose" class="detailBox">
-            <el-form size="small" inline :model="detailForm" label-position="left" label-width="100px">
-                <el-form-item label="客户名称：">{{detailForm.customer}}</el-form-item>
-                <el-form-item label="房间号：">{{detailForm.roomNum}}</el-form-item>
-                <el-form-item label="电话号码：">{{detailForm.phone}}</el-form-item>
-                <el-form-item label="电子邮箱：">{{detailForm.eMail}}</el-form-item>
-                <el-form-item label="发票类型：">{{detailForm.type}}</el-form-item>
-                <el-form-item label="发票号码：">{{detailForm.invoiceNum}}</el-form-item>
-                <el-form-item label="发票抬头：">{{detailForm.invoiceTitle}}</el-form-item>
-                <el-form-item label="税号：">{{detailForm.taxNum}}</el-form-item>
-                <el-form-item label="开票金额：">{{detailForm.invoiceAmount}}</el-form-item>
-                <el-form-item label="税金：">{{detailForm.taxes}}</el-form-item>
-                <el-form-item label="账务类型：">{{detailForm.serviceType}}</el-form-item>
-                <el-form-item label="开票时间：">{{detailForm.billTime}}</el-form-item>
-                <el-form-item label="备注：">{{detailForm.remarks}}</el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button class="submit" @click="detailVisible = false">关闭</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "",
-        data() {
-            return {
-                activeName: 'invoice', invoiceForm: {cate: 'all', strDate: '', endDate: '', name: ''},
-                tableData: [{customer: '欧阳楠楠', roomNum: 'A001', phone: '18677890922', type: '增值税电子发票', invoiceTitle: '全购网络有限公司', invoiceAmount: '100', taxes: '0', invoiceNum: '91430102687415586A', billTime: '2020/04/22 12:24', operator: '张三'}],
-                detailVisible: false, detailForm: {}
-            }
-        },
-        methods: {
-            detail(row) {
-                this.detailForm = row;
-                this.detailForm.eMail = '18055016808@qq.com';
-                this.detailForm.taxNum = '937527037047650';
-                this.detailForm.serviceType = '客人账务';
-                this.detailForm.remarks = '';
-                this.detailVisible = true;
-            },
-            handleDelete(row) {},
-            handleClose() {
-                this.detailVisible = false
-            }
-        }
+  import {mapState, mapActions} from 'vuex'
+  export default {
+    name: "",
+    data() {
+      return {
+        activeName: 'invoice',
+        invoiceForm: {cate: 'all', strDate: '', endDate: '', name: ''},
+        tableData: [{customer: '欧阳楠楠', roomNum: 'A001', phone: '18677890922', type: '增值税电子发票', invoiceTitle: '全购网络有限公司', invoiceAmount: '100', taxes: '0', invoiceNum: '91430102687415586A', billTime: '2020/04/22 12:24', operator: '张三'}],
+        detailVisible: false, detailForm: {}
+      }
+    },
+    created() {
+      if (sessionStorage.subMenul) {
+        this.menuList = JSON.parse(sessionStorage.subMenul).childList || []
+        this.$forceUpdate()
+      }
+      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path
+    },
+    methods: {
+      detail(row) {
+        this.detailForm = row;
+        this.detailForm.eMail = '18055016808@qq.com';
+        this.detailForm.taxNum = '937527037047650';
+        this.detailForm.serviceType = '客人账务';
+        this.detailForm.remarks = '';
+        this.detailVisible = true;
+      },
+      handleDelete(row) {},
+      handleClose() {
+        this.detailVisible = false
+      }
     }
-</script>
+  }
 
+</script>
 <style lang="scss">
     .invoiceBox {
         height: 100%;

@@ -1,96 +1,57 @@
-<!--
- * @Date: 2020-04-10 10:22:53
- * @LastEditors: cindy
- * @LastEditTime: 2020-04-13 17:48:45
- * @FilePath: /cloudAdmin/src/views/finance/account/index.vue
- -->
-
+/*
+* @Author: Dana 统计分析管理
+* @Date: 2020-03-10 13:45:16
+* @Last Modified by: Dana
+* @Last Modified time: 2020-03-11 16:59:58
+*/
 <template>
-    <div class="boss-index" id="page1">
+    <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane label="流水账" name="first">
-                <accountRun ref="publishRef"/>
-            </el-tab-pane>
-            <el-tab-pane label="总账" name="second">
-                <ledger />
-            </el-tab-pane>
-            <el-tab-pane label="明细账" name="third">
-                <detailed ref="productList"/>
-            </el-tab-pane>
-            <el-tab-pane label="科目余额表" name="forth">
-                <balance />
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('finance', item.path, true)">
+                <!-- 流水账-->
+                <accountRun v-if="item.path == 'accountRun'"/>
+                <!-- 总账-->
+                <ledger v-if="item.path == 'ledger'"/>
+                <!-- 明细账-->
+                <detailed v-if="item.path == 'detailed'"/>
+                <!-- 科目余额表-->
+                <balance v-if="item.path == 'balance'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
-    import detailed from "./detailed";
-    import accountRun from "./accountrun";
-    import ledger from "./ledger";
-    import balance from "./balance";
+  import detailed from "./detailed";
+  import accountRun from "./accountrun";
+  import ledger from "./ledger";
+  import balance from "./balance";
+  import {mapState, mapActions} from 'vuex'
 
-    export default {
-        components: {detailed, accountRun, ledger, balance},
-        data() {
-            return {
-                activeName: "first" //第一个默认启动
-            };
-        },
-        methods: {}
-    };
+  export default {
+    components: {detailed, accountRun, ledger, balance},
+    data() {
+      return {
+        activeName: 'accountRun',
+        menuList: [],
+      }
+    },
+    created() {
+      if (sessionStorage.subMenul) {
+        this.menuList = JSON.parse(sessionStorage.subMenul).childList || []
+        this.$forceUpdate()
+      }
+      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path
+    },
+    methods: {
+
+    }
+  }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less">
-    .term {
-        background: #fafafa;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        padding: 20px;
+<style lang="scss">
 
-        &.line {
-            .el-form-item {
-                margin-bottom: 0;
-            }
-        }
-
-        .export {
-            float: right;
-        }
-
-        .el-input, .el-select {
-            width: 160px
-        }
-
-        .line {
-            margin: 0 10px;
-        }
-    }
-    .flex-col {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-
-        .el-table {
-            flex: 1;
-            height: 0;
-        }
-        .total {
-            height: 40px;
-            line-height: 40px;
-            padding: 0 20px;
-            font-size: 15px;
-            border: 1px solid #EBEEF5;
-            border-top: 0;
-        }
-        .top {
-            height: 44px;
-            line-height: 44px;
-            padding: 0 20px;
-            font-size: 15px;
-            border: 1px solid #EBEEF5;
-            border-bottom: 0;
-        }
-    }
 </style>

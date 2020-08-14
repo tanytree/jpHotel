@@ -1,41 +1,52 @@
-<!--
- * @Date: 2020-03-20 19:11:04
- * @LastEditors: Dana
- * @LastEditTime: 2020-04-13 17:52:16
- * @FilePath: /cloudAdmin/src/views/finance/account/bill.vue
- -->
+/*
+* @Author: Dana 凭证
+* @Date: 2020-03-10 13:45:16
+* @Last Modified by: Dana
+* @Last Modified time: 2020-03-11 16:59:58
+*/
 <template>
     <div class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane label="录凭证" name="overView">
-                <inputEvidence/>
-            </el-tab-pane>
-            <el-tab-pane label="查凭证" name="record">
-                <evidence />
-            </el-tab-pane>
-            <el-tab-pane label="设置" name="authority">
-                <setup />
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('finance', item.path, true)">
+                <!-- 录凭证-->
+                <inputEvidence v-if="item.path == 'inputEvidence'"/>
+                <!-- 查凭证-->
+                <evidence v-if="item.path == 'evidence'"/>
+                <!-- 设置-->
+                <setup v-if="item.path == 'setup'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
-    import { get_consume_list, del_consume_info } from '@/utils/api/finance'
-    import inputEvidence from './bill/inputEvidence'
-    import evidence from './bill/evidence'
-    import setup from './bill/setup'
+  import inputEvidence from './bill/inputEvidence'
+  import evidence from './bill/evidence'
+  import setup from './bill/setup'
+  export default {
+    components: { inputEvidence, evidence, setup },
+    data() {
+      return {
+        activeName: 'inputEvidence'
+      }
+    },
+    created() {
+      if (sessionStorage.subMenul) {
+        this.menuList = JSON.parse(sessionStorage.subMenul).childList || []
+        this.$forceUpdate()
+      }
+      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
+    },
+    methods: {
 
-    export default {
-        components: { inputEvidence, evidence, setup },
-        data () {
-            return {
-                activeName: 'overView'
-            }
-        },
     }
+  }
 </script>
 
 <style lang="scss">
 
 </style>
+
