@@ -7,11 +7,14 @@
 <template>
     <div id="page1" class="boss-index">
         <el-tabs class="pageTab" v-model="activeName">
-            <el-tab-pane label="价格策略" name="first">
-                <priceStrategy ref="priceStrategy"/>
-            </el-tab-pane>
-            <el-tab-pane label="计费规则" name="second" >
-                <billingRules ref="billingRules"/>
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('finance', item.path, true)">
+                <!-- 价格策略-->
+                <priceStrategy v-if="item.path == 'priceStrategy'"/>
+                <!-- 计费规则-->
+                <billingRules v-if="item.path == 'billingRules'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -34,6 +37,7 @@
             }
         },
         created () {
+            this.$F.handleThirdMenu(this);
         },
         activated () {
         },

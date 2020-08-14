@@ -6,23 +6,40 @@
  -->
 <template>
     <div id="page1" class="boss-index">
-        <el-tabs class="pageTab" v-model="activeName" @tab-click="tabChange">
-            <el-tab-pane label="商品管理" name="first">
-                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData"/>
-            </el-tab-pane>
-            <el-tab-pane label="售卖点" name="second">
-                <SalePoint ref="SalePoint" :list="salesList" :category="category" :total="salesTotal" :pageSize="salesSize" :currentPage="salesPage" :initData="getSellingData"/>
-            </el-tab-pane>
-            <el-tab-pane label="商品分类" name="third">
-                <GoodsKinds ref="GoodsKinds" :list="category" :initData="getCategoryData"/>
-            </el-tab-pane>
-            <el-tab-pane label="库存管理" name="fouth">
-                <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" />
-            </el-tab-pane>
-            <el-tab-pane label="入库审核" name="fifth">
-                <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :total="auditTotal" :pageSize="auditSize" :currentPage="auditPage" :initData="getAuditData"/>
+        <el-tabs class="pageTab" v-model="activeName">
+            <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                         :name="item.path"
+                         :key="item.path"
+                         v-if="$F.filterThirdMenu('finance', item.path, true)">
+                <!-- 商品管理-->
+                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
+                <!-- 售卖点-->
+                <SalePoint ref="SalePoint" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'SalePoint'"/>
+                <!-- 商品分类-->
+                <GoodsKinds ref="GoodsKinds" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'GoodsKinds'"/>
+                <!-- 库存管理-->
+                <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'StockMg'"/>
+                <!-- 入库审核-->
+                <IntoKuAudit ref="IntoKuAudit" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'IntoKuAudit'"/>
             </el-tab-pane>
         </el-tabs>
+<!--        <el-tabs class="pageTab" v-model="activeName" @tab-click="tabChange">-->
+<!--            <el-tab-pane label="商品管理" name="first">-->
+<!--                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData"/>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="售卖点" name="second">-->
+<!--                <SalePoint ref="SalePoint" :list="salesList" :category="category" :total="salesTotal" :pageSize="salesSize" :currentPage="salesPage" :initData="getSellingData"/>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="商品分类" name="third">-->
+<!--                <GoodsKinds ref="GoodsKinds" :list="category" :initData="getCategoryData"/>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="库存管理" name="fouth">-->
+<!--                <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" />-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="入库审核" name="fifth">-->
+<!--                <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :total="auditTotal" :pageSize="auditSize" :currentPage="auditPage" :initData="getAuditData"/>-->
+<!--            </el-tab-pane>-->
+<!--        </el-tabs>-->
     </div>
 </template>
 
@@ -54,6 +71,9 @@
                 auditList: [], auditTotal: 0, auditSize: 0, auditPage: 1,
                 category: [], cateTotal: 0, cateSize: 0, catePage: 1,
             }
+        },
+        created() {
+           this.$F.handleThirdMenu(this);
         },
         mounted() {
             const obj = {name: 'first'};
