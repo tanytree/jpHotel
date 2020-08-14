@@ -7,17 +7,31 @@
 
 <template>
   <div id="page1" class="boss-index">
-    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="预订单" name="first">
-        <booking />
-      </el-tab-pane>
-      <el-tab-pane label="订单查询" name="second">
-        <order />
-      </el-tab-pane>
-      <el-tab-pane label="赔偿记录" name="third">
-        <compensate />
-      </el-tab-pane>
-    </el-tabs>
+
+      <el-tabs class="pageTab" v-model="activeName">
+          <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                       :name="item.path"
+                       :key="item.path"
+                       v-if="$F.filterThirdMenu('frontOffice', item.path, true)">
+              <!-- 预订单-->
+              <booking v-if="item.path == 'booking'"/>
+              <!-- 订单查询-->
+              <order v-if="item.path == 'order'"/>
+              <!-- 赔偿记录-->
+              <compensate v-if="item.path == 'compensate'"/>
+          </el-tab-pane>
+      </el-tabs>
+<!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
+<!--      <el-tab-pane label="预订单" name="first">-->
+<!--        <booking />-->
+<!--      </el-tab-pane>-->
+<!--      <el-tab-pane label="订单查询" name="second">-->
+<!--        <order />-->
+<!--      </el-tab-pane>-->
+<!--      <el-tab-pane label="赔偿记录" name="third">-->
+<!--        <compensate />-->
+<!--      </el-tab-pane>-->
+<!--    </el-tabs>-->
   </div>
 </template>
 
@@ -30,8 +44,11 @@ export default {
   components: { booking, order, compensate },
   data() {
     return {
-      activeName: "first" //第一个默认启动
+      activeName: "" //第一个默认启动
     };
+  },
+  created() {
+    this.$F.handleThirdMenu(this);
   },
   mounted() {},
   methods: {

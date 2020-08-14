@@ -133,7 +133,7 @@
       getMemberList (params = {}) {
         // this.$F.merge(params, { storesNum: '' })
         this.$F.merge(params, this.form)
-        this.$F.fetchMemberTypeList(params, (res) => {
+        this.$F.commons.fetchMemberTypeList(params, (res) => {
           this.tableData = res.list
           this.$forceUpdate()
         })

@@ -33,15 +33,11 @@
         components: {incomeStatus, authority, record, employeeRights},
         data() {
             return {
-                activeName: 'overView'
+                activeName: ''
             }
         },
         created() {
-            if (sessionStorage.subMenul) {
-                this.menuList = JSON.parse(sessionStorage.subMenul).childList || []
-                this.$forceUpdate()
-            }
-            this.activeName = this.$F.filterThirdMenu(null, null, false, true).path
+          this.$F.handleThirdMenu(this);
         },
         methods: {
             getFinancialData(type, str, end) {

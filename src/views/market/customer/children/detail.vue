@@ -544,7 +544,7 @@ export default {
             });
         },
         smembertype_list() {
-            this.$F.fetchMemberTypeList({}, (res) => {
+            this.$F.commons.fetchMemberTypeList({}, (res) => {
                 this.smembertypeList = res.list;
             })
         },
@@ -588,7 +588,7 @@ export default {
             })
         },
         nationality() {
-            this.$F.fetchNationality((res) => {
+            this.$F.commons.fetchNationality((res) => {
                 this.nationalityList = res;
             })
         },

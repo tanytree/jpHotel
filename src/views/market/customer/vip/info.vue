@@ -223,7 +223,7 @@ export default {
     mounted() {
         this.initForm();
         this.stores_list()
-        this.$F.fetchMemberTypeList({}, (res) => {
+        this.$F.commons.fetchMemberTypeList({}, (res) => {
             this.smembertypeList = res.list;
         })
     },

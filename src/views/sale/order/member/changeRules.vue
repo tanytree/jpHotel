@@ -302,7 +302,7 @@
         if (this.memberTypeList.length > 0) {
           this.fetchRuleList(this.memberTypeList);
         } else {
-          this.$F.fetchMemberTypeList({}, (memberTypeList) => {
+          this.$F.commons.fetchMemberTypeList({}, (memberTypeList) => {
             this.fetchRuleList(memberTypeList.list);
           })
         }

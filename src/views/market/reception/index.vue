@@ -7,17 +7,30 @@
 
 <template>
   <div id="page1" class="boss-index">
-    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="入住办理" name="first">
-        <checkin />
-      </el-tab-pane>
-      <el-tab-pane label="前台报表" name="second">
-        <reportform />
-      </el-tab-pane>
-      <el-tab-pane label="前台交班" name="third">
-        <shiftover />
-      </el-tab-pane>
-    </el-tabs>
+      <el-tabs class="pageTab" v-model="activeName">
+          <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                       :name="item.path"
+                       :key="item.path"
+                       v-if="$F.filterThirdMenu('frontOffice', item.path, true)">
+              <!-- 入住办理-->
+              <checkin v-if="item.path == 'checkin'"/>
+              <!-- 前台报表-->
+              <reportform v-if="item.path == 'reportform'"/>
+              <!-- 前台交班-->
+              <shiftover v-if="item.path == 'shiftover'"/>
+          </el-tab-pane>
+      </el-tabs>
+<!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
+<!--      <el-tab-pane label="入住办理" name="first">-->
+<!--        <checkin />-->
+<!--      </el-tab-pane>-->
+<!--      <el-tab-pane label="前台报表" name="second">-->
+<!--        <reportform />-->
+<!--      </el-tab-pane>-->
+<!--      <el-tab-pane label="前台交班" name="third">-->
+<!--        <shiftover />-->
+<!--      </el-tab-pane>-->
+<!--    </el-tabs>-->
   </div>
 </template>
 
@@ -30,8 +43,11 @@ export default {
   components: { checkin, reportform, shiftover },
   data() {
     return {
-      activeName: "first" //第一个默认启动
+      activeName: "" //第一个默认启动
     };
+  },
+  created() {
+    this.$F.handleThirdMenu(this);
   },
   mounted() {},
   methods: {

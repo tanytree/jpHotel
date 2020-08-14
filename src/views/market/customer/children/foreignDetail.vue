@@ -154,7 +154,7 @@ export default {
             })
         },
         nationality() {
-          this.$F.fetchNationality((res) => {
+          this.$F.commons.fetchNationality((res) => {
             this.nationalityList = res;
           })
         },

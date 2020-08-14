@@ -155,7 +155,7 @@ export default {
     },
 
     getMemberTypeList () {
-      this.$F.fetchMemberTypeList({}, (res) => {
+      this.$F.commons.fetchMemberTypeList({}, (res) => {
         this.memberTypeList = res.list
       })
     }

@@ -194,31 +194,43 @@ const $F = {
         return null
     },
 
-    //获取会员类型列表 这里封装统一方法 很多地方用到
-    fetchMemberTypeList (requestParams = {}, callback) {
-        let params = {
-            name: '',
-            pageIndex: 1,
-            pageSize: 10,
-            paging: false,
-            id: ''
+    handleThirdMenu($instance) {
+        if (sessionStorage.subMenul) {
+            $instance.menuList = JSON.parse(sessionStorage.subMenul).childList || []
+            $instance.$forceUpdate()
         }
-        merge(params, requestParams)
-        this.doRequest(null, '/pms/membertype/list', params, (data) => {
-            callback(data)
-        })
+        $instance.activeName = this.filterThirdMenu(null, null, false, true).path;
     },
-    //获取国籍list
-    fetchNationality (callback) {
-        if (NATIONALITYLIST.length > 0) {
-            callback(NATIONALITYLIST)
-            return;
+
+    // 一些多个页面都会用到的方法 统一写到commons里面
+    commons: {
+
+        //获取会员类型列表 这里封装统一方法 很多地方用到
+        fetchMemberTypeList (requestParams = {}, callback) {
+            let params = {
+                name: '',
+                pageIndex: 1,
+                pageSize: 10,
+                paging: false,
+                id: ''
+            }
+            merge(params, requestParams)
+            $F.doRequest(null, '/pms/membertype/list', params, (data) => {
+                callback(data)
+            })
+        },
+        //获取国籍list
+        fetchNationality (callback) {
+            if (NATIONALITYLIST.length > 0) {
+                callback(NATIONALITYLIST)
+                return;
+            }
+            $F.doRequest(null, '/pms/system/country_list', {}, (data) => {
+                NATIONALITYLIST = data;
+                callback(NATIONALITYLIST)
+            })
         }
-        this.doRequest(null, '/pms/system/country_list', {}, (data) => {
-            NATIONALITYLIST = data;
-            callback(NATIONALITYLIST)
-        })
-    },
+    }
 
 }
 export default $F
