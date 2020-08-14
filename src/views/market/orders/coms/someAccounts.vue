@@ -1,64 +1,66 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 18:44:57
+ * @LastEditTime: 2020-08-14 09:48:22
  * @FilePath: /jiudian/src/views/market/orders/coms/someAccounts.vue
  -->
 <template>
-    <el-dialog title="部分结账" top="0" :visible.sync="visible" :lock-scroll='false' width="800px">
-        <el-form v-loading="loading" :model="consumeOperForm" ref="someAccounts" :rules="{}" size="mini" label-width="100px">
-            <p>选择账务：自动计费、已冲调、已结的账务不可部分结账</p>
-            <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                <el-table-column label="账务项目" show-overflow-tooltip>
-                    <template slot-scope="{row}">
-                        {{F_priceType(row.priceType)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
-            </el-table>
-            <el-row class="padding-tb-10">
-                <el-col :span="3">
-                    总消费：100
-                </el-col>
-                <el-col :span="3">
-                    总支付：610
-                </el-col>
-                <el-col :span="3">
-                    应退：400
-                </el-col>
-            </el-row>
-            <el-form-item label="" label-width="0">
-                <el-button type="primary" size="mini">收款</el-button>
-                <el-button type="primary" size="mini">挂账</el-button>
-                <el-button type="primary" size="mini">免单</el-button>
-                <el-button type="primary" size="mini">退款</el-button>
-            </el-form-item>
-            <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                <el-table-column label="账务项目" show-overflow-tooltip>
-                    <template slot-scope="{row}">
-                        {{F_priceType(row.priceType)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="consumePrice" label="退款" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="{row}">
-                        <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="visible=false">取消</el-button>
-            <el-button type="primary" @click="consume_oper(2,'onAccount')">结账</el-button>
-        </div>
-    </el-dialog>
+<el-dialog title="部分结账" top="0" :visible.sync="visible" :lock-scroll='false' width="800px">
+    <el-form v-loading="loading" :model="consumeOperForm" ref="someAccounts" :rules="{}" size="mini" label-width="100px">
+        <p>选择账务：自动计费、已冲调、已结的账务不可部分结账</p>
+        <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
+            <el-table-column type="selection" width="55">
+            </el-table-column>
+            <el-table-column label="账务项目" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_priceType(row.priceType)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+        </el-table>
+        <el-row class="padding-tb-10">
+            <el-col :span="3">
+                总消费：100
+            </el-col>
+            <el-col :span="3">
+                总支付：610
+            </el-col>
+            <el-col :span="3">
+                应退：400
+            </el-col>
+        </el-row>
+        <el-form-item label="" label-width="0">
+            <el-button type="primary" size="mini">收款</el-button>
+            <el-button type="primary" size="mini">挂账</el-button>
+            <el-button type="primary" size="mini">免单</el-button>
+            <el-button type="primary" size="mini">退款</el-button>
+        </el-form-item>
+        <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+            <el-table-column label="账务项目" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{F_priceType(row.priceType)}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="consumePrice" label="退款" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="{row}">
+                    <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="visible=false">取消</el-button>
+        <el-button type="primary" @click="consume_oper(2,'onAccount')">结账</el-button>
+    </div>
+</el-dialog>
 </template>
 
 <script>
@@ -93,8 +95,8 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             destructionList: [],
-            consumeOperForm:{
-                name:''
+            consumeOperForm: {
+                name: ''
             }
         };
     },
@@ -102,7 +104,7 @@ export default {
     methods: {
         async init(id) {
             this.id = id
-           
+
             this.initForm()
             this.visible = true;
         },

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 18:36:17
+ * @LastEditTime: 2020-08-14 12:01:40
  * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
@@ -390,7 +390,10 @@ import someAccounts from './someAccounts'
 export default {
     mixins: [myMixin],
     props: ['currentRoom', 'detailData'],
-    components: {consumeGoods,someAccounts},
+    components: {
+        consumeGoods,
+        someAccounts
+    },
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -505,7 +508,7 @@ export default {
     mounted() {
         let id = this.$route.query.id
         this.consume_order_list()
-            this.hoteldamagetype_list()
+        this.hoteldamagetype_list()
     },
 
     methods: {
@@ -545,21 +548,21 @@ export default {
              * 
              * **/
             let params = this.consumeOperForm
-          
-                params.checkInId = this.$route.query.id
-                if (this.currentRoom) {
-                    params.roomId = this.currentRoom.id
-                    params.roomNum = this.currentRoom.houseNum
+
+            params.checkInId = this.$route.query.id
+            if (this.currentRoom) {
+                params.roomId = this.currentRoom.id
+                params.roomNum = this.currentRoom.houseNum
+            } else {
+                if (this.detailData.inRoomList.length) {
+                    params.roomId = this.detailData.inRoomList[0].id
+                    params.roomNum = this.detailData.inRoomList[0].houseNum
                 } else {
-                    if (this.detailData.inRoomList.length) {
-                        params.roomId = this.detailData.inRoomList[0].id
-                        params.roomNum = this.detailData.inRoomList[0].houseNum
-                    } else {
-                        this.$message.error('暂无入住人');
-                        return
-                    }
+                    this.$message.error('暂无入住人');
+                    return
                 }
-            
+            }
+
             //入账
             if (type == 1) {
                 params.state = 2
@@ -589,10 +592,16 @@ export default {
                 params.payType = 1 //挂账无需支付方式
                 params.state = 1
             }
-            if(type == 3){
-                params.state = 1
+            //冲调
+            if (type == 3) {
+                params.state = 2
                 params.orderId = this.destructionList[0].id
+                 if (params.consumePrice > 0 || params.consumePrice == 0) {
+                        this.$message.error('请输入为负数金额');
+                        return
+                    }
             }
+
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
@@ -606,16 +615,16 @@ export default {
                 }
             });
         },
-        out_check_in(){
+        out_check_in() {
 
-let params = {
-                    checkInId: this.$route.query.id,
-                    billType: 4
-                }
-                this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
-                    this.knotShow = false
-                    this.consume_order_list()
-                })
+            let params = {
+                checkInId: this.$route.query.id,
+                billType: 4
+            }
+            this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                this.knotShow = false
+                this.consume_order_list()
+            })
         },
         //开发票按钮点击
         openInvoiceHandle() {
@@ -778,11 +787,11 @@ let params = {
             this.destructionShow = true
             this.$forceUpdate()
         },
-        consumeGoodsHandle(){
-             this.$refs.consumeGoods.init(this.$route.query.id);
+        consumeGoodsHandle() {
+            this.$refs.consumeGoods.init(this.$route.query.id);
         },
-        someAccountsHandle(){
-             this.$refs.someAccounts.init(this.$route.query.id);
+        someAccountsHandle() {
+            this.$refs.someAccounts.init(this.$route.query.id);
         },
         /**多选 */
         handleSelectionChange(val) {
