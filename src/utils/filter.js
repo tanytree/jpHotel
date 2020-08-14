@@ -1,13 +1,14 @@
 /*
  * @Date: 2020-04-24 20:06:35
  * @LastEditors: 董林
- * @LastEditTime: 2020-07-27 17:28:28
+ * @LastEditTime: 2020-08-14 15:52:32
  * @FilePath: /jiudian/src/utils/filter.js
  */ 
 /****************** 全局过滤器 ******************/
 
 // import moment from 'moment'
 // import accounting from 'accounting'
+
 const filters = {
 	// 金额格式化
 	F_formatMoney: function(value) {
@@ -26,6 +27,8 @@ const filters = {
 			return ''
 		}
 	},
+
+	
 
 	// 手机号脱敏
 	F_phone: function(value) {

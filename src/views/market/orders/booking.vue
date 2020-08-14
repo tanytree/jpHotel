@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-10 09:25:19
+ * @LastEditTime: 2020-08-14 13:53:21
  * @FilePath: /jiudian/src/views/market/orders/booking.vue
  -->
 
@@ -12,7 +12,7 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="100px">
             <el-row>
-                <el-form-item label="订单状态">
+                <el-form-item label="订单状态：">
                     <div class="tagList">
                         <template v-for="(item,key,index) of $t('commons.reserveState')">
                             <el-tag class="tag" :type="searchForm.state==key?'':'info'" :key="index" @click="stateClick(key)">{{item}}</el-tag>
@@ -21,13 +21,13 @@
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="预抵日期">
-                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
+                <el-form-item label="预抵日期：">
+                    <!-- <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">上周</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">今日</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">本周</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">下周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp; -->
                 </el-form-item>
                 <el-form-item label="">
                     <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
@@ -35,12 +35,12 @@
             </el-row>
             <el-row>
                 <el-form-item label="预订日期：">
-                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
+                    <!-- <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">上周</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">今日</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">本周</el-tag>&nbsp;&nbsp;
                     <el-tag type="info">下周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp;
+                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp; -->
                 </el-form-item>
                 <el-form-item label="">
                     <el-date-picker v-model="searchForm.createTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
@@ -53,36 +53,36 @@
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="订单来源">
+                <el-form-item label="订单来源：">
                     <el-select v-model="searchForm.orderSource" class="width150">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="团队名称">
+                <el-form-item label="团队名称：">
                     <el-input v-model="searchForm.enterName" class="width150"></el-input>
                 </el-form-item>
-                <el-form-item label="预订单号">
+                <el-form-item label="预订单号：">
                     <el-input v-model="searchForm.orderNum" class="width150"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="预订人">
+                <el-form-item label="预订人：">
                     <el-input v-model="searchForm.name" class="width150"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号">
+                <el-form-item label="手机号：">
                     <el-input v-model="searchForm.mobile" class="width150"></el-input>
                 </el-form-item>
-                <el-form-item label="房型">
+                <el-form-item label="房型：">
                     <el-select v-model="searchForm.enterStatus" class="width150">
                         <el-option :label="item.houseName?item.houseName:'未知'" :value="item.roomTypeId" v-for="(item,index) of roomTypeList" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="房间号">
+                <el-form-item label="房间号：">
                     <el-input v-model="searchForm.houseNum" class="width150"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="外部单号">
+                <el-form-item label="外部单号：">
                     <el-input v-model="searchForm.thirdOrdernum" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item>
@@ -100,7 +100,7 @@
             <el-table-column prop="name" label="预订人" show-overflow-tooltip></el-table-column>
             <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="预订时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="" label="抵离时间" width="200">
+            <el-table-column prop="" label="抵离时间" width="300">
                 <template slot-scope="{row}">
                     <div class="box">
                         <div class="item">

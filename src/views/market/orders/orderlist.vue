@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-11 09:35:52
+ * @LastEditTime: 2020-08-14 15:50:15
  * @FilePath: /jiudian/src/views/market/orders/orderlist.vue
  -->
 
@@ -13,66 +13,60 @@
         <el-form inline size="small" label-width="80px">
             <el-row>
                 <el-form-item label="订单类型">
-                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">在住订单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">今日预离</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">历史订单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">走结订单</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">反结订单</el-tag>&nbsp;&nbsp;
+                    <div class="tagList">
+                        <template v-for="(item,key,index) of $t('frontOffice.orderType')">
+                            <el-tag class="tag" :type="searchForm.orderType==key?'':'info'" :key="index" @click="orderTypeClick(key)">{{item}}</el-tag>
+                        </template>
+                    </div>
                 </el-form-item>
             </el-row>
             <el-row>
                 <el-form-item label="预离日期">
-                    <el-tag type="info">当天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">昨天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">明天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">后三天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">近三天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">近七天</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">上月</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">本月</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">下月</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp;
-                    <el-form-item label="">
-                        <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                    <div class="tagList" style="display:inline-block">
+                        <template v-for="(item,key,index) of $t('frontOffice.leaveDate')">
+                            <el-tag class="tag" :type="searchForm.leaveDate==key?'':'info'" :key="index" @click="leaveDateClick(key)">{{item}}</el-tag>
+                        </template>
+                    </div>
+                    <el-form-item label="" v-if="searchForm.leaveDate==10">
+                        <el-date-picker v-model="searchForm.outStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                         <span style="margin:0 5px">-</span>
-                        <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <el-date-picker v-model="searchForm.outEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
                 </el-form-item>
             </el-row>
             <el-row>
                 <el-form-item label="入住方式">
-                    <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">全天房</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">钟点房</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">午夜房</el-tag>&nbsp;&nbsp;
+                    <div class="tagList" style="display:inline-block">
+                        <template v-for="(item,key,index) of $t('frontOffice.checkInRoomType')">
+                            <el-tag class="tag" :type="searchForm.checkInRoomType==key?'':'info'" :key="index" @click="checkInRoomTypeClick(key)">{{item}}</el-tag>
+                        </template>
+                    </div>
                     <el-form-item label="入住日期">
-                        <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                         <span style="margin:0 5px">-</span>
-                        <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                        <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
                 </el-form-item>
             </el-row>
             <el-row>
                 <el-form-item label="订单来源">
-                    <el-select v-model="searchForm.enterStatus" class="width150">
+                    <el-select v-model="searchForm.orderSource" class="width150">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="客源类别">
-                    <el-select v-model="searchForm.enterStatus" class="width150">
-                        <el-radio v-for="(item,key,index) of $t('commons.guestType')" :value="key" :label="item" :key="index">{{item}}</el-radio>
+                    <el-select v-model="searchForm.guestType" class="width150">
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.guestType')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="房型">
-                    <el-select v-model="searchForm.enterStatus" class="width150">
-                        <el-option label="全部" value="3">全部</el-option>
-                        <el-option label="已认证" value="1">已认证</el-option>
-                        <el-option label="未认证" value="2">未认证</el-option>
+                    <el-select v-model="searchForm.roomTypeId" class="width150">
+                        <el-option label="全部" value="">全部</el-option>
+                        <el-option :value="item.id" v-for="(item,index) of roomTypeList" :label="item.houseName" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="外部订单">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                    <el-input v-model="searchForm.thirdOrdernum" class="width150"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
@@ -80,14 +74,10 @@
                     <el-input v-model="searchForm.name" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item label="房间号">
-                    <el-input v-model="searchForm.content" class="width150"></el-input>
+                    <el-input v-model="searchForm.roomNum" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item label="订单号">
-                    <el-select v-model="searchForm.enterStatus" class="width150">
-                        <el-option label="全部" value="3">全部</el-option>
-                        <el-option label="已认证" value="1">已认证</el-option>
-                        <el-option label="未认证" value="2">未认证</el-option>
-                    </el-select>
+                    <el-input v-model="searchForm.orderNum" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getDataList">查询</el-button>
@@ -174,6 +164,7 @@ export default {
             showEdit: false,
             showDetail: false,
             searchForm: {
+                orderType: '',
                 mobile: '',
                 idcard: '',
                 name: '',
@@ -184,15 +175,20 @@ export default {
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [] //表格数据
+            tableData: [], //表格数据
+            roomTypeList: []
         };
     },
     mounted() {
         this.initForm();
+        this.room_type_list()
     },
     methods: {
         initForm() {
             this.searchForm = {
+                leaveDate: '',
+                checkInRoomType: '',
+                orderType: '',
                 mobile: '',
                 idcard: '',
                 name: '',
@@ -212,9 +208,135 @@ export default {
                 this.listTotal = res.page.count
             })
         },
+        /**房型下拉框 */
+        room_type_list() {
+            this.loading = true;
+            this.$F.doRequest(this, '/pms/hotel/room_type_list', this.searchForm, (res) => {
+                this.loading = false
+                this.roomTypeList = res.meetingtype
+            })
+        },
         handelDetail(item) {
             this.$router.push('/orderdetail?id=' + item.id)
         },
+        orderTypeClick(key) {
+            this.searchForm.orderType = key ? key : ''
+        },
+        checkInRoomTypeClick(key) {
+            this.searchForm.checkInRoomType = key ? key : ''
+        },
+        leaveDateClick(key) {
+            let that = this
+            let date = ''
+            this.searchForm.leaveDate = key
+
+            function getCalcDate(v = 0) {
+                var datetime = new Date();
+                datetime.setDate(datetime.getDate() + v);
+                console.log(datetime)
+                var year = datetime.getFullYear();
+                var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+                var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+                return year + '-' + month + '-' + date
+            }
+            switch (key * 1) {
+                case 0:
+                    that.searchForm.outStartTime = ''
+                    that.searchForm.outEndTime = ''
+                    break;
+                case 1:
+                    date = getCalcDate(0)
+                    that.searchForm.outStartTime = date
+                    that.searchForm.outEndTime = date
+                    alert(that.searchForm.outStartTime)
+                    break;
+                case 2:
+                    date = getCalcDate(-1)
+                    that.searchForm.outStartTime = date
+                    that.searchForm.outEndTime = date
+                    break;
+                case 3:
+                    date = getCalcDate(1)
+                    that.searchForm.outStartTime = date
+                    that.searchForm.outEndTime = date
+                    break;
+                case 4:
+                    that.searchForm.outStartTime = getCalcDate(1)
+                    that.searchForm.outEndTime = getCalcDate(3)
+                    break;
+                case 5:
+                    that.searchForm.outStartTime = getCalcDate(-2)
+                    that.searchForm.outEndTime = getCalcDate(0)
+                    break;
+                case 6:
+                    that.searchForm.outStartTime = getCalcDate(-6)
+                    that.searchForm.outEndTime = getCalcDate(0)
+                    break;
+                case 7:
+                    ;
+                    (function prevMonth() {
+                        var nowdays = new Date();
+                        var year = nowdays.getFullYear();
+                        var month = nowdays.getMonth();
+                        if (month == 0) {
+                            month = 12;
+                            year = year - 1;
+                        }
+                        if (month < 10) {
+                            month = '0' + month;
+                        }
+                        var myDate = new Date(year, month, 0);
+                        that.searchForm.outStartTime = year + '-' + month + '-01'; //上个月第一天
+                        that.searchForm.outEndTime = year + '-' + month + '-' + myDate.getDate(); //上个月最后一天
+                    })()
+                    break;
+                case 8:
+                    ;
+                    (function prevMonth() {
+                        var nowdays = new Date();
+                        var year = nowdays.getFullYear();
+                        var month = nowdays.getMonth() + 1;
+                        if (month == 0) {
+                            month = 12;
+                            year = year - 1;
+                        }
+                        if (month < 10) {
+                            month = '0' + month;
+                        }
+                        var myDate = new Date(year, month, 0);
+                        that.searchForm.outStartTime = year + '-' + month + '-01'; //上个月第一天
+                        that.searchForm.outEndTime = year + '-' + month + '-' + myDate.getDate(); //上个月最后一天
+                    })()
+                    break;
+                case 9:
+                    ;
+                    (function prevMonth() {
+                        var nowdays = new Date();
+                        var year = nowdays.getFullYear();
+                        var month = nowdays.getMonth() + 2;
+                        if (month == 0) {
+                            month = 12;
+                            year = year - 1;
+                        }
+                        if (month < 10) {
+                            month = '0' + month;
+                        }
+                        var myDate = new Date(year, month, 0);
+                        that.searchForm.outStartTime = year + '-' + month + '-01'; //上个月第一天
+                        that.searchForm.outEndTime = year + '-' + month + '-' + myDate.getDate(); //上个月最后一天
+                    })()
+                    break;
+                case 10:
+                    //不操作，手动输入日期
+                    // that.searchForm.outStartTime = ''
+                    // that.searchForm.outEndTime = ''
+                    break;
+                default:
+                    this.searchForm.outStartTime = ''
+                    this.searchForm.outEndTime = ''
+            }
+        },
+
         /**编辑 */
         editRowItem(row) {
             // 加载组件
@@ -252,3 +374,9 @@ export default {
     }
 };
 </script>
+
+<style lang="less" scoped>
+.tagList .tag {
+    margin-right: 5px
+}
+</style>
