@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 10:51:16
+ * @LastEditTime: 2020-08-17 11:09:34
  * @FilePath: /jiudian/src/views/market/orders/detail.vue
  -->
 <template>
@@ -111,7 +111,7 @@
                                     <div class="wrap">
                                         <el-row class="row">
                                             <h3>基本信息<el-button style="vertical-align: middle;margin-left: 10px;display: inline-block;
-" size="mini" class="vm">联房</el-button>
+" size="mini" class="vm" @click="yokeplateHandle">联房</el-button>
                                             </h3>
                                             <el-row class="cell">
                                                 <el-col :span="6">入住时间：{{detailData.checkIn.checkinTime}} </el-col>
@@ -166,6 +166,8 @@
             </el-col>
         </el-row>
     </div>
+    <unitedRoomHandle ref="unitedRoomHandle" />
+
 </div>
 </template>
 
@@ -178,12 +180,15 @@ import c1 from './coms/c1'
 import c2 from './coms/c2'
 import customer from './bookingcoms/customer'
 import myMixin from '@/utils/filterMixin';
+import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
+
 export default {
     mixins: [myMixin],
     components: {
         c1,
         c2,
-        customer
+        customer,
+        unitedRoomHandle
     },
     computed: {
         ...mapState({
@@ -274,8 +279,8 @@ export default {
             this.searchForm.page = val;
             this.getDataList();
         },
-        handleClick() {
-
+        yokeplateHandle() {
+            this.$refs.unitedRoomHandle.init(this.$route.query.id);
         },
         checkTypeHandle(v, item) {
             this.checkType = v
