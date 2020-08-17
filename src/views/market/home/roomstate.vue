@@ -354,7 +354,7 @@
                 <template v-if="currentRoom.checkInRoomType==1">
                     <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
                     <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
-                    <el-button style="width:60px;" @click="roomchange=true">换房</el-button>
+                    <el-button style="width:60px;" @click="rowRoomHandle(currentRoom)">换房</el-button>
                     <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>
                     <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">
                         置脏
@@ -600,6 +600,7 @@
         </el-dialog>
         <roomStatusHandle ref="roomStatusHandle" @initForm="initForm"/>
         <unitedRoomHandle ref="unitedRoomHandle"/>
+        <rowRoomHandle ref="rowRoomHandle" />
     </div>
 </template>
 
@@ -644,12 +645,14 @@
     }]
     import unitedRoomHandle from "./unitedRoomHandle";
     import roomStatusHandle from "./roomStatusHandle";
+    import rowRoomHandle from "./rowRoomHandle";
     import myMixin from '@/utils/filterMixin';
 
     export default {
         components: {
             roomStatusHandle,
-            unitedRoomHandle
+            unitedRoomHandle,
+            rowRoomHandle
         },
         mixins: [myMixin],
         data() {
@@ -1012,6 +1015,15 @@
             batchRoomHaldel() {
                 this.$refs.roomStatusHandle.init();
             },
+
+            rowRoomHandle(item){
+                if(item.livingPersonList.length){
+                    this.$refs.rowRoomHandle.initForm(item.livingPersonList[0].checkinId);
+                }else{
+                    this.$message.error('暂无入住人，请添加入住人后操作')
+                    return
+                }
+            },
             //获取制卡房间表
             liveCard_in_person_list(item) {
                 console.log(item)
@@ -1050,9 +1062,7 @@
                 console.log(val)
             },
             mackcadeCancel() {
-
                 this.mackcade = false
-
             },
             make_card_status() {
                 let arr = []
