@@ -85,7 +85,33 @@ export default {
       routermsg: (state) => state.routermsg.routermsg,
       plat_source: (state) => state.config.plat_source,
     }),
+    dataRule () {
+      return {
+        storesNum: {
+          required: true,
+          message: this.$t('login.sTip'),
+          trigger: "change",
+        },
+        account: {
+          required: true,
+          message: this.$F.translate("请输入 ID", "入力してください ID"),
+          trigger: "change",
+        },
+        password: [
+          {
+            required: true,
+            message: this.$F.translate(
+              "请输入密码",
+              "入力してくださいパスワード"
+            ),
+            // message: 'Please enter the' + ' password',
+            trigger: "change",
+          },
+        ],
+      }
+    }
   },
+
   data() {
     var validatePass = (rule, value, callback) => {
       if (!value) {
@@ -114,29 +140,7 @@ export default {
         account: "",
         password: "",
       },
-      dataRule: {
-        storesNum: {
-          required: true,
-          message: this.$F.translate("请选择门店列表", "店舗先選択"),
-          trigger: "change",
-        },
-        account: {
-          required: true,
-          message: this.$F.translate("请输入 ID", "入力してください ID"),
-          trigger: "change",
-        },
-        password: [
-          {
-            required: true,
-            message: this.$F.translate(
-              "请输入密码",
-              "入力してくださいパスワード"
-            ),
-            // message: 'Please enter the' + ' password',
-            trigger: "change",
-          },
-        ],
-      },
+
     };
   },
 
