@@ -18,7 +18,7 @@
 						<el-table-column prop="remark" label="备注"></el-table-column>
 						<el-table-column label="操作" width="200">
 							<template slot-scope="scope">
-								<el-button type="text" size="small">禁用</el-button>
+								<el-button type="text" size="small" @click="stop('kefang', scope.row)">{{scope.row.state==1? '禁用':'启用'}}</el-button>
 								<el-button type="text" size="small" @click="addHouse('change', scope.row)">修改</el-button>
 								<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="houseConfirm_delete">
 									<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
@@ -52,7 +52,7 @@
 					<el-table-column prop="remark" label="备注"></el-table-column>
 					<el-table-column label="操作" width="250">
 						<template slot-scope="scope">
-							<el-button type="text" size="small">禁用</el-button>
+							<el-button type="text" @click="stop('huiyi', scope.row)">{{scope.row.state==1? '禁用':'启用'}}</el-button>
 							<el-button type="text" size="small" @click="addHouse('change', scope.row)">修改</el-button>
 							<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="houseConfirm_delete">
 								<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
@@ -166,24 +166,6 @@
 						</span>
                             </div>
                         </el-upload>
-<!--						<el-upload list-type="picture-card" action="aa" ref="upload" :auto-upload="false" :http-request="uploadFile"-->
-<!--						 multiple :on-preview="handlePictureCardPreview" :on-remove="handleRemove" accept="image/png,image/gif,image/jpg,image/jpeg">-->
-<!--							<i slot="default" class="el-icon-plus"></i>-->
-<!--							<div slot="file" slot-scope="{file}">-->
-<!--								<img class="el-upload-list__item-thumbnail" :src="file.url" alt="">-->
-<!--								<span class="el-upload-list__item-actions">-->
-<!--									<span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">-->
-<!--										<i class="el-icon-zoom-in"></i>-->
-<!--									</span>-->
-<!--									<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">-->
-<!--										<i class="el-icon-download"></i>-->
-<!--									</span>-->
-<!--									<span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">-->
-<!--										<i class="el-icon-delete"></i>-->
-<!--									</span>-->
-<!--								</span>-->
-<!--							</div>-->
-<!--						</el-upload>-->
 					</el-col>
 					<el-dialog top="0" :visible.sync="dialogVisible">
 						<img width="100%" :src="dialogImageUrl" alt="">
@@ -328,6 +310,23 @@
 						break;
 				}
 			},
+			// 客房禁用
+			stop(type, item) {
+				let params =  {
+					id: item.id
+				}
+				if (item.state ===1) {
+					params.state = 2
+				} else {
+					params.state = 1
+				}
+				params.roomTypeId = item.id
+				debugger
+				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_state', params, (res) => {
+					this.tableData = []
+					this.get_house_list()
+				})
+			},
 			// 选择的图片
 			uploadFile(file) {
 				this.formData.append('uploadFile', file.file);
@@ -348,6 +347,7 @@
 					roomTypeId: this.selectedInfo.id
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_delete', params, (res) => {
+					this.get_house_list()
 					this.$message({
 					  message: '删除成功',
 					  type: 'success'
@@ -397,7 +397,7 @@
 			// 获取 房间类型类型列表
 			get_house_list() {
 				let params = Object.assign({}, this.form)
-                debugger
+                // debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
 					this.tableData = res.list
 					this.form.totalSize = res.totalSize

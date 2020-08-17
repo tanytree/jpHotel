@@ -13,9 +13,11 @@
 		<el-row :gutter="20" class="demo-form-inline" style="background-color: #e6eaed;padding: 10px 0px;">
 			<el-col :span="6">{{currentDong}}共有<span style="color: #126EFF;">{{dongInfo.buildingTotal}}</span>层 共有房间: <span style="color: #126EFF;">{{dongInfo.roomTotal}}</span>间</el-col>
 			<el-col :span="6">
-				<el-button type="text">修改</el-button>
+				<el-button type="text" @click="popup('changeDong')">修改</el-button>
 				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-				<el-button type="text">删除</el-button>
+				<el-popconfirm title="你确定要删除吗？" @onConfirm="houseFloor_delete">
+					<el-button slot="reference" type="text" size="small" @click="deleteRow(selectRedio)">删除</el-button>
+				</el-popconfirm>
 				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
 				<el-button type="text" @click="forward">前移</el-button>
 				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
@@ -35,7 +37,9 @@
 							<el-col :span="10">{{value.building.name}}{{value.name}}</el-col>
 							<el-col :span="14" style="display: flex;justify-content: flex-end;">
 								<el-button type="text" @click="popup('changeCeng',value)">修改</el-button>
-								<el-button type="text">删除</el-button>
+								<el-popconfirm title="你确定要删除吗？" @onConfirm="houseRoom_delete(value)">
+									<el-button slot="reference" type="text" size="small" @click="deleteRow(value)">删除</el-button>
+								</el-popconfirm>
 							</el-col>
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
@@ -51,7 +55,7 @@
 			</el-row>
 		</el-row>
 		<!-- 新增楼栋 -->
-		<el-dialog top="0" title="新增楼栋" :visible.sync="addDong_show" :close-on-click-modal="false">
+		<el-dialog top="0" :title="dong_title" :visible.sync="addDong_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm_dong" :rules="rules" ref="ruleForm_dong" label-width="150px">
 					<el-col :span="20">
@@ -72,7 +76,7 @@
 			</span>
 		</el-dialog>
 		<!-- 新增楼层 -->
-		<el-dialog top="0" title="新增楼层" :visible.sync="addCeng_show" :close-on-click-modal="false">
+		<el-dialog top="0" :title="ceng_title" :visible.sync="addCeng_show" :close-on-click-modal="false">
 			<el-row :gutter="20">
 				<el-form :model="ruleForm_ceng" :rules="rules" ref="ruleForm_ceng" label-width="150px">
 					<el-col :span="20">
@@ -143,6 +147,9 @@
 					}]
 				},
 				currentDong: '',
+				select_type: '',
+				dong_title: '新增楼栋',
+				ceng_title: '新增楼层',
 				dongList: [], //楼栋列表
 				cengList: [], // 楼层列表
 				roomList:[],
@@ -170,15 +177,36 @@
 		},
 		methods: {
 			popup(type, value) {
+				this.select_type = type
 				switch (type) {
 					case 'addDong':
 						this.addDong_show = true
+						this.dong_title = '新增楼栋'
+						break
+					case 'changeDong':
+						this.dongList.forEach((value, index) =>{
+							if (this.selectRedio == value.id) {
+								this.ruleForm_dong = value
+								this.ruleForm_dong.hotelBuildingId = value.id
+							}
+						})
+						this.addDong_show = true
+						this.dong_title = '修改楼栋'
 						break
 					case 'addCeng':
 						this.addCeng_show = true
+						this.ceng_title = '新增楼层'
+						this.ruleForm_ceng ={
+							buildingId:'',// 楼栋id
+							buildingFloorId: '',//楼层id
+							name: '', //楼层名称
+							floor:'', //楼层数字
+							remark:''
+						}
 						break
 					case 'changeCeng':
 						this.addCeng_show = true
+						this.ceng_title = '修改楼层'
 						this.ruleForm_ceng = value
 						break
 				}
@@ -186,11 +214,17 @@
 			// 添加楼栋--确认
 			defineDong() {
 				let params = Object.assign({}, this.ruleForm_dong)
+				switch(this.select_type) {
+					case 'changeDong':
+					params.hotelBuildingId = this.ruleForm_dong.hotelBuildingId
+					break
+				}
+				debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_building_save', params, (res) => {
 					this.get_dong_list()
 					this.addDong_show = false
 					this.$message({
-					  message: '新增成功',
+					  message: '成功',
 					  type: 'success'
 					});
 				})
@@ -207,6 +241,34 @@
 					this.addCeng_show = false
 					this.$message({
 					  message: '新增成功',
+					  type: 'success'
+					});
+				})
+			},
+			// 删除--楼栋
+			houseFloor_delete() {
+				let params = {
+					hotelBuildingId: this.selectRedio
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_building_delete', params, (res) => {
+					this.get_dong_list()
+					this.$message({
+					  message: '删除成功',
+					  type: 'success'
+					});
+				})
+			},
+			// 删除--楼层
+			houseRoom_delete(value) {
+				debugger
+				let params = {
+					buildingFloorId: value.id
+				}
+				debugger
+				this.$F.doRequest(this, '/pms/hotel/hotel_building_floor_delete', params, (res) => {
+					this.get_ceng_list()
+					this.$message({
+					  message: '删除成功',
 					  type: 'success'
 					});
 				})

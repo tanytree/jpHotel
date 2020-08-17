@@ -15,7 +15,11 @@
 				<div class="components-edit">
 					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column prop="name" label="会员类型"></el-table-column>
-						<el-table-column prop="priceModel" label="计费规则"></el-table-column>
+						<el-table-column label="计费规则">
+							<template slot-scope="{row}">
+								<span>{{row.hotelRuleMemberPrice.alldayRuleName}}</span>
+							</template>
+						</el-table-column>
 						<el-table-column prop="time" label="状态">
 							<template slot-scope="{row}">
 								<span>{{row.state ? '启用':'禁用'}}</span>
@@ -27,6 +31,15 @@
 							</template>
 						</el-table-column>
 					</el-table>
+					<el-pagination
+					    @size-change="handleSizeChange"
+					    @current-change="handleCurrentChange"
+					    :current-page="ruleForm_r.pageIndex"
+					    :page-sizes="[10, 20, 50, 100]"
+					    :page-size="ruleForm_r.pageSize"
+					    :total="ruleForm_r.totalSize"
+					    layout="total, sizes, prev, pager, next, jumper"
+					></el-pagination>
 				</div>
 			</el-row>
 		</el-row>
@@ -50,9 +63,8 @@
 					</el-col>
 					<el-col :span="18">
 						<el-form-item label="计费规则:" class="margin-l-15">
-							<el-select v-model="ruleForm.name" placeholder="请选择计费规则" style="width: 100%;">
-								<el-option label="区域一" value="shanghai"></el-option>
-								<el-option label="区域二" value="beijing"></el-option>
+							<el-select v-model="alldayRuleId" placeholder="请选择计费规则" style="width: 100%;">
+								<el-option :label="value.ruleName" :value="value.id" v-for="(value, index) in ruleList" :key="index"></el-option>
 							</el-select>
 						</el-form-item>
 					</el-col>
@@ -79,6 +91,9 @@
 				},
 				ruleForm: {},
 				dialogsit: false,
+				alldayRuleId: '',
+				alldayRuleId_name: '',
+				ruleList: []// 全天房计费规则
 			};
 		},
 		created() {
@@ -91,20 +106,50 @@
 					case 'sit':
 						this.dialogsit = true;
 						this.ruleForm = value;
+						this.get_hotel_rule_allday_list()
 						break
 				}
 			},
 			// 查询
 			searchBtn() {
+				this.tableData = []
 				this.get_hotel_rule_member_price_list()
 			},
 			saveInfo() {
 				let params = {
-					id: this.ruleForm.id,
+					id: this.ruleForm.hotelRuleMemberPrice.id,
 					memberId: this.ruleForm.hotelRuleMemberPrice.memberId,
-					alldayRuleId: this.ruleForm.hotelRuleMemberPrice.alldayRuleId,
+					alldayRuleId: this.alldayRuleId || this.ruleForm.hotelRuleMemberPrice.alldayRuleId,
 					state: this.ruleForm.state,
 				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_member_price_save', params, (res) => {
+					this.tableData = []
+					this.dialogsit = false;
+					this.get_hotel_rule_member_price_list()
+					this.$message({
+					  message: '设置成功',
+					  type: 'success'
+					});
+				})
+			},
+			// 获取 计费规则全天房计费列表
+			get_hotel_rule_allday_list() {
+				let params = {
+					pageIndex: 1,
+					pageSize: 999,
+					totalSize: 0
+				}
+				this.$F.doRequest(this, '/pms/hotel/hotel_rule_allday_list', params, (res) => {
+					if (res.list.length != 0) {
+						res.list.forEach(item =>{
+							if (item.status != 2) {
+								this.ruleList.push(item)
+							}
+						})
+						this.alldayRuleId_name = this.ruleForm.hotelRuleMemberPrice.ruleName
+						this.alldayRuleId = this.ruleForm.hotelRuleMemberPrice.alldayRuleId
+					}
+				})
 			},
 			// 获取 全部房型
 			get_hotel_room_type_list() {

@@ -32,7 +32,16 @@
 					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column prop="ruleName" label="规则名称"></el-table-column>
 						<el-table-column prop="priceModel" label="计费模式"></el-table-column>
-						<el-table-column prop="job_status" label="规则详情"></el-table-column>
+						<el-table-column  label="规则详情" width="500">
+							<template slot-scope="{row}">
+								<span>
+								{{row.priceModel==1 ? '固定时间退房模式':'24小时退房模式'}}
+								入住{{row.checkinStartMinute}}分钟后收起步费,入住{{row.checkinStartHourhouse}}分钟后收全日租
+								次日{{row.checkoutTime}}超过{{row.outtimeMinute}}分钟后收费,{{row.outtimeRule==1 ? '半日租加收':'按每小时加收'}}{{row.outtimeAllday==true?'加收封顶' : ''}}
+								超过{{row.outtimeAllday}}分钟后收全日租
+								</span>
+							</template>
+						</el-table-column>
 						<el-table-column prop="time" label="状态">
 							<template slot-scope="{row}">
 								<span>{{row.state ? '启用':'禁用'}}</span>
@@ -242,6 +251,7 @@
 			},
 			// 查询
 			searchBtn() {
+				this.tableData = []
 				this.get_hotel_rule_allday_list()
 			},
 			// 全天房保存

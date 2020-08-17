@@ -1,7 +1,7 @@
 <!-- 房屋信息 -->
 <template>
 	<div id="page1" class="boss-index">
-		<el-row v-if="!add_show">
+		<el-row v-if="!add_show" style="height: 100%;">
 			<el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
 				<el-col :span="2.5">{{hotel_name || ''}}</el-col>
 				<el-col :span="2">共有{{dongList.length || ''}}栋楼</el-col>
@@ -11,13 +11,12 @@
 					<el-radio-button :label="value.id" v-for="(value, index) in dongList" :key="index">{{value.name}}</el-radio-button>
 				</el-radio-group>
 			</el-row>
-			<el-row>
+			<el-row style="height: 100%;">
 				<el-row :gutter="20" class="demo-form-inline">
 					<el-col :span="14">
 						<el-form class="demo-form-inline" inline size="small">
 							<el-form-item label="楼层全称:" class="margin-l-15">
 								<el-select v-model="form.buildingFloorId" style="width: 120px">
-                                    <el-option label="全部" value="">全部</el-option>
 									<el-option :label="value.name" :value="value.id" v-for="(value, index) in cengList" :key="index"></el-option>
 								</el-select>
 							</el-form-item>
@@ -35,84 +34,74 @@
 					<el-col :span="10">
 						<el-row class="form-inline-flex" style="margin-bottom: 20px;">
 							<el-button type="primary" size="mini" @click="addRoom('add', '')">新增房间</el-button>
-							<el-button type="primary" size="mini">批量启用</el-button>
-							<el-button type="primary" size="mini" @click="popup('change')">批量禁用</el-button>
+							<el-button type="primary" size="mini" @click="stop_p('qyong')">批量启用</el-button>
+							<el-button type="primary" size="mini" @click="stop_p('jyong')">批量禁用</el-button>
 							<el-button type="primary" size="mini">批量噪音房</el-button>
 							<el-button type="primary" size="mini">批量高温房</el-button>
 						</el-row>
 					</el-col>
 				</el-row>
 				<el-container direction="vertical" class="boss-index">
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-					<el-table-column type="selection" width="55"></el-table-column>
-					<el-table-column prop="houseNum" label="房间号"></el-table-column>
-					<el-table-column prop="roomTypeId_name" label="房型名称"></el-table-column>
-					<el-table-column prop="buildingId" label="楼栋">
-                        <template slot-scope="{row}">
-                            <span>
-                                {{dongList.filter((item)=>{
-                                  return item.id == row.buildingId
-                                })[0].name}}
-                            </span>
-                        </template>
-                    </el-table-column>
-					<el-table-column prop="buildingFloorId" label="楼层">
-                        <template slot-scope="{row}">
-                            <span>
-                                {{cengList.filter((item)=>{
-                                  return item.id == row.buildingFloorId
-                                })[0].name}}
-                            </span>
-                        </template>
-                    </el-table-column>
-					<el-table-column prop="extension" label="电话分机"></el-table-column>
-					<el-table-column prop="toward" label="朝向">
-                        <template slot-scope="{row}">
-                            <span>{{$t('commons.toward')[row.toward]}}</span>
-                        </template>
-                    </el-table-column>
-					<el-table-column prop="roadFlag" label="是否靠马路">
-                        <template slot-scope="{row}">
-                            <span v-if="row.roadFlag == 1">是</span>
-                            <span v-if="row.roadFlag == 0">否</span>
-                        </template>
-                    </el-table-column>
-					<el-table-column prop="windowFlag" label="是否有窗">
-                        <template slot-scope="{row}">
-                            <span v-if="row.windowFlag == 1">是</span>
-                            <span v-if="row.windowFlag == 0">否</span>
-                        </template>
-                    </el-table-column>
-					<el-table-column prop="state" label="状态">
-                        <template slot-scope="{row}">
-                            <span v-if="row.state == 1">启用</span>
-                            <span v-if="row.state == 0">禁用</span>
-                        </template>
-                    </el-table-column>
-					<el-table-column label="操作" width="200">
-						<template slot-scope="scope">
-							<el-button type="text" size="small" @click="popup('detail')">禁用</el-button>
-							<el-button type="text" size="small" @click="addRoom('change', scope.row)">修改</el-button>
-							<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="houseConfirm_delete(scope.row)">
-								<el-button slot="reference" type="text" size="small">删除</el-button>
-							</el-popconfirm>
-						</template>
-					</el-table-column>
-				</el-table>
-				<!-- <div class="block">
-					<div class="page-all">
-						共
-						<span style="font-weight:600;font-size: 14px;">400</span>条记录
-					</div>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage1"
-					 :page-sizes="[100, 200, 300, 400]" :page-size="100" layout=" sizes, prev, pager, next, jumper" :total="400"></el-pagination>
-				</div> -->
+					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" @selection-change="handleSelectionChange" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+						<el-table-column type="selection" width="55"></el-table-column>
+						<el-table-column prop="houseNum" label="房间号"></el-table-column>
+						<el-table-column prop="roomTypeId_name" label="房型名称"></el-table-column>
+						<el-table-column label="楼栋">
+							<template slot-scope="{row}">
+								<template slot-scope="scope">
+									<el-input v-model="scope.row.hotelBuilding.name"></el-input>
+								</template>
+							</template>
+						</el-table-column>
+						<el-table-column prop="buildingFloorId" label="楼层">
+							<template slot-scope="{row}">
+								<template slot-scope="scope">
+									<el-input v-model="scope.row.hotelBuildingFloor.name"></el-input>
+								</template>
+							</template>
+						</el-table-column>
+						<el-table-column prop="extension" label="电话分机"></el-table-column>
+						<el-table-column prop="toward" label="朝向">
+							<template slot-scope="{row}">
+								<span>{{$t('commons.toward')[row.toward]}}</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="roadFlag" label="是否靠马路">
+							<template slot-scope="{row}">
+								<span v-if="row.roadFlag == 1">是</span>
+								<span v-if="row.roadFlag == 0">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="windowFlag" label="是否有窗">
+							<template slot-scope="{row}">
+								<span v-if="row.windowFlag == 1">是</span>
+								<span v-if="row.windowFlag == 0">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="state" label="状态">
+							<template slot-scope="{row}">
+								<span v-if="row.state == 1">启用</span>
+								<span v-if="row.state == 0">禁用</span>
+							</template>
+						</el-table-column>
+						<el-table-column label="操作" width="200">
+							<template slot-scope="scope">
+								<el-button type="text" size="small" @click="stop_d(scope.row)">{{scope.row.state==1? '禁用':'启用'}}</el-button>
+								<el-button type="text" size="small" @click="addRoom('change', scope.row)">修改</el-button>
+								<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="houseConfirm_delete(scope.row)">
+									<el-button slot="reference" type="text" size="small">删除</el-button>
+								</el-popconfirm>
+							</template>
+						</el-table-column>
+					</el-table>
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
+					 :page-sizes="[10, 20, 50, 100]" :page-size="form.pageSize" :total="form.totalSize" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
 				</el-container>
 			</el-row>
 		</el-row>
 		<el-row v-if="add_show">
-			<AddRoom ref="AddRoom" :selectRedio="selectRedio" :currentDong="currentDong" :selectFrom="selectFrom" :roomType="roomType" :dongList="dongList" :add_show="add_show"
-			 @changeShow="changeShow"></AddRoom>
+			<AddRoom ref="AddRoom" :selectRedio="selectRedio" :currentDong="currentDong" :selectFrom="selectFrom" :roomType="roomType"
+			 :dongList="dongList" :add_show="add_show" @changeShow="changeShow"></AddRoom>
 		</el-row>
 	</div>
 </template>
@@ -145,8 +134,8 @@
 					buildingFloorId: '',
 					roomTypeId: '',
 					houseNum: '',
-					pageIndex: '1',
-					pageSize: '10'
+					pageIndex: 1,
+					pageSize: 10
 				},
 				dongList: [], //楼栋列表
 				cengList: [], // 楼层列表
@@ -166,14 +155,15 @@
 				selectFrom: {},
 				add_show: false,
 				roomType: [{
-					label:'客房',
-					value:'1',
-					children:[]
-				},{
-					label:'会议厅',
-					value:'2',
-					children:[]
-				}]
+					label: '客房',
+					value: '1',
+					children: []
+				}, {
+					label: '会议厅',
+					value: '2',
+					children: []
+				}],
+				multipleSelection: []
 			}
 		},
 		watch: {
@@ -188,6 +178,10 @@
 			this.get_room_type_list()
 		},
 		methods: {
+			handleSelectionChange(val) {
+				this.multipleSelection = val;
+				// debugger
+			},
 			addRoom(type, value) {
 				debugger
 				switch (type) {
@@ -195,22 +189,22 @@
 						this.selectFrom = {
 							name: '',
 							buildingId: '',
-							buildingId_name:'',
-							buildingFloorId:'',
-							buildingFloorId_name:'',
-							roomTypeId:'',
-							roomTypeId_name:'',
-							houseNum:'',
-							extension:'',
-							roomIcon:'',
-							toward:1,
-							roadFlag:1,
-							state:1,
-							windowFlag:1,
-							smokeFlag:1,
-							noiseFlag:1,
-							temperatureFlag:1,
-							remark:'备注', //为什么备注是必选
+							buildingId_name: '',
+							buildingFloorId: '',
+							buildingFloorId_name: '',
+							roomTypeId: '',
+							roomTypeId_name: '',
+							houseNum: '',
+							extension: '',
+							roomIcon: '',
+							toward: 1,
+							roadFlag: 1,
+							state: 1,
+							windowFlag: 1,
+							smokeFlag: 1,
+							noiseFlag: 1,
+							temperatureFlag: 1,
+							remark: '备注', //为什么备注是必选
 						}
 						this.add_show = true
 						break;
@@ -221,7 +215,53 @@
 				}
 			},
 			search_list() {
+				this.tableData = []
 				this.get_room_list()
+			},
+			stop_p(type) {
+				let params = {}
+				let roomId = ''
+				if (this.multipleSelection.length !== 0) {
+					this.multipleSelection.forEach(item =>{
+						roomId = roomId + ',' + item.id
+					})
+					if (roomId.substr(0, 1) === ',') {
+					  roomId = roomId.substr(1)
+					}
+				} else {
+					this.$message({
+						message: '请选择',
+						type: 'warning'
+					});
+					return
+				}
+				params.roomId = roomId
+				if (type == 'qyong') {
+					params.state = 1
+				} else {
+					params.state = 2
+				}
+				debugger
+				this.$F.doRequest(this, '/pms/hotel/hotel_room_oper', params, (res) => {
+					this.tableData = []
+					this.get_room_list()
+				})
+			},
+			stop_d(item) {
+				let params = {
+					id: item.id
+				}
+				if (item.state === 1) {
+					params.state = 2
+				} else {
+					params.state = 1
+				}
+				params.roomId = item.id
+				debugger
+				this.$F.doRequest(this, '/pms/hotel/hotel_room_oper', params, (res) => {
+					this.tableData = []
+					this.get_room_list()
+				})
 			},
 			// 获取联级选择--房屋类型
 			handleChange(value) {
@@ -232,7 +272,7 @@
 				this.form.buildingId = this.selectRedio
 				let params = this.form
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_list', params, (res) => {
-					res.list.forEach((item, index) =>{
+					res.list.forEach((item, index) => {
 
 						item.buildingId_name = item.hotelBuilding.name
 						item.buildingFloorId_name = item.hotelBuildingFloor.name
@@ -267,12 +307,12 @@
 				// debugger
 				this.$F.doRequest(this, '/pms/hotel/room_type_list', {}, (res) => {
 					// debugger
-					res.roomtype.forEach((item, index) =>{
+					res.roomtype.forEach((item, index) => {
 						item.label = item.houseName
 						item.value = item.id
 						this.roomType[0].children.push(item)
 					})
-					res.meetingtype.forEach((item, index) =>{
+					res.meetingtype.forEach((item, index) => {
 						item.label = item.houseName
 						item.value = item.id
 						this.roomType[1].children.push(item)
@@ -298,9 +338,14 @@
 			},
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
+				this.form.pageSize = val;
+				this.form.pageIndex = 1;
+				this.get_room_list();
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
+				this.form.pageIndex = 1;
+				this.get_room_list();
 			}
 		}
 	}
@@ -310,5 +355,9 @@
 <style lang="less">
 	.row-width {
 		width: 120px;
+	}
+
+	.boss-index {
+		height: 100%;
 	}
 </style>
