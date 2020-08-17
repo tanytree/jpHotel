@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 15:33:02
+ * @LastEditTime: 2020-08-17 17:03:54
  * @FilePath: /jiudian/src/views/market/home/rowRoomHandle.vue
  -->
 <template>
@@ -254,16 +254,40 @@ export default {
     },
     computed: {},
     methods: {
-        initForm(checkInId) {
+        initForm(checkInId, reservedRoom) {
+            console.log(reservedRoom)
+            let item = {
+                num: 1,
+                price: 236,
+                reserveTotal: 1,
+                roomTypeId: "2c9f404b7362933c01736348f8880005",
+                roomTypeName: "大床房",
+                todayPrice: 236
+            }
+            for (let item of reservedRoom) {
+                console.log(item)
+                let exist = false
+                for (let k in this.waitingRoom) {
+                    if (this.waitingRoom[k].roomTypeId == item.roomTypeId) {
+                        this.waitingRoom[k].num++
+                        exist = true
+                    }
+                }
+                if (!exist) {
+                    item.num = 1
+                    this.waitingRoom.push(item)
+                }
+            }
+
             this.rowRoomHandleShow = true
+            this.checkInForm.checkInId = checkInId
+            this.checkInForm.checkInReserveId = checkInId
+
             this.getRoomsForm = {
                 changeType: 1,
                 bedCount: '',
                 roomType: this.operCheckinType == 'b3' ? 2 : 1
             };
-            this.checkInForm.checkInId = checkInId
-            this.checkInForm.checkInReserveId = checkInId
-            alert(checkInId)
             this.getDataList();
         },
         /**获取表格数据 */

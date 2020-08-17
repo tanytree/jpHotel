@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 09:25:30
+ * @LastEditTime: 2020-08-17 16:12:29
  * @FilePath: /jiudian/src/views/market/orders/bookingDetail.vue
  -->
 <template>
@@ -36,7 +36,10 @@
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane label="订单基本信息" name="first">
                         <div class="tabWrap">
-                            <sbase :checkinInfo="detailData.checkIn" :roomInfo="detailData.inRoomList" @baseInfoChange="baseInfoChange"></sbase>
+                            <sbase 
+                                :checkinInfo="detailData.checkIn" 
+                                :roomInfo="detailData.inRoomList" 
+                                @baseInfoChange="baseInfoChange"></sbase>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="客人信息" name="second">
