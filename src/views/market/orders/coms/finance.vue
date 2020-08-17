@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-14 12:01:40
+ * @LastEditTime: 2020-08-17 10:55:37
  * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
@@ -61,7 +61,7 @@
     <!--分页 -->
     <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination> -->
     <!--入账-->
-    <el-dialog title="入账" :visible.sync="entryShow">
+    <el-dialog top='0' title="入账" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
             <p>快速入账项目</p>
             <el-form-item label="付款项目：">
@@ -107,7 +107,7 @@
             <el-button type="primary" @click="consume_oper(1,'entry')">入账</el-button>
         </div>
     </el-dialog>
-    <el-dialog title="选择结算方式" :visible.sync="payTypeShow">
+    <el-dialog top='0' title="选择结算方式" :visible.sync="payTypeShow">
         <el-form :model="consumeOperForm" size="mini">
             <el-form-item label="">
                 <el-radio-group v-model="consumeOperForm.payType">
@@ -125,7 +125,7 @@
         </div>
     </el-dialog>
     <!--挂账-->
-    <el-dialog title="挂账" :visible.sync="onAccountShow" width="500px">
+    <el-dialog top='0' title="挂账" :visible.sync="onAccountShow" width="500px">
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -172,7 +172,7 @@
         </div>
     </el-dialog>
     <!--走结-->
-    <el-dialog title="走结" :visible.sync="knotShow" width="500px">
+    <el-dialog top='0' title="走结" :visible.sync="knotShow" width="500px">
         <el-form :model="consumeOperForm" ref="knot" :rules="rules" size="mini" label-width="20px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -209,7 +209,7 @@
         </div>
     </el-dialog>
     <!--开发票-->
-    <el-dialog title="开发票" :visible.sync="openInvoiceShow" width="900px">
+    <el-dialog top='0' title="开发票" :visible.sync="openInvoiceShow" width="900px">
         <el-form :model="openInvoiceForm" ref="openInvoice" :rules="rules" size="mini" label-width="130px">
             <el-row>
                 <el-col :span="8">
@@ -260,7 +260,7 @@
         </div>
     </el-dialog>
     <!--结账退款-->
-    <el-dialog title="退房结账" :visible.sync="checkOutShow" width="800px">
+    <el-dialog top='0' title="退房结账" :visible.sync="checkOutShow" width="800px">
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -314,7 +314,7 @@
         </div>
     </el-dialog>
     <!--冲调-->
-    <el-dialog title="冲调" :visible.sync="destructionShow" width="800px">
+    <el-dialog top='0' title="冲调" :visible.sync="destructionShow" width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-14 16:41:29
+ * @LastEditTime: 2020-08-17 10:56:13
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/finance.vue
  -->
 <template>
@@ -43,7 +43,7 @@
         <el-table-column prop="" label="班次" show-overflow-tooltip></el-table-column>
     </el-table>
     <!--冲调-->
-    <el-dialog title="冲调" :visible.sync="destructionShow" width="800px">
+    <el-dialog top='0' title="冲调" :visible.sync="destructionShow" width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
             <p>正在冲调的账务</p>
             <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
@@ -77,7 +77,7 @@
         </div>
     </el-dialog>
     <!--交订金-->
-    <el-dialog title="交订金" :visible.sync="depositShow">
+    <el-dialog top='0' title="交订金" :visible.sync="depositShow">
         <el-form :model="consumeOperForm" ref="deposit" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="detailData">
                 <el-col :span="8" v-if="detailData.checkIn">预订单号：{{detailData.checkIn.reserveOrderNum}}</el-col>
@@ -105,7 +105,7 @@
         </div>
     </el-dialog>
     <!--退订金-->
-    <el-dialog title="退订金" :visible.sync="refundShow">
+    <el-dialog top='0' title="退订金" :visible.sync="refundShow">
         <el-form :model="consumeOperForm" ref="refund" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="detailData">
                 <el-col :span="8" v-if="detailData.checkIn">预订单号：{{detailData.checkIn.reserveOrderNum}}</el-col>
@@ -132,7 +132,7 @@
             <el-button type="primary" @click="consume_oper(2,'refund')">结算</el-button>
         </div>
     </el-dialog>
-    <el-dialog title="选择结算方式" :visible.sync="payTypeShow">
+    <el-dialog top='0' title="选择结算方式" :visible.sync="payTypeShow">
         <el-form :model="consumeOperForm" size="mini">
             <el-form-item label="">
                 <el-radio-group v-model="consumeOperForm.payType">
