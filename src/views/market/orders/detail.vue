@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 11:15:26
+ * @LastEditTime: 2020-08-17 11:22:57
  * @FilePath: /jiudian/src/views/market/orders/detail.vue
  -->
 <template>
@@ -14,7 +14,7 @@
             </el-breadcrumb>
         </div>
     </div>
-    <div class="bodyInfo margin-t-10"  v-loading="loading">
+    <div class="bodyInfo margin-t-10" v-loading="loading">
         <el-row :gutter="20">
             <el-col :span="6">
                 <div class="grid-content">
@@ -87,7 +87,7 @@
             <el-col :span="18">
                 <div class="grid-content">
                     <template v-if="checkType=='customer'">
-                        <c1  :detailData="detailData" :currentRoom="currentRoom"></c1>
+                        <c1 :detailData="detailData" :currentRoom="currentRoom"></c1>
                     </template>
                     <template v-if="checkType=='order'">
                         <div class="detailTabWrap">
@@ -110,7 +110,9 @@
                                 <div class="thisOrderInfo">
                                     <div class="wrap">
                                         <el-row class="row">
-                                            <h3>基本信息</h3>
+                                            <h3>基本信息<el-button style="vertical-align: middle;margin-left: 10px;display: inline-block;
+" size="mini" class="vm" @click="yokeplateHandle" v-if="detailData.inRoomList.length">联房</el-button>
+                                            </h3>
                                             <el-row class="cell">
                                                 <el-col :span="6">入住时间：{{detailData.checkIn.checkinTime}} </el-col>
                                                 <el-col :span="6">预离时间：{{detailData.checkIn.checkoutTime}}</el-col>
@@ -164,6 +166,8 @@
             </el-col>
         </el-row>
     </div>
+    <unitedRoomHandle ref="unitedRoomHandle" />
+
 </div>
 </template>
 
@@ -176,12 +180,15 @@ import c1 from './coms/c1'
 import c2 from './coms/c2'
 import customer from './bookingcoms/customer'
 import myMixin from '@/utils/filterMixin';
+import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
+
 export default {
     mixins: [myMixin],
     components: {
         c1,
         c2,
-        customer
+        customer,
+        unitedRoomHandle
     },
     computed: {
         ...mapState({
@@ -213,7 +220,7 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             salesList: [],
-            currentRoom:'',
+            currentRoom: '',
         };
     },
 
@@ -272,13 +279,13 @@ export default {
             this.searchForm.page = val;
             this.getDataList();
         },
-        handleClick() {
-
+        yokeplateHandle() {
+            this.$refs.unitedRoomHandle.init(this.$route.query.id);
         },
-        checkTypeHandle(v,item) {
+        checkTypeHandle(v, item) {
             this.checkType = v
             this.currentRoom = ''
-            if(item){
+            if (item) {
                 this.currentRoom = item
             }
         }

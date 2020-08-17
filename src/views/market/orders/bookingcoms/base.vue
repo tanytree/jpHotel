@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-10 17:30:58
+ * @LastEditTime: 2020-08-17 10:19:53
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
  -->
 <template>
@@ -9,12 +9,12 @@
     <el-row class="clearfix">
         <div class="fr">
             <el-button plain @click="liveInPersonShow=true">批量入住</el-button>
-            <el-button plain>修改订单</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')">修改订单</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary">
                 更多操作
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>排房</el-dropdown-item>
-                    <el-dropdown-item>更改客源</el-dropdown-item>
+                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
                     <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
                 </el-dropdown-menu>
@@ -41,7 +41,6 @@
             </el-col>
         </el-row>
     </el-row>
-
     <el-row>
         <h4>预订房型</h4>
         <el-row>
@@ -78,7 +77,102 @@
             <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
         </span>
     </el-dialog>
- <el-dialog top="0" title="NOSHOW" :visible.sync="noShowDiaShow" width="600px" center>
+    <el-dialog top="0" title="修改订单" :visible.sync="baseInfoChangeShow" width="900px" center>
+        <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
+            <el-row>
+                <el-col :span="8">
+                    <el-form-item label="预抵时间：" class="">
+                        {{baseInfoChangeForm.checkinTime}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="入住天数：" class="">
+                        {{baseInfoChangeForm.checkinDays}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="预离时间：" class="">
+                        {{baseInfoChangeForm.checkoutTime}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="入住类型" prop="checkinType">
+                        <el-select v-model="baseInfoChangeForm.checkinType" class="width150">
+                            <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="销售员：">
+                        <el-select v-model="baseInfoChangeForm.salesId" class="width150">
+                            <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="保留时间：" prop="keepTime">
+                        <el-date-picker v-model="baseInfoChangeForm.keepTime" type="datetime" style="width:150px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="预订人：" class="" prop="name">
+                        <el-input type="text" v-model="baseInfoChangeForm.name" style="width:150px"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="手机号：" prop="mobile">
+                        <el-input v-model="baseInfoChangeForm.mobile" class="width150"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="外部订单号：">
+                        <el-input v-model="baseInfoChangeForm.thirdOrdernum" class="width150"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="备注：" class="">
+                        <el-input type="textarea" v-model="baseInfoChangeForm.remark" style="width:450px"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="baseInfoChangeShow = false">取 消</el-button>
+            <el-button type="primary" @click="hotel_check_inChange">确 定</el-button>
+        </span>
+    </el-dialog>
+    <el-dialog top="0" title="更改客源" :visible.sync="gustTypeChangeShow" width="500px" center>
+        <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
+            <el-row>
+
+                <el-row>
+                    <el-form-item label="客人类型:" class="" style="margin-bottom:0" prop="guestType">
+                        <el-radio-group v-model="baseInfoChangeForm.guestType">
+                            <el-radio v-for="(item,key,index) of $t('commons.guestType')" :label="key" :key="index">{{item}}</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label-width="100px" label="" class="" style="margin-bottom:0" v-if="baseInfoChangeForm.guestType==2||baseInfoChangeForm.guestType==3">
+                        <el-input type="text" class="width200"></el-input>
+
+                    </el-form-item>
+                </el-row>
+                <br />
+                <el-row>
+                    <el-form-item label="订单来源" prop="orderSource">
+                        <el-select v-model="baseInfoChangeForm.orderSource" class="width200">
+                            <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-row>
+            </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="baseInfoChangeShow = false">取 消</el-button>
+            <el-button type="primary" @click="hotel_check_inChange">确 定</el-button>
+        </span>
+    </el-dialog>
+
+    <el-dialog top="0" title="NOSHOW" :visible.sync="noShowDiaShow" width="600px" center>
         <el-form :model="currentItem" style="margin-top:-20px" size="mini">
             <el-row>
                 <el-col :span="12">
@@ -117,6 +211,21 @@
 </template>
 
 <script>
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "H+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 import {
     mapState,
     mapActions
@@ -165,16 +274,101 @@ export default {
             loading: false,
             liveInPersonShow: false,
             noShowDiaShow: false,
+            baseInfoChangeShow: false,
+            gustTypeChangeShow: false,
             activeName: 'first',
+            salesList: [],
             roomTypeList: {},
-            currentItem:{}
-
+            currentItem: {},
+            baseInfoChangeForm: {},
+            rules: {
+                name: [{
+                    required: true,
+                    message: '请输入姓名',
+                    trigger: 'blur'
+                }, ],
+                sex: [{
+                    required: true,
+                    message: '请选择性别',
+                    trigger: 'blur'
+                }, ],
+                mobile: [{
+                    required: true,
+                    message: '请输入手机号',
+                    trigger: 'blur'
+                }, ],
+                idcardType: [{
+                    required: true,
+                    message: '请选择护照类型',
+                    trigger: 'blur'
+                }, ],
+                idcard: [{
+                    required: true,
+                    message: '请输入证件号',
+                    trigger: 'blur'
+                }, ],
+                checkinTime: [{
+                    required: true,
+                    message: '请选择入住时间',
+                    trigger: 'change'
+                }, ],
+                checkoutTime: [{
+                    required: true,
+                    message: '请选择预离时间',
+                    trigger: 'change'
+                }, ],
+                keepTime: [{
+                    required: true,
+                    message: '请选择保留时间',
+                    trigger: 'change'
+                }, ],
+                checkinDays: [{
+                    required: true,
+                    message: '请输入入住天数',
+                    trigger: 'change'
+                }, ],
+                guestType: [{
+                    required: true,
+                    message: '请选择客源类型',
+                    trigger: 'blur'
+                }, ],
+                orderSource: [{
+                    required: true,
+                    message: '请订单来源',
+                    trigger: 'change'
+                }, ],
+                checkinType: [{
+                    required: true,
+                    message: '请选择入住类型',
+                    trigger: 'change'
+                }, ],
+                ruleHourId: [{
+                    required: true,
+                    message: '请选择计费规则',
+                    trigger: 'change'
+                }, ],
+            },
+            leaveTime: {
+                disabledDate: time => {
+                    if (this.baseInfoChangeForm.checkinTime != "" && this.baseInfoChangeForm.checkinTime) {
+                        let timeStr = new Date(new Date(this.baseInfoChangeForm.checkinTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                        if (this.operCheckinType == 'b2') { //时租预订
+                            return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
+                        }
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr;
+                    } else if (this.baseInfoChangeForm.checkinTime == "") {
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                    } else {
+                        return "";
+                    }
+                }
+            },
         };
     },
 
     mounted() {
         let id = this.$route.query.id
-        // this.get_user_enterprise(id)
+        this.login_user_list()
     },
 
     methods: {
@@ -189,7 +383,7 @@ export default {
         },
         handleCancel() {
             let params = {
-                checkInReserveId:this.$route.query.id || '',
+                checkInReserveId: this.$route.query.id || '',
                 state: 8
             }
             this.$confirm('请确认是否取消?', '提示', {
@@ -221,6 +415,42 @@ export default {
                 });
                 this.$router.go(-1)
             })
+        },
+        login_user_list() {
+            let params = {
+                searchType: 2,
+                paging: false,
+                salesFlag: 1,
+                content: '',
+                departmentId: '',
+                pageIndex: 1,
+                pageSize: 10
+            }
+            this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (data) => {
+                this.salesList = data.hotelUserList;
+            })
+        },
+        hotel_check_inChange() {
+            this.$refs.baseInfoChange.validate((valid) => {
+                this.baseInfoChangeForm.checkInReserveId = this.$route.query.id
+                if (valid) {
+                    this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.baseInfoChangeForm, (data) => {
+                        this.baseInfoChangeShow = false
+                        this.gustTypeChangeShow = false
+                        this.$emit('baseInfoChange', '');
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        baseInfoChangeHandle(type) {
+            this.baseInfoChangeForm = this.checkinInfo
+            this[type] = true
+            this.baseInfoChangeForm.checkinType = this.baseInfoChangeForm.checkinType.toString()
+            this.baseInfoChangeForm.orderSource = this.baseInfoChangeForm.orderSource.toString()
+            this.baseInfoChangeForm.guestType = this.baseInfoChangeForm.guestType.toString()
         },
         handleNoshow() {
             this.currentItem = this.checkinInfo;
