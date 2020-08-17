@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 17:03:54
+ * @LastEditTime: 2020-08-17 18:54:58
  * @FilePath: /jiudian/src/views/market/home/rowRoomHandle.vue
  -->
 <template>
@@ -255,34 +255,27 @@ export default {
     computed: {},
     methods: {
         initForm(checkInId, reservedRoom) {
-            console.log(reservedRoom)
-            let item = {
-                num: 1,
-                price: 236,
-                reserveTotal: 1,
-                roomTypeId: "2c9f404b7362933c01736348f8880005",
-                roomTypeName: "大床房",
-                todayPrice: 236
-            }
+            let that = this
+            //初始化已排房
             for (let item of reservedRoom) {
-                console.log(item)
                 let exist = false
-                for (let k in this.waitingRoom) {
-                    if (this.waitingRoom[k].roomTypeId == item.roomTypeId) {
-                        this.waitingRoom[k].num++
+                for (let i = 0; i < that.waitingRoom.length;i++) {
+                    if (that.waitingRoom[i].roomTypeId == item.roomTypeId) {
+                        that.waitingRoom[i].num++
+                        that.waitingRoom[i]['roomsArr'].push({houseNum:item.houseNum,id:item.id})
                         exist = true
                     }
                 }
                 if (!exist) {
                     item.num = 1
-                    this.waitingRoom.push(item)
+                    item.roomsArr = []
+                    item.roomsArr.push({houseNum:item.houseNum,id:item.id})
+                    that.waitingRoom.push(item)
                 }
             }
-
             this.rowRoomHandleShow = true
             this.checkInForm.checkInId = checkInId
             this.checkInForm.checkInReserveId = checkInId
-
             this.getRoomsForm = {
                 changeType: 1,
                 bedCount: '',
