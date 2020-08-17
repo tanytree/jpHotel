@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 10:19:53
+ * @LastEditTime: 2020-08-17 15:26:23
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
  -->
 <template>
@@ -13,7 +13,7 @@
             <el-dropdown split-button type="primary">
                 更多操作
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>排房</el-dropdown-item>
+                    <el-dropdown-item @click.native="rowRoomHandle">排房</el-dropdown-item>
                     <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
                     <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
@@ -207,6 +207,8 @@
             <el-button type="primary" @click="confirmNoshow">确 定</el-button>
         </span>
     </el-dialog>
+            <rowRoomHandle ref="rowRoomHandle" />
+
 </div>
 </template>
 
@@ -232,9 +234,11 @@ import {
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
 import customer from './customer'
+import rowRoomHandle from "@/views/market/home/rowRoomHandle";
+
 export default {
     components: {
-        customer
+        customer,rowRoomHandle
     },
     mixins: [myMixin],
     props: ['checkinInfo', 'roomInfo'],
@@ -455,6 +459,10 @@ export default {
         handleNoshow() {
             this.currentItem = this.checkinInfo;
             this.noShowDiaShow = true
+        },
+        rowRoomHandle(){
+                if(this.$route.query.id)
+                    this.$refs.rowRoomHandle.initForm(this.$route.query.id);
         },
 
     }

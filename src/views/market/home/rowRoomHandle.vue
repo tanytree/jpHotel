@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 15:03:06
+ * @LastEditTime: 2020-08-17 15:33:02
  * @FilePath: /jiudian/src/views/market/home/rowRoomHandle.vue
  -->
 <template>
@@ -262,6 +262,8 @@ export default {
                 roomType: this.operCheckinType == 'b3' ? 2 : 1
             };
             this.checkInForm.checkInId = checkInId
+            this.checkInForm.checkInReserveId = checkInId
+            alert(checkInId)
             this.getDataList();
         },
         /**获取表格数据 */
@@ -397,18 +399,13 @@ export default {
             if (number < 1) {
                 return
             }
-
             let params = {
                 checkinRoomType: 1,
                 roomTypeId: roomTypeId,
                 rowHousesTotal: number
             }
-            if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
-                params.checkinId = this.checkInForm.checkInId
-            }
-            if (this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3') {
-                params.checkinReserveId = this.checkInForm.checkInId
-            }
+            params.checkinId = this.checkInForm.checkInId
+            params.checkinReserveId = this.checkInForm.checkInId
             let setRooms = (key, item) => {
                 console.log(key)
                 console.log(item)
