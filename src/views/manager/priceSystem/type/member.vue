@@ -5,7 +5,9 @@
                 <el-form class="demo-form-inline" inline size="small">
                     <!-- 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 -->
                     <el-form-item label="选择时间:">
-                        <el-date-picker v-model="ruleForm.name" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions">
+                        <el-date-picker v-model="ruleForm.date"
+                                        value-format="yyyy-MM-dd"
+                                        align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" @blur="get_hotel_price_room_type_list">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item class="form-inline-flex">
@@ -54,7 +56,12 @@
                     </el-col>
                     <el-col :span="20">
                         <el-form-item label="选择时间:">
-                            <el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" value-format="yyyy-MM-dd" unlink-panels range-separator="至"
+                            <el-date-picker v-model="batchEditPriceForm.time"
+                                            type="daterange" align="right"
+                                            value-format="yyyy-MM-dd"
+                                            :picker-options="expireTimeOption"
+                                            unlink-panels
+                                            range-separator="至"
                                             start-placeholder="开始日期" end-placeholder="结束日期">
                             </el-date-picker>
                         </el-form-item>
@@ -105,7 +112,7 @@
             </el-table>
             <el-row style="padding: 20px 0px;">
                 <el-button type="primary" style="width: 80px;" @click="onSave">保存</el-button>
-                <el-button style="width: 80px;margin-left: 20px; cursor: pointer">返回</el-button>
+                <el-button style="width: 80px;margin-left: 20px; cursor: pointer" @back="back_1">返回</el-button>
             </el-row>
         </el-row>
 
@@ -153,7 +160,8 @@
                 roomStrategyJson: [],
               },
               ruleForm: {
-                name: '',
+                // date: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                date: new Date().Format("yyyy-MM-dd"),
                 region: '',
                 date1: '',
                 date2: '',
@@ -172,6 +180,12 @@
               },
 			  memberTableHeads: [],
               memberTableData: {memberTypeList: [], dateList: []},
+              expireTimeOption: {
+                disabledDate(date) {
+                  //disabledDate 文档上：设置禁用状态，参数为当前日期，要求返回 Boolean
+                  return date.getTime() < Date.now() - 24 * 60 * 60 * 1000;
+                }
+              },
             pickerOptions: {
                 disabledDate(time) {
                     return time.getTime() > Date.now();
@@ -187,6 +201,7 @@
                     const date = new Date();
                     date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
                     picker.$emit('pick', date);
+                    this.get_hotel_price_room_type_list();
                   }
                 }, {
                   text: '后十五天',
@@ -194,6 +209,7 @@
                     const date = new Date();
                     date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
                     picker.$emit('pick', date);
+                    this.get_hotel_price_room_type_list();
                   }
                 }]
             },
@@ -242,6 +258,7 @@
             })
             params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
             this.$F.doRequest(this, '/pms/hotel/hotel_price_member_strategy_save', params, (res) => {
+              this.$message.success("Save success");
             })
           },
           priceBlur(row, index) {
@@ -298,7 +315,13 @@
             }
             this.editPriceForm.member = memberTypeObject;
             this.editPriceForm.room = roomObject;
-            this.editPriceForm.dateStr = item.dateStr;
+
+            let array = this.memberTableData.dayPriceList.filter(item => {
+              return item.memberTypeId == this.editPriceForm.member.id && item.roomTypeId == this.editPriceForm.room.id;
+            })
+            debugger
+            this.editPriceForm.customPrice = array[0].newCustomPrice || array[0].customPrice || '';
+            this.editPriceForm.dateStr = new Date().getFullYear() + '-' + item.dateStr;
             this.editPriceDialog = true;
           },
 
@@ -317,6 +340,7 @@
               dayTime: this.editPriceForm.dateStr,
               strategyId: 1,
             }
+            debugger;
             this.$F.doRequest(this, '/pms/hotel/hotel_room_day_price_save', params, (res) => {
               this.editPriceDialog = false;
               this.$message.success('success');
@@ -326,7 +350,7 @@
           // 会员 价格策略单位列表
           get_hotel_price_room_type_list() {
             let params = {
-              strategyTime: '2020-08-11',
+              strategyTime: this.ruleForm.date,
               priceCalend:1,  // 检索类型 1会员价格日历 2单位价格日历
               timeType:1,  // 检索类型 1会员价格日历 2单位价格日历
             }
@@ -342,7 +366,6 @@
               });
               debugger
               this.memberTableData = res;
-              console.log(this.memberTableData);
               this.batchEditPriceForm.roomStrategyJson = [];
               this.memberTableData.memberTypeList[0].roomTypeList.forEach(item => {
                 this.batchEditPriceForm.roomStrategyJson.push({

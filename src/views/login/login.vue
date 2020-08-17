@@ -1,7 +1,7 @@
 <template>
 	<div class="register-index">
 		<div class="body-r">
-			<div class="room-title">{{$F.translate('大仓集团酒店管理系统', '大倉グループホテル管理システム')}}</div>
+			<div class="room-title">{{$t('login.roomTitle')}}</div>
 			<div class="room-name">{{$t('login.roomName')}}</div>
 		</div>
 		<div class="register-body" v-loading="loading" v-if="loginType=='login'">

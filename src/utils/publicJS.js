@@ -194,12 +194,32 @@ const $F = {
         return null
     },
 
+    //获取三级菜单 并默认设置当前tab值
     handleThirdMenu($instance) {
         if (sessionStorage.subMenul) {
             $instance.menuList = JSON.parse(sessionStorage.subMenul).childList || []
             $instance.$forceUpdate()
         }
         $instance.activeName = this.filterThirdMenu(null, null, false, true).path;
+    },
+
+    //
+    formatDate(fmt) {
+        var o = {
+            "M+": this.getMonth() + 1,                 //月份
+            "d+": this.getDate(),                    //日
+            "h+": this.getHours(),                   //小时
+            "m+": this.getMinutes(),                 //分
+            "s+": this.getSeconds(),                 //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds()             //毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
     },
 
     // 一些多个页面都会用到的方法 统一写到commons里面

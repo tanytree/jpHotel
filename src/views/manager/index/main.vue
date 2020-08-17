@@ -1,7 +1,36 @@
 
 <template>
     <div class="boss-index" id="page1">
-        <el-tabs class="pageTab" v-model="activeName">
+<!--        <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
+<!--            <el-tab-pane label="房间动态" name="a">-->
+<!--                <roomStatus ref="roomStatus"/>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="夜审设置" name="b" >-->
+<!--                <nightSite ref="nightSite" :findOne="findOne" :initData="getFindOneData"/>-->
+<!--            </el-tab-pane>-->
+<!--            &lt;!&ndash;<el-tab-pane label="发票维护" name="c" >-->
+<!--                <billMainten ref="billMainten"/>-->
+<!--            </el-tab-pane>&ndash;&gt;-->
+<!--            <el-tab-pane label="损物赔偿" name="d" >-->
+<!--                <damageCompensate ref="damageCompensate" :list="damageData" :initData="getDamageTypeData"/>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="交班设置" name="hand" >-->
+<!--                <shiftSite ref="shiftSite" :handData="handData" :initData="getHandOverData" />-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="酒店服务" name="hotel" >-->
+<!--                <hotelServices ref="hotelServices" :hotelData="hotelData" :initData="getHotelServiceData"/>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="打印管理" name="print" >-->
+<!--                <printingMg ref="printingMg" :printData="printData" :initData="getPrintParamData"/>-->
+<!--            </el-tab-pane>-->
+<!--            &lt;!&ndash; 员工权限&ndash;&gt;-->
+<!--            <el-tab-pane :label="$F.filterThirdMenu('manager', 'staff-rights').thirdMenu"-->
+<!--                         v-if="$F.filterThirdMenu('manager', 'staff-rights', true)">-->
+<!--                <EmployeeRights/>-->
+<!--            </el-tab-pane>-->
+<!--        </el-tabs>-->
+
+        <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                          :name="item.path"
                          :key="item.path"
@@ -9,15 +38,15 @@
                 <!-- 房间动态-->
                 <roomStatus v-if="item.path == 'roomStatus'"/>
                 <!-- 夜审设置-->
-                <nightSite v-if="item.path == 'nightSite'"/>
+                <nightSite v-if="item.path == 'nightSite'" ref="nightSite" :findOne="findOne" :initData="getFindOneData"/>
                 <!-- 损物赔偿-->
-                <damageCompensate v-if="item.path == 'damageCompensate'"/>
+                <damageCompensate v-if="item.path == 'damageCompensate'" ref="damageCompensate" :list="damageData" :initData="getDamageTypeData"/>
                 <!-- 交班设置-->
-                <shiftSite v-if="item.path == 'shiftSite'"/>
+                <shiftSite v-if="item.path == 'shiftSite'"  ref="shiftSite" :handData="handData" :initData="getHandOverData" />
                 <!-- 酒店服务-->
-                <hotelServices v-if="item.path == 'hotelServices'"/>
+                <hotelServices v-if="item.path == 'hotelServices'" ref="hotelServices" :hotelData="hotelData" :initData="getHotelServiceData"/>
                 <!-- 打印管理-->
-                <printingMg v-if="item.path == 'printingMg'"/>
+                <printingMg v-if="item.path == 'printingMg'"  ref="printingMg" :printData="printData" :initData="getPrintParamData"/>
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -64,25 +93,25 @@
         methods: {
 			handleClick(tab) {
 				this.activeName = tab.name;
-				if(tab.name == 'b') {
+				if(tab.name == 'nightSite') {
 					this.getFindOneData();
-				} else if (tab.name == 'd') {
+				} else if (tab.name == 'damageCompensate') {
 					this.getDamageTypeData();
-				} else if (tab.name == 'hotel') {
+				} else if (tab.name == 'hotelServices') {
 				    this.getHotelServiceData()
-				} else if (tab.name == 'print') {
+				} else if (tab.name == 'printingMg') {
 				    this.getPrintParamData()
-                } else if (tab.name == 'hand') {
+                } else if (tab.name == 'shiftSite') {
 				    this.getHandOverData()
                 }
 			},
 			getFindOneData() {
 				this.$F.doRequest(this, '/pms/nighttrial/findone', {}, (res) => {
-					res.arriveStatus = res.arriveStatus == 1 ? true : false;
-					res.leaveStatus = res.leaveStatus == 1 ? true : false;
-					res.leaveOrder = res.leaveOrder == 1 ? true : false;
-					res.isOd = res.isOd == 1 ? true : false;
-					res.trialType = res.trialType == 1 ? true : false;
+					res.arriveStatus = res.arriveStatus == 1;
+					res.leaveStatus = res.leaveStatus == 1;
+					res.leaveOrder = res.leaveOrder == 1;
+					res.isOd = res.isOd == 1;
+					res.trialType = res.trialType == 1;
 					this.findOne = res;
 				})
 			},
