@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 11:09:34
+ * @LastEditTime: 2020-08-17 11:22:57
  * @FilePath: /jiudian/src/views/market/orders/detail.vue
  -->
 <template>
@@ -111,7 +111,7 @@
                                     <div class="wrap">
                                         <el-row class="row">
                                             <h3>基本信息<el-button style="vertical-align: middle;margin-left: 10px;display: inline-block;
-" size="mini" class="vm" @click="yokeplateHandle">联房</el-button>
+" size="mini" class="vm" @click="yokeplateHandle" v-if="detailData.inRoomList.length">联房</el-button>
                                             </h3>
                                             <el-row class="cell">
                                                 <el-col :span="6">入住时间：{{detailData.checkIn.checkinTime}} </el-col>
