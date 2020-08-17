@@ -1,12 +1,12 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 09:30:17
+ * @LastEditTime: 2020-08-17 09:25:30
  * @FilePath: /jiudian/src/views/market/orders/bookingDetail.vue
  -->
 <template>
-<div class="boss-index ov-y" >
-    <div class="el-card"  style="height:auto">
+<div class="boss-index ov-y">
+    <div class="el-card" style="height:auto">
         <div class="el-card__header">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/orders' }">预订单</el-breadcrumb-item>
@@ -36,7 +36,7 @@
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane label="订单基本信息" name="first">
                         <div class="tabWrap">
-                            <sbase :checkinInfo="detailData.checkIn" :roomInfo="detailData.inRoomList"></sbase>
+                            <sbase :checkinInfo="detailData.checkIn" :roomInfo="detailData.inRoomList" @baseInfoChange="baseInfoChange"></sbase>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="客人信息" name="second">
@@ -88,25 +88,26 @@ export default {
     },
     data() {
         return {
+            id: '',
             loading: false,
             isOrder: true,
             activeName: 'first',
             detailData: {},
-            currentRoom:{}
-            
+            currentRoom: {}
+
         };
     },
 
     mounted() {
-        let id = this.$route.query.id
-        this.getDetail(id)
+        this.id = this.$route.query.id
+        this.getDetail(this.id)
     },
 
     methods: {
         getDetail(id) {
             // 加载组件
             let params = {
-                reserveId:id
+                reserveId: id
             }
             this.loading = true;
             this.$F.doRequest(this, '/pms/checkin/reserve_check_in_detail', params, (res) => {
@@ -114,12 +115,11 @@ export default {
                 this.detailData = res
             })
         },
-
-         handleClick() {
-                
-
+        baseInfoChange(v) {
+            this.getDetail(this.id)
         },
-        showRoomInfo(item){
+        handleClick() {},
+        showRoomInfo(item) {
             this.currentRoom = item
             this.isOrder = false
         }
@@ -201,7 +201,7 @@ export default {
     }
 
     .rightContent {
-        padding:0 10px;
+        padding: 0 10px;
         background: #fff;
         overflow: hidden;
         margin-bottom: -5000px;

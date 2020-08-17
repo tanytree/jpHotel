@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-12 13:19:50
+ * @LastEditTime: 2020-08-17 09:41:28
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -116,7 +116,7 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="客源类型：" prop="guestType">
-                            <el-input type="input" :value="guestTypeSwitch(checkInForm.guestType)" class="width200">
+                            <el-input type="input" :value="guestTypeSwitch(checkInForm.guestType)" class="width200" :disabled="true">
                                 <template slot="append"><span @click="guestTypeShow=true">…</span></template>
                             </el-input>
                         </el-form-item>
