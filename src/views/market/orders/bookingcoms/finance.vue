@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 10:56:13
+ * @LastEditTime: 2020-08-18 14:41:47
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/finance.vue
  -->
 <template>
@@ -42,6 +42,10 @@
         <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
         <el-table-column prop="" label="班次" show-overflow-tooltip></el-table-column>
     </el-table>
+    <div style="margin-top:10px"></div>
+    <!-- 分页 -->
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+
     <!--冲调-->
     <el-dialog top='0' title="冲调" :visible.sync="destructionShow" width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
@@ -183,13 +187,10 @@ export default {
                 text: ''
             },
             searchForm: {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                state: '',
+                checkInId: '',
+                pageIndex: 1,
+                pageSize: 10
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -257,12 +258,12 @@ export default {
 
     methods: {
         consume_order_list() {
-            let params = {
-                state: '',
-                checkInId: this.$route.query.id
-            };
-            this.$F.doRequest(this, '/pms/consume/consume_order_list', params, (res) => {
+
+            this.searchForm.checkInId = this.$route.query.id;
+
+            this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
                 this.tableData = res.consumeOrderList
+                this.listTotal = (res.page || {}).count || 0
                 this.$forceUpdate()
             })
         },
@@ -312,14 +313,12 @@ export default {
             //冲调
             if (type == 3) { //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
                 params.state = 2
-                
-               
-                    // params.priceType == 1
-                    if (params.consumePrice > 0 || params.consumePrice == 0) {
-                        this.$message.error('请输入为负数金额');
-                        return
-                    }
-                
+                params.payType == 0
+                if (params.consumePrice > 0 || params.consumePrice == 0) {
+                    this.$message.error('请输入为负数金额');
+                    return
+                }
+
             }
 
             this.$refs[formName].validate((valid) => {
@@ -359,6 +358,17 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
+        /**每页数 */
+        handleSizeChange(val) {
+            this.searchForm.pageSize = val;
+            this.searchForm.pageIndex = 1;
+            this.consume_order_list();
+        },
+        /**当前页 */
+        handleCurrentChange(val) {
+            this.searchForm.pageIndex = val;
+            this.consume_order_list();
+        }
     }
 };
 </script>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 11:22:57
+ * @LastEditTime: 2020-08-18 13:50:01
  * @FilePath: /jiudian/src/views/market/orders/detail.vue
  -->
 <template>
@@ -93,7 +93,7 @@
                         <div class="detailTabWrap">
                             <div class="el-card detailTab">
                                 <div class="el-card__header" style="padding:0 20px">
-                                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                                    <el-tabs v-model="activeName" >
                                         <el-tab-pane label="账务明细" name="first">
                                         </el-tab-pane>
                                         <el-tab-pane label="订单信息" name="second">

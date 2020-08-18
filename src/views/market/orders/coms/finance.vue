@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 10:55:37
+ * @LastEditTime: 2020-08-18 15:07:25
  * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
@@ -13,7 +13,7 @@
                 <el-button type="primary" size="mini" @click="entryShow=true">入账</el-button>
                 <el-button type="primary" size="mini" @click="onAccountShow=true">挂账</el-button>
                 <el-button type="primary" size="mini" @click="consumeGoodsHandle">迷你吧</el-button>
-                <el-button type="primary" size="mini" @click="checkOutShow=true">退房结账</el-button>
+                <el-button type="primary" size="mini" @click="checkOutHandle">退房结账</el-button>
                 <el-button type="primary" size="mini" @click="openInvoiceHandle">开发票</el-button>
                 <el-button type="primary" size="mini">打印</el-button>
                 <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
@@ -58,9 +58,9 @@
         </el-table-column>
     </el-table>
     <div style="margin-top:10px"></div>
-    <!--分页 -->
-    <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination> -->
-    <!--入账-->
+    <!-- 分页 -->
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+    <!--入账 -->
     <el-dialog top='0' title="入账" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
             <p>快速入账项目</p>
@@ -261,7 +261,7 @@
     </el-dialog>
     <!--结账退款-->
     <el-dialog top='0' title="退房结账" :visible.sync="checkOutShow" width="800px">
-        <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
+        <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
                     房型：{{currentRoom.roomTypeName}}
@@ -286,9 +286,9 @@
             </div>
             <br />
             <el-form-item label="" label-width="0">
-                <el-checkbox v-model="consumeOperForm.name">可用200积分抵扣20日元</el-checkbox>
+                <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
             </el-form-item>
-            <el-form-item label="收款方式：" prop="payType">
+            <el-form-item label="收款方式：" prop="payType" v-if="detailData.totalPrice>0">
                 <el-radio-group v-model="consumeOperForm.payType">
                     <el-radio :label="1" :value="1">现金</el-radio>
                     <el-radio :label="2" :value="2">银行卡</el-radio>
@@ -298,7 +298,7 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="金额：" class="" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
+                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="备注：">
                 <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
@@ -310,7 +310,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="checkOutShow=false">关闭</el-button>
-            <el-button type="primary" @click="consume_oper(2,'onAccount')">确认</el-button>
+            <el-button type="primary" @click="consume_oper(4,'checkOut')">确认</el-button>
         </div>
     </el-dialog>
     <!--冲调-->
@@ -421,13 +421,10 @@ export default {
                 text: ''
             },
             searchForm: {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
+                state: '',
+                checkInId: '',
+                pageIndex: 1,
+                pageSize: 10
             },
             consumeOperForm: {
                 priceType: '',
@@ -446,7 +443,8 @@ export default {
                 projectName: '',
                 invoiceTime: '',
                 remark: '',
-                invoiceId: ''
+                invoiceId: '',
+                isPoints:false
             },
             rules: {
                 consumePrice: [{
@@ -507,18 +505,17 @@ export default {
 
     mounted() {
         let id = this.$route.query.id
-        this.consume_order_list()
+        this.consume_order_list('')
         this.hoteldamagetype_list()
     },
 
     methods: {
-        consume_order_list(state = '') {
-            let params = {
-                state: state,
-                checkInId: this.$route.query.id
-            };
-            this.$F.doRequest(this, '/pms/consume/consume_order_list', params, (res) => {
+        consume_order_list(state) {
+            this.searchForm.state = state || '';
+            this.searchForm.checkInId = this.$route.query.id;
+            this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
                 this.tableData = res.consumeOrderList
+                this.listTotal = (res.page || {}).count || 0
                 this.$forceUpdate()
             })
         },
@@ -589,17 +586,32 @@ export default {
             //挂账
             if (type == 2) {
                 params.priceType = 13
-                params.payType = 1 //挂账无需支付方式
+                params.payType = 0 //挂账无需支付方式
                 params.state = 1
             }
             //冲调
             if (type == 3) {
                 params.state = 2
+                params.payType = 0 //挂账无需支付方式
                 params.orderId = this.destructionList[0].id
-                 if (params.consumePrice > 0 || params.consumePrice == 0) {
-                        this.$message.error('请输入为负数金额');
-                        return
-                    }
+                if (params.consumePrice > 0 || params.consumePrice == 0) {
+                    this.$message.error('请输入为负数金额');
+                    return
+                }
+            }
+            //退房结账
+            if (type == 4) {
+                params.state = 2
+                if(params.consumePrice<0){
+                    params.payType = 0 
+                }
+                if(params.isPoints){
+                    params.scoresDiscount = 200
+                    params.scoresPrice = 20
+                } else {
+                    params.scoresDiscount = ''
+                    params.scoresPrice = ''
+                }
             }
 
             this.$refs[formName].validate((valid) => {
@@ -607,6 +619,10 @@ export default {
                     this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
                         this.entryShow = false
                         this.onAccountShow = false
+                        this.destructionShow = false
+                        this.consumeOperForm.forEach(element => {
+                            element = ''
+                        });
                         this.consume_order_list()
                     })
                 } else {
@@ -648,6 +664,10 @@ export default {
                 }
             }
             this.openInvoiceShow = true
+        },
+        checkOutHandle() {
+            this.checkOutShow = true;
+            this.consumeOperForm.consumePrice = this.detailData.totalPrice
         },
         //开发票提交
         openInvoiceSubmit(formName) {
@@ -801,12 +821,12 @@ export default {
         handleSizeChange(val) {
             this.searchForm.pageSize = val;
             this.searchForm.pageIndex = 1;
-            this.getDataList();
+            this.consume_order_list();
         },
         /**当前页 */
         handleCurrentChange(val) {
             this.searchForm.pageIndex = val;
-            this.getDataList();
+            this.consume_order_list();
         }
     }
 };

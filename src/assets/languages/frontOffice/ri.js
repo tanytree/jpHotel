@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-10 14:30:47
+ * @LastEditTime: 2020-08-18 13:44:40
  * @FilePath: /jiudian/src/assets/languages/frontOffice/ri.js
  */
 module.exports = {
@@ -35,6 +35,7 @@ module.exports = {
         "10": '部分冲调',
         "11": '免单',
         "12": '房费',
+        "13": '挂账',
         "100": '其他'
     }
 }
