@@ -13,24 +13,24 @@
                        :key="item.path"
                        v-if="$F.filterThirdMenu('frontOffice', item.path, true)">
               <!-- 普通预订-->
-              <normal v-if="item.path == 'normal'"/>
+              <normal v-if="item.path == 'normal'" operCheckinType="b1"/>
               <!-- 时租房预订-->
-              <hour v-if="item.path == 'hour'"/>
+              <hour v-if="item.path == 'hour'" operCheckinType="b2"/>
               <!-- 会场预订-->
-              <hall v-if="item.path == 'hall'"/>
+              <hall v-if="item.path == 'hall'" operCheckinType="b3"/>
           </el-tab-pane>
       </el-tabs>
-<!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
-<!--      <el-tab-pane label="普通预订" name="b1">-->
-<!--        <normal :operCheckinType="activeName" />-->
-<!--      </el-tab-pane>-->
-<!--      <el-tab-pane label="时租房预订" name="b2">-->
-<!--        <hour :operCheckinType="activeName" />-->
-<!--      </el-tab-pane>-->
-<!--      <el-tab-pane label="会场预订" name="b3">-->
-<!--        <hall />-->
-<!--      </el-tab-pane>-->
-<!--    </el-tabs>-->
+      <!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
+      <!--      <el-tab-pane label="普通预订" name="b1">-->
+      <!--        <normal :operCheckinType="activeName" />-->
+      <!--      </el-tab-pane>-->
+      <!--      <el-tab-pane label="时租房预订" name="b2">-->
+      <!--        <hour :operCheckinType="activeName" />-->
+      <!--      </el-tab-pane>-->
+      <!--      <el-tab-pane label="会场预订" name="b3">-->
+      <!--        <hall />-->
+      <!--      </el-tab-pane>-->
+      <!--    </el-tabs>-->
   </div>
 </template>
 
@@ -53,7 +53,6 @@ export default {
   methods: {
     //二级tab切片
     handleClick(tab, event) {
-      // console.log(tab.index);
     }
   }
 };
