@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 15:26:23
+ * @LastEditTime: 2020-08-17 16:10:05
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
  -->
 <template>
@@ -461,8 +461,11 @@ export default {
             this.noShowDiaShow = true
         },
         rowRoomHandle(){
-                if(this.$route.query.id)
-                    this.$refs.rowRoomHandle.initForm(this.$route.query.id);
+                if(!this.$route.query.id){
+                    this.$message.error('订单信息不正确');
+                    return
+                }
+                this.$refs.rowRoomHandle.initForm(this.$route.query.id,this.roomInfo);
         },
 
     }

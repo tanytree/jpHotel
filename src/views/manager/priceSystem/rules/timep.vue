@@ -26,7 +26,18 @@
 				<div class="components-edit">
 					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column prop="ruleName" label="规则名称"></el-table-column>
-						<el-table-column prop="ruleName" label="规则详情"></el-table-column>
+						<el-table-column prop="ruleName" label="规则详情" width="500">
+							<template slot-scope="{row}">
+								<span>
+								指定办理入住时间段{{row.startTime}}-{{row.endTime}}
+								入住{{row.outtimeMinute}}分钟后收起步费,入住{{row.checkinStartHourhouse}}分钟后收时租房全价
+								超过{{row.outtimeMinute}}分钟后收费,
+								超过{{row.outtimeAllday}}分钟后转全日租,
+								{{row.outtimeRule==1 ? '半日租加收':'每小时加收'}}
+								{{row.outtimeRuleCaps==true?'加收封顶' : ''}}
+								</span>
+							</template>
+						</el-table-column>
 						<el-table-column label="状态">
 							<template slot-scope="{row}">
 								<span>{{row.state == 1 ? '启用':'禁用'}}</span>
@@ -44,10 +55,6 @@
 						</el-table-column>
 					</el-table>
 					<div class="block">
-						<!-- <div class="page-all">
-							共
-							<span style="font-weight:600;font-size: 14px;">{{ruleForm.totalSize}}</span>条记录
-						</div> -->
 						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="ruleForm.pageIndex"
 						 :page-sizes="[10, 20, 30, 40]" :page-size="ruleForm.pageSize" layout=" sizes, prev, pager, next, jumper"
 						 :total="ruleForm.totalSize"></el-pagination>
