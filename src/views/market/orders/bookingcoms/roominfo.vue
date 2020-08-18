@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-10 17:13:46
+ * @LastEditTime: 2020-08-18 11:29:02
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/roominfo.vue
  -->
 <template>
@@ -20,7 +20,7 @@
         <el-col :span="12">
             <div class="fr">
                 <el-button plain size="mini" @click="liveInPersonShow=true">入住</el-button>
-                <el-button plain size="mini">修改预留</el-button>
+                <el-button plain size="mini" @click="rowRoomHandle">修改预留</el-button>
                 &nbsp;
                 &nbsp;
                 &nbsp;
@@ -131,6 +131,7 @@
             <el-button size="small" @click="mackcade=false">取消</el-button>
         </span>
     </el-dialog>
+    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" />
 
 </div>
 </template>
@@ -141,10 +142,12 @@ import {
     mapActions
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
+import rowRoomHandle from "@/views/market/home/rowRoomHandle";
 import customer from './customer'
 export default {
     components: {
-        customer
+        customer,
+        rowRoomHandle
     },
     mixins: [myMixin],
     props: ['checkinInfo', 'currentRoom'],
@@ -160,8 +163,8 @@ export default {
         return {
             loading: false,
             liveInPersonShow: false,
-            mackcade:false,
-            liveCardLoading:false,
+            mackcade: false,
+            liveCardLoading: false,
             checkType: 'customer',
             activeName: 'first',
             detail: {
@@ -211,7 +214,7 @@ export default {
             }
             return ''
         },
-         //获取入住人
+        //获取入住人
         liveCard_in_person_list() {
             let params = {
                 type: 3,
@@ -263,6 +266,18 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val;
             console.log(val)
+        },
+        baseInfoChange() {
+            this.$emit('baseInfoChange', '');
+        },
+        rowRoomHandle() {
+            if (!this.$route.query.id) {
+                this.$message.error('订单信息不正确');
+                return
+            }
+            let arr = [];
+            arr.push(this.currentRoom)
+            this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, arr);
         },
 
     }

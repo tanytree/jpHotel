@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 18:54:58
+ * @LastEditTime: 2020-08-18 10:44:03
  * @FilePath: /jiudian/src/views/market/home/rowRoomHandle.vue
  -->
 <template>
@@ -9,7 +9,25 @@
     <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" title="排房" width="80%">
 
         <el-row style="margin-bottom:60px" v-loading="loading">
-            <h3>房间信息</h3>
+            <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
+                <el-row>
+                    <el-col :span="6">
+                        <el-form-item label="预抵时间" prop="checkinTime">
+                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="入住天数：" prop="checkinDays">
+                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="预离时间：" prop="checkoutTime">
+                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
             <el-form inline size="mini">
                 <el-row>
                     <el-col :span="17">
@@ -113,6 +131,10 @@
                 </el-row>
             </el-form>
         </el-row>
+        <span slot="footer" class="dialog-footer">
+            <el-button size="small" @click="rowRoomHandleShow = false">取消</el-button>
+            <el-button size="small" type="primary" @click="hotel_check_inChange">确定</el-button>
+        </span>
     </el-dialog>
 
     <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" title="排房" width="800px">
@@ -181,6 +203,41 @@ export default {
     mixins: [myMixin],
     data() {
         return {
+            afterToday: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天 
+                }
+            },
+            leaveTime: {
+                disabledDate: time => {
+                    if (this.checkInForm.checkinTime != "" && this.checkInForm.checkinTime) {
+                        let timeStr = new Date(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                        if (this.operCheckinType == 'b2') { //时租预订
+                            return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
+                        }
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr;
+                    } else if (this.checkInForm.checkinTime == "") {
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                    } else {
+                        return "";
+                    }
+                }
+            },
+            satrtTime: {
+                disabledDate: time => {
+                    if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
+                        let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                        if (this.operCheckinType == 'b2') { //时租预订
+                            return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
+                        }
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
+                    } else if (this.checkInForm.checkoutTime == "") {
+                        return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                    } else {
+                        return "";
+                    }
+                }
+            },
             rowRoomHandleShow: false,
             loading: false,
             liveLoading: false,
@@ -232,6 +289,73 @@ export default {
                 checkInId: '',
                 checkInReserveId: ''
             },
+            rules: {
+                name: [{
+                    required: true,
+                    message: '请输入姓名',
+                    trigger: 'blur'
+                }, ],
+                sex: [{
+                    required: true,
+                    message: '请选择性别',
+                    trigger: 'blur'
+                }, ],
+                mobile: [{
+                    required: true,
+                    message: '请输入手机号',
+                    trigger: 'blur'
+                }, ],
+                idcardType: [{
+                    required: true,
+                    message: '请选择护照类型',
+                    trigger: 'blur'
+                }, ],
+                idcard: [{
+                    required: true,
+                    message: '请输入证件号',
+                    trigger: 'blur'
+                }, ],
+                checkinTime: [{
+                    required: true,
+                    message: '请选择入住时间',
+                    trigger: 'change'
+                }, ],
+                checkoutTime: [{
+                    required: true,
+                    message: '请选择预离时间',
+                    trigger: 'change'
+                }, ],
+                keepTime: [{
+                    required: true,
+                    message: '请选择保留时间',
+                    trigger: 'change'
+                }, ],
+                checkinDays: [{
+                    required: true,
+                    message: '请输入入住天数',
+                    trigger: 'change'
+                }, ],
+                guestType: [{
+                    required: true,
+                    message: '请选择客源类型',
+                    trigger: 'blur'
+                }, ],
+                orderSource: [{
+                    required: true,
+                    message: '请订单来源',
+                    trigger: 'change'
+                }, ],
+                checkinType: [{
+                    required: true,
+                    message: '请选择入住类型',
+                    trigger: 'change'
+                }, ],
+                ruleHourId: [{
+                    required: true,
+                    message: '请选择计费规则',
+                    trigger: 'change'
+                }, ],
+            },
             hotelRoomListParams: {
                 buildingId: '',
                 buildingFloorId: '',
@@ -254,26 +378,34 @@ export default {
     },
     computed: {},
     methods: {
-        initForm(checkInId, reservedRoom) {
+        initForm(checkInId, checkinInfo, reservedRoom) {
             let that = this
+            that.waitingRoom = [];
             //初始化已排房
             for (let item of reservedRoom) {
                 let exist = false
-                for (let i = 0; i < that.waitingRoom.length;i++) {
+                for (let i = 0; i < that.waitingRoom.length; i++) {
                     if (that.waitingRoom[i].roomTypeId == item.roomTypeId) {
                         that.waitingRoom[i].num++
-                        that.waitingRoom[i]['roomsArr'].push({houseNum:item.houseNum,id:item.id})
+                        that.waitingRoom[i]['roomsArr'].push({
+                            houseNum: item.houseNum,
+                            id: item.id
+                        })
                         exist = true
                     }
                 }
                 if (!exist) {
                     item.num = 1
                     item.roomsArr = []
-                    item.roomsArr.push({houseNum:item.houseNum,id:item.id})
+                    item.roomsArr.push({
+                        houseNum: item.houseNum,
+                        id: item.id
+                    })
                     that.waitingRoom.push(item)
                 }
             }
             this.rowRoomHandleShow = true
+            this.checkInForm = checkinInfo
             this.checkInForm.checkInId = checkInId
             this.checkInForm.checkInReserveId = checkInId
             this.getRoomsForm = {
@@ -505,6 +637,45 @@ export default {
                 return false
             }
             return false
+        },
+        satrtTimeChange(e) {
+            let day = 0
+            if (this.checkInForm.checkoutTime != '') {
+                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
+                this.checkInForm.checkinDays = day
+            }
+        },
+        endTimeChange(e) {
+            let day = 0
+            if (this.checkInForm.checkinTime != '') {
+                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
+                this.checkInForm.checkinDays = day
+            }
+        },
+        checkinDaysChange(e) {
+            console.log(e)
+            if (this.checkInForm.checkinTime == '') {
+                this.$message.error('请选择到店时间')
+                this.checkInForm.checkinDays = 0
+                return
+            } else {
+                var date = new Date(this.checkInForm.checkinTime);
+                date.setDate(date.getDate() + e);
+                this.checkInForm.checkoutTime = date
+            }
+        },
+        hotel_check_inChange() {
+            this.$refs.checkInForm.validate((valid) => {
+                if (valid) {
+                    this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
+                        this.rowRoomHandleShow = false
+                        this.$emit('baseInfoChange', '');
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         },
 
     }

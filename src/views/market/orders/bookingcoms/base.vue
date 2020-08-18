@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 16:10:05
+ * @LastEditTime: 2020-08-18 11:09:02
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
  -->
 <template>
@@ -207,7 +207,7 @@
             <el-button type="primary" @click="confirmNoshow">确 定</el-button>
         </span>
     </el-dialog>
-            <rowRoomHandle ref="rowRoomHandle" />
+    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" />
 
 </div>
 </template>
@@ -238,7 +238,8 @@ import rowRoomHandle from "@/views/market/home/rowRoomHandle";
 
 export default {
     components: {
-        customer,rowRoomHandle
+        customer,
+        rowRoomHandle
     },
     mixins: [myMixin],
     props: ['checkinInfo', 'roomInfo'],
@@ -456,16 +457,19 @@ export default {
             this.baseInfoChangeForm.orderSource = this.baseInfoChangeForm.orderSource.toString()
             this.baseInfoChangeForm.guestType = this.baseInfoChangeForm.guestType.toString()
         },
+        baseInfoChange() {
+            this.$emit('baseInfoChange', '');
+        },
         handleNoshow() {
             this.currentItem = this.checkinInfo;
             this.noShowDiaShow = true
         },
-        rowRoomHandle(){
-                if(!this.$route.query.id){
-                    this.$message.error('订单信息不正确');
-                    return
-                }
-                this.$refs.rowRoomHandle.initForm(this.$route.query.id,this.roomInfo);
+        rowRoomHandle() {
+            if (!this.$route.query.id) {
+                this.$message.error('订单信息不正确');
+                return
+            }
+            this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, this.roomInfo);
         },
 
     }

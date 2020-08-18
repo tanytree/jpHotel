@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 16:12:29
+ * @LastEditTime: 2020-08-18 11:10:08
  * @FilePath: /jiudian/src/views/market/orders/bookingDetail.vue
  -->
 <template>
@@ -55,7 +55,7 @@
                 </el-tabs>
             </el-row>
             <el-row v-else>
-                <roominfo :currentRoom="currentRoom" :checkinInfo="detailData.checkIn"></roominfo>
+                <roominfo :currentRoom="currentRoom" :checkinInfo="detailData.checkIn" @baseInfoChange="baseInfoChange"></roominfo>
             </el-row>
         </div>
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: 董林
- * @LastEditTime: 2020-08-17 09:41:28
+ * @LastEditTime: 2020-08-18 10:27:03
  * @FilePath: /jiudian/src/views/market/reception/checkin/normal.vue
  -->
 
@@ -1664,7 +1664,7 @@ export default {
         checkinDaysChange(e) {
             console.log(e)
             if (this.checkInForm.checkinTime == '') {
-                this.$message.error('请选着到店时间')
+                this.$message.error('请选择到店时间')
                 this.checkInForm.checkinDays = 0
                 return
             } else {
