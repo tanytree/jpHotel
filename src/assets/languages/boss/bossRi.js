@@ -28,6 +28,38 @@ module.exports = {
     report_cashier: "勤務交代報告書(レジに応じて)",
     report_expand: "消費明細報告書 ",
     report_income: "入金明細報告書",
+    report_businessHours: "営業時間",
+    report_toText: 'から',
+    report_inquire: '検索',
+    report_print: "印刷",
+    report_export: "導出",
+    report_thisMonth: "今月",
+    report_lastMonth: "先月",
+    report_computeFormula: "計算式：",
+    report_computeContent: "1.非客室料金代収入=ミニバー+会員カード+損害賠償",
+    report_profession: '業務',
+    report_happenToday: '本日発生',
+    report_cumulativeThisMonth: '今月累計',
+    report_cumulativeLastMonth: '先月累計',
+    report_cumulativeLastYear: '去年累計',
+    report_cumulativeThisYear: '本年累計',
+    report_operating: '操作 ',
+    report_checkingData: '資料確認 ',
+    report_permissionSettings: '権限設定',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -27,4 +27,27 @@ module.exports = {
     report_cashier: "交班报表（按收银员）",
     report_expand: "消费明细表",
     report_income: "收款明细表",
+    report_businessHours: "营业时间",
+    report_toText: '至',
+    report_inquire: '查询',
+    report_print: "打印",
+    report_export: "导出",
+    report_thisMonth: "本月",
+    report_lastMonth: "上月",
+    report_computeFormula: "计算公式：",
+    report_computeContent: "1.非房费收入包含损物赔偿、迷你吧、其他、会员卡",
+    report_profession: '业务',
+    report_happenToday: "本日发生",
+    report_cumulativeThisMonth: '本月累计',
+    report_cumulativeLastMonth: '上月累计',
+    report_cumulativeLastYear: '上年本月',
+    report_cumulativeThisYear: '本年累计',
+    report_operating: '操作',
+    report_checkingData: '查看资料 ',
+    report_permissionSettings: '权限设置',
+
+
+
+
+
 }

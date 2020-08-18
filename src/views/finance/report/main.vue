@@ -26,35 +26,37 @@
           <div class="report">
             <el-form ref="form" size="small" inline :model="form" class="term line">
               <div class="inline" v-if="pane.path == 'day'">
-                <el-form-item label="营业时间：">
+                <el-form-item :label="$t('boss.report_businessHours')+'：'">
                   <el-date-picker type="date" v-model="form.date"></el-date-picker>
                 </el-form-item>
               </div>
               <div class="inline" v-if="pane.path == 'month'">
-                <el-form-item label="营业时间：">
+                <el-form-item :label="$t('boss.report_businessHours')+'：'">
                   <el-date-picker type="date" v-model="form.strDate"></el-date-picker>
-                  <span class="line">至</span>
+                  <span class="line">{{$t('boss.report_toText')}}</span>
                   <el-time-picker type="date" v-model="form.endDate"></el-time-picker>
                 </el-form-item>
                 <el-form-item>
                   <el-radio-group v-model="form.cate">
-                    <el-radio-button value="curMonth" label="本月"></el-radio-button>
-                    <el-radio-button value="lastMonth" label="上月"></el-radio-button>
+                    <el-radio-button value="curMonth" :label="$t('boss.report_thisMonth')"></el-radio-button>
+                    <el-radio-button value="lastMonth" :label="$t('boss.report_lastMonth')"></el-radio-button>
                   </el-radio-group>
                 </el-form-item>
               </div>
               <el-form-item>
-                <el-button type="primary" class="submit">查询</el-button>
-                <el-button type="primary" class="submit">打印</el-button>
-                <el-button type="primary" class="submit">导出</el-button>
+                <el-button type="primary" class="submit">{{$t('boss.report_inquire')}}</el-button>
+                <el-button type="primary" class="submit">{{$t('boss.report_print')}}</el-button>
+                <el-button type="primary" class="submit">{{$t('boss.report_export')}}</el-button>
               </el-form-item>
             </el-form>
             <div class="reportTitle">{{pane.title}}</div>
-            <div class="subTip">营业时间：{{strTime}} 至 {{endTime}}</div>
+            <div
+              class="subTip"
+            >{{$t('boss.report_businessHours')}}：{{strTime}} {{$t('boss.report_toText')}} {{endTime}}</div>
             <reportTable :type="pane.path" :reportData="reportData" />
             <div class="formula">
-              <div class="red">计算公式：</div>
-              <div>1.非房费收入包含损物赔偿、迷你吧、其他、会员卡</div>
+              <div class="red">{{$t('boss.report_computeFormula')}}</div>
+              <div>{{$t('boss.report_computeContent')}}</div>
             </div>
           </div>
         </el-tab-pane>
@@ -85,6 +87,7 @@ export default {
           title: this.$t("boss.report_accountDetailed"),
           path: "accountDetailed",
         },
+
         { title: this.$t("boss.report_accountUnit"), path: "accountUnit" },
         { title: this.$t("boss.report_salesDetailed"), path: "salesDetailed" },
         { title: this.$t("boss.report_sales"), path: "sales" },
@@ -135,16 +138,14 @@ export default {
     };
   },
   components: { reportTable },
+
   mounted() {
     this.arr = this.group(this.reports, 5);
+    console.log(this.lang);
   },
-  watch: {
-    reports(newValue, oldValue) {
-      this.reports = newValue;
-      this.arr = this.group(this.reports, 5);
-    },
-  },
+
   methods: {
+    updataLang() {},
     removeTab(targetName) {
       const index = this.reportNav.findIndex((s) => s.path == targetName);
       this.reportNav = this.reportNav.filter((s) => s.path != targetName);
