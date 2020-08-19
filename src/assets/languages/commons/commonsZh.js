@@ -5,12 +5,32 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    backIntoJob: '重新入职',
+    delete: "删除",
+    positive: '转正',
+    forDeparture: '办理离职',
+    detail: '详情',
+    modify: '修改',
+    addEmployees: '添加员工',
+    bulkImport: "批量导入",
+    downloadTemplate: '下载模板',
+    selectDate: '选择日期',
+    all: "全部",
+    cancel: '取 消',
+    determine: '确 定',
+    close: "关闭",
+    lookDetail: "查看详情",
+    back: '返回',
+    save: '保存',
+    print: "打印",
+    operating: '操作',
     queryBtn: '查询',
     resetBtn: '重置',
     exportBtn: '导出',
     pleaseEnter: '请输入',
     passwordDesc: '密码',
     F_sex: {
+
         '1': '男',
         '2': '女',
         '3': '保密',
@@ -22,10 +42,10 @@ module.exports = {
     },
     //用户类型 用于权限空
     userRoleList: [
-        {label: '超级用户', value: 0},
-        {label: '普通用户', value: 1},
-        {label: '部门负责人', value: 2},
-        {label: '门店经理', value: 3},
+        { label: '超级用户', value: 0 },
+        { label: '普通用户', value: 1 },
+        { label: '部门负责人', value: 2 },
+        { label: '门店经理', value: 3 },
     ],
     //人员管理员工类型
     userStatus: {
@@ -40,19 +60,19 @@ module.exports = {
         "3": '驾驶证'
     },
     //订单来源
-    orderSource:{
+    orderSource: {
         "1": '前台',
         "2": '销售推荐',
         // "3": '渠道订单',
         "10": '其它'
     },
     //正常免费
-    checkinType:{
+    checkinType: {
         "1": '正常',
         "2": '免费'
     },
     //客户类型
-    guestType:{
+    guestType: {
         "1": '散客',
         "2": '会员',
         "3": '单位'
@@ -78,7 +98,7 @@ module.exports = {
         name: '维修',
         value: '5'
     }],
-    F_roomStatus:{
+    F_roomStatus: {
         '1': '空净',
         '2': '空脏',
         '3': '住静',
@@ -86,30 +106,30 @@ module.exports = {
         '5': '维修'
     },
     //朝向
-    toward:{
+    toward: {
         "1": '朝南',
         "2": '朝北',
         "3": '朝东',
         "4": '朝西'
     },
     //制卡状态
-    markCard:{
+    markCard: {
         "1": '未制卡',
         "2": '已制卡'
     },
-    bedCount:{
+    bedCount: {
         "0": '全部',
         "1": '单床',
         "2": '双床',
         "3": '三床'
     },
     //入住状态
-    checkinState:{
+    checkinState: {
         "1": '入住中',
         "2": '已退房'
     },
     //预订状态
-    reserveState:{
+    reserveState: {
         "0": '不限',
         "1": '预订中',
         "2": '已确认',
@@ -121,7 +141,7 @@ module.exports = {
         "8": '已取消'
     },
     //入住状态
-    billType:{
+    billType: {
         "1": '已结',
         "2": '挂账',
         "3": '冲调',
@@ -129,18 +149,18 @@ module.exports = {
         "5": '反结'
     },
     //预订类型
-    operCheckinType:{
+    operCheckinType: {
         "1": '普通房',
         "2": '时租房',
         "3": '会场'
     },
     //单位是否停用
-    comState:{
+    comState: {
         "1": '正常',
         "2": '停用'
     },
     //集团内是否共享
-    comShareFlag:{
+    comShareFlag: {
         "1": '是',
         "2": '否'
     }

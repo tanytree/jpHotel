@@ -18,7 +18,7 @@
           </div>
           <el-dropdown trigger="click" @command="(e) => handleCommand(e, item)">
             <span class="el-dropdown-link">
-              {{$t('boss.report_operating')}}
+              {{$t('commons.operating')}}
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -35,7 +35,7 @@
     <div v-if="!listVisible" class="author setting" v-loading="loading">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item>
-          <a @click="back">员工权限</a>
+          <a @click="back">{{$t('boss.report_employeeRights')}}</a>
         </el-breadcrumb-item>
         <el-breadcrumb-item>{{$t('boss.report_permissionSettings')}}</el-breadcrumb-item>
       </el-breadcrumb>
@@ -45,8 +45,8 @@
       </div>
       <div class="content">
         <div class="title">
-          <span>具体权限设置（ {{$i18n.locale == 'ri' ? firstMenuInfo.japanese : (firstMenuInfo.menuAliasTitle || firstMenuInfo.menuTitle)}}）</span>
-          <span class="tip">开启后就拥有该项权限</span>
+          <span>{{$t('boss.report_specificPrivileges')}}（ {{$i18n.locale == 'ri' ? firstMenuInfo.japanese : (firstMenuInfo.menuAliasTitle || firstMenuInfo.menuTitle)}}）</span>
+          <span class="tip">{{$t('boss.report_openAccess')}}</span>
         </div>
         <div class="inner">
           <div v-for="(item, index) in menuList" :key="index" class="checkItem">
@@ -56,7 +56,7 @@
                 :indeterminate="item.isIndeterminate"
                 v-model="item.checkAll"
                 @change="(e) => checkAllChange(e, item)"
-              >全部开启</el-checkbox>
+              >{{$t('boss.report_openAll')}}</el-checkbox>
             </div>
             <el-row :gutter="20">
               <el-col v-for="(child, i) in item.childList" :key="index + '_' + i" :span="6">
@@ -77,8 +77,8 @@
         </div>
       </div>
       <div class="setBtn">
-        <el-button class="submit" @click="saveChange">保存</el-button>
-        <el-button class="cancel" @click="listVisible=true">返回</el-button>
+        <el-button class="submit" @click="saveChange">{{$t('commons.save')}}</el-button>
+        <el-button class="cancel" @click="listVisible=true">{{$t('commons.back')}}</el-button>
       </div>
     </div>
     <!-- 查看资料组件 -->
