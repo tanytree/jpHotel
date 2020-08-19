@@ -41,7 +41,7 @@
       :close-on-click-modal="false"
       @close="closeDialog"
     >
-      <el-col :span="5" class="col-title">{{dialog_info.title}}</el-col>
+      <el-col :span="5" class="col-title">{{dialog_info.title+':'}}</el-col>
       <el-row>
         <el-input
           :placeholder="$t('boss.department_placeEnterContent')"
@@ -68,7 +68,7 @@
           <el-row>
             <el-col
               class="selected"
-            >{{$t('boss.department_hasChosen')}} {{dialog_info.selected_name || (dialog_info.header && dialog_info.header.account) ||$t('boss.loginDetail_no')}}</el-col>
+            >{{$t('boss.department_hasChosen')+'：'}} {{dialog_info.selected_name || (dialog_info.header && dialog_info.header.account) ||$t('boss.loginDetail_no')}}</el-col>
           </el-row>
         </el-row>
       </el-row>

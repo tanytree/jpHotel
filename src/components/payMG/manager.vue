@@ -20,10 +20,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('boss.staff_name')+'：'" class="margin-l">
+        <el-form-item :label="$t('boss.staff_name')+':'" class="margin-l">
           <el-input v-model="payManagerForm.content"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('boss.compensation_payMonth')+'：'" class="margin-l">
+        <el-form-item :label="$t('boss.compensation_payMonth')+':'" class="margin-l">
           <el-date-picker
             v-model="payManagerForm.payTime"
             type="month"
@@ -31,7 +31,7 @@
             value-format="yyyy-MM"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('boss.staff_staffState')" class="margin-l">
+        <el-form-item :label="$t('boss.staff_staffState')+':'" class="margin-l">
           <el-select
             v-model="payManagerForm.userStatus"
             :placeholder="$t('boss.compensation_selectState')"
@@ -68,42 +68,66 @@
           <el-table-column prop="payTime" :label="$t('boss.compensation_payMonth')"></el-table-column>
           <el-table-column :label="$t('boss.compensation_basicSalary')">
             <el-table-column prop="wage.baseWage" :label="$t('boss.compensation_baseSalary')"></el-table-column>
-            <el-table-column prop="wage.socialBenefits" label="社保补助"></el-table-column>
-            <el-table-column prop="wage.otherWage" label="其他"></el-table-column>
-            <el-table-column prop="wage.secretWage" label="保密工资"></el-table-column>
+            <el-table-column prop="wage.socialBenefits" :label="$t('boss.compensation_benefits')"></el-table-column>
+            <el-table-column prop="wage.otherWage" :label="$t('commons.other')"></el-table-column>
+            <el-table-column
+              prop="wage.secretWage"
+              :label="$t('boss.compensation_confidentialSalary')"
+            ></el-table-column>
           </el-table-column>
-          <el-table-column prop="wage.jobsWage" label="岗位工资"></el-table-column>
-          <el-table-column prop="wage.performance" label="绩效工资"></el-table-column>
-          <el-table-column prop="wage.bonus" label="奖金"></el-table-column>
-          <el-table-column label="补贴">
-            <el-table-column prop="wage.mealSubsidies" label="餐补"></el-table-column>
-            <el-table-column prop="wage.houseSubsidies" label="房补"></el-table-column>
+          <el-table-column prop="wage.jobsWage" :label="$t('boss.compensation_postSalary')"></el-table-column>
+          <el-table-column prop="wage.performance" :label="$t('boss.compensation_meritPay')"></el-table-column>
+          <el-table-column prop="wage.bonus" :label="$t('boss.compensation_bonus')"></el-table-column>
+          <el-table-column :label="$t('boss.compensation_subsides')">
+            <el-table-column
+              prop="wage.mealSubsidies"
+              :label="$t('boss.compensation_subsidizedMeals')"
+            ></el-table-column>
+            <el-table-column
+              prop="wage.houseSubsidies"
+              :label="$t('boss.compensation_housingAllowances')"
+            ></el-table-column>
           </el-table-column>
-          <el-table-column label="出勤">
-            <el-table-column prop="demandJobDay" label="应出勤天数"></el-table-column>
-            <el-table-column prop="realJobDay" label="实际出勤天数"></el-table-column>
-            <el-table-column prop="jobsDemandWage" label="出勤工资应发"></el-table-column>
+          <el-table-column :label="$t('boss.compensation_attendance')">
+            <el-table-column
+              prop="demandJobDay"
+              :label="$t('boss.compensation_attendanceShoudDay')"
+            ></el-table-column>
+            <el-table-column prop="realJobDay" :label="$t('boss.compensation_attendanceActualDay')"></el-table-column>
+            <el-table-column prop="jobsDemandWage" :label="$t('boss.compensation_attendanceWage')"></el-table-column>
           </el-table-column>
-          <el-table-column label="扣款">
-            <el-table-column prop="lateDeductions" label="迟到扣款"></el-table-column>
-            <el-table-column prop="socialDeduction" label="社保扣款"></el-table-column>
-            <el-table-column prop="taxDeduction" label="个税扣款"></el-table-column>
+          <el-table-column :label="$t('boss.compensation_deductions')">
+            <el-table-column prop="lateDeductions" :label="$t('boss.compensation_lateDeductions')"></el-table-column>
+            <el-table-column
+              prop="socialDeduction"
+              :label="$t('boss.compensation_socialDeductions')"
+            ></el-table-column>
+            <el-table-column prop="taxDeduction" :label="$t('boss.compensation_taxDeductions')"></el-table-column>
           </el-table-column>
-          <el-table-column prop="shouldPay" label="应发工资"></el-table-column>
-          <el-table-column prop="realPay" label="实发工资"></el-table-column>
-          <el-table-column prop="submitMoney" label="当月报销费用"></el-table-column>
-          <el-table-column prop="realPay" label="总实发工资"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="160">
+          <el-table-column prop="shouldPay" :label="$t('boss.compensation_shouldPay')"></el-table-column>
+          <el-table-column prop="realPay" :label="$t('boss.compensation_realWages')"></el-table-column>
+          <el-table-column prop="submitMoney" :label="$t('boss.compensation_monthlyExpense')"></el-table-column>
+          <el-table-column prop="realPay" :label="$t('boss.compensation_grossPay')"></el-table-column>
+          <el-table-column fixed="right" :label="$t('commons.operating')" width="160">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="popup('ch_detail', scope)">员工详情</el-button>
-              <el-button type="text" size="small" @click="popup('ch_change', scope)">修改</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="popup('ch_detail', scope)"
+              >{{$t('boss.compensation_employeeDetails')}}</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="popup('ch_change', scope)"
+              >{{$t('commons.modify')}}</el-button>
             </template>
           </el-table-column>
         </el-table>
         <div class="block">
           <div class="page-all">
-            共
-            <span style="font-weight:600;font-size: 14px;">400</span>条记录
+            {{$t('boss.compensation_general')}}
+            <span style="font-weight:600;font-size: 14px;">400</span>
+            {{$t('boss.compensation_records')}}
           </div>
           <el-pagination
             @size-change="handleSizeChange"
@@ -132,34 +156,37 @@
         class="demo-ruleForm"
       >
         <el-row class="main-menu">
-          <el-form-item label="基本工资" style="font-size: 16px; font-weight: 800"></el-form-item>
+          <el-form-item
+            :label="$t('boss.compensation_basicSalary')"
+            style="font-size: 16px; font-weight: 800"
+          ></el-form-item>
         </el-row>
         <el-row class="demo-form-inline">
           <el-col>
-            <el-form-item label="基本工资:">
+            <el-form-item :label="$t('boss.compensation_basicSalary')+':'">
               <el-input v-model="ruleForm.wage.baseWage" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="其他:">
+            <el-form-item :label="$t('commons.other')+':'">
               <el-input v-model="ruleForm.wage.otherWage" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="岗位工资:">
+            <el-form-item :label="$t('boss.compensation_postSalary')+':'">
               <el-input v-model="ruleForm.wage.jobsWage" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="奖金:">
+            <el-form-item :label="$t('boss.compensation_bonus')+':'">
               <el-input v-model="ruleForm.wage.bonus" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col class="margin-l">
-            <el-form-item label="社保补助:">
+            <el-form-item :label="$t('boss.compensation_benefits')+':'">
               <el-input v-model="ruleForm.wage.socialBenefits" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="保密工资:">
+            <el-form-item :label="$t('boss.compensation_confidentialSalary')+':'">
               <el-input v-model="ruleForm.wage.secretWage" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="绩效工资:">
+            <el-form-item :label="$t('boss.compensation_meritPay')+':'">
               <el-input v-model="ruleForm.wage.performance" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="工资月份:" prop="payTime">
+            <el-form-item :label="$t('boss.compensation_payMonth')+'：'" prop="payTime">
               <el-date-picker
                 v-model="ruleForm.payTime"
                 type="month"
@@ -170,81 +197,97 @@
           </el-col>
         </el-row>
         <el-row class="main-menu">
-          <el-form-item label="补贴" style="font-size: 16px; font-weight: 800"></el-form-item>
+          <el-form-item
+            :label="$t('boss.compensation_subsides')"
+            style="font-size: 16px; font-weight: 800"
+          ></el-form-item>
         </el-row>
         <el-row class="demo-form-inline">
           <el-col>
-            <el-form-item label="房补:">
+            <el-form-item :label="$t('boss.compensation_housingAllowances')+':'">
               <el-input v-model="ruleForm.wage.houseSubsidies" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col class="margin-l">
-            <el-form-item label="餐补:">
+            <el-form-item :label="$t('boss.compensation_subsidizedMeals')+':'">
               <el-input v-model="ruleForm.wage.mealSubsidies" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row class="main-menu">
-          <el-form-item label="出勤天数" style="font-size: 16px; font-weight: 800"></el-form-item>
+          <el-form-item
+            :label="$t('boss.compensation_attendanceDays')"
+            style="font-size: 16px; font-weight: 800"
+          ></el-form-item>
         </el-row>
         <el-row class="demo-form-inline">
           <el-col>
-            <el-form-item label="应出勤天数:">
+            <el-form-item :label="$t('boss.compensation_attendanceShoudDay')+'：'">
               <el-input v-model="ruleForm.demandJobDay" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="出勤工资应发:">
+            <el-form-item :label="$t('boss.compensation_attendanceWage')+':'">
               <el-input v-model="ruleForm.jobsDemandWage" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col class="margin-l">
-            <el-form-item label="实际出勤天数:">
+            <el-form-item :label="$t('boss.compensation_attendanceActualDay')+':'">
               <el-input v-model="ruleForm.realJobDay" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="发放日期:">
-              <el-date-picker v-model="ruleForm.sendTime" type="date" placeholder="选择日期"></el-date-picker>
+            <el-form-item :label="$t('boss.compensation_issuingDate')+':'">
+              <el-date-picker
+                v-model="ruleForm.sendTime"
+                type="date"
+                :placeholder="$t('commons.selectDate')"
+              ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row class="main-menu">
-          <el-form-item label="扣款" style="font-size: 16px; font-weight: 800"></el-form-item>
+          <el-form-item
+            :label="$t('boss.compensation_deductions')"
+            style="font-size: 16px; font-weight: 800"
+          ></el-form-item>
         </el-row>
         <el-row class="demo-form-inline">
           <el-col>
-            <el-form-item label="迟到扣款:">
+            <el-form-item :label="$t('boss.compensation_lateDeductions')+':'">
               <el-input v-model="ruleForm.lateDeductions" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="社保扣款:">
+            <el-form-item :label="$t('boss.compensation_socialDeductions')+':'">
               <el-input v-model="ruleForm.socialDeduction" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col class="margin-l">
-            <el-form-item label="个人扣税:">
+            <el-form-item :label="$t('boss.compensation_personalTax')+':'">
               <el-input v-model="ruleForm.taxDeduction" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row class="demo-form-inline">
           <el-col>
-            <el-form-item label="应发工资:">
+            <el-form-item :label="$t('boss.compensation_shouldPay')+':'">
               <el-input v-model="ruleForm.shouldPay" :disabled="iss_disabled"></el-input>
             </el-form-item>
-            <el-form-item label="实发工资:">
+            <el-form-item :label="$t('boss.compensation_realWages')+':'">
               <el-input v-model="ruleForm.realPay" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col class="margin-l">
-            <el-form-item label="当月报销费用:">
+            <el-form-item :label="$t('boss.compensation_monthlyExpense')+':'">
               <el-input v-model="ruleForm.submitMoney" :disabled="iss_disabled"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer" v-if="iss_disabled">
-        <el-button @click="dialogAdd = false">关 闭</el-button>
+        <el-button @click="dialogAdd = false">{{$t('commons.close')}}</el-button>
       </span>
       <span slot="footer" class="dialog-footer" v-else>
-        <el-button @click="dialogAdd = false">取 消</el-button>
-        <el-button type="primary" @click="changeSalaryDefine('ruleForm')">确 定</el-button>
+        <el-button @click="dialogAdd = false">{{$t('commons.cancel')}}</el-button>
+        <el-button
+          type="primary"
+          @click="changeSalaryDefine('ruleForm')"
+        >{{$t('commons.determine')}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -308,7 +351,7 @@ export default {
         payTime: [
           {
             required: true,
-            message: "请选择发放月份",
+            message: this.releaseMonth,
             trigger: "blur",
           },
         ],
@@ -332,21 +375,42 @@ export default {
       },
     };
   },
-  watch: {
-    // activeName() {
-    // 	if (this.activeName == 'first') {
-    // 		this.get_salary_mg_list()
-    // 	} else {
-    // 		this.get_salary_set_list()
-    // 	}
-    // }
-  },
+
   computed: {
     ...mapState({
       token: (state) => state.user.token,
       userId: (state) => state.user.id,
       storesNum: (state) => state.user.storesInfo.storesNum,
     }),
+    releaseMonth: {
+      get() {
+        return this.$t("boss.compensation_selectReleaseMonth");
+      },
+      set() {},
+    },
+    toView: {
+      get() {
+        return this.$t("boss.compensation_toView");
+      },
+      set() {},
+    },
+    salaryChange: {
+      get() {
+        return this.$t("boss.compensation_salaryChange");
+      },
+      set() {},
+    },
+  },
+  watch: {
+    releaseMonth(newValue, oldValue) {
+      this.releaseMonth = newValue;
+    },
+    toView(newValue, oldValue) {
+      this.toView = newValue;
+    },
+    salaryChange(newValue, oldValue) {
+      this.salaryChange = newValue;
+    },
   },
   mounted() {
     this.get_salary_mg_list();
@@ -369,7 +433,7 @@ export default {
     popup(type, value) {
       switch (type) {
         case "ch_detail":
-          this.salary_change_title = "查看";
+          this.salary_change_title = this.toView;
           this.iss_disabled = true;
           this.dialogAdd = true;
           this.change_salary_info = value;
@@ -377,7 +441,7 @@ export default {
           debugger;
           break;
         case "ch_change":
-          this.salary_change_title = "薪资修改";
+          this.salary_change_title = this.salaryChange;
           this.iss_disabled = false;
           this.dialogAdd = true;
           this.change_salary_info = value;

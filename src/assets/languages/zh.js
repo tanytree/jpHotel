@@ -8,6 +8,8 @@ import bossLang from "./boss/bossZh";
 import commons from "./commons/commonsZh";
 import frontOffice from './frontOffice/zh'
 import login from './login/zh'
+import manager from './manager/zh'
+
 export default {
     language: {
         name: '中文'
@@ -21,4 +23,7 @@ export default {
 
     //登录模块
     login: login,
+
+    //管理部
+    manager: manager,
 }

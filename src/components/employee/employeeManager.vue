@@ -18,10 +18,10 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('boss.staff_name')">
+      <el-form-item :label="$t('boss.staff_name')+':'">
         <el-input v-model="searchForm.content"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('boss.staff_workTime')">
+      <el-form-item :label="$t('boss.staff_workTime')+':'">
         <el-date-picker
           v-model="searchForm.inStartTime"
           value-format="yyyy-MM-dd"
@@ -282,7 +282,7 @@
           <el-row>
             <el-col :span="12">
               <div class="grid-content">
-                <el-form-item :label="$t('boss.staff_workTime')" prop="inTime">
+                <el-form-item :label="$t('boss.staff_workTime')+':'" prop="inTime">
                   <el-date-picker
                     v-model="addAndEditForm.inTime"
                     value-format="yyyy-MM-dd"
@@ -337,7 +337,7 @@
           <el-row>
             <el-col>
               <div class="grid-content">
-                <el-form-item :label="$t('boss.staff_departureTime')">
+                <el-form-item :label="$t('boss.staff_departureTime')+'：'">
                   <el-date-picker
                     v-model="itemCtrlForm.outTime"
                     value-format="yyyy-MM-dd"

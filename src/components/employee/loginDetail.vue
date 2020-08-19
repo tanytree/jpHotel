@@ -109,31 +109,31 @@ export default {
       token: (state) => state.user.token,
       userId: (state) => state.user.id,
       storesNum: (state) => state.user.storesInfo.storesNum,
-      alertContent: {
-        get() {
-          return this.$t("boss.loginDetail_alertContent");
-        },
-        set() {},
-      },
-      alertTitle: {
-        get() {
-          return this.$t("boss.loginDetail_alertTitle");
-        },
-        set() {},
-      },
-      close: {
-        get() {
-          return this.$t("commons.close");
-        },
-        set() {},
-      },
-      unknown: {
-        get() {
-          return this.$t("boss.loginDetail_unknownStores");
-        },
-        set() {},
-      },
     }),
+    alertContent: {
+      get() {
+        return this.$t("boss.loginDetail_alertContent");
+      },
+      set() {},
+    },
+    alertTitle: {
+      get() {
+        return this.$t("boss.loginDetail_alertTitle");
+      },
+      set() {},
+    },
+    close: {
+      get() {
+        return this.$t("commons.close");
+      },
+      set() {},
+    },
+    unknown: {
+      get() {
+        return this.$t("boss.loginDetail_unknownStores");
+      },
+      set() {},
+    },
   },
   mounted() {
     this.isPersonnelManager = this.$route.name == "employeeList";

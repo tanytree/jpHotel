@@ -8,7 +8,7 @@ import bossLang from './boss/bossRi'
 import commons from "./commons/commonsRi";
 import frontOffice from "./frontOffice/ri";
 import login from './login/ri'
-
+import manager from './manager/ri'
 export default {
     language: {
         name: '日本语'
@@ -21,5 +21,7 @@ export default {
 
     //登录模块
     login: login,
+    //管理部
+    manager: manager,
 
 }

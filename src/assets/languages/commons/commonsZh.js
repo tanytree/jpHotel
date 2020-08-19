@@ -5,6 +5,7 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    other: '其他',
     backIntoJob: '重新入职',
     delete: "删除",
     positive: '转正',

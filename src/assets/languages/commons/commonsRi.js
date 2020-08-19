@@ -5,6 +5,7 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsRi.js
  */
 module.exports = {
+    other: 'その他',
     backIntoJob: '再就職',
     delete: "削除",
     positive: '正社員になる',
@@ -25,7 +26,7 @@ module.exports = {
     print: "印刷",
     operating: '操作 ',
     queryBtn: '検索',
-    resetBtn: '重置',
+    resetBtn: 'リセット',
     exportBtn: 'リセット',
     pleaseEnter: '入力してください',
     passwordDesc: 'パスワード',

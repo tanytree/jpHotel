@@ -85,11 +85,11 @@ export default {
       routermsg: (state) => state.routermsg.routermsg,
       plat_source: (state) => state.config.plat_source,
     }),
-    dataRule () {
+    dataRule() {
       return {
         storesNum: {
           required: true,
-          message: this.$t('login.sTip'),
+          message: this.$t("login.sTip"),
           trigger: "change",
         },
         account: {
@@ -108,8 +108,8 @@ export default {
             trigger: "change",
           },
         ],
-      }
-    }
+      };
+    },
   },
 
   data() {
@@ -140,7 +140,6 @@ export default {
         account: "",
         password: "",
       },
-
     };
   },
 
