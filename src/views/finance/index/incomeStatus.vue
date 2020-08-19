@@ -13,18 +13,20 @@
                         <p>{{item.tip}} {{date.strDate}} 至 {{date.endDate}}</p>
                         <el-form v-if="activeName == 'week'" size="small" :inline="true" :model="date">
                             <el-form-item>
-                                <el-date-picker type="date" placeholder="开始时间" v-model="date.strDate"></el-date-picker>
+                                <el-date-picker type="date" placeholder="开始时间" format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="date.strDate"></el-date-picker>
                             </el-form-item>
                             <el-form-item>至</el-form-item>
                             <el-form-item>
-                                <el-time-picker type="date" placeholder="结束时间" v-model="date.endDate"></el-time-picker>
+                                <el-date-picker type="date" placeholder="结束时间" format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="date.endDate"></el-date-picker>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" class="submit" @click="onSubmit">查询</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
-                    <div id="J_chartLineBox" class="chart-box"></div>
+                    <div class="chart-box">
+                        <div id="J_chartLineBox" class="chart-box"></div>
+                    </div>
                 </el-tab-pane>
             </el-tabs>
 
@@ -41,7 +43,7 @@
             return {
                 activeName: 'week',
                 tip: '',
-                date: {strDate: '2020-05-09', endDate: '2020-05-16'},
+                date: {strDate: '', endDate: ''},
                 dataList: [],
                 dataArr: [],
                 paneArr: [
@@ -51,24 +53,27 @@
                 ]
             }
         },
+        props: {
+            list: Array, initData: Function
+        },
         mounted() {
             this.tabChange()
-            // this.initChartLine()
         },
         methods: {
-
             tabChange() {
                 var dataArr = []
                 var data = new Date()
                 var year = data.getFullYear();
                 if (this.activeName == 'week') {
-                    for (var i = -10; i < 1; i++) {
-                        dataArr.push(year - i)
+                    for (let i = -7; i < 1; i++) {
+                        const time = new Date(new Date().setDate(new Date().getDate() + i))
+                        const year = time.getFullYear()
+                        const month = `0${time.getMonth() + 1}`.slice(-2)
+                        const strDate = `0${time.getDate()}`.slice(-2)
+                        dataArr.push(`${year}-${month}-${strDate}`)
                     }
-                    // this.form.year = dataArr.join(',')
-                    // this.form.month = ''
-                    // this.form.day = ''
-                } else if (this.activeName == 'month') {
+                    this.data = {strDate: dataArr[0], endDate: dataArr[dataArr.length-1]}
+                } else if (this.activeName == 'year') {
                     data.setMonth(data.getMonth() + 1, 1) //获取到当前月份,设置月份
                     for (var i = -12; i < 1; i++) {
                         data.setMonth(data.getMonth() - 1) //每次循环一次 月份值减1
@@ -76,10 +81,7 @@
                         m = m < 10 ? '0' + m : m
                         dataArr.push(data.getFullYear() + '-' + m)
                     }
-                    // this.form.year = ''
-                    // this.form.month = dataArr.join(',')
-                    // this.form.day = ''
-                } else if (this.activeName == 'year') {
+                } else if (this.activeName == 'month') {
                     for (let i = -30; i < 1; i++) {
                         const time = new Date(new Date().setDate(new Date().getDate() + i))
                         const year = time.getFullYear()
@@ -87,16 +89,27 @@
                         const strDate = `0${time.getDate()}`.slice(-2)
                         dataArr.push(`${year}-${month}-${strDate}`)
                     }
-                    // this.form.year = ''
-                    // this.form.month = ''
-                    // this.form.day = dataArr.join(',')
                 }
-                this.dataArr = dataArr
-                // this.getChartData()
-                // console.log(dataArr);
+                this.dataArr = dataArr;
+                this.openChart()
+            },
+            openChart() {
+                this.$nextTick(() => {
+                    // this.chartLine = echarts.init(document.getElementById('J_chartLineBox'));
+                    let type = this.activeName == 'week' ? 1 : this.activeName == 'month' ? 2 : 3;
+                    this.initData(type, this.date.strDate, this.date.endDate, () => {
+                        this.initChartLine()
+                    });
+                });
             },
             // 折线图
             initChartLine() {
+                const income=[], expend=[], profit=[];
+                this.list.map(item => {
+                    if(item.payment == 1) {
+
+                    }
+                })
                 var option = {
                     legend: {
                         data: ['收入']
@@ -126,21 +139,21 @@
                             type: 'line',
                             smooth: true,
                             stack: '总量',
-                            data: this.dataList.map(item => item.pay_price || 0)
+                            data: income
                         },
                         {
                             name: '支出',
                             type: 'line',
                             smooth: true,
                             stack: '支付总金额',
-                            data: this.dataList.map(item => item.total_price || 0)
+                            data: expend
                         },
                         {
                             name: '利润',
                             type: 'line',
                             smooth: true,
                             stack: '支付总金额',
-                            data: this.dataList.map(item => item.total_price || 0)
+                            data: profit
                         }
                     ]
                 }
@@ -150,7 +163,9 @@
                     this.chartLine.resize()
                 })
             },
-            onSubmit() {}
+            onSubmit() {
+                this.tabChange()
+            }
         }
     }
 </script>

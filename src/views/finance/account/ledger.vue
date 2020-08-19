@@ -7,18 +7,16 @@
 <template>
     <div class="boss-index">
         <el-card shadow="never">
-            <el-form ref="form" inline :model="form" label-width="80px" class="term line">
+            <el-form ref="form" inline :model="form" size="small" class="term line demo-form-inline">
                 <el-form-item label="日期：">
-                    <el-select v-model="form.type" clearable placeholder="请选择">
-                        <el-option v-for="item in type" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                    </el-select>
+                    <el-date-picker type="date" v-model="form.type"></el-date-picker>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" class="submit">查询</el-button>
                 </el-form-item>
-                <div class="export">
+                <el-form-item class="form-inline-flex">
                     <el-button type="primary" class="submit">导出</el-button>
-                </div>
+                </el-form-item>
             </el-form>
             <el-table :data="tableData" size="small" :span-method="objectSpanMethod" border height="100%" header-row-class-name="default">
                 <el-table-column header-align="center" prop="code" label="科目编码" width="120"></el-table-column>
@@ -42,14 +40,22 @@
         // components: {recharge},
         data() {
             return {
-                form: {type: 1, },
-                type: [{value: 1, label: '2020年第4期'}],
+                form: {type: ''},
+                type: [],
                 tableData: [
                     {code: '1001', name: '库存现金', period: '202004', abstract: '期初余额', debit: '', credit: '', direct: '借', balance: '1000.00'}
                 ],
             };
         },
+        mounted() {
+            this.getLedgerData()
+        },
         methods: {
+            getLedgerData() {
+                this.$F.doRequest(this, '/api/user/register', {monthTime: this.form.type}, (res) => {
+                    this.tableData = res
+                })
+            },
             objectSpanMethod({row, column, rowIndex, columnIndex}) {
                 if (columnIndex === 0) {
                     if (rowIndex % 2 === 0) {

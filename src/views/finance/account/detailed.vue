@@ -1,7 +1,7 @@
 <template>
     <div class="boss-index">
         <el-card shadow="never">
-            <el-form ref="form" inline :model="form" label-width="80px" class="term line">
+            <el-form ref="form" inline :model="form" size="small" class="term line">
                 <el-form-item label="日期：">
                     <el-select v-model="form.type" clearable placeholder="请选择">
                         <el-option v-for="item in type" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -11,7 +11,7 @@
                     <el-button type="primary" class="submit">查询</el-button>
                 </el-form-item>
                 <div class="export">
-                    <el-button type="primary" class="submit">导出</el-button>
+                    <el-button type="primary" size="small" class="submit">导出</el-button>
                 </div>
             </el-form>
             <div class="detailed">
@@ -64,6 +64,11 @@
 
         },
         methods: {
+            getDetailData() {
+                this.$F.doRequest(this, '/pms/orderanls/running_account_detail', {monthTime: this.form.type, subjectsId: ''}, (res) => {
+                    this.tableData = res.credentailList
+                })
+            },
             nodeClick() {
             }
         }
@@ -101,6 +106,13 @@
                     height: 30px;
                 }
             }
+        }
+
+        .top {
+            border: 1px solid #EBEEF5;
+            border-bottom: 0;
+            line-height: 50px;
+            padding: 0 20px;
         }
     }
 </style>

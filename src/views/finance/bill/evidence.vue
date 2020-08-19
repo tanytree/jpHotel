@@ -7,7 +7,7 @@
 <template>
     <div class="boss-index">
         <el-card shadow="never">
-            <el-form ref="form" inline :model="form" label-width="100px" class="term line">
+            <el-form ref="form" inline :model="form" size="small" label-width="100px" class="term line">
                 <el-form-item label="选择日期：">
                     <el-date-picker type="date" v-model="form.strDate"></el-date-picker>
                     <span class="line">至</span>
@@ -22,10 +22,10 @@
                     <el-button type="primary" class="submit">查询</el-button>
                 </el-form-item>
                 <div class="export">
-                    <el-button type="primary" class="submit">审核</el-button>
-                    <el-button type="primary" class="submit">反审核</el-button>
-                    <el-button type="primary" class="submit">批量删除</el-button>
-                    <el-button type="primary" class="submit">导出</el-button>
+                    <el-button size="small" class="submit">审核</el-button>
+                    <el-button size="small" class="submit">反审核</el-button>
+                    <el-button size="small" class="submit">批量删除</el-button>
+                    <el-button size="small" class="submit">导出</el-button>
                 </div>
             </el-form>
             <el-table :data="tableData" size="small" :span-method="objectSpanMethod" border height="100%" header-row-class-name="default" @selection-change="selectionChange">
@@ -65,7 +65,15 @@
                 tableData: []
             };
         },
+        mounted() {
+            this.getEvidenceData()
+        },
         methods: {
+            getEvidenceData() {
+                this.$F.doRequest(this, '/pms/credentail/list', {startTime: this.form.strDate, endTime: this.form.endDate, auditStatus: this.form.status}, (res) => {
+                    this.tableData = res
+                })
+            },
             objectSpanMethod({row, column, rowIndex, columnIndex}) {
                 if (columnIndex === 0) {
                     if (rowIndex % 2 === 0) {

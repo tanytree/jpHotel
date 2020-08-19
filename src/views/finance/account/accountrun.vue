@@ -3,42 +3,46 @@
         <el-card shadow="never">
             <el-form ref="form" inline size="small" :model="form" label-width="90px" class="term">
                 <el-form-item label="日期：">
-                    <el-select v-model="form.type" clearable placeholder="请选择">
-                        <el-option v-for="item in type" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="form.type" clearable>
+                        <el-option v-for="(item, index) in type" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="账户：">
-                    <el-select v-model="form.account" clearable placeholder="请选择">
-                        <el-option v-for="item in account" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="form.accountId" clearable>
+                        <el-option v-for="(item, index) in account" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="方向：">
-                    <el-select v-model="form.direction" placeholder="请选择到账时间">
-                        <el-option v-for="item in direction" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="form.payment" placeholder="请选择到账时间">
+                        <el-option :label="1">支出</el-option>
+                        <el-option :label="2">收入</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="创建时间：">
-                    <el-date-picker type="date" v-model="form.strDate"></el-date-picker>
+                    <el-date-picker type="date" v-model="form.createStartTime"></el-date-picker>
                     <span class="line">至</span>
-                    <el-time-picker type="date" v-model="form.endDate"></el-time-picker>
+                    <el-date-picker type="date" v-model="form.createEndTime"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="来源：">
-                    <el-select v-model="form.source" clearable placeholder="请选择">
-                        <el-option v-for="item in source" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="form.financialType" clearable placeholder="请选择">
+                        <el-option :label="1">自动产生</el-option>
+                        <el-option :label="2">手动产生</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="审核状态：">
-                    <el-select v-model="form.status" clearable placeholder="请选择">
-                        <el-option v-for="item in status" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    <el-select v-model="form.auditStatus" clearable placeholder="请选择">
+                        <el-option :label="1">待审核</el-option>
+                        <el-option :label="2">审核通过</el-option>
+                        <el-option :label="3">审核不通过</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="营业项目：">
-                    <el-select v-model="form.project" clearable placeholder="请选择">
+                    <el-select v-model="form.remeberId" clearable placeholder="请选择">
                         <el-option v-for="item in project" :key="item.value" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" class="submit">查询</el-button>
+                    <el-button type="primary" class="submit" @click="search">查询</el-button>
                     <el-button type="primary" class="submit">导出</el-button>
                 </el-form-item>
             </el-form>
@@ -56,14 +60,14 @@
                     <el-table-column header-align="center" prop="time" label="创建时间" width="140"></el-table-column>
                     <el-table-column header-align="center" label="操作" width="130">
                         <template slot-scope="scope">
-                            <el-button type="text" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></el-button>
-                            <el-button type="text" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)"></el-button>
-                            <el-button type="text" size="mini" @click="handleExamine(scope.$index, scope.row)">审核</el-button>
+                            <el-button type="text" size="small" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></el-button>
+                            <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)"></el-button>
+                            <el-button type="text" size="small" @click="handleExamine(scope.$index, scope.row)">审核</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column header-align="center" label="凭证" width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="mini">生成凭证</el-button>
+                            <el-button type="text" size="small" @click="create(scope.row)">生成凭证</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -118,16 +122,15 @@
     export default {
         data() {
             return {
-                form: {type: 1, account: '1', direction: '1', strDate: '', endDate: '', source: '1', status: '1', project: '1'},
-                type: [{value: 1, label: '2020年第4期'}],
+                form: {monthTime: 1, accountId: '1', payment: '1', createStartTime: '', createEndTime: '', financialType: '1', auditStatus: '1', remeberId: '1'},
+                type: [{value: 1, label: '全部'}],
                 account: [{value: 1, label: '全部'}],
                 direction: [{value: 1, label: '全部'}],
                 source: [{value: 1, label: '全部'}],
                 status: [{value: 1, label: '全部'}],
                 project: [{value: 1, label: '全部'}],
-                tableData: [
-                    {date: '2020-05-20', from: 'PMS产生', direct: '支出', detailed: '现金退款', price: '-8888.00', account: '库存现金', record: '', examine: '', examineType: '', examineStatus: '', time: '2020-05-22 09:23'}
-                ], income: '49758695867.88', expand: '8937585.00', profit: '457889458.88',
+                tableData: [],
+                income: '49758695867.88', expand: '8937585.00', profit: '457889458.88',
                 editVisible: false, examineVisible: false,
                 edit: {account: '', price: 1, remark: ''},
                 editRule: {
@@ -147,12 +150,32 @@
                 company: state => state.company
             })
         },
+        mounted() {
+            this.getAccountData()
+        },
         methods: {
+            getAccountData() {
+                const params = {
+                    monthTime: this.form.monthTime,
+                    accountId: this.form.accountId,
+                    payment: this.form.payment,
+                    createStartTime: this.form.createStartTime,
+                    createEndTime: this.form.createEndTime,
+                    financialType: this.form.financialType,
+                    auditStatus: this.form.auditStatus,
+                    remeberId: this.form.remeberId
+                }
+                this.$F.doRequest(this, '/pms/orderanls/running_account_list', params, (res) => {
+                    this.tableData = res.remeberSubList
+                })
+            },
             handleEdit(index, row) {
                 this.editVisible = true;
                 this.edit = row
             },
-
+            search() {
+                this.getAccountData()
+            },
             handleDelete(index, row) {
 
             },
@@ -160,10 +183,7 @@
                 this.examineVisible = true;
                 this.examine = row
             },
-            //折叠面板
-            handleChange(val) {
-                console.log(val);
-            },
+
             objectSpanMethod({row, column, rowIndex, columnIndex}) {
                 if (columnIndex === 0) {
                     if (rowIndex % 2 === 0) {
@@ -182,11 +202,35 @@
             handleClose() {
                 this.editVisible = false;
                 this.examineVisible = false;
-            }
+            },
+            create(item) {
+                const params = {
+                    title: item.msg,
+                    subjectsId: item.accountId,
+                    debitAmount: item.payment == 1 ? item.amount : '',
+                    lenderAmount: item.payment == 2 ? item.amount : '',
+                    credentailTime: item.payTime,
+                    wordId: item.wordId,
+                    attachCount: item.attachCount,
+                    remeberSubId: item.remeberSubId,
+                    credentailId: item.credentailId,
+                }
+                this.$F.doRequest(this, '/pms/orderanls/running_account_list', params, (res) => {
+                    this.tableData = res.remeberSubList
+                })
+            },
         }
     };
 </script>
 
 <style lang="less">
+    .flex-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
 
+        .total {
+            margin-top: 10px;
+        }
+    }
 </style>

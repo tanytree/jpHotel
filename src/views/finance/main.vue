@@ -6,15 +6,15 @@
 */
 <template>
     <div class="boss-index">
-        <el-tabs class="pageTab" v-model="activeName">
+        <el-tabs class="pageTab" v-model="activeName" @tab-click="tabChange">
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                          :name="item.path"
                          :key="item.path"
                          v-if="$F.filterThirdMenu('finance', item.path, true)">
                 <!-- 财务慨览-->
-                <incomeStatus v-if="item.path == 'overView'" :list="list" :init="getFinancialData"/>
+                <incomeStatus ref="incomes" v-if="item.path == 'overView'" :list="list" :initData="getFinancialData"/>
                 <!-- 记一笔-->
-                <record v-if="item.path == 'makeNote'"/>
+                <record v-if="item.path == 'makeNote'" :list="remember" :initData="getRememberData"/>
                 <!-- 员工权限-->
                 <employeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -33,23 +33,42 @@
         components: {incomeStatus, authority, record, employeeRights},
         data() {
             return {
-                activeName: ''
+                activeName: 'overView', list: [], remember: []
             }
         },
         created() {
           this.$F.handleThirdMenu(this);
         },
+        mounted() {
+            this.tabChange()
+        },
         methods: {
-            getFinancialData(type, str, end) {
+            tabChange() {
+                const a = this;
+                if(this.activeName == 'overView') {
+                    this.getFinancialData(1, '', '', () => {
+                        a.$refs['incomes'][0].initChartLine()
+                    })
+                } else if (this.activeName == 'makeNote') {
+                    this.getRememberData()
+                } else if (this.activeName == 'staff-rights') {
+                    this.getAuditData(this.pageForm);
+                }
+            },
+            getFinancialData(type, str, end, callback) {
                 const params = {
                     searchType: type,
                     startTime: str,
                     endTime: end
                 }
                 this.$F.doRequest(this, '/pms/remeber/financial_charts', params, (res) => {
-                    this.onshelfVisible = false;
-                    this.$message.success('success');
-                    this.initData()
+                    this.list = res.chartsList;
+                    callback && callback()
+                })
+            },
+            getRememberData () {
+                this.$F.doRequest(this, '/pms/remeber/remeber_list', {}, (res) => {
+                    this.remember = res.remeberList;
                 })
             }
         }

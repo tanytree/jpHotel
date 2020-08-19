@@ -54,39 +54,15 @@
                 ],
             };
         },
+        mounted() {
+            this.getDamageData()
+        },
         methods: {
-            /**初始化数据 */
-            initData(balance) {
-                this.editForm = {
-
-                    balance: balance,
-                    price: 0
-                };
-                this.visible = true;
+            getBalanceData() {
+                this.$F.doRequest(this, '/pms/orderanls/running_account_subject', {monthTime: this.form.type}, (res) => {
+                    this.tableData = res
+                })
             },
-            /**新增/编辑 数据 */
-            editFormSubmit() {
-
-                get_recharge_info(this.editForm).then(res => {
-                    if (res.code == 200) {
-                        pay_weixinpc({id: res.data.id}).then(res1 => {
-                            if (res1.code == 200) {
-                                this.qcodeUrl = res1.data.weixin_url;
-                                this.queryReqult(res.data.id);
-                            } else {
-                                this.$message.error(res1.message);
-                            }
-                        });
-                    } else {
-                        this.$message.error(res.message);
-                    }
-                });
-            },
-            queryReqult(id) {
-                quertPayInfo({id: id}).then(res => {
-                    this.chargeStep = 3;
-                });
-            }
         }
     };
 </script>

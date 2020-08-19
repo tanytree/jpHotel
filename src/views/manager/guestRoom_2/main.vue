@@ -76,7 +76,7 @@
            this.$F.handleThirdMenu(this);
         },
         mounted() {
-            const obj = {name: 'first'};
+            const obj = {name: this.activeName};
             this.getCategoryData();
             this.tabChange(obj)
         },
