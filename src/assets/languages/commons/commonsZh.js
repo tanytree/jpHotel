@@ -5,6 +5,10 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    disable: '禁用',
+    enable: '启用',
+    newAdd: '新增',
+    name: '名称',
     other: '其他',
     backIntoJob: '重新入职',
     delete: "删除",

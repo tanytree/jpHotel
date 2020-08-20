@@ -5,6 +5,10 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsRi.js
  */
 module.exports = {
+    disable: '使用禁止',
+    enable: '使用開始',
+    newAdd: '新規追加',
+    name: '名称',
     other: 'その他',
     backIntoJob: '再就職',
     delete: "削除",

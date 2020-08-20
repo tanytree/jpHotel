@@ -2,11 +2,11 @@
   <div>
     <el-row class="demo-form-inline">
       <div class="tag-group">
-        <span class="tag-group__title">房态:</span>
+        <span class="tag-group__title">{{$t('manager.hp_toRoom')}}</span>
         <el-tag
           effect="plain"
           class="tag-width2 margin-l2"
-        >{{ '全部' + '(' + F_roomStatus('', 'total') + ')' }}</el-tag>
+        >{{ $t('commons.all') + '(' + F_roomStatus('', 'total') + ')' }}</el-tag>
         <el-tag
           v-for="(item,index) in $t('commons.roomStatus')"
           :key="index"
@@ -16,10 +16,10 @@
         >{{ item.name + '(' + F_roomStatus(item.value) + ')' }}</el-tag>
       </div>
       <el-form class="demo-form-inline" inline size="small" style="margin-left: 100px;">
-        <el-form-item label="楼层楼栋:" class="margin-l-15">
+        <el-form-item :label="$t('manager.hp_floorBuilding')+':'" class="margin-l-15">
           <el-select
             v-model="form.buildingId"
-            placeholder="楼层"
+            :placeholder="$t('manager.hp_storiedBuilding')"
             class="row-width"
             @change="dongChange"
           >
@@ -32,7 +32,7 @@
           </el-select>
           <el-select
             v-model="form.buildingFloorId"
-            placeholder="楼层"
+            :placeholder="$t('manager.hp_floor')"
             class="row-width"
             style="margin-left: 10px;"
             @change="cengChange"
@@ -44,24 +44,28 @@
               :key="index"
             ></el-option>
           </el-select>
-          <el-button plain style="width: 100px;margin-left: 30px;" @click="reset">重置</el-button>
+          <el-button
+            plain
+            style="width: 100px;margin-left: 30px;"
+            @click="reset"
+          >{{$t('commons.resetBtn')}}</el-button>
         </el-form-item>
       </el-form>
     </el-row>
     <el-row class="demo-form-inline">
       <div class="tag-group">
-        <span class="tag-group__title">房型:</span>
+        <span class="tag-group__title">{{$t('manager.hp_room')+':'}}</span>
         <el-tag
           effect="plain"
           class="tag-width2 margin-l2"
-        >{{ '全部' + '(' + F_roomStatus('roomType', 'total') + ')' }}</el-tag>
+        >{{ $t('commons.all') + '(' + F_roomStatus('roomType', 'total') + ')' }}</el-tag>
         <el-tag
           v-for="(item, i) in roomInfo.roomTypeList"
           :key="i"
           :type="item.roomTypeId"
           effect="plain"
           class="tag-width2 margin-l2"
-        >{{ (item.houseName || '未知') + '(' + item.total + ')' }}</el-tag>
+        >{{ (item.houseName || $t('manager.hp_unknown')) + '(' + item.total + ')' }}</el-tag>
       </div>
     </el-row>
     <template v-for="(item, index) in rooms_list_info.floorList">
@@ -69,7 +73,8 @@
         <el-row :gutter="20" style="margin-top: 10px;">
           <el-col :span="5">
             {{item.building?item.building.name:''}}
-            <span>{{item.floor}}</span>层
+            <span>{{item.floor}}</span>
+            {{$t('manager.hp_layer')}}
           </el-col>
           <el-col :span="1" :offset="0.5" style="color: #999;">
             <span style="color: #126eff;">{{item.reserveFloorRoomCount}}</span>
