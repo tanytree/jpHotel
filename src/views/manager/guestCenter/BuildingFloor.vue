@@ -43,10 +43,10 @@
 							</el-col>
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-							<el-table-column prop="roomTypeId" label="房型"></el-table-column>
-							<el-table-column prop="houseNum" label="房间数"></el-table-column>
+							<el-table-column prop="typeName" label="房型"></el-table-column>
+							<el-table-column prop="total" label="房间数"></el-table-column>
 						</el-table>
-						<el-row style="padding:20px 0px 10px 0px;">楼层备注:</el-row>
+						<el-row style="padding:20px 0px 10px 0px;">楼层备注: {{value.remark}}</el-row>
 						<el-row v-if="!selectRedio">
 							<el-input placeholder="请输入内容" v-model="value.building.remark"></el-input>
 						</el-row>
@@ -71,7 +71,7 @@
 				</el-form>
 			</el-row>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
+				<el-button @click="addDong_show = false">取 消</el-button>
 				<el-button type="primary" @click="defineDong">确 定</el-button>
 			</span>
 		</el-dialog>
@@ -97,7 +97,7 @@
 				</el-form>
 			</el-row>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="centerDialogVisible = false">取 消</el-button>
+				<el-button @click="addCeng_show = false">取 消</el-button>
 				<el-button type="primary" @click="defineCeng">确 定</el-button>
 			</span>
 		</el-dialog>
@@ -219,7 +219,7 @@
 					params.hotelBuildingId = this.ruleForm_dong.hotelBuildingId
 					break
 				}
-				debugger
+				// debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_building_save', params, (res) => {
 					this.get_dong_list()
 					this.addDong_show = false
@@ -260,11 +260,11 @@
 			},
 			// 删除--楼层
 			houseRoom_delete(value) {
-				debugger
+				// debugger
 				let params = {
 					buildingFloorId: value.id
 				}
-				debugger
+				// debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_building_floor_delete', params, (res) => {
 					this.get_ceng_list()
 					this.$message({
@@ -277,14 +277,15 @@
 			showroom_list(value) {
 				this.get_room_list(value.id)
 			},
-			// 获取 房间房型列表
+			// 获取 楼层 -- 房型列表
 			get_room_list(buildingFloorId) {
 				let params = {
 					buildingId: this.selectRedio,
 					buildingFloorId: buildingFloorId,
 				}
 				this.$F.doRequest(this, '/pms/hotel/gethotel_building_room_type_total', params, (res) => {
-					this.tableData = res.list
+					// debugger
+					this.tableData = res
 				})
 			},
 			// 获取 楼层列表

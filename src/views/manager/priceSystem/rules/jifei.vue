@@ -63,7 +63,7 @@
 					</el-col>
 					<el-col :span="18">
 						<el-form-item label="计费规则:" class="margin-l-15">
-							<el-select v-model="alldayRuleId" placeholder="请选择计费规则" style="width: 100%;">
+							<el-select v-model="ruleForm.alldayRuleId" :placeholder="ruleForm.alldayRuleName" style="width: 100%;">
 								<el-option :label="value.ruleName" :value="value.id" v-for="(value, index) in ruleList" :key="index"></el-option>
 							</el-select>
 						</el-form-item>
@@ -87,7 +87,8 @@
 				ruleForm_r: {
 					name: '',
 					pageIndex: 1,
-					pageSize: 10
+					pageSize: 10,
+					totalSize: 0
 				},
 				ruleForm: {},
 				dialogsit: false,
@@ -106,6 +107,8 @@
 					case 'sit':
 						this.dialogsit = true;
 						this.ruleForm = value;
+						this.ruleForm.alldayRuleId = this.ruleForm.hotelRuleMemberPrice.alldayRuleId
+						this.ruleForm.alldayRuleName = this.ruleForm.hotelRuleMemberPrice.alldayRuleName
 						this.get_hotel_rule_allday_list()
 						break
 				}
@@ -119,7 +122,7 @@
 				let params = {
 					id: this.ruleForm.hotelRuleMemberPrice.id,
 					memberId: this.ruleForm.hotelRuleMemberPrice.memberId,
-					alldayRuleId: this.alldayRuleId || this.ruleForm.hotelRuleMemberPrice.alldayRuleId,
+					alldayRuleId: this.ruleForm.alldayRuleId,
 					state: this.ruleForm.state,
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_member_price_save', params, (res) => {
@@ -146,8 +149,6 @@
 								this.ruleList.push(item)
 							}
 						})
-						this.alldayRuleId_name = this.ruleForm.hotelRuleMemberPrice.ruleName
-						this.alldayRuleId = this.ruleForm.hotelRuleMemberPrice.alldayRuleId
 					}
 				})
 			},
@@ -179,6 +180,7 @@
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_member_price_list', params, (res) => {
 					if (res.list.length != 0) {
 						this.tableData = res.list
+						this.ruleForm_r.totalSize = res.totalSize
 					}
 				})
 			},

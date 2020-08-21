@@ -418,7 +418,7 @@
 				this.get_house_list();
 			},
 			handleCurrentChange(val) {
-				this.form.pageIndex = 1;
+				this.form.pageIndex = val;
 				this.get_house_list();
 			}
 		}

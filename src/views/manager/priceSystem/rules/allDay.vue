@@ -185,7 +185,7 @@
 					checkoutTime: '',
 					outtimeMinute: '',
 					outtimeAllday: '',
-					outtimeRule: '2',
+					outtimeRule: 2,
 					outtimeRuleCaps: true,
 					remark: '',
 					roomStrategyJson: [],

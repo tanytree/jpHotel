@@ -83,15 +83,24 @@
 					</template>
 				</el-table-column>
 			</el-table>
+			<el-pagination
+			    @size-change="handleSizeChange"
+			    @current-change="handleCurrentChange"
+			    :current-page="form.pageIndex"
+			    :page-sizes="[10, 20, 50, 100]"
+			    :page-size="form.pageSize"
+			    :total="form.totalSize"
+			    layout="total, sizes, prev, pager, next, jumper"
+			></el-pagination>
 		</el-container>
-		<div class="block">
+		<!-- <div class="block">
 			<div class="page-all">
 				共
 				<span style="font-weight:600;font-size: 14px;">{{form.totalSize}}</span>条记录
 			</div>
 			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
 			 :page-sizes="[100, 200, 300, 400]" :page-size="form.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="form.totalSize"></el-pagination>
-		</div>
+		</div> -->
 		<!-- 按列批量修改 -->
 		<el-dialog top="0" title="按列批量修改" :visible.sync="dialogAdd_kinds" :close-on-click-modal="false">
 			<el-row class="demo-form-inline">
@@ -495,7 +504,9 @@
 					  message: '保存成功',
 					  type: 'success'
 					});
+					this.tableData = []
 					this.dialogAdd_kinds = false
+					this.hotel_room_lock_list();
 				})
 			},
 			// 修改
@@ -508,7 +519,9 @@
 					  message: '保存成功',
 					  type: 'success'
 					});
+					this.tableData = []
 					this.dialogChange_show = false
+					this.hotel_room_lock_list();
 				})
 			},
 			// 获取 楼栋列表
@@ -529,6 +542,7 @@
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_lock_list', params, (res) => {
 					if (res.length != 0) {
 						this.tableData = res.list
+						this.form.totalSize = res.totalSize
 					}
 				})
 			},
@@ -538,7 +552,7 @@
 				this.hotel_room_lock_list();
 			},
 			handleCurrentChange(val) {
-				this.form.pageIndex = 1;
+				this.form.pageIndex = val;
 				this.hotel_room_lock_list();
 			}
 		}

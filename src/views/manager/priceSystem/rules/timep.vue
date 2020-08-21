@@ -233,6 +233,7 @@
 			},
 			// 查询
 			searchBtn() {
+				this.tableData = []
 				this.get_hotel_rule_hour_list()
 			},
 			// 时租房保存

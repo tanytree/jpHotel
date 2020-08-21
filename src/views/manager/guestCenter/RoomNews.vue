@@ -36,8 +36,8 @@
 							<el-button type="primary" size="mini" @click="addRoom('add', '')">新增房间</el-button>
 							<el-button type="primary" size="mini" @click="stop_p('qyong')">批量启用</el-button>
 							<el-button type="primary" size="mini" @click="stop_p('jyong')">批量禁用</el-button>
-							<el-button type="primary" size="mini">批量噪音房</el-button>
-							<el-button type="primary" size="mini">批量高温房</el-button>
+							<el-button type="primary" size="mini" @click="stop('zaoyin')">批量噪音房</el-button>
+							<el-button type="primary" size="mini" @click="stop('gaowen')">批量高温房</el-button>
 						</el-row>
 					</el-col>
 				</el-row>
@@ -47,17 +47,13 @@
 						<el-table-column prop="houseNum" label="房间号"></el-table-column>
 						<el-table-column prop="roomTypeId_name" label="房型名称"></el-table-column>
 						<el-table-column label="楼栋">
-							<template slot-scope="{row}">
-								<template slot-scope="scope">
-									<el-input v-model="scope.row.hotelBuilding.name"></el-input>
-								</template>
+							<template slot-scope="scope">
+								<el-col>{{scope.row.hotelBuilding.name}}</el-col>
 							</template>
 						</el-table-column>
 						<el-table-column prop="buildingFloorId" label="楼层">
-							<template slot-scope="{row}">
-								<template slot-scope="scope">
-									<el-input v-model="scope.row.hotelBuildingFloor.name"></el-input>
-								</template>
+							<template slot-scope="scope">
+								<el-col>{{scope.row.hotelBuildingFloor.name}}</el-col>
 							</template>
 						</el-table-column>
 						<el-table-column prop="extension" label="电话分机"></el-table-column>
@@ -69,19 +65,31 @@
 						<el-table-column prop="roadFlag" label="是否靠马路">
 							<template slot-scope="{row}">
 								<span v-if="row.roadFlag == 1">是</span>
-								<span v-if="row.roadFlag == 0">否</span>
+								<span v-if="row.roadFlag == 2">否</span>
 							</template>
 						</el-table-column>
 						<el-table-column prop="windowFlag" label="是否有窗">
 							<template slot-scope="{row}">
 								<span v-if="row.windowFlag == 1">是</span>
-								<span v-if="row.windowFlag == 0">否</span>
+								<span v-if="row.windowFlag == 2">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column label="是否噪音房">
+							<template slot-scope="{row}">
+								<span v-if="row.noiseFlag == 1">是</span>
+								<span v-if="row.noiseFlag == 2">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column label="是否高温房">
+							<template slot-scope="{row}">
+								<span v-if="row.temperatureFlag == 1">是</span>
+								<span v-if="row.temperatureFlag == 2">否</span>
 							</template>
 						</el-table-column>
 						<el-table-column prop="state" label="状态">
 							<template slot-scope="{row}">
 								<span v-if="row.state == 1">启用</span>
-								<span v-if="row.state == 0">禁用</span>
+								<span v-if="row.state == 2">禁用</span>
 							</template>
 						</el-table-column>
 						<el-table-column label="操作" width="200">
@@ -94,8 +102,15 @@
 							</template>
 						</el-table-column>
 					</el-table>
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
-					 :page-sizes="[10, 20, 50, 100]" :page-size="form.pageSize" :total="form.totalSize" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
+					<el-pagination
+					    @size-change="handleSizeChange"
+					    @current-change="handleCurrentChange"
+					    :current-page="form.pageIndex"
+					    :page-sizes="[10, 20, 50, 100]"
+					    :page-size="form.pageSize"
+					    :total="form.totalSize"
+					    layout="total, sizes, prev, pager, next, jumper"
+					></el-pagination>
 				</el-container>
 			</el-row>
 		</el-row>
@@ -135,7 +150,8 @@
 					roomTypeId: '',
 					houseNum: '',
 					pageIndex: 1,
-					pageSize: 10
+					pageSize: 10,
+					totalSize: 0
 				},
 				dongList: [], //楼栋列表
 				cengList: [], // 楼层列表
@@ -168,6 +184,8 @@
 		},
 		watch: {
 			selectRedio() {
+				this.form.buildingFloorId = ''
+				this.form.roomTypeId = ''
 				this.get_ceng_list()
 				this.get_room_list()
 			},
@@ -183,7 +201,7 @@
 				// debugger
 			},
 			addRoom(type, value) {
-				debugger
+				// debugger
 				switch (type) {
 					case 'add':
 						this.selectFrom = {
@@ -247,6 +265,36 @@
 					this.get_room_list()
 				})
 			},
+			stop(type) {
+				let params = {}
+				let roomId = ''
+				if (this.multipleSelection.length !== 0) {
+					this.multipleSelection.forEach(item =>{
+						roomId = roomId + ',' + item.id
+					})
+					if (roomId.substr(0, 1) === ',') {
+					  roomId = roomId.substr(1)
+					}
+				} else {
+					this.$message({
+						message: '请选择',
+						type: 'warning'
+					});
+					return
+				}
+				params.roomIds = roomId
+				if (type == 'zaoyin') {
+					params.operType = 2
+				} else {
+					params.operType = 1
+				}
+				params.flag = 1
+				debugger
+				this.$F.doRequest(this, '/pms/hotel/oper_room_flag', params, (res) => {
+					this.tableData = []
+					this.get_room_list()
+				})
+			},
 			stop_d(item) {
 				let params = {
 					id: item.id
@@ -279,6 +327,7 @@
 						item.roomTypeId_name = item.hotelRoomType.houseName
 					})
 					this.tableData = res.list
+					this.form.totalSize = res.totalSize
 				})
 			},
 			// 获取 楼层列表
@@ -304,7 +353,7 @@
 			},
 			// 选择--获取房型
 			get_room_type_list() {
-				// debugger
+				// this.roomType = []
 				this.$F.doRequest(this, '/pms/hotel/room_type_list', {}, (res) => {
 					// debugger
 					res.roomtype.forEach((item, index) => {
@@ -337,14 +386,13 @@
 				this.get_room_list()
 			},
 			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
 				this.form.pageSize = val;
 				this.form.pageIndex = 1;
 				this.get_room_list();
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
-				this.form.pageIndex = 1;
+				this.form.pageIndex = val;
 				this.get_room_list();
 			}
 		}
