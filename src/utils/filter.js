@@ -3,10 +3,11 @@
  * @LastEditors: 董林
  * @LastEditTime: 2020-08-14 15:52:32
  * @FilePath: /jiudian/src/utils/filter.js
- */ 
+ */
 /****************** 全局过滤器 ******************/
 
-// import moment from 'moment'
+import commonsZh from '@/assets/languages/commons/commonsZh'
+import commonsRi from '@/assets/languages/commons/commonsRi'
 // import accounting from 'accounting'
 
 const filters = {
@@ -28,7 +29,7 @@ const filters = {
 		}
 	},
 
-	
+
 
 	// 手机号脱敏
 	F_phone: function(value) {
@@ -59,8 +60,8 @@ const filters = {
 			return `****${value.slice(-4)}`
 		}
 	},
-	
-	
+
+
 	//格式化距离
 	F_distance: function(value) {
 		if (value ==null || value=='') {
@@ -75,53 +76,30 @@ const filters = {
 			return ''
 		}
 	},
-
+    //
 	F_visaType(value) {
-		let enums = {
-			'1': '普通签证',
-			'2': '外交签证',
-			'3': '公务签证'
-		}
+        let enums = sessionStorage.locale == 'ri' ? commonsRi.F_visaType : commonsZh.F_visaType;
 		return value && enums[value] ? enums[value] : '其它'
 	},
 	F_sex(value) {
-		let enums = {
-			'1': '男',
-			'2': '女',
-			'3': '保密',
-		}
+        let enums = sessionStorage.locale == 'ri' ? commonsRi.F_sex : commonsZh.F_sex;
 		return value && enums[value] ? enums[value] : '其它'
 	},
 	F_state(value) {
-		let enums = {
-			'1': '启用',
-			'2': '禁用'
-		}
+		let enums = sessionStorage.locale == 'ri' ? commonsRi.F_state : commonsZh.F_state;
 		return value && enums[value] ? enums[value] : '其它'
 	},
 	F_idcardType(value) {
-		let enums = {
-			'1': '身份证',
-			'2': '护照',
-			'3': '驾驶证'
-		}
+        let enums = sessionStorage.locale == 'ri' ? commonsRi.idCardType : commonsZh.idCardType;
 		return value && enums[value] ? enums[value] : '其它'
 	},
 	F_userStatus(value) {
-		let enums = {
-			'1': '正式工',
-			'2': '实习期',
-			'3': '试用期'
-		}
+        let enums = sessionStorage.locale == 'ri' ? commonsRi.userStatus : commonsZh.userStatus;
 		return value && enums[value] ? enums[value] : '其它'
 	},
 	F_cardState(value) {
-		let enums = {
-			'1': '正常',
-			'2': '已挂失',
-			'3': '待启用'
-		}
-		return value && enums[value] ? enums[value] : '其它'
+        let enums = sessionStorage.locale == 'ri' ? commonsRi.memberCardState : commonsZh.memberCardState;
+		return value && enums[value] ? enums[value] : ''
 	},
 	F_isBlacklist(value) {
 		let enums = {
@@ -129,21 +107,13 @@ const filters = {
 			'2': '是',
 		}
 		return value && enums[value] ? enums[value] : '否'
-	}, 
+	},
 	F_is1or2(value) {
-		let enums = {
-			'1': '是',
-			'2': '否',
-		}
-		return value && enums[value] ? enums[value] : ''
-	}, 
+		let enums = sessionStorage.locale == 'ri' ? commonsRi.comShareFlag : commonsZh.comShareFlag
+		return value && enums[value] ? enums[value] : '';
+	},
 	F_toward(value) {
-		let enums = {
-			'1': '朝南',
-			'2': '朝北',
-			'3': '朝东',
-			'4': '朝西',
-		}
+        let enums = sessionStorage.locale == 'ri' ? commonsRi.towards : commonsZh.towards;
 		return value && enums[value] ? enums[value] : ''
 	}
 

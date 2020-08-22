@@ -15,22 +15,22 @@
               <!-- 普通预订-->
               <normal v-if="item.path == 'normal'" operCheckinType="b1"/>
               <!-- 时租房预订-->
-              <hour v-if="item.path == 'hour'" operCheckinType="b2"/>
+              <normal v-if="item.path == 'hour'" operCheckinType="b2"/>
               <!-- 会场预订-->
               <hall v-if="item.path == 'hall'" operCheckinType="b3"/>
           </el-tab-pane>
       </el-tabs>
-      <!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
-      <!--      <el-tab-pane label="普通预订" name="b1">-->
-      <!--        <normal :operCheckinType="activeName" />-->
-      <!--      </el-tab-pane>-->
-      <!--      <el-tab-pane label="时租房预订" name="b2">-->
-      <!--        <hour :operCheckinType="activeName" />-->
-      <!--      </el-tab-pane>-->
-      <!--      <el-tab-pane label="会场预订" name="b3">-->
-      <!--        <hall />-->
-      <!--      </el-tab-pane>-->
-      <!--    </el-tabs>-->
+<!--          <el-tabs class="pageTab" v-model="activeName">-->
+<!--            <el-tab-pane label="普通预订" name="b1">-->
+<!--              <normal :operCheckinType="activeName" />-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="时租房预订" name="b2">-->
+<!--              <normal :operCheckinType="activeName" />-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="会场预订" name="b3">-->
+<!--              <normal :operCheckinType="activeName"/>-->
+<!--            </el-tab-pane>-->
+<!--          </el-tabs>-->
   </div>
 </template>
 
@@ -43,7 +43,7 @@ export default {
   components: { normal, hour, hall },
   data() {
     return {
-      activeName: "" //第一个默认启动
+      activeName: "b1" //第一个默认启动
     };
   },
   mounted() {},

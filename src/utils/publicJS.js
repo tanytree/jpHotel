@@ -62,7 +62,6 @@ const $F = {
             else
                 newImageList.push(file.url);
         })
-        debugger
         if (newImageList.length == imgList.length) {
             callback(newImageList.join(','))
             return;
@@ -99,7 +98,8 @@ const $F = {
         params = this.deepClone(params);
         for (let key in params) {
             let value = params[key];
-            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum') {
+            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
+                || ((value instanceof Array) && value.length == 0)) {
                 delete params[key];
             }
         }

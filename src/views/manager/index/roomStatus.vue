@@ -8,12 +8,12 @@
           class="tag-width2 margin-l2"
         >{{ $t('commons.all') + '(' + F_roomStatus('', 'total') + ')' }}</el-tag>
         <el-tag
-          v-for="(item,index) in $t('commons.roomStatus')"
-          :key="index"
-          :type="item.type"
+            v-for="(value, key) in $t('commons.F_roomStatus')"
+          :key="key"
+          :type="key"
           effect="plain"
           class="tag-width2 margin-l2"
-        >{{ item.name + '(' + F_roomStatus(item.value) + ')' }}</el-tag>
+        >{{ value + '(' + F_roomStatus(key) + ')' }}</el-tag>
       </div>
       <el-form class="demo-form-inline" inline size="small" style="margin-left: 100px;">
         <el-form-item :label="$t('manager.hp_floorBuilding')+':'" class="margin-l-15">

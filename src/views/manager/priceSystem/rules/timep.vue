@@ -62,7 +62,7 @@
 				</div>
 			</el-row>
 		</el-row>
-		
+
 		<!-- 时租房添加 -->
 		<el-row v-if="!tab_show">
 			<el-row style="padding: 20px 0px;">
@@ -166,7 +166,7 @@
 				<el-button style="width: 80px;margin-left: 20px;" @click="tab_show = false">返回</el-button>
 			</el-row>
 		</el-row>
-		
+
 	</div>
 </template>
 
@@ -181,7 +181,7 @@
 					priceModel: '', //收费模式 1固定时间退房模式  2 24小时退房模式
 					state: '',
 					pageIndex: 1,
-					pageSize: 10,
+					pageSize: 999,
 					totalSize: 0
 				},
 				ruleForm_h: {
@@ -330,7 +330,9 @@
 				let params = Object.assign({}, this.ruleForm)
 				params.status = 2
 				let arr_list = []
+
 				this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_list', params, (res) => {
+                    debugger;
 					if (res.list.length != 0) {
 						res.list.forEach(item =>{
 							if (item.status != 2) {
