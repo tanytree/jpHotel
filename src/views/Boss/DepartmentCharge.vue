@@ -148,22 +148,14 @@ export default {
     },
     // 弹框 -- 获取人员列表
     get_dialogList(item) {
-      let params = this.dialog_info;
-      this.$F.doRequest(
-        this,
-        "/pms/workuser/login_user_list",
-        params,
-        (res) => {
-          if (res) {
+        let params = this.dialog_info;
+        this.$F.commons.fetchSalesList(params, (data)=> {
             res.hotelUserList.forEach((value) => {
-              if (item.header_name == value.account) value.checked = true;
-              else value.checked = false;
+                if (item.header_name == value.account) value.checked = true;
+                else value.checked = false;
             });
             this.peopleList = res.hotelUserList;
-            debugger;
-          }
-        }
-      );
+        });
     },
     // 弹框--改变选中的人
     changeRedio(value, index) {

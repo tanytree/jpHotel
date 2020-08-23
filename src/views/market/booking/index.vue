@@ -36,11 +36,10 @@
 
 <script>
 import normal from "@/views/market/reception/checkin/normal";
-import hour from "./hour";
 import hall from "./hall";
 
 export default {
-  components: { normal, hour, hall },
+  components: { normal, hall },
   data() {
     return {
       activeName: "b1" //第一个默认启动

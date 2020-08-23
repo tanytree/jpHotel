@@ -224,7 +224,19 @@ const $F = {
 
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
+        //获取销售员
 
+        fetchSalesList(params = {}, callback) {
+            $F.merge(params, {
+                searchType: 1,
+                paging: false,
+                pageIndex: 1,
+                pageSize: 999
+            })
+            $F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
+                callback(data);
+            })
+        },
         //获取会员类型列表 这里封装统一方法 很多地方用到
         fetchMemberTypeList (requestParams = {}, callback) {
             let params = {

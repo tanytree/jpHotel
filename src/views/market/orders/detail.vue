@@ -227,7 +227,9 @@ export default {
     mounted() {
         let id = this.$route.query.id
         this.getDetail(id)
-        this.login_user_list()
+        this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
+            this.salesList = data.hotelUserList;
+        });
     },
     methods: {
         getDetail(id) {
@@ -241,20 +243,7 @@ export default {
                 this.detailData = res
             })
         },
-        login_user_list() {
-            let params = {
-                searchType: 1,
-                paging: false,
-                salesFlag: 1,
-                content: '',
-                departmentId: '',
-                pageIndex: 1,
-                pageSize: 10
-            }
-            this.$F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
-                this.salesList = data.hotelUserList;
-            })
-        },
+
         F_salesId(v) {
             let that = this
             for (let k in that.salesList) {

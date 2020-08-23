@@ -203,7 +203,6 @@ export default {
                 pageSize: 999
             }
             this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_list', params, (res) => {
-                debugger
                 this.ruleHourList = res.list
             })
         },

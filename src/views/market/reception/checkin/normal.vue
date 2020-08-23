@@ -394,8 +394,8 @@
                     <div class="grid-content">
                         <el-row>
                             <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
-                            <el-button @click="live_in_person_list" v-if="operCheckinType != 'b3'"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
-                            <el-button @click="liveCard_in_person_list"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
+                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
+                            <el-button @click="liveCard_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />
                         <el-row class="roomSelect">
@@ -820,7 +820,9 @@ export default {
     mounted() {
         this.handleOperCheckinType()
         this.hotel_rule_hour_list()
-        this.login_user_list();
+        this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
+            this.salesList = data.hotelUserList;
+        });
         this.getDataList();
         this.initForm();
     },
@@ -979,23 +981,9 @@ export default {
             }
         },
 
-        login_user_list() {
-            let params = {
-                searchType: 1,
-                paging: false,
-                salesFlag: 1,
-                content: '',
-                departmentId: '',
-                pageIndex: 1,
-                pageSize: 10
-            }
-            this.$F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
-                this.salesList = data.hotelUserList;
-            })
-        },
-        hotel_check_in(type) {
+        hotel_check_in(type, callback) {
             debugger
-            this.isSubmitErr = false //
+            this.isSubmitErr = false;
             let url = ''
             let operCheckinType = this.operCheckinType
             if (operCheckinType == 'a1' || operCheckinType == 'a2') {
@@ -1005,19 +993,23 @@ export default {
             }
             let ajax = () => {
                 this.$F.doRequest(this, url, this.checkInForm, (data) => {
-                    if (type == 1) {
+                    if (type == 1 || type == 4) {
                         if (operCheckinType == 'a1' || operCheckinType == 'a2') {
                             console.log(data.checkinId)
                             this.checkInForm.checkInId = data.checkinId
                         } else {
                             this.checkInForm.checkInId = data.checkInReserveId
                             this.checkInForm.checkInReserveId = data.checkInReserveId
+                        }
+                        if (type == 1) {
                             this.$F.doRequest(this, '/pms/reserve/reserve_oper', {
                                 checkInReserveId: data.checkInReserveId,
                                 state: 2
                             }, (data) => {
                                 console.log('预订单直接转为确认状态')
                             })
+                        } else {
+                            callback();
                         }
                         this.$forceUpdate()
                         console.log(this.checkInForm)
@@ -1160,10 +1152,22 @@ export default {
         },
 
         rowRoomByItem(item, index) {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请完善入住信息后操作');
-                return
+            debugger
+            if (this.checkInForm.checkInId) {
+                this.rowRoomByItem2(item, index);
+            }else {
+                this.hotel_check_in(4, () => {
+                    if (!this.checkInForm.checkInId) {
+                        this.$message.error('请完善入住信息后操作');
+                        return
+                    }
+                    this.rowRoomByItem2(item, index);
+                });
             }
+        },
+
+        rowRoomByItem2(item, index) {
+            debugger
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item))
             this.rowRoomCurrentIndex = index
             this.hotelRoomListParams.roomTypeId = item.roomTypeId
