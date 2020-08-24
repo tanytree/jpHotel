@@ -282,6 +282,72 @@ module.exports = {
     ps_newMemberPrice: '新会員価格',
     ps_memberContent: '新しい会員価格がないなら、会員価格にします',
     ps_roomPrice: '部屋料金',
+    ps_ruleName: 'ルール名',
+    ps_modifyCalendar: 'カレンダーを直す',
+    ps_addSuccess: '追加成功',
+    ps_allDayRoom: '終日宿泊料金',
+    ps_clockRoom: '時間割り料金',
+    ps_getMoneyRule: '配置料金計算規則',
+    ps_priceModel: '課金モード',
+    ps_ruleDetail: 'ルールの詳細',
+    ps_fixedTime: '固定時間チェックアウトモード',
+    ps_everyTime: '24時間チェックアウトモード',
+    ps_inLive: '初乗り料金',
+    ps_minterGet: '分間チェックインしたら初乗り料金がかかります。チェックインしてから',
+    ps_getAll: '分後には全日レンタルでかかります。',
+    ps_nextDay: '翌日',
+    ps_moreThen: '',
+    ps_letterMin: '分間を超えると、課金する，に基づき,',
+    ps_addHalf: '半日料金加算する',
+    ps_addHour: '1時間ごとに加算されます',
+    ps_addSky: '加算上限を追加する',
+    ps_billingType: '課金タイプ',
+    ps_startPrice: '初乗り料金：',
+    ps_thenTime: '時間オーバー料金',
+    ps_minGetMoney: '分間を超えると、課金する，に基づき',
+    ps_startAt: '初乗り運賃',
+    ps_everyHourAdd: '1時間ごとに加算されます',
+    ps_skyPrice: '上限料',
+    ps_specifiedTime: 'チェックイン受け時間帯を指定する',
+    ps_letterGetAllMoney: '分で部屋を借りると全額となる。',
+    ps_minLetterChange: '分間を超えると、終日宿泊料金を課金する',
+    ps_thenTimeRule: 'タイムアウト規則',
+    ps_fullPrice: '全价',
+    ps_advanceRoomPay: '料金を事前に収める',
+    ps_accountingRules: '料金計算規則',
+    ps_setUp: '設定',
+    ps_resetSuccess: '設置に成功',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

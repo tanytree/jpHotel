@@ -5,6 +5,8 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsRi.js
  */
 module.exports = {
+    week: '曜日',
+    time: '時間',
     confirm: '确 认',
     saveSuccess: '保存に成功する',
     disable: '使用禁止',
@@ -105,7 +107,7 @@ module.exports = {
         name: '维修',
         value: '5'
     }],
-    F_roomStatus:{
+    F_roomStatus: {
         '1': '空净',
         '2': '空脏',
         '3': '住净',
@@ -136,7 +138,7 @@ module.exports = {
         "2": '已退房'
     },
     //预订状态
-    reserveState:{
+    reserveState: {
         "0": '不限',
         "1": '预订中',
         "2": '已确认',
@@ -156,7 +158,7 @@ module.exports = {
         "5": '反结'
     },
     //预订类型
-    operCheckinType:{
+    operCheckinType: {
         "1": '普通房',
         "2": '时租房',
         "3": '会场'

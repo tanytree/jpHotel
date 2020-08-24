@@ -5,6 +5,8 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    time: '时间',
+    week: '星期',
     confirm: '确 认',
     saveSuccess: '保存成功',
     disable: '禁用',

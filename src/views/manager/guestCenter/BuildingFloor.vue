@@ -3,7 +3,9 @@
   <div id="page1">
     <el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
       <el-col :span="2.5">{{hotel_name || ''}}</el-col>
-      <el-col :span="2">共有{{dongList.length || ''}}栋楼</el-col>
+      <el-col
+        :span="2"
+      >{{$t('manager.hk_total')}}{{dongList.length || ''}}{{$t('manager.hk_building')}}</el-col>
     </el-row>
     <el-row style="padding: 20px 0px;">
       <el-radio-group v-model="selectRedio">
@@ -20,24 +22,35 @@
       style="background-color: #e6eaed;padding: 10px 0px;"
     >
       <el-col :span="6">
-        {{currentDong}}共有
-        <span style="color: #126EFF;">{{dongInfo.buildingTotal}}</span>层 共有房间:
-        <span style="color: #126EFF;">{{dongInfo.roomTotal}}</span>间
+        {{currentDong}}{{$t('manager.hk_total')}}
+        <span
+          style="color: #126EFF;"
+        >{{dongInfo.buildingTotal}}</span>
+        {{$t('manager.hp_layer')}} {{$t('manager.hk_totalRoom')}}:
+        <span
+          style="color: #126EFF;"
+        >{{dongInfo.roomTotal}}</span>
+        {{$t('manager.hk_space')}}
       </el-col>
       <el-col :span="6">
-        <el-button type="text" @click="popup('changeDong')">修改</el-button>
+        <el-button type="text" @click="popup('changeDong')">{{$t('commons.modify')}}</el-button>
         <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-        <el-popconfirm title="你确定要删除吗？" @onConfirm="houseFloor_delete">
-          <el-button slot="reference" type="text" size="small" @click="deleteRow(selectRedio)">删除</el-button>
+        <el-popconfirm :title="$t('manager.hk_sureDelete')+'？'" @onConfirm="houseFloor_delete">
+          <el-button
+            slot="reference"
+            type="text"
+            size="small"
+            @click="deleteRow(selectRedio)"
+          >{{$t('commons.delete')}}</el-button>
         </el-popconfirm>
         <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-        <el-button type="text" @click="forward">前移</el-button>
+        <el-button type="text" @click="forward">{{$t('manager.hk_forward')}}</el-button>
         <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-        <el-button type="text" @click="back">后移</el-button>
+        <el-button type="text" @click="back">{{$t('manager.hk_moveBack')}}</el-button>
       </el-col>
       <el-col :span="8" :offset="8">
-        <el-button type="primary" @click="popup('addDong')">新增楼栋</el-button>
-        <el-button type="primary" @click="popup('addCeng')">新增楼层</el-button>
+        <el-button type="primary" @click="popup('addDong')">{{$t('manager.hk_newBuilding')}}</el-button>
+        <el-button type="primary" @click="popup('addCeng')">{{$t('manager.hk_newFloor')}}</el-button>
       </el-col>
     </el-row>
     <el-row style="margin-top: 20px;margin-left: 40px;">
@@ -48,9 +61,17 @@
             <el-row :gutter="20" style="border-bottom: 1px solid #e5e5e5;padding: 10px 0px;">
               <el-col :span="10">{{value.building.name}}{{value.name}}</el-col>
               <el-col :span="14" style="display: flex;justify-content: flex-end;">
-                <el-button type="text" @click="popup('changeCeng',value)">修改</el-button>
-                <el-popconfirm title="你确定要删除吗？" @onConfirm="houseRoom_delete(value)">
-                  <el-button slot="reference" type="text" size="small" @click="deleteRow(value)">删除</el-button>
+                <el-button type="text" @click="popup('changeCeng',value)">{{$t('commons.modify')}}</el-button>
+                <el-popconfirm
+                  :title="$t('manager.hk_sureDelete')+'？'"
+                  @onConfirm="houseRoom_delete(value)"
+                >
+                  <el-button
+                    slot="reference"
+                    type="text"
+                    size="small"
+                    @click="deleteRow(value)"
+                  >{{$t('commons.delete')}}</el-button>
                 </el-popconfirm>
               </el-col>
             </el-row>
@@ -60,12 +81,17 @@
               tooltip-effect="dark"
               :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
             >
-              <el-table-column prop="typeName" label="房型"></el-table-column>
-              <el-table-column prop="total" label="房间数"></el-table-column>
+              <el-table-column prop="typeName" :label="$t('manager.hp_room')"></el-table-column>
+              <el-table-column prop="total" :label="$t('manager.hk_roomNum')"></el-table-column>
             </el-table>
-            <el-row style="padding:20px 0px 10px 0px;">楼层备注: {{value.remark}}</el-row>
+            <el-row
+              style="padding:20px 0px 10px 0px;"
+            >{{$t('manager.hk_floorNote')+':'}} {{value.remark}}</el-row>
             <el-row v-if="!selectRedio">
-              <el-input placeholder="请输入内容" v-model="value.building.remark"></el-input>
+              <el-input
+                :placeholder="$t('boss.department_placeEnterContent')"
+                v-model="value.building.remark"
+              ></el-input>
             </el-row>
           </el-row>
         </el-popover>
@@ -81,16 +107,16 @@
       <el-row :gutter="20">
         <el-form :model="ruleForm_dong" :rules="rules" ref="ruleForm_dong" label-width="150px">
           <el-col :span="20">
-            <el-form-item label="楼栋名称:" prop="name">
-              <el-input placeholder="请输入楼栋名称" v-model="ruleForm_dong.name"></el-input>
+            <el-form-item :label="$t('manager.hk_buildingName')+':'" prop="name">
+              <el-input :placeholder="$t('manager.hk_inputBuildName')" v-model="ruleForm_dong.name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="楼栋备注:">
+            <el-form-item :label="$t('manager.hk_buildingNote')+':'">
               <el-input
                 type="textarea"
                 :rows="2"
-                placeholder="请输入内容"
+                :placeholder="$t('boss.department_placeEnterContent')"
                 v-model="ruleForm_dong.remark"
               ></el-input>
             </el-form-item>
@@ -98,8 +124,8 @@
         </el-form>
       </el-row>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addDong_show = false">取 消</el-button>
-        <el-button type="primary" @click="defineDong">确 定</el-button>
+        <el-button @click="addDong_show = false">{{$t('commons.cancel')}}</el-button>
+        <el-button type="primary" @click="defineDong">{{$t('commons.determine')}}</el-button>
       </span>
     </el-dialog>
     <!-- 新增楼层 -->
@@ -112,21 +138,27 @@
       <el-row :gutter="20">
         <el-form :model="ruleForm_ceng" :rules="rules" ref="ruleForm_ceng" label-width="150px">
           <el-col :span="20">
-            <el-form-item label="楼层:" prop="name">
-              <el-input placeholder="请输入内容" v-model="ruleForm_ceng.floor"></el-input>
+            <el-form-item :label="$t('manager.hp_floor')+':'" prop="name">
+              <el-input
+                :placeholder="$t('boss.department_placeEnterContent')"
+                v-model="ruleForm_ceng.floor"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="楼层名称:" prop="name">
-              <el-input placeholder="请输入内容" v-model="ruleForm_ceng.name"></el-input>
+            <el-form-item :label="$t('manager.hk_floorName')+':'" prop="name">
+              <el-input
+                :placeholder="$t('boss.department_placeEnterContent')"
+                v-model="ruleForm_ceng.name"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="楼层备注:">
+            <el-form-item :label="$t('manager.hk_floorNote')+':'">
               <el-input
                 type="textarea"
                 :rows="2"
-                placeholder="请输入内容"
+                :placeholder="$t('boss.department_placeEnterContent')"
                 v-model="ruleForm_ceng.remark"
               ></el-input>
             </el-form-item>
@@ -134,8 +166,8 @@
         </el-form>
       </el-row>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addCeng_show = false">取 消</el-button>
-        <el-button type="primary" @click="defineCeng">确 定</el-button>
+        <el-button @click="addCeng_show = false">{{$t('commons.cancel')}}</el-button>
+        <el-button type="primary" @click="defineCeng">{{$t('commons.determine')}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -154,6 +186,48 @@ export default {
     ...mapState({
       user: (state) => state.user,
     }),
+    newBuilding: {
+      get() {
+        return this.$t("manager.hk_newBuilding");
+      },
+      set() {},
+    },
+    modifyBuilding: {
+      get() {
+        return this.$t("manager.hk_modifyBuilding");
+      },
+      set() {},
+    },
+    newFloor: {
+      get() {
+        return this.$t("manager.hk_newFloor");
+      },
+      set() {},
+    },
+    modifyFloor: {
+      get() {
+        return this.$t("manager.hk_modifyFloor");
+      },
+      set() {},
+    },
+    success: {
+      get() {
+        return this.$t("manager.hk_success");
+      },
+      set() {},
+    },
+    newSuccess: {
+      get() {
+        return this.$t("manager.hk_newSuccess");
+      },
+      set() {},
+    },
+    deleteSuccess: {
+      get() {
+        return this.$t("manager.hk_deleteSuccess");
+      },
+      set() {},
+    },
   },
   data() {
     return {
@@ -212,6 +286,27 @@ export default {
         this.get_current_ceng_info();
       }
     },
+    newBuilding(newValue, oldValue) {
+      this.newBuilding = newValue;
+    },
+    modifyBuilding(newValue, oldValue) {
+      this.modifyBuilding = newValue;
+    },
+    newFloor(newValue, oldValue) {
+      this.newFloor = newValue;
+    },
+    modifyFloor(newValue, oldValue) {
+      this.modifyFloor = newValue;
+    },
+    success(newValue, oldValue) {
+      this.success = newValue;
+    },
+    newSuccess(newValue, oldValue) {
+      this.newSuccess = newValue;
+    },
+    deleteSuccess(newValue, oldValue) {
+      this.deleteSuccess = newValue;
+    },
   },
   methods: {
     popup(type, value) {
@@ -219,7 +314,7 @@ export default {
       switch (type) {
         case "addDong":
           this.addDong_show = true;
-          this.dong_title = "新增楼栋";
+          this.dong_title = this.newBuilding;
           break;
         case "changeDong":
           this.dongList.forEach((value, index) => {
@@ -229,11 +324,11 @@ export default {
             }
           });
           this.addDong_show = true;
-          this.dong_title = "修改楼栋";
+          this.dong_title = this.modifyBuilding;
           break;
         case "addCeng":
           this.addCeng_show = true;
-          this.ceng_title = "新增楼层";
+          this.ceng_title = this.newFloor;
           this.ruleForm_ceng = {
             buildingId: "", // 楼栋id
             buildingFloorId: "", //楼层id
@@ -244,7 +339,7 @@ export default {
           break;
         case "changeCeng":
           this.addCeng_show = true;
-          this.ceng_title = "修改楼层";
+          this.ceng_title = this.modifyFloor;
           this.ruleForm_ceng = value;
           break;
       }
@@ -266,7 +361,7 @@ export default {
           this.get_dong_list();
           this.addDong_show = false;
           this.$message({
-            message: "成功",
+            message: this.success,
             type: "success",
           });
         }
@@ -287,7 +382,7 @@ export default {
           this.get_ceng_list();
           this.addCeng_show = false;
           this.$message({
-            message: "新增成功",
+            message: this.newSuccess,
             type: "success",
           });
         }
@@ -305,7 +400,7 @@ export default {
         (res) => {
           this.get_dong_list();
           this.$message({
-            message: "删除成功",
+            message: this.deleteSuccess,
             type: "success",
           });
         }
@@ -325,7 +420,7 @@ export default {
         (res) => {
           this.get_ceng_list();
           this.$message({
-            message: "删除成功",
+            message: this.deleteSuccess,
             type: "success",
           });
         }
