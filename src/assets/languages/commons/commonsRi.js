@@ -5,6 +5,8 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsRi.js
  */
 module.exports = {
+    confirm: '确 认',
+    saveSuccess: '保存に成功する',
     disable: '使用禁止',
     enable: '使用開始',
     newAdd: '新規追加',

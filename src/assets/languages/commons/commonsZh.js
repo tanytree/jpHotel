@@ -5,6 +5,8 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    confirm: '确 认',
+    saveSuccess: '保存成功',
     disable: '禁用',
     enable: '启用',
     newAdd: '新增',

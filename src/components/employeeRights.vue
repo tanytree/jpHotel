@@ -114,9 +114,19 @@ export default {
     ...mapState({
       user: (state) => state.user,
     }),
+    setSuccess: {
+      get() {
+        return this.$t("boss.compensation_setSuccess");
+      },
+      set() {},
+    },
   },
   name: "",
-
+  watch: {
+    setSuccess(newValue, oldValue) {
+      this.setSuccess = newValue;
+    },
+  },
   data() {
     return {
       loading: false,
@@ -288,7 +298,7 @@ export default {
       };
       this.$F.doRequest(this, "/pms/workuser/set_user_menu", params, (res) => {
         this.$message({
-          message: "设置成功",
+          message: this.setSuccess,
           type: "success",
         });
         this.listVisible = true;

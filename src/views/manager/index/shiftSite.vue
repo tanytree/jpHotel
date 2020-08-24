@@ -7,33 +7,36 @@
             <div class="manage-item" v-for="(item, index) in handData" :key="index">
               <div class="handTitle">
                 <span class="square"></span>
-                {{item.handoverType == 1 ? '前台部' : item.handoverType == 2 ? '餐饮部' : '商店部'}}交班设置
+                {{item.handoverType == 1 ? $t('manager.hp_deskDepartment') : item.handoverType == 2 ? $t('manager.hp_foodDepartment') : $t('manager.hp_storeDepartment')}}{{$t('manager.hp_setSuccession')}}
               </div>
               <el-form size="small" inline label-position="left">
                 <div>
-                  <el-form-item label="交班模式：">
+                  <el-form-item :label="$t('manager.hp_patternsSuccession')+':'">
                     <el-radio-group v-model="item.handoverStatus">
-                      <el-radio :label="1">现金流模式</el-radio>
-                      <el-radio :label="2">实收模式</el-radio>
-                      <el-radio :label="3">应收模式</el-radio>
+                      <el-radio :label="1">{{$t('manager.hp_cashModel')}}</el-radio>
+                      <el-radio :label="2">{{$t('manager.hp_paidModel')}}</el-radio>
+                      <el-radio :label="3">{{$t('manager.hp_accountsModel')}}</el-radio>
                     </el-radio-group>
                   </el-form-item>
-                  <el-form-item label="备用金：" v-if="item.handoverStatus == 1">
+                  <el-form-item
+                    :label="$t('manager.hp_locker')+':'"
+                    v-if="item.handoverStatus == 1"
+                  >
                     <el-input v-model="item.pettyCash"></el-input>
                   </el-form-item>
                 </div>
-                <el-form-item label="模式说明：" class="inline">
+                <el-form-item :label="$t('manager.hp_modelSpecification')+':'" class="inline">
                   <el-input type="textarea" resize="none" :rows="3" v-model="item.remark"></el-input>
                 </el-form-item>
               </el-form>
             </div>
           </div>
           <div class="footer">
-            <el-button type="primary" class="submit" @click="submit('hand')">保存</el-button>
+            <el-button type="primary" class="submit" @click="submit('hand')">{{$t('commons.save')}}</el-button>
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="班次管理" name="handManage">
+      <el-tab-pane :label="$t('manager.hp_flightManagement')" name="handManage">
         <div class="content">
           <div class="demo-form-inline">
             <el-radio-group v-model="handType.id" size="small" @change="radioChange">
@@ -41,9 +44,14 @@
                 v-for="(item, index) in handData"
                 :key="index"
                 :label="item.id"
-              >{{item.handoverType == 1 ? '前台部' : item.handoverType == 2 ? '餐饮部' : '商店部'}}班次</el-radio-button>
+              >{{item.handoverType == 1 ? $t('manager.hp_deskDepartment') : item.handoverType == 2 ? $t('manager.hp_foodDepartment') : $t('manager.hp_storeDepartment')}}{{$t('manager.hp_shift')}}</el-radio-button>
             </el-radio-group>
-            <el-button type="primary" class="submit" size="small" @click="popup_thing">新增</el-button>
+            <el-button
+              type="primary"
+              class="submit"
+              size="small"
+              @click="popup_thing"
+            >{{$t('commons.newAdd')}}</el-button>
           </div>
           <el-table
             ref="multipleTable"
@@ -54,14 +62,18 @@
             size="small"
             v-loading="loading"
           >
-            <el-table-column prop="name" label="班次名称"></el-table-column>
-            <el-table-column prop="startTime" label="开始时间"></el-table-column>
-            <el-table-column prop="endTime" label="结束时间"></el-table-column>
-            <el-table-column label="操作" width="150">
+            <el-table-column prop="name" :label="$t('manager.hp_shiftName')"></el-table-column>
+            <el-table-column prop="startTime" :label="$t('manager.hp_startTime')"></el-table-column>
+            <el-table-column prop="endTime" :label="$t('manager.hp_endTime')"></el-table-column>
+            <el-table-column :label="$t('commons.operating')" width="150">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="popup_thing(scope.row)">编辑</el-button>
+                <el-button
+                  type="text"
+                  size="small"
+                  @click="popup_thing(scope.row)"
+                >{{$t("manager.hp_editor")}}</el-button>
                 <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm(scope.row)">
-                  <el-button slot="reference" type="text" size="small">删除</el-button>
+                  <el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
@@ -84,19 +96,19 @@
           :close-on-click-modal="false"
         >
           <el-form :model="typeData" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="班次名称" prop="name">
+            <el-form-item :label="$t('manager.hp_shiftName')" prop="name">
               <el-input v-model="typeData.name"></el-input>
             </el-form-item>
-            <el-form-item label="开始时间" prop="startTime">
+            <el-form-item :label="$t('manager.hp_startTime')" prop="startTime">
               <el-time-picker v-model="typeData.startTime" format="HH:mm" value-format="HH:mm"></el-time-picker>
             </el-form-item>
-            <el-form-item label="结束时间" prop="endTime">
+            <el-form-item :label="$t('manager.hp_endTime')" prop="endTime">
               <el-time-picker v-model="typeData.endTime" format="HH:mm" value-format="HH:mm"></el-time-picker>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button class="white" @click="addTypeVisible = false">取 消</el-button>
-            <el-button class="submit" type="primary" @click="saveInfo">确 定</el-button>
+            <el-button class="white" @click="addTypeVisible = false">{{$t('commons.cancel')}}</el-button>
+            <el-button class="submit" type="primary" @click="saveInfo">{{$t('commons.determine')}}</el-button>
           </div>
         </el-dialog>
       </el-tab-pane>
@@ -126,6 +138,37 @@ export default {
   props: {
     handData: Array,
     initData: Function,
+  },
+  computed: {
+    editore: {
+      get() {
+        return this.$t("manager.hp_editor");
+      },
+      set() {},
+    },
+    newAdd: {
+      get() {
+        return this.$t("commons.newAdd");
+      },
+      set() {},
+    },
+    saveSuccess: {
+      get() {
+        return this.$t("commons.saveSuccess");
+      },
+      set() {},
+    },
+  },
+  watch: {
+    editore(newValue, oldValue) {
+      this.editore = newValue;
+    },
+    newAdd(newValue, oldValue) {
+      this.newAdd = newValue;
+    },
+    saveSuccess(newValue, oldValue) {
+      this.saveSuccess = newValue;
+    },
   },
   methods: {
     changeTab(tab) {
@@ -168,10 +211,10 @@ export default {
       this.addTypeVisible = true;
       if (row.id) {
         this.typeData = row;
-        this.addTypeTitle = "编辑";
+        this.addTypeTitle = this.editore;
       } else {
         this.typeData = { name: "", startTime: "", endTime: "" };
-        this.addTypeTitle = "新增";
+        this.addTypeTitle = this.newAdd;
       }
     },
     saveInfo() {
@@ -216,7 +259,7 @@ export default {
         };
         this.$F.doRequest(this, "/pms/handover/edit", params, (res) => {
           this.initData();
-          this.$message({ message: "保存成功", type: "success" });
+          this.$message({ message: this.saveSuccess, type: "success" });
         });
       } else {
       }
