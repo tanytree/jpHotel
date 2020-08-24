@@ -601,9 +601,9 @@
       employees_list (id) {
         let that = this
         this.employeesForm.departmentId = id
-        this.$F.doRequest(this, '/pms/workuser/login_user_list', this.employeesForm, (res) => {
-          this.employeesList = res.hotelUserList
-        })
+          this.$F.commons.fetchSalesList(this.employeesForm, (data)=> {
+              this.employeesList = res.hotelUserList
+          });
       },
       department_delete () {
         let item = this.activeDepartMent

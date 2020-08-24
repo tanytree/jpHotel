@@ -391,20 +391,6 @@ export default {
       disabled: false,
     };
   },
-  computed: {
-    deleteSuccess: {
-      get() {
-        return this.$t("manager.hk_deleteSuccess");
-      },
-      set() {},
-    },
-    selectRoomImg: {
-      get() {
-        return this.$t("manager.hp_selectRoomImg");
-      },
-      set() {},
-    },
-  },
   watch: {
     active_tag() {
       if (this.active_tag == "one") {
@@ -416,12 +402,6 @@ export default {
         this.ruleForm.roomType = 2;
         this.get_house_list();
       }
-    },
-    deleteSuccess(newValue, oldValue) {
-      this.deleteSuccess = newValue;
-    },
-    selectRoomImg(newValue, oldValue) {
-      this.selectRoomImg = newValue;
     },
   },
   created() {
@@ -494,7 +474,7 @@ export default {
         (res) => {
           this.get_house_list();
           this.$message({
-            message: this.deleteSuccess,
+            message: "删除成功",
             type: "success",
           });
         }
@@ -517,7 +497,7 @@ export default {
       let imgList = this.$refs.upload.uploadFiles || [];
       if (imgList.length == 0) {
         return this.$message({
-          message: this.selectRoomImg,
+          message: "请选择房屋图片",
           type: "warn",
         });
       }
@@ -574,7 +554,7 @@ export default {
       this.get_house_list();
     },
     handleCurrentChange(val) {
-      this.form.pageIndex = 1;
+      this.form.pageIndex = val;
       this.get_house_list();
     },
   },

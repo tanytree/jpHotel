@@ -258,9 +258,7 @@ export default {
 
     methods: {
         consume_order_list() {
-
             this.searchForm.checkInId = this.$route.query.id;
-
             this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
                 this.tableData = res.consumeOrderList
                 this.listTotal = (res.page || {}).count || 0
@@ -268,10 +266,10 @@ export default {
             })
         },
         consume_oper(type, formName) {
-            /** 
+            /**
              * 1.订金
              * 2.退订金
-             * 
+             *
              * **/
             let params = this.consumeOperForm
 

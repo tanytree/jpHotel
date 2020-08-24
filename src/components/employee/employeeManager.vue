@@ -911,16 +911,11 @@ export default {
         this.optionsSearchForm.content = content;
         if (!this.optionsSearchForm.storesNum)
           this.optionsSearchForm.storesNum = this.storesNum;
-        this.vloading = true;
-        this.$F.doRequest(
-          null,
-          "/pms/workuser/login_user_list",
-          this.optionsSearchForm,
-          (res) => {
-            this.vloading = false;
-            this.options = res.hotelUserList;
-          }
-        );
+          this.vloading = true;
+          this.$F.commons.fetchSalesList(this.optionsSearchForm, (data)=> {
+              this.vloading = false;
+              this.options = res.hotelUserList;
+          });
       } else {
         this.options = [];
       }

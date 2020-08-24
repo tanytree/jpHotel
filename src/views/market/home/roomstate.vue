@@ -11,7 +11,9 @@
             <div class="left">
                 <el-form class="room" v-model="searchForm" inline size="small">
                     <el-form-item>
-                        <el-input v-model="searchForm.keyword" class="search" placeholder="姓名/房号" @keyup.native="handleChange"></el-input>
+                        <el-input v-model="searchForm.keyword" class="search" placeholder="姓名/房号" @keyup.native="handleChange">
+                            <el-button slot="append" icon="el-icon-search"></el-button>
+                        </el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-checkbox-group v-model="searchForm.checkInType" @change="handleChange">
@@ -30,7 +32,8 @@
                     <div class="tag-btm">
                         <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
                             <el-checkbox v-for="(item,index) in $t('commons.roomStatus')" :key="index" :label="item.value">
-                                <el-tag :type="item.type" effect="plain" size="mini">{{ item.name + ' ' + F_roomStatus(item.value) }}</el-tag>
+                                <el-tag :type="item.type" effect="plain" size="mini">{{ item.name + ' ' + F_roomStatus(item.value) }}</span></el-tag>
+
                             </el-checkbox>
                         </el-checkbox-group>
                     </div>
@@ -47,7 +50,7 @@
 
                     <div class="tag-btm">
                         <el-checkbox-group v-model="searchForm.roomTypeId" @change="handleChange">
-                            <el-checkbox class="roomType" v-for="item of roomTypeId" :key="item.roomTypeId" :label="item.roomTypeId">
+                            <el-checkbox class="roomType" v-for="item of roomTypeList" :key="item.roomTypeId" :label="item.roomTypeId">
                                 {{item.houseName?item.houseName:'未知'}}
                                 <span class="total">{{item.reserveCount}}/{{item.total}}</span>
                             </el-checkbox>
@@ -90,7 +93,8 @@
                 <el-header>
                     <el-row>
                         <el-checkbox-group v-model="searchForm.personRoom" @change="handleChange">
-                            <el-checkbox v-for="(item,index) in personRoom" :value="item.eName" :label="item.eName" :key="index">{{item.name}}({{item.total}})</el-checkbox>
+                            <el-checkbox v-for="(item,index) in personRoom" :value="item.eName"
+                                         :label="item.eName" :key="index">{{item.name}}({{item.total}})</el-checkbox>
                         </el-checkbox-group>
                     </el-row>
                 </el-header>
@@ -98,7 +102,7 @@
                     <div v-for="(item, index) in roomList" :key="index" v-if="item.floorRoomCount>0">
                         <div class="floor">
                         <span class="title">
-                            {{item.building?item.building.name:''}}
+                            {{item.building ? item.building.name:''}}
                             <span>{{item.floor}}</span>层
                         </span>
                             <span class="count">
@@ -112,14 +116,15 @@
                                         <span>{{room.houseNum}}</span>
                                         <span>{{room.hotelRoomType.houseName}}</span>
                                     </div>
-                                    <div class="line" v-if="room.livingPersonList && room.livingPersonList.length && (room.roomStatus==3 || room.roomStatus==4)">
+<!--                                    && (room.roomStatus==3 || room.roomStatus==4)-->
+                                    <div class="line" v-if="room.livingPersonList && room.livingPersonList.length > 0 && (room.checkInRoomType == 1 || room.checkInRoomType == 2)">
                                         <span>{{room.livingPersonList[0].name}}</span>
-                                        <span>{{room.livingPersonList[0].sex | F_sex}}</span>
+                                        <span>{{F_sex(room.livingPersonList[0].sex)}}</span>
                                     </div>
                                     <!-- 清扫图标后期加 -->
                                     <div class="placeIcon text-center">
                                         <img v-if="room.roomStatus==5" :src="require('@/assets/images/frontdesk/fix.png')"/>
-                                        <img v-if="room.roomStatus==2" :src="require('@/assets/images/frontdesk/clearn.png')"/>
+                                        <img v-if="room.roomStatus==2 || room.roomStatus==4" :src="require('@/assets/images/frontdesk/clearn.png')"/>
                                     </div>
                                 </div>
                             </div>
@@ -285,27 +290,29 @@
 
                         <el-button type="text" class="icon" size="small" slot="reference" icon="el-icon-question">图标</el-button>
                     </el-popover>
+<!--                    <div style="float:right">80</div>-->
                 </el-footer>
             </el-container>
         </div>
 
         <!-- 房间信息 -->
-        <el-dialog top="0" :visible.sync="hosteldis" width="800px" :title="`${currentRoom.houseNum}房间-${currentRoom.hotelRoomType?currentRoom.hotelRoomType.houseName:''}`">
+        <el-dialog top="0" :visible.sync="hosteldis" width="800px" :title="`${currentRoom.houseNum}房间-${currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName:''}`">
             <el-tabs type="border-card">
-                <el-tab-pane :label="currentRoom.checkInRoomType==1?'入住信息':'预订信息'" v-if="currentRoom.checkInRoomType==1||currentRoom.checkInRoomType==2">
+                <el-tab-pane :label="currentRoom.checkInRoomType == 1 ?'入住信息' : '预订信息'"
+                             v-if="currentRoom.checkInRoomType==1||currentRoom.checkInRoomType==2">
                     <div class="inMsg">
                         <div class="row">
                             <div class="col">入住时间：<span>{{currentRoom.createTime}}</span></div>
-                            <div class="col">入住类型：<span>正常</span></div>
-                            <div class="col">消费合计：<span>{{currentRoom.total}}</span></div>
-                            <div class="col">预离时间：<span>5465465</span></div>
-                            <div class="col">制卡数量：<span>正常</span></div>
-                            <div class="col">余额：<span>5465465</span></div>
-                            <div class="col">入住天数：<span>5465465</span></div>
-                            <div class="col">付款合计：<span>5465465</span></div>
-                            <div class="col">联房余额：<span>5465465</span></div>
+                            <div class="col">入住类型：<span>{{$t('commons.checkinType')[(currentRoom.livingPersonList[0] ? currentRoom.livingPersonList[0].checkIn.checkinType : '1').toString()]}}</span></div>
+                            <div class="col">消费合计：<span>帮忙找下哪个字段</span></div>
+                            <div class="col">预离时间：<span>{{currentRoom.livingPersonList[0] ? currentRoom.livingPersonList[0].checkIn.checkoutTime : ''}}</span></div>
+                            <div class="col">制卡数量：<span>帮忙找下哪个字段</span></div>
+                            <div class="col">余额：<span>帮忙找下哪个字段</span></div>
+                            <div class="col">入住天数：<span>帮忙找下哪个字段</span></div>
+                            <div class="col">付款合计：<span>帮忙找下哪个字段</span></div>
+                            <div class="col">联房余额：<span>帮忙找下哪个字段</span></div>
                         </div>
-                        <el-table :data="currentRoom.livingPersonList" style="width: 100%" border header-row-class-name="default" size="small">
+                        <el-table v-if="currentRoom.livingPersonList && currentRoom.livingPersonList.length > 0" :data="currentRoom.livingPersonList" style="width: 100%" border header-row-class-name="default" size="small">
                             <el-table-column label="姓名" width="100">
                                 <template slot-scope="scope">{{scope.row.name}}</template>
                             </el-table-column>
@@ -313,71 +320,80 @@
                                 <template slot-scope="scope">{{scope.row.mobile}}</template>
                             </el-table-column>
                             <el-table-column label="性别" width="">
-                                <template slot-scope="scope">{{scope.row.sex | F_sex}}</template>
+                                <template slot-scope="scope">{{F_sex(scope.row.sex)}}</template>
                             </el-table-column>
                             <el-table-column label="客源类型" width="">
                                 <template slot-scope="scope">{{F_guestType(scope.row.checkIn.guestType)}}</template>
                             </el-table-column>
                             <el-table-column label="同来客" width="">
-                                <template slot-scope="scope">{{currentRoom.livingPersonList ? currentRoom.livingPersonList.length-1 : ''}}</template>
+                                <template slot-scope="scope">{{currentRoom.livingPersonList.length - 1 || 0}}</template>
                             </el-table-column>
-                            <el-table-column label="操作">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="text">查看</el-button>
-                                    <!--  @click="handleEdit(scope.$index, scope.row)" -->
-                                </template>
-                            </el-table-column>
+<!--                            <el-table-column label="操作">-->
+<!--                                <template slot-scope="scope">-->
+<!--                                    <el-button size="mini" type="text">查看</el-button>-->
+<!--                                    &lt;!&ndash;  @click="handleEdit(scope.$index, scope.row)" &ndash;&gt;-->
+<!--                                </template>-->
+<!--                            </el-table-column>-->
                         </el-table>
                         <div class="remark">
                             <label>备注：<span>{{currentRoom.remark}}</span></label>
-                            <el-button type="text" @click="remark=true">修改</el-button>
+<!--                            <el-button type="text" @click="remark = true">修改</el-button>-->
                         </div>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane label="房间信息">
-                    <div class="inMsg">
-
-                    </div>
+<!--                    <div class="inMsg">-->
+<!--                    </div>-->
                     <div class="row">
                         <div class="col">门市价：<span>{{currentRoom.extension}}</span></div>
-                        <div class="col">窗户：<span>{{currentRoom.windowFlag | F_is1or2}}</span></div>
-                        <div class="col">靠马路：<span>{{currentRoom.roadFlag | F_is1or2}}</span></div>
-                        <div class="col">噪音房：<span>{{currentRoom.noiseFlag | F_is1or2}}</span></div>
-                        <div class="col">无烟房：<span>{{currentRoom.smokeFlag | F_is1or2}}</span></div>
-                        <div class="col">高温房：<span>{{currentRoom.temperatureFlag | F_is1or2}}</span></div>
-                        <div class="col">朝向：<span>{{currentRoom.toward | F_toward}}</span></div>
+                        <div class="col">窗户：<span>{{F_is1or2(currentRoom.windowFlag)}}</span></div>
+                        <div class="col">靠马路：<span>{{F_is1or2(currentRoom.roadFlag)}}</span></div>
+                        <div class="col">噪音房：<span>{{F_is1or2(currentRoom.noiseFlag)}}</span></div>
+                        <div class="col">无烟房：<span>{{F_is1or2(currentRoom.smokeFlag)}}</span></div>
+                        <div class="col">高温房：<span>{{F_is1or2(currentRoom.temperatureFlag)}}</span></div>
+                        <div class="col">朝向：<span>{{F_is1or2(currentRoom.toward)}}</span></div>
                         <div class="col">房间备注：<span>{{currentRoom.remark}}</span></div>
                     </div>
                 </el-tab-pane>
             </el-tabs>
             <div slot="footer" class="dialog-footer">
-                <template v-if="currentRoom.checkInRoomType==1">
-                    <el-button style="width:60px;" @click="stayoer=true">续住</el-button>
-                    <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>
-                    <el-button style="width:60px;" @click="rowRoomHandle(currentRoom)">换房</el-button>
-                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>
-                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">
-                        置脏
-                    </el-button>
-                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2||currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
-                </template>
-                <template v-else-if="currentRoom.checkInRoomType==2">
-                    <el-button style="width:60px;">入住</el-button>
-                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>
-                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>
-                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1|| currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">
-                        置脏
-                    </el-button>
-                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
-                </template>
-                <template v-else>
-                    <el-button style="width:60px;" @click="stayoer=true">入住</el-button>
-                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>
-                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null' ||currentRoom.roomStatus==null ||currentRoom.roomStatus==1 || currentRoom.roomStatus==3"
-                               @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏
-                    </el-button>
-                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>
-                </template>
+                <el-button style="width:60px;"
+                           v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3"
+                           @click="handleOperRoomStatus(2, currentRoom)">
+                    置脏
+                </el-button>
+                <el-button style="width:60px;" v-if="(currentRoom.roomStatus==2 || currentRoom.roomStatus==4)"
+                           @click="handleOperRoomStatus(1, currentRoom)">
+                    置净
+                </el-button>
+                <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>
+<!--                <template v-if="currentRoom.checkInRoomType == 1">-->
+<!--                    <el-button style="width:60px;" @click="stayoer=true">续住</el-button>-->
+<!--                    <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>-->
+<!--                    <el-button style="width:60px;" @click="rowRoomHandle(currentRoom)">换房</el-button>-->
+<!--                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>-->
+<!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">-->
+<!--                        置脏-->
+<!--                    </el-button>-->
+<!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2||currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>-->
+<!--                </template>-->
+<!--                <template v-else-if="currentRoom.checkInRoomType==2">-->
+<!--                    <el-button style="width:60px;">入住</el-button>-->
+<!--                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>-->
+<!--                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>-->
+<!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1|| currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">-->
+<!--                        置脏-->
+<!--                    </el-button>-->
+<!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>-->
+<!--                </template>-->
+<!--                <template v-else>-->
+<!--                    <el-button style="width:60px;" @click="stayoer=true">入住</el-button>-->
+<!--                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>-->
+<!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null' ||currentRoom.roomStatus==null ||currentRoom.roomStatus==1 || currentRoom.roomStatus==3"-->
+<!--                               @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏-->
+<!--                    </el-button>-->
+
+<!--                </template>-->
             </div>
         </el-dialog>
         <!-- 续住 -->
@@ -605,44 +621,6 @@
 </template>
 
 <script>
-    let personRoom = [{
-        name: '今日预离',
-        value: 'today_out'
-    },
-        {
-            name: '散客',
-            value: 'homepage_individual'
-        },
-        {
-            name: '会员',
-            value: 'homepage_member'
-        },
-        {
-            name: '单位',
-            value: 'homepage_enter'
-        },
-    ];
-    let roomStatus = [{
-        type: "success",
-        name: '空净',
-        value: '1'
-    }, {
-        type: "danger",
-        name: '空脏',
-        value: '2'
-    }, {
-        type: "",
-        name: '住静',
-        value: '3'
-    }, {
-        type: "warning",
-        name: '住脏',
-        value: '4'
-    }, {
-        type: "info",
-        name: '维修',
-        value: '5'
-    }]
     import unitedRoomHandle from "./unitedRoomHandle";
     import roomStatusHandle from "./roomStatusHandle";
     import rowRoomHandle from "./rowRoomHandle";
@@ -738,31 +716,21 @@
                     personRoom: []
                 },
                 personRoom: '',
-                roomTypeId: '',
+                roomTypeList: [],
                 channel: '',
                 iconDesList: '',
                 hotel_building_list: '',
                 hotel_building_floor_list: '',
-                currentRoom: '',
+                currentRoom: {
+                    livingPersonList: [],
+                },
                 liveCardData: [],
                 liveCardLoading: false,
                 multipleSelection: []
 
             };
         },
-        filters: {
 
-            F_roomStatusColor(value) {
-                let enums = {
-                    '1': '#276BBA',
-                    '2': '#C0512B',
-                    '3': '#276BBA',
-                    '4': '#e6a23c',
-                    '5': '#27AE76'
-                }
-                return enums[value] ? enums[value] : '#276BBA'
-            }
-        },
         async mounted() {
             await this.getChannel()
             await this.getPersonRoom()
@@ -791,12 +759,10 @@
             getDataList() {
                 this.roomloading = true
                 this.roomList = []
-                return new Promise((resolve, reject) => {
-                    this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', this.searchForm, (res) => {
-                        this.roomloading = false
-                        this.roomList = res.floorList;
-                        resolve(res)
-                    })
+                this.$F.doRequest(null, '/pms/realtime/realtime_hotel_room_list', this.searchForm, (res) => {
+                    this.roomloading = false
+                    this.roomList = res.floorList;
+                    this.$forceUpdate();
                 })
             },
             getChannel() {
@@ -848,10 +814,9 @@
                         '6': 'orders_night', //午夜房
                         '7': 'orders_free' //免费
                     }
-                    // debugger;
                     this.roomStatusList = res.roomStatusList;
                     this.personRoom = res.personRoomList
-                    this.roomTypeId = res.roomTypeList
+                    this.roomTypeList = res.roomTypeList
                     this.channel = res.channelList
                     this.channel.forEach(element => {
                         element.name = checkIdInDict(element.channel, this.dict_channel)
@@ -910,7 +875,7 @@
                 this.getDataList()
             },
             clearnSelectAttr(attr) {
-                this.searchForm[attr] = '';
+                this.searchForm[attr] = [];
                 this.getDataList()
             },
             F_roomStatusColor(value) {
@@ -932,21 +897,23 @@
                 return array.length > 0 ? array[0].total : 0;
             },
 
-            handleOperRoomStatus(s, item) {
-                console.log(s)
-                let status = '';
-                if (s == 1 || s == null || s == 'null') {
-                    status = 2
-                }
-                if (s == 3) {
-                    status = 4
-                }
-                if (s == 2) {
-                    status = 1
-                }
-                if (s == 4) {
-                    status = 3
-                }
+            handleOperRoomStatus(status, item) {
+                // console.log(s)
+                // debugger;
+                // let status = '';
+                // if (s == 1 || s == null || s == 'null') {
+                //     status = 2
+                // }
+                // if (s == 3) {
+                //     status = 4
+                // }
+                // if (s == 2) {
+                //     status = 1
+                // }
+                // if (s == 4) {
+                //     status = 1
+                // }
+                item.roomStatus = status;
                 this.$F.doRequest(this, '/pms/hotel/oper_room_status', {
                     roomIds: item.id,
                     roomStatus: status
@@ -956,19 +923,23 @@
                         message: '操作成功',
                         type: 'success'
                     });
-                    this.getDataList()
+                    // this.getDataList()
                 })
             },
             handleChange(e) {
                 this.getDataList()
             },
             hostelmess(room) {
+                this.currentRoom = room || {};
+                this.$F.merge(this.currentRoom, {livingPersonList: []});
                 this.hosteldis = true;
-                this.currentRoom = room
+                debugger
             },
             yokeplateHandle(item) {
                 this.$refs.unitedRoomHandle.init(item.id);
             },
+
+            //将房间设置为维修状态
             handleFix(item) {
                 this.$confirm('请确认房间维修', '提示', {
                     confirmButtonText: '确定',
@@ -983,6 +954,7 @@
                             message: '操作成功',
                             type: 'success'
                         });
+                        this.hosteldis = false;
                     })
                 }).catch(() => {
                 });

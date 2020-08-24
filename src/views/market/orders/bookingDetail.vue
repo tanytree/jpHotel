@@ -17,7 +17,7 @@
     <div class="bodyInfo margin-t-10" v-loading="loading">
         <div class="aside">
             <ul>
-                <li @click="isOrder=true;currentRoom={}">
+                <li @click="isOrder=true;currentRoom={}" :class="isOrder ? 'active' : ''">
                     <p>预订单信息</p>
                 </li>
                 <li v-for="(item,index) of detailData.inRoomList" :key="index" :class="currentRoom.id==item.id?'active':''" @click="showRoomInfo(item)">
@@ -25,10 +25,6 @@
                     <span class="ok" v-if="item.personList.length">已排房</span>
                     <span class="no" v-else>未排房</span>
                 </li>
-                <!-- <li>
-                    <p>张三 房型：总统套房</p>
-                    <span class="no">未排房</span>
-                </li> -->
             </ul>
         </div>
         <div class="rightContent">
@@ -36,15 +32,16 @@
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane label="订单基本信息" name="first">
                         <div class="tabWrap">
-                            <sbase 
-                                :checkinInfo="detailData.checkIn" 
-                                :roomInfo="detailData.inRoomList" 
-                                @baseInfoChange="baseInfoChange"></sbase>
+                            <sbase
+                                :checkinInfo="detailData.checkIn"
+                                :roomInfo="detailData.inRoomList"
+                                @baseInfoChange="baseInfoChange">
+                            </sbase>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="客人信息" name="second">
                         <div class="tabWrap">
-                            <customer></customer>
+                            <customer type="detail" :detailData="detailData"></customer>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="财务明细" name="third">
@@ -95,7 +92,7 @@ export default {
             loading: false,
             isOrder: true,
             activeName: 'first',
-            detailData: {},
+            detailData: {checkIn: {}, inRoomList:[]},
             currentRoom: {}
 
         };
@@ -112,9 +109,7 @@ export default {
             let params = {
                 reserveId: id
             }
-            this.loading = true;
             this.$F.doRequest(this, '/pms/checkin/reserve_check_in_detail', params, (res) => {
-                this.loading = false
                 this.detailData = res
             })
         },
@@ -123,8 +118,8 @@ export default {
         },
         handleClick() {},
         showRoomInfo(item) {
+            this.isOrder = false;
             this.currentRoom = item
-            this.isOrder = false
         }
 
     }
@@ -142,6 +137,7 @@ export default {
 </style>
 <style lang="less" scoped>
 .bodyInfo {
+    height: 80%;
     overflow: hidden;
 
     .tabWrap {

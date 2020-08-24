@@ -25,7 +25,7 @@
         <h4>基本信息</h4>
         <el-row>
             <el-col :span="8">
-                <p>订单号：{{checkinInfo.reserveOrderNum?checkinInfo.reserveOrderNum:''}}</p>
+                <p>订单号：{{checkinInfo.reserveOrderNum || ''}}</p>
             </el-col>
             <el-col :span="8">
                 <p>订单来源：{{F_orderSource(checkinInfo.orderSource)}}</p>
@@ -61,12 +61,12 @@
                 <p>外部订单号：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
             </el-col>
             <el-col :span="8">
-                <p>销售员：{{checkinInfo.salesId}}</p>
+                <p>销售员：{{checkinInfo.salesId || '无'}}</p>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="12">
-                <p>订单备注：{{checkinInfo.remark}}</p>
+                <p>订单备注：{{checkinInfo.remark || '无'}}</p>
             </el-col>
         </el-row>
     </el-row>
@@ -213,21 +213,6 @@
 </template>
 
 <script>
-Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "H+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
 import {
     mapState,
     mapActions
@@ -254,6 +239,7 @@ export default {
     watch: {
         roomInfo: {
             handler(n, o) {
+                debugger
                 console.log(n)
                 n.forEach(element => {
                     if (element.personList.length) {
@@ -270,7 +256,7 @@ export default {
                 });
                 console.log(this.roomTypeList)
             },
-            //   immediate: true,  
+            //   immediate: true,
             deep: true
         }
     },
@@ -373,7 +359,9 @@ export default {
 
     mounted() {
         let id = this.$route.query.id
-        this.login_user_list()
+        this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
+            this.salesList = data.hotelUserList;
+        });
     },
 
     methods: {
@@ -421,20 +409,7 @@ export default {
                 this.$router.go(-1)
             })
         },
-        login_user_list() {
-            let params = {
-                searchType: 2,
-                paging: false,
-                salesFlag: 1,
-                content: '',
-                departmentId: '',
-                pageIndex: 1,
-                pageSize: 10
-            }
-            this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (data) => {
-                this.salesList = data.hotelUserList;
-            })
-        },
+
         hotel_check_inChange() {
             this.$refs.baseInfoChange.validate((valid) => {
                 this.baseInfoChangeForm.checkInReserveId = this.$route.query.id

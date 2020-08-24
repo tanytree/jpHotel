@@ -485,7 +485,9 @@ export default {
         this.initForm();
         this.hotel_price_enter_strategy_list()
         this.hotel_rule_allday_list()
-        this.login_user_list()
+        this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
+            this.salesList = data.hotelUserList;
+        });
     },
     methods: {
         initForm() {
@@ -611,20 +613,7 @@ export default {
                 }
             }
         },
-        login_user_list() {
-            let params = {
-                searchType: 1,
-                paging: false,
-                salesFlag: 1,
-                content: '',
-                departmentId: '',
-                pageIndex: 1,
-                pageSize: 10
-            }
-            this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (data) => {
-                this.salesList = data.hotelUserList;
-            })
-        },
+
         totalset() {
             this.$refs.setBatchForm.validate((valid) => {
                 if (valid) {

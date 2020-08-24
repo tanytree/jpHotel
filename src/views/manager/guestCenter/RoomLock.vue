@@ -3,9 +3,7 @@
   <div id="page1" class="boss-index">
     <el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
       <el-col :span="2.5">{{hotel_name || ''}}</el-col>
-      <el-col
-        :span="2"
-      >{{$t('manager.hk_total')}}{{dongList.length || ''}}{{$t('manager.hk_building')}}</el-col>
+      <el-col :span="2">共有{{dongList.length || ''}}栋楼</el-col>
     </el-row>
     <el-row style="padding: 20px 0px;">
       <el-radio-group v-model="selectRedio">
@@ -19,11 +17,7 @@
     <el-row :gutter="20" class="demo-form-inline">
       <el-col :span="10" :offset="14">
         <el-row class="form-inline-flex" style="margin-bottom: 20px;">
-          <el-button
-            type="primary"
-            size="mini"
-            @click="popup('addPie')"
-          >{{$t('manager.hk_batchModify')}}</el-button>
+          <el-button type="primary" size="mini" @click="popup('addPie')">按列批量修改</el-button>
         </el-row>
       </el-col>
     </el-row>
@@ -35,112 +29,98 @@
         height="100%"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
       >
-        <el-table-column prop="houseNum" :label="$t('manager.hk_roomNumber')"></el-table-column>
-        <el-table-column prop="time" :label="$t('manager.hk_hardWare')">
+        <el-table-column prop="houseNum" label="房间号"></el-table-column>
+        <el-table-column prop="time" label="硬件">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.hardware}}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('manager.hp_storiedBuilding')">
+        <el-table-column label="楼栋">
           <template slot-scope="{row}">
             <span>{{row.hotelBuilding.name}}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('manager.hp_floor')">
+        <el-table-column label="楼层">
           <template slot-scope="{row}">
             <span>{{row.hotelBuildingFloor.name}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="number" :label="$t('manager.hk_lock')">
+        <el-table-column prop="number" label="锁号">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.lockNum}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="part" :label="$t('manager.hk_interfaceType')">
+        <el-table-column prop="part" label="接口类型">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.apiType}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="job" :label="$t('manager.hk_roomLockInfo')">
+        <el-table-column prop="job" label="房锁配置信息">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.setInfo}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="number" :label="$t('manager.hk_cardNum')">
+        <el-table-column prop="number" label="制卡数">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.cardNumber}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="part" :label="$t('manager.hk_theOpen')">
+        <el-table-column prop="part" label="反开">
           <template slot-scope="{row}">
-            <span v-if="row.hotelRoomLock.openOpposite">{{$t('manager.hk_yes')}}</span>
-            <span v-else>{{$t('manager.hk_no')}}</span>
+            <span v-if="row.hotelRoomLock.openOpposite">是</span>
+            <span v-else>否</span>
           </template>
         </el-table-column>
-        <el-table-column prop="setInfo" :label="$t('manager.hk_lockType')">
+        <el-table-column prop="setInfo" label="锁类型">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.lockType}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="number" :label="$t('manager.hk_roomWhterNum')">
+        <el-table-column prop="number" label="房间流水号">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.roomSerial}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="part" :label="$t('manager.hk_roomSerialNum')">
+        <el-table-column prop="part" label="房间序列号">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.roomImei}}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="150">
+        <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="popup('change', scope.row)"
-            >{{$t('commons.modify')}}</el-button>
-            <el-button
-              type="text"
-              size="small"
-              @click="popup('detail', scope.row)"
-            >{{$t('commons.detail')}}</el-button>
+            <el-button type="text" size="small" @click="popup('change', scope.row)">修改</el-button>
+            <el-button type="text" size="small" @click="popup('detail', scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
-    </el-container>
-    <div class="block">
-      <div class="page-all">
-        {{$t('boss.compensation_general')}}
-        <span
-          style="font-weight:600;font-size: 14px;"
-        >{{form.totalSize}}</span>
-        {{$t('boss.compensation_records')}}
-      </div>
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="form.pageIndex"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="form.pageIndex"
-        layout=" sizes, prev, pager, next, jumper"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="form.pageSize"
         :total="form.totalSize"
+        layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
-    </div>
+    </el-container>
+    <!-- <div class="block">
+			<div class="page-all">
+				共
+				<span style="font-weight:600;font-size: 14px;">{{form.totalSize}}</span>条记录
+			</div>
+			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
+			 :page-sizes="[100, 200, 300, 400]" :page-size="form.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="form.totalSize"></el-pagination>
+    </div>-->
     <!-- 按列批量修改 -->
-    <el-dialog
-      top="0"
-      :title="$t('manager.hk_batchModify')"
-      :visible.sync="dialogAdd_kinds"
-      :close-on-click-modal="false"
-    >
+    <el-dialog top="0" title="按列批量修改" :visible.sync="dialogAdd_kinds" :close-on-click-modal="false">
       <el-row class="demo-form-inline">
         <el-checkbox-group v-model="checkList" style="line-height: 30px;">
-          <el-checkbox label="a">{{$t('manager.hk_hardWare')}}</el-checkbox>
+          <el-checkbox label="a">硬件</el-checkbox>
           <!-- <el-checkbox label="b">楼栋</el-checkbox>
           <el-checkbox label="c">楼层</el-checkbox>-->
-          <el-checkbox label="d">{{$t('manager.hk_lock')}}</el-checkbox>
-          <el-checkbox label="e">{{$t('manager.hk_interfaceType')}}</el-checkbox>
-          <el-checkbox label="f">{{$t('manager.hk_doorInfo')}}</el-checkbox>
+          <el-checkbox label="d">锁号</el-checkbox>
+          <el-checkbox label="e">接口类型</el-checkbox>
+          <el-checkbox label="f">门锁配置信息</el-checkbox>
 
           <el-checkbox label="g">{{$t('manager.hk_cardNum')}}</el-checkbox>
           <el-checkbox label="h">{{$t('manager.hk_theOpen')}}</el-checkbox>
@@ -434,24 +414,6 @@ export default {
     ...mapState({
       user: (state) => state.user,
     }),
-    modify: {
-      get() {
-        return this.$t("commons.modify");
-      },
-      set() {},
-    },
-    detail: {
-      get() {
-        return this.$t("commons.detail");
-      },
-      set() {},
-    },
-    saveSuccess: {
-      get() {
-        return this.$t("commons.saveSuccess");
-      },
-      set() {},
-    },
   },
   data() {
     return {
@@ -546,15 +508,6 @@ export default {
     selectRedio() {
       this.hotel_room_lock_list();
     },
-    modify(newValue, oldValue) {
-      this.modify = newValue;
-    },
-    detail(newValue, oldValue) {
-      this.detail = newValue;
-    },
-    saveSuccess(newValue, oldValue) {
-      this.saveSuccess = newValue;
-    },
   },
   created() {
     this.hotel_name = JSON.parse(
@@ -574,14 +527,14 @@ export default {
           this.isDisable = true;
           this.ruleForm = value;
           this.detail_show = false;
-          this.dia_title = this.modify;
+          this.dia_title = "修改";
           break;
         case "detail":
           this.dialogChange_show = true;
           this.isDisable = true;
           this.ruleForm = value;
           this.detail_show = true;
-          this.dia_title = this.detail;
+          this.dia_title = "详情";
           break;
       }
     },
@@ -607,10 +560,12 @@ export default {
         params,
         (res) => {
           this.$message({
-            message: this.saveSuccess,
+            message: "保存成功",
             type: "success",
           });
+          this.tableData = [];
           this.dialogAdd_kinds = false;
+          this.hotel_room_lock_list();
         }
       );
     },
@@ -625,10 +580,12 @@ export default {
         params,
         (res) => {
           this.$message({
-            message: this.saveSuccess,
+            message: "保存成功",
             type: "success",
           });
+          this.tableData = [];
           this.dialogChange_show = false;
+          this.hotel_room_lock_list();
         }
       );
     },
@@ -654,6 +611,7 @@ export default {
         (res) => {
           if (res.length != 0) {
             this.tableData = res.list;
+            this.form.totalSize = res.totalSize;
           }
         }
       );
@@ -664,7 +622,7 @@ export default {
       this.hotel_room_lock_list();
     },
     handleCurrentChange(val) {
-      this.form.pageIndex = 1;
+      this.form.pageIndex = val;
       this.hotel_room_lock_list();
     },
   },

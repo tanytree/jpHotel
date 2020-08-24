@@ -105,7 +105,7 @@
                   this.toSection(this.menul.childList[0])
                   this.$forceUpdate()
                 } else {
-                  this.$message.warning('no menus');
+                  this.$message.warning('暂未开放');
                 }
 			},
 			//点击左侧导航

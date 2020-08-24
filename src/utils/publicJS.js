@@ -62,7 +62,6 @@ const $F = {
             else
                 newImageList.push(file.url);
         })
-        debugger
         if (newImageList.length == imgList.length) {
             callback(newImageList.join(','))
             return;
@@ -99,7 +98,8 @@ const $F = {
         params = this.deepClone(params);
         for (let key in params) {
             let value = params[key];
-            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum') {
+            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
+                || ((value instanceof Array) && value.length == 0)) {
                 delete params[key];
             }
         }
@@ -224,7 +224,19 @@ const $F = {
 
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
+        //获取销售员
 
+        fetchSalesList(params = {}, callback) {
+            $F.merge(params, {
+                searchType: 1,
+                paging: false,
+                pageIndex: 1,
+                pageSize: 999
+            })
+            $F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
+                callback(data);
+            })
+        },
         //获取会员类型列表 这里封装统一方法 很多地方用到
         fetchMemberTypeList (requestParams = {}, callback) {
             let params = {
