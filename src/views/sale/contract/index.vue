@@ -10,25 +10,27 @@
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                          :name="item.path"
                          :key="item.path"
-                         v-if="$F.filterThirdMenu('sale', item.path, true)">
+                         v-if="$F.filterThirdMenu('sale1', item.path, true)">
                 <!-- 单位价格-->
-                <UnitPrice v-if="item.path == 'UnitPrice'"/>
+                <Unitquery v-if="item.path == 'Unitquery'"/>
                 <!-- 单位查询-->
-                <UnitQuery v-if="item.path == 'Unitquery'"/>
+                <UnitPrice v-if="item.path == 'UnitPrice'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
-  import UnitPrice from './unit/unitPrice'
-  import UnitQuery from './unit/unitquery'
+    import Unitquery from '@/components/unitManager/com';
+    import UnitPrice from '@/components/unitManager/unitList';
+  // import UnitPrice from './unit/unitPrice'
+  // import UnitQuery from './unit/unitquery'
 
   export default {
-    components: { UnitPrice, UnitQuery },
+    components: { UnitPrice, Unitquery },
     data () {
       return {
-        activeName: 'first' //第一个默认启动
+        activeName: '' //第一个默认启动
       }
     },
     created() {

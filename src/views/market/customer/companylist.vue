@@ -27,7 +27,8 @@
   </div>
 </template>
 <script>
-import company from "./company/com";
+// import company from "./company/com";
+import company from '@/components/unitManager/com';
 import collection from "./company/collection";
 import bill from "./company/bill";
 import accounts from "./company/accounts";
