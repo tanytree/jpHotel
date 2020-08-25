@@ -4,11 +4,13 @@
  -->
 <template>
     <div class="boss-index">
-        <el-tabs class="pageTab" v-model="activeName">
+        <el-tabs class="pageTab noBg" v-model="activeName">
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
-                         :name="item.path"
-                         :key="item.path"
-                         v-if="$F.filterThirdMenu('frontOffice', item.path, true)">
+                 :name="item.path"
+                 :key="item.path"
+                 v-if="$F.filterThirdMenu('frontOffice', item.path, true)"
+                 :class="item.path !== 'Roomstate' ? 'bg' : ''"
+            >
                 <!-- 房间动态-->
                 <Roomstate v-if="item.path == 'Roomstate'"/>
                 <!-- 收据记录-->
