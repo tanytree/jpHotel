@@ -6,7 +6,7 @@
  -->
 <template>
     <div id="page1" class="boss-index">
-        <el-tabs class="pageTab" v-model="activeName">
+        <el-tabs class="pageTab" v-model="activeName" @tab-click="tabChange">
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                          :name="item.path"
                          :key="item.path"
@@ -14,9 +14,9 @@
                 <!-- 商品管理-->
                 <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
                 <!-- 售卖点-->
-                <SalePoint ref="SalePoint" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'SalePoint'"/>
+                <SalePoint ref="SalePoint" :list="salesList" :category="category" :total="salesTotal" :pageSize="salesSize" :currentPage="salesPage" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
                 <!-- 商品分类-->
-                <GoodsKinds ref="GoodsKinds" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'GoodsKinds'"/>
+                <GoodsKinds ref="GoodsKinds" :list="category" :initData="getCategoryData" v-if="item.path == 'GoodsKinds'"/>
                 <!-- 库存管理-->
                 <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'StockMg'"/>
                 <!-- 入库审核-->
@@ -65,7 +65,7 @@
                     pageSize: 10,
                     paging: true
                 },
-                activeName: 'first', //第一个默认启动
+                activeName: 'GoodsMg', //第一个默认启动
                 goodsList: [], goodsTotal: 0, goodsSize: 0, goodsPage: 1,
                 salesList: [], salesTotal: 0, salesSize: 0, salesPage: 1,
                 auditList: [], auditTotal: 0, auditSize: 0, auditPage: 1,
@@ -76,18 +76,17 @@
            this.$F.handleThirdMenu(this);
         },
         mounted() {
-            const obj = {name: this.activeName};
             this.getCategoryData();
-            this.tabChange(obj)
+            this.tabChange()
         },
         methods: {
             tabChange(tab) {
-                if(tab.name == 'first' || tab.name == 'fouth') {
+                if(this.activeName == 'GoodsMg' || this.activeName == 'StockMg') {
                     this.getHotelGoodsData(this.pageForm);
-                } else if (tab.name == 'second') {
-                    this.getSellingData(this.pageForm);
-                    this.$refs['SalePoint'].getManageData(this.pageForm)
-                } else if (tab.name == 'fifth') {
+                } else if (this.activeName == 'SalePoint') {
+                    // this.getSellingData(this.pageForm);
+                    // this.$refs['SalePoint'].getManageData(this.pageForm)
+                } else if (this.activeName == 'IntoKuAudit') {
                     this.getAuditData(this.pageForm);
                 }
             },

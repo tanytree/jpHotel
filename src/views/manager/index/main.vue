@@ -40,7 +40,7 @@
                 <!-- 夜审设置-->
                 <nightSite v-if="item.path == 'nightSite'" ref="nightSite" :findOne="findOne" :initData="getFindOneData"/>
                 <!-- 损物赔偿-->
-                <damageCompensate v-if="item.path == 'damageCompensate'" ref="damageCompensate" :list="damageData" :initData="getDamageTypeData"/>
+                <damageCompensate v-if="item.path == 'damageCompensate'" ref="damageCompensate" :list="damageData" :typeTotal="typeTotal" :initData="getDamageTypeData"/>
                 <!-- 交班设置-->
                 <shiftSite v-if="item.path == 'shiftSite'"  ref="shiftSite" :handData="handData" :initData="getHandOverData" />
                 <!-- 酒店服务-->
@@ -82,7 +82,7 @@
 				findOne: {arriveStatus: 1, leaveStatus: 2, leaveOrder: 1, isOd: 1, trialType: 1, state: 1, trialStartTime: "", trialEndTime: "", trialAutoTime: ""},
 				damageData: [],
                 hotelData: {imgPath: '', name: '', address: '', phone: '', startTime: '', endTime: '', remark: ''},
-                printData: [],handData: [],
+                printData: [],handData: [], typeTotal: 0,
             }
         },
           created() {
@@ -96,7 +96,7 @@
 				if(tab.name == 'nightSite') {
 					this.getFindOneData();
 				} else if (tab.name == 'damageCompensate') {
-					this.getDamageTypeData();
+					this.getDamageTypeData('', '', '', this.pageForm);
 				} else if (tab.name == 'hotelServices') {
 				    this.getHotelServiceData()
 				} else if (tab.name == 'printingMg') {
@@ -115,15 +115,17 @@
 					this.findOne = res;
 				})
 			},
-			getDamageTypeData(id, name, status) {
+			getDamageTypeData(id, name, status, form, callback) {
 				const params = {
 					id: id,
 					name: name,
 					status: status,
 				}
-				this.$F.merge(params, this.pageForm);
+				this.$F.merge(params, form);
 				this.$F.doRequest(this, '/pms/hoteldamagetype/list', params, (res) => {
-					this.damageData = res.list
+					this.damageData = res.list;
+					this.typeTotal = res.page.count;
+					callback && callback(res.page)
 				})
 			},
             getHotelServiceData() {

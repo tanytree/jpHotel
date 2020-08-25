@@ -50,7 +50,8 @@
                     {label: '近七天', name: 'week', tip: '近7天收支表'},
                     {label: '本月', name: 'month', tip: '月度收支表'},
                     {label: '本年', name: 'year', tip: '年度收支表'}
-                ]
+                ],
+                times: [], income: [], expend: [], profit: [],
             }
         },
         props: {
@@ -102,14 +103,31 @@
                     });
                 });
             },
-            // 折线图
-            initChartLine() {
-                const income=[], expend=[], profit=[];
+            handleData() {
                 this.list.map(item => {
-                    if(item.payment == 1) {
-
+                    if(this.times.indexOf(item.time) < 0) {
+                        this.times.push(item.time);
                     }
                 })
+                this.times.map(t => {
+                    this.list.map(l => {
+                        if(l.time == t) {
+                            if(l.payment == 1) {
+                                this.expend.push(l.total)
+                            } else if (l.payment == 2) {
+                                this.income.push(l.total)
+                            }
+                        }
+                    })
+                })
+                this.expend.map((ex, i) => {
+                    const val = this.income[i] - ex;
+                    this.profit.push(val);
+                })
+            },
+            // 折线图
+            initChartLine() {
+                this.handleData();
                 var option = {
                     legend: {
                         data: ['收入']
@@ -139,21 +157,21 @@
                             type: 'line',
                             smooth: true,
                             stack: '总量',
-                            data: income
+                            data: this.income
                         },
                         {
                             name: '支出',
                             type: 'line',
                             smooth: true,
                             stack: '支付总金额',
-                            data: expend
+                            data: this.expend
                         },
                         {
                             name: '利润',
                             type: 'line',
                             smooth: true,
                             stack: '支付总金额',
-                            data: profit
+                            data: this.profit
                         }
                     ]
                 }
