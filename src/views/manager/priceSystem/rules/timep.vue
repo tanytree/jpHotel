@@ -7,10 +7,10 @@
 						<el-form-item label="规则名称:">
 							<el-input v-model="ruleForm.ruleName" class="row-width"></el-input>
 						</el-form-item>
-						<el-form-item label="计费模式:" class="margin-l-15">
-							<el-select v-model="ruleForm.priceModel" class="row-width">
-								<el-option label="1" value="固定时间退房模式"></el-option>
-								<el-option label="2" value="24小时退房模式"></el-option>
+						<el-form-item label="状态:" class="margin-l-15">
+							<el-select v-model="ruleForm.state" class="row-width">
+								<el-option label="启用" :value="1"></el-option>
+								<el-option label="禁用" :value="2"></el-option>
 							</el-select>
 						</el-form-item>
 						<el-form-item>
@@ -163,7 +163,7 @@
 			</el-table>
 			<el-row style="padding: 20px 0px;">
 				<el-button type="primary" style="width: 80px;" @click="saveInfo_h">保存</el-button>
-				<el-button style="width: 80px;margin-left: 20px;" @click="tab_show = false">返回</el-button>
+				<el-button style="width: 80px;margin-left: 20px;" @click="back">返回</el-button>
 			</el-row>
 		</el-row>
 		
@@ -178,7 +178,6 @@
 				tableData: [],
 				ruleForm: {
 					ruleName: '',
-					priceModel: '', //收费模式 1固定时间退房模式  2 24小时退房模式
 					state: '',
 					pageIndex: 1,
 					pageSize: 10,

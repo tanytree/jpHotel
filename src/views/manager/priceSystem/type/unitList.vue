@@ -8,8 +8,8 @@
 					</el-form-item>
 					<el-form-item label="状态:" class="margin-l-15">
 						<el-select v-model="searchForm.state" placeholder="请选择状态" class="row-width">
-							<el-option label="启用" value="1"></el-option>
-							<el-option label="禁用" value="2"></el-option>
+							<el-option label="启用" :value="1"></el-option>
+							<el-option label="禁用" :value="2"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -38,7 +38,7 @@
 							<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="get_price_enter_strategy_delete(scope.row)">
 								<el-button slot="reference" type="text" size="small">删除</el-button>
 							</el-popconfirm>
-							<el-button type="text" size="small" @click="popup('changerili')">修改日历</el-button>
+							<el-button type="text" size="small" @click="popup('changerili')">价格日历</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -138,11 +138,13 @@
 				</el-row>
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">时间:</el-col>
-					<el-col span="14">{{detail_info.createTime}}</el-col>
+					<el-col span="14">{{detail_info.startTime}}至{{detail_info.endTime}}</el-col>
 				</el-row>
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">星期:</el-col>
-					<el-col span="14">{{detail_info.weeks}}</el-col>
+					<el-col span="14">
+						<span v-for="(value,index) in detail_info.weeks">{{value}},</span>
+					</el-col>
 				</el-row>
 				<el-row>
 					<el-col span="4" style="color: #898B8E;">折扣率:</el-col>
@@ -154,7 +156,7 @@
 				<el-table-column prop="marketPrice" label="门市价"></el-table-column>
 				<el-table-column prop="job_status" label="调价方式">
 					<template slot-scope="{row}">
-						<span>{{row.adjustType ? '折扣率':'一口价'}}</span>
+						<span>{{row.adjustType==1 ? '折扣率':'一口价'}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="adjustPrice" label="调价后"></el-table-column>
@@ -174,7 +176,8 @@
 				tab1_show: true,
 				searchForm: { // 搜索列表参数
 					ruleName: '',
-					state: ''
+					state: '',
+					status: 1
 				},
 				tableData: [],
 				ruleForm: {
@@ -224,7 +227,7 @@
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_save', params, (res) => {
 					return this.$message({
 					  message: '添加成功',
-					  type: 'warn'
+					  type: 'success'
 					});
 				})
 			},
@@ -269,10 +272,11 @@
 				}
 			},
 			popup(type, value) {
+				debugger
 				switch (type) {
 					case 'add':
 						this.tab1_show = false;
-						this.allForm.ruleForm = null
+						// this.allForm.ruleForm = null
 						this.ruleForm.roomStrategyJson = []
 						this.get_hotel_price_room_type_list()
 						break
@@ -282,12 +286,14 @@
 						break
 					case 'change':
 						this.tab1_show = false;
+						this.ruleForm.roomStrategyJson = []
 						this.hotel_price_enter_strategy_detail(value)
 						break
 				}
 			},
 			// 单位--房型
 			get_hotel_price_room_type_list() {
+				debugger
 			  let params = {
 			    pageIndex: 1,
 			    pageSize:99,
@@ -338,6 +344,7 @@
 					time_arr.push(this.ruleForm.endTime)
 					this.ruleForm.time = time_arr
 					this.ruleForm.weeks = this.ruleForm.weeks.split(',')
+					this.detail_info.weeks = this.detail_info.weeks.split(',')
 					this.ruleForm.roomStrategyJson =  this.ruleForm.hotelPriceRoomTypeList
 				})
 			},
@@ -356,9 +363,7 @@
 			},
 			// 获取 价格策略单位列表
 			get_price_enter_strategy_list() {
-				let params = {
-					status: 1
-				}
+				let params = this.searchForm
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_list', params, (res) => {
 					if (res.length != 0) {
 						this.tableData = res

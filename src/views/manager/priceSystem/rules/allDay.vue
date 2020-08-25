@@ -31,7 +31,11 @@
 				<div class="components-edit">
 					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column prop="ruleName" label="规则名称"></el-table-column>
-						<el-table-column prop="priceModel" label="计费模式"></el-table-column>
+						<el-table-column label="计费模式">
+							<template slot-scope="{row}">
+								<span>{{row.priceModel==1 ? '固定时间退房模式':'24小时退房模式'}}</span>
+							</template>
+						</el-table-column>
 						<el-table-column  label="规则详情" width="500">
 							<template slot-scope="{row}">
 								<span>

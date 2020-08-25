@@ -18,10 +18,10 @@
 				<el-popconfirm title="你确定要删除吗？" @onConfirm="houseFloor_delete">
 					<el-button slot="reference" type="text" size="small" @click="deleteRow(selectRedio)">删除</el-button>
 				</el-popconfirm>
-				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
+				<!-- <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
 				<el-button type="text" @click="forward">前移</el-button>
 				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-				<el-button type="text" @click="back">后移</el-button>
+				<el-button type="text" @click="back">后移</el-button> -->
 			</el-col>
 			<el-col :span="8" :offset="8">
 				<el-button type="primary" @click="popup('addDong')">新增楼栋</el-button>
