@@ -15,15 +15,15 @@
               <normal :operCheckinType="activeName"></normal>
             </el-tab-pane>
     </el-tabs>
-     
+
   </div>
 </template>
 <script>
 import normal from "./checkin/normal";
-import hour from "./checkin/hour";
+// import hour from "./checkin/hour";
 
 export default {
-  components: { normal, hour},
+  components: { normal},
   data() {
     return {
       activeName: "a1" //第一个默认启动

@@ -114,9 +114,19 @@ export default {
     ...mapState({
       user: (state) => state.user,
     }),
+    setSuccess: {
+      get() {
+        return this.$t("boss.compensation_setSuccess");
+      },
+      set() {},
+    },
   },
   name: "",
-
+  watch: {
+    setSuccess(newValue, oldValue) {
+      this.setSuccess = newValue;
+    },
+  },
   data() {
     return {
       loading: false,
@@ -136,26 +146,21 @@ export default {
     initForm() {
       this.firstMenuInfo = JSON.parse(sessionStorage.menul || "{}");
       this.searchForm = {
-        departmentId: this.firstMenuInfo.id,
-        searchType: 1,
-        content: "",
-        pageIndex: 1,
-        pageSize: 10,
+          departmentId: this.firstMenuInfo.id,
+          searchType: 1,
+          content: "",
+          pageIndex: 1,
+          pageSize: 10,
+          paging: true,
       };
       this.getDataList();
     },
     getDataList() {
-      let that = this;
-      this.$F.doRequest(
-        this,
-        "/pms/workuser/login_user_list",
-        this.searchForm,
-        (res) => {
-          this.tableData = res.hotelUserList;
-          this.listTotal = this.tableData.length;
-          that.$forceUpdate();
-        }
-      );
+        this.$F.commons.fetchSalesList(this.searchForm, (data)=> {
+            this.tableData = data.hotelUserList;
+            this.listTotal = this.tableData.length;
+            this.$forceUpdate();
+        });
     },
     getMenu_list() {
       let params = {
@@ -288,7 +293,7 @@ export default {
       };
       this.$F.doRequest(this, "/pms/workuser/set_user_menu", params, (res) => {
         this.$message({
-          message: "设置成功",
+          message: this.setSuccess,
           type: "success",
         });
         this.listVisible = true;

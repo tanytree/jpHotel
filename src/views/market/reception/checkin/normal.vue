@@ -27,7 +27,10 @@
                                 </el-option>
                             </el-select> -->
 
-                            <el-autocomplete style="width:200px" v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
+                            <el-autocomplete style="width:200px" v-model="checkInForm.name" name="name"
+                                             :fetch-suggestions="remoteMethod" :highlight-first-item="true"
+                                             popper-class="popper-class" :trigger-on-focus="false"
+                                             placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
                             <!-- &nbsp;&nbsp;&nbsp;
                             <el-button type="primary" size="small">扫脸入住</el-button> -->
                         </el-form-item>
@@ -64,14 +67,21 @@
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="入住时间：" prop="checkinTime">
-                                <el-date-picker v-model="checkInForm.checkinTime" disabled type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="satrtTime"></el-date-picker>
+                                <el-date-picker v-model="checkInForm.checkinTime"
+                                                disabled type="datetime"
+                                                style="width:200px" placeholder="选择日期"
+                                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+                                                :picker-options="startTime"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
                     <el-col :span="6">
                         <div class="grid-content">
                             <el-form-item label="预离时间：" prop="checkoutTime">
-                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
+                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime"
+                                                style="width:200px" placeholder="选择日期"
+                                                :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss"
+                                                value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
                             </el-form-item>
                         </div>
                     </el-col>
@@ -115,9 +125,10 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="客源类型：" prop="guestType">
-                            <el-input type="input" :value="guestTypeSwitch(checkInForm.guestType)" class="width200" :disabled="true">
-                                <template slot="append"><span @click="guestTypeShow=true">…</span></template>
+                        <el-form-item label="客源类型" prop="guestType">
+                            <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" class="width200" :disabled="true">
+                                <template slot="append">
+                                    <span @click="popup('guestTypeShow')">…</span></template>
                             </el-input>
                         </el-form-item>
                     </div>
@@ -178,8 +189,10 @@
                                     </el-row>
                                 </el-option>
                             </el-select> -->
-                            <el-autocomplete style="width:200px" v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
-
+                            <el-autocomplete style="width:200px" v-model="checkInForm.name"
+                                             name="name" :fetch-suggestions="remoteMethod"
+                                             :highlight-first-item="true" popper-class="popper-class"
+                                             :trigger-on-focus="false" placeholder="姓名查询" @select="changeName($event)"></el-autocomplete>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -230,29 +243,43 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
+<!--                        <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">-->
+                        <el-form-item label="预抵时间" prop="checkinTime">
+                            <el-date-picker
+                                v-model="checkInForm.checkinTime"
+                                type="datetime" style="width:200px"
+                                placeholder="选择日期" :picker-options="startTime"
+                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+                                @change="startTimeChange"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6" v-if="operCheckinType=='b1'">
                     <div class="grid-content">
                         <el-form-item label="入住天数：" prop="checkinDays">
-                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>
+                            <el-input-number class="width200" v-model="checkInForm.checkinDays"
+                                             :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="预离时间：" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkoutTime"
+                                            type="datetime" style="width:200px"
+                                            placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss"
+                                            value-format="yyyy-MM-dd HH:mm:ss"
+                                            :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item label="保留时间：" prop="keepTime">
-                            <el-date-picker v-model="checkInForm.keepTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.keepTime" type="datetime"
+                                            style="width:200px"
+                                            placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+                                            :picker-options="leaveTime"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
@@ -260,9 +287,9 @@
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="客源类型：" prop="guestType">
-                            <el-input type="input" :value="guestTypeSwitch(checkInForm.guestType)" :disabled="true" class="width200">
-                                <template slot="append"><span @click="guestTypeShow=true">…</span></template>
+                        <el-form-item label="客源类型" prop="guestType">
+                            <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true" class="width200">
+                                <template slot="append"><span @click="popup('guestTypeShow')">…</span></template>
                             </el-input>
                         </el-form-item>
                     </div>
@@ -301,15 +328,15 @@
                     </el-col>
                 </template>
             </el-row>
+            </br>
             <el-row>
                 <el-col :span="12">
                     <div class="grid-content">
                         <el-form-item label="订单备注：">
-                            <el-input style="100%" type="textarea" v-model="checkInForm.remark"></el-input>
+                            <el-input class="width200" type="textarea" v-model="checkInForm.remark"></el-input>
                         </el-form-item>
                     </div>
                 </el-col>
-
             </el-row>
         </el-form>
     </el-row>
@@ -367,8 +394,8 @@
                     <div class="grid-content">
                         <el-row>
                             <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
-                            <el-button @click="live_in_person_list" v-if="operCheckinType != 'b3'"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
-                            <el-button @click="liveCard_in_person_list"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
+                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
+                            <el-button @click="liveCard_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />
                         <el-row class="roomSelect">
@@ -600,13 +627,13 @@
 <script>
 Date.prototype.Format = function (fmt) {
     var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "H+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     for (var k in o)
@@ -627,7 +654,7 @@ import {
 } from "vuex";
 const vm = window.vm;
 export default {
-    props: ['operCheckinType'],
+    props: ['operCheckinType'],   //b1：普通预定 b2:时租房预定 b3:会场预定     a1: 普通入住  a2:时租入住
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -640,7 +667,7 @@ export default {
         return {
             afterToday: {
                 disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天 
+                    return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
                 }
             },
             leaveTime: {
@@ -658,19 +685,20 @@ export default {
                     }
                 }
             },
-            satrtTime: {
+            startTime: {
                 disabledDate: time => {
-                    if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
-                        let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
-                        if (this.operCheckinType == 'b2') { //时租预订
-                            return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
-                        }
-                        return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
-                    } else if (this.checkInForm.checkoutTime == "") {
-                        return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
-                    } else {
-                        return "";
-                    }
+                    // if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
+                    //     let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                    //     if (this.operCheckinType == 'b2') { //时租预订
+                    //         return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
+                    //     }
+                    //     return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
+                    // } else if (this.checkInForm.checkoutTime == "") {
+                    //     return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                    // } else {
+                    //     return "";
+                    // }
+                    return time.getTime() < new Date().getTime();
                 }
             },
             num: 1,
@@ -688,35 +716,13 @@ export default {
             baseInfo: '',
             getRoomsForm: {
                 changeType: 1,
+                roomType : 1,
                 bedCount: '',
             },
             salesList: '',
-            ruleHourList: '',
+            ruleHourList: [],
+            //预定和入住人信息
             checkInForm: {
-                operCheckinType: 1,
-                name: '',
-                sex: '',
-                idcardType: '',
-                idcard: '',
-                memberCard: '',
-                checkinTime: '',
-                checkoutTime: '',
-                keepTime: '',
-                checkinDays: 0,
-                salesId: '',
-                thirdOrdernum: '',
-                mobile: '',
-                ruleHourId: '',
-                guestType: '',
-                orderSource: '',
-                recommendInfo: '',
-                channel: '',
-                checkinType: '',
-                remark: '',
-                // checkInId: '2c9f404b73939b040173947c555b000c',
-                // checkInReserveId: '2c9f404b738f2f5d017393748ad60009',
-                checkInId: '',
-                checkInReserveId: ''
             },
             rules: {
                 name: [{
@@ -736,7 +742,7 @@ export default {
                 idcardType: [{
                     required: true,
                     message: '请选择护照类型',
-                    trigger: 'blur'
+                    trigger: 'change'
                 }, ],
                 idcard: [{
                     required: true,
@@ -746,22 +752,22 @@ export default {
                 checkinTime: [{
                     required: true,
                     message: '请选择入住时间',
-                    trigger: 'change'
+                    trigger: 'blur'
                 }, ],
                 checkoutTime: [{
                     required: true,
                     message: '请选择预离时间',
-                    trigger: 'change'
+                    trigger: 'blur'
                 }, ],
                 keepTime: [{
                     required: true,
                     message: '请选择保留时间',
-                    trigger: 'change'
+                    trigger: 'blur'
                 }, ],
                 checkinDays: [{
                     required: true,
                     message: '请输入入住天数',
-                    trigger: 'change'
+                    trigger: 'blur'
                 }, ],
                 guestType: [{
                     required: true,
@@ -771,17 +777,17 @@ export default {
                 orderSource: [{
                     required: true,
                     message: '请订单来源',
-                    trigger: 'change'
+                    trigger: 'blur'
                 }, ],
                 checkinType: [{
                     required: true,
                     message: '请选择入住类型',
-                    trigger: 'change'
+                    trigger: 'blur'
                 }, ],
                 ruleHourId: [{
                     required: true,
                     message: '请选择计费规则',
-                    trigger: 'change'
+                    trigger: 'blur'
                 }, ],
             },
             listTotal: 0, //总条数
@@ -812,32 +818,19 @@ export default {
         };
     },
     mounted() {
-        console.log(this.$t('commons.markCard'))
-        if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
-            this.checkInForm.checkinTime = new Date().Format("yyyy-MM-dd HH:mm:ss")
-        } else {
-            this.typeText = '预订'
-        }
-        // if (this.operCheckinType == 'b1') {
-        //     this.checkInForm.checkinTime = new Date().Format('yyyy-MM-dd HH:mm:ss')
-        //     this.checkInForm.checkinDays = 1
-        //     let date = new Date(this.checkInForm.checkinTime);
-        //     date.setDate(date.getDate() + this.checkInForm.checkinDays);
-        //     this.checkInForm.checkoutTime = date
-        // } else {
-        //     for (let k in this.checkInForm) {
-        //         if (k !== 'operCheckinType') {
-        //             this.checkInForm[k] = ''
-        //         }
-        //     }
-        // }
         this.handleOperCheckinType()
         this.hotel_rule_hour_list()
+        this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
+            this.salesList = data.hotelUserList;
+        });
+        this.getDataList();
         this.initForm();
     },
     watch: {
         operCheckinType() {
-            this.handleOperCheckinType()
+            debugger;
+            this.initForm();
+            // this.handleOperCheckinType()
             console.log(this.checkInForm)
         },
         checkInForm: {
@@ -882,7 +875,7 @@ export default {
                     if (len == arr.length) {
                         window.setTimeout(() => {
 
-                            this.hotel_check_in(1)
+                           // this.hotel_check_in(1)
 
                         }, 2000)
 
@@ -890,7 +883,7 @@ export default {
                 }
 
             },
-            //   immediate: true,  
+            //   immediate: true,
             deep: true
         }
     },
@@ -901,13 +894,47 @@ export default {
                 bedCount: '',
                 roomType: this.operCheckinType == 'b3' ? 2 : 1
             };
+            //预定和入住人信息
+            let operTypeEM = {
+                b1: '1',
+                b2: '2',
+                b3: '3'
+            }
+            this.checkInForm = {
+                operCheckinType: operTypeEM[this.operCheckinType] || '',  //预定办理类型  1普通预定 2时租房预定 3会场预定 Integer必填
+                name: '',    //入住人姓名  String必填
+                mobile: '',   //电话  String选填
+                orderSource: '1',   //订单来源  1前台 2销售推荐 3渠道订单 10其他  Integer必填
+                sex: '1',     //    入住人性别 1男 2女 3保密  Integer必填
+                idcardType: '1',    // 证件类型  1身份证 2护照  Integer必填
+                idcard: '',    //证件号码  String必填
+                memberCard: '',    // 会员卡号  String选填
+                checkinTime: '',    // 预抵时间/到店时间 yyyy-MM-dd hh:mm:ss格式  String必填
+                checkoutTime: '',   //预离时间 yyyy-MM-dd hh:mm:ss格式  String必填
+                keepTime: '',       //保留时间 yyyy-MM-dd hh:mm:ss格式  String必填
+                checkinDays: 1,   //入住天数  int必填
+                salesId: '',      //销售员id  String选填
+                thirdOrdernum: '',    //外部订单号  String选填
+                ruleHourId: '',    //时租房规则id  operCheckinType=2必填  String选填
+                guestType: '1',    //客户类型  1散客 2会员 3单位  Integer必填
+                recommendInfo: '',   //推荐人信息（姓名或销售用户id）  String选填
+                channel: '',      //渠道类型  2飞猪  3去哪儿 4携程 5艺龙 6美团  Integer选填
+                checkinType: '1',    // 入住类型  1正常 2免费  Integer必填
+                remark: '',       //订单信息备注  String选填
+                // checkInId: '2c9f404b73939b040173947c555b000c',
+                // checkInReserveId: '2c9f404b738f2f5d017393748ad60009',
+                checkInId: '',    // 传入改值，将会进行编辑客人信息  String选填
+                checkInReserveId: '',   //传入改值，将会进行编辑预定客人信息  String选填
+                meetingName: '',    //会议名称  String选填
+                enterName: '',      //单位名称 String选填
+            }
+            this.handleOperCheckinType();
             this.getDataList();
         },
-        /**获取表格数据 */
+        /**获取房间信息数据 */
         getDataList() {
-            let that = this
+            let that = this;
             this.$F.doRequest(this, '/pms/checkin/hotel_checkin_roominfo', this.getRoomsForm, (res) => {
-                this.loading = false
                 let list = res.roomTypeList;
                 list.forEach(element => {
                     let coverData = check(element.roomTypeId)
@@ -923,31 +950,40 @@ export default {
                 function check(id) {
                     for (let k in that.waitingRoom) {
                         if (that.waitingRoom[k].roomTypeId == id) {
-                            return that.waitingRoom[k]
+                            return that.waitingRoom[k];
                         }
                     }
                     return false
                 }
-                this.roomList = list
-                console.log(this.roomList)
+                this.roomList = list;
+                this.$forceUpdate();
             })
         },
-        login_user_list() {
-            let params = {
-                searchType: 2,
-                paging: false,
-                salesFlag: 1,
-                content: '',
-                departmentId: '',
-                pageIndex: 1,
-                pageSize: 10
+
+        //页面上点击事件都在这里
+        popup(type, row) {
+            //客源类型选择
+            if(type == 'guestTypeShow') {
+               this.guestTypeShow = true;
+               this.checkInForm.guestType = this.checkInForm.guestType ? this.checkInForm.guestType.toString() : '1';
+            } else if (type == 'bin') {
+                this.$F.doRequest(this, '/pms/hotelgoods/up_status', {
+                    id: row.id,
+                    state: row.state == 1 ? 2 : 1
+                }, (res) => {
+                    this.$message.success('success');
+                    this.initData()
+                })
+            } else if (type == 'change') {
+                this.edit = true;
+                this.tab_show = false;
+                this.rowData = row;
             }
-            this.$F.doRequest(this, '/pms/workuser/login_user_list', params, (data) => {
-                this.salesList = data.hotelUserList;
-            })
         },
-        hotel_check_in(type) {
-            this.isSubmitErr = false //
+
+        hotel_check_in(type, callback) {
+            debugger
+            this.isSubmitErr = false;
             let url = ''
             let operCheckinType = this.operCheckinType
             if (operCheckinType == 'a1' || operCheckinType == 'a2') {
@@ -957,19 +993,23 @@ export default {
             }
             let ajax = () => {
                 this.$F.doRequest(this, url, this.checkInForm, (data) => {
-                    if (type == 1) {
+                    if (type == 1 || type == 4) {
                         if (operCheckinType == 'a1' || operCheckinType == 'a2') {
                             console.log(data.checkinId)
                             this.checkInForm.checkInId = data.checkinId
                         } else {
                             this.checkInForm.checkInId = data.checkInReserveId
                             this.checkInForm.checkInReserveId = data.checkInReserveId
+                        }
+                        if (type == 1) {
                             this.$F.doRequest(this, '/pms/reserve/reserve_oper', {
                                 checkInReserveId: data.checkInReserveId,
                                 state: 2
                             }, (data) => {
                                 console.log('预订单直接转为确认状态')
                             })
+                        } else {
+                            callback();
                         }
                         this.$forceUpdate()
                         console.log(this.checkInForm)
@@ -978,7 +1018,6 @@ export default {
                         console.log(operCheckinType)
 
                     } else if (type == 2) {
-
                         if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
                             if (!this.liveInPersonData.length) {
                                 this.isSubmitErr = true
@@ -986,7 +1025,7 @@ export default {
                                 this.live_in_person_list()
                                 return false
                             }
-                            
+
                             if (this.liveCardData == '') {
                                 this.isSubmitErr = true
                                 this.$message.error('请制卡')
@@ -1000,7 +1039,6 @@ export default {
                                 return false
                             }
                         }
-
                         this.$message({
                             message: '办理成功',
                             type: 'success'
@@ -1082,14 +1120,7 @@ export default {
                 this.refs.detailRef.initdata(row.id);
             });
         },
-        guestTypeSwitch(v) {
-            for (let k in this.$t('commons.guestType')) {
-                if (v == k) {
-                    return this.$t('commons.guestType')[k]
-                }
-            }
-            return ''
-        },
+
 
         handleNumChange(e, item) {
             let exist = false
@@ -1121,10 +1152,22 @@ export default {
         },
 
         rowRoomByItem(item, index) {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请完善入住信息后操作');
-                return
+            debugger
+            if (this.checkInForm.checkInId) {
+                this.rowRoomByItem2(item, index);
+            }else {
+                this.hotel_check_in(4, () => {
+                    if (!this.checkInForm.checkInId) {
+                        this.$message.error('请完善入住信息后操作');
+                        return
+                    }
+                    this.rowRoomByItem2(item, index);
+                });
             }
+        },
+
+        rowRoomByItem2(item, index) {
+            debugger
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item))
             this.rowRoomCurrentIndex = index
             this.hotelRoomListParams.roomTypeId = item.roomTypeId
@@ -1134,14 +1177,24 @@ export default {
         //计费规则时租房计费列表
         hotel_rule_hour_list() {
             let params = {
-                ruleName: "",
-                priceModel: 2,
-                state: 1,
+                ruleName: '',
+                priceModel: '', //收费模式 1固定时间退房模式  2 24小时退房模式
+                state: '',
+                status: 2,
                 pageIndex: 1,
-                pageSize: 999
+                pageSize: 999,
+                totalSize: 0
             }
             this.$F.doRequest(this, '/pms/hotel/hotel_rule_hour_list', params, (res) => {
-                this.ruleHourList = res.list
+                if (res.list.length != 0) {
+                    res.list.forEach(item =>{
+                        if (item.status != 2) {
+                            this.ruleHourList.push(item)
+                        }
+                    })
+                    // this.tableData = res.list
+                    // this.ruleForm.totalSize = res.totalSize
+                }
             })
         },
         //获取可排房的房间
@@ -1185,7 +1238,7 @@ export default {
                 this.$forceUpdate()
             })
         },
-        //自动排房确定
+        //自动排房
         page_row_houses() {
             if (!this.checkInForm.checkInId) {
                 this.$message.error('请输入入住信息后操作')
@@ -1570,11 +1623,20 @@ export default {
             this.nameLoading = true;
             this.$F.doRequest(this, '/pms/checkin/checkin_order_list', params, (res) => {
                 this.nameLoading = false
-                this.options = res.roomPersonList
+                this.options = res.roomPersonList || [];
                 this.options.forEach(element => {
-                    element.value = element.name + '   /   ' + (element.mobile ? '手机号：' + element.mobile + '   /   ' : '') + '身份证后四位：' + element.idcard.slice(-4)
+                    element.value = element.name + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + (element.mobile || '') + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + element.idcard.slice(-4);
                 });
-                cb(this.options)
+                // this.options.unshift({
+                //     value: '姓名     ' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + '手机号         身份证后四位'
+                // });
+                // if (this.options.length  == 0) {
+                //     this.options.push({
+                //         label: '暂无客户信息',
+                //         value: '暂无客户信息'
+                //     });
+                // }
+                cb(this.options);
                 this.$forceUpdate()
             })
         },
@@ -1606,25 +1668,35 @@ export default {
                 b2: 2,
                 b3: 3
             }
-            this.checkInForm.operCheckinType = menu[this.operCheckinType]
-            if (this.operCheckinType == 'b1') {
-                this.checkInForm.checkinTime = new Date().Format('yyyy-MM-dd HH:mm:ss')
-                this.checkInForm.checkinDays = 1
-                let date = new Date(this.checkInForm.checkinTime);
-                date.setDate(date.getDate() + this.checkInForm.checkinDays);
-                this.checkInForm.checkoutTime = date
-            } else {
-                for (let k in this.checkInForm) {
-                    if (k !== 'operCheckinType') {
-                        this.checkInForm[k] = ''
-                    }
+            this.checkInForm.operCheckinType = menu[this.operCheckinType];
+            let nowDate = new Date();
+            if (this.operCheckinType && this.operCheckinType.startsWith('b')) {
+                this.checkInForm.checkinTime = nowDate.Format('yyyy-MM-dd HH:mm:ss')
+                if (this.operCheckinType == 'b1') {
+                    this.checkInForm.checkinDays = 1;
+                    nowDate.setDate(nowDate.getDate() + this.checkInForm.checkinDays);
+                    this.checkInForm.checkoutTime = nowDate.Format('yyyy-MM-dd HH:mm:ss');
+                } else if (this.operCheckinType == 'b2' || this.operCheckinType == 'b3') {
+                    this.checkInForm.checkinDays = '';
+                    nowDate.setDate(nowDate.getDate() + 1);
+                    nowDate.setHours(12);
+                    nowDate.setMinutes(0);
+                    nowDate.setSeconds(0);
+                    this.checkInForm.checkoutTime = nowDate.Format('yyyy-MM-dd HH:mm:ss');
+                    // for (let k in this.checkInForm) {
+                    //     if (k !== 'operCheckinType') {
+                    //         this.checkInForm[k] = ''
+                    //     }
+                    // }
                 }
+                this.checkInForm.keepTime = new Date().Format("yyyy-MM-dd") + ' 23:59:00';
             }
             if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
                 this.checkInForm.checkinTime = new Date().Format("yyyy-MM-dd HH:mm:ss")
             } else {
                 this.typeText = '预订'
             }
+
         },
         selectBlur(e) {
             console.log(e)
@@ -1646,10 +1718,11 @@ export default {
                 this.mackcade = false
             }
         },
-        satrtTimeChange(e) {
+        startTimeChange(e) {
             let day = 0
             if (this.checkInForm.checkoutTime != '') {
-                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
+                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
+                        new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
                 this.checkInForm.checkinDays = day
             }
         },
@@ -1669,9 +1742,10 @@ export default {
             } else {
                 var date = new Date(this.checkInForm.checkinTime);
                 date.setDate(date.getDate() + e);
-                this.checkInForm.checkoutTime = date
+                this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
             }
-        }
+        },
+
     }
 };
 </script>

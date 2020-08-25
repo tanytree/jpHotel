@@ -7,10 +7,7 @@
 <template>
 <el-dialog top="0" title="批量置脏/置净" width="700px" :visible.sync="visible">
     <el-row style="margin:10px 20px">
-        <el-row style="text-align:center; margin-bottom: 10px;">
-            <el-button :class="type==2?'active':''" @click="typeChange(2)">批量置脏</el-button>
-            <el-button :class="type==1?'active':''" @click="typeChange(1)">批量置净</el-button>
-        </el-row>
+
         <el-form>
             <el-row>
                 <el-col :span="16">
@@ -69,8 +66,13 @@
         </el-form>
     </el-row>
     <div slot="footer" class="dialog-footer" style="text-align:center">
-        <el-button style="width:80px;" @click="visible = false">取 消</el-button>
-        <el-button style="width:80px;" type="primary" @click="dataFormSubmit">确 定</el-button>
+        <el-button style="width:80px;" @click="dataFormSubmit(2)">批量置脏</el-button>
+        <el-button style="width:80px;" type="primary" @click="dataFormSubmit(1)">批量置净</el-button>
+<!--        <el-button :class="type==2?'active':''" @click="dataFormSubmit(2)">批量置脏</el-button>-->
+<!--        <el-button :class="type==1?'active':''" @click="typeChange(1)">批量置净</el-button>-->
+<!--        <el-row style="text-align:center; margin-bottom: 10px;">-->
+<!--            -->
+<!--        </el-row>-->
     </div>
 </el-dialog>
 </template>
@@ -137,12 +139,12 @@ export default {
                 this.roomList = data;
             })
         },
-        dataFormSubmit() {
-            if(this.type == ''){
-              this.$message.error('请选择操作类型');
-              return
-            }
-            let errTip = this.type==2?'批量置脏':'批量置净'
+        dataFormSubmit(type) {
+            // if(this.type == ''){
+            //   this.$message.error('请选择操作类型');
+            //   return
+            // }
+            let errTip = type== 2 ? '批量置脏':'批量置净'
             let roomIds = [];
             for (let k in this.roomList) {
               console.log(this.roomList[k].checkedItems)
@@ -150,7 +152,7 @@ export default {
             }
             console.log(roomIds)
             let params = {
-              roomStatus:this.type,
+              roomStatus: type,
               roomIds:roomIds
             }
 

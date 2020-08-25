@@ -4,13 +4,13 @@
       <el-row>
         <el-form class="demo-form-inline" inline size="small">
           <!-- 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 -->
-          <el-form-item label="选择时间:">
+          <el-form-item :label="$t('manager.grsl_selectTime')+':'">
             <el-date-picker
               v-model="ruleForm.date"
               value-format="yyyy-MM-dd"
               align="right"
               type="date"
-              placeholder="选择日期"
+              :placeholder="$t('commons.selectDate')"
               :picker-options="pickerOptions"
               @blur="get_hotel_price_room_type_list"
             ></el-date-picker>
@@ -22,7 +22,7 @@
                 @click="popup('adjust')"
                 style="width: 100px;"
                 size="mini"
-              >批量调价</el-button>
+              >{{$t('manager.ps_bulkPrice')}}</el-button>
             </el-row>
           </el-form-item>
         </el-form>
@@ -62,7 +62,7 @@
       <el-row :gutter="20">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
           <el-col :span="20">
-            <el-form-item label="会员类型:" prop="name">
+            <el-form-item :label="$t('manager.ps_memberType')+':'" prop="name">
               <el-checkbox-group v-model="batchEditPriceForm.memberTypeId">
                 <el-checkbox
                   v-for="(item, index) in memberTableData.memberTypeList"
@@ -73,12 +73,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="渠道:" prop="name">
-              <el-button plain size="mini">线下</el-button>
+            <el-form-item :label="$t('manager.ps_channel')+':'" prop="name">
+              <el-button plain size="mini">{{$t('manager.ps_offline')}}</el-button>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="选择时间:">
+            <el-form-item :label="$t('manager.grsl_selectTime')+':'">
               <el-date-picker
                 v-model="batchEditPriceForm.time"
                 type="daterange"
@@ -86,14 +86,14 @@
                 value-format="yyyy-MM-dd"
                 :picker-options="expireTimeOption"
                 unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('boss.report_toText')"
+                :start-placeholder="$t('manager.ps_startDate')"
+                :end-placeholder="$t('manager.ps_endDate')"
               ></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="选择星期:" prop="name">
+            <el-form-item :label="$t('manager.ps_selectWeek')+':'" prop="name">
               <el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
                 <el-checkbox
                   v-for="(item, index) in weekDays"
@@ -104,12 +104,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="折扣率:" prop="name">
+            <el-form-item :label="$t('manager.ps_discount')+':'" prop="name">
               <el-radio-group v-model="batchEditPriceForm.discounts">
-                <el-radio :label="1">向上取整</el-radio>
-                <el-radio :label="2">向下取整</el-radio>
-                <el-radio :label="3">四舍五入(取整)</el-radio>
-                <el-radio :label="4">保持不变</el-radio>
+                <el-radio :label="1">{{$t('manager.ps_upword')}}</el-radio>
+                <el-radio :label="2">{{$t('manager.ps_down')}}</el-radio>
+                <el-radio :label="3">{{$t('manager.ps_fourAndFive')}}</el-radio>
+                <el-radio :label="4">{{$t('manager.ps_keep')}}</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -121,19 +121,19 @@
         tooltip-effect="dark"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
       >
-        <el-table-column prop="houseName" label="房型"></el-table-column>
-        <el-table-column prop="marketPrice" label="门市价"></el-table-column>
-        <el-table-column prop="name" label="调价方式">
+        <el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
+        <el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
+        <el-table-column prop="name" :label="$t('manager.ps_changPriceWay')">
           <template slot-scope="{row, $index}">
             <el-row class="demo-form-inline">
               <el-select
                 v-model="row.adjustType"
-                placeholder="请选择"
+                :placeholder="$t('manager.hk_pleaseSelect')"
                 style="width: 150px;"
                 @change="change(row)"
               >
-                <el-option label="折扣率" value="1"></el-option>
-                <el-option label="一口价" value="2"></el-option>
+                <el-option :label="$t('manager.ps_discount')" value="1"></el-option>
+                <el-option :label="$t('manager.ps_fixedPrice')" value="2"></el-option>
               </el-select>
               <span v-if="row.adjustType == 1">
                 <el-input
@@ -151,55 +151,65 @@
                   max="100"
                   style="width: 140px;margin: 0px 15px;"
                   @input="priceBlur(row, $index)"
-                ></el-input>日元
+                ></el-input>
+                {{$t('manager.ps_japanYen')}}
               </span>
             </el-row>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="调价后">
+        <el-table-column prop="name" :label="$t('manager.ps_dueTo')">
           <template slot-scope="{row}">
             <el-input v-model="row.adjustPrice" :disabled="true"></el-input>
           </template>
         </el-table-column>
       </el-table>
       <el-row style="padding: 20px 0px;">
-        <el-button type="primary" style="width: 80px;" @click="onSave">保存</el-button>
-        <el-button style="width: 80px;margin-left: 20px; cursor: pointer" @back="back_1">返回</el-button>
+        <el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
+        <el-button
+          style="width: 80px;margin-left: 20px; cursor: pointer"
+          @back="back_1"
+        >{{$t('commons.back')}}</el-button>
       </el-row>
     </el-row>
 
     <el-dialog
       top="0"
-      title="修改房价"
+      :title="$t('manager.ps_resetRoomPrice')"
       :visible.sync="editPriceDialog"
       :close-on-click-modal="false"
       width="30%"
       class="editPriceDialog"
     >
       <el-form ref="discountForm" :model="editPriceForm" label-width="120px">
-        <el-form-item label="当前选中:">
+        <el-form-item :label="$t('manager.ps_nowSelect')+':'">
           <span>{{editPriceForm.member.name + ' ' + editPriceForm.room.houseName}}</span>
         </el-form-item>
-        <el-form-item label="当前日期">
+        <el-form-item :label="$t('manager.ps_nowDate')">
           <span>{{editPriceForm.dateStr}}</span>
         </el-form-item>
-        <el-form-item label="门市价">
+        <el-form-item :label="$t('manager.hk_doorPrice')">
           <span>{{editPriceForm.room.marketPrice}}</span>
         </el-form-item>
-        <el-form-item label="会员价">
+        <el-form-item :label="$t('manager.ps_memberPrice')">
           <span>
             {{editPriceForm.member.prices}}
-            <span class="tip">(折扣为{{editPriceForm.discount}})</span>
+            <span
+              class="tip"
+            >({{$t('manager.ps_discountFor')}}{{editPriceForm.discount}})</span>
           </span>
         </el-form-item>
-        <el-form-item label="新会员价">
+        <el-form-item :label="$t('manager.ps_newMemberPrice')">
           <el-input v-model="editPriceForm.customPrice" style="width:200px"></el-input>
-          <span class="tip">如果没有新会员价就按会员价</span>
+          <span class="tip">{{$t('manager.ps_memberContent')}}</span>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editPriceDialog = false">取 消</el-button>
-        <el-button type="primary" @click="editPriceSubmit" v-loading="loading">确 定</el-button>
+        <el-button @click="editPriceDialog = false">{{$t('commons.cancel')}}</el-button>
+        <el-button
+          type="primary"
+          @click="editPriceSubmit"
+          v-loading="loading"
+        >{{$t('commons.determine')}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -307,7 +317,30 @@ export default {
   mounted() {
     this.get_hotel_price_room_type_list();
   },
+  computed: {
+    roomPrice: {
+      get() {
+        return this.$t("manager.ps_roomPrice");
+      },
+      set() {},
+    },
 
+    deleteSuccess: {
+      get() {
+        return this.$t("manager.hk_deleteSuccess");
+      },
+      set() {},
+    },
+  },
+  watch: {
+    roomPrice(newValue, oldValue) {
+      this.roomPrice = newValue;
+    },
+
+    deleteSuccess(newValue, oldValue) {
+      this.deleteSuccess = newValue;
+    },
+  },
   methods: {
     //保存批量修改房价
     onSave() {
@@ -470,7 +503,7 @@ export default {
           );
           this.memberTableHeads = res.dateList;
           this.memberTableHeads.unshift({
-            dateStr: "房价",
+            dateStr: this.roomPrice,
             weekDay: "",
           });
           this.$forceUpdate();
@@ -505,7 +538,7 @@ export default {
         (res) => {
           this.get_price_enter_strategy_list();
           this.$message({
-            message: "删除成功",
+            message: this.deleteSuccess,
             type: "success",
           });
         }

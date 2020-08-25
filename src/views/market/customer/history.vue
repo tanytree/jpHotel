@@ -420,7 +420,9 @@ export default {
         this.initForm();
         this.stores_list()
         this.smembertype_list()
-        this.login_user_list()
+        this.$F.commons.fetchSalesList(this.employeesForm, (data)=> {
+            this.salesList = data.hotelUserList;
+        });
         this.hotelenter_list()
         this.nationality()
     },
@@ -472,20 +474,6 @@ export default {
         smembertype_list() {
             this.$F.commons.fetchMemberTypeList({}, (res) => {
                 this.smembertypeList = res.list;
-            })
-        },
-        login_user_list() {
-            let params = {
-                searchType: 1,
-                paging: false,
-                salesFlag: 1,
-                content: '',
-                departmentId: '',
-                pageIndex: 1,
-                pageSize: 10
-            }
-            this.$F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
-                this.salesList = data.hotelUserList;
             })
         },
         hotelenter_list() {

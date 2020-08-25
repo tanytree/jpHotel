@@ -167,13 +167,10 @@
       },
       /**获取表格数据 */
       getDataList () {
-        console.log(JSON.stringify(this.searchForm))
-        this.loading = true
-        this.$F.doRequest(this, '/pms/workuser/login_user_list', this.searchForm, (res) => {
-          console.log(res)
-          this.loading = false
-          this.tableData = res.hotelUserList
-        })
+          console.log(JSON.stringify(this.searchForm))
+          this.$F.commons.fetchSalesList(this.searchForm, (data)=> {
+              this.tableData = res.hotelUserList
+          });
       },
       /**添加项目 */
       submitItem () {

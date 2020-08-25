@@ -243,7 +243,9 @@ export default {
         }
         this.stores_list()
         this.nationality()
-        this.login_user_list()
+        this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
+            this.salesList = data.hotelUserList;
+        });
         this.hotelenter_list()
         this.smembertype_list()
     },
@@ -349,20 +351,7 @@ export default {
                 this.smembertypeList = res.list;
             })
         },
-        login_user_list() {
-            let params = {
-                searchType: 1,
-                paging: false,
-                salesFlag: 1,
-                content: '',
-                departmentId: '',
-                pageIndex: 1,
-                pageSize: 10
-            }
-            this.$F.doRequest(null, '/pms/workuser/login_user_list', params, (data) => {
-                this.salesList = data.hotelUserList;
-            })
-        },
+
         hotelenter_list() {
             let params = {
                 id: '',
