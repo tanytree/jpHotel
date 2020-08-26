@@ -1072,6 +1072,8 @@
         display: flex;
         flex-direction: row;
         height: 100%;
+        background: transparent;
+        padding: 0;
 
         > div, section {
             background: #fff;

@@ -14,7 +14,7 @@
                 <!-- 商品管理-->
                 <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
                 <!-- 售卖点-->
-                <SalePoint ref="SalePoint" :list="salesList" :category="category" :total="salesTotal" :pageSize="salesSize" :currentPage="salesPage" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
+                <SalePoint ref="SalePoint" :list="salesList" :category="category" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
                 <!-- 商品分类-->
                 <GoodsKinds ref="GoodsKinds" :list="category" :initData="getCategoryData" v-if="item.path == 'GoodsKinds'"/>
                 <!-- 库存管理-->
@@ -84,8 +84,7 @@
                 if(this.activeName == 'GoodsMg' || this.activeName == 'StockMg') {
                     this.getHotelGoodsData(this.pageForm);
                 } else if (this.activeName == 'SalePoint') {
-                    // this.getSellingData(this.pageForm);
-                    // this.$refs['SalePoint'].getManageData(this.pageForm)
+                    this.getSellingData(this.pageForm);
                 } else if (this.activeName == 'IntoKuAudit') {
                     this.getAuditData(this.pageForm);
                 }
@@ -151,7 +150,7 @@
                     return 0;
                 }
             },
-            getSellingData(obj, name, categoryId, sellId) {
+            getSellingData(obj, name, categoryId, sellId, callback) {
                 const params = {
                     goodsName: name,
                     categoryId: categoryId,
@@ -160,16 +159,7 @@
                 this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/sellinglog/list', params, (res) => {
                     this.salesList = res.list;
-                    if(res.page) {
-                        this.salesSize = res.page.pageSize;
-                        this.salesPage = res.page.pageIndex;
-                        this.salesTotal = res.page.count;
-                    } else {
-                        this.salesSize = 10;
-                        this.salesPage = 1;
-                        this.salesTotal = res.list.length;
-                    }
-
+                    callback && callback(res.page)
                 })
             },
             getAuditData(obj, authStatus, soteageType, creatorName, startDate, endDate, content) {

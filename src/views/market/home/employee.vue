@@ -7,279 +7,209 @@
  -->
 <template>
   <div>
-      <!-- 员工管理 -->
+    <!-- 员工管理 -->
 
-          <div v-if="display">
-          <h4>前台部</h4>
-          <el-divider></el-divider>
+    <div v-if="display">
+      <h4>前台部</h4>
+      <el-divider></el-divider>
+      <span>
+        <el-avatar
+          style="vertical-align: middle;"
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        ></el-avatar>
+        <label style="margin:0 10px">张鑫</label>
+        <span class="duty">部门负责人</span>
+      </span>
+      <el-dropdown @command="handleCommand" style="float:right">
+        <span class="el-dropdown-link">
+          操作
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="checkData">查看资料</el-dropdown-item>
+          <el-dropdown-item command="jurisdiction">权限设置</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-divider></el-divider>
+    </div>
+
+    <div>
+      <el-breadcrumb separator-class="el-icon-arrow-right" v-if="!display">
+        <!--  v-if="!display" -->
+        <el-breadcrumb-item>
+          <span @click="management()" style="cursor: pointer;">员工管理</span>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>权限设置</el-breadcrumb-item>
+        <el-divider></el-divider>
+        <div>
           <span>
-            <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-            <label style="margin:0 10px">张鑫</label><span class="duty">部门负责人</span>
-            </span>
-          <el-dropdown @command="handleCommand" style="float:right">
-          <span class="el-dropdown-link">
-            操作<i class="el-icon-arrow-down el-icon--right"></i>
+            <el-avatar
+              style="vertical-align: middle;"
+              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            ></el-avatar>
+            <label style="margin:0 10px">张鑫</label>
+            <el-divider></el-divider>
           </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="checkData">查看资料</el-dropdown-item>
-            <el-dropdown-item command="jurisdiction">权限设置</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-          <el-divider></el-divider>
         </div>
 
-        <div>
-          <el-breadcrumb separator-class="el-icon-arrow-right"  v-if="!display">
-            <!--  v-if="!display" -->
-            <el-breadcrumb-item ><span @click="management()" style="cursor: pointer;">员工管理</span></el-breadcrumb-item>
-            <el-breadcrumb-item>权限设置</el-breadcrumb-item>
-            <el-divider></el-divider>
-            <div>
-              <span>
-                <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-                <label style="margin:0 10px">张鑫</label>
-                <el-divider></el-divider>
-              </span>
-            </div>
-
-            <el-row style="margin-left:10px">
-                <div>
-                    <span style="font-size:18px">具体权限设置(前台部)</span><span style="margin-left:20px">开启后就有该项权限</span>
-                    <!-- 首页 -->
-                    <el-row style="margin-top:30px">
-                        <span>首页</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
-                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
-                        <div style="margin-top:10px;">
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>实时房态</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>开票申请</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>留言管理</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>物品寄存</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                        </div>
-                    </el-row>
-                    <!-- 客房中心 -->
-                    <el-row style="margin-top:30px">
-                        <span>客房中心</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
-                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
-                        <div style="margin-top:10px;">
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>实时房态</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>开票申请</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>留言管理</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>物品寄存</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                        </div>
-                    </el-row>
-                    <!-- 预订管理 -->
-                    <el-row style="margin-top:30px">
-                        <span>预订管理</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
-                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
-                        <div style="margin-top:10px;">
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>实时房态</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>开票申请</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                        </div>
-                    </el-row>
-
-                    <!-- 订单管理 -->
-                    <el-row style="margin-top:30px">
-                        <span>订单管理</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
-                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
-                        <div style="margin-top:10px;">
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>实时房态</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>开票申请</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                        </div>
-                    </el-row>
-
-                    <!-- 预订管理 -->
-                    <el-row style="margin-top:30px">
-                        <span>预订管理</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
-                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
-                        <div style="margin-top:10px;">
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>实时房态</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>开票申请</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                        </div>
-                    </el-row>
-
-                    <!-- 客户管理 -->
-                    <el-row style="margin-top:30px">
-                        <span>客户管理</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
-                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
-                        <div style="margin-top:10px;">
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>会员管理</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span> 客史档案</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span> 单位管理</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                        </div>
-                    </el-row>
-
-                    <!-- 夜审 -->
-                    <el-row style="margin-top:30px">
-                        <span>夜审</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
-                        <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
-                        <div style="margin-top:10px;">
-                          <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
-                            <i class="el-icon-more"></i>
-                            <span>夜审</span>
-                            <el-switch
-                            style="margin-left:170px"
-                              v-model="Oswitch"
-                              >
-                            </el-switch>
-                          </el-col>
-                        </div>
-                    </el-row>
-
-
-                </div>
+        <el-row style="margin-left:10px">
+          <div>
+            <span style="font-size:18px">具体权限设置(前台部)</span>
+            <span style="margin-left:20px">开启后就有该项权限</span>
+            <!-- 首页 -->
+            <el-row style="margin-top:30px">
+              <span>首页</span>
+              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+              <div style="margin-top:10px;">
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>实时房态</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>开票申请</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>留言管理</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>物品寄存</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+              </div>
+            </el-row>
+            <!-- 客房中心 -->
+            <el-row style="margin-top:30px">
+              <span>客房中心</span>
+              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+              <div style="margin-top:10px;">
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>实时房态</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>开票申请</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>留言管理</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>物品寄存</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+              </div>
+            </el-row>
+            <!-- 预订管理 -->
+            <el-row style="margin-top:30px">
+              <span>预订管理</span>
+              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+              <div style="margin-top:10px;">
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>实时房态</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>开票申请</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+              </div>
             </el-row>
 
-          </el-breadcrumb>
+            <!-- 订单管理 -->
+            <el-row style="margin-top:30px">
+              <span>订单管理</span>
+              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+              <div style="margin-top:10px;">
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>实时房态</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>开票申请</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+              </div>
+            </el-row>
 
+            <!-- 预订管理 -->
+            <el-row style="margin-top:30px">
+              <span>预订管理</span>
+              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+              <div style="margin-top:10px;">
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>实时房态</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>开票申请</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+              </div>
+            </el-row>
 
-        </div>
+            <!-- 客户管理 -->
+            <el-row style="margin-top:30px">
+              <span>客户管理</span>
+              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+              <div style="margin-top:10px;">
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>会员管理</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>客史档案</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>单位管理</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+              </div>
+            </el-row>
 
-
-
-
+            <!-- 夜审 -->
+            <el-row style="margin-top:30px">
+              <span>夜审</span>
+              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
+              <div style="margin-top:10px;">
+                <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
+                  <i class="el-icon-more"></i>
+                  <span>夜审</span>
+                  <el-switch style="margin-left:170px" v-model="Oswitch"></el-switch>
+                </el-col>
+              </div>
+            </el-row>
+          </div>
+        </el-row>
+      </el-breadcrumb>
+    </div>
   </div>
 </template>
 
@@ -287,10 +217,10 @@
 export default {
   data() {
     return {
-      num:1,
-      currentPage4: 4,//分页当前所在页数的位置
-      stayoernum:'1',//续住天数
-      stayoerchecked:false,//续住  勾选
+      num: 1,
+      currentPage4: 4, //分页当前所在页数的位置
+      stayoernum: "1", //续住天数
+      stayoerchecked: false, //续住  勾选
       tableData: [
         //待开票表格字段
         {
@@ -301,8 +231,8 @@ export default {
           invoiceTitle: "全购网络技术有限公司",
           invoiceAmount: 150,
           taxes: 0,
-          billNum: 5545554
-        }
+          billNum: 5545554,
+        },
       ],
       billList: [], //点击开票按钮的数据
       tableDatas: [
@@ -317,7 +247,7 @@ export default {
           taxes: 0,
           billNum: 5545554,
           time: "2020/1/10",
-          operator: "张三"
+          operator: "张三",
         },
         {
           clientName: "tom",
@@ -329,27 +259,27 @@ export default {
           taxes: 0,
           billNum: 5545554,
           time: "2020/1/10",
-          operator: "张三"
-        }
+          operator: "张三",
+        },
       ],
       print: false, //催押
       batch: false,
       detailsBill: false, //已开票  详情
       awaitBill: false, //待开票
-      checkdetail:false,//物品寄存 详情
+      checkdetail: false, //物品寄存 详情
       editBill: false, //已开票  编辑
-      newCheck:false,//新增寄存按钮
-      checkPatch:false,//寄存补打 按钮
-      hosteldis:false,//
-      stayoer:false,//续住
-      yokeplate:false,//联房
-      roomchange:false,//换房
-      mackcade:false,//制卡
-      dirty:false,// 置脏
+      newCheck: false, //新增寄存按钮
+      checkPatch: false, //寄存补打 按钮
+      hosteldis: false, //
+      stayoer: false, //续住
+      yokeplate: false, //联房
+      roomchange: false, //换房
+      mackcade: false, //制卡
+      dirty: false, // 置脏
       formInline: {
         //待开票
         user: "",
-        hostel: ""
+        hostel: "",
       },
       notedetail: false, // 留言详情
       newNote: false, //新增留言按钮
@@ -359,74 +289,69 @@ export default {
           content: "身份和骄傲股市的看法",
           room: "A100",
           employee: "刘洋",
-          time: "2020/10/10"
-        }
+          time: "2020/10/10",
+        },
       ],
       // 新增留言
       noteForm: {
         room: "",
-        desc: ""
+        desc: "",
       },
       billForm: {
-        resource: "" //单选按钮
+        resource: "", //单选按钮
       },
       formLabelWidth: "120px",
       form: {
         //催押
         roomname: "",
         peoplename: "",
-        phonenum: ""
+        phonenum: "",
       },
       // 留言管理
-      noteForm:{
-        content:'',
-        room:'',
-        staff:'',
-        value2:''
+      noteForm: {
+        content: "",
+        room: "",
+        staff: "",
+        value2: "",
       },
       // 物品寄存
-      leftLuggage:{
-        name:'',
-        room:'',
-        num:'',
-        time:'',
-        goodsname:''
-
+      leftLuggage: {
+        name: "",
+        room: "",
+        num: "",
+        time: "",
+        goodsname: "",
       },
       // 新增 寄存
-     newCheckForm:{
-        name:'',
-        roomnum:'',
-        phoennum:'',
-        goodsname:'',
-        remark:''
-     },
+      newCheckForm: {
+        name: "",
+        roomnum: "",
+        phoennum: "",
+        goodsname: "",
+        remark: "",
+      },
       // 物品寄存表格
-      checkTables:[
+      checkTables: [
         {
-          name:"噢噢噢噢",
-          roomnum:"a14",
-          phonenum:111111,
-          goodsname:'行李箱',
-          leavetime:222,
-          gettime:222,
-          getnum:55555,
-          status:"待领取",
-          operator:'张三'
-          }
+          name: "噢噢噢噢",
+          roomnum: "a14",
+          phonenum: 111111,
+          goodsname: "行李箱",
+          leavetime: 222,
+          gettime: 222,
+          getnum: 55555,
+          status: "待领取",
+          operator: "张三",
+        },
       ],
-      hosteldata:[
-          {
-
-          }
-      ],
-      display:true,
+      hosteldata: [{}],
+      display: true,
       activeName: "one",
       roomStatus: {
         dong: "", //楼栋
-        tag: "" //楼层
+        tag: "", //楼层
       },
-      Oswitch:false,
+      Oswitch: false,
       input: "", //搜索框
       checked1: false,
       checked2: false,
@@ -434,108 +359,108 @@ export default {
       items: [
         {
           type: "success",
-          label: "空净(20)"
+          label: "空净(20)",
         },
         {
           type: "info",
-          label: "空脏(20)"
+          label: "空脏(20)",
         },
         {
           type: "danger",
-          label: "空脏(20)"
+          label: "空脏(20)",
         },
         {
           type: "warning",
-          label: "空脏(20)"
+          label: "空脏(20)",
         },
         {
           type: "warning",
-          label: "空脏(20)"
-        }
+          label: "空脏(20)",
+        },
       ],
       roomList: [
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#27ae76"
+          bgColor: "#27ae76",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "单间",
-          bgColor: "#276bba"
+          bgColor: "#276bba",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "单间",
-          bgColor: "#b07b2e"
+          bgColor: "#b07b2e",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#276bba"
+          bgColor: "#276bba",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#c0512b"
+          bgColor: "#c0512b",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#276bba"
+          bgColor: "#276bba",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#276bba"
+          bgColor: "#276bba",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#276bba"
+          bgColor: "#276bba",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#c0512b"
+          bgColor: "#c0512b",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#276bba"
+          bgColor: "#276bba",
         },
         {
           hao: "A001",
           status: 1,
           status_name: "标准间",
-          bgColor: "#276bba"
-        }
+          bgColor: "#276bba",
+        },
       ],
       checked: false,
       activeThree: "a",
-      currentPage3:'',
-       value1: '',//时间
+      currentPage3: "",
+      value1: "", //时间
       // value2: '',
       // value3: ''
     };
   },
   methods: {
-     hostelmess(){
-       this.hosteldis = true;
-     },
-     handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      },
+    hostelmess() {
+      this.hosteldis = true;
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
@@ -580,24 +505,23 @@ export default {
       this.newNote = false;
     },
     // 新增寄存
-    Save(){
+    Save() {
       console.log("新增寄存保存");
-      this.newCheck = false
+      this.newCheck = false;
     },
 
     // 员工管理
-     handleCommand(command) {
-        // this.$message('click on item ' + command);
-        if(command=='jurisdiction'){
-          // alert(11111)
-          this.display=!this.display;
-
-        }
-      },
-      management(){
-          this.display=!this.display;;
-      },
-       // 查询按钮
+    handleCommand(command) {
+      // this.$message('click on item ' + command);
+      if (command == "jurisdiction") {
+        // alert(11111)
+        this.display = !this.display;
+      }
+    },
+    management() {
+      this.display = !this.display;
+    },
+    // 查询按钮
     onSubmit() {
       console.log("submit!");
     },
@@ -616,8 +540,8 @@ export default {
     // 批量置脏/置净
     batchForm() {
       console.log("批量置脏/置净");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -633,13 +557,11 @@ export default {
   font-size: 14px;
   border-radius: 4px;
   padding: 3px;
-
 }
 .inco {
   border: 1px solid #333;
   background: #666;
   color: #fff;
-
 }
 .search {
   width: 137px !important;
@@ -667,11 +589,10 @@ export default {
   text-align: left;
   font-family: PingFangSC-Regular;
 }
-.duty{
-  border:1px solid #1B80FF;
+.duty {
+  border: 1px solid #1b80ff;
   font-size: 12px;
   padding: 3px 10px;
-
 }
 .rescet {
   border-radius: 0;

@@ -28,7 +28,6 @@
         </el-form>
       </el-row>
       <div class="components-edit member-price">
-        <!--                row-key="id"-->
         <el-table
           :data="memberTableData.memberTypeList"
           style="width: 100%;margin-bottom: 20px;"
@@ -38,9 +37,9 @@
           :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}"
         >
           <el-table-column
-            v-for="(item, index) in memberTableHeads"
-            :key="index"
-            :label="item.dateStr + '' + item.weekDay"
+              v-for="(item, index) in memberTableHeads"
+              :key="index"
+              :label="item.dateStr + '' + item.weekDay"
           >
             <template slot-scope="{row, $index}">
               <span v-if="index === 0">{{row.name || row.houseName}}</span>
@@ -314,6 +313,9 @@ export default {
       ],
     };
   },
+
+
+
   mounted() {
     this.get_hotel_price_room_type_list();
   },

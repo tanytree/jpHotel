@@ -45,6 +45,7 @@ import history from "./history";
 import guest from "./guest";
 import company from "./companylist";
 
+
 export default {
   components: { member, history, guest, company },
   data() {

@@ -4,6 +4,7 @@ import VueI18n from 'vue-i18n'
 import locale from 'element-ui/lib/locale';
 import zh from '../assets/languages/zh.js'
 import ri from '../assets/languages/ri.js'
+import { getLanguage, setLanguage } from '@/utils/auth'
 // import enLocale from 'element-ui/lib/locale/lang/en'
 // import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 
@@ -18,8 +19,8 @@ const messages = {
 console.log(messages.zh)
 
 const i18n = new VueI18n({
-  locale: localStorage.getItem('locale') || 'zh',
-  messages 
+  locale: getLanguage() || 'ri',
+  messages
 })
 
 

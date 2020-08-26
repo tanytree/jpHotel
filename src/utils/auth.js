@@ -63,7 +63,7 @@ export function removeRouterMsg () {
 
 //储存用户选择的语言
 export function getLanguage () {
-    return Cookies.get(Language) || ''
+    return Cookies.get(Language) || 'ri'
 }
 
 export function setLanguage (language) {

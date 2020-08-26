@@ -602,7 +602,7 @@
         let that = this
         this.employeesForm.departmentId = id
           this.$F.commons.fetchSalesList(this.employeesForm, (data)=> {
-              this.employeesList = res.hotelUserList
+              this.employeesList = data.hotelUserList
           });
       },
       department_delete () {
