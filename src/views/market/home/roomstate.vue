@@ -342,17 +342,17 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane label="房间信息">
-<!--                    <div class="inMsg">-->
-<!--                    </div>-->
-                    <div class="row">
-                        <div class="col">门市价：<span>{{currentRoom.extension}}</span></div>
-                        <div class="col">窗户：<span>{{F_is1or2(currentRoom.windowFlag)}}</span></div>
-                        <div class="col">靠马路：<span>{{F_is1or2(currentRoom.roadFlag)}}</span></div>
-                        <div class="col">噪音房：<span>{{F_is1or2(currentRoom.noiseFlag)}}</span></div>
-                        <div class="col">无烟房：<span>{{F_is1or2(currentRoom.smokeFlag)}}</span></div>
-                        <div class="col">高温房：<span>{{F_is1or2(currentRoom.temperatureFlag)}}</span></div>
-                        <div class="col">朝向：<span>{{F_is1or2(currentRoom.toward)}}</span></div>
-                        <div class="col">房间备注：<span>{{currentRoom.remark}}</span></div>
+                    <div class="inMsg">
+                        <div class="row">
+                            <div class="col">门市价：<span>{{currentRoom.extension}}</span></div>
+                            <div class="col">窗户：<span>{{F_is1or2(currentRoom.windowFlag)}}</span></div>
+                            <div class="col">靠马路：<span>{{F_is1or2(currentRoom.roadFlag)}}</span></div>
+                            <div class="col">噪音房：<span>{{F_is1or2(currentRoom.noiseFlag)}}</span></div>
+                            <div class="col">无烟房：<span>{{F_is1or2(currentRoom.smokeFlag)}}</span></div>
+                            <div class="col">高温房：<span>{{F_is1or2(currentRoom.temperatureFlag)}}</span></div>
+                            <div class="col">朝向：<span>{{F_is1or2(currentRoom.toward)}}</span></div>
+                            <div class="col">房间备注：<span>{{currentRoom.remark}}</span></div>
+                        </div>
                     </div>
                 </el-tab-pane>
             </el-tabs>
@@ -1195,9 +1195,10 @@
                     flex-wrap: wrap;
 
                     .tag-margin {
-                        height: 140px;
-                        width: 250px;
+                        height: 150px;
+                        width: 20%;
                         padding: 10px;
+                        margin: 0;
 
                         & > div {
                             width: 100%;
@@ -1205,6 +1206,7 @@
                             cursor: pointer;
                             padding: 10px;
                             color: #fff;
+                            border-radius: 5px;
                         }
 
                         .line {
@@ -1216,7 +1218,7 @@
                         }
 
                         .placeIcon {
-                            margin-top: 25px
+                            margin-top: 15px
                         }
                     }
                 }
