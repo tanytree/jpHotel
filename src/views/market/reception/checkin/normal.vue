@@ -723,6 +723,7 @@ export default {
             ruleHourList: [],
             //预定和入住人信息
             checkInForm: {
+                checkInRoomJson: []
             },
             rules: {
                 name: [{
@@ -872,14 +873,6 @@ export default {
                             len++
                         }
                     }
-                    if (len == arr.length) {
-                        window.setTimeout(() => {
-
-                           // this.hotel_check_in(1)
-
-                        }, 2000)
-
-                    }
                 }
 
             },
@@ -927,6 +920,7 @@ export default {
                 checkInReserveId: '',   //传入改值，将会进行编辑预定客人信息  String选填
                 meetingName: '',    //会议名称  String选填
                 enterName: '',      //单位名称 String选填
+                checkInRoomJson: [],   //排房信息json集合字符串
             }
             this.handleOperCheckinType();
             this.getDataList();
@@ -982,7 +976,6 @@ export default {
         },
 
         hotel_check_in(type, callback) {
-            debugger
             this.isSubmitErr = false;
             let url = ''
             let operCheckinType = this.operCheckinType
@@ -992,112 +985,77 @@ export default {
                 url = '/pms/reserve/reserve_check_in'
             }
             let ajax = () => {
-                this.$F.doRequest(this, url, this.checkInForm, (data) => {
-                    if (type == 1 || type == 4) {
-                        if (operCheckinType == 'a1' || operCheckinType == 'a2') {
-                            console.log(data.checkinId)
-                            this.checkInForm.checkInId = data.checkinId
-                        } else {
-                            this.checkInForm.checkInId = data.checkInReserveId
-                            this.checkInForm.checkInReserveId = data.checkInReserveId
-                        }
-                        if (type == 1) {
-                            this.$F.doRequest(this, '/pms/reserve/reserve_oper', {
-                                checkInReserveId: data.checkInReserveId,
-                                state: 2
-                            }, (data) => {
-                                console.log('预订单直接转为确认状态')
-                            })
-                        } else {
-                            callback();
-                        }
-                        this.$forceUpdate()
-                        console.log(this.checkInForm)
-                        console.log('沉浸式提交')
-                        console.log(this.operCheckinType)
-                        console.log(operCheckinType)
-
-                    } else if (type == 2) {
-                        if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
-                            if (!this.liveInPersonData.length) {
-                                this.isSubmitErr = true
-                                this.$message.error('请添加入住人')
-                                this.live_in_person_list()
-                                return false
-                            }
-
-                            if (this.liveCardData == '') {
-                                this.isSubmitErr = true
-                                this.$message.error('请制卡')
-                                this.liveCard_in_person_list()
-                                return false
-                            }
-                            if (this.liveCardData.unfinished > 0) {
-                                this.isSubmitErr = true
-                                this.$message.error('请制卡')
-                                this.liveCard_in_person_list()
-                                return false
-                            }
-                        }
+                console.log(this.checkInForm)
+                debugger
+                let params = this.$F.deepClone(this.checkInForm);
+                params.checkInRoomJson = JSON.stringify(params.checkInRoomJson);
+                this.$F.doRequest(this, url, params, (data) => {
+                    if (type == 2) {
                         this.$message({
-                            message: '办理成功',
+                            message: 'Success',
                             type: 'success'
                         });
                         window.setTimeout(() => {
-                            this.$router.push('/orderdetail?id=' + data.checkinId)
+                            if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
+                                this.$router.push('/orderdetail?id=' + data.checkInReserveId || data.checkinId);
+                            } else {
+                                this.$router.push('/bookingDetail?id=' + data.checkInReserveId || data.checkinId);
+                            }
                         }, 2000)
                     } else if (type == 3) {
                         this.$message({
                             message: '办理成功',
                             type: 'success'
                         });
-                        for (let k in this.checkInForm) {
-                            if (k != 'operCheckinType') {
-                                this.checkInForm[k] = ''
-                            }
-                        }
-                        this.waitingRoom = []
-                        this.liveInPersonData = []
+                        this.initForm();
+                        this.waitingRoom = [];
+                        this.liveInPersonData = [];
                     }
                 })
             }
-
-            if (type == 2 || type == 3) {
-                if (!this.checkInForm.checkInId) {
-                    this.$message.error('请输入入住信息后操作')
-                    return false
-                }
-                if (!this.waitingRoom.length) {
-                    this.$message.error('请选择房型')
-                    return false
-                }
-                if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
-                    for (let k= 0;k < this.waitingRoom.length;k++) {
-                        if (!this.waitingRoom[k].roomsArr) {
-                            this.$message.error('请选择房间')
+            this.$refs.checkInForm.validate((valid) => {
+                if (valid) {
+                    if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
+                        if (!this.waitingRoom.length) {
+                            this.$message.error('请选择房型')
                             return false
                         }
-                        if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
-                            this.$message.error('请选择房间')
+                        for (let k= 0;k < this.waitingRoom.length;k++) {
+                            if (!this.waitingRoom[k].roomsArr) {
+                                this.$message.error('请选择房间')
+                                return false
+                            }
+                            if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
+                                this.$message.error('请选择房间')
+                                return false
+                            }
+                        }
+                        if (!this.liveInPersonData.length) {
+                            this.isSubmitErr = true
+                            this.$message.error('请添加入住人')
+                            this.live_in_person_list()
+                            return false
+                        }
+
+                        if (this.liveCardData == '') {
+                            this.isSubmitErr = true
+                            this.$message.error('请制卡')
+                            this.liveCard_in_person_list()
+                            return false
+                        }
+                        if (this.liveCardData.unfinished > 0) {
+                            this.isSubmitErr = true
+                            this.$message.error('请制卡')
+                            this.liveCard_in_person_list()
                             return false
                         }
                     }
+                    ajax();
+                } else {
+                    console.log('error submit!!');
+                    return false;
                 }
-
-                this.$refs.checkInForm.validate((valid) => {
-                    if (valid) {
-                        console.log(this.checkInForm)
-                        ajax()
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            } else {
-                console.log(this.checkInForm)
-                ajax()
-            }
-
+            });
         },
 
         /**编辑 */
@@ -1152,28 +1110,13 @@ export default {
         },
 
         rowRoomByItem(item, index) {
-            debugger
-            if (this.checkInForm.checkInId) {
-                this.rowRoomByItem2(item, index);
-            }else {
-                this.hotel_check_in(4, () => {
-                    if (!this.checkInForm.checkInId) {
-                        this.$message.error('请完善入住信息后操作');
-                        return
-                    }
-                    this.rowRoomByItem2(item, index);
-                });
-            }
-        },
-
-        rowRoomByItem2(item, index) {
-            debugger
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item))
             this.rowRoomCurrentIndex = index
             this.hotelRoomListParams.roomTypeId = item.roomTypeId
             this.rowRoomShow = true
             this.hotel_room_list()
         },
+
         //计费规则时租房计费列表
         hotel_rule_hour_list() {
             let params = {
@@ -1215,65 +1158,85 @@ export default {
                 this.$message.error('排房数量超过订房数量');
                 return
             }
-            let ids = [];
-            this.rowRoomCurrentItem.roomsArr.map((item) => {
-                ids.push(item.id);
+            debugger
+            this.rowRoomCurrentItem.roomsArr.forEach( item => {
+                let ids = [];
+                this.rowRoomCurrentItem.roomsArr.map((item) => {
+                    ids.push(item.id);
+                })
+                this.checkInForm.checkInRoomJson.push({
+                    roomTypeId: this.rowRoomCurrentItem.roomTypeId,
+                    roomId: ids.join(','),
+                    reservePrice: this.rowRoomCurrentItem.todayPrice,
+                    realPrice: this.rowRoomCurrentItem.price
+                })
             })
-            let params = {
-                checkinRoomType: 1,
-                roomTypeId: this.rowRoomCurrentItem.roomTypeId,
-                checkinId: this.checkInForm.checkInId,
-                checkinReserveId: this.checkInForm.checkInId,
-                roomId: ids,
-                reservePrice: this.rowRoomCurrentItem.todayPrice,
-                realPrice: this.rowRoomCurrentItem.price
-            }
-            this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
-                this.$message({
-                    message: '排房成功',
-                    type: 'success'
-                });
-                this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
-                this.rowRoomShow = false
-                this.$forceUpdate()
-            })
+            this.$message({
+                message: 'Success',
+                type: 'success'
+            });
+            this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
+            this.rowRoomShow = false;
+            // [{"roomTypeId":"xxxxxxx","roomId":"xxxxx,xxxxx","reservePrice":333,"realPrice":185},
+            //     {"roomTypeId":"xxxxxxx","roomId":"xxxxx,xxxxx","reservePrice":333,"realPrice":185}]
+
+            // let params = {
+            //     checkinRoomType: 1,
+            //     roomTypeId: this.rowRoomCurrentItem.roomTypeId,
+            //     checkinId: this.checkInForm.checkInId,
+            //     checkinReserveId: this.checkInForm.checkInId,
+            //     roomId: ids,
+            //     reservePrice: this.rowRoomCurrentItem.todayPrice,
+            //     realPrice: this.rowRoomCurrentItem.price
+            // }
+            // this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
+            //     this.$message({
+            //         message: '排房成功',
+            //         type: 'success'
+            //     });
+            //     this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
+            //     this.rowRoomShow = false
+            //     this.$forceUpdate()
+            // })
         },
         //自动排房
         page_row_houses() {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请输入入住信息后操作')
-                return false
-            }
-            if (this.waitingRoom.length < 1) {
-                this.$message.error('请选择房型后操作');
-                return
-            }
+            // if (!this.checkInForm.checkInId) {
+            //     this.$message.error('请输入入住信息后操作')
+            //     return false
+            // }
+            // if (this.waitingRoom.length < 1) {
+            //     this.$message.error('请选择房型后操作');
+            //     return
+            // }
+            debugger
             let roomTypeId = [],
                 number = 0;
             this.waitingRoom.forEach(element => {
                 let thisNum = element.num - (element.roomsArr?element.roomsArr.length:0)
                 number += thisNum
                 if(thisNum>0){
-                    for(let i = 0;i<thisNum;i++){
-                        roomTypeId.push(element.roomTypeId);
+                    for(let i = 0;i < thisNum;i++){
+                        if (roomTypeId.indexOf(element.roomTypeId) == -1) {
+                            roomTypeId.push(element.roomTypeId);
+                        }
                     }
                 }
             });
             if (number < 1) {
                 return
             }
-
             let params = {
                 checkinRoomType: 1,
-                roomTypeId: roomTypeId,
-                rowHousesTotal: number
+                roomTypeId: roomTypeId.join(','),
+                rowHousesTotal : number
             }
-            if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
-                params.checkinId = this.checkInForm.checkInId
-            }
-            if (this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3') {
-                params.checkinReserveId = this.checkInForm.checkInId
-            }
+            // if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
+            //     params.checkinId = this.checkInForm.checkInId
+            // }
+            // if (this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3') {
+            //     params.checkinReserveId = this.checkInForm.checkInId
+            // }
             let setRooms = (key, item) => {
                 console.log(key)
                 console.log(item)
@@ -1289,7 +1252,8 @@ export default {
                     }
                 }
             }
-            this.$F.doRequest(this, '/pms/checkin/page_row_houses', params, (res) => {
+            this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
+                debugger
                 let data = res
                 this.$message({
                     message: '排房成功',
