@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
 	<div>
 		<el-row v-if="tab_show">
 			<el-row :gutter="20">
@@ -63,7 +62,7 @@
 				</div>
 			</el-row>
 		</el-row>
-		
+
 		<!-- 时租房添加 -->
 		<el-row v-if="!tab_show">
 			<el-row style="padding: 20px 0px;">
@@ -167,7 +166,7 @@
 				<el-button style="width: 80px;margin-left: 20px;" @click="back">返回</el-button>
 			</el-row>
 		</el-row>
-		
+
 	</div>
 </template>
 
