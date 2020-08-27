@@ -10,7 +10,7 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item @click.native="danweiClick" class="point">单位管理</el-breadcrumb-item>
+          <el-breadcrumb-item @click.native="danweiClick()" class="point">单位管理</el-breadcrumb-item>
           <el-breadcrumb-item>详情</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -325,11 +325,6 @@ export default {
 
 .fixedFoot .wrap button {
   margin-left: 20px;
-}
-
-.bodyInfo {
-  .mianInfo {
-  }
 }
 
 .thisOrderInfo {
