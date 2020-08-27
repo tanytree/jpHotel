@@ -310,7 +310,7 @@
     >
       <el-form
         :model="setBatchForm"
-        :rules="rules"
+        :rules="plRule"
         ref="setBatchForm"
         label-width="100px"
         size="mini"
@@ -567,6 +567,22 @@ export default {
         email: "",
         remark: "",
       },
+      plRule: {
+        enterStrategyId: [
+          {
+            required: true,
+            message: "请选择价格策略",
+            trigger: "change",
+          },
+        ],
+        ruleAlldayId: [
+          {
+            required: true,
+            message: "请选择计费规则",
+            trigger: "change",
+          },
+        ],
+      },
       setBatchForm: {
         enterStrategyId: "",
         ruleAlldayId: "",
@@ -636,7 +652,6 @@ export default {
     this.hotel_rule_allday_list();
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
       this.salesList = data.hotelUserList;
-      console.log(this.salesList + "这是销售员列表");
     });
   },
   methods: {
@@ -794,6 +809,7 @@ export default {
     totalset() {
       this.$refs.setBatchForm.validate((valid) => {
         if (valid) {
+          console.log("都是有值的");
           this.$F.doRequest(
             this,
             "/pms/hotelenter/totalset",

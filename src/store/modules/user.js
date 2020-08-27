@@ -18,11 +18,11 @@ const state = {
   userInfo: '',
   headimgurl: "",
   nickname: "",
-  userName:"",
+  userName: "",
   userType: '',
   userAuth: '',
   storesInfo: {
-    storesNum:''
+    storesNum: ''
   },
 }
 
