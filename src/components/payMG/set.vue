@@ -59,17 +59,16 @@
         <div class="block">
           <div class="page-all">
             {{$t('boss.compensation_general')}}
-            <span style="font-weight:600;font-size: 14px;">400</span>
+            <span style="font-weight:600;font-size: 14px;">{{listTotal}}</span>
             {{$t('boss.compensation_records')}}
           </div>
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="searchForm.pageIndex"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
+            :page-size="10"
             layout=" sizes, prev, pager, next, jumper"
-            :total="400"
+            :total="listTotal"
           ></el-pagination>
         </div>
       </div>
@@ -269,6 +268,7 @@ export default {
         "/pms/employee/employee_list",
         this.searchForm,
         (res) => {
+            debugger
           this.setTableData = res.employeesList;
           this.listTotal = res.page.count;
           this.$forceUpdate();

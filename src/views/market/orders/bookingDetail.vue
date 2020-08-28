@@ -98,7 +98,7 @@ export default {
         };
     },
 
-    mounted() {
+    created() {
         this.id = this.$route.query.id
         this.getDetail(this.id)
     },
@@ -110,7 +110,8 @@ export default {
                 reserveId: id
             }
             this.$F.doRequest(this, '/pms/checkin/reserve_check_in_detail', params, (res) => {
-                this.detailData = res
+                this.detailData = res;
+                this.$forceUpdate();
             })
         },
         baseInfoChange(v) {

@@ -15,7 +15,7 @@
                 <el-button type="primary" size="mini" @click="consumeGoodsHandle">迷你吧</el-button>
                 <el-button type="primary" size="mini" @click="checkOutHandle">退房结账</el-button>
                 <el-button type="primary" size="mini" @click="openInvoiceHandle">开发票</el-button>
-                <el-button type="primary" size="mini">打印</el-button>
+                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>
                 <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
                 <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
                 <el-button type="primary" size="mini">撤销结账</el-button>
@@ -538,11 +538,11 @@ export default {
             }).catch(() => {});
         },
         consume_oper(type, formName) {
-            /** 
+            /**
              * 1.入账
              * 2.挂账
              * 3.冲调
-             * 
+             *
              * **/
             let params = this.consumeOperForm
 
@@ -603,7 +603,7 @@ export default {
             if (type == 4) {
                 params.state = 2
                 if(params.consumePrice<0){
-                    params.payType = 0 
+                    params.payType = 0
                 }
                 if(params.isPoints){
                     params.scoresDiscount = 200

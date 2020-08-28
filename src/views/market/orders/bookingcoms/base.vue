@@ -239,7 +239,6 @@ export default {
     watch: {
         roomInfo: {
             handler(n, o) {
-                debugger
                 console.log(n)
                 n.forEach(element => {
                     if (element.personList.length) {

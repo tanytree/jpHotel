@@ -233,7 +233,7 @@
 
       <div slot="footer" class="dialog-footer" style="text-align:center">
         <el-button style="width:80px;" @click="checkPatch = false">取消</el-button>
-        <el-button style="width:80px;" type="primary">打印</el-button>
+<!--        <el-button style="width:80px;" type="primary">{{$t('commons.print')}}</el-button>-->
       </div>
     </el-dialog>
   </div>

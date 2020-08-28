@@ -393,7 +393,7 @@
                 <el-col :span="7">
                     <div class="grid-content">
                         <el-row>
-                            <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
+                            <el-button @click="empty_row_houses">自动排房</el-button>&nbsp;&nbsp;
                             <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
                             <el-button @click="liveCard_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
                         </el-row>
@@ -1086,12 +1086,12 @@ export default {
                 if (this.waitingRoom[k].roomTypeId == item.roomTypeId) {
                     if (item.num > 0) {
                         this.waitingRoom[k].price = item.price
-                        this.waitingRoom[k].todayPrice = item.todayPrice
+                        this.waitingRoom[k].todayPrice = item.todayPrice;
                         this.waitingRoom[k].num = item.num
                     } else {
                         this.waitingRoom.splice(k, 1)
                     }
-                    exist = true
+                    exist = true;
                     break
                 }
             }
@@ -1200,7 +1200,7 @@ export default {
             // })
         },
         //自动排房
-        page_row_houses() {
+        empty_row_houses() {
             // if (!this.checkInForm.checkInId) {
             //     this.$message.error('请输入入住信息后操作')
             //     return false
@@ -1238,6 +1238,8 @@ export default {
             //     params.checkinReserveId = this.checkInForm.checkInId
             // }
             let setRooms = (key, item) => {
+                this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
+                this.rowRoomShow = false;
                 console.log(key)
                 console.log(item)
                 for (let k in this.waitingRoom) {
@@ -1260,9 +1262,16 @@ export default {
                     type: 'success'
                 });
                 for (let k in data) {
-                    // for (let j in data[k]) {
-                    //     setRooms(k, data[k][j])
-                    // }
+                    let ids = [];
+                    data[k].forEach((item) => {
+                        ids.push(item.id);
+                    })
+                    this.checkInForm.checkInRoomJson.push({
+                        roomTypeId: k,
+                        roomId: ids.join(','),
+                        reservePrice: 100,
+                        realPrice: 100
+                    })
                     data[k].forEach(element => {
                         setRooms(k, element)
                     });
@@ -1289,10 +1298,8 @@ export default {
             })
         },
         rowRoomCurrentListItemAdd(item) {
-            if (!this.rowRoomCurrentItem.roomsArr) {
-                this.rowRoomCurrentItem.roomsArr = [];
-            }
-            let exist = false
+            this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
+            let exist = false;
             for (let k in this.rowRoomCurrentItem.roomsArr) {
                 if (item.id == this.rowRoomCurrentItem.roomsArr[k].id) {
                     this.rowRoomCurrentItem.roomsArr.splice(k, 1)

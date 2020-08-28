@@ -120,8 +120,16 @@
                     {{F_operCheckinType(row.operCheckinType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="deposit" label="订金" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="总房费" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="deposit" label="订金" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.deposit || 0}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="totalRoomPrice" label="总房费" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{row.totalRoomPrice || 0}}
+                </template>
+            </el-table-column>
             <el-table-column prop="" label="订单来源" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     {{F_orderSource(row.orderSource)}}
@@ -138,11 +146,12 @@
                     <template v-if="row.state!=7">
                         <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">订金</el-button>
                         <el-button type="text" size="mini" v-if="row.state==5" @click="handleNoshow(row)">NOSHOW</el-button>
-                        <el-button type="text" size="mini" @click="handleCancel(row)">取消</el-button>
-                        <el-button type="text" size="mini" v-if="row.state==1&&row.orderSource==3" @click="handleAccept(row)">接受</el-button>
-                        <el-button type="text" size="mini" v-if="row.state==1&&row.orderSource==3" @click="handleRefuse(row)">拒单</el-button>
-                        <el-button type="text" size="mini" v-if="row.state==8" @click="handleReset(row)">恢复</el-button>
-                        <el-button type="text" size="mini" v-if="row.state==4" @click="handleReset(row)">撤销</el-button>
+                        <el-button type="text" size="mini" v-if="row.state != 8" @click="handleCancel(row)">取消</el-button>
+<!--                        只有当渠道订单才会有接收和拒单-->
+                        <el-button type="text" size="mini" v-if="row.state==1&&row.orderSource == 3" @click="handleAccept(row)">接受</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==1&&row.orderSource == 3" @click="handleRefuse(row)">拒单</el-button>
+                        <el-button type="text" size="mini" v-if="row.state == 8" @click="handleReset(row)">恢复</el-button>
+<!--                        <el-button type="text" size="mini" v-if="row.state==4" @click="handleReset(row)">撤销</el-button>-->
                     </template>
                 </template>
             </el-table-column>
@@ -206,9 +215,9 @@
             <el-form-item label="备注：">
                 <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="打印单据：">
-                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
-            </el-form-item>
+<!--            <el-form-item label="打印单据：">-->
+<!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
+<!--            </el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="deposit = false">关闭</el-button>
@@ -282,7 +291,7 @@ export default {
             roomTypeList: [],
             currentItem: {},
             consumeOperForm: {
-                priceType: '',
+                priceType: '1',
                 payType: '',
                 name: ''
             },
@@ -317,18 +326,14 @@ export default {
         },
         /**获取表格数据 */
         getDataList() {
-            this.loading = true;
             this.$F.doRequest(this, '/pms/reserve/reserve_order_list', this.searchForm, (res) => {
-                this.loading = false
                 this.tableData = res.resreveList;
                 this.listTotal = res.page.count
             })
         },
         realtime_room_statistics() {
-            let that = this
             this.$F.doRequest(this, '/pms/realtime/realtime_room_statistics', this.searchForm, (res) => {
                 this.roomTypeList = res.roomTypeList
-
             })
         },
         stateClick(key) {
@@ -359,6 +364,8 @@ export default {
                 });
             })
         },
+
+
         handleCancel(item) {
             let params = {
                 checkInReserveId: item.id,
@@ -444,10 +451,10 @@ export default {
             });
         },
         consume_oper(type, formName) {
-            /** 
+            /**
              * 1.订金
              * 2.退订金
-             * 
+             *
              * **/
             let params = this.consumeOperForm
 

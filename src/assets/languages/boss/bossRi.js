@@ -8,7 +8,7 @@
 
 
 module.exports = {
-    //    总办 > 首页 
+    //    总办 > 首页
 
     report_home: 'ホームページ',
     report_deskReport: 'フロント報告書',
@@ -68,6 +68,8 @@ module.exports = {
     loginDetail_alertContent: "該当するスタッフの資料がなかった（資料が「従業員管理」欄に入力してから、そのスタッフのサーバIDに関連すればいい）",
     loginDetail_alertTitle: "促す",
     loginDetail_unknownStores: "未知屋",
+    loginDetail_outTime: "離職時間",
+    loginDetail_outReason: "離職原因",
 
     //总办 > 部门负责人
     department_name: "部署名",

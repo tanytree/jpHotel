@@ -11,7 +11,7 @@
             <el-button type="primary" size="mini" @click="depositShow=true">交订金</el-button>
             <el-button type="primary" size="mini" @click="refundShow=true">退订金</el-button>
             <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
-            <el-button type="primary" size="mini">打印</el-button>
+            <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>
         </div>
     </el-row>
     <el-row class="clearfix padding-tb-20">
@@ -82,7 +82,7 @@
     </el-dialog>
     <!--交订金-->
     <el-dialog top='0' title="交订金" :visible.sync="depositShow">
-        <el-form :model="consumeOperForm" ref="deposit" :rules="rules" size="mini" label-width="100px">
+        <el-form :model="consumeOperForm" ref="deposit" :rules="rules" size="mini" label-width="140px">
             <el-row v-if="detailData">
                 <el-col :span="8" v-if="detailData.checkIn">预订单号：{{detailData.checkIn.reserveOrderNum}}</el-col>
                 <el-col :span="8" v-if="detailData.checkIn">预订人：{{detailData.checkIn.name}}</el-col>
@@ -94,14 +94,14 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="金额：">
-                <el-input class="width100" v-model="consumeOperForm.payPrice" :autofocus="true" autocomplete="off"></el-input>
+                <el-input class="" v-model="consumeOperForm.payPrice" :autofocus="true" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="备注：">
-                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-input class="" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="打印单据：">
-                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
-            </el-form-item>
+<!--            <el-form-item label="打印单据：">-->
+<!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
+<!--            </el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="deposit = false">关闭</el-button>
@@ -197,7 +197,7 @@ export default {
             tableData: [{}], //表格数据
             destructionList: [],
             consumeOperForm: {
-                priceType: '',
+                priceType: '1',
                 payType: '',
                 name: ''
             },
