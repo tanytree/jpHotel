@@ -7,7 +7,6 @@
 import { setToken, removeToken, setRouterKey, setUserInfo } from '@/utils/auth'
 
 const state = {
-    "activeName": 'member',
     "id": "2c915739711b3fc501712aef4fcf00b5",
     "co_name": "测试商家",
     "enterName": "",

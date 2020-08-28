@@ -65,7 +65,7 @@
         </el-form-item>
         <el-form-item style="float:right">
           <el-button type="primary" @click="addAndEditItem('add')">+新增</el-button>
-          <el-button type="primary" @click="setBatchFormVisible=true">批量设置</el-button>
+          <el-button type="primary" @click="piliangClick">批量设置</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -308,17 +308,11 @@
       class="setBatchForm"
       width="1200px"
     >
-      <el-form
-        :model="setBatchForm"
-        :rules="rules"
-        ref="setBatchForm"
-        label-width="100px"
-        size="mini"
-      >
+      <el-form :model="setBatchForm" ref="setBatchForm" label-width="100px" size="mini">
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item label="价格策略：">
+              <el-form-item label="价格策略：" prop="enterStrategyId">
                 <el-select v-model="setBatchForm.enterStrategyId">
                   <el-option
                     :label="item.ruleName"
@@ -330,7 +324,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="计费规则：">
+              <el-form-item label="计费规则：" prop="ruleAlldayId">
                 <el-select v-model="setBatchForm.ruleAlldayId">
                   <el-option
                     :label="item.ruleName"
@@ -567,6 +561,7 @@ export default {
         email: "",
         remark: "",
       },
+
       setBatchForm: {
         enterStrategyId: "",
         ruleAlldayId: "",
@@ -658,6 +653,11 @@ export default {
       };
       this.getDataList();
     },
+    //点击 批量设置 按钮
+    piliangClick() {
+      this.setBatchFormVisible = true;
+      this.getDataList();
+    },
     /**获取表格数据 */
     getDataList() {
       this.loading = true;
@@ -710,8 +710,11 @@ export default {
         if (valid) {
           let params = {};
           Object.assign(params, this.addCompanyForm);
+          console.log(params.shareFlag);
+          console.log(params.state);
+
           params.shareFlag = params.shareFlag ? 1 : 2;
-          params.state = params.state ? 1 : 2;
+          params.state = params.state ? 2 : 1;
           this.$F.doRequest(this, "/pms/hotelenter/edit", params, (res) => {
             this.setCompanyFormVisible = false;
             this.$message({
@@ -792,39 +795,53 @@ export default {
         }
       }
     },
+    // 验证材料
+    //  this.$refs.setBatchForm.validate((valid) => {
+    //       if (valid) {
+    //         this.$F.doRequest(
+    //           this,
+    //           "/pms/hotelenter/totalset",
+    //           this.setBatchForm,
+    //           (data) => {
+    //             this.$message({
+    //               message: "操作成功",
+    //               type: "success",
+    //             });
+    //           }
+    //         );
+    //       } else {
+    //         console.log("error submit!!");
+    //         return false;
+    //       }
+    //     });
 
-    totalset() {
-      this.$refs.setBatchForm.validate((valid) => {
-        if (valid) {
-          this.$F.doRequest(
-            this,
-            "/pms/hotelenter/totalset",
-            this.setBatchForm,
-            (data) => {
-              this.$message({
-                message: "操作成功",
-                type: "success",
-              });
-            }
-          );
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
     batchedit() {
-      let params = {
-        enters: JSON.stringify(this.multipleSelection),
-      };
-      this.$F.doRequest(this, "/pms/hotelenter/batchedit", params, (data) => {
-        this.setBatchFormVisible = false;
-        this.getDataList();
-        this.$message({
-          message: "操作成功",
-          type: "success",
+      if (this.multipleSelection.length > 0) {
+        for (let item of this.multipleSelection) {
+          if (!item.enterStrategyId) {
+            this.$message.error(item.enterName + "价格策略不能为空");
+            return false;
+          } else {
+            if (!item.ruleAlldayId) {
+              this.$message.error(item.enterName + "计费规则不能为空");
+              return false;
+            }
+          }
+        }
+        let params = {
+          enters: JSON.stringify(this.multipleSelection),
+        };
+        this.$F.doRequest(this, "/pms/hotelenter/batchedit", params, (data) => {
+          this.setBatchFormVisible = false;
+          this.getDataList();
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
         });
-      });
+      } else {
+        this.$message.error("请选择单位");
+      }
     },
     changeSate(item) {
       item.state = item.state == 1 ? 2 : 1;
@@ -874,10 +891,41 @@ export default {
         this.refs.detailRef.initdata(row.id);
       });
     },
+    //批量设置，点击设置按钮
 
+    totalset() {
+      if (this.multipleSelection.length > 0) {
+        for (let item of this.multipleSelection) {
+          item.enterStrategyId = this.setBatchForm.enterStrategyId
+            ? this.setBatchForm.enterStrategyId
+            : item.enterStrategyId;
+          item.ruleAlldayId = this.setBatchForm.ruleAlldayId
+            ? this.setBatchForm.ruleAlldayId
+            : item.ruleAlldayId;
+          item.creditLimit = this.setBatchForm.creditLimit
+            ? this.setBatchForm.creditLimit
+            : item.creditLimit;
+          item.state = this.setBatchForm.state
+            ? this.setBatchForm.state
+            : item.state;
+          item.effectiveStartTime = this.setBatchForm.effectiveStartTime
+            ? this.setBatchForm.effectiveStartTime
+            : item.effectiveStartTime;
+          item.effectiveEndTime = this.setBatchForm.effectiveEndTime
+            ? this.setBatchForm.effectiveEndTime
+            : item.effectiveEndTime;
+          item.salesId = this.setBatchForm.salesId
+            ? this.setBatchForm.salesId
+            : item.salesId;
+        }
+      } else {
+        this.$message.error("请选择单位");
+      }
+    },
     /**多选 */
     handleSelectionChange(val) {
       this.multipleSelection = val;
+      console.log(this.multipleSelection);
     },
     /**每页数 */
     handleSizeChange(val) {
