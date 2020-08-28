@@ -449,7 +449,7 @@ export default {
             (data) => {
               console.log(data.message);
               this.newCheck = false;
-              this.getDepositList();
+              (this.newCheckForm = {}), this.getDepositList();
             }
           );
         } else {
@@ -462,6 +462,8 @@ export default {
     //点击重置按钮
     resetClick(leftLuggage) {
       this.leftLuggage = {};
+      this.pageIndex = 1;
+      this.getDepositList();
     },
     //点击查询按钮
     lookFor(leftLuggage) {

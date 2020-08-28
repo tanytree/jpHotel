@@ -20,7 +20,7 @@
       <el-tab-pane label="账务处理" name="four">
         <accounts></accounts>
       </el-tab-pane>
-      <el-tab-pane label="服务查询" name="five">
+      <el-tab-pane label="账务查询" name="five">
         <service></service>
       </el-tab-pane>
     </el-tabs>

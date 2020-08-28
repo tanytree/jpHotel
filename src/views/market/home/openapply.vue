@@ -43,7 +43,7 @@
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage3"
           :page-size="100"
-          layout="prev, pager, next, jumper"
+          layout="total,prev, pager, next, jumper"
           :total="total"
         ></el-pagination>
       </div>
@@ -155,12 +155,27 @@ export default {
       formInline.startTime = "";
       formInline.endTime = "";
       formInline.name = "";
+      this.pageIndex = 1;
+      this.getInvoiceList();
     },
     //点击查询
     queryClick(formInline) {
       console.log(formInline);
-      this.pageIndex = 1;
-      this.getInvoiceList();
+      if (formInline.startTime) {
+        if (formInline.endTime) {
+          this.pageIndex = 1;
+          this.getInvoiceList();
+        } else {
+          this.$message.error("请补全开票时间信息");
+        }
+      } else {
+        if (formInline.endTime) {
+          this.$message.error("请补全开票时间信息");
+        } else {
+          this.pageIndex = 1;
+          this.getInvoiceList();
+        }
+      }
     },
 
     /**获取开票记录 列表数据 */
@@ -173,7 +188,7 @@ export default {
       this.$F.doRequest(this, "/pms/invoice/invoice_list", params, (data) => {
         console.log(data);
         this.tableDatas = data.invoiceList;
-        this.total = data.page.pageTotal;
+        this.total = data.page.count;
       });
     },
     // 每页数

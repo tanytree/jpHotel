@@ -21,32 +21,28 @@ export default {
       childroute: [],
       roleskey: [],
       showTab: "",
-      showOpen: ""
+      showOpen: "",
     };
   },
   methods: {
-    getRouter() {
-
-    },
-    routerfuc: function(data) {}
+    getRouter() {},
+    routerfuc: function (data) {},
   },
   watch: {
     childrenroutemsg: {
       handler(oldvalue, newValue) {
         let arrrouter = this.childrenroutemsg;
       },
-      deep: true
+      deep: true,
     },
     $route(to, from) {
       this.showTab = to.path;
       sessionStorage.showTab = to.path;
       this.getRouter();
-    }
+    },
   },
-  created() {
-  }
+  created() {},
 };
 </script>
 <style scoped>
-
 </style>
