@@ -7,453 +7,206 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-row>
+<div class="boss-index">
+    <div class="content">
         <h3 v-if="operCheckinType=='a1' || operCheckinType=='a2'">入住信息</h3>
         <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">预订信息</h3>
         <h3 v-if="operCheckinType=='b3'">会议登记信息</h3>
-        <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="入住人：" prop="name">
-                            <!-- <el-select v-model="checkInForm.name" filterable remote placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName" @blur="selectBlur">
-                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
-                                    <el-row style="width:300px">
-                                        <el-col :span="8">{{item.name}}</el-col>
-                                        <el-col :span="8">{{item.mobile}}</el-col>
-                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
-                                    </el-row>
-                                </el-option>
-                            </el-select> -->
-
-                            <el-autocomplete style="width:200px" v-model="checkInForm.name" name="name"
-                                             :fetch-suggestions="remoteMethod" :highlight-first-item="true"
-                                             popper-class="popper-class" :trigger-on-focus="false"
-                                             placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
-                            <!-- &nbsp;&nbsp;&nbsp;
-                            <el-button type="primary" size="small">扫脸入住</el-button> -->
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="性别：" prop="sex">
-                            <el-radio-group v-model="checkInForm.sex">
-                                <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="证件类型：" prop="idcardType">
-                            <el-select v-model="checkInForm.idcardType" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="证件号：" prop="idcard">
-                            <el-input v-model="checkInForm.idcard" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <template v-if="operCheckinType=='a1'">
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="入住时间：" prop="checkinTime">
-                                <el-date-picker v-model="checkInForm.checkinTime"
-                                                disabled type="datetime"
-                                                style="width:200px" placeholder="选择日期"
-                                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
-                                                :picker-options="startTime"></el-date-picker>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="预离时间：" prop="checkoutTime">
-                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime"
-                                                style="width:200px" placeholder="选择日期"
-                                                :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss"
-                                                value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-                </template>
-                <template v-if="operCheckinType=='a2'">
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="计费规则：" prop="ruleHourId">
-                                <el-select v-model="checkInForm.ruleHourId" class="width200">
-                                    <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-                </template>
-
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.salesId" class="width200">
-                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="外部订单号：">
-                            <el-input v-model="checkInForm.thirdOrdernum" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="手机号：" prop="mobile">
-                            <el-input v-model="checkInForm.mobile" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="客源类型" prop="guestType">
-                            <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" class="width200" :disabled="true">
-                                <template slot="append">
-                                    <span @click="popup('guestTypeShow')">…</span></template>
-                            </el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="订单备注：">
-                            <el-input class="width200" type="textarea" v-model="checkInForm.remark"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="订单来源" prop="orderSource">
-                            <el-select v-model="checkInForm.orderSource" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="入住类型" prop="checkinType">
-                            <el-select v-model="checkInForm.checkinType" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                </el-col>
-                <el-col :span="6">
-                </el-col>
-            </el-row>
+        <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules" label-width="120px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
+            <el-form-item label="入住人：" prop="name">
+                <el-autocomplete v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
+            </el-form-item>
+            <el-form-item label="性别：" prop="sex">
+                <el-radio-group v-model="checkInForm.sex">
+                    <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="证件类型：" prop="idcardType">
+                <el-select v-model="checkInForm.idcardType">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="证件号：" prop="idcard">
+                <el-input v-model="checkInForm.idcard"></el-input>
+            </el-form-item>
+            <template v-if="operCheckinType=='a1'">
+                <el-form-item label="入住时间：" prop="checkinTime">
+                    <el-date-picker v-model="checkInForm.checkinTime" disabled type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="startTime"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="预离时间：" prop="checkoutTime">
+                    <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" placeholder="选择日期" :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
+                </el-form-item>
+            </template>
+            <template v-if="operCheckinType=='a2'">
+                <el-form-item label="计费规则：" prop="ruleHourId">
+                    <el-select v-model="checkInForm.ruleHourId">
+                        <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+            </template>
+            <el-form-item label="销售员：">
+                <el-select v-model="checkInForm.salesId">
+                    <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="外部订单号：">
+                <el-input v-model="checkInForm.thirdOrdernum"></el-input>
+            </el-form-item>
+            <el-form-item label="手机号：" prop="mobile">
+                <el-input v-model="checkInForm.mobile"></el-input>
+            </el-form-item>
+            <el-form-item label="客源类型" prop="guestType">
+                <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
+                    <template slot="append">
+                        <span @click="popup('guestTypeShow')">…</span>
+                    </template>
+                </el-input>
+            </el-form-item>
+            <el-form-item label="订单来源" prop="orderSource">
+                <el-select v-model="checkInForm.orderSource">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="入住类型" prop="checkinType">
+                <el-select v-model="checkInForm.checkinType">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="订单备注：">
+                <el-input type="textarea" v-model="checkInForm.remark"></el-input>
+            </el-form-item>
         </el-form>
-        <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px" v-if="operCheckinType=='b1' || operCheckinType=='b2'|| operCheckinType=='b3'">
-            <el-row>
-                <!-- <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="预订人：" prop="name">
-                            <el-input v-model="checkInForm.name" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col> -->
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="入住人：" prop="name">
-                            <!-- <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
-                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
-                                    <el-row style="width:300px">
-                                        <el-col :span="8">{{item.name}}</el-col>
-                                        <el-col :span="8">{{item.mobile}}</el-col>
-                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
-                                    </el-row>
-                                </el-option>
-                            </el-select> -->
-                            <el-autocomplete style="width:200px" v-model="checkInForm.name"
-                                             name="name" :fetch-suggestions="remoteMethod"
-                                             :highlight-first-item="true" popper-class="popper-class"
-                                             :trigger-on-focus="false" placeholder="姓名查询" @select="changeName($event)"></el-autocomplete>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="手机号：" prop="prop">
-                            <el-input v-model="checkInForm.mobile" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="订单来源" prop="orderSource">
-                            <el-select v-model="checkInForm.orderSource" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType!='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="入住类型" prop="checkinType">
-                            <el-select v-model="checkInForm.checkinType" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType=='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.salesId" class="width200">
-                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content" v-if="operCheckinType=='b2'">
-                        <el-form-item label="计费规则：" prop="ruleHourId">
-                            <el-select v-model="checkInForm.ruleHourId" class="width200">
-                                <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-<!--                        <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">-->
-                        <el-form-item label="预抵时间" prop="checkinTime">
-                            <el-date-picker
-                                v-model="checkInForm.checkinTime"
-                                type="datetime" style="width:200px"
-                                placeholder="选择日期" :picker-options="startTime"
-                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
-                                @change="startTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType=='b1'">
-                    <div class="grid-content">
-                        <el-form-item label="入住天数：" prop="checkinDays">
-                            <el-input-number class="width200" v-model="checkInForm.checkinDays"
-                                             :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="预离时间：" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime"
-                                            type="datetime" style="width:200px"
-                                            placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss"
-                                            value-format="yyyy-MM-dd HH:mm:ss"
-                                            :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="保留时间：" prop="keepTime">
-                            <el-date-picker v-model="checkInForm.keepTime" type="datetime"
-                                            style="width:200px"
-                                            placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
-                                            :picker-options="leaveTime"></el-date-picker>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="客源类型" prop="guestType">
-                            <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true" class="width200">
-                                <template slot="append"><span @click="popup('guestTypeShow')">…</span></template>
-                            </el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-
-                <el-col :span="6" v-if="operCheckinType!='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.salesId" class="width200">
-                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType!='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="外部订单号：">
-                            <el-input v-model="checkInForm.thirdOrdernum" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <template v-if="operCheckinType=='b3'">
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="会议名称：" prop="meetingName">
-                                <el-input v-model="checkInForm.meetingName" class="width200"></el-input>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="单位名称：" prop="enterName">
-                                <el-input v-model="checkInForm.enterName" class="width200"></el-input>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-                </template>
-            </el-row>
-            </br>
-            <el-row>
-                <el-col :span="12">
-                    <div class="grid-content">
-                        <el-form-item label="订单备注：">
-                            <el-input class="width200" type="textarea" v-model="checkInForm.remark"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
+        <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules" label-width="120px" v-if="operCheckinType=='b1' || operCheckinType=='b2'|| operCheckinType=='b3'">
+            <el-form-item label="入住人：" prop="name">
+                <el-autocomplete v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="姓名查询" @select="changeName($event)"></el-autocomplete>
+            </el-form-item>
+            <el-form-item label="手机号：" prop="prop">
+                <el-input v-model="checkInForm.mobile"></el-input>
+            </el-form-item>
+            <el-form-item label="订单来源" prop="orderSource">
+                <el-select v-model="checkInForm.orderSource">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="入住类型" prop="checkinType" v-if="operCheckinType!='b3'">
+                <el-select v-model="checkInForm.checkinType">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="销售员：" v-if="operCheckinType=='b3'">
+                <el-select v-model="checkInForm.salesId">
+                    <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="计费规则：" prop="ruleHourId" v-if="operCheckinType=='b2'">
+                <el-select v-model="checkInForm.ruleHourId">
+                    <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="预抵时间" prop="checkinTime">
+                <el-date-picker v-model="checkInForm.checkinTime" type="datetime" placeholder="选择日期" :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="入住天数：" prop="checkinDays" v-if="operCheckinType=='b1'">
+                <el-input-number v-model="checkInForm.checkinDays" :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
+            </el-form-item>
+            <el-form-item label="预离时间：" prop="checkoutTime">
+                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="保留时间：" prop="keepTime">
+                <el-date-picker v-model="checkInForm.keepTime" type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="客源类型" prop="guestType">
+                <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
+                    <template slot="append"><span @click="popup('guestTypeShow')">…</span></template>
+                </el-input>
+            </el-form-item>
+            <el-form-item label="销售员：" v-if="operCheckinType!='b3'">
+                <el-select v-model="checkInForm.salesId">
+                    <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="外部订单号：" v-if="operCheckinType!='b3'">
+                <el-input v-model="checkInForm.thirdOrdernum"></el-input>
+            </el-form-item>
+            <template v-if="operCheckinType=='b3'">
+                <el-form-item label="会议名称：" prop="meetingName">
+                    <el-input v-model="checkInForm.meetingName"></el-input>
+                </el-form-item>
+                <el-form-item label="单位名称：" prop="enterName">
+                    <el-input v-model="checkInForm.enterName"></el-input>
+                </el-form-item>
+            </template>
+            <el-form-item label="订单备注：">
+                <el-input type="textarea" v-model="checkInForm.remark"></el-input>
+            </el-form-item>
         </el-form>
-    </el-row>
-    <el-row style="margin-bottom:60px">
+    </div>
+    <div class="content last">
         <h3>房间信息</h3>
-        <el-form inline size="mini">
-            <el-row>
-                <el-col :span="17">
-                    <div class="grid-content">
-                        <el-row>
-                            <el-radio-group v-model="getRoomsForm.changeType" size="small" @change="getDataList">
-                                <el-radio :label="1" border>可改房价</el-radio>
-                                <el-radio :label="2" border>不可改房价</el-radio>
-                            </el-radio-group>
-                            <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-row>
-                        <br />
-                        <el-row>
-                            <el-col :span="8" v-for="v in roomList" :key="v.roomTypeId">
-                                <div class="grid-content rooms">
-                                    <div class="grid-cell" :class="activeRoomCheck(v.roomTypeId)?'active':''">
-                                        <div class="wrap">
-                                            <el-row class="row">
-                                                <el-col :span="14">
-                                                    <span>{{v.roomTypeName}}</span>
-                                                </el-col>
-                                                <el-col :span="10">
-                                                    <div style="text-align: right">
-                                                        <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" label="描述文字" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="row">
-                                                <el-col :span="14">
-                                                    <el-button type="text" size="mini">可订{{v.reserveTotal}}</el-button>
-                                                </el-col>
-                                                <el-col :span="10">
-                                                    <div style="text-align: right">
-
-                                                        <el-input placeholder="" size="mini" style="width:60px" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
-                                                        <em>{{v.todayPrice}}</em>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                        </div>
-                                    </div>
+        <div class="roomMsg">
+            <div class="left">
+                <el-form inline size="small">
+                    <el-form-item>
+                        <el-radio-group v-model="getRoomsForm.changeType" @change="getDataList">
+                            <el-radio :label="1" border>可改房价</el-radio>
+                            <el-radio :label="2" border>不可改房价</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-select v-model="getRoomsForm.bedCount" @change="getDataList">
+                            <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <div class="roomBtm">
+                    <div class="roomBox" v-for="v in roomList" :key="v.roomTypeId">
+                        <div class="rooms" :class="activeRoomCheck(v.roomTypeId)?'active':''">
+                            <div class="row">
+                                <span>{{v.roomTypeName}}</span>
+                                <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" label="描述文字" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
+                            </div>
+                            <div class="row">
+                                <span class="allow">可订{{v.reserveTotal}}</span>
+                                <div>
+                                    <el-input size="mini" class="num" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
+                                    <del>{{v.todayPrice}}</del>
                                 </div>
-                            </el-col>
-                        </el-row>
+                            </div>
+                        </div>
                     </div>
-                </el-col>
-                <el-col :span="7">
-                    <div class="grid-content">
-                        <el-row>
-                            <el-button @click="empty_row_houses">自动排房</el-button>&nbsp;&nbsp;
-                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
-                            <el-button @click="liveCard_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
-                        </el-row>
-                        <br />
-                        <el-row class="roomSelect">
-                            <ul>
-                                <li v-for="(v,index) in waitingRoom" :key="index">
-                                    <div class="grid-content">
-                                        <div class="grid-cell">
-                                            <div class="wrap">
-                                                <el-row class="row">
-                                                    <el-col :span="14">
-                                                        <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span>
-                                                    </el-col>
-                                                    <el-col :span="10">
-                                                        <div style="text-align: right">
-                                                            <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
-                                                        </div>
-                                                    </el-col>
-                                                </el-row>
-                                                <el-row class="row" v-if="v.roomsArr&&v.roomsArr.length">
-                                                    <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
-                                                </el-row>
-                                                <!-- <el-row class="row">
-                                                    <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
-                                                    <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
-                                                </el-row> -->
-                                                <!-- <el-row class="row">
-                                                    <el-col :span="14">
-                                                        <el-button type="text" size="mini">可订{{v.reserveTotal}}</el-button>
-                                                    </el-col>
-                                                    <el-col :span="10">
-                                                        <div style="text-align: right">
-                                                            <el-button type="text" style="color:#666">
-                                                                {{v.num}}间
-                                                            </el-button>
-
-                                                        </div>
-                                                    </el-col>
-                                                </el-row> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </el-row>
-
+                </div>
+            </div>
+            <div class="right">
+                <el-form inline size="small">
+                    <el-form-item>
+                        <el-button @click="empty_row_houses">自动排房</el-button>
+                        <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading='liveLoading'></i>添加入住人</el-button>
+                        <el-button @click="liveCard_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading="liveCardLoading"></i>制卡</el-button>
+                    </el-form-item>
+                </el-form>
+                <div class="roomBtm">
+                    <div v-for="(v,index) in waitingRoom" :key="index">
+                        <div class="row">
+                            <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span>
+                            <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
+                        </div>
+                        <div class="row">
+                            <div class="tags">
+                                <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
+                            </div>
+                        </div>
                     </div>
-                </el-col>
-            </el-row>
-        </el-form>
-    </el-row>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
-    <el-row class="fixedFoot">
+    <div class="fixedFoot">
         <div class="wrap">
             <el-button type="primary" @click="hotel_check_in(2)">保存</el-button>
             <el-button @click="hotel_check_in(3)">保存后继续办理新{{typeText}}</el-button>
         </div>
-    </el-row>
+    </div>
 
     <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" title="排房" width="800px">
         <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
@@ -829,7 +582,6 @@ export default {
     },
     watch: {
         operCheckinType() {
-            debugger;
             this.initForm();
             // this.handleOperCheckinType()
             console.log(this.checkInForm)
@@ -986,7 +738,6 @@ export default {
             }
             let ajax = () => {
                 console.log(this.checkInForm)
-                debugger
                 let params = this.$F.deepClone(this.checkInForm);
                 params.checkInRoomJson = JSON.stringify(params.checkInRoomJson);
                 this.$F.doRequest(this, url, params, (data) => {
@@ -1158,7 +909,6 @@ export default {
                 this.$message.error('排房数量超过订房数量');
                 return
             }
-            debugger
             this.rowRoomCurrentItem.roomsArr.forEach( item => {
                 let ids = [];
                 this.rowRoomCurrentItem.roomsArr.map((item) => {
@@ -1209,7 +959,7 @@ export default {
             //     this.$message.error('请选择房型后操作');
             //     return
             // }
-            debugger
+
             let roomTypeId = [],
                 number = 0;
             this.waitingRoom.forEach(element => {
@@ -1255,7 +1005,6 @@ export default {
                 }
             }
             this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
-                debugger
                 let data = res
                 this.$message({
                     message: '排房成功',
@@ -1721,46 +1470,120 @@ export default {
 };
 </script>
 
-<style>
-.popper-class {
-    width: 350px !important;
-}
-</style>
-<style scoped>
-.fixedFoot {
-    text-align: right;
-    position: fixed;
-    bottom: 0;
-    left: 200px;
-    right: 20px;
-    background: #fff;
-    border-top: 1px solid #eee;
-    z-index: 9;
-}
+<style lang="scss">
+    .boss-index {
+        border-radius: 0 0 8px 8px;
 
-.fixedFoot .wrap {
-    padding: 10px 20px
-}
+        .content {
+            padding: 20px;
 
-.fixedFoot .wrap button {
-    margin-left: 20px;
-}
+            h3 {
+                margin: 0 0 15px;
+            }
 
-.rooms {
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
+            .inForm {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
 
-.rooms .grid-cell {
-    border: 1px solid #eee;
-    border-radius: 5px;
-}
+                .el-form-item {
+                    width: 350px;
+                    margin-right: 0;
+                    margin-bottom: 12px;
+                    display: flex;
+                    flex-direction: row;
 
-.rooms .grid-cell.active {
-    background: #E3EEFF;
-    border-color: #126EFF;
-}
+                    .el-form-item__content {
+                        flex: 1;
+                        width: 0;
 
+                        .el-autocomplete, .el-input, .el-select, .el-input-number {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .roomMsg {
+                display: flex;
+
+                .left, .right {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .left {
+                    flex: 2;
+                    margin-right: 20px;
+                }
+                .right {
+                    flex: 1;
+                }
+                .roomBtm {
+                    background: #F6F7F7;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    flex: 1;
+
+                    .roomBox {
+                        width: 33%;
+                        padding: 10px;
+
+                        .rooms {
+                            padding: 10px;
+                            background: #fff;
+                            border-radius: 4px;
+
+                            &.active {
+                                background: #E3EEFF;
+                                border-color: #126EFF;
+                            }
+                            .row {
+                                display: flex;
+                                justify-content: space-between;
+                                margin-bottom: 12px;
+
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+                                .allow {
+                                    color: #126EFF;
+                                    font-size: 13px;
+                                }
+                                .num {
+                                    width: 70px;
+
+                                    .el-input__inner {
+                                        background: #D6D6D6;
+                                    }
+                                }
+                                del {
+                                    margin-left: 10px;
+                                    color: #999;
+                                    font-size: 13px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .fixedFoot {
+            text-align: right;
+            background: #fff;
+            border-top: 1px solid #eee;
+
+            .wrap {
+                padding: 10px 20px;
+
+                button {
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
 .rooms .grid-cell .wrap {
     padding: 10px 5px;
 }

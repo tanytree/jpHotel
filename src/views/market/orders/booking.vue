@@ -7,10 +7,10 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-card>
+<div class="boss-index">
+    <div class="booking">
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="100px">
+        <el-form class="term" inline size="small" label-width="100px">
             <el-row>
                 <el-form-item label="订单状态：">
                     <div class="tagList">
@@ -22,30 +22,29 @@
             </el-row>
             <el-row>
                 <el-form-item label="预抵日期：">
-                    <!-- <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">上周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">今日</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">本周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">下周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp; -->
+                    <el-tag type="info">不限</el-tag>
+                    <el-tag type="info">上周</el-tag>
+                    <el-tag type="info">今日</el-tag>
+                    <el-tag type="info">本周</el-tag>
+                    <el-tag type="info">下周</el-tag>
+                    <el-tag type="info">自定义</el-tag>
                 </el-form-item>
-                <el-form-item label="">
+                <!--<el-form-item label="">
                     <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                </el-form-item>
+                </el-form-item>-->
             </el-row>
             <el-row>
                 <el-form-item label="预订日期：">
-                    <!-- <el-tag type="info">不限</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">上周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">今日</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">本周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">下周</el-tag>&nbsp;&nbsp;
-                    <el-tag type="info">自定义</el-tag>&nbsp;&nbsp; -->
+                    <el-tag type="info">不限</el-tag>
+                    <el-tag type="info">上周</el-tag>
+                    <el-tag type="info">今日</el-tag>
+                    <el-tag type="info">本周</el-tag>
+                    <el-tag type="info">下周</el-tag>
+                    <el-tag type="info">自定义</el-tag>
                 </el-form-item>
-                <el-form-item label="">
+                <!--<el-form-item label="">
                     <el-date-picker v-model="searchForm.createTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                </el-form-item>
-
+                </el-form-item>-->
             </el-row>
             <el-row>
                 <el-form-item label="入住类型：">
@@ -96,11 +95,11 @@
             </el-row>
         </el-form>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="name" label="预订人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="预订时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="" label="抵离时间" width="300">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+            <el-table-column prop="name" label="预订人"></el-table-column>
+            <el-table-column prop="mobile" label="手机号码"></el-table-column>
+            <el-table-column prop="createTime" label="预订时间" width="160px"></el-table-column>
+            <el-table-column prop="" label="抵离时间" width="220">
                 <template slot-scope="{row}">
                     <div class="box">
                         <div class="item">
@@ -111,7 +110,7 @@
                                 <span class="text-red">离</span>{{row.checkoutTime}}
                             </div>
                         </div>
-                        <div class="item">{{row.checkinDays}}天</div>
+                        <div>{{row.checkinDays}}天</div>
                     </div>
                 </template>
             </el-table-column>
@@ -156,10 +155,11 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-    </el-card>
+        <div class="block">
+            <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
     <el-dialog top="0" title="NOSHOW" :visible.sync="noShowDiaShow" width="600px" center>
         <el-form :model="currentItem" style="margin-top:-20px" size="mini">
@@ -241,7 +241,6 @@
             <el-button type="primary" @click="payTypeShow = false">结算</el-button>
         </div>
     </el-dialog>
-
 </div>
 </template>
 
@@ -555,8 +554,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.tagList .tag {
-    margin-right: 5px
-}
+<style lang="scss" scoped>
+
 </style>

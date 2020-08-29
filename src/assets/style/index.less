@@ -273,6 +273,7 @@ li {
 
     &.noBg .el-tabs__content {
         background: transparent;
+        border-radius: 0;
 
         .el-tab-pane {
             padding: 0;
@@ -624,6 +625,41 @@ li {
 
         .el-form-item__content {
             padding: 15px;
+        }
+    }
+}
+
+.inRoom {
+    padding: 0 !important;
+
+    .el-tabs__header {
+        margin-bottom: 0;
+        background: #fff;
+        border-radius: 8px 8px 0 0;
+    }
+    .content {
+        margin-bottom: 20px;
+        background: #fff;
+        border-radius: 0 0 8px 8px;
+
+        &.last {
+            margin-bottom: 0;
+            border-radius: 8px;
+        }
+    }
+}
+
+.booking {
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .term {
+        padding: 10px 10px 0;
+
+        .el-form-item {
+            margin-bottom: 12px;
         }
     }
 }

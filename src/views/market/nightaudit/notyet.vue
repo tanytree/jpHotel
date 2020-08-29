@@ -7,14 +7,14 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-card>
+<div class="boss-index">
+    <div class="booking">
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small" @selection-change="handleSelectionChange">
             <el-table-column prop="name" label="预订人"></el-table-column>
-            <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="预定时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="抵离时间" width="300">
+            <el-table-column prop="mobile" label="手机号码"></el-table-column>
+            <el-table-column prop="createTime" label="预定时间" width="180" align="center"></el-table-column>
+            <el-table-column prop="enterName" label="抵离时间" width="220">
                 <template slot-scope="{row}">
                     <div class="box">
                         <div class="item">
@@ -25,34 +25,34 @@
                                 <span class="text-red">离</span>{{row.checkoutTime}}
                             </div>
                         </div>
-                        <div class="item">{{row.checkinDays}}天</div>
+                        <div>{{row.checkinDays}}天</div>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="deposit" label="订金" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="orderSource" label="订单来源" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="state" label="状态">
+            <el-table-column prop="deposit" label="订金" width="140" align="center"></el-table-column>
+            <el-table-column prop="orderSource" label="订单来源" width="140" align="center"></el-table-column>
+            <el-table-column prop="state" label="状态" width="140" align="center">
                 <template slot-scope="{row}">
                     {{F_checkinState(row.state)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="checkinType" label="入住类型" show-overflow-tooltip>
-                                <template slot-scope="{row}">
+            <el-table-column prop="checkinType" label="入住类型" width="140" align="center">
+                <template slot-scope="{row}">
                     {{F_checkinType(row.checkinType)}}
                 </template>
-
             </el-table-column>
             <el-table-column prop="reserveOrderNum" label="预定单号" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="100">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini">详情</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-    </el-card>
+        <div class="block">
+            <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
 </div>
 </template>

@@ -7,47 +7,38 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
+<div class="boss-index">
     <el-card class="box-card">
         <div slot="header" class="clearfix">
             <span>建议夜审前处理以下业务</span>
             <el-button style="float: right; padding: 3px 0" type="text" @click="recordShow=true">夜审记录</el-button>
         </div>
-        <el-row>
-            <el-col :span="6">
-                <div class="grid-content">
-                    <el-badge value="99" class="item">
-                        <el-button size="small" icon="el-icon-document" @click="setCurrentItem('second')">应到未到订单</el-button>
-                    </el-badge>
-                </div>
-            </el-col>
-            <el-col :span="6">
-                <div class="grid-content">
-                    <el-badge value="99" class="item">
-                        <el-button size="small" icon="el-icon-document" @click="setCurrentItem('third')">应离未离订单</el-button>
-                    </el-badge>
-                </div>
-            </el-col>
-            <el-col :span="6">
-                <div class="grid-content">
-                    <el-badge value="99" class="item">
-                        <el-button size="small" icon="el-icon-document" @click="setCurrentItem('four')">走结订单</el-button>
-                    </el-badge>
-                </div>
-            </el-col>
-            <el-col :span="6">
-                <div class="grid-content">
-                    <el-badge value="99" class="item">
-                        <el-button size="small" icon="el-icon-document" @click="setCurrentItem('five')">房价预审订单</el-button>
-                    </el-badge>
-                </div>
-            </el-col>
-        </el-row>
+        <div class="row">
+            <div class="grid-content">
+                <el-badge value="99" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('second')">应到未到订单</el-button>
+                </el-badge>
+            </div>
+            <div class="grid-content">
+                <el-badge value="99" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('third')">应离未离订单</el-button>
+                </el-badge>
+            </div>
+            <div class="grid-content">
+                <el-badge value="99" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('four')">走结订单</el-button>
+                </el-badge>
+            </div>
+            <div class="grid-content">
+                <el-badge value="99" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('five')">房价预审订单</el-button>
+                </el-badge>
+            </div>
+        </div>
     </el-card>
-    <br />
-    <el-row>
-        <el-button type="primary">夜审</el-button>
-    </el-row>
+    <div class="box-card">
+        <el-button type="primary" class="submit">夜审</el-button>
+    </div>
     <el-dialog top="0" :visible.sync="recordShow" title="选择企业" width="600px" class="dialogCom">
  <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
@@ -56,13 +47,12 @@
             <el-table-column prop="enterName" label="夜审结果" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterName" label="操作人" show-overflow-tooltip></el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
         <!--分页 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
-        <span slot="footer" class="dialog-footer">
-            <el-button size="small" type="primary" @click="recordShow=false">关闭</el-button>
-        </span>
+        <div slot="footer" class="dialog-footer">
+            <el-button size="small" type="primary" class="grey" @click="recordShow=false">关闭</el-button>
+        </div>
     </el-dialog>
 </div>
 </template>
@@ -173,19 +163,25 @@ export default {
 };
 </script>
 
-<style scoped>
-.grid-content {
-    text-align: center;
-    border-right: 1px solid #eee;
-    padding: 80px 0;
-}
+<style lang="scss" scoped>
+    .box-card {
+        height: auto;
+        width: 1000px;
+        margin: 50px auto 0;
 
-.grid-content>>>.el-button {
-    border: 0
-}
+        .row {
+            display: flex;
 
-.grid-content>>>.el-badge__content.is-fixed {
-    left: -10px;
-    right: inherit;
-}
+            .grid-content {
+                flex: 1;
+                border-right: 1px solid #eee;
+                text-align: center;
+                padding: 80px 0;
+
+                &:last-child{
+                    border-right: 0;
+                }
+            }
+        }
+    }
 </style>

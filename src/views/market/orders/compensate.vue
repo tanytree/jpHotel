@@ -7,10 +7,10 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-card>
+<div class="boss-index">
+    <div class="booking">
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form class="term line demo-form-inline" inline size="small" label-width="80px">
             <el-form-item label="房间号">
                 <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
@@ -28,13 +28,13 @@
             <el-form-item label="商品名称">
                 <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="form-inline-flex">
                 <el-button type="primary" @click="getDataList">查询</el-button>
                 <el-button type="primary" @click="initForm">重置</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
             <el-table-column prop="enterName" label="房间号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="客人姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="商品类别" show-overflow-tooltip></el-table-column>
@@ -44,10 +44,11 @@
             <el-table-column prop="enterType" label="总价" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="赔偿日期" show-overflow-tooltip></el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-    </el-card>
+        <div class="block">
+            <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
 </div>
 </template>

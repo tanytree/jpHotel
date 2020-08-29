@@ -7,10 +7,10 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-card>
+<div class="boss-index">
+    <div class="booking">
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form class="term" inline size="small" label-width="80px">
             <el-form-item label="创建门店">
                 <el-select v-model="searchForm.storesNum" class="width150">
                     <el-option label="全部" value=""></el-option>
@@ -54,34 +54,34 @@
             </el-form-item>
         </el-form>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="sex" label="性别" show-overflow-tooltip>
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+            <el-table-column prop="name" align="center" label="姓名" width="120"></el-table-column>
+            <el-table-column prop="sex" align="center" label="性别" width="100">
                 <template slot-scope="{row}">
                     {{row.sex | F_sex}}
                 </template>
             </el-table-column>
             <el-table-column prop="mobile" label="手机号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="idcardType" label="证件类型" show-overflow-tooltip>
+            <el-table-column prop="idcardType" align="center" label="证件类型" width="120">
                 <template slot-scope="{row}">
                     {{row.idcardType | F_idcardType}}
                 </template>
             </el-table-column>
             <el-table-column prop="idcard" label="证件号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="生日" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="guestType" label="客人类型" show-overflow-tooltip>
+            <el-table-column prop="enterType" align="center" label="生日" width="120"></el-table-column>
+            <el-table-column prop="guestType" align="center" label="客人类型" width="100">
                 <template slot-scope="{row}">
                     {{F_guestType(row.guestType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="memberCard" label="会员卡卡号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip>
+            <el-table-column prop="memberCard" align="center" label="会员卡卡号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="storesNum" label="所属门店">
                 <template slot-scope="{row}">
                     {{F_storeName(row.storesNum)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="cumulativePrice" label="累计消费" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isBlacklist" label="是否黑名单" show-overflow-tooltip>
+            <el-table-column prop="cumulativePrice" align="center" label="累计消费" width="100"></el-table-column>
+            <el-table-column prop="isBlacklist" align="center" label="是否黑名单" width="120">
                 <template slot-scope="{row}">
                     {{row.isBlacklist==2?'是':'否'}}
                 </template>
@@ -105,8 +105,10 @@
         </el-table>
         <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-    </el-card>
+        <div class="block">
+            <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
     <el-dialog top="0" :title="detailForm.type=='add'?'转为会员':'详情'" :visible.sync="setMemberFormVisible" class="setMemberForm" width="60%">
         <el-form :model="detailForm" :rules="detailForm.type=='add'?rules:{}" ref="setMemberForm" label-width="100px" size="mini">

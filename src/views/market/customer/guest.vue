@@ -7,10 +7,10 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-card>
+<div class="boss-index">
+    <div class="booking">
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form class="term" inline size="small" label-width="80px">
             <el-form-item label="登记门店">
                 <el-select v-model="searchForm.storesNum">
                     <el-option label="全部" value=""></el-option>
@@ -57,38 +57,38 @@
             </el-form-item>
         </el-form>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
             <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="sex" label="性别" show-overflow-tooltip>
+            <el-table-column prop="sex" label="性别" width="100" align="center">
                 <template slot-scope="{row}">
                     {{row.sex | F_sex}}
                 </template>
             </el-table-column>
-            <el-table-column prop="phone" label="手机号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="nationality" label="宾客籍贯" show-overflow-tooltip>
+            <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
+            <el-table-column prop="nationality" label="宾客籍贯" width="120" align="center">
                 <template slot-scope="{row}">
                     {{F_nationality(row.nationality)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="idcardType" label="证件类型" show-overflow-tooltip>
+            <el-table-column prop="idcardType" label="证件类型" width="120" align="center">
                 <template slot-scope="{row}">
                     {{row.idcardType | F_idcardType}}
                 </template>
             </el-table-column>
-            <el-table-column prop="idcard" label="证件号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="visaType" label="签证种类" show-overflow-tooltip>
+            <el-table-column prop="idcard" label="证件号"></el-table-column>
+            <el-table-column prop="visaType" label="签证种类" width="120" align="center">
                 <template slot-scope="{row}">
                     {{row.visaType | F_visaType}}
                 </template>
             </el-table-column>
-            <el-table-column prop="storesNum" label="登记门店" show-overflow-tooltip>
+            <el-table-column prop="storesNum" label="登记门店">
                 <template slot-scope="{row}">
                     {{F_storeName(row.storesNum)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="登记时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="cumulativePrice" label="累计消费" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="state" label="现入住状态" show-overflow-tooltip>
+            <el-table-column prop="createTime" label="登记时间" width="180" align="center"></el-table-column>
+            <el-table-column prop="cumulativePrice" label="累计消费" width="120" align="center"></el-table-column>
+            <el-table-column prop="state" label="现入住状态" width="120" align="center">
                 <template slot-scope="{row}">
                     {{row.state | F_state}}
                 </template>
@@ -103,8 +103,10 @@
         </el-table>
         <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-    </el-card>
+        <div class="block">
+            <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
     <el-dialog top="0" :title="foreignForm.type=='add'?'登记外宾':'编辑外宾'" :visible.sync="setForeignFormVisible" class="setForeignForm" width="1200px">
         <el-form :model="foreignForm" label-width="80px" size="mini" :rules="rules" ref="setForeignForm">

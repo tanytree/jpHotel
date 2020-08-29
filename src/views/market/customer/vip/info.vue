@@ -7,10 +7,10 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-card v-if="showPageType == 'main'">
+<div class="boss-index">
+    <div class="booking" v-if="showPageType == 'main'">
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form class="term" inline size="small" label-width="80px">
             <el-form-item label="开卡门店">
                 <el-select v-model="searchForm.storesNum" class="width150">
                     <el-option label="全部" value=""></el-option>
@@ -69,45 +69,41 @@
                     <el-button type="primary" @click="handleAdd">新增会员</el-button>
                 </el-form-item>
             </el-row>
-            <el-row>
-                <el-form-item>
-                    <el-button type="text">开卡总数：999</el-button>
-                </el-form-item>
-            </el-row>
         </el-form>
+        <div class="open">开卡总数：<span class="count">999</span></div>
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
             <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column label="会员类型" show-overflow-tooltip>
+            <el-table-column prop="name" label="姓名"></el-table-column>
+            <el-table-column label="会员类型" width="140">
                 <template slot-scope="{row}">
                     {{F_memberTypeId(row.memberTypeId)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="mobile" label="手机号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="score" label="剩余积分" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="state" label="状态" show-overflow-tooltip>
+            <el-table-column prop="mobile" label="手机号"  width="140"></el-table-column>
+            <el-table-column prop="score" label="剩余积分" width="100"></el-table-column>
+            <el-table-column prop="state" label="状态" width="100">
                 <template slot-scope="{row}">
                     {{row.state | F_cardState}}
                 </template>
             </el-table-column>
-            <el-table-column prop="storesNum" label="开卡门店" show-overflow-tooltip>
+            <el-table-column prop="storesNum" label="开卡门店">
                 <template slot-scope="{row}">
                     {{F_storeName(row.storesNum)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="getWay" label="发展途径" show-overflow-tooltip>
+            <el-table-column prop="getWay" align="center" label="发展途径" width="100">
                 <template slot-scope="{row}">
                     {{row.getWay==1?'线上':'线下'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="开卡日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isBlacklist" label="是否黑名单" show-overflow-tooltip>
+            <el-table-column prop="createTime" label="开卡日期" width="180"></el-table-column>
+            <el-table-column prop="isBlacklist" align="center" label="是否黑名单" width="100">
                 <template slot-scope="{row}">
                     {{row.isBlacklist==2?'是':'否'}}
                 </template>
             </el-table-column>
-            <el-table-column prop="isBlacklist" label="是否注销" show-overflow-tooltip>
+            <el-table-column prop="isBlacklist" align="center" label="是否注销" width="100">
                 <template slot-scope="{row}">
                     {{row.status == 1?'否':'是'}}
                 </template>
@@ -117,8 +113,8 @@
                     <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
                     <el-button type="text" size="mini" @click="handleEdit(row)" v-if="row.state!=2">修改</el-button>
                     <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state==2">恢复</el-button>
-                    <el-dropdown>
-                        <span class="el-dropdown-link" style="font-size:12px">
+                    <el-dropdown style="margin-left: 10px;font-size:12px">
+                        <span class="el-dropdown-link">
                             更多<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
@@ -129,10 +125,11 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-    </el-card>
+        <div class="block">
+            <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
     <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
         <el-form :model="setBlackForm" ref="setBlackForm">
@@ -370,3 +367,15 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+    .open {
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #666;
+
+        .count {
+            color: #333;
+        }
+    }
+</style>
