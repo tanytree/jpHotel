@@ -389,7 +389,8 @@
             },
             search(type) {
                 if (type) {
-                    this.getShelfData(this.upshelf.category, this.upshelf.name);
+                    const category = this.upshelf.category[this.upshelf.category.length - 1];
+                    this.getShelfData(category, this.upshelf.name);
                 } else {
                     this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
                 }

@@ -50,11 +50,7 @@
                         <el-table-column prop="endTime" :label="$t('manager.hp_endTime')"></el-table-column>
                         <el-table-column :label="$t('commons.operating')" width="150">
                             <template slot-scope="scope">
-                                <el-button
-                                        type="text"
-                                        size="small"
-                                        @click="popup_thing(scope.row)"
-                                >{{$t("manager.hp_editor")}}
+                                <el-button type="text" size="small" @click="popup_thing(scope.row)">{{$t("manager.hp_editor")}}
                                 </el-button>
                                 <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm(scope.row)">
                                     <el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
@@ -72,10 +68,10 @@
                             <el-input v-model="typeData.name"></el-input>
                         </el-form-item>
                         <el-form-item :label="$t('manager.hp_startTime')" prop="startTime">
-                            <el-time-select v-model="typeData.startTime" format="HH:mm" value-format="HH:mm" :picker-options="{start: '00:00', end: '24:00'}"></el-time-select>
+                            <el-time-select v-model="typeData.startTime" format="HH:mm" value-format="HH:mm" :picker-options="startPicker"></el-time-select>
                         </el-form-item>
                         <el-form-item :label="$t('manager.hp_endTime')" prop="endTime">
-                            <el-time-select v-model="typeData.endTime" format="HH:mm" value-format="HH:mm" :picker-options="{start: '00:00', end: '24:00', minTime: typeData.startTime}"></el-time-select>
+                            <el-time-select v-model="typeData.endTime" format="HH:mm" value-format="HH:mm" :picker-options="endPicker"></el-time-select>
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
@@ -105,6 +101,8 @@
                 addTypeVisible: false,
                 typeData: {},
                 addTypeTitle: "",
+                startPicker: {start: '00:00', end: '24:00'},
+                endPicker: {start: '00:00', end: '24:00'},
             };
         },
         props: {
@@ -233,6 +231,35 @@
                 } else {
                 }
             },
+            // startFocus(e) {
+            //     let start = '00:00', end = '24:00'
+            //     if(this.manageData.length > 0) {
+            //         this.manageData.map(item => {
+            //             if(start < item.endTime) {
+            //                 start = item.endTime
+            //             }
+            //             if(end > item.startTime) {
+            //                 end = item.startTime
+            //             }
+            //         })
+            //     }
+            //     if(start == '24:00') {
+            //         start = '00:00'
+            //     }
+            //     if(start < end) {}
+            //     this.startPicker = {start: '00:00', end: '24:00'}
+            // },
+            // endFocus(e) {
+            //     let end = '24:00';
+            //     if(this.manageData.length > 0) {
+            //         this.manageData.map(item => {
+            //             if(end > item.startTime) {
+            //                 end = item.startTime
+            //             }
+            //         })
+            //     }
+            //     this.endPicker = {start: this.typeData.startTime, end: '48:00'}
+            // },
         },
     };
 </script>

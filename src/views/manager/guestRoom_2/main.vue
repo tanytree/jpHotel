@@ -12,15 +12,15 @@
                          :key="item.path"
                          v-if="$F.filterThirdMenu('finance', item.path, true)">
                 <!-- 商品管理-->
-                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
+                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
                 <!-- 售卖点-->
-                <SalePoint ref="SalePoint" :list="salesList" :category="category" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
+                <SalePoint ref="SalePoint" :list="salesList" :category="category" :total="salesTotal" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
                 <!-- 商品分类-->
                 <GoodsKinds ref="GoodsKinds" :list="category" :initData="getCategoryData" v-if="item.path == 'GoodsKinds'"/>
                 <!-- 库存管理-->
-                <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'StockMg'"/>
+                <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :initData="getHotelGoodsData" v-if="item.path == 'StockMg'"/>
                 <!-- 入库审核-->
-                <IntoKuAudit ref="IntoKuAudit" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" v-if="item.path == 'IntoKuAudit'"/>
+                <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :total="auditTotal" :initData="getAuditData" v-if="item.path == 'IntoKuAudit'"/>
             </el-tab-pane>
         </el-tabs>
 <!--        <el-tabs class="pageTab" v-model="activeName" @tab-click="tabChange">-->
@@ -66,9 +66,9 @@
                     paging: true
                 },
                 activeName: 'GoodsMg', //第一个默认启动
-                goodsList: [], goodsTotal: 0, goodsSize: 0, goodsPage: 1,
+                goodsList: [], goodsTotal: 0,
                 salesList: [], salesTotal: 0, salesSize: 0, salesPage: 1,
-                auditList: [], auditTotal: 0, auditSize: 0, auditPage: 1,
+                auditList: [], auditTotal: 0,
                 category: [], cateTotal: 0, cateSize: 0, catePage: 1,
             }
         },
@@ -99,13 +99,7 @@
                 this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {
                     this.goodsList = res.list;
                     if (res.page) {
-                        this.goodsSize = res.page.pageSize;
-                        this.goodsPage = res.page.pageIndex;
                         this.goodsTotal = res.page.count;
-                    } else {
-                        this.goodsSize = 10;
-                        this.goodsPage = 1;
-                        this.goodsTotal = res.list.length;
                     }
                 })
             },
@@ -175,15 +169,8 @@
                 this.$F.doRequest(this, '/pms/hotelstorage/list', params, (res) => {
                     this.auditList = res.list;
                     if(res.page) {
-                        this.auditSize = res.page.pageSize;
-                        this.auditPage = res.page.pageIndex;
                         this.auditTotal = res.page.count;
-                    } else {
-                        this.auditSize = 10;
-                        this.auditPage = 1;
-                        this.auditTotal = res.list.length;
                     }
-
                 })
             }
         }

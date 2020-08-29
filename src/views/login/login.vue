@@ -88,7 +88,6 @@
                 plat_source: (state) => state.config.plat_source,
             }),
             dataRule () {
-                debugger
                 return {
                     storesNum: {
                         required: true,
@@ -147,7 +146,6 @@
         },
 
         mounted () {
-            debugger
             this.language = getLanguage();
             this.$i18n.locale = this.language;
             // this.$refs.loginForm.clearValidate();
@@ -229,7 +227,6 @@
                     return item.storesNum == this.loginForm.storesNum
                 })[0]
                 this.saveuser(data)
-                // debugger
                 // const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg)
 
                 var array = {

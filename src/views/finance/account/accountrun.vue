@@ -31,9 +31,9 @@
                 </el-form-item>
                 <el-form-item label="审核状态：">
                     <el-select v-model="form.auditStatus" clearable placeholder="请选择">
-                        <el-option :label="1">待审核</el-option>
-                        <el-option :label="2">审核通过</el-option>
-                        <el-option :label="3">审核不通过</el-option>
+                        <el-option :label="1">{{$t('manage.grsl_waiteReview')}}</el-option>
+                        <el-option :label="2">{{$t('manage.grsl_reviewPass')}}</el-option>
+                        <el-option :label="3">{{$t('manage.grsl_reviewFail')}}</el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="营业项目：">
