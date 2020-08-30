@@ -56,8 +56,30 @@
                 <el-button @click="getDataList(searchForm)" type="primary">{{$t('commons.queryBtn')}}</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary">{{$t('commons.downloadTemplate')}}</el-button>
-                <el-button type="primary">{{$t('commons.bulkImport')}}</el-button>
+                <el-button type="primary" @click="downloadTemplate" >{{$t('commons.downloadTemplate')}}</el-button>
+<!--                <el-button type="primary">{{$t('commons.bulkImport')}}</el-button>-->
+                <template>
+                    <el-upload
+                        class="upload-demo"
+                        :action="action"
+                        accept="xls"
+                        :data="uploadData"
+                        :show-file-list="false"
+                        :before-upload="beforeUpload2"
+                    >
+                        <el-button size="small" type="primary">{{$t('commons.bulkImport')}}
+                        </el-button>
+                    </el-upload>
+<!--                    <el-upload-->
+<!--                        class="upload-demo"-->
+<!--                        action="aa"-->
+<!--                        :auto-upload="false"-->
+<!--                        :before-upload="beforeUpload"-->
+<!--                    >-->
+<!--                        <el-button size="small" type="primary">{{$t('commons.bulkImport')}}-->
+<!--                        </el-button>-->
+<!--                    </el-upload>-->
+                </template>
                 <el-button type="primary" @click="addItem">{{$t('commons.addEmployees')}}</el-button>
             </el-form-item>
         </el-form>
@@ -443,7 +465,7 @@
     import {mapState, mapActions} from "vuex";
     import httpRequest from "@/utils/httpRequest";
     import LoginDetail from "@/components/employee/loginDetail";
-
+    import axios from "axios";
     export default {
         components: {
             LoginDetail,
@@ -741,6 +763,36 @@
             this.department_list();
         },
         methods: {
+
+            //下载模板
+            downloadTemplate() {
+                // this.$F.doRequest(this, "/pms/employee/download", {}, (res) => {
+                //     this.$message.success(this.downloadSuccessful);
+                // });
+
+                let url = httpRequest.systemUrl("/pms/employee/download") + `?userId=${this.userId}&platSource=2005`;
+                debugger
+                axios.get(url, {
+                    headers:{
+                        "accessToken": sessionStorage.accessToken
+                    },
+                    responseType: 'blob', //二进制流
+                }).then(function (res) {
+                    if(!res) return
+                    let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
+                    let url = window.URL.createObjectURL(blob);
+                    let aLink = document.createElement("a");
+                    aLink.style.display = "none";
+                    aLink.href = url;
+                    aLink.setAttribute("download", "excel.xls");
+                    document.body.appendChild(aLink);
+                    aLink.click();
+                    document.body.removeChild(aLink);
+                    window.URL.revokeObjectURL(url);
+                }).catch(function (error) {
+                    console.log(error)
+                });
+            },
             initForm() {
                 this.searchForm = {
                     workingState: 2, //工作状态  1离职  2在职  int选填
@@ -975,11 +1027,27 @@
                 this.itemCtrlForm.outDataUrlShow = file.name;
             },
             beforeUpload(file) {
+                debugger
                 const isLt2M = file.size / 1024 / 1024 < 8;
                 if (!isLt2M) {
                     this.$message.error(this.fileLimit);
                 }
                 return isLt2M;
+            },
+            beforeUpload2(file) {
+                let formData = new FormData();
+                formData.append('filename', file);
+                formData.append('platSource', 1005);
+                axios.post(this.$F.getUploadUrl() + ('/pms/employee/upload'), formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            "accessToken": sessionStorage.accessToken
+                        }
+                    }
+                ).then(res => {
+                    debugger
+                })
             },
         },
     };

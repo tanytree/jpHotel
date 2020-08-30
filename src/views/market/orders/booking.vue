@@ -364,7 +364,6 @@ export default {
             })
         },
 
-
         handleCancel(item) {
             let params = {
                 checkInReserveId: item.id,
@@ -455,9 +454,10 @@ export default {
              * 2.退订金
              *
              * **/
+            debugger
             let params = this.consumeOperForm
 
-            params.checkinReserveId = this.currentItem.id
+            params.checkinReserveId = this.currentItem.id;
 
             if (this.currentItem.checkInRoomList.length) {
                 params.roomId = this.currentItem.checkInRoomList[0].id
@@ -474,14 +474,14 @@ export default {
                     this.$message.error('请选择付款项目');
                     return
                 }
-                if (params.priceType == 1 && !params.payType) {
-                    this.payTypeShow = true
-                    return
-                }
+                // if (params.priceType == 1 && !params.payType) {
+                //     this.payTypeShow = true
+                //     return
+                // }
                 if (params.priceType == 1) {
                     if (params.payPrice < 0 || params.payPrice == 0) {
                         this.$message.error('请输入大于0的金额');
-                        return
+                        return;
                     }
                 }
                 if (params.priceType == 4) {

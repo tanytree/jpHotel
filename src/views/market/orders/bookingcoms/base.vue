@@ -13,7 +13,7 @@
             <el-dropdown split-button type="primary">
                 更多操作
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="rowRoomHandle">排房</el-dropdown-item>
+                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">排房</el-dropdown-item>
                     <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
                     <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
@@ -227,7 +227,7 @@ export default {
         rowRoomHandle
     },
     mixins: [myMixin],
-    props: ['checkinInfo', 'roomInfo'],
+    props: ['checkinInfo', 'inRoomList'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -357,6 +357,9 @@ export default {
     },
 
     mounted() {
+        console.log(this.checkinInfo);
+        console.log(this.inRoomList);
+        debugger
         let id = this.$route.query.id
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;

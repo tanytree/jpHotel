@@ -23,6 +23,12 @@
             </el-form-item>
         </el-row>
         <el-form-item label="账务类别：">
+<!--            <el-tabs type="border-card">-->
+<!--                <el-tab-pane label="用户管理"></el-tab-pane>-->
+<!--                <el-tab-pane label="配置管理"></el-tab-pane>-->
+<!--                <el-tab-pane label="角色管理"></el-tab-pane>-->
+<!--            </el-tabs>-->
+
             <el-button plain size="mini" @click="consume_order_list('')">所有账务</el-button>
             <el-button plain size="mini" @click="consume_order_list(1)">未结账务</el-button>
             <el-button plain size="mini" @click="consume_order_list(2)">已结账务</el-button>
@@ -32,7 +38,8 @@
         </el-form-item>
     </el-form>
     <!--表格数据 -->
-    <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
+    <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+              @selection-change="handleSelectionChange" size="mini">
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="createTime" label="消费时间" show-overflow-tooltip></el-table-column>
@@ -42,12 +49,17 @@
                 {{F_priceType(row.priceType)}}
             </template>
         </el-table-column>
+        <el-table-column label="付款" prop="payPrice"></el-table-column>
         <el-table-column prop="state" label="状态" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{row.state==1?'未结':'已结'}}
             </template>
         </el-table-column>
-        <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="consumePrice" label="消费">
+            <template slot-scope="{row}" style="color: red">
+                {{row.consumePrice}}
+            </template>
+        </el-table-column>
         <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
@@ -66,7 +78,7 @@
             <p>快速入账项目</p>
             <el-form-item label="付款项目：">
                 <el-radio-group v-model="consumeOperForm.priceType">
-                    <el-radio-button :label="4" :value="4">收款</el-radio-button>
+                    <el-radio-button :label="3" :value="3">收款</el-radio-button>
                     <el-radio-button :label="2" :value="2">押金</el-radio-button>
                 </el-radio-group>
             </el-form-item>
@@ -92,15 +104,15 @@
                 </el-form-item>
             </template>
             <el-form-item label="金额：">
-                <el-input class="width100" v-if="consumeOperForm.priceType==4||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
-                <el-input class="width100" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
+                <el-input class="" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
+                <el-input class="" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="备注：">
-                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-input class="" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="打印单据：">
-                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
-            </el-form-item>
+<!--            <el-form-item label="打印单据：">-->
+<!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
+<!--            </el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="entryShow = false">关闭</el-button>
@@ -135,7 +147,7 @@
                     房间号：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList[0].name}}
+                    入住人：{{currentRoom.personList && currentRoom.personList.length && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <el-row v-else>
@@ -147,7 +159,9 @@
                         房间号：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
-                        入住人：{{detailData.inRoomList[0].personList[0].name}}
+                        入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
+                        detailData.inRoomList[0].personList[0] &&
+                        detailData.inRoomList[0].personList[0].name}}
                     </el-col>
                 </template>
             </el-row>
@@ -182,7 +196,7 @@
                     房间号：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList[0].name}}
+                    入住人：{{currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <el-row v-else>
@@ -194,7 +208,8 @@
                         房间号：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
-                        入住人：{{detailData.inRoomList[0].personList[0].name}}
+                        入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList
+                        && detailData.inRoomList[0].personList[0].name}}
                     </el-col>
                 </template>
             </el-row>
@@ -270,7 +285,7 @@
                     房间号：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList[0].name}}
+                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <br />
@@ -324,7 +339,7 @@
                     房间号：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList[0].name}}
+                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <el-row v-else>
@@ -336,7 +351,8 @@
                         房间号：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
-                        入住人：{{detailData.inRoomList[0].personList[0].name}}
+                        入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
+                        detailData.inRoomList[0].personList[0].name}}
                     </el-col>
                 </template>
             </el-row>
@@ -389,17 +405,13 @@ import consumeGoods from './consumeGoods'
 import someAccounts from './someAccounts'
 export default {
     mixins: [myMixin],
-    props: ['currentRoom', 'detailData'],
+    props: ['currentRoomId', 'detailData'],
     components: {
         consumeGoods,
         someAccounts
     },
     computed: {
         ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
         })
     },
     data() {
@@ -499,12 +511,24 @@ export default {
             hoteldamagetypeList: [],
             hoteldamageList: [],
             hotelenterList: [], //挂账企业列表
-            destructionList: [] //冲调的账务
+            destructionList: [], //冲调的账务
+            currentRoom: {
+                personList: []
+            }
         };
     },
 
+    created() {
+        if (this.currentRoomId) {
+            this.currentRoom = this.detailData.inRoomList.filter(item=>{
+                return item.id == this.currentRoomId
+            })[0];
+        }
+    },
+
     mounted() {
-        let id = this.$route.query.id
+        let id = this.$route.query.id;
+
         this.consume_order_list('')
         this.hoteldamagetype_list()
     },
@@ -545,41 +569,37 @@ export default {
              *
              * **/
             let params = this.consumeOperForm
-
+            debugger;
             params.checkInId = this.$route.query.id
-            if (this.currentRoom) {
-                params.roomId = this.currentRoom.id
+            if (this.currentRoomId) {
+                params.roomId = this.currentRoom.id;
                 params.roomNum = this.currentRoom.houseNum
             } else {
                 if (this.detailData.inRoomList.length) {
-                    params.roomId = this.detailData.inRoomList[0].id
+                    params.roomId = this.detailData.inRoomList[0].id;
                     params.roomNum = this.detailData.inRoomList[0].houseNum
-                } else {
-                    this.$message.error('暂无入住人');
-                    return
                 }
             }
-
-            //入账
+            //入账 默认未接
             if (type == 1) {
-                params.state = 2
+                params.state = 1;
                 if (!params.priceType) {
                     this.$message.error('请选择入账项目');
-                    return
+                    return;
                 }
-                if (params.priceType == 4 && !params.payType) {
-                    this.payTypeShow = true
-                    return
+                if (params.priceType == 3 && !params.payType) {
+                    this.payTypeShow = true;
+                    return;
                 }
-                if (params.priceType == 4 || params.priceType == 2) {
+                if (params.priceType == 3 || params.priceType == 2) {
                     if (!params.payPrice) {
                         this.$message.error('请输入金额');
-                        return
+                        return;
                     }
                 } else {
                     if (!params.consumePrice) {
                         this.$message.error('请输入金额');
-                        return
+                        return;
                     }
                 }
             }
@@ -619,10 +639,12 @@ export default {
                     this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
                         this.entryShow = false
                         this.onAccountShow = false
-                        this.destructionShow = false
-                        this.consumeOperForm.forEach(element => {
-                            element = ''
-                        });
+                        this.destructionShow = false;
+                        this.consumeOperForm = {
+                            priceType: '',
+                            payType: '',
+                            name: ''
+                        }
                         this.consume_order_list()
                     })
                 } else {
@@ -722,7 +744,6 @@ export default {
                     }
 
                 }
-
             } else if (e == 6) {
                 if (this.currentRoom) {
                     this.consumeOperForm.consumePrice = (this.currentRoom.realPrice * 0.5).toFixed(2)

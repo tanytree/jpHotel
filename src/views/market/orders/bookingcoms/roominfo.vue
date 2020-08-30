@@ -21,16 +21,12 @@
             <div class="fr">
                 <el-button plain size="mini" @click="liveInPersonShow=true">入住</el-button>
                 <el-button plain size="mini" @click="rowRoomHandle">修改预留</el-button>
-                &nbsp;
-                &nbsp;
-                &nbsp;
-                &nbsp;
                 <el-dropdown split-button type="primary" size="mini">
                     更多操作
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>改价</el-dropdown-item>
+<!--                        <el-dropdown-item>改价</el-dropdown-item>-->
                         <el-dropdown-item>取消预留</el-dropdown-item>
-                        <el-dropdown-item @click.native="liveCard_in_person_list">操作房卡</el-dropdown-item>
+<!--                        <el-dropdown-item @click.native="liveCard_in_person_list">操作房卡</el-dropdown-item>-->
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>

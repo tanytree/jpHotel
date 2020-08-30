@@ -47,8 +47,12 @@ export default {
       activeName: "" //第一个默认启动
     };
   },
+
   created() {
-    this.$F.handleThirdMenu(this);
+      this.$F.handleThirdMenu(this);
+      let type = this.$route.query.type;
+      if (type)
+          this.activeName = type;
   },
   mounted() {},
   methods: {

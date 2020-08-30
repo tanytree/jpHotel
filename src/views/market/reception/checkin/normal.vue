@@ -257,95 +257,71 @@
         </span>
     </el-dialog>
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
-        <el-table :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='true' :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-            <el-table-column label="房号/房型" width="200">
+        <el-table v-loading="loading" :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;"
+                  row-key="id" border :default-expand-all='true'
+                  :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+            <el-table-column label="房号/房型" width="100">
                 <template slot-scope="scope">
-                    {{scope.row.isChild?'':scope.row.room?scope.row.room.houseNum:''}}
+                    {{scope.row.isChild?'':scope.row.houseNum}}
+                    {{scope.row.isChild?'':scope.row.roomTypeName}}
                 </template>
             </el-table-column>
-            <el-table-column prop="realPrice" label="房价" width="150">
+            <el-table-column prop="realPrice" label="房价" width="100">
             </el-table-column>
-            <el-table-column label="姓名" width="100">
+            <!-- <el-table-column prop="" label="排房" width="150">
+            </el-table-column> -->
+            <el-table-column label="姓名" width="150">
                 <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-input v-model="row.params.name" placeholder="请输入姓名"></el-input>
-                    </el-row>
-                    <el-row v-else>
-                        <el-input v-if="row.edit" v-model="row.name"></el-input>
-                        <span v-else>{{row.name}}</span>
+                    <el-row>
+                        <el-input v-model="row.name" placeholder="请输入姓名"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="groupName" label="证件类型" width="120">
+            <el-table-column prop="groupName" label="证件类型" width="150">
                 <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-select v-model="row.params.idcardType" style="width:100%">
+                    <el-row>
+                        <el-select v-model="row.idcardType" style="width:100%">
                             <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
                         </el-select>
-                    </el-row>
-                    <el-row v-else>
-                        <el-select v-if="row.edit" v-model="row.idcardType" style="width:100%">
-                            <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
-                        </el-select>
-                        <span v-else>{{row.idcardType | F_idcardType}}</span>
                     </el-row>
                 </template>
 
             </el-table-column>
             <el-table-column prop="groupName" label="证件号码">
                 <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-input v-model="row.params.idcard" placeholder="请输入证件号码"></el-input>
-                    </el-row>
-                    <el-row v-else>
-                        <el-input v-if="row.edit" v-model="row.idcard"></el-input>
-                        <span v-else>{{row.idcard}}</span>
+                    <el-row>
+                        <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>
                     </el-row>
                 </template>
-
             </el-table-column>
             <el-table-column label="性别" width="120">
                 <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-select v-model="row.params.sex" style="width:100%">
+                    <el-row>
+                        <el-select v-model="row.sex" style="width:100%">
                             <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index"></el-option>
                         </el-select>
-                    </el-row>
-                    <el-row v-else>
-                        <el-select v-if="row.edit" v-model="row.sex" style="width:100%">
-                            <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index">{{item}}</el-option>
-                        </el-select>
-                        <span v-else>{{row.sex | F_sex}}</span>
                     </el-row>
                 </template>
             </el-table-column>
             <el-table-column prop="groupName" label="手机号" width="150">
                 <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-input v-model="row.params.mobile" placeholder="请输入手机号"></el-input>
-                    </el-row>
-                    <el-row v-else>
-                        <el-input v-if="row.edit" v-model="row.mobile"></el-input>
-                        <span v-else>{{row.mobile}}</span>
+                    <el-row>
+                        <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
-                    <el-button type="text" size="mini" @click="editItem_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">保存</el-button>
-                    <el-button type="text" size="mini" @click="cancel_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">取消</el-button>
-                    <el-button type="text" size="mini" @click="edit_live_in_person(scope.row.isChild?scope.row:scope.row.params)" v-if="scope.row.isChild&&!scope.row.edit">编辑</el-button>
-                    <el-button type="text" size="mini" @click="del_live_in_person(scope.row)" v-if="scope.row.isChild && !scope.row.isIndex0">删除</el-button>
-                    <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addItem_live_in_person(scope.$index,scope.row.params)">
-                        <template v-if="scope.row.children.length">+同来宾客</template>
-                        <template v-else>+入住人</template>
+                    <el-button type="text" size="mini" @click="" v-if="scope.row.isChild && !scope.row.isIndex0">删除</el-button>
+                    <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
+                        <template>+同来宾客</template>
                     </el-button>
                 </template>
             </el-table-column>
         </el-table>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="liveInPersonCancel">取消</el-button>
-            <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
+             <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button>
         </span>
     </el-dialog>
     <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
@@ -727,7 +703,7 @@ export default {
             }
         },
 
-        hotel_check_in(type, callback) {
+        hotel_check_in(type) {
             this.isSubmitErr = false;
             let url = ''
             let operCheckinType = this.operCheckinType
@@ -737,7 +713,6 @@ export default {
                 url = '/pms/reserve/reserve_check_in'
             }
             let ajax = () => {
-                console.log(this.checkInForm)
                 let params = this.$F.deepClone(this.checkInForm);
                 params.checkInRoomJson = JSON.stringify(params.checkInRoomJson);
                 this.$F.doRequest(this, url, params, (data) => {
@@ -781,25 +756,18 @@ export default {
                                 return false
                             }
                         }
-                        if (!this.liveInPersonData.length) {
-                            this.isSubmitErr = true
-                            this.$message.error('请添加入住人')
-                            this.live_in_person_list()
-                            return false
-                        }
-
-                        if (this.liveCardData == '') {
-                            this.isSubmitErr = true
-                            this.$message.error('请制卡')
-                            this.liveCard_in_person_list()
-                            return false
-                        }
-                        if (this.liveCardData.unfinished > 0) {
-                            this.isSubmitErr = true
-                            this.$message.error('请制卡')
-                            this.liveCard_in_person_list()
-                            return false
-                        }
+                        // if (this.liveCardData == '') {
+                        //     this.isSubmitErr = true
+                        //     this.$message.error('请制卡')
+                        //     // this.liveCard_in_person_list()
+                        //     return false
+                        // }
+                        // if (this.liveCardData.unfinished > 0) {
+                        //     this.isSubmitErr = true
+                        //     this.$message.error('请制卡')
+                        //     // this.liveCard_in_person_list()
+                        //     return false
+                        // }
                     }
                     ajax();
                 } else {
@@ -949,17 +917,10 @@ export default {
             //     this.$forceUpdate()
             // })
         },
+
         //自动排房
         empty_row_houses() {
-            // if (!this.checkInForm.checkInId) {
-            //     this.$message.error('请输入入住信息后操作')
-            //     return false
-            // }
-            // if (this.waitingRoom.length < 1) {
-            //     this.$message.error('请选择房型后操作');
-            //     return
-            // }
-
+            debugger
             let roomTypeId = [],
                 number = 0;
             this.waitingRoom.forEach(element => {
@@ -1005,6 +966,7 @@ export default {
                 }
             }
             this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
+
                 let data = res
                 this.$message({
                     message: '排房成功',
@@ -1025,26 +987,15 @@ export default {
                         setRooms(k, element)
                     });
                 }
+                console.log(this.waitingRoom);
+                debugger
                 this.$forceUpdate()
             })
         },
         //移除排房
         delete_db_row_houses(item, id, i) {
-            let params = {
-                checkinRoomType: 1,
-                roomTypeId: item.roomTypeId,
-                checkinId: this.checkInForm.checkInId,
-                checkinReserveId: this.checkInForm.checkInId,
-                roomId: id
-            };
-            this.$F.doRequest(this, '/pms/checkin/delete_db_row_houses', params, (res) => {
-                this.$message({
-                    message: '移除成功',
-                    type: 'success'
-                });
-                item.roomsArr.splice(i, 1)
-                this.$forceUpdate()
-            })
+            item.roomsArr.splice(i, 1);
+            this.$forceUpdate()
         },
         rowRoomCurrentListItemAdd(item) {
             this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
@@ -1077,232 +1028,11 @@ export default {
             }
             return false
         },
-        //获取入住人
-        liveCard_in_person_list() {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请输入入住信息后操作')
-                return false
-            }
-            if (this.operCheckinType != 'b3') {
-                if (!this.liveInPersonData.length) {
-                    this.$message.error('请添加入住人')
-                    this.live_in_person_list()
-                    return false
-                }
-                // for (let k in this.liveInPersonData) {
-                //     if (!this.liveInPersonData[k].personList.length) {
-                //         this.$message.error('请添加入住人')
-                //         this.live_in_person_list()
-                //         return false
-                //     }
-                // }
-            }
-            let params = {
-                type: 3,
-                checkinId: this.checkInForm.checkInId,
-                pageIndex: 1,
-                pageSize: 999
-            };
-            this.liveCardLoading = true;
-            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
-                // this.liveCardData = res.checkInRoomList
-                this.liveCardData = res
-                this.liveCardData.done = 0;
-                this.liveCardData.unfinished = 0;
-                let list = res.checkInRoomList;
-                for (let k in list) {
-                    if (list[k].markCard == 2) {
-                        this.liveCardData.done++
-                    }
-                    if (list[k].markCard == 1) {
-                        this.liveCardData.unfinished++
-                    }
-                }
-                this.liveCardLoading = false
-                this.mackcade = true
-                this.$forceUpdate()
-            })
-        },
+
         live_in_person_list() {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请输入入住信息后操作')
-                return false
-            }
-            let flag = false;
-            console.log(this.waitingRoom)
-            for (let k in this.waitingRoom) {
-                if (this.waitingRoom[k].roomsArr && this.waitingRoom[k].roomsArr.length) {
-                    flag = true
-                }
-            }
-            if (!flag) {
-                this.$message.error('请排房后操作');
-                return
-            }
-            let params = {
-                type: 1,
-                checkinId: this.checkInForm.checkInId,
-                pageIndex: 1,
-                pageSize: 999
-            };
-            this.liveLoading = true;
-            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
-                this.liveLoading = false
-                let data = res.checkInRoomList
-                this.liveInPersonShow = true
-                for (let k=0;k<data.length;k++) {
-                    console.log(k)
-                    data[k].params = {
-                        checkinRoomId: data[k].room ? data[k].room.id : '',
-                        name: '',
-                        idcardType: '',
-                        idcard: '',
-                        sex: '',
-                        mobile: '',
-                        checkinId: this.checkInForm.checkInId,
-                        checkInPersonId: '',
-                        // hasChildren: false
-                    }
-                    //将登记人添加为入住人
-                    if (data[k].personList.length < 1) {
-                        let params = {
-                            checkinRoomId: data[k].roomId,
-                            name: this.checkInForm.name,
-                            idcardType: this.checkInForm.idcardType,
-                            idcard: this.checkInForm.idcard,
-                            sex: this.checkInForm.sex,
-                            mobile: this.checkInForm.mobile,
-                            checkinId: this.checkInForm.checkInId,
-                            checkInPersonId: ''
-                        };
-                        this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                            this.live_in_person_list()
-                            this.$forceUpdate()
-                        })
-                    }
-                    if (data[k].personList && data[k].personList.length) {
-                        // data[k].params = data[k].personList[0]
-                        data[k].children = []
-                        data[k].personList.forEach((element, index) => {
-                            element.sex = element.sex.toString()
-                            element.idcardType = element.idcardType.toString()
-                            element.isChild = true
-                            element.edit = false
-                            if(index>0){
-                            element.isIndex0 = false
-                            }else{
-                                element.isIndex0 = true
-                            }
-                            data[k].children.push(element)
-                        });
-                        // data[k].hasChildren = true
-                    } else {
+            console.log('添加入住人');
+        },
 
-                        data[k].children = []
-                        // data[k].hasChildren = false
-                    }
-                }
-                this.liveInPersonData = data
-                this.$forceUpdate()
-            })
-        },
-        //添加入住人
-        editItem_live_in_person(item) {
-            if (!item.name) {
-                this.$message.error('请填写姓名');
-                return
-            }
-            if (!item.idcardType) {
-                this.$message.error('请选择证件类型');
-                return
-            }
-            if (!item.idcard) {
-                this.$message.error('请填写证件号');
-                return
-            }
-            if (!item.sex) {
-                this.$message.error('请选择性别');
-                return
-            }
-            if (!item.mobile) {
-                this.$message.error('请输入手机号');
-                return
-            }
-            let params = {
-                checkinRoomId: item.checkinRoomId,
-                name: item.name,
-                idcardType: item.idcardType,
-                idcard: item.idcard,
-                sex: item.sex,
-                mobile: item.mobile,
-                checkinId: this.checkInForm.checkInId,
-                checkInPersonId: item.id
-            };
-            this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
-        },
-        addItem_live_in_person(i, item) {
-            console.log(item)
-            return
-            if (!item.name) {
-                this.$message.error('请填写姓名');
-                return
-            }
-            if (!item.idcardType) {
-                this.$message.error('请选择证件类型');
-                return
-            }
-            if (!item.idcard) {
-                this.$message.error('请填写证件号');
-                return
-            }
-            if (!item.sex) {
-                this.$message.error('请选择性别');
-                return
-            }
-            if (!item.mobile) {
-                this.$message.error('请输入手机号');
-                return
-            }
-            let params = {
-                checkinRoomId: item.checkinRoomId,
-                name: item.name,
-                idcardType: item.idcardType,
-                idcard: item.idcard,
-                sex: item.sex,
-                mobile: item.mobile,
-                checkinId: this.checkInForm.checkInId,
-                checkInPersonId: '',
-
-            };
-            this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
-        },
-        del_live_in_person(item) {
-            let params = {
-                checkInPersonId: item.id,
-            };
-            this.$F.doRequest(this, '/pms/checkin/delete_live_in_person', params, (res) => {
-                this.$message({
-                    message: '移除成功',
-                    type: 'success'
-                });
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
-        },
-        edit_live_in_person(item) {
-            item.edit = true
-            this.$forceUpdate()
-        },
-        cancel_live_in_person(item) {
-            item.edit = false
-            this.$forceUpdate()
-        },
         make_card_status() {
             let arr = []
             if (!this.multipleSelection.length) {
@@ -1320,7 +1050,6 @@ export default {
                     message: '制卡成功',
                     type: 'success'
                 });
-                this.liveCard_in_person_list()
                 this.$forceUpdate()
             })
         },
@@ -1464,6 +1193,25 @@ export default {
                 date.setDate(date.getDate() + e);
                 this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
             }
+        },
+
+        //添加同来宾客
+        addGuest(row, index) {
+            let newRow = this.$F.deepClone(row);
+            row.children.push({
+                checkinId: newRow.checkinId,
+                checkinRoomId: newRow.roomId,
+                id: '3213213',
+                name: '',
+                isChild: true,
+                idcardType: '',
+                idcard: '',
+                edit: true,
+                sex: '',
+                mobile: '',
+                checkInPersonId: '',
+                // hasChildren: false
+            });
         },
 
     }

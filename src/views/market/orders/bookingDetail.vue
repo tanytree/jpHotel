@@ -20,7 +20,7 @@
                 <li @click="isOrder=true;currentRoom={}" :class="isOrder ? 'active' : ''">
                     <p>预订单信息</p>
                 </li>
-                <li v-for="(item,index) of detailData.inRoomList" :key="index" :class="currentRoom.id==item.id?'active':''" @click="showRoomInfo(item)">
+                <li v-for="(item,index) of detailData.inRoomList" :key="index" :class="currentRoom.id == item.id?'active':''" @click="showRoomInfo(item)">
                     <p>{{item.houseNum}} 房型：{{item.roomTypeName}}</p>
                     <span class="ok" v-if="item.personList.length">已排房</span>
                     <span class="no" v-else>未排房</span>
@@ -34,7 +34,7 @@
                         <div class="tabWrap">
                             <sbase
                                 :checkinInfo="detailData.checkIn"
-                                :roomInfo="detailData.inRoomList"
+                                :inRoomList="detailData.inRoomList"
                                 @baseInfoChange="baseInfoChange">
                             </sbase>
                         </div>

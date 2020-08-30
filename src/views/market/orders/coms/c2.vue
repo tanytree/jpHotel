@@ -3,7 +3,7 @@
  * @LastEditors: 董林
  * @LastEditTime: 2020-08-13 11:15:45
  * @FilePath: /jiudian/src/views/market/orders/coms/c2.vue
---> 
+-->
 <template>
 <div class="roomDetails">
     <div class="cost margin-t-10">
@@ -18,7 +18,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance :detailData="detailData" />
+            <finance :currentRoomId="currentRoomId" :detailData="detailData" />
         </div>
     </div>
 </div>
@@ -36,7 +36,7 @@ export default {
         finance
     },
     mixins: [myMixin],
-    props: ['detailData'],
+    props: ['detailData', 'currentRoomId'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -47,6 +47,9 @@ export default {
     },
     data() {
         return {
+            currentRoom: {
+                personList:[]
+            },
             loading: false,
             detail: {
                 text: ''
@@ -111,135 +114,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.bodyInfo {
-    .customerInfo {
-        background: #fff;
-
-        .wrap {
-            padding: 0 10px;
-
-            .hd {
-                overflow: hidden;
-                padding: 10px 0;
-                line-height: 2;
-
-                h3 {
-                    font-size: 16px;
-                    padding: 0;
-                    margin: 0;
-                }
-            }
-
-            .bd {
-                background: #F3F3F3;
-                padding: 10px 0;
-                margin-bottom: 10px;
-
-                .row {
-                    font-size: 14px;
-                    padding: 5px 10px;
-
-                    .cell {
-                        padding: 5px 0
-                    }
-                }
-            }
-        }
-
-        .customerCtrl {
-            ul {
-                li {
-                    line-height: 2;
-                    padding: 10px 0;
-                    font-size: 12px;
-
-                    span {
-                        color: #126EFF;
-                        cursor: pointer;
-
-                        i {
-                            font-size: 18px;
-                            color: #DC3E3E
-                        }
-                    }
-
-                    &:hover {
-                        background: #E3EEFF
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    .roomDetails {
-        .hd {
-            background: #fff;
-
-            .tit {
-                padding: 15px 15px;
-                margin: 0;
-                border-bottom: 1px solid #eee;
-
-                h3 {
-                    display: inline-block;
-                    margin: 0;
-                    font-size: 16px;
-                    vertical-align: middle;
-                }
-
-                span {
-                    font-size: 14px;
-                    color: #999;
-                    margin-left: 5px;
-                    vertical-align: middle;
-                }
-            }
-
-            .customerInfo {
-                padding: 0 15px;
-
-                .row {
-                    font-size: 14px;
-                    padding: 10px 0;
-                }
-            }
-        }
-
-        .cost {
-
-            background: #fff;
-
-            .wrap {
-                padding: 20px 15px;
-
-                span.fee {
-                    font-size: 26px;
-                    color: #DC3E3E;
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin-right: 50px;
-                }
-
-                .costNum {
-                    display: inline-block;
-                    font-size: 16px;
-                    vertical-align: middle;
-                    border-left: 1px solid #eee;
-                    padding-left: 50px;
-                }
-            }
-        }
-
-        .bd {
-            background: #fff;
-
-            .wrap {
-                padding: 20px 15px
-            }
-        }
-
-    }
-}
 </style>

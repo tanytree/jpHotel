@@ -99,7 +99,8 @@
                                                         </el-col>
                                                     </el-row>
                                                     <el-row class="row" v-if="v.roomsArr&&v.roomsArr.length">
-                                                        <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
+                                                        <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}}
+                                                            <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
                                                     </el-row>
                                                     <!-- <el-row class="row">
                                                         <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
@@ -520,6 +521,7 @@ export default {
                 this.$message.error('请选择房型后操作');
                 return
             }
+            debugger
             let roomTypeId = [],
                 number = 0;
             this.waitingRoom.forEach(element => {
@@ -575,21 +577,8 @@ export default {
         },
         //移除排房
         delete_db_row_houses(item, id, i) {
-            let params = {
-                checkinRoomType: 1,
-                roomTypeId: item.roomTypeId,
-                checkinId: this.checkInForm.checkInId,
-                checkinReserveId: this.checkInForm.checkInId,
-                roomId: id
-            };
-            this.$F.doRequest(this, '/pms/checkin/delete_db_row_houses', params, (res) => {
-                this.$message({
-                    message: '移除成功',
-                    type: 'success'
-                });
-                item.roomsArr.splice(i, 1)
-                this.$forceUpdate()
-            })
+            item.roomsArr.splice(i, 1)
+            this.$forceUpdate()
         },
         rowRoomCurrentListItemAdd(item) {
             if (!this.rowRoomCurrentItem.roomsArr) {
