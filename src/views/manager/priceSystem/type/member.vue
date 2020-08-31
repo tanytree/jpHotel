@@ -166,7 +166,7 @@
         <el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
         <el-button
           style="width: 80px;margin-left: 20px; cursor: pointer"
-          @back="back_1"
+          @click="back_1"
         >{{$t('commons.back')}}</el-button>
       </el-row>
     </el-row>
@@ -432,7 +432,7 @@ export default {
           item.roomTypeId == this.editPriceForm.room.id
         );
       });
-      debugger;
+      // debugger;
       this.editPriceForm.customPrice =
         array[0].newCustomPrice || array[0].customPrice || "";
       this.editPriceForm.dateStr =
@@ -455,7 +455,7 @@ export default {
         dayTime: this.editPriceForm.dateStr,
         strategyId: 1,
       };
-      debugger;
+      // debugger;
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_room_day_price_save",
@@ -488,7 +488,7 @@ export default {
               roomType.id2 = index;
             });
           });
-          debugger;
+          // debugger;
           this.memberTableData = res;
           this.batchEditPriceForm.roomStrategyJson = [];
           this.memberTableData.memberTypeList[0].roomTypeList.forEach(
