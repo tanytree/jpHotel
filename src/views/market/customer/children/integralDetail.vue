@@ -3,9 +3,16 @@
   <!-- 统一的列表格式 -->
   <div>
     <el-card>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/customer' }">会员管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path:'/customeredit',query:{ id: hyId}}">修改会员信息</el-breadcrumb-item>
+        <el-breadcrumb-item>积分明细</el-breadcrumb-item>
+      </el-breadcrumb>
+    </el-card>
+    <el-card>
       <!-- 查询部分 -->
       <el-form inline size="small" label-width="80px">
-        <el-form-item label="消费时间">
+        <el-form-item label="发生日期:">
           <el-radio-group v-model="searchForm.timeType">
             <el-radio-button label="1" style="margin-right:10px">不限</el-radio-button>
             <el-radio-button label="2" style="margin-right:10px">今日</el-radio-button>
@@ -33,8 +40,8 @@
           </el-form-item>
         </el-form-item>
         <br />
-        <el-form-item label="发生门店">
-          <el-select v-model="searchForm.storesNum" class="width150">
+        <el-form-item label="发生门店:">
+          <el-select v-model="searchForm.storesNum" class="width150" style="width:140px">
             <el-option label="全部" value></el-option>
             <el-option
               v-for="(item,index) in storeList"
@@ -44,33 +51,37 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="操作类型">
-          <el-select v-model="searchForm.enterStatus" class="width150">
+        <el-form-item label="操作类型:">
+          <el-select v-model="searchForm.enterStatus" class="width150" style="width:140px">
             <el-option label="全部" value="3">全部</el-option>
             <el-option label="增加" value="1"></el-option>
             <el-option label="扣除" value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="会员类型">
-          <el-select v-model="searchForm.memberTypeId" class="width150">
-            <el-option label="全部" value></el-option>
-            <el-option
-              v-for="item in smembertypeList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+
+        <el-form-item label="手机号:">
+          <el-input v-model="searchForm.content" class="width150" style="width:140px"></el-input>
+        </el-form-item>
+        <el-form-item label="业务说明:">
+          <el-select v-model="searchForm.yewu" class="width150" style="width:140px">
+            <el-option label="全部" value="3">全部</el-option>
+            <el-option label="增加" value="1">房费获得</el-option>
+            <el-option label="扣除" value="2">会议厅获得</el-option>
+            <el-option label="扣除" value="2">餐费获得</el-option>
+            <el-option label="扣除" value="2">商品费获得</el-option>
+            <el-option label="扣除" value="2">房费抵扣</el-option>
+            <el-option label="扣除" value="2">会议厅抵扣</el-option>
+            <el-option label="扣除" value="2">餐费抵扣</el-option>
+            <el-option label="扣除" value="2">商品费抵扣</el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="手机号">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
-        </el-form-item>
+
         <br />
-        <el-form-item label="卡号">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+        <el-form-item label="卡号:">
+          <el-input v-model="searchForm.content" class="width150" style="width:140px"></el-input>
         </el-form-item>
-        <el-form-item label="姓名">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+        <el-form-item label="姓名:">
+          <el-input v-model="searchForm.content" class="width150" style="width:140px"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getDataList">查询</el-button>
@@ -97,7 +108,7 @@
         <el-table-column prop="createTime" label="发生日期" show-overflow-tooltip></el-table-column>
         <el-table-column prop="storesName" label="发生门店" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creatorName" label="操作员" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" label="业务说明" show-overflow-tooltip></el-table-column>
       </el-table>
       <div style="margin-top:10px"></div>
       <!--分页 -->
@@ -128,10 +139,9 @@ export default {
   },
   data() {
     return {
-      smembertypeList: [],
+      hyId: null, //接收传过来的会员id
       pageIndex: 1, //当前页
       pageSize: 10, //页数
-      smembertypeList: [],
       storeList: null,
       loading: false,
       showEdit: false,
@@ -151,12 +161,11 @@ export default {
     };
   },
 
-  mounted() {
+  created() {
     this.getStoreList();
-    this.$F.commons.fetchMemberTypeList({}, (res) => {
-      this.smembertypeList = res.list;
-    });
-    this.getDataList();
+
+    // this.getDataList();
+    this.hyId = this.$route.query.id;
   },
   methods: {
     //请求门店列表
