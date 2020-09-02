@@ -135,7 +135,7 @@
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="220">
-          <template slot-scope="{row}" v-if="row.priceType==2">
+          <template slot-scope="{row}" v-if="row.priceType==1">
             <el-button @click="paymentsRefund(row)" type="text" size="mini">预收款退款</el-button>
             <el-button @click="printDetail(row)" type="text" size="mini">预收款补打</el-button>
           </template>
@@ -192,7 +192,7 @@
       <div class="bigBox">
         <div class="headInfo">
           <span>打印时间：{{printingTime}}</span>
-          <span>订单编号：{{itemInfo.id}}</span>
+          <span>订单编号：{{itemInfo.orderNum}}</span>
           <span>收银员：{{itemInfo.creatorName}}</span>
         </div>
         <div class="middleInfo">
@@ -222,35 +222,35 @@
               <div>联系人</div>
               <div>Contacts</div>
             </div>
-            <div class="right50">周悦</div>
+            <div class="right50">{{itemInfo.hotelEnter.contactName}}</div>
             <div class="right30">
               <div>手机号</div>
               <div>Phone</div>
             </div>
-            <div class="right50">18066016909</div>
+            <div class="right50">{{itemInfo.hotelEnter.contactPhone}}</div>
             <div class="right30">
               <div>卡内余额</div>
               <div>Balance</div>
             </div>
-            <div>2000</div>
+            <div>{{itemInfo.hotelEnter.totalLimit}}</div>
           </div>
         </div>
       </div>
       <el-row :gutter="20" style="margin-bottom:15px">
         <el-col :span="8">
-          <span>充值时间：2020-04-22 14:01</span>
+          <span>充值时间：{{itemInfo.createTime}}</span>
         </el-col>
         <el-col :span="8">
-          <span>备注：正确</span>
+          <span>备注：{{itemInfo.remark}}</span>
         </el-col>
         <el-col :span="8"></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
-          <span>前台电话：888-88888</span>
+          <span>前台电话：{{storeInfo.phone}}</span>
         </el-col>
         <el-col :span="9">
-          <span>酒店地址：安徽省合肥市蜀山区</span>
+          <span>酒店地址：{{storeInfo.address}}</span>
         </el-col>
         <el-col :span="7">贵宾签名：</el-col>
       </el-row>
@@ -276,6 +276,7 @@ export default {
   },
   data() {
     return {
+      storeInfo: null,
       printingTime: null,
       checkPatch: false,
       dialogVisible: false,
@@ -290,8 +291,8 @@ export default {
         storesNum: "",
         enterId: "",
         timeType: "",
-        payType: null,
-        priceType: null,
+        payType: "",
+        priceType: "",
         startTime: "",
         endTime: "",
       },
@@ -332,7 +333,15 @@ export default {
       this.itemInfo = row;
       console.log(this.itemInfo);
       this.getNowDate();
+      this.getStoreInfo();
       this.checkPatch = true;
+    },
+    //取得酒店的基本信息
+    getStoreInfo(params = {}) {
+      this.$F.doRequest(this, "/pms/hotelservice/findone", params, (res) => {
+        this.storeInfo = res;
+        console.log(res);
+      });
     },
     //退款dialog  点击 确认 按钮
     sureRefund() {
@@ -399,7 +408,15 @@ export default {
       );
     },
     initForm() {
-      this.searchForm = {};
+      this.searchForm = {
+        storesNum: "",
+        enterId: "",
+        timeType: "",
+        payType: "",
+        priceType: "",
+        startTime: "",
+        endTime: "",
+      };
       this.getReceiveList();
     },
     handelRowItem(row) {

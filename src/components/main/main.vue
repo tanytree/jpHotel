@@ -401,4 +401,8 @@ a {
   color: #fff;
   border-right: 3px solid #fff;
 }
+//main-content是为了  前台部 > 客户管理 > 会员管理 > 会员信息管理——修改 页面
+.main-content {
+  overflow: auto;
+}
 </style>

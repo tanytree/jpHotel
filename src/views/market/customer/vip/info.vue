@@ -1,10 +1,4 @@
-<!--
- * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 13:47:01
- * @FilePath: /jiudian/src/views/market/customer/vip/info.vue
- -->
-
+ <!-- 前台部 > 客户管理 > 会员管理 > 会员信息管理 -->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -305,6 +299,7 @@ export default {
         name: "customerdetails",
         query: {
           id: item.id,
+          buttonName: "详情",
         },
       });
     },

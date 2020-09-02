@@ -10,7 +10,10 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/customer' }">会员管理</el-breadcrumb-item>
+          <el-breadcrumb-item
+            @click.native="goMemberManag()"
+            style=" font-weight: 700;cursor: pointer;"
+          >会员管理</el-breadcrumb-item>
           <el-breadcrumb-item
             v-if="type != 'add'"
           >{{detailForm.memberCard}}-{{detailForm.name}}-{{F_memberTypeId(detailForm.memberTypeId)}}</el-breadcrumb-item>
@@ -50,11 +53,17 @@
                     </p>
                     <p>
                       <span class="text-blue" style="cursor:pointer;" @click="toIntegralDetail">明细</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span class="text-blue" v-if="type=='edit'">积分兑换</span>
+                      <span
+                        style="cursor:pointer;"
+                        class="text-blue"
+                        v-if="type=='edit'"
+                        @click="exchangeDialog=true"
+                      >积分兑换</span>
                     </p>
                   </div>
                 </el-row>
                 <br />
+
                 <el-row class="row">
                   <el-row class="cell">
                     <template v-if="type=='add'">
@@ -368,11 +377,107 @@
         <el-button type="primary" @click="setCardFrormChange('cardForm')">确认</el-button>
       </div>
     </el-dialog>
+    <!-- 积分兑换弹窗 -->
+    <el-dialog title="积分兑换" :visible.sync="exchangeDialog" width="90%" top="0">
+      <el-row :gutter="20">
+        <el-col :span="14">
+          <div class="ex_border">
+            <div class="ex15_top">
+              <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form-item label="商品名称:">
+                  <el-input v-model="formInline.goodsName" size="small" placeholder="请填写"></el-input>
+                </el-form-item>
+                <el-form-item label="商品类别:">
+                  <el-select v-model="formInline.goodsClasses" placeholder="活动区域" size="small">
+                    <el-option label="全部" value></el-option>
+                    <el-option label="区域二" value="beijing"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" size="small">查询</el-button>
+                  <el-button type="primary" size="small">重置</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+            <el-table
+              ref="multipleTable"
+              v-loading="loading"
+              :data="exchangeTable_choose"
+              :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+              size="mini"
+            >
+              <el-table-column prop="goodsName" label="商品名称" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="goodsClasses" label="商品类别" show-overflow-tooltip></el-table-column>
+              <el-table-column
+                prop="consumptionIntegral"
+                label="消耗积分"
+                show-overflow-tooltip
+                width="280px"
+              ></el-table-column>
+              <el-table-column prop="inventory" label="库存" show-overflow-tooltip></el-table-column>
+              <el-table-column label="操作" show-overflow-tooltip>
+                <template>
+                  <el-button type="text" size="mini">添加</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+        <el-col :span="10">
+          <div class="ex_border">
+            <div class="ex9_top">已选商品</div>
+            <el-table
+              ref="multipleTable"
+              v-loading="loading"
+              :data="exchangeTable_select"
+              :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+              size="mini"
+            >
+              <el-table-column prop="goodsName" label="商品名称" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="consumptionIntegral" label="消耗积分" show-overflow-tooltip></el-table-column>
+              <el-table-column
+                prop="number"
+                label="数量"
+                align="center"
+                show-overflow-tooltip
+                width="120px"
+              >
+                <template slot-scope="{row}">
+                  <el-input-number
+                    v-model="row.number"
+                    @change="handleChange"
+                    :min="1"
+                    :max="10"
+                    style="width:100px"
+                    size="mini"
+                  ></el-input-number>
+                </template>
+              </el-table-column>
+              <el-table-column label="合计" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                  <div>{{addUpTo(row)}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" show-overflow-tooltip>
+                <template>
+                  <el-button type="text" size="mini">移除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <div style="margin:20px 0 40px 0">
+              共10件，
+              <span class="hejiClass">合计：50</span>
+            </div>
+            <el-button type="primary" style="margin:0 0 16px 16px;">确认兑换</el-button>
+          </div>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 // import {
 //     get_user_enterprise
 // } from "@/utils/api/company";
@@ -388,6 +493,50 @@ export default {
   },
   data() {
     return {
+      exchangeTable_choose: [
+        {
+          goodsName: "肥宅快乐水",
+          goodsClasses: "饮料",
+          consumptionIntegral: 5,
+          inventory: 50,
+        },
+        {
+          goodsName: "瓜子",
+          goodsClasses: "饮料",
+          consumptionIntegral: 5,
+          inventory: 50,
+        },
+        {
+          goodsName: "小糖",
+          goodsClasses: "饮料",
+          consumptionIntegral: 5,
+          inventory: 50,
+        },
+        {
+          goodsName: "啤酒",
+          goodsClasses: "饮料",
+          consumptionIntegral: 5,
+          inventory: 50,
+        },
+        {
+          goodsName: "花生米",
+          goodsClasses: "饮料",
+          consumptionIntegral: 5,
+          inventory: 50,
+        },
+      ],
+      exchangeTable_select: [
+        {
+          goodsName: "肥宅快乐水",
+          number: 2,
+          consumptionIntegral: 5,
+        },
+      ],
+      formInline: {
+        goodsName: "",
+        goodsClasses: "",
+      },
+      exchangeDialog: false,
       loading: false,
       type: "edit",
       setCardFormVisible: false,
@@ -517,14 +666,34 @@ export default {
   },
 
   methods: {
+    ...mapMutations({
+      resetActive: "taozi/resetActive",
+    }),
+    //跳转  会员信息管理
+    goMemberManag() {
+      this.resetActive("member");
+      this.$router.push("/customer");
+    },
     //跳转  积分明细  页面
     toIntegralDetail() {
-      this.$router.push({
-        path: "/integralDetail",
-        query: {
-          id: this.detailForm.id,
-        },
-      });
+      if (this.$route.query.buttonName == "详情") {
+        return false;
+      } else {
+        this.$router.push({
+          path: "/integralDetail",
+          query: {
+            id: this.detailForm.id,
+          },
+        });
+      }
+    },
+    //计算合计
+    addUpTo(row) {
+      return row.consumptionIntegral * row.number;
+    },
+    //计数器改变
+    handleChange(value) {
+      console.log(value);
     },
     findone(id) {
       this.$F.doRequest(
@@ -677,7 +846,7 @@ export default {
                 type: "success",
               });
               setTimeout(() => {
-                this.$router.go(-1);
+                this.$router.replace("/customer");
               }, 1200);
             }
           );
@@ -767,11 +936,6 @@ export default {
   margin-left: 20px;
 }
 
-.bodyInfo {
-  .mianInfo {
-  }
-}
-
 .thisOrderInfo {
   background: #fff;
   padding-bottom: 30px;
@@ -791,5 +955,52 @@ export default {
       color: #333;
     }
   }
+}
+.ex15_top {
+  background-color: rgba(250, 250, 250, 1);
+  padding-top: 20px;
+  margin-bottom: 10px;
+}
+.ex9_top {
+  padding: 15px;
+  border-bottom: 1px solid rgba(226, 226, 226, 1);
+  margin-bottom: 10px;
+}
+.hejiClass {
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+.ex_border {
+  border-radius: 8px;
+
+  border: 1px solid rgba(211, 211, 211, 1);
 }
 </style>
