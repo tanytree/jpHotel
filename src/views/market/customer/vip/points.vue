@@ -7,12 +7,12 @@
       <el-form inline size="small" label-width="80px">
         <el-form-item label="消费时间">
           <el-radio-group v-model="searchForm.timeType">
-            <el-radio-button label="1" style="margin-right:10px">不限</el-radio-button>
-            <el-radio-button label="2" style="margin-right:10px">今日</el-radio-button>
-            <el-radio-button label="3" style="margin-right:10px">昨日</el-radio-button>
-            <el-radio-button label="4" style="margin-right:10px">本周</el-radio-button>
+            <el-radio-button label="" style="margin-right:10px">不限</el-radio-button>
+            <el-radio-button label="1" style="margin-right:10px">今日</el-radio-button>
+            <el-radio-button label="2" style="margin-right:10px">昨日</el-radio-button>
+            <el-radio-button label="6" style="margin-right:10px">本周</el-radio-button>
             <el-radio-button label="5" style="margin-right:10px">本月</el-radio-button>
-            <el-radio-button label="6" style="margin-right:10px">自定义</el-radio-button>
+            <el-radio-button label="自定义" style="margin-right:10px">自定义</el-radio-button>
           </el-radio-group>
           <el-form-item v-if="searchForm.timeType==6">
             <el-date-picker
@@ -177,7 +177,7 @@ export default {
         pageSize: this.pageSize,
       });
       this.$F.merge(params, this.searchForm);
-      this.$F.doRequest(this, "/pms/hotelmember/list", params, (data) => {
+      this.$F.doRequest(this, "/pms/hotelmemberscore/list", params, (data) => {
         console.log(data);
         this.tableData = data.list;
         this.listTotal = data.page.count;

@@ -21,23 +21,23 @@
             <el-radio-button label="5" style="margin-right:10px">本月</el-radio-button>
             <el-radio-button label="6" style="margin-right:10px">自定义</el-radio-button>
           </el-radio-group>
-          <el-form-item v-if="searchForm.timeType==6">
-            <el-date-picker
-              v-model="searchForm.startTime"
-              value-format="yyyy-MM-dd"
-              type="date"
-              style="width:140px"
-              placeholder="选择日期"
-            ></el-date-picker>
-            <span style="margin:0 5px">至</span>
-            <el-date-picker
-              v-model="searchForm.endTime"
-              value-format="yyyy-MM-dd"
-              type="date"
-              style="width:140px"
-              placeholder="选择日期"
-            ></el-date-picker>
-          </el-form-item>
+        </el-form-item>
+        <el-form-item v-if="searchForm.timeType==6">
+          <el-date-picker
+            v-model="searchForm.startTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width:140px"
+            placeholder="选择日期"
+          ></el-date-picker>
+          <span style="margin:0 5px">至</span>
+          <el-date-picker
+            v-model="searchForm.endTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width:140px"
+            placeholder="选择日期"
+          ></el-date-picker>
         </el-form-item>
         <br />
         <el-form-item label="发生门店:">

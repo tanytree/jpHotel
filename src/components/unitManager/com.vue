@@ -266,7 +266,7 @@
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item label="电话：">
-                <el-input v-model="addCompanyForm.taxNum"></el-input>
+                <el-input v-model="addCompanyForm.contactPhone"></el-input>
               </el-form-item>
             </el-col>
           </el-row>

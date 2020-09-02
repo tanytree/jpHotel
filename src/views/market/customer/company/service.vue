@@ -6,7 +6,7 @@
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
         <el-form-item label="消费门店">
-          <el-select v-model="searchForm.storesNum" class="width150">
+          <el-select v-model="searchForm.storesNum" class="width150" placeholder="请选择">
             <el-option label="全部" value></el-option>
             <el-option
               v-for="(item,index) in storeList"
@@ -17,25 +17,29 @@
           </el-select>
         </el-form-item>
         <el-form-item label="挂账单位">
-          <el-select v-model="searchForm.enterStatus" class="width150">
-            <el-option label="全部" value="3">全部</el-option>
-            <el-option label="已认证" value="1">已认证</el-option>
-            <el-option label="未认证" value="2">未认证</el-option>
+          <el-select v-model="searchForm.enterId" class="width150" placeholder="请选择">
+            <el-option label="全部" value>全部</el-option>
+            <el-option
+              v-for="(item,index) in unitList"
+              :key="index"
+              :label="item.enterName"
+              :value="item.id"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="结账状态">
-          <el-select v-model="searchForm.enterStatus" class="width150">
-            <el-option label="全部" value="3">全部</el-option>
-            <el-option label="已结" value="1">已认证</el-option>
-            <el-option label="未结" value="2">未认证</el-option>
+          <el-select v-model="searchForm.state" class="width150">
+            <el-option label="全部" value></el-option>
+            <el-option label="已结" value="1"></el-option>
+            <el-option label="未结" value="2"></el-option>
           </el-select>
         </el-form-item>
         <br />
         <el-form-item label="姓名">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+          <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="房间号">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+          <el-input v-model="searchForm.roomNum" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="消费日期">
           <el-date-picker
@@ -127,6 +131,7 @@ export default {
   },
   data() {
     return {
+      unitList: null,
       storeList: null,
       pageIndex: 1, //当前页
       pageSize: 10, //页数
@@ -134,11 +139,13 @@ export default {
       showEdit: false,
       showDetail: false,
       searchForm: {
-        searchType: 1,
-        content: "",
-        enterStatus: "",
+        storesNum: "",
+        enterId: "",
+        state: "",
         startTime: "", //考试时件
         endTime: "", //结束时间
+        name: "",
+        roomNum: "",
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -155,7 +162,8 @@ export default {
     //请求 单位 列表
     getUnitList() {
       this.$F.doRequest(this, "/pms/hotelenter/list", {}, (res) => {
-        console.log(res);
+        this.unitList = res.list;
+        console.log(this.unitList);
       });
     },
     //请求门店列表

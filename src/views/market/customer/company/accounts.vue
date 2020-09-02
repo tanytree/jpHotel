@@ -15,7 +15,7 @@
           <el-select v-model="searchForm.enterId" class="width150">
             <el-option label="全部" value></el-option>
             <el-option
-              v-for="(item,index) in selectList"
+              v-for="(item,index) in unitList"
               :key="index"
               :label="item.enterName"
               :value="item.id"
@@ -62,11 +62,16 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="已结算" align="center">
-          <el-table-column prop="createTime" label="已结算" width="80"></el-table-column>
+          <el-table-column label="已结算" width="80">
+            <template slot-scope="{row}">
+              <div>{{hasSettled(row)}}</div>
+            </template>
+          </el-table-column>
           <el-table-column label="现金" width="80">
             <template slot-scope="{row}">
               <div v-for="(item,index) in row.finance.typeList" :key="index">
                 <div v-if="item.payType==1">{{item.payPrice}}</div>
+                <div v-else>0</div>
               </div>
               <div v-if="row.finance.typeList.length==0">0</div>
             </template>
@@ -75,15 +80,17 @@
             <template slot-scope="{row}">
               <div v-for="(item,index) in row.finance.typeList" :key="index">
                 <div v-if="item.payType==2">{{item.payPrice}}</div>
+                <div v-else>0</div>
               </div>
               <div v-if="row.finance.typeList.length==0">0</div>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="预收款" width="80"></el-table-column>
+          <el-table-column label="预收款" width="80">0</el-table-column>
           <el-table-column label="微信" width="80">
             <template slot-scope="{row}">
               <div v-for="(item,index) in row.finance.typeList" :key="index">
                 <div v-if="item.payType==4">{{item.payPrice}}</div>
+                <div v-else>0</div>
               </div>
               <div v-if="row.finance.typeList.length==0">0</div>
             </template>
@@ -92,6 +99,7 @@
             <template slot-scope="{row}">
               <div v-for="(item,index) in row.finance.typeList" :key="index">
                 <div v-if="item.payType==3">{{item.payPrice}}</div>
+                <div v-else>0</div>
               </div>
               <div v-if="row.finance.typeList.length==0">0</div>
             </template>
@@ -99,7 +107,8 @@
           <el-table-column label="免单" width="80">
             <template slot-scope="{row}">
               <div v-for="(item,index) in row.finance.typeList" :key="index">
-                <div v-if="item.payType==0">{{item.payPrice}}</div>
+                <div v-if="item.payType==6">{{item.payPrice}}</div>
+                <div v-else>0</div>
               </div>
               <div v-if="row.finance.typeList.length==0">0</div>
             </template>
@@ -146,7 +155,7 @@ export default {
       loading: false,
       showEdit: false,
       showDetail: false,
-      selectList: null,
+      unitList: null,
       searchForm: {
         enterId: null,
       },
@@ -157,9 +166,28 @@ export default {
   },
   created() {
     this.getDataList();
+    this.getUnitList();
   },
 
   methods: {
+    hasSettled(row) {
+      if (row.finance.typeList.length == 0) {
+        return 0;
+      } else {
+        let allPrice = 0;
+        for (let item of row.finance.typeList) {
+          allPrice += item.payPrice;
+        }
+        return allPrice;
+      }
+    },
+    //请求 单位 列表
+    getUnitList() {
+      this.$F.doRequest(this, "/pms/hotelenter/list", {}, (res) => {
+        this.unitList = res.list;
+        console.log(this.unitList);
+      });
+    },
     /**获取表格数据 */
     getDataList(params = {}) {
       this.$F.merge(params, {
@@ -175,7 +203,7 @@ export default {
         (data) => {
           console.log(data);
           this.tableData = data.enterList;
-          this.selectList = data.enterList;
+
           this.listTotal = data.page.count;
         }
       );
