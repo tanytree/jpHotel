@@ -175,8 +175,7 @@ export default {
 
   created() {
     this.getStoreList();
-
-    // this.getDataList();
+    this.getDataList();
     this.hyId = this.$route.query.id;
   },
   methods: {

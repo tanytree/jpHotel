@@ -57,7 +57,7 @@
                         style="cursor:pointer;"
                         class="text-blue"
                         v-if="type=='edit'"
-                        @click="exchangeDialog=true"
+                        @click="exchangeClick()"
                       >积分兑换</span>
                     </p>
                   </div>
@@ -380,74 +380,70 @@
     <!-- 积分兑换弹窗 -->
     <el-dialog title="积分兑换" :visible.sync="exchangeDialog" width="90%" top="0">
       <el-row :gutter="20">
+        <!-- 左边 -->
         <el-col :span="14">
           <div class="ex_border">
             <div class="ex15_top">
               <el-form :inline="true" :model="formInline" class="demo-form-inline">
                 <el-form-item label="商品名称:">
-                  <el-input v-model="formInline.goodsName" size="small" placeholder="请填写"></el-input>
+                  <el-input v-model="formInline.name" size="small" placeholder="请填写"></el-input>
                 </el-form-item>
                 <el-form-item label="商品类别:">
-                  <el-select v-model="formInline.goodsClasses" placeholder="活动区域" size="small">
+                  <el-select v-model="formInline.categoryId" placeholder="活动区域" size="small">
                     <el-option label="全部" value></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                    <el-option
+                      v-for="item in goodsKind"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" size="small">查询</el-button>
-                  <el-button type="primary" size="small">重置</el-button>
+                  <el-button type="primary" @click="ex_lookFor" size="small">查询</el-button>
+                  <el-button type="primary" @click="ex_reset" size="small">重置</el-button>
                 </el-form-item>
               </el-form>
             </div>
             <el-table
               ref="multipleTable"
               v-loading="loading"
-              :data="exchangeTable_choose"
+              :data="chooseList"
               :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
               size="mini"
             >
-              <el-table-column prop="goodsName" label="商品名称" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="goodsClasses" label="商品类别" show-overflow-tooltip></el-table-column>
-              <el-table-column
-                prop="consumptionIntegral"
-                label="消耗积分"
-                show-overflow-tooltip
-                width="280px"
-              ></el-table-column>
-              <el-table-column prop="inventory" label="库存" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="name" label="商品名称" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="categoryName" label="商品类别" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="score" label="消耗积分" show-overflow-tooltip width="280px"></el-table-column>
+              <el-table-column prop="inventoryCount" label="库存" show-overflow-tooltip></el-table-column>
               <el-table-column label="操作" show-overflow-tooltip>
-                <template>
-                  <el-button type="text" size="mini">添加</el-button>
+                <template slot-scope="{row}">
+                  <el-button type="text" size="mini" @click="addGoods(row)">添加</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </el-col>
+        <!-- 右边 -->
         <el-col :span="10">
           <div class="ex_border">
             <div class="ex9_top">已选商品</div>
             <el-table
               ref="multipleTable"
               v-loading="loading"
-              :data="exchangeTable_select"
+              :data="selectList"
               :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
               size="mini"
             >
               <el-table-column prop="goodsName" label="商品名称" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="consumptionIntegral" label="消耗积分" show-overflow-tooltip></el-table-column>
-              <el-table-column
-                prop="number"
-                label="数量"
-                align="center"
-                show-overflow-tooltip
-                width="120px"
-              >
+              <el-table-column prop="score" label="消耗积分" show-overflow-tooltip></el-table-column>
+              <el-table-column label="数量" align="center" show-overflow-tooltip width="120px">
                 <template slot-scope="{row}">
                   <el-input-number
                     v-model="row.number"
                     @change="handleChange"
                     :min="1"
-                    :max="10"
+                    :max="row.inventoryCount"
                     style="width:100px"
                     size="mini"
                   ></el-input-number>
@@ -459,16 +455,16 @@
                 </template>
               </el-table-column>
               <el-table-column label="操作" show-overflow-tooltip>
-                <template>
-                  <el-button type="text" size="mini">移除</el-button>
+                <template slot-scope="{row}">
+                  <el-button type="text" size="mini" @click="removeClick(row)">移除</el-button>
                 </template>
               </el-table-column>
             </el-table>
             <div style="margin:20px 0 40px 0">
-              共10件，
-              <span class="hejiClass">合计：50</span>
+              共{{common(selectList)}}件，
+              <span class="hejiClass">合计：{{combined}}</span>
             </div>
-            <el-button type="primary" style="margin:0 0 16px 16px;">确认兑换</el-button>
+            <el-button type="primary" @click="sureExchange" style="margin:0 0 16px 16px;">确认兑换</el-button>
           </div>
         </el-col>
       </el-row>
@@ -493,48 +489,13 @@ export default {
   },
   data() {
     return {
-      exchangeTable_choose: [
-        {
-          goodsName: "肥宅快乐水",
-          goodsClasses: "饮料",
-          consumptionIntegral: 5,
-          inventory: 50,
-        },
-        {
-          goodsName: "瓜子",
-          goodsClasses: "饮料",
-          consumptionIntegral: 5,
-          inventory: 50,
-        },
-        {
-          goodsName: "小糖",
-          goodsClasses: "饮料",
-          consumptionIntegral: 5,
-          inventory: 50,
-        },
-        {
-          goodsName: "啤酒",
-          goodsClasses: "饮料",
-          consumptionIntegral: 5,
-          inventory: 50,
-        },
-        {
-          goodsName: "花生米",
-          goodsClasses: "饮料",
-          consumptionIntegral: 5,
-          inventory: 50,
-        },
-      ],
-      exchangeTable_select: [
-        {
-          goodsName: "肥宅快乐水",
-          number: 2,
-          consumptionIntegral: 5,
-        },
-      ],
+      combined: 0,
+      goodsKind: [],
+      chooseList: [],
+      selectList: [],
       formInline: {
-        goodsName: "",
-        goodsClasses: "",
+        name: "",
+        categoryId: "",
       },
       exchangeDialog: false,
       loading: false,
@@ -669,6 +630,106 @@ export default {
     ...mapMutations({
       resetActive: "taozi/resetActive",
     }),
+
+    //计算 共   多少件
+    common(selectList) {
+      let total = 0;
+      let gongji = 0;
+      for (let item of selectList) {
+        total += item.number;
+        gongji += item.heji;
+      }
+      this.combined = gongji;
+      return total;
+    },
+    //积分兑换  点击 确认兑换
+    sureExchange(params = {}) {
+      this.$F.merge(params, {
+        memberCard: this.detailForm.memberCard,
+        content: JSON.stringify(this.selectList),
+      });
+      this.$F.doRequest(
+        this,
+        "/pms/hotelmemberscore/get_total_member",
+        params,
+        (res) => {
+          console.log(res);
+          this.$message.success("兑换成功");
+          this.exchangeDialog = false;
+        }
+      );
+    },
+
+    //积分兑换  点击查询
+    ex_lookFor() {
+      let params = {
+        name: "",
+        categoryId: "",
+        state: 1,
+        status: 1,
+      };
+      this.$F.merge(params, this.formInline);
+      this.$F.doRequest(this, "/pms/hotelgoods/list", params, (res) => {
+        console.log(res);
+        this.chooseList = res.list;
+      });
+    },
+    //积分兑换  点击重置
+    ex_reset() {
+      this.formInline = { name: "", categoryId: "" };
+      this.ex_lookFor();
+    },
+    //点击 积分兑换
+    exchangeClick() {
+      let params = {
+        name: "",
+        categoryId: "",
+        state: 1,
+        status: 1,
+      };
+      this.$F.doRequest(this, "/pms/hotelgoods/list", params, (res) => {
+        console.log(res);
+        this.chooseList = res.list;
+        this.goodsType();
+      });
+    },
+    //商品分裂接口
+    goodsType() {
+      this.$F.doRequest(this, "/pms/hotelcategory/list", {}, (res) => {
+        console.log(res);
+        this.goodsKind = res.list;
+        this.exchangeDialog = true;
+      });
+    },
+    //积分兑换  点击移除
+    removeClick(row) {
+      this.selectList = this.selectList.filter((item) => {
+        return item.goodsId != row.goodsId;
+      });
+      console.log(this.selectList.length);
+    },
+
+    //积分兑换  点击添加
+    addGoods(row) {
+      console.log(row);
+      let each = {
+        goodsId: row.id,
+        goodsName: row.name,
+        score: row.score,
+        number: row.buyCount,
+        inventoryCount: row.inventoryCount,
+
+        heji: 0,
+      };
+      let id = row.id;
+      for (let item = 0; item < this.selectList.length; item++) {
+        if (id == this.selectList[item].goodsId) {
+          this.selectList[item].number += row.buyCount;
+          return false;
+        }
+      }
+      this.selectList.push(each);
+    },
     //跳转  会员信息管理
     goMemberManag() {
       this.resetActive("member");
@@ -689,7 +750,10 @@ export default {
     },
     //计算合计
     addUpTo(row) {
-      return row.consumptionIntegral * row.number;
+      let heji = 0;
+      heji = row.score * row.number;
+      row.heji = heji;
+      return heji;
     },
     //计数器改变
     handleChange(value) {

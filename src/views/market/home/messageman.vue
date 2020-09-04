@@ -185,6 +185,7 @@ export default {
       this.$F.doRequest(this, "/pms/hotelguestnote/findone", params, (data) => {
         console.log(data);
         this.messageDetail = data;
+        this.notedetail = true;
       });
     },
     // 留言删除
