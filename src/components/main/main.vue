@@ -186,6 +186,7 @@ export default {
   //   this.toSection(this.menul.childList[0])
   // },
   mounted() {
+    console.log(this);
     if (sessionStorage.menul && sessionStorage.menul != "undefined") {
       this.menulfuc(JSON.parse(sessionStorage.menul));
       this.toSection(JSON.parse(sessionStorage.subMenul));

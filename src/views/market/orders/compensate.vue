@@ -4,23 +4,27 @@
   <div class="boss-index">
     <div class="booking">
       <!-- 查询部分 -->
-      <el-form class="term line demo-form-inline" inline size="small" label-width="80px">
+      <el-form
+        class="term line demo-form-inline"
+        inline
+        size="small"
+        v-model="searchForm"
+        label-width="80px"
+      >
         <el-form-item label="房间号:">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+          <el-input v-model="searchForm.roomNum" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="客人姓名:">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+          <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="商品类别:">
-          <el-select v-model="searchForm.enterStatus" class="width150">
-            <el-option label="全部" value="3">全部</el-option>
-            <el-option label="正常" value="1"></el-option>
-            <el-option label="挂失" value="2"></el-option>
-            <el-option label="停用" value="3"></el-option>
+          <el-select v-model="searchForm.damageTypeId" class="width150">
+            <el-option label="全部" value>全部</el-option>
+            <el-option v-for="item in goodsKind" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="商品名称:">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+          <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <el-form-item class="form-inline-flex">
           <el-button type="primary" @click="getDataList">查询</el-button>
@@ -73,30 +77,57 @@ export default {
   },
   data() {
     return {
+      goodsKind: [],
       loading: false,
       pageIndex: 1, //当前页
       pageSize: 10, //页数
-
       searchForm: {
-        content: "",
-        enterStatus: "",
+        roomNum: "",
+        name: "",
+        damageTypeId: "",
+        name: "",
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
-      tableData: [{}], //表格数据
+      tableData: [], //表格数据
     };
   },
 
-  mounted() {
-    // this.initForm();
+  created() {
+    this.goodsType();
+    this.getDataList();
   },
   methods: {
+    //商品类别接口
+    goodsType() {
+      this.$F.doRequest(this, "/pms/hoteldamagetype/list", {}, (res) => {
+        console.log(res);
+        this.goodsKind = res.list;
+      });
+    },
     initForm() {
-      this.searchForm = {};
+      this.searchForm = {
+        roomNum: "",
+        name: "",
+        damageTypeId: "",
+        name: "",
+      };
       this.getDataList();
     },
     /**获取表格数据 */
-    getDataList() {},
+    getDataList(params = {}) {
+      this.$F.merge(params, {
+        paging: true,
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+      });
+      this.$F.merge(params, this.searchForm);
+      this.$F.doRequest(this, "/pms/hotelmemberscore/list", params, (data) => {
+        console.log(data);
+        this.tableData = data.list;
+        this.listTotal = data.page.count;
+      });
+    },
 
     /**每页数 */
     handleSizeChange(val) {
