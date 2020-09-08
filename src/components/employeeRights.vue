@@ -146,21 +146,21 @@ export default {
     initForm() {
       this.firstMenuInfo = JSON.parse(sessionStorage.menul || "{}");
       this.searchForm = {
-          departmentId: this.firstMenuInfo.id,
-          searchType: 1,
-          content: "",
-          pageIndex: 1,
-          pageSize: 10,
-          paging: true,
+        departmentId: this.firstMenuInfo.id,
+        searchType: 1,
+        content: "",
+        pageIndex: 1,
+        pageSize: 10,
+        paging: true,
       };
       this.getDataList();
     },
     getDataList() {
-        this.$F.commons.fetchSalesList(this.searchForm, (data)=> {
-            this.tableData = data.hotelUserList;
-            this.listTotal = this.tableData.length;
-            this.$forceUpdate();
-        });
+      this.$F.commons.fetchSalesList(this.searchForm, (data) => {
+        this.tableData = data.hotelUserList;
+        this.listTotal = this.tableData.length;
+        this.$forceUpdate();
+      });
     },
     getMenu_list() {
       let params = {

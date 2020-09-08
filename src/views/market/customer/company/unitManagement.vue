@@ -1,9 +1,9 @@
 <template>
   <!-- 统一的列表格式 -->
-  <div>
-    <el-card>
+  <div class="boss-index">
+    <div class="booking">
       <!-- 查询部分 -->
-      <el-form inline size="small" label-width="80px">
+      <el-form class="term" inline size="small" label-width="80px">
         <el-form-item label="单位名称">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
@@ -49,16 +49,16 @@
           <el-input v-model="searchForm.endCreditLimit" class="width150" style="width:80px"></el-input>
         </el-form-item>
         <el-form-item label="已用额度">
-          <el-input v-model="searchForm.startUsedLimit" class="width150" style="width:80px"></el-input>至
-          <el-input v-model="searchForm.endUsedLimit" class="width150" style="width:80px"></el-input>
+          <el-input v-model="searchForm.endCreditLimit" class="width150" style="width:80px"></el-input>至
+          <el-input v-model="searchForm.endCreditLimit" class="width150" style="width:80px"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+          <el-button type="primary" class="grey" @click="initForm">重置</el-button>
         </el-form-item>
-        <el-form-item style="float:right">
-          <el-button type="primary" @click="addAndEditItem('add')">+新增</el-button>
-          <el-button type="primary" @click="piliangClick">批量设置</el-button>
+        <el-form-item class="fr">
+          <el-button type="primary" class="submit" @click="addAndEditItem('add')">+新增</el-button>
+          <el-button type="primary" class="white" @click="setBatchFormVisible=true">批量设置</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -66,8 +66,9 @@
         ref="multipleTable"
         v-loading="loading"
         :data="tableData"
-        :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-        size="mini"
+        height="100%"
+        header-row-class-name="default"
+        size="small"
       >
         <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
@@ -80,13 +81,13 @@
         <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
         <el-table-column prop="usedLimit" label="已用额度" show-overflow-tooltip></el-table-column>
         <el-table-column prop="totalLimit" label="总消费" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="totalLimit" label="预收款余额" show-overflow-tooltip></el-table-column>
-        <el-table-column label="状态" show-overflow-tooltip>
+        <el-table-column prop="enterType" label="预收款余额" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="status" label="状态" show-overflow-tooltip>
           <template slot-scope="{row}">
             <div>{{row.state==1?'启用':'禁用'}}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="salesName" label="销售员" show-overflow-tooltip>
+        <el-table-column prop="salesId" label="销售员" show-overflow-tooltip>
           <template slot-scope="{row}">{{setSalesIdName(row.salesId)}}</template>
         </el-table-column>
         <el-table-column prop="shareFlag" label="是否共享" show-overflow-tooltip>
@@ -96,8 +97,8 @@
           <template slot-scope="{row}">
             <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
             <el-button type="text" size="mini" @click="addAndEditItem('edit',row)">修改</el-button>
-            <el-dropdown szie="mini">
-              <span class="el-dropdown-link" style="font-size:12px">
+            <el-dropdown style="margin-left: 10px;font-size:12px">
+              <span class="el-dropdown-link">
                 更多
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
@@ -109,18 +110,17 @@
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin-top:10px"></div>
       <!--分页 -->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="searchForm.page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="searchForm.page_num"
-        layout=" sizes, prev, pager, next, jumper"
-        :total="listTotal"
-      ></el-pagination>
-    </el-card>
+      <div class="block">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page="searchForm.page"
+          :page-size="searchForm.page_num"
+          :total="listTotal"
+          layout="total, prev, pager, next, jumper"
+        ></el-pagination>
+      </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
@@ -173,7 +173,7 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="计费规则：" prop required>
+              <el-form-item label="计费规则：" prop>
                 <el-select v-model="addCompanyForm.ruleAlldayId">
                   <el-option
                     :label="item.ruleName"
@@ -303,11 +303,17 @@
       class="setBatchForm"
       width="1200px"
     >
-      <el-form :model="setBatchForm" ref="setBatchForm" label-width="100px" size="mini">
+      <el-form
+        :model="setBatchForm"
+        :rules="plRule"
+        ref="setBatchForm"
+        label-width="100px"
+        size="mini"
+      >
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item label="价格策略：" prop="enterStrategyId">
+              <el-form-item label="价格策略：">
                 <el-select v-model="setBatchForm.enterStrategyId">
                   <el-option
                     :label="item.ruleName"
@@ -319,7 +325,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="计费规则：" prop="ruleAlldayId">
+              <el-form-item label="计费规则：">
                 <el-select v-model="setBatchForm.ruleAlldayId">
                   <el-option
                     :label="item.ruleName"
@@ -379,7 +385,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="3" class="col" style="text-align:center">
+            <el-col :span="6" class="col">
               <el-form-item label label-width="0px">
                 <el-button type="primary" @click="totalset">设置</el-button>
               </el-form-item>
@@ -490,7 +496,7 @@
         :current-page="searchForm.page"
         :page-sizes="[10, 50, 100, 200]"
         :page-size="searchForm.page_num"
-        layout=" sizes, prev, pager, next, jumper"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="listTotal"
       ></el-pagination>
       <div slot="footer" class="dialog-footer">
@@ -503,6 +509,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+
 export default {
   computed: {
     ...mapState({
@@ -556,7 +563,22 @@ export default {
         email: "",
         remark: "",
       },
-
+      plRule: {
+        enterStrategyId: [
+          {
+            required: true,
+            message: "请选择价格策略",
+            trigger: "change",
+          },
+        ],
+        ruleAlldayId: [
+          {
+            required: true,
+            message: "请选择计费规则",
+            trigger: "change",
+          },
+        ],
+      },
       setBatchForm: {
         enterStrategyId: "",
         ruleAlldayId: "",
@@ -640,17 +662,10 @@ export default {
         salesId: "",
         startCreditLimit: "",
         endCreditLimit: "",
-        startUsedLimit: "",
-        endUsedLimit: "",
         paging: true,
         pageIndex: 1,
         pageSize: 10,
       };
-      this.getDataList();
-    },
-    //点击 批量设置 按钮
-    piliangClick() {
-      this.setBatchFormVisible = true;
       this.getDataList();
     },
     /**获取表格数据 */
@@ -661,7 +676,6 @@ export default {
         "/pms/hotelenter/list",
         this.searchForm,
         (res) => {
-          console.log(res);
           this.loading = false;
           this.tableData = res.list;
           this.stableData = res.list;
@@ -694,7 +708,6 @@ export default {
         "/pms/hotel/hotel_rule_allday_list",
         params,
         (res) => {
-          console.log(res);
           this.alldayList = res.list;
         }
       );
@@ -705,11 +718,8 @@ export default {
         if (valid) {
           let params = {};
           Object.assign(params, this.addCompanyForm);
-          console.log(params.shareFlag);
-          console.log(params.state);
-
           params.shareFlag = params.shareFlag ? 1 : 2;
-          params.state = params.state ? 2 : 1;
+          params.state = params.state ? 1 : 2;
           this.$F.doRequest(this, "/pms/hotelenter/edit", params, (res) => {
             this.setCompanyFormVisible = false;
             this.$message({
@@ -728,7 +738,7 @@ export default {
       this.$router.push("/companydetail?id=" + item.id);
     },
     disableItem(item) {
-      this.$confirm("确认要禁用该单位", "提示", {
+      this.$confirm("确认禁用该单位？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -752,7 +762,7 @@ export default {
         .catch(() => {});
     },
     delItem(item) {
-      this.$confirm("确认删除该单位", "提示", {
+      this.$confirm("确认删除该单位？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -776,6 +786,7 @@ export default {
         .catch(() => {});
     },
     addAndEditItem(type, item) {
+      console.log(type);
       this.setCompanyFormVisible = true;
       this.addCompanyForm.type = type;
       if (item) {
@@ -790,53 +801,40 @@ export default {
         }
       }
     },
-    // 验证材料
-    //  this.$refs.setBatchForm.validate((valid) => {
-    //       if (valid) {
-    //         this.$F.doRequest(
-    //           this,
-    //           "/pms/hotelenter/totalset",
-    //           this.setBatchForm,
-    //           (data) => {
-    //             this.$message({
-    //               message: "操作成功",
-    //               type: "success",
-    //             });
-    //           }
-    //         );
-    //       } else {
-    //         console.log("error submit!!");
-    //         return false;
-    //       }
-    //     });
 
-    batchedit() {
-      if (this.multipleSelection.length > 0) {
-        for (let item of this.multipleSelection) {
-          if (!item.enterStrategyId) {
-            this.$message.error(item.enterName + "价格策略不能为空");
-            return false;
-          } else {
-            if (!item.ruleAlldayId) {
-              this.$message.error(item.enterName + "计费规则不能为空");
-              return false;
+    totalset() {
+      this.$refs.setBatchForm.validate((valid) => {
+        if (valid) {
+          console.log("都是有值的");
+          this.$F.doRequest(
+            this,
+            "/pms/hotelenter/totalset",
+            this.setBatchForm,
+            (data) => {
+              this.$message({
+                message: "操作成功",
+                type: "success",
+              });
             }
-          }
+          );
+        } else {
+          console.log("error submit!!");
+          return false;
         }
-        let params = {
-          enters: JSON.stringify(this.multipleSelection),
-        };
-        this.$F.doRequest(this, "/pms/hotelenter/batchedit", params, (data) => {
-          this.setBatchFormVisible = false;
-          this.getDataList();
-          this.$message({
-            message: "操作成功",
-            type: "success",
-          });
+      });
+    },
+    batchedit() {
+      let params = {
+        enters: JSON.stringify(this.multipleSelection),
+      };
+      this.$F.doRequest(this, "/pms/hotelenter/batchedit", params, (data) => {
+        this.setBatchFormVisible = false;
+        this.getDataList();
+        this.$message({
+          message: "操作成功",
+          type: "success",
         });
-      } else {
-        this.$message.error("请选择单位");
-      }
+      });
     },
     changeSate(item) {
       item.state = item.state == 1 ? 2 : 1;
@@ -886,42 +884,10 @@ export default {
         this.refs.detailRef.initdata(row.id);
       });
     },
-    //批量设置，点击设置按钮
 
-    totalset() {
-      if (this.multipleSelection.length > 0) {
-        for (let item of this.multipleSelection) {
-          item.enterStrategyId = this.setBatchForm.enterStrategyId
-            ? this.setBatchForm.enterStrategyId
-            : item.enterStrategyId;
-          item.ruleAlldayId = this.setBatchForm.ruleAlldayId
-            ? this.setBatchForm.ruleAlldayId
-            : item.ruleAlldayId;
-          item.creditLimit = this.setBatchForm.creditLimit
-            ? this.setBatchForm.creditLimit
-            : item.creditLimit;
-          item.state = this.setBatchForm.state
-            ? this.setBatchForm.state
-            : item.state;
-          item.effectiveStartTime = this.setBatchForm.effectiveStartTime
-            ? this.setBatchForm.effectiveStartTime
-            : item.effectiveStartTime;
-          item.effectiveEndTime = this.setBatchForm.effectiveEndTime
-            ? this.setBatchForm.effectiveEndTime
-            : item.effectiveEndTime;
-          item.salesId = this.setBatchForm.salesId
-            ? this.setBatchForm.salesId
-            : item.salesId;
-        }
-        this.$message.success("设置成功，点击保存按钮");
-      } else {
-        this.$message.error("请选择单位");
-      }
-    },
     /**多选 */
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      console.log(this.multipleSelection);
     },
     /**每页数 */
     handleSizeChange(val) {

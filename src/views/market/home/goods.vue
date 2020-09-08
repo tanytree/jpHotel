@@ -1,5 +1,5 @@
 <!--
- * @LastEditors: 魏轩
+ * @LastEditors: 陶子
  *
  -->
 <template>
@@ -233,7 +233,7 @@
 
       <div slot="footer" class="dialog-footer" style="text-align:center">
         <el-button style="width:80px;" @click="checkPatch = false">取消</el-button>
-<!--        <el-button style="width:80px;" type="primary">{{$t('commons.print')}}</el-button>-->
+        <!--        <el-button style="width:80px;" type="primary">{{$t('commons.print')}}</el-button>-->
       </div>
     </el-dialog>
   </div>
@@ -360,7 +360,7 @@ export default {
             params,
             (data) => {
               this.$message({
-                message: "操作成功",
+                message: "删除成功",
                 type: "success",
               });
               this.getDepositList();
@@ -421,7 +421,7 @@ export default {
       };
       this.$F.doRequest(
         this,
-        "/pms/luggagedeposit/findone", //请求新增接口  (接口有问题)
+        "/pms/luggagedeposit/findone", //请求新增接口
         params,
         (data) => {
           this.itemGoodsDetail = data;

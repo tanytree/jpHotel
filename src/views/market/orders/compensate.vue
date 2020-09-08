@@ -15,7 +15,7 @@
           <el-input v-model="searchForm.roomNum" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="客人姓名:">
-          <el-input v-model="searchForm.name" class="width150"></el-input>
+          <el-input v-model="searchForm.cname" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="商品类别:">
           <el-select v-model="searchForm.damageTypeId" class="width150">
@@ -24,7 +24,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="商品名称:">
-          <el-input v-model="searchForm.name" class="width150"></el-input>
+          <el-input v-model="searchForm.damageName" class="width150"></el-input>
         </el-form-item>
         <el-form-item class="form-inline-flex">
           <el-button type="primary" @click="getDataList">查询</el-button>
@@ -83,9 +83,9 @@ export default {
       pageSize: 10, //页数
       searchForm: {
         roomNum: "",
-        name: "",
+        cname: "",
         damageTypeId: "",
-        name: "",
+        damageName: "",
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -108,10 +108,12 @@ export default {
     initForm() {
       this.searchForm = {
         roomNum: "",
-        name: "",
+        cname: "",
         damageTypeId: "",
-        name: "",
+        damageName: "",
       };
+      this.pageIndex = 1; //当前页
+      this.pageSize = 10; //页数
       this.getDataList();
     },
     /**获取表格数据 */
@@ -122,11 +124,16 @@ export default {
         pageSize: this.pageSize,
       });
       this.$F.merge(params, this.searchForm);
-      this.$F.doRequest(this, "/pms/hotelmemberscore/list", params, (data) => {
-        console.log(data);
-        this.tableData = data.list;
-        this.listTotal = data.page.count;
-      });
+      this.$F.doRequest(
+        this,
+        "/pms/consume/consume_order_list",
+        params,
+        (data) => {
+          console.log(data);
+          this.tableData = data.consumeOrderList;
+          this.listTotal = data.page.count;
+        }
+      );
     },
 
     /**每页数 */

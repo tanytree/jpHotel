@@ -180,7 +180,15 @@ export default {
 
     // 重置
     resetForm() {
-      this.searchForm = {};
+      this.searchForm = {
+        storesNum: "",
+        enterId: "",
+        state: "",
+        startTime: "", //考试时件
+        endTime: "", //结束时间
+        name: "",
+        roomNum: "",
+      };
       this.pageIndex = 1;
       this.getDataList();
     },

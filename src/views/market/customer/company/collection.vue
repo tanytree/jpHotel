@@ -136,7 +136,12 @@
         <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="220">
           <template slot-scope="{row}" v-if="row.priceType==1">
-            <el-button @click="paymentsRefund(row)" type="text" size="mini">预收款退款</el-button>
+            <el-button
+              @click="paymentsRefund(row)"
+              type="text"
+              v-if="row.outMoney==1"
+              size="mini"
+            >预收款退款</el-button>
             <el-button @click="printDetail(row)" type="text" size="mini">预收款补打</el-button>
           </template>
         </el-table-column>
@@ -152,6 +157,7 @@
         ></el-pagination>
       </div>
     </div>
+    <!-- 退款dialog -->
     <el-dialog title="退款" v-if="dialogVisible" :visible.sync="dialogVisible" width="700px" top="0">
       <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="退款方式:">
@@ -352,6 +358,7 @@ export default {
           enterId: this.rowInfo.enterId,
           priceType: 3,
           enterOrderId: this.rowInfo.id,
+          outMoneyOrderId: this.rowInfo.id,
         });
         this.$F.merge(params, this.ruleForm);
         this.$F.doRequest(

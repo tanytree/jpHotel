@@ -1,14 +1,6 @@
-
-<!--
-
- * @LastEditors: 魏轩1
-
- *
- -->
+   <!-- 员工管理 -->
 <template>
   <div>
-    <!-- 员工管理 -->
-
     <div v-if="display">
       <h4>前台部</h4>
       <el-divider></el-divider>

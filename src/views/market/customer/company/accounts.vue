@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账务处理  -->
+<!--  前台部 > 客户管理 > 单位管理 > 账务处理     9/8 开始调账务结算样式 --> 
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -35,10 +35,8 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column>
-          <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
-        </el-table-column>
+        <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
         <el-table-column label="未结算" align="center">
           <el-table-column label="挂账总额" width="120">
             <template slot-scope="{row}">
@@ -116,8 +114,8 @@
         </el-table-column>
         <el-table-column label="操作" width="220">
           <template slot-scope="{row}">
-            <el-button type="text" size="mini">预收款</el-button>
-            <el-button type="text" size="mini">账务结算</el-button>
+            <el-button type="text" @click="advancePayments(row)" size="mini">预收款</el-button>
+            <el-button type="text" @click="settlement(row)" size="mini">账务结算</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -132,7 +130,103 @@
         ></el-pagination>
       </div>
     </div>
-    <!-- 编辑or详情弹窗 -->
+    <!-- 预收款弹窗 -->
+    <el-dialog title="预收款" v-if="advanceDialog" :visible.sync="advanceDialog" width="600px" top="0">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="100px"
+        class="demo-ruleForm"
+        inline
+      >
+        <el-form-item label="单位名称:">{{itemInfo.enterName}}</el-form-item>
+        <el-form-item label="预收款余额:">{{itemInfo.totalLimit}}</el-form-item>
+
+        <el-form-item label="支付方式:">
+          <el-radio-group v-model="ruleForm.payType">
+            <el-radio label="1">现金</el-radio>
+            <el-radio label="2">银行卡</el-radio>
+            <el-radio label="5">支票</el-radio>
+            <el-radio label="4">微信</el-radio>
+            <el-radio label="3">支付宝</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="金额:" prop="payPrice">
+          <el-input size="small" style="width:360px" v-model="ruleForm.payPrice"></el-input>
+        </el-form-item>
+        <el-form-item label="备注:">
+          <el-input type="textarea" style="width:360px" v-model="ruleForm.remark"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <div class="dialog-footer">
+          <el-button @click="advanceDialog = false">取 消</el-button>
+          <el-button type="primary" @click="advanceDialog_sure('ruleForm')">确 定</el-button>
+        </div>
+      </div>
+    </el-dialog>
+    <!-- 账务结算dialog -->
+    <el-dialog
+      title="账务结算"
+      v-if="settlementDialog"
+      :visible.sync="settlementDialog"
+      width="900px"
+      top="0"
+    >
+      <div>
+        <span>单位名称:蓝海一号</span>
+        <span>
+          选择账务：
+          <el-radio-group v-model="ruleForm.payType">
+            <el-radio label="1">选择账务</el-radio>
+            <el-radio label="2">选择账套</el-radio>
+          </el-radio-group>
+        </span>
+      </div>
+      <div v-if="1==1" class="rootA">
+        <el-table
+          :data="tableData"
+          height="250"
+          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+        >
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column prop="date" label="消费时间" width="180"></el-table-column>
+          <el-table-column prop="name" label="姓名/团队" width="180"></el-table-column>
+          <el-table-column prop="address" label="房号"></el-table-column>
+          <el-table-column prop="address" label="挂账金额"></el-table-column>
+        </el-table>
+
+        <div>总计:0笔账务，共计:0元</div>
+        <div>
+          <el-button>收款</el-button>
+          <el-button>免单</el-button>
+          <el-button>预收款</el-button>
+        </div>
+        <div>结算账单</div>
+        <el-table
+          :data="tableData"
+          height="250"
+          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+        >
+          <el-table-column prop="date" label="营业项目" width="180"></el-table-column>
+          <el-table-column prop="name" label="结账" width="180"></el-table-column>
+          <el-table-column prop="address" label="金额"></el-table-column>
+          <el-table-column prop="address" label="操作">
+            <template>
+              <el-button type="text" size="mini">移除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div>平衡数:0</div>
+      </div>
+      <div slot="footer">
+        <div class="dialog-footer">
+          <el-button @click="advanceDialog = false">取 消</el-button>
+          <el-button type="primary" @click="advanceDialog_sure('ruleForm')">确 定</el-button>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -149,7 +243,31 @@ export default {
     }),
   },
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入预收款金额"));
+      } else {
+        if (value <= 0) {
+          callback(new Error("预收款金额必须大于0"));
+        } else {
+          callback();
+        }
+      }
+    };
     return {
+      ruleForm: {
+        payType: "1",
+        payPrice: "0",
+        remark: "",
+      },
+      rules: {
+        payPrice: [
+          { validator: validatePass, trigger: "blur", required: true },
+        ],
+      },
+      settlementDialog: true, //账务结算弹框
+      itemInfo: null,
+      advanceDialog: false,
       pageIndex: 1, //当前页
       pageSize: 10, //页数
       loading: false,
@@ -170,6 +288,45 @@ export default {
   },
 
   methods: {
+    //点击账务结算按钮
+    settlement(row) {
+      this.settlementDialog = true;
+    },
+    //预收款弹框 点击确定按钮
+    advanceDialog_sure(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let params = {
+            enterId: this.itemInfo.id,
+            priceType: 1,
+          };
+          this.$F.merge(params, this.ruleForm);
+          this.$F.doRequest(
+            this,
+            "/pms/consume/enter_consume_oper",
+            params,
+            (data) => {
+              this.ruleForm = {
+                payType: "1",
+                payPrice: "0",
+                remark: "",
+              };
+              this.advanceDialog = false;
+              this.getDataList();
+            }
+          );
+        } else {
+          return false;
+        }
+      });
+    },
+    //点击 预收款 按钮
+    advancePayments(row) {
+      this.itemInfo = row;
+      if (this.itemInfo) {
+        this.advanceDialog = true;
+      }
+    },
     hasSettled(row) {
       if (row.finance.typeList.length == 0) {
         return 0;
@@ -237,3 +394,8 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+.dialog-footer {
+  text-align: right;
+}
+</style>
