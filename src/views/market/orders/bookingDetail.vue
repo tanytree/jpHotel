@@ -67,7 +67,7 @@ import {
 } from "vuex";
 import roominfo from './bookingcoms/roominfo'
 import sbase from './bookingcoms/base'
-import customer from './bookingcoms/customer'
+import customer from '@/components/front/customer'
 import finance from './bookingcoms/finance'
 import myMixin from '@/utils/filterMixin';
 export default {

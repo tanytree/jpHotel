@@ -177,7 +177,7 @@ import {
 } from "vuex";
 import c1 from './coms/c1'
 import c2 from './coms/c2'
-import customer from './bookingcoms/customer'
+import customer from '@/components/front/customer'
 import myMixin from '@/utils/filterMixin';
 import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
 

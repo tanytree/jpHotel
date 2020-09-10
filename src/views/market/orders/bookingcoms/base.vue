@@ -218,7 +218,7 @@ import {
     mapActions
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
-import customer from './customer'
+import customer from '@/components/front/customer'
 import rowRoomHandle from "@/views/market/home/rowRoomHandle";
 
 export default {

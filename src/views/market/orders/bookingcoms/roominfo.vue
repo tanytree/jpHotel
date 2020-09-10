@@ -139,7 +139,7 @@ import {
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
 import rowRoomHandle from "@/views/market/home/rowRoomHandle";
-import customer from './customer'
+import customer from '@/components/front/customer'
 export default {
     components: {
         customer,
