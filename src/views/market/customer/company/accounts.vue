@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账务处理     9/8 开始调账务结算样式 --> 
+<!--  前台部 > 客户管理 > 单位管理 > 账务处理   --> 
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -133,9 +133,9 @@
     <!-- 预收款弹窗 -->
     <el-dialog title="预收款" v-if="advanceDialog" :visible.sync="advanceDialog" width="600px" top="0">
       <el-form
-        :model="ruleForm"
+        :model="advanceRuleForm"
         :rules="rules"
-        ref="ruleForm"
+        ref="advanceRuleForm"
         label-width="100px"
         class="demo-ruleForm"
         inline
@@ -144,7 +144,7 @@
         <el-form-item label="预收款余额:">{{itemInfo.totalLimit}}</el-form-item>
 
         <el-form-item label="支付方式:">
-          <el-radio-group v-model="ruleForm.payType">
+          <el-radio-group v-model="advanceRuleForm.payType">
             <el-radio label="1">现金</el-radio>
             <el-radio label="2">银行卡</el-radio>
             <el-radio label="5">支票</el-radio>
@@ -153,16 +153,16 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="金额:" prop="payPrice">
-          <el-input size="small" style="width:360px" v-model="ruleForm.payPrice"></el-input>
+          <el-input size="small" style="width:360px" v-model="advanceRuleForm.payPrice"></el-input>
         </el-form-item>
         <el-form-item label="备注:">
-          <el-input type="textarea" style="width:360px" v-model="ruleForm.remark"></el-input>
+          <el-input type="textarea" style="width:360px" v-model="advanceRuleForm.remark"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
         <div class="dialog-footer">
           <el-button @click="advanceDialog = false">取 消</el-button>
-          <el-button type="primary" @click="advanceDialog_sure('ruleForm')">确 定</el-button>
+          <el-button type="primary" @click="advanceDialog_sure('advanceRuleForm')">确 定</el-button>
         </div>
       </div>
     </el-dialog>
@@ -176,16 +176,204 @@
     >
       <div>
         <span>单位名称:蓝海一号</span>
-        <span>
+        <span style="margin-left:20px">
           选择账务：
-          <el-radio-group v-model="ruleForm.payType">
+          <el-radio-group v-model="choose">
             <el-radio label="1">选择账务</el-radio>
             <el-radio label="2">选择账套</el-radio>
           </el-radio-group>
         </span>
+        <el-input
+          v-if="choose==2"
+          v-model="input"
+          :disabled="true"
+          size="mini"
+          style="width:120px;margin-left:30px"
+        ></el-input>
+        <el-button
+          v-if="choose==2"
+          @click="dialogChooseBook = true"
+          plain
+          size="small"
+          style="margin-left:5px"
+        >选择账套</el-button>
       </div>
-      <div v-if="1==1" class="rootA">
+      <div>
+        <!-- 内层dailog -->
+        <!-- 内层  收款dialog -->
+        <el-dialog
+          title="结算收款"
+          v-if="dialogVisible"
+          :visible.sync="dialogVisible"
+          append-to-body
+          width="500px"
+          top="0"
+        >
+          <el-form
+            :model="inneraAccountForm"
+            ref="inneraAccountForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="收款方式:">
+              <el-radio-group v-model="inneraAccountForm.payType">
+                <el-radio label="1">现金</el-radio>
+                <el-radio label="2">银行卡</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="金额:">
+              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            </el-form-item>
+            <el-form-item label="备注:" prop="remark">
+              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            </el-form-item>
+          </el-form>
+          <div style="text-align:right" slot="footer" class="dialog-footer">
+            <span>
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="sureRefund('dialogVisible')">确 认</el-button>
+            </span>
+          </div>
+        </el-dialog>
+        <!-- 内层  免单dialog -->
+        <el-dialog
+          title="结算收款"
+          v-if="dialogFree"
+          :visible.sync="dialogFree"
+          append-to-body
+          width="500px"
+          top="0"
+        >
+          <el-form
+            :model="inneraAccountForm"
+            ref="inneraAccountForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="收款方式:">
+              <el-radio-group v-model="inneraAccountForm.payType">
+                <el-radio label="1">免单</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="金额:">
+              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            </el-form-item>
+            <el-form-item label="备注:" prop="remark">
+              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            </el-form-item>
+          </el-form>
+          <div style="text-align:right" slot="footer" class="dialog-footer">
+            <span>
+              <el-button @click="dialogFree = false">取 消</el-button>
+              <el-button type="primary" @click="sureRefund('dialogFree')">确 认</el-button>
+            </span>
+          </div>
+        </el-dialog>
+        <!-- 内层  预收款dialog -->
+        <el-dialog
+          title="结算收款"
+          v-if="dialogAheadTime"
+          :visible.sync="dialogAheadTime"
+          append-to-body
+          width="500px"
+          top="0"
+        >
+          <el-form
+            :model="inneraAccountForm"
+            ref="inneraAccountForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="收款方式:">
+              <el-radio-group v-model="inneraAccountForm.payType">
+                <el-radio label="1">预收款</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="预收款余额:">
+              <span>300</span>
+            </el-form-item>
+            <el-form-item label="金额:">
+              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            </el-form-item>
+            <el-form-item label="备注:" prop="remark">
+              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            </el-form-item>
+          </el-form>
+          <div style="text-align:right" slot="footer" class="dialog-footer">
+            <span>
+              <el-button @click="dialogAheadTime = false">取 消</el-button>
+              <el-button type="primary" @click="sureRefund('dialogAheadTime')">确 认</el-button>
+            </span>
+          </div>
+        </el-dialog>
+        <!-- 内层  选择账套dialog -->
+        <el-dialog
+          title="选择账套"
+          v-if="dialogChooseBook"
+          :visible.sync="dialogChooseBook"
+          append-to-body
+          width="700px"
+          top="0"
+        >
+          <el-table
+            :data="tableData"
+            height="250"
+            :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          >
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column prop="date" label="账套名" width="180"></el-table-column>
+            <el-table-column prop="address" label="挂账金额"></el-table-column>
+            <el-table-column prop="name" label="结算金额" width="180"></el-table-column>
+            <el-table-column prop="address" label="创建时间"></el-table-column>
+          </el-table>
+          <div style="text-align:right" slot="footer" class="dialog-footer">
+            <span>
+              <el-button @click="dialogChooseBook = false">取 消</el-button>
+              <el-button type="primary" @click="dialogChooseBook = false">确 认</el-button>
+            </span>
+          </div>
+        </el-dialog>
+        <!-- 内层  退款dialog -->
+        <el-dialog
+          title="退款"
+          v-if="dialogRefoundMoney"
+          :visible.sync="dialogRefoundMoney"
+          append-to-body
+          width="500px"
+          top="0"
+        >
+          <el-form
+            :model="inneraAccountForm"
+            ref="inneraAccountForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="收款方式:">
+              <el-radio-group v-model="inneraAccountForm.payType">
+                <el-radio label="1">现金</el-radio>
+                <el-radio label="2">银行卡</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="金额:">
+              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            </el-form-item>
+            <el-form-item label="备注:" prop="remark">
+              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            </el-form-item>
+          </el-form>
+          <div style="text-align:right" slot="footer" class="dialog-footer">
+            <span>
+              <el-button @click="dialogRefoundMoney = false">取 消</el-button>
+              <el-button type="primary" @click="sureRefund('dialogRefoundMoney')">确 认</el-button>
+            </span>
+          </div>
+        </el-dialog>
+
+        <!-- div结束标签 -->
+      </div>
+      <div v-if="choose == 1" class="rootA">
         <el-table
+          key="1"
           :data="tableData"
           height="250"
           :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
@@ -198,10 +386,10 @@
         </el-table>
 
         <div>总计:0笔账务，共计:0元</div>
-        <div>
-          <el-button>收款</el-button>
-          <el-button>免单</el-button>
-          <el-button>预收款</el-button>
+        <div style="margin:15px 0">
+          <el-button type="primary" @click="dialogVisible=true">收款</el-button>
+          <el-button type="primary" @click="dialogFree = true">免单</el-button>
+          <el-button type="primary" @click="dialogAheadTime = true">预收款</el-button>
         </div>
         <div>结算账单</div>
         <el-table
@@ -218,12 +406,51 @@
             </template>
           </el-table-column>
         </el-table>
-        <div>平衡数:0</div>
+        <div style="margin-top:5px">平衡数:0</div>
+      </div>
+      <div v-if="choose==2" class="rootA">
+        <el-table
+          key="2"
+          :data="tableData"
+          height="250"
+          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+        >
+          <el-table-column prop="date" label="消费时间" width="180"></el-table-column>
+          <el-table-column prop="name" label="姓名/团队" width="180"></el-table-column>
+          <el-table-column prop="address" label="房号"></el-table-column>
+          <el-table-column prop="address" label="挂账金额"></el-table-column>
+        </el-table>
+
+        <div>总计:0笔账务，共计:0元</div>
+        <div style="margin:15px 0">
+          <el-button type="primary" @click="dialogVisible=true">收款</el-button>
+          <el-button type="primary" @click="dialogRefoundMoney=true">退款</el-button>
+          <el-button type="primary" @click="brewRich">冲调</el-button>
+          <el-button type="primary" @click="dialogFree = true">免单</el-button>
+          <el-button type="primary" @click="dialogAheadTime = true">预收款</el-button>
+        </div>
+        <div>结算账单</div>
+        <el-table
+          :data="tableData"
+          height="250"
+          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+        >
+          <el-table-column prop="date" label="选择" width="180"></el-table-column>
+          <el-table-column prop="name" label="营业项目" width="180"></el-table-column>
+          <el-table-column prop="name" label="业务详情" width="180"></el-table-column>
+          <el-table-column prop="address" label="金额"></el-table-column>
+          <el-table-column prop="address" label="操作">
+            <template>
+              <el-button type="text" size="mini">移除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div style="margin-top:5px">平衡数:0</div>
       </div>
       <div slot="footer">
         <div class="dialog-footer">
-          <el-button @click="advanceDialog = false">取 消</el-button>
-          <el-button type="primary" @click="advanceDialog_sure('ruleForm')">确 定</el-button>
+          <el-button @click="settlementDialog = false">取 消</el-button>
+          <el-button type="primary" @click="advanceDialog_sure('ruleForm')">结 账</el-button>
         </div>
       </div>
     </el-dialog>
@@ -255,7 +482,17 @@ export default {
       }
     };
     return {
+      inneraAccountForm: {
+        payType: "1",
+        payPrice: "0",
+        remark: "",
+      },
       ruleForm: {
+        payType: "1",
+        payPrice: "0",
+        remark: "",
+      },
+      advanceRuleForm: {
         payType: "1",
         payPrice: "0",
         remark: "",
@@ -265,7 +502,13 @@ export default {
           { validator: validatePass, trigger: "blur", required: true },
         ],
       },
-      settlementDialog: true, //账务结算弹框
+      choose: "1",
+      dialogRefoundMoney: false, //内层  退款 dialog
+      dialogChooseBook: false, //内层  选择账套 dialog
+      dialogAheadTime: false, //内层  预收款dialog
+      dialogFree: false, //内层   免单dialog
+      dialogVisible: false, //内层  收款dialog
+      settlementDialog: false, //账务结算弹框
       itemInfo: null,
       advanceDialog: false,
       pageIndex: 1, //当前页
@@ -275,7 +518,7 @@ export default {
       showDetail: false,
       unitList: null,
       searchForm: {
-        enterId: null,
+        enterId: "",
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -288,10 +531,28 @@ export default {
   },
 
   methods: {
+    sureRefund(dialogName) {
+      if (this.inneraAccountForm.payPrice == 0) {
+        this.$message.error("退款金额必须大于0！");
+      } else {
+        this[dialogName] = false;
+        this.inneraAccountForm = {
+          payType: "1",
+          payPrice: "0",
+          remark: "",
+        };
+      }
+    },
+    //账务结算dialog ，点击 结账按钮
+    brewRich() {
+      this.$message.error("请选择被冲调的账务");
+    },
     //点击账务结算按钮
     settlement(row) {
       this.settlementDialog = true;
     },
+    //账务结算dialog ，点击 结账按钮
+    settlementDialog_sure() {},
     //预收款弹框 点击确定按钮
     advanceDialog_sure(formName) {
       this.$refs[formName].validate((valid) => {
@@ -300,13 +561,13 @@ export default {
             enterId: this.itemInfo.id,
             priceType: 1,
           };
-          this.$F.merge(params, this.ruleForm);
+          this.$F.merge(params, this.advanceRuleForm);
           this.$F.doRequest(
             this,
             "/pms/consume/enter_consume_oper",
             params,
             (data) => {
-              this.ruleForm = {
+              this.advanceRuleForm = {
                 payType: "1",
                 payPrice: "0",
                 remark: "",
@@ -322,6 +583,7 @@ export default {
     },
     //点击 预收款 按钮
     advancePayments(row) {
+      console.log(row);
       this.itemInfo = row;
       if (this.itemInfo) {
         this.advanceDialog = true;
@@ -380,15 +642,16 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    /**每页数 */
+    /**每页条数（即每一页要显示的数据条数） */
     handleSizeChange(val) {
-      this.searchForm.page_num = val;
-      this.searchForm.page = 1;
+      this.pageSize = val;
+      this.pageIndex = 1;
       this.getDataList();
     },
-    /**当前页 */
+    /**当前页改变（即当前页是第几页） */
     handleCurrentChange(val) {
-      this.searchForm.page = val;
+      this.pageSize = 10;
+      this.pageIndex = val;
       this.getDataList();
     },
   },

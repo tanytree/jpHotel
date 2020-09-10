@@ -40,14 +40,18 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="enterName" label="房间号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="createTime" label="客人姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterType" label="商品类别" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterType" label="商品名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterType" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterType" label="单价" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterType" label="总价" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterType" label="赔偿日期" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="checkInPerson.houseNum" label="房间号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="checkInPerson.checkIn.name" label="客人姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="damageTypeName" label="商品类别" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="damageName" label="商品名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="damageCount" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="damageInfo.damagePrice" label="单价" show-overflow-tooltip></el-table-column>
+        <el-table-column label="总价" show-overflow-tooltip>
+          <template slot-scope="{row}">
+            <div>{{allPrice(row)}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="payTime" label="赔偿日期" show-overflow-tooltip></el-table-column>
       </el-table>
       <!--分页 -->
       <div class="block">
@@ -98,6 +102,12 @@ export default {
     this.getDataList();
   },
   methods: {
+    //计算商品总价
+    allPrice(row) {
+      if (row.damageCount && row.damageInfo.damagePrice) {
+        return row.damageCount * row.damageInfo.damagePrice;
+      }
+    },
     //商品类别接口
     goodsType() {
       this.$F.doRequest(this, "/pms/hoteldamagetype/list", {}, (res) => {
@@ -122,6 +132,7 @@ export default {
         paging: true,
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
+        priceType: 7,
       });
       this.$F.merge(params, this.searchForm);
       this.$F.doRequest(
@@ -138,13 +149,14 @@ export default {
 
     /**每页数 */
     handleSizeChange(val) {
-      this.searchForm.page_num = val;
-      this.searchForm.page = 1;
+      this.pageSize = val;
+      this.pageIndex = 1;
       this.getDataList();
     },
     /**当前页 */
     handleCurrentChange(val) {
-      this.searchForm.page = val;
+      this.pageSize = 10;
+      this.pageIndex = val;
       this.getDataList();
     },
   },

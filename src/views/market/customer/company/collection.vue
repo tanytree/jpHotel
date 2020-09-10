@@ -190,7 +190,7 @@
       top="0"
       title="寄存补打"
       style="text-align:left"
-      width="650px"
+      width="750px"
       v-if="checkPatch"
       :visible.sync="checkPatch"
     >
@@ -371,6 +371,7 @@ export default {
             this.ruleForm.payType = "1";
             this.ruleForm.payPrice = null;
             this.ruleForm.remark = null;
+            this.getReceiveList();
           }
         );
       } else {
@@ -424,6 +425,8 @@ export default {
         startTime: "",
         endTime: "",
       };
+      this.pageIndex = 1;
+      this.pageSize = 10;
       this.getReceiveList();
     },
     handelRowItem(row) {
@@ -442,13 +445,14 @@ export default {
     },
     /**每页数 */
     handleSizeChange(val) {
-      this.searchForm.page_num = val;
-      this.searchForm.page = 1;
+      this.pageSize = val;
+      this.pageIndex = 1;
       this.getDataList();
     },
     /**当前页 */
     handleCurrentChange(val) {
-      this.searchForm.page = val;
+      this.pageSize = 10;
+      this.pageIndex = val;
       this.getDataList();
     },
   },
