@@ -419,6 +419,31 @@ export default new Router({
                     component: () =>
                         import('@/views/menuAssert/menuAssert')
                 },
+
+                //餐饮部
+                {
+                    path: '/food',
+                    name: 'food',
+                    meta: { title: 'food' },
+                    component: () =>
+                        import ('@/views/food/main')
+                },
+
+                {
+                    path: '/dish',
+                    name: 'dish',
+                    meta: { title: 'dish' },
+                    component: () =>
+                        import ('@/views/food/dish')
+                },
+
+                {
+                    path: '/dishOrder',
+                    name: 'dishOrder',
+                    meta: { title: 'dishOrder' },
+                    component: () =>
+                        import ('@/views/food/order')
+                }
             ]
         },
 
