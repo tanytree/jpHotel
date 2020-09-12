@@ -7,8 +7,8 @@
                     <el-input v-model="form.soteageName" placeholder="仓库名称"></el-input>
                   </el-form-item>
 
-                <el-form-item label="计费类型:" prop="status">
-                    <el-radio-group v-model="form.status" >
+                <el-form-item label="计费类型:" prop="state">
+                    <el-radio-group v-model="form.state" >
                         <el-radio :label="1">启用</el-radio>
                         <el-radio :label="2">禁用</el-radio>
                     </el-radio-group>
@@ -46,7 +46,7 @@
                 loading:false,
                 info:{},
                 form:{
-                    status:1,//状态
+                    state:1,//状态
                     soteageName:'',// 仓库名称 String 必填
                     address:'',// 仓库地址 String 非必填
                     remark:'',//  备注 String 非必填
@@ -55,7 +55,7 @@
                     soteageName: [
                         {required: true, message: '请输入仓库名称', trigger: 'change' }
                     ],
-                    status: [
+                    state: [
                         { required: true, message: '请选择状态', trigger: 'change' }
                     ],
                 }
@@ -78,7 +78,7 @@
             intForm(){
                this.form = {
                     id:'',
-                    status:1,//状态
+                    state:1,//状态
                     soteageName:'',// 仓库名称 String 必填
                     address:'',// 仓库地址 String 非必填
                     remark:'',//  备注 String 非必填
@@ -89,7 +89,7 @@
                 this.intForm();
                 console.log(data)
                 this.info = {
-                    status:1,//状态
+                    state:1,//状态
                     soteageName:'',// 仓库名称 String 必填
                     address:'',// 仓库地址 String 非必填
                     remark:'',//  备注 String 非必填
@@ -102,7 +102,6 @@
 
 
             submit(){
-                return
                 let params = this.form
                 params.userId = this.userId
                 params.storesNum = this.storesNum
