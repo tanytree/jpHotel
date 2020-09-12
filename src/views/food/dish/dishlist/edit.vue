@@ -1,5 +1,4 @@
 <template>
-
         <el-form :model="info" :rules="rules" ref="form" label-width="150px" class="demo-ruleForm">
               <el-form-item label="菜品名称" prop="name">
                 <el-input v-model="info.name"></el-input>
@@ -16,8 +15,6 @@
                 <el-input v-model="info.categoryName" ></el-input>
               </el-form-item>
 
-
-
               <el-form-item label="菜品价格" prop="name">
                 <el-input v-model="info.price"></el-input>
               </el-form-item>
@@ -29,6 +26,7 @@
                        ref="upload"
                        list-type="picture-card"
                        :file-list="files"
+                       :limit="1"
                        :auto-upload="false">
                          <i slot="default" class="el-icon-plus"></i>
                          <div slot="file" slot-scope="{file}">
@@ -50,12 +48,10 @@
                            </span>
                          </div>
                      </el-upload>
-
-
                 </div>
               </el-form-item>
 
-              <el-form-item label="菜品原料" prop="desc">
+              <el-form-item label="菜品原料" prop="desc" :style="files.length == 0 ? '' : 'margin-top: -25px;'">
                 <el-input  v-model="info.marterial"></el-input>
               </el-form-item>
 
@@ -67,16 +63,15 @@
                 <el-radio v-model="info.state" :label="1">启用</el-radio>
                 <el-radio v-model="info.state" :label="2">禁用</el-radio>
              </el-form-item>
-            <div class="text-right">
+            <el-divider></el-divider>
+            <div class="text-right"  style="padding: 0 20px;margin:-10px -20px -15px;">
               <el-button @click="closeDialog">取消</el-button>
                <el-button type="primary" @click="submitForm('form')">确定</el-button>
             </div>
-            <el-dialog :title="$t('manager.hp_img')" top="0" :visible.sync="dialogVisible">
+            <!-- <el-dialog :title="$t('manager.hp_img')" top="0" :visible.sync="dialogVisible">
               <img width="100%" :src="dialogImageUrl" alt />
-            </el-dialog>
+            </el-dialog> -->
         </el-form>
-
-
 </template>
 
 <script>
@@ -159,8 +154,8 @@
                        url:data.images
                     })
                 }
-                
-                
+
+
             },
 
             intData(){
@@ -174,7 +169,8 @@
                      images:'',
                      dishesId:'',
                      state:1,
-                 }
+                }
+                this.files = []
             },
 
 
@@ -219,24 +215,15 @@
               );
               this.$refs.upload.uploadFiles = this.$F.deepClone(this.hotelData.files);
             },
-
-
-
             submitForm(form) {
-
-                console.log(this.info)
+                // console.log(this.info)
                 this.$refs[form].validate((valid) => {
                  if (valid) {
-
-
                     this.formData = new FormData();
                     let imgList = this.$refs.upload.uploadFiles || [];
                     if (imgList.length == 0) {
                         return a.$message.warning('无图片');
                     }
-
-
-
                     this.$F.doUploadBatch(this, imgList, (data) => {
                         this.info.images = data;
                         let params = this.info
@@ -249,16 +236,7 @@
                               this.closeDialog();
                           }
                       });
-
-
-
-
                     });
-
-
-
-
-
                  } else {
                    this.alert(0,'操作失败')
                  }

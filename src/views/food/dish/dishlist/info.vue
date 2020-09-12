@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="proInfo">
             <div v-if="info.images" class=" items imgs text-center">
               <img :src="info.images">
@@ -21,12 +20,10 @@
             </div>
         </div>
 
-
-
-    <el-divider></el-divider>
-    <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-       <el-button size="small" @click="closeDialog">关闭</el-button>
-    </div>
+        <el-divider></el-divider>
+        <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
+           <el-button size="small" @click="closeDialog">关闭</el-button>
+        </div>
     </div>
 </template>
 
@@ -43,19 +40,8 @@
         methods: {
             //获取传过来的值
             getInfo(data){
-                console.log(data)
+                // console.log(data)
                  this.info = data
-            },
-
-            submitForm(form) {
-                this.$refs[form].validate((valid) => {
-                 if (valid) {
-                   alert('submit!');
-                 } else {
-                   console.log('error submit!!');
-                   return false;
-                 }
-                });
             },
             closeDialog(){
                 this.info = {}
