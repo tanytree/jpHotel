@@ -79,15 +79,17 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
     <!-- 编辑or详情弹窗 -->
+
     <el-dialog
         top="0"
         :title="$t('food.dishTitle.'+ dialogType)"
-        width="40%"
+        :width="dialogType == 4 ? '600px' : '700PX'"
         :visible.sync="dialogShow"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
         @close="closeDialog"
         >
+
             <edit @closeDialog="closeDialog" ref="editRef" v-if="dialogType == 1 || dialogType == 2" />
             <info @closeDialog="closeDialog" ref="infoRef" v-if="dialogType == 4" />
     </el-dialog>

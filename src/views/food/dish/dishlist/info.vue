@@ -54,7 +54,7 @@
 <style lang="less" scoped>
 
     .proInfo{
-        width:500px;margin: 0 auto;
+        width:100%;margin: 0 auto;
         .text-size18{
             font-size: 18px;
         }

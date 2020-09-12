@@ -1,6 +1,6 @@
 <template>
         <el-form :model="info" :rules="rules" ref="form" label-width="150px" class="demo-ruleForm">
-              <el-form-item label="菜品名称" prop="name">
+              <el-form-item label="菜品名称" prop="name" style="margin-top: -15px;">
                 <el-input v-model="info.name"></el-input>
               </el-form-item>
 
@@ -63,14 +63,11 @@
                 <el-radio v-model="info.state" :label="1">启用</el-radio>
                 <el-radio v-model="info.state" :label="2">禁用</el-radio>
              </el-form-item>
-            <el-divider></el-divider>
+            <el-divider style="margin:-15px;"></el-divider>
             <div class="text-right"  style="padding: 0 20px;margin:-10px -20px -15px;">
               <el-button @click="closeDialog">取消</el-button>
                <el-button type="primary" @click="submitForm('form')">确定</el-button>
             </div>
-            <!-- <el-dialog :title="$t('manager.hp_img')" top="0" :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt />
-            </el-dialog> -->
         </el-form>
 </template>
 
@@ -253,5 +250,7 @@
     }
 </script>
 
-<style>
+
+<style lang="less" scoped>
+   
 </style>

@@ -443,6 +443,13 @@ export default new Router({
                     meta: { title: 'dishOrder' },
                     component: () =>
                         import ('@/views/food/order')
+                },
+                {
+                    path: '/warehouse',
+                    name: 'warehouse',
+                    meta: { title: 'warehouse' },
+                    component: () =>
+                        import ('@/views/food/warehouse')
                 }
             ]
         },
