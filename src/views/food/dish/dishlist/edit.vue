@@ -32,7 +32,7 @@
                        :auto-upload="false">
                          <i slot="default" class="el-icon-plus"></i>
                          <div slot="file" slot-scope="{file}">
-                           <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+                           <img v-if="file.url" class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
                            <span class="el-upload-list__item-actions">
                              <!-- <span
                                class="el-upload-list__item-preview"
@@ -153,11 +153,14 @@
                      state:data.state,
                      dishesId:data.id,
                      state:data.state
-                 }
-
-               this.files.push({
-                   url:data.images
-               })
+                }
+                if(data.images){
+                    this.files.push({
+                       url:data.images
+                    })
+                }
+                
+                
             },
 
             intData(){
