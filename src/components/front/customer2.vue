@@ -66,14 +66,14 @@
             <template slot-scope="scope">
                 <el-button type="text" size="mini" @click="del_live_in_person(scope.row, scope.$index)" v-if="scope.row.isChild">删除</el-button>
                 <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
-                    <template @click="addGuest">+同来宾客</template>
+                    <template>+同来宾客</template>
 <!--                    <template v-else>+入住人</template>-->
                 </el-button>
             </template>
         </el-table-column>
     </el-table>
     <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="consume_oper(1,'entry')">确定</el-button>
+        <el-button type="primary" @click="personSubmit()">确定</el-button>
     </div>
 
 
@@ -126,11 +126,30 @@ export default {
 
     methods: {
         personSubmit() {
-            this.liveInPersonData.forEach((item, index) => {
-
+            console.log(this.liveInPersonData)
+            let checkInRoomJson = [];
+            this.liveInPersonData.forEach(item => {
+                if (!item.personList)
+                    item.personList;
+                let temp = {
+                    roomTypeId: item.roomTypeId,
+                    roomId: item.roomId,
+                    reservePrice: item.reservePrice,
+                    realPrice: item.realPrice,
+                    personList: item.personList
+                }
+                temp.personList.unshift({
+                    checkinRoomId: item.checkinRoomId,
+                    name: item.name,
+                    idcardType: item.idcardType,
+                    idcard: item.idcard,
+                    sex: item.sex,
+                    mobile: item.mobile
+                });
+                checkInRoomJson.push(temp);
             })
-
-            this.$emit('personCallback', )
+            debugger
+            this.$emit('personCallback', checkInRoomJson);
         },
 
         //添加同来宾客

@@ -137,9 +137,6 @@ export default {
     computed: {
         ...mapState({
             token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
         })
     },
     data() {
@@ -165,6 +162,7 @@ export default {
         },
     },
     mounted() {
+        debugger
         if (this.type != 'checkin') {
             let id = this.$route.query.id;
             this.searchForm.checkinId = id

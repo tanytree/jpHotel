@@ -2,6 +2,7 @@ import store from '@/store'
 import axios from 'axios'
 import { request } from '@/utils/request'
 import merge from 'lodash/merge'
+import httpRequest from "@/utils/httpRequest";
 
 // eslint-disable-next-line no-unused-vars
 var publicDict = {}
@@ -225,7 +226,6 @@ const $F = {
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
         //获取销售员
-
         fetchSalesList(params = {}, callback) {
             $F.merge(params, {
                 searchType: 1,
@@ -261,6 +261,29 @@ const $F = {
                 NATIONALITYLIST = data;
                 callback(NATIONALITYLIST)
             })
+        },
+        downloadTemplate(action) {
+            let url = httpRequest.systemUrl(action) + `?userId=${sessionStorage.userId}&platSource=1005`;
+            axios.get(url, {
+                headers:{
+                    "accessToken": sessionStorage.accessToken
+                },
+                responseType: 'blob', //二进制流
+            }).then(function (res) {
+                if(!res) return
+                let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
+                let url = window.URL.createObjectURL(blob);
+                let aLink = document.createElement("a");
+                aLink.style.display = "none";
+                aLink.href = url;
+                aLink.setAttribute("download", "excel.xls");
+                document.body.appendChild(aLink);
+                aLink.click();
+                document.body.removeChild(aLink);
+                window.URL.revokeObjectURL(url);
+            }).catch(function (error) {
+                console.log(error)
+            });
         }
     }
 

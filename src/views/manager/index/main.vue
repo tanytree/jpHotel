@@ -78,15 +78,16 @@
 					pageSize: 10,
 					paging: true
 				},
-                activeName: '', //第一个默认启动
+                activeName: 'damageCompensate', //第一个默认启动
 				findOne: {arriveStatus: 1, leaveStatus: 2, leaveOrder: 1, isOd: 1, trialType: 1, state: 1, trialStartTime: "", trialEndTime: "", trialAutoTime: ""},
 				damageData: [],
-                hotelData: {imgPath: '', name: '', address: '', phone: '', startTime: '', endTime: '', remark: ''},
+                hotelData: { imgPath: '', name: '', address: '', phone: '', startTime: '', endTime: '', remark: ''},
                 printData: [],handData: [], typeTotal: 0,
             }
         },
           created() {
             this.$F.handleThirdMenu(this);
+            this.activeName = 'damageCompensate'; //第一个默认启动
           },
         activated () {
         },

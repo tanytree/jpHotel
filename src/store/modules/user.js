@@ -32,6 +32,7 @@ const mutations = {
     state.storesInfo = data.storesInfo;
     state.token = data.token.accessToken;
     sessionStorage.accessToken = data.token.accessToken;
+    sessionStorage.userId = data.user.userId;
     Object.assign(state, data.user)
     state.storeList = data.belongTo || [];
   },

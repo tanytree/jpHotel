@@ -138,25 +138,6 @@
                                 </div>
                             </div>
                             <template v-if="activeName=='third'">
-                                <!-- <div class="thisOrderInfo">
-                                    <div class="wrap">
-                                        <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                                            <el-table-column prop="enterName" label="姓名" show-overflow-tooltip></el-table-column>
-                                            <el-table-column prop="createTime" label="房间/房型" show-overflow-tooltip></el-table-column>
-                                            <el-table-column prop="enterType" label="手机号" show-overflow-tooltip></el-table-column>
-                                            <el-table-column prop="enterType" label="证件类型" show-overflow-tooltip></el-table-column>
-                                            <el-table-column prop="enterType" label="证件号码" show-overflow-tooltip></el-table-column>
-                                            <el-table-column prop="enterType" label="性别" show-overflow-tooltip></el-table-column>
-                                            <el-table-column prop="enterType" label="地址" show-overflow-tooltip></el-table-column>
-                                            <el-table-column prop="enterType" label="同来" show-overflow-tooltip></el-table-column>
-                                            <el-table-column label="操作">
-                                                <template slot-scope="{row}">
-                                                    <el-button type="text" size="mini">添加黑名单</el-button>
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
-                                    </div>
-                                </div> -->
 
                             </template>
                         </div>
@@ -239,7 +220,6 @@ export default {
             this.$F.doRequest(this, '/pms/checkin/check_in_detail', {
                 checkInId: id
             }, (res) => {
-                debugger
                 this.$F.merge(this.detailData, res);
             })
         },

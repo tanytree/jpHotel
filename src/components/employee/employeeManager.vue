@@ -763,35 +763,31 @@
             this.department_list();
         },
         methods: {
-
             //下载模板
             downloadTemplate() {
-                // this.$F.doRequest(this, "/pms/employee/download", {}, (res) => {
-                //     this.$message.success(this.downloadSuccessful);
+                this.$F.commons.downloadTemplate("/pms/employee/download");
+                // let url = httpRequest.systemUrl("/pms/employee/download") + `?userId=${this.userId}&platSource=2005`;
+                // debugger
+                // axios.get(url, {
+                //     headers:{
+                //         "accessToken": sessionStorage.accessToken
+                //     },
+                //     responseType: 'blob', //二进制流
+                // }).then(function (res) {
+                //     if(!res) return
+                //     let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
+                //     let url = window.URL.createObjectURL(blob);
+                //     let aLink = document.createElement("a");
+                //     aLink.style.display = "none";
+                //     aLink.href = url;
+                //     aLink.setAttribute("download", "excel.xls");
+                //     document.body.appendChild(aLink);
+                //     aLink.click();
+                //     document.body.removeChild(aLink);
+                //     window.URL.revokeObjectURL(url);
+                // }).catch(function (error) {
+                //     console.log(error)
                 // });
-
-                let url = httpRequest.systemUrl("/pms/employee/download") + `?userId=${this.userId}&platSource=2005`;
-                debugger
-                axios.get(url, {
-                    headers:{
-                        "accessToken": sessionStorage.accessToken
-                    },
-                    responseType: 'blob', //二进制流
-                }).then(function (res) {
-                    if(!res) return
-                    let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
-                    let url = window.URL.createObjectURL(blob);
-                    let aLink = document.createElement("a");
-                    aLink.style.display = "none";
-                    aLink.href = url;
-                    aLink.setAttribute("download", "excel.xls");
-                    document.body.appendChild(aLink);
-                    aLink.click();
-                    document.body.removeChild(aLink);
-                    window.URL.revokeObjectURL(url);
-                }).catch(function (error) {
-                    console.log(error)
-                });
             },
             initForm() {
                 this.searchForm = {

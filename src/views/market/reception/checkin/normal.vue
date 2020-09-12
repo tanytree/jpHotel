@@ -620,8 +620,10 @@
         },
         methods: {
             personCallback(data) {
-              debugger
+                this.checkInForm.checkInRoomJson = data;
+                this.addLivePersonShow = false;
             },
+
             initForm() {
                 this.getRoomsForm = {
                     changeType: 1,
@@ -729,6 +731,7 @@
                     let params = this.$F.deepClone(this.checkInForm);
                     params.checkInRoomJson = JSON.stringify(params.checkInRoomJson);
                     this.$F.doRequest(this, url, params, (data) => {
+                        debugger
                         if (type == 2) {
                             this.$message({
                                 message: 'Success',
@@ -736,9 +739,9 @@
                             });
                             window.setTimeout(() => {
                                 if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
-                                    this.$router.push('/orderdetail?id=' + data.checkInReserveId || data.checkinId);
+                                    this.$router.push('/orderdetail?id=' + (data.checkInReserveId || data.checkinId));
                                 } else {
-                                    this.$router.push('/bookingDetail?id=' + data.checkInReserveId || data.checkinId);
+                                    this.$router.push('/bookingDetail?id=' + (data.checkInReserveId || data.checkinId));
                                 }
                             }, 2000)
                         } else if (type == 3) {
@@ -1047,31 +1050,40 @@
                 console.log(this.waitingRoom);
                 let waitingRoom2 =  this.$F.deepClone(this.waitingRoom);
                 this.liveData = [];
-                waitingRoom2.forEach(roomTypeObject => {
-                    roomTypeObject.roomsArr.forEach((room, index) => {
-                        room.roomTypeName = roomTypeObject.roomTypeName;
-                        room.houseNum = room.houseNum;
-                        if (room.personList && room.personList.length > 1) {
-                            room.personList.forEach((element, index) => {
-                                if (index > 0) {
-                                    element.isChild = true;
-                                }
-                            });
-                        } else {
-                            this.$F.merge(room, {
-                                checkinRoomId: '',
-                                name: this.checkInForm.name,
-                                idcardType: this.checkInForm.idcardType,
-                                idcard: this.checkInForm.idcard,
-                                sex: this.checkInForm.sex,
-                                mobile: this.checkInForm.mobile,
-                                checkinId: '',
-                                checkInPersonId: '',
-                            })
-                        }
-                        this.liveData.push(room);
+                if (this.checkInForm.checkInRoomJson.length > 0) {
+                    this.checkInForm.checkInRoomJson.forEach((room, index) => {
+                        this.$F.merge(room, room.personList[0])
+                        room.personList.splice(0, 1);
+                    });
+                    this.liveData =  this.checkInForm.checkInRoomJson;
+                } else {
+                    waitingRoom2.forEach(roomTypeObject => {
+                        roomTypeObject.roomsArr.forEach((room, index) => {
+                            room.roomTypeName = roomTypeObject.roomTypeName;
+                            room.houseNum = room.houseNum;
+                            if (room.personList && room.personList.length > 1) {
+                                room.personList.forEach((element, index) => {
+                                    if (index > 0) {
+                                        element.isChild = true;
+                                    }
+                                });
+                            } else {
+                                this.$F.merge(room, {
+                                    checkinRoomId: '',
+                                    name: this.checkInForm.name,
+                                    idcardType: this.checkInForm.idcardType,
+                                    idcard: this.checkInForm.idcard,
+                                    sex: this.checkInForm.sex,
+                                    mobile: this.checkInForm.mobile,
+                                    checkinId: '',
+                                    checkInPersonId: '',
+                                })
+                            }
+                            this.liveData.push(room);
+                        })
                     })
-                })
+                }
+
                 console.log(this.liveData);
                 debugger
                 this.addLivePersonShow = true;
