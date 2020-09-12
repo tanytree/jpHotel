@@ -25,12 +25,33 @@
               <el-form-item label="菜品图片" prop="name">
                 <div>
                      <el-upload
-                       action="aa"
+                       action="#"
+                       ref="upload"
                        list-type="picture-card"
-                       :on-preview="handlePictureCardPreview"
-                       :on-remove="handleRemove">
-                       <i class="el-icon-plus"></i>
+                       :file-list="files"
+                       :auto-upload="false">
+                         <i slot="default" class="el-icon-plus"></i>
+                         <div slot="file" slot-scope="{file}">
+                           <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+                           <span class="el-upload-list__item-actions">
+                             <!-- <span
+                               class="el-upload-list__item-preview"
+                               @click="handlePictureCardPreview(file)"
+                             >
+                               <i class="el-icon-zoom-in"></i>
+                             </span> -->
+                             <span
+                               v-if="!disabled"
+                               class="el-upload-list__item-delete"
+                               @click="handleRemove(file)"
+                             >
+                               <i class="el-icon-delete"></i>
+                             </span>
+                           </span>
+                         </div>
                      </el-upload>
+
+
                 </div>
               </el-form-item>
 
@@ -50,6 +71,9 @@
               <el-button @click="closeDialog">取消</el-button>
                <el-button type="primary" @click="submitForm('form')">确定</el-button>
             </div>
+            <el-dialog :title="$t('manager.hp_img')" top="0" :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt />
+            </el-dialog>
         </el-form>
 
 
@@ -74,10 +98,10 @@
                    dishesId:'',
                    state:1
                },
-               fileList: [
-
-               ],
-
+               files:[],
+               dialogImageUrl: '',
+               dialogVisible: false,
+               disabled: false,
                rules: {
                  name: [
                    { required: true, message: '请输入活动名称', trigger: 'blur' },
@@ -117,7 +141,8 @@
             //获取传过来的值
             getData(data){
                 console.log(data)
-                 this.info = {
+                this.files = []
+                this.info = {
                      name:data.name,
                      categoryId:data.categoryId,
                      categoryName:data.categoryName,
@@ -129,6 +154,10 @@
                      dishesId:data.id,
                      state:data.state
                  }
+
+               this.files.push({
+                   url:data.images
+               })
             },
 
             intData(){
@@ -176,32 +205,64 @@
                  }
             },
 
+            // 选择图片--放大
+            // handlePictureCardPreview(file) {
+            //   this.dialogImageUrl = file.url;
+            //   this.dialogVisible = true;
+            // },
+            handleRemove(file) {
+              this.files = this.files.filter(
+                (item) => item.url != file.url
+              );
+              this.$refs.upload.uploadFiles = this.$F.deepClone(this.hotelData.files);
+            },
+
+
+
             submitForm(form) {
 
                 console.log(this.info)
                 this.$refs[form].validate((valid) => {
                  if (valid) {
 
-                    let params = this.info
-                    params.userId = this.userId
-                    this.$F.doRequest(this, "/pms/dishes/dishes_manage_edit", params, (res) => {
-                        console.log(res)
-                        if(res.dishesId){
-                            this.alert(200,'操作成功')
-                            this.closeDialog();
-                        }
+
+                    this.formData = new FormData();
+                    let imgList = this.$refs.upload.uploadFiles || [];
+                    if (imgList.length == 0) {
+                        return a.$message.warning('无图片');
+                    }
+
+
+
+                    this.$F.doUploadBatch(this, imgList, (data) => {
+                        this.info.images = data;
+                        let params = this.info
+                        params.userId = this.userId
+
+                        this.$F.doRequest(this, "/pms/dishes/dishes_manage_edit", params, (res) => {
+                          console.log(res)
+                          if(res.dishesId){
+                              this.alert(200,'操作成功')
+                              this.closeDialog();
+                          }
+                      });
+
+
+
+
                     });
+
+
+
+
+
                  } else {
                    this.alert(0,'操作失败')
                  }
                 });
             },
-            handlePictureCardPreview(file) {
-                console.log(file)
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
-              },
+
+
             closeDialog(){
                 this.$refs['form'].resetFields();
                 this.intData();
