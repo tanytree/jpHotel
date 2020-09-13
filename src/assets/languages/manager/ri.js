@@ -193,6 +193,7 @@ module.exports = {
     grsl_salePointName: '売り場名称',
     grsl_allowedToRoom: '部屋への売掛許可',
     grsl_allowerToUnit: '会社への売掛許可',
+    grsl_allowDelete: '削除を許可',
     grsl_toEnble: '使用開始中',
     grsl_allowedCheckUnit: '会社への売掛許可',
     grsl_allowedCheckRoom: '部屋への売掛許可',

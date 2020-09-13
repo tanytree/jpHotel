@@ -114,27 +114,27 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="operCheckinType" label="房型（房号）" show-overflow-tooltip>
+            <el-table-column prop="operCheckinType" label="房型（房号）" width="140">
                 <template slot-scope="{row}">
                     {{F_operCheckinType(row.operCheckinType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="deposit" label="订金" show-overflow-tooltip>
+            <el-table-column prop="deposit" label="订金" width="100" align="center">
                 <template slot-scope="{row}">
                     {{row.deposit || 0}}
                 </template>
             </el-table-column>
-            <el-table-column prop="totalRoomPrice" label="总房费" show-overflow-tooltip>
+            <el-table-column prop="totalRoomPrice" label="总房费" width="100" align="center">
                 <template slot-scope="{row}">
                     {{row.totalRoomPrice || 0}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="订单来源" show-overflow-tooltip>
+            <el-table-column prop="" label="订单来源" width="100" align="center">
                 <template slot-scope="{row}">
                     {{F_orderSource(row.orderSource)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="状态" show-overflow-tooltip>
+            <el-table-column prop="" label="状态" width="100" align="center">
                 <template slot-scope="{row}">
                     {{F_reserveState(row.state)}}
                 </template>

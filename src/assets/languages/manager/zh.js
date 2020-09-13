@@ -193,6 +193,7 @@ module.exports = {
     grsl_salePointName: '售卖点名称',
     grsl_allowedToRoom: '允许签单到房间',
     grsl_allowerToUnit: '允许签单到单位',
+    grsl_allowDelete: '允许删除',
     grsl_toEnble: '启用中',
     grsl_allowedCheckUnit: '允许签到到单位',
     grsl_allowedCheckRoom: '允许签到到房间',

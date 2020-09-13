@@ -84,7 +84,7 @@
                 if(this.activeName == 'GoodsMg' || this.activeName == 'StockMg') {
                     this.getHotelGoodsData(this.pageForm);
                 } else if (this.activeName == 'SalePoint') {
-                    this.getSellingData(this.pageForm);
+                    // this.getSellingData(this.pageForm);
                 } else if (this.activeName == 'IntoKuAudit') {
                     this.getAuditData(this.pageForm);
                 }
@@ -153,6 +153,7 @@
                 this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/sellinglog/list', params, (res) => {
                     this.salesList = res.list;
+                    this.salesTotal = res.page.count;
                     callback && callback(res.page)
                 })
             },

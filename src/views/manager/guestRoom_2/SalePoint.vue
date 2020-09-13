@@ -56,25 +56,14 @@
                 <span class="title">{{$t('manager.grsl_salePointManagement')}}</span>
                 <el-button class="submit" size="small" @click="popup('add')">{{$t('commons.newAdd')}}</el-button>
             </div>
-            <el-table
-                    ref="multipleTable"
-                    :data="salePoint"
-                    height="100%"
-                    style="min-height: 250px"
-                    header-row-class-name="default"
-                    size="small"
-            >
+            <el-table ref="multipleTable" :data="salePoint" height="100%" style="min-height: 250px" header-row-class-name="default" size="small">
                 <el-table-column prop="name" :label="$t('manager.grsl_salePointName')"></el-table-column>
                 <el-table-column :label="$t('manager.grsl_allowedToRoom')">
-                    <template
-                            slot-scope="scope"
-                    >{{scope.row.allowRoom == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
+                    <template slot-scope="scope">{{scope.row.allowRoom == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('manager.grsl_allowerToUnit')">
-                    <template
-                            slot-scope="scope"
-                    >{{scope.row.allowEnter == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
+                    <template slot-scope="scope">{{scope.row.allowEnter == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('boss.loginDetail_state')">
@@ -85,36 +74,15 @@
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="200">
                     <template slot-scope="scope">
-                        <el-button
-                                type="text"
-                                size="small"
-                                @click="popup('state', scope.row)"
-                        >{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}
-                        </el-button>
-                        <el-button
-                                type="text"
-                                size="small"
-                                @click="popup('edit', scope.row)"
-                        >{{$t('commons.modify')}}
-                        </el-button>
-                        <el-popconfirm
-                                :title="$t('manager.grsl_sureDelete')+'？'"
-                                icon="el-icon-warning-outline"
-                                iconColor="#FF8C00"
-                                @onConfirm="pointDelete(scope.row)"
-                        >
+                        <el-button type="text" size="small" @click="popup('state', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
+                        <el-button type="text" size="small" @click="popup('edit', scope.row)">{{$t('commons.modify')}}</el-button>
+                        <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="pointDelete(scope.row)">
                             <el-button slot="reference" size="small" type="text">{{$t('commons.delete')}}</el-button>
                         </el-popconfirm>
                     </template>
                 </el-table-column>
             </el-table>
-            <el-dialog
-                    top="0"
-                    :title="editPointTitle"
-                    :visible.sync="editPointVisible"
-                    :close-on-click-modal="false"
-                    append-to-body
-            >
+            <el-dialog top="0" :title="editPointTitle" :visible.sync="editPointVisible" :close-on-click-modal="false" append-to-body>
                 <el-form :model="point" :rules="threerules" ref="ruleForm" label-width="150px">
                     <el-form-item :label="$t('manager.grsl_salePointName')+':'" prop="name">
                         <el-input v-model="point.name"></el-input>
@@ -127,6 +95,12 @@
                     </el-form-item>
                     <el-form-item :label="$t('manager.grsl_allowedCheckRoom')+':'">
                         <el-radio-group v-model="point.allowRoom">
+                            <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
+                            <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item v-if="pointType" :label="$t('manager.grsl_allowDelete')+':'">
+                        <el-radio-group v-model="point.delFlag">
                             <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
                         </el-radio-group>
@@ -226,13 +200,13 @@
                     paging: true,
                 },
                 shelfForm: {pageIndex: 1, pageSize: 10, paging: true,},
-                sellId: "", total: 0,
+                sellId: "",
                 sellName: "",
                 form: {name: "", category: ""},
                 categoryProps: {value: "id", label: "name", children: "child"},
                 salePoint: [],
                 shelfData: [],
-                point: {name: "", allowEnter: 1, allowRoom: 1, state: 1},
+                point: {name: "", allowEnter: 1, allowRoom: 1, state: 1, delFlag: 1},
                 rowData: {goodsName: ""},
                 salePointVisible: false,
                 editPointVisible: false,
@@ -250,13 +224,13 @@
         props: {
             list: Array,
             category: Array,
+            total: Number,
             initData: Function,
         },
         mounted() {
             this.getManageData(() => {
                 this.initData(this.pageForm, '', '', this.sellId, (res)=> {
                     this.pageForm.pageIndex = res.pageIndex;
-                    this.total = res.count;
                 })
             });
         },
@@ -317,7 +291,6 @@
                 })
                 this.initData(this.pageForm, '', '', val, (res)=> {
                     this.pageForm.pageIndex = res.pageIndex;
-                    this.total = res.count;
                 })
             },
             getShelfData(categoryId, goodsName) {
@@ -376,14 +349,13 @@
                     this.editPointVisible = true;
                     this.editPointTitle = this.addNewPoint;
                     this.pointType = true;
-                    this.point = {name: "", allowEnter: 1, allowRoom: 1, state: 1};
+                    this.point = {name: "", allowEnter: 1, allowRoom: 1, state: 1, delFlag: 1};
                 }
             },
             offShelf(row) {
                 this.$F.doRequest(this, "/pms/sellinglog/delete", {id: row.id,}, (res) => {
                     this.initData(this.pageForm, '', '', this.sellId, (res) => {
                         this.pageForm.pageIndex = res.pageIndex;
-                        this.total = res.count;
                     });
                 });
             },
@@ -413,9 +385,7 @@
 
             currentChange(val) {
                 this.pageForm.pageIndex = val;
-                this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, (res) => {
-                    this.total = res.count;
-                });
+                this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
             },
             shelfChange() {
                 this.shelfForm.pageIndex = val;
@@ -436,9 +406,7 @@
                     this.$F.doRequest(this, "/pms/sellinglog/add", params, (res) => {
                         this.$message.success("success");
                         this.getShelfData();
-                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, (res) => {
-                            this.total = res.count;
-                        });
+                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
                     });
                 } else if (type == "point") {
                     if (this.pointType) {
@@ -462,9 +430,7 @@
                     this.$F.doRequest(this, "/pms/sellinglog/edit", params, (res) => {
                         this.onshelfVisible = false;
                         this.$message.success("success");
-                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, (res) => {
-                            this.total = res.count;
-                        });
+                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
                     });
                 }
             },

@@ -22,7 +22,9 @@
                 <el-form-item class="form-inline-flex">
                     <el-row class="form-inline-flex">
                         <el-button class="white" @click="downModel('dynamicValidateForm')">{{$t('commons.downloadTemplate')}}</el-button>
-                        <el-button class="white" @click="importModel">{{$t('manager.grsl_import')}}</el-button>
+                        <el-upload class="button_upload" ref="upload" action="123" :limit="1" :http-request='importModel'>
+                            <el-button class="white">{{$t('manager.grsl_import')}}</el-button>
+                        </el-upload>
                         <el-button @click="popup('add')" class="submit">{{$t('manager.grsl_addGoods')}}</el-button>
                     </el-row>
                 </el-form-item>
@@ -269,12 +271,21 @@
                 this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
             },
             downModel() {
-                this.$F.doRequest(this, "/pms/hotelgoods/download", {}, (res) => {
-                    this.$message.success(this.downloadSuccessful);
-                });
+                // this.$F.doRequest(this, "/pms/hotelgoods/download", {}, (res) => {
+                //     this.$message.success(this.downloadSuccessful);
+                // });
+                this.$F.commons.downloadTemplate("/pms/hotelgoods/download");
             },
-            importModel() {
-                this.$F.doRequest(this, "/pms/hotelgoods/upload", {filename: ""}, (res) => {
+            importModel(params) {
+                var a = this;
+
+                this.$F.doRequest(this, "/pms/hotelgoods/upload", {filename: params.file.name}, (res) => {
+                    // if(res.code > 0) {
+                    //     params.onSuccess(res.message + '上传成功');
+                    // } else {
+                    //     a.$message.error(data.message);
+                    //     a.$refs.upload.uploadFiles = [];
+                    // }
                     this.$message.success(this.importSuccess);
                 });
             },
@@ -316,6 +327,15 @@
             .block {
                 display: flex;
                 align-items: center;
+            }
+        }
+
+        .button_upload {
+            margin: 0 10px;
+            height: 35px;
+
+            .el-upload-list {
+                display: none;
             }
         }
 

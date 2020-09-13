@@ -14,7 +14,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" class="submit" @click="search">{{$t('commons.queryBtn')}}</el-button>
+                            <el-button type="primary" class="submit" @click="search('form')">{{$t('commons.queryBtn')}}</el-button>
                             <el-button class="grey" @click="reset">{{$t('commons.resetBtn')}}</el-button>
                         </el-form-item>
                         <el-form-item class="form-inline-flex">
@@ -22,8 +22,7 @@
                         </el-form-item>
                     </el-form>
                     <div class="components-edit">
-                        <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small" @selection-change="selectionChange">
-                            <el-table-column type="selection" width="70"></el-table-column>
+                        <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
                             <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
                             <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>
                             <el-table-column prop="inventoryCount" :label="$t('manager.grsl_inventoryNum')"></el-table-column>
@@ -78,7 +77,7 @@
                 </el-form-item>
             </el-form>
             <el-card shadow="never">
-                <el-table ref="multipleTable" :data="list" height="100%" border header-row-class-name="default" size="small">
+                <el-table ref="multipleTable" :data="goodsInList" height="100%" style="min-height: 300px" border header-row-class-name="default" size="small">
                     <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
                     <el-table-column :label="$t('manager.grsl_rukuNum')">
@@ -127,14 +126,14 @@
                     <el-cascader v-model="addGoods.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" class="submit" @click="search">{{$t('commons.queryBtn')}}</el-button>
+                    <el-button type="primary" class="submit" @click="search('addGoods')">{{$t('commons.queryBtn')}}</el-button>
                 </el-form-item>
             </el-form>
             <div class="components-edit">
                 <el-table ref="multipleTable" :data="list" tooltip-effect="dark" height="250px" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="addSelection">
                     <el-table-column type="selection" width="55"></el-table-column>
                     <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                    <el-table-column prop="categoryId" :label="$t('manager.grsl_goodsKind')"></el-table-column>
+                    <el-table-column prop="categoryName" :label="$t('manager.grsl_goodsKind')"></el-table-column>
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
                 </el-table>
                 <div class="block">
@@ -171,6 +170,7 @@
                 goodsInVisible: false, //商品入库弹框
                 addGoodsVisible: false, // 修改库存
                 section: [], currentPage: 1,
+                goodsInList: [], addGoodsSec: [],
             };
         },
         props: {
@@ -187,25 +187,30 @@
                     this.stock.id = row.id;
                     this.stock.count = row.inventoryCount;
                     this.changeStockVisible = true;
+                } else if(type == 'addPi') {
+                    this.addGoods = {name: "", categoryId: ""};
+                    this.addGoodsVisible = true;
                 }
                 switch (type) {
                     case "info":
                         this.goodsInVisible = true;
                         break;
-                    case "addPi":
-                        this.addGoodsVisible = true;
-                        break;
                 }
             },
-            search() {
-                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+            search(type) {
+                if(type == 'form') {
+                    this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                } else {
+                    this.initData(this.pageForm, this.addGoods.name, this.addGoods.category);
+                }
+
             },
             reset() {
                 this.form = {name: "", status: "", category: ""};
                 this.initData(this.pageForm);
             },
             casChange(value) {
-                this.rowData.categoryId = value[value.length - 1];
+                this.addGoods.category = value[value.length - 1];
             },
             currentChange(val) {
                 this.pageForm.pageIndex = val;
@@ -253,28 +258,18 @@
                         }
                     );
                 } else if (type == 'batchIn') {
-
+                    this.goodsInList = this.addGoodsSec;
+                    this.addGoodsVisible = false;
                 }
             },
             goodsDelete(row) {
+                this.list = this.list.filter(item => item.id != row.id)
             },
             exportcount() {
-                this.$F.doRequest(
-                    this,
-                    "/pms/hotelgoods/upcounts",
-                    {
-                        categoryId: "",
-                        name: "",
-                    },
-                    (res) => {
-                        this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
-                    }
-                );
-            },
-            selectionChange(val) {
-                this.selection = val;
+                this.$F.commons.downloadTemplate("/pms/hotelgoods/upcounts");
             },
             addSelection(val) {
+                this.addGoodsSec = val;
             },
         },
     };
