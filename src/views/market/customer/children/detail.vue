@@ -628,7 +628,7 @@ export default {
 
   methods: {
     ...mapMutations({
-      resetActive: "taozi/resetActive",
+      resetActive: "resetActive",
     }),
 
     //计算 共   多少件
@@ -780,10 +780,10 @@ export default {
     },
     setCardFormBtnClick(v) {
       let enums = {
-        "1": "换卡操作",
-        "2": "修改会员类型",
-        "3": "会员停用",
-        "4": "挂失/补卡操作",
+        1: "换卡操作",
+        2: "修改会员类型",
+        3: "会员停用",
+        4: "挂失/补卡操作",
       };
       this.cardForm.type = v;
       this.cardForm.titleName = v && enums[v] ? enums[v] : "其它";

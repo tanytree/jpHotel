@@ -169,6 +169,14 @@ export default new Router({
                     component: () =>
                         import('@/views/market/booking')
                 },
+                // c2detail 陶子添加
+                {
+                    path: '/c2detail',
+                    name: 'c2detail',
+                    meta: { title: '会议核销详情', },
+                    component: () =>
+                        import('@/views/market/booking/venue/c2detail')
+                },
 
                 {
                     path: '/market-authSet',
@@ -426,7 +434,7 @@ export default new Router({
                     name: 'food',
                     meta: { title: 'food' },
                     component: () =>
-                        import ('@/views/food/main')
+                        import('@/views/food/main')
                 },
 
                 {
@@ -434,7 +442,7 @@ export default new Router({
                     name: 'dish',
                     meta: { title: 'dish' },
                     component: () =>
-                        import ('@/views/food/dish')
+                        import('@/views/food/dish')
                 },
 
                 {
@@ -442,14 +450,14 @@ export default new Router({
                     name: 'dishOrder',
                     meta: { title: 'dishOrder' },
                     component: () =>
-                        import ('@/views/food/order')
+                        import('@/views/food/order')
                 },
                 {
                     path: '/warehouse',
                     name: 'warehouse',
                     meta: { title: 'warehouse' },
                     component: () =>
-                        import ('@/views/food/warehouse')
+                        import('@/views/food/warehouse')
                 }
             ]
         },

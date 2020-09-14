@@ -266,15 +266,15 @@
         height="250"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
       >
-        <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
-        <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="120"></el-table-column>
+        <el-table-column prop="createTime" label="消费时间" width="160"></el-table-column>
+        <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="100"></el-table-column>
         <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
         <el-table-column label="消费金额	">
           <template slot-scope="{row}">
             <div>{{row.consumePrice?row.consumePrice:0}}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="creatorName" label="操作员"></el-table-column>
+        <el-table-column prop="creatorName" label="操作员" width="150px"></el-table-column>
         <el-table-column prop="address" label="操作">
           <template slot-scope="{row}">
             <el-button type="text" @click="dialogEditor_remove(row)" size="mini">移除</el-button>
@@ -494,11 +494,11 @@
           <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
           <el-table-column label="挂账金额">
             <template slot-scope="{row}">
-              <div>{{row.consumePrice?row.consumePrice:0}}</div>
+              <div>{{row.onAccountTotal?-row.onAccountTotal:0}}</div>
             </template>
           </el-table-column>
         </el-table>
-        <div>总计：{{editorData.length}}笔账务，共计：{{totalPrice(editorData)}}元</div>
+        <div>总计：{{editorData.length}}笔账务，共计：{{-totalPrice_deal(editorData)}}元</div>
         <div style="margin:15px 0">
           <el-button type="primary" @click="dialogVisible=true">收款</el-button>
           <el-button type="primary" @click="dialogRefoundMoney=true">退款</el-button>
@@ -611,7 +611,8 @@ export default {
       editorData_choose: [], //编辑  账务列表
       editorData: [], //当点击编辑时，用来接收编辑的表格数据
       allPrice: null, //即共计
-      radioId:'',   //对结算账单里面进行单选用的
+      allPrice_deal: null, //账套结算——即共计
+      radioId: "", //对结算账单里面进行单选用的
     };
   },
 
@@ -660,6 +661,20 @@ export default {
         return 0;
       }
       this.allPrice = gongji;
+      return gongji;
+    },
+    //计算账务处理的总消费金额
+    totalPrice_deal(arrayName) {
+      let gongji = 0;
+      if (arrayName.length > 0) {
+        for (let item of arrayName) {
+          gongji += item.onAccountTotal;
+        }
+      } else {
+        this.allPrice_deal = 0;
+        return 0;
+      }
+      this.allPrice_deal = gongji;
       return gongji;
     },
     //点击 编辑按钮
