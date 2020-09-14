@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账套管理  -->    账套数据中的账务列表问题
+<!--  前台部 > 客户管理 > 单位管理 > 账套管理  -->  
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -163,8 +163,8 @@
         height="250"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
       >
-        <el-table-column prop="createTime" label="消费时间" width="150"></el-table-column>
-        <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="150"></el-table-column>
+        <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
+        <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="120"></el-table-column>
         <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
         <el-table-column prop="consumePrice" label="消费金额	"></el-table-column>
         <el-table-column prop="creatorName" label="操作员"></el-table-column>
@@ -221,12 +221,17 @@
           :data="editorData_choose"
           height="250"
           :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column prop="date" label="消费时间" width="180"></el-table-column>
-          <el-table-column prop="address" label="房号"></el-table-column>
-          <el-table-column prop="name" label="姓名/团队" width="180"></el-table-column>
-          <el-table-column prop="address" label="金额"></el-table-column>
+          <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
+          <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
+          <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="180"></el-table-column>
+          <el-table-column label="金额">
+            <template slot-scope="{row}">
+              <div>{{row.consumePrice?row.consumePrice:0}}</div>
+            </template>
+          </el-table-column>
         </el-table>
         <div style="text-align:right" slot="footer" class="dialog-footer">
           <span>
@@ -261,18 +266,22 @@
         height="250"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
       >
-        <el-table-column prop="date" label="消费时间" width="150"></el-table-column>
-        <el-table-column prop="name" label="姓名/团队" width="150"></el-table-column>
-        <el-table-column prop="address" label="房号"></el-table-column>
-        <el-table-column prop="address" label="消费金额	"></el-table-column>
-        <el-table-column prop="address" label="操作员"></el-table-column>
+        <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
+        <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="120"></el-table-column>
+        <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
+        <el-table-column label="消费金额	">
+          <template slot-scope="{row}">
+            <div>{{row.consumePrice?row.consumePrice:0}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="creatorName" label="操作员"></el-table-column>
         <el-table-column prop="address" label="操作">
-          <template>
+          <template slot-scope="{row}">
             <el-button type="text" @click="dialogEditor_remove(row)" size="mini">移除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div>总计：{{accountList_add.length}}笔账务，共计：{{totalPrice(editorData)}}元</div>
+      <div>总计：{{editorData.length}}笔账务，共计：{{totalPrice(editorData)}}元</div>
       <div style="text-align:right" slot="footer" class="dialog-footer">
         <span>
           <el-button @click="dialogEditor_cancle">取 消</el-button>
@@ -280,7 +289,7 @@
         </span>
       </div>
     </el-dialog>
-    <!-- 账务处理dialog -->
+    <!-- 账务处理（按账套）dialog -->
     <el-dialog
       title="账务处理（按账套）"
       v-if="settlementDialog"
@@ -292,8 +301,8 @@
         <span>单位名称:{{itemInfo.enterName}}</span>
         <span style="margin-left:20px">账套名称: {{itemInfo.accountSetName}}</span>
       </div>
+      <!-- 内层dailog -->
       <div>
-        <!-- 内层dailog -->
         <!-- 内层  收款dialog -->
         <el-dialog
           title="结算收款"
@@ -305,7 +314,7 @@
         >
           <el-form
             :model="inneraAccountForm"
-            ref="inneraAccountForm"
+            ref="inneraAccountForm_collection"
             label-width="100px"
             class="demo-ruleForm"
           >
@@ -324,7 +333,7 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button @click="dialogCancle('dialogVisible')">取 消</el-button>
               <el-button type="primary" @click="sureRefund('dialogVisible')">确 认</el-button>
             </span>
           </div>
@@ -395,14 +404,14 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogAheadTime = false">取 消</el-button>
+              <el-button @click="dialogCancle('dialogAheadTime')">取 消</el-button>
               <el-button type="primary" @click="sureRefund('dialogAheadTime')">确 认</el-button>
             </span>
           </div>
         </el-dialog>
-        <!-- 内层  选择账套dialog -->
+        <!-- 内层  冲调dialog -->
         <el-dialog
-          title="选择账套"
+          title="冲调"
           v-if="dialogChooseBook"
           :visible.sync="dialogChooseBook"
           append-to-body
@@ -414,12 +423,20 @@
             height="250"
             :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
           >
-            <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="date" label="账套名" width="180"></el-table-column>
-            <el-table-column prop="address" label="挂账金额"></el-table-column>
-            <el-table-column prop="name" label="结算金额" width="180"></el-table-column>
-            <el-table-column prop="address" label="创建时间"></el-table-column>
+            <el-table-column prop="date" label="营业项目" width="180"></el-table-column>
+            <el-table-column prop="address" label="业务详情"></el-table-column>
+            <el-table-column prop="name" label="挂账金额" width="180"></el-table-column>
           </el-table>
+          <el-form
+            :model="inneraAccountForm"
+            ref="inneraAccountForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="冲调原因:">
+              <el-input v-model="inneraAccountForm.reason" style="width:280px"></el-input>
+            </el-form-item>
+          </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
               <el-button @click="dialogChooseBook = false">取 消</el-button>
@@ -457,7 +474,7 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogRefoundMoney = false">取 消</el-button>
+              <el-button @click="dialogCancle('dialogRefoundMoney')">取 消</el-button>
               <el-button type="primary" @click="sureRefund('dialogRefoundMoney')">确 认</el-button>
             </span>
           </div>
@@ -472,16 +489,20 @@
           height="250"
           :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
         >
-          <el-table-column prop="date" label="消费时间" width="180"></el-table-column>
-          <el-table-column prop="name" label="姓名/团队" width="180"></el-table-column>
-          <el-table-column prop="address" label="房号"></el-table-column>
-          <el-table-column prop="address" label="挂账金额"></el-table-column>
+          <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
+          <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="180"></el-table-column>
+          <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
+          <el-table-column label="挂账金额">
+            <template slot-scope="{row}">
+              <div>{{row.consumePrice?row.consumePrice:0}}</div>
+            </template>
+          </el-table-column>
         </el-table>
         <div>总计：{{editorData.length}}笔账务，共计：{{totalPrice(editorData)}}元</div>
         <div style="margin:15px 0">
           <el-button type="primary" @click="dialogVisible=true">收款</el-button>
           <el-button type="primary" @click="dialogRefoundMoney=true">退款</el-button>
-          <el-button type="primary" @click="brewRich">冲调</el-button>
+          <el-button type="primary" @click="dialogChooseBook = true">冲调</el-button>
           <el-button type="primary" @click="dialogFree = true">免单</el-button>
           <el-button type="primary" @click="dialogAheadTime = true">预收款</el-button>
         </div>
@@ -491,8 +512,15 @@
           :data="tableData"
           height="250"
           :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          highlight-current-row
+          @row-click="rowClick"
         >
-          <el-table-column type="selection" width="50"></el-table-column>
+          <!-- <el-table-column type="selection" width="50"></el-table-column> -->
+          <el-table-column label width="35">
+            <template slot-scope="{row}">
+              <el-radio :label="row.name" v-model="radioId">&nbsp;</el-radio>
+            </template>
+          </el-table-column>
           <el-table-column prop="name" label="营业项目" width="180"></el-table-column>
           <el-table-column prop="name" label="业务详情" width="180"></el-table-column>
           <el-table-column prop="address" label="金额"></el-table-column>
@@ -559,6 +587,18 @@ export default {
       dialogEditor: false, //编辑账套 dialog
       dialogChoose: false, //内层  新增账套 账务选择dialog
       dialogChoose_editor: false, //内层 编辑账套  账务选择dialog
+      //账务处理内层弹框
+      dialogVisible: false, //收款
+      dialogRefoundMoney: false, //退款
+      dialogAheadTime: false, //预收款
+      dialogChooseBook: false, //冲调
+      dialogFree: false, //免单
+      inneraAccountForm: {
+        payType: "",
+        payPrice: "0",
+        remark: "",
+        reason: "",
+      },
       editorForm: {
         //编辑 form表单
         enterId: "",
@@ -567,10 +607,11 @@ export default {
         endTime: "",
       },
       orderListJson: [],
-      inneraAccountForm: {},
       itemInfo: null,
       editorData_choose: [], //编辑  账务列表
       editorData: [], //当点击编辑时，用来接收编辑的表格数据
+      allPrice: null, //即共计
+      radioId:'',   //对结算账单里面进行单选用的
     };
   },
 
@@ -579,9 +620,32 @@ export default {
     this.getUnitList();
   },
   methods: {
+    rowClick(row) {
+      this.radioId = row.name;
+    },
+    //账务处理（按账套）内层dialog 点击取消
+    dialogCancle(dialogName) {
+      this[dialogName] = false;
+      this.inneraAccountForm = {
+        payType: "",
+        payPrice: "0",
+        remark: "",
+      };
+    },
+    //账务处理（按账套）内层dialog 点击确认
+    sureRefund(dialogName) {
+      this[dialogName] = false;
+      this.inneraAccountForm = {
+        payType: "",
+        payPrice: "0",
+        remark: "",
+      };
+    },
     //点击结账按钮
     settleAccounts(row) {
+      console.log(row);
       this.itemInfo = row;
+      this.editorData = row.subList;
       this.settlementDialog = true;
     },
     //计算账务列表的总消费金额
@@ -592,13 +656,18 @@ export default {
           gongji += item.consumePrice;
         }
       } else {
+        this.allPrice = 0;
         return 0;
       }
+      this.allPrice = gongji;
       return gongji;
     },
     //点击 编辑按钮
     editorClick(row) {
       this.itemInfo = row;
+      this.editorData = row.subList;
+      console.log(row);
+      console.log(this.editorData);
       this.editorForm.enterId = this.itemInfo.enterId;
       this.editorForm.accountSetName = this.itemInfo.accountSetName;
       this.dialogEditor = true;
@@ -637,7 +706,10 @@ export default {
               this.$message.success("账套新增成功");
               this.addFrom.enterId = "";
               this.addFrom.name = "";
+              this.addFrom.accountSetName = "";
               this.dialogNew = false;
+              this.accountList_add = [];
+              this.getDataList();
             }
           );
         } else {
@@ -655,6 +727,7 @@ export default {
             this.orderListJson.push(item.id);
           }
           let params = {
+            accountSetId: this.itemInfo.id,
             enterId: this.editorForm.enterId,
             accountSetName: this.editorForm.accountSetName,
             orderListJson: JSON.stringify(this.orderListJson),
@@ -664,10 +737,12 @@ export default {
             "/pms/consume/enter_credit_edit",
             params,
             (data) => {
-              this.$message.success("账套新增成功");
+              this.$message.success("账套编辑成功");
               this.editorForm.enterId = "";
               this.editorForm.name = "";
+              this.editorForm.accountSetName = "";
               this.dialogEditor = false;
+              this.editorData = [];
             }
           );
         } else {
@@ -679,12 +754,16 @@ export default {
     dialogNew_cancle() {
       this.addFrom.enterId = "";
       this.addFrom.name = "";
+      this.addFrom.accountSetName = "";
       this.dialogNew = false;
+      this.accountList_add = [];
     },
     //编辑账套  点击取消
     dialogEditor_cancle() {
       this.editorForm.enterId = "";
       this.editorForm.name = "";
+      this.editorForm.accountSetName = "";
+      this.editorData = [];
       this.dialogEditor = false;
     },
     //新增  账务选择  点击取消
@@ -746,19 +825,17 @@ export default {
     //新增 点击账务选择 查询按钮
     dialogChoose_look() {
       let params = {
-        state: 1,
-        paging: true,
         pageIndex: 1,
         pageSize: 999,
       };
       this.$F.merge(params, this.addFrom);
       this.$F.doRequest(
         this,
-        "/pms/consume/enter_finance_order_list",
+        "/pms/consume/enter_credit_order_list",
         params,
         (data) => {
           console.log(data);
-          this.accountList = data.enterOrderLogList;
+          this.accountList = data.consumeOrderList;
           this.dialogChoose = true;
         }
       );
@@ -766,19 +843,17 @@ export default {
     //编辑 点击账务选择 查询按钮
     dialogChoose_editor_look() {
       let params = {
-        state: 1,
-        paging: true,
         pageIndex: 1,
         pageSize: 999,
       };
       this.$F.merge(params, this.editorForm);
       this.$F.doRequest(
         this,
-        "/pms/consume/enter_finance_order_list",
+        "/pms/consume/enter_credit_order_list",
         params,
         (data) => {
           console.log(data);
-          this.editorData_choose = data.enterOrderLogList;
+          this.editorData_choose = data.consumeOrderList;
           this.dialogChoose_editor = true;
         }
       );
@@ -787,19 +862,17 @@ export default {
     chooseAccount() {
       if (this.addFrom.enterId) {
         let params = {
-          state: 1,
-          paging: true,
           pageIndex: 1,
           pageSize: 999,
         };
         this.$F.merge(params, this.addFrom);
         this.$F.doRequest(
           this,
-          "/pms/consume/enter_finance_order_list",
+          "/pms/consume/enter_credit_order_list",
           params,
           (data) => {
             console.log(data);
-            this.accountList = data.enterOrderLogList;
+            this.accountList = data.consumeOrderList;
             this.dialogChoose = true;
           }
         );
@@ -811,19 +884,17 @@ export default {
     chooseAccount_editor() {
       if (this.editorForm.enterId) {
         let params = {
-          state: 1,
-          paging: true,
           pageIndex: 1,
           pageSize: 999,
         };
         this.$F.merge(params, this.editorForm);
         this.$F.doRequest(
           this,
-          "/pms/consume/enter_finance_order_list",
+          "/pms/consume/enter_credit_order_list",
           params,
           (data) => {
             console.log(data);
-            this.editorData_choose = data.enterOrderLogList;
+            this.editorData_choose = data.consumeOrderList;
             this.dialogChoose_editor = true;
           }
         );
