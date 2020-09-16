@@ -99,7 +99,7 @@
             </div>
         <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
     <!-- 编辑or详情弹窗 -->
 
@@ -248,7 +248,7 @@ export default {
 
          /**每页数 */
         handleSizeChange(val) {
-              this.searchForm.pageIndex = val;
+              this.searchForm.pageSize = val;
               this.getDataList();
         },
          /**当前页 */

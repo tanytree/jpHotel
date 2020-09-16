@@ -378,8 +378,8 @@ export default {
 
     /**每页数 */
     handleSizeChange(val) {
-        console.log(val)
-        this.searchForm.pageIndex = val;
+        // console.log(val)
+        this.searchForm.pageSize = val;
         this.getDataList();
     },
     /**当前页 */

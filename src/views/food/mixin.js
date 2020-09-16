@@ -30,6 +30,18 @@ const mixin= {
                 return arr.join(",");
             }
         },
+        //数组去重
+        noRepeat(arr) {
+            var newArr = [];
+            for(var i=0,l = arr.length; i < l; i++) {
+                for(var j=i+1;j<l;j++) {
+                    if(JSON.stringify(arr[i]) == JSON.stringify(arr[j])) j = ++i;
+                }
+                newArr.push(arr[i]);
+            }
+            // console.log(newArr);
+            return newArr;
+        },
         alert(v,msg){
              if(v == 200){
                  this.$message({
