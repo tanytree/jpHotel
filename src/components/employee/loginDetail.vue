@@ -78,15 +78,15 @@
         <el-col :span="14">{{detailsData.positiveTime || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
 
-        <el-row style="margin:10px 0" v-if="dimission == 1">
-            <el-col :span="8">{{$t('boss.loginDetail_outTime')}}</el-col>
-            <el-col :span="14">{{detailsData.outTime || $t('boss.loginDetail_no')}}</el-col>
-        </el-row>
+      <el-row style="margin:10px 0" v-if="dimission == 1">
+        <el-col :span="8">{{$t('boss.loginDetail_outTime')}}</el-col>
+        <el-col :span="14">{{detailsData.outTime || $t('boss.loginDetail_no')}}</el-col>
+      </el-row>
 
-        <el-row style="margin:10px 0"  v-if="dimission == 1">
-            <el-col :span="8">{{$t('boss.loginDetail_outReason')}}</el-col>
-            <el-col :span="14">{{detailsData.outReason || $t('boss.loginDetail_no')}}</el-col>
-        </el-row>
+      <el-row style="margin:10px 0" v-if="dimission == 1">
+        <el-col :span="8">{{$t('boss.loginDetail_outReason')}}</el-col>
+        <el-col :span="14">{{detailsData.outReason || $t('boss.loginDetail_no')}}</el-col>
+      </el-row>
 
       <el-row style="margin:10px 0">
         <el-col :span="8">{{$t('boss.loginDetail_note')}}</el-col>
@@ -103,7 +103,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-  props: ["account", "employeeId", "storeList", 'dimission'],
+  props: ["account", "employeeId", "storeList", "dimission"],
   data() {
     return {
       loading: false,
@@ -176,7 +176,7 @@ export default {
       );
     },
     getDetails(account, employeeId, item) {
-        debugger
+      debugger;
       if (item) {
         this.details = true;
         this.detailsData = item;

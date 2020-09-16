@@ -366,6 +366,7 @@ export default {
     }
 
     .tip {
+      margin-left: 10px;
       font-size: 14px;
       color: #888;
     }

@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Dana
- * @LastEditTime: 2020-07-07 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-09-16 12:07:53
+ * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
 
@@ -29,7 +29,7 @@ module.exports = {
     report_expand: "消費明細報告書 ",
     report_income: "入金明細報告書",
     report_businessHours: "営業時間",
-    report_toText: 'から',
+    report_toText: '-',
     report_inquire: '検索',
     report_thisMonth: "今月",
     report_lastMonth: "先月",
@@ -43,13 +43,13 @@ module.exports = {
     report_cumulativeThisYear: '本年累計',
     report_checkingData: '資料確認 ',
     report_permissionSettings: '権限設定',
-    report_employeeRights: '従業員権限',
-    report_specificPrivileges: '具体权限设置',
+    report_employeeRights: 'アクセス権限',
+    report_specificPrivileges: '具体的権限設定',
     report_openAccess: "開封後、あなたは許可を得ています",
     report_openAll: "全部作動",
     // loginDetail页面内容
     loginDetail_name: "名前",
-    loginDetail_state: "状態",
+    loginDetail_state: "状態（all、on、off）",
     loginDetail_phone: "携帯番号",
     loginDetail_stores: "所属店舗",
     loginDetail_department: "所属部門",
@@ -72,11 +72,11 @@ module.exports = {
     loginDetail_outReason: "離職原因",
 
     //总办 > 部门负责人
-    department_name: "部署名",
-    department_head: "責任者",
-    department_setHead: "担当者を設置する",
+    department_name: "部署",
+    department_head: "担当責任者",
+    department_setHead: "担当責任者設定",
     department_placeEnterContent: "従業員名を入力してください",
-    department_hasChosen: "現在の選択",
+    department_hasChosen: "決定",
 
     //总办 > 人员管理
     staff_name: '名前',
@@ -96,7 +96,7 @@ module.exports = {
     staff_clickUp: 'アップロードをクリックする',
     staff_positiveTime: '正しい日付：',
     staff_selectStores: '店を選んでください',
-    staff_inputStaffName: '従業員名を入力してください',
+    staff_inputStaffName: '担当責任者名前を入力',
     staff_placeSelectStaffState: '社員の状態を選んでください',
     staff_inputWorkTime: '入社時間を入力してください',
     staff_sureDelete: '削除するか確認してください?',
@@ -140,11 +140,35 @@ module.exports = {
     compensation_issuingDate: '発行日時',
     compensation_personalTax: '個人控除',
     compensation_selectReleaseMonth: '発行月を選んでください',
-    compensation_toView: 'チェック',
+    compensation_toView: '確認',
     compensation_salaryChange: '報酬改定',
     compensation_selectDepartment: '部署を選んでください',
     compensation_wageSetting: '報酬設定',
     compensation_setSuccess: '設置に成功!!',
+    //总办 > 门店管理
+    store_createStore: 'ホテル追加',
+    store_storeName: 'ホテル名称',
+    store_storeManagers: '支配人',
+    store_address: '住所',
+    store_addStore: 'ホテル追加',
+    store_resetStore: 'ホテル情報変更',
+    store_loginAccount: 'ログインアカウント',
+    store_loginPassword: 'ログインパスワード',
+    //人事部 （personnel）
+    personnel_department: '所属編集',
+    personnel_addDepart: '部門を加える',
+    personnel_editDepart: '編集master',
+
+
+
+
+
+
+
+
+
+
+
 
 
 

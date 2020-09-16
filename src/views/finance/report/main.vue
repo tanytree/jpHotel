@@ -45,7 +45,7 @@
               </div>
               <el-form-item>
                 <el-button type="primary" class="submit">{{$t('commons.queryBtn')}}</el-button>
-<!--                <el-button type="primary" class="submit">{{$t('commons.print')}}</el-button>-->
+                <!--                <el-button type="primary" class="submit">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" class="submit">{{$t('commons.exportBtn')}}</el-button>
               </el-form-item>
             </el-form>

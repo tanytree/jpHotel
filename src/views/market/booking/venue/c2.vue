@@ -14,7 +14,7 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
           <el-row>
-            <el-form-item label="收款时间">
+            <el-form-item label="会议时间:">
               <el-radio-group v-model="searchForm.searchType">
                 <el-radio-button label style="margin-right:10px">不限</el-radio-button>
                 <el-radio-button label="1" style="margin-right:10px">当天</el-radio-button>
@@ -43,7 +43,7 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item label="登记时间">
+            <el-form-item label="登记日期:">
               <el-date-picker
                 v-model="searchForm.startTime"
                 value-format="yyyy-MM-dd"
@@ -62,7 +62,7 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item label="订单来源">
+            <el-form-item label="订单来源:">
               <el-select v-model="searchForm.orderSource" class="width150">
                 <el-option
                   :value="key"
@@ -72,7 +72,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="客源类别">
+            <el-form-item label="客源类别:">
               <el-select v-model="searchForm.guestType" class="width150">
                 <el-option
                   :value="key"
@@ -84,13 +84,13 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item label="预订人">
+            <el-form-item label="预订人:">
               <el-input v-model="searchForm.content" class="width200"></el-input>
             </el-form-item>
-            <el-form-item label="房间号">
+            <el-form-item label="房间号:">
               <el-input v-model="searchForm.content" class="width200"></el-input>
             </el-form-item>
-            <el-form-item label="订单号">
+            <el-form-item label="订单号:">
               <el-input v-model="searchForm.content" class="width200"></el-input>
             </el-form-item>
             <el-form-item>
@@ -128,9 +128,9 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="searchForm.page"
+          :current-page="searchForm.pageIndex"
           :page-sizes="[10, 50, 100, 200]"
-          :page-size="searchForm.page_num"
+          :page-size="searchForm.pageSize"
           layout=" sizes, prev, pager, next, jumper"
           :total="listTotal"
         ></el-pagination>
@@ -184,7 +184,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align:right">
           <el-button @click="dialogMeet=false">取消</el-button>
-          <el-button type="primary" @click="hotelenterAddAndEdit">确认</el-button>
+          <el-button type="primary" @click="dialogMeet_sure">确认</el-button>
         </div>
       </el-dialog>
     </div>
@@ -206,8 +206,6 @@ export default {
     return {
       dialogMeet: false,
       loading: false,
-      showEdit: false,
-      showDetail: false,
       searchForm: {
         searchType: 1,
         content: "",
@@ -297,10 +295,14 @@ export default {
     };
   },
 
-  mounted() {
+  created() {
     // this.initForm();
   },
   methods: {
+    //点击会议签到  确认 按钮
+    dialogMeet_sure() {
+      this.dialogMeet = false;
+    },
     //点击  会议登记 按钮
     meetClick(row) {
       this.dialogMeet = true;
@@ -336,13 +338,14 @@ export default {
     },
     /**每页数据 */
     handleSizeChange(val) {
-      this.searchForm.page_num = val;
-      this.searchForm.page = 1;
+      this.searchForm.pageSize = val;
+      this.searchForm.pageIndex = 1;
       this.getDataList();
     },
     /**当前页 */
     handleCurrentChange(val) {
-      this.searchForm.page = val;
+      this.searchForm.pageIndex = val;
+      this.searchForm.pageSize = 10;
       this.getDataList();
     },
   },
