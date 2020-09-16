@@ -154,7 +154,7 @@ export default {
                 id:'',//主键id String选填
                 createrName:'',// 制单人 String选填
                 storageId :'',//  倉庫id 不传表示全部 String选填
-                state :1,//      状态 1待审核 2审核通过 3未通过 Integer选填
+                state :'',//      状态 1待审核 2审核通过 3未通过 Integer选填
                 type:'',//     申请类型 1入库 2出库 Integer选填
                 startTime:'',//   起始时间yyyyMMdd String选填
                 endTime  :'',//   结束时间yyyyMMdd String选填
@@ -181,7 +181,7 @@ export default {
                 id:'',//主键id String选填
                 createrName:'',// 制单人 String选填
                 storageId:'',//  倉庫id 不传表示全部 String选填
-                state:1,//      状态 1待审核 2审核通过 3未通过 Integer选填
+                state:'',//      状态 1待审核 2审核通过 3未通过 Integer选填
                 type:'',//     申请类型 1入库 2出库 Integer选填
                 startTime:'',//   起始时间yyyyMMdd String选填
                 endTime:'',//   结束时间yyyyMMdd String选填

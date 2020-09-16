@@ -7,12 +7,12 @@
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="商品单位：">
+                <el-form-item label="库存量：">
                     {{info.inventoryCount ? info.inventoryCount : '--'}}
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="库存量：">
+                <el-form-item label="商品单位：">
                     {{info.unit ? info.unit : '--'}}
                 </el-form-item>
             </el-row>

@@ -61,6 +61,11 @@ module.exports = {
         3:'出库单明细',
         4:'入库审核',
         5:'出库审核'
+    },
+    common:{
+        storageInTitle:'入库仓库',
+        storageOutTitle:'出库仓库'
+
     }
 
 

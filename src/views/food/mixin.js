@@ -50,7 +50,7 @@ const mixin= {
                  });
             }else{
                 this.$message({
-                  type: 'info',
+                  type: 'error',
                   message: msg
                 });
             }

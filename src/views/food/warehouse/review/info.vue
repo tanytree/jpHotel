@@ -23,7 +23,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="制单人：">
+                    <el-form-item label="经办人：">
                         {{info.createrName}}
                     </el-form-item>
                 </el-col>
@@ -34,17 +34,17 @@
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="审核时间：">
-                        {{info.updateTime ? info.updateTime : '--'}}
+                        {{info.approvalTime ? info.approvalTime : '--'}}
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="制单人：">
+                        {{info.applyerName ? info.applyerName : '--'}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="审核人：">
-                        {{info.createrName}}
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="经办人：">
-                        {{info.createrName}}
+                        {{info.approvalName ? info.approvalName : '--' }}
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">

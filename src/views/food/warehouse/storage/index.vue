@@ -43,6 +43,12 @@
                   >
                 </el-table-column>
                 <el-table-column
+                  prop="goodsNo"
+                  label="商品编号"
+                  >
+                </el-table-column>
+
+                <el-table-column
                   prop="inventoryCount"
                   label="仓库量"
                   >
@@ -58,14 +64,14 @@
                   label="所在仓库"
                   >
                 </el-table-column>
-                <el-table-column
+               <!-- <el-table-column
                   width="200"
                   label="操作"
                  >
                   <template slot-scope="scope">
                       <el-button @click="getInfo(scope.row)"  type="text" >详情</el-button>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
               </el-table>
             </div>
 
@@ -75,12 +81,13 @@
     </div>
     <!-- 编辑or详情弹窗 -->
 
+
    <el-dialog top="0" width="50%" :title="$t('food.storageTitle.'+ storeType)" :visible.sync="dialogShow" :close-on-click-modal="false" :close-on-press-escape="false" @close="closeDialog">
         <div v-show="is_batch == 0">
             <el-form inline size="small" label-width="100px"  :model="storageInfo" :rules="storageInfoRules" ref="storageInfo" class="margin-t-20 ">
                 <el-row>
-                    <el-form-item label="入库仓库:" prop="storageId">
-                        <el-select size="small" v-model="storageInfo.storageId" placeholder="请选择入库仓库">
+                    <el-form-item :label=" storeType == 1 ? $t('food.common.storageInTitle') :  $t('food.common.storageOutTitle') " prop="storageId">
+                        <el-select size="small" v-model="storageInfo.storageId" :placeholder="storeType == 1 ? $t('food.common.storageInTitle') :  $t('food.common.storageOutTitle') ">
                             <el-option v-for="(item,index) in mealstorageList" :key="index" :label="item.soteageName" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
@@ -196,7 +203,7 @@
                       label="操作"
                     >
                         <template slot-scope="scope">
-                           <el-button type="text" >删除</el-button>
+                           <el-button type="text" @click="delItem(scope.row)">删除</el-button>
                         </template>
                     </el-table-column>
                   </el-table>
@@ -416,6 +423,24 @@ export default {
 
         },
 
+        delItem(data){
+            console.log(data)
+            console.log(data.inventoryCount && parseFloat(data.inventoryCount) > 0)
+            if(!data.inventoryCount ||  parseFloat(data.inventoryCount) > 0){
+                this.alert(0,'该商品还有库存，暂时不能删除');
+                return false
+            }else{
+                let params = {
+                    id:id
+                }
+                params.userId = this.userId
+                params.storesNum = this.storesNum
+                this.$F.doRequest(this, "/pms/hotelmealgoods/delete", params, (res) => {
+                    this.getProList();
+                });
+            }
+        },
+
         //添加商品
         addProSubmit(){
             this.$refs['addProInfo'].validate((valid) => {
@@ -472,7 +497,6 @@ export default {
 
         //删除选中的商品
         delBatchOne(index){
-            console.log(index)
             this.batchAllList.splice(index,1)
         },
 
