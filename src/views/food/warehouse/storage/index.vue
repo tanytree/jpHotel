@@ -424,9 +424,9 @@ export default {
         },
 
         delItem(data){
-            console.log(data)
-            console.log(data.inventoryCount && parseFloat(data.inventoryCount) > 0)
-            if(!data.inventoryCount ||  parseFloat(data.inventoryCount) > 0){
+            if(!data.inventoryCount){
+                return false
+            }else if(parseFloat(data.inventoryCount) > 0){
                 this.alert(0,'该商品还有库存，暂时不能删除');
                 return false
             }else{
