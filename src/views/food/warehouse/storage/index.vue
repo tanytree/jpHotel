@@ -420,25 +420,34 @@ export default {
                 this.productList = res.list
                 this.prolistTotal = res.page.count
             });
-
         },
-
         delItem(data){
-            if(!data.inventoryCount){
-                return false
-            }else if(parseFloat(data.inventoryCount) > 0){
-                this.alert(0,'该商品还有库存，暂时不能删除');
-                return false
-            }else{
                 let params = {
-                    id:id
+                    id:data.id
                 }
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-                this.$F.doRequest(this, "/pms/hotelmealgoods/delete", params, (res) => {
-                    this.getProList();
+                this.$confirm('确定删除吗?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                    this.$F.doRequest(this, "/pms/hotelmealgoods/delete", params, (res) => {
+                        if(res === 'cannotDelete'){
+                            this.alert(0,'该商品还有库存，暂时不能删除');
+                            return false
+                        }
+                        if(res === 'success'){
+                            this.$message({
+                              type: 'success',
+                              message: '删除成功!'
+                            });
+                            this.getProList();
+                            return false
+                        }
+                    });
+                }).catch(() => {
                 });
-            }
         },
 
         //添加商品
