@@ -77,7 +77,7 @@
                   <template slot-scope="scope">
                       <span v-if="!scope.row.memberCard">临时客人</span>
                       <span v-else>
-                          {{scope.row.signUserName}} + {{scope.row.memberCard}}
+                          {{scope.row.memberTypeName}} + {{scope.row.memberCard}}
                       </span>
                   </template>
                 </el-table-column>

@@ -64,7 +64,23 @@ module.exports = {
     },
     common:{
         storageInTitle:'入库仓库',
-        storageOutTitle:'出库仓库'
+        storageOutTitle:'出库仓库',
+        //点餐
+        is_choose_food:'已选菜品',
+        food_title:'菜品名称',
+        food_price:'菜品价格',
+        food_count:'菜品数量',
+        action:'操作',
+        food_total:'共 {count} 件菜品，合计:',
+        save:'提交',
+        all:'全部',
+        food_surplus:'预估剩余',
+        add:'添加',
+        remove:'移除',
+        is_solt:'已沽清',
+        cate:'菜品分类',
+        no_set:'未设置'
+
 
     }
 

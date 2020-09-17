@@ -62,9 +62,23 @@ module.exports = {
         5:'出库审核'
     },
     common:{
-        storageInTitle:'入库仓库',
-        storageOutTitle:'出库仓库'
-
+        storageInTitle:'倉庫に入庫する',
+        storageOutTitle:'出庫倉庫',
+        //点餐
+        is_choose_food:'已选菜品',
+        food_title:'メニュー名',
+        food_price:'価格',
+        food_count:'メニューの数',
+        action:'操作',
+        food_total:'共に {count} 料理の品，合計:',
+        save:'提交',
+        all:'全部',
+        food_surplus:'余剰を見込む',
+        add:'添加',
+        remove:'移除',
+        is_solt:'已沽清',
+        cate:'料理の種類',
+        no_set:'未設定',
     }
 
 

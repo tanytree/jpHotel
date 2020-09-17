@@ -2,7 +2,7 @@
   <div class="boss-index">
    <div class="content">
       <div class="left">
-        <el-header>已选菜品</el-header>
+        <el-header>{{$t('food.common.is_choose_food')}}</el-header>
         <div class="tablist">
             <el-table
               :data="cart"
@@ -10,15 +10,13 @@
               header-row-class-name="default"
               size="small"
             >
-              <el-table-column prop="name" label="菜品名称" ></el-table-column>
-              <el-table-column label="菜品价格">
-
+              <el-table-column prop="name" :label="$t('food.common.food_title')" ></el-table-column>
+              <el-table-column :label="$t('food.common.food_price')">
                   <template slot-scope="scope">
                    ¥ {{scope.row.price}}
                   </template>
-
               </el-table-column>
-              <el-table-column label="菜品数量" width="160">
+              <el-table-column :label="$t('food.common.food_count')" width="160">
                   <template slot-scope="scope">
                     <div class="cell" style="padding:0;">
                         <div  class="el-input-number el-input-number--mini" style=" width:100px;">
@@ -31,16 +29,16 @@
                     </div>
                   </template>
               </el-table-column>
-              <el-table-column label="操作">
+              <el-table-column :label="$t('food.common.action')">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleDelete(scope.$index)">移除</el-button>
+                  <el-button size="mini" @click="handleDelete(scope.$index)">{{$t('food.common.remove')}}</el-button>
                 </template>
               </el-table-column>
             </el-table>
         </div>
         <div class="block flex " >
             <div class=" text-size14 text-left"  style="justify-content: flex-start">
-                共 {{countToTal}} 件菜品,合计：¥  <span class="text-size20">{{cartToTal}}</span>
+                {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20">{{cartToTal}}</span>
              </div>
             <div style="max-width: 100px;">
                <el-button type="primary" :disabled="cartToTal == '0.00'" style="width: 100%;" @click="submit">提交</el-button>
@@ -52,11 +50,11 @@
       <el-container class="right">
         <el-header>
             <el-row>
-              <el-button size="small" :type="tabCurr == 999 ? 'primary' : '' " @click="intForm">全部</el-button>
+              <el-button size="small" :type="tabCurr == 999 ? 'primary' : '' " @click="intForm">{{$t('food.common.all')}}</el-button>
               <el-button size="small" v-for="(item,index) in categroyList" :key="index"  :type="tabCurr == index ? 'primary' : ''"  @click="changeTab(item.id,item,index)">{{item.name}}</el-button>
               <span style="float: right;">
                   <el-input
-                      placeholder="请输入内容"
+                      :placeholder="$t('food.common.food_title')"
                       v-model="searchForm.name"
                       @change="getDataList"
                       >
@@ -68,7 +66,7 @@
         <el-main  v-loading="list_loading">
             <div v-if="cateList.length > 0">
                 <el-form class="demo-ruleForm">
-                    <el-form-item label="菜品分类" prop="categoryId">
+                    <el-form-item :label="$t('food.common.cate')" prop="categoryId">
                       <el-cascader
                          :options="cateList"
                          v-model="searchForm.categoryId"
@@ -84,10 +82,12 @@
                                <div class="top">
                                    <div>{{item.name}}</div>
                                    <div class="text-size12 margin-t-10 text-gray" style="height:16px;">
-                                       <span v-if="item.remainingCount == null" class="text-gray text-size12">未设置</span>
+                                       <span v-if="item.remainingCount == null" class="text-gray text-size12">{{$t('no_set')}}</span>
                                        <div v-else>
-                                           <div v-if="item.soldOut  == 1"  :class="item.remainingCount <= item.warningCount ? 'text-red' : ''" >预估剩余：{{item.remainingCount}}</div>
-                                           <div v-else class="text-red">已沽清</div>
+                                           <div v-if="item.soldOut  == 1"  :class="item.remainingCount <= item.warningCount ? 'text-red' : ''" >{{$t('food.common.food_surplus')}}：{{item.remainingCount}}</div>
+                                           <div v-else class="text-red">
+                                               {{$t('food.common.is_solt')}}
+                                           </div>
                                        </div>
 
                                    </div>
@@ -170,7 +170,7 @@ export default {
             for(let k in this.cart){
                 sum +=  parseFloat(this.cart[k].count)
             }
-            return sum.toFixed(2);
+            return sum
         }else{
           return sum
         }
