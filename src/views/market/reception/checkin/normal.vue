@@ -990,10 +990,10 @@
                 }
                 this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
                     let data = res
-                    this.$message({
-                        message: '排房成功',
-                        type: 'success'
-                    });
+                    // this.$message({
+                    //     message: '排房成功',
+                    //     type: 'success'
+                    // });
                     for (let k in data) {
                         let ids = [];
                         data[k].forEach((item) => {

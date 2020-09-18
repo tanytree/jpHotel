@@ -10,7 +10,7 @@
       >
         <div class="side-menu-wrapper">
           <div class="topNav">
-            <img :src="require(`@/assets/images/${menul.icon}.png`)" alt />
+            <img :src="require(`@/assets/images/${menul.icon}.png`)" alt/>
             {{$i18n.locale == 'ri' ? menul.japanese : (menul.menuAliasTitle || menul.menuTitle)}}
           </div>
           <ul class="el-menu">
@@ -102,6 +102,8 @@ export default {
     },
 
     menulfuc(item) {
+        debugger
+        console.log(item);
       if (item.childList && item.childList.length > 0) {
         this.menul = item;
         this.routerCompany = "";

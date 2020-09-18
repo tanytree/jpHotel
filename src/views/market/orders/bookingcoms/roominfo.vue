@@ -20,7 +20,7 @@
         <el-col :span="12">
             <div class="fr">
                 <el-button plain size="mini" @click="liveInPersonShow=true">入住</el-button>
-                <el-button plain size="mini" @click="rowRoomHandle">修改预留</el-button>
+                <el-button plain size="mini" @click="updateReserved">修改预留</el-button>
                 <el-dropdown split-button type="primary" size="mini">
                     更多操作
                     <el-dropdown-menu slot="dropdown">
@@ -263,16 +263,18 @@ export default {
             this.multipleSelection = val;
             console.log(val)
         },
+
         baseInfoChange() {
             this.$emit('baseInfoChange', '');
         },
-        rowRoomHandle() {
+
+        updateReserved() {
             if (!this.$route.query.id) {
                 this.$message.error('订单信息不正确');
                 return
             }
             let arr = [];
-            arr.push(this.currentRoom)
+            arr.push(this.currentRoom);
             this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, arr);
         },
 

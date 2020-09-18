@@ -5,150 +5,179 @@
  * @FilePath: /jiudian/src/views/market/orders/detail.vue
  -->
 <template>
-<div class="boss-index ov-y">
-    <div class="el-card" style="height:auto">
-        <div class="el-card__header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: '/orders?type=order' }">订单管理</el-breadcrumb-item>
-                <el-breadcrumb-item>详情</el-breadcrumb-item>
-            </el-breadcrumb>
+    <div class="boss-index ov-y">
+        <div class="el-card" style="height:auto">
+            <div class="el-card__header">
+                <el-breadcrumb separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item :to="{ path: '/orders?type=order' }">订单管理</el-breadcrumb-item>
+                    <el-breadcrumb-item>详情</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
         </div>
-    </div>
-    <div class="bodyInfo margin-t-10" v-loading="loading">
-        <el-row :gutter="20">
-            <el-col :span="6">
-                <div class="grid-content">
-                    <div class="customerInfo">
-                        <div class="wrap">
-                            <div class="hd">
-                                <el-button type="primary" size="mini" style="float:right" v-if="detailData.checkIn.guestType == 1">办理会员</el-button>
-                                <h3>客人信息</h3>
-                            </div>
-                            <div class="bd" v-if="detailData.checkIn">
-                                <div class="innerWrap">
-                                    <el-row class="row clearfix">
-                                        <el-button class="fr" size="mini" :type="detailData.checkIn.state==1?'success':'danger'" plain>{{F_checkinState(detailData.checkIn.state)}}</el-button>客人姓名：{{detailData.checkIn.name}}
-                                    </el-row>
-                                    <el-row class="row">
-                                        手机号：{{detailData.checkIn.mobile}}
-                                    </el-row>
-                                    <el-row class="row">
-                                        <el-col :span="12" class="cell">
-                                            客源类型：{{F_guestType(detailData.checkIn.guestType)}}
-                                        </el-col>
-                                        <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
-                                            会员类型：白金卡
-                                        </el-col>
-                                        <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
-                                            余额：2 <el-button size="mini" type="text">充值</el-button>
-                                        </el-col>
-                                        <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
-                                            积分：
-                                        </el-col>
-                                        <el-col :span="12" class="cell">
-                                            同来宾客：{{detailData.checkIn.personTotal ? detailData.checkIn.personTotal-1:''}}
-                                        </el-col>
-<!--                                        <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
-<!--                                            车牌号：-->
-<!--                                        </el-col>-->
-                                    </el-row>
+        <div class="bodyInfo margin-t-10" v-loading="loading">
+            <el-row :gutter="20">
+                <el-col :span="6">
+                    <div class="grid-content">
+                        <div class="customerInfo">
+                            <div class="wrap">
+                                <div class="hd">
+                                    <el-button type="primary" size="mini" style="float:right"
+                                               v-if="detailData.checkIn.guestType == 1">办理会员
+                                    </el-button>
+                                    <h3>客人信息</h3>
+                                </div>
+                                <div class="bd" v-if="detailData.checkIn">
+                                    <div class="innerWrap">
+                                        <el-row class="row clearfix">
+                                            <el-button class="fr" size="mini"
+                                                       :type="detailData.checkIn.state==1?'success':'danger'" plain>
+                                                {{ F_checkinState(detailData.checkIn.state) }}
+                                            </el-button>
+                                            客人姓名：{{ detailData.checkIn.name }}
+                                        </el-row>
+                                        <el-row class="row">
+                                            手机号：{{ detailData.checkIn.mobile }}
+                                        </el-row>
+                                        <el-row class="row">
+                                            <el-col :span="12" class="cell">
+                                                客源类型：{{ F_guestType(detailData.checkIn.guestType) }}
+                                            </el-col>
+                                            <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
+                                                会员类型：白金卡
+                                            </el-col>
+                                            <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
+                                                余额：2
+                                                <el-button size="mini" type="text">充值</el-button>
+                                            </el-col>
+                                            <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
+                                                积分：
+                                            </el-col>
+                                            <el-col :span="12" class="cell">
+                                                同来宾客：{{
+                                                    detailData.checkIn.personTotal ? detailData.checkIn.personTotal - 1 : ''
+                                                }}
+                                            </el-col>
+                                            <!--                                        <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
+                                            <!--                                            车牌号：-->
+                                            <!--                                        </el-col>-->
+                                        </el-row>
 
+                                    </div>
                                 </div>
                             </div>
+                            <!--                        <el-row style="text-align:center;background:#F3F3F3;padding:15px 0">-->
+                            <!--                            <el-checkbox-group v-model="detail.text">-->
+                            <!--                                <el-checkbox label="复选框 A">预订（2）</el-checkbox>-->
+                            <!--                                <el-checkbox label="复选框 B">在线（3）</el-checkbox>-->
+                            <!--                                <el-checkbox label="复选框 C">离店（3）</el-checkbox>-->
+                            <!--                            </el-checkbox-group>-->
+                            <!--                        </el-row>-->
+                            <el-row class="customerCtrl">
+                                <ul>
+                                    <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
+                                        <div class="wrap"><span>查看订单信息（联房）></span></div>
+                                    </li>
+                                    <li @click="checkTypeHandle('customer',item)"
+                                        v-for="(item,index) of detailData.inRoomList" :key="index"
+                                        :class="currentRoom.id == item.id?'active':''">
+                                        <div class="wrap">
+                                            <el-button size="mini" :type="item.state==1?'success':'danger'" plain
+                                                       class="fr">{{ F_checkinState(item.state) }}
+                                            </el-button>
+                                            <span><i
+                                                class="el-icon-s-custom vm"></i>{{
+                                                    item.personList.length ? item.personList[0].name : ''
+                                                }}（{{ item.houseNum }}）</span>
+                                        </div>
+                                    </li>
+                                    <!-- <li>
+                                        <div class="wrap">
+                                            <el-button size="mini" type="danger" plain class="fr">离店</el-button><span>李四（A002） 余额：-100</span>
+                                        </div>
+                                    </li> -->
+                                </ul>
+                            </el-row>
                         </div>
-<!--                        <el-row style="text-align:center;background:#F3F3F3;padding:15px 0">-->
-<!--                            <el-checkbox-group v-model="detail.text">-->
-<!--                                <el-checkbox label="复选框 A">预订（2）</el-checkbox>-->
-<!--                                <el-checkbox label="复选框 B">在线（3）</el-checkbox>-->
-<!--                                <el-checkbox label="复选框 C">离店（3）</el-checkbox>-->
-<!--                            </el-checkbox-group>-->
-<!--                        </el-row>-->
-                        <el-row class="customerCtrl">
-                            <ul>
-                                <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
-                                    <div class="wrap"><span>查看订单信息（联房）></span></div>
-                                </li>
-                                <li @click="checkTypeHandle('customer',item)" v-for="(item,index) of detailData.inRoomList" :key="index"
-                                    :class="currentRoom.id == item.id?'active':''" >
-                                    <div class="wrap">
-                                        <el-button size="mini" :type="item.state==1?'success':'danger'" plain class="fr">{{F_checkinState(item.state)}}</el-button><span><i class="el-icon-s-custom vm"></i>{{item.personList.length?item.personList[0].name:''}}（{{item.houseNum}}）</span>
-                                    </div>
-                                </li>
-                                <!-- <li>
-                                    <div class="wrap">
-                                        <el-button size="mini" type="danger" plain class="fr">离店</el-button><span>李四（A002） 余额：-100</span>
-                                    </div>
-                                </li> -->
-                            </ul>
-                        </el-row>
+
                     </div>
-
-                </div>
-            </el-col>
-            <el-col :span="18">
-                <div class="grid-content">
-                    <template v-if="checkType=='customer'">
-                        <c1 :detailData="detailData" :currentRoomId="currentRoom.id"></c1>
-                    </template>
-                    <template v-if="checkType=='order'">
-                        <div class="detailTabWrap">
-                            <div class="el-card detailTab">
-                                <div class="el-card__header" style="padding:0 20px">
-                                    <el-tabs v-model="activeName" >
-                                        <el-tab-pane label="账务明细" name="first">
-                                            <c2 :detailData="detailData"></c2>
-                                        </el-tab-pane>
-                                        <el-tab-pane label="订单信息" name="second">
-                                            <div class="thisOrderInfo">
-                                                <div class="wrap">
-                                                    <el-row class="row">
-                                                        <h3>基本信息<el-button style="vertical-align: middle;margin-left: 10px;display: inline-block;
+                </el-col>
+                <el-col :span="18">
+                    <div class="grid-content">
+                        <template v-if="checkType=='customer'">
+                            <c1 :detailData="detailData" :currentRoomId="currentRoom.id"></c1>
+                        </template>
+                        <template v-if="checkType=='order'">
+                            <div class="detailTabWrap">
+                                <div class="el-card detailTab">
+                                    <div class="el-card__header" style="padding:0 20px">
+                                        <el-tabs v-model="activeName">
+                                            <el-tab-pane label="账务明细" name="first">
+                                                <c2 :detailData="detailData"></c2>
+                                            </el-tab-pane>
+                                            <el-tab-pane label="订单信息" name="second">
+                                                <div class="thisOrderInfo">
+                                                    <div class="wrap">
+                                                        <el-row class="row">
+                                                            <h3>基本信息
+                                                                <el-button style="vertical-align: middle;margin-left: 10px;display: inline-block;
 " size="mini" class="vm" @click="yokeplateHandle"
-                                                                           v-if="detailData.inRoomList.length">联房</el-button>
-                                                        </h3>
-                                                        <el-row class="cell">
-                                                            <el-col :span="6">入住时间：{{detailData.checkIn.checkinTime}} </el-col>
-                                                            <el-col :span="6">预离时间：{{detailData.checkIn.checkoutTime}}</el-col>
+                                                                           v-if="detailData.inRoomList.length">联房
+                                                                </el-button>
+                                                            </h3>
+                                                            <el-row class="cell">
+                                                                <el-col :span="6">
+                                                                    入住时间：{{ detailData.checkIn.checkinTime }}
+                                                                </el-col>
+                                                                <el-col :span="6">
+                                                                    预离时间：{{ detailData.checkIn.checkoutTime }}
+                                                                </el-col>
+                                                            </el-row>
+                                                            <el-row class="cell">
+                                                                <el-col :span="6">备注：{{ detailData.checkIn.remark }}
+                                                                </el-col>
+                                                            </el-row>
                                                         </el-row>
-                                                        <el-row class="cell">
-                                                            <el-col :span="6">备注：{{detailData.checkIn.remark}}</el-col>
+                                                        <el-divider></el-divider>
+                                                        <el-row class="row">
+                                                            <h3>客房信息</h3>
+                                                            <el-row class="cell">
+                                                                <el-col :span="6"
+                                                                        v-for="(item,index) of detailData.inRoomList"
+                                                                        :key="index">
+                                                                    已入住：{{ item.roomTypeName }}（{{ item.houseNum }}）
+                                                                </el-col>
+                                                            </el-row>
                                                         </el-row>
-                                                    </el-row>
-                                                    <el-divider></el-divider>
-                                                    <el-row class="row">
-                                                        <h3>客房信息</h3>
-                                                        <el-row class="cell">
-                                                            <el-col :span="6" v-for="(item,index) of detailData.inRoomList" :key="index">已入住：{{item.roomTypeName}}（{{item.houseNum}}）</el-col>
+                                                        <el-divider></el-divider>
+                                                        <el-row class="row">
+                                                            <h3>销售信息</h3>
+                                                            <el-row class="cell">
+                                                                <el-col :span="6">
+                                                                    销售员：{{ F_salesId(detailData.checkIn.salesId) }}
+                                                                </el-col>
+                                                            </el-row>
                                                         </el-row>
-                                                    </el-row>
-                                                    <el-divider></el-divider>
-                                                    <el-row class="row">
-                                                        <h3>销售信息</h3>
-                                                        <el-row class="cell">
-                                                            <el-col :span="6">销售员：{{F_salesId(detailData.checkIn.salesId)}}</el-col>
-                                                        </el-row>
-                                                    </el-row>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </el-tab-pane>
-                                        <el-tab-pane label="客人信息" name="third">
-                                            <customer />
-                                        </el-tab-pane>
-                                    </el-tabs>
+                                            </el-tab-pane>
+                                            <el-tab-pane label="客人信息" name="third">
+                                                <customer/>
+                                            </el-tab-pane>
+                                        </el-tabs>
+                                    </div>
                                 </div>
+                                <template v-if="activeName=='third'">
+
+                                </template>
                             </div>
-                            <template v-if="activeName=='third'">
+                        </template>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+        <unitedRoomHandle ref="unitedRoomHandle"/>
 
-                            </template>
-                        </div>
-                    </template>
-                </div>
-            </el-col>
-        </el-row>
     </div>
-    <unitedRoomHandle ref="unitedRoomHandle" />
-
-</div>
 </template>
 
 <script>
@@ -211,7 +240,7 @@ export default {
     mounted() {
         let id = this.$route.query.id
         this.getDetail(id);
-        this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
+        this.$F.commons.fetchSalesList({salesFlag: 1}, (data) => {
             this.salesList = data.hotelUserList;
         });
     },
@@ -267,16 +296,17 @@ export default {
     border: 0
 }
 
-.detailTab>>>.el-tabs__header {
+.detailTab >>> .el-tabs__header {
     margin: 0;
 }
 </style>
 <style lang="less" scoped>
-    .active {
-        background: #E3EEFF;
-        color: #126EFF;
-        border-right-color: #126EFF;
-    }
+.active {
+    background: #E3EEFF;
+    color: #126EFF;
+    border-right-color: #126EFF;
+}
+
 .bodyInfo {
     .customerInfo {
         background: #fff;
