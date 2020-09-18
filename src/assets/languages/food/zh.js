@@ -79,7 +79,17 @@ module.exports = {
         remove:'移除',
         is_solt:'已沽清',
         cate:'菜品分类',
-        no_set:'未设置'
+        no_set:'未设置',
+        //沽清管理
+        is_served:'已沽清菜品',
+        cancel_all:'全部取消',
+        solt_text:'沽清',
+        tip:'提示',
+        is_confirm_solt:'确认沽清该菜品?',
+        ok:'确定',
+        cancel:'取消',
+        working_day:'营业日',
+        
 
 
     }
