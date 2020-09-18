@@ -387,6 +387,32 @@ module.exports = {
     finance_superiorSubject: "上級科目",
     finance_accountantCourse: "会計科目",
     finance_chooseSubject: "選択科目",
+    finance_invoiceType: "インボイスタイプ",
+    finance_noLimit: "决断",
+    finance_vatInvoice: "付加価値税専用領収書",
+    finance_ordinaryInvoice: "付加価値税普通伝票",
+    finance_electronicInvoice: "付加価値税電子計算書",
+    finance_customerName: "クライアント名",
+    finance_phone: "自宅電話番号",
+    finance_invoiceHeader: "送り状の台頭",
+    finance_c: "開票金額",
+    finance_tax: "税金",
+    finance_invoiceNum: "送り状番号",
+    finance_invoiceTime: "開票時間",
+    finance_operationOf: "担当者",
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

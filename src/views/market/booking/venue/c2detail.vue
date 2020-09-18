@@ -23,15 +23,17 @@
           <div class="box_box">
             <div class="box_item">
               客人姓名：
-              <span>张三</span>
+              <span>{{checkIn.name}}</span>
             </div>
             <div>
               手机号：
-              <span>18066866505</span>
+              <span>{{checkIn.mobile}}</span>
             </div>
             <div>
               客源类型：
-              <span>散客</span>
+              <span v-if="checkIn.guestType==1">散客</span>
+              <span v-if="checkIn.guestType==2">会员</span>
+              <span v-if="checkIn.guestType==3">单位</span>
             </div>
           </div>
         </el-card>
@@ -39,10 +41,10 @@
       <el-col :span="18">
         <el-card style=" height: 203px;">
           <div slot="header" class="card_header">
-            <span>会议信息（房间：A001 前台）</span>
+            <span>会议信息（房间：A001 {{checkSource()}}）</span>
             <div>
               订单号：
-              <span>98247690457045976</span>
+              <span>{{checkIn.id}}</span>
             </div>
           </div>
           <el-form ref="form" label-position="left" :model="form" label-width="90px" inline>
@@ -51,19 +53,19 @@
                 <el-form-item label="会议厅：">大型会议厅</el-form-item>
               </el-col>
               <el-col :span="5">
-                <el-form-item label="会议名称：">会议1</el-form-item>
+                <el-form-item label="会议名称：">{{checkIn.meetingName}}</el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="会议时间：">2020-04-15 11:00至2020-04-15 12:00</el-form-item>
+                <el-form-item label="会议时间：">{{checkIn.checkinTime}} 至 {{checkIn.checkoutTime}}</el-form-item>
               </el-col>
               <el-col :span="7">
-                <el-form-item label="单位名称：">全购网络有限公司</el-form-item>
+                <el-form-item label="单位名称：">{{checkIn.enterName}}</el-form-item>
               </el-col>
               <el-col :span="5">
-                <el-form-item label="房价合计：">2000</el-form-item>
+                <el-form-item label="房价合计：">{{checkIn.roomTotalPrice}}</el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="备注：">无</el-form-item>
+                <el-form-item label="备注：">{{checkIn.remark}}</el-form-item>
               </el-col>
             </el-row>
           </el-form>
@@ -107,45 +109,45 @@
       >
         <el-row class="row">
           <el-col :span="11">
-            <el-form-item label="来客姓名:" prop="enterName">
-              <el-input v-model="addCompanyForm.enterName" style="width:180px"></el-input>
+            <el-form-item label="来客姓名:" prop="name">
+              <el-input v-model="addCompanyForm.name" style="width:180px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="性别:">
               <el-radio-group v-model="addCompanyForm.sex">
-                <el-radio :label="1">男</el-radio>
-                <el-radio :label="2">女</el-radio>
+                <el-radio label="1">男</el-radio>
+                <el-radio label="2">女</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row class="row">
           <el-col :span="11" class="col">
-            <el-form-item label="证件类型:" prop required>
-              <el-select v-model="addCompanyForm.ruleAlldayId" style="width:180px">
-                <el-option
-                  :label="item.ruleName"
-                  :value="item.id"
-                  v-for="(item,index) of alldayList"
-                  :key="index"
-                ></el-option>
+            <el-form-item label="证件类型:" prop="idcardType">
+              <el-select
+                v-model="addCompanyForm.idcardType"
+                style="width:180px"
+                placeholder="请选择证件类型"
+              >
+                <el-option label="身份证" value="1"></el-option>
+                <el-option label="护照" value="2"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8" class="col">
-            <el-form-item label="证件号:" prop="creditLimit">
-              <el-input v-model="addCompanyForm.creditLimit" style="width:180px"></el-input>
+            <el-form-item label="证件号:" prop="idcard">
+              <el-input v-model="addCompanyForm.idcard" style="width:180px"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-form-item label="手机号:">
-          <el-input v-model="addCompanyForm.enterName" style="width:180px"></el-input>
+          <el-input v-model="addCompanyForm.mobile" style="width:180px"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align:right">
         <el-button @click="dialogMeet=false">取消</el-button>
-        <el-button type="primary" @click="hotelenterAddAndEdit">确认</el-button>
+        <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')">确认</el-button>
       </div>
     </el-dialog>
   </div>
@@ -167,91 +169,111 @@ export default {
     return {
       loading: false,
       form: {},
-      tableData: [{}],
+      tableData: [],
       addCompanyForm: {
-        id: "",
-        type: "",
-        enterName: "",
-        contactName: "",
-        contactPhone: "",
-        enterStrategyId: "",
-        ruleAlldayId: "",
-        creditLimit: "",
-        shareFlag: "",
-        state: "",
-        effectiveStartTime: "",
-        effectiveEndTime: "",
-        getWay: "",
-        salesId: "",
-        bankCard: "",
-        taxNum: "",
-        contractNum: "",
-        email: "",
-        remark: "",
+        name: "",
+        sex: "1",
+        idcardType: "1",
+        idcard: "",
+        mobile: "",
       },
       rules: {
-        enterName: [
+        name: [
           {
             required: true,
-            message: "请输入单位名称",
+            message: "请输入来客姓名",
             trigger: "blur",
           },
         ],
-        contactName: [
+        idcard: [
           {
             required: true,
-            message: "请填写联系人",
+            message: "请输入证件号",
             trigger: "blur",
           },
         ],
-        contactPhone: [
+
+        idcardType: [
           {
             required: true,
-            message: "请输入手机号",
-            trigger: "blur",
-          },
-        ],
-        enterStrategyId: [
-          {
-            required: true,
-            message: "请选择价格策略",
+            message: "请选择证件类型",
             trigger: "change",
-          },
-        ],
-        ruleAlldayId: [
-          {
-            required: true,
-            message: "请选择计费规则",
-            trigger: "change",
-          },
-        ],
-        creditLimit: [
-          {
-            required: true,
-            message: "请输入挂账额度",
-            trigger: "blur",
-          },
-        ],
-        state: [
-          {
-            required: true,
-            message: "请选择是否停用",
-            trigger: "blur",
           },
         ],
       },
       dialogMeet: false,
       alldayList: [],
       hotelenterAddAndEdit: false,
+      /****** */
+      checkIn: {},
+      consumePrice: null,
+      totalPrice: null,
+      payPrice: null,
+      inRoomList: [],
     };
   },
-  mounted() {},
+  created() {
+    this.getOrderDetail();
+    this.getData();
+  },
 
   methods: {
     ...mapMutations({
       resetBookingName: "resetBookingName",
       resetBookSub: "resetBookSub",
     }),
+    getOrderDetail(params = {}) {
+      this.$F.merge(params, {
+        reserveId: this.$route.query.id,
+      });
+      this.$F.doRequest(
+        this,
+        "/pms/checkin/reserve_check_in_detail",
+        params,
+        (data) => {
+          console.log(data);
+          this.checkIn = data.checkIn;
+          this.consumePrice = data.consumePrice;
+          this.totalPrice = data.totalPrice;
+          this.payPrice = data.payPrice;
+          this.inRoomList = data.inRoomList;
+        }
+      );
+    },
+    //会议登记列表
+    getData(params = {}) {
+      this.$F.merge(params, {
+        checkinId: this.$route.query.id,
+      });
+      this.$F.doRequest(
+        this,
+        "/pms/meeting/person_register_list",
+        params,
+        (data) => {
+          console.log(data);
+          this.tableData = data.registerList;
+        }
+      );
+    },
+
+    checkSource() {
+      let text = "";
+      switch (this.checkIn.orderSource) {
+        case 1:
+          text = "前台";
+          break;
+        case 2:
+          text = "销售推荐";
+          break;
+        case 3:
+          text = "渠道订单";
+          break;
+        case 10:
+          text = "其他";
+          break;
+      }
+      return text;
+    },
     //点击  会议登记 按钮
     meetClick() {
       this.dialogMeet = true;

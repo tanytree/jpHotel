@@ -1,9 +1,9 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
+ * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-07-10 17:43:49
- * @FilePath: /jiudian/src/views/market/booking/venue/c2.vue
+ * @LastEditTime: 2020-09-17 16:53:01
+ * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
 <template>
@@ -15,18 +15,18 @@
         <el-form inline size="small" label-width="80px">
           <el-row>
             <el-form-item label="会议时间:">
-              <el-radio-group v-model="searchForm.searchType">
+              <el-radio-group v-model="searchForm.timeType">
                 <el-radio-button label style="margin-right:10px">不限</el-radio-button>
                 <el-radio-button label="1" style="margin-right:10px">当天</el-radio-button>
-                <el-radio-button label="2" style="margin-right:10px">明天</el-radio-button>
-                <el-radio-button label="3" style="margin-right:10px">后天</el-radio-button>
-                <el-radio-button label="4" style="margin-right:10px">近7天</el-radio-button>
+                <el-radio-button label="8" style="margin-right:10px">明天</el-radio-button>
+                <el-radio-button label="9" style="margin-right:10px">后天</el-radio-button>
+                <el-radio-button label="7" style="margin-right:10px">近7天</el-radio-button>
                 <el-radio-button label="自定义" style="margin-right:10px">自定义</el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="searchForm.searchType=='自定义'">
+            <el-form-item v-if="searchForm.timeType=='自定义'">
               <el-date-picker
-                v-model="searchForm.startTime"
+                v-model="searchForm.cstartTime"
                 value-format="yyyy-MM-dd"
                 type="date"
                 style="width:140px"
@@ -34,7 +34,7 @@
               ></el-date-picker>
               <span style="margin:0 5px">至</span>
               <el-date-picker
-                v-model="searchForm.endTime"
+                v-model="searchForm.cendTime"
                 value-format="yyyy-MM-dd"
                 type="date"
                 style="width:140px"
@@ -64,6 +64,7 @@
           <el-row>
             <el-form-item label="订单来源:">
               <el-select v-model="searchForm.orderSource" class="width150">
+                <el-option value label="全部"></el-option>
                 <el-option
                   :value="key"
                   v-for="(item,key,index) of $t('commons.orderSource')"
@@ -74,6 +75,7 @@
             </el-form-item>
             <el-form-item label="客源类别:">
               <el-select v-model="searchForm.guestType" class="width150">
+                <el-option value label="全部"></el-option>
                 <el-option
                   :value="key"
                   v-for="(item,key,index) of $t('commons.guestType')"
@@ -85,13 +87,13 @@
           </el-row>
           <el-row>
             <el-form-item label="预订人:">
-              <el-input v-model="searchForm.content" class="width200"></el-input>
+              <el-input v-model="searchForm.name" class="width200"></el-input>
             </el-form-item>
             <el-form-item label="房间号:">
-              <el-input v-model="searchForm.content" class="width200"></el-input>
+              <el-input v-model="searchForm.houseNum" class="width200"></el-input>
             </el-form-item>
             <el-form-item label="订单号:">
-              <el-input v-model="searchForm.content" class="width200"></el-input>
+              <el-input v-model="searchForm.orderNum" class="width200"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="getDataList">查询</el-button>
@@ -107,15 +109,49 @@
           :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
           size="mini"
         >
-          <el-table-column prop="enterName" label="名称" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="createTime" label="单位" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="enterType" label="会议名称" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="enterType" label="会议开始-会议结束" show-overflow-tooltip width="180px"></el-table-column>
-          <el-table-column prop="enterType" label="房间号" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="enterType" label="会议厅" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="enterType" label="客源类别" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="enterType" label="订单来源" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="enterType" label="会议状态" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="name" label="名称" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="enterName" label="单位" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="meetingName" label="会议名称" show-overflow-tooltip></el-table-column>
+          <el-table-column label="会议开始-会议结束" show-overflow-tooltip width="150px">
+            <template slot-scope="{row}">
+              <div>
+                <span style="color:#126EFF">开</span>
+                {{row.checkinTime}}
+              </div>
+              <div>
+                <span style="color:#D32B2B">结</span>
+                {{row.checkoutTime}}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="房间号" show-overflow-tooltip></el-table-column>
+          <el-table-column label="会议厅" show-overflow-tooltip></el-table-column>
+          <el-table-column label="客源类别" show-overflow-tooltip>
+            <template slot-scope="{row}">
+              <div v-if="row.guestType==1">散客</div>
+              <div v-if="row.guestType==2">会员</div>
+              <div v-if="row.guestType==3">单位</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="订单来源" show-overflow-tooltip>
+            <template slot-scope="{row}">
+              <div v-if="row.orderSource==1">前台</div>
+              <div v-if="row.orderSource==2">销售推荐</div>
+              <div v-if="row.orderSource==3">渠道订单</div>
+              <div v-if="row.orderSource==10">其他</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="会议状态" show-overflow-tooltip>
+            <template slot-scope="{row}">
+              <div v-if="row.state==1">待确认(预定中)</div>
+              <div v-if="row.state==2">已确认预定订单</div>
+              <div v-if="row.state==3">拒单</div>
+              <div v-if="row.state==4">NOSHOW</div>
+              <div v-if="row.state==5">未入住</div>
+              <div v-if="row.state==6">已入住</div>
+              <div v-if="row.state==7">离店</div>
+            </template>
+          </el-table-column>
           <el-table-column label="操作" width="220">
             <template slot-scope="{row}">
               <el-button type="text" @click="goDetail(row)" size="mini">详情</el-button>
@@ -131,7 +167,7 @@
           :current-page="searchForm.pageIndex"
           :page-sizes="[10, 50, 100, 200]"
           :page-size="searchForm.pageSize"
-          layout=" sizes, prev, pager, next, jumper"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="listTotal"
         ></el-pagination>
       </el-card>
@@ -146,45 +182,45 @@
         >
           <el-row class="row">
             <el-col :span="11">
-              <el-form-item label="来客姓名:" prop="enterName">
-                <el-input v-model="addCompanyForm.enterName" style="width:180px"></el-input>
+              <el-form-item label="来客姓名:" prop="name">
+                <el-input v-model="addCompanyForm.name" style="width:180px"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="性别:">
                 <el-radio-group v-model="addCompanyForm.sex">
-                  <el-radio :label="1">男</el-radio>
-                  <el-radio :label="2">女</el-radio>
+                  <el-radio label="1">男</el-radio>
+                  <el-radio label="2">女</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="row">
             <el-col :span="11" class="col">
-              <el-form-item label="证件类型:" prop required>
-                <el-select v-model="addCompanyForm.ruleAlldayId" style="width:180px">
-                  <el-option
-                    :label="item.ruleName"
-                    :value="item.id"
-                    v-for="(item,index) of alldayList"
-                    :key="index"
-                  ></el-option>
+              <el-form-item label="证件类型:" prop="idcardType">
+                <el-select
+                  v-model="addCompanyForm.idcardType"
+                  style="width:180px"
+                  placeholder="请选择证件类型"
+                >
+                  <el-option label="身份证" value="1"></el-option>
+                  <el-option label="护照" value="2"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="证件号:" prop="creditLimit">
-                <el-input v-model="addCompanyForm.creditLimit" style="width:180px"></el-input>
+              <el-form-item label="证件号:" prop="idcard">
+                <el-input v-model="addCompanyForm.idcard" style="width:180px"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item label="手机号:">
-            <el-input v-model="addCompanyForm.enterName" style="width:180px"></el-input>
+            <el-input v-model="addCompanyForm.mobile" style="width:180px"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align:right">
           <el-button @click="dialogMeet=false">取消</el-button>
-          <el-button type="primary" @click="dialogMeet_sure">确认</el-button>
+          <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')">确认</el-button>
         </div>
       </el-dialog>
     </div>
@@ -207,104 +243,87 @@ export default {
       dialogMeet: false,
       loading: false,
       searchForm: {
-        searchType: 1,
-        content: "",
-        enterStatus: "",
+        timeType: "",
+        cstartTime: "",
+        cendTime: "",
+        startTime: "",
+        endTime: "",
+        orderSource: "",
+        guestType: "",
+        name: "",
+        houseNum: "",
+        orderNum: "",
+        operCheckinType: 3,
         pageIndex: 1, //当前页
         pageSize: 10, //页数
-        startTime: "", //考试时件
-        endTime: "", //结束时间
       },
       listTotal: 0, //总条数
-      multipleSelection: [], //多选
-      tableData: [{}], //表格数据
+      tableData: [], //表格数据
       addCompanyForm: {
-        id: "",
-        type: "",
-        enterName: "",
-        contactName: "",
-        contactPhone: "",
-        enterStrategyId: "",
-        ruleAlldayId: "",
-        creditLimit: "",
-        shareFlag: "",
-        state: "",
-        effectiveStartTime: "",
-        effectiveEndTime: "",
-        getWay: "",
-        salesId: "",
-        bankCard: "",
-        taxNum: "",
-        contractNum: "",
-        email: "",
-        remark: "",
+        name: "",
+        sex: "1",
+        idcardType: "1",
+        idcard: "",
+        mobile: "",
       },
       rules: {
-        enterName: [
+        name: [
           {
             required: true,
-            message: "请输入单位名称",
+            message: "请输入来客姓名",
             trigger: "blur",
           },
         ],
-        contactName: [
+        idcard: [
           {
             required: true,
-            message: "请填写联系人",
+            message: "请输入证件号",
             trigger: "blur",
           },
         ],
-        contactPhone: [
+
+        idcardType: [
           {
             required: true,
-            message: "请输入手机号",
-            trigger: "blur",
-          },
-        ],
-        enterStrategyId: [
-          {
-            required: true,
-            message: "请选择价格策略",
+            message: "请选择证件类型",
             trigger: "change",
-          },
-        ],
-        ruleAlldayId: [
-          {
-            required: true,
-            message: "请选择计费规则",
-            trigger: "change",
-          },
-        ],
-        creditLimit: [
-          {
-            required: true,
-            message: "请输入挂账额度",
-            trigger: "blur",
-          },
-        ],
-        state: [
-          {
-            required: true,
-            message: "请选择是否停用",
-            trigger: "blur",
           },
         ],
       },
-      alldayList: [],
-      hotelenterAddAndEdit: false,
+      itemInfo: null,
     };
   },
 
   created() {
-    // this.initForm();
+    this.initForm();
   },
   methods: {
     //点击会议签到  确认 按钮
-    dialogMeet_sure() {
-      this.dialogMeet = false;
+    dialogMeet_sure(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          console.log(this.itemInfo);
+          let params = {};
+          this.$F.merge(params, {
+            checkInReserveId: this.itemInfo.id,
+          });
+          this.$F.doRequest(
+            this,
+            "/pms/reserve/reserve_to_checkin",
+            params,
+            (data) => {
+              //       到了预订房办理入住接口出错
+              console.log(data);
+            }
+          );
+        } else {
+          return false;
+        }
+      });
     },
     //点击  会议登记 按钮
     meetClick(row) {
+      this.itemInfo = row;
       this.dialogMeet = true;
     },
     //点击  详情  按钮
@@ -312,30 +331,46 @@ export default {
       this.$router.push({
         name: "c2detail",
         query: {
-          id: "123456",
+          id: row.id,
         },
       });
     },
     initForm() {
       this.searchForm = {
-        searchType: 1,
-        content: "",
-        enterStatus: "",
+        timeType: "",
+        cstartTime: "",
+        cendTime: "",
+        startTime: "",
+        endTime: "",
+        orderSource: "",
+        guestType: "",
+        name: "",
+        houseNum: "",
+        orderNum: "",
+        operCheckinType: 3,
         pageIndex: 1, //当前页
         pageSize: 10, //页数
-        startTime: "", //考试时件
-        endTime: "", //结束时间
       };
       this.getDataList();
     },
     /**获取表格数据 */
-    getDataList() {
-      console.log("哎，接口没调");
+    getDataList(params = {}) {
+      this.$F.merge(params, {
+        paging: true,
+      });
+      this.$F.merge(params, this.searchForm);
+      this.$F.doRequest(
+        this,
+        "/pms/reserve/reserve_order_list",
+        params,
+        (data) => {
+          console.log(data);
+          this.tableData = data.resreveList;
+          this.listTotal = data.page.count;
+        }
+      );
     },
-    /**多选 */
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
+
     /**每页数据 */
     handleSizeChange(val) {
       this.searchForm.pageSize = val;
