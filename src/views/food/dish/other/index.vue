@@ -14,8 +14,8 @@
             <el-row  class="margin-b-20">
                 <el-col :span="24">营业日：{{nowDate}}</el-col>
             </el-row>
-           <el-form-item label="标题名称：">
-               <el-input v-model="searchForm.name" placeholder="标题名称" class="width200"></el-input>
+           <el-form-item label="菜品名称：">
+               <el-input v-model="searchForm.name" placeholder="菜品名称" class="width200"></el-input>
            </el-form-item>
            <el-form-item label="菜品分类" prop="categoryId">
              <el-cascader

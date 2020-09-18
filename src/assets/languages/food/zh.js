@@ -89,7 +89,11 @@ module.exports = {
         ok:'确定',
         cancel:'取消',
         working_day:'营业日',
+        food_remain:'菜品剩余',
+        price:'价格',
+        warning_count:'预警数',
         
+
 
 
     }
