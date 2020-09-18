@@ -2,7 +2,6 @@
 <!-- 统一的列表格式 -->
 <div>
     <div>
-
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-row>
@@ -84,10 +83,10 @@
 
    <el-dialog top="0" width="50%" :title="$t('food.storageTitle.'+ storeType)" :visible.sync="dialogShow" :close-on-click-modal="false" :close-on-press-escape="false" @close="closeDialog">
         <div v-show="is_batch == 0">
-            <el-form inline size="small" label-width="100px"  :model="storageInfo" :rules="storageInfoRules" ref="storageInfo" class="margin-t-20 ">
+            <el-form inline size="small" label-width="100px"  :model="storageInfo" :rules="storageInfoRules" ref="storageInfo">
                 <el-row>
                     <el-form-item :label=" storeType == 1 ? $t('food.common.storageInTitle') :  $t('food.common.storageOutTitle') " prop="storageId">
-                        <el-select size="small" v-model="storageInfo.storageId" :placeholder="storeType == 1 ? $t('food.common.storageInTitle') :  $t('food.common.storageOutTitle') ">
+                        <el-select  :disabled="storeType == 2 && proInfo.storageId != ''" size="small" v-model="storageInfo.storageId" :placeholder="storeType == 1 ? $t('food.common.storageInTitle') :  $t('food.common.storageOutTitle') ">
                             <el-option v-for="(item,index) in mealstorageList" :key="index" :label="item.soteageName" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
@@ -475,6 +474,7 @@ export default {
 
         //点击确定添加到入库/出库的数组中
         setBatch(){
+            this.storageInfo.storageId = this.proInfo.storageId
             if(this.multipleSelection.length == 0){
                 this.alert(0,'请选择商品！')
                 return false
@@ -496,6 +496,8 @@ export default {
 
         //取消添加到出入库列表
         cancelBatch(){
+            this.storageInfo.storageId  = ''
+            this.proInfo.storageId = ''
             this.is_batch = 0
             this.batchAllList = []
             this.batchList = []

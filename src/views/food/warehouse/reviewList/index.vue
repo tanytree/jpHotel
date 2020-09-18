@@ -90,7 +90,7 @@
             </el-table-column>
 
             <el-table-column
-              prop="createrName"
+              prop="applyerName"
               label="制单人"
               >
             </el-table-column>
