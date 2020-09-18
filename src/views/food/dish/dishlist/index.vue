@@ -4,8 +4,8 @@
     <div class="padding-10">
         <!-- 查询部分 -->
         <el-form inline size="small" class="padding-20"  style="background:#FAFAFA;">
-            <el-form-item label="标题名称：">
-                <el-input v-model="searchForm.name" placeholder="标题名称" class="width200"></el-input>
+            <el-form-item label="菜品名称：">
+                <el-input v-model="searchForm.name" placeholder="菜品名称" class="width200"></el-input>
             </el-form-item>
             <el-form-item label="菜品分类" prop="categoryId">
               <el-cascader
