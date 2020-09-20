@@ -5,43 +5,43 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-row>
-                <el-form-item label="类型">
+                <el-form-item :label="$t('food.common.type')">
                        <el-radio-group v-model="searchForm.type" size="small" @change="changeType">
-                         <el-radio-button label="">全部</el-radio-button>
-                         <el-radio-button :label="1">商品入库</el-radio-button>
-                         <el-radio-button :label="2">商品出库</el-radio-button>
+                         <el-radio-button label="">{{$t('food.common.all')}}</el-radio-button>
+                         <el-radio-button :label="1">{{$t('food.common.product_storage_in')}}</el-radio-button>
+                         <el-radio-button :label="2">{{$t('food.common.product_storage_out')}}</el-radio-button>
                        </el-radio-group>
                     </el-form-item>
                 </el-row>
                 <el-row>
-                    <el-form-item label="审核状态">
+                    <el-form-item :label="$t('food.common.review_status')">
                        <el-radio-group v-model="searchForm.state" size="small" @change="changeState">
-                            <el-radio-button label="">全部</el-radio-button>
-                            <el-radio-button :label="1">待审核</el-radio-button>
-                            <el-radio-button :label="2">审核通过</el-radio-button>
-                            <el-radio-button :label="3">未通过</el-radio-button>
+                            <el-radio-button label="">{{$t('food.common.all')}}</el-radio-button>
+                            <el-radio-button :label="1">{{$t('food.storageLogState.1')}}</el-radio-button>
+                            <el-radio-button :label="2">{{$t('food.storageLogState.2')}}</el-radio-button>
+                            <el-radio-button :label="3">{{$t('food.storageLogState.3')}}</el-radio-button>
                        </el-radio-group>
                     </el-form-item>
                 </el-row>
             <el-row>
-            <el-form-item label="出入仓库:">
-                <el-select size="small" v-model="searchForm.storageId" placeholder="请选择出入仓库">
+            <el-form-item :label="$t('food.common.store_in_out')">
+                <el-select size="small" v-model="searchForm.storageId" :placeholder="$t('food.common.store_in_out')">
                     <el-option v-for="(item,index) in mealstorageList" :key="index" :label="item.soteageName" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="制单人">
-                <el-input v-model="searchForm.createrName" placeholder="制单人" class="width200"></el-input>
+            <el-form-item :label="$t('food.common.applyer_name')">
+                <el-input v-model="searchForm.createrName" :placeholder="$t('food.common.applyer_name')" class="width200"></el-input>
             </el-form-item>
 
-            <el-form-item label="申请日期">
-                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
-                <span> 至 </span>
-                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+            <el-form-item :label="$t('food.common.apply_time')">
+                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('food.common.apply_time')"></el-date-picker>
+                <span> {{$t('food.common.to')}} </span>
+                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('food.common.apply_time')"></el-date-picker>
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" @click="getDataList">查询</el-button>
-                <el-button @click="initForm">重置</el-button>
+                <el-button type="primary" @click="getDataList">{{$t('food.common.search')}}</el-button>
+                <el-button @click="initForm">{{$t('food.common.reset')}}</el-button>
             </el-form-item>
         </el-row>
     </el-form>
@@ -57,21 +57,21 @@
            >
             <el-table-column
               prop="orderNo"
-              label="单号"
+              :label="$t('food.common.storage_order_no')"
               >
             </el-table-column>
             <el-table-column
               prop="applyTime"
-              label="申请日期"
+              :label="$t('food.common.apply_time')"
               >
             </el-table-column>
             <el-table-column
               prop="storageName"
-              label="出入仓库"
+              :label="$t('food.common.store_in_out')"
              >
             </el-table-column>
             <el-table-column
-              label="类型"
+              :label="$t('food.common.type')"
               >
               <template slot-scope="scope">
                 <span v-if="scope.row.type">
@@ -80,7 +80,7 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="审核状态"
+              :label="$t('food.common.view_status')"
               >
               <template slot-scope="scope">
                 <span v-if="scope.row.state">
@@ -91,17 +91,17 @@
 
             <el-table-column
               prop="applyerName"
-              label="制单人"
+              :label="$t('food.common.applyer_name')"
               >
             </el-table-column>
             <el-table-column
               width="200"
-              label="操作"
+              :label="$t('food.common.action')"
              >
                 <template slot-scope="scope">
-                  <el-button @click="getInfo(scope.row)"  type="text">明细</el-button>
-                  <el-button @click="del(scope.row)" v-if="scope.row.state == 1 || scope.row.state == 3"   type="text" >删除</el-button>
-                  <el-button @click="deal(scope.row)"  v-if="scope.row.state == 1" type="text" >审核</el-button>
+                  <el-button @click="getInfo(scope.row)"  type="text">{{$t('food.common.storage_detail')}}</el-button>
+                  <el-button @click="del(scope.row)" v-if="scope.row.state == 1 || scope.row.state == 3"   type="text" >{{$t('food.common.del')}}</el-button>
+                  <el-button @click="deal(scope.row)"  v-if="scope.row.state == 1" type="text" >{{$t('food.common.view')}}</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -226,26 +226,20 @@ export default {
 
         del(data){
 
-            this.$confirm('是否确认删除?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+            this.$confirm(this.$t('food.common.confirm_del'), this.$t('food.common.tip'), {
+              confirmButtonText: this.$t('food.common.ok'),
+              cancelButtonText: this.$t('food.common.cancel'),
               type: 'warning'
             }).then(() => {
-
                 let params = {
                     orderNo:data.orderNo
                 }
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 this.$F.doRequest(this, "/pms/mealstoragelog/delete", params, (res) => {
+                   this.alert(200,this.$t('food.common.success'));
                    this.getDataList();
                 });
-
-
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              });
             }).catch(() => {
 
             });

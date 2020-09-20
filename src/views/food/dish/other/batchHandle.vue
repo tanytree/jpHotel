@@ -1,8 +1,8 @@
 <template>
    <div>
         <div class="margin-b-20">
-            <el-checkbox v-model="checkedRemainingCount">剩余份数</el-checkbox>
-            <el-checkbox v-model="checkedWarningCount">库存预警数</el-checkbox>
+            <el-checkbox v-model="checkedRemainingCount">{{$t('food.common.food_remain_count')}}</el-checkbox>
+            <el-checkbox v-model="checkedWarningCount">{{$t('food.common.warning_count')}}</el-checkbox>
         </div>
         <el-table
           :data="list"
@@ -10,27 +10,27 @@
           height="300"
           size="small"
         >
-          <el-table-column label="菜品名称">
+          <el-table-column :label="$t('food.common.food_title')">
               <template slot-scope="scope">
                 <span class="text-blue">{{scope.row.name}}</span>
               </template>
           </el-table-column>
-          <el-table-column label="剩余份数" width="160" >
+          <el-table-column :label="$t('food.common.food_remain_count')" width="160" >
               <template slot-scope="scope">
                  <el-input
                     size="small"
-                    placeholder="请输入内容"
+                    :placeholder="$t('food.common.food_remain_count')"
                     v-model="scope.row.remainingCount"
                     :disabled="!checkedRemainingCount"
                      >
                   </el-input>
               </template>
           </el-table-column>
-          <el-table-column label="库存预警数" >
+          <el-table-column :label="$t('food.common.warning_count')" >
             <template slot-scope="scope">
               <el-input
                  size="small"
-                 placeholder="请输入内容"
+                 :placeholder="$t('food.common.warning_count')"
                  v-model="scope.row.warningCount"
                  :disabled="!checkedWarningCount"
                  >
@@ -40,8 +40,8 @@
         </el-table>
 
         <div class="dialog-footer text-right" style="padding: 0 20px;margin:15px -20px -15px;">
-           <el-button size="small" @click="closeDialog">取消</el-button>
-           <el-button size="small" type="primary" @click="submitForm('form')">提交</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+           <el-button size="small" type="primary" @click="submitForm('form')">{{$t('food.common.submit')}}</el-button>
         </div>
    </div>
 </template>

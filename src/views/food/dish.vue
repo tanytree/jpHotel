@@ -76,7 +76,7 @@
         },
         watch:{
             activeName(val, oldVal){//普通的watch监听
-                console.log(val)
+                // console.log(val)
                 if(val == 'empty'){
                     this.$refs.empty[0].getDataList();
                 }

@@ -2,21 +2,21 @@
     <div class="action" v-loading="loading">
         <div>
            <el-form :model="form" ref="form" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="审核状态：" prop="state">
+                <el-form-item :label="$t('food.common.view_status')" prop="state">
                     <el-radio-group v-model="form.state" >
-                        <el-radio :label="2">通过</el-radio>
-                        <el-radio :label="3">未通过</el-radio>
+                        <el-radio :label="2">{{$t('food.common.pass')}}</el-radio>
+                        <el-radio :label="3">{{$t('food.common.nopass')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item  label="审核意见:">
-                    <el-input type="textarea" placeholder="请填写备注" v-model="form.remark2"  maxlength="200" show-word-limit></el-input>
+                <el-form-item  :label="$t('food.common.view_remark')">
+                    <el-input type="textarea" :placeholder="$t('food.common.view_remark')" v-model="form.remark2"  maxlength="200" show-word-limit></el-input>
                 </el-form-item>
             </el-form>
         </div>
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">取消</el-button>
-           <el-button type="primary" size="small"  @click="submit">确认</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+           <el-button type="primary" size="small"  @click="submit">{{$t('food.common.ok')}}</el-button>
         </div>
     </div>
 </template>
@@ -75,7 +75,7 @@
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 this.$F.doRequest(this, "/pms/mealstoragelog/approval", params, (res) => {
-                    this.alert(200,'操作成功');
+                    this.alert(200,this.$t('food.common.success'));
                     this.closeDialog();
                 });
             },

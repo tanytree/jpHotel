@@ -5,20 +5,20 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-row>
-                <el-form-item label="结账状态">
+                <el-form-item :label="$t('food.common.order_status')">
                    <el-radio-group v-model="searchForm.state" size="small" @change="changeOrderStatus">
-                     <el-radio-button label="">不限</el-radio-button>
-                     <el-radio-button :label="1">未结</el-radio-button>
-                     <el-radio-button :label="2">已结</el-radio-button>
-                     <el-radio-button :label="3">已取消</el-radio-button>
+                     <el-radio-button label="">{{$t('food.common.no_limit')}}</el-radio-button>
+                     <el-radio-button :label="1">{{$t('food.order_status.1')}}</el-radio-button>
+                     <el-radio-button :label="2">{{$t('food.order_status.2')}}</el-radio-button>
+                     <el-radio-button :label="3">{{$t('food.order_status.3')}}</el-radio-button>
                    </el-radio-group>
                 </el-form-item>
             </el-row>
-            <el-form-item label="客人名称">
-                <el-input v-model="searchForm.name" placeholder="客人名称" class="width200"></el-input>
+            <el-form-item :label="$t('food.common.curstom_name')">
+                <el-input v-model="searchForm.name" :placeholder="$t('food.common.curstom_name')" class="width200"></el-input>
             </el-form-item>
-            <el-form-item label="订单来源">
-                <el-select v-model="searchForm.orderSource" placeholder="请选择">
+            <el-form-item :label="$t('food.common.order_from')">
+                <el-select v-model="searchForm.orderSource" :placeholder="$t('food.common.order_from')">
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -28,17 +28,17 @@
                   </el-select>
             </el-form-item>
 
-            <el-form-item label="班次时间">
-                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+            <el-form-item :label="$t('food.common.order_time')">
+                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('food.common.order_time')"></el-date-picker>
                 <span> 至 </span>
-                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px":placeholder="$t('food.common.order_time')"></el-date-picker>
             </el-form-item>
-            <el-form-item label="订单编号">
-                <el-input v-model="searchForm.dishesNum"  placeholder="订单编号" class="width200"></el-input>
+            <el-form-item :label="$t('food.common.order_num')">
+                <el-input v-model="searchForm.dishesNum"  :placeholder="$t('food.common.order_num')" class="width200"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="getDataList">查询</el-button>
-                <el-button type="primary" @click="initForm">重置</el-button>
+                <el-button type="primary" @click="getDataList">{{$t('food.common.search')}}</el-button>
+                <el-button type="primary" @click="initForm">{{$t('food.common.reset')}}</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -54,16 +54,16 @@
                >
                 <el-table-column
                   prop="dishesNum"
-                  label="订单号"
+                  :label="$t('food.common.order_num')"
                   >
                 </el-table-column>
                 <el-table-column
                   prop="createTime"
-                  label="创建时间"
+                  :label="$t('food.common.create_time')"
                   >
                 </el-table-column>
                 <el-table-column
-                  label="菜品明细"
+                  :label="$t('food.common.food_detail')"
                   >
                   <template slot-scope="scope" >
                     <div v-for="sumItem in scope.row.orderSubList" class="text-size12">
@@ -73,9 +73,9 @@
                 </el-table-column>
 
                 <el-table-column
-                  label="客人信息">
+                  :label="$t('food.common.curstom_info')">
                   <template slot-scope="scope">
-                      <span v-if="!scope.row.memberCard">临时客人</span>
+                      <span v-if="!scope.row.memberCard">{{$t('food.common.guests')}}</span>
                       <span v-else>
                           {{scope.row.memberTypeName}}
                       </span>
@@ -83,22 +83,23 @@
                 </el-table-column>
 
                 <el-table-column
-                  label="订单来源"
+                  :label="$t('food.common.order_from')"
                  >
                   <template slot-scope="scope">{{getOrderSource(scope.row.orderSource)}}</template>
                 </el-table-column>
 
                 <el-table-column
-                  label="总消费"
+                  :label="$t('food.common.total_pay')"
                  >
                     <template slot-scope="scope">{{scope.row.consumePrice}}</template>
                 </el-table-column>
 
                 <el-table-column
-                  label="状态"
+                  :label="$t('food.common.status')"
                  >
                   <template slot-scope="scope">
-                      {{scope.row.state == 1 ? '未结' : (scope.row.state == 2 ? '已结' : '已取消') }}
+                      <span v-if="scope.row.state">{{$t('food.order_status.'+ scope.row.state)}}</span>
+                      <!-- {{scope.row.state == 1 ? '未结' : (scope.row.state == 2 ? '已结' : '已取消') }} -->
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -106,9 +107,9 @@
                   label="操作"
                  >
                   <template slot-scope="scope">
-                      <el-button @click="getInfo(scope.row)"  type="text" >详情</el-button>
-                      <el-button @click="action(scope.row)" v-if="scope.row.state == 1" type="text">结账</el-button>
-                      <el-button @click="cancleOrder(scope.row)" v-if="scope.row.state == 1"  type="text">取消订单</el-button>
+                      <el-button @click="getInfo(scope.row)"  type="text" >{{$t('food.common.detail')}}</el-button>
+                      <el-button @click="action(scope.row)" v-if="scope.row.state == 1" type="text">{{$t('food.common.order_deal')}}</el-button>
+                      <el-button @click="cancleOrder(scope.row)" v-if="scope.row.state == 1"  type="text">{{$t('food.common.cancel_order')}}</el-button>
                       <!-- <el-button v-if="scope.row.state == 3"  type="text">恢复</el-button> -->
                   </template>
                 </el-table-column>
@@ -133,11 +134,6 @@
             <detail @closeDialog="closeDialog" @changeDialog="changeDialog" ref="detailRef" v-if="dialogType == 1" />
             <action @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
-
-
-
-
-
 
 </div>
 </template>
@@ -179,13 +175,13 @@ export default {
             options: [
                 {
                   value: '1',
-                  label: '前台点餐'
+                  label: this.$t('food.orderSource.1')
                 }, {
                   value: '2',
-                  label: 'IPAD点餐'
+                  label: this.$t('food.orderSource.2')
                 }, {
                   value: '3',
-                  label: 'H5点餐'
+                  label: this.$t('food.orderSource.3')
                 }
             ],
             listTotal: 0, //总条数
@@ -299,22 +295,21 @@ export default {
                 this.$refs.actionRef.getInfo(data)
             })
         },
+        //取消订单
         cancleOrder(data){
         // console.log(data)
-
-        let params = {
-            dishesOrderId:data.id
-        }
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-
-         this.$confirm('确定取消该订单吗?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
+            let params = {
+                dishesOrderId:data.id
+            }
+            params.userId = this.userId
+            params.storesNum = this.storesNum
+            this.$confirm( this.$t('food.common.cancel_confirm_order_tips'),  this.$t('food.common.tip'), {
+               confirmButtonText:  this.$t('food.common.ok'),
+               cancelButtonText:  this.$t('food.common.cancel'),
+               type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, "/pms/dishes/dishes_order_cancle", params, (res) => {
-                    this.alert(200,'取消成功')
+                    this.alert(200, this.$t('food.common.success'));
                     this.getDataList();
                 });
             }).catch(() => {

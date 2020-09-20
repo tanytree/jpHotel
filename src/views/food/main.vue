@@ -62,7 +62,7 @@
         },
 		watch:{
 		    activeName(val, oldVal){//普通的watch监听
-                console.log(val)
+                // console.log(val)
 		        if(val == 'orderDesk'){
 		            this.$refs.orderDesk[0].getDataList();
 		        }

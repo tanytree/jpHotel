@@ -2,8 +2,8 @@
   <div v-loading="loading">
     <div class="content padding-10 round">
         <div class="padding-12 round basebg margin-b-20 margin-t-10">
-            <el-button @click="slideAllList" :icon="slideAll ? 'el-icon-caret-bottom' : 'el-icon-caret-right' "> {{slideAll ? '展开全部': '折叠全部' }} </el-button>
-            <el-button @click="addCategray(1)">新增一级分类</el-button>
+            <el-button @click="slideAllList" :icon="!slideAll ? 'el-icon-caret-bottom' : 'el-icon-caret-right' "> {{!slideAll ? $t('food.common.slide_all'): $t('food.common.no_slide_all') }} </el-button>
+            <el-button @click="addCategray(1)">{{$t('food.common.add_first_level')}}</el-button>
         </div>
 
           <div class="padding-12 round basebg margin-b-20" v-for="(item,index) in categoryList">
@@ -12,9 +12,9 @@
                    <i v-if="item.childList.length > 0" :class="item.is_slide ? 'el-icon-caret-bottom' : 'el-icon-caret-right'"></i> {{item.name}}
                 </span>
                 <div style="float:right;">
-                    <el-button type="text" @click="addCategray_2(2,item.id)">新增二级分类</el-button>
-                    <el-button type="text" @click="editCategray_1(1,item.id,item.name,item.pCategoryId)">编辑</el-button>
-                    <el-button type="text" @click="del(item.id)">删除</el-button>
+                    <el-button type="text" @click="addCategray_2(2,item.id)">{{$t('food.common.add_second_level')}}</el-button>
+                    <el-button type="text" @click="editCategray_1(1,item.id,item.name,item.pCategoryId)">{{$t('food.common.edit')}}</el-button>
+                    <el-button type="text" @click="del(item.id)">{{$t('food.common.del')}}</el-button>
                 </div>
               </div>
 
@@ -25,17 +25,17 @@
                              <i v-if="subItem.childList.length > 0" :class="subItem.is_slide ? 'el-icon-caret-bottom' : 'el-icon-caret-right'"></i> {{subItem.name}}
                         </span>
                         <div style="float:right;">
-                            <el-button type="text" @click="addCategray_3(3,subItem.id,index)">新增三级级分类</el-button>
-                            <el-button type="text" @click="editCategray_2(2,subItem.id,index,subItem.name,subItem.pCategoryId)">编辑</el-button>
-                            <el-button type="text" @click="del(subItem.id)">删除</el-button>
+                            <el-button type="text" @click="addCategray_3(3,subItem.id,index)">{{$t('food.common.add_three_level')}}</el-button>
+                            <el-button type="text" @click="editCategray_2(2,subItem.id,index,subItem.name,subItem.pCategoryId)">{{$t('food.common.edit')}}</el-button>
+                            <el-button type="text" @click="del(subItem.id)">{{$t('food.common.del')}}</el-button>
                         </div>
                     </div>
                     <div  v-show= "subItem.is_slide" class="clearfix"  v-if="subItem.childList.length > 0">
                          <div v-for="(subItems,sinidexs) in subItem.childList" class="padding-12 top_border clearfix subItem">
                              <span style="float: left;">{{subItems.name}}</span>
                              <div style="float:right;">
-                                 <el-button type="text" @click="editCategray_3(3,subItems.id,subItems.name,subItems.pCategoryId,sinidexs,sinidex,index)">编辑</el-button>
-                                 <el-button type="text" @click="del(subItems.id)">删除</el-button>
+                                 <el-button type="text" @click="editCategray_3(3,subItems.id,subItems.name,subItems.pCategoryId,sinidexs,sinidex,index)">{{$t('food.common.edit')}}</el-button>
+                                 <el-button type="text" @click="del(subItems.id)">{{$t('food.common.del')}}</el-button>
                              </div>
                          </div>
                     </div>
@@ -44,20 +44,20 @@
             </div>
     </div>
 
-    <el-dialog top="0" title="新增" width="40%" :visible.sync="dialogShow" :close-on-click-modal="false" @close="closeDialog">
+    <el-dialog top="0" :title="$t('food.common.add')" width="40%" :visible.sync="dialogShow" :close-on-click-modal="false" @close="closeDialog">
         <el-form :model="info" ref="form"  :rules="rules"  label-width="150px" >
-            <el-form-item label="上级分类" v-if="list.length > 0 && info.pCategoryId && info.pCategoryId !== '0'" >
-              <el-select v-model="info.pCategoryId" disabled placeholder="请选择上级分类">
+            <el-form-item :label="$t('food.common.up_level')" v-if="list.length > 0 && info.pCategoryId && info.pCategoryId !== '0'" >
+              <el-select v-model="info.pCategoryId" disabled :placeholder="$t('food.common.up_level')">
                 <el-option v-for="cate in list" :key="cate.id" :label="cate.name" :value="cate.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="info.categoryLevel == 3 ?  '三级分类名称：' : (info.categoryLevel == 2 ? '二级分类名称：' : '一级分类名称：') " prop="name" >
+            <el-form-item :label="info.categoryLevel == 3 ?  $t('food.common.three_level') : (info.categoryLevel == 2 ? $t('food.common.second_level') : $t('food.common.first_level')) " prop="name" >
                 <el-input v-model="info.name"></el-input>
             </el-form-item>
             <el-divider></el-divider>
             <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
-               <el-button size="small" @click="closeDialog">取消</el-button>
-               <el-button size="small" type="primary" :disabled="!info.name" @click="submitForm('form')">提交</el-button>
+               <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+               <el-button size="small" type="primary" :disabled="!info.name" @click="submitForm('form')">{{$t('food.common.submit')}}</el-button>
             </div>
         </el-form>
     </el-dialog>
@@ -181,18 +181,15 @@ export default {
            userId:this.userId,
            categoryId:id
        }
-       this.$confirm('确认删除?', '提示', {
-           confirmButtonText: '确定',
-           cancelButtonText: '取消',
-           type: 'warning'
-       }).then(() => {
+      this.$confirm( this.$t('food.common.confirm_del'),  this.$t('food.common.tip'), {
+          confirmButtonText:  this.$t('food.common.ok'),
+          cancelButtonText:  this.$t('food.common.cancel'),
+          type: 'warning'
+      }).then(() => {
            this.$F.doRequest(this, "/pms/dishes/dishes_category_delete", info, (res) => {
               this.getList();
            });
-           this.$message({
-               type: 'success',
-               message: '操作成功!'
-           });
+           this.alert(0,this.$t('food.common.success'))
        }).catch(() => {
 
        });
@@ -333,7 +330,6 @@ export default {
         // return
         this.$refs[form].validate((valid) => {
          if (valid) {
-
            this.$F.doRequest(this, "/pms/dishes/dishes_category_edit", params, (res) => {
                 this.closeDialog();
                 this.$refs[form].resetFields();

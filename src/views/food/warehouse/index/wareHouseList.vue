@@ -5,15 +5,15 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-row>
-                <el-form-item label="状态">
+                <el-form-item :label="$t('food.common.status')">
                    <el-radio-group v-model="searchForm.state" size="small" @change="changeStatus">
-                     <el-radio-button label="">全部</el-radio-button>
-                     <el-radio-button :label="1">启用 </el-radio-button>
-                     <el-radio-button :label="2">禁用 </el-radio-button>
+                     <el-radio-button label="">{{$t('food.common.all')}}</el-radio-button>
+                     <el-radio-button :label="1">{{$t('food.common.active')}}</el-radio-button>
+                     <el-radio-button :label="2">{{$t('food.common.disable')}} </el-radio-button>
                    </el-radio-group>
                 </el-form-item>
 
-                 <el-button style="float: right;" size="small" type="primary" @click="add">新增仓库</el-button>
+                 <el-button style="float: right;" size="small" type="primary" @click="add">{{$t('food.common.add_storage')}}</el-button>
             </el-row>
         </el-form>
         <!--表格数据 -->
@@ -31,31 +31,31 @@
                >
                 <el-table-column
                   prop="soteageName"
-                  label="仓库名称"
+                  :label="$t('food.common.storage_name')"
                   >
                 </el-table-column>
                 <el-table-column
                   prop="address"
-                  label="仓库地址"
+                  :label="$t('food.common.storage_address')"
                   >
                 </el-table-column>
                 <el-table-column
-                  label="状态"
+                  :label="$t('food.common.status')"
                  >
                   <template slot-scope="scope">
-                      {{scope.row.status == 1 ? '未结' : (scope.row.status == 2 ? '已结' : '已取消') }}
+                      {{scope.row.status == 1 ? $t('food.common.active') : $t('food.common.disable') }}
                   </template>
                 </el-table-column>
                 <el-table-column
                   width="200"
-                  label="操作"
+                  :label="$t('food.common.action')"
                  >
                   <template slot-scope="scope">
-                      <el-button @click="getInfo(scope.row)"  type="text" >详情</el-button>
-                      <el-button @click="editInfo(scope.row)"  type="text">修改</el-button>
-                      <el-button v-if="scope.row.state == 1" @click="changeState(scope.row,2)" type="text">禁用</el-button>
-                      <el-button v-if="scope.row.state == 2" @click="changeState(scope.row,1)" type="text">启用</el-button>
-                      <el-button @click="del(scope.row)" type="text">删除</el-button>
+                      <el-button @click="getInfo(scope.row)"  type="text" >{{$t('food.common.detail')}}</el-button>
+                      <el-button @click="editInfo(scope.row)"  type="text">{{$t('food.common.edit')}}</el-button>
+                      <el-button v-if="scope.row.state == 1" @click="changeState(scope.row,2)" type="text">{{$t('food.common.disable')}}</el-button>
+                      <el-button v-if="scope.row.state == 2" @click="changeState(scope.row,1)" type="text">{{$t('food.common.active')}}</el-button>
+                      <el-button @click="del(scope.row)" type="text">{{$t('food.common.del')}}</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -171,13 +171,13 @@ export default {
             }
             params.userId = this.userId
             params.storesNum = this.storesNum
-            this.$confirm(this.$t('food.houseStateDesc.'+state), '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+            this.$confirm(this.$t('food.houseStateDesc.'+state), this.$t('food.common.tip'), {
+              confirmButtonText: this.$t('food.common.ok'),
+              cancelButtonText: this.$t('food.common.cancel'),
               type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, "/pms/hotelmealstorage/disable", params, (res) => {
-                    this.alert(200,'操作成功')
+                    this.alert(200,this.$t('food.common.success'))
                     this.getDataList();
                 });
             }).catch(() => {
@@ -190,13 +190,13 @@ export default {
             }
             params.userId = this.userId
             params.storesNum = this.storesNum
-            this.$confirm(this.$t('food.houseStateDesc.3'), '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+            this.$confirm(this.$t('food.houseStateDesc.3'), this.$t('food.common.tip'), {
+             confirmButtonText: this.$t('food.common.ok'),
+             cancelButtonText: this.$t('food.common.cancel'),
               type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, "/pms/hotelmealstorage/delete", params, (res) => {
-                    this.alert(200,'操作成功')
+                    this.alert(200, this.$t('food.common.success'))
                     this.getDataList();
                 });
             }).catch(() => {

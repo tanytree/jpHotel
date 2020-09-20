@@ -1,32 +1,32 @@
 <template>
     <div class="action" v-loading="loading">
-        <div class="money text-red text-size20">应收 : {{info.consumePrice}}</div>
+        <div class="money text-red text-size20">{{$t('food.common.consumePrice')}} : {{info.consumePrice}}</div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="计费类型:" prop="billingType">
+                <el-form-item :label="$t('food.common.billingType')" prop="billingType">
                     <el-radio-group v-model="form.billingType" @change="changeBillingType">
-                        <el-radio :label="1">直接结账</el-radio>
-                        <el-radio :label="2">签单到单位</el-radio>
-                        <el-radio :label="3">签单到房间</el-radio>
+                        <el-radio :label="1">{{$t('food.billingType.1')}}</el-radio>
+                        <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio>
+                        <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <div v-if="form.billingType == 1">
-                    <el-form-item label="支付方式:">
-                        <el-select size="small" v-model="form.payType" placeholder="请选择活动区域">
-                            <el-option label="现金" :value="1"></el-option>
-                            <el-option label="银行卡" :value="2"></el-option>
-                            <el-option label="支付宝" :value="3"></el-option>
-                            <el-option label="支票" :value="4"></el-option>
-                            <el-option label="会员卡" :value="5"></el-option>
+                    <el-form-item :label="$t('food.common.payType')">
+                        <el-select size="small" v-model="form.payType">
+                            <el-option :label="$t('food.payType.1')" :value="1"></el-option>
+                            <el-option :label="$t('food.payType.2')" :value="2"></el-option>
+                            <el-option :label="$t('food.payType.3')" :value="3"></el-option>
+                            <el-option :label="$t('food.payType.4')" :value="4"></el-option>
+                            <el-option :label="$t('food.payType.5')" :value="5"></el-option>
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item label="结算金额:">
+                    <el-form-item :label="$t('food.common.payPrice')">
                         {{getPayPrice}}
                     </el-form-item>
 
-                    <el-form-item label="会员卡:">
-                        <el-select  size="small" v-model="form.memberCard"  filterable placeholder="请选目标会员卡" @change="getMerberInfo">
+                    <el-form-item :label="$t('food.common.member_card')">
+                        <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.common.select_member_card')" @change="getMerberInfo">
                             <el-option
                               v-for="(item,index) in memberList"
                               :key="index"
@@ -34,7 +34,7 @@
                               :value="item.memberCard">
                             </el-option>
                         </el-select>
-                        <el-button style="margin-left: 10px;" size="small">读会员卡</el-button>
+                        <el-button style="margin-left: 10px;" size="small">{{$t('food.common.read_member_card')}}</el-button>
                     </el-form-item>
                     <!-- 使用积分兑换操作，暂时不要 -->
                     <!-- <el-form-item v-if="selectMerberInfo.score && selectMerberInfo.score > 0">
@@ -42,8 +42,8 @@
                     </el-form-item> -->
                 </div>
                 <div v-if="form.billingType == 2">
-                    <el-form-item label="选择单位:" prop="signEnterId">
-                        <el-select  size="small" v-model="form.signEnterId"  filterable placeholder="请选目标单位" @focus="getSignList" @change="getSignInfo" >
+                    <el-form-item :label="$t('food.common.select_company')" prop="signEnterId">
+                        <el-select  size="small" v-model="form.signEnterId"  filterable :placeholder="$t('food.common.select_company')" @focus="getSignList" @change="getSignInfo" >
                             <el-option
                               v-for="(item,index) in signList"
                               :key="index"
@@ -53,20 +53,20 @@
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item label="用户信息:" prop="signUserName" class="signUserBox">
+                    <el-form-item :label="$t('food.common.acount_info')" prop="signUserName" class="signUserBox">
                         <el-input  size="small" placeholder="姓名" v-model="form.signUserName" style="width: 180px;" ></el-input>
-                        <el-select size="small" v-model="form.signIdcardType" placeholder="证件类型" style="width: 120px;" >
-                            <el-option label="身份证" :value="1"></el-option>
-                            <el-option label="护照" :value="2"></el-option>
+                        <el-select size="small" v-model="form.signIdcardType" :placeholder="$t('food.common.card_type')" style="width: 120px;" >
+                            <el-option :label="$t('food.card_type.1')" :value="1"></el-option>
+                            <el-option :label="$t('food.card_type.2')" :value="2"></el-option>
                         </el-select>
-                        <el-input size="small" placeholder="证件号" v-model="form.signIdcard" style="width: 180px;" ></el-input>
+                        <el-input size="small" :placeholder="$t('food.common.card_no')" v-model="form.signIdcard" style="width: 180px;" ></el-input>
                     </el-form-item>
                 </div>
 
 
                 <div v-if="form.billingType == 3">
-                    <el-form-item label="选择目标房间:" prop="signRoomId">
-                        <el-select  size="small" v-model="form.signRoomId"  filterable placeholder="请选目标单位" @focus="getSignRoomList" @change="getSignRoomInfo" >
+                    <el-form-item :label="$('food.common.select_room')" prop="signRoomId">
+                        <el-select  size="small" v-model="form.signRoomId"  filterable :placeholder="$('food.common.select_room')" @focus="getSignRoomList" @change="getSignRoomInfo" >
                             <el-option
                               v-for="(item,index) in romeList"
                               :key="index"
@@ -77,23 +77,23 @@
                     </el-form-item>
                 </div>
 
-                <el-form-item  label="备注:">
-                    <el-input type="textarea" placeholder="请填写备注" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
+                <el-form-item  :label="$t('food.common.remark')">
+                    <el-input type="textarea" :placeholder="$t('food.common.remark')" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
                 </el-form-item>
 
-                <el-form-item  label="单据份数:">
+                <el-form-item  :label="$t('food.common.order_count')">
                     <el-input-number size="mini" v-model="form.docCoun" :step="1" step-strictly></el-input-number>
                 </el-form-item>
 
                 <el-form-item>
-                    <el-checkbox v-model="isPrint">打印单据</el-checkbox>
+                    <el-checkbox v-model="isPrint">{{$t('food.common.order_print')}}</el-checkbox>
                 </el-form-item>
             </el-form>
         </div>
         <el-divider></el-divider>
         <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">取消</el-button>
-           <el-button type="primary" size="small"  @click="submit">立即结账</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+           <el-button type="primary" size="small"  @click="submit">{{$t('food.common.pay_order_deal')}}</el-button>
         </div>
     </div>
 </template>
@@ -373,12 +373,15 @@
             },
 
             submit(){
+                
+                
+                
                 let params = this.form
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 // console.log(params)
                 this.$F.doRequest(this, "/pms/dishes/dishes_place_order_pay", params, (res) => {
-                    this.alert(200,'结账成功');
+                    this.alert(200,this.$t('food.common.success'));
                     this.closeDialog();
                 });
             },

@@ -2,28 +2,28 @@
     <div class="action" v-loading="loading">
         <div>
             <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-                 <el-form-item size="small" label="仓库名称:" prop="soteageName">
-                    <el-input v-model="form.soteageName" placeholder="仓库名称"></el-input>
+                 <el-form-item size="small" :label="$t('food.common.storage_name')" prop="soteageName">
+                    <el-input v-model="form.soteageName" :placeholder="$t('food.common.storage_name')"></el-input>
                   </el-form-item>
 
-                <el-form-item label="是否禁用:" prop="state">
+                <el-form-item :label="$t('food.common.status')" prop="state">
                     <el-radio-group v-model="form.state" >
-                        <el-radio :label="1">启用</el-radio>
-                        <el-radio :label="2">禁用</el-radio>
+                        <el-radio :label="1">{{$t('food.common.active')}}</el-radio>
+                        <el-radio :label="2">{{$t('food.common.disable')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item  label="仓库地址:" prop="address">
-                    <el-input type="textarea" placeholder="请填写仓库地址" v-model="form.address"  maxlength="200" show-word-limit></el-input>
+                <el-form-item  :label="$t('food.common.storage_address')" prop="address">
+                    <el-input type="textarea" :placeholder="$t('food.common.storage_address')" v-model="form.address"  maxlength="200" show-word-limit></el-input>
                 </el-form-item>
-                <el-form-item  label="备注:">
-                    <el-input type="textarea" placeholder="请填写备注" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
+                <el-form-item  :label="$t('food.common.remark')">
+                    <el-input type="textarea" :placeholder="$t('food.common.remark')" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
                 </el-form-item>
             </el-form>
         </div>
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">取消</el-button>
-           <el-button type="primary" size="small"  @click="submit">确认</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
+           <el-button type="primary" size="small"  @click="submit">{{$t('food.common.ok')}}</el-button>
         </div>
     </div>
 </template>
@@ -45,10 +45,10 @@
                 },
                 rules: {
                     soteageName: [
-                        {required: true, message: '请输入仓库名称', trigger: 'change' }
+                        {required: true, message: this.$t('food.common.input_storage_name'), trigger: 'change' }
                     ],
                     state: [
-                        { required: true, message: '请选择状态', trigger: 'change' }
+                        { required: true, message: this.$t('food.common.status'), trigger: 'change' }
                     ],
                 }
             }
@@ -92,7 +92,7 @@
                 if(data.id){
                     this.form.id = data.id
                 }
-                console.log(this.form)
+                // console.log(this.form)
             },
 
             submit(){
@@ -103,11 +103,11 @@
                 this.$refs['form'].validate((valid) => {
                   if (valid) {
                     this.$F.doRequest(this, "/pms/hotelmealstorage/edit", params, (res) => {
-                        this.alert(200,'操作成功');
+                        this.alert(200,this.$t('food.common.success'));
                         this.closeDialog();
                     });
                   } else {
-                    console.log('error submit!!');
+                    // console.log('error submit!!');
                     return false;
                   }
                 });

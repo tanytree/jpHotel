@@ -1,59 +1,57 @@
 <template>
     <div class="action" v-loading="loading">
-
-
         <el-form size="small" inline>
             <el-row>
                 <el-col :span="16">
-                    <el-form-item label="入库单号：">
+                    <el-form-item :label="$t('food.common.storage_order_no')">
                           {{info.orderNo}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="入库仓库:" v-if="info.type == 1">
+                    <el-form-item :label="$t('food.common.storageInTitle')" v-if="info.type == 1">
                        {{info.storageName}}
                     </el-form-item>
-                    <el-form-item label="出库仓库:" v-if="info.type == 2">
+                    <el-form-item :label="$t('food.common.storageOutTitle')" v-if="info.type == 2">
                        {{info.storageName}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="申请日期：">
+                    <el-form-item :label="$t('food.common.apply_time')">
                         {{info.applyTime}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="经办人：">
+                    <el-form-item :label="$t('food.common.createrName')">
                         {{info.createrName}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="审核状态：" v-if="info.state">
+                    <el-form-item :label="$t('food.common.review_status')" v-if="info.state">
                         {{$t('food.storageLogState.'+ info.state)}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="审核时间：">
+                    <el-form-item :label="$t('food.common.view_time')" >
                         {{info.approvalTime ? info.approvalTime : '--'}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="制单人：">
+                    <el-form-item :label="$t('food.common.applyer_name')" >
                         {{info.applyerName ? info.applyerName : '--'}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="审核人：">
+                    <el-form-item :label="$t('food.common.viewer_name')">
                         {{info.approvalName ? info.approvalName : '--' }}
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                    <el-form-item label="入库备注：">
+                    <el-form-item :label="$t('food.common.remark')">
                         {{info.remark}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="审核意见：">
+                    <el-form-item :label="$t('food.common.view_remark')">
                         {{info.remark2 ? info.remark2 : '--'}}
                     </el-form-item>
                 </el-col>
@@ -70,24 +68,25 @@
            >
             <el-table-column
               prop="dishesName"
-              label="商品名称"
+              :label="$t('food.common.product_name')"
               >
             </el-table-column>
             <el-table-column
               prop="unit"
-              label="单位"
+              :label="$t('food.common.unit')"
               >
             </el-table-column>
             <el-table-column
               prop="inventoryCount"
-              label="入库数量"
+               :label="$t('food.common.product_count')"
              >
             </el-table-column>
-          </el-table>
+        </el-table>
+
 
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">关闭</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
         </div>
     </div>
 </template>

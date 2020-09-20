@@ -7,22 +7,22 @@
             <div class="items text-size20"><b>{{info.name}}</b></div>
             <div class="items text-red text-size18"> ￥{{info.price}}</div>
             <div class="items flex text-gray">
-               <div class="label" style="width:100px;">【菜品分类】</div>
+               <div class="label" style="width:100px;">【{{$t('food.common.cate')}}】</div>
                <div>{{info.categoryName}}</div>
             </div>
             <div class="items flex text-gray">
-               <div class="label">【菜品原料】</div>
+               <div class="label">【{{$t('food.common.material')}}】</div>
                <div>{{info.marterial}}</div>
             </div>
             <div class="items flex text-gray" >
-               <div class="label">【菜品介绍】</div>
+               <div class="label">【{{$t('food.common.food_desc')}}】</div>
                 <div>{{info.remark}}</div>
             </div>
         </div>
 
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">关闭</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
         </div>
     </div>
 </template>

@@ -2,23 +2,23 @@
     <div class="action" v-loading="loading">
         <div>
 		   <el-form label-width="100px" class="demo-ruleForm">
-		        <el-form-item size="small" label="仓库名称 :">
+		        <el-form-item size="small" :label="$t('food.common.storage_name')">
                     <div class="text-black">{{ info.soteageName}}</div>
 		        </el-form-item>
-		        <el-form-item label="状态 :">
-                    <div class="text-black">{{ info.state == 1 ? '启用' : '禁用'}}</div>
+		        <el-form-item :label="$t('food.common.status')">
+                    <div class="text-black">{{ info.state == 1 ? $t('food.common.active') : $t('food.common.disable')}}</div>
 		        </el-form-item>
-		        <el-form-item  label="仓库地址 :">
+		        <el-form-item  :label="$t('food.common.storage_address')">
                     <div class="text-black">{{ info.address}}</div>
 		        </el-form-item>
-		        <el-form-item label="备注 :">
+		        <el-form-item :label="$t('food.common.remark')">
 		           <div class="text-black">{{ info.remark}}</div>
 		        </el-form-item>
 		   </el-form>
         </div>
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">关闭</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
         </div>
     </div>
 </template>
@@ -37,14 +37,6 @@
                     soteageName:'',// 仓库名称 String 必填
                     address:'',// 仓库地址 String 非必填
                     remark:'',//  备注 String 非必填
-                },
-                rules: {
-                    soteageName: [
-                        {required: true, message: '请输入仓库名称', trigger: 'blur' }
-                    ],
-                    state: [
-                        { required: true, message: '请选择状态', trigger: 'change' }
-                    ],
                 }
             }
         },
@@ -67,8 +59,8 @@
             //获取传过来的值
             getInfo(data){
                 this.info = data
-                console.log(data)
-                console.log('详情')
+                // console.log(data)
+                // console.log('详情')
 
             },
 

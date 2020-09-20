@@ -4,14 +4,14 @@
 
         <div class="detailPanel" v-if="add == 0">
             <div class="top">
-                <span>订单编号：{{info.dishesNum}} </span><span v-if= "info.deskNum">桌号：{{info.deskNum}} </span>  <span v-if= "info.numberPlat">号码牌：{{info.numberPlat}} </span>
+                <span>{{$t('food.common.order_num')}}：{{info.dishesNum}} </span><span v-if= "info.deskNum">{{$t('food.common.deskNum')}}：{{info.deskNum}} </span>  <span v-if= "info.numberPlat">{{$t('food.common.numberPlat')}}：{{info.numberPlat}} </span>
                 </div>
-            <div class="text-red text-size20 margin-t-20">应收：{{info.consumePrice}}</div>
+            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{info.consumePrice}}</div>
 
             <div class="text-red text-size20 margin-t-20">
-                <el-button v-if="info.state == 1" type="primary" size="small" @click="addOrderInfo">添加菜品</el-button>
-                <el-button v-if="info.state == 1" type="primary" size="small">结账</el-button>
-                <el-button type="primary" size="small">打印</el-button>
+                <el-button v-if="info.state == 1" type="primary" size="small" @click="addOrderInfo">{{$t('food.common.add_food')}}</el-button>
+                <el-button v-if="info.state == 1" type="primary" size="small">{{$t('food.common.order_deal')}}</el-button>
+                <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>
             </div>
 
             <div class="margin-t-20">
@@ -21,13 +21,13 @@
                   header-row-class-name="default"
                   size="small"
                 >
-                  <el-table-column prop="dishesName" label="菜品名称" ></el-table-column>
-                  <el-table-column label="单价">
+                  <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>
+                  <el-table-column :label="$t('food.common.price')">
                       <template slot-scope="scope">
                        ¥ {{scope.row.unitPrice}}
                       </template>
                   </el-table-column>
-                  <el-table-column label="菜品数量" width="160">
+                  <el-table-column :label="$t('food.common.food_count')" width="160">
                       <template slot-scope="scope">
                         <div class="cell" style="padding:0;" v-if="info.state == 1" >
                             <div  class="el-input-number el-input-number--mini" style=" width:100px;">
@@ -43,9 +43,9 @@
                         </div>
                       </template>
                   </el-table-column>
-                  <el-table-column label="操作" v-if="info.state == 1">
+                  <el-table-column :label="$t('food.common.action')" v-if="info.state == 1">
                     <template slot-scope="scope">
-                      <el-button size="mini" @click="handleDelete(scope.$index)">移除</el-button>
+                      <el-button size="mini" @click="handleDelete(scope.$index)">{{$t('food.common.remove')}}</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -56,10 +56,10 @@
         <div class="cartPanel"  v-if="add == 1" v-loading="list_loading">
                 <!-- 查询部分 -->
                 <el-form inline size="small">
-                    <el-form-item label="菜品名称：">
-                        <el-input v-model="searchForm.name" placeholder="标题名称：" class="width200"></el-input>
+                    <el-form-item :label="$t('food.common.food_title')">
+                        <el-input v-model="searchForm.name" :placeholder="$t('food.common.food_title')" class="width200"></el-input>
                     </el-form-item>
-                    <el-form-item label="菜品分类" prop="categoryId">
+                    <el-form-item :label="$t('food.common.cate')" prop="categoryId">
                       <el-cascader
                          :options="cateList"
                          v-model="searchForm.categoryId"
@@ -67,8 +67,8 @@
                     </el-form-item>
 
                     <el-form-item>
-                       <el-button type="primary" @click="getAllTableList">查询</el-button>
-                        <el-button type="default" @click="initForm">重置</el-button>
+                       <el-button type="primary" @click="getAllTableList">{{$t('food.common.search')}}</el-button>
+                        <el-button type="default" @click="initForm">{{$t('food.common.reset')}}</el-button>
                     </el-form-item>
                 </el-form>
 
@@ -79,14 +79,14 @@
                   header-row-class-name="default"
                   size="small"
                 >
-                  <el-table-column prop="name" label="菜品名称" ></el-table-column>
-                  <el-table-column label="菜品价格">
+                  <el-table-column prop="name" :label="$t('food.common.food_title')" ></el-table-column>
+                  <el-table-column :label="$t('food.common.food_price')">
                       <template slot-scope="scope">
                        ¥ {{scope.row.price}}
                       </template>
                   </el-table-column>
                  <el-table-column
-                   label="菜品剩余"
+                   :label="$t('food.common.food_remain')"
                    >
                    <template slot-scope="scope">
                      <span class="text-blue text-size12">{{scope.row.remainingCount}}</span>
@@ -94,18 +94,18 @@
                  </el-table-column>
 
                  <el-table-column
-                   label="沽清">
-                   <template slot-scope="scope">{{ scope.row.soldOut == 1 ? '否' : '是' }}</template>
+                   :label="$t('food.common.is_solt')">
+                   <template slot-scope="scope">{{ scope.row.soldOut == 1 ? $t('food.common.no') : $t('food.common.yes') }}</template>
                  </el-table-column>
 
                  <el-table-column
-                   label="预警数"
+                   :label="$t('food.common.warning_count')"
                   >
                   <template slot-scope="scope">
                     <span class="text-blue">{{scope.row.warningCount ? scope.row.warningCount : '-' }}</span>
                   </template>
                  </el-table-column>
-                  <el-table-column label="操作" width="200">
+                  <el-table-column :label="$t('food.common.action')" width="200">
                       <template slot-scope="scope">
                         <div class="cell" style="padding:0;" >
                             <!-- 如果匹配上则显示加减 -->
@@ -117,7 +117,7 @@
                                 </div>
                             </div>
                             <div v-else>
-                                <el-button v-if="scope.row.soldOut == 1" size="small" @click="changeCartCount(scope.$index,2)">添加</el-button>
+                                <el-button v-if="scope.row.soldOut == 1" size="small" @click="changeCartCount(scope.$index,2)">{{$t('food.common.isadd')}}</el-button>
                                 <span v-else>-</span>
                             </div>
 
@@ -125,7 +125,6 @@
                         <!-- <div v-else>-</div> -->
                       </template>
                   </el-table-column>
-
                 </el-table>
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
@@ -133,8 +132,8 @@
 
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">关闭</el-button>
-           <el-button  v-if="add == 1" size="small" type="primary" @click="save(1)">确认</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
+           <el-button  v-if="add == 1" size="small" type="primary" @click="save(1)">{{$t('food.common.ok')}}</el-button>
         </div>
 
     </div>
@@ -287,13 +286,12 @@
                 if(type == 1){
                     // console.log('减少')
                     if(info.count == 1){
-                        this.$confirm('确定移除该菜品吗?', '提示', {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
+                        this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
+                            confirmButtonText: this.$t('food.common.ok'),
+                            cancelButtonText: this.$t('food.common.cancel'),
                             type: 'warning'
                         }).then(() => {
                             //移除需要调用菜品删除接口
-                            // console.log(good)
                             let params = {
                                 dishesCount:good.dishesCount,
                                 consumePrice:this.info.consumePrice,
@@ -330,10 +328,12 @@
                         }
                     }
                 }else{
-                    // console.log('添加')
+
+
+
                     if(info.remainingCount == 0){
-                        this.$alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', '提示', {
-                          confirmButtonText: '确定',
+                        this.$alert(this.$t('food.common.soldOut') , this.$t('food.common.tip'), {
+                          confirmButtonText: this.$t('food.common.ok'),
                           callback: action => {
                           }
                         });
@@ -382,11 +382,11 @@
                 // console.log('减少')
                 // console.log(info)
                 if(info.dishesCount == 1){
-                    this.$confirm('确定移除该菜品吗?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
+                   this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
+                       confirmButtonText: this.$t('food.common.ok'),
+                       cancelButtonText: this.$t('food.common.cancel'),
+                       type: 'warning'
+                   }).then(() => {
                         let params = {
                             dishesCount:info.dishesCount,
                             consumePrice:this.info.consumePrice,
@@ -423,11 +423,11 @@
             //移除菜品
             handleDelete(index){
                 let info  = this.cart[index]
-                this.$confirm('确定移除该菜品吗?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
+               this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
+                   confirmButtonText: this.$t('food.common.ok'),
+                   cancelButtonText: this.$t('food.common.cancel'),
+                   type: 'warning'
+               }).then(() => {
 
                     // console.log(1111)
                     let params = {
@@ -490,9 +490,9 @@
                 // console.log(params)
 
                 if(v == 1){
-                    this.$confirm('确定提交吗?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
+                    this.$confirm( this.$t('food.common.confirm_submit'), this.$t('food.common.tip'), {
+                        confirmButtonText: this.$t('food.common.ok'),
+                        cancelButtonText: this.$t('food.common.cancel'),
                         type: 'warning'
                     }).then(() => {
                         this.$F.doRequest(this, "/pms/dishes/dishes_place_order_add", params, (res) => {
@@ -501,12 +501,9 @@
                                 this.closeDialog();
                             }
                         });
-
                     }).catch(() => {
 
                     });
-
-
                 }else{
 
                     this.$F.doRequest(this, "/pms/dishes/dishes_place_order_add", params, (res) => {
