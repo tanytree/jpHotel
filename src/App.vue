@@ -91,7 +91,6 @@ export default {
         },
 
         reload() {
-            debugger;
             this.isRouterAlive = false;
             this.$nextTick(function () {
                 this.isRouterAlive = true;

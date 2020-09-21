@@ -195,7 +195,6 @@ export default {
       while (index < array.length) {
         newArray.push(array.slice(index, (index += length)));
       }
-      debugger;
       return newArray;
     },
     addReport(item) {

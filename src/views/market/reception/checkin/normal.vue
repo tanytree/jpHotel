@@ -731,7 +731,6 @@
                     let params = this.$F.deepClone(this.checkInForm);
                     params.checkInRoomJson = JSON.stringify(params.checkInRoomJson);
                     this.$F.doRequest(this, url, params, (data) => {
-                        debugger
                         if (type == 2) {
                             this.$message({
                                 message: 'Success',
@@ -974,7 +973,6 @@
                             if (!this.waitingRoom[k].roomsArr) {
                                 this.waitingRoom[k].roomsArr = []
                             }
-                            debugger
                             let object = this.waitingRoom.filter((temp) => {
                                 return temp.roomTypeId == item.roomTypeId
                             })[0];
@@ -1085,7 +1083,6 @@
                 }
 
                 console.log(this.liveData);
-                debugger
                 this.addLivePersonShow = true;
             },
 

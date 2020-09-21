@@ -410,7 +410,6 @@ export default {
       } else {
         params.state = 2;
       }
-      debugger;
       this.$F.doRequest(this, "/pms/hotel/hotel_room_oper", params, (res) => {
         this.tableData = [];
         this.get_room_list();
@@ -440,7 +439,6 @@ export default {
         params.operType = 1;
       }
       params.flag = 1;
-      debugger;
       this.$F.doRequest(this, "/pms/hotel/oper_room_flag", params, (res) => {
         this.tableData = [];
         this.get_room_list();
@@ -456,7 +454,6 @@ export default {
         params.state = 1;
       }
       params.roomId = item.id;
-      debugger;
       this.$F.doRequest(this, "/pms/hotel/hotel_room_oper", params, (res) => {
         this.tableData = [];
         this.get_room_list();

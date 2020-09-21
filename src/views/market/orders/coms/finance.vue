@@ -569,7 +569,6 @@ export default {
              *
              * **/
             let params = this.consumeOperForm
-            debugger;
             params.checkInId = this.$route.query.id
             if (this.currentRoomId) {
                 params.roomId = this.currentRoom.id;

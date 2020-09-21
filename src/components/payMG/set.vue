@@ -268,7 +268,6 @@ export default {
         "/pms/employee/employee_list",
         this.searchForm,
         (res) => {
-            debugger
           this.setTableData = res.employeesList;
           this.listTotal = res.page.count;
           this.$forceUpdate();

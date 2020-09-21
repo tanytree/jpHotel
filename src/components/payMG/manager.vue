@@ -439,7 +439,6 @@ export default {
           this.dialogAdd = true;
           this.change_salary_info = value;
           this.ruleForm = value.row;
-          debugger;
           break;
         case "ch_change":
           this.salary_change_title = this.salaryChange;

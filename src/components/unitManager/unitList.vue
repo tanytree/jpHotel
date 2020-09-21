@@ -328,7 +328,6 @@ export default {
       }
       params.weeks = params.weeks.join(",");
       params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
-      debugger;
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_price_enter_strategy_save",
@@ -440,7 +439,6 @@ export default {
         "/pms/hotel/hotel_price_enter_strategy_detail",
         params,
         (res) => {
-          debugger;
           switch (res.discounts) {
             case "1":
               res.discounts_name = "向上取整";

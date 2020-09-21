@@ -284,7 +284,6 @@ export default {
 
         checkTypeHandle(v, item) {
             this.checkType = v;
-            debugger
             this.currentRoom = item || {};
         }
     }

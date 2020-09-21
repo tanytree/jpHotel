@@ -285,7 +285,6 @@
 						this.get_hotel_room_type_list();
 						break;
 					case "change":
-						debugger;
 						this.tab1_show = false;
 						this.allForm = value;
 						if (this.allForm.outtimeRuleCaps == 1) {
@@ -312,7 +311,6 @@
 			saveInfo_d() {
 				let roomStrategyJson = [];
 				let obj = {};
-				debugger;
 				this.allForm.roomStrategyJson.forEach((item) => {
 					obj = {};
 					obj.houseName = item.houseName;
@@ -364,7 +362,6 @@
 				);
 			},
 			stop_d(item) {
-				debugger;
 				let params = {
 					id: item.id,
 				};
@@ -373,7 +370,6 @@
 				} else {
 					params.state = 1;
 				}
-				debugger;
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_rule_allday_delete",
@@ -404,7 +400,6 @@
 								item.topPrice = "";
 								item.remark = "";
 							});
-							debugger;
 							this.allForm.roomStrategyJson = res.list;
 						}
 					}

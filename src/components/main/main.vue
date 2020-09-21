@@ -102,7 +102,6 @@ export default {
     },
 
     menulfuc(item) {
-        debugger
         console.log(item);
       if (item.childList && item.childList.length > 0) {
         this.menul = item;

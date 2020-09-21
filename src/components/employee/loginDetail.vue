@@ -176,7 +176,6 @@ export default {
       );
     },
     getDetails(account, employeeId, item) {
-      debugger;
       if (item) {
         this.details = true;
         this.detailsData = item;

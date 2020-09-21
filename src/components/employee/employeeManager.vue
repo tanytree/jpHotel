@@ -1025,7 +1025,6 @@ export default {
             this.itemCtrlForm.outDataUrlShow = file.name;
         },
         beforeUpload(file) {
-            debugger
             const isLt2M = file.size / 1024 / 1024 < 8;
             if (!isLt2M) {
                 this.$message.error(this.fileLimit);
@@ -1044,7 +1043,6 @@ export default {
                     }
                 }
             ).then(res => {
-                debugger
             })
         },
     },
