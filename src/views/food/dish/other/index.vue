@@ -5,12 +5,12 @@
         <!-- 查询部分 -->
         <el-form inline size="small" class="padding-20"  style="background:#FAFAFA;">
             <el-row  class="margin-b-20">
-                <el-col :span="24">{{$t('food.common.working_day')}}：{{nowDate}}</el-col>
+                <el-col :span="24">{{$t('food.common.working_day')}} {{nowDate}}</el-col>
             </el-row>
-           <el-form-item :label="$t('food.common.food_title') + ' :'">
+           <el-form-item :label="$t('food.common.food_title')">
                <el-input v-model="searchForm.name" :placeholder="$t('food.common.food_title')" class="width200"></el-input>
            </el-form-item>
-           <el-form-item :label="$t('food.common.cate') + ' :'" prop="categoryId">
+           <el-form-item :label="$t('food.common.cate')" prop="categoryId">
              <el-cascader
                 :options="getNewCateList(categroyList)"
                 v-model="searchForm.categoryId"
