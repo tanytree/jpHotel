@@ -44,6 +44,7 @@
               <el-button size="small" v-for="(item,index) in categroyList" :key="index"  :type="tabCurr == index ? 'primary' : ''"  @click="changeTab(item.id,item,index)">{{item.name}}</el-button>
               <span style="float: right;">
                   <el-input
+                    size="small"
                       :placeholder="$t('food.common.food_title')"
                       v-model="searchForm.name"
                       @change="getDataList"
