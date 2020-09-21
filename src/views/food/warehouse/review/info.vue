@@ -80,7 +80,7 @@
             </el-table-column>
             <el-table-column
               prop="inventoryCount"
-               :label="$t('food.common.product_count')"
+              :label=" info.type == 1 ? $t('food.common.product_storage_in_count') : $t('food.common.product_storage_out_count')"
              >
             </el-table-column>
         </el-table>

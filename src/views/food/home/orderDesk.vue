@@ -82,7 +82,7 @@
                                <div class="top">
                                    <div>{{item.name}}</div>
                                    <div class="text-size12 margin-t-10 text-gray" style="height:16px;">
-                                       <span v-if="item.remainingCount == null" class="text-gray text-size12">{{$t('no_set')}}</span>
+                                       <span v-if="item.remainingCount == null" class="text-gray text-size12">{{$t('food.common.no_set')}}</span>
                                        <div v-else>
                                            <div v-if="item.soldOut  == 1"  :class="item.remainingCount <= item.warningCount ? 'text-red' : ''" >{{$t('food.common.food_surplus')}}：{{item.remainingCount}}</div>
                                            <div v-else class="text-red">

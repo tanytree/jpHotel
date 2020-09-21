@@ -131,9 +131,50 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
-            <detail @closeDialog="closeDialog" @changeDialog="changeDialog" ref="detailRef" v-if="dialogType == 1" />
+            <detail @closeDialog="closeDialog" @changeDialog="changeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
             <action @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
+
+    <el-dialog
+        top="0"
+        :title="$t('food.orderTitle.1')"
+        width="700px"
+        :visible.sync="dialogShows"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        @close="closeDialog"
+        >
+
+        <div class="detailPanel">
+            <div class="top">
+                <span>{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
+            </div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{detail.consumePrice}}</div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：{{detail.createTime}}</div>
+            <el-table
+              class="margin-t-10 "
+              :data="detail.orderSubList"
+              border
+              header-row-class-name="default"
+              size="small"
+            >
+              <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>
+              <el-table-column :label="$t('food.common.price')" prop="unitPrice"></el-table-column>
+              <el-table-column :label="$t('food.common.food_count')" width="160" prop="dishesCount"></el-table-column>
+            </el-table>
+
+            <el-divider></el-divider>
+            <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
+               <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
+           </div>
+
+
+        </div>
+        <!-- {{detail}} -->
+
+    </el-dialog>
+
+
 
 </div>
 </template>
@@ -159,6 +200,7 @@ export default {
         return {
             dialogType:1,
             dialogShow:false,
+            dialogShows:false,
             loading: false,
             showEdit: false,
             showDetail: false,
@@ -186,7 +228,8 @@ export default {
             ],
             listTotal: 0, //总条数
             tableData: [], //表格数据
-            is_add:true
+            is_add:true,
+            detail:{}
 
         };
     },
@@ -269,25 +312,35 @@ export default {
 
         //获取订单信息
         getInfo(data){
-            // console.log(data)
-            let info = {
-                dishesOrderId:data.id
+            console.log(data)
+            if(data.state == 2){
+               this.dialogShows = true
+               this.detail = data
+               return false
+            }else{
+                let info = {
+                    dishesOrderId:data.id
+                }
+                info.userId = this.userId
+                info.storesNum = this.storesNum
+                this.dialogShow = true
+                this.dialogType = 1
+                this.is_add = true
+                let cateList = this.getNewCateList(this.categroyList)
+
+                this.$nextTick(()=>{
+                    this.$refs.detailRef.getInfo(info,cateList)
+                })
             }
-            info.userId = this.userId
-            info.storesNum = this.storesNum
-            this.dialogShow = true
-            this.dialogType = 1
-            this.is_add = true
-            let cateList = this.getNewCateList(this.categroyList)
 
-            this.$nextTick(()=>{
-                this.$refs.detailRef.getInfo(info,cateList)
 
-            })
+
+
         },
 
         //结账
         action(data){
+            console.log(data)
             this.is_add = true
             this.dialogShow = true
             this.dialogType = 2
@@ -317,6 +370,7 @@ export default {
         },
         closeDialog(){
             this.dialogShow = false
+            this.dialogShows = false
             this.getDataList();
         },
 

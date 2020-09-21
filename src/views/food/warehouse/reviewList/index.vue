@@ -215,7 +215,12 @@ export default {
         getInfo(data){
             this.id_detail = 0
             this.dialogShow = true
-            this.dialogType = 3
+            
+            if(data.type == 1){
+                this.dialogType = 2
+            }else{
+                this.dialogType = 3
+            }                      
             this.$nextTick(()=>{
                this.$refs.infoRef.getInfo(data)
             })

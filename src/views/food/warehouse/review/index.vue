@@ -110,6 +110,7 @@
         <!--分页 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
+
     <!-- 编辑or详情弹窗 -->
 
    <el-dialog
@@ -216,9 +217,15 @@ export default {
 
         //获取订单信息
         getInfo(data){
+            console.log(data)
             this.id_detail = 0
             this.dialogShow = true
-            this.dialogType = 3
+            if(data.type == 1){
+                this.dialogType = 2
+            }else{
+                this.dialogType = 3
+            }
+            
             this.$nextTick(()=>{
                this.$refs.infoRef.getInfo(data)
             })

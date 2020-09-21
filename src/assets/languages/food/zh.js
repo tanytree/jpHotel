@@ -186,6 +186,7 @@ module.exports = {
         no_limit:'不限',
         curstom_name:'客人名称',
         order_from:'订单来源',
+        order_price:'订单总价',
         order_time:'班次时间',
         order_num:'订单号',
         create_time:'创建时间',
