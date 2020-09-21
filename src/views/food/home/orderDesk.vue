@@ -193,6 +193,7 @@ export default {
     getDataList(){
         this.list_loading = true
         let params = this.searchForm
+        params.state = 1
         params.userId = this.userId
         params.storesNum = this.storesNum
         this.$F.doRequest(this, "/pms/dishes/dishes_manage_list", params, (res) => {

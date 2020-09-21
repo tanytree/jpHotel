@@ -150,7 +150,7 @@
                 <span>{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{detail.consumePrice}}</div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：{{detail.createTime}}</div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
             <el-table
               class="margin-t-10 "
               :data="detail.orderSubList"
