@@ -405,7 +405,6 @@ export default {
         getDataList() {
             let that = this
             this.$F.doRequest(this, '/pms/checkin/hotel_checkin_roominfo', this.getRoomsForm, (res) => {
-                debugger
                 this.loading = false
                 let list = res.roomTypeList;
                 list.forEach(element => {
@@ -522,7 +521,6 @@ export default {
                 this.$message.error('请选择房型后操作');
                 return
             }
-            debugger
             let roomTypeId = [],
                 number = 0;
             this.waitingRoom.forEach(element => {
@@ -653,7 +651,6 @@ export default {
             })
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
             console.log(this.checkInForm);
-            debugger
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {

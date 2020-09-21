@@ -599,7 +599,6 @@ export default {
       }
       params.roomIds = roomIds;
       params.status = 1;
-      debugger;
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_room_lock_save",

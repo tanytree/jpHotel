@@ -1121,7 +1121,6 @@ export default {
       this.currentRoom = room || {};
       this.$F.merge(this.currentRoom, { livingPersonList: [] });
       this.hosteldis = true;
-      debugger;
     },
     yokeplateHandle(item) {
       this.$refs.unitedRoomHandle.init(item.id);

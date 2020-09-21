@@ -454,7 +454,6 @@ export default {
              * 2.退订金
              *
              * **/
-            debugger
             let params = this.consumeOperForm
 
             params.checkinReserveId = this.currentItem.id;

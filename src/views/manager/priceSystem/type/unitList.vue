@@ -250,7 +250,6 @@
 				params.endTime = params.time[1];
 				params.weeks = params.weeks.join(',');
 				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
-				debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_save', params, (res) => {
 					return this.$message({
 						message: '添加成功',
@@ -299,7 +298,6 @@
 				}
 			},
 			popup(type, value) {
-				debugger
 				switch (type) {
 					case 'add':
 						this.tab1_show = false;
