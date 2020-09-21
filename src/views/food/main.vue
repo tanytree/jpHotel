@@ -15,7 +15,8 @@
                 <orderDesk :categroyList = 'categoryList' ref="orderDesk" v-if="item.path == 'orderDesk'"/>
                 <!-- 交班-->
                 <bookOff :categroyList = 'categoryList' ref="bookOff" v-if="item.path == 'bookOff'"/>
-
+                <!-- 员工权限-->
+                <employeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
