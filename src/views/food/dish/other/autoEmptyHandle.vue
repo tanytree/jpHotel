@@ -8,9 +8,9 @@
             <el-time-select
               v-model="info.content"
               :picker-options="{
-                start: '08:30',
+                start: '06:00',
                 step: '00:15',
-                end: '18:30'
+                end: '22:00'
               }"
               :placeholder="$t('food.common.select_date')">
             </el-time-select>

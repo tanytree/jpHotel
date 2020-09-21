@@ -95,7 +95,7 @@
             </div>
         </el-main>
         <div class="block" style="padding:0 20px;">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
         </div>
     </el-container>
     </div>
@@ -233,10 +233,6 @@ export default {
     },
 
     //提交
-
-
-
-
     clearAll(){
         this.$confirm(this.$t('food.common.is_confirm_solt_cancel_all'), this.$t('food.common.tip'), {
             confirmButtonText: this.$t('food.common.ok'),
@@ -263,11 +259,13 @@ export default {
 
     /**每页数 */
     handleSizeChange(val) {
-        this.searchForm.pageIndex = val;
+        console.log(val)
+        this.searchForm.pageSize = val;
         this.getDataList();
     },
     /**当前页 */
     handleCurrentChange(val) {
+        console.log(val)
         this.searchForm.pageIndex = val;
         this.getDataList();
     }
