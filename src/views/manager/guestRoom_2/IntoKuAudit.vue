@@ -39,15 +39,15 @@
                         <el-table-column :label="$t('manager.grsl_wareType')">
                             <template slot-scope="scope">{{scope.row.soteageType == 1 ? $t('manager.grsl_procurementWarehousing') : scope.row.soteageType == 2 ? $t('manager.grsl_putIn') : $t('manager.grsl_putOther')}}</template>
                         </el-table-column>
-                        <el-table-column prop="creatorName" :label="$t('manager.grsl_makingPeople')"></el-table-column>
-                        <el-table-column :label="$t('boss.loginDetail_state')">
+                        <el-table-column prop="creatorName" :label="$t('manager.grsl_makingPeople')" width="160"></el-table-column>
+                        <el-table-column :label="$t('boss.loginDetail_state')" width="160">
                             <template slot-scope="scope">{{scope.row.authStatus == 1 ? $t('manager.grsl_waiteReview') : scope.row.authStatus == 2 ? $t('manager.grsl_reviewPass') : $t('manager.grsl_reviewFail')}}</template>
                         </el-table-column>
-                        <el-table-column :label="$t('commons.operating')" width="300">
+                        <el-table-column :label="$t('commons.operating')" width="200">
                             <template slot-scope="scope">
                                 <el-button type="text" size="small" @click="popup('detail', scope.row)">{{$t('manager.grsl_theDetail')}}</el-button>
-                                <el-button type="text" size="small" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
-                                <el-button type="text" size="small" @click="popup('exam', scope.row)">{{$t('manager.grsl_audit')}}</el-button>
+                                <el-button type="text" v-if="scope.row.authStatus == 1" size="small" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
+                                <el-button type="text" v-if="scope.row.authStatus == 1" size="small" @click="popup('exam', scope.row)">{{$t('manager.grsl_audit')}}</el-button>
                                 <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="handleDelete(scope.row)">
                                     <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
                                 </el-popconfirm>
@@ -128,7 +128,7 @@
                 </el-form-item>
             </el-form>
             <el-card shadow="never">
-                <el-table ref="multipleTable" :data="realDetailList" border height="100%" style="min-height: 300px;" header-row-class-name="default" size="small">
+                <el-table ref="multipleTable" :data="realDetailList" border height="100%" header-row-class-name="default" size="small">
                     <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
                     <el-table-column :label="$t('manager.grsl_rukuNum')">
@@ -562,15 +562,18 @@
 
     .into_audit {
         .el-dialog__body {
-            min-height: 600px;
             display: flex;
             flex-direction: column;
         }
 
         .el-card {
-            flex: 1;
             border: 1px solid #c2c2c2;
             margin-bottom: 20px;
+
+            .el-table {
+                min-height: 200px;
+                max-height: 400px;
+            }
         }
     }
 </style>

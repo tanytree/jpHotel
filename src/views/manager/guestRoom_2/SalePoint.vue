@@ -82,7 +82,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-dialog top="0" :title="editPointTitle" :visible.sync="editPointVisible" :close-on-click-modal="false" append-to-body>
+            <el-dialog top="0" :title="editPointTitle" width="600px" :visible.sync="editPointVisible" :close-on-click-modal="false" append-to-body>
                 <el-form :model="point" :rules="threerules" ref="ruleForm" label-width="150px">
                     <el-form-item :label="$t('manager.grsl_salePointName')+':'" prop="name">
                         <el-input v-model="point.name"></el-input>
