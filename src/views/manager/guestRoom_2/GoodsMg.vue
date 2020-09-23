@@ -198,7 +198,12 @@
                 this.initData(this.pageForm, '', '', '');
             },
             casChange(value) {
-                this.rowData.categoryId = value[value.length - 1];
+                if(this.tab_show) {
+                    this.form.category = value[value.length - 1];
+                } else {
+                    this.rowData.categoryId = value[value.length - 1];
+                }
+
             },
             hideRow({row, rowIndex}) {
                 if (row.status !== 1) {

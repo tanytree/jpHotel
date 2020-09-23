@@ -89,11 +89,13 @@
                     this.getAuditData(this.pageForm);
                 }
             },
-            getHotelGoodsData(obj, name, categoryId, state) {
+            getHotelGoodsData(obj, name, categoryId, state, haveInventory) {
                 const params = {
-                    goodsName: name,
+                    name: name,
                     categoryId: categoryId,
                     state: state,
+                    status: 1,
+                    haveInventory: haveInventory
                 }
                 this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {

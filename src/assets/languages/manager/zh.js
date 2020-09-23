@@ -215,6 +215,8 @@ module.exports = {
     grsl_deleteContent: '此操作将永久删除, 是否继续?',
     grsl_inventoryStatistical: '商品库存统计',
     grsl_inventoryState: '库存状态',
+    grsl_inventoryNo: '无库存',
+    grsl_inventoryYes: '有库存',
     grsl_inventoryNum: '库存量',
     grsl_resetInventory: '修改库存',
     grsl_warehousingAudit: '入库审核',
