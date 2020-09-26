@@ -254,7 +254,7 @@
             initData: Function,
         },
         mounted() {
-            this.getCountData();
+            // this.getCountData();
             this.tableList = this.list.filter(
                 (item) => (item.authStatus = this.currentIndex)
             );
@@ -470,7 +470,11 @@
                     this.$F.doRequest(this, "/pms/hotelstorage/approval", this.examData, (res) => {
                         this.$message.success("success");
                         this.initData(this.pageForm, this.currentIndex, this.form.soteageType, this.form.creatorName, this.form.startDate, this.form.endDate, this.form.content);
+                        this.tableList = this.list.filter(
+                            (item) => (item.authStatus = this.currentIndex)
+                        );
                         this.inHouseExamVisible = false;
+                        this.getCountData();
                     });
                 } else if (type == 'batchIn') {
                     this.realDetailList = this.addGoodsSec;
@@ -495,7 +499,7 @@
                     };
                     this.$F.doRequest(
                         this,
-                        "/pms/hotelgoods/edit",
+                        "/pms/hotelstorage/applyStorage",
                         params,
                         (res) => {
                             this.changeInfoVisible = false;

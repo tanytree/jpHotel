@@ -190,11 +190,10 @@
                 } else if(type == 'addPi') {
                     this.addGoods = {name: "", categoryId: ""};
                     this.addGoodsVisible = true;
-                }
-                switch (type) {
-                    case "info":
-                        this.goodsInVisible = true;
-                        break;
+                } else if(type == 'info') {
+                    this.goodsInList = [];
+                    this.goodInForm = {type: "", person: "", date: "", remark: ""};
+                    this.goodsInVisible = true;
                 }
             },
             search(type) {
@@ -203,7 +202,6 @@
                 } else {
                     this.initData(this.pageForm, this.addGoods.name, this.addGoods.category);
                 }
-
             },
             reset() {
                 this.form = {name: "", status: "", category: ""};
@@ -254,6 +252,7 @@
                         params,
                         (res) => {
                             this.goodsInVisible = false;
+                            this.$message.success('success');
                             this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
                         }
                     );

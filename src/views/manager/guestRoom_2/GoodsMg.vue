@@ -283,8 +283,8 @@
             },
             importModel(params) {
                 var a = this;
-
-                this.$F.doRequest(this, "/pms/hotelgoods/upload", {filename: params.file.name}, (res) => {
+                console.log(params)
+                this.$F.doRequest(this, "/pms/hotelgoods/upload", {filename: params.file}, (res) => {
                     // if(res.code > 0) {
                     //     params.onSuccess(res.message + '上传成功');
                     // } else {

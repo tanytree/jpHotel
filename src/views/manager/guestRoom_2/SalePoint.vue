@@ -340,6 +340,7 @@
                     this.editPointTitle = this.resetSalePoint;
                     this.pointType = false;
                     this.point = {
+                        id: row.id,
                         name: row.name,
                         allowEnter: row.allowEnter,
                         allowRoom: row.allowRoom,
