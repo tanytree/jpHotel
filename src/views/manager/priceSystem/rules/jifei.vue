@@ -56,7 +56,7 @@
 					</el-col>
 					<el-col :span="18">
 						<el-form-item :label="$t('manager.ps_accountingRules')+':'" class="margin-l-15">
-							<el-select v-model="ruleForm.alldayRuleId" placeholder="请选择" style="width: 100%;" @change="changeRule">
+							<el-select v-model="ruleForm.alldayRuleId" :placeholder="ruleForm.alldayRuleName" style="width: 100%;">
 								<el-option :label="value.ruleName" :value="value.id" v-for="(value, index) in ruleList" :key="index"></el-option>
 							</el-select>
 						</el-form-item>
@@ -87,7 +87,8 @@
 					name: '',
 					memberId: '',
 					state: 1,
-					alldayRuleId: ''
+					alldayRuleId: '',
+					alldayRuleName: ''
 				},
 				dialogsit: false,
 				alldayRuleId: "",
@@ -118,8 +119,9 @@
 					case "sit":
 						this.dialogsit = true;
 						this.ruleForm = value;
+						debugger
 						// this.ruleForm.alldayRuleId = this.ruleForm.hotelRuleMemberPrice.alldayRuleId;
-						this.ruleForm.alldayRuleName = this.ruleForm.hotelRuleMemberPrice.alldayRuleName;
+						// this.ruleForm.alldayRuleName = this.ruleForm.hotelRuleMemberPrice.alldayRuleName;
 						this.ruleList = [];
 						this.get_hotel_rule_allday_list();
 						break;
@@ -174,6 +176,7 @@
 							res.list.forEach((item) => {
 								if (item.status != 2) {
 									this.ruleList.push(item);
+									debugger
 								}
 							});
 						}

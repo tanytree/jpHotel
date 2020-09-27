@@ -316,7 +316,7 @@
         </div>-->
       </el-row>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">{{$t('commons.cancel')}}</el-button>
+        <el-button @click="dialogAdd_kinds = false">{{$t('commons.cancel')}}</el-button>
         <el-button type="primary" @click="savePi">{{$t('commons.determine')}}</el-button>
       </span>
     </el-dialog>
@@ -419,7 +419,7 @@
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer" v-if="!detail_show">
-        <el-button @click="centerDialogVisible = false">{{$t('commons.cancel')}}</el-button>
+        <el-button @click="dialogChange_show = false">{{$t('commons.cancel')}}</el-button>
         <el-button type="primary" @click="defineSingle">{{$t('commons.determine')}}</el-button>
       </span>
     </el-dialog>

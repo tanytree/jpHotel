@@ -13,7 +13,7 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" style="width: 100px;" size="mini" @click="get_price_enter_strategy_list">{{$t('commons.queryBtn')}}</el-button>
+						<el-button type="primary" style="width: 100px;" size="mini" @click="search">{{$t('commons.queryBtn')}}</el-button>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
 						<el-row class="form-inline-flex">
@@ -52,12 +52,12 @@
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm">
 					<el-row>
-						<el-col :span="5">
+						<el-col span="5">
 							<el-form-item :label="$t('manager.ps_ruleName')+':'" prop="ruleName" style="display: flex;align-items: center;">
 								<el-input v-model="ruleForm.ruleName"></el-input>
 							</el-form-item>
 						</el-col>
-						<el-col :span="10">
+						<el-col span="10">
 							<el-form-item :label="$t('boss.loginDetail_state')+':'">
 								<el-radio-group v-model="ruleForm.state">
 									<el-radio :label="1">{{$t('commons.enable')}}</el-radio>
@@ -66,26 +66,26 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-col :span="20">
+					<el-col span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')+':'" prop="time">
 							<el-date-picker v-model="ruleForm.time" type="daterange" align="right" value-format="yyyy-MM-dd" unlink-panels
 							 :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')" :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20">
+					<el-col span="20">
 						<el-form-item :label="$t('manager.ps_selectWeek')+':'" prop="name">
 							<el-checkbox-group v-model="ruleForm.weeks" @change="handleWeekDayChange">
 								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
 							</el-checkbox-group>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20">
+					<el-col span="20">
 						<el-form-item :label="$t('manager.ps_discount')+':'" prop="name">
 							<el-radio-group v-model="ruleForm.discounts">
-								<el-radio :label="1">{{$t('manager.ps_upword')}}</el-radio>
-								<el-radio :label="2">{{$t('manager.ps_down')}}</el-radio>
-								<el-radio :label="3">{{$t('manager.ps_fourAndFive')}}</el-radio>
-								<el-radio :label="4">{{$t('manager.ps_keep')}}</el-radio>
+								<el-radio label="1">{{$t('manager.ps_upword')}}</el-radio>
+								<el-radio label="2">{{$t('manager.ps_down')}}</el-radio>
+								<el-radio label="3">{{$t('manager.ps_fourAndFive')}}</el-radio>
+								<el-radio label="4">{{$t('manager.ps_keep')}}</el-radio>
 							</el-radio-group>
 						</el-form-item>
 					</el-col>
@@ -98,8 +98,8 @@
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline">
 							<el-select v-model="row.adjustType" :placeholder="$t('manager.hk_pleaseSelect')" style="width: 150px;" @change="change(row)">
-								<el-option :label="$t('manager.ps_discount')" value="1"></el-option>
-								<el-option :label="$t('manager.ps_fixedPrice')" value="2"></el-option>
+								<el-option :label="$t('manager.ps_discount')" :value="1"></el-option>
+								<el-option :label="$t('manager.ps_fixedPrice')" :value="2"></el-option>
 							</el-select>
 							<span v-if="row.adjustType == 1">
 								<el-input v-model.number="row.content" min="1" max="100" style="width: 120px;margin: 0px 15px;" @input="priceBlur(row, $index)"></el-input>%
@@ -182,7 +182,7 @@
 					startTime: '',
 					endTime: '',
 					weeks: [],
-					discounts: 1,
+					discounts: '1',
 					state: 1,
 					roomStrategyJson: []
 				},
@@ -232,7 +232,17 @@
 					},
 				],
 				dialogDetail: false,
-				detail_info: {}
+				detail_info: {
+					ruleName: '',
+					time: '',
+					startTime: '',
+					endTime: '',
+					weeks: [],
+					discounts: 1,
+					state: 1,
+					roomStrategyJson: []
+				},
+				type: ''
 			}
 		},
 		mounted() {
@@ -242,6 +252,10 @@
 		},
 
 		methods: {
+			search() {
+				this.tableData = []
+				this.get_price_enter_strategy_list();
+			},
 			//单位-增加-修改
 			onSave() {
 				console.log(this.ruleForm);
@@ -299,7 +313,7 @@
 				}
 			},
 			popup(type, value) {
-				debugger
+				this.type = type;
 				switch (type) {
 					case 'add':
 						this.tab1_show = false;
@@ -346,7 +360,6 @@
 					id: value.id
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_detail', params, (res) => {
-					debugger
 					switch (res.discounts) {
 						case '1':
 							res.discounts_name = '向上取整'
@@ -361,16 +374,21 @@
 							res.discounts_name = '保持不变'
 							break;
 					}
-
-					this.detail_info = res
-					this.ruleForm = res
-					let time_arr = []
-					time_arr.push(this.ruleForm.startTime)
-					time_arr.push(this.ruleForm.endTime)
-					this.ruleForm.time = time_arr
-					this.ruleForm.weeks = this.ruleForm.weeks.split(',')
-					this.detail_info.weeks = this.detail_info.weeks.split(',')
-					this.ruleForm.roomStrategyJson = this.ruleForm.hotelPriceRoomTypeList
+					debugger
+					if (this.type == 'see') {
+						this.detail_info = res;
+						this.detail_info.weeks = res.weeks.split(',')
+					} else {
+						this.ruleForm = res
+						let time_arr = []
+						time_arr.push(this.ruleForm.startTime)
+						time_arr.push(this.ruleForm.endTime)
+						this.ruleForm.time = time_arr
+						this.ruleForm.weeks = res.weeks.split(',')
+						this.ruleForm.roomStrategyJson =res.hotelPriceRoomTypeList
+						console.log('this.ruleForm---', this.ruleForm)
+					}
+					
 				})
 			},
 			// 单位列表-删除
