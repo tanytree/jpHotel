@@ -165,7 +165,7 @@ module.exports = {
         is_active:'启用中',
         input_food_title:'请输入菜品名称',
         input_food_cate:'请输入菜品分类',
-        input_food_cate_name:'请输入菜品分类名称',
+        input_food_cate_name:'请选择菜品分类名称',
         input_food_price:'请输入菜品价格',
         input_food_pic:'请选择菜品图片',
 
