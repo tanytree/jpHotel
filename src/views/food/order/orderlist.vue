@@ -30,7 +30,7 @@
 
             <el-form-item :label="$t('food.common.order_time')">
                 <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('food.common.order_time')"></el-date-picker>
-                <span> 至 </span>
+                <span> {{$t('food.common.to')}} </span>
                 <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px":placeholder="$t('food.common.order_time')"></el-date-picker>
             </el-form-item>
             <el-form-item :label="$t('food.common.order_num')">
