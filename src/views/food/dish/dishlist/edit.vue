@@ -1,25 +1,24 @@
 <template>
         <el-form :model="info" :rules="rules" ref="form" label-width="150px" class="demo-ruleForm">
-              <el-form-item label="菜品名称" prop="name" style="margin-top: -15px;">
+              <el-form-item :label="$t('food.common.food_title')" prop="name" style="margin-top: -15px;">
                 <el-input v-model="info.name"></el-input>
               </el-form-item>
 
-              <el-form-item label="菜品分类" prop="categoryId">
+              <el-form-item :label="$t('food.common.cate')" prop="categoryId">
                 <el-cascader
                    :options="getNewCateList(categoryList)"
                    v-model="info.categoryId"
                    @change="handleChange"></el-cascader>
               </el-form-item>
 
-              <el-form-item label="菜品分类名称" prop="name">
+              <el-form-item :label="$t('food.common.cate_name')" prop="categoryName">
                 <el-input v-model="info.categoryName" ></el-input>
               </el-form-item>
 
-              <el-form-item label="菜品价格" prop="name">
+              <el-form-item :label="$t('food.common.food_price')" prop="price">
                 <el-input v-model="info.price"></el-input>
               </el-form-item>
-
-              <el-form-item label="菜品图片" prop="name">
+              <el-form-item :label="$t('food.common.food_pic')" prop="files">
                 <div>
                      <el-upload
                        action="#"
@@ -32,12 +31,6 @@
                          <div slot="file" slot-scope="{file}">
                            <img v-if="file.url" class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
                            <span class="el-upload-list__item-actions">
-                             <!-- <span
-                               class="el-upload-list__item-preview"
-                               @click="handlePictureCardPreview(file)"
-                             >
-                               <i class="el-icon-zoom-in"></i>
-                             </span> -->
                              <span
                                v-if="!disabled"
                                class="el-upload-list__item-delete"
@@ -51,22 +44,22 @@
                 </div>
               </el-form-item>
 
-              <el-form-item label="菜品原料" prop="desc" :style="files.length == 0 ? '' : 'margin-top: -25px;'">
+              <el-form-item :label="$t('food.common.material')" prop="desc" :style="files.length == 0 ? '' : 'margin-top: -25px;'">
                 <el-input  v-model="info.marterial"></el-input>
               </el-form-item>
 
-             <el-form-item label="菜品介绍" prop="desc">
+             <el-form-item :label="$t('food.common.food_desc')" prop="desc">
                <el-input type="textarea" v-model="info.remark"></el-input>
              </el-form-item>
 
-             <el-form-item label="菜品状态">
-                <el-radio v-model="info.state" :label="1">启用</el-radio>
-                <el-radio v-model="info.state" :label="2">禁用</el-radio>
+             <el-form-item :label="$t('food.common.status')">
+                <el-radio v-model="info.state" :label="1">{{$t('food.common.open')}}</el-radio>
+                <el-radio v-model="info.state" :label="2">{{$t('food.common.disable')}}</el-radio>
              </el-form-item>
             <el-divider style="margin:-15px;"></el-divider>
             <div class="text-right"  style="padding: 0 20px;margin:-10px -20px -15px;">
-              <el-button @click="closeDialog">取消</el-button>
-               <el-button type="primary" @click="submitForm('form')">确定</el-button>
+              <el-button @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+               <el-button type="primary" @click="submitForm('form')">{{$t('food.common.ok')}}</el-button>
             </div>
         </el-form>
 </template>
@@ -96,24 +89,20 @@
                disabled: false,
                rules: {
                  name: [
-                   { required: true, message: '请输入活动名称', trigger: 'blur' },
+                   { required: true, message: this.$t('food.common.input_food_title'), trigger: 'change' },
                  ],
                  categoryId: [
-                   { required: true, message: '请选择菜品分类', trigger: 'change' }
+                   { required: true, message: this.$t('food.common.input_food_cate'), trigger: 'change' }
                  ],
                  categoryName: [
-                   {  required: true, message: '请选择输入菜品分类名称', trigger: 'change' }
+                   {  required: true, message: this.$t('food.common.input_food_cate_name'), trigger: 'change' }
                  ],
                  price: [
-                   { required: true, message: '请输入菜品价格', trigger: 'change' }
+                   { required: true, message: this.$t('food.common.input_food_price'), trigger: 'change' }
                  ],
-                 marterial: [
-                   { required: true, message: '请输入菜品原料', trigger: 'change' }
-                 ],
-                 remark: [
-                   { required: true, message: '请输入菜品介绍', trigger: 'change' }
-                 ],
-
+                 // files: [
+                 //   { required: true, message: this.$t('food.common.input_food_pic'), trigger: 'blur' }
+                 // ],
                },
                options:[],
             }
@@ -132,7 +121,7 @@
         methods: {
             //获取传过来的值
             getData(data){
-                console.log(data)
+                // console.log(data)
                 this.files = []
                 this.info = {
                      name:data.name,
@@ -219,7 +208,8 @@
                     this.formData = new FormData();
                     let imgList = this.$refs.upload.uploadFiles || [];
                     if (imgList.length == 0) {
-                        return a.$message.warning('无图片');
+                        this.alert(0,this.$t('food.common.input_food_pic'));
+                        return false
                     }
                     this.$F.doUploadBatch(this, imgList, (data) => {
                         this.info.images = data;
@@ -229,13 +219,13 @@
                         this.$F.doRequest(this, "/pms/dishes/dishes_manage_edit", params, (res) => {
                           console.log(res)
                           if(res.dishesId){
-                              this.alert(200,'操作成功')
+                              this.alert(200,this.$t('food.common.success'))
                               this.closeDialog();
                           }
                       });
                     });
                  } else {
-                   this.alert(0,'操作失败')
+                   // this.alert(0,'操作失败')
                  }
                 });
             },
@@ -252,5 +242,5 @@
 
 
 <style lang="less" scoped>
-   
+
 </style>

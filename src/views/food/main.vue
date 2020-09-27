@@ -12,10 +12,11 @@
                  :class="item.path !== 'orderDesk' ? 'bg' : ''"
             >
                 <!-- 餐饮收银-->
-                <orderDesk :categroyList = 'categoryList' v-if="item.path == 'orderDesk'"/>
+                <orderDesk :categroyList = 'categoryList' ref="orderDesk" v-if="item.path == 'orderDesk'"/>
                 <!-- 交班-->
-                <bookOff :categroyList = 'categoryList' v-if="item.path == 'bookOff'"/>
-
+                <bookOff :categroyList = 'categoryList' ref="bookOff" v-if="item.path == 'bookOff'"/>
+                <!-- 员工权限-->
+                <employeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -59,7 +60,18 @@
                     this.categoryList = list
                 });
             },
-        }
+        },
+		watch:{
+		    activeName(val, oldVal){//普通的watch监听
+                // console.log(val)
+		        if(val == 'orderDesk'){
+		            this.$refs.orderDesk[0].getDataList();
+		        }
+		        // if(val == 'bookOff'){
+		        //     this.$refs.bookOff[0].getDataList();
+		        // }
+		    },
+		}
     };
 </script>
 

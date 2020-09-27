@@ -5,20 +5,20 @@
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
             <el-row>
-                <el-form-item label="结账状态">
+                <el-form-item :label="$t('food.common.order_status')">
                    <el-radio-group v-model="searchForm.state" size="small" @change="changeOrderStatus">
-                     <el-radio-button label="">不限</el-radio-button>
-                     <el-radio-button :label="1">未结</el-radio-button>
-                     <el-radio-button :label="2">已结</el-radio-button>
-                     <el-radio-button :label="3">已取消</el-radio-button>
+                     <el-radio-button label="">{{$t('food.common.no_limit')}}</el-radio-button>
+                     <el-radio-button :label="1">{{$t('food.order_status.1')}}</el-radio-button>
+                     <el-radio-button :label="2">{{$t('food.order_status.2')}}</el-radio-button>
+                     <el-radio-button :label="3">{{$t('food.order_status.3')}}</el-radio-button>
                    </el-radio-group>
                 </el-form-item>
             </el-row>
-            <el-form-item label="客人名称">
-                <el-input v-model="searchForm.name" placeholder="客人名称" class="width200"></el-input>
+            <el-form-item :label="$t('food.common.curstom_name')">
+                <el-input v-model="searchForm.name" :placeholder="$t('food.common.curstom_name')" class="width200"></el-input>
             </el-form-item>
-            <el-form-item label="订单来源">
-                <el-select v-model="searchForm.orderSource" placeholder="请选择">
+            <el-form-item :label="$t('food.common.order_from')">
+                <el-select v-model="searchForm.orderSource" :placeholder="$t('food.common.order_from')">
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -28,17 +28,17 @@
                   </el-select>
             </el-form-item>
 
-            <el-form-item label="班次时间">
-                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+            <el-form-item :label="$t('food.common.order_time')">
+                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('food.common.order_time')"></el-date-picker>
                 <span> 至 </span>
-                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px":placeholder="$t('food.common.order_time')"></el-date-picker>
             </el-form-item>
-            <el-form-item label="订单编号">
-                <el-input v-model="searchForm.dishesNum"  placeholder="订单编号" class="width200"></el-input>
+            <el-form-item :label="$t('food.common.order_num')">
+                <el-input v-model="searchForm.dishesNum"  :placeholder="$t('food.common.order_num')" class="width200"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="getDataList">查询</el-button>
-                <el-button type="primary" @click="initForm">重置</el-button>
+                <el-button type="primary" @click="getDataList">{{$t('food.common.search')}}</el-button>
+                <el-button type="primary" @click="initForm">{{$t('food.common.reset')}}</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -54,16 +54,16 @@
                >
                 <el-table-column
                   prop="dishesNum"
-                  label="订单号"
+                  :label="$t('food.common.order_num')"
                   >
                 </el-table-column>
                 <el-table-column
                   prop="createTime"
-                  label="创建时间"
+                  :label="$t('food.common.create_time')"
                   >
                 </el-table-column>
                 <el-table-column
-                  label="菜品明细"
+                  :label="$t('food.common.food_detail')"
                   >
                   <template slot-scope="scope" >
                     <div v-for="sumItem in scope.row.orderSubList" class="text-size12">
@@ -73,32 +73,33 @@
                 </el-table-column>
 
                 <el-table-column
-                  label="客人信息">
+                  :label="$t('food.common.curstom_info')">
                   <template slot-scope="scope">
-                      <span v-if="!scope.row.memberCard">临时客人</span>
+                      <span v-if="!scope.row.memberCard">{{$t('food.common.guests')}}</span>
                       <span v-else>
-                          {{scope.row.signUserName}} + {{scope.row.memberCard}}
+                          {{scope.row.memberTypeName}}
                       </span>
                   </template>
                 </el-table-column>
 
                 <el-table-column
-                  label="订单来源"
+                  :label="$t('food.common.order_from')"
                  >
                   <template slot-scope="scope">{{getOrderSource(scope.row.orderSource)}}</template>
                 </el-table-column>
 
                 <el-table-column
-                  label="总消费"
+                  :label="$t('food.common.total_pay')"
                  >
                     <template slot-scope="scope">{{scope.row.consumePrice}}</template>
                 </el-table-column>
 
                 <el-table-column
-                  label="状态"
+                  :label="$t('food.common.status')"
                  >
                   <template slot-scope="scope">
-                      {{scope.row.state == 1 ? '未结' : (scope.row.state == 2 ? '已结' : '已取消') }}
+                      <span v-if="scope.row.state">{{$t('food.order_status.'+ scope.row.state)}}</span>
+                      <!-- {{scope.row.state == 1 ? '未结' : (scope.row.state == 2 ? '已结' : '已取消') }} -->
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -106,9 +107,9 @@
                   label="操作"
                  >
                   <template slot-scope="scope">
-                      <el-button @click="getInfo(scope.row)"  type="text" >详情</el-button>
-                      <el-button @click="action(scope.row)" v-if="scope.row.state == 1" type="text">结账</el-button>
-                      <el-button @click="cancleOrder(scope.row)" v-if="scope.row.state == 1"  type="text">取消订单</el-button>
+                      <el-button @click="getInfo(scope.row)"  type="text" >{{$t('food.common.detail')}}</el-button>
+                      <el-button @click="action(scope.row)" v-if="scope.row.state == 1" type="text">{{$t('food.common.order_deal')}}</el-button>
+                      <el-button @click="cancleOrder(scope.row)" v-if="scope.row.state == 1"  type="text">{{$t('food.common.cancel_order')}}</el-button>
                       <!-- <el-button v-if="scope.row.state == 3"  type="text">恢复</el-button> -->
                   </template>
                 </el-table-column>
@@ -117,7 +118,7 @@
 
         <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
     <!-- 编辑or详情弹窗 -->
 
@@ -130,12 +131,48 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
-            <detail @closeDialog="closeDialog" @changeDialog="changeDialog" ref="detailRef" v-if="dialogType == 1" />
+            <detail @closeDialog="closeDialog" @changeDialog="changeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
             <action @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
 
+    <el-dialog
+        top="0"
+        :title="$t('food.orderTitle.1')"
+        width="700px"
+        :visible.sync="dialogShows"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        @close="closeDialog"
+        >
+
+        <div class="detailPanel">
+            <div class="top">
+                <span>{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
+            </div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{detail.consumePrice}}</div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
+            <el-table
+              class="margin-t-10 "
+              :data="detail.orderSubList"
+              border
+              header-row-class-name="default"
+              size="small"
+            >
+              <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>
+              <el-table-column :label="$t('food.common.price')" prop="unitPrice"></el-table-column>
+              <el-table-column :label="$t('food.common.food_count')" width="160" prop="dishesCount"></el-table-column>
+            </el-table>
+
+            <el-divider></el-divider>
+            <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
+               <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
+           </div>
 
 
+        </div>
+        <!-- {{detail}} -->
+
+    </el-dialog>
 
 
 
@@ -163,6 +200,7 @@ export default {
         return {
             dialogType:1,
             dialogShow:false,
+            dialogShows:false,
             loading: false,
             showEdit: false,
             showDetail: false,
@@ -179,18 +217,19 @@ export default {
             options: [
                 {
                   value: '1',
-                  label: '前台点餐'
+                  label: this.$t('food.orderSource.1')
                 }, {
                   value: '2',
-                  label: 'IPAD点餐'
+                  label: this.$t('food.orderSource.2')
                 }, {
                   value: '3',
-                  label: 'H5点餐'
+                  label: this.$t('food.orderSource.3')
                 }
             ],
             listTotal: 0, //总条数
             tableData: [], //表格数据
-            is_add:true
+            is_add:true,
+            detail:{}
 
         };
     },
@@ -273,25 +312,35 @@ export default {
 
         //获取订单信息
         getInfo(data){
-            // console.log(data)
-            let info = {
-                dishesOrderId:data.id
+            console.log(data)
+            if(data.state == 2){
+               this.dialogShows = true
+               this.detail = data
+               return false
+            }else{
+                let info = {
+                    dishesOrderId:data.id
+                }
+                info.userId = this.userId
+                info.storesNum = this.storesNum
+                this.dialogShow = true
+                this.dialogType = 1
+                this.is_add = true
+                let cateList = this.getNewCateList(this.categroyList)
+
+                this.$nextTick(()=>{
+                    this.$refs.detailRef.getInfo(info,cateList)
+                })
             }
-            info.userId = this.userId
-            info.storesNum = this.storesNum
-            this.dialogShow = true
-            this.dialogType = 1
-            this.is_add = true
-            let cateList = this.getNewCateList(this.categroyList)
 
-            this.$nextTick(()=>{
-                this.$refs.detailRef.getInfo(info,cateList)
 
-            })
+
+
         },
 
         //结账
         action(data){
+            console.log(data)
             this.is_add = true
             this.dialogShow = true
             this.dialogType = 2
@@ -299,22 +348,21 @@ export default {
                 this.$refs.actionRef.getInfo(data)
             })
         },
+        //取消订单
         cancleOrder(data){
         // console.log(data)
-
-        let params = {
-            dishesOrderId:data.id
-        }
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-
-         this.$confirm('确定取消该订单吗?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
+            let params = {
+                dishesOrderId:data.id
+            }
+            params.userId = this.userId
+            params.storesNum = this.storesNum
+            this.$confirm( this.$t('food.common.cancel_confirm_order_tips'),  this.$t('food.common.tip'), {
+               confirmButtonText:  this.$t('food.common.ok'),
+               cancelButtonText:  this.$t('food.common.cancel'),
+               type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, "/pms/dishes/dishes_order_cancle", params, (res) => {
-                    this.alert(200,'取消成功')
+                    this.alert(200, this.$t('food.common.success'));
                     this.getDataList();
                 });
             }).catch(() => {
@@ -322,18 +370,22 @@ export default {
         },
         closeDialog(){
             this.dialogShow = false
+            this.dialogShows = false
             this.getDataList();
         },
 
         /**每页数 */
         handleSizeChange(val) {
-            this.searchForm.pageIndex = val;
+            this.searchForm.pageSize = val;
             this.getDataList();
+
+            console.log(1)
         },
         /**当前页 */
         handleCurrentChange(val) {
             this.searchForm.pageIndex = val;
             this.getDataList();
+            console.log(2)
         },
         changeDialog(){
             this.is_add = false

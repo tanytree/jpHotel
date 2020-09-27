@@ -9,8 +9,8 @@
                         </el-form-item>
                         <el-form-item :label="$t('manager.grsl_inventoryState')+':'" class="margin-l-15">
                             <el-select v-model="form.status">
-                                <el-option :label="$t('commons.enable')" value="1"></el-option>
-                                <el-option :label="$t('commons.disable')" value="2"></el-option>
+                                <el-option :label="$t('manager.grsl_inventoryYes')" value="1"></el-option>
+                                <el-option :label="$t('manager.grsl_inventoryNo')" value="2"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item>
@@ -190,20 +190,18 @@
                 } else if(type == 'addPi') {
                     this.addGoods = {name: "", categoryId: ""};
                     this.addGoodsVisible = true;
-                }
-                switch (type) {
-                    case "info":
-                        this.goodsInVisible = true;
-                        break;
+                } else if(type == 'info') {
+                    this.goodsInList = [];
+                    this.goodInForm = {type: "", person: "", date: "", remark: ""};
+                    this.goodsInVisible = true;
                 }
             },
             search(type) {
                 if(type == 'form') {
-                    this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                    this.initData(this.pageForm, this.form.name, this.form.category, '', this.form.status);
                 } else {
                     this.initData(this.pageForm, this.addGoods.name, this.addGoods.category);
                 }
-
             },
             reset() {
                 this.form = {name: "", status: "", category: ""};
@@ -232,7 +230,7 @@
                     );
                 } else if (type == "goodsin") {
                     const content = [];
-                    this.list.map((item) => {
+                    this.goodsInList.map((item) => {
                         let obj = {
                             goodsId: item.id,
                             costPrice: item.costPrice,
@@ -254,6 +252,7 @@
                         params,
                         (res) => {
                             this.goodsInVisible = false;
+                            this.$message.success('success');
                             this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
                         }
                     );
@@ -263,7 +262,7 @@
                 }
             },
             goodsDelete(row) {
-                this.list = this.list.filter(item => item.id != row.id)
+                this.goodsInList = this.goodsInList.filter(item => item.id != row.id)
             },
             exportcount() {
                 this.$F.commons.downloadTemplate("/pms/hotelgoods/upcounts");

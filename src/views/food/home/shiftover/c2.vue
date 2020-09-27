@@ -131,7 +131,7 @@ export default {
                 startTime: "", //考试时件
                 endTime: "" //结束时间
             };
-            this.getDataList();
+            // this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {

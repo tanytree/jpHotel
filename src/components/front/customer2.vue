@@ -88,7 +88,7 @@ import {
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
-    props: ['roomInfo', 'type', 'detailData', 'liveData'],
+    props: ['roomInfo', 'type', 'detailData', 'liveData', 'checkinInfo'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -113,13 +113,15 @@ export default {
     },
     // watch: {
     //     liveData(newValue, oldValue) {
-    //         debugger
     //         this.liveInPersonData = newValue;
     //         this.$forceUpdate();
     //     },
     // },
 
     created() {
+        console.log(this.liveData);
+        console.log(this.checkinInfo);
+        debugger
         this.liveInPersonData = this.$F.deepClone(this.liveData);
         this.$forceUpdate();
     },
@@ -144,12 +146,36 @@ export default {
                     idcardType: item.idcardType,
                     idcard: item.idcard,
                     sex: item.sex,
-                    mobile: item.mobile
+                    mobile: item.mobile,
+                    id: item.id
                 });
                 checkInRoomJson.push(temp);
             })
-            debugger
-            this.$emit('personCallback', checkInRoomJson);
+            if (this.type == 'reserve') {
+                let params = {};
+                this.$F.merge(params, {
+                    checkInReserveId: this.checkinInfo.id,
+                });
+                debugger
+                //预定房办理入住
+                this.$F.doRequest(this, '/pms/reserve/reserve_to_checkin', params, (res) => {
+                   // res.checkinId
+                    //然后立即办理入住
+                    params = {
+                        checkinId: res.checkinId,
+                        personListJson: JSON.stringify(this.liveInPersonData[0].personList),
+                        personList: JSON.stringify(this.liveInPersonData[0].personList),
+                    }
+                    debugger
+                    this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (res) => {
+
+                    })
+                })
+            } else {
+
+                this.$emit('personCallback', checkInRoomJson);
+            }
+
         },
 
         //添加同来宾客
@@ -248,7 +274,6 @@ export default {
             })
         },
         del_live_in_person(item, index) {
-            debugger
             let currentIndex = 0;
             for (let i = 0 ; i < this.liveInPersonData.length; i++) {
                 currentIndex = i;
@@ -262,14 +287,6 @@ export default {
                 }
             }
             this.$set(this.liveInPersonData, currentIndex, this.liveInPersonData[currentIndex]);
-            this.$forceUpdate()
-        },
-        edit_live_in_person(item) {
-            item.edit = true
-            this.$forceUpdate()
-        },
-        cancel_live_in_person(item) {
-            item.edit = false
             this.$forceUpdate()
         },
     }

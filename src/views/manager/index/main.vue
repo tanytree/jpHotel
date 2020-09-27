@@ -144,7 +144,11 @@
             },
             getPrintParamData() {
                 this.$F.doRequest(this, '/pms/documentsparams/list', {}, (res) => {
+                    res.list.map(item => {
+                        item.pop = false;
+                    })
                     this.printData = res.list;
+                    console.log(res)
                 })
             },
             getHandOverData() {

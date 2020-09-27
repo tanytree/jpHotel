@@ -359,7 +359,6 @@ export default {
     mounted() {
         console.log(this.checkinInfo);
         console.log(this.inRoomList);
-        debugger
         let id = this.$route.query.id
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;

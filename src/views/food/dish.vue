@@ -12,10 +12,10 @@
                  :class="item.path !== 'empty' ? 'bg' : ''"
             >
                 <!-- 沽清管理-->
-                <empty :categroyList = 'categoryList' v-if="item.path == 'empty'"/>
-                <other :categroyList = 'categoryList'  v-if="item.path == 'other'"/>
-                <dishlist :categroyList = 'categoryList'  v-if="item.path == 'dishlist'"/>
-                <categray :categroyList = 'categoryList'  v-if="item.path == 'dishtype'"/>
+                <empty :categroyList = 'categoryList' ref="empty" v-if="item.path == 'empty'"/>
+                <other :categroyList = 'categoryList' ref="other" v-if="item.path == 'other'"/>
+                <dishlist :categroyList = 'categoryList' ref="dishlist" v-if="item.path == 'dishlist'"/>
+                <categray :categroyList = 'categoryList' ref="dishtype" v-if="item.path == 'dishtype'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -72,6 +72,26 @@
                     let list = res.categoryList
                     this.categoryList = list
                 });
+            },
+        },
+        watch:{
+            activeName(val, oldVal){//普通的watch监听
+                // console.log(val)
+                if(val == 'empty'){
+                    this.$refs.empty[0].getDataList();
+                }
+
+                if(val == 'other'){
+                    this.$refs.other[0].getDataList();
+                }
+
+                if(val == 'dishlist'){
+                    this.$refs.dishlist[0].getDataList();
+                }
+
+                if(val == 'dishtype'){
+                    this.$refs.dishtype[0].getList();
+                }
             },
         }
     };

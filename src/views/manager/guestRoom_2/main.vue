@@ -23,23 +23,6 @@
                 <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :total="auditTotal" :initData="getAuditData" v-if="item.path == 'IntoKuAudit'"/>
             </el-tab-pane>
         </el-tabs>
-<!--        <el-tabs class="pageTab" v-model="activeName" @tab-click="tabChange">-->
-<!--            <el-tab-pane label="商品管理" name="first">-->
-<!--                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData"/>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="售卖点" name="second">-->
-<!--                <SalePoint ref="SalePoint" :list="salesList" :category="category" :total="salesTotal" :pageSize="salesSize" :currentPage="salesPage" :initData="getSellingData"/>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="商品分类" name="third">-->
-<!--                <GoodsKinds ref="GoodsKinds" :list="category" :initData="getCategoryData"/>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="库存管理" name="fouth">-->
-<!--                <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :pageSize="goodsSize" :currentPage="goodsPage" :initData="getHotelGoodsData" />-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="入库审核" name="fifth">-->
-<!--                <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :total="auditTotal" :pageSize="auditSize" :currentPage="auditPage" :initData="getAuditData"/>-->
-<!--            </el-tab-pane>-->
-<!--        </el-tabs>-->
     </div>
 </template>
 
@@ -87,13 +70,16 @@
                     // this.getSellingData(this.pageForm);
                 } else if (this.activeName == 'IntoKuAudit') {
                     this.getAuditData(this.pageForm);
+                    this.$refs['IntoKuAudit'][0].getCountData();
                 }
             },
-            getHotelGoodsData(obj, name, categoryId, state) {
+            getHotelGoodsData(obj, name, categoryId, state, haveInventory) {
                 const params = {
-                    goodsName: name,
+                    name: name,
                     categoryId: categoryId,
                     state: state,
+                    status: 1,
+                    haveInventory: haveInventory
                 }
                 this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {

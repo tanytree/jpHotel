@@ -1,17 +1,17 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 15:49:59
- * @FilePath: /jiudian/src/assets/languages/commons/commonsRi.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-09-16 14:57:19
+ * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
     week: '曜日',
-    time: '時間',
-    confirm: '确 认',
+    time: '期間',
+    confirm: '確認',
     saveSuccess: '保存に成功する',
-    disable: '使用禁止',
-    enable: '使用開始',
-    newAdd: '新規追加',
+    disable: 'off（停止）',
+    enable: 'on（起用）',
+    newAdd: '追加',
     name: '名称',
     other: 'その他',
     backIntoJob: '再就職',
@@ -25,17 +25,17 @@ module.exports = {
     downloadTemplate: 'テンプレートをダウンロードする',
     selectDate: '期日を選ぶ',
     all: "選択してください",
-    cancel: 'キャンセル',
+    cancel: '取り消し',
     determine: '確認',
-    close: "閉じる",
+    close: "閉める",
     lookDetail: "資料確認",
     back: '戻る',
     save: '保存',
     print: "印刷",
-    operating: '操作 ',
+    operating: '設定 ',
     queryBtn: '検索',
     resetBtn: 'リセット',
-    exportBtn: 'リセット',
+    exportBtn: '出力',
     pleaseEnter: '入力してください',
     passwordDesc: 'パスワード',
 

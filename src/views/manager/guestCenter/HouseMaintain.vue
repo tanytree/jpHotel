@@ -467,7 +467,6 @@ export default {
         params.state = 1;
       }
       params.roomTypeId = item.id;
-      // debugger;
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_room_type_state",

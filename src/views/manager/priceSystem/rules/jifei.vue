@@ -144,7 +144,6 @@
 					alldayRuleId: this.ruleForm.alldayRuleId,
 					state: this.ruleForm.state,
 				};
-				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_rule_member_price_save",
@@ -203,7 +202,6 @@
 								item.topPrice = "";
 								item.remark = "";
 							});
-							debugger;
 							this.allForm.roomStrategyJson = res.list;
 							this.ruleForm_h.roomStrategyJson = res.list;
 						}

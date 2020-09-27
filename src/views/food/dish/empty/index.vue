@@ -5,10 +5,10 @@
         <el-header>
             <div class="block flex" >
                <div class=" text-size14 text-left"  style="justify-content: flex-start">
-                  已沽清菜品：{{soldOutList.length}}
+                  {{$t('food.common.is_served')}}：{{soldOutList.length}}
                 </div>
                <div style="max-width: 100px;">
-                  <el-button type="primary"  style="width: 100%;" :disabled="soldOutList.length == 0" @click="clearAll">全部取消</el-button>
+                  <el-button type="primary"  style="width: 100%;" :disabled="soldOutList.length == 0" @click="clearAll">{{$t('food.common.cancel_all')}}</el-button>
                </div>
             </div>
         </el-header>
@@ -20,16 +20,16 @@
                   header-row-class-name="default"
                   size="small"
                 >
-                  <el-table-column prop="name" label="菜品名称"></el-table-column>
-                  <el-table-column label="菜品价格">
+                  <el-table-column prop="name" :label="$t('food.common.food_title')"></el-table-column>
+                  <el-table-column :label="$t('food.common.food_price')">
                       <template slot-scope="scope">
                         ¥{{scope.row.price}}
                       </template>
                   </el-table-column>
-                  <el-table-column prop="remainingCount" label="菜品数量"></el-table-column>
-                  <el-table-column label="操作" width="80">
+                  <el-table-column prop="remainingCount" :label="$t('food.common.food_count')"></el-table-column>
+                  <el-table-column :label="$t('food.common.action')" width="80">
                     <template slot-scope="scope">
-                      <el-button size="mini" @click="clear(scope.row,1)">移除</el-button>
+                      <el-button size="mini" @click="clear(scope.row,1)">{{$t('food.common.remove')}}</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -40,11 +40,12 @@
     <el-container class="right">
         <el-header>
             <el-row>
-              <el-button size="small" :type="tabCurr == 999 ? 'primary' : '' " @click="intForm">全部</el-button>
+              <el-button size="small" :type="tabCurr == 999 ? 'primary' : '' " @click="intForm">{{$t('food.common.all')}}</el-button>
               <el-button size="small" v-for="(item,index) in categroyList" :key="index"  :type="tabCurr == index ? 'primary' : ''"  @click="changeTab(item.id,item,index)">{{item.name}}</el-button>
               <span style="float: right;">
                   <el-input
-                      placeholder="请输入内容"
+                    size="small"
+                      :placeholder="$t('food.common.food_title')"
                       v-model="searchForm.name"
                       @change="getDataList"
                       >
@@ -57,7 +58,7 @@
         <el-main  v-loading="list_loading">
             <div v-if="cateList.length > 0">
                 <el-form class="demo-ruleForm">
-                    <el-form-item label="菜品分类" prop="categoryId">
+                    <el-form-item :label="$t('food.common.cate')" prop="categoryId">
                       <el-cascader
                          :options="cateList"
                          v-model="searchForm.categoryId"
@@ -74,18 +75,18 @@
                               <div class="top">
                                   <div>{{item.name}}</div>
                                   <div class="text-size12 margin-t-10 text-gray" style="height:16px;">
-                                      <span v-if="item.remainingCount == null" class="text-gray text-size12">未设置</span>
+                                      <span v-if="item.remainingCount == null" class="text-gray text-size12">{{$t('food.common.no_set')}}</span>
                                       <div v-else>
-                                          <div v-if="item.soldOut  == 1"  :class="item.remainingCount <= item.warningCount ? 'text-red' : ''" >预估剩余：{{item.remainingCount}}</div>
-                                          <div v-else class="text-red">已沽清</div>
+                                          <div v-if="item.soldOut  == 1"  :class="item.remainingCount <= item.warningCount ? 'text-red' : ''" >{{$t('food.common.food_surplus')}}：{{item.remainingCount}}</div>
+                                          <div v-else class="text-red">{{$t('food.common.is_solt')}}</div>
                                       </div>
 
                                   </div>
                               </div>
                               <div class="bot margin-t-10 clearfix">
                                   <span>¥{{item.price}}</span>
-                                  <el-button v-if="item.soldOut  == 1" @click="clear(item,2)" size="mini" plain>沽清</el-button>
-                                  <el-button v-else @click="clear(item,1)" size="mini" plain>取消</el-button>
+                                  <el-button v-if="item.soldOut  == 1" @click="clear(item,2)" size="mini" plain>{{$t('food.common.solt_text')}}</el-button>
+                                  <el-button v-else @click="clear(item,1)" size="mini" plain>{{$t('food.common.cancel')}}</el-button>
                               </div>
                           </div>
                       </div>
@@ -95,7 +96,7 @@
             </div>
         </el-main>
         <div class="block" style="padding:0 20px;">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
         </div>
     </el-container>
     </div>
@@ -204,17 +205,16 @@ export default {
 
     //沽清菜单
     clear(item,status){
-
         let text = ''
         if(status == 1){
-            text = '确认取消沽清该菜品?'
+            text = this.$t('food.common.is_confirm_solt_cancel')
         }else{
-             text = '确认沽清该菜品?'
+             text = this.$t('food.common.is_confirm_solt')
         }
 
-        this.$confirm(text, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+        this.$confirm(text, this.$t('food.common.tip'), {
+            confirmButtonText: this.$t('food.common.ok'),
+            cancelButtonText: this.$t('food.common.cancel'),
             type: 'warning'
         }).then(() => {
             let params = {
@@ -228,19 +228,16 @@ export default {
                 this.getDataList();
                 this.getSoldOutList();
             });
-            this.$message({
-                type: 'success',
-                message: '操作成功!'
-            });
+            this.alert(200,this.$t('food.common.success'));
         }).catch(() => {
         });
     },
 
     //提交
     clearAll(){
-        this.$confirm('确认全部取消吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+        this.$confirm(this.$t('food.common.is_confirm_solt_cancel_all'), this.$t('food.common.tip'), {
+            confirmButtonText: this.$t('food.common.ok'),
+            cancelButtonText: this.$t('food.common.cancel'),
             type: 'warning'
         }).then(() => {
             let list = this.soldOutList
@@ -255,28 +252,21 @@ export default {
                 this.getDataList();
                 this.getSoldOutList();
             });
-            this.$message({
-                type: 'success',
-                message: '操作成功!'
-            });
+            this.alert(200,this.$t('food.common.success'));
         }).catch(() => {
-          // this.$message({
-          //   type: 'info',
-          //   message: '已取消'
-          // });
+
         });
-
-
-
     },
 
     /**每页数 */
     handleSizeChange(val) {
-        this.searchForm.pageIndex = val;
+        console.log(val)
+        this.searchForm.pageSize = val;
         this.getDataList();
     },
     /**当前页 */
     handleCurrentChange(val) {
+        console.log(val)
         this.searchForm.pageIndex = val;
         this.getDataList();
     }

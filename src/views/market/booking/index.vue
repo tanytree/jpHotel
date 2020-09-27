@@ -7,32 +7,34 @@
 
 <template>
   <div id="page1" class="boss-index">
-      <el-tabs class="pageTab noBg" v-model="activeName">
-          <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
-                       :name="item.path"
-                       :key="item.path"
-                       v-if="$F.filterThirdMenu('frontOffice', item.path, true)"
-                       class="inRoom"
-          >
-              <!-- 普通预订-->
-              <normal v-if="item.path == 'normal'" operCheckinType="b1"/>
-              <!-- 时租房预订-->
-              <normal v-if="item.path == 'hour'" operCheckinType="b2"/>
-              <!-- 会场预订-->
-              <hall v-if="item.path == 'hall'" operCheckinType="b3"/>
-          </el-tab-pane>
-      </el-tabs>
-<!--          <el-tabs class="pageTab" v-model="activeName">-->
-<!--            <el-tab-pane label="普通预订" name="b1">-->
-<!--              <normal :operCheckinType="activeName" />-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="时租房预订" name="b2">-->
-<!--              <normal :operCheckinType="activeName" />-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="会场预订" name="b3">-->
-<!--              <normal :operCheckinType="activeName"/>-->
-<!--            </el-tab-pane>-->
-<!--          </el-tabs>-->
+    <el-tabs class="pageTab noBg" v-model="activeName">
+      <el-tab-pane
+        v-for="item in menuList"
+        :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+        :name="item.path"
+        :key="item.path"
+        v-if="$F.filterThirdMenu('frontOffice', item.path, true)"
+        class="inRoom"
+      >
+        <!-- 普通预订-->
+        <normal v-if="item.path == 'normal'" operCheckinType="b1" />
+        <!-- 时租房预订-->
+        <normal v-if="item.path == 'hour'" operCheckinType="b2" />
+        <!-- 会场预订-->
+        <hall v-if="item.path == 'hall'" operCheckinType="b3" />
+      </el-tab-pane>
+    </el-tabs>
+    <!--          <el-tabs class="pageTab" v-model="activeName">-->
+    <!--            <el-tab-pane label="普通预订" name="b1">-->
+    <!--              <normal :operCheckinType="activeName" />-->
+    <!--            </el-tab-pane>-->
+    <!--            <el-tab-pane label="时租房预订" name="b2">-->
+    <!--              <normal :operCheckinType="activeName" />-->
+    <!--            </el-tab-pane>-->
+    <!--            <el-tab-pane label="会场预订" name="b3">-->
+    <!--              <normal :operCheckinType="activeName"/>-->
+    <!--            </el-tab-pane>-->
+    <!--          </el-tabs>-->
   </div>
 </template>
 
@@ -44,18 +46,22 @@ export default {
   components: { normal, hall },
   data() {
     return {
-      activeName: "b1" //第一个默认启动
+      activeName: "normal", //第一个默认启动
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$store.state);
+    this.activeName = this.$store.state.taozi.bookingName;
+  },
   created() {
     this.$F.handleThirdMenu(this);
   },
   methods: {
     //二级tab切片
     handleClick(tab, event) {
-    }
-  }
+      // console.log(tab.index);
+    },
+  },
 };
 </script>
 

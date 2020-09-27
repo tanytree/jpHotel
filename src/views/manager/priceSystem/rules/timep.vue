@@ -262,7 +262,6 @@
 		},
 		methods: {
 			popup(type, value) {
-				debugger
 				switch (type) {
 					case "add":
 						this.tab_show = false;

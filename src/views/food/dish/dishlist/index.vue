@@ -4,10 +4,10 @@
     <div class="padding-10">
         <!-- 查询部分 -->
         <el-form inline size="small" class="padding-20"  style="background:#FAFAFA;">
-            <el-form-item label="标题名称：">
-                <el-input v-model="searchForm.name" placeholder="标题名称" class="width200"></el-input>
+            <el-form-item :label="$t('food.common.food_title')">
+                <el-input v-model="searchForm.name" :placeholder="$t('food.common.food_title')" class="width200"></el-input>
             </el-form-item>
-            <el-form-item label="菜品分类" prop="categoryId">
+            <el-form-item :label="$t('food.common.cate')" prop="categoryId">
               <el-cascader
                  :options="getNewCateList(categroyList)"
                  v-model="searchForm.categoryId"
@@ -15,12 +15,12 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" @click="getDataList">查询</el-button>
-                <el-button type="default" @click="initForm">重置</el-button>
+                <el-button type="primary" @click="getDataList">{{$t('food.common.search')}}</el-button>
+                <el-button type="default" @click="initForm">{{$t('food.common.reset')}}</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary" @click="batchDel">批量删除</el-button>
-                <el-button type="primary" @click="add">新增菜品</el-button>
+                <el-button type="primary" @click="batchDel">{{$t('food.common.batch_del')}}</el-button>
+                <el-button type="primary" @click="add">{{$t('food.common.add_food')}}</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -40,43 +40,43 @@
             </el-table-column>
             <el-table-column
               prop="name"
-              label="菜品名称"
+              :label="$t('food.common.food_title')"
               >
             </el-table-column>
             <el-table-column
               prop="categoryName"
-              label="菜品分类"
+              :label="$t('food.common.cate')"
               >
             </el-table-column>
 
             <el-table-column
-              label="价格"
+              :label="$t('food.common.price')"
              >
               <template slot-scope="scope">¥ {{ scope.row.price}}</template>
             </el-table-column>
 
             <el-table-column
-              label="状态"
+              :label="$t('food.common.status')"
              >
-             <template slot-scope="scope"> {{ scope.row.state == 1 ? '启用中':'禁用中'}}</template>
+             <template slot-scope="scope"> {{ scope.row.state == 1 ? $t('food.common.is_active') : $t('food.common.is_disable')}}</template>
             </el-table-column>
 
             <el-table-column
               width="250"
-              label="操作"
+              :label="$t('food.common.action')"
              >
               <template slot-scope="scope">
-                  <el-button @click="getInfo(scope.row,4)" type="text">详情</el-button>
-                  <el-button  @click="edit(scope.row,1)" type="text">修改</el-button>
-                  <el-button type="text" @click="changStatus( scope.row)"> {{ scope.row.state == 1 ? '禁用':'开启'}}</el-button>
-                  <el-button type="text" @click="deleteHandle(scope.row)">删除</el-button>
+                  <el-button @click="getInfo(scope.row,4)" type="text">{{$t('food.common.detail')}}</el-button>
+                  <el-button  @click="edit(scope.row,1)" type="text">{{$t('food.common.edit')}}</el-button>
+                  <el-button type="text" @click="changStatus( scope.row)"> {{ scope.row.state == 1 ? $t('food.common.disable') : $t('food.common.open')}}</el-button>
+                  <el-button type="text" @click="deleteHandle(scope.row)">{{$t('food.common.del')}}</el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
         <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
     <!-- 编辑or详情弹窗 -->
 
@@ -193,20 +193,20 @@ export default {
             params.userId = this.userId
             let text = ''
             if(data.state == 1){
-                text = '确认要开启吗?'
+                text = this.$t('food.common.confirm_open')
             }else{
-                text = '确认要禁用吗?'
+                text = this.$t('food.common.confirm_disable')
             }
             console.log(params)
             console.log(data.state)
             console.log(params)
-            this.$confirm(text, '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm(text,  this.$t('food.common.tip'), {
+                confirmButtonText:  this.$t('food.common.ok'),
+                cancelButtonText:  this.$t('food.common.cancel'),
                 type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, "/pms/dishes/dishes_manage_disable", params, (res) => {
-                    this.alert(200,'操作成功')
+                    this.alert(200, this.$t('food.common.success'));
                     this.getDataList();
                 });
             }).catch(() => {
@@ -215,9 +215,9 @@ export default {
         },
         //批量删除
         deleteHandle(data){
-            this.$confirm('确认要删除吗?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm( this.$t('food.common.confirm_del'),  this.$t('food.common.tip'), {
+                confirmButtonText:  this.$t('food.common.ok'),
+                cancelButtonText:  this.$t('food.common.cancel'),
                 type: 'warning'
             }).then(() => {
                 let params ={
@@ -226,17 +226,18 @@ export default {
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 this.$F.doRequest(this, "/pms/dishes/dishes_manage_delete", params, (res) => {
-                    this.alert(200,'删除成功');
+                    this.alert(200, this.$t('food.common.success'));
                     this.closeDialog();
                 });
             }).catch(() => {
 
             });
         },
+        //批量删除
         batchDel(){
             if(this.multipleSelection.length == 0){
                 this.$message({
-                  message: '请先选择菜品！',
+                  message: this.$t('food.common.select_food_tips'),
                   type: 'warning'
                 });
                 return false
@@ -244,15 +245,15 @@ export default {
             let params ={
                 dishesIds:this.getArr(this.multipleSelection)
             }
-            this.$confirm('确认全部删除吗?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
+           this.$confirm( this.$t('food.common.confirm_del_all'),  this.$t('food.common.tip'), {
+               confirmButtonText:  this.$t('food.common.ok'),
+               cancelButtonText:  this.$t('food.common.cancel'),
+               type: 'warning'
+           }).then(() => {
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 this.$F.doRequest(this, "/pms/dishes/dishes_manage_delete", params, (res) => {
-                    this.alert(200,'删除成功');
+                    this.alert(200, this.$t('food.common.success'));
                     this.closeDialog();
                 });
             }).catch(() => {
@@ -275,7 +276,7 @@ export default {
 
         /**每页数 */
         handleSizeChange(val) {
-            this.searchForm.pageIndex = val;
+            this.searchForm.pageSize = val;
             this.getDataList();
         },
         /**当前页 */

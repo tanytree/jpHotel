@@ -171,11 +171,11 @@ export default {
 			let params = {}
 			params.userId = this.userId
 			params.storesNum = this.storesNum
-			this.$F.doRequest(this, "/pms/dishes/handover/handover_base_info", params, (res) => {
-			   console.log(res)
-			    this.loading = false
-				this.info = res
-			});
+			// this.$F.doRequest(this, "/pms/dishes/handover/handover_base_info", params, (res) => {
+			//    console.log(res)
+			//     this.loading = false
+			// 	this.info = res
+			// });
 
 
         },

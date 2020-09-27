@@ -19,8 +19,8 @@
         </el-col>
         <el-col :span="12">
             <div class="fr">
-                <el-button plain size="mini" @click="liveInPersonShow=true">入住</el-button>
-                <el-button plain size="mini" @click="rowRoomHandle">修改预留</el-button>
+                <el-button plain size="mini" @click="doLiveInPerson">入住</el-button>
+                <el-button plain size="mini" @click="updateReserved">修改预留</el-button>
                 <el-dropdown split-button type="primary" size="mini">
                     更多操作
                     <el-dropdown-menu slot="dropdown">
@@ -95,7 +95,7 @@
         </el-row>
     </el-row>
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
-        <customer></customer>
+        <customer :liveData="liveData" type="reserve" :checkinInfo="checkinInfo"></customer>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="liveInPersonShow=false">取消</el-button>
             <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
@@ -139,7 +139,7 @@ import {
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
 import rowRoomHandle from "@/views/market/home/rowRoomHandle";
-import customer from '@/components/front/customer'
+import customer from '@/components/front/customer2'
 export default {
     components: {
         customer,
@@ -149,10 +149,6 @@ export default {
     props: ['checkinInfo', 'currentRoom'],
     computed: {
         ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
         })
     },
     data() {
@@ -179,16 +175,53 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             ruleHourList: [],
-            liveCardData: []
+            liveCardData: [],
+            liveData: []
         };
     },
 
-    mounted() {
+    created() {
+        console.log(this.currentRoom)
+        console.log(this.checkinInfo)
         let id = this.$route.query.id
         this.hotel_rule_hour_list()
     },
 
     methods: {
+        doLiveInPerson() {
+            // this.liveCard_in_person_list();
+            if (this.currentRoom.personList && this.currentRoom.personList.length > 1) {
+                var personList = this.currentRoom.personList;
+                var room = {};
+                this.$F.merge(room, {
+                    roomId: personList[0].id,
+                    roomTypeName: personList[0].houseName,
+                    houseNum: personList[0].houseNum,
+                    checkinRoomId: personList[0].checkinRoomId,
+                    name: personList[0].name,
+                    idcardType: personList[0].idcardType + '',
+                    idcard: personList[0].idcard,
+                    sex: personList[0].sex + '',
+                    personList: [],
+                    mobile: personList[0].mobile,
+                    checkinId: personList[0].checkinId,
+                    checkInPersonId: personList[0].id,
+                })
+                personList.splice(0, 1);
+                personList.splice(2)
+                personList.forEach((person, index) => {
+                    person.roomId = personList[0].id + index;
+                    person.idcardType = person.idcardType + '',
+                    person.sex = person.sex + '',
+                    person.isChild = true;
+                })
+                room.personList = personList;
+                this.liveData.push(room);
+                debugger
+            }
+            this.liveInPersonShow = true;
+
+        },
         //计费规则时租房计费列表
         hotel_rule_hour_list() {
             let params = {
@@ -220,6 +253,7 @@ export default {
             };
             this.liveCardLoading = true;
             this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
+                debugger
                 // this.liveCardData = res.checkInRoomList
                 this.liveCardData = res
                 this.liveCardData.done = 0;
@@ -263,16 +297,18 @@ export default {
             this.multipleSelection = val;
             console.log(val)
         },
+
         baseInfoChange() {
             this.$emit('baseInfoChange', '');
         },
-        rowRoomHandle() {
+
+        updateReserved() {
             if (!this.$route.query.id) {
                 this.$message.error('订单信息不正确');
                 return
             }
             let arr = [];
-            arr.push(this.currentRoom)
+            arr.push(this.currentRoom);
             this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, arr);
         },
 

@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Dana
- * @LastEditTime: 2020-07-31 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-09-16 17:33:39
+ * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
 // 管理部 || 日语
@@ -84,7 +84,7 @@ module.exports = {
     //   管理部 > 客房中心 (houseKeeping > hk)
     hk_guestRoom: '客室タイプ',
     hk_roomName: '部屋タイプ名称',
-    hk_doorPrice: '店頭価格',
+    hk_doorPrice: '定価',
     hk_beds: 'ベッドの数',
     hk_availabilityPeople: '宿泊可能人数',
     hk_drawingRoomType: '会議室の部屋タイプ',
@@ -139,7 +139,7 @@ module.exports = {
     hk_consistent: '一致',
     hk_guestRooms: '客室',
     hk_chamber: 'コンベンションホール',
-    hk_pleaseSelect: '選んでください',
+    hk_pleaseSelect: '選択',
     hk_roomStructure: '部屋構造',
     hk_roomIMg: '部屋の写真',
     hk_smokeRoom: '禁煙室',
@@ -215,7 +215,9 @@ module.exports = {
     grsl_deleteContent: 'この作業は永久に削除され,継続されるかどうか。',
     grsl_inventoryStatistical: '商品在庫集計',
     grsl_inventoryState: '在庫状態',
-    grsl_inventoryNum: '在庫量',
+    grsl_inventoryNo: '在庫がない',
+    grsl_inventoryYes: '在庫がある',
+    grsl_inventoryNum: '在庫がある',
     grsl_resetInventory: '在品を修正',
     grsl_warehousingAudit: '入庫審査',
     grsl_commodityWarehousing: '商品入庫',
@@ -237,7 +239,7 @@ module.exports = {
     grsl_putIn: '手動入庫',
     grsl_putOther: 'その他の入庫',
     grsl_makingPeople: '作成者',
-    grsl_selectTime: '選択時間',
+    grsl_selectTime: '期間設定',
     grsl_storageContent: '入庫内容',
     grsl_orderNo: '入庫書番号',
     grsl_theDetail: '明細',
@@ -265,16 +267,16 @@ module.exports = {
     ps_offline: 'アウトライン',
     ps_startDate: '開始日時',
     ps_endDate: '終了期日',
-    ps_selectWeek: '曜日を選択',
+    ps_selectWeek: '曜日設定',
     ps_discount: '割引率',
-    ps_upword: '上に整数を取る',
-    ps_down: '下に整数を取る',
-    ps_fourAndFive: '四捨五入(整数を取る)',
+    ps_upword: '切り捨て',
+    ps_down: '切り上げ',
+    ps_fourAndFive: '四捨五入',
     ps_keep: '現状保持',
-    ps_changPriceWay: '価格調整方式',
+    ps_changPriceWay: '割引規則',
     ps_fixedPrice: '言い値',
     ps_japanYen: '日本円',
-    ps_dueTo: '値段を調整した後',
+    ps_dueTo: '割引後料金',
     ps_resetRoomPrice: '価格変更',
     ps_nowSelect: '現在選択',
     ps_nowDate: '現在の期日',
@@ -318,6 +320,163 @@ module.exports = {
     ps_accountingRules: '料金計算規則',
     ps_setUp: '設定',
     ps_resetSuccess: '設置に成功',
+    //财务部 （finance）
+    finance_startTime: '開始時刻',
+    finance_endTime: '終了時間',
+    finance_income: '所得',
+    finance_spending: '支出',
+    finance_nowChoose: '現在選択',
+    finance_abstract: '摘要',
+    finance_account: '口座',
+    finance_nowSpend: '今回の発生金額',
+    finance_payTime: '支払い時間',
+    finance_uploadImg: '画像をアップロードする',
+    finance_clearContent: "内容をクリアする",
+    finance_typeName: "分類名",
+    finance_incomeType: "収支類型",
+    finance_date: "日付",
+    finance_direction: "方向",
+    finance_chooseInTime: "勘定時間まで選んでください",
+    finance_creatTime: "処理した時間",
+    finance_source: "源",
+    finance_autoPro: "自動的に生じる",
+    finance_handPro: "手動生成",
+    finance_openProject: "営業種目",
+    finance_price: "金額(円)",
+    finance_accoutRemark: "記帳備考",
+    finance_auditRemark: "審査備考",
+    finance_credentials: "証拠",
+    finance_proCredentials: "証明書を生成する",
+    finance_profits: "利益",
+    finance_only: "審査されたデータだけを集計する",
+    finance_resetAccount: "配水帳を修正する",
+    finance_theAmount: "発生金額",
+    finance_pass: "を通じて",
+    finance_notPass: "通らない",
+    finance_projectNum: "科目コード",
+    finance_projectName: "科目名",
+    finance_during: "まで",
+    finance_borrower: "やめて",
+    finance_lender: "贷",
+    finance_balance: "残高",
+    finance_project: "項目",
+    finance_change: "高速切り替え",
+    finance_beginning: "期首残高",
+    finance_current: "今期発生額",
+    finance_nowYear: "本年の累積発生額",
+    finance_end: "期末残高",
+    finance_theAudit: "逆査定",
+    finance_batchDelete: "一括削除",
+    finance_proofWords: "証拠書類",
+    finance_debitBalance: "借り手の残高",
+    finance_creditBalance: "貸手残高",
+    finance_sterilisation: "頻繁な",
+    finance_kind: "種別",
+    finance_coding: "コード",
+    finance_balanceDirection: "残高方向",
+    finance_borrrow: "借",
+    finance_credit: "プライム",
+    finance_normal: "正常",
+    finance_deleted: "削除済み",
+    finance_addLower: "下級を加える",
+    finance_printTitle: "印刷タイトル",
+    finance_chooseDefault: "黙認するか否か",
+    finance_setDefault: "をデフォルト",
+    finance_accoutCode: "アカウントコード",
+    finance_accoutName: "アカウント名",
+    finance_accountNum: "アカウント",
+    finance_projectKind: "科目別",
+    finance_superiorSubject: "上級科目",
+    finance_accountantCourse: "会計科目",
+    finance_chooseSubject: "選択科目",
+    finance_invoiceType: "インボイスタイプ",
+    finance_noLimit: "决断",
+    finance_vatInvoice: "付加価値税専用領収書",
+    finance_ordinaryInvoice: "付加価値税普通伝票",
+    finance_electronicInvoice: "付加価値税電子計算書",
+    finance_customerName: "クライアント名",
+    finance_phone: "自宅電話番号",
+    finance_invoiceHeader: "送り状の台頭",
+    finance_c: "開票金額",
+    finance_tax: "税金",
+    finance_invoiceNum: "送り状番号",
+    finance_invoiceTime: "開票時間",
+    finance_operationOf: "担当者",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

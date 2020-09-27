@@ -198,7 +198,12 @@
                 this.initData(this.pageForm, '', '', '');
             },
             casChange(value) {
-                this.rowData.categoryId = value[value.length - 1];
+                if(this.tab_show) {
+                    this.form.category = value[value.length - 1];
+                } else {
+                    this.rowData.categoryId = value[value.length - 1];
+                }
+
             },
             hideRow({row, rowIndex}) {
                 if (row.status !== 1) {
@@ -278,8 +283,8 @@
             },
             importModel(params) {
                 var a = this;
-
-                this.$F.doRequest(this, "/pms/hotelgoods/upload", {filename: params.file.name}, (res) => {
+                console.log(params)
+                this.$F.doRequest(this, "/pms/hotelgoods/upload", {filename: params.file}, (res) => {
                     // if(res.code > 0) {
                     //     params.onSuccess(res.message + '上传成功');
                     // } else {

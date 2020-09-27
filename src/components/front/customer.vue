@@ -162,7 +162,6 @@ export default {
         },
     },
     mounted() {
-        debugger
         if (this.type != 'checkin') {
             let id = this.$route.query.id;
             this.searchForm.checkinId = id

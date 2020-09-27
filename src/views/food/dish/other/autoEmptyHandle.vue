@@ -1,27 +1,27 @@
 <template>
    <div class="">
         <div>
-            <el-radio v-model="info.flag" :label="true">开启</el-radio>
-            <el-radio v-model="info.flag" :label="false">关闭</el-radio>
+            <el-radio v-model="info.flag" :label="true">{{$t('food.common.open')}}</el-radio>
+            <el-radio v-model="info.flag" :label="false">{{$t('food.common.close')}}</el-radio>
         </div>
         <div class="padding-tb-20">
             <el-time-select
               v-model="info.content"
               :picker-options="{
-                start: '08:30',
+                start: '06:00',
                 step: '00:15',
-                end: '18:30'
+                end: '22:00'
               }"
-              placeholder="选择时间">
+              :placeholder="$t('food.common.select_date')">
             </el-time-select>
              <span class="margin-l-15">
-                 <el-checkbox v-model="info.check">清除所有菜品预警数</el-checkbox>
+                 <el-checkbox v-model="info.check">{{$t('food.common.hanlde_empty_warning')}}</el-checkbox>
              </span>
         </div>
         <el-divider></el-divider>
         <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -20px;">
-            <el-button size="small" @click="closeDialog">取 消</el-button>
-            <el-button size="small" :disabled="!info.content" @click="submitForm" type="primary">确 定</el-button>
+            <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+            <el-button size="small" :disabled="!info.content" @click="submitForm" type="primary">{{$t('food.common.ok')}}</el-button>
         </div>
    </div>
 </template>
@@ -53,14 +53,14 @@
         },
         methods: {
             submitForm() {
-                console.log(this.info)
-                if(this.info.check && this.info.content ){
+                // console.log(this.info)
+                if( this.info.content ){
                     let params =this.info
                     params.userId = this.userId
                     params.storesNum = this.storesNum
                     this.$F.doRequest(this, "/pms/dishes/dishes_manage_set_auto", params, (res) => {
                         console.log(res)
-                        this.alert(200,'操作成功')
+                        this.alert(200,this.$t('food.common.success'));
                         this.closeDialog();
                     });
                 }

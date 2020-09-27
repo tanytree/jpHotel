@@ -1,10 +1,3 @@
-<!--
- * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 17:41:33
- * @FilePath: /jiudian/src/views/market/reception/shiftover/c2.vue
- -->
-
 <template>
 <!-- 统一的列表格式 -->
 <div>
@@ -12,12 +5,12 @@
         <!-- 查询部分 -->
         <el-form inline size="small" class="padding-20"  style="background:#FAFAFA;">
             <el-row  class="margin-b-20">
-                <el-col :span="24">营业日：{{nowDate}}</el-col>
+                <el-col :span="24">{{$t('food.common.working_day')}} {{nowDate}}</el-col>
             </el-row>
-           <el-form-item label="标题名称：">
-               <el-input v-model="searchForm.name" placeholder="标题名称" class="width200"></el-input>
+           <el-form-item :label="$t('food.common.food_title')">
+               <el-input v-model="searchForm.name" :placeholder="$t('food.common.food_title')" class="width200"></el-input>
            </el-form-item>
-           <el-form-item label="菜品分类" prop="categoryId">
+           <el-form-item :label="$t('food.common.cate')" prop="categoryId">
              <el-cascader
                 :options="getNewCateList(categroyList)"
                 v-model="searchForm.categoryId"
@@ -25,13 +18,13 @@
            </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" @click="getDataList">查询</el-button>
-                <el-button type="default" @click="initForm">重置</el-button>
+                <el-button type="primary" @click="getDataList">{{$t('food.common.search')}}</el-button>
+                <el-button type="default" @click="initForm">{{$t('food.common.reset')}}</el-button>
             </el-form-item>
             <el-form-item style="float:right">
-                <el-button type="primary" @click="emptyHandle">手动清空</el-button>
-                <el-button type="primary" @click="autoEmptyHandle">设置自动清空时间</el-button>
-                <el-button type="primary" @click="batchHandle">批量设置</el-button>
+                <el-button type="primary" @click="emptyHandle">{{$t('food.common.hanlde_empty')}}</el-button>
+                <el-button type="primary" @click="autoEmptyHandle">{{$t('food.common.set_auto_emptying_time')}}</el-button>
+                <el-button type="primary" @click="batchHandle">{{$t('food.common.batch_set')}}</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -51,16 +44,16 @@
                 </el-table-column>
                 <el-table-column
                   prop="name"
-                  label="菜品名称"
+                  :label="$t('food.common.food_title')"
                   >
                 </el-table-column>
                 <el-table-column
                   prop="categoryName"
-                  label="菜品分类"
+                  :label="$t('food.common.cate')"
                   >
                 </el-table-column>
                 <el-table-column
-                  label="菜品剩余"
+                  :label="$t('food.common.food_remain')"
                   >
                   <template slot-scope="scope">
                     <span class="text-blue">{{scope.row.remainingCount}}</span>
@@ -68,18 +61,18 @@
                 </el-table-column>
 
                 <el-table-column
-                  label="沽清">
-                  <template slot-scope="scope">{{ scope.row.soldOut == 1 ? '否' : '是' }}</template>
+                  :label="$t('food.common.is_solt')">
+                  <template slot-scope="scope">{{ scope.row.soldOut == 1 ? $t('food.common.no') : $t('food.common.yes')}}</template>
                 </el-table-column>
 
                 <el-table-column
-                  label="价格"
+                  :label="$t('food.common.price')"
                  >
                   <template slot-scope="scope">¥ {{ scope.row.price}}</template>
                 </el-table-column>
 
                 <el-table-column
-                  label="预警数"
+                  :label="$t('food.common.warning_count')"
                  >
                  <template slot-scope="scope">
                    <span class="text-blue">{{scope.row.warningCount ? scope.row.warningCount : '-' }}</span>
@@ -88,18 +81,18 @@
 
                 <el-table-column
                   width="100"
-                  label="操作"
+                  :label="$t('food.common.action')"
                  >
                   <template slot-scope="scope">
-                      <el-button @click="edit(scope.row,2)" type="text" v-if="scope.row.warningCount == ''">设置</el-button>
-                      <el-button  @click="edit(scope.row,1)" type="text" v-else>修改</el-button>
+                      <el-button @click="edit(scope.row,2)" type="text" v-if="scope.row.warningCount == ''">{{$t('food.common.set')}}</el-button>
+                      <el-button  @click="edit(scope.row,1)" type="text" v-else>{{$t('food.common.edit')}}</el-button>
                   </template>
                 </el-table-column>
               </el-table>
             </div>
         <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
     <!-- 编辑or详情弹窗 -->
 
@@ -217,7 +210,7 @@ export default {
         batchHandle(){
             if(this.multipleSelection.length == 0){
                 this.$message({
-                  message: '请先选择菜品！',
+                  message: this.$t('food.common.select_food'),
                   type: 'warning'
                 });
                 return false
@@ -226,9 +219,7 @@ export default {
             this.dialogType = 5
             this.$nextTick(() => {
                 this.$refs.batchRef.getData(this.multipleSelection);
-
             });
-
         },
 
         closeDialog(){
@@ -248,7 +239,7 @@ export default {
 
          /**每页数 */
         handleSizeChange(val) {
-              this.searchForm.pageIndex = val;
+              this.searchForm.pageSize = val;
               this.getDataList();
         },
          /**当前页 */
