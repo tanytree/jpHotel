@@ -65,8 +65,8 @@
 
 
                 <div v-if="form.billingType == 3">
-                    <el-form-item :label="$('food.common.select_room')" prop="signRoomId">
-                        <el-select  size="small" v-model="form.signRoomId"  filterable :placeholder="$('food.common.select_room')" @focus="getSignRoomList" @change="getSignRoomInfo" >
+                    <el-form-item :label="$t('food.common.select_room')" prop="signRoomId">
+                        <el-select  size="small" v-model="form.signRoomId"  filterable :placeholder="$t('food.common.select_room')" @focus="getSignRoomList" @change="getSignRoomInfo" >
                             <el-option
                               v-for="(item,index) in romeList"
                               :key="index"
@@ -373,9 +373,6 @@
             },
 
             submit(){
-                
-                
-                
                 let params = this.form
                 params.userId = this.userId
                 params.storesNum = this.storesNum

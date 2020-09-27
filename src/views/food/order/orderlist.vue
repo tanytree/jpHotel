@@ -165,7 +165,7 @@
 
             <el-divider></el-divider>
             <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-               <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
+               <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
            </div>
 
 

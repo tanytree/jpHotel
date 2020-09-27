@@ -41,7 +41,7 @@
 
         <div class="dialog-footer text-right" style="padding: 0 20px;margin:15px -20px -15px;">
            <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
-           <el-button size="small" type="primary" @click="submitForm('form')">{{$t('food.common.submit')}}</el-button>
+           <el-button size="small" type="primary" @click="submitForm('form')">{{$t('food.common.ok')}}</el-button>
         </div>
    </div>
 </template>

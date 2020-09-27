@@ -132,7 +132,7 @@
 
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
            <el-button  v-if="add == 1" size="small" type="primary" @click="save(1)">{{$t('food.common.ok')}}</el-button>
         </div>
 

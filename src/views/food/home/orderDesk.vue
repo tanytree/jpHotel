@@ -41,7 +41,7 @@
                 {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20">{{cartToTal}}</span>
              </div>
             <div style="max-width: 100px;">
-               <el-button type="primary" :disabled="cartToTal == '0.00'" style="width: 100%;" @click="submit">提交</el-button>
+               <el-button type="primary" :disabled="cartToTal == '0.00'" style="width: 100%;" @click="submit">{{$t('food.common.submit')}}</el-button>
             </div>
          </div>
       </div>
@@ -94,7 +94,7 @@
                                    </div>
                                </div>
                                 <div class="bot margin-t-10 clearfix">
-                                    <span>¥{{item.price}}</span><el-button @click="addCart(item,index)" size="mini" plain>添加</el-button>
+                                    <span>¥{{item.price}}</span><el-button @click="addCart(item,index)" size="mini" plain>{{$t('food.common.isadd')}}</el-button>
                                 </div>
                             </div>
                         </div>

@@ -42,12 +42,12 @@
                 <el-table-column
                   :label="$t('food.common.status')"
                  >
-                  <template slot-scope="scope">
+                  <template slot-scope="scope">                     
                       {{scope.row.status == 1 ? $t('food.common.active') : $t('food.common.disable') }}
                   </template>
                 </el-table-column>
                 <el-table-column
-                  width="200"
+                  width="250"
                   :label="$t('food.common.action')"
                  >
                   <template slot-scope="scope">
