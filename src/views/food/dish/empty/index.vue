@@ -8,7 +8,7 @@
                   {{$t('food.common.is_served')}}：{{soldOutList.length}}
                 </div>
                <div style="max-width: 100px;">
-                  <el-button type="primary"  style="width: 100%;" :disabled="soldOutList.length == 0" @click="clearAll">{{$t('food.common.cancel_all')}}</el-button>
+                  <el-button type="primary"   :disabled="soldOutList.length == 0" @click="clearAll">{{$t('food.common.cancel_all')}}</el-button>
                </div>
             </div>
         </el-header>
