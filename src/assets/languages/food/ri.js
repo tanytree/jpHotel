@@ -34,9 +34,9 @@ module.exports = {
         3:'倉庫詳細'
     },
     houseStateDesc:{
-        1:'确定启用吗?',
-        2:'确定禁用吗?',
-        3:'确定删除吗?'
+        1:'起動確認いたしますか?',
+        2:'使用停止確認いたしますか?',
+        3:'削除確認いたしますか?'
     },
     storageTitle:{
         1:'商品入庫',
@@ -67,8 +67,8 @@ module.exports = {
     // 订单来源
     orderSource:{
         1:'フロント注文',
-        2:'IPAD点餐',
-        3:'H5点餐'
+        2:'タブレット注文',
+        3:'携帯ディバイス注文'
     },
     //计费类型
     billingType:{
@@ -78,16 +78,16 @@ module.exports = {
     },
     //支付方式
     payType:{
-        1:'现金',
-        2:'银行卡',
-        3:'支付宝',
-        4:'支票',
-        5:'会员卡'
+        1:'キャッシュ',
+        2:'デビットカード',
+        // 3:'支付宝',
+        // 4:'支票',
+        5:'会員カード'
     },
     //身份类型
     card_type:{
-       1:'身份证',
-       2:'护照'
+       1:'本人確認書',
+       2:'パスポート'
     },
     //审核和状态
     view_status:{
@@ -100,7 +100,7 @@ module.exports = {
         no:'いいえ',
         success:'操作成功',
         //点餐
-        is_choose_food:'已选菜品',
+        is_choose_food:'注文受け取り',
         food_title:'料理名',
         food_price:'単価',
         food_count:'数量',
@@ -108,7 +108,7 @@ module.exports = {
         food_total:'数量 {count}，合計',
         save:'送信確認',
         all:'全て',
-        food_surplus:'预估剩余',
+        food_surplus:'残り数量',
         isadd:'選択',
         remove:'削除',
         confirm_remove_tips:'确定移除吗?',
@@ -117,15 +117,15 @@ module.exports = {
         cate_name:'カテゴリ',
         no_set:'未設定',
         set:'設定',
-        select_food:'请先选择菜品',
+        select_food:'先にメニューを選んで下さい',
         //沽清管理
         is_served:'品切れ料理',
         cancel_all:'全てキャンセル',
         solt_text:'品切れ',
         tip:'提示',
         is_confirm_solt:'この料理は売り切れましたか?',
-        is_confirm_solt_cancel:'确认取消沽清该菜品?',
-        is_confirm_solt_cancel_all:'确认全部取消吗?',
+        is_confirm_solt_cancel:'品切れを取り消しますか?',
+        is_confirm_solt_cancel_all:'全部、取り消し確認いたしますか?',
         ok:'確認',
         cancel:'キャンセル',
         submit:'送信確認',
@@ -144,9 +144,9 @@ module.exports = {
         set_auto_emptying_time:'自動クリア時間設定 ',
         open:'ON',
         close:'OFF',
-        select_date:'选择时间',
+        select_date:'時間を選択してください',
         batch_set:'一括設定',
-        select_food_tips:'请选择菜品',
+        select_food_tips:'メーニューを選んでください',
 
         //菜品管理
         batch_del:'一括削除',
@@ -159,15 +159,15 @@ module.exports = {
         material:'原料',
         food_desc:'紹介',
         food_pic:'写真',
-        confirm_disable:'确认要禁用吗?',
-        confirm_open:'确认要开启吗?',
+        confirm_disable:'使用停止いたしますか?',
+        confirm_open:'起動確認いたしますか?',
         is_disable:'停止',
         is_active:'利用中',
-        input_food_title:'请输入菜品名称',
-        input_food_cate:'请选择菜品分类',
-        input_food_cate_name:'请输入菜品分类名称',
-        input_food_price:'请输入菜品价格',
-        input_food_pic:'请选择菜品图片',
+        input_food_title:'料理名称を入力してください',
+        input_food_cate:'カテゴリーを選択してください',
+        input_food_cate_name:'カテゴリー名称を入力してください',
+        input_food_price:'料理金額を入力してください',
+        input_food_pic:'料理写真を添付してください',
 
         //菜品分类管理
         slide_all:'展開',
@@ -201,10 +201,10 @@ module.exports = {
         numberPlat:'番号票',
         cancel_order:'予約キャンセル',
         cancel_confirm_order_tips:'注文をキャンセルしますか?',
-        confirm_submit:'确定提交吗?',
+        confirm_submit:'提出確認いたしますか?',
         print:'印刷',
-        soldOut:' 该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!',
-        payType:'支付方式',
+        soldOut:' こちらのメニューは売り切れです。注文は受けられません。メニュー管理に品数を追加して下さい!',
+        payType:'支払方法',
         billingType:'会計分類別',
         billingType1:'直払い',
         billingType2:'部屋付け',
@@ -219,14 +219,14 @@ module.exports = {
         pay_order_deal:'確認',
         select_company:'法人/会社入力',
         acount_info:'利用者情報',
-        account_name:'姓名',
-        card_type:'证件类型',
-        card_no:'证件号',
+        account_name:'名前',
+        card_type:'証明書の種類',
+        card_no:'本人確認書',
         select_room:'部屋情報入力',
 
         //库房管理
         storage_name:'倉庫名',
-        input_storage_name:'请输入仓库名称',
+        input_storage_name:'倉庫の名称を入力してください',
         second_status:'请选择状态',
         disable:'停止',
         active:'利用中',
@@ -234,12 +234,12 @@ module.exports = {
         add_storage:'倉庫追加',
         storage_in:'保管倉庫',
         product_name:'商品名',
-        input_product_name:'请输入商品名称',
+        input_product_name:'商品の名称を入力してください',
         product_num:'商品コード',
         product_count:'在庫数',
-        unit:'商品単位',
+        unit:'商品の単位',
         input_unit:'请输入商品单位',
-        unit_desc:'单位(个,斤,吨)',
+        unit_desc:'品単位：（個、グラムg、キロkg）',
         storageInTitle:'利用倉庫',
         storageOutTitle:'出库倉库',
 
@@ -250,15 +250,15 @@ module.exports = {
         product_storage_in_count:'入庫数',
         product_storage_out_count:'出庫数',
         createrName:'担当者',
-        input_createName:'请输入经办人姓名',
+        input_createName:'担当者名前を入力してください',
         apply_time:'申請日',
-        input_apply_time:'请选择申请日期',
+        input_apply_time:'登録日を選択して下さい',
         add_pro:'倉庫追加',
         batch_add_product:'商品一括登録',
         add_product:'商品登録',
-        select_storage:'请选择仓库',
-        select_product:'请选择商品',
-        product_del_tips:'该商品还有库存，暂时不能删除',
+        select_storage:'倉庫を選択してください',
+        select_product:'商品を選択してください',
+        product_del_tips:'商品在庫が有る為、削除できません',
 
         //出入库审核
         review_status:'検品状況',
@@ -269,7 +269,7 @@ module.exports = {
         view:'審査',
         view_status:'検品状況',
         pass:'（検品）承認',
-        nopass:'検品）却下',
+        nopass:'（検品）却下',
         view_remark:'意見',
         view_storage_in:'入庫検品',
         view_storage_out:'出庫検品',
