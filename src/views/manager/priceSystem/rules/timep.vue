@@ -290,6 +290,7 @@
 			},
 			// 查询
 			searchBtn() {
+				this.ruleForm.pageIndex = 1;
 				this.tableData = [];
 				this.get_hotel_rule_hour_list();
 			},
@@ -334,6 +335,7 @@
 							message: this.success,
 							type: "success",
 						});
+						this.get_hotel_room_type_list()
 					}
 				);
 			},

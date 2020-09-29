@@ -50,8 +50,8 @@
 							</template>
 						</el-table-column>
 						<el-table-column prop="time" :label="$t('boss.loginDetail_state')">
-							<template slot-scope="{row}">
-								<span>{{row.state ? $t('commons.enable'):$t('commons.disable')}}</span>
+							<template slot-scope="scope">
+								<span>{{scope.row.state==1 ? $t('commons.enable'):$t('commons.disable')}}</span>
 							</template>
 						</el-table-column>
 						<el-table-column prop="remark" :label="$t('boss.loginDetail_note')"></el-table-column>

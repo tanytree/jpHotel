@@ -43,10 +43,10 @@
                         @click="deleteRow(selectRedio)"
                     >{{$t('commons.delete')}}</el-button>
                 </el-popconfirm>
-                <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
+                <!-- <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
                 <el-button type="text" @click="forward">{{$t('manager.hk_forward')}}</el-button>
                 <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-                <el-button type="text" @click="back">{{$t('manager.hk_moveBack')}}</el-button>
+                <el-button type="text" @click="back">{{$t('manager.hk_moveBack')}}</el-button> -->
             </el-col>
             <el-col :span="8" :offset="8">
                 <el-button type="primary" @click="popup('addDong')">{{$t('manager.hk_newBuilding')}}</el-button>

@@ -311,6 +311,7 @@ export default {
     selectRedio() {
       this.form.buildingFloorId = "";
       this.form.roomTypeId = "";
+	  this.form.pageIndex = 1;
       this.get_ceng_list();
       this.get_room_list();
     },
@@ -345,6 +346,9 @@ export default {
     ).storesInfo.storesName;
     this.get_dong_list();
     this.get_room_type_list();
+  },
+  mounted() {
+  	this.get_room_type_list();
   },
   methods: {
     handleSelectionChange(val) {
@@ -513,11 +517,13 @@ export default {
           item.value = item.id;
           this.roomType[0].children.push(item);
         });
+		this.roomType[0].label = this.guestRooms;
         res.meetingtype.forEach((item, index) => {
           item.label = item.houseName;
           item.value = item.id;
           this.roomType[1].children.push(item);
         });
+		this.roomType[1].label = this.chamber;
         console.log(this.roomType);
       });
     },

@@ -286,7 +286,7 @@ module.exports = {
     ps_memberContent: '如果没有新会员价就按会员价',
     ps_roomPrice: '房价',
     ps_ruleName: '规则名称',
-    ps_modifyCalendar: '修改日历',
+    ps_modifyCalendar: '价格日历',
     ps_addSuccess: '添加成功',
     ps_allDayRoom: '全天房计费',
     ps_clockRoom: '时租房计费',
