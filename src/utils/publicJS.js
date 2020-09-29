@@ -42,10 +42,11 @@ const $F = {
             let newObject = obj.constructor === Array ? [] : {}
             if (typeof obj !== 'object') {
                 return
-            } else if (window.JSON) {
-                newObject = JSON.parse(JSON.stringify(obj)) // 还原
             } else {
                 for (let i in obj) {
+                    if (obj[i] instanceof File) {
+                        return obj
+                    }
                     newObject[i] = typeof obj[i] === 'object' ? this.deepClone(obj[i]) : obj[i]
                 }
             }
@@ -73,6 +74,7 @@ const $F = {
             $instance.dataListLoading = true
             $instance.loading = true
         }
+        debugger
         axios.post(uploadUrl + '/pms/upload/batch_upload_img', formData,
             {
                 headers: {
@@ -97,6 +99,7 @@ const $F = {
             $instance.loading = true
         }
         params = this.deepClone(params);
+        debugger
         for (let key in params) {
             let value = params[key];
             if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'

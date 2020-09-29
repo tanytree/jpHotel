@@ -33,9 +33,9 @@
                     </el-form-item>
                 </el-form>
                 <div class="components-edit">
-                    <el-table ref="multipleTable" :data="tableList" border height="100%" header-row-class-name="default" size="small">
+                    <el-table ref="multipleTable" :data="list" border height="100%" header-row-class-name="default" size="small">
                         <el-table-column prop="storeageNum" :label="$t('manager.grsl_orderNo')"></el-table-column>
-                        <el-table-column prop="applyTime" :label="$t('manager.grsl_applyDate')"></el-table-column>
+                        <el-table-column prop="createTime" :label="$t('manager.grsl_applyDate')"></el-table-column>
                         <el-table-column :label="$t('manager.grsl_wareType')">
                             <template slot-scope="scope">{{scope.row.soteageType == 1 ? $t('manager.grsl_procurementWarehousing') : scope.row.soteageType == 2 ? $t('manager.grsl_putIn') : $t('manager.grsl_putOther')}}</template>
                         </el-table-column>
@@ -188,7 +188,6 @@
             <el-form :model="examData" label-width="100px">
                 <el-form-item :label="$t('manager.grsl_audit')+':'">
                     <el-radio-group v-model="examData.authStatus">
-                        <el-radio :label="1">{{$t('manager.grsl_waiteReview')}}</el-radio>
                         <el-radio :label="2">{{$t('manager.grsl_reviewPass')}}</el-radio>
                         <el-radio :label="3">{{$t('manager.grsl_reviewFail')}}</el-radio>
                     </el-radio-group>
@@ -223,7 +222,6 @@
                     endDate: "",
                     content: "",
                 },
-                tableList: [],
                 rowData: {
                     storesNum: "",
                     soteageType: "",
@@ -237,7 +235,7 @@
                     remark: "",
                     authContent: "",
                 },
-                examData: {authStatus: 1, authContent: ""},
+                examData: {authStatus: 2, authContent: ""},
                 entryDetailVisible: false,
                 changeInfoVisible: false, //修改入库弹框
                 batchAddVisible: false, //批量修改库存
@@ -254,10 +252,7 @@
             initData: Function,
         },
         mounted() {
-            // this.getCountData();
-            this.tableList = this.list.filter(
-                (item) => (item.authStatus = this.currentIndex)
-            );
+            this.getCountData();
         },
         computed: {
             waiteReviewOrder: {
@@ -436,9 +431,7 @@
             // 切换
             changeTab(item) {
                 this.currentIndex = item.id;
-                this.tableList = this.list.filter(
-                    (item) => (item.authStatus == this.currentIndex)
-                );
+                this.initData(this.pageForm, this.currentIndex, this.form.soteageType, this.form.creatorName, this.form.startDate, this.form.endDate, this.form.content);
             },
             search() {
                 this.initData(this.pageForm, this.currentIndex, this.form.soteageType, this.form.creatorName, this.form.startDate, this.form.endDate, this.form.content);
@@ -470,9 +463,6 @@
                     this.$F.doRequest(this, "/pms/hotelstorage/approval", this.examData, (res) => {
                         this.$message.success("success");
                         this.initData(this.pageForm, this.currentIndex, this.form.soteageType, this.form.creatorName, this.form.startDate, this.form.endDate, this.form.content);
-                        this.tableList = this.list.filter(
-                            (item) => (item.authStatus = this.currentIndex)
-                        );
                         this.inHouseExamVisible = false;
                         this.getCountData();
                     });
@@ -556,6 +546,7 @@
 
     .into {
         flex: 1;
+        height: 0;
         display: flex;
         flex-direction: column;
 
@@ -579,5 +570,9 @@
                 max-height: 400px;
             }
         }
+    }
+    .content .components-edit {
+        height: 0;
+        flex: 1;
     }
 </style>

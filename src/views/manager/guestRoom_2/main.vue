@@ -69,7 +69,7 @@
                 } else if (this.activeName == 'SalePoint') {
                     // this.getSellingData(this.pageForm);
                 } else if (this.activeName == 'IntoKuAudit') {
-                    this.getAuditData(this.pageForm);
+                    this.getAuditData(this.pageForm, 1);
                     this.$refs['IntoKuAudit'][0].getCountData();
                 }
             },

@@ -314,6 +314,9 @@
                 this.getShelfData();
             },
             shelfSelect(val) {
+                this.shelfData.map(item => {
+                    item.his = true;
+                })
                 val.map((item) => {
                     item.his = false;
                 });
