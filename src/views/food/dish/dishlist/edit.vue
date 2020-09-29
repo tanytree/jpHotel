@@ -53,7 +53,7 @@
              </el-form-item>
 
              <el-form-item :label="$t('food.common.status')">
-                <el-radio v-model="info.state" :label="1">{{$t('food.common.open')}}</el-radio>
+                <el-radio v-model="info.state" :label="1">{{$t('food.common.active')}}</el-radio>
                 <el-radio v-model="info.state" :label="2">{{$t('food.common.disable')}}</el-radio>
              </el-form-item>
             <el-divider style="margin:-15px;"></el-divider>

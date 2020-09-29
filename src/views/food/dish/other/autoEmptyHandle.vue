@@ -15,7 +15,7 @@
               :placeholder="$t('food.common.select_date')">
             </el-time-select>
              <span class="margin-l-15">
-                 <el-checkbox v-model="info.check">{{$t('food.common.hanlde_empty_warning')}}</el-checkbox>
+                 <el-checkbox v-model="info.check">{{$t('food.common.hanlde_auto_empty_warning')}}</el-checkbox>
              </span>
         </div>
         <el-divider></el-divider>
