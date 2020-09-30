@@ -34,9 +34,9 @@ module.exports = {
         3:'倉庫詳細'
     },
     houseStateDesc:{
-        1:'起動確認いたしますか?',
-        2:'使用停止確認いたしますか?',
-        3:'削除確認いたしますか?'
+        1:'起動確認しますか?',
+        2:'使用停止確認しますか?',
+        3:'削除確認しますか?'
     },
     storageTitle:{
         1:'商品入庫',
@@ -67,8 +67,8 @@ module.exports = {
     // 订单来源
     orderSource:{
         1:'フロント注文',
-        2:'タブレット注文',
-        3:'携帯ディバイス注文'
+        2:'タブレットでの注文',
+        3:'携帯ディバイスでの注文'
     },
     //计费类型
     billingType:{
@@ -86,7 +86,7 @@ module.exports = {
     },
     //身份类型
     card_type:{
-       1:'本人確認書',
+       1:'身分証明書',
        2:'パスポート'
     },
     //审核和状态
@@ -108,7 +108,7 @@ module.exports = {
         food_total:'数量 {count}，合計',
         save:'送信確認',
         all:'全て',
-        food_surplus:'残り数量',
+        food_surplus:'注文可能数',
         isadd:'選択',
         remove:'削除',
         confirm_remove_tips:'确定移除吗?',
@@ -125,7 +125,7 @@ module.exports = {
         tip:'提示',
         is_confirm_solt:'この料理は売り切れましたか?',
         is_confirm_solt_cancel:'品切れを取り消しますか?',
-        is_confirm_solt_cancel_all:'全部、取り消し確認いたしますか?',
+        is_confirm_solt_cancel_all:'全部、取り消し確認しますか?',
         ok:'確認',
         cancel:'キャンセル',
         submit:'送信確認',
@@ -150,7 +150,7 @@ module.exports = {
 
         //菜品管理
         batch_del:'一括削除',
-        confirm_del_all:'确认全部删除吗?',
+        confirm_del_all:'全部削除しますか?',
         del:'削除',
         confirm_del:'是否確認刪除?',
         add_food:'料理登録',
@@ -159,8 +159,8 @@ module.exports = {
         material:'原料',
         food_desc:'紹介',
         food_pic:'写真',
-        confirm_disable:'使用停止いたしますか?',
-        confirm_open:'起動確認いたしますか?',
+        confirm_disable:'使用停止しますか?',
+        confirm_open:'起動確認しますか?',
         is_disable:'停止',
         is_active:'利用中',
         input_food_title:'料理名称を入力してください',
@@ -201,7 +201,7 @@ module.exports = {
         numberPlat:'番号票',
         cancel_order:'予約キャンセル',
         cancel_confirm_order_tips:'注文をキャンセルしますか?',
-        confirm_submit:'提出確認いたしますか?',
+        confirm_submit:'提出確認しますか?',
         print:'印刷',
         soldOut:' こちらのメニューは売り切れです。注文は受けられません。メニュー管理に品数を追加して下さい!',
         payType:'支払方法',
@@ -211,7 +211,7 @@ module.exports = {
         billingType3:'法人会社請求',
         payPrice:'精算合計',
         member_card:'会員カード',
-        select_member_card:'请选目标会员卡',
+        select_member_card:'会員カードを選択して下さい',
         read_member_card:'读会员卡',
         remark:'備考',
         order_count:'レシート部数',
@@ -221,13 +221,13 @@ module.exports = {
         acount_info:'利用者情報',
         account_name:'名前',
         card_type:'証明書の種類',
-        card_no:'本人確認書',
+        card_no:'身分証明書',
         select_room:'部屋情報入力',
 
         //库房管理
         storage_name:'倉庫名',
         input_storage_name:'倉庫の名称を入力してください',
-        second_status:'请选择状态',
+        second_status:'状況を選択して下さい',
         disable:'停止',
         active:'利用中',
         storage_address:'倉庫住所',
@@ -238,7 +238,7 @@ module.exports = {
         product_num:'商品コード',
         product_count:'在庫数',
         unit:'商品の単位',
-        input_unit:'请输入商品单位',
+        input_unit:'商品の単位を入力してください',
         unit_desc:'品単位：（個、グラムg、キロkg）',
         storageInTitle:'利用倉庫',
         storageOutTitle:'出库倉库',
@@ -250,7 +250,7 @@ module.exports = {
         product_storage_in_count:'入庫数',
         product_storage_out_count:'出庫数',
         createrName:'担当者',
-        input_createName:'担当者名前を入力してください',
+        input_createName:'担当者名を入力してください',
         apply_time:'申請日',
         input_apply_time:'登録日を選択して下さい',
         add_pro:'倉庫追加',
