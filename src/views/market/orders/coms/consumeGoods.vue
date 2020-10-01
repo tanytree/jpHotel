@@ -6,6 +6,8 @@
  -->
 <template>
 <el-dialog top='0' title="迷你吧" :visible.sync="visible" :lock-scroll='false' width="1200px">
+
+
         <el-row :gutter="20">
             <el-col :span="14">
                 <el-row>
@@ -69,12 +71,14 @@
                     </el-row>
                     <el-form size="mini">
                         <el-form-item label="按员工价：">
-                            <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
+                            <el-checkbox v-model="consumeOperForm.employeePrice"></el-checkbox>
                         </el-form-item>
                         <el-form-item label="选择房间：">
-                            <el-select v-model="consumeOperForm.damageTypeId">
-                                <!-- <el-option v-for="item in hoteldamagetypeList" :key="item.id" :label="item.name" :value="item.id">
-                                </el-option> -->
+
+
+                           <el-select v-model="consumeOperForm.damageTypeId">
+                                <el-option v-for="item in detailData.inRoomList" :key="item.id" :label="item.houseNum" :value="item.roomId">
+                                </el-option>
                             </el-select>
 
                         </el-form-item>
@@ -110,6 +114,7 @@ import myMixin from '@/utils/filterMixin';
 
 export default {
     mixins: [myMixin],
+    props:['detailData'],
     data() {
         return {
             id: '',
@@ -129,17 +134,21 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             consumeOperForm:{
-                name:''
+                employeePrice:false,
+                goodsTotal:'',
+                goodsJson:[]
             }
         };
     },
-    computed: {},
+    computed: {
+
+    },
     methods: {
         async init(id) {
             this.id = id
-           
             this.initForm()
             this.visible = true;
+
         },
         initForm() {
             this.searchForm = {
@@ -152,9 +161,10 @@ export default {
         getDataList() {
             this.loading = true
             this.$F.doRequest(this, '/pms/consume/consume_goods_list', this.searchForm, (res) => {
+                console.log(res)
                 this.tableData = res.consumeGoodsList;
                 this.listTotal = res.page.count
-                
+
             })
         },
         already_room_join(id) {

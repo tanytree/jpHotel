@@ -13,7 +13,7 @@
       <el-form class="term" inline size="small" label-width="100px">
         <el-row>
           <el-form-item label="订单类型">
-            <div class="tagList">
+            <div class="tagList">                
               <template v-for="(item,key,index) of $t('frontOffice.orderType')">
                 <el-tag
                   class="tag"

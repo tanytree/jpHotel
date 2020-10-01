@@ -51,7 +51,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance :currentRoomId="currentRoomId" :detailData="detailData" />
+            <finance ref="finance" :currentRoomId="currentRoomId" :detailData="detailData" @getOrderDetail="getOrderDetail" />
         </div>
     </div>
     <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
@@ -140,6 +140,9 @@ export default {
     },
 
     mounted() {
+
+
+
         let id = this.$route.query.id
         // this.get_user_enterprise(id)
     },
@@ -157,6 +160,7 @@ export default {
                     if (res.code == 200) {
                         this.detailDialogFormVisible = true;
                         this.detailData = res.data
+                        console.log(res.data)
                     } else {
                         this.$message.error(res.message);
                     }
@@ -256,6 +260,10 @@ export default {
         handleCurrentChange(val) {
             this.searchForm.page = val;
             this.getDataList();
+        },
+        getOrderDetail(){
+            console.log('c1')
+            this.$emit('getOrderDetail')
         }
 
     }

@@ -25,14 +25,19 @@
         </el-table>
         <el-row class="padding-tb-10">
             <el-col :span="3">
-                总消费：100
+                总消费：{{detailData.consumePrice}}
             </el-col>
             <el-col :span="3">
-                总支付：610
+                总支付：{{detailData.payPrice}}
             </el-col>
             <el-col :span="3">
-                应退：400
+                应退：{{detailData.totalPrice}}
             </el-col>
+
+
+
+
+
         </el-row>
         <el-form-item label="" label-width="0">
             <el-button type="primary" size="mini">收款</el-button>
@@ -76,6 +81,7 @@ import myMixin from '@/utils/filterMixin';
 
 export default {
     mixins: [myMixin],
+    props:['detailData'],
     data() {
         return {
             id: '',

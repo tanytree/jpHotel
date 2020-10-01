@@ -65,29 +65,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                        <el-row style="text-align:center;background:#F3F3F3;padding:15px 0">-->
-                            <!--                            <el-checkbox-group v-model="detail.text">-->
-                            <!--                                <el-checkbox label="复选框 A">预订（2）</el-checkbox>-->
-                            <!--                                <el-checkbox label="复选框 B">在线（3）</el-checkbox>-->
-                            <!--                                <el-checkbox label="复选框 C">离店（3）</el-checkbox>-->
-                            <!--                            </el-checkbox-group>-->
-                            <!--                        </el-row>-->
+                                                   <!-- <el-row style="text-align:center;background:#F3F3F3;padding:15px 0">
+                                                       <el-checkbox-group v-model="detail.text">
+                                                           <el-checkbox label="复选框 A">预订（2）</el-checkbox>
+                                                           <el-checkbox label="复选框 B">在线（3）</el-checkbox>
+                                                           <el-checkbox label="复选框 C">离店（3）</el-checkbox>
+                                                       </el-checkbox-group>
+                                                   </el-row> -->
                             <el-row class="customerCtrl">
                                 <ul>
                                     <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
                                         <div class="wrap"><span>查看订单信息（联房）></span></div>
                                     </li>
-                                    <li @click="checkTypeHandle('customer',item)"
-                                        v-for="(item,index) of detailData.inRoomList" :key="index"
-                                        :class="currentRoom.id == item.id?'active':''">
+                                    <li @click="checkTypeHandle('customer',item)" v-for="(item,index) of detailData.inRoomList" :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id?'active':''">
                                         <div class="wrap">
-                                            <el-button size="mini" :type="item.state==1?'success':'danger'" plain
-                                                       class="fr">{{ F_checkinState(item.state) }}
+                                            <el-button size="mini" :type="item.state==1?'success':'danger'" plain class="fr">
+                                                {{ F_checkinState(item.state) }}
                                             </el-button>
-                                            <span><i
-                                                class="el-icon-s-custom vm"></i>{{
-                                                    item.personList.length ? item.personList[0].name : ''
-                                                }}（{{ item.houseNum }}）</span>
+                                            <span>
+                                                <i class="el-icon-s-custom vm"></i>
+                                                {{item.personList.length ? item.personList[0].name : ''}}（{{ item.houseNum }}）</span>
                                         </div>
                                     </li>
                                     <!-- <li>
@@ -104,7 +101,7 @@
                 <el-col :span="18">
                     <div class="grid-content">
                         <template v-if="checkType=='customer'">
-                            <c1 :detailData="detailData" :currentRoomId="currentRoom.id"></c1>
+                            <c1 v-if="isReset"  :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail"></c1>
                         </template>
                         <template v-if="checkType=='order'">
                             <div class="detailTabWrap">
@@ -112,7 +109,7 @@
                                     <div class="el-card__header" style="padding:0 20px">
                                         <el-tabs v-model="activeName">
                                             <el-tab-pane label="账务明细" name="first">
-                                                <c2 :detailData="detailData"></c2>
+                                                <c2 v-if="isReset" :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail"></c2>
                                             </el-tab-pane>
                                             <el-tab-pane label="订单信息" name="second">
                                                 <div class="thisOrderInfo">
@@ -120,8 +117,7 @@
                                                         <el-row class="row">
                                                             <h3>基本信息
                                                                 <el-button style="vertical-align: middle;margin-left: 10px;display: inline-block;
-" size="mini" class="vm" @click="yokeplateHandle"
-                                                                           v-if="detailData.inRoomList.length">联房
+" size="mini" class="vm" @click="yokeplateHandle" v-if="detailData.inRoomList.length">联房
                                                                 </el-button>
                                                             </h3>
                                                             <el-row class="cell">
@@ -219,6 +215,8 @@ export default {
                 checkIn: {},
                 inRoomList: []
             },
+            consumePrice:'0.00',
+            payPrice:'0.00',
             checkType: 'order',
             searchForm: {
                 searchType: 1,
@@ -234,22 +232,35 @@ export default {
             tableData: [], //表格数据
             salesList: [],
             currentRoom: {},
+            isReset:true
         };
     },
 
     mounted() {
-        let id = this.$route.query.id
-        this.getDetail(id);
+
+        this.getDetail();
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data) => {
             this.salesList = data.hotelUserList;
         });
     },
     methods: {
-        getDetail(id) {
+        getDetail() {
+            console.log(111)
+            let id = this.$route.query.id
             this.$F.doRequest(this, '/pms/checkin/check_in_detail', {
                 checkInId: id
             }, (res) => {
-                this.$F.merge(this.detailData, res);
+                this.detailData = res
+                // this.$F.merge(this.detailData, res);
+
+                //默认获取第一个房间为主账房，暂不明确主账房标识
+                if(res.inRoomList.length > 0 ){
+                    this.currentRoom = res.inRoomList[0]
+                    this.resetDom();
+                    this.$forceUpdate()
+
+                }
+
             })
         },
 
@@ -285,6 +296,14 @@ export default {
         checkTypeHandle(v, item) {
             this.checkType = v;
             this.currentRoom = item || {};
+            this.resetDom();
+            this.$forceUpdate()
+            //切换关联订单后需要刷新组件，原来没有刷新，所以里面的内容没有变化
+        },
+        resetDom(){
+            this.isReset = false
+            this.$nextTick(() => (this.isReset = true))
+
         }
     }
 };

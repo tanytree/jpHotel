@@ -18,7 +18,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance :currentRoomId="currentRoomId" :detailData="detailData" />
+            <finance :currentRoomId="currentRoomId" :detailData="detailData"  @getOrderDetail="getOrderDetail"/>
         </div>
     </div>
 </div>
@@ -108,6 +108,10 @@ export default {
             });
 
         },
+        getOrderDetail(){
+            console.log('c2')
+            this.$emit('getOrderDetail')
+        }
 
     }
 };

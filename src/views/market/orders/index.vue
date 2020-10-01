@@ -7,7 +7,6 @@
 
 <template>
   <div id="page1" class="boss-index">
-
       <el-tabs class="pageTab" v-model="activeName">
           <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                        :name="item.path"

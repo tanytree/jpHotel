@@ -82,6 +82,18 @@
                     <el-radio-button :label="2" :value="2">押金</el-radio-button>
                 </el-radio-group>
             </el-form-item>
+
+            <el-form-item label="选择结算方式" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
+                <el-radio-group v-model="consumeOperForm.payType">
+                    <el-radio :label="1" :value="1">现金</el-radio>
+                    <el-radio :label="2" :value="2">银行卡</el-radio>
+                    <el-radio :label="3" :value="3">支付宝</el-radio>
+                    <el-radio :label="4" :value="4">微信</el-radio>
+                    <el-radio :label="5" :value="5">会员卡</el-radio>
+                </el-radio-group>
+            </el-form-item>
+
+
             <el-form-item label="消费项目：">
                 <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
                     <el-radio-button :label="5" :value="5">加收全天房费</el-radio-button>
@@ -89,6 +101,9 @@
                     <el-radio-button :label="7" :value="7">损物赔偿</el-radio-button>
                 </el-radio-group>
             </el-form-item>
+
+
+
             <template v-if="consumeOperForm.priceType==7">
                 <el-form-item label="商品类别：">
                     <el-select v-model="consumeOperForm.damageTypeId" @change="damageTypeIdChange">
@@ -97,15 +112,17 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="商品名称：">
-                    <el-select v-model="consumeOperForm.damageId">
+                    <el-select v-model="consumeOperForm.damageId" @change="getDdamageInfo">
                         <el-option v-for="item in hoteldamageList" :key="item.id" :label="item.name" :value="item.id">
                         </el-option>
-                    </el-select>&nbsp;&nbsp;&nbsp;&nbsp;<el-input-number v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
+                    </el-select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <el-input-number @change="getDamagePrice" :disabled="!consumeOperForm.damageId"  v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
                 </el-form-item>
             </template>
             <el-form-item label="金额：">
-                <el-input class="" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
-                <el-input class="" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
+                <el-input class="1" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
+                <el-input class="2" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="备注：">
                 <el-input class="" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
@@ -119,7 +136,7 @@
             <el-button type="primary" @click="consume_oper(1,'entry')">入账</el-button>
         </div>
     </el-dialog>
-    <el-dialog top='0' title="选择结算方式" :visible.sync="payTypeShow">
+   <!-- <el-dialog top='0' title="选择结算方式" :visible.sync="payTypeShow">
         <el-form :model="consumeOperForm" size="mini">
             <el-form-item label="">
                 <el-radio-group v-model="consumeOperForm.payType">
@@ -135,7 +152,8 @@
             <el-button @click="payTypeShow = false">取消</el-button>
             <el-button type="primary" @click="payTypeShow = false">确认</el-button>
         </div>
-    </el-dialog>
+    </el-dialog> -->
+
     <!--挂账-->
     <el-dialog top='0' title="挂账" :visible.sync="onAccountShow" width="500px">
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
@@ -166,18 +184,19 @@
                 </template>
             </el-row>
             <br />
+
             <el-form-item label="挂账金额：" class="" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
+                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice"></el-input>
             </el-form-item>
             <el-form-item label="挂账单位：" class="" prop="creditName">
-                <el-select class="width200" v-model="consumeOperForm.enterId" filterable remote reserve-keyword placeholder="请输入关键词" :remote-method="remoteMethod" :loading="loading" @change="enterNameChange">
+                <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword placeholder="请输入关键词"  :loading="loading" @change="enterNameChange">
                     <el-option v-for="item in hotelenterList" :key="item.id" :label="item.enterName" :value="item.id">
                         {{item.enterName}}
                     </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="备注：">
-                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -370,17 +389,18 @@
                 <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
             </el-table>
-            <el-form-item label="冲调方式：" prop="priceType">
+            <el-form-item style="margin-top: 10px;" label="冲调方式：" prop="priceType">
                 <el-radio-group v-model="consumeOperForm.priceType">
                     <el-radio :label="9" :value="9">完全冲调</el-radio>
                     <el-radio :label="10" :value="10">部分冲调</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="冲调金额：" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input><em style="margin-left:10px;color:#888">注意：冲调金额小于原账金额</em>
+            <el-form-item label="冲调金额：" prop="consumePrice" v-if="consumeOperForm.priceType == 10">
+                <el-input class="width200" type="text" v-model="consumeOperForm.consumePrice"></el-input>
+                <em style="margin-left:10px;color:#888;font-size: 12px;">注意：冲调金额小于原账金额</em>
             </el-form-item>
             <el-form-item label="冲调原因：" prop="remark">
-                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-input type="textarea" v-model="consumeOperForm.remark"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -389,9 +409,9 @@
         </div>
     </el-dialog>
     <!--部分结账-->
-    <someAccounts ref="someAccounts" />
+    <someAccounts ref="someAccounts" :detailData = "detailData" />
     <!--迷你吧-->
-    <consumeGoods ref="consumeGoods" />
+    <consumeGoods ref="consumeGoods" :detailData = "detailData" />
 </div>
 </template>
 
@@ -441,7 +461,7 @@ export default {
             consumeOperForm: {
                 priceType: '',
                 payType: '',
-                name: ''
+                name: '',
             },
             openInvoiceForm: {
                 roomNum: '',
@@ -519,11 +539,15 @@ export default {
     },
 
     created() {
+
+        console.log(this.currentRoomId)
         if (this.currentRoomId) {
             this.currentRoom = this.detailData.inRoomList.filter(item=>{
                 return item.id == this.currentRoomId
             })[0];
         }
+
+        console.log(this.currentRoom)
     },
 
     mounted() {
@@ -531,6 +555,7 @@ export default {
 
         this.consume_order_list('')
         this.hoteldamagetype_list()
+        this.hotelenter_list()
     },
 
     methods: {
@@ -558,6 +583,7 @@ export default {
                         message: '移除成功!'
                     });
                     this.consume_order_list()
+                    this.getOrderDetail();
                 })
             }).catch(() => {});
         },
@@ -568,17 +594,23 @@ export default {
              * 3.冲调
              *
              * **/
+
             let params = this.consumeOperForm
+            // params.orderId = this.$route.query.id
+
             params.checkInId = this.$route.query.id
             if (this.currentRoomId) {
                 params.roomId = this.currentRoom.id;
                 params.roomNum = this.currentRoom.houseNum
             } else {
-                if (this.detailData.inRoomList.length) {
+                if (this.detailData.inRoomList.length > 0) {
                     params.roomId = this.detailData.inRoomList[0].id;
                     params.roomNum = this.detailData.inRoomList[0].houseNum
                 }
             }
+
+
+
             //入账 默认未接
             if (type == 1) {
                 params.state = 1;
@@ -587,7 +619,8 @@ export default {
                     return;
                 }
                 if (params.priceType == 3 && !params.payType) {
-                    this.payTypeShow = true;
+                    // this.payTypeShow = true;
+                    this.$message.error('请选择结算方式');
                     return;
                 }
                 if (params.priceType == 3 || params.priceType == 2) {
@@ -596,28 +629,54 @@ export default {
                         return;
                     }
                 } else {
+
                     if (!params.consumePrice) {
                         this.$message.error('请输入金额');
                         return;
                     }
+
+                    if(params.priceType == 5 || params.priceType == 6 || params.priceType == 7 ){
+                        params.payType = 0
+                    }
                 }
+
             }
+
+
+
             //挂账
             if (type == 2) {
                 params.priceType = 13
                 params.payType = 0 //挂账无需支付方式
                 params.state = 1
+                console.log(params)
             }
             //冲调
             if (type == 3) {
                 params.state = 2
                 params.payType = 0 //挂账无需支付方式
                 params.orderId = this.destructionList[0].id
+
+
                 if (params.consumePrice > 0 || params.consumePrice == 0) {
                     this.$message.error('请输入为负数金额');
-                    return
+                    return false
                 }
+                if(this.consumeOperForm.priceType == 9){
+                    params.consumePrice = '-' + this.destructionList[0].consumePrice
+                }
+
+                if(this.consumeOperForm.priceType == 10){
+                    // this.consumeOperForm.consumePrice = ''
+                }
+
+
+
             }
+
+            console.log(params)
+            // return
+
             //退房结账
             if (type == 4) {
                 params.state = 2
@@ -633,6 +692,9 @@ export default {
                 }
             }
 
+
+
+
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
@@ -645,6 +707,7 @@ export default {
                             name: ''
                         }
                         this.consume_order_list()
+                        this.getOrderDetail()
                     })
                 } else {
                     console.log('error submit!!');
@@ -653,7 +716,6 @@ export default {
             });
         },
         out_check_in() {
-
             let params = {
                 checkInId: this.$route.query.id,
                 billType: 4
@@ -725,11 +787,16 @@ export default {
             };
             this.$F.doRequest(this, '/pms/hoteldamage/list', params, (res) => {
                 this.hoteldamageList = res.list
+                console.log(res)
                 this.$forceUpdate()
             })
         },
+
+
         priceTypeChange(e) {
+            this.consumeOperForm.priceType = e
             console.log(e)
+            console.log(this.currentRoom)
             if (e == 5) {
                 if (this.currentRoom) {
                     this.consumeOperForm.consumePrice = this.currentRoom.realPrice
@@ -741,11 +808,12 @@ export default {
                         this.$message.error('暂无入住人');
                         return
                     }
-
                 }
             } else if (e == 6) {
+                console.log(this.currentRoom)
                 if (this.currentRoom) {
                     this.consumeOperForm.consumePrice = (this.currentRoom.realPrice * 0.5).toFixed(2)
+
                 } else {
                     if (this.detailData && this.detailData.inRoomList.length) {
                         this.consumeOperForm.consumePrice = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(2)
@@ -756,15 +824,43 @@ export default {
                     }
                 }
             } else if (e == 7) {
+                this.consumeOperForm.damageCount = 1
                 this.consumeOperForm.consumePrice = ''
+                this.getDdamageInfo();
             }
+
+            // console.log( this.consumeOperForm.consumePrice)
+
+
             this.$forceUpdate()
         },
+        getDamagePrice(value){
+            this.getDdamageInfo();
+        },
+        //获取房间的物品价格
+        getDdamageInfo(){
+            console.log(this.consumeOperForm.damageId)
+            console.log(this.hoteldamageList)
+            let list = this.hoteldamageList
+            if(list.length > 0 && this.consumeOperForm.damageTypeId && this.consumeOperForm.damageId ){
+               for(let i in list){
+                   if(this.consumeOperForm.damageId == list[i].id){
+                       console.log(list[i])
+                       let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
+                       this.consumeOperForm.consumePrice = p.toFixed(2)
+                       this.consumeOperForm.damageName = list[i].name
+                   }
+               }
+            }
+        },
+
+
+
+
         /**获取挂账企业 */
         hotelenter_list(name) {
             let searchForm = {
                 id: '',
-                enterName: name,
                 state: '',
                 shareFlag: '',
                 contactName: '',
@@ -776,9 +872,13 @@ export default {
                 pageIndex: 1,
                 pageSize: 10
             };
+            if(name){
+                searchForm.enterName = name
+            }
             this.loading = true
             this.$F.doRequest(this, '/pms/hotelenter/list', searchForm, (res) => {
                 this.loading = false
+                console.log(res)
                 this.hotelenterList = res.list;
 
             })
@@ -803,10 +903,30 @@ export default {
                 }
             });
         },
+        //获取商品分类信息
         damageTypeIdChange(e) {
             console.log(e)
-            // this.hoteldamage_list()
+            console.log(this.hoteldamagetypeList)
+            let list = this.hoteldamagetypeList
+            if(list.length > 0){
+                for(let i in list){
+                    if(list[i].id == e){
+                        // console.log(list[i])
+                        this.consumeOperForm.damageTypeName  = list[i].name
+                    }
+                }
+            }
+
+
+            if(e){
+                this.hoteldamage_list()
+            }
+
         },
+
+
+
+
         destructionHandle() {
             if (this.multipleSelection.length < 1) {
                 this.$message.error('请选择需要操作的账务');
@@ -847,7 +967,30 @@ export default {
         handleCurrentChange(val) {
             this.searchForm.pageIndex = val;
             this.consume_order_list();
+        },
+        getOrderDetail(){
+            console.log(111)
+            this.$emit('getOrderDetail')
         }
+    },
+    watch:{
+        'consumeOperForm.priceType':function(val,oldval){
+                // console.log(val)
+               // if(val !== 3){
+               //    this.consumeOperForm.payType = ''
+               // }
+               // if(val !== 7){
+               //     this.consumeOperForm.consumePrice = ''
+               // }
+
+                // if(val == 9){
+
+                //     this.consumeOperForm.consumePrice = ''
+                // }
+                // console.log(this.consumeOperForm.payType)
+        }
+
+
     }
 };
 </script>
