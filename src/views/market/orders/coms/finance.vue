@@ -72,6 +72,7 @@
     <div style="margin-top:10px"></div>
     <!-- 分页 -->
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+
     <!--入账 -->
     <el-dialog top='0' title="入账" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
@@ -348,8 +349,8 @@
         </div>
     </el-dialog>
     <!--冲调-->
-    <el-dialog top='0' title="冲调" :visible.sync="destructionShow" width="800px">
-        <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
+    <el-dialog top='0' title="冲调" :visible.sync="destructionShow"width="800px">
+        <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
             <el-row v-if="currentRoom">
                 <el-col :span="8">
                     房型：{{currentRoom.roomTypeName}}
@@ -395,7 +396,7 @@
                     <el-radio :label="10" :value="10">部分冲调</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="冲调金额：" prop="consumePrice" v-if="consumeOperForm.priceType == 10">
+            <el-form-item label="冲调金额：" prop="consumePrice"  v-if="consumeOperForm.priceType == 10">
                 <el-input class="width200" type="text" v-model="consumeOperForm.consumePrice"></el-input>
                 <em style="margin-left:10px;color:#888;font-size: 12px;">注意：冲调金额小于原账金额</em>
             </el-form-item>
@@ -408,10 +409,11 @@
             <el-button type="primary" @click="consume_oper(3,'destruction')">确认</el-button>
         </div>
     </el-dialog>
+
     <!--部分结账-->
-    <someAccounts ref="someAccounts" :detailData = "detailData" />
+    <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
     <!--迷你吧-->
-    <consumeGoods ref="consumeGoods" :detailData = "detailData" />
+    <consumeGoods ref="consumeGoods" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
 </div>
 </template>
 
@@ -658,19 +660,12 @@ export default {
                 params.orderId = this.destructionList[0].id
 
 
-                if (params.consumePrice > 0 || params.consumePrice == 0) {
-                    this.$message.error('请输入为负数金额');
-                    return false
-                }
-                if(this.consumeOperForm.priceType == 9){
-                    params.consumePrice = '-' + this.destructionList[0].consumePrice
-                }
+                // if (params.consumePrice > 0 || params.consumePrice == 0) {
+                //     this.$message.error('请输入为负数金额');
+                //     return false
+                // }
 
-                if(this.consumeOperForm.priceType == 10){
-                    // this.consumeOperForm.consumePrice = ''
-                }
-
-
+                params.consumePrice = '-' + this.consumeOperForm.consumePrice
 
             }
 
@@ -975,6 +970,13 @@ export default {
     },
     watch:{
         'consumeOperForm.priceType':function(val,oldval){
+                if(val == 9){
+                    this.consumeOperForm.consumePrice = this.destructionList[0].consumePrice ? this.destructionList[0].consumePrice : this.destructionList[0].payPrice
+                }else if(val == 10){
+                   this.consumeOperForm.consumePrice = ''
+                }else{
+                    this.consumeOperForm.consumePrice = ''
+                }
                 // console.log(val)
                // if(val !== 3){
                //    this.consumeOperForm.payType = ''

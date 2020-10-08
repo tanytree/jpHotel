@@ -263,6 +263,8 @@
             getManageData(callback) {
                 var a = this;
                 this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", {}, (res) => {
+                
+                    console.log(res)
                     a.salePoint = res.list.reverse();
                     a.salePoint.some(item => {
                         if (item.state != 2) {

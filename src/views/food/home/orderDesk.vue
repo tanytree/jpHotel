@@ -257,30 +257,12 @@ export default {
 
               }
             });
-            // this.alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', '提示', {
-            //   confirmButtonText: '确定',
-            //   type: 'warning'
-            // }).then(() => {
-            //     // this.$router.replace('/dish?type=' + 2)
-            // }).catch(() => {
-
-            // });
         }else{
             this.$alert('该菜品已经沽清啦，不能再售卖啦，您可以前往菜品管理>沽清管理取消该商品的沽清!', '提示', {
               confirmButtonText: '确定',
               callback: action => {
-
               }
             });
-
-
-            // this.alert('该菜品已经沽清啦，不能再售卖啦，您可以前往菜品管理>沽清管理取消该商品的沽清!', '提示', {
-            //   confirmButtonText: '确定',
-            //   type: 'warning'
-            // }).then(() => {
-            //     // this.$router.replace('/dish?type=' + 2)
-            // }).catch(() => {
-            // });
         }
     },
 
