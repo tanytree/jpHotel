@@ -14,7 +14,7 @@
                 </el-breadcrumb>
             </div>
         </div>
-        
+
         <div class="bodyInfo margin-t-10" v-loading="loading">
             <el-row :gutter="20">
                 <el-col :span="6">
@@ -78,7 +78,8 @@
                                     <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
                                         <div class="wrap"><span>查看订单信息（联房）></span></div>
                                     </li>
-                                    <li @click="checkTypeHandle('customer',item)" v-for="(item,index) of detailData.inRoomList" :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id?'active':''">
+                                    <li @click="checkTypeHandle('customer',item)" v-for="(item,index) of detailData.inRoomList"
+                                        :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id?'active':''">
                                         <div class="wrap">
                                             <el-button size="mini" :type="item.state==1?'success':'danger'" plain class="fr">
                                                 {{ F_checkinState(item.state) }}
@@ -255,6 +256,7 @@ export default {
                 // this.$F.merge(this.detailData, res);
 
                 //默认获取第一个房间为主账房，暂不明确主账房标识
+                debugger
                 if(res.inRoomList.length > 0 ){
                     this.currentRoom = res.inRoomList[0]
                     this.resetDom();

@@ -104,12 +104,12 @@ export default {
     },
 
     methods: {
+        //获取预定单详情信息
         getDetail(id) {
-            // 加载组件
-            let params = {
+            this.$F.doRequest(this, '/pms/checkin/reserve_check_in_detail', {
                 reserveId: id
-            }
-            this.$F.doRequest(this, '/pms/checkin/reserve_check_in_detail', params, (res) => {
+            }, (res) => {
+                debugger
                 this.detailData = res;
                 this.$forceUpdate();
             })

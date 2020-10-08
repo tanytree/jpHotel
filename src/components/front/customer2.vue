@@ -9,15 +9,19 @@
     <el-table
         :data="liveInPersonData"
         style="width: 100%;margin-bottom: 20px;"
-        row-key="roomId"
+        :row-key="getRowKey"
         border
         default-expand-all
         :tree-props="{children: 'personList', hasChildren: 'hasChildren'}">
-        <el-table-column label="房号/房型">
+        <el-table-column label="房号/房型" width="200">
             <template slot-scope="scope">
-                {{scope.row.isChild?'':scope.row.houseNum}}
+                <span v-if="!scope.row.isChild">
+                    {{scope.row.isChild?'':scope.row.houseNum}}
+                </span>
                 <span v-if="!scope.row.isChild">/</span>
-                {{scope.row.isChild?'':scope.row.roomTypeName}}
+                <span v-if="!scope.row.isChild">
+                    {{scope.row.isChild?'':scope.row.roomTypeName}}
+                </span>
             </template>
         </el-table-column>
         <el-table-column prop="realPrice" label="房价">
@@ -111,44 +115,50 @@ export default {
             }
         };
     },
-    // watch: {
-    //     liveData(newValue, oldValue) {
-    //         this.liveInPersonData = newValue;
-    //         this.$forceUpdate();
-    //     },
-    // },
 
     created() {
         console.log(this.liveData);
         console.log(this.checkinInfo);
-        debugger
         this.liveInPersonData = this.$F.deepClone(this.liveData);
+        console.log(JSON.parse(JSON.stringify(this.liveInPersonData)));
+        debugger
         this.$forceUpdate();
     },
 
     methods: {
+        getRowKey(row) {
+            return row.id || row.roomId;
+        },
         personSubmit() {
             console.log(this.liveInPersonData)
             let checkInRoomJson = [];
+            let personListJSONList = [];
             this.liveInPersonData.forEach(item => {
                 if (!item.personList)
                     item.personList;
                 let temp = {
+                    checkinRoomId: item.roomId,
                     roomTypeId: item.roomTypeId,
                     roomId: item.roomId,
                     reservePrice: item.reservePrice,
                     realPrice: item.realPrice,
-                    personList: item.personList
+                    personList: item.personList || []
                 }
-                temp.personList.unshift({
-                    checkinRoomId: item.checkinRoomId,
+                let tempObject = {
+                    checkinRoomId: item.roomId,
                     name: item.name,
                     idcardType: item.idcardType,
                     idcard: item.idcard,
                     sex: item.sex,
                     mobile: item.mobile,
                     id: item.id
-                });
+                }
+                temp.personList.unshift(tempObject);
+                temp.personList.forEach(temp => {
+                    delete temp['isChild'];
+                    delete temp['roomId'];
+                })
+                personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
             })
             if (this.type == 'reserve') {
@@ -172,8 +182,7 @@ export default {
                     })
                 })
             } else {
-
-                this.$emit('personCallback', checkInRoomJson);
+                this.$emit('personCallback', personListJSONList);
             }
 
         },

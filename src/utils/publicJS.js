@@ -42,6 +42,8 @@ const $F = {
             let newObject = obj.constructor === Array ? [] : {}
             if (typeof obj !== 'object') {
                 return
+            } else if (window.JSON) {
+                newObject = JSON.parse(JSON.stringify(obj)) // 还原
             } else {
                 for (let i in obj) {
                     if (obj[i] instanceof File) {
@@ -74,7 +76,6 @@ const $F = {
             $instance.dataListLoading = true
             $instance.loading = true
         }
-        debugger
         axios.post(uploadUrl + '/pms/upload/batch_upload_img', formData,
             {
                 headers: {
@@ -85,6 +86,30 @@ const $F = {
             if (res.data.code === 200) {
                 let array = newImageList.concat(res.data.data.split(','));
                 callback(array.join(','))
+            } else {
+                if ($instance) {
+                    $instance.$message.error(res.message || res.data.message)
+                }
+            }
+        })
+    },
+
+    doImportFile ($instance, data, callback) {
+        let formData = new FormData();
+        formData.append('storesNum', sessionStorage.storesNum);
+        formData.append('imgModel', '2');
+        formData.append('platSource', platSource);
+        formData.append('filename', data.filename, data.filename.name);
+
+        axios.post(uploadUrl + '/pms/upload/batch_upload_img', formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        ).then(res => {
+            if (res.data.code === 200) {
+                callback(res.data)
             } else {
                 if ($instance) {
                     $instance.$message.error(res.message || res.data.message)

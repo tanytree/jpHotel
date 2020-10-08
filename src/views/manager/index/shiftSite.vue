@@ -52,7 +52,7 @@
                             <template slot-scope="scope">
                                 <el-button type="text" size="small" @click="popup_thing(scope.row)">{{$t("manager.hp_editor")}}
                                 </el-button>
-                                <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm(scope.row)">
+                                <el-popconfirm title="确定删除？" @onConfirm="onConfirm(scope.row)">
                                     <el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
                                 </el-popconfirm>
                             </template>

@@ -184,6 +184,7 @@ export default {
       data.data.storesInfo = this.storeList.filter((item) => {
         return item.storesNum == this.loginForm.storesNum;
       })[0];
+      sessionStorage.storesNum = data.data.storesInfo.storesNum;
       this.saveuser(data);
       var array = {
         id: "menuAssert",

@@ -33,7 +33,7 @@ module.exports = {
     hp_weekGo: '一周前',
     hp_compensationType: '损物赔偿类型',
     hp_addType: '新增类型',
-    hp_bulletTitle: '这是一段内容确定删除吗？',
+    hp_bulletTitle: '确定删除吗？',
     hp_compensationGoods: '损物赔偿物品',
     hp_goodsName: '物品名称',
     hp_goodsType: '物品类型',

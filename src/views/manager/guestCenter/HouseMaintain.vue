@@ -354,20 +354,20 @@ export default {
             trigger: "blur",
           },
         ],
-        bedNum: [
-          {
-            required: true,
-            message: "请输入床位数/座位",
-            trigger: "blur",
-          },
-        ],
-        bedSizeH: [
-          {
-            required: true,
-            message: "请输入床宽",
-            trigger: "blur",
-          },
-        ],
+        // bedNum: [
+        //   {
+        //     required: true,
+        //     message: "请输入床位数/座位",
+        //     trigger: "blur",
+        //   },
+        // ],
+        // bedSizeH: [
+        //   {
+        //     required: true,
+        //     message: "请输入床宽",
+        //     trigger: "blur",
+        //   },
+        // ],
         houseSizeW: [
           {
             required: true,
@@ -382,13 +382,13 @@ export default {
             trigger: "blur",
           },
         ],
-        bedType: [
-          {
-            required: true,
-            message: "请输入床型",
-            trigger: "blur",
-          },
-        ],
+        // bedType: [
+        //   {
+        //     required: true,
+        //     message: "请输入床型",
+        //     trigger: "blur",
+        //   },
+        // ],
       },
       selectedInfo: {}, // 选中的某条
       formData: {},
