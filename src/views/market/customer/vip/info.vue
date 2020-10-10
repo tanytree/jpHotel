@@ -98,42 +98,105 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="memberCard"
+          label="卡号"
+          show-overflow-tooltip
+        ></el-table-column>
         <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column label="会员类型" width="140">
-          <template slot-scope="{row}">{{F_memberTypeId(row.memberTypeId)}}</template>
+          <template slot-scope="{ row }">{{
+            F_memberTypeId(row.memberTypeId)
+          }}</template>
         </el-table-column>
-        <el-table-column prop="mobile" label="手机号" width="140"></el-table-column>
-        <el-table-column prop="score" label="剩余积分" width="100"></el-table-column>
+        <el-table-column
+          prop="mobile"
+          label="手机号"
+          width="140"
+        ></el-table-column>
+        <el-table-column
+          prop="score"
+          label="剩余积分"
+          width="100"
+        ></el-table-column>
         <el-table-column prop="state" label="状态" width="100">
-          <template slot-scope="{row}">{{row.state | F_cardState}}</template>
+          <template slot-scope="{ row }">{{
+            row.state | F_cardState
+          }}</template>
         </el-table-column>
         <el-table-column prop="storesNum" label="开卡门店">
-          <template slot-scope="{row}">{{F_storeName(row.storesNum)}}</template>
+          <template slot-scope="{ row }">{{
+            F_storeName(row.storesNum)
+          }}</template>
         </el-table-column>
-        <el-table-column prop="getWay" align="center" label="发展途径" width="100">
-          <template slot-scope="{row}">{{row.getWay==1?'线上':'线下'}}</template>
+        <el-table-column
+          prop="getWay"
+          align="center"
+          label="发展途径"
+          width="100"
+        >
+          <template slot-scope="{ row }">{{
+            row.getWay == 1 ? "线上" : "线下"
+          }}</template>
         </el-table-column>
-        <el-table-column prop="createTime" label="开卡日期" width="180"></el-table-column>
-        <el-table-column prop="isBlacklist" align="center" label="是否黑名单" width="100">
-          <template slot-scope="{row}">{{row.isBlacklist==2?'是':'否'}}</template>
+        <el-table-column
+          prop="createTime"
+          label="开卡日期"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="isBlacklist"
+          align="center"
+          label="是否黑名单"
+          width="100"
+        >
+          <template slot-scope="{ row }">{{
+            row.isBlacklist == 2 ? "是" : "否"
+          }}</template>
         </el-table-column>
-        <el-table-column prop="isBlacklist" align="center" label="是否注销" width="100">
-          <template slot-scope="{row}">{{row.status == 1?'否':'是'}}</template>
+        <el-table-column
+          prop="isBlacklist"
+          align="center"
+          label="是否注销"
+          width="100"
+        >
+          <template slot-scope="{ row }">{{
+            row.status == 1 ? "否" : "是"
+          }}</template>
         </el-table-column>
         <el-table-column label="操作" width="220">
-          <template slot-scope="{row}">
-            <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
-            <el-button type="text" size="mini" @click="handleEdit(row)" v-if="row.state!=2">修改</el-button>
-            <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state==2">恢复</el-button>
-            <el-dropdown style="margin-left: 10px;font-size:12px">
+          <template slot-scope="{ row }">
+            <el-button type="text" size="mini" @click="handleDetail(row)"
+              >详情</el-button
+            >
+            <el-button
+              type="text"
+              size="mini"
+              @click="handleEdit(row)"
+              v-if="row.state != 2"
+              >修改</el-button
+            >
+            <el-button
+              type="text"
+              size="mini"
+              @click="handleRecovery(row)"
+              v-if="row.state == 2"
+              >恢复</el-button
+            >
+            <el-dropdown style="margin-left: 10px; font-size: 12px">
               <span class="el-dropdown-link">
                 更多
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="setCardVisible = true">收卡费</el-dropdown-item>
-                <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!= 2">拉黑</el-dropdown-item>
+                <el-dropdown-item @click.native="chargeCard(row)"
+                  >收卡费</el-dropdown-item
+                >
+                <el-dropdown-item
+                  @click.native="handelblacklist(row)"
+                  v-if="row.isBlacklist != 2"
+                  >拉黑</el-dropdown-item
+                >
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -158,7 +221,7 @@
             type="textarea"
             v-model="setBlackForm.remark"
             autocomplete="off"
-            style="width:80%"
+            style="width: 80%"
           ></el-input>
         </el-form-item>
       </el-form>
@@ -166,13 +229,19 @@
         <el-button type="primary" @click="addblacklist">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog top="0" title="补收卡费" :visible.sync="setCardVisible" width="470px">
+    <!-- 补收卡费弹框 -->
+    <el-dialog
+      top="0"
+      title="补收卡费"
+      :visible.sync="setCardVisible"
+      width="470px"
+    >
+      <div class="dialogDiv" v-if="dialogInfo">
+        <span>卡号：{{ dialogInfo.memberCard }}</span>
+        <span>姓名：{{ dialogInfo.name }}</span>
+        <span>会员类型：{{ F_memberTypeId(dialogInfo.memberTypeId) }}</span>
+      </div>
       <el-form :model="cardForm" ref="cardForm">
-        <el-form-item
-          label
-          class="require"
-          label-width="80px"
-        >卡号：{{cardForm.memberCard}} 姓名：{{cardForm.name}} 会员类型：{{F_memberTypeId(cardForm.memberTypeId)}}</el-form-item>
         <el-form-item label="补收类型" class prop="memberTypeId">
           <el-radio-group v-model="cardForm.type">
             <el-radio :label="3">卡费</el-radio>
@@ -181,7 +250,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="支付方式" class prop="payWay">
-          <el-select v-model="cardForm.payWay" style="width:300px">
+          <el-select v-model="cardForm.payWay" style="width: 300px">
             <el-option label="现金" :value="1"></el-option>
             <el-option label="微信" :value="2"></el-option>
             <el-option label="支付宝" :value="3"></el-option>
@@ -189,11 +258,17 @@
           </el-select>
         </el-form-item>
         <el-form-item label="支付费用" class prop="payPrices">
-          <el-input style="width:300px" v-model="cardForm.payPrices" placeholder></el-input>
+          <el-input
+            style="width: 300px"
+            v-model="cardForm.payPrices"
+            placeholder
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="setCardFrormChange('cardForm')">确认</el-button>
+        <el-button type="primary" @click="setCardFrormChange(cardForm)"
+          >确认</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -213,7 +288,11 @@ export default {
   data() {
     return {
       setCardVisible: false,
-      cardForm: {},
+      cardForm: {
+        type: 3,
+        payWay: 1,
+        payPrices: "",
+      },
       showPageType: "main", //页面显示类型
       loading: false,
       showEdit: false,
@@ -222,6 +301,7 @@ export default {
         status: "",
         storesNum: "",
       },
+      dialogInfo: null,
       listTotal: 0, //总条数
       multipleSelection: [], //多选
       tableData: [{}], //表格数据
@@ -251,6 +331,21 @@ export default {
     });
   },
   methods: {
+    //补收卡费弹框，点击确定按钮
+    setCardFrormChange(info) {
+      console.log(info);
+      return false;
+      // let params = { memberId: this.dialogInfo.id };
+      // this.$F.doRequest(this, "/pms/freeuser/stores_list", (data) => {
+      //   this.storeList = data;
+      // });
+    },
+    // 点击补收卡费
+    chargeCard(row) {
+      console.log(row);
+      this.dialogInfo = row;
+      this.setCardVisible = true;
+    },
     initForm() {
       this.searchForm = {
         status: "",
@@ -421,5 +516,11 @@ export default {
   .count {
     color: #333;
   }
+}
+.dialogDiv span {
+  margin-right: 15px;
+}
+.dialogDiv {
+  margin-bottom: 15px;
 }
 </style>

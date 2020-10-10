@@ -1,97 +1,153 @@
+<!--
+ * @Date: 2020-09-14 10:55:10
+ * @Author: 陶子
+ * @LastEditTime: 2020-10-10 09:56:47
+ * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
+-->
 <template>
   <div>
     <div class="breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item
           @click.native="meetBooking"
-          style=" font-weight: 700;cursor: pointer;"
-        >会场预订</el-breadcrumb-item>
+          style="font-weight: 700; cursor: pointer"
+          >会场预订</el-breadcrumb-item
+        >
         <el-breadcrumb-item
           @click.native="meetCancel"
-          style=" font-weight: 700;cursor: pointer;"
-        >会议核销</el-breadcrumb-item>
+          style="font-weight: 700; cursor: pointer"
+          >会议核销</el-breadcrumb-item
+        >
         <el-breadcrumb-item>详情</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <el-row :gutter="20" class="rowRoot">
-      <el-col :span="6" style=" height: 563px;">
+      <el-col :span="6" style="height: 563px">
         <el-card>
           <div class="clearfix">
-            <span style="font-weight: bold;">客人信息</span>
-            <el-button size="mini" style="float:right" type="primary">办理会员</el-button>
+            <span style="font-weight: bold">客人信息</span>
+            <el-button size="mini" style="float: right" type="primary"
+              >办理会员</el-button
+            >
           </div>
           <div class="box_box">
             <div class="box_item">
               客人姓名：
-              <span>{{checkIn.name}}</span>
+              <span>{{ checkIn.name }}</span>
             </div>
             <div>
               手机号：
-              <span>{{checkIn.mobile}}</span>
+              <span>{{ checkIn.mobile }}</span>
             </div>
             <div>
               客源类型：
-              <span v-if="checkIn.guestType==1">散客</span>
-              <span v-if="checkIn.guestType==2">会员</span>
-              <span v-if="checkIn.guestType==3">单位</span>
+              <span v-if="checkIn.guestType == 1">散客</span>
+              <span v-if="checkIn.guestType == 2">会员</span>
+              <span v-if="checkIn.guestType == 3">单位</span>
             </div>
           </div>
         </el-card>
       </el-col>
       <el-col :span="18">
-        <el-card style=" height: 203px;">
+        <el-card style="height: 203px">
           <div slot="header" class="card_header">
-            <span>会议信息（房间：A001 {{checkSource()}}）</span>
+            <span>会议信息（房间：A001 {{ checkSource() }}）</span>
             <div>
               订单号：
-              <span>{{checkIn.id}}</span>
+              <span>{{ checkIn.reserveOrderNum }}</span>
             </div>
           </div>
-          <el-form ref="form" label-position="left" :model="form" label-width="90px" inline>
+          <el-form
+            ref="form"
+            label-position="left"
+            :model="form"
+            label-width="90px"
+            inline
+          >
             <el-row>
               <el-col :span="7">
                 <el-form-item label="会议厅：">大型会议厅</el-form-item>
               </el-col>
               <el-col :span="5">
-                <el-form-item label="会议名称：">{{checkIn.meetingName}}</el-form-item>
+                <el-form-item label="会议名称：">{{
+                  checkIn.meetingName
+                }}</el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="会议时间：">{{checkIn.checkinTime}} 至 {{checkIn.checkoutTime}}</el-form-item>
+                <el-form-item label="会议时间："
+                  >{{ checkIn.checkinTime }} 至
+                  {{ checkIn.checkoutTime }}</el-form-item
+                >
               </el-col>
               <el-col :span="7">
-                <el-form-item label="单位名称：">{{checkIn.enterName}}</el-form-item>
+                <el-form-item label="单位名称：">{{
+                  checkIn.enterName
+                }}</el-form-item>
               </el-col>
               <el-col :span="5">
-                <el-form-item label="房价合计：">{{checkIn.roomTotalPrice}}</el-form-item>
+                <el-form-item label="房价合计：">{{
+                  checkIn.totalRoomPrice
+                }}</el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="备注：">{{checkIn.remark}}</el-form-item>
+                <el-form-item label="备注：">{{ checkIn.remark }}</el-form-item>
               </el-col>
             </el-row>
           </el-form>
         </el-card>
-        <el-card style="margin-top:10px;height:350px">
-          <div class="clearfix" style="margin-bottom:10px">
+        <el-card style="margin-top: 10px; height: 350px">
+          <div class="clearfix" style="margin-bottom: 10px">
             <span>会议登记</span>
-            <el-button size="mini" @click="meetClick()" style="float:right">会议登记</el-button>
+            <el-button size="mini" @click="meetClick()" style="float: right"
+              >会议登记</el-button
+            >
           </div>
           <!--表格数据 -->
           <el-table
             ref="multipleTable"
             v-loading="loading"
             :data="tableData"
-            :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+            :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
             size="mini"
           >
-            <el-table-column prop="enterName" label="姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="性别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="证件类型" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="证件号" show-overflow-tooltip width="150px"></el-table-column>
-            <el-table-column prop="enterType" label="登记时间" show-overflow-tooltip width="150px"></el-table-column>
-            <el-table-column prop="enterType" label="手机号" show-overflow-tooltip width="150px"></el-table-column>
+            <el-table-column
+              prop="enterName"
+              label="姓名"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="createTime"
+              label="性别"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="enterType"
+              label="证件类型"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="enterType"
+              label="证件号"
+              show-overflow-tooltip
+              width="150px"
+            ></el-table-column>
+            <el-table-column
+              prop="enterType"
+              label="登记时间"
+              show-overflow-tooltip
+              width="150px"
+            ></el-table-column>
+            <el-table-column
+              prop="enterType"
+              label="手机号"
+              show-overflow-tooltip
+              width="150px"
+            ></el-table-column>
             <el-table-column label="操作">
-              <template slot-scope="{row}">
-                <el-button type="text" @click="goDetail(row)" size="mini">移除</el-button>
+              <template slot-scope="{ row }">
+                <el-button type="text" @click="goDetail(row)" size="mini"
+                  >移除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -99,7 +155,12 @@
       </el-col>
     </el-row>
     <!-- 会议签到dialog -->
-    <el-dialog top="0" title="会议签到" :visible.sync="dialogMeet" class="setCompanyForm">
+    <el-dialog
+      top="0"
+      title="会议签到"
+      :visible.sync="dialogMeet"
+      class="setCompanyForm"
+    >
       <el-form
         :model="addCompanyForm"
         ref="addCompanyForm"
@@ -110,7 +171,10 @@
         <el-row class="row">
           <el-col :span="11">
             <el-form-item label="来客姓名:" prop="name">
-              <el-input v-model="addCompanyForm.name" style="width:180px"></el-input>
+              <el-input
+                v-model="addCompanyForm.name"
+                style="width: 180px"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -127,7 +191,7 @@
             <el-form-item label="证件类型:" prop="idcardType">
               <el-select
                 v-model="addCompanyForm.idcardType"
-                style="width:180px"
+                style="width: 180px"
                 placeholder="请选择证件类型"
               >
                 <el-option label="身份证" value="1"></el-option>
@@ -137,17 +201,25 @@
           </el-col>
           <el-col :span="8" class="col">
             <el-form-item label="证件号:" prop="idcard">
-              <el-input v-model="addCompanyForm.idcard" style="width:180px"></el-input>
+              <el-input
+                v-model="addCompanyForm.idcard"
+                style="width: 180px"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-form-item label="手机号:">
-          <el-input v-model="addCompanyForm.mobile" style="width:180px"></el-input>
+          <el-input
+            v-model="addCompanyForm.mobile"
+            style="width: 180px"
+          ></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer" style="text-align:right">
-        <el-button @click="dialogMeet=false">取消</el-button>
-        <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')">确认</el-button>
+      <div slot="footer" class="dialog-footer" style="text-align: right">
+        <el-button @click="dialogMeet = false">取消</el-button>
+        <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')"
+          >确认</el-button
+        >
       </div>
     </el-dialog>
   </div>

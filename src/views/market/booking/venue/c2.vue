@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-09-17 16:53:01
+ * @LastEditTime: 2020-10-09 17:34:31
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -16,28 +16,40 @@
           <el-row>
             <el-form-item label="会议时间:">
               <el-radio-group v-model="searchForm.timeType">
-                <el-radio-button label style="margin-right:10px">不限</el-radio-button>
-                <el-radio-button label="1" style="margin-right:10px">当天</el-radio-button>
-                <el-radio-button label="8" style="margin-right:10px">明天</el-radio-button>
-                <el-radio-button label="9" style="margin-right:10px">后天</el-radio-button>
-                <el-radio-button label="7" style="margin-right:10px">近7天</el-radio-button>
-                <el-radio-button label="自定义" style="margin-right:10px">自定义</el-radio-button>
+                <el-radio-button label style="margin-right: 10px"
+                  >不限</el-radio-button
+                >
+                <el-radio-button label="1" style="margin-right: 10px"
+                  >当天</el-radio-button
+                >
+                <el-radio-button label="8" style="margin-right: 10px"
+                  >明天</el-radio-button
+                >
+                <el-radio-button label="9" style="margin-right: 10px"
+                  >后天</el-radio-button
+                >
+                <el-radio-button label="7" style="margin-right: 10px"
+                  >近7天</el-radio-button
+                >
+                <el-radio-button label="自定义" style="margin-right: 10px"
+                  >自定义</el-radio-button
+                >
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="searchForm.timeType=='自定义'">
+            <el-form-item v-if="searchForm.timeType == '自定义'">
               <el-date-picker
                 v-model="searchForm.cstartTime"
                 value-format="yyyy-MM-dd"
                 type="date"
-                style="width:140px"
+                style="width: 140px"
                 placeholder="选择日期"
               ></el-date-picker>
-              <span style="margin:0 5px">至</span>
+              <span style="margin: 0 5px">至</span>
               <el-date-picker
                 v-model="searchForm.cendTime"
                 value-format="yyyy-MM-dd"
                 type="date"
-                style="width:140px"
+                style="width: 140px"
                 placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
@@ -48,15 +60,15 @@
                 v-model="searchForm.startTime"
                 value-format="yyyy-MM-dd"
                 type="date"
-                style="width:200px"
+                style="width: 200px"
                 placeholder="选择日期"
               ></el-date-picker>
-              <span style="margin:0 5px">-</span>
+              <span style="margin: 0 5px">-</span>
               <el-date-picker
                 v-model="searchForm.endTime"
                 value-format="yyyy-MM-dd"
                 type="date"
-                style="width:200px"
+                style="width: 200px"
                 placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
@@ -67,7 +79,7 @@
                 <el-option value label="全部"></el-option>
                 <el-option
                   :value="key"
-                  v-for="(item,key,index) of $t('commons.orderSource')"
+                  v-for="(item, key, index) of $t('commons.orderSource')"
                   :label="item"
                   :key="index"
                 ></el-option>
@@ -78,7 +90,7 @@
                 <el-option value label="全部"></el-option>
                 <el-option
                   :value="key"
-                  v-for="(item,key,index) of $t('commons.guestType')"
+                  v-for="(item, key, index) of $t('commons.guestType')"
                   :label="item"
                   :key="index"
                 ></el-option>
@@ -90,10 +102,16 @@
               <el-input v-model="searchForm.name" class="width200"></el-input>
             </el-form-item>
             <el-form-item label="房间号:">
-              <el-input v-model="searchForm.houseNum" class="width200"></el-input>
+              <el-input
+                v-model="searchForm.houseNum"
+                class="width200"
+              ></el-input>
             </el-form-item>
             <el-form-item label="订单号:">
-              <el-input v-model="searchForm.orderNum" class="width200"></el-input>
+              <el-input
+                v-model="searchForm.orderNum"
+                class="width200"
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="getDataList">查询</el-button>
@@ -106,60 +124,87 @@
           ref="multipleTable"
           v-loading="loading"
           :data="tableData"
-          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
           size="mini"
         >
-          <el-table-column prop="name" label="名称" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="enterName" label="单位" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="meetingName" label="会议名称" show-overflow-tooltip></el-table-column>
-          <el-table-column label="会议开始-会议结束" show-overflow-tooltip width="150px">
-            <template slot-scope="{row}">
+          <el-table-column
+            prop="name"
+            label="名称"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            prop="enterName"
+            label="单位"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            prop="meetingName"
+            label="会议名称"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="会议开始-会议结束"
+            show-overflow-tooltip
+            width="150px"
+          >
+            <template slot-scope="{ row }">
               <div>
-                <span style="color:#126EFF">开</span>
-                {{row.checkinTime}}
+                <span style="color: #126eff">开</span>
+                {{ row.checkinTime }}
               </div>
               <div>
-                <span style="color:#D32B2B">结</span>
-                {{row.checkoutTime}}
+                <span style="color: #d32b2b">结</span>
+                {{ row.checkoutTime }}
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="房间号" show-overflow-tooltip></el-table-column>
-          <el-table-column label="会议厅" show-overflow-tooltip></el-table-column>
+          <el-table-column
+            label="房间号"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="会议厅"
+            show-overflow-tooltip
+          ></el-table-column>
           <el-table-column label="客源类别" show-overflow-tooltip>
-            <template slot-scope="{row}">
-              <div v-if="row.guestType==1">散客</div>
-              <div v-if="row.guestType==2">会员</div>
-              <div v-if="row.guestType==3">单位</div>
+            <template slot-scope="{ row }">
+              <div v-if="row.guestType == 1">散客</div>
+              <div v-if="row.guestType == 2">会员</div>
+              <div v-if="row.guestType == 3">单位</div>
             </template>
           </el-table-column>
           <el-table-column label="订单来源" show-overflow-tooltip>
-            <template slot-scope="{row}">
-              <div v-if="row.orderSource==1">前台</div>
-              <div v-if="row.orderSource==2">销售推荐</div>
-              <div v-if="row.orderSource==3">渠道订单</div>
-              <div v-if="row.orderSource==10">其他</div>
+            <template slot-scope="{ row }">
+              <div v-if="row.orderSource == 1">前台</div>
+              <div v-if="row.orderSource == 2">销售推荐</div>
+              <div v-if="row.orderSource == 3">渠道订单</div>
+              <div v-if="row.orderSource == 10">其他</div>
             </template>
           </el-table-column>
           <el-table-column label="会议状态" show-overflow-tooltip>
-            <template slot-scope="{row}">
-              <div v-if="row.state==1">待确认(预定中)</div>
-              <div v-if="row.state==2">已确认预定订单</div>
-              <div v-if="row.state==3">拒单</div>
-              <div v-if="row.state==4">NOSHOW</div>
-              <div v-if="row.state==5">未入住</div>
-              <div v-if="row.state==6">已入住</div>
-              <div v-if="row.state==7">离店</div>
+            <template slot-scope="{ row }">
+              <div v-if="row.state == 1">待确认(预定中)</div>
+              <div v-if="row.state == 2">已确认预定订单</div>
+              <div v-if="row.state == 3">拒单</div>
+              <div v-if="row.state == 4">NOSHOW</div>
+              <div v-if="row.state == 5">未入住</div>
+              <div v-if="row.state == 6">已入住</div>
+              <div v-if="row.state == 7">离店</div>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="220">
-            <template slot-scope="{row}">
-              <el-button type="text" @click="goDetail(row)" size="mini">详情</el-button>
-              <el-button type="text" @click="meetClick(row)" size="mini">会议登记</el-button>
+            <template slot-scope="{ row }">
+              <el-button type="text" @click="goDetail(row)" size="mini"
+                >详情</el-button
+              >
+              <!-- v-if="row.state == 6" -->
+              <el-button type="text" @click="meetClick(row)" size="mini"
+                >会议登记</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
+        <div style="margin-top: 10px"></div>
         <!--分页 -->
         <el-pagination
           @size-change="handleSizeChange"
@@ -172,7 +217,12 @@
         ></el-pagination>
       </el-card>
       <!-- 会议签到dialog -->
-      <el-dialog top="0" title="会议签到" :visible.sync="dialogMeet" class="setCompanyForm">
+      <el-dialog
+        top="0"
+        title="会议签到"
+        :visible.sync="dialogMeet"
+        class="setCompanyForm"
+      >
         <el-form
           :model="addCompanyForm"
           ref="addCompanyForm"
@@ -183,7 +233,10 @@
           <el-row class="row">
             <el-col :span="11">
               <el-form-item label="来客姓名:" prop="name">
-                <el-input v-model="addCompanyForm.name" style="width:180px"></el-input>
+                <el-input
+                  v-model="addCompanyForm.name"
+                  style="width: 180px"
+                ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -200,7 +253,7 @@
               <el-form-item label="证件类型:" prop="idcardType">
                 <el-select
                   v-model="addCompanyForm.idcardType"
-                  style="width:180px"
+                  style="width: 180px"
                   placeholder="请选择证件类型"
                 >
                   <el-option label="身份证" value="1"></el-option>
@@ -210,17 +263,25 @@
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item label="证件号:" prop="idcard">
-                <el-input v-model="addCompanyForm.idcard" style="width:180px"></el-input>
+                <el-input
+                  v-model="addCompanyForm.idcard"
+                  style="width: 180px"
+                ></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item label="手机号:">
-            <el-input v-model="addCompanyForm.mobile" style="width:180px"></el-input>
+            <el-input
+              v-model="addCompanyForm.mobile"
+              style="width: 180px"
+            ></el-input>
           </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer" style="text-align:right">
-          <el-button @click="dialogMeet=false">取消</el-button>
-          <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')">确认</el-button>
+        <div slot="footer" class="dialog-footer" style="text-align: right">
+          <el-button @click="dialogMeet = false">取消</el-button>
+          <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')"
+            >确认</el-button
+          >
         </div>
       </el-dialog>
     </div>

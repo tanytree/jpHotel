@@ -1,15 +1,25 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账务查询  -->
+<!--  前台部 > 客户管理 > 单位管理 > 账务查询     houseName有问题-->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
     <div class="booking">
       <!-- 查询部分 -->
-      <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
+      <el-form
+        class="term"
+        inline
+        size="small"
+        label-width="80px"
+        v-model="searchForm"
+      >
         <el-form-item label="消费门店">
-          <el-select v-model="searchForm.storesNum" class="width150" placeholder="请选择">
+          <el-select
+            v-model="searchForm.storesNum"
+            class="width150"
+            placeholder="请选择"
+          >
             <el-option label="全部" value></el-option>
             <el-option
-              v-for="(item,index) in storeList"
+              v-for="(item, index) in storeList"
               :key="index"
               :label="item.storesName"
               :value="item.storesNum"
@@ -17,10 +27,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="挂账单位">
-          <el-select v-model="searchForm.enterId" class="width150" placeholder="请选择">
+          <el-select
+            v-model="searchForm.enterId"
+            class="width150"
+            placeholder="请选择"
+          >
             <el-option label="全部" value>全部</el-option>
             <el-option
-              v-for="(item,index) in unitList"
+              v-for="(item, index) in unitList"
               :key="index"
               :label="item.enterName"
               :value="item.id"
@@ -46,21 +60,25 @@
             v-model="searchForm.startTime"
             value-format="yyyy-MM-dd"
             type="date"
-            style="width:140px"
+            style="width: 140px"
             placeholder="选择日期"
           ></el-date-picker>
-          <span style="margin:0 5px">-</span>
+          <span style="margin: 0 5px">-</span>
           <el-date-picker
             v-model="searchForm.endTime"
             value-format="yyyy-MM-dd"
             type="date"
-            style="width:140px"
+            style="width: 140px"
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="onSubmit">查询</el-button>
-          <el-button type="primary" class="grey" @click="resetForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="onSubmit"
+            >查询</el-button
+          >
+          <el-button type="primary" class="grey" @click="resetForm"
+            >重置</el-button
+          >
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -72,17 +90,43 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="createTime" label="消费时间" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="checkInPerson.checkIn.storesName" label="消费门店" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creditName" label="挂账单位" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="consumePrice" label="挂账金额" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="checkInPerson.checkIn.name" label="姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="checkInPerson.idcard" label="证件号" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="createTime"
+          label="消费时间"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="checkInPerson.checkIn.storesName"
+          label="消费门店"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="creditName"
+          label="挂账单位"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="consumePrice"
+          label="挂账金额"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="checkInPerson.checkIn.name"
+          label="姓名"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="checkInPerson.idcard"
+          label="证件号"
+          show-overflow-tooltip
+        ></el-table-column>
         <el-table-column label="房型/房号" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <div
-              v-if="row.checkInPerson.houseName&&row.checkInPerson.houseNum"
-            >{{row.checkInPerson.houseName}}/{{row.checkInPerson.houseNum}}</div>
+              v-if="row.checkInPerson.houseName && row.checkInPerson.houseNum"
+            >
+              {{ row.checkInPerson.houseName }}/{{ row.checkInPerson.houseNum }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column
@@ -96,9 +140,9 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column prop="state" label="结算状态" show-overflow-tooltip>
-          <template slot-scope="{row}">
-            <div v-if="row.state==1">未结</div>
-            <div v-if="row.state==2">已结</div>
+          <template slot-scope="{ row }">
+            <div v-if="row.state == 1">未结</div>
+            <div v-if="row.state == 2">已结</div>
           </template>
         </el-table-column>
       </el-table>

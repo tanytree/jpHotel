@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-07 16:43:41
- * @FilePath: /jiudian/src/views/market/customer/history.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-10 16:51:27
+ * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
 <template>
@@ -25,10 +25,11 @@
         <el-form-item label="客人类型">
           <el-radio-group v-model="searchForm.guestType" class="width300">
             <el-radio
-              v-for="(item,key,index) of $t('commons.guestType')"
+              v-for="(value, key, index) of $t('commons.guestType')"
               :label="key"
               :key="index"
-            >{{item}}</el-radio>
+              >{{ value }}</el-radio
+            >
           </el-radio-group>
         </el-form-item>
         <el-form-item label="黑名单">
@@ -50,7 +51,11 @@
           <el-input v-model="searchForm.mobile" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="证件类型">
-          <el-select v-model="searchForm.idcardType" placeholder="请选择证件类型" class="width300">
+          <el-select
+            v-model="searchForm.idcardType"
+            placeholder="请选择证件类型"
+            class="width300"
+          >
             <el-option label="全部" value></el-option>
             <el-option
               v-for="(label, value) in $t('commons.idCardType')"
@@ -80,46 +85,111 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="name" align="center" label="姓名" width="120"></el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="姓名"
+          width="120"
+        ></el-table-column>
         <el-table-column prop="sex" align="center" label="性别" width="100">
-          <template slot-scope="{row}">{{row.sex | F_sex}}</template>
+          <template slot-scope="{ row }">{{ row.sex | F_sex }}</template>
         </el-table-column>
-        <el-table-column prop="mobile" label="手机号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="idcardType" align="center" label="证件类型" width="120">
-          <template slot-scope="{row}">{{row.idcardType | F_idcardType}}</template>
+        <el-table-column
+          prop="mobile"
+          label="手机号"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="idcardType"
+          align="center"
+          label="证件类型"
+          width="120"
+        >
+          <template slot-scope="{ row }">{{
+            row.idcardType | F_idcardType
+          }}</template>
         </el-table-column>
-        <el-table-column prop="idcard" label="证件号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterType" align="center" label="生日" width="120"></el-table-column>
-        <el-table-column prop="guestType" align="center" label="客人类型" width="100">
-          <template slot-scope="{row}">{{F_guestType(row.guestType)}}</template>
+        <el-table-column
+          prop="idcard"
+          label="证件号"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="birthday"
+          align="center"
+          label="生日"
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop="guestType"
+          align="center"
+          label="客人类型"
+          width="100"
+        >
+          <template slot-scope="{ row }">{{
+            F_guestType(row.guestType)
+          }}</template>
         </el-table-column>
-        <el-table-column prop="memberCard" align="center" label="会员卡卡号" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="memberCard"
+          align="center"
+          label="会员卡卡号"
+          show-overflow-tooltip
+        ></el-table-column>
         <el-table-column prop="storesNum" label="所属门店">
-          <template slot-scope="{row}">{{F_storeName(row.storesNum)}}</template>
+          <template slot-scope="{ row }">{{
+            F_storeName(row.storesNum)
+          }}</template>
         </el-table-column>
-        <el-table-column prop="cumulativePrice" align="center" label="累计消费" width="100"></el-table-column>
-        <el-table-column prop="isBlacklist" align="center" label="是否黑名单" width="120">
-          <template slot-scope="{row}">{{row.isBlacklist==2?'是':'否'}}</template>
+        <el-table-column
+          prop="consumeTotalPrice"
+          align="center"
+          label="累计消费"
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="isBlacklist"
+          align="center"
+          label="是否黑名单"
+          width="120"
+        >
+          <template slot-scope="{ row }">{{
+            row.isBlacklist == 2 ? "是" : "否"
+          }}</template>
         </el-table-column>
         <el-table-column prop label="操作" width="200">
-          <template slot-scope="{row}">
-            <el-button type="text" size="mini" @click="handleHistory(row)">客史</el-button>
-            <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
+          <template slot-scope="{ row }">
+            <el-button type="text" size="mini" @click="handleHistory(row)"
+              >客史</el-button
+            >
+            <el-button type="text" size="mini" @click="handleDetail(row)"
+              >详情</el-button
+            >
             <el-dropdown>
               <span class="el-dropdown-link">
                 更多
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <!-- <el-dropdown-item @click.native="handleEdit(row)">修改</el-dropdown-item> -->
-                <el-dropdown-item v-if="!row.memberCard" @click.native="changeIntoMember(row)">转为会员</el-dropdown-item>
-                <el-dropdown-item @click.native="handelblacklist(row)" v-if="row.isBlacklist!= 2">拉黑</el-dropdown-item>
+                <!-- <el-dropdown-item @click.native="handleEdit(row)"
+                  >修改</el-dropdown-item
+                > -->
+                <el-dropdown-item
+                  v-if="!row.memberCard"
+                  @click.native="changeIntoMember(row)"
+                  >转为会员</el-dropdown-item
+                >
+                <el-dropdown-item
+                  @click.native="handelblacklist(row)"
+                  v-if="row.isBlacklist != 2"
+                  >拉黑</el-dropdown-item
+                >
               </el-dropdown-menu>
             </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin-top:10px"></div>
+      <div style="margin-top: 10px"></div>
       <!--分页 -->
       <div class="block">
         <el-pagination
@@ -134,14 +204,14 @@
     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
-      :title="detailForm.type=='add'?'转为会员':'详情'"
+      :title="detailForm.type == 'add' ? '转为会员' : '详情'"
       :visible.sync="setMemberFormVisible"
       class="setMemberForm"
       width="60%"
     >
       <el-form
         :model="detailForm"
-        :rules="detailForm.type=='add'?rules:{}"
+        :rules="detailForm.type == 'add' ? rules : {}"
         ref="setMemberForm"
         label-width="100px"
         size="mini"
@@ -150,8 +220,12 @@
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item label="姓名：" class prop="name">
-                <el-input v-model="detailForm.name" class="width200" v-if="detailForm.type=='add'"></el-input>
-                <template v-else>{{detailForm.name}}</template>
+                <el-input
+                  v-model="detailForm.name"
+                  class="width200"
+                  v-if="detailForm.type == 'add'"
+                ></el-input>
+                <template v-else>{{ detailForm.name }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -159,9 +233,9 @@
                 <el-input
                   v-model="detailForm.mobile"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 ></el-input>
-                <template v-else>{{detailForm.mobile}}</template>
+                <template v-else>{{ detailForm.mobile }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -169,7 +243,7 @@
                 <el-select
                   v-model="detailForm.idcardType"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 >
                   <el-option
                     v-for="(label, value) in $t('commons.idCardType')"
@@ -178,7 +252,9 @@
                     :key="value"
                   ></el-option>
                 </el-select>
-                <template v-else>{{detailForm.idcardType | F_idcardType}}</template>
+                <template v-else>{{
+                  detailForm.idcardType | F_idcardType
+                }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -186,9 +262,9 @@
                 <el-input
                   v-model="detailForm.idcard"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 ></el-input>
-                <template v-else>{{detailForm.idcard}}</template>
+                <template v-else>{{ detailForm.idcard }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -196,9 +272,9 @@
                 <el-input
                   v-model="detailForm.memberCard"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 ></el-input>
-                <template v-else>{{detailForm.memberCard}}</template>
+                <template v-else>{{ detailForm.memberCard }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -206,7 +282,7 @@
                 <el-select
                   v-model="detailForm.memberTypeId"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 >
                   <el-option
                     v-for="item in smembertypeList"
@@ -215,7 +291,9 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
-                <template v-else>{{F_memberTypeId(detailForm.memberTypeId)}}</template>
+                <template v-else>{{
+                  F_memberTypeId(detailForm.memberTypeId)
+                }}</template>
               </el-form-item>
             </el-col>
           </el-row>
@@ -226,14 +304,18 @@
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item label="性别：">
-                <el-radio-group v-model="detailForm.sex" v-if="detailForm.type=='add'">
+                <el-radio-group
+                  v-model="detailForm.sex"
+                  v-if="detailForm.type == 'add'"
+                >
                   <el-radio
-                    v-for="(item,key,index) of $t('commons.F_sex')"
+                    v-for="(item, key, index) of $t('commons.F_sex')"
                     :label="key"
                     :key="index"
-                  >{{item}}</el-radio>
+                    >{{ item }}</el-radio
+                  >
                 </el-radio-group>
-                <template v-else>{{detailForm.sex | F_sex}}</template>
+                <template v-else>{{ detailForm.sex | F_sex }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -244,15 +326,19 @@
                   type="date"
                   placeholder="选择日期"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 ></el-date-picker>
-                <template v-else>{{detailForm.birthday}}</template>
+                <template v-else>{{ detailForm.birthday }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item label="邮箱：">
-                <el-input v-model="detailForm.email" class="width200" v-if="detailForm.type=='add'"></el-input>
-                <template v-else>{{detailForm.email}}</template>
+                <el-input
+                  v-model="detailForm.email"
+                  class="width200"
+                  v-if="detailForm.type == 'add'"
+                ></el-input>
+                <template v-else>{{ detailForm.email }}</template>
               </el-form-item>
             </el-col>
           </el-row>
@@ -262,16 +348,18 @@
                 <el-select
                   v-model="detailForm.nationality"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 >
                   <el-option
                     v-for="item in nationalityList"
                     :key="item.id"
-                    :label="$i18n.locale == 'ri' ?item.jName:item.cName"
+                    :label="$i18n.locale == 'ri' ? item.jName : item.cName"
                     :value="item.id"
                   ></el-option>
                 </el-select>
-                <template v-else>{{F_nationality(detailForm.nationality)}}</template>
+                <template v-else>{{
+                  F_nationality(detailForm.nationality)
+                }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -279,9 +367,9 @@
                 <el-input
                   v-model="detailForm.address"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 ></el-input>
-                <template v-else>{{detailForm.address}}</template>
+                <template v-else>{{ detailForm.address }}</template>
               </el-form-item>
             </el-col>
           </el-row>
@@ -291,15 +379,19 @@
                 <el-input
                   v-model="detailForm.carNum"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 ></el-input>
-                <template v-else>{{detailForm.carNum}}</template>
+                <template v-else>{{ detailForm.carNum }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item label="爱好：">
-                <el-input v-model="detailForm.hobby" class="width200" v-if="detailForm.type=='add'"></el-input>
-                <template v-else>{{detailForm.hobby}}</template>
+                <el-input
+                  v-model="detailForm.hobby"
+                  class="width200"
+                  v-if="detailForm.type == 'add'"
+                ></el-input>
+                <template v-else>{{ detailForm.hobby }}</template>
               </el-form-item>
             </el-col>
           </el-row>
@@ -309,7 +401,7 @@
                 <el-select
                   v-model="detailForm.enterId"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 >
                   <el-option
                     v-for="item in hotelenterList"
@@ -318,7 +410,7 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
-                <template v-else>{{F_enterId(detailForm.enterId)}}</template>
+                <template v-else>{{ F_enterId(detailForm.enterId) }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
@@ -327,9 +419,9 @@
                   type="textarea"
                   v-model="detailForm.remark"
                   class="width200"
-                  v-if="detailForm.type=='add'"
+                  v-if="detailForm.type == 'add'"
                 ></el-input>
-                <template v-else>{{detailForm.remark}}</template>
+                <template v-else>{{ detailForm.remark }}</template>
               </el-form-item>
             </el-col>
           </el-row>
@@ -339,7 +431,10 @@
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item label="销售员：">
-                <el-select v-model="detailForm.salesId" v-if="detailForm.type=='add'">
+                <el-select
+                  v-model="detailForm.salesId"
+                  v-if="detailForm.type == 'add'"
+                >
                   <el-option
                     v-for="item in salesList"
                     :key="item.id"
@@ -347,12 +442,15 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
-                <template v-else>{{F_salesId(detailForm.salesId)}}</template>
+                <template v-else>{{ F_salesId(detailForm.salesId) }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item label="发展途径：">
-                <el-select v-model="detailForm.getWay" v-if="detailForm.type=='add'">
+                <el-select
+                  v-model="detailForm.getWay"
+                  v-if="detailForm.type == 'add'"
+                >
                   <el-option
                     v-for="(value, key) in $t('frontOffice.getWay')"
                     :label="value"
@@ -360,7 +458,7 @@
                     :value="key"
                   ></el-option>
                 </el-select>
-                <template v-else>{{F_getWay(detailForm.getWay)}}</template>
+                <template v-else>{{ F_getWay(detailForm.getWay) }}</template>
               </el-form-item>
             </el-col>
           </el-row>
@@ -369,19 +467,26 @@
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item label="立即发卡：" prop="state">
-                <el-radio-group v-model="detailForm.state" v-if="detailForm.type=='add'">
+                <el-radio-group
+                  v-model="detailForm.state"
+                  v-if="detailForm.type == 'add'"
+                >
                   <el-radio label="1">是</el-radio>
                   <el-radio label="2">待启用</el-radio>
                 </el-radio-group>
-                <template v-else>{{detailForm.state==1?'是':'待启用'}}</template>
+                <template v-else>{{
+                  detailForm.state == 1 ? "是" : "待启用"
+                }}</template>
               </el-form-item>
             </el-col>
           </el-row>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer" v-if="detailForm.type=='add'">
-        <el-button @click="setMemberFormVisible=false">关闭</el-button>
-        <el-button type="primary" @click="addItem('setMemberForm')">确认</el-button>
+      <div slot="footer" class="dialog-footer" v-if="detailForm.type == 'add'">
+        <el-button @click="setMemberFormVisible = false">关闭</el-button>
+        <el-button type="primary" @click="addItem('setMemberForm')"
+          >确认</el-button
+        >
       </div>
     </el-dialog>
     <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
@@ -391,7 +496,7 @@
             type="textarea"
             v-model="setBlackForm.remark"
             autocomplete="off"
-            style="width:80%"
+            style="width: 80%"
           ></el-input>
         </el-form-item>
       </el-form>
@@ -422,6 +527,7 @@ export default {
       showDetail: false,
       setMemberFormVisible: false,
       searchForm: {
+        isBlacklist: "",
         mobile: "",
         idcard: "",
         name: "",
@@ -556,6 +662,7 @@ export default {
   methods: {
     initForm() {
       this.searchForm = {
+        isBlacklist: "",
         mobile: "",
         idcard: "",
         name: "",
@@ -576,6 +683,7 @@ export default {
         (res) => {
           this.loading = false;
           this.tableData = res.roomPersonList;
+          console.log(this.tableData);
           this.listTotal = res.page.count;
         }
       );
@@ -689,6 +797,7 @@ export default {
       this.setMemberFormVisible = true;
     },
     handleHistory(item) {
+      console.log(item.idcard);
       this.$router.push({
         name: "customerhistory",
         query: {
