@@ -93,13 +93,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <el-row style="text-align:center;background:#F3F3F3;padding:15px 0">
-                                                       <el-checkbox-group v-model="detail.text">
-                                                           <el-checkbox label="复选框 A">预订（2）</el-checkbox>
-                                                           <el-checkbox label="复选框 B">在线（3）</el-checkbox>
-                                                           <el-checkbox label="复选框 C">离店（3）</el-checkbox>
-                                                       </el-checkbox-group>
-                                                   </el-row> -->
               <el-row class="customerCtrl">
                 <ul>
                   <li
@@ -119,12 +112,7 @@
                     "
                   >
                     <div class="wrap">
-                      <el-button
-                        size="mini"
-                        :type="item.state == 1 ? 'success' : 'danger'"
-                        plain
-                        class="fr"
-                      >
+                      <el-button  size="mini" :type="item.state == 1 ? 'success' : 'danger'"  plain class="fr" >
                         {{ F_checkinState(item.state) }}
                       </el-button>
                       <span>
@@ -135,11 +123,6 @@
                       >
                     </div>
                   </li>
-                  <!-- <li>
-                                        <div class="wrap">
-                                            <el-button size="mini" type="danger" plain class="fr">离店</el-button><span>李四（A002） 余额：-100</span>
-                                        </div>
-                                    </li> -->
                 </ul>
               </el-row>
             </div>
@@ -148,12 +131,7 @@
         <el-col :span="18">
           <div class="grid-content">
             <template v-if="checkType == 'customer'">
-              <c1
-                v-if="isReset"
-                :detailData="detailData"
-                :currentRoomId="currentRoom.id"
-                @getOrderDetail="getDetail"
-              ></c1>
+              <c1  v-if="isReset"  :detailData="detailData" :currentRoomId="currentRoom.id"  @getOrderDetail="getDetail" ></c1>
             </template>
             <template v-if="checkType == 'order'">
               <div class="detailTabWrap">
@@ -161,12 +139,7 @@
                   <div class="el-card__header" style="padding: 0 20px">
                     <el-tabs v-model="activeName">
                       <el-tab-pane label="账务明细" name="first">
-                        <c2
-                          v-if="isReset"
-                          :detailData="detailData"
-                          :currentRoomId="currentRoom.id"
-                          @getOrderDetail="getDetail"
-                        ></c2>
+                        <c2  v-if="isReset" :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail" ></c2>
                       </el-tab-pane>
                       <el-tab-pane label="订单信息" name="second">
                         <div class="thisOrderInfo">
@@ -174,18 +147,7 @@
                             <el-row class="row">
                               <h3>
                                 基本信息
-                                <el-button
-                                  style="
-                                    vertical-align: middle;
-                                    margin-left: 10px;
-                                    display: inline-block;
-                                  "
-                                  size="mini"
-                                  class="vm"
-                                  @click="yokeplateHandle"
-                                  v-if="detailData.inRoomList.length"
-                                  >联房
-                                </el-button>
+                                  <el-button  style=" vertical-align: middle; margin-left: 10px; display: inline-block; "  size="mini"  class="vm" @click="yokeplateHandle" v-if="detailData.inRoomList.length" >联房 </el-button>
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">

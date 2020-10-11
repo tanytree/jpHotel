@@ -14,7 +14,7 @@
                 <el-button type="primary" size="mini" @click="onAccountShow=true">挂账</el-button>
                 <el-button type="primary" size="mini" @click="consumeGoodsHandle">迷你吧</el-button>
                 <el-button type="primary" size="mini" @click="checkOutHandle">退房结账</el-button>
-                <el-button type="primary" size="mini" @click="openInvoiceHandle">开发票</el-button>
+                <el-button type="primary" size="mini" @click="invoicingHandle">开发票</el-button>
                 <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>
                 <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
                 <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
@@ -244,56 +244,7 @@
         </div>
     </el-dialog>
     <!--开发票-->
-    <el-dialog top='0' title="开发票" :visible.sync="openInvoiceShow" width="900px">
-        <el-form :model="openInvoiceForm" ref="openInvoice" :rules="rules" size="mini" label-width="130px">
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="消费金额：">
-                        <el-input class="width150" type="text" v-model="openInvoiceForm.consumePrice" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="已开票金额：">
-                        <el-input class="width150" type="text" v-model="openInvoiceForm.invoicePrice" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="付款公司名称：" prop="companyName">
-                        <el-input class="width150" type="text" v-model="openInvoiceForm.companyName" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="项目：" prop="projectName">
-                        <el-input class="width150" type="text" v-model="openInvoiceForm.projectName" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="金额：" prop="prices">
-                        <el-input class="width150" type="text" v-model="openInvoiceForm.prices" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="日期：" prop="invoiceTime">
-                        <el-date-picker style="width:150px" v-model="openInvoiceForm.invoiceTime" type="date" placeholder="选择日期">
-                        </el-date-picker>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="16">
-                    <el-form-item label="备注：">
-                        <el-input style="width:400px" type="textarea" v-model="openInvoiceForm.remark" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="openInvoiceShow = false">取消</el-button>
-            <el-button type="primary" @click="openInvoiceSubmit('openInvoice')">确定</el-button>
-        </div>
-    </el-dialog>
+
     <!--结账退款-->
     <el-dialog top='0' title="退房结账" :visible.sync="checkOutShow" width="800px">
         <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
@@ -414,6 +365,8 @@
     <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
     <!--迷你吧-->
     <consumeGoods ref="consumeGoods" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
+    <!--开发票-->
+    <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
 </div>
 </template>
 
@@ -425,12 +378,14 @@ import {
 import myMixin from '@/utils/filterMixin';
 import consumeGoods from './consumeGoods'
 import someAccounts from './someAccounts'
+import invoicing from './invoicing'
 export default {
     mixins: [myMixin],
     props: ['currentRoomId', 'detailData'],
     components: {
         consumeGoods,
-        someAccounts
+        someAccounts,
+        invoicing
     },
     computed: {
         ...mapState({
@@ -941,6 +896,10 @@ export default {
             this.destructionList = this.multipleSelection
             this.destructionShow = true
             this.$forceUpdate()
+        },
+        //开发票
+        invoicingHandle() {
+            this.$refs.invoicing.init(this.$route.query.id);
         },
         consumeGoodsHandle() {
             this.$refs.consumeGoods.init(this.$route.query.id);
