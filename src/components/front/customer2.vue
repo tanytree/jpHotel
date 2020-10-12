@@ -161,6 +161,7 @@ export default {
                 personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
             })
+            debugger
             if (this.type == 'reserve') {
                 let params = {};
                 this.$F.merge(params, {
@@ -181,6 +182,8 @@ export default {
 
                     })
                 })
+            } else if (this.type == 'order'){
+                this.$emit('personCallback', checkInRoomJson);
             } else {
                 this.$emit('personCallback', personListJSONList);
             }

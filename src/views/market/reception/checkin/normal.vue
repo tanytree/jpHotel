@@ -336,7 +336,7 @@
         </span>
         </el-dialog>
         <el-dialog top="0" :show-close='false' title="添加入住人" :visible.sync="addLivePersonShow" width="60%">
-            <customer v-if="addLivePersonShow" type="checkin" :liveData="liveData" @personCallback="personCallback"></customer>
+            <customer v-if="addLivePersonShow" type="checkin" :liveData="liveData" :type="order" @personCallback="personCallback"></customer>
 
         </el-dialog>
         <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="checkInForm"></guestChoose>
@@ -607,11 +607,6 @@
             }
         },
         methods: {
-            personCallback(data) {
-                this.checkInForm.checkInRoomJson = data;
-                this.addLivePersonShow = false;
-            },
-
             initForm() {
                 this.getRoomsForm = {
                     changeType: 1,
@@ -1030,6 +1025,12 @@
                     return false
                 }
                 return false
+            },
+            //入住人回调
+            personCallback(data) {
+                debugger
+                this.checkInForm.checkInRoomJson = data;
+                this.addLivePersonShow = false;
             },
             live_in_person_list() {
                 console.log('添加入住人');
