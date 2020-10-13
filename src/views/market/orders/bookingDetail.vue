@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 10:27:27
+ * @LastEditTime: 2020-10-12 17:00:44
  * @FilePath: \jiudian\src\views\market\orders\bookingDetail.vue
  -->
 <template>
@@ -126,7 +126,7 @@ export default {
           reserveId: id,
         },
         (res) => {
-          debugger;
+          // debugger;
           this.detailData = res;
           this.$forceUpdate();
         }

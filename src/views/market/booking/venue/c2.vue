@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-10-09 17:34:31
+ * @LastEditTime: 2020-10-12 14:00:00
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -197,8 +197,11 @@
               <el-button type="text" @click="goDetail(row)" size="mini"
                 >详情</el-button
               >
-              <!-- v-if="row.state == 6" -->
-              <el-button type="text" @click="meetClick(row)" size="mini"
+              <el-button
+                type="text"
+                v-if="row.state == 6"
+                @click="meetClick(row)"
+                size="mini"
                 >会议登记</el-button
               >
             </template>
@@ -278,7 +281,7 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align: right">
-          <el-button @click="dialogMeet = false">取消</el-button>
+          <el-button @click="dialogMeet_cancle">取消</el-button>
           <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')"
             >确认</el-button
           >
@@ -373,14 +376,38 @@ export default {
             "/pms/reserve/reserve_to_checkin",
             params,
             (data) => {
-              //       到了预订房办理入住接口出错
-              console.log(data);
+              this.$F.merge(this.addCompanyForm, {
+                checkinId: data.checkinId,
+              });
+              this.$F.doRequest(
+                this,
+                "/pms/meeting/person_register",
+                this.addCompanyForm,
+                (data) => {
+                  this.$message({
+                    message: "会议签到成功",
+                    type: "success",
+                  });
+                  this.dialogMeet_cancle();
+                }
+              );
             }
           );
         } else {
           return false;
         }
       });
+    },
+    //点击会议签到  取消  按钮
+    dialogMeet_cancle() {
+      this.dialogMeet = false;
+      this.addCompanyForm = {
+        name: "",
+        sex: "1",
+        idcardType: "1",
+        idcard: "",
+        mobile: "",
+      };
     },
     //点击  会议登记 按钮
     meetClick(row) {

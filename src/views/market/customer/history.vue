@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 16:51:27
+ * @LastEditTime: 2020-10-12 20:56:34
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -141,12 +141,11 @@
             F_storeName(row.storesNum)
           }}</template>
         </el-table-column>
-        <el-table-column
-          prop="consumeTotalPrice"
-          align="center"
-          label="累计消费"
-          width="100"
-        ></el-table-column>
+        <el-table-column align="center" label="累计消费" width="100">
+          <template slot-scope="{ row }">{{
+            row.consumeTotalPrice ? row.consumeTotalPrice : "0"
+          }}</template>
+        </el-table-column>
         <el-table-column
           prop="isBlacklist"
           align="center"
@@ -171,9 +170,9 @@
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <!-- <el-dropdown-item @click.native="handleEdit(row)"
+                <el-dropdown-item @click.native="handleEdit(row)"
                   >修改</el-dropdown-item
-                > -->
+                >
                 <el-dropdown-item
                   v-if="!row.memberCard"
                   @click.native="changeIntoMember(row)"
@@ -807,7 +806,10 @@ export default {
     },
     handleEdit(item) {
       this.$router.push({
-        name: "customeredit",
+        name: "historydetail",
+        query: {
+          item: item,
+        },
       });
     },
     F_memberTypeId(v) {
