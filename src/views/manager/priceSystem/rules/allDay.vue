@@ -34,20 +34,11 @@
 				<div class="components-edit">
 					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column prop="ruleName" :label="$t('manager.ps_ruleName')"></el-table-column>
-						<el-table-column prop="priceModel" :label="$t('manager.ps_priceModel')">
-							<template slot-scope="{row}">
-								<span>{{row.priceModel==1 ? '固定时间退房模式':'24小时退房模式'}}</span>
-							</template>
-						</el-table-column>
-<<<<<<< HEAD
-						<el-table-column label="规则详情" width="500">
-							<template slot-scope="{row}">
-								<span>
-									{{row.priceModel==1 ? '固定时间退房模式':'24小时退房模式'}}
-									入住{{row.checkinStartMinute}}分钟后收起步费,入住{{row.checkinStartHourhouse}}分钟后收全日租
-									次日{{row.checkoutTime}}超过{{row.outtimeMinute}}分钟后收费,{{row.outtimeRule==1 ? '半日租加收':'按每小时加收'}}{{row.outtimeAllday==true?'加收封顶' : ''}}
-									超过{{row.outtimeAllday}}分钟后收全日租
-=======
+<!--						<el-table-column prop="priceModel" :label="$t('manager.ps_priceModel')">-->
+<!--							<template slot-scope="{rowceModel==1}">-->
+<!--								<span>{{row.priceModel==1 ? '固定时间退房模式':'24小时退房模式'}}</span>-->
+<!--							</template>-->
+<!--						</el-table-column>-->
 						<el-table-column :label="$t('manager.ps_ruleDetail')" width="500">
 							<template slot-scope="{row}">
 								<span>
@@ -55,7 +46,6 @@
 									{{$t('manager.ps_inLive')+':'}}{{row.checkinStartMinute}}{{$t('manager.ps_minterGet')}}{{row.checkinStartHourhouse}}{{$t('manager.ps_getAll')}}
 									{{$t('manager.ps_nextDay')}}{{row.checkoutTime}}{{$t('manager.ps_moreThen')}}{{row.outtimeMinute}}{{$t('manager.ps_letterMin')}}{{row.outtimeRule==1 ? $t('manager.ps_addHalf'):$t('manager.ps_addHour')}}{{row.outtimeAllday==true?$t('manager.ps_addSky') : ''}}
 									{{$t('manager.ps_moreThen')}}{{row.outtimeAllday}}{{$t('manager.ps_getAll')}}
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 								</span>
 							</template>
 						</el-table-column>
@@ -76,10 +66,6 @@
 						</el-table-column>
 					</el-table>
 					<div class="block">
-<<<<<<< HEAD
-
-=======
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="ruleForm.pageIndex"
 						 :page-sizes="[10, 20, 30, 40]" :page-size="ruleForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="ruleForm.totalSize"></el-pagination>
 					</div>
@@ -291,7 +277,6 @@
 		},
 		methods: {
 			popup(type, value) {
-				// debugger
 				switch (type) {
 					case "add":
 						this.tab1_show = false;
@@ -299,10 +284,6 @@
 						this.get_hotel_room_type_list();
 						break;
 					case "change":
-<<<<<<< HEAD
-						debugger;
-=======
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 						this.tab1_show = false;
 						this.allForm = value;
 						if (this.allForm.outtimeRuleCaps == 1) {
@@ -314,15 +295,13 @@
 						break;
 				}
 			},
-<<<<<<< HEAD
-=======
+
 			// 重置
 			clear() {
 				this.ruleForm.ruleName = ''
 				this.ruleForm.priceModel = ''
 				this.ruleForm.state = ''
 			},
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 			// 查询
 			searchBtn() {
 				this.tableData = [];
@@ -332,10 +311,6 @@
 			saveInfo_d() {
 				let roomStrategyJson = [];
 				let obj = {};
-<<<<<<< HEAD
-				debugger;
-=======
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 				this.allForm.roomStrategyJson.forEach((item) => {
 					obj = {};
 					obj.houseName = item.houseName;
@@ -387,10 +362,6 @@
 				);
 			},
 			stop_d(item) {
-<<<<<<< HEAD
-				debugger;
-=======
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 				let params = {
 					id: item.id,
 				};
@@ -399,10 +370,6 @@
 				} else {
 					params.state = 1;
 				}
-<<<<<<< HEAD
-				debugger;
-=======
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_rule_allday_delete",
@@ -433,10 +400,6 @@
 								item.topPrice = "";
 								item.remark = "";
 							});
-<<<<<<< HEAD
-							debugger;
-=======
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 							this.allForm.roomStrategyJson = res.list;
 						}
 					}
