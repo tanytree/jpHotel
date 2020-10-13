@@ -292,6 +292,7 @@ const $F = {
         },
         downloadTemplate(action) {
             let url = httpRequest.systemUrl(action) + `?userId=${sessionStorage.userId}&platSource=1005`;
+            debugger
             axios.get(url, {
                 headers:{
                     "accessToken": sessionStorage.accessToken

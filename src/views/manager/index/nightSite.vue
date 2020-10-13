@@ -53,7 +53,7 @@
         <el-time-picker size="small" v-model="findOne.trialEndTime" value-format="HH-mm" clearable></el-time-picker>
       </span>
     </div>
-    <div class="tag-top">
+    <div class="tag-top" v-if="findOne.state != 2">
       <span class="label">{{$t('manager.hp_auditAutoTime')+':'}}</span>
       <span class="value">
         <el-time-picker size="small" v-model="findOne.trialAutoTime" value-format="HH-mm" clearable></el-time-picker>
@@ -145,6 +145,7 @@ export default {
       };
       this.$F.doRequest(this, "/pms/nighttrial/edit", param, (res) => {
         this.initData();
+        this.$message.success(this.$t("commons.saveSuccess"))
       });
     },
   },
