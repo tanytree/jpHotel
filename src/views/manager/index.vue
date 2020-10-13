@@ -251,7 +251,7 @@
 								<el-table-column label="操作" width="300">
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup_kinds">修改</el-button>
-										<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
+										<el-popconfirm title="确定删除？" @onConfirm="onConfirm">
 											<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
 										</el-popconfirm>
 									</template>
@@ -291,7 +291,7 @@
 									<el-table-column label="操作" width="150">
 										<template slot-scope="scope">
 											<el-button type="text" size="small" @click="popup_thing(scope.row)">修改</el-button>
-											<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
+											<el-popconfirm title="确定删除？" @onConfirm="onConfirm">
 												<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
 											</el-popconfirm>
 										</template>
@@ -367,7 +367,7 @@
 									<el-table-column label="操作" width="150">
 										<template slot-scope="scope">
 											<el-button type="text" size="small" @click="popup_thing(scope.row)">编辑</el-button>
-											<el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="onConfirm">
+											<el-popconfirm title="确定删除？" @onConfirm="onConfirm">
 												<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">删除</el-button>
 											</el-popconfirm>
 										</template>
@@ -798,7 +798,6 @@
 			},
 			// 交班模式选择,非现金流时不显示备用金
 			changeRedio_five(value, index) {
-				debugger
 				this.five_redioList.forEach((value, index) => {
 					value.redio = false
 				})

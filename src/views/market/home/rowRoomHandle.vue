@@ -6,7 +6,7 @@
  -->
 <template>
 <div>
-    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" title="排房" width="80%">
+    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" title="修改预留" width="80%">
 
         <el-row style="margin-bottom:60px" v-loading="loading">
             <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
@@ -99,7 +99,8 @@
                                                         </el-col>
                                                     </el-row>
                                                     <el-row class="row" v-if="v.roomsArr&&v.roomsArr.length">
-                                                        <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
+                                                        <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}}
+                                                            <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
                                                     </el-row>
                                                     <!-- <el-row class="row">
                                                         <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
@@ -404,7 +405,6 @@ export default {
         getDataList() {
             let that = this
             this.$F.doRequest(this, '/pms/checkin/hotel_checkin_roominfo', this.getRoomsForm, (res) => {
-                debugger
                 this.loading = false
                 let list = res.roomTypeList;
                 list.forEach(element => {
@@ -500,15 +500,16 @@ export default {
                 reservePrice: this.rowRoomCurrentItem.todayPrice,
                 realPrice: this.rowRoomCurrentItem.price
             }
-            this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
-                this.$message({
-                    message: '排房成功',
-                    type: 'success'
-                });
-                this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
-                this.rowRoomShow = false
-                this.$forceUpdate()
-            })
+            this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
+            this.rowRoomShow = false
+            this.$forceUpdate()
+            // this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
+            //     this.$message({
+            //         message: '排房成功',
+            //         type: 'success'
+            //     });
+            //
+            // })
         },
         //自动排房确定
         page_row_houses() {
@@ -549,23 +550,19 @@ export default {
                         if (!this.waitingRoom[k].roomsArr) {
                             this.waitingRoom[k].roomsArr = []
                         }
+
                         this.waitingRoom[k].roomsArr.push({
                             houseNum: item.houseNum,
-                            id: item.id
+                            id: item.id,
+                            reservePrice: 555,
+                            realPrice: 555
                         })
                     }
                 }
             }
-            this.$F.doRequest(this, '/pms/checkin/page_row_houses', params, (res) => {
+            this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
                 let data = res
-                this.$message({
-                    message: '排房成功',
-                    type: 'success'
-                });
                 for (let k in data) {
-                    // for (let j in data[k]) {
-                    //     setRooms(k, data[k][j])
-                    // }
                     data[k].forEach(element => {
                         setRooms(k, element)
                     });
@@ -575,21 +572,8 @@ export default {
         },
         //移除排房
         delete_db_row_houses(item, id, i) {
-            let params = {
-                checkinRoomType: 1,
-                roomTypeId: item.roomTypeId,
-                checkinId: this.checkInForm.checkInId,
-                checkinReserveId: this.checkInForm.checkInId,
-                roomId: id
-            };
-            this.$F.doRequest(this, '/pms/checkin/delete_db_row_houses', params, (res) => {
-                this.$message({
-                    message: '移除成功',
-                    type: 'success'
-                });
-                item.roomsArr.splice(i, 1)
-                this.$forceUpdate()
-            })
+            item.roomsArr.splice(i, 1)
+            this.$forceUpdate()
         },
         rowRoomCurrentListItemAdd(item) {
             if (!this.rowRoomCurrentItem.roomsArr) {
@@ -651,6 +635,22 @@ export default {
             }
         },
         hotel_check_inChange() {
+
+            let checkInRoomJson = []
+            this.waitingRoom.forEach(item => {
+                let array = [];
+                item.roomsArr.forEach(room=> {
+                    array.push(room.id);
+                })
+                checkInRoomJson.push({
+                    roomTypeId: item.roomTypeId,
+                    roomId: array.join(','),
+                    reservePrice: item.reservePrice,
+                    realPrice: item.realPrice
+                })
+            })
+            this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
+            console.log(this.checkInForm);
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {

@@ -9,12 +9,12 @@
                         </el-form-item>
                         <el-form-item :label="$t('manager.grsl_inventoryState')+':'" class="margin-l-15">
                             <el-select v-model="form.status">
-                                <el-option :label="$t('commons.enable')" value="1"></el-option>
-                                <el-option :label="$t('commons.disable')" value="2"></el-option>
+                                <el-option :label="$t('manager.grsl_inventoryYes')" value="1"></el-option>
+                                <el-option :label="$t('manager.grsl_inventoryNo')" value="2"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" class="submit" @click="search">{{$t('commons.queryBtn')}}</el-button>
+                            <el-button type="primary" class="submit" @click="search('form')">{{$t('commons.queryBtn')}}</el-button>
                             <el-button class="grey" @click="reset">{{$t('commons.resetBtn')}}</el-button>
                         </el-form-item>
                         <el-form-item class="form-inline-flex">
@@ -22,8 +22,7 @@
                         </el-form-item>
                     </el-form>
                     <div class="components-edit">
-                        <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small" @selection-change="selectionChange">
-                            <el-table-column type="selection" width="70"></el-table-column>
+                        <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
                             <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
                             <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>
                             <el-table-column prop="inventoryCount" :label="$t('manager.grsl_inventoryNum')"></el-table-column>
@@ -34,7 +33,7 @@
                             </el-table-column>
                         </el-table>
                         <div class="block">
-                            <el-pagination @current-change="currentChange" :page-size="pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
+                            <el-pagination @current-change="currentChange" :current-page="pageForm.pageIndex" :page-size="pageForm.pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
                         </div>
                     </div>
                 </div>
@@ -67,17 +66,18 @@
             <el-form :model="goodInForm" :rules="rules" size="small" inline label-width="100px">
                 <el-form-item :label="$t('manager.grsl_wareType')+':'" prop="name">
                     <el-select v-model="goodInForm.type" :placeholder="$t('manager.grsl_selectWareType')">
-                        <el-option :label="1">{{$t('manager.grsl_procurementWarehousing')}}</el-option>
-                        <el-option :label="2">{{$t('manager.grsl_putIn')}}</el-option>
-                        <el-option :label="3">{{$t('manager.grsl_putOther')}}</el-option>
+                        <el-option :label="$t('manager.grsl_procurementWarehousing')" :value="1"></el-option>
+                        <el-option :label="$t('manager.grsl_putIn')" :value="2"></el-option>
+                        <el-option :label="$t('manager.grsl_putOther')" :value="3"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item class="form-inline-flex">
-                    <el-button type="primary" class="submit" @click="popup('addPi')">{{$t('manager.grsl_bulkAdd')}}</el-button>
+                    <el-button type="primary" class="submit" @click="popup('addPi')">{{$t('manager.grsl_bulkAdd')}}
+                    </el-button>
                 </el-form-item>
             </el-form>
             <el-card shadow="never">
-                <el-table ref="multipleTable" :data="list" height="100%" border header-row-class-name="default" size="small">
+                <el-table ref="multipleTable" :data="goodsInList" height="100%" style="min-height: 300px" border header-row-class-name="default" size="small">
                     <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
                     <el-table-column :label="$t('manager.grsl_rukuNum')">
@@ -117,49 +117,32 @@
             </div>
         </el-dialog>
         <!-- 批量添加商品 -->
-        <el-dialog
-                top="0"
-                :title="$t('manager.grsl_bulkAdd')"
-                width="1000px"
-                :visible.sync="addGoodsVisible"
-                :close-on-click-modal="false"
-        >
+        <el-dialog top="0" :title="$t('manager.grsl_bulkAdd')" width="1000px" :visible.sync="addGoodsVisible" :close-on-click-modal="false">
             <el-form v-model="addGoods" class="demo-form-inline" inline size="small">
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="addGoods.name"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsType')+':'" class="margin-l-15">
-                    <el-cascader
-                            v-model="addGoods.category"
-                            :options="category"
-                            :props="categoryProps"
-                            @change="casChange"
-                    ></el-cascader>
+                    <el-cascader v-model="addGoods.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" class="submit" @click="search">{{$t('commons.queryBtn')}}</el-button>
+                    <el-button type="primary" class="submit" @click="search('addGoods')">{{$t('commons.queryBtn')}}</el-button>
                 </el-form-item>
             </el-form>
             <div class="components-edit">
                 <el-table ref="multipleTable" :data="list" tooltip-effect="dark" height="250px" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="addSelection">
                     <el-table-column type="selection" width="55"></el-table-column>
                     <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                    <el-table-column prop="time" :label="$t('manager.grsl_goodsKind')"></el-table-column>
-                    <el-table-column prop="job_status" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
+                    <el-table-column prop="categoryName" :label="$t('manager.grsl_goodsKind')"></el-table-column>
+                    <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
                 </el-table>
                 <div class="block">
-                    <el-pagination
-                            @current-change="handleCurrentChange"
-                            :current-page="currentPage"
-                            :page-size="pageSize"
-                            :total="total"
-                            layout="total, prev, pager, next, jumper"
-                    ></el-pagination>
+                    <el-pagination @current-change="currentChange" :current-page="currentPage" :page-size="pageForm.pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
                 </div>
             </div>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">{{$t('commons.cancel')}}</el-button>
-                <el-button type="primary" @click="centerDialogVisible = false">{{$t('commons.determine')}}</el-button>
+                <el-button @click="addGoodsVisible = false">{{$t('commons.cancel')}}</el-button>
+                <el-button type="primary" @click="submit('batchIn')">{{$t('commons.determine')}}</el-button>
             </div>
         </el-dialog>
     </div>
@@ -169,6 +152,11 @@
     export default {
         data() {
             return {
+                pageForm: {
+                    pageIndex: 1,
+                    pageSize: 10,
+                    paging: true
+                },
                 activeName: "count",
                 form: {name: "", status: ""},
                 stock: {count: ""},
@@ -181,15 +169,14 @@
                 changeStockVisible: false,
                 goodsInVisible: false, //商品入库弹框
                 addGoodsVisible: false, // 修改库存
-                section: [],
+                section: [], currentPage: 1,
+                goodsInList: [], addGoodsSec: [],
             };
         },
         props: {
             list: Array,
             category: Array,
             total: Number,
-            pageSize: Number,
-            currentPage: Number,
             initData: Function,
         },
         mounted() {
@@ -200,74 +187,89 @@
                     this.stock.id = row.id;
                     this.stock.count = row.inventoryCount;
                     this.changeStockVisible = true;
-                }
-                switch (type) {
-                    case "info":
-                        this.goodsInVisible = true;
-                        break;
-                    case "addPi":
-                        this.addGoodsVisible = true;
-                        break;
+                } else if(type == 'addPi') {
+                    this.addGoods = {name: "", categoryId: ""};
+                    this.addGoodsVisible = true;
+                } else if(type == 'info') {
+                    this.goodsInList = [];
+                    this.goodInForm = {type: "", person: "", date: "", remark: ""};
+                    this.goodsInVisible = true;
                 }
             },
-            search() {
-                this.getHotelGoodsData(
-                    this.form.name,
-                    this.form.category,
-                    this.form.status
-                );
+            search(type) {
+                if(type == 'form') {
+                    this.initData(this.pageForm, this.form.name, this.form.category, '', this.form.status);
+                } else {
+                    this.initData(this.pageForm, this.addGoods.name, this.addGoods.category);
+                }
             },
             reset() {
                 this.form = {name: "", status: "", category: ""};
-                this.getHotelGoodsData();
+                this.initData(this.pageForm);
             },
             casChange(value) {
-                this.rowData.categoryId = value[value.length - 1];
+                this.addGoods.category = value[value.length - 1];
             },
             currentChange(val) {
-                console.log(`当前页: ${val}`);
+                this.pageForm.pageIndex = val;
+                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
             },
             submit(type) {
                 if (type == "stockNum") {
-                    this.$F.doRequest(this, "/pms/hotelgoods/upcounts", {
-                        id: this.stock.id,
-                        counts: this.stock.count,
-                    }, (res) => {
-                        this.changeStockVisible = false;
-                        this.initData();
+                    this.$F.doRequest(
+                        this,
+                        "/pms/hotelgoods/upcounts",
+                        {
+                            id: this.stock.id,
+                            counts: this.stock.count,
+                        },
+                        (res) => {
+                            this.changeStockVisible = false;
+                            this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                        }
+                    );
+                } else if (type == "goodsin") {
+                    const content = [];
+                    this.goodsInList.map((item) => {
+                        let obj = {
+                            goodsId: item.id,
+                            costPrice: item.costPrice,
+                            goodsCount: item.buyCount,
+                        };
+                        content.push(obj);
                     });
-                } else if (type == 'goodsin') {
                     const params = {
-                        id: '',
+                        id: "",
                         soteageType: this.goodInForm.type,
                         agentName: this.goodInForm.person,
                         applyTime: this.goodInForm.date,
                         remark: this.goodInForm.remark,
-                        content: ''
-                    }
-                    this.$F.doRequest(this, "/pms/hotelstorage/applyStorage", params, (res) => {
-                        this.changeStockVisible = false;
-                        this.initData();
-                    });
+                        content: JSON.stringify(content),
+                    };
+                    this.$F.doRequest(
+                        this,
+                        "/pms/hotelstorage/applyStorage",
+                        params,
+                        (res) => {
+                            this.goodsInVisible = false;
+                            this.$message.success('success');
+                            this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                        }
+                    );
+                } else if (type == 'batchIn') {
+                    this.goodsInList = this.addGoodsSec;
+                    this.addGoodsVisible = false;
                 }
             },
             goodsDelete(row) {
-
+                this.goodsInList = this.goodsInList.filter(item => item.id != row.id)
             },
             exportcount() {
-                this.$F.doRequest(this, "/pms/hotelgoods/upcounts", {
-                    categoryId: '',
-                    name: ''
-                }, (res) => {
-                    this.initData();
-                });
-            },
-            selectionChange(val) {
-                this.selection = val;
+                this.$F.commons.downloadTemplate("/pms/hotelgoods/upcounts");
             },
             addSelection(val) {
-
-            }
+                this.addGoodsSec = val;
+            },
         },
     };
 </script>

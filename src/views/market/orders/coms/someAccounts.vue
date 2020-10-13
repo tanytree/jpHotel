@@ -24,21 +24,15 @@
             <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
         </el-table>
         <el-row class="padding-tb-10">
-            <el-col :span="3">
-                总消费：100
-            </el-col>
-            <el-col :span="3">
-                总支付：610
-            </el-col>
-            <el-col :span="3">
-                应退：400
-            </el-col>
+            <span>总消费：{{detailData.consumePrice}}</span>
+            <span style="padding: 0 12px;">总支付：{{detailData.payPrice}}</span>
+            <span>应退：{{detailData.totalPrice}}</span>
         </el-row>
         <el-form-item label="" label-width="0">
-            <el-button type="primary" size="mini">收款</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(1)">收款</el-button>
             <el-button type="primary" size="mini">挂账</el-button>
-            <el-button type="primary" size="mini">免单</el-button>
-            <el-button type="primary" size="mini">退款</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(2)">免单</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(3)">退款</el-button>
         </el-form-item>
         <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column label="账务项目" show-overflow-tooltip>
@@ -60,6 +54,47 @@
         <el-button @click="visible=false">取消</el-button>
         <el-button type="primary" @click="consume_oper(2,'onAccount')">结账</el-button>
     </div>
+
+
+    <el-dialog :title="title" top="0" :visible.sync="getStatus" :modal="false">
+        <el-form ref="form" :model="getForm" label-width="80px">
+          <el-form-item label="收款方式" required v-if="type == 1">
+            <el-radio-group v-model="getForm.payType">
+                <el-radio :label="1" :value="1">现金</el-radio>
+                <el-radio :label="2" :value="2">银行卡</el-radio>
+                <el-radio :label="3" :value="3">支付宝</el-radio>
+                <el-radio :label="4" :value="4">微信</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="收款方式" required v-if="type == 2">
+            <el-radio-group v-model="getForm.payType">
+                <el-radio :label="0" :value="0">免单</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="收款方式" required v-if="type == 3">
+            <el-radio-group v-model="getForm.payType">
+                <el-radio :label="0" :value="0">现金退款</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="金额" required>
+            <el-input size="small" placeholder="金额" v-model="getForm.amount"></el-input>
+          </el-form-item>
+          <el-form-item label="备注">
+            <el-input type="textarea" placeholder="备注" v-model="getForm.remark"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="visible=false">取消</el-button>
+            <el-button type="primary" >确定</el-button>
+        </div>
+    </el-dialog>
+
+
+
+
 </el-dialog>
 </template>
 
@@ -76,6 +111,7 @@ import myMixin from '@/utils/filterMixin';
 
 export default {
     mixins: [myMixin],
+    props:['detailData','currentRoom'],
     data() {
         return {
             id: '',
@@ -83,9 +119,6 @@ export default {
             visible: false,
             loading: true,
             searchForm: {
-                mobile: '',
-                idcard: '',
-                name: '',
                 searchType: 3,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
@@ -95,9 +128,16 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             destructionList: [],
-            consumeOperForm: {
-                name: ''
-            }
+            consumeOperForm: {},
+            getStatus:false,
+            getForm:{
+                payType:1,
+                amount:'',
+                remark:''
+            },
+
+            title:'收款',
+            type:1
         };
     },
     computed: {},
@@ -118,77 +158,53 @@ export default {
                 checkInId: this.$route.query.id
             };
             this.$F.doRequest(this, '/pms/consume/consume_order_list', params, (res) => {
+                console.log(res)
                 this.tableData = res.consumeOrderList
                 this.loading = false
                 this.$forceUpdate()
             })
         },
-        already_room_join(id) {
-            return new Promise((resolve, reject) => {
-                this.$F.doRequest(this, '/pms/checkin/already_room_join', {
-                    roomId: id
-                }, (res) => {
-                    this.roomJoinList = res || []
-                    resolve(res)
-                })
+
+        openDialog(v){
+            if(v== 1){
+                this.title = '收款'
+                this.getForm.payType = 1
+            }else if(v == 2){
+                this.title = '免单'
+                this.getForm.payType = 0
+            }else if(v == 3){
+                this.title = '退款'
+                this.getForm.payType = 0
+            }
+            this.type = v
+            this.getStatus = true
+            console.log(this.getForm)
+        },
+
+
+        //
+        consume_oper() {
+            let params = {}
+            params.checkInId = this.$route.query.id
+            params.priceType = 8
+            params.payType = 0
+            params.state = 1
+            params.remak = this.consumeOperForm.remark
+            params.roomId = this.currentRoom.roorId;
+            params.roomNum = this.currentRoom.houseNum
+
+
+
+            this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
+              this.visible = false
+              this.$emit('get_consume_order_list','');
             })
-        },
-        dataFormSubmit() {
-            let joinRoomIds = [];
-            joinRoomIds.push()
-            this.roomJoinList.forEach(element => {
-                joinRoomIds.push(element.id || element.roomId)
-            });
-            let params = {
-                roomId: this.id,
-                joinRoomIds: joinRoomIds,
-            }
-            this.$confirm('请确认联房', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$F.doRequest(this, '/pms/checkin/check_in_room_join', params, (res) => {
-                    this.visible = false
-                    this.$message({
-                        type: 'success',
-                        message: '操作成功!'
-                    });
-                })
-            }).catch(() => {
 
-            });
 
         },
-        handleAdd(item) {
-            let room = {
-                houseNum: item.houseNum,
-                roomId: item.id
-            }
-            this.roomJoinList.push2(room)
-        },
-        handleDel(i, item) {
-            console.log(item)
-            if (item.id) {
-                this.$F.doRequest(this, '/pms/checkin/move_room_join', {
-                    joinId: item.id
-                }, (res) => {
-                    this.$message({
-                        type: 'success',
-                        message: '操作成功!'
-                    });
-                    this.already_room_join(this.id)
-                })
-            } else if (item.roomId) {
-                this.roomJoinList.splice(i, 1)
-            }
-        },
-        checkItem(id) {
-            if (JSON.stringify(this.roomJoinList).indexOf(id) != -1) {
-                return true
-            }
-            return false
-        },
+
+
+
         /**多选 */
         handleSelectionChange(val) {
             this.multipleSelection = val;

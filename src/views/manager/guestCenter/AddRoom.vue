@@ -443,7 +443,6 @@ export default {
         },
         // 保存
         saveInfo(ruleForm) {
-            debugger;
             if (this.selectFrom.id) this.selectFrom.roomId = this.selectFrom.id;
             this.formData = new FormData();
             let imgList = this.$refs.upload.uploadFiles || [];

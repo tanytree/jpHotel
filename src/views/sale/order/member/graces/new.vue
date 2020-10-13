@@ -107,7 +107,6 @@ export default {
   mounted () {
     this.$F.merge(this.newvip, this.selected)
     console.log(this.newvip)
-    debugger
     if (this.newvip.duration != 9999) {
       this.durationType = '2'
     }
@@ -137,7 +136,6 @@ export default {
           })
           if (array.length == 0) {
             console.log(this.newvip)
-            debugger
             this.$F.doRequest(this, '/pms/membertype/edit', this.newvip, (res) => {
               this.$message.success('edit success')
               setTimeout(() => {

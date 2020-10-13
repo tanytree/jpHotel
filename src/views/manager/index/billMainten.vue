@@ -218,7 +218,6 @@
 			},
 			// 交班模式选择,非现金流时不显示备用金
 			changeRedio_five(value, index) {
-				debugger
 				this.five_redioList.forEach((value, index) => {
 					value.redio = false
 				})

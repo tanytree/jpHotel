@@ -22,15 +22,15 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="clientName" label="客户名称" width="140"></el-table-column>
+        <el-table-column prop="name" label="客户名称" width="140"></el-table-column>
         <el-table-column prop="roomNum" label="房间号" width="100"></el-table-column>
-        <el-table-column prop="phonenum" label="电话号码" width="140"></el-table-column>
-        <el-table-column prop="invoiceTitle" label="付款方公司名称" width="200"></el-table-column>
-        <el-table-column prop="invoiceAmount" label="金额" width="100"></el-table-column>
-        <el-table-column prop="billType" label="项目" width="180"></el-table-column>
-        <el-table-column prop="time" label="日期" width="180"></el-table-column>
-        <el-table-column prop="time" label="操作时间" width="180"></el-table-column>
-        <el-table-column prop="operator" label="操作人" width="130"></el-table-column>
+        <el-table-column prop="mobile" label="电话号码" width="140"></el-table-column>
+        <el-table-column prop="companyName" label="付款方公司名称" width="200"></el-table-column>
+        <el-table-column prop="prices" label="金额" width="100"></el-table-column>
+        <el-table-column prop="projectName" label="项目" width="180"></el-table-column>
+        <el-table-column prop="createTime" label="日期" width="180"></el-table-column>
+        <el-table-column prop="updateTime" label="操作时间" width="180"></el-table-column>
+        <el-table-column prop="creatorName" label="操作人" width="130"></el-table-column>
         <el-table-column label="操作" width="140">
           <template slot-scope="scope">
             <el-button size="small" type="text" @click="handleDelete(scope.$index, scope.row)">详情</el-button>
@@ -43,45 +43,46 @@
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage3"
           :page-size="100"
-          layout="prev, pager, next, jumper"
+          layout="total,prev, pager, next, jumper"
           :total="total"
         ></el-pagination>
       </div>
     </div>
     <!-- 点击详情弹出框 -->
-    <el-dialog title="详情" width="1180px" top="0" v-if="detailsBill" :visible.sync="detailsBill">
+    <el-dialog title="详情" width="880px" top="0" v-if="detailsBill" :visible.sync="detailsBill">
       <el-row style="margin:10px 20px">
         <el-col :span="12">
           <el-col :span="12" style="margin-bottom: 10px;">
             <span style="color:#888888">客户名称：</span>
-            {{invoiceDetail.clientName}}
+            {{invoiceDetail.name}}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px;">
             <span style="color:#888888">房间号:</span>
-            {{invoiceDetail.clientName}}
+            {{invoiceDetail.roomNum}}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px;">
             <span style="color:#888888">电话号码:</span>
-            {{invoiceDetail.clientName}}
+            {{invoiceDetail.mobile}}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">罚款公司:</span>
-            {{invoiceDetail.clientName}}
+            <span style="color:#888888">付款公司:</span>
+            {{invoiceDetail.companyName}}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px;">
             <span style="color:#888888">金额:</span>
-            {{invoiceDetail.clientName}}
+            {{invoiceDetail.prices}}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px;">
             <span style="color:#888888">日期:</span>
-            {{invoiceDetail.clientName}}
+            {{invoiceDetail.createTime}}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px;">
             <span style="color:#888888">项目:</span>
-            {{invoiceDetail.clientName}}
+            {{invoiceDetail.projectName}}
           </el-col>
           <el-col>
             <span style="color:#888888">备注：</span>
+            {{invoiceDetail.remark}}
           </el-col>
         </el-col>
       </el-row>
@@ -154,12 +155,27 @@ export default {
       formInline.startTime = "";
       formInline.endTime = "";
       formInline.name = "";
+      this.pageIndex = 1;
+      this.getInvoiceList();
     },
     //点击查询
     queryClick(formInline) {
       console.log(formInline);
-      this.pageIndex = 1;
-      this.getInvoiceList();
+      if (formInline.startTime) {
+        if (formInline.endTime) {
+          this.pageIndex = 1;
+          this.getInvoiceList();
+        } else {
+          this.$message.error("请补全开票时间信息");
+        }
+      } else {
+        if (formInline.endTime) {
+          this.$message.error("请补全开票时间信息");
+        } else {
+          this.pageIndex = 1;
+          this.getInvoiceList();
+        }
+      }
     },
 
     /**获取开票记录 列表数据 */
@@ -170,7 +186,9 @@ export default {
       });
       this.$F.merge(params, this.formInline);
       this.$F.doRequest(this, "/pms/invoice/invoice_list", params, (data) => {
-        console.log(data); //接口暂时没有数据显示
+        console.log(data);
+        this.tableDatas = data.invoiceList;
+        this.total = data.page.count;
       });
     },
     // 每页数

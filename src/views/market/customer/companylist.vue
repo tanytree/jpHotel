@@ -6,8 +6,8 @@
  -->
 
 <template>
-  <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+  <div class="boss-index">
+    <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">
       <el-tab-pane label="单位管理" name="first">
         <company></company>
       </el-tab-pane>
@@ -20,15 +20,14 @@
       <el-tab-pane label="账务处理" name="four">
         <accounts></accounts>
       </el-tab-pane>
-      <el-tab-pane label="服务查询" name="five">
+      <el-tab-pane label="账务查询" name="five">
         <service></service>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
-// import company from "./company/com";
-import company from '@/components/unitManager/com';
+import company from "@/components/unitManager/com";
 import collection from "./company/collection";
 import bill from "./company/bill";
 import accounts from "./company/accounts";
@@ -52,5 +51,5 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" >
+<style lang="less">
 </style>

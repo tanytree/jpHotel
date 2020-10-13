@@ -6,7 +6,7 @@
 					<Member></Member>
 				</el-tab-pane>
 				<el-tab-pane label="单位" name="unit">
-					<unitList :tab1_show="unit_show"></unitList>
+					<unitList></unitList>
 				</el-tab-pane>
 			</el-tabs>
 		</el-row>
@@ -15,8 +15,8 @@
 
 <script>
 	import Member from './type/member';
-	import unitList from '@/components/unitManager/unitList';
-	// import unitList from './type/unitList';
+	// import unitList from '@/components/unitManager/unitList';
+	import unitList from './type/unitList';
 	export default {
 		components: {
 			Member, unitList

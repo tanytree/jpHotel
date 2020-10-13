@@ -1,16 +1,9 @@
-<!--
- * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-30 11:32:35
- * @FilePath: /jiudian/src/views/market/customer/company/com.vue
- -->
-
 <template>
   <!-- 统一的列表格式 -->
-  <div>
-    <el-card>
+  <div class="boss-index">
+    <div class="booking">
       <!-- 查询部分 -->
-      <el-form inline size="small" label-width="80px">
+      <el-form class="term" inline size="small" label-width="80px">
         <el-form-item label="单位名称">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
@@ -60,12 +53,12 @@
           <el-input v-model="searchForm.endCreditLimit" class="width150" style="width:80px"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+          <el-button type="primary" class="grey" @click="initForm">重置</el-button>
         </el-form-item>
-        <el-form-item style="float:right">
-          <el-button type="primary" @click="addAndEditItem('add')">+新增</el-button>
-          <el-button type="primary" @click="setBatchFormVisible=true">批量设置</el-button>
+        <el-form-item class="fr">
+          <el-button type="primary" class="submit" @click="addAndEditItem('add')">+新增</el-button>
+          <el-button type="primary" class="white" @click="setBatchFormVisible=true">批量设置</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -73,8 +66,9 @@
         ref="multipleTable"
         v-loading="loading"
         :data="tableData"
-        :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-        size="mini"
+        height="100%"
+        header-row-class-name="default"
+        size="small"
       >
         <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
@@ -89,7 +83,9 @@
         <el-table-column prop="totalLimit" label="总消费" show-overflow-tooltip></el-table-column>
         <el-table-column prop="enterType" label="预收款余额" show-overflow-tooltip></el-table-column>
         <el-table-column prop="status" label="状态" show-overflow-tooltip>
-          <template slot-scope="{row}">{{row.status==1?'正常':'已删除'}}</template>
+          <template slot-scope="{row}">
+            <div>{{row.state==1?'启用':'禁用'}}</div>
+          </template>
         </el-table-column>
         <el-table-column prop="salesId" label="销售员" show-overflow-tooltip>
           <template slot-scope="{row}">{{setSalesIdName(row.salesId)}}</template>
@@ -101,8 +97,8 @@
           <template slot-scope="{row}">
             <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
             <el-button type="text" size="mini" @click="addAndEditItem('edit',row)">修改</el-button>
-            <el-dropdown szie="mini">
-              <span class="el-dropdown-link" style="font-size:12px">
+            <el-dropdown style="margin-left: 10px;font-size:12px">
+              <span class="el-dropdown-link">
                 更多
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
@@ -114,18 +110,17 @@
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin-top:10px"></div>
       <!--分页 -->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="searchForm.page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="searchForm.page_num"
-        layout=" sizes, prev, pager, next, jumper"
-        :total="listTotal"
-      ></el-pagination>
-    </el-card>
+      <div class="block">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page="searchForm.page"
+          :page-size="searchForm.page_num"
+          :total="listTotal"
+          layout="total, prev, pager, next, jumper"
+        ></el-pagination>
+      </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
@@ -310,7 +305,7 @@
     >
       <el-form
         :model="setBatchForm"
-        :rules="rules"
+        :rules="plRule"
         ref="setBatchForm"
         label-width="100px"
         size="mini"
@@ -501,7 +496,7 @@
         :current-page="searchForm.page"
         :page-sizes="[10, 50, 100, 200]"
         :page-size="searchForm.page_num"
-        layout=" sizes, prev, pager, next, jumper"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="listTotal"
       ></el-pagination>
       <div slot="footer" class="dialog-footer">
@@ -514,6 +509,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+
 export default {
   computed: {
     ...mapState({
@@ -566,6 +562,22 @@ export default {
         contractNum: "",
         email: "",
         remark: "",
+      },
+      plRule: {
+        enterStrategyId: [
+          {
+            required: true,
+            message: "请选择价格策略",
+            trigger: "change",
+          },
+        ],
+        ruleAlldayId: [
+          {
+            required: true,
+            message: "请选择计费规则",
+            trigger: "change",
+          },
+        ],
       },
       setBatchForm: {
         enterStrategyId: "",
@@ -636,7 +648,6 @@ export default {
     this.hotel_rule_allday_list();
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
       this.salesList = data.hotelUserList;
-      console.log(this.salesList + "这是销售员列表");
     });
   },
   methods: {
@@ -727,7 +738,7 @@ export default {
       this.$router.push("/companydetail?id=" + item.id);
     },
     disableItem(item) {
-      this.$confirm("确认删除该单位", "提示", {
+      this.$confirm("确认禁用该单位？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -751,7 +762,7 @@ export default {
         .catch(() => {});
     },
     delItem(item) {
-      this.$confirm("确认删除该单位", "提示", {
+      this.$confirm("确认删除该单位？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -794,6 +805,7 @@ export default {
     totalset() {
       this.$refs.setBatchForm.validate((valid) => {
         if (valid) {
+          console.log("都是有值的");
           this.$F.doRequest(
             this,
             "/pms/hotelenter/totalset",

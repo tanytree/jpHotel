@@ -165,7 +165,6 @@ export default {
         this.searchForm.checkinId = id
         this.live_in_person_list();
         this.tableData[0] = this.detailData;
-        debugger
         this.$forceUpdate();
     },
 
@@ -188,6 +187,8 @@ export default {
                 // hasChildren: false
             });
         },
+
+        //获取入住人数
         live_in_person_list() {
             let params = {
                 type: 1,

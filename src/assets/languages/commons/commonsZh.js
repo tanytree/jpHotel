@@ -7,7 +7,7 @@
 module.exports = {
     time: '时间',
     week: '星期',
-    confirm: '确 认',
+    confirm: '确认',
     saveSuccess: '保存成功',
     disable: '禁用',
     enable: '启用',
@@ -25,8 +25,8 @@ module.exports = {
     downloadTemplate: '下载模板',
     selectDate: '选择日期',
     all: '全部',
-    cancel: '取 消',
-    determine: '确 定',
+    cancel: '取消',
+    determine: '确定',
     close: '关闭',
     lookDetail: '查看详情',
     back: '返回',
@@ -72,7 +72,7 @@ module.exports = {
     orderSource: {
         '1': '前台',
         '2': '销售推荐',
-        // "3": '渠道订单',
+        "3": '渠道订单',
         '10': '其它'
     },
     //正常免费
@@ -134,8 +134,11 @@ module.exports = {
     },
     //入住状态
     checkinState: {
-        '1': '入住中',
-        '2': '已退房'
+        '1': '在住',
+        '2': '预离',
+        '3': '离店',
+        '4': '离店(走结)',
+        '5': '离店(反结)'
     },
     //预订状态
     reserveState: {

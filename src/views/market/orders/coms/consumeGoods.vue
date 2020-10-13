@@ -5,11 +5,11 @@
  * @FilePath: /jiudian/src/views/market/orders/coms/consumeGoods.vue
  -->
 <template>
-<el-dialog top='0' title="迷你吧" :visible.sync="visible" :lock-scroll='false' width="1200px">
+<el-dialog top='0' title="迷你吧" :visible.sync="visible" :lock-scroll='false' width="80%">
         <el-row :gutter="20">
             <el-col :span="14">
                 <el-row>
-                    <div class="">
+                    <div class="padding-20 clearfix" style="border:1px solid #eee;">
                         <el-form inline size="small" label-width="100px">
                             <el-form-item label="商品名称：">
                                 <el-input v-model="searchForm.name" style="width:150px"></el-input>
@@ -27,18 +27,14 @@
                             </el-form-item>
                         </el-form>
                         <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                            <el-table-column label="商品名称" show-overflow-tooltip>
-                                <template slot-scope="{row}">
-                                    {{F_priceType(row.priceType)}}
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="consumePrice" label="商品类别" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="consumePrice" label="商品单价(元)" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="consumePrice" label="员工价(元)" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="createTime" label="库存" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="goodsName" label="商品名称"  show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="sellName" label="商品类别" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="retailPrice" label="商品单价(元)" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="employeePrice" label="员工价(元)" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="inventoryCount" label="库存" show-overflow-tooltip></el-table-column>
                             <el-table-column label="操作">
-                                <template slot-scope="{row}">
-                                    <el-button type="text" size="mini">添加</el-button>
+                                <template slot-scope="scope">
+                                    <el-button :disabled="scope.row.inventoryCount == 0" size="mini" @click="addCart(scope.row,scope.$index)">添加</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -46,43 +42,56 @@
                 </el-row>
             </el-col>
             <el-col :span="10">
-                <div class="">
-                    <h3>已选商品</h3>
-                    <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                        <el-table-column label="商品名称" show-overflow-tooltip>
-                            <template slot-scope="{row}">
-                                {{F_priceType(row.priceType)}}
+                <div class="padding-20 clearfix" style="border:1px solid #eee;">
+                    <h3 style="margin-top:0;border-bottom: 1px solid #eee;padding-bottom:10px;">已选商品</h3>
+                    <el-table v-loading="loading" :data="cart" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+                        <el-table-column label="商品名称" prop="goodsName" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="retailPrice" label="单价(元)" show-overflow-tooltip></el-table-column>
+                        <el-table-column label="数量" width="150">
+                            <template slot-scope="scope">
+                              <div class="cell" style="padding:0;">
+                                  <div  class="el-input-number el-input-number--mini" style=" width:100px;">
+                                      <span role="button" class="el-input-number__decrease" @click="changeCartCount(scope.$index,1)"><i class="el-icon-minus"></i></span>
+                                      <span role="button" class="el-input-number__increase" @click="changeCartCount(scope.$index,2)"><i class="el-icon-plus"></i></span>
+                                      <div class="el-input el-input--mini">
+                                          <input type="text" min="1" v-model="scope.row.count" class="el-input__inner" disabled="disabled">
+                                      </div>
+                                  </div>
+                              </div>
+                            </template>
+
+
+                        </el-table-column>
+                        <el-table-column label="合计(元)" show-overflow-tooltip>
+                            <template slot-scope="scope">
+                                {{parseFloat(scope.row.count) * parseFloat(scope.row.retailPrice)}}
                             </template>
                         </el-table-column>
-
-                        <el-table-column prop="consumePrice" label="单价(元)" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="consumePrice" label="数量" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="createTime" label="合计(元)" show-overflow-tooltip></el-table-column>
                         <el-table-column label="操作">
-                            <template slot-scope="{row}">
-                                <el-button type="text" size="mini">移除</el-button>
+                            <template slot-scope="scope">
+                                <el-button size="mini" @click="handleDelete(scope.row,scope.$index)">移除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                     <el-row class="padding-tb-10">
-                        <em>共十件</em>，合计：50元
+                        <em>共 {{countToTal}} 件</em>，合计：{{cartToTal}}元
                     </el-row>
                     <el-form size="mini">
                         <el-form-item label="按员工价：">
-                            <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
+                            <el-checkbox v-model="consumeOperForm.employeePrice"></el-checkbox>
                         </el-form-item>
                         <el-form-item label="选择房间：">
-                            <el-select v-model="consumeOperForm.damageTypeId">
-                                <!-- <el-option v-for="item in hoteldamagetypeList" :key="item.id" :label="item.name" :value="item.id">
-                                </el-option> -->
+                           <el-select v-model="consumeOperForm.roorId">
+                                <el-option v-for="item in detailData.inRoomList" :key="item.id" :label="item.houseNum" :value="item.roomId">
+                                </el-option>
                             </el-select>
 
                         </el-form-item>
                         <el-form-item label="入账金额：">
-                            50
+                            {{totalIn}}
                         </el-form-item>
                         <el-form-item label="备注：">
-                            <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                            <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off" placeholder="请填写冲调原因，必填！"></el-input>
                         </el-form-item>
 
                     </el-form>
@@ -92,7 +101,7 @@
 
         <div slot="footer" class="dialog-footer">
             <el-button @click="visible = false">取消</el-button>
-            <el-button type="primary" @click="visible = false">确认</el-button>
+            <el-button type="primary"  @click="consume_oper">确认</el-button>
         </div>
     </el-dialog>
 </template>
@@ -106,10 +115,11 @@ Array.prototype.push2 = function () {
         }
     }
 };
+import {mapState,mapActions} from "vuex";
 import myMixin from '@/utils/filterMixin';
-
 export default {
     mixins: [myMixin],
+    props:['detailData','currentRoom'],
     data() {
         return {
             id: '',
@@ -128,101 +138,245 @@ export default {
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [], //表格数据
+            cart:[],//购物车
             consumeOperForm:{
-                name:''
-            }
+                employeePrice:false,
+                goodsTotal:'',
+                goodsJson:[],
+                remark:'',
+                roorId:''
+            },
+
         };
     },
-    computed: {},
+    computed: {
+        ...mapState({
+            token: state => state.user.token,
+            userId: state => state.user.userId,
+            msgKey: state => state.config.msgKey,
+            plat_source: state => state.config.plat_source
+        }),
+        //商品总金额
+        cartToTal(){
+            let sum = 0
+            let cart = this.cart
+            cart.forEach(element => {
+                sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
+            });
+            return sum.toFixed(0);
+        },
+        //入账金额
+        totalIn(){
+            let sum = 0
+            let cart = this.cart
+            if(this.consumeOperForm.employeePrice){
+                cart.forEach(element => {
+                    sum +=  parseFloat(element.employeePrice) *  parseFloat(element.count)
+                });
+            }else{
+                cart.forEach(element => {
+                    sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
+                });
+            }
+
+
+            return sum.toFixed(0);
+        },
+        //商品数量
+        countToTal(){
+            let sum = 0
+            let cart = this.cart
+            cart.forEach(element => {
+                sum +=  parseFloat(element.count)
+            });
+            return sum
+        },
+
+    },
     methods: {
         async init(id) {
             this.id = id
-           
             this.initForm()
             this.visible = true;
+
         },
         initForm() {
             this.searchForm = {
-                orderId:this.id,
+                sellId:'',
+                paging:false,
                 pageIndex:1,
                 pageSize:10
             };
             this.getDataList();
         },
+        //获取列表
         getDataList() {
+            this.tableData = []
             this.loading = true
-            this.$F.doRequest(this, '/pms/consume/consume_goods_list', this.searchForm, (res) => {
-                this.tableData = res.consumeGoodsList;
-                this.listTotal = res.page.count
-                
-            })
-        },
-        already_room_join(id) {
-            return new Promise((resolve, reject) => {
-                this.$F.doRequest(this, '/pms/checkin/already_room_join', {
-                    roomId: id
-                }, (res) => {
-                    this.roomJoinList = res || []
-                    resolve(res)
-                })
-            })
-        },
-        dataFormSubmit() {
-            let joinRoomIds = [];
-            joinRoomIds.push()
-            this.roomJoinList.forEach(element => {
-                joinRoomIds.push(element.id || element.roomId)
-            });
-            let params = {
-                roomId: this.id,
-                joinRoomIds: joinRoomIds,
-            }
-            this.$confirm('请确认联房', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$F.doRequest(this, '/pms/checkin/check_in_room_join', params, (res) => {
-                    this.visible = false
-                    this.$message({
-                        type: 'success',
-                        message: '操作成功!'
-                    });
-                })
-            }).catch(() => {
+            this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", {}, (res) => {
+                let name = '迷你吧';
+                for(let i in res.list){
+                   if(res.list[i].name == name){
+                       this.sellId = res.list[i].id
+                       this.$F.doRequest(this, '/pms/sellinglog/list', this.searchForm, (res) => {
+                            let Goodlist = res.list;
+                            for(let j in Goodlist){
+                               if(Goodlist[j].sellId == this.sellId){
+                                   this.tableData.push(Goodlist[j])
+                               }
+                            }
+                        })
+                        break;
+                   }
+               }
 
             });
+        },
+        //加入菜单
+        addCart(item,index){
+            if(this.tableData[index].inventoryCount > 0){
+                this.tableData[index].inventoryCount -= 1
+                let good = this.cart.find(v=>v.goodsName==item.goodsName)
+                if(good){
+                  good.count += 1
+                }else{
+                  this.cart.push({...item,count:1})
+                }
+            }else{
+                this.$alert('该菜品已经没有库存啦，不能再售卖啦！', '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                  }
+                });
+            }
+        },
+
+        //购物车的加减 type = 1 是减少  2 是添加
+        changeCartCount(v,type){
+            let info  = this.cart[v]
+            let good = this.tableData.find(v=>v.id==info.id)
+            if(type == 1){
+                info.count-= 1
+                good.inventoryCount += 1
+                if(info.count == 0){
+                    this.cart.splice(v,1)
+                    return false
+                }
+            }else{
+                if(good.inventoryCount == 0){
+                    this.$alert('该菜品已经没有库存啦，不能再售卖啦!', '提示', {
+                      confirmButtonText: '确定',
+                      callback: action => {
+                      }
+                    });
+                    return false
+                }else{
+                    info.count+= 1
+                    good.inventoryCount -= 1
+                }
+            }
 
         },
-        handleAdd(item) {
-            let room = {
-                houseNum: item.houseNum,
-                roomId: item.id
-            }
-            this.roomJoinList.push2(room)
-        },
-        handleDel(i, item) {
-            console.log(item)
-            if (item.id) {
-                this.$F.doRequest(this, '/pms/checkin/move_room_join', {
-                    joinId: item.id
-                }, (res) => {
-                    this.$message({
-                        type: 'success',
-                        message: '操作成功!'
-                    });
-                    this.already_room_join(this.id)
-                })
-            } else if (item.roomId) {
-                this.roomJoinList.splice(i, 1)
+        handleDelete(item,index){
+            let good = this.tableData.find(v=>v.id==item.id)
+            good.inventoryCount = good.inventoryCount + item.count
+            this.cart.splice(index,1)
+            if(this.cart.length == 0){
+                this.getDataList();
             }
         },
-        checkItem(id) {
-            if (JSON.stringify(this.roomJoinList).indexOf(id) != -1) {
-                return true
+
+
+        consume_oper() {
+
+            if(this.cart.length == 0){
+                this.$message({
+                  type: 'error',
+                  message: '请选择商品!'
+                });
+                return false
             }
-            return false
+
+
+            if(!this.consumeOperForm.roorId){
+                this.$message({
+                  type: 'error',
+                  message: '请选择房间号!'
+                });
+                return false
+            }
+            
+            
+            if(!this.consumeOperForm.remark){
+                this.$message({
+                  type: 'error',
+                  message: '请填写冲调原因!'
+                });
+                return false
+            }
+            
+            
+            
+            let params = {}
+            params.checkInId = this.$route.query.id
+            params.priceType = 8
+            params.payType = 0
+            params.state = 1
+            params.remak = this.consumeOperForm.remark
+            params.employeePrice = this.consumeOperForm.employeePrice ? 1 : 2
+            params.goodsTotal = this.cartToTal
+
+            let roomList = this.detailData.inRoomList
+            let choose = {}
+            roomList.forEach(element => {
+               if(element.roomId == this.consumeOperForm.roorId){
+                   choose = element
+               }
+            });
+            params.roomId = this.consumeOperForm.roorId;
+            params.roomNum = choose.houseNum
+
+
+            let Json = []
+            let cart = this.cart
+            if(this.consumeOperForm.employeePrice){
+                cart.forEach(element => {
+                    Json.push({
+                        goodsId:element.id,
+                        goodsName:element.goodsName,
+                        price:element.employeePrice,
+                        goodsCount:element.count,
+                        totalPrice: this.totalIn
+                    })
+                });
+                params.consumePrice = this.totalIn
+            }else{
+                cart.forEach(element => {
+                    Json.push({
+                        goodsId:element.id,
+                        goodsName:element.goodsName,
+                        price:element.retailPrice,
+                        goodsCount:element.count,
+                        totalPrice: this.cartToTal
+                    })
+                });
+                params.consumePrice = this.cartToTal
+            }
+            params.goodsJson = JSON.stringify(Json)
+
+
+
+            console.log(params)
+            this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
+              this.visible = false
+              this.$emit('get_consume_order_list','');
+            })
+
+
         },
+
+
+
         /**多选 */
         handleSelectionChange(val) {
             this.multipleSelection = val;

@@ -13,7 +13,7 @@
             <el-dropdown split-button type="primary">
                 更多操作
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="rowRoomHandle">排房</el-dropdown-item>
+                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">排房</el-dropdown-item>
                     <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
                     <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
@@ -218,7 +218,7 @@ import {
     mapActions
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
-import customer from './customer'
+import customer from '@/components/front/customer'
 import rowRoomHandle from "@/views/market/home/rowRoomHandle";
 
 export default {
@@ -227,7 +227,7 @@ export default {
         rowRoomHandle
     },
     mixins: [myMixin],
-    props: ['checkinInfo', 'roomInfo'],
+    props: ['checkinInfo', 'inRoomList'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -239,7 +239,6 @@ export default {
     watch: {
         roomInfo: {
             handler(n, o) {
-                debugger
                 console.log(n)
                 n.forEach(element => {
                     if (element.personList.length) {
@@ -358,6 +357,8 @@ export default {
     },
 
     mounted() {
+        console.log(this.checkinInfo);
+        console.log(this.inRoomList);
         let id = this.$route.query.id
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;

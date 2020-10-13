@@ -7,49 +7,50 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <el-card>
+<div class="boss-index">
+    <div class="booking">
         <!--表格数据 -->
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small" @selection-change="handleSelectionChange">
             <el-table-column prop="name" label="客人名称"></el-table-column>
-            <el-table-column prop="mobile" label="手机号码" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="checkinTime" label="入住时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="checkoutTime" label="预离时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="" label="房间号" show-overflow-tooltip>
+            <el-table-column prop="mobile" label="手机号码"></el-table-column>
+            <el-table-column prop="checkinTime" label="入住时间" width="200" align="center"></el-table-column>
+            <el-table-column prop="checkoutTime" label="预离时间" width="200" align="center"></el-table-column>
+            <el-table-column prop="" label="房间号" width="140" align="center">
                 <template slot-scope="{row}">
                     {{row.hotelCheckInRoom?row.hotelCheckInRoom.houseNum:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="guestType" label="客源类别" show-overflow-tooltip>
+            <el-table-column prop="guestType" label="客源类别" width="140" align="center">
                 <template slot-scope="{row}">
                     {{F_guestType(row.guestType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="总消费" show-overflow-tooltip>
+            <el-table-column prop="" label="总消费">
                 <template slot-scope="{row}">
                     {{row.memberObject?row.memberObject.consumeTotalPrice:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="state" label="在住状态" show-overflow-tooltip>
+            <el-table-column prop="state" label="在住状态" width="140" align="center">
                 <template slot-scope="{row}">
                     {{F_checkinState(row.state)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="billType" label="结账状态" show-overflow-tooltip>
+            <el-table-column prop="billType" label="结账状态" width="140" align="center">
                 <template slot-scope="{row}">
                     {{F_billType(row.billType)}}
                 </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="140">
                 <template slot-scope="{row}">
                     <el-button type="text">详情</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-    </el-card>
+        <div class="block">
+            <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+        </div>
+    </div>
     <!-- 编辑or详情弹窗 -->
 </div>
 </template>

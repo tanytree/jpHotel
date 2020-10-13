@@ -10,9 +10,9 @@ import Main from '@/components/main/main'
 Vue.use(Router)
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
-        return originalPush.call(this, location).catch(err => err)
-    }
-    // 不需要要权限的页面默认挂载
+    return originalPush.call(this, location).catch(err => err)
+}
+// 不需要要权限的页面默认挂载
 export default new Router({
     mode: 'hash',
 
@@ -26,7 +26,7 @@ export default new Router({
             name: 'login',
             meta: { title: '登录' },
             component: () =>
-                import ('@/views/login/login')
+                import('@/views/login/login')
         },
         {
             path: '/main',
@@ -45,20 +45,20 @@ export default new Router({
                     name: 'bossIndex',
                     meta: { title: 'bossIndex' },
                     component: () =>
-                        import ('@/views/Boss/Index')
+                        import('@/views/Boss/Index')
                 },
                 {
                     path: '/index-design',
                     name: 'indexDesign',
                     meta: { title: 'indexDesign' },
                     component: () =>
-                        import ('@/views/Boss/IndexDesign')
+                        import('@/views/Boss/IndexDesign')
                 },
                 {
                     path: '/department-charge',
                     name: 'DepartmentCharge',
                     component: () =>
-                        import ('@/views/Boss/DepartmentCharge')
+                        import('@/views/Boss/DepartmentCharge')
                 },
                 // {
                 //     path: '/person-mg',
@@ -70,14 +70,14 @@ export default new Router({
                     path: '/pay-mg',
                     name: 'PayMg',
                     component: () =>
-                        import ('@/components/payMG')
+                        import('@/components/payMG')
                 },
                 {
                     path: '/storeManagement',
                     name: 'storeManagement',
                     meta: { title: '门店管理', pid: "13" },
                     component: () =>
-                        import ('@/views/Boss/StoreManagement/index')
+                        import('@/views/Boss/StoreManagement/index')
                 },
                 //管理部
                 {
@@ -85,35 +85,35 @@ export default new Router({
                     name: 'managerIndex',
                     meta: { title: 'manager' },
                     component: () =>
-                        import ('@/views/manager/index/main')
+                        import('@/views/manager/index/main')
                 },
                 {
                     path: '/guest-center',
                     name: 'guestCenter',
                     meta: { title: 'guestCenter' },
                     component: () =>
-                        import ('@/views/manager/guestCenter/main')
+                        import('@/views/manager/guestCenter/main')
                 },
                 {
                     path: '/guest-Room_2',
                     name: 'guestRoom_2',
                     meta: { title: 'guestRoom_2' },
                     component: () =>
-                        import ('@/views/manager/guestRoom_2/main')
+                        import('@/views/manager/guestRoom_2/main')
                 },
                 {
                     path: '/price-system',
                     name: 'priceSystem',
                     meta: { title: 'priceSystem' },
                     component: () =>
-                        import ('@/views/manager/priceSystem/main')
+                        import('@/views/manager/priceSystem/main')
                 },
                 //财务部
                 {
                     path: '/income',
                     name: 'income',
                     component: () =>
-                        import ('@/views/finance/main')
+                        import('@/views/finance/main')
                 },
                 /**管理部 */
                 {
@@ -124,7 +124,7 @@ export default new Router({
 
                     },
                     component: () =>
-                        import ('@/views/market/main')
+                        import('@/views/market/main')
                 },
 
                 {
@@ -132,42 +132,50 @@ export default new Router({
                     name: 'nightaudit',
                     meta: { title: '夜审', pid: "13" },
                     component: () =>
-                        import ('@/views/market/nightaudit')
+                        import('@/views/market/nightaudit')
                 },
                 {
                     path: '/orders',
                     name: 'orders',
                     meta: { title: '订单管理', pid: "13" },
                     component: () =>
-                        import ('@/views/market/orders')
+                        import('@/views/market/orders')
                 },
                 {
                     path: '/orderdetail',
                     name: 'orderdetails',
                     meta: { title: '订单详情', pid: "13" },
                     component: () =>
-                        import ('@/views/market/orders/detail')
+                        import('@/views/market/orders/detail')
                 },
                 {
                     path: '/bookingDetail',
                     name: 'bookingDetail',
                     meta: { title: '预订详情', pid: "13" },
                     component: () =>
-                        import ('@/views/market/orders/bookingDetail')
+                        import('@/views/market/orders/bookingDetail')
                 },
                 {
                     path: '/reception',
                     name: 'reception',
                     meta: { title: '前台服务', pid: "13" },
                     component: () =>
-                        import ('@/views/market/reception')
+                        import('@/views/market/reception')
                 },
                 {
                     path: '/booking',
                     name: 'booking',
                     meta: { title: '预订管理', pid: "13" },
                     component: () =>
-                        import ('@/views/market/booking')
+                        import('@/views/market/booking')
+                },
+                // c2detail 陶子添加
+                {
+                    path: '/c2detail',
+                    name: 'c2detail',
+                    meta: { title: '会议核销详情', },
+                    component: () =>
+                        import('@/views/market/booking/venue/c2detail')
                 },
 
                 {
@@ -175,7 +183,7 @@ export default new Router({
                     name: 'marketauthSet',
                     meta: { title: '权限设置' },
                     component: () =>
-                        import ('@/views/market/authSet')
+                        import('@/views/market/authSet')
                 },
 
                 /**人事部 */ // 渠道管理
@@ -184,43 +192,50 @@ export default new Router({
                     name: 'personnelManager',
                     meta: { title: '首页' },
                     component: () =>
-                        import ('@/views/market/personnelManager')
+                        import('@/views/market/personnelManager')
                 },
                 {
                     path: '/employeeList',
                     name: 'employeeList',
                     meta: { title: '人员管理' },
                     component: () =>
-                        import ('@/components/employee/employeeList')
+                        import('@/components/employee/employeeList')
                 },
                 {
                     path: '/channelDaili',
                     name: 'channelDaili',
                     meta: { title: '薪酬管理' },
                     component: () =>
-                        import ('@/views/market/personnelManager/daili/channelDaili')
+                        import('@/views/market/personnelManager/daili/channelDaili')
                 },
                 {
                     path: '/channelSetting',
                     name: 'channelSetting',
                     meta: { title: '渠道管理' },
                     component: () =>
-                        import ('@/views/market/personnelManager/setting/channelSetting')
+                        import('@/views/market/personnelManager/setting/channelSetting')
                 },
 
                 {
                     path: '/customer',
                     name: 'customer',
-                    meta: { title: '客户管理'},
+                    meta: { title: '客户管理' },
                     component: () =>
-                        import ('@/views/market/customer'),
+                        import('@/views/market/customer'),
                 },
                 {
                     path: '/customerdetails',
                     name: 'customerdetails',
                     meta: { title: '客户详情' },
                     component: () =>
-                        import ('@/views/market/customer/children/detail'),
+                        import('@/views/market/customer/children/detail'),
+                },
+                {
+                    path: '/integralDetail',
+                    name: 'customerdetails',
+                    meta: { title: '积分明细' },
+                    component: () =>
+                        import('@/views/market/customer/children/integralDetail'),
                 },
 
                 {
@@ -228,42 +243,42 @@ export default new Router({
                     name: 'customeredit',
                     meta: { title: '客户编辑' },
                     component: () =>
-                        import ('@/views/market/customer/children/detail'),
+                        import('@/views/market/customer/children/detail'),
                 },
                 {
                     path: '/customeradd',
                     name: 'customeradd',
                     meta: { title: '添加客户' },
                     component: () =>
-                        import ('@/views/market/customer/children/detail'),
+                        import('@/views/market/customer/children/detail'),
                 },
                 {
                     path: '/historydetail',
                     name: 'historydetail',
                     meta: { title: '客史详情' },
                     component: () =>
-                        import ('@/views/market/customer/children/historydetail'),
+                        import('@/views/market/customer/children/historydetail'),
                 },
                 {
                     path: '/customerhistory',
                     name: 'customerhistory',
                     meta: { title: '客户历史' },
                     component: () =>
-                        import ('@/views/market/customer/children/history'),
+                        import('@/views/market/customer/children/history'),
                 },
                 {
                     path: '/foreignDetail',
                     name: 'foreignDetail',
                     meta: { title: '外宾详情' },
                     component: () =>
-                        import ('@/views/market/customer/children/foreignDetail'),
+                        import('@/views/market/customer/children/foreignDetail'),
                 },
                 {
                     path: '/companydetail',
                     name: 'companydetail',
                     meta: { title: '单位详情' },
                     component: () =>
-                        import ('@/views/market/customer/children/companydetail'),
+                        import('@/views/market/customer/children/companydetail'),
                 },
 
 
@@ -273,21 +288,21 @@ export default new Router({
                     name: 'salemain',
                     meta: { title: '企划部首页', pid: "22" },
                     component: () =>
-                        import ('@/views/sale/main')
+                        import('@/views/sale/main')
                 },
                 {
                     path: '/saleOrder',
                     name: 'saleOrder',
                     meta: { title: '会员管理', pid: "21" },
                     component: () =>
-                        import ('@/views/sale/order')
+                        import('@/views/sale/order')
                 },
                 {
                     path: '/newdetail',
                     name: 'newdetail',
                     meta: { title: '新增会员类型', pid: "21" },
                     component: () =>
-                        import ('@/views/sale/order/member/graces/new')
+                        import('@/views/sale/order/member/graces/new')
                 },
 
                 {
@@ -295,21 +310,21 @@ export default new Router({
                     name: 'orderInfo',
                     meta: { title: '订单详情' },
                     component: () =>
-                        import ('@/views/sale/order/orderInfo')
+                        import('@/views/sale/order/orderInfo')
                 },
                 {
                     path: '/Personer',
                     name: 'Personer',
                     meta: { title: '用户订单' },
                     component: () =>
-                        import ('@/views/sale/order/Personer')
+                        import('@/views/sale/order/Personer')
                 },
                 //销售审批
                 {
                     path: '/approvalPreSale',
                     name: 'approvalPreSale',
                     component: () =>
-                        import ('@/views/sale/approval/preSale')
+                        import('@/views/sale/approval/preSale')
                 },
 
                 //我的报价
@@ -317,62 +332,62 @@ export default new Router({
                     path: '/offerStart',
                     name: 'offerStart',
                     component: () =>
-                        import ('@/views/sale/offer/start')
+                        import('@/views/sale/offer/start')
                 },
                 {
                     path: '/offerWait',
                     name: 'offerWait',
                     component: () =>
-                        import ('@/views/sale/offer/wait')
+                        import('@/views/sale/offer/wait')
                 },
                 {
                     path: '/offerCollect',
                     name: 'offerCollect',
                     component: () =>
-                        import ('@/views/sale/offer/collect')
+                        import('@/views/sale/offer/collect')
                 },
                 {
                     path: '/offerOnline',
                     name: 'offerOnline',
                     component: () =>
-                        import ('@/views/sale/offer/online')
+                        import('@/views/sale/offer/online')
                 },
                 {
                     path: '/publicPool',
                     name: 'publicPool',
                     component: () =>
-                        import ('@/views/sale/publicPool')
+                        import('@/views/sale/publicPool')
                 },
                 {
                     path: '/agentOrder',
                     name: 'agentOrder',
                     component: () =>
-                        import ('@/views/sale/order/Agent')
+                        import('@/views/sale/order/Agent')
                 },
                 {
                     path: '/channelOrder',
                     name: 'channelOrder',
                     component: () =>
-                        import ('@/views/sale/order/Channel')
+                        import('@/views/sale/order/Channel')
                 },
                 {
                     path: '/saleCustomer',
                     name: 'saleCustomer',
                     component: () =>
-                        import ('@/views/sale/SaleCustomer')
+                        import('@/views/sale/SaleCustomer')
                 },
                 {
                     path: '/saleBussness',
                     name: 'SaleBussness',
                     component: () =>
-                        import ('@/views/sale/SaleBussness')
+                        import('@/views/sale/SaleBussness')
                 },
                 /**财务部 */
                 {
                     path: '/finance',
                     name: 'finance',
                     component: () =>
-                        import ('@/views/finance/main')
+                        import('@/views/finance/main')
                 },
 
                 {
@@ -380,38 +395,70 @@ export default new Router({
                     name: 'saleContract',
                     meta: { title: '单位管理', pid: "25" },
                     component: () =>
-                        import ('@/views/sale/contract/index')
+                        import('@/views/sale/contract/index')
                 },
                 {
                     path: '/account',
                     name: 'account',
                     component: () =>
-                        import ('@/views/finance/account')
+                        import('@/views/finance/account')
                 },
                 {
                     path: '/bill',
                     name: 'bill',
                     component: () =>
-                        import ('@/views/finance/bill')
+                        import('@/views/finance/bill')
                 },
                 {
                     path: '/report',
                     name: 'report',
                     component: () =>
-                        import ('@/views/finance/report')
+                        import('@/views/finance/report')
                 },
                 {
                     path: '/invoice',
                     name: 'invoice',
                     component: () =>
-                        import ('@/views/finance/invoice')
+                        import('@/views/finance/invoice')
                 },
                 {
                     path: '/menuAssert',
                     name: 'menuAssert',
                     component: () =>
-                        import ('@/views/menuAssert/menuAssert')
+                        import('@/views/menuAssert/menuAssert')
                 },
+
+                //餐饮部
+                {
+                    path: '/food',
+                    name: 'food',
+                    meta: { title: 'food' },
+                    component: () =>
+                        import('@/views/food/main')
+                },
+
+                {
+                    path: '/dish',
+                    name: 'dish',
+                    meta: { title: 'dish' },
+                    component: () =>
+                        import('@/views/food/dish')
+                },
+
+                {
+                    path: '/dishOrder',
+                    name: 'dishOrder',
+                    meta: { title: 'dishOrder' },
+                    component: () =>
+                        import('@/views/food/order')
+                },
+                {
+                    path: '/warehouse',
+                    name: 'warehouse',
+                    meta: { title: 'warehouse' },
+                    component: () =>
+                        import('@/views/food/warehouse')
+                }
             ]
         },
 
@@ -419,7 +466,7 @@ export default new Router({
             path: '/404',
             name: '404',
             component: () =>
-                import ('@/components/error')
+                import('@/components/error')
         },
     ]
 

@@ -34,3 +34,5 @@
   width: 20px;
   height: 20px;
 }
+
+.el-dialog{border-radius: 5px; overflow: hidden;}

@@ -3,7 +3,7 @@
  * @LastEditors: 董林
  * @LastEditTime: 2020-08-11 17:26:45
  * @FilePath: /jiudian/src/views/market/orders/coms/c1.vue
---> 
+-->
 <template>
 <div class="roomDetails">
     <div class="hd">
@@ -51,7 +51,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance :currentRoom="currentRoom"  />
+            <finance ref="finance" :currentRoomId="currentRoomId" :detailData="detailData" @getOrderDetail="getOrderDetail" />
         </div>
     </div>
     <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
@@ -92,7 +92,7 @@ import finance from './finance'
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
-    props: ['detailData', 'currentRoom'],
+    props: ['detailData', 'currentRoomId'],
     components: {
         finance
     },
@@ -124,11 +124,25 @@ export default {
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [], //表格数据
-            liveCardData: []
+            liveCardData: [],
+            currentRoom: {
+                personList: []
+            }
         };
     },
 
+    created() {
+        if (this.currentRoomId) {
+            this.currentRoom = this.detailData.inRoomList.filter(item=>{
+                return item.id == this.currentRoomId
+            })[0];
+        }
+    },
+
     mounted() {
+
+
+
         let id = this.$route.query.id
         // this.get_user_enterprise(id)
     },
@@ -146,6 +160,7 @@ export default {
                     if (res.code == 200) {
                         this.detailDialogFormVisible = true;
                         this.detailData = res.data
+                        console.log(res.data)
                     } else {
                         this.$message.error(res.message);
                     }
@@ -245,6 +260,10 @@ export default {
         handleCurrentChange(val) {
             this.searchForm.page = val;
             this.getDataList();
+        },
+        getOrderDetail(){
+            console.log('c1')
+            this.$emit('getOrderDetail')
         }
 
     }

@@ -45,19 +45,14 @@
                         <el-table-column prop="damageTypeName" :label="$t('manager.hp_goodsType')"></el-table-column>
                         <el-table-column prop="name" :label="$t('manager.hp_goodsName')"></el-table-column>
                         <el-table-column prop="damagePrice" :label="$t('manager.hp_compensationPrice')"></el-table-column>
-                        <el-table-column prop="state" :label="$t('boss.loginDetail_state')"></el-table-column>
+                        <el-table-column :label="$t('boss.loginDetail_state')">
+                            <template slot-scope="scope">{{scope.row.state == 1 ? $t('commons.enable') : $t('commons.disable')}}</template>
+                        </el-table-column>
                         <el-table-column :label="$t('commons.operating')" width="150">
                             <template slot-scope="scope">
-                                <el-button
-                                        type="text"
-                                        size="small"
-                                        @click="popup_thing(scope.row)"
-                                >{{$t('commons.modify')}}
+                                <el-button type="text" size="small" @click="popup_thing(scope.row)">{{$t('commons.modify')}}
                                 </el-button>
-                                <el-popconfirm
-                                        :title="$t('manager.hp_bulletTitle')"
-                                        @onConfirm="onDeleteData(scope.row)"
-                                >
+                                <el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="onDeleteData(scope.row)">
                                     <el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
                                 </el-popconfirm>
                             </template>
@@ -286,7 +281,6 @@
             },
             // 交班模式选择,非现金流时不显示备用金
             changeRedio_five(value, index) {
-                debugger;
                 this.five_redioList.forEach((value, index) => {
                     value.redio = false;
                 });

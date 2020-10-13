@@ -25,7 +25,11 @@
             <el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
             <el-table-column prop="bedNum" :label="$t('manager.hk_beds')"></el-table-column>
             <el-table-column prop="checkinNum" :label="$t('manager.hk_availabilityPeople')"></el-table-column>
-            <el-table-column prop="status" :label="$t('boss.loginDetail_state')"></el-table-column>
+            <el-table-column prop="status" :label="$t('boss.loginDetail_state')">
+				<template slot-scope="scope">
+					<span>{{scope.row.state==1? $t('commons.enable'): $t('commons.disable')}}</span>
+				</template>
+			</el-table-column>
             <el-table-column prop="remark" :label="$t('boss.loginDetail_note')"></el-table-column>
             <el-table-column :label="$t('commons.operating')" width="200">
               <template slot-scope="scope">
@@ -67,7 +71,7 @@
       <el-tab-pane :label="$t('manager.hk_drawingRoomType')" name="two">
         <el-container direction="vertical" class="boss-index">
           <el-row :gutter="20">
-            <el-col :span="6" :offset="20">
+            <el-col style="display: flex;justify-content: flex-end;margin: 10px 0px;">
               <el-button
                 type="primary"
                 style="width: 100px;"
@@ -81,12 +85,16 @@
             :data="tableData"
             tooltip-effect="dark"
             height="100%"
-            :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+            header-row-class-name="default"
           >
             <el-table-column prop="houseName" :label="$t('manager.hk_roomName')"></el-table-column>
             <el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
             <el-table-column prop="bedNum" :label="$t('manager.hk_seating')"></el-table-column>
-            <el-table-column prop="status" :label="$t('boss.loginDetail_state')"></el-table-column>
+            <el-table-column prop="status" :label="$t('boss.loginDetail_state')">
+				<template slot-scope="scope">
+					<span>{{scope.row.state==1? $t('commons.enable'): $t('commons.disable')}}</span>
+				</template>
+			</el-table-column>
             <el-table-column prop="remark" :label="$t('boss.loginDetail_note')"></el-table-column>
             <el-table-column :label="$t('commons.operating')" width="250">
               <template slot-scope="scope">
@@ -287,7 +295,7 @@
 </template>
 
 <script>
-import axios from "axios";
+
 export default {
   data() {
     return {
@@ -346,20 +354,20 @@ export default {
             trigger: "blur",
           },
         ],
-        bedNum: [
-          {
-            required: true,
-            message: "请输入床位数/座位",
-            trigger: "blur",
-          },
-        ],
-        bedSizeH: [
-          {
-            required: true,
-            message: "请输入床宽",
-            trigger: "blur",
-          },
-        ],
+        // bedNum: [
+        //   {
+        //     required: true,
+        //     message: "请输入床位数/座位",
+        //     trigger: "blur",
+        //   },
+        // ],
+        // bedSizeH: [
+        //   {
+        //     required: true,
+        //     message: "请输入床宽",
+        //     trigger: "blur",
+        //   },
+        // ],
         houseSizeW: [
           {
             required: true,
@@ -374,13 +382,13 @@ export default {
             trigger: "blur",
           },
         ],
-        bedType: [
-          {
-            required: true,
-            message: "请输入床型",
-            trigger: "blur",
-          },
-        ],
+        // bedType: [
+        //   {
+        //     required: true,
+        //     message: "请输入床型",
+        //     trigger: "blur",
+        //   },
+        // ],
       },
       selectedInfo: {}, // 选中的某条
       formData: {},
@@ -433,6 +441,7 @@ export default {
         case "house":
           this.ruleForm = {};
           this.tab_show = false;
+					this.files = [];
           break;
         case "change":
           this.tab_show = false;
@@ -458,7 +467,6 @@ export default {
         params.state = 1;
       }
       params.roomTypeId = item.id;
-      debugger;
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_room_type_state",

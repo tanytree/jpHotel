@@ -6,10 +6,9 @@
  -->
 
 <template>
-  <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+  <div class="boss-index">
+    <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">
             <el-tab-pane label="会员信息管理" name="first">
-<!--                smembertypeList:storeList="storeList" :nationalityList="nationalityList" :hotelenterList="hotelenterList" :smembertypeList="smembertypeList"-->
                 <info ></info>
             </el-tab-pane>
             <el-tab-pane label="积分查询" name="second">

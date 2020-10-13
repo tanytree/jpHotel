@@ -55,18 +55,19 @@
           :data="payManagerTableData"
           height="100%"
           tooltip-effect="dark"
+          :border="true"
           :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
         >
-          <el-table-column prop="employee.position" :label="$t('boss.loginDetail_position')"></el-table-column>
-          <el-table-column prop="employee.userName" :label="$t('boss.loginDetail_name')"></el-table-column>
-          <el-table-column :label="$t('boss.staff_staffState')">
+          <el-table-column resizable prop="employee.position" :label="$t('boss.loginDetail_position')" ></el-table-column>
+          <el-table-column resizable prop="employee.userName" :label="$t('boss.loginDetail_name')"></el-table-column>
+          <el-table-column resizable :label="$t('boss.staff_staffState')">
             <template
               slot-scope="scope"
             >{{$t('commons.userStatus')[scope.row.employee.userStatus || '']}}</template>
           </el-table-column>
-          <el-table-column prop="employee.worknum" :label="$t('boss.loginDetail_workNumber')"></el-table-column>
-          <el-table-column prop="payTime" :label="$t('boss.compensation_payMonth')"></el-table-column>
-          <el-table-column :label="$t('boss.compensation_basicSalary')">
+          <el-table-column resizable prop="employee.worknum" :label="$t('boss.loginDetail_workNumber')"></el-table-column>
+          <el-table-column resizable prop="payTime" :label="$t('boss.compensation_payMonth')"></el-table-column>
+          <el-table-column resizable :label="$t('boss.compensation_basicSalary')">
             <el-table-column prop="wage.baseWage" :label="$t('boss.compensation_baseSalary')"></el-table-column>
             <el-table-column prop="wage.socialBenefits" :label="$t('boss.compensation_benefits')"></el-table-column>
             <el-table-column prop="wage.otherWage" :label="$t('commons.other')"></el-table-column>
@@ -438,7 +439,6 @@ export default {
           this.dialogAdd = true;
           this.change_salary_info = value;
           this.ruleForm = value.row;
-          debugger;
           break;
         case "ch_change":
           this.salary_change_title = this.salaryChange;

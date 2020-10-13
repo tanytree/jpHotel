@@ -5,6 +5,7 @@
  * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/dimission.vue
  -->
  <template>
+     <!--离职人员维护-->
   <div class="sec1">
     <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
       <el-form-item :label="$t('boss.loginDetail_stores')" v-if="storesNum == $F.getHQCode()">
@@ -113,7 +114,7 @@
       ></el-pagination>
     </div>
     <!-- 查看资料组件 -->
-    <LoginDetail ref="loginDetail" :storeList="storeList"></LoginDetail>
+    <LoginDetail ref="loginDetail" :storeList="storeList" dimission="1"></LoginDetail>
   </div>
 </template>
 

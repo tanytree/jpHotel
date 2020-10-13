@@ -9,7 +9,7 @@ import commons from "./commons/commonsZh";
 import frontOffice from './frontOffice/zh'
 import login from './login/zh'
 import manager from './manager/zh'
-
+import food from './food/zh'
 export default {
     language: {
         name: '中文'
@@ -26,4 +26,7 @@ export default {
 
     //管理部
     manager: manager,
+	
+	//餐饮部
+	food:food
 }

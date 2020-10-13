@@ -7,7 +7,7 @@
 
 //  中文语言
 module.exports = {
-    //    总办 > 首页 
+    //    总办 > 首页
 
     report_home: '首页',
     report_deskReport: "前台部报表",
@@ -67,11 +67,13 @@ module.exports = {
     loginDetail_alertContent: "该成员暂无资料（资料需要在员工管理添加，然后绑定该成员的后台账号即可）",
     loginDetail_alertTitle: "提示",
     loginDetail_unknownStores: "未知门店",
+    loginDetail_outTime: "离职时间",
+    loginDetail_outReason: "离职原因",
 
     //总办 > 部门负责人
     department_name: "部门名称",
     department_head: "负责人",
-    department_setHead: "设为负责人",
+    department_setHead: "设置负责人",
     department_placeEnterContent: "请输入内容",
     department_hasChosen: "已选择",
     department_setSuccess: "设置成功！",
@@ -148,6 +150,31 @@ module.exports = {
     compensation_: '薪资修改',
     compensation_: '薪资修改',
     compensation_: '薪资修改',
+    //总办 > 门店管理
+    store_createStore: '创建门店',
+    store_storeName: '门店名称',
+    store_storeManagers: '门店经理',
+    store_address: '门店地址',
+    store_addStore: '创建门店',
+    store_resetStore: '修改门店',
+    store_loginAccount: '登录账号',
+    store_loginPassword: '登录密码',
+    store_: '创建门店',
+    store_: '创建门店',
+    //人事部 （personnel）
+    personnel_department: '部门',
+    personnel_addDepart: '添加部门',
+    personnel_editDepart: '编辑部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
+    personnel_: '部门',
 
 
 

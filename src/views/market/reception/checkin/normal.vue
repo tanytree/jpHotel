@@ -6,622 +6,341 @@
  -->
 
 <template>
-<!-- 统一的列表格式 -->
-<div>
-    <el-row>
-        <h3 v-if="operCheckinType=='a1' || operCheckinType=='a2'">入住信息</h3>
-        <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">预订信息</h3>
-        <h3 v-if="operCheckinType=='b3'">会议登记信息</h3>
-        <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="入住人：" prop="name">
-                            <!-- <el-select v-model="checkInForm.name" filterable remote placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName" @blur="selectBlur">
-                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
-                                    <el-row style="width:300px">
-                                        <el-col :span="8">{{item.name}}</el-col>
-                                        <el-col :span="8">{{item.mobile}}</el-col>
-                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
-                                    </el-row>
-                                </el-option>
-                            </el-select> -->
-
-                            <el-autocomplete style="width:200px" v-model="checkInForm.name" name="name"
-                                             :fetch-suggestions="remoteMethod" :highlight-first-item="true"
-                                             popper-class="popper-class" :trigger-on-focus="false"
-                                             placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
-                            <!-- &nbsp;&nbsp;&nbsp;
-                            <el-button type="primary" size="small">扫脸入住</el-button> -->
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="性别：" prop="sex">
-                            <el-radio-group v-model="checkInForm.sex">
-                                <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="证件类型：" prop="idcardType">
-                            <el-select v-model="checkInForm.idcardType" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="证件号：" prop="idcard">
-                            <el-input v-model="checkInForm.idcard" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
+    <!-- 统一的列表格式 -->
+    <div class="boss-index">
+        <div class="content">
+            <h3 v-if="operCheckinType=='a1' || operCheckinType=='a2'">入住信息</h3>
+            <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">预订信息</h3>
+            <h3 v-if="operCheckinType=='b3'">会议登记信息</h3>
+            <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules"
+                     label-width="120px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
+                <el-form-item label="入住人：" prop="name">
+                    <el-autocomplete v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
+                </el-form-item>
+                <el-form-item label="性别：" prop="sex">
+                    <el-radio-group v-model="checkInForm.sex">
+                        <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="证件类型：" prop="idcardType">
+                    <el-select v-model="checkInForm.idcardType">
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="证件号：" prop="idcard">
+                    <el-input v-model="checkInForm.idcard"></el-input>
+                </el-form-item>
                 <template v-if="operCheckinType=='a1'">
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="入住时间：" prop="checkinTime">
-                                <el-date-picker v-model="checkInForm.checkinTime"
-                                                disabled type="datetime"
-                                                style="width:200px" placeholder="选择日期"
-                                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
-                                                :picker-options="startTime"></el-date-picker>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="预离时间：" prop="checkoutTime">
-                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime"
-                                                style="width:200px" placeholder="选择日期"
-                                                :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss"
-                                                value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
-                            </el-form-item>
-                        </div>
-                    </el-col>
+                    <el-form-item label="入住时间：" prop="checkinTime">
+                        <el-date-picker v-model="checkInForm.checkinTime" disabled type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="startTime"></el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="预离时间：" prop="checkoutTime">
+                        <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" placeholder="选择日期" :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
+                    </el-form-item>
                 </template>
                 <template v-if="operCheckinType=='a2'">
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="计费规则：" prop="ruleHourId">
-                                <el-select v-model="checkInForm.ruleHourId" class="width200">
-                                    <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </div>
-                    </el-col>
+                    <el-form-item label="计费规则：" prop="ruleHourId">
+                        <el-select v-model="checkInForm.ruleHourId">
+                            <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
                 </template>
-
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.salesId" class="width200">
-                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="外部订单号：">
-                            <el-input v-model="checkInForm.thirdOrdernum" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="手机号：" prop="mobile">
-                            <el-input v-model="checkInForm.mobile" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="客源类型" prop="guestType">
-                            <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" class="width200" :disabled="true">
-                                <template slot="append">
-                                    <span @click="popup('guestTypeShow')">…</span></template>
-                            </el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="订单备注：">
-                            <el-input class="width200" type="textarea" v-model="checkInForm.remark"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="订单来源" prop="orderSource">
-                            <el-select v-model="checkInForm.orderSource" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="入住类型" prop="checkinType">
-                            <el-select v-model="checkInForm.checkinType" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                </el-col>
-                <el-col :span="6">
-                </el-col>
-            </el-row>
-        </el-form>
-        <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px" v-if="operCheckinType=='b1' || operCheckinType=='b2'|| operCheckinType=='b3'">
-            <el-row>
-                <!-- <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="预订人：" prop="name">
-                            <el-input v-model="checkInForm.name" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col> -->
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="入住人：" prop="name">
-                            <!-- <el-select v-model="checkInForm.name" allow-create filterable remote reserve-keyword placeholder="请输入姓名" :remote-method="remoteMethod" :loading="nameLoading" style="width:200px" @change="changeName">
-                                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item">
-                                    <el-row style="width:300px">
-                                        <el-col :span="8">{{item.name}}</el-col>
-                                        <el-col :span="8">{{item.mobile}}</el-col>
-                                        <el-col :span="8">身份证后四位：{{item.idcard.slice(-4)}}</el-col>
-                                    </el-row>
-                                </el-option>
-                            </el-select> -->
-                            <el-autocomplete style="width:200px" v-model="checkInForm.name"
-                                             name="name" :fetch-suggestions="remoteMethod"
-                                             :highlight-first-item="true" popper-class="popper-class"
-                                             :trigger-on-focus="false" placeholder="姓名查询" @select="changeName($event)"></el-autocomplete>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="手机号：" prop="prop">
-                            <el-input v-model="checkInForm.mobile" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="订单来源" prop="orderSource">
-                            <el-select v-model="checkInForm.orderSource" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType!='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="入住类型" prop="checkinType">
-                            <el-select v-model="checkInForm.checkinType" class="width200">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType=='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.salesId" class="width200">
-                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content" v-if="operCheckinType=='b2'">
-                        <el-form-item label="计费规则：" prop="ruleHourId">
-                            <el-select v-model="checkInForm.ruleHourId" class="width200">
-                                <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-<!--                        <el-form-item :label="operCheckinType=='b2'?'预抵时间：':'到店时间：'" prop="checkinTime">-->
-                        <el-form-item label="预抵时间" prop="checkinTime">
-                            <el-date-picker
-                                v-model="checkInForm.checkinTime"
-                                type="datetime" style="width:200px"
-                                placeholder="选择日期" :picker-options="startTime"
-                                format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
-                                @change="startTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType=='b1'">
-                    <div class="grid-content">
-                        <el-form-item label="入住天数：" prop="checkinDays">
-                            <el-input-number class="width200" v-model="checkInForm.checkinDays"
-                                             :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="预离时间：" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime"
-                                            type="datetime" style="width:200px"
-                                            placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss"
-                                            value-format="yyyy-MM-dd HH:mm:ss"
-                                            :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="保留时间：" prop="keepTime">
-                            <el-date-picker v-model="checkInForm.keepTime" type="datetime"
-                                            style="width:200px"
-                                            placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
-                                            :picker-options="leaveTime"></el-date-picker>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    <div class="grid-content">
-                        <el-form-item label="客源类型" prop="guestType">
-                            <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true" class="width200">
-                                <template slot="append"><span @click="popup('guestTypeShow')">…</span></template>
-                            </el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-
-                <el-col :span="6" v-if="operCheckinType!='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="销售员：">
-                            <el-select v-model="checkInForm.salesId" class="width200">
-                                <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6" v-if="operCheckinType!='b3'">
-                    <div class="grid-content">
-                        <el-form-item label="外部订单号：">
-                            <el-input v-model="checkInForm.thirdOrdernum" class="width200"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
+                <el-form-item label="销售员：">
+                    <el-select v-model="checkInForm.salesId">
+                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="外部订单号：">
+                    <el-input v-model="checkInForm.thirdOrdernum"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号：" prop="mobile">
+                    <el-input v-model="checkInForm.mobile"></el-input>
+                </el-form-item>
+                <el-form-item label="客源类型" prop="guestType">
+                    <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
+                        <template slot="append">
+                            <span @click="popup('guestTypeShow')">…</span>
+                        </template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="订单来源" prop="orderSource">
+                    <el-select v-model="checkInForm.orderSource">
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="入住类型" prop="checkinType">
+                    <el-select v-model="checkInForm.checkinType">
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="订单备注：">
+                    <el-input type="textarea" v-model="checkInForm.remark"></el-input>
+                </el-form-item>
+            </el-form>
+            <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules" label-width="120px" v-if="operCheckinType=='b1' || operCheckinType=='b2'|| operCheckinType=='b3'">
+                <el-form-item label="入住人：" prop="name">
+                    <el-autocomplete v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="姓名查询" @select="changeName($event)"></el-autocomplete>
+                </el-form-item>
+                <el-form-item label="手机号：" prop="prop">
+                    <el-input v-model="checkInForm.mobile"></el-input>
+                </el-form-item>
+                <el-form-item label="订单来源" prop="orderSource">
+                    <el-select v-model="checkInForm.orderSource">
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="入住类型" prop="checkinType" v-if="operCheckinType!='b3'">
+                    <el-select v-model="checkInForm.checkinType">
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="销售员：" v-if="operCheckinType=='b3'">
+                    <el-select v-model="checkInForm.salesId">
+                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="计费规则：" prop="ruleHourId" v-if="operCheckinType=='b2'">
+                    <el-select v-model="checkInForm.ruleHourId">
+                        <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="预抵时间" prop="checkinTime">
+                    <el-date-picker v-model="checkInForm.checkinTime" type="datetime" placeholder="选择日期" :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="入住天数：" prop="checkinDays" v-if="operCheckinType=='b1'">
+                    <el-input-number v-model="checkInForm.checkinDays" :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
+                </el-form-item>
+                <el-form-item label="预离时间：" prop="checkoutTime">
+                    <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="保留时间：" prop="keepTime">
+                    <el-date-picker v-model="checkInForm.keepTime" type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="客源类型" prop="guestType">
+                    <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
+                        <template slot="append"><span @click="popup('guestTypeShow')">…</span></template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="销售员：" v-if="operCheckinType!='b3'">
+                    <el-select v-model="checkInForm.salesId">
+                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="外部订单号：" v-if="operCheckinType!='b3'">
+                    <el-input v-model="checkInForm.thirdOrdernum"></el-input>
+                </el-form-item>
                 <template v-if="operCheckinType=='b3'">
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="会议名称：" prop="meetingName">
-                                <el-input v-model="checkInForm.meetingName" class="width200"></el-input>
-                            </el-form-item>
-                        </div>
-                    </el-col>
-                    <el-col :span="6">
-                        <div class="grid-content">
-                            <el-form-item label="单位名称：" prop="enterName">
-                                <el-input v-model="checkInForm.enterName" class="width200"></el-input>
-                            </el-form-item>
-                        </div>
-                    </el-col>
+                    <el-form-item label="会议名称：" prop="meetingName">
+                        <el-input v-model="checkInForm.meetingName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="单位名称：" prop="enterName">
+                        <el-input v-model="checkInForm.enterName"></el-input>
+                    </el-form-item>
                 </template>
-            </el-row>
-            </br>
-            <el-row>
-                <el-col :span="12">
-                    <div class="grid-content">
-                        <el-form-item label="订单备注：">
-                            <el-input class="width200" type="textarea" v-model="checkInForm.remark"></el-input>
-                        </el-form-item>
-                    </div>
-                </el-col>
-            </el-row>
-        </el-form>
-    </el-row>
-    <el-row style="margin-bottom:60px">
-        <h3>房间信息</h3>
-        <el-form inline size="mini">
-            <el-row>
-                <el-col :span="17">
-                    <div class="grid-content">
-                        <el-row>
-                            <el-radio-group v-model="getRoomsForm.changeType" size="small" @change="getDataList">
+                <el-form-item label="订单备注：">
+                    <el-input type="textarea" v-model="checkInForm.remark"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="content last">
+            <h3>房间信息</h3>
+            <div class="roomMsg">
+                <div class="left">
+                    <el-form inline size="small">
+                        <el-form-item>
+                            <el-radio-group v-model="getRoomsForm.changeType" @change="getDataList">
                                 <el-radio :label="1" border>可改房价</el-radio>
                                 <el-radio :label="2" border>不可改房价</el-radio>
                             </el-radio-group>
-                            <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
+                        </el-form-item>
+                        <el-form-item>
+                            <el-select v-model="getRoomsForm.bedCount" @change="getDataList">
                                 <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                             </el-select>
-                        </el-row>
-                        <br />
-                        <el-row>
-                            <el-col :span="8" v-for="v in roomList" :key="v.roomTypeId">
-                                <div class="grid-content rooms">
-                                    <div class="grid-cell" :class="activeRoomCheck(v.roomTypeId)?'active':''">
-                                        <div class="wrap">
-                                            <el-row class="row">
-                                                <el-col :span="14">
-                                                    <span>{{v.roomTypeName}}</span>
-                                                </el-col>
-                                                <el-col :span="10">
-                                                    <div style="text-align: right">
-                                                        <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" label="描述文字" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="row">
-                                                <el-col :span="14">
-                                                    <el-button type="text" size="mini">可订{{v.reserveTotal}}</el-button>
-                                                </el-col>
-                                                <el-col :span="10">
-                                                    <div style="text-align: right">
-
-                                                        <el-input placeholder="" size="mini" style="width:60px" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
-                                                        <em>{{v.todayPrice}}</em>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                        </div>
+                        </el-form-item>
+                    </el-form>
+                    <div class="roomBtm">
+                        <div class="roomBox" v-for="v in roomList" :key="v.roomTypeId">
+                            <div class="rooms" :class="activeRoomCheck(v.roomTypeId)?'active':''">
+                                <div class="row">
+                                    <span>{{v.roomTypeName}}</span>
+                                    <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" label="描述文字" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
+                                </div>
+                                <div class="row">
+                                    <span class="allow">可订{{v.reserveTotal}}</span>
+                                    <div>
+                                        <el-input size="mini" class="num" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
+                                        <del>{{v.todayPrice}}</del>
                                     </div>
                                 </div>
-                            </el-col>
-                        </el-row>
+                            </div>
+                        </div>
                     </div>
-                </el-col>
-                <el-col :span="7">
-                    <div class="grid-content">
-                        <el-row>
-                            <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
-                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading='liveLoading'></i>添加入住人</el-button>&nbsp;&nbsp;
-                            <el-button @click="liveCard_in_person_list" v-if="!operCheckinType.startsWith('b')"><i v-loading="liveCardLoading"></i>制卡</el-button>&nbsp;&nbsp;
-                        </el-row>
-                        <br />
-                        <el-row class="roomSelect">
-                            <ul>
-                                <li v-for="(v,index) in waitingRoom" :key="index">
-                                    <div class="grid-content">
-                                        <div class="grid-cell">
-                                            <div class="wrap">
-                                                <el-row class="row">
-                                                    <el-col :span="14">
-                                                        <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span>
-                                                    </el-col>
-                                                    <el-col :span="10">
-                                                        <div style="text-align: right">
-                                                            <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
-                                                        </div>
-                                                    </el-col>
-                                                </el-row>
-                                                <el-row class="row" v-if="v.roomsArr&&v.roomsArr.length">
-                                                    <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
-                                                </el-row>
-                                                <!-- <el-row class="row">
-                                                    <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
-                                                    <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
-                                                </el-row> -->
-                                                <!-- <el-row class="row">
-                                                    <el-col :span="14">
-                                                        <el-button type="text" size="mini">可订{{v.reserveTotal}}</el-button>
-                                                    </el-col>
-                                                    <el-col :span="10">
-                                                        <div style="text-align: right">
-                                                            <el-button type="text" style="color:#666">
-                                                                {{v.num}}间
-                                                            </el-button>
-
-                                                        </div>
-                                                    </el-col>
-                                                </el-row> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </el-row>
-
+                </div>
+                <div class="right">
+                    <el-form inline size="small">
+                        <el-form-item>
+                            <el-button @click="empty_row_houses">自动排房</el-button>
+                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading='liveLoading'></i>添加入住人</el-button>
+                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading="liveCardLoading"></i>制卡</el-button>
+                        </el-form-item>
+                    </el-form>
+                    <div class="roomBtm">
+                        <div v-for="(v,index) in waitingRoom" :key="index">
+                            <div class="row">
+                                <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span>
+                                <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
+                            </div>
+                            <div class="row">
+                                <div class="tags">
+                                    <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </el-col>
-            </el-row>
-        </el-form>
-    </el-row>
-    <!-- 编辑or详情弹窗 -->
-    <el-row class="fixedFoot">
-        <div class="wrap">
-            <el-button type="primary" @click="hotel_check_in(2)">保存</el-button>
-            <el-button @click="hotel_check_in(3)">保存后继续办理新{{typeText}}</el-button>
-        </div>
-    </el-row>
-
-    <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" title="排房" width="800px">
-        <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
-            <el-form-item label="朝向:" class="" style="margin-bottom:0">
-                <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
-                    <el-checkbox v-for="(item,key,index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{item}}</el-checkbox>
-                </el-checkbox-group>
-            </el-form-item>
-            <el-form-item label="属性:" class="" style="margin-bottom:0">
-                <el-checkbox v-model="hotelRoomListParams.windowFlag" @change="hotel_room_list">有窗</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.roadFlag" @change="hotel_room_list">靠马路</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.smokeFlag" @change="hotel_room_list">无烟房</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.noiseFlag" @change="hotel_room_list">非噪音房</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.temperatureFlag" @change="hotel_room_list">非高温房</el-checkbox>
-            </el-form-item>
-            <div class="rowRoomsList">
-                <div class="wrap">
-                    <el-row>
-                        <!-- <h3>新加坡假日酒店</h3> -->
-                        <el-row class="roomsInserted" :gutter="10">
-                            <el-col v-for="v in rowRoomCurrentList" :key="v.id" :span="3" style="margin-bottom:10px">
-                                <el-tag :type="checkIsSelect(v)?'danger':'info'" effect="dark" class="tag" @click="rowRoomCurrentListItemAdd(v)">{{v.houseNum}}</el-tag>
-                            </el-col>
-                        </el-row>
-                    </el-row>
                 </div>
             </div>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
+        </div>
+        <!-- 编辑or详情弹窗 -->
+        <div class="fixedFoot">
+            <div class="wrap">
+                <el-button type="primary" @click="hotel_check_in(2)">保存</el-button>
+                <el-button @click="hotel_check_in(3)">保存后继续办理新{{typeText}}</el-button>
+            </div>
+        </div>
+
+        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" title="排房" width="800px">
+            <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
+                <el-form-item label="朝向:" class="" style="margin-bottom:0">
+                    <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
+                        <el-checkbox v-for="(item,key,index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{item}}</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label="属性:" class="" style="margin-bottom:0">
+                    <el-checkbox v-model="hotelRoomListParams.windowFlag" @change="hotel_room_list">有窗</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.roadFlag" @change="hotel_room_list">靠马路</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.smokeFlag" @change="hotel_room_list">无烟房</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.noiseFlag" @change="hotel_room_list">非噪音房</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.temperatureFlag" @change="hotel_room_list">非高温房</el-checkbox>
+                </el-form-item>
+                <div class="rowRoomsList">
+                    <div class="wrap">
+                        <el-row>
+                            <!-- <h3>新加坡假日酒店</h3> -->
+                            <el-row class="roomsInserted" :gutter="10">
+                                <el-col v-for="v in rowRoomCurrentList" :key="v.id" :span="3" style="margin-bottom:10px">
+                                    <el-tag :type="checkIsSelect(v)?'danger':'info'" effect="dark" class="tag" @click="rowRoomCurrentListItemAdd(v)">{{v.houseNum}}</el-tag>
+                                </el-col>
+                            </el-row>
+                        </el-row>
+                    </div>
+                </div>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="rowRoomShow = false">取消</el-button>
             <el-button size="small" type="primary" @click="db_row_houses">确定</el-button>
         </span>
-    </el-dialog>
-    <el-dialog top="0" :visible.sync="guestTypeShow" class="guestTypeDia" title="客源类型" width="500px">
-        <el-form :model="checkInForm" style="margin-top:-20px">
-            <el-form-item label="客人类型:" class="" style="margin-bottom:0">
-                <el-radio-group v-model="checkInForm.guestType">
-                    <el-radio v-for="(item,key,index) of $t('commons.guestType')" :label="key" :key="index">{{item}}</el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label="" class="" style="margin-bottom:0" label-width="0" v-if="checkInForm.guestType==2||checkInForm.guestType==3">
-                <el-input type="text"></el-input>
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="guestTypeShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="guestTypeShow = false">确定</el-button>
-        </span>
-    </el-dialog>
-    <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
-        <el-table :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :default-expand-all='true' :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-            <el-table-column label="房号/房型" width="200">
-                <template slot-scope="scope">
-                    {{scope.row.isChild?'':scope.row.room?scope.row.room.houseNum:''}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="realPrice" label="房价" width="150">
-            </el-table-column>
-            <el-table-column label="姓名" width="100">
-                <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-input v-model="row.params.name" placeholder="请输入姓名"></el-input>
-                    </el-row>
-                    <el-row v-else>
-                        <el-input v-if="row.edit" v-model="row.name"></el-input>
-                        <span v-else>{{row.name}}</span>
-                    </el-row>
-                </template>
-            </el-table-column>
-            <el-table-column prop="groupName" label="证件类型" width="120">
-                <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-select v-model="row.params.idcardType" style="width:100%">
-                            <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
-                        </el-select>
-                    </el-row>
-                    <el-row v-else>
-                        <el-select v-if="row.edit" v-model="row.idcardType" style="width:100%">
-                            <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
-                        </el-select>
-                        <span v-else>{{row.idcardType | F_idcardType}}</span>
-                    </el-row>
-                </template>
+        </el-dialog>
+        <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
+            <el-table v-loading="loading" :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;"
+                      row-key="id" border :default-expand-all='true'
+                      :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+                <el-table-column label="房号/房型" width="100">
+                    <template slot-scope="scope">
+                        {{scope.row.isChild?'':scope.row.houseNum}}
+                        {{scope.row.isChild?'':scope.row.roomTypeName}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="realPrice" label="房价" width="100">
+                </el-table-column>
+                <!-- <el-table-column prop="" label="排房" width="150">
+                </el-table-column> -->
+                <el-table-column label="姓名" width="150">
+                    <template slot-scope="{row}">
+                        <el-row>
+                            <el-input v-model="row.name" placeholder="请输入姓名"></el-input>
+                        </el-row>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="groupName" label="证件类型" width="150">
+                    <template slot-scope="{row}">
+                        <el-row>
+                            <el-select v-model="row.idcardType" style="width:100%">
+                                <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
+                            </el-select>
+                        </el-row>
+                    </template>
 
-            </el-table-column>
-            <el-table-column prop="groupName" label="证件号码">
-                <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-input v-model="row.params.idcard" placeholder="请输入证件号码"></el-input>
-                    </el-row>
-                    <el-row v-else>
-                        <el-input v-if="row.edit" v-model="row.idcard"></el-input>
-                        <span v-else>{{row.idcard}}</span>
-                    </el-row>
-                </template>
-
-            </el-table-column>
-            <el-table-column label="性别" width="120">
-                <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-select v-model="row.params.sex" style="width:100%">
-                            <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index"></el-option>
-                        </el-select>
-                    </el-row>
-                    <el-row v-else>
-                        <el-select v-if="row.edit" v-model="row.sex" style="width:100%">
-                            <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index">{{item}}</el-option>
-                        </el-select>
-                        <span v-else>{{row.sex | F_sex}}</span>
-                    </el-row>
-                </template>
-            </el-table-column>
-            <el-table-column prop="groupName" label="手机号" width="150">
-                <template slot-scope="{row}">
-                    <el-row v-if="!row.isChild">
-                        <el-input v-model="row.params.mobile" placeholder="请输入手机号"></el-input>
-                    </el-row>
-                    <el-row v-else>
-                        <el-input v-if="row.edit" v-model="row.mobile"></el-input>
-                        <span v-else>{{row.mobile}}</span>
-                    </el-row>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作" width="180">
-                <template slot-scope="scope">
-                    <el-button type="text" size="mini" @click="editItem_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">保存</el-button>
-                    <el-button type="text" size="mini" @click="cancel_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">取消</el-button>
-                    <el-button type="text" size="mini" @click="edit_live_in_person(scope.row.isChild?scope.row:scope.row.params)" v-if="scope.row.isChild&&!scope.row.edit">编辑</el-button>
-                    <el-button type="text" size="mini" @click="del_live_in_person(scope.row)" v-if="scope.row.isChild && !scope.row.isIndex0">删除</el-button>
-                    <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addItem_live_in_person(scope.$index,scope.row.params)">
-                        <template v-if="scope.row.children.length">+同来宾客</template>
-                        <template v-else>+入住人</template>
-                    </el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-        <span slot="footer" class="dialog-footer">
+                </el-table-column>
+                <el-table-column prop="groupName" label="证件号码">
+                    <template slot-scope="{row}">
+                        <el-row>
+                            <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>
+                        </el-row>
+                    </template>
+                </el-table-column>
+                <el-table-column label="性别" width="120">
+                    <template slot-scope="{row}">
+                        <el-row>
+                            <el-select v-model="row.sex" style="width:100%">
+                                <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index"></el-option>
+                            </el-select>
+                        </el-row>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="groupName" label="手机号" width="150">
+                    <template slot-scope="{row}">
+                        <el-row>
+                            <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
+                        </el-row>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="180">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="mini" @click="" v-if="scope.row.isChild && !scope.row.isIndex0">删除</el-button>
+                        <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
+                            <template>+同来宾客</template>
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="liveInPersonCancel">取消</el-button>
-            <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
+             <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button>
         </span>
-    </el-dialog>
-    <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
-        <el-row>
-            <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
-            <el-col :span="8" style="float:right">
-                <el-button @click="make_card_status">制卡</el-button>
-                <el-button>清卡</el-button>
-                <el-button>读卡</el-button>
-            </el-col>
-        </el-row>
-        <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
-            <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="name" label="房间号" width="200">
-                <template slot-scope="{row}">
-                    {{row.room?row.room.houseNum:''}}
-                </template>
-            </el-table-column>
-            <el-table-column prop="name" label="本次制卡状态">
-                <template slot-scope="{row}">
-                    {{F_markCard(row.markCard)}}
-                </template>
-            </el-table-column>
-        </el-table>
-        <span slot="footer" class="dialog-footer">
+        </el-dialog>
+        <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
+            <el-row>
+                <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
+                <el-col :span="8" style="float:right">
+                    <el-button @click="make_card_status">制卡</el-button>
+                    <el-button>清卡</el-button>
+                    <el-button>读卡</el-button>
+                </el-col>
+            </el-row>
+            <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
+                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column prop="name" label="房间号" width="200">
+                    <template slot-scope="{row}">
+                        {{row.room?row.room.houseNum:''}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="name" label="本次制卡状态">
+                    <template slot-scope="{row}">
+                        {{F_markCard(row.markCard)}}
+                    </template>
+                </el-table-column>
+            </el-table>
+            <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="mackcadeCancel">取消</el-button>
         </span>
-    </el-dialog>
-</div>
+        </el-dialog>
+        <el-dialog top="0" :show-close='false' title="添加入住人" :visible.sync="addLivePersonShow" width="60%">
+            <customer v-if="addLivePersonShow" type="checkin" :liveData="liveData" :type="order" @personCallback="personCallback"></customer>
+
+        </el-dialog>
+        <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="checkInForm"></guestChoose>
+    </div>
 </template>
 
 <script>
@@ -653,8 +372,14 @@ import {
     mapActions
 } from "vuex";
 const vm = window.vm;
+import customer from '@/components/front/customer2'
+import guestChoose from '@/views/market/reception/checkin/guestChoose'
 export default {
     props: ['operCheckinType'],   //b1：普通预定 b2:时租房预定 b3:会场预定     a1: 普通入住  a2:时租入住
+    components: {
+        customer,
+        guestChoose
+    },
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -665,6 +390,8 @@ export default {
     },
     data() {
         return {
+            liveData: [],  //添加入住人
+            addLivePersonShow: false,  //是否显示添加入住人组件
             afterToday: {
                 disabledDate(time) {
                     return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
@@ -723,6 +450,7 @@ export default {
             ruleHourList: [],
             //预定和入住人信息
             checkInForm: {
+                checkInRoomJson: []
             },
             rules: {
                 name: [{
@@ -828,7 +556,6 @@ export default {
     },
     watch: {
         operCheckinType() {
-            debugger;
             this.initForm();
             // this.handleOperCheckinType()
             console.log(this.checkInForm)
@@ -871,14 +598,6 @@ export default {
                             console.log(this.checkInForm[arr[k]])
                             len++
                         }
-                    }
-                    if (len == arr.length) {
-                        window.setTimeout(() => {
-
-                           // this.hotel_check_in(1)
-
-                        }, 2000)
-
                     }
                 }
 
@@ -927,6 +646,7 @@ export default {
                 checkInReserveId: '',   //传入改值，将会进行编辑预定客人信息  String选填
                 meetingName: '',    //会议名称  String选填
                 enterName: '',      //单位名称 String选填
+                checkInRoomJson: [],   //排房信息json集合字符串
             }
             this.handleOperCheckinType();
             this.getDataList();
@@ -964,8 +684,9 @@ export default {
         popup(type, row) {
             //客源类型选择
             if(type == 'guestTypeShow') {
-               this.guestTypeShow = true;
-               this.checkInForm.guestType = this.checkInForm.guestType ? this.checkInForm.guestType.toString() : '1';
+                // this.guestTypeShow = true;
+                this.checkInForm.guestType = this.checkInForm.guestType ? this.checkInForm.guestType.toString() : '1';
+                this.$refs.guestChoose.dialogOpen(this.checkInForm);
             } else if (type == 'bin') {
                 this.$F.doRequest(this, '/pms/hotelgoods/up_status', {
                     id: row.id,
@@ -981,8 +702,7 @@ export default {
             }
         },
 
-        hotel_check_in(type, callback) {
-            debugger
+        hotel_check_in(type) {
             this.isSubmitErr = false;
             let url = ''
             let operCheckinType = this.operCheckinType
@@ -992,112 +712,68 @@ export default {
                 url = '/pms/reserve/reserve_check_in'
             }
             let ajax = () => {
-                this.$F.doRequest(this, url, this.checkInForm, (data) => {
-                    if (type == 1 || type == 4) {
-                        if (operCheckinType == 'a1' || operCheckinType == 'a2') {
-                            console.log(data.checkinId)
-                            this.checkInForm.checkInId = data.checkinId
-                        } else {
-                            this.checkInForm.checkInId = data.checkInReserveId
-                            this.checkInForm.checkInReserveId = data.checkInReserveId
-                        }
-                        if (type == 1) {
-                            this.$F.doRequest(this, '/pms/reserve/reserve_oper', {
-                                checkInReserveId: data.checkInReserveId,
-                                state: 2
-                            }, (data) => {
-                                console.log('预订单直接转为确认状态')
-                            })
-                        } else {
-                            callback();
-                        }
-                        this.$forceUpdate()
-                        console.log(this.checkInForm)
-                        console.log('沉浸式提交')
-                        console.log(this.operCheckinType)
-                        console.log(operCheckinType)
-
-                    } else if (type == 2) {
-                        if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
-                            if (!this.liveInPersonData.length) {
-                                this.isSubmitErr = true
-                                this.$message.error('请添加入住人')
-                                this.live_in_person_list()
-                                return false
-                            }
-
-                            if (this.liveCardData == '') {
-                                this.isSubmitErr = true
-                                this.$message.error('请制卡')
-                                this.liveCard_in_person_list()
-                                return false
-                            }
-                            if (this.liveCardData.unfinished > 0) {
-                                this.isSubmitErr = true
-                                this.$message.error('请制卡')
-                                this.liveCard_in_person_list()
-                                return false
-                            }
-                        }
+                let params = this.$F.deepClone(this.checkInForm);
+                params.checkInRoomJson = JSON.stringify(params.checkInRoomJson);
+                this.$F.doRequest(this, url, params, (data) => {
+                    if (type == 2) {
                         this.$message({
-                            message: '办理成功',
+                            message: 'Success',
                             type: 'success'
                         });
                         window.setTimeout(() => {
-                            this.$router.push('/orderdetail?id=' + data.checkinId)
+                            if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
+                                this.$router.push('/orderdetail?id=' + (data.checkInReserveId || data.checkinId));
+                            } else {
+                                this.$router.push('/bookingDetail?id=' + (data.checkInReserveId || data.checkinId));
+                            }
                         }, 2000)
                     } else if (type == 3) {
                         this.$message({
                             message: '办理成功',
                             type: 'success'
                         });
-                        for (let k in this.checkInForm) {
-                            if (k != 'operCheckinType') {
-                                this.checkInForm[k] = ''
-                            }
-                        }
-                        this.waitingRoom = []
-                        this.liveInPersonData = []
+                        this.initForm();
+                        this.waitingRoom = [];
+                        this.liveInPersonData = [];
                     }
                 })
             }
-
-            if (type == 2 || type == 3) {
-                if (!this.checkInForm.checkInId) {
-                    this.$message.error('请输入入住信息后操作')
-                    return false
-                }
-                if (!this.waitingRoom.length) {
-                    this.$message.error('请选择房型')
-                    return false
-                }
-                if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
-                    for (let k= 0;k < this.waitingRoom.length;k++) {
-                        if (!this.waitingRoom[k].roomsArr) {
-                            this.$message.error('请选择房间')
+            this.$refs.checkInForm.validate((valid) => {
+                if (valid) {
+                    if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
+                        if (!this.waitingRoom.length) {
+                            this.$message.error('请选择房型')
                             return false
                         }
-                        if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
-                            this.$message.error('请选择房间')
-                            return false
+                        for (let k= 0;k < this.waitingRoom.length;k++) {
+                            if (!this.waitingRoom[k].roomsArr) {
+                                this.$message.error('请选择房间')
+                                return false
+                            }
+                            if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
+                                this.$message.error('请选择房间')
+                                return false
+                            }
                         }
+                        // if (this.liveCardData == '') {
+                        //     this.isSubmitErr = true
+                        //     this.$message.error('请制卡')
+                        //     // this.liveCard_in_person_list()
+                        //     return false
+                        // }
+                        // if (this.liveCardData.unfinished > 0) {
+                        //     this.isSubmitErr = true
+                        //     this.$message.error('请制卡')
+                        //     // this.liveCard_in_person_list()
+                        //     return false
+                        // }
                     }
+                    ajax();
+                } else {
+                    console.log('error submit!!');
+                    return false;
                 }
-
-                this.$refs.checkInForm.validate((valid) => {
-                    if (valid) {
-                        console.log(this.checkInForm)
-                        ajax()
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            } else {
-                console.log(this.checkInForm)
-                ajax()
-            }
-
+            });
         },
 
         /**编辑 */
@@ -1128,12 +804,12 @@ export default {
                 if (this.waitingRoom[k].roomTypeId == item.roomTypeId) {
                     if (item.num > 0) {
                         this.waitingRoom[k].price = item.price
-                        this.waitingRoom[k].todayPrice = item.todayPrice
+                        this.waitingRoom[k].todayPrice = item.todayPrice;
                         this.waitingRoom[k].num = item.num
                     } else {
                         this.waitingRoom.splice(k, 1)
                     }
-                    exist = true
+                    exist = true;
                     break
                 }
             }
@@ -1152,28 +828,13 @@ export default {
         },
 
         rowRoomByItem(item, index) {
-            debugger
-            if (this.checkInForm.checkInId) {
-                this.rowRoomByItem2(item, index);
-            }else {
-                this.hotel_check_in(4, () => {
-                    if (!this.checkInForm.checkInId) {
-                        this.$message.error('请完善入住信息后操作');
-                        return
-                    }
-                    this.rowRoomByItem2(item, index);
-                });
-            }
-        },
-
-        rowRoomByItem2(item, index) {
-            debugger
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item))
             this.rowRoomCurrentIndex = index
             this.hotelRoomListParams.roomTypeId = item.roomTypeId
             this.rowRoomShow = true
             this.hotel_room_list()
         },
+
         //计费规则时租房计费列表
         hotel_rule_hour_list() {
             let params = {
@@ -1215,120 +876,127 @@ export default {
                 this.$message.error('排房数量超过订房数量');
                 return
             }
-            let ids = [];
-            this.rowRoomCurrentItem.roomsArr.map((item) => {
-                ids.push(item.id);
+            this.rowRoomCurrentItem.roomsArr.forEach( item => {
+                let ids = [];
+                this.rowRoomCurrentItem.roomsArr.map((item) => {
+                    ids.push(item.id);
+                })
+                this.checkInForm.checkInRoomJson.push({
+                    roomTypeId: this.rowRoomCurrentItem.roomTypeId,
+                    roomId: ids.join(','),
+                    reservePrice: this.rowRoomCurrentItem.todayPrice,
+                    realPrice: this.rowRoomCurrentItem.price
+                })
             })
-            let params = {
-                checkinRoomType: 1,
-                roomTypeId: this.rowRoomCurrentItem.roomTypeId,
-                checkinId: this.checkInForm.checkInId,
-                checkinReserveId: this.checkInForm.checkInId,
-                roomId: ids,
-                reservePrice: this.rowRoomCurrentItem.todayPrice,
-                realPrice: this.rowRoomCurrentItem.price
-            }
-            this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
-                this.$message({
-                    message: '排房成功',
-                    type: 'success'
-                });
-                this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
-                this.rowRoomShow = false
-                this.$forceUpdate()
-            })
+            this.$message({
+                message: 'Success',
+                type: 'success'
+            });
+            this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
+            this.rowRoomShow = false;
+            // [{"roomTypeId":"xxxxxxx","roomId":"xxxxx,xxxxx","reservePrice":333,"realPrice":185},
+            //     {"roomTypeId":"xxxxxxx","roomId":"xxxxx,xxxxx","reservePrice":333,"realPrice":185}]
+
+            // let params = {
+            //     checkinRoomType: 1,
+            //     roomTypeId: this.rowRoomCurrentItem.roomTypeId,
+            //     checkinId: this.checkInForm.checkInId,
+            //     checkinReserveId: this.checkInForm.checkInId,
+            //     roomId: ids,
+            //     reservePrice: this.rowRoomCurrentItem.todayPrice,
+            //     realPrice: this.rowRoomCurrentItem.price
+            // }
+            // this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
+            //     this.$message({
+            //         message: '排房成功',
+            //         type: 'success'
+            //     });
+            //     this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
+            //     this.rowRoomShow = false
+            //     this.$forceUpdate()
+            // })
         },
+
         //自动排房
-        page_row_houses() {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请输入入住信息后操作')
-                return false
-            }
-            if (this.waitingRoom.length < 1) {
-                this.$message.error('请选择房型后操作');
-                return
-            }
+        empty_row_houses() {
             let roomTypeId = [],
-                number = 0;
+                numbers = [];
             this.waitingRoom.forEach(element => {
                 let thisNum = element.num - (element.roomsArr?element.roomsArr.length:0)
-                number += thisNum
+                // number += thisNum
+                numbers.push(thisNum);
                 if(thisNum>0){
-                    for(let i = 0;i<thisNum;i++){
-                        roomTypeId.push(element.roomTypeId);
+                    for(let i = 0;i < thisNum;i++){
+                        if (roomTypeId.indexOf(element.roomTypeId) == -1) {
+                            roomTypeId.push(element.roomTypeId);
+                        }
                     }
                 }
             });
-            if (number < 1) {
+            if (numbers.length < 1)
                 return
-            }
-
             let params = {
                 checkinRoomType: 1,
-                roomTypeId: roomTypeId,
-                rowHousesTotal: number
+                roomTypeId: roomTypeId.join(','),
+                rowHousesTotal : numbers.join(',')
             }
-            if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
-                params.checkinId = this.checkInForm.checkInId
-            }
-            if (this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3') {
-                params.checkinReserveId = this.checkInForm.checkInId
-            }
+            // if (this.operCheckinType == 'a1' || this.operCheckinType == 'a2') {
+            //     params.checkinId = this.checkInForm.checkInId
+            // }
+            // if (this.operCheckinType == 'b1' || this.operCheckinType == 'b2' || this.operCheckinType == 'b3') {
+            //     params.checkinReserveId = this.checkInForm.checkInId
+            // }
             let setRooms = (key, item) => {
+                this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
+                this.rowRoomShow = false;
                 console.log(key)
                 console.log(item)
+                console.log(this.waitingRoom)
                 for (let k in this.waitingRoom) {
                     if (this.waitingRoom[k].roomTypeId == key) {
                         if (!this.waitingRoom[k].roomsArr) {
                             this.waitingRoom[k].roomsArr = []
                         }
+                        let object = this.waitingRoom.filter((temp) => {
+                            return temp.roomTypeId == item.roomTypeId
+                        })[0];
                         this.waitingRoom[k].roomsArr.push({
+                            roomTypeId: item.roomTypeId,
+                            roomId: item.id,
                             houseNum: item.houseNum,
-                            id: item.id
+                            reservePrice: object.price,
+                            realPrice: object.todayPrice
                         })
                     }
                 }
             }
-            this.$F.doRequest(this, '/pms/checkin/page_row_houses', params, (res) => {
+            this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
                 let data = res
-                this.$message({
-                    message: '排房成功',
-                    type: 'success'
-                });
+                // this.$message({
+                //     message: '排房成功',
+                //     type: 'success'
+                // });
                 for (let k in data) {
-                    // for (let j in data[k]) {
-                    //     setRooms(k, data[k][j])
-                    // }
+                    let ids = [];
+                    data[k].forEach((item) => {
+                        ids.push(item.id);
+                    })
                     data[k].forEach(element => {
                         setRooms(k, element)
                     });
                 }
+                console.log(this.waitingRoom);
                 this.$forceUpdate()
             })
         },
         //移除排房
         delete_db_row_houses(item, id, i) {
-            let params = {
-                checkinRoomType: 1,
-                roomTypeId: item.roomTypeId,
-                checkinId: this.checkInForm.checkInId,
-                checkinReserveId: this.checkInForm.checkInId,
-                roomId: id
-            };
-            this.$F.doRequest(this, '/pms/checkin/delete_db_row_houses', params, (res) => {
-                this.$message({
-                    message: '移除成功',
-                    type: 'success'
-                });
-                item.roomsArr.splice(i, 1)
-                this.$forceUpdate()
-            })
+            item.roomsArr.splice(i, 1);
+            this.$forceUpdate()
         },
         rowRoomCurrentListItemAdd(item) {
-            if (!this.rowRoomCurrentItem.roomsArr) {
-                this.rowRoomCurrentItem.roomsArr = [];
-            }
-            let exist = false
+            this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
+            let exist = false;
             for (let k in this.rowRoomCurrentItem.roomsArr) {
                 if (item.id == this.rowRoomCurrentItem.roomsArr[k].id) {
                     this.rowRoomCurrentItem.roomsArr.splice(k, 1)
@@ -1337,11 +1005,12 @@ export default {
                 }
             }
             if (!exist) {
-                this.rowRoomCurrentItem.roomsArr.push({
-                    houseNum: item.houseNum,
-                    id: item.id,
-                    checkinNum: item.hotelRoomType.checkinNum
-                })
+                // this.rowRoomCurrentItem.roomsArr.push({
+                //     houseNum: item.houseNum,
+                //     id: item.id,
+                //     checkinNum: item.hotelRoomType.checkinNum
+                // })
+                this.rowRoomCurrentItem.roomsArr.push(item);
             }
             this.$forceUpdate()
             console.log(this.rowRoomCurrentItem)
@@ -1357,232 +1026,55 @@ export default {
             }
             return false
         },
-        //获取入住人
-        liveCard_in_person_list() {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请输入入住信息后操作')
-                return false
-            }
-            if (this.operCheckinType != 'b3') {
-                if (!this.liveInPersonData.length) {
-                    this.$message.error('请添加入住人')
-                    this.live_in_person_list()
-                    return false
-                }
-                // for (let k in this.liveInPersonData) {
-                //     if (!this.liveInPersonData[k].personList.length) {
-                //         this.$message.error('请添加入住人')
-                //         this.live_in_person_list()
-                //         return false
-                //     }
-                // }
-            }
-            let params = {
-                type: 3,
-                checkinId: this.checkInForm.checkInId,
-                pageIndex: 1,
-                pageSize: 999
-            };
-            this.liveCardLoading = true;
-            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
-                // this.liveCardData = res.checkInRoomList
-                this.liveCardData = res
-                this.liveCardData.done = 0;
-                this.liveCardData.unfinished = 0;
-                let list = res.checkInRoomList;
-                for (let k in list) {
-                    if (list[k].markCard == 2) {
-                        this.liveCardData.done++
-                    }
-                    if (list[k].markCard == 1) {
-                        this.liveCardData.unfinished++
-                    }
-                }
-                this.liveCardLoading = false
-                this.mackcade = true
-                this.$forceUpdate()
-            })
+        //入住人回调
+        personCallback(data) {
+            debugger
+            this.checkInForm.checkInRoomJson = data;
+            this.addLivePersonShow = false;
         },
         live_in_person_list() {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error('请输入入住信息后操作')
-                return false
-            }
-            let flag = false;
-            console.log(this.waitingRoom)
-            for (let k in this.waitingRoom) {
-                if (this.waitingRoom[k].roomsArr && this.waitingRoom[k].roomsArr.length) {
-                    flag = true
-                }
-            }
-            if (!flag) {
-                this.$message.error('请排房后操作');
-                return
-            }
-            let params = {
-                type: 1,
-                checkinId: this.checkInForm.checkInId,
-                pageIndex: 1,
-                pageSize: 999
-            };
-            this.liveLoading = true;
-            this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
-                this.liveLoading = false
-                let data = res.checkInRoomList
-                this.liveInPersonShow = true
-                for (let k=0;k<data.length;k++) {
-                    console.log(k)
-                    data[k].params = {
-                        checkinRoomId: data[k].room ? data[k].room.id : '',
-                        name: '',
-                        idcardType: '',
-                        idcard: '',
-                        sex: '',
-                        mobile: '',
-                        checkinId: this.checkInForm.checkInId,
-                        checkInPersonId: '',
-                        // hasChildren: false
-                    }
-                    //将登记人添加为入住人
-                    if (data[k].personList.length < 1) {
-                        let params = {
-                            checkinRoomId: data[k].roomId,
-                            name: this.checkInForm.name,
-                            idcardType: this.checkInForm.idcardType,
-                            idcard: this.checkInForm.idcard,
-                            sex: this.checkInForm.sex,
-                            mobile: this.checkInForm.mobile,
-                            checkinId: this.checkInForm.checkInId,
-                            checkInPersonId: ''
-                        };
-                        this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                            this.live_in_person_list()
-                            this.$forceUpdate()
-                        })
-                    }
-                    if (data[k].personList && data[k].personList.length) {
-                        // data[k].params = data[k].personList[0]
-                        data[k].children = []
-                        data[k].personList.forEach((element, index) => {
-                            element.sex = element.sex.toString()
-                            element.idcardType = element.idcardType.toString()
-                            element.isChild = true
-                            element.edit = false
-                            if(index>0){
-                            element.isIndex0 = false
-                            }else{
-                                element.isIndex0 = true
-                            }
-                            data[k].children.push(element)
-                        });
-                        // data[k].hasChildren = true
-                    } else {
-
-                        data[k].children = []
-                        // data[k].hasChildren = false
-                    }
-                }
-                this.liveInPersonData = data
-                this.$forceUpdate()
-            })
-        },
-        //添加入住人
-        editItem_live_in_person(item) {
-            if (!item.name) {
-                this.$message.error('请填写姓名');
-                return
-            }
-            if (!item.idcardType) {
-                this.$message.error('请选择证件类型');
-                return
-            }
-            if (!item.idcard) {
-                this.$message.error('请填写证件号');
-                return
-            }
-            if (!item.sex) {
-                this.$message.error('请选择性别');
-                return
-            }
-            if (!item.mobile) {
-                this.$message.error('请输入手机号');
-                return
-            }
-            let params = {
-                checkinRoomId: item.checkinRoomId,
-                name: item.name,
-                idcardType: item.idcardType,
-                idcard: item.idcard,
-                sex: item.sex,
-                mobile: item.mobile,
-                checkinId: this.checkInForm.checkInId,
-                checkInPersonId: item.id
-            };
-            this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
-        },
-        addItem_live_in_person(i, item) {
-            console.log(item)
-            return
-            if (!item.name) {
-                this.$message.error('请填写姓名');
-                return
-            }
-            if (!item.idcardType) {
-                this.$message.error('请选择证件类型');
-                return
-            }
-            if (!item.idcard) {
-                this.$message.error('请填写证件号');
-                return
-            }
-            if (!item.sex) {
-                this.$message.error('请选择性别');
-                return
-            }
-            if (!item.mobile) {
-                this.$message.error('请输入手机号');
-                return
-            }
-            let params = {
-                checkinRoomId: item.checkinRoomId,
-                name: item.name,
-                idcardType: item.idcardType,
-                idcard: item.idcard,
-                sex: item.sex,
-                mobile: item.mobile,
-                checkinId: this.checkInForm.checkInId,
-                checkInPersonId: '',
-
-            };
-            this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
-        },
-        del_live_in_person(item) {
-            let params = {
-                checkInPersonId: item.id,
-            };
-            this.$F.doRequest(this, '/pms/checkin/delete_live_in_person', params, (res) => {
-                this.$message({
-                    message: '移除成功',
-                    type: 'success'
+            console.log('添加入住人');
+            console.log(this.waitingRoom);
+            let waitingRoom2 =  this.$F.deepClone(this.waitingRoom);
+            this.liveData = [];
+            if (this.checkInForm.checkInRoomJson.length > 0 && this.checkInForm.checkInRoomJson[0].personList.length > 0) {
+                this.checkInForm.checkInRoomJson.forEach((room, index) => {
+                    this.$F.merge(room, room.personList[0])
+                    room.personList.splice(0, 1);
                 });
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
+                this.liveData =  this.checkInForm.checkInRoomJson;
+            } else {
+                waitingRoom2.forEach(roomTypeObject => {
+                    roomTypeObject.roomsArr.forEach((room, index) => {
+                        room.roomTypeName = roomTypeObject.roomTypeName;
+                        room.houseNum = room.houseNum;
+                        if (room.personList && room.personList.length > 1) {
+                            room.personList.forEach((element, index) => {
+                                if (index > 0) {
+                                    element.isChild = true;
+                                }
+                            });
+                        } else {
+                            this.$F.merge(room, {
+                                checkinRoomId: '',
+                                name: this.checkInForm.name,
+                                idcardType: this.checkInForm.idcardType,
+                                idcard: this.checkInForm.idcard,
+                                sex: this.checkInForm.sex,
+                                mobile: this.checkInForm.mobile,
+                                checkinId: '',
+                                checkInPersonId: '',
+                            })
+                        }
+                        this.liveData.push(room);
+                    })
+                })
+            }
+
+            console.log(this.liveData);
+            this.addLivePersonShow = true;
         },
-        edit_live_in_person(item) {
-            item.edit = true
-            this.$forceUpdate()
-        },
-        cancel_live_in_person(item) {
-            item.edit = false
-            this.$forceUpdate()
-        },
+
         make_card_status() {
             let arr = []
             if (!this.multipleSelection.length) {
@@ -1600,7 +1092,6 @@ export default {
                     message: '制卡成功',
                     type: 'success'
                 });
-                this.liveCard_in_person_list()
                 this.$forceUpdate()
             })
         },
@@ -1625,17 +1116,9 @@ export default {
                 this.nameLoading = false
                 this.options = res.roomPersonList || [];
                 this.options.forEach(element => {
-                    element.value = element.name + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + (element.mobile || '') + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + element.idcard.slice(-4);
+                    element.value = element.name + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + (element.mobile || '') + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + (element.idcard ? element.idcard.slice(-4) : '');
                 });
-                // this.options.unshift({
-                //     value: '姓名     ' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + '手机号         身份证后四位'
-                // });
-                // if (this.options.length  == 0) {
-                //     this.options.push({
-                //         label: '暂无客户信息',
-                //         value: '暂无客户信息'
-                //     });
-                // }
+
                 cb(this.options);
                 this.$forceUpdate()
             })
@@ -1660,6 +1143,11 @@ export default {
 
         },
 
+        //选择客源类型组件的确认回调
+        guestChooseCallback(data) {
+            debugger;
+            this.checkInForm = data;
+        },
         handleOperCheckinType() {
             let menu = {
                 a1: 1,
@@ -1722,7 +1210,7 @@ export default {
             let day = 0
             if (this.checkInForm.checkoutTime != '') {
                 day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
-                        new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
+                    new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
                 this.checkInForm.checkinDays = day
             }
         },
@@ -1746,50 +1234,151 @@ export default {
             }
         },
 
+        //添加同来宾客
+        addGuest(row, index) {
+            let newRow = this.$F.deepClone(row);
+            row.children.push({
+                checkinId: newRow.checkinId,
+                checkinRoomId: newRow.roomId,
+                id: '3213213',
+                name: '',
+                isChild: true,
+                idcardType: '',
+                idcard: '',
+                edit: true,
+                sex: '',
+                mobile: '',
+                checkInPersonId: '',
+                // hasChildren: false
+            });
+        },
+
     }
 };
 </script>
 
-<style>
-.popper-class {
-    width: 350px !important;
+<style lang="scss">
+.el-autocomplete {
+    position: relative;
+    display: inline-block;
+    width: 100%;
 }
-</style>
-<style scoped>
-.fixedFoot {
-    text-align: right;
-    position: fixed;
-    bottom: 0;
-    left: 200px;
-    right: 20px;
-    background: #fff;
-    border-top: 1px solid #eee;
-    z-index: 9;
+.el-autocomplete-suggestion {
+    width: 450px !important;
 }
+.boss-index {
+    border-radius: 0 0 8px 8px;
 
-.fixedFoot .wrap {
-    padding: 10px 20px
-}
+    .content {
+        padding: 20px;
 
-.fixedFoot .wrap button {
-    margin-left: 20px;
-}
+        h3 {
+            margin: 0 0 15px;
+        }
 
-.rooms {
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
+        .inForm {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
 
-.rooms .grid-cell {
-    border: 1px solid #eee;
-    border-radius: 5px;
-}
+            .el-form-item {
+                width: 350px;
+                margin-right: 0;
+                margin-bottom: 12px;
+                display: flex;
+                flex-direction: row;
 
-.rooms .grid-cell.active {
-    background: #E3EEFF;
-    border-color: #126EFF;
-}
+                .el-form-item__content {
+                    flex: 1;
+                    width: 0;
 
+                    .el-autocomplete, .el-input, .el-select, .el-input-number {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .roomMsg {
+            display: flex;
+
+            .left, .right {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .left {
+                flex: 2;
+                margin-right: 20px;
+            }
+            .right {
+                flex: 1;
+            }
+            .roomBtm {
+                background: #F6F7F7;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                flex: 1;
+
+                .roomBox {
+                    width: 33%;
+                    padding: 10px;
+
+                    .rooms {
+                        padding: 10px;
+                        background: #fff;
+                        border-radius: 4px;
+
+                        &.active {
+                            background: #E3EEFF;
+                            border-color: #126EFF;
+                        }
+                        .row {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 12px;
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                            .allow {
+                                color: #126EFF;
+                                font-size: 13px;
+                            }
+                            .num {
+                                width: 70px;
+
+                                .el-input__inner {
+                                    background: #D6D6D6;
+                                }
+                            }
+                            del {
+                                margin-left: 10px;
+                                color: #999;
+                                font-size: 13px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .fixedFoot {
+        text-align: right;
+        background: #fff;
+        border-top: 1px solid #eee;
+
+        .wrap {
+            padding: 10px 20px;
+
+            button {
+                margin-left: 20px;
+            }
+        }
+    }
+}
 .rooms .grid-cell .wrap {
     padding: 10px 5px;
 }

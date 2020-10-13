@@ -7,7 +7,6 @@
 
 <template>
   <div id="page1" class="boss-index">
-
       <el-tabs class="pageTab" v-model="activeName">
           <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                        :name="item.path"
@@ -47,8 +46,12 @@ export default {
       activeName: "" //第一个默认启动
     };
   },
+
   created() {
-    this.$F.handleThirdMenu(this);
+      this.$F.handleThirdMenu(this);
+      let type = this.$route.query.type;
+      if (type)
+          this.activeName = type;
   },
   mounted() {},
   methods: {
@@ -61,5 +64,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" >
+<style lang="scss">
+
 </style>

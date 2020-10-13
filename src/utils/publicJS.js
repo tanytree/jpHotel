@@ -2,6 +2,7 @@ import store from '@/store'
 import axios from 'axios'
 import { request } from '@/utils/request'
 import merge from 'lodash/merge'
+import httpRequest from "@/utils/httpRequest";
 
 // eslint-disable-next-line no-unused-vars
 var publicDict = {}
@@ -45,6 +46,9 @@ const $F = {
                 newObject = JSON.parse(JSON.stringify(obj)) // 还原
             } else {
                 for (let i in obj) {
+                    if (obj[i] instanceof File) {
+                        return obj
+                    }
                     newObject[i] = typeof obj[i] === 'object' ? this.deepClone(obj[i]) : obj[i]
                 }
             }
@@ -90,12 +94,37 @@ const $F = {
         })
     },
 
+    doImportFile ($instance, data, callback) {
+        let formData = new FormData();
+        formData.append('storesNum', sessionStorage.storesNum);
+        formData.append('imgModel', '2');
+        formData.append('platSource', platSource);
+        formData.append('filename', data.filename, data.filename.name);
+
+        axios.post(uploadUrl + '/pms/upload/batch_upload_img', formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        ).then(res => {
+            if (res.data.code === 200) {
+                callback(res.data)
+            } else {
+                if ($instance) {
+                    $instance.$message.error(res.message || res.data.message)
+                }
+            }
+        })
+    },
+
     doRequest ($instance, url, params = {}, callback) {
         if ($instance) {
             $instance.dataListLoading = true
             $instance.loading = true
         }
         params = this.deepClone(params);
+        // debugger
         for (let key in params) {
             let value = params[key];
             if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
@@ -225,7 +254,6 @@ const $F = {
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
         //获取销售员
-
         fetchSalesList(params = {}, callback) {
             $F.merge(params, {
                 searchType: 1,
@@ -261,6 +289,29 @@ const $F = {
                 NATIONALITYLIST = data;
                 callback(NATIONALITYLIST)
             })
+        },
+        downloadTemplate(action) {
+            let url = httpRequest.systemUrl(action) + `?userId=${sessionStorage.userId}&platSource=1005`;
+            axios.get(url, {
+                headers:{
+                    "accessToken": sessionStorage.accessToken
+                },
+                responseType: 'blob', //二进制流
+            }).then(function (res) {
+                if(!res) return
+                let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
+                let url = window.URL.createObjectURL(blob);
+                let aLink = document.createElement("a");
+                aLink.style.display = "none";
+                aLink.href = url;
+                aLink.setAttribute("download", "excel.xls");
+                document.body.appendChild(aLink);
+                aLink.click();
+                document.body.removeChild(aLink);
+                window.URL.revokeObjectURL(url);
+            }).catch(function (error) {
+                console.log(error)
+            });
         }
     }
 

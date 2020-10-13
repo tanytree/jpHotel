@@ -9,6 +9,8 @@ import commons from "./commons/commonsRi";
 import frontOffice from "./frontOffice/ri";
 import login from './login/ri'
 import manager from './manager/ri'
+import food from './food/ri'
+
 export default {
     language: {
         name: '日本语'
@@ -24,4 +26,6 @@ export default {
     //管理部
     manager: manager,
 
+	//餐饮部
+	food:food
 }
