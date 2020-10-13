@@ -1,79 +1,5 @@
 <!-- 楼栋楼层 -->
 <template>
-<<<<<<< HEAD
-<div id="page1">
-    <el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
-      <el-col :span="2.5">{{hotel_name || ''}}</el-col>
-      <el-col
-        :span="2"
-      >{{$t('manager.hk_total')}}{{dongList.length || ''}}{{$t('manager.hk_building')}}</el-col>
-    </el-row>
-    <el-row style="padding: 20px 0px;">
-      <el-radio-group v-model="selectRedio">
-        <el-radio-button
-          :label="value.id"
-          v-for="(value, index) in dongList"
-          :key="index"
-        >{{value.name}}</el-radio-button>
-      </el-radio-group>
-    </el-row>
-    <el-row
-      :gutter="20"
-      class="demo-form-inline"
-      style="background-color: #e6eaed;padding: 10px 0px;"
-    >
-      <el-col :span="6">
-        {{currentDong}}{{$t('manager.hk_total')}}
-        <span
-          style="color: #126EFF;"
-        >{{dongInfo.buildingTotal}}</span>
-        {{$t('manager.hp_layer')}} {{$t('manager.hk_totalRoom')}}:
-        <span
-          style="color: #126EFF;"
-        >{{dongInfo.roomTotal}}</span>
-        {{$t('manager.hk_space')}}
-      </el-col>
-      <el-col :span="6">
-        <el-button type="text" @click="popup('changeDong')">{{$t('commons.modify')}}</el-button>
-        <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-        <el-popconfirm :title="$t('manager.hk_sureDelete')+'？'" @onConfirm="houseFloor_delete">
-          <el-button
-            slot="reference"
-            type="text"
-            size="small"
-            @click="deleteRow(selectRedio)"
-          >{{$t('commons.delete')}}</el-button>
-        </el-popconfirm>
-        <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-        <el-button type="text" @click="forward">{{$t('manager.hk_forward')}}</el-button>
-        <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-        <el-button type="text" @click="back">{{$t('manager.hk_moveBack')}}</el-button>
-      </el-col>
-      <el-col :span="8" :offset="8">
-        <el-button type="primary" @click="popup('addDong')">{{$t('manager.hk_newBuilding')}}</el-button>
-        <el-button type="primary" @click="popup('addCeng')">{{$t('manager.hk_newFloor')}}</el-button>
-      </el-col>
-    </el-row>
-    <el-row style="margin-top: 20px;margin-left: 40px;">
-      <el-row v-for="(value, index) in cengList" :key="index">
-        <el-popover placement="right" width="400" trigger="hover" @show="showroom_list(value)">
-          <el-button slot="reference">{{value.name}}</el-button>
-          <el-row>
-            <el-row :gutter="20" style="border-bottom: 1px solid #e5e5e5;padding: 10px 0px;">
-              <el-col :span="10">{{value.building.name}}{{value.name}}</el-col>
-              <el-col :span="14" style="display: flex;justify-content: flex-end;">
-                <el-button type="text" @click="popup('changeCeng',value)">{{$t('commons.modify')}}</el-button>
-                <el-popconfirm
-                  :title="$t('manager.hk_sureDelete')+'？'"
-                  @onConfirm="houseRoom_delete(value)"
-                >
-                  <el-button
-                    slot="reference"
-                    type="text"
-                    size="small"
-                    @click="deleteRow(value)"
-                  >{{$t('commons.delete')}}</el-button>
-=======
     <div id="page1">
         <el-row :gutter="20" style="font-size: 14px; font-weight: bolder;">
             <el-col :span="2.5">{{hotel_name || ''}}</el-col>
@@ -116,7 +42,6 @@
                         size="small"
                         @click="deleteRow(selectRedio)"
                     >{{$t('commons.delete')}}</el-button>
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
                 </el-popconfirm>
                 <!-- <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
                 <el-button type="text" @click="forward">{{$t('manager.hk_forward')}}</el-button>
@@ -244,13 +169,8 @@
         <el-button @click="addCeng_show = false">{{$t('commons.cancel')}}</el-button>
         <el-button type="primary" @click="defineCeng">{{$t('commons.determine')}}</el-button>
       </span>
-<<<<<<< HEAD
-    </el-dialog>
-  </div>
-=======
         </el-dialog>
     </div>
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
 </template>
 
 <script>

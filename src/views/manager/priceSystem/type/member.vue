@@ -164,14 +164,8 @@
       </el-table>
       <el-row style="padding: 20px 0px;">
         <el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
-        <el-button
-          style="width: 80px;margin-left: 20px; cursor: pointer"
-          @click="back_1"
-<<<<<<< HEAD
-        >{{$t('commons.back')}}===</el-button>
-=======
-        >{{$t('commons.back')}}</el-button>
->>>>>>> 9d849db0a0fffdd1f92f937340a698e69a0eb367
+        <el-button  style="width: 80px;margin-left: 20px; cursor: pointer" @click="back_1">
+            {{$t('commons.back')}}</el-button>
       </el-row>
     </el-row>
 
