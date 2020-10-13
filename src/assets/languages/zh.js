@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-03 16:34:17
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-13 14:13:40
+ * @FilePath: \jiudian\src\assets\languages\zh.js
  */
 import bossLang from "./boss/bossZh";
 import commons from "./commons/commonsZh";
@@ -10,6 +10,8 @@ import frontOffice from './frontOffice/zh'
 import login from './login/zh'
 import manager from './manager/zh'
 import food from './food/zh'
+import desk from './desk/deskZh'
+
 export default {
     language: {
         name: '中文'
@@ -26,7 +28,9 @@ export default {
 
     //管理部
     manager: manager,
-	
-	//餐饮部
-	food:food
+
+    //餐饮部
+    food: food,
+    //前台部
+    desk: desk
 }
