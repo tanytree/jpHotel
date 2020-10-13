@@ -8,10 +8,9 @@
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
-    <div class="booking">
+    <div class="booking flex_column">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="100px">
-        <el-row>
           <el-form-item label="订单类型">
             <div class="tagList">
               <template
@@ -28,8 +27,6 @@
               </template>
             </div>
           </el-form-item>
-        </el-row>
-        <el-row>
           <el-form-item label="预离日期">
             <div class="tagList" style="display: inline-block">
               <template
@@ -63,8 +60,6 @@
               ></el-date-picker>
             </el-form-item>
           </el-form-item>
-        </el-row>
-        <el-row>
           <el-form-item label="入住方式">
             <div class="tagList" style="display: inline-block">
               <template
@@ -98,8 +93,6 @@
               ></el-date-picker>
             </el-form-item>
           </el-form-item>
-        </el-row>
-        <el-row>
           <el-form-item label="订单来源">
             <el-select v-model="searchForm.orderSource" class="width150">
               <el-option
@@ -137,8 +130,6 @@
               class="width150"
             ></el-input>
           </el-form-item>
-        </el-row>
-        <el-row>
           <el-form-item label="姓名">
             <el-input v-model="searchForm.name" class="width150"></el-input>
           </el-form-item>
@@ -156,14 +147,12 @@
           <!-- <el-form-item style="float: right">
             <el-button type="text" icon="el-icon-arrow-up">收起</el-button>
           </el-form-item> -->
-        </el-row>
       </el-form>
       <!--表格数据 -->
       <el-table
         ref="multipleTable"
         v-loading="loading"
         :data="tableData"
-        max-height="280"
         header-row-class-name="default"
         size="small"
       >
@@ -172,7 +161,7 @@
           label="姓名"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="mobile" label="手机号码"></el-table-column>
+        <el-table-column prop="mobile" width="140px" label="手机号码"></el-table-column>
         <el-table-column
           prop="checkinTime"
           label="入住时间"
@@ -252,7 +241,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin-top: 10px"></div>
       <!--分页 -->
       <div class="block">
         <el-pagination

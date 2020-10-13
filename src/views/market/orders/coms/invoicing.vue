@@ -6,7 +6,7 @@
  -->
 
 <template>
-  <div id="page1" class="boss-index">
+  <div id="page1" class="boss-index" v-if="openInvoiceShow">
     <!--开发票-->
     <el-dialog
       top="0"

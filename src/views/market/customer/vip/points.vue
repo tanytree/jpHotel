@@ -1,10 +1,10 @@
 <!--  前台部 > 客户管理 > 会员管理 > 积分查询  -->
 <template>
   <!-- 统一的列表格式 -->
-  <div>
-    <el-card>
+  <div class="boss-index">
+    <div class="booking flex_column">
       <!-- 查询部分 -->
-      <el-form inline size="small" label-width="80px" v-model="searchForm">
+      <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
         <el-form-item label="消费时间">
           <el-radio-group v-model="searchForm.timeType">
             <el-radio-button label style="margin-right:10px">不限</el-radio-button>
@@ -73,21 +73,15 @@
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+          <el-button type="primary" class="submit" @click="initForm">重置</el-button>
         </el-form-item>
         <el-form-item>
           <el-button plain>读会员卡</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="tableData"
-        :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-        size="mini"
-      >
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
         <el-table-column prop="memberTypeName" label="会员类型" show-overflow-tooltip></el-table-column>
@@ -115,12 +109,11 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="searchForm.page"
-        :page-sizes="[10, 50, 100, 200]"
         :page-size="searchForm.page_num"
         layout=" total,sizes, prev, pager, next, jumper"
         :total="listTotal"
       ></el-pagination>
-    </el-card>
+    </div>
     <!-- 编辑or详情弹窗 -->
   </div>
 </template>

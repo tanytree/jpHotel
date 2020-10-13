@@ -204,8 +204,8 @@
         <!-- 编辑or详情弹窗 -->
         <div class="fixedFoot">
             <div class="wrap">
-                <el-button type="primary" @click="hotel_check_in(2)">保存</el-button>
-                <el-button @click="hotel_check_in(3)">保存后继续办理新{{typeText}}</el-button>
+                <el-button type="primary" class="submit" @click="hotel_check_in(2)">保存</el-button>
+                <el-button class="white" @click="hotel_check_in(3)">保存后继续办理新{{typeText}}</el-button>
             </div>
         </div>
 
@@ -1320,6 +1320,7 @@ export default {
                 flex-direction: row;
                 flex-wrap: wrap;
                 flex: 1;
+                padding: 5px;
 
                 .roomBox {
                     width: 33%;

@@ -59,11 +59,11 @@
           <el-input v-model="searchForm.idcard" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+          <el-button type="primary" class="white" @click="initForm">重置</el-button>
         </el-form-item>
         <el-form-item style="float: right">
-          <el-button type="primary" @click="addAndEditItemClick('add')"
+          <el-button type="primary" class="white" @click="addAndEditItemClick('add')"
             >登记外宾</el-button
           >
         </el-form-item>

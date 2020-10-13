@@ -7,15 +7,14 @@
 
 <template>
 <!-- 统一的列表格式 -->
-<div>
-    <div>
+<div class="boss-index">
+    <div class="booking flex_column">
          <!-- 查询部分 -->
-        <el-form inline size="small">
-
+        <el-form class="term" inline size="small">
             <el-form-item label="营业时间">
                 <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
             </el-form-item>
-            
+
             <el-form-item>
                 <el-button type="primary" @click="getDataList">查询</el-button>
                 <el-button type="primary" @click="initForm">重置</el-button>
@@ -25,7 +24,7 @@
         <!--表格数据 -->
         <h3 style="text-align:center">营业日报（明细）</h3>
         <el-row style="font-size:12px;color:#666;margin-bottom:10px">营业时间：2020-04-26 00:00:0 至 2020-04-26 23:59:9</el-row>
-        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" @selection-change="handleSelectionChange" height="100%" header-row-class-name="default" size="small">
             <el-table-column prop="enterStatus" label="业务"></el-table-column>
             <el-table-column prop="enterName" label="本日发生" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="本月累计" show-overflow-tooltip></el-table-column>
@@ -33,9 +32,8 @@
             <el-table-column prop="enterStatus" label="上年本月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterStatus" label="本年累计" show-overflow-tooltip></el-table-column>
         </el-table>
-        <div style="margin-top:10px"></div>
         <!--分页 -->
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
+        <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.pageSize" layout="  prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </div>
     <!-- 编辑or详情弹窗 -->
 </div>
@@ -132,11 +130,11 @@ export default {
             this.multipleSelection = val;
         },
         /**每页数 */
-        handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
-            this.getDataList();
-        },
+        // handleSizeChange(val) {
+        //     this.searchForm.page_num = val;
+        //     this.searchForm.page = 1;
+        //     this.getDataList();
+        // },
         /**当前页 */
         handleCurrentChange(val) {
             this.searchForm.page = val;

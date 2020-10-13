@@ -1,7 +1,7 @@
 <template>
   <div class="boss-index">
     <!-- 留言管理 -->
-    <div class="content">
+    <div class="booking flex_column">
       <el-form
         :model="messageForm"
         inline
@@ -46,7 +46,7 @@
           >
           <el-button class="white" @click="resetForm">重置</el-button>
         </el-form-item>
-        <div>
+        <el-form-item>
           <el-button
             class="submit"
             size="small"
@@ -54,7 +54,7 @@
             @click="newNote = true"
             >新增留言</el-button
           >
-        </div>
+        </el-form-item>
       </el-form>
       <el-table
         :data="messageContents"
@@ -67,24 +67,23 @@
         <el-table-column
           prop="content"
           label="留言内容"
-          width="300"
         ></el-table-column>
         <el-table-column
           label="房间号"
-          width="180"
+          width="220"
           prop="roomNum"
         ></el-table-column>
         <el-table-column
           label="留言员工"
-          width="180"
+          width="220"
           prop="creatorName"
         ></el-table-column>
         <el-table-column
           label="留言时间"
-          width="180"
+          width="220"
           prop="createTime"
         ></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="220px">
           <template slot-scope="{ row }">
             <el-button size="small" type="text" @click="noteDdetail(row)"
               >详情</el-button
@@ -97,11 +96,10 @@
       </el-table>
       <div class="block">
         <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
           :page-size="10"
-          layout="total, sizes, prev, pager, next, jumper"
+          layout="total, prev, pager, next, jumper"
           :total="total"
         ></el-pagination>
       </div>
@@ -319,11 +317,11 @@ export default {
       this.pageIndex = val;
       this.getMessageList();
     },
-    handleSizeChange(val) {
-      this.pageSize = val;
-      this.pageIndex = 1;
-      this.getMessageList();
-    },
+    // handleSizeChange(val) {
+    //   this.pageSize = val;
+    //   this.pageIndex = 1;
+    //   this.getMessageList();
+    // },
   },
 };
 </script>

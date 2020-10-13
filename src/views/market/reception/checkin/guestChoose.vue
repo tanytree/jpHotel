@@ -6,7 +6,7 @@
  -->
 
 <template>
-  <div class="boss-index inRoom">
+  <div class="boss-index inRoom" v-if="guestTypeShow">
     <el-dialog
       top="0"
       :visible.sync="guestTypeShow"
