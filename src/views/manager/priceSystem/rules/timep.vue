@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
 	<div>
 		<el-row v-if="tab_show">
 			<el-row :gutter="20">

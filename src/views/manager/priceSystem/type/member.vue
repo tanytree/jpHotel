@@ -166,8 +166,8 @@
         <el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
         <el-button
           style="width: 80px;margin-left: 20px; cursor: pointer"
-          @back="back_1"
-        >{{$t('commons.back')}}</el-button>
+          @click="back_1"
+        >{{$t('commons.back')}}===</el-button>
       </el-row>
     </el-row>
 
@@ -563,6 +563,7 @@ export default {
       );
     },
     back_1() {
+		debugger
       this.tab1_show = true;
     },
     handleSizeChange(val) {
