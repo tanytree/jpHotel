@@ -46,7 +46,7 @@
               <span
                 v-if="index > 0 && row.houseName"
                 style=" cursor: pointer !important;"
-                @click="priceClick(row, item)"
+                @click="priceClick(row, item, index)"
               >{{row.marketPrice}}</span>
             </template>
           </el-table-column>
@@ -93,13 +93,17 @@
           </el-col>
           <el-col :span="20">
             <el-form-item :label="$t('manager.ps_selectWeek')+':'" prop="name">
-              <el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
+				<el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
+					<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
+				</el-checkbox-group>
+				
+              <!-- <el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
                 <el-checkbox
                   v-for="(item, index) in weekDays"
                   :label="item.value"
                   :key="index"
                 >{{item.label}}</el-checkbox>
-              </el-checkbox-group>
+              </el-checkbox-group> -->
             </el-form-item>
           </el-col>
           <el-col :span="20">
@@ -191,7 +195,7 @@
         </el-form-item>
         <el-form-item :label="$t('manager.ps_memberPrice')">
           <span>
-            {{editPriceForm.member.prices}}
+            {{editPriceForm.room.discountPrice}}
             <span
               class="tip"
             >({{$t('manager.ps_discountFor')}}{{editPriceForm.discount}})</span>
@@ -361,6 +365,7 @@ export default {
         item.adjustType = parseInt(item.adjustType);
       });
       params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
+	  // debugger
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_price_member_strategy_save",
@@ -385,28 +390,56 @@ export default {
     change(row) {},
     //选择日期change事件
     handleWeekDayChange(value) {
-      this.batchEditPriceForm.weeks = value;
-      if (value.length == 0) this.batchEditPriceForm.weeks = [];
+      // this.batchEditPriceForm.weeks = value;
+      // if (value.length == 0) this.batchEditPriceForm.weeks = [];
 
-      if (value.length == 8 || value[value.length - 1] === "") {
-        this.batchEditPriceForm.weeks = [];
-        this.weekDays.forEach((week) => {
-          this.batchEditPriceForm.weeks.push(week.value);
-        });
-      } else {
-        let $index = 999;
-        this.batchEditPriceForm.weeks.forEach((week, index) => {
-          if (week === "") {
-            $index = index;
-          }
-        });
-        if ($index != 999) {
-          this.batchEditPriceForm.weeks.splice($index, 1);
-        }
-      }
+      // if (value.length == 8 || value[value.length - 1] === "") {
+      //   this.batchEditPriceForm.weeks = [];
+      //   this.weekDays.forEach((week) => {
+      //     this.batchEditPriceForm.weeks.push(week.value);
+      //   });
+      // } else {
+      //   let $index = 999;
+      //   this.batchEditPriceForm.weeks.forEach((week, index) => {
+      //     if (week === "") {
+      //       $index = index;
+      //     }
+      //   });
+      //   if ($index != 999) {
+      //     this.batchEditPriceForm.weeks.splice($index, 1);
+      //   }
+      // }
+	  
+	  this.batchEditPriceForm.weeks = value;
+	  if (value.length == 0)
+	  	this.batchEditPriceForm.weeks = [];
+	  // console.log(value== "")
+	  // debugger
+	  // let i = typeof(value)
+	  if (value.length == 8 || value == "") {
+	  	// debugger
+	  	if (value.length == 8) {
+	  		this.batchEditPriceForm.weeks = [];
+	  	} else {
+	  		this.batchEditPriceForm.weeks = value;
+	  		this.weekDays.forEach(week => {
+	  			this.batchEditPriceForm.weeks.push(week.value);
+	  		})
+	  	}
+	  } else {
+	  	let $index = 999;
+	  	this.batchEditPriceForm.weeks.forEach((week, index) => {
+	  		if (week === '') {
+	  			$index = index;
+	  		}
+	  	})
+	  	if ($index != 999) {
+	  		this.batchEditPriceForm.weeks.splice($index, 1);
+	  	}
+	  }
     },
     //点击修改房价
-    priceClick(row, item, params = {}) {
+    priceClick(row, item, index) {
       let memberTypeObject = {},
         roomObject = {},
         flag = true;
@@ -416,6 +449,7 @@ export default {
         for (let j = 0; j < member.roomTypeList.length; j++) {
           let room = member.roomTypeList[j];
           if (room.id == row.id) {
+			  // debugger
             roomObject = room;
             memberTypeObject = member;
             flag = false;
@@ -423,20 +457,22 @@ export default {
           }
         }
       }
-      this.editPriceForm.member = memberTypeObject;
+	  debugger
+      this.editPriceForm.member.price = row.discountPrice;
+	  this.editPriceForm.member.discount = row.discountPrice;
       this.editPriceForm.room = roomObject;
-
+	  
+	  var myDate = new Date();
+	  this.editPriceForm.dateStr = myDate.toLocaleDateString().split('/').join('-');
+	  // debugger
       let array = this.memberTableData.dayPriceList.filter((item) => {
+		// this.editPriceForm.dateStr = new Date().getFullYear() + "-" + item.dateStr;
         return (
           item.memberTypeId == this.editPriceForm.member.id &&
           item.roomTypeId == this.editPriceForm.room.id
         );
       });
-      // debugger;
-      this.editPriceForm.customPrice =
-        array[0].newCustomPrice || array[0].customPrice || "";
-      this.editPriceForm.dateStr =
-        new Date().getFullYear() + "-" + item.dateStr;
+      // this.editPriceForm.customPrice = array[0].newCustomPrice || array[0].customPrice || "";
       this.editPriceDialog = true;
     },
 
@@ -546,24 +582,9 @@ export default {
         }
       );
     },
-    // 获取 价格策略单位列表
-    get_price_enter_strategy_list() {
-      let params = {
-        status: 1,
-      };
-      this.$F.doRequest(
-        this,
-        "/pms/hotel/hotel_price_enter_strategy_list",
-        params,
-        (res) => {
-          if (res.length != 0) {
-            this.tableData_b = res;
-          }
-        }
-      );
-    },
     back_1() {
       this.tab1_show = true;
+	  this.get_hotel_price_room_type_list()
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

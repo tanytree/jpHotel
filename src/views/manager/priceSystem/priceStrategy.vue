@@ -6,7 +6,7 @@
 					<Member></Member>
 				</el-tab-pane>
 				<el-tab-pane label="单位" name="unit">
-					<unitList></unitList>
+					<unitList @backMember="backMember"></unitList>
 				</el-tab-pane>
 			</el-tabs>
 		</el-row>
@@ -42,6 +42,9 @@
 		mounted() {
 		},
 		methods: {
+			backMember() {
+				this.activName = 'member'
+			}
 		}
 	};
 </script>

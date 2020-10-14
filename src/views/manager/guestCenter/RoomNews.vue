@@ -345,7 +345,7 @@ export default {
       sessionStorage.getItem("userData")
     ).storesInfo.storesName;
     this.get_dong_list();
-    this.get_room_type_list();
+    // this.get_room_type_list();
   },
   mounted() {
   	this.get_room_type_list();

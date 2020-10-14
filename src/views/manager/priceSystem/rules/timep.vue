@@ -7,20 +7,18 @@
 						<el-form-item :label="$t('manager.ps_ruleName')+':'">
 							<el-input v-model="ruleForm.ruleName" class="row-width"></el-input>
 						</el-form-item>
-						<el-form-item :label="$t('manager.ps_priceModel')+':'" class="margin-l-15">
+						<!-- <el-form-item :label="$t('manager.ps_priceModel')+':'" class="margin-l-15">
 							<el-select v-model="ruleForm.priceModel" class="row-width">
 								<el-option label="固定时间退房模式" value="1"></el-option>
 								<el-option label="24小时退房模式" value="2"></el-option>
-								<!-- <el-option label="$t('manager.ps_fixedTime')" value="1"></el-option>
-                                <el-option label="$t('manager.ps_everyTime')" value="2"></el-option> -->
 							</el-select>
-						</el-form-item>
+						</el-form-item> -->
 						<el-form-item>
 							<el-button type="primary" style="width: 100px;" size="mini" @click="searchBtn">{{$t('commons.queryBtn')}}</el-button>
 						</el-form-item>
 						<el-form-item class="form-inline-flex">
 							<el-row>
-								<el-button type="primary" @click="popup('add')" style="width: 100px;" size="mini">{{$t('commons.newAdd')}}</el-button>
+								<el-button type="primary" @click="popup('add', '')" style="width: 100px;" size="mini">{{$t('commons.newAdd')}}</el-button>
 							</el-row>
 						</el-form-item>
 					</el-form>
@@ -183,6 +181,7 @@
 			return {
 				tab_show: true,
 				tableData: [],
+				type: "",
 				ruleForm: {
 					ruleName: "",
 					priceModel: "", //收费模式 1固定时间退房模式  2 24小时退房模式
@@ -262,6 +261,7 @@
 		},
 		methods: {
 			popup(type, value) {
+				this.type = type
 				switch (type) {
 					case "add":
 						this.tab_show = false;
@@ -274,6 +274,7 @@
 						time.push(value.startTime);
 						time.push(value.endTime);
 						this.ruleForm_h.time = time
+						this.ruleForm_h.roomStrategyJson = value.hotelRuleRoomTypeList
 						if(value.state ==1) {
 							value.state = true;
 						} else {
@@ -301,7 +302,12 @@
 				this.ruleForm_h.roomStrategyJson.forEach((item) => {
 					// debugger;
 					obj = {};
-					obj.roomTypeId = item.id;
+					if(this.type == "change") {
+						obj.id = item.id;
+						obj.roomTypeId = item.roomTypeId;
+					} else {
+						obj.roomTypeId = item.id;
+					}
 					obj.allPrice = item.allPrice;
 					obj.startPrice = item.startPrice;
 					obj.hourAddPrice = item.hourAddPrice;
@@ -311,6 +317,7 @@
 					roomStrategyJson.push(obj);
 				});
 				this.ruleForm_h.roomStrategyJson = roomStrategyJson;
+				debugger
 				let params = this.$F.deepClone(this.ruleForm_h);
 				params.startTime = params.time[0];
 				params.endTime = params.time[1];
@@ -326,6 +333,7 @@
 				}
 				// debugger;
 				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
+				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_rule_hour_save",
@@ -407,7 +415,7 @@
 			get_hotel_rule_hour_list() {
 				// debugger
 				let params = Object.assign({}, this.ruleForm);
-				params.status = 2;
+				params.status = 1;
 				let arr_list = [];
 
 				this.$F.doRequest(
@@ -430,6 +438,20 @@
 			},
 			back() {
 				this.tableData = [];
+				this.ruleForm_h.ruleName= "",
+				this.ruleForm_h.checkinStartMinute= "",
+				this.ruleForm_h.checkinStartHourhouse= "",
+				this.ruleForm_h.outtimeMinute= "",
+				this.ruleForm_h.outtimeAllday= "",
+				this.ruleForm_h.time= [],
+				this.ruleForm_h.startTime= "",
+				this.ruleForm_h.endTime= "",
+				this.ruleForm_h.outtimeRule= "2",
+				this.ruleForm_h.outtimeRuleCaps= true,
+				this.ruleForm_h.remark= "",
+				this.ruleForm_h.state= true,
+				this.ruleForm_h.roomStrategyJson= [],
+				this.type = '';
 				this.get_hotel_rule_hour_list();
 				this.tab_show = true;
 			},

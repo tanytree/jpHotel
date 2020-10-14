@@ -17,7 +17,7 @@
 						<el-table-column prop="name" :label="$t('manager.ps_memberType')"></el-table-column>
 						<el-table-column :label="$t('manager.ps_accountingRules')">
 							<template slot-scope="{row}">
-								<span>{{row.hotelRuleMemberPrice.alldayRuleName}}</span>
+								<span>{{row.hotelRuleMemberPrice? row.hotelRuleMemberPrice.alldayRuleName : ''}}</span>
 							</template>
 						</el-table-column>
 						<el-table-column prop="time" :label="$t('boss.loginDetail_state')">
@@ -119,7 +119,7 @@
 					case "sit":
 						this.dialogsit = true;
 						this.ruleForm = value;
-						debugger
+						// debugger
 						// this.ruleForm.alldayRuleId = this.ruleForm.hotelRuleMemberPrice.alldayRuleId;
 						// this.ruleForm.alldayRuleName = this.ruleForm.hotelRuleMemberPrice.alldayRuleName;
 						this.ruleList = [];
@@ -138,6 +138,7 @@
 			// 	debugger
 			// },
 			saveInfo() {
+				debugger
 				let params = {
 					id: this.ruleForm.hotelRuleMemberPrice.id,
 					memberId: this.ruleForm.hotelRuleMemberPrice.memberId,
@@ -175,7 +176,6 @@
 							res.list.forEach((item) => {
 								if (item.status != 2) {
 									this.ruleList.push(item);
-									debugger
 								}
 							});
 						}
@@ -216,6 +216,7 @@
 					"/pms/hotel/hotel_rule_member_price_list",
 					params,
 					(res) => {
+						debugger
 						if (res.list.length != 0) {
 							this.tableData = res.list;
 							this.ruleForm_r.totalSize = res.totalSize;

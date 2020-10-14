@@ -10,6 +10,7 @@
 						<el-select v-model="searchForm.state" :placeholder="$t('boss.compensation_selectState')" class="row-width">
 							<el-option :label="$t('commons.enable')" value="1"></el-option>
 							<el-option :label="$t('commons.disable')" value="2"></el-option>
+							<el-option label="全部" value=""></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -52,12 +53,12 @@
 			<el-row :gutter="20">
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm">
 					<el-row>
-						<el-col span="5">
+						<el-col :span="5">
 							<el-form-item :label="$t('manager.ps_ruleName')+':'" prop="ruleName" style="display: flex;align-items: center;">
 								<el-input v-model="ruleForm.ruleName"></el-input>
 							</el-form-item>
 						</el-col>
-						<el-col span="10">
+						<el-col :span="10">
 							<el-form-item :label="$t('boss.loginDetail_state')+':'">
 								<el-radio-group v-model="ruleForm.state">
 									<el-radio :label="1">{{$t('commons.enable')}}</el-radio>
@@ -66,20 +67,34 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-col span="20">
+					<el-col :span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')+':'" prop="time">
-							<el-date-picker v-model="ruleForm.time" type="daterange" align="right" value-format="yyyy-MM-dd" unlink-panels
-							 :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')" :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
+							<el-date-picker
+							      v-model="ruleForm.time"
+							      type="datetimerange"
+							      range-separator="至"
+							      start-placeholder="开始日期"
+							      end-placeholder="结束日期" @change="changeTime">
+							    </el-date-picker>
+							<!-- <el-date-picker
+							      v-model="value1"
+							      type="daterange"
+							      range-separator="至"
+							      start-placeholder="开始日期"
+							      end-placeholder="结束日期">
+							    </el-date-picker> -->
+							<!-- <el-date-picker v-model="ruleForm.time" type="daterange" align="right" value-format="yyyy-MM-dd" unlink-panels
+							 :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')" :end-placeholder="$t('manager.ps_endDate')"></el-date-picker> -->
 						</el-form-item>
 					</el-col>
-					<el-col span="20">
+					<el-col :span="20">
 						<el-form-item :label="$t('manager.ps_selectWeek')+':'" prop="name">
 							<el-checkbox-group v-model="ruleForm.weeks" @change="handleWeekDayChange">
 								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
 							</el-checkbox-group>
 						</el-form-item>
 					</el-col>
-					<el-col span="20">
+					<el-col :span="20">
 						<el-form-item :label="$t('manager.ps_discount')+':'" prop="name">
 							<el-radio-group v-model="ruleForm.discounts">
 								<el-radio label="1">{{$t('manager.ps_upword')}}</el-radio>
@@ -119,33 +134,33 @@
 			</el-table>
 			<el-row style="padding: 20px 0px;">
 				<el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
-				<el-button style="width: 80px;margin-left: 20px; cursor: pointer">{{$t('commons.back')}}</el-button>
+				<el-button style="width: 80px;margin-left: 20px; cursor: pointer" @click="back_1">{{$t('commons.back')}}</el-button>
 			</el-row>
 		</el-row>
 		<!-- 查看 -->
 		<el-dialog top="0" title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false">
 			<el-row style="line-height: 30px;">
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">规则名称:</el-col>
-					<el-col span="14">{{detail_info.ruleName}}</el-col>
+					<el-col :span="4" style="color: #898B8E;">规则名称:</el-col>
+					<el-col :span="14">{{detail_info.ruleName}}</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">状态:</el-col>
-					<el-col span="14">{{detail_info.state==1? '启用':'禁用'}}</el-col>
+					<el-col :span="4" style="color: #898B8E;">状态:</el-col>
+					<el-col :span="14">{{detail_info.state==1? '启用':'禁用'}}</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">时间:</el-col>
-					<el-col span="14">{{detail_info.startTime}}至{{detail_info.endTime}}</el-col>
+					<el-col :span="4" style="color: #898B8E;">时间:</el-col>
+					<el-col :span="14">{{detail_info.startTime}}至{{detail_info.endTime}}</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">星期:</el-col>
-					<el-col span="14">
+					<el-col :span="4" style="color: #898B8E;">星期:</el-col>
+					<el-col :span="14">
 						<span v-for="(value,index) in detail_info.weeks">{{value}},</span>
 					</el-col>
 				</el-row>
 				<el-row>
-					<el-col span="4" style="color: #898B8E;">折扣率:</el-col>
-					<el-col span="14">{{detail_info.discounts_name}}</el-col>
+					<el-col :span="4" style="color: #898B8E;">折扣率:</el-col>
+					<el-col :span="14">{{detail_info.discounts_name}}</el-col>
 				</el-row>
 			</el-row>
 			<el-table ref="multipleTable" :data="detail_info.hotelPriceRoomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
@@ -178,7 +193,7 @@
 				tableData: [],
 				ruleForm: {
 					ruleName: '',
-					time: '',
+					time: [],
 					startTime: '',
 					endTime: '',
 					weeks: [],
@@ -256,9 +271,13 @@
 				this.tableData = []
 				this.get_price_enter_strategy_list();
 			},
+			changeTime(e) {
+				debugger
+			},
 			//单位-增加-修改
 			onSave() {
 				console.log(this.ruleForm);
+				// debugger
 				let params = this.$F.deepClone(this.ruleForm);
 				params.startTime = params.time[0];
 				params.endTime = params.time[1];
@@ -327,6 +346,9 @@
 						this.ruleForm.roomStrategyJson = []
 						this.hotel_price_enter_strategy_detail(value)
 						break
+					case 'changerili':
+						this.$emit('backMember')
+						break
 				}
 			},
 			// 单位--房型
@@ -344,7 +366,7 @@
 						this.ruleForm.roomStrategyJson.push({
 							roomTypeId: item.id,
 							marketPrice: item.marketPrice,
-							adjustType: '1',
+							adjustType: 1,
 							houseName: item.houseName,
 							content: '',
 							adjustPrice: ''
@@ -373,21 +395,22 @@
 							res.discounts_name = '保持不变'
 							break;
 					}
-					debugger
+					// debugger
 					if (this.type == 'see') {
 						this.detail_info = res;
 						this.detail_info.weeks = res.weeks.split(',')
 					} else {
 						this.ruleForm = res
 						let time_arr = []
-						time_arr.push(this.ruleForm.startTime)
-						time_arr.push(this.ruleForm.endTime)
+						time_arr.push(res.startTime)
+						time_arr.push(res.endTime)
 						this.ruleForm.time = time_arr
 						this.ruleForm.weeks = res.weeks.split(',')
-						this.ruleForm.roomStrategyJson =res.hotelPriceRoomTypeList
+						this.ruleForm.roomStrategyJson = res.hotelPriceRoomTypeList
 						console.log('this.ruleForm---', this.ruleForm)
+						debugger
 					}
-					
+
 				})
 			},
 			// 单位列表-删除
@@ -414,6 +437,23 @@
 			},
 			back_1() {
 				this.get_price_enter_strategy_list()
+				this.ruleForm.ruleName = ''
+				this.ruleForm.time = ''
+				this.ruleForm.startTime = ''
+				this.ruleForm.endTime = ''
+				this.ruleForm.weeks = []
+				this.ruleForm.discounts = '1'
+				this.ruleForm.state = 1
+				this.ruleForm.roomStrategyJson = []
+				
+				this.detail_info.ruleName = ''
+				this.detail_info.time = ''
+				this.detail_info.startTime = ''
+				this.detail_info.endTime = ''
+				this.detail_info.weeks = []
+				this.detail_info.discounts = '1'
+				this.detail_info.state = 1
+				this.detail_info.roomStrategyJson = []
 				this.tab1_show = true;
 			},
 			handleSizeChange(val) {
