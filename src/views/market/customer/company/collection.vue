@@ -93,12 +93,12 @@
               <el-radio-button label="5" style="margin-right: 10px"
                 >本月</el-radio-button
               >
-              <el-radio-button label="自定义" style="margin-right: 10px"
+              <el-radio-button label="defined" style="margin-right: 10px"
                 >自定义</el-radio-button
               >
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="searchForm.timeType == '自定义'">
+          <el-form-item v-if="searchForm.timeType == 'defined'">
             <el-date-picker
               v-model="searchForm.startTime"
               value-format="yyyy-MM-dd"
@@ -491,6 +491,8 @@ export default {
         pageSize: this.pageSize,
       });
       this.$F.merge(params, this.searchForm);
+      if (params.timeType == 'defined')
+          delete params['timeType'];
       this.$F.doRequest(
         this,
         "/pms/consume/enter_consume_order_list",

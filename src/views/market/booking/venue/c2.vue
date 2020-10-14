@@ -29,12 +29,12 @@
                 <el-radio-button label="7" style="margin-right: 10px"
                   >近7天</el-radio-button
                 >
-                <el-radio-button label="自定义" style="margin-right: 10px"
+                <el-radio-button label="defined" style="margin-right: 10px"
                   >自定义</el-radio-button
                 >
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="searchForm.timeType == '自定义'">
+            <el-form-item v-if="searchForm.timeType == 'defined'">
               <el-date-picker
                 v-model="searchForm.cstartTime"
                 value-format="yyyy-MM-dd"
@@ -432,6 +432,8 @@ export default {
         paging: true,
       });
       this.$F.merge(params, this.searchForm);
+      if (params.timeType == 'defined')
+          delete params['timeType'];
       this.$F.doRequest(
         this,
         "/pms/reserve/reserve_order_list",

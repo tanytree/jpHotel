@@ -212,18 +212,17 @@
         </el-table-column>
         <el-table-column label="操作" width="240">
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="popClick(row, 'detail')"
-              >详情</el-button
-            >
+            <el-button type="text" size="mini" @click="popClick(row, 'detail')" >详情</el-button  >
             <!--              这里未退房或者今日预离订单才可以操作结账-->
             <el-button
               type="text"
               size="mini"
               v-if="row.orderType == 1 || row.orderType == 2"
-              @click="settleAccounts(row)"
+              @click="popClick(row, 'detail')"
               >结账</el-button
-            >
-            <el-button
+                >
+              <!--              @click="settleAccounts(row)"-->
+              <el-button
               type="text"
               size="mini"
               @click="popClick(row, 'invoicing')"

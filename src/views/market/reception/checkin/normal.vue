@@ -287,7 +287,7 @@
                             </el-select>
                         </el-row>
                     </template>
-                </el-table-column>
+                </el-table-column>checkInRoomJson
                 <el-table-column prop="groupName" label="手机号" width="150">
                     <template slot-scope="{row}">
                         <el-row>
@@ -739,6 +739,8 @@ export default {
                 })
             }
             this.$refs.checkInForm.validate((valid) => {
+                console.log(this.waitingRoom);
+                debugger
                 if (valid) {
                     if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
                         if (!this.waitingRoom.length) {
@@ -767,6 +769,22 @@ export default {
                         //     // this.liveCard_in_person_list()
                         //     return false
                         // }
+                    } else {
+                        this.waitingRoom.forEach((item) => {
+                            let temp = {
+                                roomTypeId: item.roomTypeId,
+                                reservePrice: item.price,
+                                realPrice: item.todayPrice,
+                            }
+                            if (item.roomsArr && item.roomsArr.length > 0) {
+                                let array = [];
+                                item.roomsArr.forEach((room) => {
+                                    array.push(room.roomId);
+                                })
+                                temp.roomId = array.join(",");
+                            }
+                            this.checkInForm.checkInRoomJson.push(temp);
+                        })
                     }
                     ajax();
                 } else {
@@ -894,27 +912,6 @@ export default {
             });
             this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
             this.rowRoomShow = false;
-            // [{"roomTypeId":"xxxxxxx","roomId":"xxxxx,xxxxx","reservePrice":333,"realPrice":185},
-            //     {"roomTypeId":"xxxxxxx","roomId":"xxxxx,xxxxx","reservePrice":333,"realPrice":185}]
-
-            // let params = {
-            //     checkinRoomType: 1,
-            //     roomTypeId: this.rowRoomCurrentItem.roomTypeId,
-            //     checkinId: this.checkInForm.checkInId,
-            //     checkinReserveId: this.checkInForm.checkInId,
-            //     roomId: ids,
-            //     reservePrice: this.rowRoomCurrentItem.todayPrice,
-            //     realPrice: this.rowRoomCurrentItem.price
-            // }
-            // this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
-            //     this.$message({
-            //         message: '排房成功',
-            //         type: 'success'
-            //     });
-            //     this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
-            //     this.rowRoomShow = false
-            //     this.$forceUpdate()
-            // })
         },
 
         //自动排房
@@ -949,8 +946,6 @@ export default {
             let setRooms = (key, item) => {
                 this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
                 this.rowRoomShow = false;
-                console.log(key)
-                console.log(item)
                 console.log(this.waitingRoom)
                 for (let k in this.waitingRoom) {
                     if (this.waitingRoom[k].roomTypeId == key) {

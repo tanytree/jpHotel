@@ -12,9 +12,9 @@
             <el-radio-button label="2" style="margin-right:10px">昨日</el-radio-button>
             <el-radio-button label="6" style="margin-right:10px">本周</el-radio-button>
             <el-radio-button label="5" style="margin-right:10px">本月</el-radio-button>
-            <el-radio-button label="自定义" style="margin-right:10px">自定义</el-radio-button>
+            <el-radio-button label="defined" style="margin-right:10px">自定义</el-radio-button>
           </el-radio-group>
-          <el-form-item v-if="searchForm.timeType=='自定义'">
+          <el-form-item v-if="searchForm.timeType=='defined'">
             <el-date-picker
               v-model="searchForm.startTime"
               value-format="yyyy-MM-dd"
@@ -191,6 +191,8 @@ export default {
         pageSize: this.pageSize,
       });
       this.$F.merge(params, this.searchForm);
+      if (params.timeType == 'defined')
+          delete params['timeType'];
       this.$F.doRequest(this, "/pms/hotelmemberscore/list", params, (data) => {
         console.log(data);
         this.tableData = data.list;

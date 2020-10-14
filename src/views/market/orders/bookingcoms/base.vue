@@ -8,7 +8,7 @@
 <div class="base" v-if="checkinInfo">
     <el-row class="clearfix">
         <div class="fr">
-            <el-button plain @click="liveInPersonShow=true">批量入住</el-button>
+            <el-button plain @click="batchCheckId">批量入住</el-button>
             <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')">修改订单</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary">
                 更多操作
@@ -71,11 +71,7 @@
         </el-row>
     </el-row>
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
-        <customer></customer>
-        <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="liveInPersonShow=false">取消</el-button>
-            <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
-        </span>
+        <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
     </el-dialog>
     <el-dialog top="0" title="修改订单" :visible.sync="baseInfoChangeShow" width="900px" center>
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
@@ -218,12 +214,12 @@ import {
     mapActions
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
-import customer from '@/components/front/customer'
+import customer2 from '@/components/front/customer2'
 import rowRoomHandle from "@/views/market/home/rowRoomHandle";
 
 export default {
     components: {
-        customer,
+        customer2,
         rowRoomHandle
     },
     mixins: [myMixin],
@@ -270,6 +266,7 @@ export default {
             salesList: [],
             roomTypeList: {},
             currentItem: {},
+            liveData: [],
             baseInfoChangeForm: {},
             rules: {
                 name: [{
@@ -357,8 +354,6 @@ export default {
     },
 
     mounted() {
-        console.log(this.checkinInfo);
-        console.log(this.inRoomList);
         let id = this.$route.query.id
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;
@@ -366,6 +361,36 @@ export default {
     },
 
     methods: {
+        checkInCallback(id) {
+            this.liveInPersonShow = false;
+            this.$router.push('/orderdetail?id=' + id);
+        },
+        batchCheckId() {
+            console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
+            console.log(JSON.parse(JSON.stringify(this.inRoomList)));
+            debugger
+            this.inRoomList.forEach((item, i) => {
+                let object = {
+                    checkinRoomId: this.checkinInfo.id,
+                    name: this.checkinInfo.name,
+                    idcardType: this.checkinInfo.idcardType || '1',
+                    idcard: this.checkinInfo.idcard,
+                    sex: this.checkinInfo.sex || '1',
+                    mobile: this.checkinInfo.mobile,
+                    checkinId: '',
+                    checkInPersonId: '',
+                    houseNum: item.houseNum,
+                    realPrice: item.realPrice,
+                    reservePrice: item.reservePrice,
+                    roomId: item.roomId,
+                    roomTypeId: item.roomTypeId,
+                    roomTypeName: item.roomTypeName,
+                    personList: []
+                }
+                this.liveData.push(object);
+            })
+            this.liveInPersonShow = true;
+        },
         checkKey(key) {
             console.log(key)
             if (key.indexOf('checkIn') != -1) {

@@ -19,23 +19,12 @@
     <div class="bodyInfo margin-t-10" v-loading="loading">
       <div class="aside">
         <ul>
-          <li
-            @click="
-              isOrder = true;
-              currentRoom = {};
-            "
-            :class="isOrder ? 'active' : ''"
-          >
+          <li @click=" isOrder = true; currentRoom = {};" :class="isOrder ? 'active' : ''">
             <p>预订单信息</p>
           </li>
-          <li
-            v-for="(item, index) of detailData.inRoomList"
-            :key="index"
-            :class="currentRoom.id == item.id ? 'active' : ''"
-            @click="showRoomInfo(item)"
-          >
+           <li v-for="(item, index) of detailData.inRoomList" :key="index" :class="currentRoom.id == item.id ? 'active' : ''"   @click="showRoomInfo(item)"  >
             <p>{{ item.houseNum }} 房型：{{ item.roomTypeName }}</p>
-            <span class="ok" v-if="item.personList.length">已排房</span>
+            <span class="ok" v-if="item.roomId">已排房</span>
             <span class="no" v-else>未排房</span>
           </li>
         </ul>
@@ -66,11 +55,7 @@
           </el-tabs>
         </el-row>
         <el-row v-else>
-          <roominfo
-            :currentRoom="currentRoom"
-            :checkinInfo="detailData.checkIn"
-            @baseInfoChange="baseInfoChange"
-          ></roominfo>
+          <roominfo :currentRoom="currentRoom"  :checkinInfo="detailData.checkIn" @baseInfoChange="baseInfoChange"  ></roominfo>
         </el-row>
       </div>
     </div>

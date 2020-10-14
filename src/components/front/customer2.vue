@@ -79,8 +79,6 @@
         <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="personSubmit()">确定</el-button>
         </div>
-
-
     </div>
 </template>
 
@@ -124,7 +122,6 @@ export default {
     },
 
     methods: {
-
         personListKeyup(object, key, value, index) {
             debugger
             if (object.sysIndex || object.sysIndex === 0) {
@@ -192,8 +189,9 @@ export default {
                         personListJson: JSON.stringify(this.liveInPersonData[0].personList),
                         personList: JSON.stringify(this.liveInPersonData[0].personList),
                     }
-                    this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (res) => {
-
+                    this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
+                        debugger
+                        this.emit('checkInCallback', res.checkinId);
                     })
                 })
             } else if (this.type == 'order'){

@@ -468,12 +468,13 @@ export default {
             return;
           }
         }
+        debugger
         if (params.priceType == 4) {
           // params.priceType == 1
-          if (params.consumePrice > 0 || params.consumePrice == 0) {
-            this.$message.error("请输入为负数金额");
-            return;
-          }
+          // if (params.consumePrice > 0 || params.consumePrice == 0) {
+          //   this.$message.error("请输入为负数金额");
+          //   return;
+          // }
         }
       }
       //冲调

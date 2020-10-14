@@ -51,76 +51,6 @@
             </template>
         </el-table-column>
     </el-table>
-
-<!--    <el-table v-else v-loading="loading" :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;"-->
-<!--              row-key="id" border :default-expand-all='true'-->
-<!--              :tree-props="{children: 'children', hasChildren: 'hasChildren'}">-->
-<!--        <el-table-column label="房号/房型" width="100">-->
-<!--            <template slot-scope="scope">-->
-<!--                {{scope.row.isChild?'':scope.row.houseNum}}-->
-<!--                {{scope.row.isChild?'':scope.row.roomTypeName}}-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column prop="realPrice" label="房价" width="100">-->
-<!--        </el-table-column>-->
-<!--        &lt;!&ndash; <el-table-column prop="" label="排房" width="150">-->
-<!--        </el-table-column> &ndash;&gt;-->
-<!--        <el-table-column label="姓名" width="150">-->
-<!--            <template slot-scope="{row}">-->
-<!--                <el-row>-->
-<!--                    <el-input v-model="row.name" placeholder="请输入姓名"></el-input>-->
-<!--                </el-row>-->
-<!--&lt;!&ndash;                <el-row v-else>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <el-input v-if="row.edit" v-model="row.name"></el-input>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <span v-else>{{row.name}}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                </el-row>&ndash;&gt;-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column prop="groupName" label="证件类型" width="150">-->
-<!--            <template slot-scope="{row}">-->
-<!--                <el-row>-->
-<!--                    <el-select v-model="row.idcardType" style="width:100%">-->
-<!--                        <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>-->
-<!--                    </el-select>-->
-<!--                </el-row>-->
-<!--            </template>-->
-
-<!--        </el-table-column>-->
-<!--        <el-table-column prop="groupName" label="证件号码">-->
-<!--            <template slot-scope="{row}">-->
-<!--                <el-row>-->
-<!--                    <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>-->
-<!--                </el-row>-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column label="性别" width="120">-->
-<!--            <template slot-scope="{row}">-->
-<!--                <el-row>-->
-<!--                    <el-select v-model="row.sex" style="width:100%">-->
-<!--                        <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index"></el-option>-->
-<!--                    </el-select>-->
-<!--                </el-row>-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column prop="groupName" label="手机号" width="150">-->
-<!--            <template slot-scope="{row}">-->
-<!--                <el-row>-->
-<!--                    <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>-->
-<!--                </el-row>-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column label="操作" width="180">-->
-<!--            <template slot-scope="scope">-->
-<!--&lt;!&ndash;                <el-button type="text" size="mini" @click="editItem_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">保存</el-button>&ndash;&gt;-->
-<!--                <el-button type="text" size="mini" @click="edit_live_in_person(scope.row.isChild?scope.row:scope.row)" v-if="scope.row.isChild&&!scope.row.edit">编辑</el-button>-->
-<!--                <el-button type="text" size="mini" @click="del_live_in_person(scope.row)" v-if="scope.row.isChild && !scope.row.isIndex0">删除</el-button>-->
-<!--                <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)">&lt;!&ndash;@click="addItem_live_in_person(scope.$index,scope.row)"&ndash;&gt;-->
-<!--                    <template>+同来宾客</template>-->
-<!--&lt;!&ndash;                    <template v-else>+入住人</template>&ndash;&gt;-->
-<!--                </el-button>-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-<!--    </el-table>-->
     <el-table v-else v-loading="loading" :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;"
               border :default-expand-all='true'
              >
@@ -176,7 +106,6 @@
     </el-table>
     <el-dialog top="0" :show-close='false' title="添加入住人" :visible.sync="addLivePersonShow" width="80%">
         <customer2 v-if="addLivePersonShow" :liveData="liveData2" @personCallback="personCallback"></customer2>
-
     </el-dialog>
 </div>
 </template>
