@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-13 14:59:36
+ * @LastEditTime: 2020-10-13 21:17:31
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 
@@ -16,6 +16,57 @@ module.exports = {
     home_messEmployees: 'メッセージ送信者',
     home_messTime: '送信時間',
     home_newAddMess: 'メッセージ追加',
+    home_inputMessContent: '未翻译词条',
+    home_sureDelete: '未翻译词条',
+    home_prompt: '未翻译词条',
+    home_deleteSuccess: '未翻译词条',
+    home_addSuccess: '未翻译词条',
+    home_register: '預かり種別',
+    home_toRetrieve: '受取待ち',
+    home_haveRetrieve: '受取済み',
+    home_cancelllation: '廃棄',
+    home_customerName: '顧客名前',
+    home_getNum: '受け渡す番号',
+    home_registerTime: '預かり時間',
+    home_goodsName: '預かり内容',
+    home_addRegister: '預かり追加',
+    home_phoneNum: '電話番号',
+    home_depositingTime: '預かり時間',
+    home_drawTime: '受け渡す時間',
+    home_state: '状態',
+    home_operator: '操作員',
+    home_receive: '受け渡す',
+    home_invalid: '廃棄',
+    home_cancelInvalid: '未翻译词条',
+    home_checkToPlay: '預かり書を再発行',
+    home_note: '未翻译词条',
+    home_goodsGetOrder: '未翻译词条',
+    home_printTime: '打印时间',
+    home_checkTheTime: '預かり時間',
+    home_explain: '受け渡す際必要ですので、必ず大事に保存下さい',
+    home_deskPhone: 'フロント電話番号',
+    home_hotelAddress: 'ホテル住所',
+    home_telNum: '電話番号',
+    home_getState: '未翻译词条',
+    home_saveAndPri: '未翻译词条',
+    home_inputGoodsName: '未翻译词条',
+    home_inputRoomNum: '未翻译词条',
+    home_deleteSure: '未翻译词条',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
