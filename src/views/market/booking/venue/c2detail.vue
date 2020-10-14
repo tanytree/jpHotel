@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-09-14 10:55:10
  * @Author: 陶子
- * @LastEditTime: 2020-10-12 14:23:32
+ * @LastEditTime: 2020-10-14 10:21:34
  * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
 -->
 <template>
@@ -286,7 +286,6 @@ export default {
   },
   created() {
     this.getOrderDetail();
-    this.getData();
   },
 
   methods: {
@@ -309,6 +308,7 @@ export default {
           this.totalPrice = data.totalPrice;
           this.payPrice = data.payPrice;
           this.inRoomList = data.inRoomList;
+          this.getData();
         }
       );
     },
@@ -318,7 +318,7 @@ export default {
         if (valid) {
           let params = {};
           this.$F.merge(params, {
-            checkInReserveId: this.checkIn.id,
+            checkInReserveId: this.$route.query.id,
           });
           this.$F.doRequest(
             this,
@@ -362,7 +362,7 @@ export default {
     //会议登记列表
     getData(params = {}) {
       this.$F.merge(params, {
-        checkinId: this.$route.query.id,
+        checkinId: this.checkIn.id,
       });
       this.$F.doRequest(
         this,

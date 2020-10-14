@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-13 11:17:01
+ * @LastEditTime: 2020-10-14 14:54:27
  * @FilePath: \jiudian\src\views\market\customer\children\historydetail.vue
  -->
 <template>
@@ -13,7 +13,7 @@
           <el-breadcrumb-item @click.native="goBack" style="cursor: pointer"
             >客史档案</el-breadcrumb-item
           >
-          <el-breadcrumb-item>张三</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ itemInfo.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="bodyInfo">
@@ -30,27 +30,26 @@
                     </el-col>
                     <el-col :span="7" class="col">
                       <el-form-item label="电话:">
-                        <el-input v-model="editorForm.name"></el-input>
+                        <el-input v-model="editorForm.mobile"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="10" class="col">
                       <el-form-item label="证件类型:">
                         <el-select
                           style="width: 100px; margin-right: 4px"
-                          v-model="editorForm.value"
+                          v-model="editorForm.idcardType"
                           placeholder="请选择"
                           size="small"
                         >
                           <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                          >
-                          </el-option>
+                            v-for="(label, value) in $t('commons.idCardType')"
+                            :label="label"
+                            :value="value"
+                            :key="value"
+                          ></el-option>
                         </el-select>
                         <el-input
-                          v-model="editorForm.name"
+                          v-model="editorForm.idcard"
                           style="width: 200px"
                         ></el-input>
                       </el-form-item>
@@ -61,7 +60,7 @@
                   <el-row class="cell">
                     <el-col :span="7" class="col">
                       <el-form-item label="性别:">
-                        <el-radio-group v-model="editorForm.radio">
+                        <el-radio-group v-model="editorForm.sex">
                           <el-radio :label="1">男</el-radio>
                           <el-radio :label="2">女</el-radio>
                         </el-radio-group>
@@ -72,27 +71,27 @@
                         <el-date-picker
                           type="date"
                           placeholder="选择日期"
-                          v-model="editorForm.date1"
+                          v-model="editorForm.birthday"
                           style="width: 200px"
                         ></el-date-picker>
                       </el-form-item>
                     </el-col>
                     <el-col :span="10" class="col">
                       <el-form-item label="邮箱:">
-                        <el-input v-model="editorForm.name"></el-input>
+                        <el-input v-model="editorForm.email"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="7" class="col">
                       <el-form-item label="国籍:">
-                        <el-input v-model="editorForm.name"></el-input>
+                        <el-input v-model="editorForm.nationality"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="17" class="col">
                       <el-form-item label="地址:">
                         <el-input
-                          v-model="editorForm.name"
+                          v-model="editorForm.address"
                           style="width: 530px"
                         ></el-input>
                       </el-form-item>
@@ -107,7 +106,7 @@
                     <el-col :span="17" class="col">
                       <el-form-item label="爱好:">
                         <el-input
-                          v-model="editorForm.name"
+                          v-model="editorForm.hobby"
                           style="width: 530px"
                         ></el-input>
                       </el-form-item>
@@ -118,41 +117,25 @@
                       <el-form-item label="所属单位:">
                         <el-select
                           style="width: 200px"
-                          v-model="editorForm.value"
+                          v-model="editorForm.enterId"
                           placeholder="请选择"
                           size="small"
                         >
                           <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                          >
-                          </el-option>
+                            v-for="item in hotelenterList"
+                            :key="item.id"
+                            :label="item.enterName"
+                            :value="item.id"
+                          ></el-option>
                         </el-select>
                       </el-form-item>
                     </el-col>
                     <el-col :span="17" class="col">
                       <el-form-item label="备注:">
                         <el-input
-                          v-model="editorForm.name"
+                          v-model="editorForm.remark"
                           style="width: 530px"
                         ></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </el-row>
-                <el-divider></el-divider>
-                <el-row class="row">
-                  <el-row class="cell">
-                    <el-col :span="8" class="col">
-                      <el-form-item label="销售员:">
-                        <el-input v-model="editorForm.name"></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8" class="col">
-                      <el-form-item label="发展途径:">
-                        <el-input v-model="editorForm.name"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -160,8 +143,8 @@
               </el-form>
             </div>
             <div style="text-align: right">
-              <el-button type="primary">保存</el-button>
-              <el-button>返回</el-button>
+              <el-button type="primary" @click="saveEditor">保存</el-button>
+              <el-button @click="goBack()">返回</el-button>
             </div>
           </div>
         </div>
@@ -187,40 +170,69 @@ export default {
   },
   data() {
     return {
-      editorForm: {
-        radio: 1,
-      },
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕",
-        },
-        {
-          value: "选项2",
-          label: "双皮奶",
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎",
-        },
-        {
-          value: "选项4",
-          label: "龙须面",
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭",
-        },
-      ],
+      editorForm: {},
+      hotelenterList: "",
+
+      itemInfo: null,
     };
   },
-
-  mounted() {
+  created() {
+    this.hotelenter_list();
     this.itemInfo = this.$route.query.item;
     console.log(this.itemInfo);
+    this.editorForm.name = this.itemInfo.name;
+    this.editorForm.mobile = this.itemInfo.mobile;
+    this.editorForm.idcardType = this.itemInfo.idcardType;
+    this.editorForm.idcard = this.itemInfo.idcard;
+    this.editorForm.sex = this.itemInfo.sex;
+    this.editorForm.birthday = this.itemInfo.birthday;
+    this.editorForm.email = this.itemInfo.email;
+    this.editorForm.nationality = this.itemInfo.nationality;
+    this.editorForm.address = this.itemInfo.address;
+    this.editorForm.carNum = this.itemInfo.carNum;
+    this.editorForm.hobby = this.itemInfo.hobby;
+    this.editorForm.enterId = this.itemInfo.enterId;
+    this.editorForm.remark = this.itemInfo.remark;
+    //以下为非改项
+    if (this.itemInfo.memberObject) {
+      this.editorForm.memberTypeId = this.itemInfo.memberObject.memberTypeId;
+    }
+    this.editorForm.memberCard = this.itemInfo.memberCard;
   },
+  mounted() {},
 
   methods: {
+    //点击保存按钮
+    saveEditor() {
+      this.$F.doRequest(
+        this,
+        "/pms/hotelmember/edit",
+        this.editorForm,
+        (data) => {
+          this.$message({ message: "保存成功", type: success });
+        }
+      );
+    },
+    hotelenter_list() {
+      let params = {
+        id: "",
+        enterName: "",
+        state: 1,
+        shareFlag: "",
+        contactName: "",
+        contactPhone: "",
+        salesId: "",
+        startCreditLimit: "",
+        endCreditLimit: "",
+        paging: false,
+        salesFlag: 1,
+        pageIndex: 1,
+        pageSize: 10,
+      };
+      this.$F.doRequest(this, "/pms/hotelenter/list", params, (data) => {
+        this.hotelenterList = data.list;
+      });
+    },
     goBack() {
       this.$router.history.go(-1);
     },
