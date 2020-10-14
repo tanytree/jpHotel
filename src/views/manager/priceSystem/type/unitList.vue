@@ -69,13 +69,9 @@
 					</el-row>
 					<el-col :span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')+':'" prop="time">
-							<el-date-picker
-							      v-model="ruleForm.time"
-							      type="datetimerange"
-							      range-separator="至"
-							      start-placeholder="开始日期"
-							      end-placeholder="结束日期" @change="changeTime">
-							    </el-date-picker>
+							<el-date-picker v-model="ruleForm.time" type="datetimerange" range-separator="至" start-placeholder="开始日期"
+							 end-placeholder="结束日期" @change="changeTime">
+							</el-date-picker>
 							<!-- <el-date-picker
 							      v-model="value1"
 							      type="daterange"
@@ -445,7 +441,7 @@
 				this.ruleForm.discounts = '1'
 				this.ruleForm.state = 1
 				this.ruleForm.roomStrategyJson = []
-				
+
 				this.detail_info.ruleName = ''
 				this.detail_info.time = ''
 				this.detail_info.startTime = ''
@@ -465,68 +461,3 @@
 		}
 	};
 </script>
-
-<style lang="less" scoped>
-	.demo-form-inline {
-		display: flex;
-		align-items: center;
-	}
-
-	.editPriceDialog .tip {
-		font-size: 12px;
-		color: #b1b1b1;
-	}
-
-	.row-width {
-		width: 120px;
-	}
-
-	.padding-item {
-		padding-bottom: 5px;
-	}
-
-	.btn-click {
-		height: 200px;
-		width: 300px;
-		background: #e5e5e5;
-		// background-color: linear-gradient(toright, #e5e5e5, #e5e5e5);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		i {
-			font-size: 30px;
-		}
-
-		span {
-			font-size: 20px;
-			color: #666666;
-			margin-left: 10px;
-		}
-	}
-
-	.btn-click:hover {
-		height: 200px;
-		width: 300px;
-		background: #4db8ff;
-		// background: linear-gradient(toright, #4db8ff, #1aa3ff);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		i {
-			font-size: 30px;
-			color: #fff;
-		}
-
-		span {
-			font-size: 20px;
-			color: #fff;
-			margin-left: 10px;
-		}
-	}
-
-	.member-price .el-table .cell {
-		cursor: pointer !important;
-	}
-</style>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 16:38:41
+ * @LastEditTime: 2020-10-13 11:42:04
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -75,11 +75,6 @@
           <el-button type="primary" @click="getDataList">查询</el-button>
           <el-button type="primary" @click="initForm">重置</el-button>
         </el-form-item>
-        <el-row>
-          <el-form-item>
-            <el-button type="text">开卡总数：999</el-button>
-          </el-form-item>
-        </el-row>
       </el-form>
       <!--表格数据 -->
       <el-table

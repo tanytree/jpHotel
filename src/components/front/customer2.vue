@@ -5,83 +5,83 @@
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/customer.vue
  -->
 <template>
-<div class="customer">
-    <el-table
-        :data="liveInPersonData"
-        style="width: 100%;margin-bottom: 20px;"
-        :row-key="getRowKey"
-        border
-        default-expand-all
-        :tree-props="{children: 'personList', hasChildren: 'hasChildren'}">
-        <el-table-column label="房号/房型" width="200">
-            <template slot-scope="scope">
+    <div class="customer">
+        <el-table
+            :data="liveInPersonData"
+            style="width: 100%;margin-bottom: 20px;"
+            :row-key="getRowKey"
+            border
+            default-expand-all
+            :tree-props="{children: 'personList', hasChildren: 'hasChildren'}">
+            <el-table-column label="房号/房型" width="200">
+                <template slot-scope="scope">
                 <span v-if="!scope.row.isChild">
                     {{scope.row.isChild?'':scope.row.houseNum}}
                 </span>
-                <span v-if="!scope.row.isChild">/</span>
-                <span v-if="!scope.row.isChild">
+                    <span v-if="!scope.row.isChild">/</span>
+                    <span v-if="!scope.row.isChild">
                     {{scope.row.isChild?'':scope.row.roomTypeName}}
                 </span>
-            </template>
-        </el-table-column>
-        <el-table-column prop="realPrice" label="房价">
-        </el-table-column>
-        <el-table-column label="姓名" width="150">
-            <template slot-scope="{row}">
-                <el-row>
-                    <el-input v-model="row.name" placeholder="请输入姓名"></el-input>
-                </el-row>
-            </template>
-        </el-table-column>
-        <el-table-column prop="groupName" label="证件类型">
-            <template slot-scope="{row}">
-                <el-row>
-                    <el-select v-model="row.idcardType" style="width:100%">
-                        <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
-                    </el-select>
-                </el-row>
-            </template>
+                </template>
+            </el-table-column>
+            <el-table-column prop="realPrice" label="房价">
+            </el-table-column>
+            <el-table-column label="姓名" width="150">
+                <template slot-scope="{row, $index}">
+                    <el-row>
+                        <el-input v-model="row.name" placeholder="请输入姓名" @keyup.native="personListKeyup(row, 'name', row.name, $index)"></el-input>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <el-table-column prop="groupName" label="证件类型">
+                <template slot-scope="{row}">
+                    <el-row>
+                        <el-select v-model="row.idcardType" style="width:100%">
+                            <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index" ></el-option>
+                        </el-select>
+                    </el-row>
+                </template>
 
-        </el-table-column>
-        <el-table-column prop="groupName" label="证件号码">
-            <template slot-scope="{row}">
-                <el-row>
-                    <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>
-                </el-row>
-            </template>
-        </el-table-column>
-        <el-table-column label="性别">
-            <template slot-scope="{row}">
-                <el-row>
-                    <el-select v-model="row.sex" style="width:100%">
-                        <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index"></el-option>
-                    </el-select>
-                </el-row>
-            </template>
-        </el-table-column>
-        <el-table-column prop="groupName" label="手机号">
-            <template slot-scope="{row}">
-                <el-row>
-                    <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
-                </el-row>
-            </template>
-        </el-table-column>
-        <el-table-column label="操作">
-            <template slot-scope="scope">
-                <el-button type="text" size="mini" @click="del_live_in_person(scope.row, scope.$index)" v-if="scope.row.isChild">删除</el-button>
-                <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
-                    <template>+同来宾客</template>
-<!--                    <template v-else>+入住人</template>-->
-                </el-button>
-            </template>
-        </el-table-column>
-    </el-table>
-    <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="personSubmit()">确定</el-button>
+            </el-table-column>
+            <el-table-column prop="groupName" label="证件号码">
+                <template slot-scope="{row}">
+                    <el-row>
+                        <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <el-table-column label="性别">
+                <template slot-scope="{row}">
+                    <el-row>
+                        <el-select v-model="row.sex" style="width:100%">
+                            <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index"></el-option>
+                        </el-select>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <el-table-column prop="groupName" label="手机号">
+                <template slot-scope="{row}">
+                    <el-row>
+                        <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button type="text" size="mini" @click="del_live_in_person(scope.row, scope.$index)" v-if="scope.row.isChild">删除</el-button>
+                    <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
+                        <template>+同来宾客</template>
+                        <!--                    <template v-else>+入住人</template>-->
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="personSubmit()">确定</el-button>
+        </div>
+
+
     </div>
-
-
-</div>
 </template>
 
 <script>
@@ -120,14 +120,29 @@ export default {
         console.log(this.liveData);
         console.log(this.checkinInfo);
         this.liveInPersonData = this.$F.deepClone(this.liveData);
-        console.log(JSON.parse(JSON.stringify(this.liveInPersonData)));
-        debugger
         this.$forceUpdate();
     },
 
     methods: {
+
+        personListKeyup(object, key, value, index) {
+            debugger
+            if (object.sysIndex || object.sysIndex === 0) {
+                let index2 = 0;
+                this.liveInPersonData.forEach((item, i) => {
+                    if (item.roomId == object.roomId) {
+                        index2 = i;
+                    }
+                })
+                this.liveInPersonData[index2].personList[object.sysIndex][key] = value;
+                this.$set(this.liveInPersonData, index2, this.liveInPersonData[index2]);
+                this.$set(this.liveInPersonData[index2].personList, object.sysIndex, this.liveInPersonData[index2].personList[object.sysIndex]);
+            }
+
+
+        },
         getRowKey(row) {
-            return row.id || row.roomId;
+            return row.id + row.roomId + row.houseNum;
         },
         personSubmit() {
             console.log(this.liveInPersonData)
@@ -156,6 +171,7 @@ export default {
                 temp.personList.unshift(tempObject);
                 temp.personList.forEach(temp => {
                     delete temp['isChild'];
+                    delete temp['sysIndex'];
                     delete temp['roomId'];
                 })
                 personListJSONList = personListJSONList.concat(temp.personList);
@@ -167,17 +183,15 @@ export default {
                 this.$F.merge(params, {
                     checkInReserveId: this.checkinInfo.id,
                 });
-                debugger
                 //预定房办理入住
                 this.$F.doRequest(this, '/pms/reserve/reserve_to_checkin', params, (res) => {
-                   // res.checkinId
+                    // res.checkinId
                     //然后立即办理入住
                     params = {
                         checkinId: res.checkinId,
                         personListJson: JSON.stringify(this.liveInPersonData[0].personList),
                         personList: JSON.stringify(this.liveInPersonData[0].personList),
                     }
-                    debugger
                     this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (res) => {
 
                     })
@@ -192,7 +206,17 @@ export default {
 
         //添加同来宾客
         addGuest(row, index) {
+
             let newRow = this.$F.deepClone(row);
+            let sysIndex = 0;
+            for (let i = 0; i < this.liveInPersonData.length; i++) {
+                let item = this.liveInPersonData[i];
+                if (item.roomId == newRow.roomId) {
+                    index = i;
+                    break;
+                }
+            }
+            debugger
             if (! this.liveInPersonData[index].personList) {
                 row.personList = [];
             }
@@ -203,10 +227,13 @@ export default {
                 isChild: true,
                 idcardType: '1',
                 idcard: '',
+                sysIndex: this.liveInPersonData[index].personList.length,
                 sex: '1',
                 mobile: '',
             });
-            this.$set(this.liveInPersonData, index, this.liveInPersonData[index]);
+            this.liveInPersonData.forEach((item, i) => {
+                this.$set(this.liveInPersonData, i, this.liveInPersonData[i]);
+            })
             this.$forceUpdate()
         },
 

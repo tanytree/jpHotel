@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 16:51:27
+ * @LastEditTime: 2020-10-13 10:56:04
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -69,8 +69,8 @@
           <el-input v-model="searchForm.idcard" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+          <el-button type="primary" class="white" @click="initForm">重置</el-button>
         </el-form-item>
         <el-form-item>
           <el-button plain>读会员卡</el-button>
@@ -141,12 +141,11 @@
             F_storeName(row.storesNum)
           }}</template>
         </el-table-column>
-        <el-table-column
-          prop="consumeTotalPrice"
-          align="center"
-          label="累计消费"
-          width="100"
-        ></el-table-column>
+        <el-table-column align="center" label="累计消费" width="100">
+          <template slot-scope="{ row }">{{
+            row.consumeTotalPrice ? row.consumeTotalPrice : "0"
+          }}</template>
+        </el-table-column>
         <el-table-column
           prop="isBlacklist"
           align="center"
@@ -171,9 +170,9 @@
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <!-- <el-dropdown-item @click.native="handleEdit(row)"
+                <el-dropdown-item @click.native="handleEdit(row)"
                   >修改</el-dropdown-item
-                > -->
+                >
                 <el-dropdown-item
                   v-if="!row.memberCard"
                   @click.native="changeIntoMember(row)"
@@ -807,7 +806,10 @@ export default {
     },
     handleEdit(item) {
       this.$router.push({
-        name: "customeredit",
+        name: "historydetail",
+        query: {
+          item: item,
+        },
       });
     },
     F_memberTypeId(v) {

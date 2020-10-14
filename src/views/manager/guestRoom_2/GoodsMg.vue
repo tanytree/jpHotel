@@ -107,6 +107,7 @@
 </template>
 
 <script>
+    import axios from "axios";
     export default {
         data() {
             return {
@@ -284,15 +285,20 @@
             importModel(params) {
                 var a = this;
                 console.log(params)
-                this.$F.doRequest(this, "/pms/hotelgoods/upload", {filename: params.file}, (res) => {
-                    // if(res.code > 0) {
-                    //     params.onSuccess(res.message + '上传成功');
-                    // } else {
-                    //     a.$message.error(data.message);
-                    //     a.$refs.upload.uploadFiles = [];
-                    // }
+                let formData = new FormData();
+                formData.append('filename', params.file);
+                formData.append('platSource', 1005);
+                axios.post(this.$F.getUploadUrl() + ('/pms/hotelgoods/upload'), formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            "accessToken": sessionStorage.accessToken
+                        }
+                    }
+                ).then(res => {
+                    console.log(res);
                     this.$message.success(this.importSuccess);
-                });
+                })
             },
             handleDelete(row) {
                 this.$F.doRequest(

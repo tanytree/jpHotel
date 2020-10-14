@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 17:37:06
+ * @LastEditTime: 2020-10-13 14:15:27
  * @FilePath: \jiudian\src\views\market\customer\guest.vue
  -->
 
@@ -59,11 +59,11 @@
           <el-input v-model="searchForm.idcard" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+          <el-button type="primary" class="white" @click="initForm">重置</el-button>
         </el-form-item>
         <el-form-item style="float: right">
-          <el-button type="primary" @click="addAndEditItemClick('add')"
+          <el-button type="primary" class="white" @click="addAndEditItemClick('add')"
             >登记外宾</el-button
           >
         </el-form-item>
@@ -151,7 +151,9 @@
         </el-table-column>
         <el-table-column label="操作" width="160">
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini">客史</el-button>
+            <el-button type="text" size="mini" @click="handleHistory(row)"
+              >客史</el-button
+            >
             <el-button type="text" size="mini" @click="handleDetail(row)"
               >详情</el-button
             >
@@ -411,6 +413,15 @@ export default {
         pageSize: 10, //页数
       };
       this.getDataList();
+    },
+    handleHistory(item) {
+      console.log(item.idcard);
+      this.$router.push({
+        name: "customerhistory",
+        query: {
+          idcard: item.idcard,
+        },
+      });
     },
     /**获取表格数据 */
     getDataList() {

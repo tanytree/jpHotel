@@ -13,50 +13,58 @@
         size="small"
         class="term"
       >
-        <el-form-item label="寄存类型：" style="display: block">
+        <el-form-item
+          :label="$t('desk.home_register') + ':'"
+          style="display: block"
+        >
           <el-radio-group v-model="leftLuggage.operStatus">
-            <el-radio-button label="">不限</el-radio-button>
-            <el-radio-button label="1" style="margin-left: 10px"
-              >待取回</el-radio-button
-            >
-            <el-radio-button label="2" style="margin-left: 10px"
-              >已取回</el-radio-button
-            >
-            <el-radio-button label="3" style="margin-left: 10px"
-              >已作废</el-radio-button
-            >
+            <el-radio-button label="">{{
+              $t("desk.home_noLimit")
+            }}</el-radio-button>
+            <el-radio-button label="1" style="margin-left: 10px">{{
+              $t("desk.home_toRetrieve")
+            }}</el-radio-button>
+            <el-radio-button label="2" style="margin-left: 10px">{{
+              $t("desk.home_haveRetrieve")
+            }}</el-radio-button>
+            <el-radio-button label="3" style="margin-left: 10px">{{
+              $t("desk.home_cancelllation")
+            }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="客户名称：">
+        <el-form-item :label="$t('desk.home_customerName') + ':'">
           <el-input v-model="leftLuggage.guestName"></el-input>
         </el-form-item>
-        <el-form-item label="房间号：">
+        <el-form-item :label="$t('desk.home_roomNum') + ':'">
           <el-input v-model="leftLuggage.roomNum"></el-input>
         </el-form-item>
-        <el-form-item label="领取编号：">
+        <el-form-item :label="$t('desk.home_getNum') + ':'">
           <el-input v-model="leftLuggage.luggageNum"></el-input>
         </el-form-item>
-        <el-form-item label="寄放日期：">
+        <el-form-item :label="$t('desk.home_registerTime') + ':'">
           <el-date-picker
             type="date"
             v-model="leftLuggage.startTime"
           ></el-date-picker>
-          <span class="line">至</span>
+          <span class="line">{{ $t("boss.report_toText") }}</span>
           <el-date-picker
             type="date"
             v-model="leftLuggage.endTime"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="物品名称:">
+        <el-form-item :label="$t('desk.home_goodsName') + ':'">
           <el-input v-model="leftLuggage.luggageName"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="submit" type="primary" @click="lookFor(leftLuggage)"
-            >查询</el-button
+          <el-button
+            class="submit"
+            type="primary"
+            @click="lookFor(leftLuggage)"
+            >{{ $t("commons.queryBtn") }}</el-button
           >
-          <el-button class="white" @click="resetClick(leftLuggage)"
-            >重置</el-button
-          >
+          <el-button class="white" @click="resetClick(leftLuggage)">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
         <div>
           <el-button
@@ -64,7 +72,7 @@
             size="small"
             type="primary"
             @click="newCheck = true"
-            >新增寄存</el-button
+            >{{ $t("desk.home_addRegister") }}</el-button
           >
         </div>
       </el-form>
@@ -75,90 +83,96 @@
         header-row-class-name="default"
         size="small"
       >
-        <!--:data="tableData"  -->
         <el-table-column
-          label="客户名称"
+          :label="$t('desk.home_customerName')"
           width="80"
           prop="guestName"
         ></el-table-column>
         <el-table-column
-          label="房间号"
+          :label="$t('desk.home_roomNum')"
           width="80"
           prop="roomNum"
         ></el-table-column>
         <el-table-column
-          label="手机号"
+          :label="$t('desk.home_phoneNum')"
           width="100"
           prop="mobile"
         ></el-table-column>
         <el-table-column
-          label="物品名称"
+          :label="$t('desk.home_goodsName')"
           width="80"
           prop="luggageName"
         ></el-table-column>
         <el-table-column
-          label="寄放时间"
+          :label="$t('desk.home_depositingTime')"
           width="120"
           prop="createTime"
         ></el-table-column>
         <el-table-column
-          label="领取时间"
+          :label="$t('desk.home_drawTime')"
           width="120"
           prop="receiveTime"
         ></el-table-column>
         <el-table-column
-          label="领取编号"
+          :label="$t('desk.home_getNum')"
           width="180"
           prop="luggageNum"
         ></el-table-column>
-        <el-table-column label="状态" width="80">
+        <el-table-column :label="$t('desk.home_state')" width="80">
           <template slot-scope="{ row }">
-            <div v-if="row.operStatus == 1">待取回</div>
-            <div v-if="row.operStatus == 2">已取回</div>
-            <div v-if="row.operStatus == 3">已作废</div>
+            <div v-if="row.operStatus == 1">
+              {{ $t("desk.home_toRetrieve") }}
+            </div>
+            <div v-if="row.operStatus == 2">
+              {{ $t("desk.home_haveRetrieve") }}
+            </div>
+            <div v-if="row.operStatus == 3">
+              {{ $t("desk.home_cancelllation") }}
+            </div>
           </template>
         </el-table-column>
-        <el-table-column label="操作人" width="80">
+        <el-table-column :label="$t('desk.home_operator')" width="80">
           <template slot-scope="{ row }">{{ row.creatorName }}</template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{ row }">
             <el-button
               type="primary"
               v-if="row.operStatus == 1"
               @click="getClick(row)"
-              >领取</el-button
             >
-            <el-button size="small" type="text" @click="noteDdetail(row)"
-              >详情</el-button
+              {{ $t("desk.home_receive") }}</el-button
             >
+            <el-button size="small" type="text" @click="noteDdetail(row)">{{
+              $t("commons.detail")
+            }}</el-button>
             <el-button
               size="small"
               type="text"
               v-if="row.operStatus == 1"
               @click="invalidClick(row)"
-              >作废</el-button
+              >{{ $t("desk.home_invalid") }}</el-button
             >
             <el-button
               size="small"
               type="text"
               v-if="row.operStatus == 3"
               @click="cancelInvalidClick(row)"
-              >取消作废</el-button
+              >{{ $t("desk.home_cancelInvalid") }}</el-button
             >
             <el-button
               size="small"
               type="text"
               v-if="row.operStatus == 2 || row.operStatus == 3"
               @click="deletClick(row)"
-              >删除</el-button
+              >{{ $t("commons.delete") }}</el-button
             >
             <el-button
               size="small"
               type="text"
               v-if="row.operStatus == 1"
               @click="jicunClick(row)"
-              >寄存补打</el-button
+              >{{ $t("desk.home_checkToPlay") }}</el-button
             >
           </template>
         </el-table-column>
@@ -178,7 +192,7 @@
     <!-- newCheck新增寄存 -->
     <el-dialog
       top="0"
-      title="新增寄存"
+      :title="$t('desk.home_addRegister')"
       style="text-align: left"
       :visible.sync="newCheck"
     >
@@ -189,42 +203,47 @@
         label-width="90px"
       >
         <el-col :span="8">
-          <el-form-item label="客户姓名:">
+          <el-form-item :label="$t('desk.home_customerName') + ':'">
             <el-input v-model="newCheckForm.guestName"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="房间号：">
+          <el-form-item :label="$t('desk.home_roomNum') + ':'" prop="roomNum">
             <el-input v-model="newCheckForm.roomNum"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="手机号：" prop="phoneNum">
+          <el-form-item :label="$t('desk.home_phoneNum') + ':'">
             <el-input v-model="newCheckForm.mobile"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="物品名称:" prop="luggageName">
+          <el-form-item
+            :label="$t('desk.home_goodsName') + ':'"
+            prop="luggageName"
+          >
             <el-input v-model="newCheckForm.luggageName"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="14">
-          <el-form-item label="备注：">
+          <el-form-item :label="$t('desk.home_note') + ':'">
             <el-input v-model="newCheckForm.remark"></el-input>
           </el-form-item>
         </el-col>
       </el-form>
 
       <div slot="footer" class="dialog-footer" style="text-align: center">
-        <el-button style="width: 80px" @click="newCheck = false"
-          >取消</el-button
-        >
-        <el-button style="width: 110px" v-if="1 == 2">保存并打印</el-button>
+        <el-button style="width: 80px" @click="cancelClick()">{{
+          $t("commons.cancel")
+        }}</el-button>
+        <el-button style="width: 110px" v-if="1 == 2">{{
+          $t("desk.home_saveAndPri")
+        }}</el-button>
         <el-button
           style="width: 80px"
           type="primary"
           @click="saveNewAdd('newCheckForm')"
-          >保存</el-button
+          >{{ $t("commons.save") }}</el-button
         >
       </div>
     </el-dialog>
@@ -232,60 +251,72 @@
     <!-- 新增寄存 详情 -->
     <el-dialog
       top="0"
-      title="详情"
+      :title="$t('commons.detail')"
       style="text-align: left"
       v-if="checkdetail"
       :visible.sync="checkdetail"
     >
       <el-row style="margin: 10px 20px">
         <el-col :span="12">
-          <span style="color: #888888">客户名称：</span>
+          <span style="color: #888888">{{
+            $t("desk.home_customerName") + ":"
+          }}</span>
           {{ itemGoodsDetail.guestName }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">房间号：</span>
+          <span style="color: #888888">{{
+            $t("desk.home_roomNum") + ":"
+          }}</span>
           {{ itemGoodsDetail.roomNum }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">电话号码：</span>
+          <span style="color: #888888">{{ $t("desk.home_telNum") + ":" }}</span>
           {{ itemGoodsDetail.mobile }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">物品名称：</span>
+          <span style="color: #888888">{{
+            $t("desk.home_goodsName") + ":"
+          }}</span>
           {{ itemGoodsDetail.luggageName }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">领取编号：</span>
+          <span style="color: #888888">{{ $t("desk.home_getNum") + ":" }}</span>
           {{ itemGoodsDetail.luggageNum }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">领取状态：</span>
+          <span style="color: #888888">{{
+            $t("desk.home_getState") + ":"
+          }}</span>
           {{ itemGoodsDetail.operStatus }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">寄存时间：</span>
+          <span style="color: #888888">{{
+            $t("desk.home_checkTheTime") + ":"
+          }}</span>
           {{ itemGoodsDetail.createTime }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">领取时间：</span>
+          <span style="color: #888888">{{
+            $t("desk.home_drawTime") + ":"
+          }}</span>
           {{ itemGoodsDetail.receiveTime }}
         </el-col>
         <el-col>
-          <span style="color: #888888">备注：</span>
+          <span style="color: #888888">{{ $t("desk.home_note") + ":" }}</span>
           {{ itemGoodsDetail.remark }}
         </el-col>
       </el-row>
 
       <div slot="footer" class="dialog-footer" style="text-align: center">
-        <el-button style="width: 80px" @click="checkdetail = false"
-          >关闭</el-button
-        >
+        <el-button style="width: 80px" @click="checkdetail = false">{{
+          $t("commons.close")
+        }}</el-button>
       </div>
     </el-dialog>
     <!-- checkPatch  寄存补打-->
     <el-dialog
       top="0"
-      title="寄存补打"
+      :title="$t('desk.home_checkToPlay')"
       style="text-align: left"
       width="650px"
       v-if="checkPatch"
@@ -293,7 +324,7 @@
     >
       <el-row style="margin: 10px 20px">
         <h2 style="text-align: center">
-          {{ itemJiCun.storesName }}物品寄存领取单
+          {{ itemJiCun.storesName }}{{ $t("desk.home_goodsGetOrder") }}
         </h2>
         <el-row
           style="
@@ -302,7 +333,7 @@
             margin-bottom: 10px;
           "
         >
-          <label>打印时间：</label>
+          <label>{{ $t("desk.home_printTime") + ":" }}</label>
           {{ itemJiCun.printingTime }}
         </el-row>
 
@@ -314,29 +345,35 @@
           "
         >
           <p>
-            <label>物品名称：</label>
+            <label>{{ $t("desk.home_goodsName") + ":" }}</label>
             {{ itemJiCun.luggageName }}
           </p>
-          <label>领取编号:</label>
+          <label>{{ $t("desk.home_getNum") + ":" }}</label>
           {{ itemJiCun.luggageNum }}
         </el-row>
         <el-row style="margin-bottom: 10px">
-          <label>寄存时间:</label>
+          <label>{{ $t("desk.home_checkTheTime") + ":" }}</label>
           {{ itemJiCun.createTime }}
         </el-row>
-        <el-row style="color: red; margin-bottom: 10px"
-          >请您务必保管好此票，凭此票 领取东西</el-row
-        >
+        <el-row style="color: red; margin-bottom: 10px">{{
+          $t("desk.home_explain")
+        }}</el-row>
         <el-row>
-          <span>前台电话：{{ itemJiCun.receptionMobile }}</span>
-          <span>酒店地址：{{ itemJiCun.storesAddress }}</span>
+          <span
+            >{{ $t("desk.home_deskPhone") + ":"
+            }}{{ itemJiCun.receptionMobile }}</span
+          >
+          <span
+            >{{ $t("desk.home_hotelAddress") + ":"
+            }}{{ itemJiCun.storesAddress }}</span
+          >
         </el-row>
       </el-row>
 
       <div slot="footer" class="dialog-footer" style="text-align: center">
-        <el-button style="width: 80px" @click="checkPatch = false"
-          >取消</el-button
-        >
+        <el-button style="width: 80px" @click="checkPatch = false">{{
+          $t("commons.cancel")
+        }}</el-button>
         <!--        <el-button style="width:80px;" type="primary">{{$t('commons.print')}}</el-button>-->
       </div>
     </el-dialog>
@@ -346,20 +383,6 @@
 <script>
 export default {
   data() {
-    var checkPhone = (rule, value, callback) => {
-      if (value) {
-        setTimeout(() => {
-          let reg = /^(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])\d{8}$/;
-          if (!reg.test(value)) {
-            return callback(new Error("请输入正确的手机号"));
-          } else {
-            callback();
-          }
-        }, 500);
-      } else {
-        callback();
-      }
-    };
     return {
       nowTime: null,
       pageIndex: 1,
@@ -367,25 +390,6 @@ export default {
       num: 1,
       total: 0,
       currentPage4: 1, //分页当前所在页数的位置
-      rules: {
-        luggageName: [
-          { required: true, message: "请输入物品名称", trigger: "blur" },
-        ],
-        phoneNum: [{ validator: checkPhone, trigger: "blur" }],
-      },
-      tableData: [
-        //待开票表格字段
-        {
-          name: "王小虎",
-          roomNum: 12,
-          phonenum: 1111111,
-          billType: "增值税电子发票",
-          invoiceTitle: "全购网络技术有限公司",
-          invoiceAmount: 150,
-          taxes: 0,
-          billNum: 5545554,
-        },
-      ],
       checkdetail: false, //物品寄存dialog
       newCheck: false, //新增寄存按钮
       checkPatch: false, //寄存补打 按钮
@@ -418,7 +422,26 @@ export default {
   created() {
     this.getDepositList(); //请求寄存列表
   },
-
+  computed: {
+    rules() {
+      return {
+        luggageName: [
+          {
+            required: true,
+            message: this.$t("desk.home_inputGoodsName"),
+            trigger: "blur",
+          },
+        ],
+        roomNum: [
+          {
+            required: true,
+            message: this.$t("desk.home_inputRoomNum"),
+            trigger: "blur",
+          },
+        ],
+      };
+    },
+  },
   methods: {
     //点击 寄存补打 按钮
     jicunClick(row) {
@@ -436,6 +459,10 @@ export default {
         }
       );
     },
+    cancelClick() {
+      this.newCheck = false;
+      this.newCheckForm = {};
+    },
     //取得当前时间
     getNowDate() {
       let now = new Date(),
@@ -450,11 +477,15 @@ export default {
     },
     //点击  删除   按钮
     deletClick(row) {
-      this.$confirm("确认删除该单位", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
+      this.$confirm(
+        this.$t("desk.home_deleteSure"),
+        this.$t("desk.home_prompt"),
+        {
+          confirmButtonText: this.$t("commons.determine"),
+          cancelButtonText: this.$t("commons.cancel"),
+          type: "warning",
+        }
+      )
         .then(() => {
           let params = {
             id: row.id,
@@ -465,7 +496,7 @@ export default {
             params,
             (data) => {
               this.$message({
-                message: "删除成功",
+                message: this.$t("desk.home_deleteSuccess"),
                 type: "success",
               });
               this.getDepositList();
@@ -554,11 +585,11 @@ export default {
             (data) => {
               console.log(data.message);
               this.newCheck = false;
-              (this.newCheckForm = {}), this.getDepositList();
+              this.newCheckForm = {};
+              this.getDepositList();
             }
           );
         } else {
-          console.log("小伙子，你路走窄了");
           return false;
         }
       });

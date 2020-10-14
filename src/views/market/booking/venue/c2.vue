@@ -2,18 +2,16 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-10-09 17:34:31
+ * @LastEditTime: 2020-10-12 14:00:00
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
 <template>
   <!-- 统一的列表格式 -->
-  <div>
-    <div>
-      <el-card>
+  <div class="boss-index">
+    <div class="booking flex_column" style="background: #fff">
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
-          <el-row>
+        <el-form class="term" inline size="small" label-width="80px">
             <el-form-item label="会议时间:">
               <el-radio-group v-model="searchForm.timeType">
                 <el-radio-button label style="margin-right: 10px"
@@ -53,8 +51,6 @@
                 placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item label="登记日期:">
               <el-date-picker
                 v-model="searchForm.startTime"
@@ -72,8 +68,6 @@
                 placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item label="订单来源:">
               <el-select v-model="searchForm.orderSource" class="width150">
                 <el-option value label="全部"></el-option>
@@ -96,8 +90,6 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item label="预订人:">
               <el-input v-model="searchForm.name" class="width200"></el-input>
             </el-form-item>
@@ -114,18 +106,16 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="getDataList">查询</el-button>
-              <el-button type="primary" @click="initForm">重置</el-button>
+              <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+              <el-button type="primary" class="white" @click="initForm">重置</el-button>
             </el-form-item>
-          </el-row>
         </el-form>
         <!--表格数据 -->
         <el-table
           ref="multipleTable"
           v-loading="loading"
           :data="tableData"
-          :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
-          size="mini"
+          height="100%" header-row-class-name="default" size="small"
         >
           <el-table-column
             prop="name"
@@ -160,20 +150,20 @@
           </el-table-column>
           <el-table-column
             label="房间号"
-            show-overflow-tooltip
+            width="120px"
           ></el-table-column>
           <el-table-column
             label="会议厅"
             show-overflow-tooltip
           ></el-table-column>
-          <el-table-column label="客源类别" show-overflow-tooltip>
+          <el-table-column label="客源类别" align="center" width="100px">
             <template slot-scope="{ row }">
               <div v-if="row.guestType == 1">散客</div>
               <div v-if="row.guestType == 2">会员</div>
               <div v-if="row.guestType == 3">单位</div>
             </template>
           </el-table-column>
-          <el-table-column label="订单来源" show-overflow-tooltip>
+          <el-table-column label="订单来源" align="center" width="140px">
             <template slot-scope="{ row }">
               <div v-if="row.orderSource == 1">前台</div>
               <div v-if="row.orderSource == 2">销售推荐</div>
@@ -192,13 +182,16 @@
               <div v-if="row.state == 7">离店</div>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="220">
+          <el-table-column label="操作" width="140">
             <template slot-scope="{ row }">
               <el-button type="text" @click="goDetail(row)" size="mini"
                 >详情</el-button
               >
-              <!-- v-if="row.state == 6" -->
-              <el-button type="text" @click="meetClick(row)" size="mini"
+              <el-button
+                type="text"
+                v-if="row.state == 6"
+                @click="meetClick(row)"
+                size="mini"
                 >会议登记</el-button
               >
             </template>
@@ -207,15 +200,12 @@
         <div style="margin-top: 10px"></div>
         <!--分页 -->
         <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="searchForm.pageIndex"
-          :page-sizes="[10, 50, 100, 200]"
           :page-size="searchForm.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
+          layout="total, prev, pager, next, jumper"
           :total="listTotal"
         ></el-pagination>
-      </el-card>
       <!-- 会议签到dialog -->
       <el-dialog
         top="0"
@@ -278,10 +268,8 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align: right">
-          <el-button @click="dialogMeet = false">取消</el-button>
-          <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')"
-            >确认</el-button
-          >
+          <el-button class="white" @click="dialogMeet_cancle">取消</el-button>
+          <el-button type="primary" class="submit" @click="dialogMeet_sure('addCompanyForm')">确认</el-button>
         </div>
       </el-dialog>
     </div>
@@ -373,14 +361,38 @@ export default {
             "/pms/reserve/reserve_to_checkin",
             params,
             (data) => {
-              //       到了预订房办理入住接口出错
-              console.log(data);
+              this.$F.merge(this.addCompanyForm, {
+                checkinId: data.checkinId,
+              });
+              this.$F.doRequest(
+                this,
+                "/pms/meeting/person_register",
+                this.addCompanyForm,
+                (data) => {
+                  this.$message({
+                    message: "会议签到成功",
+                    type: "success",
+                  });
+                  this.dialogMeet_cancle();
+                }
+              );
             }
           );
         } else {
           return false;
         }
       });
+    },
+    //点击会议签到  取消  按钮
+    dialogMeet_cancle() {
+      this.dialogMeet = false;
+      this.addCompanyForm = {
+        name: "",
+        sex: "1",
+        idcardType: "1",
+        idcard: "",
+        mobile: "",
+      };
     },
     //点击  会议登记 按钮
     meetClick(row) {
@@ -433,11 +445,11 @@ export default {
     },
 
     /**每页数据 */
-    handleSizeChange(val) {
-      this.searchForm.pageSize = val;
-      this.searchForm.pageIndex = 1;
-      this.getDataList();
-    },
+    // handleSizeChange(val) {
+    //   this.searchForm.pageSize = val;
+    //   this.searchForm.pageIndex = 1;
+    //   this.getDataList();
+    // },
     /**当前页 */
     handleCurrentChange(val) {
       this.searchForm.pageIndex = val;

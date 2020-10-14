@@ -34,11 +34,11 @@
 				<div class="components-edit">
 					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 						<el-table-column prop="ruleName" :label="$t('manager.ps_ruleName')"></el-table-column>
-						<el-table-column prop="priceModel" :label="$t('manager.ps_priceModel')">
-							<template slot-scope="{row}">
-								<span>{{row.priceModel==1 ? '固定时间退房模式':'24小时退房模式'}}</span>
-							</template>
-						</el-table-column>
+<!--						<el-table-column prop="priceModel" :label="$t('manager.ps_priceModel')">-->
+<!--							<template slot-scope="{rowceModel==1}">-->
+<!--								<span>{{row.priceModel==1 ? '固定时间退房模式':'24小时退房模式'}}</span>-->
+<!--							</template>-->
+<!--						</el-table-column>-->
 						<el-table-column :label="$t('manager.ps_ruleDetail')" width="500">
 							<template slot-scope="{row}">
 								<span>
@@ -277,7 +277,6 @@
 		},
 		methods: {
 			popup(type, value) {
-				// debugger
 				switch (type) {
 					case "add":
 						this.tab1_show = false;
@@ -296,6 +295,7 @@
 						break;
 				}
 			},
+
 			// 重置
 			clear() {
 				this.ruleForm.ruleName = ''

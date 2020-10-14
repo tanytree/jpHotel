@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-09-14 10:55:10
  * @Author: 陶子
- * @LastEditTime: 2020-10-10 09:56:47
+ * @LastEditTime: 2020-10-14 10:21:34
  * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
 -->
 <template>
@@ -216,7 +216,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align: right">
-        <el-button @click="dialogMeet = false">取消</el-button>
+        <el-button @click="dialogMeet_cancle">取消</el-button>
         <el-button type="primary" @click="dialogMeet_sure('addCompanyForm')"
           >确认</el-button
         >
@@ -286,7 +286,6 @@ export default {
   },
   created() {
     this.getOrderDetail();
-    this.getData();
   },
 
   methods: {
@@ -309,13 +308,61 @@ export default {
           this.totalPrice = data.totalPrice;
           this.payPrice = data.payPrice;
           this.inRoomList = data.inRoomList;
+          this.getData();
         }
       );
+    },
+    //点击会议签到  确认 按钮
+    dialogMeet_sure(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let params = {};
+          this.$F.merge(params, {
+            checkInReserveId: this.$route.query.id,
+          });
+          this.$F.doRequest(
+            this,
+            "/pms/reserve/reserve_to_checkin",
+            params,
+            (data) => {
+              this.$F.merge(this.addCompanyForm, {
+                checkinId: data.checkinId,
+              });
+              this.$F.doRequest(
+                this,
+                "/pms/meeting/person_register",
+                this.addCompanyForm,
+                (data) => {
+                  this.$message({
+                    message: "会议签到成功",
+                    type: "success",
+                  });
+                  this.dialogMeet_cancle();
+                  this.getData();
+                }
+              );
+            }
+          );
+        } else {
+          return false;
+        }
+      });
+    },
+    //点击会议签到  取消  按钮
+    dialogMeet_cancle() {
+      this.dialogMeet = false;
+      this.addCompanyForm = {
+        name: "",
+        sex: "1",
+        idcardType: "1",
+        idcard: "",
+        mobile: "",
+      };
     },
     //会议登记列表
     getData(params = {}) {
       this.$F.merge(params, {
-        checkinId: this.$route.query.id,
+        checkinId: this.checkIn.id,
       });
       this.$F.doRequest(
         this,
@@ -348,7 +395,15 @@ export default {
     },
     //点击  会议登记 按钮
     meetClick() {
-      this.dialogMeet = true;
+      if (this.checkIn.state == 6) {
+        this.dialogMeet = true;
+      } else {
+        this.$message({
+          showClose: true,
+          message: "当前订单还未入住，暂不可登记",
+          type: "warning",
+        });
+      }
     },
     //点击会议核销
     meetCancel() {

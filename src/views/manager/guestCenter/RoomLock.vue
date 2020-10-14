@@ -117,14 +117,6 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </el-container>
-    <!-- <div class="block">
-			<div class="page-all">
-				共
-				<span style="font-weight:600;font-size: 14px;">{{form.totalSize}}</span>条记录
-			</div>
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
-			 :page-sizes="[100, 200, 300, 400]" :page-size="form.pageIndex" layout=" sizes, prev, pager, next, jumper" :total="form.totalSize"></el-pagination>
-    </div>-->
     <!-- 按列批量修改 -->
     <el-dialog
       top="0"
@@ -171,12 +163,6 @@
                 <el-row class="demo-flex" v-if="value =='a'">
                   <el-col :span="8" class="title-co">{{$t('manager.hk_hardWare')}}</el-col>
                 </el-row>
-                <!-- <el-row class="demo-flex"   v-if="value =='b'">
-										<el-col :span="8" class="title-co">楼栋</el-col>
-									</el-row>
-									<el-row class="demo-flex"   v-if="value =='c'">
-										<el-col :span="8" class="title-co">楼层</el-col>
-                </el-row>-->
                 <el-row class="demo-flex" v-if="value =='d'">
                   <el-col :span="8" class="title-co">{{$t('manager.hk_lock')}}</el-col>
                 </el-row>
@@ -247,12 +233,6 @@
                     ></el-option>
                   </el-select>
                 </el-row>
-                <!-- <el-row class="demo-flex"   v-if="value =='b'">
-										<el-input v-model="row.hourAddPrice"></el-input>
-									</el-row>
-									<el-row class="demo-flex"   v-if="value =='c'">
-										<el-input v-model="row.hourAddPrice"></el-input>
-                </el-row>-->
                 <el-row class="demo-flex" v-if="value =='d'">
                   <el-input v-model="row.lockNum"></el-input>
                 </el-row>
@@ -310,10 +290,6 @@
             </template>
           </el-table-column>
         </el-table>
-        <!-- <div class="block">
-					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="form.pageIndex"
-					 :page-sizes="[100, 200, 300, 400]" :page-size="form.pageSize" layout=" sizes, prev, pager, next, jumper" :total="form.totalSize"></el-pagination>
-        </div>-->
       </el-row>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogAdd_kinds = false">{{$t('commons.cancel')}}</el-button>

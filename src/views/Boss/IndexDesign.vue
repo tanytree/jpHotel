@@ -9,7 +9,6 @@
 		<el-tabs class="pageTab" v-model="activeName">
 			<el-tab-pane :label="boss_first_title" name="first">
 				<el-tabs v-model="active_second_name" type="card">
-					=====
 				</el-tabs>
 			</el-tab-pane>
 			<el-tab-pane :label="boss_second_title" name="second">

@@ -168,10 +168,8 @@
       </el-table>
       <el-row style="padding: 20px 0px;">
         <el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
-        <el-button
-          style="width: 80px;margin-left: 20px; cursor: pointer"
-          @click="back_1"
-        >{{$t('commons.back')}}</el-button>
+        <el-button  style="width: 80px;margin-left: 20px; cursor: pointer" @click="back_1">
+            {{$t('commons.back')}}</el-button>
       </el-row>
     </el-row>
 
@@ -583,6 +581,7 @@ export default {
       );
     },
     back_1() {
+		debugger
       this.tab1_show = true;
 	  this.get_hotel_price_room_type_list()
     },

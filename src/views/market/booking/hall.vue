@@ -6,8 +6,8 @@
  -->
 
 <template>
-  <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+  <div class="boss-index">
+    <el-tabs class="tabCenter" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="会场预订" name="b3">
         <normal :operCheckinType="activeName"></normal>
       </el-tab-pane>

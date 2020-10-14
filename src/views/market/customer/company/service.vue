@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账务查询     houseName有问题-->
+<!--  前台部 > 客户管理 > 单位管理 > 账务查询     -->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -122,9 +122,7 @@
         ></el-table-column>
         <el-table-column label="房型/房号" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            <div
-              v-if="row.checkInPerson.houseName && row.checkInPerson.houseNum"
-            >
+            <div v-if="row.checkInPerson">
               {{ row.checkInPerson.houseName }}/{{ row.checkInPerson.houseNum }}
             </div>
           </template>
