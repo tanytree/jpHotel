@@ -249,10 +249,10 @@
       </div>
       <el-form :model="cardForm" ref="cardForm">
         <el-form-item label="补收类型" class prop="memberTypeId">
-          <el-radio-group v-model="cardForm.type">
-            <el-radio :label="3">卡费</el-radio>
-            <el-radio :label="6">升级卡</el-radio>
-            <el-radio :label="9">补卡费</el-radio>
+          <el-radio-group v-model="cardForm.operType">
+            <el-radio :label="4">卡费</el-radio>
+            <el-radio :label="5">升级卡</el-radio>
+            <el-radio :label="6">补卡费</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="支付方式" class prop="payWay">
@@ -295,9 +295,13 @@ export default {
     return {
       setCardVisible: false,
       cardForm: {
-        type: 3,
+        operType: 4,
         payWay: 1,
         payPrices: "",
+        //不改变
+        cardNum: "",
+        memberId: "",
+        cardTypeId: "",
       },
       showPageType: "main", //页面显示类型
       loading: false,

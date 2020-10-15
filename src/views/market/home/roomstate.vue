@@ -1,6 +1,6 @@
 <!--
 
- * @LastEditors: 董林
+ * @LastEditors: Please set LastEditors
 
  *
  -->
@@ -14,35 +14,46 @@
             <el-input
               v-model="searchForm.keyword"
               class="search"
-              placeholder="姓名/房号"
+              :placeholder="$t('desk.home_nameAroom')"
               @keyup.native="handleChange"
             >
               <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-checkbox-group v-model="searchForm.checkInType" @change="handleChange">
-              <el-checkbox-button label="1">身份证</el-checkbox-button>
-              <el-checkbox-button label="2">房卡</el-checkbox-button>
+            <el-checkbox-group
+              v-model="searchForm.checkInType"
+              @change="handleChange"
+            >
+              <el-checkbox-button label="1">{{
+                $t("desk.home_idCard")
+              }}</el-checkbox-button>
+              <el-checkbox-button label="2">{{
+                $t("desk.home_roomCard")
+              }}</el-checkbox-button>
             </el-checkbox-group>
           </el-form-item>
         </el-form>
         <!-- 房态 -->
         <div class="room">
           <div class="tag-top">
-            <span class="fang">房态</span>
-            <!-- <span class="all">全部100</span> -->
-            <span class="reset" @click="clearnSelectAttr('roomStatus')">重置</span>
+            <span class="fang">{{ $t("desk.home_toRoom") }}</span>
+            <span class="reset" @click="clearnSelectAttr('roomStatus')">{{
+              $t("commons.resetBtn")
+            }}</span>
           </div>
           <div class="tag-btm">
-            <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
+            <el-checkbox-group
+              v-model="searchForm.roomStatus"
+              @change="handleChange"
+            >
               <el-checkbox
-                v-for="(item,index) in $t('commons.roomStatus')"
+                v-for="(item, index) in $t('commons.roomStatus')"
                 :key="index"
                 :label="item.value"
               >
                 <el-tag :type="item.type" effect="plain" size="mini">
-                  <span>{{ item.name + ' ' + F_roomStatus(item.value) }}</span>
+                  <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
                 </el-tag>
               </el-checkbox>
             </el-checkbox-group>
@@ -52,24 +63,29 @@
         <div class="room">
           <div class="tag-top">
             <div>
-              <span class="fang">房型</span>
-              <span class="all">可订数/总房数</span>
+              <span class="fang">{{ $t("desk.home_roomType") }}</span>
+              <span class="all">{{ $t("desk.home_roomType") }}</span>
             </div>
-            <span class="reset" @click="clearnSelectAttr('roomTypeId')">重置</span>
+            <span class="reset" @click="clearnSelectAttr('roomTypeId')">{{
+              $t("commons.resetBtn")
+            }}</span>
           </div>
 
           <div class="tag-btm">
-            <el-checkbox-group v-model="searchForm.roomTypeId" @change="handleChange">
+            <el-checkbox-group
+              v-model="searchForm.roomTypeId"
+              @change="handleChange"
+            >
               <el-checkbox
                 class="roomType"
                 v-for="item of roomTypeList"
                 :key="item.roomTypeId"
                 :label="item.roomTypeId"
               >
-                {{item.houseName?item.houseName:'未知'}}
-                <span
-                  class="total"
-                >{{item.reserveCount}}/{{item.total}}</span>
+                {{ item.houseName ? item.houseName : $t("desk.home_unknown") }}
+                <span class="total"
+                  >{{ item.reserveCount }}/{{ item.total }}</span
+                >
               </el-checkbox>
             </el-checkbox-group>
           </div>
@@ -77,10 +93,10 @@
 
         <!-- 楼栋楼层 -->
         <el-form class="room" v-model="searchForm" size="small">
-          <el-form-item label="楼层楼栋:">
+          <el-form-item :label="$t('desk.home_floorBuilding') + ':'">
             <el-select
               v-model="searchForm.buildingId"
-              placeholder="楼栋"
+              :placeholder="$t('desk.home_building')"
               class="row-width"
               @change="buildingSelectChange"
             >
@@ -93,7 +109,7 @@
             </el-select>
             <el-select
               v-model="searchForm.buildingFloorId"
-              placeholder="楼层"
+              :placeholder="$t('desk.home_floor')"
               class="row-width margin-l-8"
               @change="floorSelectChange"
             >
@@ -110,19 +126,24 @@
         <!-- 渠道 -->
         <div class="room">
           <div class="tag-top">
-            <span class="fang">渠道</span>
-            <span class="reset" @click="clearnSelectAttr('channel')">重置</span>
+            <span class="fang">{{ $t("desk.home_channel") }}</span>
+            <span class="reset" @click="clearnSelectAttr('channel')">{{
+              $t("commons.resetBtn")
+            }}</span>
           </div>
           <div class="tag-btm">
-            <el-checkbox-group v-model="searchForm.channel" @change="handleChange">
+            <el-checkbox-group
+              v-model="searchForm.channel"
+              @change="handleChange"
+            >
               <el-checkbox
                 class="roomType"
                 v-for="item of channel"
                 :key="item.channel"
                 :label="item.channel"
               >
-                {{item.name?item.name:'未知'}}
-                <span class="total">{{item.total}}</span>
+                {{ item.name ? item.name : $t("desk.home_unknown") }}
+                <span class="total">{{ item.total }}</span>
               </el-checkbox>
             </el-checkbox-group>
           </div>
@@ -132,13 +153,17 @@
       <el-container class="right" v-loading="roomloading">
         <el-header>
           <el-row>
-            <el-checkbox-group v-model="searchForm.personRoom" @change="handleChange">
+            <el-checkbox-group
+              v-model="searchForm.personRoom"
+              @change="handleChange"
+            >
               <el-checkbox
-                v-for="(item,index) in personRoom"
+                v-for="(item, index) in personRoom"
                 :value="item.eName"
                 :label="item.eName"
                 :key="index"
-              >{{item.name}}({{item.total}})</el-checkbox>
+                >{{ item.name }}({{ item.total }})</el-checkbox
+              >
             </el-checkbox-group>
           </el-row>
         </el-header>
@@ -147,12 +172,15 @@
             <div v-if="item.floorRoomCount > 0">
               <div class="floor">
                 <span class="title">
-                  {{item.building ? item.building.name:''}}
-                  <span>{{item.floor}}</span>层
+                  {{ item.building ? item.building.name : "" }}
+                  <span>{{ item.floor }}</span
+                  >{{ $t("desk.home_layer") }}
                 </span>
                 <span class="count">
-                  <span style="color: #126eff;">{{item.reserveFloorRoomCount}}</span>
-                  /{{item.floorRoomCount}}
+                  <span style="color: #126eff">{{
+                    item.reserveFloorRoomCount
+                  }}</span>
+                  /{{ item.floorRoomCount }}
                 </span>
               </div>
               <div class="floor-box">
@@ -162,27 +190,33 @@
                   v-for="(room, i) in item.roomList"
                   :key="i"
                 >
-                  <div :style="`background:${F_roomStatusColor(room.roomStatus)};`">
+                  <div
+                    :style="`background:${F_roomStatusColor(room.roomStatus)};`"
+                  >
                     <div class="line">
-                      <span>{{room.houseNum}}</span>
-                      <span>{{room.hotelRoomType.houseName}}</span>
+                      <span>{{ room.houseNum }}</span>
+                      <span>{{ room.hotelRoomType.houseName }}</span>
                     </div>
                     <!--                                    && (room.roomStatus==3 || room.roomStatus==4)-->
                     <div
                       class="line"
-                      v-if="room.livingPersonList && room.livingPersonList.length > 0 && (room.checkInRoomType == 1 || room.checkInRoomType == 2)"
+                      v-if="
+                        room.livingPersonList &&
+                        room.livingPersonList.length > 0 &&
+                        (room.checkInRoomType == 1 || room.checkInRoomType == 2)
+                      "
                     >
-                      <span>{{room.livingPersonList[0].name}}</span>
-                      <span>{{F_sex(room.livingPersonList[0].sex)}}</span>
+                      <span>{{ room.livingPersonList[0].name }}</span>
+                      <span>{{ F_sex(room.livingPersonList[0].sex) }}</span>
                     </div>
                     <!-- 清扫图标后期加 -->
                     <div class="placeIcon text-center">
                       <img
-                        v-if="room.roomStatus==5"
+                        v-if="room.roomStatus == 5"
                         :src="require('@/assets/images/frontdesk/fix.png')"
                       />
                       <img
-                        v-if="room.roomStatus==2 || room.roomStatus==4"
+                        v-if="room.roomStatus == 2 || room.roomStatus == 4"
                         :src="require('@/assets/images/frontdesk/clearn.png')"
                       />
                     </div>
@@ -193,52 +227,89 @@
           </div>
         </el-main>
         <el-footer>
-          <el-button class="white" size="small" @click="batchRoomHaldel">批量置脏/置净</el-button>
-          <el-button class="white" size="small">打印房态盘</el-button>
+          <el-button class="white" size="small" @click="batchRoomHaldel">{{
+            $t("desk.home_batchSet")
+          }}</el-button>
+          <el-button class="white" size="small">{{
+            $t("desk.home_printRoomState")
+          }}</el-button>
           <el-button
             type="primary"
             class="submit"
             size="small"
             @click="print = true"
             icon="el-icon-message-solid"
-          >催押</el-button>
+            >{{ $t("desk.home_pushAnd") }}</el-button
+          >
           <!-- 催押 -->
-          <el-dialog top="0" title="当前催交" width="1160px" :visible.sync="print">
+          <el-dialog
+            top="0"
+            :title="$t('desk.home_nowCall')"
+            width="1160px"
+            :visible.sync="print"
+          >
             <el-form :model="form">
               <el-row>
                 <el-col :span="6">
-                  <el-form-item label="房间号：">
-                    <el-input v-model="form.roomname" style="width:160px" autocomplete="off"></el-input>
+                  <el-form-item :label="$t('desk.home_roomNum') + ':'">
+                    <el-input
+                      v-model="form.roomname"
+                      style="width: 160px"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item label="手机号：" :label-width="formLabelWidth">
-                    <el-input v-model="form.phonenum" style="width:160px" autocomplete="off"></el-input>
+                  <el-form-item
+                    :label="$t('desk.home_phoneNum') + ':'"
+                    :label-width="formLabelWidth"
+                  >
+                    <el-input
+                      v-model="form.phonenum"
+                      style="width: 160px"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item label="姓名：" :label-width="formLabelWidth">
-                    <el-input v-model="form.peoplename" style="width:160px" autocomplete="off"></el-input>
+                  <el-form-item
+                    :label="$t('desk.home_name') + ':'"
+                    :label-width="formLabelWidth"
+                  >
+                    <el-input
+                      v-model="form.peoplename"
+                      style="width: 160px"
+                      autocomplete="off"
+                    ></el-input>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item>
                     <el-button
-                      style="width:80px;margin-left:20px"
+                      style="width: 80px; margin-left: 20px"
                       type="primary"
                       @click="submitForm('form')"
-                    >查询</el-button>
-                    <el-button style="width:80px" @click="resetForms('form')">重置</el-button>
+                      >{{ $t("commons.queryBtn") }}</el-button
+                    >
+                    <el-button
+                      style="width: 80px"
+                      @click="resetForms('form')"
+                      >{{ $t("commons.resetBtn") }}</el-button
+                    >
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="2">
-                  <el-checkbox v-model="checked">全部 120</el-checkbox>
+                  <el-checkbox v-model="checked"
+                    >{{ $t("desk.home_all") }} 120</el-checkbox
+                  >
                 </el-col>
                 <el-col :span="2">
-                  <el-checkbox v-model="checked">催押 20</el-checkbox>
+                  <el-checkbox v-model="checked"
+                    >{{ $t("desk.home_pushAnd") }} 20</el-checkbox
+                  >
                 </el-col>
                 <el-col :span="2">
                   <el-checkbox v-model="checked">欠费 120</el-checkbox>
@@ -256,44 +327,60 @@
 
             <el-row>
               <el-table :data="tableData" style="width: 100%">
-                <el-table-column label="房间号" width="120">
+                <el-table-column :label="$t('desk.home_roomNum')" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
                 <el-table-column label="入住人" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
                 <el-table-column label="总消费" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
                 <el-table-column label="押金" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
                 <el-table-column label="余额" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
                 <el-table-column label="状态" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="姓名" width="120">
+                <el-table-column :label="$t('desk.home_name')" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="手机号" width="120">
+                <el-table-column :label="$t('desk.home_phoneNum')" width="120">
                   <template slot-scope="scope">
-                    <div slot="reference" class="name-wrapper">{{ scope.row.name }}</div>
+                    <div slot="reference" class="name-wrapper">
+                      {{ scope.row.name }}
+                    </div>
                   </template>
                 </el-table-column>
 
@@ -302,12 +389,17 @@
                     <!-- <el-button
                                                     size="mini"
                     @click="Edit(scope.$index, scope.row)">账单详情</el-button>-->
-                    <el-button type="text" @click="Edit(scope.$index, scope.row)" size="mini">账单详情</el-button>
+                    <el-button
+                      type="text"
+                      @click="Edit(scope.$index, scope.row)"
+                      size="mini"
+                      >账单详情</el-button
+                    >
                   </template>
                 </el-table-column>
               </el-table>
             </el-row>
-            <div slot="footer" class="dialog-footer" style="text-align:center">
+            <div slot="footer" class="dialog-footer" style="text-align: center">
               <el-button type="primary" @click="print = false">关闭</el-button>
             </div>
           </el-dialog>
@@ -344,7 +436,9 @@
               </el-col>
               <el-col :span="4" class="item">
                 <span class="inco i_img">
-                  <img :src="require('@/assets/images/frontdesk/minClearn.png')" />
+                  <img
+                    :src="require('@/assets/images/frontdesk/minClearn.png')"
+                  />
                 </span>
                 <span>脏房</span>
               </el-col>
@@ -368,7 +462,8 @@
               size="small"
               slot="reference"
               icon="el-icon-question"
-            >图标</el-button>
+              >图标</el-button
+            >
           </el-popover>
           <!--                    <div style="float:right">80</div>-->
         </el-footer>
@@ -380,22 +475,33 @@
       top="0"
       :visible.sync="hosteldis"
       width="800px"
-      :title="`${currentRoom.houseNum}房间-${currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName:''}`"
+      :title="`${currentRoom.houseNum}房间-${
+        currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : ''
+      }`"
     >
       <el-tabs type="border-card">
         <el-tab-pane
-          :label="currentRoom.checkInRoomType == 1 ?'入住信息' : '预订信息'"
-          v-if="currentRoom.checkInRoomType==1||currentRoom.checkInRoomType==2"
+          :label="currentRoom.checkInRoomType == 1 ? '入住信息' : '预订信息'"
+          v-if="
+            currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2
+          "
         >
           <div class="inMsg">
             <div class="row">
               <div class="col">
                 入住时间：
-                <span>{{currentRoom.createTime}}</span>
+                <span>{{ currentRoom.createTime }}</span>
               </div>
               <div class="col">
                 入住类型：
-                <span>{{$t('commons.checkinType')[(currentRoom.livingPersonList[0] ? currentRoom.livingPersonList[0].checkIn.checkinType : '1').toString()]}}</span>
+                <span>{{
+                  $t("commons.checkinType")[
+                    (currentRoom.livingPersonList[0]
+                      ? currentRoom.livingPersonList[0].checkIn.checkinType
+                      : "1"
+                    ).toString()
+                  ]
+                }}</span>
               </div>
               <div class="col">
                 消费合计：
@@ -403,7 +509,11 @@
               </div>
               <div class="col">
                 预离时间：
-                <span>{{currentRoom.livingPersonList[0] ? currentRoom.livingPersonList[0].checkIn.checkoutTime : ''}}</span>
+                <span>{{
+                  currentRoom.livingPersonList[0]
+                    ? currentRoom.livingPersonList[0].checkIn.checkoutTime
+                    : ""
+                }}</span>
               </div>
               <div class="col">
                 制卡数量：
@@ -427,27 +537,36 @@
               </div>
             </div>
             <el-table
-              v-if="currentRoom.livingPersonList && currentRoom.livingPersonList.length > 0"
+              v-if="
+                currentRoom.livingPersonList &&
+                currentRoom.livingPersonList.length > 0
+              "
               :data="currentRoom.livingPersonList"
               style="width: 100%"
               border
               header-row-class-name="default"
               size="small"
             >
-              <el-table-column label="姓名" width="100">
-                <template slot-scope="scope">{{scope.row.name}}</template>
+              <el-table-column :label="$t('desk.home_name')" width="100">
+                <template slot-scope="scope">{{ scope.row.name }}</template>
               </el-table-column>
-              <el-table-column label="手机号" width>
-                <template slot-scope="scope">{{scope.row.mobile}}</template>
+              <el-table-column :label="$t('desk.home_phoneNum')" width>
+                <template slot-scope="scope">{{ scope.row.mobile }}</template>
               </el-table-column>
               <el-table-column label="性别" width>
-                <template slot-scope="scope">{{F_sex(scope.row.sex)}}</template>
+                <template slot-scope="scope">{{
+                  F_sex(scope.row.sex)
+                }}</template>
               </el-table-column>
               <el-table-column label="客源类型" width>
-                <template slot-scope="scope">{{F_guestType(scope.row.checkIn.guestType)}}</template>
+                <template slot-scope="scope">{{
+                  F_guestType(scope.row.checkIn.guestType)
+                }}</template>
               </el-table-column>
               <el-table-column label="同来客" width>
-                <template>{{currentRoom.livingPersonList.length - 1 || 0}}</template>
+                <template>{{
+                  currentRoom.livingPersonList.length - 1 || 0
+                }}</template>
               </el-table-column>
               <!--                            <el-table-column label="操作">-->
               <!--                                <template slot-scope="scope">-->
@@ -459,7 +578,7 @@
             <div class="remark">
               <label>
                 备注：
-                <span>{{currentRoom.remark}}</span>
+                <span>{{ currentRoom.remark }}</span>
               </label>
               <!--                            <el-button type="text" @click="remark = true">修改</el-button>-->
             </div>
@@ -470,35 +589,35 @@
             <div class="row">
               <div class="col">
                 门市价：
-                <span>{{currentRoom.extension}}</span>
+                <span>{{ currentRoom.extension }}</span>
               </div>
               <div class="col">
                 窗户：
-                <span>{{F_is1or2(currentRoom.windowFlag)}}</span>
+                <span>{{ F_is1or2(currentRoom.windowFlag) }}</span>
               </div>
               <div class="col">
                 靠马路：
-                <span>{{F_is1or2(currentRoom.roadFlag)}}</span>
+                <span>{{ F_is1or2(currentRoom.roadFlag) }}</span>
               </div>
               <div class="col">
                 噪音房：
-                <span>{{F_is1or2(currentRoom.noiseFlag)}}</span>
+                <span>{{ F_is1or2(currentRoom.noiseFlag) }}</span>
               </div>
               <div class="col">
                 无烟房：
-                <span>{{F_is1or2(currentRoom.smokeFlag)}}</span>
+                <span>{{ F_is1or2(currentRoom.smokeFlag) }}</span>
               </div>
               <div class="col">
                 高温房：
-                <span>{{F_is1or2(currentRoom.temperatureFlag)}}</span>
+                <span>{{ F_is1or2(currentRoom.temperatureFlag) }}</span>
               </div>
               <div class="col">
                 朝向：
-                <span>{{F_is1or2(currentRoom.toward)}}</span>
+                <span>{{ F_is1or2(currentRoom.toward) }}</span>
               </div>
               <div class="col">
                 房间备注：
-                <span>{{currentRoom.remark}}</span>
+                <span>{{ currentRoom.remark }}</span>
               </div>
             </div>
           </div>
@@ -506,16 +625,25 @@
       </el-tabs>
       <div slot="footer" class="dialog-footer">
         <el-button
-          style="width:60px;"
-          v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3"
+          style="width: 60px"
+          v-if="
+            currentRoom.roomStatus == 'null' ||
+            currentRoom.roomStatus == null ||
+            currentRoom.roomStatus == 1 ||
+            currentRoom.roomStatus == 3
+          "
           @click="handleOperRoomStatus(2, currentRoom)"
-        >置脏</el-button>
+          >置脏</el-button
+        >
         <el-button
-          style="width:60px;"
-          v-if="(currentRoom.roomStatus==2 || currentRoom.roomStatus==4)"
+          style="width: 60px"
+          v-if="currentRoom.roomStatus == 2 || currentRoom.roomStatus == 4"
           @click="handleOperRoomStatus(1, currentRoom)"
-        >置净</el-button>
-        <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>
+          >置净</el-button
+        >
+        <el-button style="width: 60px" @click="handleFix(currentRoom)"
+          >维修</el-button
+        >
         <!--                <template v-if="currentRoom.checkInRoomType == 1">-->
         <!--                    <el-button style="width:60px;" @click="stayoer=true">续住</el-button>-->
         <!--                    <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>-->
@@ -547,7 +675,12 @@
     </el-dialog>
     <!-- 续住 -->
     <el-dialog top="0" title="续住" :visible.sync="stayoer" width="80%">
-      <el-alert title="如果需要提前离店，需要在续住天数中输入负数" type="error" :closable="false" show-icon></el-alert>
+      <el-alert
+        title="如果需要提前离店，需要在续住天数中输入负数"
+        type="error"
+        :closable="false"
+        show-icon
+      ></el-alert>
       <el-table
         :data="tableData"
         style="width: 100%"
@@ -555,10 +688,10 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column label="房间号" width="100">
+        <el-table-column :label="$t('desk.home_roomNum')" width="100">
           <template>A100</template>
         </el-table-column>
-        <el-table-column label="姓名" width="100">
+        <el-table-column :label="$t('desk.home_name')" width="100">
           <template>A100</template>
         </el-table-column>
         <el-table-column label="原预离时间" width="100">
@@ -571,7 +704,11 @@
         </el-table-column>
         <el-table-column label="新预离时间">
           <template class="block">
-            <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker
+              v-model="value1"
+              type="date"
+              placeholder="选择日期"
+            ></el-date-picker>
           </template>
         </el-table-column>
 
@@ -583,13 +720,21 @@
       <el-row>
         <el-checkbox v-model="stayoerchecked">
           按入住时房价续住
-          <span style="color:red">(午夜房不可按入住时房价入住)</span>
+          <span style="color: red">(午夜房不可按入住时房价入住)</span>
         </el-checkbox>
       </el-row>
 
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" class="white" @click="stayoer = false">取 消</el-button>
-        <el-button size="small" type="primary" class="submit" @click="stayoer = false">确 定</el-button>
+        <el-button size="small" class="white" @click="stayoer = false"
+          >取 消</el-button
+        >
+        <el-button
+          size="small"
+          type="primary"
+          class="submit"
+          @click="stayoer = false"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
     <!-- 换房 -->
@@ -665,7 +810,7 @@
                 </el-col>
       </el-card>-->
       <el-form size="small" inline class="inline">
-        <el-form-item label="房间号：">A100</el-form-item>
+        <el-form-item :label="$t('desk.home_roomNum') + ':'">A100</el-form-item>
         <el-form-item label="客人姓名：">战三</el-form-item>
         <el-form-item label="房价：">300</el-form-item>
         <el-form-item label="换房原因:">
@@ -681,7 +826,9 @@
             </el-form-item>
             <el-form-item>
               <el-select v-model="checkInForm.enterStatus" placeholder="床位数">
-                <el-option label="全部" value="3">床位数</el-option>
+                <el-option :label="$t('desk.home_all')" value="3"
+                  >床位数</el-option
+                >
                 <el-option label="已认证" value="1">已认证</el-option>
                 <el-option label="未认证" value="2">未认证</el-option>
               </el-select>
@@ -699,14 +846,18 @@
                       :max="10"
                       label
                       size="mini"
-                      style="width:100px"
+                      style="width: 100px"
                     ></el-input-number>
                   </div>
                 </div>
                 <div class="row">
                   <span class="allow">可订12</span>
                   <div>
-                    <el-input placeholder size="mini" style="width:70px"></el-input>
+                    <el-input
+                      placeholder
+                      size="mini"
+                      style="width: 70px"
+                    ></el-input>
                     <del>666</del>
                   </div>
                 </div>
@@ -722,7 +873,9 @@
                 <span>标准间</span>
                 <span class="count">{{}}间</span>
               </div>
-              <el-button type="primary" class="submit" size="small">排房</el-button>
+              <el-button type="primary" class="submit" size="small"
+                >排房</el-button
+              >
             </div>
             <div>
               <el-button size="small" class="disabled">A1001</el-button>
@@ -739,10 +892,16 @@
       </div>
     </el-dialog>
     <!-- 制卡 -->
-    <el-dialog top="0" :show-close="false" title="房卡操作" :visible.sync="mackcade" width="60%">
+    <el-dialog
+      top="0"
+      :show-close="false"
+      title="房卡操作"
+      :visible.sync="mackcade"
+      width="60%"
+    >
       <el-row>
-        <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
-        <el-col :span="8" style="float:right">
+        <span>共一间&nbsp;&nbsp;本次已制卡数：{{ liveCardData.done }}</span>
+        <el-col :span="8" style="float: right">
           <el-button @click="make_card_status">制卡</el-button>
           <el-button>清卡</el-button>
           <el-button>读卡</el-button>
@@ -757,11 +916,15 @@
         size="small"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column label="房间号" width="200">
-          <template slot-scope="{row}">{{row.room?row.room.houseNum:''}}</template>
+        <el-table-column :label="$t('desk.home_roomNum')" width="200">
+          <template slot-scope="{ row }">{{
+            row.room ? row.room.houseNum : ""
+          }}</template>
         </el-table-column>
         <el-table-column label="本次制卡状态">
-          <template slot-scope="{row}">{{F_markCard(row.markCard)}}</template>
+          <template slot-scope="{ row }">{{
+            F_markCard(row.markCard)
+          }}</template>
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
@@ -777,8 +940,16 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" class="white" @click="remark = false">取 消</el-button>
-        <el-button size="small" type="primary" class="submit" @click="remark = false">确 定</el-button>
+        <el-button size="small" class="white" @click="remark = false"
+          >取 消</el-button
+        >
+        <el-button
+          size="small"
+          type="primary"
+          class="submit"
+          @click="remark = false"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
     <roomStatusHandle ref="roomStatusHandle" @initForm="initForm" />

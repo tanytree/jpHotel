@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-14 20:14:30
+ * @LastEditTime: 2020-10-15 18:06:51
  * @FilePath: \jiudian\src\views\market\reception\shiftover\c2.vue
  -->
 
@@ -11,37 +11,41 @@
     <div class="booking flex_column">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item label="班次时间">
+        <el-form-item :label="$t('desk.serve_flightTime')">
           <el-date-picker
             v-model="searchForm.workStarTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 200px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
-          <span> 至 </span>
+          <span> {{ $t("desk.serve_to") }} </span>
           <el-date-picker
             v-model="searchForm.workEndTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 200px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="当班人">
+        <el-form-item :label="$t('desk.serve_peopleDuty')">
           <el-input v-model="searchForm.employer" class="width200"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList"
-            >查询</el-button
-          >
-          <el-button type="primary" class="white" @click="initForm"
-            >重置</el-button
-          >
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="white" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
         <el-form-item style="float: right">
-          <el-button type="primary" class="submit">合计</el-button>
-          <el-button type="primary" class="submit">补打</el-button>
+          <el-button type="primary" class="submit">{{
+            $t("desk.serve_heji")
+          }}</el-button>
+          <el-button type="primary" class="submit">{{
+            $t("desk.serve_patch")
+          }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -54,29 +58,37 @@
         size="small"
       >
         <el-table-column
-          label="基本信息"
+          :label="$t('desk.serve_basicInfo')"
           fixed="left"
           align="center"
           width="255px"
         >
-          <el-table-column prop="createTime" label="班次"> </el-table-column>
-          <el-table-column label="开始-结束" width="100px">
+          <el-table-column prop="createTime" :label="$t('desk.serve_flight')">
+          </el-table-column>
+          <el-table-column :label="$t('desk.serve_startAend')" width="100px">
             <template slot-scope="{ row }">
               <div>
-                <span style="color: #126eff; margin-right: 2px">开</span
+                <span style="color: #126eff; margin-right: 2px">{{
+                  $t("desk.serve_open")
+                }}</span
                 >{{ row.workStarTime }}
               </div>
               <div>
-                <span style="color: #df1e1e; margin-right: 2px">结</span
+                <span style="color: #df1e1e; margin-right: 2px">{{
+                  $t("desk.serve_tie")
+                }}</span
                 >{{ row.workEndTime }}
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="handoveEmployeedId" label="当班人">
+          <el-table-column
+            prop="handoveEmployeedId"
+            :label="$t('desk.serve_peopleDuty')"
+          >
           </el-table-column>
         </el-table-column>
-        <el-table-column label="本班全责汇总" align="center">
-          <el-table-column label="现金"
+        <el-table-column :label="$t('desk.serve_flightDuty')" align="center">
+          <el-table-column :label="$t('desk.serve_cash')"
             ><template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
@@ -86,53 +98,82 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="挂账"> </el-table-column>
-          <el-table-column prop="nowWeixinRetained" label="微信">
+          <el-table-column prop="createTime" :label="$t('desk.serve_thisCard')">
           </el-table-column>
-          <el-table-column prop="nowAliRetained" label="支付宝">
+          <el-table-column
+            prop="nowWeixinRetained"
+            :label="$t('desk.serve_wechat')"
+          >
           </el-table-column>
-          <el-table-column prop="createTime" label="其它"> </el-table-column>
-          <el-table-column prop="createTime" label="房费"> </el-table-column>
-          <el-table-column prop="createTime" label="迷你吧"> </el-table-column>
-          <el-table-column prop="createTime" label="会员卡卡费" width="100px ">
+          <el-table-column
+            prop="nowAliRetained"
+            :label="$t('desk.serve_alipay')"
+          >
           </el-table-column>
-          <el-table-column prop="createTime" label="餐饮费"> </el-table-column>
-          <el-table-column prop="createTime" label="商品费"> </el-table-column>
-          <el-table-column prop="createTime" label="其他收入">
+          <el-table-column prop="createTime" :label="$t('desk.serve_other')">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            :label="$t('desk.serve_roomPrice')"
+          >
+          </el-table-column>
+          <el-table-column prop="createTime" :label="$t('desk.serve_miniPub')">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            :label="$t('desk.serve_memCardPrice')"
+            width="100px "
+          >
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            :label="$t('desk.serve_foodPrice')"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            :label="$t('desk.serve_goodsPrice')"
+          >
+          </el-table-column>
+          <el-table-column prop="createTime" :label="$t('desk.serve_otherIn')">
           </el-table-column>
         </el-table-column>
-        <el-table-column label="现金模式" align="center">
+        <el-table-column :label="$t('desk.serve_cashModel')" align="center">
           <el-table-column
             prop="nowMoneyHandin"
-            label="本班现金上交"
+            :label="$t('desk.serve_flightCashUp')"
             width="120px"
           >
           </el-table-column>
           <el-table-column
             prop="nowWeixinHandin"
-            label="本班微信上交"
+            :label="$t('desk.serve_flightWeUp')"
             width="120px"
           >
           </el-table-column>
           <el-table-column
             prop="nowAliHandin"
-            label="本班支付宝上交"
+            :label="$t('desk.serve_flightAliUp')"
             width="120px"
           >
           </el-table-column>
           <el-table-column
             prop="goSettlement"
-            label="本班走结订单金额"
+            :label="$t('desk.serve_flightGoOrder')"
             width="140px"
           >
           </el-table-column>
           <el-table-column
             prop="createTime"
-            label="实际交班存留金额"
+            :label="$t('desk.serve_actralAmount')"
             width="140px"
           >
           </el-table-column>
-          <el-table-column prop="createTime" label="下放实际金额" width="120px">
+          <el-table-column
+            prop="createTime"
+            :label="$t('desk.serve_drowPrice')"
+            width="120px"
+          >
           </el-table-column>
         </el-table-column>
       </el-table>
@@ -151,23 +192,36 @@
       top="0"
       :visible.sync="lookMoney"
       class="liveInPersonDia"
-      title="现金统计查看"
+      :title="$t('desk.serve_cashView')"
       width="80%"
     >
       <div class="dialog_top">
-        PMS统计本班现金收入：<span>1000.00</span>日元
+        {{ $t("desk.serve_systemIn") + ":" }}<span>1000.00</span
+        >{{ $t("desk.serve_yen") }}
       </div>
       <div class="dialog_middle">
-        <div class="middle_text">五百日元：<span>1</span>张</div>
-        <div class="middle_text">一百日元：<span>4</span>张</div>
-        <div class="middle_text">五十日元：<span>2</span>张</div>
+        <div class="middle_text">
+          {{ $t("desk.serve_wuYen") + ":" }}<span>1</span
+          >{{ $t("desk.serve_zhang") }}
+        </div>
+        <div class="middle_text">
+          {{ $t("desk.serve_yiYen") + ":" }}<span>4</span
+          >{{ $t("desk.serve_zhang") }}
+        </div>
+        <div class="middle_text">
+          {{ $t("desk.serve_yiYen") + ":" }}<span>2</span
+          >{{ $t("desk.serve_zhang") }}
+        </div>
       </div>
       <el-divider></el-divider>
       <div class="dialog_bot">
-        平衡数=<span>0</span>（平衡数=实际现金收入-PMS统计现金收入）
+        {{ $t("desk.serve_balanceNum") }}<span>0</span
+        >{{ $t("desk.serve_parentheses") }}
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="lookMoney = false">关闭</el-button>
+        <el-button size="small" @click="lookMoney = false">{{
+          $t("commons.close")
+        }}</el-button>
       </span>
     </el-dialog>
   </div>

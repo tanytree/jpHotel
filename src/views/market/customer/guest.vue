@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-13 14:15:27
+ * @LastEditTime: 2020-10-15 14:42:12
  * @FilePath: \jiudian\src\views\market\customer\guest.vue
  -->
 
@@ -59,11 +59,18 @@
           <el-input v-model="searchForm.idcard" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
-          <el-button type="primary" class="white" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList"
+            >查询</el-button
+          >
+          <el-button type="primary" class="white" @click="initForm"
+            >重置</el-button
+          >
         </el-form-item>
         <el-form-item style="float: right">
-          <el-button type="primary" class="white" @click="addAndEditItemClick('add')"
+          <el-button
+            type="primary"
+            class="white"
+            @click="addAndEditItemClick('add')"
             >登记外宾</el-button
           >
         </el-form-item>
@@ -146,7 +153,8 @@
           align="center"
         >
           <template slot-scope="{ row }">
-            {{ row.state | F_state }}
+            <div v-if="row.checkInFlag">入住中</div>
+            <div v-if="!row.checkInFlag">未入住</div>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160">

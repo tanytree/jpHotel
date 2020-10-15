@@ -1,18 +1,36 @@
 <template>
   <div class="boss-index">
     <div class="content">
-      <el-form inline :model="formInline" size="small" class="term line demo-form-inline">
+      <el-form
+        inline
+        :model="formInline"
+        size="small"
+        class="term line demo-form-inline"
+      >
         <el-form-item label="开票时间：">
-          <el-date-picker type="date" v-model="formInline.startTime"></el-date-picker>
+          <el-date-picker
+            type="date"
+            v-model="formInline.startTime"
+          ></el-date-picker>
           <span class="line">至</span>
-          <el-date-picker type="date" v-model="formInline.endTime"></el-date-picker>
+          <el-date-picker
+            type="date"
+            v-model="formInline.endTime"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="客户名称：">
           <el-input v-model="formInline.name"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="submit" type="primary" @click="queryClick(formInline)">查询</el-button>
-          <el-button class="white" @click="resetForm(formInline)">重置</el-button>
+          <el-button
+            class="submit"
+            type="primary"
+            @click="queryClick(formInline)"
+            >查询</el-button
+          >
+          <el-button class="white" @click="resetForm(formInline)"
+            >重置</el-button
+          >
         </el-form-item>
       </el-form>
       <el-table
@@ -22,18 +40,59 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="name" label="客户名称" width="140"></el-table-column>
-        <el-table-column prop="roomNum" label="房间号" width="100"></el-table-column>
-        <el-table-column prop="mobile" label="电话号码" width="140"></el-table-column>
-        <el-table-column prop="companyName" label="付款方公司名称" width="200"></el-table-column>
-        <el-table-column prop="prices" label="金额" width="100"></el-table-column>
-        <el-table-column prop="projectName" label="项目" width="180"></el-table-column>
-        <el-table-column prop="createTime" label="日期" width="180"></el-table-column>
-        <el-table-column prop="updateTime" label="操作时间" width="180"></el-table-column>
-        <el-table-column prop="creatorName" label="操作人" width="130"></el-table-column>
+        <el-table-column
+          prop="name"
+          label="客户名称"
+          width="140"
+        ></el-table-column>
+        <el-table-column
+          prop="roomNum"
+          label="房间号"
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="mobile"
+          label="电话号码"
+          width="140"
+        ></el-table-column>
+        <el-table-column
+          prop="companyName"
+          label="付款方公司名称"
+          width="200"
+        ></el-table-column>
+        <el-table-column
+          prop="prices"
+          label="金额"
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="projectName"
+          label="项目"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="createTime"
+          label="日期"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="updateTime"
+          label="操作时间"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="creatorName"
+          label="操作人"
+          width="130"
+        ></el-table-column>
         <el-table-column label="操作" width="140">
           <template slot-scope="scope">
-            <el-button size="small" type="text" @click="handleDelete(scope.$index, scope.row)">详情</el-button>
+            <el-button
+              size="small"
+              type="text"
+              @click="handleDelete(scope.$index, scope.row)"
+              >详情</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -49,45 +108,53 @@
       </div>
     </div>
     <!-- 点击详情弹出框 -->
-    <el-dialog title="详情" width="880px" top="0" v-if="detailsBill" :visible.sync="detailsBill">
-      <el-row style="margin:10px 20px">
+    <el-dialog
+      title="详情"
+      width="880px"
+      top="0"
+      v-if="detailsBill"
+      :visible.sync="detailsBill"
+    >
+      <el-row style="margin: 10px 20px">
         <el-col :span="12">
-          <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">客户名称：</span>
-            {{invoiceDetail.name}}
+          <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">客户名称：</span>
+            {{ invoiceDetail.name }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">房间号:</span>
-            {{invoiceDetail.roomNum}}
+          <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">房间号:</span>
+            {{ invoiceDetail.roomNum }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">电话号码:</span>
-            {{invoiceDetail.mobile}}
+          <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">电话号码:</span>
+            {{ invoiceDetail.mobile }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">付款公司:</span>
-            {{invoiceDetail.companyName}}
+          <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">付款公司:</span>
+            {{ invoiceDetail.companyName }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">金额:</span>
-            {{invoiceDetail.prices}}
+          <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">金额:</span>
+            {{ invoiceDetail.prices }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">日期:</span>
-            {{invoiceDetail.createTime}}
+          <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">日期:</span>
+            {{ invoiceDetail.createTime }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px;">
-            <span style="color:#888888">项目:</span>
-            {{invoiceDetail.projectName}}
+          <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">项目:</span>
+            {{ invoiceDetail.projectName }}
           </el-col>
           <el-col>
-            <span style="color:#888888">备注：</span>
-            {{invoiceDetail.remark}}
+            <span style="color: #888888">备注：</span>
+            {{ invoiceDetail.remark }}
           </el-col>
         </el-col>
       </el-row>
-      <div slot="footer" class="dialog-footer" style="text-align:center">
-        <el-button class="submit" type="primary" @click="detailsBill = false">关闭</el-button>
+      <div slot="footer" class="dialog-footer" style="text-align: center">
+        <el-button class="submit" type="primary" @click="detailsBill = false"
+          >关闭</el-button
+        >
       </div>
     </el-dialog>
   </div>

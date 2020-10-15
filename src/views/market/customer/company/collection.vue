@@ -491,8 +491,7 @@ export default {
         pageSize: this.pageSize,
       });
       this.$F.merge(params, this.searchForm);
-      if (params.timeType == 'defined')
-          delete params['timeType'];
+      if (params.timeType == "defined") delete params["timeType"];
       this.$F.doRequest(
         this,
         "/pms/consume/enter_consume_order_list",

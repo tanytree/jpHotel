@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-13 10:56:04
+ * @LastEditTime: 2020-10-15 14:14:33
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -69,8 +69,12 @@
           <el-input v-model="searchForm.idcard" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
-          <el-button type="primary" class="white" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList"
+            >查询</el-button
+          >
+          <el-button type="primary" class="white" @click="initForm"
+            >重置</el-button
+          >
         </el-form-item>
         <el-form-item>
           <el-button plain>读会员卡</el-button>
@@ -115,7 +119,7 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="birthday"
+          prop="memberObject.birthday"
           align="center"
           label="生日"
           width="120"
@@ -146,15 +150,21 @@
             row.consumeTotalPrice ? row.consumeTotalPrice : "0"
           }}</template>
         </el-table-column>
-        <el-table-column
-          prop="isBlacklist"
-          align="center"
-          label="是否黑名单"
-          width="120"
-        >
-          <template slot-scope="{ row }">{{
-            row.isBlacklist == 2 ? "是" : "否"
-          }}</template>
+        <el-table-column align="center" label="是否黑名单" width="120">
+          <template slot-scope="{ row }">
+            <div v-if="row.memberObject && row.memberObject.isBlacklist == 2">
+              是
+            </div>
+            <div
+              v-if="
+                row.memberObject &&
+                (row.memberObject.isBlacklist == 1 ||
+                  !row.memberObject.isBlacklist)
+              "
+            >
+              否
+            </div>
+          </template>
         </el-table-column>
         <el-table-column prop label="操作" width="200">
           <template slot-scope="{ row }">
@@ -180,7 +190,7 @@
                 >
                 <el-dropdown-item
                   @click.native="handelblacklist(row)"
-                  v-if="row.isBlacklist != 2"
+                  v-if="1 == 2"
                   >拉黑</el-dropdown-item
                 >
               </el-dropdown-menu>
@@ -490,7 +500,7 @@
     </el-dialog>
     <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
       <el-form :model="setBlackForm" ref="setBlackForm">
-        <el-form-item label="拉黑备注：" prop="blackRemark">
+        <el-form-item label="拉黑备注：" required="true">
           <el-input
             type="textarea"
             v-model="setBlackForm.remark"
@@ -636,15 +646,7 @@ export default {
         remark: "",
       },
       setBlackShow: false,
-      setBlackRules: {
-        blackRemark: [
-          {
-            required: true,
-            message: "not emply",
-            trigger: "change",
-          },
-        ],
-      },
+
       currentItem: "",
     };
   },
@@ -665,7 +667,7 @@ export default {
         mobile: "",
         idcard: "",
         name: "",
-        searchType: 1,
+        searchType: 3,
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
@@ -797,12 +799,16 @@ export default {
     },
     handleHistory(item) {
       console.log(item.idcard);
-      this.$router.push({
-        name: "customerhistory",
-        query: {
-          idcard: item.idcard,
-        },
-      });
+      if (item.idcard) {
+        this.$router.push({
+          name: "customerhistory",
+          query: {
+            idcard: item.idcard,
+          },
+        });
+      } else {
+        this.$message("无记录");
+      }
     },
     handleEdit(item) {
       this.$router.push({

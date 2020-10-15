@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-09-14 10:55:10
  * @Author: 陶子
- * @LastEditTime: 2020-10-14 10:21:34
+ * @LastEditTime: 2020-10-15 11:04:51
  * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
 -->
 <template>
