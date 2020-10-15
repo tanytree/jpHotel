@@ -185,16 +185,22 @@
                             <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading="liveCardLoading"></i>制卡</el-button>
                         </el-form-item>
                     </el-form>
-                    <div class="roomBtm">
-                        <div v-for="(v,index) in waitingRoom" :key="index">
-                            <div class="row">
-                                <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span>
-                                <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
+                    <div class="roomBtm checked">
+                        <div class="checkRoom" v-for="(v,index) in waitingRoom" :key="index">
+                            <div class="row rowReverse">
+                                <div>
+                                    <el-button type="primary" class="white" size="mini" @click="">附餐</el-button>
+                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
+                                </div>
+                                <div><span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span></div>
                             </div>
                             <div class="row">
-                                <div class="tags">
+                                <div class="tags margin-t-5">
                                     <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
                                 </div>
+                            </div>
+                            <div class="row rowReverse">
+                                <el-input-number class="margin-t-5" @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
                             </div>
                         </div>
                     </div>
@@ -1315,7 +1321,11 @@ export default {
                 flex-direction: row;
                 flex-wrap: wrap;
                 flex: 1;
-                padding: 5px;
+
+                &.checked {
+                    flex-direction: column;
+                    padding: 0 10px;
+                }
 
                 .roomBox {
                     width: 33%;
@@ -1355,6 +1365,16 @@ export default {
                                 font-size: 13px;
                             }
                         }
+                    }
+                }
+                .checkRoom {
+                    padding: 15px 10px;
+                    border-bottom: 1px solid #D7D7D7;
+
+                    .rowReverse {
+                        display: flex;
+                        flex-direction: row-reverse;
+                        justify-content: space-between;
                     }
                 }
             }

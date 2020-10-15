@@ -263,7 +263,7 @@
             getManageData(callback) {
                 var a = this;
                 this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", {}, (res) => {
-                
+
                     console.log(res)
                     a.salePoint = res.list.reverse();
                     a.salePoint.some(item => {
@@ -300,6 +300,7 @@
                     categoryId: categoryId,
                     goodsName: goodsName,
                     sellId: this.sellId,
+                    state: 1,
                 };
                 this.$F.merge(params, this.shelfForm);
                 this.$F.doRequest(this, "/pms/sellinglog/listusable", params, (res) => {

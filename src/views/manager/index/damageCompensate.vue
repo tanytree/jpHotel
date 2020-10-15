@@ -221,10 +221,7 @@
                 class="demo-ruleForm"
                 ref="addGoods"
             >
-                <el-form-item
-                    :label="$t('manager.hp_goodsType') + ':'"
-                    prop="type"
-                >
+                <el-form-item :label="$t('manager.hp_goodsType') + ':'" prop="type">
                     <el-select
                         v-model="goodsData.damageTypeId"
                         :placeholder="$t('boss.compensation_selectState')"
@@ -237,16 +234,10 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('manager.hp_goodsName') + ':'"
-                    prop="name"
-                >
+                <el-form-item :label="$t('manager.hp_goodsName') + ':'" prop="name">
                     <el-input v-model="goodsData.name"></el-input>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('manager.hp_compensationPrice') + ':'"
-                    prop="name"
-                >
+                <el-form-item :label="$t('manager.hp_compensationPrice') + ':'">
                     <el-input v-model="goodsData.damagePrice"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('manager.hp_costPrice') + ':'">

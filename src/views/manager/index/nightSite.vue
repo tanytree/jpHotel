@@ -43,12 +43,7 @@
     <div class="tag-top">
       <span class="label">{{$t('manager.hp_allwAuditTime')+':'}}</span>
       <span class="value">
-        <el-time-picker
-          size="small"
-          v-model="findOne.trialStartTime"
-          value-format="HH-mm"
-          clearable
-        ></el-time-picker>
+        <el-time-picker size="small" v-model="findOne.trialStartTime" value-format="HH-mm" clearable></el-time-picker>
         <span class="line">--</span>
         <el-time-picker size="small" v-model="findOne.trialEndTime" value-format="HH-mm" clearable></el-time-picker>
       </span>
@@ -132,6 +127,10 @@ export default {
   props: { findOne: Object, initData: Function },
   methods: {
     submit() {
+      if(!this.findOne.trialStartTime || !this.findOne.trialEndTime) {
+        this.$message.info(this.$t("manager.hp_mustInput"));
+        return;
+      }
       const param = {
         arriveStatus: this.findOne.arriveStatus ? 1 : 2,
         leaveStatus: this.findOne.leaveStatus ? 1 : 2,

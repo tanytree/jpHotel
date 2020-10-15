@@ -40,7 +40,7 @@ module.exports = {
     hp_compensationPrice: '赔偿单价',
     hp_typeName: '类型名称',
     hp_costPrice: '成本价格',
-    hp_inputActiveName: '请输入活动名称',
+    hp_inputActiveName: '请输入物品名称',
     hp_editor: '编辑',
     hp_patternsSuccession: '交班模式',
     hp_deskDepartment: '前台部',
@@ -80,6 +80,7 @@ module.exports = {
     hp_documentName: '单据名称',
     hp_copies: '打印份数',
     hp_documentNote: '单据备注',
+    hp_mustInput: '时间必填',
 
     //   管理部 > 客房中心 (houseKeeping > hk)
     hk_guestRoom: '客房房型',

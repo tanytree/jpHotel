@@ -6,7 +6,7 @@
  -->
 <template>
     <div class="sec1 boss-index">
-        <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
+        <el-form :model="form" inline class="term line" size="small" label-width="100px">
             <el-form-item :label="$t('boss.loginDetail_stores')" v-if="storesNum == $F.getHQCode()">
                 <el-select v-model="searchForm.storesNum">
                     <el-option :label="$t('commons.all')" value>{{ $t('commons.all') }}</el-option>
@@ -53,23 +53,15 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button @click="getDataList(searchForm)" type="primary">{{ $t('commons.queryBtn') }}</el-button>
+                <el-button @click="getDataList(searchForm)" class="submit" type="primary">{{ $t('commons.queryBtn') }}</el-button>
             </el-form-item>
-            <el-form-item style="float:right">
-                <el-button type="primary" @click="downloadTemplate">{{ $t('commons.downloadTemplate') }}</el-button>
+            <el-form-item class="export">
+                <el-button type="primary" class="submit" @click="downloadTemplate">{{ $t('commons.downloadTemplate') }}</el-button>
                 <!--                <el-button type="primary">{{$t('commons.bulkImport')}}</el-button>-->
-                <template>
-                    <el-upload
-                        class="upload-demo"
-                        :action="action"
-                        accept="xls"
-                        :data="uploadData"
-                        :show-file-list="false"
-                        :before-upload="beforeUpload2"
-                    >
-                        <el-button size="small" type="primary">{{ $t('commons.bulkImport') }}
-                        </el-button>
-                    </el-upload>
+                <el-upload class="upload-demo" :action="action" accept="xls" :data="uploadData" :show-file-list="false" :before-upload="beforeUpload2">
+                    <el-button size="small" class="submit" type="primary">{{ $t('commons.bulkImport') }}
+                    </el-button>
+                </el-upload>
                     <!--                    <el-upload-->
                     <!--                        class="upload-demo"-->
                     <!--                        action="aa"-->
@@ -79,8 +71,7 @@
                     <!--                        <el-button size="small" type="primary">{{$t('commons.bulkImport')}}-->
                     <!--                        </el-button>-->
                     <!--                    </el-upload>-->
-                </template>
-                <el-button type="primary" @click="addItem">{{ $t('commons.addEmployees') }}</el-button>
+                <el-button type="primary" class="submit" @click="addItem">{{ $t('commons.addEmployees') }}</el-button>
             </el-form-item>
         </el-form>
         <div>
@@ -156,138 +147,73 @@
             </el-table>
             <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
             <el-pagination
-                @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="searchForm.pageIndex"
-                :page-sizes="[10, 50, 100, 200]"
                 :page-size="searchForm.pageSize"
-                layout=" sizes, prev, pager, next, jumper"
+                layout="prev, pager, next, jumper"
                 :total="listTotal"
             ></el-pagination>
         </div>
-        <div>
             <!-- 添加员工 -->
-            <el-dialog
-                top="0"
-                :title="addAndEditForm.employeeId?$t('commons.modify'):$t('commons.addEmployees')"
-                :visible.sync="adddstaff"
-                @close="addAndEditFormClose"
-            >
-                <el-form
-                    ref="addAndEditForm"
-                    :model="addAndEditForm"
-                    :rules="rules"
-                    :inline="true"
-                    :required="true"
-                    class="top-body"
-                    label-width="100px"
-                    size="small"
-                >
-                    <el-row>
-                        <el-col :span="12" v-if="isPersonnelManager" class>
-                            <el-form-item
-                                :label="$t('boss.loginDetail_stores')"
-                                prop="storesNum"
-                                v-if="storesNum == $F.getHQCode()"
-                            >
-                                <el-select
-                                    v-model="addAndEditForm.storesNum"
-                                    class="width200"
-                                    @change="changeStore($event)"
-                                >
-                                    <el-option
-                                        v-for="item in storeList"
-                                        :key="item.storesNum"
-                                        :label="item.storesName"
-                                        :value="item.storesNum"
-                                    ></el-option>
+        <el-dialog top="0" :title="addAndEditForm.employeeId?$t('commons.modify'):$t('commons.addEmployees')" :visible.sync="adddstaff" @close="addAndEditFormClose">
+                <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" inline :required="true" class="term line" label-width="120px" size="small">
+                    <el-row class="margin-b-20">
+                        <el-col :span="12" v-if="isPersonnelManager">
+                            <el-form-item :label="$t('boss.loginDetail_stores')" prop="storesNum" v-if="storesNum == $F.getHQCode()">
+                                <el-select v-model="addAndEditForm.storesNum" class="width200" @change="changeStore($event)">
+                                    <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.staff_staffState')+'：'" prop="userStatus">
                                 <el-radio-group v-model="addAndEditForm.userStatus">
-                                    <el-radio
-                                        v-for="(value, key) in $t('commons.userStatus')"
-                                        :label="key"
-                                        :key="key"
-                                    >{{ value }}
-                                    </el-radio>
+                                    <el-radio v-for="(value, key) in $t('commons.userStatus')" :label="key" :key="key">{{ value }}</el-radio>
                                 </el-radio-group>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row class="margin-b-10">
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.loginDetail_name')+'：'" class prop="userName">
-                                <el-input
-                                    class="width200"
-                                    :placeholder="$t('boss.staff_inputName')"
-                                    autocomplete="off"
-                                    v-model="addAndEditForm.userName"
-                                ></el-input>
+                                <el-input class="width200" :placeholder="$t('boss.staff_inputName')" autocomplete="off" v-model="addAndEditForm.userName"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.loginDetail_phone')">
-                                <el-input class="width200" autocomplete="off"
-                                          v-model="addAndEditForm.userPhone"></el-input>
+                                <el-input class="width200" autocomplete="off" v-model="addAndEditForm.userPhone"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row class="margin-b-10">
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.loginDetail_documentType')">
-                                <el-select
-                                    v-model="addAndEditForm.idcardType"
-                                    :placeholder="$t('boss.staff_selectType')"
-                                    class="width200"
-                                >
-                                    <el-option
-                                        v-for="(value, key) in $t('commons.idCardType')"
-                                        :label="value"
-                                        :value="key"
-                                        :key="key"
-                                    ></el-option>
+                                <el-select v-model="addAndEditForm.idcardType" :placeholder="$t('boss.staff_selectType')" class="width200">
+                                    <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.loginDetail_documentNumber')">
-                                <el-input v-model="addAndEditForm.idcard" class="width200"
-                                          autocomplete="off"></el-input>
+                                <el-input v-model="addAndEditForm.idcard" class="width200" autocomplete="off"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row class="margin-b-10">
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.staff_department')" class prop="departmentId">
-                                <el-select
-                                    v-model="addAndEditForm.departmentId"
-                                    :placeholder="$t('boss.staff_selectDepartment')"
-                                    class="width200"
-                                >
-                                    <el-option
-                                        v-for="item in departmentList"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id"
-                                    ></el-option>
+                                <el-select v-model="addAndEditForm.departmentId" :placeholder="$t('boss.staff_selectDepartment')" class="width200">
+                                    <el-option v-for="item in departmentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.loginDetail_position')">
-                                <el-input
-                                    v-model="addAndEditForm.position"
-                                    class="width200"
-                                    :placeholder="$t('boss.staff_fillInPosition')"
-                                    autocomplete="off"
-                                ></el-input>
+                                <el-input v-model="addAndEditForm.position" class="width200" :placeholder="$t('boss.staff_fillInPosition')" autocomplete="off"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row class="margin-b-10">
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.loginDetail_workNumber')">
                                 <el-input v-model="addAndEditForm.worknum" class="width200"
@@ -301,7 +227,7 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row class="margin-b-10">
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.loginDetail_email')">
                                 <el-input v-model="addAndEditForm.email" class="width200" autocomplete="off"></el-input>
@@ -318,33 +244,14 @@
                         <el-col :span="12">
                             <div class="grid-content">
                                 <el-form-item :label="$t('boss.staff_workTime')+':'" prop="inTime">
-                                    <el-date-picker
-                                        v-model="addAndEditForm.inTime"
-                                        value-format="yyyy-MM-dd"
-                                        type="date"
-                                        style="width:200px"
-                                        :placeholder="$t('commons.selectDate')"
-                                    ></el-date-picker>
+                                    <el-date-picker v-model="addAndEditForm.inTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('commons.selectDate')"></el-date-picker>
                                 </el-form-item>
                             </div>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item :label="$t('boss.staff_relatedBackground')">
-                                <el-select
-                                    v-model="addAndEditForm.associatedAccount"
-                                    filterable
-                                    remote
-                                    reserve-keyword
-                                    :placeholder="$t('boss.staff_relatedBackground')"
-                                    :remote-method="remoteMethod"
-                                    :loading="vloading"
-                                >
-                                    <el-option
-                                        v-for="item in options"
-                                        :key="item.id"
-                                        :label="item.userName + '-' + item.account"
-                                        :value="item.account"
-                                    ></el-option>
+                                <el-select v-model="addAndEditForm.associatedAccount" filterable remote reserve-keyword :placeholder="$t('boss.staff_relatedBackground')" :remote-method="remoteMethod" :loading="vloading">
+                                    <el-option v-for="item in options" :key="item.id" :label="item.userName + '-' + item.account" :value="item.account"></el-option>
                                 </el-select>
                                 <!-- <el-input v-model="addAndEditForm.associatedAccount" class="width200" placeholder="请输入正确的后台账号" autocomplete="off"></el-input> -->
                             </el-form-item>
@@ -356,107 +263,75 @@
                     <el-button type="primary" @click="addAndEditPost">{{ $t('commons.determine') }}</el-button>
                 </div>
             </el-dialog>
-        </div>
 
-        <div>
             <!-- 办理离职 -->
-            <el-dialog
-                top="0"
-                :title="$t('commons.forDeparture')"
-                :visible.sync="dimission"
-                width="500px"
-                class="dimission"
-                @close="dimissionClose"
-            >
-                <el-form>
-                    <el-row>
-                        <el-col>
-                            <div class="grid-content">
-                                <el-form-item :label="$t('boss.staff_departureTime')+'：'">
-                                    <el-date-picker
-                                        v-model="itemCtrlForm.outTime"
-                                        value-format="yyyy-MM-dd"
-                                        type="date"
-                                        style="width:305px"
-                                        :placeholder="$t('commons.selectDate')"
-                                    ></el-date-picker>
-                                </el-form-item>
-                            </div>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col>
-                            <el-form-item :label="$t('boss.staff_leavingReason')">
-                                <el-input style="width:305px" v-model="itemCtrlForm.outReason"
-                                          autocomplete="off"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col>
-                            <el-form-item :label="$t('boss.staff_leavingFile')+'：'">
-                                <el-input
-                                    v-model="itemCtrlForm.outDataUrlShow"
-                                    :placeholder="$t('boss.staff_leavingFile')"
-                                    :disabled="true"
-                                    style="width:300px"
-                                >
-                                    <template slot="append">
-                                        <el-upload
-                                            class="upload-demo"
-                                            :action="action"
-                                            :data="uploadData"
-                                            :show-file-list="false"
-                                            :on-success="handleSuccess"
-                                            :before-upload="beforeUpload"
-                                        >
-                                            <el-button size="small" type="primary">{{ $t('boss.staff_clickUp') }}
-                                            </el-button>
-                                        </el-upload>
-                                    </template>
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dimissionClose">{{ $t('commons.close') }}</el-button>
-                    <el-button
-                        type="primary"
-                        @click="dimissionPost"
-                        v-loading="loading"
-                    >{{ $t('commons.determine') }}
-                    </el-button>
-                </div>
-            </el-dialog>
-        </div>
+        <el-dialog top="0" :title="$t('commons.forDeparture')" :visible.sync="dimission" width="500px" class="dimission" @close="dimissionClose">
+            <el-form>
+                <el-form-item :label="$t('boss.staff_departureTime')+'：'">
+                    <el-date-picker
+                        v-model="itemCtrlForm.outTime"
+                        value-format="yyyy-MM-dd"
+                        type="date"
+                        style="width:305px"
+                        :placeholder="$t('commons.selectDate')"
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item :label="$t('boss.staff_leavingReason')">
+                    <el-input style="width:305px" v-model="itemCtrlForm.outReason"
+                              autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('boss.staff_leavingFile')+'：'">
+                    <el-input
+                        v-model="itemCtrlForm.outDataUrlShow"
+                        :placeholder="$t('boss.staff_leavingFile')"
+                        :disabled="true"
+                        style="width:300px"
+                    >
+                        <template slot="append">
+                            <el-upload
+                                class="upload-demo"
+                                :action="action"
+                                :data="uploadData"
+                                :show-file-list="false"
+                                :on-success="handleSuccess"
+                                :before-upload="beforeUpload"
+                            >
+                                <el-button size="small" type="primary">{{ $t('boss.staff_clickUp') }}
+                                </el-button>
+                            </el-upload>
+                        </template>
+                    </el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dimissionClose">{{ $t('commons.close') }}</el-button>
+                <el-button
+                    type="primary"
+                    @click="dimissionPost"
+                    v-loading="loading"
+                >{{ $t('commons.determine') }}
+                </el-button>
+            </div>
+        </el-dialog>
 
-        <div>
             <!-- 转正 -->
-            <el-dialog top="0" :title="$t('commons.positive')" :visible.sync="correct" width="500px">
-                <el-form>
-                    <el-row>
-                        <el-col>
-                            <div class="grid-content">
-                                <el-form-item :label="$t('boss.staff_positiveTime')">
-                                    <el-date-picker
-                                        v-model="itemCtrlForm.positiveTime"
-                                        value-format="yyyy-MM-dd"
-                                        type="date"
-                                        style="width:305px"
-                                        :placeholder="$t('commons.selectDate')"
-                                    ></el-date-picker>
-                                </el-form-item>
-                            </div>
-                        </el-col>
-                    </el-row>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="correct = false">{{ $t('commons.close') }}</el-button>
-                    <el-button type="primary" @click="becomingPost">{{ $t('commons.determine') }}</el-button>
-                </div>
-            </el-dialog>
-        </div>
+        <el-dialog top="0" :title="$t('commons.positive')" :visible.sync="correct" width="500px">
+            <el-form>
+                <el-form-item :label="$t('boss.staff_positiveTime')">
+                    <el-date-picker
+                        v-model="itemCtrlForm.positiveTime"
+                        value-format="yyyy-MM-dd"
+                        type="date"
+                        style="width:305px"
+                        :placeholder="$t('commons.selectDate')"
+                    ></el-date-picker>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="correct = false">{{ $t('commons.close') }}</el-button>
+                <el-button type="primary" @click="becomingPost">{{ $t('commons.determine') }}</el-button>
+            </div>
+        </el-dialog>
         <!-- 查看资料组件 -->
         <LoginDetail ref="loginDetail" :storeList="storeList"></LoginDetail>
     </div>
@@ -1004,12 +879,12 @@ export default {
             }
         },
         /**每页数 */
-        handleSizeChange(val) {
-            this.searchForm.pageSize = val;
-            this.searchForm.pageIndex = 1;
-            this.getDataList();
-            console.log(11111);
-        },
+        // handleSizeChange(val) {
+        //     this.searchForm.pageSize = val;
+        //     this.searchForm.pageIndex = 1;
+        //     this.getDataList();
+        //     console.log(11111);
+        // },
         /**当前页 */
         handleCurrentChange(val) {
             this.searchForm.pageIndex = val;
@@ -1051,7 +926,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
-<style lang="less" scoped>
+<style lang="less">
 .goodsImg {
     width: 30px;
     height: 30px;
@@ -1075,6 +950,16 @@ export default {
 .shopStatus {
     color: rgba(9, 109, 217, 1);
     font-size: 12px;
+}
+
+.upload-demo {
+    display: inline-block;
+    margin: 0 10px;
+    vertical-align: top;
+
+    .el-upload {
+        display: block;
+    }
 }
 
 .top-body {
