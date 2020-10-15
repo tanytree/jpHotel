@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-10-12 14:00:00
+ * @LastEditTime: 2020-10-14 20:22:57
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -10,6 +10,7 @@
   <!-- 统一的列表格式 -->
   <div class="boss-index">
     <div class="booking flex_column" style="background: #fff">
+<<<<<<< Updated upstream
         <!-- 查询部分 -->
         <el-form class="term" inline size="small" label-width="80px">
             <el-form-item label="会议时间:">
@@ -136,76 +137,198 @@
             label="会议开始-会议结束"
             show-overflow-tooltip
             width="150px"
+=======
+      <!-- 查询部分 -->
+      <el-form class="term" inline size="small" label-width="80px">
+        <el-form-item label="会议时间:">
+          <el-radio-group v-model="searchForm.timeType">
+            <el-radio-button label style="margin-right: 10px"
+              >不限</el-radio-button
+            >
+            <el-radio-button label="1" style="margin-right: 10px"
+              >当天</el-radio-button
+            >
+            <el-radio-button label="8" style="margin-right: 10px"
+              >明天</el-radio-button
+            >
+            <el-radio-button label="9" style="margin-right: 10px"
+              >后天</el-radio-button
+            >
+            <el-radio-button label="7" style="margin-right: 10px"
+              >近7天</el-radio-button
+            >
+            <el-radio-button label="自定义" style="margin-right: 10px"
+              >自定义</el-radio-button
+            >
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item v-if="searchForm.timeType == '自定义'">
+          <el-date-picker
+            v-model="searchForm.cstartTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width: 140px"
+            placeholder="选择日期"
+          ></el-date-picker>
+          <span style="margin: 0 5px">至</span>
+          <el-date-picker
+            v-model="searchForm.cendTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width: 140px"
+            placeholder="选择日期"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="登记日期:">
+          <el-date-picker
+            v-model="searchForm.startTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width: 200px"
+            placeholder="选择日期"
+          ></el-date-picker>
+          <span style="margin: 0 5px">-</span>
+          <el-date-picker
+            v-model="searchForm.endTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width: 200px"
+            placeholder="选择日期"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="订单来源:">
+          <el-select v-model="searchForm.orderSource" class="width150">
+            <el-option value label="全部"></el-option>
+            <el-option
+              :value="key"
+              v-for="(item, key, index) of $t('commons.orderSource')"
+              :label="item"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="客源类别:">
+          <el-select v-model="searchForm.guestType" class="width150">
+            <el-option value label="全部"></el-option>
+            <el-option
+              :value="key"
+              v-for="(item, key, index) of $t('commons.guestType')"
+              :label="item"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="预订人:">
+          <el-input v-model="searchForm.name" class="width200"></el-input>
+        </el-form-item>
+        <el-form-item label="房间号:">
+          <el-input v-model="searchForm.houseNum" class="width200"></el-input>
+        </el-form-item>
+        <el-form-item label="订单号:">
+          <el-input v-model="searchForm.orderNum" class="width200"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" class="submit" @click="getDataList"
+            >查询</el-button
           >
-            <template slot-scope="{ row }">
-              <div>
-                <span style="color: #126eff">开</span>
-                {{ row.checkinTime }}
-              </div>
-              <div>
-                <span style="color: #d32b2b">结</span>
-                {{ row.checkoutTime }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="房间号"
-            width="120px"
-          ></el-table-column>
-          <el-table-column
-            label="会议厅"
-            show-overflow-tooltip
-          ></el-table-column>
-          <el-table-column label="客源类别" align="center" width="100px">
-            <template slot-scope="{ row }">
-              <div v-if="row.guestType == 1">散客</div>
-              <div v-if="row.guestType == 2">会员</div>
-              <div v-if="row.guestType == 3">单位</div>
-            </template>
-          </el-table-column>
-          <el-table-column label="订单来源" align="center" width="140px">
-            <template slot-scope="{ row }">
-              <div v-if="row.orderSource == 1">前台</div>
-              <div v-if="row.orderSource == 2">销售推荐</div>
-              <div v-if="row.orderSource == 3">渠道订单</div>
-              <div v-if="row.orderSource == 10">其他</div>
-            </template>
-          </el-table-column>
-          <el-table-column label="会议状态" show-overflow-tooltip>
-            <template slot-scope="{ row }">
-              <div v-if="row.state == 1">待确认(预定中)</div>
-              <div v-if="row.state == 2">已确认预定订单</div>
-              <div v-if="row.state == 3">拒单</div>
-              <div v-if="row.state == 4">NOSHOW</div>
-              <div v-if="row.state == 5">未入住</div>
-              <div v-if="row.state == 6">已入住</div>
-              <div v-if="row.state == 7">离店</div>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" width="140">
-            <template slot-scope="{ row }">
-              <el-button type="text" @click="goDetail(row)" size="mini"
-                >详情</el-button
-              >
-              <el-button
-                type="text"
-                v-if="row.state == 6"
-                @click="meetClick(row)"
-                size="mini"
-                >会议登记</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-        <div style="margin-top: 10px"></div>
-        <!--分页 -->
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="searchForm.pageIndex"
-          :page-size="searchForm.pageSize"
-          layout="total, prev, pager, next, jumper"
-          :total="listTotal"
-        ></el-pagination>
+          <el-button type="primary" class="white" @click="initForm"
+            >重置</el-button
+>>>>>>> Stashed changes
+          >
+        </el-form-item>
+      </el-form>
+      <!--表格数据 -->
+      <el-table
+        ref="multipleTable"
+        v-loading="loading"
+        :data="tableData"
+        height="100%"
+        header-row-class-name="default"
+        size="small"
+      >
+        <el-table-column
+          prop="name"
+          label="名称"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="enterName"
+          label="单位"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="meetingName"
+          label="会议名称"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          label="会议开始-会议结束"
+          show-overflow-tooltip
+          width="150px"
+        >
+          <template slot-scope="{ row }">
+            <div>
+              <span style="color: #126eff">开</span>
+              {{ row.checkinTime }}
+            </div>
+            <div>
+              <span style="color: #d32b2b">结</span>
+              {{ row.checkoutTime }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="房间号" width="120px"></el-table-column>
+        <el-table-column label="会议厅" show-overflow-tooltip></el-table-column>
+        <el-table-column label="客源类别" align="center" width="100px">
+          <template slot-scope="{ row }">
+            <div v-if="row.guestType == 1">散客</div>
+            <div v-if="row.guestType == 2">会员</div>
+            <div v-if="row.guestType == 3">单位</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="订单来源" align="center" width="140px">
+          <template slot-scope="{ row }">
+            <div v-if="row.orderSource == 1">前台</div>
+            <div v-if="row.orderSource == 2">销售推荐</div>
+            <div v-if="row.orderSource == 3">渠道订单</div>
+            <div v-if="row.orderSource == 10">其他</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="会议状态" show-overflow-tooltip>
+          <template slot-scope="{ row }">
+            <div v-if="row.state == 1">待确认(预定中)</div>
+            <div v-if="row.state == 2">已确认预定订单</div>
+            <div v-if="row.state == 3">拒单</div>
+            <div v-if="row.state == 4">NOSHOW</div>
+            <div v-if="row.state == 5">未入住</div>
+            <div v-if="row.state == 6">已入住</div>
+            <div v-if="row.state == 7">离店</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="140">
+          <template slot-scope="{ row }">
+            <el-button type="text" @click="goDetail(row)" size="mini"
+              >详情</el-button
+            >
+            <el-button
+              type="text"
+              v-if="row.state == 6"
+              @click="meetClick(row)"
+              size="mini"
+              >会议登记</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <div style="margin-top: 10px"></div>
+      <!--分页 -->
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="searchForm.pageIndex"
+        :page-size="searchForm.pageSize"
+        layout="total, prev, pager, next, jumper"
+        :total="listTotal"
+      ></el-pagination>
       <!-- 会议签到dialog -->
       <el-dialog
         top="0"
@@ -269,7 +392,12 @@
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align: right">
           <el-button class="white" @click="dialogMeet_cancle">取消</el-button>
-          <el-button type="primary" class="submit" @click="dialogMeet_sure('addCompanyForm')">确认</el-button>
+          <el-button
+            type="primary"
+            class="submit"
+            @click="dialogMeet_sure('addCompanyForm')"
+            >确认</el-button
+          >
         </div>
       </el-dialog>
     </div>

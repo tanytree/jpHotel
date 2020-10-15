@@ -78,13 +78,19 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
-          <el-button type="primary" class="submit" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList"
+            >查询</el-button
+          >
+          <el-button type="primary" class="submit" @click="initForm"
+            >重置</el-button
+          >
         </el-form-item>
         <el-row>
           <el-form-item>
             <el-button plain>读会员卡</el-button>
-            <el-button type="primary" class="submit" @click="handleAdd">新增会员</el-button>
+            <el-button type="primary" class="submit" @click="handleAdd"
+              >新增会员</el-button
+            >
           </el-form-item>
         </el-row>
       </el-form>
