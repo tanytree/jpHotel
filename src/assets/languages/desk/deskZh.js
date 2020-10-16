@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-15 19:37:25
+ * @LastEditTime: 2020-10-16 10:13:16
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 
@@ -149,23 +149,30 @@ module.exports = {
     serve_: '',
     serve_: '',
     serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
-    serve_: '',
+    //book(预定管理)
+    book_meetTime: '会议时间',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
+    book_: '',
 
 }

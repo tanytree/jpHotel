@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-10-15 10:27:36
+ * @LastEditTime: 2020-10-16 10:43:25
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -12,26 +12,26 @@
     <div class="booking flex_column" style="background: #fff">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item label="会议时间:">
+        <el-form-item :label="$t('desk.book_meetTime' + ':')">
           <el-radio-group v-model="searchForm.timeType">
-            <el-radio-button label style="margin-right: 10px"
-              >不限</el-radio-button
-            >
-            <el-radio-button label="1" style="margin-right: 10px"
-              >当天</el-radio-button
-            >
-            <el-radio-button label="8" style="margin-right: 10px"
-              >明天</el-radio-button
-            >
-            <el-radio-button label="9" style="margin-right: 10px"
-              >后天</el-radio-button
-            >
-            <el-radio-button label="7" style="margin-right: 10px"
-              >近7天</el-radio-button
-            >
-            <el-radio-button label="defined" style="margin-right: 10px"
-              >自定义</el-radio-button
-            >
+            <el-radio-button label style="margin-right: 10px">{{
+              $t("desk.home_noLimit")
+            }}</el-radio-button>
+            <el-radio-button label="1" style="margin-right: 10px">{{
+              $t("desk.book_inTheDay")
+            }}</el-radio-button>
+            <el-radio-button label="8" style="margin-right: 10px">{{
+              $t("desk.book_tomorrow")
+            }}</el-radio-button>
+            <el-radio-button label="9" style="margin-right: 10px">{{
+              $t("desk.book_afterTomorrow")
+            }}</el-radio-button>
+            <el-radio-button label="7" style="margin-right: 10px">{{
+              $t("desk.book_week")
+            }}</el-radio-button>
+            <el-radio-button label="defined" style="margin-right: 10px">{{
+              $t("desk.book_theCustom")
+            }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item v-if="searchForm.timeType == 'defined'">
@@ -40,15 +40,15 @@
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
-          <span style="margin: 0 5px">至</span>
+          <span style="margin: 0 5px"> 至 </span>
           <el-date-picker
             v-model="searchForm.cendTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="登记日期:">
@@ -57,7 +57,7 @@
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 200px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
           <span style="margin: 0 5px">-</span>
           <el-date-picker
@@ -65,7 +65,7 @@
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 200px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="订单来源:">

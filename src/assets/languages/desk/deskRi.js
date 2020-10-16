@@ -120,6 +120,8 @@ module.exports = {
     serve_nextMonth: '未翻译词条',
     serve_nextYear: '未翻译词条',
     serve_nowYear: '未翻译词条',
+    //book(预定管理)
+    book_meetTime: '会場予約時間',
 
 
 
