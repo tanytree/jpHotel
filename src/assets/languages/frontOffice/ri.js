@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-18 13:44:40
- * @FilePath: /jiudian/src/assets/languages/frontOffice/ri.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-16 15:08:47
+ * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
     //发展途径
@@ -37,6 +37,35 @@ module.exports = {
         "12": '房费',
         "13": '挂账',
         "100": '其他'
-    }
+    },
+    //订单类型
+    orderType: {
+        "0": '全部',
+        "1": '滞在',
+        "2": '出発予定',
+        "3": '以前/履歴',
+        "4": '売掛',
+        "5": 'チェックアウト後精算'
+    },
+    leaveDate: {
+        "0": '全部',
+        "1": '今日',
+        "2": '昨日',
+        "3": '明日',
+        "4": '三日後',
+        // "5": '近三天',
+        // "6": '近七天',
+        // "7": '上月',
+        // "8": '本月',
+        // "9": '下月',
+        "10": '期間選択'
+    },
+    //入住方式
+    checkInRoomType: {
+        "0": '全部',
+        "1": '一般',
+        "2": '時間貸し部屋',
+        "3": '深夜部屋'
+    },
 }
 

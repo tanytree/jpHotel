@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-10-16 10:43:25
+ * @LastEditTime: 2020-10-16 13:27:11
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -12,7 +12,7 @@
     <div class="booking flex_column" style="background: #fff">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item :label="$t('desk.book_meetTime' + ':')">
+        <el-form-item :label="$t('desk.book_meetTime') + ':'">
           <el-radio-group v-model="searchForm.timeType">
             <el-radio-button label style="margin-right: 10px">{{
               $t("desk.home_noLimit")
@@ -42,7 +42,7 @@
             style="width: 140px"
             :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
-          <span style="margin: 0 5px"> 至 </span>
+          <span style="margin: 0 5px"> {{ $t("desk.serve_to") }} </span>
           <el-date-picker
             v-model="searchForm.cendTime"
             value-format="yyyy-MM-dd"
@@ -51,7 +51,7 @@
             :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="登记日期:">
+        <el-form-item :label="$t('desk.book_dateRegistration') + ':'">
           <el-date-picker
             v-model="searchForm.startTime"
             value-format="yyyy-MM-dd"
@@ -68,9 +68,9 @@
             :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="订单来源:">
+        <el-form-item :label="$t('desk.book_orderSoutce') + ':'">
           <el-select v-model="searchForm.orderSource" class="width150">
-            <el-option value label="全部"></el-option>
+            <el-option value :label="$t('desk.home_all')"></el-option>
             <el-option
               :value="key"
               v-for="(item, key, index) of $t('commons.orderSource')"
@@ -79,9 +79,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="客源类别:">
+        <el-form-item :label="$t('desk.home_customersCategory') + ':'">
           <el-select v-model="searchForm.guestType" class="width150">
-            <el-option value label="全部"></el-option>
+            <el-option value :label="$t('desk.home_all')"></el-option>
             <el-option
               :value="key"
               v-for="(item, key, index) of $t('commons.guestType')"
@@ -90,22 +90,22 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="预订人:">
+        <el-form-item :label="$t('desk.home_bookPeople') + ':'">
           <el-input v-model="searchForm.name" class="width200"></el-input>
         </el-form-item>
-        <el-form-item label="房间号:">
+        <el-form-item :label="$t('desk.home_bookPeople') + ':'">
           <el-input v-model="searchForm.houseNum" class="width200"></el-input>
         </el-form-item>
-        <el-form-item label="订单号:">
+        <el-form-item :label="$t('desk.book_orderNum') + ':'">
           <el-input v-model="searchForm.orderNum" class="width200"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList"
-            >查询</el-button
-          >
-          <el-button type="primary" class="white" @click="initForm"
-            >重置</el-button
-          >
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="white" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -119,74 +119,93 @@
       >
         <el-table-column
           prop="name"
-          label="名称"
+          :label="$t('desk.book_name')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="enterName"
-          label="单位"
+          :label="$t('desk.book_unit')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="meetingName"
-          label="会议名称"
+          :label="$t('desk.book_meetName')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          label="会议开始-会议结束"
+          :label="$t('desk.book_MeetstartAend')"
           show-overflow-tooltip
           width="150px"
         >
           <template slot-scope="{ row }">
             <div>
-              <span style="color: #126eff">开</span>
+              <span style="color: #126eff">{{ $t("desk.serve_open") }}</span>
               {{ row.checkinTime }}
             </div>
             <div>
-              <span style="color: #d32b2b">结</span>
+              <span style="color: #d32b2b">{{ $t("desk.serve_tie") }}</span>
               {{ row.checkoutTime }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="房间号" width="120px"></el-table-column>
-        <el-table-column label="会议厅" show-overflow-tooltip></el-table-column>
-        <el-table-column label="客源类别" align="center" width="100px">
+        <el-table-column
+          :label="$t('desk.home_roomNum')"
+          width="120px"
+        ></el-table-column>
+        <el-table-column
+          :label="$t('desk.book_chamber')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :label="$t('desk.home_customersCategory')"
+          align="center"
+          width="100px"
+        >
           <template slot-scope="{ row }">
-            <div v-if="row.guestType == 1">散客</div>
-            <div v-if="row.guestType == 2">会员</div>
-            <div v-if="row.guestType == 3">单位</div>
+            <div v-if="row.guestType == 1">{{ $t("desk.book_traveler") }}</div>
+            <div v-if="row.guestType == 2">{{ $t("desk.book_member") }}</div>
+            <div v-if="row.guestType == 3">{{ $t("desk.book_unit") }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="订单来源" align="center" width="140px">
+        <el-table-column
+          :label="$t('desk.book_orderSoutce')"
+          align="center"
+          width="140px"
+        >
           <template slot-scope="{ row }">
-            <div v-if="row.orderSource == 1">前台</div>
-            <div v-if="row.orderSource == 2">销售推荐</div>
-            <div v-if="row.orderSource == 3">渠道订单</div>
-            <div v-if="row.orderSource == 10">其他</div>
+            <div v-if="row.orderSource == 1">{{ $t("desk.book_desk") }}</div>
+            <div v-if="row.orderSource == 2">{{ $t("desk.book_saleTo") }}</div>
+            <div v-if="row.orderSource == 3">
+              {{ $t("desk.book_channelOrder") }}
+            </div>
+            <div v-if="row.orderSource == 10">{{ $t("desk.book_other") }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="会议状态" show-overflow-tooltip>
+        <el-table-column
+          :label="$t('desk.book_meetState')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
-            <div v-if="row.state == 1">待确认(预定中)</div>
-            <div v-if="row.state == 2">已确认预定订单</div>
-            <div v-if="row.state == 3">拒单</div>
+            <div v-if="row.state == 1">{{ $t("desk.book_waiteSure") }}</div>
+            <div v-if="row.state == 2">{{ $t("desk.book_sureBook") }}</div>
+            <div v-if="row.state == 3">{{ $t("desk.book_reject") }}</div>
             <div v-if="row.state == 4">NOSHOW</div>
-            <div v-if="row.state == 5">未入住</div>
-            <div v-if="row.state == 6">已入住</div>
-            <div v-if="row.state == 7">离店</div>
+            <div v-if="row.state == 5">{{ $t("desk.book_notCheckin") }}</div>
+            <div v-if="row.state == 6">{{ $t("desk.book_checkin") }}</div>
+            <div v-if="row.state == 7">{{ $t("desk.book_leaveStore") }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="140">
+        <el-table-column :label="$t('commons.operating')" width="140">
           <template slot-scope="{ row }">
-            <el-button type="text" @click="goDetail(row)" size="mini"
-              >详情</el-button
-            >
+            <el-button type="text" @click="goDetail(row)" size="mini">{{
+              $t("commons.detail")
+            }}</el-button>
             <el-button
               type="text"
               v-if="row.state == 6"
               @click="meetClick(row)"
               size="mini"
-              >会议登记</el-button
+              >{{ $t("desk.book_meetConference") }}</el-button
             >
           </template>
         </el-table-column>

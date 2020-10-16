@@ -11,24 +11,35 @@
         v-model="searchForm"
         label-width="80px"
       >
-        <el-form-item label="房间号:">
+        <el-form-item :label="$t('desk.home_roomNum') + ':'">
           <el-input v-model="searchForm.roomNum" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="客人姓名:">
+        <el-form-item :label="$t('desk.order_guestName') + ':'">
           <el-input v-model="searchForm.cname" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="商品类别:">
+        <el-form-item :label="$t('desk.order_goodsType') + ':'">
           <el-select v-model="searchForm.damageTypeId" class="width150">
-            <el-option label="全部" value>全部</el-option>
-            <el-option v-for="item in goodsKind" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            <el-option :label="$t('desk.home_all')" value>{{
+              $t("desk.home_all")
+            }}</el-option>
+            <el-option
+              v-for="item in goodsKind"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="商品名称:">
+        <el-form-item :label="$t('desk.order_goodsName') + ':'">
           <el-input v-model="searchForm.damageName" class="width150"></el-input>
         </el-form-item>
         <el-form-item class="form-inline-flex">
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -40,18 +51,49 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="checkInPerson.houseNum" label="房间号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="checkInPerson.checkIn.name" label="客人姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="damageTypeName" label="商品类别" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="damageName" label="商品名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="damageCount" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="damageInfo.damagePrice" label="单价" show-overflow-tooltip></el-table-column>
-        <el-table-column label="总价" show-overflow-tooltip>
-          <template slot-scope="{row}">
-            <div>{{allPrice(row)}}</div>
+        <el-table-column
+          prop="checkInPerson.houseNum"
+          :label="$t('desk.home_roomNum')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="checkInPerson.checkIn.name"
+          :label="$t('desk.order_guestName')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="damageTypeName"
+          :label="$t('desk.order_goodsType')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="damageName"
+          :label="$t('desk.order_goodsName')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="damageCount"
+          :label="$t('desk.order_number')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="damageInfo.damagePrice"
+          :label="$t('desk.order_unitPrice')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :label="$t('desk.order_totalPrice')"
+          show-overflow-tooltip
+        >
+          <template slot-scope="{ row }">
+            <div>{{ allPrice(row) }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="payTime" label="赔偿日期" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="payTime"
+          :label="$t('desk.order_compensationDate')"
+          show-overflow-tooltip
+        ></el-table-column>
       </el-table>
       <!--分页 -->
       <div class="block">

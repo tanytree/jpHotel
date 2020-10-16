@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-12 17:00:32
+ * @LastEditTime: 2020-10-16 16:12:30
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -9,10 +9,10 @@
     <div class="el-card" style="height: auto">
       <div class="el-card__header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/orders?type=order' }"
-            >订单管理</el-breadcrumb-item
-          >
-          <el-breadcrumb-item>详情</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/orders?type=order' }">{{
+            $t("desk.order_orderManage")
+          }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
@@ -24,14 +24,7 @@
             <div class="customerInfo">
               <div class="wrap">
                 <div class="hd">
-<!--                  <el-button-->
-<!--                    type="primary"-->
-<!--                    size="mini"-->
-<!--                    style="float: right"-->
-<!--                    v-if="detailData.checkIn.guestType == 1"-->
-<!--                    >办理会员-->
-<!--                  </el-button>-->
-                  <h3>客人信息</h3>
+                  <h3>{{ $t("desk.order_guestInfo") }}</h3>
                 </div>
                 <div class="bd" v-if="detailData.checkIn">
                   <div class="innerWrap">
@@ -46,16 +39,17 @@
                       >
                         {{ F_checkinState(detailData.checkIn.state) }}
                       </el-button>
-                      客人姓名：{{ detailData.checkIn.name }}
+                      {{ $t("desk.order_guestName") + ":"
+                      }}{{ detailData.checkIn.name }}
                     </el-row>
                     <el-row class="row">
-                      手机号：{{ detailData.checkIn.mobile }}
+                      {{ $t("desk.home_phoneNum") + ":"
+                      }}{{ detailData.checkIn.mobile }}
                     </el-row>
                     <el-row class="row">
                       <el-col :span="12" class="cell">
-                        客源类型：{{
-                          F_guestType(detailData.checkIn.guestType)
-                        }}
+                        {{ $t("desk.order_sourceType") + ":"
+                        }}{{ F_guestType(detailData.checkIn.guestType) }}
                       </el-col>
                       <el-col
                         :span="12"
@@ -79,16 +73,6 @@
                       >
                         积分：
                       </el-col>
-<!--                      <el-col :span="12" class="cell">-->
-<!--                        同来宾客：{{-->
-<!--                          detailData.checkIn.personTotal-->
-<!--                            ? detailData.checkIn.personTotal - 1-->
-<!--                            : ""-->
-<!--                        }}-->
-<!--                      </el-col>-->
-                      <!--                                        <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
-                      <!--                                            车牌号：-->
-                      <!--                                        </el-col>-->
                     </el-row>
                   </div>
                 </div>
@@ -148,7 +132,10 @@
                 <div class="el-card detailTab">
                   <div class="el-card__header" style="padding: 0 20px">
                     <el-tabs v-model="activeName">
-                      <el-tab-pane label="账务明细" name="first">
+                      <el-tab-pane
+                        :label="$t('desk.order_billingDetails')"
+                        name="first"
+                      >
                         <c2
                           v-if="isReset"
                           :detailData="detailData"
@@ -156,12 +143,15 @@
                           @getOrderDetail="getDetail"
                         ></c2>
                       </el-tab-pane>
-                      <el-tab-pane label="订单信息" name="second">
+                      <el-tab-pane
+                        :label="$t('desk.order_orderInfo')"
+                        name="second"
+                      >
                         <div class="thisOrderInfo">
                           <div class="wrap">
                             <el-row class="row">
                               <h3>
-                                基本信息
+                                {{ $t("desk.serve_basicInfo") }}
                                 <el-button
                                   style="
                                     vertical-align: middle;
@@ -172,35 +162,38 @@
                                   class="vm"
                                   @click="yokeplateHandle"
                                   v-if="detailData.inRoomList.length"
-                                  >联房
+                                >
+                                  {{ $t("desk.order_alRoom") }}
                                 </el-button>
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">
-                                  入住时间：{{ detailData.checkIn.checkinTime }}
+                                  {{ $t("desk.order_checkinDate") + ":"
+                                  }}{{ detailData.checkIn.checkinTime }}
                                 </el-col>
                                 <el-col :span="6">
-                                  预离时间：{{
-                                    detailData.checkIn.checkoutTime
-                                  }}
+                                  {{ $t("desk.order_departureTime") + ":"
+                                  }}{{ detailData.checkIn.checkoutTime }}
                                 </el-col>
                               </el-row>
                               <el-row class="cell">
                                 <el-col :span="6"
-                                  >备注：{{ detailData.checkIn.remark }}
+                                  >{{ $t("desk.home_note") + ":"
+                                  }}{{ detailData.checkIn.remark }}
                                 </el-col>
                               </el-row>
                             </el-row>
                             <el-divider></el-divider>
                             <el-row class="row">
-                              <h3>客房信息</h3>
+                              <h3>{{ $t("desk.order_roomInfo") }}</h3>
                               <el-row class="cell">
                                 <el-col
                                   :span="6"
                                   v-for="(item, index) of detailData.inRoomList"
                                   :key="index"
                                 >
-                                  已入住：{{ item.roomTypeName }}（{{
+                                  {{ $t("desk.book_checkin") + ":"
+                                  }}{{ item.roomTypeName }}（{{
                                     item.houseNum
                                   }}）
                                 </el-col>
@@ -208,19 +201,21 @@
                             </el-row>
                             <el-divider></el-divider>
                             <el-row class="row">
-                              <h3>销售信息</h3>
+                              <h3>{{ $t("desk.order_saleInfo") }}</h3>
                               <el-row class="cell">
                                 <el-col :span="6">
-                                  销售员：{{
-                                    F_salesId(detailData.checkIn.salesId)
-                                  }}
+                                  {{ $t("desk.order_salesman") + ":"
+                                  }}{{ F_salesId(detailData.checkIn.salesId) }}
                                 </el-col>
                               </el-row>
                             </el-row>
                           </div>
                         </div>
                       </el-tab-pane>
-                      <el-tab-pane label="客人信息" name="third">
+                      <el-tab-pane
+                        :label="$t('desk.order_guestInfo')"
+                        name="third"
+                      >
                         <customer />
                       </el-tab-pane>
                     </el-tabs>

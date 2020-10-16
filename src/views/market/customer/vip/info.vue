@@ -5,9 +5,9 @@
     <div class="booking" v-if="showPageType == 'main'">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item label="开卡门店">
+        <el-form-item :label="$t('desk.customer_openCarmen')">
           <el-select v-model="searchForm.storesNum" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="item in storeList"
               :key="item.storesNum"
@@ -16,9 +16,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="发展途径">
+        <el-form-item :label="$t('desk.customer_developmentWay')">
           <el-select v-model="searchForm.getWay" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="(label, value) in $t('frontOffice.getWay')"
               :label="label"
@@ -27,9 +27,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="会员类型">
+        <el-form-item :label="$t('desk.customer_memType')">
           <el-select v-model="searchForm.memberTypeId" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="item in smembertypeList"
               :key="item.id"
@@ -43,7 +43,7 @@
         </el-form-item>
         <el-form-item label="是否注销">
           <el-select v-model="searchForm.status" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option label="正常" value="1"></el-option>
             <el-option label="已注销" value="2"></el-option>
           </el-select>
@@ -57,7 +57,7 @@
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="searchForm.state" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="(label, value) in $t('frontOffice.state')"
               :label="label"
@@ -68,7 +68,7 @@
         </el-form-item>
         <el-form-item label="黑名单">
           <el-select v-model="searchForm.isBlacklist" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="(label, value) in $t('frontOffice.isBlacklist')"
               :label="label"
@@ -110,7 +110,7 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column label="会员类型" width="140">
+        <el-table-column :label="$t('desk.customer_memType')" width="140">
           <template slot-scope="{ row }">{{
             F_memberTypeId(row.memberTypeId)
           }}</template>
@@ -130,7 +130,10 @@
             row.state | F_cardState
           }}</template>
         </el-table-column>
-        <el-table-column prop="storesNum" label="开卡门店">
+        <el-table-column
+          prop="storesNum"
+          :label="$t('desk.customer_openCarmen')"
+        >
           <template slot-scope="{ row }">{{
             F_storeName(row.storesNum)
           }}</template>
@@ -138,7 +141,7 @@
         <el-table-column
           prop="getWay"
           align="center"
-          label="发展途径"
+          :label="$t('desk.customer_developmentWay')"
           width="100"
         >
           <template slot-scope="{ row }">{{
@@ -245,7 +248,10 @@
       <div class="dialogDiv" v-if="dialogInfo">
         <span>卡号：{{ dialogInfo.memberCard }}</span>
         <span>姓名：{{ dialogInfo.name }}</span>
-        <span>会员类型：{{ F_memberTypeId(dialogInfo.memberTypeId) }}</span>
+        <span
+          >{{ $t("desk.customer_memType") + ":"
+          }}{{ F_memberTypeId(dialogInfo.memberTypeId) }}</span
+        >
       </div>
       <el-form :model="cardForm" ref="cardForm">
         <el-form-item label="补收类型" class prop="memberTypeId">

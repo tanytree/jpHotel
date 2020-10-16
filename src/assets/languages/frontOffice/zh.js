@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-18 13:44:48
- * @FilePath: /jiudian/src/assets/languages/frontOffice/zh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-16 15:04:14
+ * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
     //发展途径
@@ -61,12 +61,12 @@ module.exports = {
         "2": '昨天',
         "3": '明天',
         "4": '后三天',
-        "5": '近三天',
-        "6": '近七天',
-        "7": '上月',
-        "8": '本月',
-        "9": '下月',
-        "10":'自定义'
+        // "5": '近三天',
+        // "6": '近七天',
+        // "7": '上月',
+        // "8": '本月',
+        // "9": '下月',
+        "10": '自定义'
     },
 }
 

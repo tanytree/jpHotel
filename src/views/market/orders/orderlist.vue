@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-12 20:15:09
+ * @LastEditTime: 2020-10-16 15:51:16
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -11,140 +11,144 @@
     <div class="booking flex_column">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="100px">
-          <el-form-item label="订单类型">
-            <div class="tagList">
-              <template
-                v-for="(item, key, index) of $t('frontOffice.orderType')"
-              >
-                <el-tag
-                  class="tag"
-                  :type="searchForm.orderType == key ? '' : 'info'"
-                  style="cursor: pointer"
-                  :key="index"
-                  @click="orderTypeClick(key)"
-                  >{{ item }}
-                </el-tag>
-              </template>
-            </div>
-          </el-form-item>
-          <el-form-item label="预离日期">
-            <div class="tagList" style="display: inline-block">
-              <template
-                v-for="(item, key, index) of $t('frontOffice.leaveDate')"
-              >
-                <el-tag
-                  style="cursor: pointer"
-                  class="tag"
-                  :type="searchForm.leaveDate == key ? '' : 'info'"
-                  :key="index"
-                  @click="leaveDateClick(key)"
-                  >{{ item }}
-                </el-tag>
-              </template>
-            </div>
-            <el-form-item label v-if="searchForm.leaveDate == 10">
-              <el-date-picker
-                v-model="searchForm.outStartTime"
-                value-format="yyyy-MM-dd"
-                type="date"
-                style="width: 140px"
-                placeholder="选择日期"
-              ></el-date-picker>
-              <span style="margin: 0 5px">-</span>
-              <el-date-picker
-                v-model="searchForm.outEndTime"
-                value-format="yyyy-MM-dd"
-                type="date"
-                style="width: 140px"
-                placeholder="选择日期"
-              ></el-date-picker>
-            </el-form-item>
-          </el-form-item>
-          <el-form-item label="入住方式">
-            <div class="tagList" style="display: inline-block">
-              <template
-                v-for="(item, key, index) of $t('frontOffice.checkInRoomType')"
-              >
-                <el-tag
-                  style="cursor: pointer"
-                  class="tag"
-                  :type="searchForm.checkInRoomType == key ? '' : 'info'"
-                  :key="index"
-                  @click="checkInRoomTypeClick(key)"
-                  >{{ item }}
-                </el-tag>
-              </template>
-            </div>
-            <el-form-item label="入住日期">
-              <el-date-picker
-                v-model="searchForm.inStartTime"
-                value-format="yyyy-MM-dd"
-                type="date"
-                style="width: 140px"
-                placeholder="选择日期"
-              ></el-date-picker>
-              <span style="margin: 0 5px">-</span>
-              <el-date-picker
-                v-model="searchForm.inEndTime"
-                value-format="yyyy-MM-dd"
-                type="date"
-                style="width: 140px"
-                placeholder="选择日期"
-              ></el-date-picker>
-            </el-form-item>
-          </el-form-item>
-          <el-form-item label="订单来源">
-            <el-select v-model="searchForm.orderSource" class="width150">
-              <el-option
-                :value="key"
-                v-for="(item, key, index) of $t('commons.orderSource')"
-                :label="item"
+        <el-form-item :label="$t('desk.order_orderType')">
+          <div class="tagList">
+            <template v-for="(item, key, index) of $t('frontOffice.orderType')">
+              <el-tag
+                class="tag"
+                :type="searchForm.orderType == key ? '' : 'info'"
+                style="cursor: pointer"
                 :key="index"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="客源类别">
-            <el-select v-model="searchForm.guestType" class="width150">
-              <el-option
-                :value="key"
-                v-for="(item, key, index) of $t('commons.guestType')"
-                :label="item"
+                @click="orderTypeClick(key)"
+                >{{ item }}
+              </el-tag>
+            </template>
+          </div>
+        </el-form-item>
+        <el-form-item :label="$t('desk.order_departureDate')">
+          <div class="tagList" style="display: inline-block">
+            <template v-for="(item, key, index) of $t('frontOffice.leaveDate')">
+              <el-tag
+                style="cursor: pointer"
+                class="tag"
+                :type="searchForm.leaveDate == key ? '' : 'info'"
                 :key="index"
-              ></el-option>
-            </el-select>
+                @click="leaveDateClick(key)"
+                >{{ item }}
+              </el-tag>
+            </template>
+          </div>
+          <el-form-item label v-if="searchForm.leaveDate == 10">
+            <el-date-picker
+              v-model="searchForm.outStartTime"
+              value-format="yyyy-MM-dd"
+              type="date"
+              style="width: 140px"
+              :placeholder="$t('desk.serve_chooseDate')"
+            ></el-date-picker>
+            <span style="margin: 0 5px">-</span>
+            <el-date-picker
+              v-model="searchForm.outEndTime"
+              value-format="yyyy-MM-dd"
+              type="date"
+              style="width: 140px"
+              :placeholder="$t('desk.serve_chooseDate')"
+            ></el-date-picker>
           </el-form-item>
-          <el-form-item label="房型">
-            <el-select v-model="searchForm.roomTypeId" class="width150">
-              <el-option label="全部" value>全部</el-option>
-              <el-option
-                :value="item.id"
-                v-for="(item, index) of roomTypeList"
-                :label="item.houseName"
+        </el-form-item>
+        <el-form-item :label="$t('desk.order_checkinWay')">
+          <div class="tagList" style="display: inline-block">
+            <template
+              v-for="(item, key, index) of $t('frontOffice.checkInRoomType')"
+            >
+              <el-tag
+                style="cursor: pointer"
+                class="tag"
+                :type="searchForm.checkInRoomType == key ? '' : 'info'"
                 :key="index"
-              ></el-option>
-            </el-select>
+                @click="checkInRoomTypeClick(key)"
+                >{{ item }}
+              </el-tag>
+            </template>
+          </div>
+          <el-form-item :label="$t('desk.order_checkinTime')">
+            <el-date-picker
+              v-model="searchForm.inStartTime"
+              value-format="yyyy-MM-dd"
+              type="date"
+              style="width: 140px"
+              :placeholder="$t('desk.serve_chooseDate')"
+            ></el-date-picker>
+            <span style="margin: 0 5px">-</span>
+            <el-date-picker
+              v-model="searchForm.inEndTime"
+              value-format="yyyy-MM-dd"
+              type="date"
+              style="width: 140px"
+              :placeholder="$t('desk.serve_chooseDate')"
+            ></el-date-picker>
           </el-form-item>
-          <el-form-item label="外部订单">
-            <el-input
-              v-model="searchForm.thirdOrdernum"
-              class="width150"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="姓名">
-            <el-input v-model="searchForm.name" class="width150"></el-input>
-          </el-form-item>
-          <el-form-item label="房间号">
-            <el-input v-model="searchForm.roomNum" class="width150"></el-input>
-          </el-form-item>
-          <el-form-item label="订单号">
-            <el-input v-model="searchForm.orderNum" class="width150"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="getDataList">查询</el-button>
-            <el-button type="primary" @click="initForm">重置</el-button>
-            <el-button type="primary" @click="initForm">导出</el-button>
-          </el-form-item>
-          <!-- <el-form-item style="float: right">
+        </el-form-item>
+        <el-form-item :label="$t('desk.book_orderSoutce')">
+          <el-select v-model="searchForm.orderSource" class="width150">
+            <el-option
+              :value="key"
+              v-for="(item, key, index) of $t('commons.orderSource')"
+              :label="item"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('desk.home_customersCategory')">
+          <el-select v-model="searchForm.guestType" class="width150">
+            <el-option
+              :value="key"
+              v-for="(item, key, index) of $t('commons.guestType')"
+              :label="item"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('desk.home_roomType')">
+          <el-select v-model="searchForm.roomTypeId" class="width150">
+            <el-option :label="$t('desk.home_all')" value>{{
+              $t("desk.home_all")
+            }}</el-option>
+            <el-option
+              :value="item.id"
+              v-for="(item, index) of roomTypeList"
+              :label="item.houseName"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('desk.order_outOrder')">
+          <el-input
+            v-model="searchForm.thirdOrdernum"
+            class="width150"
+          ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('desk.home_name')">
+          <el-input v-model="searchForm.name" class="width150"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('desk.home_roomNum')">
+          <el-input v-model="searchForm.roomNum" class="width150"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('desk.book_orderNum')">
+          <el-input v-model="searchForm.orderNum" class="width150"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
+          <el-button type="primary" @click="initForm">{{
+            $t("commons.exportBtn")
+          }}</el-button>
+        </el-form-item>
+        <!-- <el-form-item style="float: right">
             <el-button type="text" icon="el-icon-arrow-up">收起</el-button>
           </el-form-item> -->
       </el-form>
@@ -158,41 +162,49 @@
       >
         <el-table-column
           prop="name"
-          label="姓名"
+          :label="$t('desk.home_name')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="mobile" width="140px" label="手机号码"></el-table-column>
+        <el-table-column
+          prop="mobile"
+          width="140px"
+          :label="$t('desk.order_moblePhone')"
+        ></el-table-column>
         <el-table-column
           prop="checkinTime"
-          label="入住时间"
+          :label="$t('desk.order_checkinDate')"
           width="160"
         ></el-table-column>
         <el-table-column
           prop="checkoutTime"
-          label="预离时间"
+          :label="$t('desk.order_departureTime')"
           width="160"
         ></el-table-column>
         <el-table-column
           prop="hotelCheckInRoom.houseNum"
-          label="房间号"
+          :label="$t('desk.home_roomNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="hotelCheckInRoom.roomTypeName"
-          label="房型"
+          :label="$t('desk.home_roomType')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop label="客源类别" width="120">
+        <el-table-column
+          prop
+          :label="$t('desk.home_customersCategory')"
+          width="120"
+        >
           <template slot-scope="{ row }">{{
             F_guestType(row.guestType)
           }}</template>
         </el-table-column>
-        <el-table-column prop label="订单来源" width="120">
+        <el-table-column prop :label="$t('desk.book_orderSoutce')" width="120">
           <template slot-scope="{ row }">{{
             F_orderSource(row.orderSource)
           }}</template>
         </el-table-column>
-        <el-table-column prop label="在住状态" width="120">
+        <el-table-column prop :label="$t('desk.order_liveState')" width="120">
           <template slot-scope="{ row }" style="color: red">
             <span
               v-if="row.state == 3 || row.state == 4 || row.state == 5"
@@ -205,28 +217,33 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop label="结账状态" width="100">
+        <el-table-column prop :label="$t('desk.order_checkStatus')" width="100">
           <template slot-scope="{ row }">{{
             F_billType(row.billType)
           }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="240">
+        <el-table-column :label="$t('commons.operating')" width="240">
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="popClick(row, 'detail')" >详情</el-button  >
+            <el-button
+              type="text"
+              size="mini"
+              @click="popClick(row, 'detail')"
+              >{{ $t("commons.detail") }}</el-button
+            >
             <!--              这里未退房或者今日预离订单才可以操作结账-->
             <el-button
               type="text"
               size="mini"
               v-if="row.orderType == 1 || row.orderType == 2"
               @click="popClick(row, 'detail')"
-              >结账</el-button
-                >
-              <!--              @click="settleAccounts(row)"-->
-              <el-button
+              >{{ $t("desk.order_invoicing") }}</el-button
+            >
+            <!--              @click="settleAccounts(row)"-->
+            <el-button
               type="text"
               size="mini"
               @click="popClick(row, 'invoicing')"
-              >开发票</el-button
+              >{{ $t("desk.order_invoice") }}</el-button
             >
             <el-button
               type="text"
@@ -235,7 +252,7 @@
                 row.orderType == 3 || row.orderType == 4 || row.orderType == 5
               "
               @click="popClick(row, 'unCheckOut')"
-              >撤销退房</el-button
+              >{{ $t("desk.order_notCheckout") }}</el-button
             >
           </template>
         </el-table-column>
@@ -363,9 +380,7 @@ export default {
       loading: false,
       showEdit: false,
       showDetail: false,
-      searchForm: {
-
-      },
+      searchForm: {},
       listTotal: 0, //总条数
       multipleSelection: [], //多选
       tableData: [], //表格数据
@@ -392,6 +407,7 @@ export default {
     this.initForm();
     this.room_type_list();
   },
+
   methods: {
     initForm() {
       this.searchForm = {
@@ -455,10 +471,7 @@ export default {
         this.$refs.invoicing.init(item);
       }
     },
-    handelDetail(item) {},
-    orderTypeClick(key) {
-      this.searchForm.orderType = key ? key : "";
-    },
+
     checkInRoomTypeClick(key) {
       this.searchForm.checkInRoomType = key ? key : "";
     },
@@ -579,30 +592,6 @@ export default {
           this.searchForm.outStartTime = "";
           this.searchForm.outEndTime = "";
       }
-    },
-
-    /**编辑 */
-    editRowItem(row) {
-      // 加载组件
-      this.showEdit = true;
-      //   组件加载完成调用组件内initdata 方法
-      this.$nextTick(() => {
-        //   可能没有详情接口的直接传row显示
-        this.refs.editRef.initdata(row.id);
-      });
-    },
-    handelRowItem(row) {
-      // 加载组件
-      this.showDetail = true;
-      //   组件加载完成调用组件内initdata 方法
-      this.$nextTick(() => {
-        //   可能没有详情接口的直接传row显示
-        this.refs.detailRef.initdata(row.id);
-      });
-    },
-    /**多选 */
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
     },
     /**每页数 */
     handleSizeChange(val) {
