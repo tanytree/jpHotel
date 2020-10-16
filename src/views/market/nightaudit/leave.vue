@@ -63,6 +63,7 @@ import {
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
+    props: ['data'],
     computed: {
         ...mapState({
             token: state => state.user.token,
@@ -108,13 +109,14 @@ export default {
                 pageSize: 10, //页数
                 paging: true
             };
-            this.getDataList();
+            // this.getDataList();
+            debugger
+            this.listTotal = this.data.page.count;
+            this.tableData = this.data.roomPersonList;
         },
         /**获取表格数据 */
         getDataList() {
-            this.loading = true;
             this.$F.doRequest(this, '/pms/checkin/checkin_order_list', this.searchForm, (res) => {
-                this.loading = false
                 this.tableData = res.roomPersonList;
                 this.listTotal = res.page.count
             })

@@ -29,7 +29,6 @@
                 type="text"
                 v-model="openInvoiceForm.consumePrice"
                 autocomplete="off"
-                disabled
               ></el-input>
             </el-form-item>
           </el-col>
@@ -40,7 +39,6 @@
                 type="text"
                 v-model="openInvoiceForm.invoicePrice"
                 autocomplete="off"
-                disabled
               ></el-input>
             </el-form-item>
           </el-col>
@@ -121,6 +119,7 @@ export default {
         checkInId: "",
         consumePrice: 0,
         invoicePrice: 0,
+          roomNum: '-',
         companyName: "",
         projectName: "",
         prices: "",

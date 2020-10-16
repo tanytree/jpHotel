@@ -24,13 +24,13 @@
             <div class="customerInfo">
               <div class="wrap">
                 <div class="hd">
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    style="float: right"
-                    v-if="detailData.checkIn.guestType == 1"
-                    >办理会员
-                  </el-button>
+<!--                  <el-button-->
+<!--                    type="primary"-->
+<!--                    size="mini"-->
+<!--                    style="float: right"-->
+<!--                    v-if="detailData.checkIn.guestType == 1"-->
+<!--                    >办理会员-->
+<!--                  </el-button>-->
                   <h3>客人信息</h3>
                 </div>
                 <div class="bd" v-if="detailData.checkIn">
@@ -79,13 +79,13 @@
                       >
                         积分：
                       </el-col>
-                      <el-col :span="12" class="cell">
-                        同来宾客：{{
-                          detailData.checkIn.personTotal
-                            ? detailData.checkIn.personTotal - 1
-                            : ""
-                        }}
-                      </el-col>
+<!--                      <el-col :span="12" class="cell">-->
+<!--                        同来宾客：{{-->
+<!--                          detailData.checkIn.personTotal-->
+<!--                            ? detailData.checkIn.personTotal - 1-->
+<!--                            : ""-->
+<!--                        }}-->
+<!--                      </el-col>-->
                       <!--                                        <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
                       <!--                                            车牌号：-->
                       <!--                                        </el-col>-->

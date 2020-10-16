@@ -390,21 +390,7 @@ export default {
       depositShow: false,
       payTypeShow: false,
       searchForm: {
-        operCheckinType: "",
-        enterName: "",
-        houseNum: "",
-        thirdOrdernum: "",
-        orderNum: "",
-        mobile: "",
-        name: "",
-        orderSource: "",
-        checkinType: "",
-        checkinTime: "",
-        createTime: "",
-        state: "",
-        pageIndex: 1, //当前页
-        pageSize: 10, //页数
-        paging: true,
+
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -441,6 +427,7 @@ export default {
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
+          filterType: 1,
       };
       this.getDataList();
     },

@@ -15,23 +15,23 @@
         </div>
         <div class="row">
             <div class="grid-content">
-                <el-badge value="99" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('second')">应到未到订单</el-button>
+                <el-badge :value="totalObject.notyetCount" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notyet')">应到未到订单</el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
-                <el-badge value="99" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('third')">应离未离订单</el-button>
+                <el-badge :value="totalObject.notLivingCount" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notleaving')">应离未离订单</el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
-                <el-badge value="99" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('four')">走结订单</el-button>
+                <el-badge :value="totalObject.leaveCount" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('leave')">走结订单</el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
-                <el-badge value="99" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('five')">房价预审订单</el-button>
+                <el-badge :value="totalObject.verifyCount" class="item">
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('verify')">房价预审订单</el-button>
                 </el-badge>
             </div>
         </div>
@@ -63,6 +63,7 @@ import {
     mapActions
 } from "vuex";
 export default {
+    props: ['totalObject'],
     computed: {
         ...mapState({
             token: state => state.user.token,

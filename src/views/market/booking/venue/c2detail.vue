@@ -26,9 +26,9 @@
         <el-card>
           <div class="clearfix">
             <span style="font-weight: bold">客人信息</span>
-            <el-button size="mini" style="float: right" type="primary"
-              >办理会员</el-button
-            >
+<!--            <el-button size="mini" style="float: right" type="primary"-->
+<!--              >办理会员</el-button-->
+<!--            >-->
           </div>
           <div class="box_box">
             <div class="box_item">

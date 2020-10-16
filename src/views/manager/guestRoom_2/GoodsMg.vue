@@ -291,8 +291,7 @@
                 axios.post(this.$F.getUploadUrl() + ('/pms/hotelgoods/upload'), formData,
                     {
                         headers: {
-                            'Content-Type': 'multipart/form-data',
-                            "accessToken": sessionStorage.accessToken
+                            'Content-Type': 'multipart/form-data'
                         }
                     }
                 ).then(res => {

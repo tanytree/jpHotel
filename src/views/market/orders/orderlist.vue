@@ -364,14 +364,7 @@ export default {
       showEdit: false,
       showDetail: false,
       searchForm: {
-        orderType: "",
-        mobile: "",
-        idcard: "",
-        name: "",
-        searchType: 1,
-        pageIndex: 1, //当前页
-        pageSize: 10, //页数
-        paging: true,
+
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -408,7 +401,7 @@ export default {
         mobile: "",
         idcard: "",
         name: "",
-        searchType: 1,
+        searchType: 2,
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,

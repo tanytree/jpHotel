@@ -169,8 +169,8 @@
                                 <div class="row">
                                     <span class="allow">可订{{v.reserveTotal}}</span>
                                     <div>
-                                        <el-input size="mini" class="num" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
-                                        <del>{{v.todayPrice}}</del>
+                                        <el-input size="mini" class="num" v-model="v.discountPrice" v-if="getRoomsForm.changeType==1"></el-input>
+                                        <del>{{v.price }}</del>
                                     </div>
                                 </div>
                             </div>

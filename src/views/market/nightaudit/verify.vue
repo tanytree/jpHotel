@@ -81,14 +81,7 @@ import {
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
-    computed: {
-        ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
-        })
-    },
+    props: ['data'],
     data() {
         return {
             loading: false,
@@ -122,6 +115,7 @@ export default {
                 pageSize: 10, //页数
                 pageing: true
             };
+            // this.tableData = this.data.roomPersonList;
             this.getDataList();
         },
         /**获取表格数据 */
