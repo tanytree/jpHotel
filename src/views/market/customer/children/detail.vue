@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 11:45:51
+ * @LastEditTime: 2020-10-17 15:06:24
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -13,14 +13,16 @@
           <el-breadcrumb-item
             @click.native="goMemberManag()"
             style="font-weight: 700; cursor: pointer"
-            >会员管理</el-breadcrumb-item
+            >{{ $t("desk.customer_memManagement") }}</el-breadcrumb-item
           >
           <el-breadcrumb-item v-if="type != 'add'"
             >{{ detailForm.memberCard }}-{{ detailForm.name }}-{{
               F_memberTypeId(detailForm.memberTypeId)
             }}</el-breadcrumb-item
           >
-          <el-breadcrumb-item v-else>新增会员</el-breadcrumb-item>
+          <el-breadcrumb-item v-else>{{
+            $t("desk.customer_addMem")
+          }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="bodyInfo">
@@ -41,31 +43,33 @@
                       type="primary"
                       size="mini"
                       @click="setCardFormBtnClick(1)"
-                      >换卡</el-button
+                      >{{ $t("desk.customer_changeCard") }}</el-button
                     >
                     <el-button
                       type="primary"
                       size="mini"
                       @click="setCardFormBtnClick(2)"
-                      >修改类型</el-button
+                      >{{ $t("desk.customer_resetType") }}</el-button
                     >
                     <el-button
                       type="primary"
                       size="mini"
                       @click="setCardFormBtnClick(3)"
-                      >注销</el-button
+                      >{{ $t("desk.customer_cancellation") }}</el-button
                     >
                     <el-button
                       type="primary"
                       size="mini"
                       @click="setCardFormBtnClick(4)"
-                      >挂失补卡</el-button
+                      >{{ $t("desk.customer_reportLossCard") }}</el-button
                     >
                   </el-form-item>
                 </el-row>
                 <el-row v-if="type == 'add'">
                   <el-form-item label>
-                    <el-button type="primary" size="mini">读会员号</el-button>
+                    <el-button type="primary" size="mini">{{
+                      $t("desk.customer_readMemNum")
+                    }}</el-button>
                   </el-form-item>
                 </el-row>
                 <el-row
@@ -75,7 +79,7 @@
                 >
                   <div class="wrap">
                     <p>
-                      剩余积分：
+                      {{ $t("desk.customer_remainPoints") + ":" }}
                       <span class="text-blue">{{
                         detailForm.score ? detailForm.score : 0
                       }}</span>
@@ -85,14 +89,15 @@
                         class="text-blue"
                         style="cursor: pointer"
                         @click="toIntegralDetail"
-                        >明细</span
+                      >
+                        {{ $t("desk.customer_theDetail") }}</span
                       >&nbsp;&nbsp;&nbsp;&nbsp;
                       <span
                         style="cursor: pointer"
                         class="text-blue"
                         v-if="type == 'edit'"
                         @click="exchangeClick()"
-                        >积分兑换</span
+                        >{{ $t("desk.customer_pointsFor") }}</span
                       >
                     </p>
                   </div>
@@ -103,7 +108,10 @@
                   <el-row class="cell">
                     <template v-if="type == 'add'">
                       <el-col :span="8" class="col">
-                        <el-form-item label="会员类型" prop="memberTypeId">
+                        <el-form-item
+                          :label="$t('desk.customer_memType')"
+                          prop="memberTypeId"
+                        >
                           <el-select
                             v-model="detailForm.memberTypeId"
                             v-if="type != 'detail'"
@@ -119,7 +127,10 @@
                         </el-form-item>
                       </el-col>
                       <el-col :span="8" class="col">
-                        <el-form-item label="会员卡号" prop="memberCard">
+                        <el-form-item
+                          :label="$t('desk.customer_memeberCardNum')"
+                          prop="memberCard"
+                        >
                           <el-input
                             v-model="detailForm.memberCard"
                             v-if="type != 'detail'"
@@ -128,7 +139,7 @@
                       </el-col>
                     </template>
                     <el-col :span="8" class="col">
-                      <el-form-item label="姓名" prop="name">
+                      <el-form-item :label="$t('desk.home_name')" prop="name">
                         <el-input
                           v-model="detailForm.name"
                           v-if="type != 'detail'"
@@ -139,7 +150,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="电话" prop="mobile">
+                      <el-form-item
+                        :label="$t('desk.home_telNum')"
+                        prop="mobile"
+                      >
                         <el-input
                           v-model="detailForm.mobile"
                           v-if="type != 'detail'"
@@ -150,7 +164,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="证件类型" prop="idcardType">
+                      <el-form-item
+                        :label="$t('desk.customer_documentType')"
+                        prop="idcardType"
+                      >
                         <el-select
                           v-model="detailForm.idcardType"
                           v-if="type != 'detail'"
@@ -169,7 +186,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="证件号码" prop="idcard">
+                      <el-form-item
+                        :label="$t('desk.customer_documentNum')"
+                        prop="idcard"
+                      >
                         <el-input
                           v-model="detailForm.idcard"
                           v-if="type != 'detail'"
@@ -183,17 +203,18 @@
                   </el-row>
                   <el-row class="cell" v-if="type != 'add'">
                     <el-col :span="8" class="col">
-                      <el-form-item label="会员卡号">{{
-                        detailForm.memberCard
-                      }}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_memeberCardNum')"
+                        >{{ detailForm.memberCard }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="会员类型">{{
+                      <el-form-item :label="$t('desk.customer_memType')">{{
                         F_memberTypeId(detailForm.memberTypeId)
                       }}</el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="是否黑名单">{{
+                      <el-form-item :label="$t('desk.customer_ifBalckName')">{{
                         detailForm.isBlacklist | F_isBlacklist
                       }}</el-form-item>
                     </el-col>
@@ -203,7 +224,7 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="性别" prop="sex">
+                      <el-form-item :label="$t('desk.customer_sex')" prop="sex">
                         <el-radio-group
                           v-model="detailForm.sex"
                           v-show="type != 'detail'"
@@ -221,12 +242,15 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="生日" prop="birthday">
+                      <el-form-item
+                        :label="$t('desk.customer_brithday')"
+                        prop="birthday"
+                      >
                         <el-date-picker
                           v-model="detailForm.birthday"
                           value-format="yyyy-MM-dd"
                           type="date"
-                          placeholder="选择日期"
+                          :placeholder="$t('desk.serve_chooseDate')"
                           v-if="type != 'detail'"
                         ></el-date-picker>
                         <template v-if="type == 'detail'">{{
@@ -235,7 +259,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="邮箱" prop="email">
+                      <el-form-item
+                        :label="$t('desk.customer_email')"
+                        prop="email"
+                      >
                         <el-input
                           v-model="detailForm.email"
                           v-if="type != 'detail'"
@@ -248,7 +275,10 @@
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="国籍" prop="nationality">
+                      <el-form-item
+                        :label="$t('desk.customer_international')"
+                        prop="nationality"
+                      >
                         <el-select
                           v-model="detailForm.nationality"
                           class
@@ -269,7 +299,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="地址" prop="address">
+                      <el-form-item
+                        :label="$t('desk.customer_address')"
+                        prop="address"
+                      >
                         <el-input
                           v-model="detailForm.address"
                           v-if="type != 'detail'"
@@ -282,7 +315,10 @@
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="车牌号" prop="carNum">
+                      <el-form-item
+                        :label="$t('desk.customer_carNum')"
+                        prop="carNum"
+                      >
                         <el-input
                           v-model="detailForm.carNum"
                           v-if="type != 'detail'"
@@ -293,7 +329,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="爱好" prop="hobby">
+                      <el-form-item
+                        :label="$t('desk.customer_hoppy')"
+                        prop="hobby"
+                      >
                         <el-input
                           v-model="detailForm.hobby"
                           v-if="type != 'detail'"
@@ -306,7 +345,10 @@
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="所属单位" prop="enterId">
+                      <el-form-item
+                        :label="$t('desk.customer_subordinateUnits')"
+                        prop="enterId"
+                      >
                         <el-select
                           v-model="detailForm.enterId"
                           class
@@ -325,7 +367,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="备注">
+                      <el-form-item :label="$t('desk.home_note')">
                         <el-input
                           v-model="detailForm.remark"
                           v-if="type != 'detail'"
@@ -341,7 +383,10 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="销售员" prop="salesId">
+                      <el-form-item
+                        :label="$t('desk.order_salesman')"
+                        prop="salesId"
+                      >
                         <el-select
                           v-model="detailForm.salesId"
                           v-if="type != 'detail'"
@@ -359,7 +404,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="发展途径" prop="getWay">
+                      <el-form-item
+                        :label="$t('desk.customer_developmentWay')"
+                        prop="getWay"
+                      >
                         <el-select
                           v-model="detailForm.getWay"
                           v-if="type != 'detail'"
@@ -372,8 +420,12 @@
                           ></el-option>
                         </el-select>
                         <template v-if="type == 'detail'">
-                          <div v-if="detailForm.getWay == 1">线上</div>
-                          <div v-if="detailForm.getWay == 2">线下</div>
+                          <div v-if="detailForm.getWay == 1">
+                            {{ $t("desk.customer_online") }}
+                          </div>
+                          <div v-if="detailForm.getWay == 2">
+                            {{ $t("desk.customer_offline") }}
+                          </div>
                         </template>
                       </el-form-item>
                     </el-col>
@@ -382,10 +434,19 @@
                 <el-row class="row" v-if="type == 'add'">
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="立即发卡" prop="state">
+                      <el-form-item
+                        :label="$t('desk.customer_creditCard')"
+                        prop="state"
+                      >
                         <el-select v-model="detailForm.state">
-                          <el-option label="是" :value="1"></el-option>
-                          <el-option label="待启用" :value="2"></el-option>
+                          <el-option
+                            :label="$t('desk.customer_yes')"
+                            :value="1"
+                          ></el-option>
+                          <el-option
+                            :label="$t('desk.customer_waiteUse')"
+                            :value="2"
+                          ></el-option>
                         </el-select>
                       </el-form-item>
                     </el-col>
@@ -405,9 +466,11 @@
             type="primary"
             @click="addItem('detailForm')"
             v-loading="loading"
-            >保存</el-button
+            >{{ $t("commons.save") }}</el-button
           >
-          <el-button @click="$router.go(-1)">返回</el-button>
+          <el-button @click="$router.go(-1)">{{
+            $t("commons.back")
+          }}</el-button>
         </div>
       </el-row>
     </template>
@@ -425,20 +488,24 @@
         :label-width="formLabelWidth"
       >
         <el-form-item label class="require" label-width="80px"
-          >原卡号：{{ detailForm.memberCard }} 姓名：{{
-            detailForm.name
-          }}
-          会员类型：{{ F_memberTypeId(detailForm.memberTypeId) }}</el-form-item
+          >{{ $t("desk.customer_originNum") + ":" }}{{ detailForm.memberCard
+          }}{{ $t("desk.home_name") + ":" }}{{ detailForm.name }}
+          {{ $t("desk.customer_memType") + ":"
+          }}{{ F_memberTypeId(detailForm.memberTypeId) }}</el-form-item
         >
         <template v-if="cardForm.type == 1">
-          <el-form-item label="新卡号" class prop="memberCard">
+          <el-form-item
+            :label="$t('desk.customer_newCardNum')"
+            class
+            prop="memberCard"
+          >
             <el-input
               style="width: 300px"
               v-model="cardForm.memberCard"
               placeholder
             ></el-input>
           </el-form-item>
-          <el-form-item label="备注" class prop="remark">
+          <el-form-item :label="$t('desk.home_note')" class prop="remark">
             <el-input
               style="width: 300px"
               type="textarea"
@@ -446,12 +513,20 @@
               placeholder
             ></el-input>
           </el-form-item>
-          <el-form-item label="立即发卡" class prop="state">
+          <el-form-item
+            :label="$t('desk.customer_creditCard')"
+            class
+            prop="state"
+          >
             <el-checkbox v-model="cardForm.state"></el-checkbox>
           </el-form-item>
         </template>
         <template v-if="cardForm.type == 2">
-          <el-form-item label="修改为" class prop="memberTypeId">
+          <el-form-item
+            :label="$t('desk.customer_resetFor')"
+            class
+            prop="memberTypeId"
+          >
             <el-select
               v-model="cardForm.memberTypeId"
               style="width: 300px"
@@ -468,15 +543,35 @@
             </el-select>
           </el-form-item>
           <template v-if="cardForm.payPrices">
-            <el-form-item label="支付方式" class prop="payWay">
+            <el-form-item
+              :label="$t('desk.customer_payType')"
+              class
+              prop="payWay"
+            >
               <el-select v-model="cardForm.payWay" style="width: 300px">
-                <el-option label="现金" :value="1"></el-option>
-                <el-option label="微信" :value="2"></el-option>
-                <el-option label="支付宝" :value="3"></el-option>
-                <el-option label="银联" :value="4"></el-option>
+                <el-option
+                  :label="$t('desk.serve_cash')"
+                  :value="1"
+                ></el-option>
+                <el-option
+                  :label="$t('desk.serve_wechat')"
+                  :value="2"
+                ></el-option>
+                <el-option
+                  :label="$t('desk.serve_alipay')"
+                  :value="3"
+                ></el-option>
+                <el-option
+                  :label="$t('desk.customer_unionpay')"
+                  :value="4"
+                ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="支付费用" class prop="payPrices">
+            <el-form-item
+              :label="$t('desk.customer_payPrice')"
+              class
+              prop="payPrices"
+            >
               <el-input
                 style="width: 300px"
                 v-model="cardForm.payPrices"
@@ -485,7 +580,11 @@
               ></el-input>
             </el-form-item>
           </template>
-          <el-form-item label="修改原因" class prop="remark">
+          <el-form-item
+            :label="$t('desk.customer_resetReason')"
+            class
+            prop="remark"
+          >
             <el-input
               style="width: 300px"
               type="textarea"
@@ -495,7 +594,7 @@
           </el-form-item>
         </template>
         <template v-if="cardForm.type == 3">
-          <el-form-item label="备注" class prop="remark">
+          <el-form-item :label="$t('desk.home_note')" class prop="remark">
             <el-input
               style="width: 300px"
               type="textarea"
@@ -505,29 +604,53 @@
           </el-form-item>
         </template>
         <template v-if="cardForm.type == 4">
-          <el-form-item label="操作类型" class prop="operType">
+          <el-form-item
+            :label="$t('desk.customer_operationType')"
+            class
+            prop="operType"
+          >
             <el-radio-group v-model="cardForm.operType">
-              <el-radio :label="2">挂失并补卡</el-radio>
-              <el-radio :label="3">仅挂失</el-radio>
+              <el-radio :label="2">{{ $t("desk.customer_lossAadd") }}</el-radio>
+              <el-radio :label="3">{{ $t("desk.customer_onlyLoss") }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <template v-if="cardForm.operType == 2">
-            <el-form-item label="新卡号" class>
+            <el-form-item :label="$t('desk.customer_newCardNum')" class>
               <el-input
                 style="width: 300px"
                 v-model="cardForm.memberCard"
                 placeholder
               ></el-input>
             </el-form-item>
-            <el-form-item label="支付方式" class prop="payWay">
+            <el-form-item
+              :label="$t('desk.customer_payType')"
+              class
+              prop="payWay"
+            >
               <el-select v-model="cardForm.payWay" style="width: 300px">
-                <el-option label="现金" :value="1"></el-option>
-                <el-option label="微信" :value="2"></el-option>
-                <el-option label="支付宝" :value="3"></el-option>
-                <el-option label="银联" :value="4"></el-option>
+                <el-option
+                  :label="$t('desk.serve_cash')"
+                  :value="1"
+                ></el-option>
+                <el-option
+                  :label="$t('desk.serve_wechat')"
+                  :value="2"
+                ></el-option>
+                <el-option
+                  :label="$t('desk.serve_alipay')"
+                  :value="3"
+                ></el-option>
+                <el-option
+                  :label="$t('desk.customer_unionpay')"
+                  :value="4"
+                ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="支付费用" class prop="payPrices">
+            <el-form-item
+              :label="$t('desk.customer_payPrice')"
+              class
+              prop="payPrices"
+            >
               <el-input
                 style="width: 300px"
                 v-model="cardForm.payPrices"
@@ -535,7 +658,7 @@
               ></el-input>
             </el-form-item>
           </template>
-          <el-form-item label="备注" class prop="remark">
+          <el-form-item :label="$t('desk.home_note')" class prop="remark">
             <el-input
               style="width: 300px"
               type="textarea"
@@ -544,7 +667,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item
-            label="立即发卡"
+            :label="$t('desk.customer_creditCard')"
             class
             prop="state"
             v-if="cardForm.operType == 1"
@@ -554,15 +677,17 @@
         </template>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="setCardFormVisible = false">关闭</el-button>
-        <el-button type="primary" @click="setCardFrormChange('cardForm')"
-          >确认</el-button
-        >
+        <el-button @click="setCardFormVisible = false">{{
+          $t("commons.close")
+        }}</el-button>
+        <el-button type="primary" @click="setCardFrormChange('cardForm')">{{
+          $t("commons.confirm")
+        }}</el-button>
       </div>
     </el-dialog>
     <!-- 积分兑换弹窗 -->
     <el-dialog
-      title="积分兑换"
+      :title="$t('desk.customer_pointsFor')"
       :visible.sync="exchangeDialog"
       width="90%"
       top="0"
@@ -577,20 +702,20 @@
                 :model="formInline"
                 class="demo-form-inline"
               >
-                <el-form-item label="商品名称:">
+                <el-form-item :label="$t('desk.order_goodsName') + ':'">
                   <el-input
                     v-model="formInline.name"
                     size="small"
-                    placeholder="请填写"
+                    :placeholder="$t('desk.customer_pleaceInput')"
                   ></el-input>
                 </el-form-item>
-                <el-form-item label="商品类别:">
+                <el-form-item :label="$t('desk.order_goodsType') + ':'">
                   <el-select
                     v-model="formInline.categoryId"
-                    placeholder="活动区域"
+                    :placeholder="$t('desk.customer_activeAera')"
                     size="small"
                   >
-                    <el-option label="全部" value></el-option>
+                    <el-option :label="$t('desk.home_all')" value></el-option>
                     <el-option
                       v-for="item in goodsKind"
                       :key="item.id"
@@ -600,12 +725,12 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="ex_lookFor" size="small"
-                    >查询</el-button
-                  >
-                  <el-button type="primary" @click="ex_reset" size="small"
-                    >重置</el-button
-                  >
+                  <el-button type="primary" @click="ex_lookFor" size="small">{{
+                    $t("commons.queryBtn")
+                  }}</el-button>
+                  <el-button type="primary" @click="ex_reset" size="small">{{
+                    $t("commons.resetBtn")
+                  }}</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -618,30 +743,33 @@
             >
               <el-table-column
                 prop="name"
-                label="商品名称"
+                :label="$t('desk.order_goodsName')"
                 show-overflow-tooltip
               ></el-table-column>
               <el-table-column
                 prop="categoryName"
-                label="商品类别"
+                :label="$t('desk.order_goodsType')"
                 show-overflow-tooltip
               ></el-table-column>
               <el-table-column
                 prop="score"
-                label="消耗积分"
+                :label="$t('desk.customer_useDuration')"
                 show-overflow-tooltip
                 width="280px"
               ></el-table-column>
               <el-table-column
                 prop="inventoryCount"
-                label="库存"
+                :label="$t('desk.customer_inventory')"
                 show-overflow-tooltip
               ></el-table-column>
-              <el-table-column label="操作" show-overflow-tooltip>
+              <el-table-column
+                :label="$t('commons.operating')"
+                show-overflow-tooltip
+              >
                 <template slot-scope="{ row }">
-                  <el-button type="text" size="mini" @click="addGoods(row)"
-                    >添加</el-button
-                  >
+                  <el-button type="text" size="mini" @click="addGoods(row)">{{
+                    $t("desk.customer_add")
+                  }}</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -650,7 +778,7 @@
         <!-- 右边 -->
         <el-col :span="10">
           <div class="ex_border">
-            <div class="ex9_top">已选商品</div>
+            <div class="ex9_top">{{ $t("desk.customer_chooseGoods") }}</div>
             <el-table
               ref="multipleTable"
               v-loading="loading"
@@ -660,16 +788,16 @@
             >
               <el-table-column
                 prop="goodsName"
-                label="商品名称"
+                :label="$t('desk.order_goodsName')"
                 show-overflow-tooltip
               ></el-table-column>
               <el-table-column
                 prop="score"
-                label="消耗积分"
+                :label="$t('desk.customer_useDuration')"
                 show-overflow-tooltip
               ></el-table-column>
               <el-table-column
-                label="数量"
+                :label="$t('desk.customer_count')"
                 align="center"
                 show-overflow-tooltip
                 width="120px"
@@ -685,28 +813,40 @@
                   ></el-input-number>
                 </template>
               </el-table-column>
-              <el-table-column label="合计" show-overflow-tooltip>
+              <el-table-column
+                :label="$t('desk.serve_heji')"
+                show-overflow-tooltip
+              >
                 <template slot-scope="{ row }">
                   <div>{{ addUpTo(row) }}</div>
                 </template>
               </el-table-column>
-              <el-table-column label="操作" show-overflow-tooltip>
+              <el-table-column
+                :label="$t('commons.operating')"
+                show-overflow-tooltip
+              >
                 <template slot-scope="{ row }">
-                  <el-button type="text" size="mini" @click="removeClick(row)"
-                    >移除</el-button
+                  <el-button
+                    type="text"
+                    size="mini"
+                    @click="removeClick(row)"
+                    >{{ $t("desk.customer_remove") }}</el-button
                   >
                 </template>
               </el-table-column>
             </el-table>
             <div style="margin: 20px 0 40px 0">
-              共{{ common(selectList) }}件，
-              <span class="hejiClass">合计：{{ combined }}</span>
+              {{ $t("desk.customer_all") }}{{ common(selectList)
+              }}{{ $t("desk.customer_each") }}，
+              <span class="hejiClass"
+                >{{ $t("desk.serve_heji") + ":" }}{{ combined }}</span
+              >
             </div>
             <el-button
               type="primary"
               @click="sureExchange"
               style="margin: 0 0 16px 16px"
-              >确认兑换</el-button
+              >{{ $t("desk.customer_sureChange") }}</el-button
             >
           </div>
         </el-col>
@@ -759,93 +899,97 @@ export default {
         id: "",
         name: "",
       },
-      rules: {
+    };
+  },
+  computed: {
+    rules() {
+      return {
         name: [
           {
             required: true,
-            message: "请输入姓名",
+            message: this.$t("desk.customer_inputName"),
             trigger: "blur",
           },
         ],
         sex: [
           {
             required: true,
-            message: "请选择性别",
+            message: this.$t("desk.customer_chooseSex"),
             trigger: "change",
           },
         ],
         idcardType: [
           {
             required: true,
-            message: "请选择证件类型",
+            message: this.$t("desk.customer_chooseCard"),
             trigger: "change",
           },
         ],
         idcard: [
           {
             required: true,
-            message: "请填入证件编号",
+            message: this.$t("desk.customer_inputCardNum"),
             trigger: "blur",
           },
         ],
         mobile: [
           {
             required: true,
-            message: "请输入手机号",
+            message: this.$t("desk.customer_inputPhone"),
             trigger: "blur",
           },
         ],
         memberCard: [
           {
             required: true,
-            message: "请输入会员卡号",
+            message: this.$t("desk.customer_inputMemNum"),
             trigger: "blur",
           },
         ],
         memberTypeId: [
           {
             required: true,
-            message: "请选择会员类型",
+            message: this.$t("desk.customer_chooseMemType"),
             trigger: "change",
           },
         ],
         state: [
           {
             required: true,
-            message: "请选择是否立即发卡",
+            message: this.$t("desk.customer_chooseIfcard"),
             trigger: "change",
           },
         ],
         remark: [
           {
             required: true,
-            message: "请填写备注",
+            message: this.$t("desk.customer_inputRemark"),
             trigger: "blur",
           },
         ],
         payPrices: [
           {
             required: true,
-            message: "请填写支付金额",
+            message: this.$t("desk.customer_inputPayPrice"),
             trigger: "blur",
           },
         ],
         payWay: [
           {
             required: true,
-            message: "请选择支付方式",
+            message: this.$t("desk.customer_choosePayType"),
             trigger: "change",
           },
         ],
         operType: [
           {
             required: true,
-            message: "请选择操作类型",
+            message: this.$t("desk.customer_chooseOpearType"),
             trigger: "change",
           },
         ],
-      },
-    };
+      };
+    },
   },
   mounted() {
     this.detailForm.id = this.$route.query.id ? this.$route.query.id : "";
@@ -897,7 +1041,7 @@ export default {
         params,
         (res) => {
           console.log(res);
-          this.$message.success("兑换成功");
+          this.$message.success(this.$t("desk.customer_changeSuccess"));
           this.exchangeDialog = false;
         }
       );
@@ -980,7 +1124,7 @@ export default {
     },
     //跳转  积分明细  页面
     toIntegralDetail() {
-      if (this.$route.query.buttonName == "详情") {
+      if (this.$route.query.buttonName == this.$t("commons.detail")) {
         return false;
       } else {
         this.$router.push({
@@ -1023,13 +1167,14 @@ export default {
     },
     setCardFormBtnClick(v) {
       let enums = {
-        1: "换卡操作",
-        2: "修改会员类型",
-        3: "会员停用",
-        4: "挂失/补卡操作",
+        1: this.$t("desk.customer_changeCardOperate"),
+        2: this.$t("desk.customer_resetMemType"),
+        3: this.$t("desk.customer_memStop"),
+        4: this.$t("desk.customer_lossOperate"),
       };
       this.cardForm.type = v;
-      this.cardForm.titleName = v && enums[v] ? enums[v] : "其它";
+      this.cardForm.titleName =
+        v && enums[v] ? enums[v] : this.$t("desk.serve_other");
       this.setCardFormVisible = true;
     },
     setCardFrormChange(formName) {

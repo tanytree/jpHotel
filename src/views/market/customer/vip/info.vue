@@ -38,24 +38,30 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item :label="$t('desk.order_moblePhone')">
           <el-input v-model="searchForm.mobile" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="是否注销">
+        <el-form-item :label="$t('desk.customer_ifCancellation')">
           <el-select v-model="searchForm.status" class="width150">
             <el-option :label="$t('desk.home_all')" value></el-option>
-            <el-option label="正常" value="1"></el-option>
-            <el-option label="已注销" value="2"></el-option>
+            <el-option
+              :label="$t('desk.customer_normal')"
+              value="1"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_haveCancellation')"
+              value="2"
+            ></el-option>
           </el-select>
         </el-form-item>
         <br />
-        <el-form-item label="卡号">
+        <el-form-item :label="$t('desk.customer_cardNum')">
           <el-input v-model="searchForm.memberCard" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="姓名">
+        <el-form-item :label="$t('desk.home_name')">
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item :label="$t('desk.home_state')">
           <el-select v-model="searchForm.state" class="width150">
             <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
@@ -66,7 +72,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="黑名单">
+        <el-form-item :label="$t('desk.customer_isBlack')">
           <el-select v-model="searchForm.isBlacklist" class="width150">
             <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
@@ -78,19 +84,19 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList"
-            >查询</el-button
-          >
-          <el-button type="primary" class="submit" @click="initForm"
-            >重置</el-button
-          >
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="submit" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
         <el-row>
           <el-form-item>
-            <el-button plain>读会员卡</el-button>
-            <el-button type="primary" class="submit" @click="handleAdd"
-              >新增会员</el-button
-            >
+            <el-button plain>{{ $t("desk.customer_readMemCard") }}</el-button>
+            <el-button type="primary" class="submit" @click="handleAdd">{{
+              $t("desk.customer_addMem")
+            }}</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -106,10 +112,13 @@
       >
         <el-table-column
           prop="memberCard"
-          label="卡号"
+          :label="$t('desk.customer_cardNum')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column
+          prop="name"
+          :label="$t('desk.home_name')"
+        ></el-table-column>
         <el-table-column :label="$t('desk.customer_memType')" width="140">
           <template slot-scope="{ row }">{{
             F_memberTypeId(row.memberTypeId)
@@ -117,15 +126,19 @@
         </el-table-column>
         <el-table-column
           prop="mobile"
-          label="手机号"
+          :label="$t('desk.order_moblePhone')"
           width="140"
         ></el-table-column>
         <el-table-column
           prop="score"
-          label="剩余积分"
+          :label="$t('desk.customer_remainPoints')"
           width="100"
         ></el-table-column>
-        <el-table-column prop="state" label="状态" width="100">
+        <el-table-column
+          prop="state"
+          :label="$t('desk.home_state')"
+          width="100"
+        >
           <template slot-scope="{ row }">{{
             row.state | F_cardState
           }}</template>
@@ -145,66 +158,70 @@
           width="100"
         >
           <template slot-scope="{ row }">{{
-            row.getWay == 1 ? "线上" : "线下"
+            row.getWay == 1
+              ? $t("desk.customer_online")
+              : $t("desk.customer_offline")
           }}</template>
         </el-table-column>
         <el-table-column
           prop="createTime"
-          label="开卡日期"
+          :label="$t('desk.customer_openCardDate')"
           width="180"
         ></el-table-column>
         <el-table-column
           prop="isBlacklist"
           align="center"
-          label="是否黑名单"
+          :label="$t('desk.customer_ifBalckName')"
           width="100"
         >
           <template slot-scope="{ row }">{{
-            row.isBlacklist == 2 ? "是" : "否"
+            row.isBlacklist == 2
+              ? $t("desk.customer_yes")
+              : $t("desk.customer_no")
           }}</template>
         </el-table-column>
         <el-table-column
           prop="isBlacklist"
           align="center"
-          label="是否注销"
+          :label="$t('desk.customer_ifCancellation')"
           width="100"
         >
           <template slot-scope="{ row }">{{
-            row.status == 1 ? "否" : "是"
+            row.status == 1 ? $t("desk.customer_no") : $t("desk.customer_yes")
           }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="220">
+        <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="handleDetail(row)"
-              >详情</el-button
-            >
+            <el-button type="text" size="mini" @click="handleDetail(row)">{{
+              $t("commons.detail")
+            }}</el-button>
             <el-button
               type="text"
               size="mini"
               @click="handleEdit(row)"
               v-if="row.state != 2"
-              >修改</el-button
+              >{{ $t("commons.modify") }}</el-button
             >
             <el-button
               type="text"
               size="mini"
               @click="handleRecovery(row)"
               v-if="row.state == 2"
-              >恢复</el-button
+              >{{ $t("desk.customer_restore") }}</el-button
             >
             <el-dropdown style="margin-left: 10px; font-size: 12px">
               <span class="el-dropdown-link">
-                更多
+                {{ $t("desk.customer_more") }}
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="chargeCard(row)"
-                  >收卡费</el-dropdown-item
-                >
+                <el-dropdown-item @click.native="chargeCard(row)">{{
+                  $t("desk.customer_getCardPri")
+                }}</el-dropdown-item>
                 <el-dropdown-item
                   @click.native="handelblacklist(row)"
                   v-if="row.isBlacklist != 2"
-                  >拉黑</el-dropdown-item
+                  >{{ $t("desk.customer_pullBlack") }}</el-dropdown-item
                 >
               </el-dropdown-menu>
             </el-dropdown>
@@ -223,9 +240,16 @@
       </div>
     </div>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
+    <el-dialog
+      :title="$t('desk.customer_newCusBlackName')"
+      :visible.sync="setBlackShow"
+      top="0"
+    >
       <el-form :model="setBlackForm" ref="setBlackForm">
-        <el-form-item label="拉黑备注：" prop="blackRemark">
+        <el-form-item
+          :label="$t('desk.customer_pullBlackRemark') + ':'"
+          prop="blackRemark"
+        >
           <el-input
             type="textarea"
             v-model="setBlackForm.remark"
@@ -235,41 +259,50 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addblacklist">确 定</el-button>
+        <el-button type="primary" @click="addblacklist">{{
+          $t("commons.determine")
+        }}</el-button>
       </div>
     </el-dialog>
     <!-- 补收卡费弹框 -->
     <el-dialog
       top="0"
-      title="补收卡费"
+      :title="$t('desk.customer_chargeCard')"
       :visible.sync="setCardVisible"
       width="470px"
     >
       <div class="dialogDiv" v-if="dialogInfo">
-        <span>卡号：{{ dialogInfo.memberCard }}</span>
-        <span>姓名：{{ dialogInfo.name }}</span>
+        <span
+          >{{ $t("desk.customer_cardNum") + ":"
+          }}{{ dialogInfo.memberCard }}</span
+        >
+        <span>{{ $t("desk.home_name") + ":" }}{{ dialogInfo.name }}</span>
         <span
           >{{ $t("desk.customer_memType") + ":"
           }}{{ F_memberTypeId(dialogInfo.memberTypeId) }}</span
         >
       </div>
       <el-form :model="cardForm" ref="cardForm">
-        <el-form-item label="补收类型" class prop="memberTypeId">
+        <el-form-item
+          :label="$t('desk.customer_chargeType')"
+          class
+          prop="memberTypeId"
+        >
           <el-radio-group v-model="cardForm.operType">
-            <el-radio :label="4">卡费</el-radio>
-            <el-radio :label="5">升级卡</el-radio>
-            <el-radio :label="6">补卡费</el-radio>
+            <el-radio :label="4">{{ $t("desk.customer_cardPri") }}</el-radio>
+            <el-radio :label="5">{{ $t("desk.customer_upgradeCard") }}</el-radio>
+            <el-radio :label="6">{{ $t("desk.customer_cardCost") }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="支付方式" class prop="payWay">
+        <el-form-item :label="$t('desk.customer_payType')" class prop="payWay">
           <el-select v-model="cardForm.payWay" style="width: 300px">
-            <el-option label="现金" :value="1"></el-option>
-            <el-option label="微信" :value="2"></el-option>
-            <el-option label="支付宝" :value="3"></el-option>
-            <el-option label="银联" :value="4"></el-option>
+            <el-option :label="$t('desk.serve_cash')" :value="1"></el-option>
+            <el-option :label="$t('desk.serve_wechat')" :value="2"></el-option>
+            <el-option :label="$t('desk.serve_alipay')" :value="3"></el-option>
+            <el-option :label="$t('desk.customer_unionpay')" :value="4"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="支付费用" class prop="payPrices">
+        <el-form-item :label="$t('desk.customer_payPrice')" class prop="payPrices">
           <el-input
             style="width: 300px"
             v-model="cardForm.payPrices"
@@ -279,7 +312,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="setCardFrormChange(cardForm)"
-          >确认</el-button
+          >{{$t('commons.confirm')}}</el-button
         >
       </div>
     </el-dialog>
@@ -410,7 +443,7 @@ export default {
         name: "customerdetails",
         query: {
           id: item.id,
-          buttonName: "详情",
+          buttonName: this.$t('commons.detail'),
         },
       });
     },
@@ -429,11 +462,11 @@ export default {
         state: 1,
       };
 
-      this.$prompt("请输入恢复原因", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$prompt(this.$t('desk.customer_inputReason'), this.$t('desk.home_prompt'), {
+        confirmButtonText: this.$t('commons.determine'),
+        cancelButtonText: this.$t('commons.cancel'),
         inputPattern: /\S/,
-        inputErrorMessage: "不能为空",
+        inputErrorMessage: this.$t('commons.customer_notBlink'),
       })
         .then(({ value }) => {
           params.remark = value;
@@ -456,7 +489,7 @@ export default {
     },
     addblacklist() {
       if (!this.setBlackForm.remark) {
-        this.$message.error("请输入备注信息");
+        this.$message.error(this.$t('desk.customer_inputRemark'));
         return;
       }
       this.$F.doRequest(
@@ -490,7 +523,7 @@ export default {
           return that.storeList[k].storesName;
         }
       }
-      return "未知门店";
+      return this.$t('desk.customer_unknowStore');
     },
     F_nationality(v) {
       let that = this;
@@ -501,7 +534,7 @@ export default {
             : that.nationalityList[k].cName;
         }
       }
-      return "未知";
+      return this.$t('desk.home_unknown');
     },
 
     /**多选 */

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-16 18:09:08
+ * @LastEditTime: 2020-10-17 15:06:12
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 
@@ -139,12 +139,12 @@ module.exports = {
     book_MeetstartAend: '開始〜終了時間',
     book_traveler: '一般',
     book_member: '会員',
-    book_desk: '未翻译词条',
-    book_saleTo: '未翻译词条',
-    book_channelOrder: '未翻译词条',
+    book_desk: 'フロント',
+    book_saleTo: '営業',
+    book_channelOrder: 'エージェント',
     book_other: 'その他',
     book_meetState: '会議状態',
-    book_waiteSure: '未翻译词条',
+    book_waiteSure: '確認待ち',
     book_sureBook: '未翻译词条',
     book_reject: '注文拒否',
     book_notCheckin: '未使用（未宿泊）',
@@ -173,8 +173,8 @@ module.exports = {
     order_saleInfo: "販売情報",
     order_roomInfo: "会場",
     order_alRoom: "グルーピング",
-    order_orderInfo: "未翻译词条",
-    order_billingDetails: "未翻译词条",
+    order_orderInfo: "予約情報",
+    order_billingDetails: "会計明細",
     order_goodsType: "商品種別",
     order_goodsName: "商品名称",
     order_number: "数量",
@@ -183,8 +183,180 @@ module.exports = {
     order_compensationDate: "賠償時間",
     //客户管理（customer）
     customer_openCarmen: '未翻译词条',
-    customer_developmentWay: '未翻译词条',
-    customer_memType: '未翻译词条',
+    customer_developmentWay: '経路',
+    customer_memType: '会員種別',
+    customer_ifCancellation: '未翻译词条',
+    customer_normal: '未翻译词条',
+    customer_haveCancellation: '未翻译词条',
+    customer_cardNum: '未翻译词条',
+    customer_isBlack: 'UGリスト',
+    customer_readMemCard: '会員カード読み取り',
+    customer_addMem: '会員追加',
+    customer_remainPoints: '未翻译词条',
+    customer_online: '未翻译词条',
+    customer_offline: '未翻译词条',
+    customer_openCardDate: '未翻译词条',
+    customer_ifBalckName: 'UGリスト',
+    customer_yes: 'はい',
+    customer_no: 'いいえ',
+    customer_restore: '予約復活',
+    customer_more: 'もっと',
+    customer_getCardPri: '未翻译词条',
+    customer_pullBlack: '未翻译词条',
+    customer_newCusBlackName: '未翻译词条',
+    customer_pullBlackRemark: '未翻译词条',
+    customer_chargeCard: '未翻译词条',
+    customer_chargeType: '未翻译词条',
+    customer_cardPri: '未翻译词条',
+    customer_upgradeCard: '未翻译词条',
+    customer_cardCost: '未翻译词条',
+    customer_payType: '支払方法',
+    customer_unionpay: '未翻译词条',
+    customer_payPrice: '未翻译词条',
+    customer_inputReason: '未翻译词条',
+    customer_notBlink: '未翻译词条',
+    customer_inputRemark: '未翻译词条',
+    customer_unknowStore: '未翻译词条',
+    customer_memManagement: '会員管理',
+    customer_changeCard: '未翻译词条',
+    customer_resetType: '未翻译词条',
+    customer_cancellation: 'ログアウト',
+    customer_reportLossCard: '未翻译词条',
+    customer_readMemNum: '未翻译词条',
+    customer_theDetail: '明細',
+    customer_pointsFor: '未翻译词条',
+    customer_memeberCardNum: '会員番号',
+    customer_documentType: '本人確認書類',
+    customer_documentNum: '本人確認書No.',
+    customer_sex: '性別',
+    customer_brithday: '生年月日',
+    customer_email: 'eメール',
+    customer_international: '国籍',
+    customer_address: '住所',
+    customer_carNum: '未翻译词条',
+    customer_hoppy: '未翻译词条',
+    customer_subordinateUnits: '未翻译词条',
+    customer_creditCard: '会員カード発行',
+    customer_waiteUse: '未翻译词条',
+    customer_originNum: '未翻译词条',
+    customer_newCardNum: '未翻译词条',
+    customer_resetFor: '未翻译词条',
+    customer_resetReason: '未翻译词条',
+    customer_operationType: '未翻译词条',
+    customer_lossAadd: '未翻译词条',
+    customer_onlyLoss: '未翻译词条',
+    customer_pleaceInput: '未翻译词条',
+    customer_activeAera: '未翻译词条',
+    customer_useDuration: '未翻译词条',
+    customer_inventory: '在庫数量',
+    customer_add: '追加',
+    customer_chooseGoods: '選択商品',
+    customer_count: '数量',
+    customer_remove: '削除',
+    customer_all: '未翻译词条',
+    customer_each: '未翻译词条',
+    customer_sureChange: '未翻译词条',
+    customer_changeSuccess: '未翻译词条',
+    customer_inputName: '未翻译词条',
+    customer_chooseSex: '未翻译词条',
+    customer_chooseCard: '未翻译词条',
+    customer_inputCardNum: '未翻译词条',
+    customer_inputPhone: '未翻译词条',
+    customer_inputMemNum: '未翻译词条',
+    customer_chooseMemType: '未翻译词条',
+    customer_chooseIfcard: '未翻译词条',
+    customer_inputRemark: '未翻译词条',
+    customer_inputPayPrice: '未翻译词条',
+    customer_choosePayType: '未翻译词条',
+    customer_chooseOpearType: '未翻译词条',
+    customer_changeCardOperate: '未翻译词条',
+    customer_resetMemType: '未翻译词条',
+    customer_memStop: '未翻译词条',
+    customer_lossOperate: '未翻译词条',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
