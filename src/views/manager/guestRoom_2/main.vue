@@ -48,7 +48,7 @@
                     pageSize: 10,
                     paging: true
                 },
-                activeName: 'GoodsMg', //第一个默认启动
+                activeName: 'GoodsMg',
                 goodsList: [], goodsTotal: 0,
                 salesList: [], salesTotal: 0, salesSize: 0, salesPage: 1,
                 auditList: [], auditTotal: 0,

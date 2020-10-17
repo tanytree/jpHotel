@@ -993,7 +993,7 @@ export default {
   },
   mounted() {
     this.detailForm.id = this.$route.query.id ? this.$route.query.id : "";
-    // debugger
+    //
     if (this.$route.name == "customeradd") {
       this.type = "add";
     } else if (this.$route.name == "customeredit") {

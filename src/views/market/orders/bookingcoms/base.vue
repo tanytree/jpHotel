@@ -368,7 +368,7 @@ export default {
         batchCheckId() {
             console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
             console.log(JSON.parse(JSON.stringify(this.inRoomList)));
-            debugger
+
             this.inRoomList.forEach((item, i) => {
                 let object = {
                     checkinRoomId: this.checkinInfo.id,

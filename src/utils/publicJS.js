@@ -124,7 +124,6 @@ const $F = {
             $instance.loading = true
         }
         params = this.deepClone(params);
-        // debugger
         for (let key in params) {
             let value = params[key];
             if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
@@ -227,9 +226,9 @@ const $F = {
     handleThirdMenu($instance) {
         if (sessionStorage.subMenul) {
             $instance.menuList = JSON.parse(sessionStorage.subMenul).childList || []
+            $instance.activeName = $instance.menuList[0].path;
             $instance.$forceUpdate()
         }
-        $instance.activeName = this.filterThirdMenu(null, null, false, true).path;
     },
 
     //
@@ -292,7 +291,6 @@ const $F = {
         },
         downloadTemplate(action) {
             let url = httpRequest.systemUrl(action) + `?userId=${sessionStorage.userId}&platSource=1005`;
-            debugger
             axios.get(url, {
                 headers:{
                     "accessToken": sessionStorage.accessToken

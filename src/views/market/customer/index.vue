@@ -52,7 +52,7 @@ export default {
   components: { member, history, guest, company },
   data() {
     return {
-      activeName: "", //第一个默认启动
+      activeName: "",
     };
   },
   mounted() {

@@ -127,7 +127,7 @@ export default {
     },
 
     changeNameGuest(e) {
-      // debugger
+      //
       if (e.name || e.enterName) {
         if (this.checkInForm.guestType == 2) {
           this.checkInForm.name = e.name;

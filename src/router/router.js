@@ -6,7 +6,7 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Main from '@/components/main/main'
+import Main from '@/components/main/mainView'
 Vue.use(Router)
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -14,7 +14,7 @@ Router.prototype.push = function push(location) {
 }
 // 不需要要权限的页面默认挂载
 export default new Router({
-    mode: 'hash',
+    mode: 'history',
 
     routes: [
         // { path: '', redirect: 'main', meta: { title: '主页' } },

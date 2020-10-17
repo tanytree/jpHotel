@@ -42,7 +42,7 @@ export default {
         user: "",
         region: ""
       },
-      activeName: "first", //第一个默认启动
+      activeName: "first",
       currentPage1: 1,
       tableData: [
         {

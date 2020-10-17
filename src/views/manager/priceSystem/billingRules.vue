@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     popup(type) {
-      // debugger
+      //
       // switch (type) {
       // 	case 'addA':
       // 		this.tab1_show = false;

@@ -169,7 +169,6 @@
             },
 
             // fetchUserList(params = {}, callback) {
-            //     debugger
             //     this.$F.merge(this.dialog_info, params)
             //     this.$F.commons.fetchSalesList(params, (res) => {
             //         this.peopleList = res.hotelUserList;

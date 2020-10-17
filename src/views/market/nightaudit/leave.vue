@@ -110,7 +110,7 @@ export default {
                 paging: true
             };
             // this.getDataList();
-            debugger
+
             this.listTotal = this.data.page.count;
             this.tableData = this.data.roomPersonList;
         },

@@ -9,7 +9,7 @@
     <div class="el-card" style="height: auto">
       <div class="el-card__header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/orders' }"
+          <el-breadcrumb-item :to="{ path: '/orders?type=booking'}"
             >预订单</el-breadcrumb-item
           >
           <el-breadcrumb-item>详情</el-breadcrumb-item>
@@ -77,14 +77,7 @@ export default {
     customer,
     finance,
   },
-  computed: {
-    ...mapState({
-      token: (state) => state.user.token,
-      userId: (state) => state.user.userId,
-      msgKey: (state) => state.config.msgKey,
-      plat_source: (state) => state.config.plat_source,
-    }),
-  },
+
   data() {
     return {
       id: "",
@@ -111,7 +104,7 @@ export default {
           reserveId: id,
         },
         (res) => {
-          // debugger;
+          // ;
           this.detailData = res;
           this.$forceUpdate();
         }

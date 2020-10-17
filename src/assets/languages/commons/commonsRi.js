@@ -5,6 +5,10 @@
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
+    request_success: '成功を請う',
+    request_fail: '失敗を請求する',
+    cancel: '取り消し',
+    confirm: '确定',
     week: '曜日',
     time: '期間',
     confirm: '確認',
@@ -25,7 +29,6 @@ module.exports = {
     downloadTemplate: 'テンプレートをダウンロードする',
     selectDate: '期日を選ぶ',
     all: "選択してください",
-    cancel: '取り消し',
     determine: '確認',
     close: "閉める",
     lookDetail: "資料確認",

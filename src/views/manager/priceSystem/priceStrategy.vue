@@ -29,7 +29,7 @@
 		},
 		watch:{
 			activName() {
-				// debugger
+				//
 				switch (this.activName) {
 					case 'a':
 					break;

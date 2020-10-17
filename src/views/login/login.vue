@@ -215,60 +215,10 @@ export default {
       this.onLanguageChange(); //保存选中语言
       data.data.menuList.push(array);
       this.routeractions(data.data.menuList);
-      let url = "main";
       this.$forceUpdate();
       this.$router.push({
         path: "/main",
       });
-    },
-
-    userIsLogin(data) {
-      data.data.storesInfo = this.storeList.filter((item) => {
-        return item.storesNum == this.loginForm.storesNum;
-      })[0];
-      this.saveuser(data);
-      // const routeArray = this.$F.handleTree(data.data.user.userAuth, this.routermsg)
-
-      var array = {
-        id: "menuAssert",
-        menuTitle: "维护菜单（开发用）",
-        menuAliasTitle: "维护菜单",
-        japanese: "维护菜单",
-        parentMenuId: null,
-        icon: "icon06",
-        path: "",
-        menuLevel: 1,
-        menuType: 1,
-        status: 1,
-        menuorder: 1,
-        childList: [
-          {
-            id: "menuAssert2",
-            createTime: "2020-07-05 15:01:00",
-            updateTime: "2020-07-05 15:01:00",
-            menuTitle: "首页",
-            menuAliasTitle: null,
-            japanese: "ホームページ",
-            parentMenuId: "menuAssert",
-            icon: "boss/nav01.png",
-            path: "menuAssert",
-          },
-        ],
-      };
-      data.data.menuList.push(array);
-      this.routeractions(data.data.menuList);
-      let url = "main";
-      // if (data.data && data.data.belongTo.length > 0) {
-      //   this.companyInit(data.data.belongTo[0]);
-      //   url = "main";
-      // }
-      this.$forceUpdate();
-      this.$router.push({
-        path: "/main",
-      });
-      // this.$router.push({
-      //   name: url
-      // });
     },
 
     loginAction() {

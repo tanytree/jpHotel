@@ -26,7 +26,7 @@
     components: { salaryAdministration, SalarySet },
     data () {
       return {
-        activeName: '', //第一个默认启动
+        activeName: '',
         menuList: [],
       }
     },

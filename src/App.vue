@@ -68,7 +68,6 @@ export default {
             reload: this.reload,
         };
     },
-    created() {},
     data() {
         return {
             isRouterAlive: true,
@@ -76,20 +75,6 @@ export default {
         };
     },
     methods: {
-        ...mapActions({
-            saveuser: "user/saveuser",
-            companyInit: "company/companyInit",
-        }),
-        fetchData: function () {
-            // let RouterKey = getRouterKey() ? JSON.parse(getRouterKey()) : [-2];
-            // if (RouterKey.includes(+this.$route.meta.roles)) {
-            // } else {
-            //   // this.$router.push({
-            //   //   path: '/@/views/noaccess/noaccess'
-            //   // })
-            // }
-        },
-
         reload() {
             this.isRouterAlive = false;
             this.$nextTick(function () {
@@ -108,15 +93,6 @@ export default {
         },
     },
     created() {
-        // let userData = sessionStorage.userData;
-        // let companyInfo = sessionStorage.companyInfo;
-        // if (companyInfo && JSON.parse(companyInfo)) {
-        //   this.companyInit(JSON.parse(companyInfo));
-        // }
-        // if (userData && JSON.parse(userData)) {
-        //   let data = JSON.parse(userData);
-        //   this.saveuser({ data: data });
-        // }
         // 在页面加载时读取sessionStorage
         if (sessionStorage.getItem("store")) {
             this.$store.replaceState(

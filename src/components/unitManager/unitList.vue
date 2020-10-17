@@ -359,10 +359,8 @@ export default {
       this.ruleForm.weeks = value;
       if (value.length == 0) this.ruleForm.weeks = [];
       // console.log(value== "")
-      // debugger
       // let i = typeof(value)
       if (value.length == 8 || value == "") {
-        // debugger
         if (value.length == 8) {
           this.ruleForm.weeks = [];
         } else {
@@ -414,7 +412,6 @@ export default {
         "/pms/hotel/hotel_room_type_list",
         params,
         (res) => {
-          // debugger
           res.list.forEach((item) => {
             this.ruleForm.roomStrategyJson.push({
               roomTypeId: item.id,

@@ -1253,7 +1253,7 @@ export default {
 
     handleOperRoomStatus(status, item) {
       // console.log(s)
-      // debugger;
+      // ;
       // let status = '';
       // if (s == 1 || s == null || s == 'null') {
       //     status = 2

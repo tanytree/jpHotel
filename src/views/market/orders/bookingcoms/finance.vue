@@ -425,7 +425,7 @@ export default {
         "/pms/consume/consume_order_list",
         this.searchForm,
         (res) => {
-            debugger
+
           this.tableData = res.consumeOrderList;
           this.listTotal = (res.page || {}).count || 0;
           this.$forceUpdate();
@@ -469,7 +469,7 @@ export default {
             return;
           }
         }
-        debugger
+
         if (params.priceType == 4) {
           // params.priceType == 1
           // if (params.consumePrice > 0 || params.consumePrice == 0) {

@@ -25,7 +25,7 @@ export default {
   components: { c1, c2},
   data() {
     return {
-      activeName: "first" //第一个默认启动
+      activeName: "first"
     };
   },
   mounted() {},

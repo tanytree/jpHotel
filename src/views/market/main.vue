@@ -23,30 +23,6 @@
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
         </el-tabs>
-
-<!--        <el-tabs class="pageTab noBg" v-model="activeName">-->
-<!--            &lt;!&ndash; 房间动态 &ndash;&gt;-->
-<!--            <el-tab-pane label="房间动态" name="one">-->
-<!--                <Roomstate/>-->
-<!--            </el-tab-pane>-->
-<!--            &lt;!&ndash; 开票申请 &ndash;&gt;-->
-<!--            <el-tab-pane label="收据记录" name="two" class="bg">-->
-<!--                <Openapply/>-->
-<!--            </el-tab-pane>-->
-<!--            &lt;!&ndash; 留言管理 &ndash;&gt;-->
-<!--            <el-tab-pane label="留言管理" name="three" class="bg">-->
-<!--                <Messageman/>-->
-<!--            </el-tab-pane>-->
-<!--            &lt;!&ndash; 物品寄存 &ndash;&gt;-->
-<!--            <el-tab-pane label="物品寄存" name="four" class="bg">-->
-<!--                <Goods/>-->
-<!--            </el-tab-pane>-->
-<!--            &lt;!&ndash; 员工权限&ndash;&gt;-->
-<!--            <el-tab-pane :label="$F.filterThirdMenu('frontOffice', 'staff-rights').thirdMenu"-->
-<!--                         v-if="$F.filterThirdMenu('frontOffice', 'staff-rights', true)" class="bg">-->
-<!--                <EmployeeRights/>-->
-<!--            </el-tab-pane>-->
-<!--        </el-tabs>-->
     </div>
 </template>
 
@@ -61,7 +37,7 @@
         components: {Roomstate, Openapply, Messageman, Goods, EmployeeRights},
         data() {
             return {
-                activeName: "",//第一个默认启动
+                activeName: "",
             }
         },
         created() {

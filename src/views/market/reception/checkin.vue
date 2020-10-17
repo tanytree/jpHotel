@@ -7,14 +7,15 @@
 
 <template>
     <div class="boss-index inRoom">
-        <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">
-            <el-tab-pane label="普通入住" name="a1">
-                <normal :operCheckinType="activeName"></normal>
-            </el-tab-pane>
-            <el-tab-pane label="时租入住" name="a2">
-                <normal :operCheckinType="activeName"></normal>
-            </el-tab-pane>
-        </el-tabs>
+        <normal :operCheckinType="activeName"></normal>
+<!--        <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">-->
+<!--            <el-tab-pane label="普通入住" name="a1">-->
+<!--                <normal :operCheckinType="activeName"></normal>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="时租入住" name="a2">-->
+<!--                <normal :operCheckinType="activeName"></normal>-->
+<!--            </el-tab-pane>-->
+<!--        </el-tabs>-->
     </div>
 </template>
 <script>
@@ -25,7 +26,7 @@
         components: {normal},
         data() {
             return {
-                activeName: "a1" //第一个默认启动
+                activeName: "a1"
             };
         },
         mounted() {

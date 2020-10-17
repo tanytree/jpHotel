@@ -11,7 +11,7 @@
     <el-card class="box-card">
         <div slot="header" class="clearfix">
             <span>建议夜审前处理以下业务</span>
-            <el-button style="float: right; padding: 3px 0" type="text" @click="recordShow=true">夜审记录</el-button>
+<!--            <el-button style="float: right; padding: 3px 0" type="text" @click="recordShow=true">夜审记录</el-button>-->
         </div>
         <div class="row">
             <div class="grid-content">
@@ -36,9 +36,9 @@
             </div>
         </div>
     </el-card>
-    <div class="box-card">
-        <el-button type="primary" class="submit">夜审</el-button>
-    </div>
+<!--    <div class="box-card">-->
+<!--        <el-button type="primary" class="submit">夜审</el-button>-->
+<!--    </div>-->
     <el-dialog top="0" :visible.sync="recordShow" title="选择企业" width="600px" class="dialogCom">
  <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">

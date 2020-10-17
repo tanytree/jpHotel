@@ -352,7 +352,6 @@
                         params.hotelBuildingId = this.ruleForm_dong.hotelBuildingId;
                         break;
                 }
-                // debugger
                 this.$F.doRequest(
                     this,
                     "/pms/hotel/hotel_building_save",
@@ -408,11 +407,9 @@
             },
             // 删除--楼层
             houseRoom_delete(value) {
-                // debugger
                 let params = {
                     buildingFloorId: value.id,
                 };
-                // debugger
                 this.$F.doRequest(
                     this,
                     "/pms/hotel/hotel_building_floor_delete",
@@ -441,7 +438,6 @@
                     "/pms/hotel/gethotel_building_room_type_total",
                     params,
                     (res) => {
-                        // debugger
                         this.tableData = res;
                     }
                 );

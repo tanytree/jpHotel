@@ -96,7 +96,7 @@
 				<el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
 					<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
 				</el-checkbox-group>
-				
+
               <!-- <el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
                 <el-checkbox
                   v-for="(item, index) in weekDays"
@@ -361,7 +361,7 @@ export default {
         item.adjustType = parseInt(item.adjustType);
       });
       params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
-	  // debugger
+	  //
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_price_member_strategy_save",
@@ -405,15 +405,15 @@ export default {
       //     this.batchEditPriceForm.weeks.splice($index, 1);
       //   }
       // }
-	  
+
 	  this.batchEditPriceForm.weeks = value;
 	  if (value.length == 0)
 	  	this.batchEditPriceForm.weeks = [];
 	  // console.log(value== "")
-	  // debugger
+	  //
 	  // let i = typeof(value)
 	  if (value.length == 8 || value == "") {
-	  	// debugger
+	  	//
 	  	if (value.length == 8) {
 	  		this.batchEditPriceForm.weeks = [];
 	  	} else {
@@ -445,7 +445,7 @@ export default {
         for (let j = 0; j < member.roomTypeList.length; j++) {
           let room = member.roomTypeList[j];
           if (room.id == row.id) {
-			  // debugger
+			  //
             roomObject = room;
             memberTypeObject = member;
             flag = false;
@@ -453,14 +453,14 @@ export default {
           }
         }
       }
-	  debugger
+
       this.editPriceForm.member.price = row.discountPrice;
 	  this.editPriceForm.member.discount = row.discountPrice;
       this.editPriceForm.room = roomObject;
-	  
+
 	  var myDate = new Date();
 	  this.editPriceForm.dateStr = myDate.toLocaleDateString().split('/').join('-');
-	  // debugger
+	  //
       let array = this.memberTableData.dayPriceList.filter((item) => {
 		// this.editPriceForm.dateStr = new Date().getFullYear() + "-" + item.dateStr;
         return (
@@ -487,7 +487,7 @@ export default {
         dayTime: this.editPriceForm.dateStr,
         strategyId: 1,
       };
-      // debugger;
+      // ;
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_room_day_price_save",
@@ -520,7 +520,7 @@ export default {
               roomType.id2 = index;
             });
           });
-          // debugger;
+          // ;
           this.memberTableData = res;
           this.batchEditPriceForm.roomStrategyJson = [];
           this.memberTableData.memberTypeList[0].roomTypeList.forEach(
@@ -579,7 +579,7 @@ export default {
       );
     },
     back_1() {
-		debugger
+
       this.tab1_show = true;
 	  this.get_hotel_price_room_type_list()
     },

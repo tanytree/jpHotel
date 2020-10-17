@@ -624,7 +624,6 @@ export default {
     },
     // 获取 房间门锁列表
     hotel_room_lock_list() {
-      // debugger
       this.form.buildingId = this.selectRedio;
       let params = Object.assign({}, this.form);
       this.$F.doRequest(

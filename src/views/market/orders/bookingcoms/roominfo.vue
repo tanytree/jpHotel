@@ -258,7 +258,7 @@ export default {
                 });
                 room.personList = personList;
                 this.liveData.push(room);
-                // debugger
+                //
             }
             this.liveInPersonShow = true;
         },
@@ -302,7 +302,7 @@ export default {
                 "/pms/checkin/live_in_person_list",
                 params,
                 (res) => {
-                    // debugger
+                    //
                     // this.liveCardData = res.checkInRoomList
                     this.liveCardData = res;
                     this.liveCardData.done = 0;

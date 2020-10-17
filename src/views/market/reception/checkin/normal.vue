@@ -746,7 +746,7 @@ export default {
             }
             this.$refs.checkInForm.validate((valid) => {
                 console.log(this.waitingRoom);
-                debugger
+
                 if (valid) {
                     if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
                         if (!this.waitingRoom.length) {
@@ -1029,7 +1029,7 @@ export default {
         },
         //入住人回调
         personCallback(data) {
-            debugger
+
             this.checkInForm.checkInRoomJson = data;
             this.addLivePersonShow = false;
         },
@@ -1146,7 +1146,7 @@ export default {
 
         //选择客源类型组件的确认回调
         guestChooseCallback(data) {
-            debugger;
+            ;
             this.checkInForm = data;
         },
         handleOperCheckinType() {

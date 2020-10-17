@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      activeName: "first", //第一个默认启动
+      activeName: "first",
       radio: 1,
       tableData: []
     };

@@ -123,7 +123,6 @@ export default {
 
     methods: {
         personListKeyup(object, key, value, index) {
-            debugger
             if (object.sysIndex || object.sysIndex === 0) {
                 let index2 = 0;
                 this.liveInPersonData.forEach((item, i) => {
@@ -174,7 +173,6 @@ export default {
                 personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
             })
-            debugger
             if (this.type == 'reserve') {
                 let params = {};
                 this.$F.merge(params, {
@@ -190,7 +188,6 @@ export default {
                         personList: JSON.stringify(this.liveInPersonData[0].personList),
                     }
                     this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
-                        debugger
                         this.emit('checkInCallback', res.checkinId);
                     })
                 })
@@ -214,7 +211,6 @@ export default {
                     break;
                 }
             }
-            debugger
             if (! this.liveInPersonData[index].personList) {
                 row.personList = [];
             }

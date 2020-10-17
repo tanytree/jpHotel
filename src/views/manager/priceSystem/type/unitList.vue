@@ -268,12 +268,12 @@
 				this.get_price_enter_strategy_list();
 			},
 			changeTime(e) {
-				debugger
+
 			},
 			//单位-增加-修改
 			onSave() {
 				console.log(this.ruleForm);
-				// debugger
+				//
 				let params = this.$F.deepClone(this.ruleForm);
 				params.startTime = params.time[0];
 				params.endTime = params.time[1];
@@ -302,10 +302,10 @@
 				if (value.length == 0)
 					this.ruleForm.weeks = [];
 				// console.log(value== "")
-				// debugger
+				//
 				// let i = typeof(value)
 				if (value.length == 8 || value == "") {
-					// debugger
+					//
 					if (value.length == 8) {
 						this.ruleForm.weeks = [];
 					} else {
@@ -349,7 +349,7 @@
 			},
 			// 单位--房型
 			get_hotel_price_room_type_list() {
-				// debugger
+				//
 				let params = {
 					pageIndex: 1,
 					pageSize: 99,
@@ -357,7 +357,7 @@
 					roomType: 3, // 房屋类型  1客房类型  2会议室房型 3全部
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
-					// debugger
+					//
 					res.list.forEach(item => {
 						this.ruleForm.roomStrategyJson.push({
 							roomTypeId: item.id,
@@ -391,7 +391,7 @@
 							res.discounts_name = '保持不变'
 							break;
 					}
-					// debugger
+					//
 					if (this.type == 'see') {
 						this.detail_info = res;
 						this.detail_info.weeks = res.weeks.split(',')
@@ -404,7 +404,7 @@
 						this.ruleForm.weeks = res.weeks.split(',')
 						this.ruleForm.roomStrategyJson = res.hotelPriceRoomTypeList
 						console.log('this.ruleForm---', this.ruleForm)
-						debugger
+
 					}
 
 				})

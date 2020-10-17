@@ -29,7 +29,7 @@ export default {
       // nationalityList: [],
       // hotelenterList: [],
       // smembertypeList: [],
-      activeName: "first" //第一个默认启动
+      activeName: "first"
     };
   },
   mounted() {

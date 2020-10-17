@@ -154,7 +154,6 @@ export default {
         },
     },
     mounted() {
-        debugger
         if (this.type != 'checkin') {
             let id = this.$route.query.id;
             this.searchForm.checkinId = id
@@ -175,7 +174,6 @@ export default {
                 personListJson: JSON.stringify(data),
                 personList: JSON.stringify(data),
             }
-            debugger
             this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (res) => {
 
             })
@@ -345,7 +343,6 @@ export default {
         },
         edit_live_in_person() {
             this.liveData2 = [];
-            debugger
             let tempArray = this.$F.deepClone(this.liveInPersonData);
             tempArray.forEach(roomTypeObject => {
                 if (roomTypeObject.personList && roomTypeObject.personList.length > 1) {

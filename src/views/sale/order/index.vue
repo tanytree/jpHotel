@@ -41,7 +41,7 @@
       return {
         menuList: [],
         memberTypeList: [],
-        activeName: '' //第一个默认启动
+        activeName: ''
       }
     },
 

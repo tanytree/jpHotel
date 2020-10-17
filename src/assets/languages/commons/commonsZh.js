@@ -5,6 +5,10 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    request_success: '请求成功',
+    request_fail: '请求失败',
+    cancel: '取消',
+    confirm: '确定',
     time: '时间',
     week: '星期',
     confirm: '确认',

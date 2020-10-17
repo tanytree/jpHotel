@@ -37,7 +37,7 @@ export default {
   components: { company, collection, bill, accounts, service },
   data() {
     return {
-      activeName: "first", //第一个默认启动
+      activeName: "first",
     };
   },
   mounted() {},

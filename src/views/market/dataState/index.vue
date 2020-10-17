@@ -13,7 +13,7 @@
     </el-tabs>
   </div>
 </template>
- 
+
 <script>
 import Tab6Se2 from "./tab6Se2";
 import Tab6Se1 from "./tab6Se1";
@@ -25,7 +25,7 @@ export default {
     return {
       input: "",
       currentIndex: "",
-      activeName: "1" //第一个默认启动
+      activeName: "1"
     };
   },
   methods: {

@@ -24,17 +24,6 @@
               <shiftover v-if="item.path == 'shiftover'"/>
           </el-tab-pane>
       </el-tabs>
-<!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
-<!--      <el-tab-pane label="入住办理" name="first">-->
-<!--        <checkin />-->
-<!--      </el-tab-pane>-->
-<!--      <el-tab-pane label="前台报表" name="second">-->
-<!--        <reportform />-->
-<!--      </el-tab-pane>-->
-<!--      <el-tab-pane label="前台交班" name="third">-->
-<!--        <shiftover />-->
-<!--      </el-tab-pane>-->
-<!--    </el-tabs>-->
   </div>
 </template>
 
@@ -47,7 +36,7 @@ export default {
   components: { checkin, reportform, shiftover },
   data() {
     return {
-      activeName: "" //第一个默认启动
+      activeName: ""
     };
   },
   created() {

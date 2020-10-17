@@ -405,7 +405,6 @@ export default {
   },
   mounted() {
     this.initForm();
-    this.room_type_list();
   },
 
   methods: {
@@ -422,6 +421,7 @@ export default {
         pageSize: 10, //页数
         paging: true,
       };
+      this.room_type_list();
       this.getDataList();
     },
     //点击结账按钮

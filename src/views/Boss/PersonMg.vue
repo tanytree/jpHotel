@@ -23,7 +23,7 @@
     components: { EmployeeManager, Dimission },
     data() {
       return {
-        activeName: "employeeManager" //第一个默认启动
+        activeName: "employeeManager"
       };
     },
 

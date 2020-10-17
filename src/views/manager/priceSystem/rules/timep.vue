@@ -234,7 +234,7 @@
 			};
 		},
 		created() {
-			// debugger
+			//
 			this.get_hotel_rule_hour_list();
 		},
 		computed: {
@@ -317,7 +317,7 @@
 					roomStrategyJson.push(obj);
 				});
 				this.ruleForm_h.roomStrategyJson = roomStrategyJson;
-				// debugger
+				debugger
 				let params = this.$F.deepClone(this.ruleForm_h);
 				params.startTime = params.time[0];
 				params.endTime = params.time[1];
@@ -333,7 +333,7 @@
 				}
 				// debugger;
 				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
-				// debugger
+				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_rule_hour_save",

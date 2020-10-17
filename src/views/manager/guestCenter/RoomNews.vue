@@ -353,10 +353,8 @@ export default {
   methods: {
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      // debugger
     },
     addRoom(type, value) {
-      // debugger
       switch (type) {
         case "add":
           this.selectFrom = {
@@ -511,7 +509,6 @@ export default {
     get_room_type_list() {
       // this.roomType = []
       this.$F.doRequest(this, "/pms/hotel/room_type_list", {}, (res) => {
-        // debugger
         res.roomtype.forEach((item, index) => {
           item.label = item.houseName;
           item.value = item.id;

@@ -216,7 +216,7 @@
             submit(type) {
                 if (type == "hand") {
                     let arr = [];
-                    // debugger
+                    //
                     // this.handData.map(item => {
                     // 	const obj = {handoverStatus: item.handoverStatus, pettyCash: item.pettyCash, handoverType: item.handoverType}
                     // 	arr.push(obj);

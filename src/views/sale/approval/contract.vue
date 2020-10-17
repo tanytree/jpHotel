@@ -20,7 +20,7 @@
 export default {
   data() {
     return {
-      activeName: "first", //第一个默认启动
+      activeName: "first",
       radio: 1,
       tableData: []
     };
@@ -29,7 +29,7 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
- 
+
     // 分页
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

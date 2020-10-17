@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
 
 <template>
@@ -30,7 +30,7 @@ export default {
   components: { list1, list2, list3 },
   data() {
     return {
-      activeName: "first" //第一个默认启动
+      activeName: "first"
     };
   },
   mounted() {},

@@ -13,24 +13,14 @@
                        :key="item.path"
                        v-if="$F.filterThirdMenu('frontOffice', item.path, true)">
               <!-- 预订单-->
-              <booking v-if="item.path == 'booking'"/>
+              <booking v-if="item.path == 'booking'" ref="booking"/>
               <!-- 订单查询-->
-              <order v-if="item.path == 'order'"/>
+              <order v-if="item.path == 'order'" ref="order"/>
               <!-- 赔偿记录-->
-              <compensate v-if="item.path == 'compensate'"/>
+              <compensate v-if="item.path == 'compensate'" ref="compensate"/>
+              <mainView v-show="mainShow" ref="mainView"/>
           </el-tab-pane>
       </el-tabs>
-<!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
-<!--      <el-tab-pane label="预订单" name="first">-->
-<!--        <booking />-->
-<!--      </el-tab-pane>-->
-<!--      <el-tab-pane label="订单查询" name="second">-->
-<!--        <order />-->
-<!--      </el-tab-pane>-->
-<!--      <el-tab-pane label="赔偿记录" name="third">-->
-<!--        <compensate />-->
-<!--      </el-tab-pane>-->
-<!--    </el-tabs>-->
   </div>
 </template>
 
@@ -38,22 +28,31 @@
 import booking from "./booking";
 import order from "./orderlist";
 import compensate from "./compensate";
+import mainShow from '@/components/main/mainView'
 
 export default {
-  components: { booking, order, compensate },
+  components: { booking, order, compensate, mainShow },
   data() {
     return {
-      activeName: "" //第一个默认启动
+        mainShow: false,
+      activeName: ""
     };
   },
-
   created() {
+      // debugger
+      // let menuList = JSON.parse(sessionStorage.subMenul) || [];
+      // this.$refs.mainView.resetMenu(menuList);
       this.$F.handleThirdMenu(this);
       let type = this.$route.query.type;
-      if (type)
-          this.activeName = type;
+      if (type) {
+          this.activeName = type || 'booking';
+      }
   },
-  mounted() {},
+  mounted() {
+      // let type = this.$route.query.type;
+      // debugger
+      // this.activeName = type || 'booking';
+  },
   methods: {
     //二级tab切片
     handleClick(tab, event) {

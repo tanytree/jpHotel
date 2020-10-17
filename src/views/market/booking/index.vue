@@ -46,15 +46,20 @@ export default {
   components: { normal, hall },
   data() {
     return {
-      activeName: "normal", //第一个默认启动
+        menuList: [],
+        activeName: "normal",
     };
   },
   mounted() {
-    console.log(this.$store.state);
-    this.activeName = this.$store.state.taozi.bookingName;
   },
   created() {
     this.$F.handleThirdMenu(this);
+    for(let i = 0; i < this.menuList.length; i++) {
+        if (this.menuList[i].path == 'hour') {
+            this.menuList.splice(i, 1)
+            break;
+        }
+    }
   },
   methods: {
     //二级tab切片

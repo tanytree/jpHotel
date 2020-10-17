@@ -31,7 +31,7 @@
         components: {empty,other,dishlist,categray},
         data() {
             return {
-                activeName: "",//第一个默认启动
+                activeName: "",
                 categoryList:[]
             }
         },

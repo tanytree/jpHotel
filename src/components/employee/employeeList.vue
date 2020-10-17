@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       menuList: [],
-      activeName: "employeeManager", //第一个默认启动
+      activeName: "employeeManager",
     };
   },
 

@@ -556,7 +556,6 @@ export default {
     // 获取 房间类型类型列表
     get_house_list() {
       let params = Object.assign({}, this.form);
-      // debugger
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_room_type_list",
