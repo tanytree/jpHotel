@@ -519,6 +519,8 @@ export default {
   },
   watch: {
     selectRedio() {
+			this.form.pageIndex = 1
+			this.tableData = []
       this.hotel_room_lock_list();
     },
     modify(newValue, oldValue) {

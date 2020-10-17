@@ -187,7 +187,7 @@
 				// 	debugger
 				// },
 				saveInfo() {
-					debugger
+					// debugger
 					let params = {
 						id: this.ruleForm.hotelRuleMemberPrice.id,
 						memberId: this.ruleForm.hotelRuleMemberPrice.memberId,
@@ -265,7 +265,7 @@
 						"/pms/hotel/hotel_rule_member_price_list",
 						params,
 						(res) => {
-							debugger
+							// debugger
 							if (res.list.length != 0) {
 								this.tableData = res.list;
 								this.ruleForm_r.totalSize = res.totalSize;

@@ -129,7 +129,7 @@
         <el-table-column prop="name" :label="$t('manager.ps_changPriceWay')">
           <template slot-scope="{row, $index}">
             <el-row class="demo-form-inline">
-              <el-select
+             <!-- <el-select
                 v-model="row.adjustType"
                 :placeholder="$t('manager.hk_pleaseSelect')"
                 style="width: 150px;"
@@ -137,17 +137,15 @@
               >
                 <el-option :label="$t('manager.ps_discount')" value="1"></el-option>
                 <el-option :label="$t('manager.ps_fixedPrice')" value="2"></el-option>
-              </el-select>
-              <span v-if="row.adjustType == 1">
+              </el-select> -->
+			  <el-input value="一口价" :disabled="true"></el-input>
+              <span>
                 <el-input
-                  v-model.number="row.content"
-                  min="1"
-                  max="100"
+                  v-model.number="row.adjustPrice"
                   style="width: 140px;margin: 0px 15px;"
-                  @input="priceBlur(row, $index)"
-                ></el-input>%
+                ></el-input>
               </span>
-              <span v-if="row.adjustType == 2">
+              <!-- <span v-if="row.adjustType == 2">
                 <el-input
                   v-model.number="row.content"
                   min="1"
@@ -156,15 +154,15 @@
                   @input="priceBlur(row, $index)"
                 ></el-input>
                 {{$t('manager.ps_japanYen')}}
-              </span>
+              </span> -->
             </el-row>
           </template>
         </el-table-column>
-        <el-table-column prop="name" :label="$t('manager.ps_dueTo')">
+        <!-- <el-table-column prop="name" :label="$t('manager.ps_dueTo')">
           <template slot-scope="{row}">
             <el-input v-model="row.adjustPrice" :disabled="true"></el-input>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <el-row style="padding: 20px 0px;">
         <el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
