@@ -528,7 +528,7 @@ export default {
               this.batchEditPriceForm.roomStrategyJson.push({
                 roomTypeId: item.id,
                 marketPrice: item.marketPrice,
-                adjustType: "1",
+                adjustType: "2",
                 houseName: item.houseName,
                 content: "",
                 adjustPrice: "",
