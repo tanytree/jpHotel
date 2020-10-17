@@ -129,11 +129,11 @@
             </el-form>
             <el-card shadow="never">
                 <el-table ref="multipleTable" :data="realDetailList" border height="100%" header-row-class-name="default" size="small">
-                    <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
+                    <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
                     <el-table-column :label="$t('manager.grsl_rukuNum')">
                         <template slot-scope="scope">
-                            <el-input v-model="scope.row.inventoryCount" size="small"></el-input>
+                            <el-input v-model="scope.row.goodsCount" size="small"></el-input>
                         </template>
                     </el-table-column>
                     <el-table-column :label="$t('commons.operating')" width="100">
@@ -169,7 +169,7 @@
         <el-dialog top="0" :title="$t('manager.grsl_bulkAdd')" width="1000px" :visible.sync="batchAddVisible" :close-on-click-modal="false">
             <div class="components-edit">
                 <el-table ref="multipleTable" :data="goodsList" tooltip-effect="dark" height="250px" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="addSelection">
-                    <el-table-column type="selection" width="55"></el-table-column>
+                    <el-table-column type="selection" width="55" :selectable="selectable"></el-table-column>
                     <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="categoryName" :label="$t('manager.grsl_goodsKind')"></el-table-column>
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')"></el-table-column>
@@ -423,6 +423,7 @@
                     }
                     this.rowData = res.data;
                     this.detailChildList = res.childlist;
+                    this.realDetailList = res.childlist;
                 });
             },
             addSelection(val) {
@@ -458,6 +459,13 @@
             Delete(row){
                 this.realDetailList = this.realDetailList.filter(i => i.id != row.id);
             },
+            selectable(row, index) {
+                if(this.realDetailList.some(item => {return  item.goodsId == row.id})) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
             submit(type) {
                 if (type == "exam") {
                     this.$F.doRequest(this, "/pms/hotelstorage/approval", this.examData, (res) => {
@@ -467,7 +475,20 @@
                         this.getCountData();
                     });
                 } else if (type == 'batchIn') {
-                    this.realDetailList = this.addGoodsSec;
+                    this.addGoodsSec.map(item => {
+                        var obj = {
+                            costPrice: item.costPrice,
+                            createTime: item.createTime,
+                            goodsCount: item.inventoryCount,
+                            goodsId: item.id,
+                            goodsName: item.name,
+                            id: item.id,
+                            status: item.status,
+                            storesNum: item.storesNum,
+                            updateTime: item.updateTime,
+                        }
+                        this.realDetailList.push(obj)
+                    })
                     this.batchAddVisible = false;
                 } else if(type == 'edit') {
                     const content = [];
@@ -475,7 +496,7 @@
                         let obj = {
                             goodsId: item.id,
                             costPrice: item.costPrice,
-                            goodsCount: item.inventoryCount,
+                            goodsCount: item.goodsCount,
                         };
                         content.push(obj);
                     });

@@ -234,7 +234,7 @@
                         let obj = {
                             goodsId: item.id,
                             costPrice: item.costPrice,
-                            goodsCount: item.buyCount,
+                            goodsCount: item.inventoryCount,
                         };
                         content.push(obj);
                     });
