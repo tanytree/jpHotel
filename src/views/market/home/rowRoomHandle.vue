@@ -133,8 +133,8 @@
             </el-form>
         </el-row>
         <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="rowRoomHandleShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="hotel_check_inChange">确定</el-button>
+            <el-button size="small" @click="rowRoomHandleShow = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="hotel_check_inChange"{{ $t('commons.confirm') }}/el-button>
         </span>
     </el-dialog>
 
@@ -166,8 +166,8 @@
             </div>
         </el-form>
         <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="rowRoomShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="db_row_houses">确定</el-button>
+            <el-button size="small" @click="rowRoomShow = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="db_row_houses"{{ $t('commons.confirm') }}/el-button>
         </span>
     </el-dialog>
 

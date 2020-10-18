@@ -887,8 +887,8 @@
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button class="white">取消</el-button>
-        <el-button class="submit" type="primary">确定</el-button>
+        <el-button class="white">{{ $t('commons.cancel') }}</el-button>
+        <el-button class="submit" type="primary"{{ $t('commons.confirm') }}/el-button>
       </div>
     </el-dialog>
     <!-- 制卡 -->
@@ -928,7 +928,7 @@
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="mackcadeCancel">取消</el-button>
+        <el-button size="small" @click="mackcadeCancel">{{ $t('commons.cancel') }}</el-button>
       </div>
     </el-dialog>
 
@@ -1299,9 +1299,9 @@ export default {
 
     //将房间设置为维修状态
     handleFix(item) {
-      this.$confirm("请确认房间维修", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("请确认房间维修", this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -1423,7 +1423,7 @@ export default {
         params,
         (res) => {
           this.$message({
-            message: "制卡成功",
+            message: this.$t('commons.request_success'),
             type: "success",
           });
           this.liveCard_in_person_list();

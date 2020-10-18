@@ -108,9 +108,9 @@ export default {
       let params = {
         orderId: item.id,
       };
-      this.$confirm("请确认是否删除该项?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("请确认是否删除该项?", this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -121,7 +121,7 @@ export default {
             (res) => {
               this.$message({
                 type: "success",
-                message: "移除成功!",
+                  message: this.$t('commons.request_success'),
               });
               this.consume_order_list();
             }

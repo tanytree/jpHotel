@@ -7,7 +7,7 @@
 
 //  前台部 中文
 module.exports = {
-    //  home(首页) 
+    //  home(首页)
     home_messageType: '留言类型',
     home_noLimit: '不限',
     home_myMessage: '我的留言',
@@ -19,8 +19,6 @@ module.exports = {
     home_newAddMess: '新增留言',
     home_inputMessContent: '请输入留言内容',
     home_sureDelete: '确认删除该留言',
-    home_prompt: '提示',
-    home_deleteSuccess: '删除成功',
     home_addSuccess: '新增留言成功',
     home_register: '寄存类型',
     home_toRetrieve: '待取回',

@@ -405,9 +405,9 @@ export default {
                 checkInReserveId: this.$route.query.id || '',
                 state: 8
             }
-            this.$confirm('请确认是否取消?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm('请确认是否取消?', this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {

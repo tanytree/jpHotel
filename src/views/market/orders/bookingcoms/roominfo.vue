@@ -102,8 +102,8 @@
         >
             <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
             <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="liveInPersonShow = false" >取消</el-button>
-                <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button> -->
+        <el-button size="small" @click="liveInPersonShow = false" >{{ $t('commons.cancel') }}</el-button>
+                <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false"{{ $t('commons.confirm') }}/el-button> -->
       </span>
         </el-dialog>
         <el-dialog
@@ -141,7 +141,7 @@
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="mackcade = false">取消</el-button>
+        <el-button size="small" @click="mackcade = false">{{ $t('commons.cancel') }}</el-button>
       </span>
         </el-dialog>
         <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange"/>
@@ -340,7 +340,7 @@ export default {
                 params,
                 (res) => {
                     this.$message({
-                        message: "制卡成功",
+                        message: this.$t('commons.request_success'),
                         type: "success",
                     });
                     this.liveCard_in_person_list();

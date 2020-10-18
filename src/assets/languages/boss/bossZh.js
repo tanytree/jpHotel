@@ -65,7 +65,7 @@ module.exports = {
     loginDetail_note: "备注",
     loginDetail_no: "暂无",
     loginDetail_alertContent: "该成员暂无资料（资料需要在员工管理添加，然后绑定该成员的后台账号即可）",
-    loginDetail_alertTitle: "提示",
+    loginDetail_alertTitle: this.$t('commons.tip_desc'),
     loginDetail_unknownStores: "未知门店",
     loginDetail_outTime: "离职时间",
     loginDetail_outReason: "离职原因",

@@ -136,9 +136,9 @@ export default {
       this.adddepart = true;
     },
     deleteItem(item) {
-      this.$confirm("请确认是否删除?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('boss.staff_sureDelete'), this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
         type: "warning",
       })
         .then(() => {

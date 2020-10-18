@@ -243,8 +243,8 @@
                 </div>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="rowRoomShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="db_row_houses">确定</el-button>
+            <el-button size="small" @click="rowRoomShow = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="db_row_houses"{{ $t('commons.confirm') }}/el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
@@ -311,8 +311,8 @@
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="liveInPersonCancel">取消</el-button>
-             <el-button size="small" type="primary" @click="liveInPersonShow = false">确定</el-button>
+            <el-button size="small" @click="liveInPersonCancel">{{ $t('commons.cancel') }}</el-button>
+             <el-button size="small" type="primary" @click="liveInPersonShow = false"{{ $t('commons.confirm') }}/el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
@@ -338,7 +338,7 @@
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="mackcadeCancel">取消</el-button>
+            <el-button size="small" @click="mackcadeCancel">{{ $t('commons.cancel') }}</el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :show-close='false' title="添加入住人" :visible.sync="addLivePersonShow" width="60%">

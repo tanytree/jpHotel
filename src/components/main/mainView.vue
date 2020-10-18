@@ -186,7 +186,6 @@ export default {
         },
 
         resetMenu(menus) {
-            debugger
             if (menus && menus != "undefined") {
                 this.menulfuc(JSON.parse(sessionStorage.menul));
                 // this.toSection(JSON.parse(sessionStorage.subMenul));

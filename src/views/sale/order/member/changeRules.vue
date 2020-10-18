@@ -187,8 +187,8 @@
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
-                <el-button @click="newvipVisable = false">取消</el-button>
-                <el-button type="primary" @click="editItem" v-loading="loading">确定</el-button>
+                <el-button @click="newvipVisable = false">{{ $t('commons.cancel') }}</el-button>
+                <el-button type="primary" @click="editItem" v-loading="loading"{{ $t('commons.confirm') }}/el-button>
             </div>
         </el-dialog>
 
@@ -275,9 +275,9 @@
       },
 
       onDelete (row) {
-        this.$confirm(`是否确定删除？`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('commons.confirm_delete'), this.$t('commons.tip_desc'), {
+          confirmButtonText: this.$t('commons.confirm'),
+          cancelButtonText: this.$t('commons.cancel'),
           type: 'warning'
         }).then(res => {
           this.$F.doRequest(this, '/pms/membertypeupdate/delete', { id: row.id }, (res) => {

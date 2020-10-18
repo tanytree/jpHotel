@@ -340,7 +340,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button>取消</el-button>
+        <el-button>{{ $t('commons.cancel') }}</el-button>
         <el-button type="primary">结账并退房</el-button>
       </div>
     </el-dialog> -->

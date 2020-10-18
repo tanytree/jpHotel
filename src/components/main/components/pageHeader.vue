@@ -84,7 +84,7 @@
         this.language = langDesc
         this.$forceUpdate()
         this.$message({
-          message: `切换为${langDesc}成功`,
+          message: this.$t('commons.request_success'),
           type: 'success'
         })
         this.reload()
@@ -93,9 +93,9 @@
       },
 
       modelShowfuc () {
-        this.$confirm('是否确认退出系统？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('是否确认退出系统？', this.$t('commons.tip_desc'), {
+          confirmButtonText: this.$t('commons.confirm'),
+          cancelButtonText: this.$t('commons.cancel'),
           type: 'warning'
         })
           .then(res => {

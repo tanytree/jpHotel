@@ -125,7 +125,7 @@ export default {
   watch: {
     setSuccess(newValue, oldValue) {
       this.setSuccess = newValue;
-    },o
+    },
   },
   data() {
     return {

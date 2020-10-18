@@ -150,7 +150,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="payTypeShow = false">取消</el-button>
+            <el-button @click="payTypeShow = false">{{ $t('commons.cancel') }}</el-button>
             <el-button type="primary" @click="payTypeShow = false">确认</el-button>
         </div>
     </el-dialog> -->
@@ -356,7 +356,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="destructionShow=false">取消</el-button>
+            <el-button @click="destructionShow=false">{{ $t('commons.cancel') }}</el-button>
             <el-button type="primary" @click="consume_oper(3,'destruction')">确认</el-button>
         </div>
     </el-dialog>
@@ -529,15 +529,15 @@ export default {
             let params = {
                 orderId: item.id
             };
-            this.$confirm('请确认是否删除该项?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm('请确认是否删除该项?', this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, '/pms/consume/consume_move', params, (res) => {
                     this.$message({
                         type: 'success',
-                        message: '移除成功!'
+                        message: this.$t('commons.request_success'),
                     });
                     this.consume_order_list()
                     this.getOrderDetail();

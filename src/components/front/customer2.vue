@@ -77,7 +77,7 @@
             </el-table-column>
         </el-table>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="personSubmit()">确定</el-button>
+            <el-button type="primary" @click="personSubmit()"{{ $t('commons.confirm') }}/el-button>
         </div>
     </div>
 </template>

@@ -305,23 +305,17 @@ export default {
             );
         },
         deleteItem(row) {
-            this.$confirm("请确认删除此用户?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("请确认删除此用户?", this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: "warning",
             })
                 .then(() => {
                     this.deleteNow(row.id);
-                    // this.$message({
-                    //   type: 'success',
-                    //   message: '删除成功!'
-                    // });
+
                 })
                 .catch(() => {
-                    // this.$message({
-                    //   type: 'info',
-                    //   message: '已取消删除'
-                    // });
+
                 });
         },
 

@@ -656,7 +656,7 @@
           <el-row style="text-align:center">
             <el-form-item>
               <el-button>取 消</el-button>
-              <el-button type="primary">确定</el-button>
+              <el-button type="primary"{{ $t('commons.confirm') }}/el-button>
             </el-form-item>
           </el-row>
         </el-form>

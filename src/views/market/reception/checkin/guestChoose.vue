@@ -48,8 +48,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="guestTypeShow = false">取消</el-button>
-        <el-button size="small" type="primary" @click="submit">确定</el-button>
+        <el-button size="small" @click="guestTypeShow = false">{{ $t('commons.cancel') }}</el-button>
+        <el-button size="small" type="primary" @click="submit"{{ $t('commons.confirm') }}/el-button>
       </span>
     </el-dialog>
   </div>

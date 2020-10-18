@@ -100,7 +100,7 @@
         </el-row>
 
         <div slot="footer" class="dialog-footer">
-            <el-button @click="visible = false">取消</el-button>
+            <el-button @click="visible = false">{{ $t('commons.cancel') }}</el-button>
             <el-button type="primary"  @click="consume_oper">确认</el-button>
         </div>
     </el-dialog>
@@ -243,8 +243,8 @@ export default {
                   this.cart.push({...item,count:1})
                 }
             }else{
-                this.$alert('该菜品已经没有库存啦，不能再售卖啦！', '提示', {
-                  confirmButtonText: '确定',
+                this.$alert('该菜品已经没有库存啦，不能再售卖啦！', this.$t('commons.tip_desc'), {
+                  confirmButtonText: this.$t('commons.confirm'),
                   callback: action => {
                   }
                 });
@@ -264,8 +264,8 @@ export default {
                 }
             }else{
                 if(good.inventoryCount == 0){
-                    this.$alert('该菜品已经没有库存啦，不能再售卖啦!', '提示', {
-                      confirmButtonText: '确定',
+                    this.$alert('该菜品已经没有库存啦，不能再售卖啦!', this.$t('commons.tip_desc'), {
+                      confirmButtonText: this.$t('commons.confirm'),
                       callback: action => {
                       }
                     });
@@ -305,8 +305,8 @@ export default {
                 });
                 return false
             }
-            
-            
+
+
             if(!this.consumeOperForm.remark){
                 this.$message({
                   type: 'error',
@@ -314,9 +314,9 @@ export default {
                 });
                 return false
             }
-            
-            
-            
+
+
+
             let params = {}
             params.checkInId = this.$route.query.id
             params.priceType = 8

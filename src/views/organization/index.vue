@@ -75,8 +75,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="addChildDepartShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">确定</el-button>
+            <el-button size="small" @click="addChildDepartShow = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading"{{ $t('commons.confirm') }}/el-button>
         </span>
         </el-dialog>
 
@@ -137,8 +137,8 @@
                 </div>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="clearDepartMentForm;departSetAndAddShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">确定</el-button>
+            <el-button size="small" @click="clearDepartMentForm;departSetAndAddShow = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading"{{ $t('commons.confirm') }}/el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :visible.sync="selectIconAndColorShow" title="选择图标" width="600px">
@@ -168,8 +168,8 @@
                 </div>
             </div>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="selectIconAndColorShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="iconAndColorChange()">确定</el-button>
+            <el-button size="small" @click="selectIconAndColorShow = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="iconAndColorChange()"{{ $t('commons.confirm') }}/el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :visible.sync="employeesDetailsShow" title="查看资料" width="600px">
@@ -195,8 +195,8 @@
             </el-form>
 
             <!-- <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="employeesDetailsShow = false">取消</el-button>
-            <el-button size="small" type="primary" @click="iconAndColorChange()">确定</el-button>
+            <el-button size="small" @click="employeesDetailsShow = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="iconAndColorChange()"{{ $t('commons.confirm') }}/el-button>
           </span>-->
         </el-dialog>
         <el-dialog top="0" :visible.sync="employeesDetailsEditShow"
@@ -248,7 +248,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
             <el-button size="small" type="primary" @click="employeesDetailsEditChange()" v-loading="loading">保存</el-button>
-            <el-button size="small" @click="itemClose">取消</el-button>
+            <el-button size="small" @click="itemClose">{{ $t('commons.cancel') }}</el-button>
         </span>
         </el-dialog>
         <!-- <add-employees :employeesSetting="employeesSetting" @getInviteShow="getInviteShow" @enterprise_department_distributionFn="enterprise_department_distributionFn"></add-employees> -->

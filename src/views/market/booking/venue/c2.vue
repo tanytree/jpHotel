@@ -281,7 +281,7 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer" style="text-align: right">
-          <el-button class="white" @click="dialogMeet_cancle">取消</el-button>
+          <el-button class="white" @click="dialogMeet_cancle">{{ $t('commons.cancel') }}</el-button>
           <el-button
             type="primary"
             class="submit"
@@ -388,8 +388,8 @@ export default {
                 this.addCompanyForm,
                 (data) => {
                   this.$message({
-                    message: "会议签到成功",
-                    type: "success",
+                      message: this.$t('commons.request_success'),
+                      type: "success",
                   });
                   this.dialogMeet_cancle();
                 }

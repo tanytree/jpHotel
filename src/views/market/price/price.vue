@@ -187,10 +187,10 @@ export default {
           });
       this.$confirm(
           id ? this.$t('commons.delete_single') : this.$t('commons.delete_batch'),
-        "提示",
+        this.$t('commons.tip_desc'),
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: this.$t('commons.confirm'),
+          cancelButtonText: this.$t('commons.cancel'),
           type: "warning"
         }
       )

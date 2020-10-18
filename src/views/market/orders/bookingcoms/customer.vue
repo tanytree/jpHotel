@@ -320,7 +320,7 @@ export default {
             };
             this.$F.doRequest(this, '/pms/checkin/delete_live_in_person', params, (res) => {
                 this.$message({
-                    message: '移除成功',
+                    message: this.$t('commons.request_success'),
                     type: 'success'
                 });
                 this.live_in_person_list()

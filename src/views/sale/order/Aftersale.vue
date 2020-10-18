@@ -208,7 +208,7 @@
       </el-radio-group>
       <span slot="footer" class="dialog-footer">
         <el-button @click="subBullet()">提交</el-button>
-        <el-button type="primary" @click="dealWithBullet = false">取消</el-button>
+        <el-button type="primary" @click="dealWithBullet = false">{{ $t('commons.cancel') }}</el-button>
       </span>
     </el-dialog>
   </div>

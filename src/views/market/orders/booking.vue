@@ -494,9 +494,9 @@ export default {
                 checkInReserveId: item.id,
                 state: 8,
             };
-            this.$confirm("请确认是否取消?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("请确认是否取消?", this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: "warning",
             })
                 .then(() => {
@@ -521,9 +521,9 @@ export default {
                 checkInReserveId: item.id,
                 state: 2,
             };
-            this.$confirm("请确认是否接受?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("请确认是否接受?", this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: "warning",
             })
                 .then(() => {
@@ -548,9 +548,9 @@ export default {
                 checkInReserveId: item.id,
                 state: 3,
             };
-            this.$confirm("请确认是否拒绝?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("请确认是否拒绝?", this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: "warning",
             })
                 .then(() => {
@@ -571,9 +571,9 @@ export default {
                 checkInReserveId: item.id,
                 state: 2,
             };
-            this.$confirm("请确认您的操作?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("请确认您的操作?", this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: "warning",
             })
                 .then(() => {

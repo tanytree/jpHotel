@@ -1,10 +1,14 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-09-16 14:57:19
- * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
+ * @LastEditors: Dana
+ * @LastEditTime: 2020-10-18 17:23:52
+ * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    confirm_delete: 'これは削除が確定していますか?',
+    tip_desc: '注意',
+    request_success: '操作に成功する',
+    delete_success: '削除成功',
     delete_batch: '一括削除を確定する',
     delete_single: '削除操作の実行を確定する',
     request_success: '成功を請う',

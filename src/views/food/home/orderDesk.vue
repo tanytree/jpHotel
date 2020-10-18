@@ -251,15 +251,15 @@ export default {
             }
 
         }else if(this.tableData[index].remainingCount  ==  0 && this.tableData[index].soldOut == 1){
-            this.$alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', '提示', {
-              confirmButtonText: '确定',
+            this.$alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', this.$t('commons.tip_desc'), {
+              confirmButtonText: this.$t('commons.confirm'),
               callback: action => {
 
               }
             });
         }else{
-            this.$alert('该菜品已经沽清啦，不能再售卖啦，您可以前往菜品管理>沽清管理取消该商品的沽清!', '提示', {
-              confirmButtonText: '确定',
+            this.$alert('该菜品已经沽清啦，不能再售卖啦，您可以前往菜品管理>沽清管理取消该商品的沽清!', this.$t('commons.tip_desc'), {
+              confirmButtonText: this.$t('commons.confirm'),
               callback: action => {
               }
             });
@@ -283,8 +283,8 @@ export default {
         }else{
             // console.log('添加')
             if(good.remainingCount == 0){
-                this.$alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', '提示', {
-                  confirmButtonText: '确定',
+                this.$alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', this.$t('commons.tip_desc'), {
+                  confirmButtonText: this.$t('commons.confirm'),
                   callback: action => {
                   }
                 });
@@ -328,9 +328,9 @@ export default {
         console.log(params)
 
 
-        this.$confirm('确定提交吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+        this.$confirm('确定提交吗?', this.$t('commons.tip_desc'), {
+            confirmButtonText: this.$t('commons.confirm'),
+            cancelButtonText: this.$t('commons.cancel'),
             type: 'warning'
         }).then(() => {
 

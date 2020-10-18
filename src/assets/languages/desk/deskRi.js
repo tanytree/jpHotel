@@ -18,8 +18,6 @@ module.exports = {
     home_newAddMess: 'メッセージ追加',
     home_inputMessContent: '伝言を入力してください',
     home_sureDelete: '該当伝言削除を確認',
-    home_prompt: '注意',
-    home_deleteSuccess: '削除成功',
     home_addSuccess: '伝言追加成功',
     home_register: '預かり種別',
     home_toRetrieve: '受取待ち',

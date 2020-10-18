@@ -281,7 +281,7 @@
 				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_save', params, (res) => {
 					return this.$message({
-						message: '添加成功',
+						message: this.$t('commons.request_success'),
 						type: 'success'
 					});
 				})
@@ -417,7 +417,7 @@
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_delete', params, (res) => {
 					this.get_price_enter_strategy_list()
 					this.$message({
-						message: '删除成功',
+						message: this.$t('commons.delete_success'),
 						type: 'success'
 					});
 				})

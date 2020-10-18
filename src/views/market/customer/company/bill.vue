@@ -718,7 +718,7 @@ export default {
             "/pms/consume/enter_credit_edit",
             params,
             (data) => {
-              this.$message.success("账套新增成功");
+              this.$message.success(this.$t('commons.request_success'));
               this.addFrom.enterId = "";
               this.addFrom.name = "";
               this.addFrom.accountSetName = "";
@@ -752,7 +752,7 @@ export default {
             "/pms/consume/enter_credit_edit",
             params,
             (data) => {
-              this.$message.success("账套编辑成功");
+              this.$message.success(this.$t('commons.request_success'));
               this.editorForm.enterId = "";
               this.editorForm.name = "";
               this.editorForm.accountSetName = "";

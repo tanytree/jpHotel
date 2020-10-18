@@ -73,8 +73,8 @@
     </div>
 
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="visible = false">取消</el-button>
-      <el-button size="small" type="primary" @click="editFormSubmit()">确定</el-button>
+      <el-button size="small" @click="visible = false">{{ $t('commons.cancel') }}</el-button>
+      <el-button size="small" type="primary" @click="editFormSubmit()"{{ $t('commons.confirm') }}/el-button>
     </span>
   </el-dialog>
 </template>

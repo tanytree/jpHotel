@@ -725,9 +725,9 @@ export default {
       this.$router.push("/companydetail?id=" + item.id);
     },
     disableItem(item) {
-      this.$confirm("确认要禁用该单位", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("确认要禁用该单位", this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -749,9 +749,9 @@ export default {
         .catch(() => {});
     },
     delItem(item) {
-      this.$confirm("确认删除该单位", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('commons.delete_single'), this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -884,7 +884,6 @@ export default {
       });
     },
     //批量设置，点击设置按钮
-
     totalset() {
       if (this.multipleSelection.length > 0) {
         for (let item of this.multipleSelection) {
@@ -910,7 +909,7 @@ export default {
             ? this.setBatchForm.salesId
             : item.salesId;
         }
-        this.$message.success("设置成功，点击保存按钮");
+        // this.$message.success("设置成功，点击保存按钮");
       } else {
         this.$message.error("请选择单位");
       }

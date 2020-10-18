@@ -156,9 +156,9 @@ export default {
               roomIds:roomIds
             }
 
-            this.$confirm('此操作将'+errTip, '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm('此操作将'+errTip, this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, '/pms/hotel/oper_room_status', params, (res) => {

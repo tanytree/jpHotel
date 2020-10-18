@@ -177,7 +177,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="destructionShow = false">取消</el-button>
+        <el-button @click="destructionShow = false">{{ $t('commons.cancel') }}</el-button>
         <el-button type="primary" @click="consume_oper(3, 'destruction')"
           >确认</el-button
         >

@@ -113,9 +113,9 @@
         })
       },
       onDelete (row) {
-        this.$confirm(`是否删除【${row.name}】？`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(`是否删除【${row.name}】？`, this.$t('commons.tip_desc'), {
+          confirmButtonText: this.$t('commons.confirm'),
+          cancelButtonText: this.$t('commons.cancel'),
           type: 'warning'
         }).then(res => {
           this.$F.doRequest(this, '/pms/membertype/delete', { id: row.id }, (res) => {

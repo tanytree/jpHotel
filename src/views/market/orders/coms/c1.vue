@@ -77,7 +77,7 @@
             </el-table-column>
         </el-table>
         <span slot="footer" class="dialog-footer">
-            <el-button size="small" @click="mackcade=false">取消</el-button>
+            <el-button size="small" @click="mackcade=false">{{ $t('commons.cancel') }}</el-button>
         </span>
     </el-dialog>
 </div>
@@ -239,7 +239,7 @@ export default {
             };
             this.$F.doRequest(this, '/pms/checkin/make_card_status', params, (res) => {
                 this.$message({
-                    message: '制卡成功',
+                    message: this.$t('commons.request_success'),
                     type: 'success'
                 });
                 this.liveCard_in_person_list()

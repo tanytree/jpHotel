@@ -100,9 +100,9 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="openInvoiceShow = false">取消</el-button>
+        <el-button @click="openInvoiceShow = false">{{ $t('commons.cancel') }}</el-button>
         <el-button type="primary" @click="openInvoiceSubmit('openInvoice')"
-          >确定</el-button
+          {{ $t('commons.confirm') }}/el-button
         >
       </div>
     </el-dialog>

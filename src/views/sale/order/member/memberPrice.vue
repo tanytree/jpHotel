@@ -82,8 +82,8 @@
                 </el-form-item>
               </el-form>
             <div slot="footer" class="dialog-footer" right>
-                <el-button type="primary" v-loading="loading" @click="editSave('discountForm')">确定</el-button>
-                <el-button @click="discountFormClose('discountForm')">取消</el-button>
+                <el-button type="primary" v-loading="loading" @click="editSave('discountForm')"{{ $t('commons.confirm') }}/el-button>
+                <el-button @click="discountFormClose('discountForm')">{{ $t('commons.cancel') }}</el-button>
             </div>
           </el-dialog>
   </div>

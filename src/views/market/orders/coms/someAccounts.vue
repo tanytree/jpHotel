@@ -51,7 +51,7 @@
         </el-table>
     </el-form>
     <div slot="footer" class="dialog-footer">
-        <el-button @click="visible=false">取消</el-button>
+        <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
         <el-button type="primary" @click="consume_oper(2,'onAccount')">结账</el-button>
     </div>
 
@@ -87,8 +87,8 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="visible=false">取消</el-button>
-            <el-button type="primary" >确定</el-button>
+            <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
+            <el-button type="primary" {{ $t('commons.confirm') }}/el-button>
         </div>
     </el-dialog>
 

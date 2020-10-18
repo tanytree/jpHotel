@@ -184,7 +184,7 @@
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer" style="text-align:center">
-            <el-button @click="setting = false">取消</el-button>
+            <el-button @click="setting = false">{{ $t('commons.cancel') }}</el-button>
             <el-button type="primary">确 定</el-button>
           </div>
         </el-dialog>

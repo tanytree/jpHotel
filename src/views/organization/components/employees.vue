@@ -93,14 +93,13 @@
         this.$emit('getDetails', data)
       },
       deleteItem (item) {
-        this.$confirm('确定删除此成员？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('commons.confirm_delete'), this.$t('commons.tip_desc'), {
+          confirmButtonText: this.$t('commons.confirm'),
+          cancelButtonText: this.$t('commons.cancel'),
           type: 'warning'
         }).then(() => {
           this.$emit('getEmployeesDelete', item)
         }).catch(() => {
-          console.log('取消')
         })
       }
     }

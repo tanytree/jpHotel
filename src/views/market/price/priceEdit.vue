@@ -29,8 +29,8 @@
       </el-table-column>
     </el-table>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="dataFormSubmit">确定</el-button>
+      <el-button @click="visible = false">{{ $t('commons.cancel') }}</el-button>
+      <el-button type="primary" @click="dataFormSubmit"{{ $t('commons.confirm') }}/el-button>
     </span>
   </el-dialog>
 </template>

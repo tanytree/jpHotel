@@ -1,10 +1,14 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-06 17:23:52
+ * @LastEditors: Dana
+ * @LastEditTime: 2020-10-18 17:23:52
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    confirm_delete: '确定删除吗？',
+    tip_desc: '提示',
+    request_success: '请求成功',
+    delete_success: '删除成功',
     delete_batch: '确定执行批量删除操作',
     delete_single: '确定执行删除操作',
     request_success: '请求成功',

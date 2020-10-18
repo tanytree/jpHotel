@@ -334,7 +334,7 @@ export default {
         params,
         (res) => {
           return this.$message({
-            message: "添加成功",
+            message: this.$t('commons.request_success'),
             type: "warn",
           });
           this.back_1();
@@ -474,7 +474,7 @@ export default {
         (res) => {
           this.get_price_enter_strategy_list();
           this.$message({
-            message: "删除成功",
+            message: this.$t('commons.delete_success'),
             type: "success",
           });
         }

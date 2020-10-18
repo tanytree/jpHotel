@@ -13,7 +13,7 @@
       </el-form-item>
       <el-divider></el-divider>
       <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">取消</el-button>
+           <el-button size="small" @click="closeDialog">{{ $t('commons.cancel') }}</el-button>
            <el-button size="small" type="primary" :disabled="!info.name" @click="submitForm('form')">提交</el-button>
       </div>
     </el-form>

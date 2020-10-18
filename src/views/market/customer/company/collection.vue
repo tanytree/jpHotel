@@ -347,7 +347,7 @@
       </el-row>
       <div slot="footer" class="dialog-footer" style="text-align: center">
         <el-button style="width: 80px" @click="checkPatch = false"
-          >取消</el-button
+          >{{ $t('commons.cancel') }}</el-button
         >
         <!--        <el-button style="width:80px;" type="primary">{{$t('commons.print')}}</el-button>-->
       </div>
@@ -453,7 +453,7 @@ export default {
           "/pms/consume/enter_consume_oper",
           params,
           (data) => {
-            this.$message.success("退款成功");
+            this.$message.success(this.$t('commons.request_success'));
             this.dialogVisible = false;
             this.ruleForm.payType = "1";
             this.ruleForm.payPrice = null;

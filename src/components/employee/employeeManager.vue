@@ -259,7 +259,7 @@
                     </el-row>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="addAndEditFormClose()">{{ $t('commons.cancel') }}</el-button>
+                    <el-button @click="addAndEditFormClose()">>{{ $t('commons.cancel') }}<</el-button>
                     <el-button type="primary" @click="addAndEditPost">{{ $t('commons.determine') }}</el-button>
                 </div>
             </el-dialog>

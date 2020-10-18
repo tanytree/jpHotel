@@ -45,8 +45,8 @@
         </el-col>
     </el-row>
     <span slot="footer" class="dialog-footer">
-        <el-button @click="visible=false">取消</el-button>
-        <el-button type="primary" @click="dataFormSubmit">确定</el-button>
+        <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
+        <el-button type="primary" @click="dataFormSubmit"{{ $t('commons.confirm') }}/el-button>
     </span>
 </el-dialog>
 </template>
@@ -140,9 +140,9 @@ export default {
                 roomId: this.id,
                 joinRoomIds: joinRoomIds,
             }
-            this.$confirm('请确认联房', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm('请确认联房', this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, '/pms/checkin/check_in_room_join', params, (res) => {
