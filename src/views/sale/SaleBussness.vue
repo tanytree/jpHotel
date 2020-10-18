@@ -86,7 +86,7 @@
                   type="text"
                   size="mini"
                   @click="clickDelete(row)"
-                >删除</el-button>
+                {{$t('commons.delete')}}/el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -250,9 +250,7 @@ export default {
               return item.title;
             });
       this.$confirm(
-        `确定对 [ ${nameS.join(",")} ] 进行 [ ${
-          data && data.id ? "删除" : "批量删除"
-        } ] 操作?`,
+          (data && data.id) ? this.$t('commons.delete_single') : this.$t('commons.delete_batch'),
         "提示",
         {
           confirmButtonText: "确定",
@@ -268,7 +266,7 @@ export default {
           }).then(data => {
             if (data && data.code == 200) {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
                 duration: 1500,
                 onClose: () => {

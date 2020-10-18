@@ -99,7 +99,7 @@
                  console.log(params)
                  this.$F.doRequest(this, "/pms/dishes/dishes_manage_updatecount_batch", params, (res) => {
                     console.log(res)
-                    this.alert(200,'操作成功')
+                    this.alert(200,this.$t('commons.request_success'))
                     this.closeDialog();
                  });
 

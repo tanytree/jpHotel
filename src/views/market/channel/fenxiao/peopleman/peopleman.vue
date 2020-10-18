@@ -59,7 +59,7 @@
                       <el-button type="text" size="mini">详情</el-button>
                       <el-button type="text" size="mini" @click="dimission=true">办理离职</el-button>
                       <el-button type="text" size="mini" @click="correct=true">转正</el-button>
-                      <el-button type="text" size="mini">删除</el-button>
+                      <el-button type="text" size="mini"{{$t('commons.delete')}}/el-button>
                   </template>
               </el-table-column>
           </el-table>

@@ -779,7 +779,7 @@ export default {
             this.detailForm,
             (res) => {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
               });
               this.setMemberFormVisible = false;

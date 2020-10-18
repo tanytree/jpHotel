@@ -4,7 +4,7 @@
       <el-form size="mini" :inline="true" label-width="80px">
         <el-form-item label="商品名称">
           <el-input v-model="form.name" style="width:180px" placeholder="请输入"></el-input>
-        </el-form-item> 
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getDataList">查询</el-button>
           <!-- <el-button>重置</el-button> -->
@@ -161,7 +161,7 @@ export default {
             return item.roleId;
           });
       this.$confirm(
-        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
+          id ? this.$t('commons.delete_single') : this.$t('commons.delete_batch'),
         "提示",
         {
           confirmButtonText: "确定",
@@ -177,7 +177,7 @@ export default {
           }).then(data => {
             if (data && data.code ==200) {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
                 duration: 1500,
                 onClose: () => {

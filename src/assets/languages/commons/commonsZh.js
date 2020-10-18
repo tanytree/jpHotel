@@ -5,6 +5,8 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    delete_batch: '确定执行批量删除操作',
+    delete_single: '确定执行删除操作',
     request_success: '请求成功',
     request_fail: '请求失败',
     cancel: '取消',

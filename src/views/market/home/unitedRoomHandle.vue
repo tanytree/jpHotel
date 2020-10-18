@@ -149,7 +149,7 @@ export default {
                     this.visible = false
                     this.$message({
                         type: 'success',
-                        message: '操作成功!'
+                        message: this.$t('commons.request_success')
                     });
                 })
             }).catch(() => {
@@ -172,7 +172,7 @@ export default {
                 }, (res) => {
                     this.$message({
                         type: 'success',
-                        message: '操作成功!'
+                        message: this.$t('commons.request_success')
                     });
                     this.already_room_join(this.id)
                 })

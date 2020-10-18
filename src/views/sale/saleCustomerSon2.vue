@@ -44,7 +44,7 @@
         <el-table-column label="操作">
           <template slot-scope={row}>
             <el-button size="mini"  v-if="row.applyType==0" @click="clickCheck(row)">审核</el-button>
-            <el-button size="mini" v-if="row.applyType==2" @click="clickDelete(row)">删除</el-button>
+            <el-button size="mini" v-if="row.applyType==2" @click="clickDelete(row)"{{$t('commons.delete')}}/el-button>
           </template>
         </el-table-column>
       </el-table>

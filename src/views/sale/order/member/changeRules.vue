@@ -72,7 +72,7 @@
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="details=true">详情</el-button>
                     <el-button type="text" size="mini" v-if="row.statu == 1">禁用</el-button>
-                    <el-button type="text" size="mini"  @click="onDelete(row)">删除</el-button>
+                    <el-button type="text" size="mini"  @click="onDelete(row)"{{$t('commons.delete')}}/el-button>
                     <el-button type="text" size="mini" @click="popup('update', row)">修改</el-button>
                     <el-button type="text" size="mini" v-if="row.statu == 2">启用</el-button>
                 </template>

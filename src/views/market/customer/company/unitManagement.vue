@@ -104,7 +104,7 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="disableItem(row)">禁用</el-dropdown-item>
-                <el-dropdown-item @click.native="delItem(row)">删除</el-dropdown-item>
+                <el-dropdown-item @click.native="delItem(row)"{{$t('commons.delete')}}/el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -723,7 +723,7 @@ export default {
           this.$F.doRequest(this, "/pms/hotelenter/edit", params, (res) => {
             this.setCompanyFormVisible = false;
             this.$message({
-              message: "操作成功",
+              message: this.$t('commons.request_success'),
               type: "success",
             });
             this.getDataList();
@@ -752,7 +752,7 @@ export default {
             },
             (res) => {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
               });
               this.getDataList();
@@ -776,7 +776,7 @@ export default {
             },
             (res) => {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
               });
               this.getDataList();
@@ -812,7 +812,7 @@ export default {
             this.setBatchForm,
             (data) => {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
               });
             }
@@ -831,7 +831,7 @@ export default {
         this.setBatchFormVisible = false;
         this.getDataList();
         this.$message({
-          message: "操作成功",
+          message: this.$t('commons.request_success'),
           type: "success",
         });
       });

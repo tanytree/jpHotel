@@ -339,9 +339,9 @@ export default {
                if(res.orderId){
                  this.cart = []
                  this.getDataList();
-                 this.alert(200,'操作成功！')
+                 this.alert(200, this.$t('commons.request_success'))
                }else{
-                 this.alert(0,'提交失败！')
+                 this.alert(200, this.$t('commons.request_fail'))
                }
             });
 

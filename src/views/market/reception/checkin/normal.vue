@@ -303,7 +303,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="180">
                     <template slot-scope="scope">
-                        <el-button type="text" size="mini" @click="" v-if="scope.row.isChild && !scope.row.isIndex0">删除</el-button>
+                        <el-button type="text" size="mini" @click="" v-if="scope.row.isChild && !scope.row.isIndex0"{{$t('commons.delete')}}/el-button>
                         <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
                             <template>+同来宾客</template>
                         </el-button>
@@ -732,10 +732,10 @@ export default {
                             } else {
                                 this.$router.push('/bookingDetail?id=' + (data.checkInReserveId || data.checkinId));
                             }
-                        }, 2000)
+                        }, 500)
                     } else if (type == 3) {
                         this.$message({
-                            message: '办理成功',
+                            message: this.$t('commons.request_success'),
                             type: 'success'
                         });
                         this.initForm();
@@ -972,11 +972,7 @@ export default {
                 }
             }
             this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
-                let data = res
-                // this.$message({
-                //     message: '排房成功',
-                //     type: 'success'
-                // });
+                let data = res;
                 for (let k in data) {
                     let ids = [];
                     data[k].forEach((item) => {
@@ -1090,7 +1086,7 @@ export default {
             };
             this.$F.doRequest(this, '/pms/checkin/make_card_status', params, (res) => {
                 this.$message({
-                    message: '制卡成功',
+                    message: this.$t('commons.request_success'),
                     type: 'success'
                 });
                 this.$forceUpdate()

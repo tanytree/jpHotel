@@ -5,6 +5,8 @@
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
+    delete_batch: '一括削除を確定する',
+    delete_single: '削除操作の実行を確定する',
     request_success: '成功を請う',
     request_fail: '失敗を請求する',
     cancel: '取り消し',

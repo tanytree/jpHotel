@@ -328,19 +328,6 @@ export default {
                 this.$forceUpdate()
             })
         },
-        del_live_in_person(item) {
-            let params = {
-                checkInPersonId: item.id,
-            };
-            this.$F.doRequest(this, '/pms/checkin/delete_live_in_person', params, (res) => {
-                this.$message({
-                    message: '移除成功',
-                    type: 'success'
-                });
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
-        },
         edit_live_in_person() {
             this.liveData2 = [];
             let tempArray = this.$F.deepClone(this.liveInPersonData);

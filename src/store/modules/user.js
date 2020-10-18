@@ -95,7 +95,7 @@ const actions = {
         const { data } = response
 
         if (!data) {
-          reject('验证失败，请重新登录。')
+          reject('検証に失敗したので、再登録してください。')
         }
 
         const { roles, name } = data

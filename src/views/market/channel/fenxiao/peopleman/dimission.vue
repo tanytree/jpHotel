@@ -50,7 +50,7 @@
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="details=true">详情</el-button>
                     <el-button type="text" size="mini">重新入职</el-button>
-                    <el-button type="text" size="mini">删除</el-button>
+                    <el-button type="text" size="mini"{{$t('commons.delete')}}/el-button>
                 </template>
             </el-table-column>
         </el-table>

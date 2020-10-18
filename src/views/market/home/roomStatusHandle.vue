@@ -166,7 +166,7 @@ export default {
                   this.visible = false
                   this.$message({
                     type: 'success',
-                    message: '操作成功!'
+                    message: this.$t('commons.request_success')
                 });
             })
 

@@ -621,7 +621,7 @@
           .then(res => {
             if (res.code == 200) {
               this.$message({
-                message: '删除成功',
+                message: this.$t('commons.request_success'),
                 type: 'success'
               })
               this.department_list()
@@ -783,7 +783,7 @@
               this.department_list()
               this.$forceUpdate()
               this.$message({
-                message: '操作成功',
+                message: this.$t('commons.request_success'),
                 type: 'success'
               })
               //console.log(JSON.stringify(this.setDepartmentList))

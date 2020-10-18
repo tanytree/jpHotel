@@ -413,7 +413,7 @@ export default {
                 this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
                     this.$router.go(-1)
                     this.$message({
-                        message: '操作成功',
+                       message: this.$t('commons.request_success'),
                         type: 'success'
                     });
                 })
@@ -429,7 +429,7 @@ export default {
             this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
                 this.noShowDiaShow = false
                 this.$message({
-                    message: '操作成功',
+                   message: this.$t('commons.request_success'),
                     type: 'success'
                 });
                 this.$router.go(-1)

@@ -243,7 +243,7 @@ export default {
             return item.id;
           });
       this.$confirm(
-        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
+          id ? this.$t('commons.delete_single') : this.$t('commons.delete_batch'),
         "提示",
         {
           confirmButtonText: "确定",
@@ -259,7 +259,7 @@ export default {
           }).then(data => {
             if (data && data.code ==200) {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
                 duration: 1500,
                 onClose: () => {

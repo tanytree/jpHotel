@@ -483,7 +483,7 @@ export default {
                 this.noShowDiaShow = false;
                 this.getDataList();
                 this.$message({
-                    message: "操作成功",
+                    message: this.$t('commons.request_success'),
                     type: "success",
                 });
             });
@@ -507,7 +507,7 @@ export default {
                         (res) => {
                             this.getDataList();
                             this.$message({
-                                message: "操作成功",
+                                message: this.$t('commons.request_success'),
                                 type: "success",
                             });
                         }
@@ -534,7 +534,7 @@ export default {
                         (res) => {
                             this.getDataList();
                             this.$message({
-                                message: "操作成功",
+                                message: this.$t('commons.request_success'),
                                 type: "success",
                             });
                         }
@@ -557,7 +557,7 @@ export default {
                     this.$F.doRequest( this, "/pms/reserve/reserve_oper", params, (res) => {
                             this.getDataList();
                             this.$message({
-                                message: "操作成功",
+                                message: this.$t('commons.request_success'),
                                 type: "success",
                             });
                         }
@@ -584,7 +584,7 @@ export default {
                         (res) => {
                             this.getDataList();
                             this.$message({
-                                message: "操作成功",
+                                message: this.$t('commons.request_success'),
                                 type: "success",
                             });
                         }

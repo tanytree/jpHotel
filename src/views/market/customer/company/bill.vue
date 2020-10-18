@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账套管理  -->  
+<!--  前台部 > 客户管理 > 单位管理 > 账套管理  -->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -929,7 +929,7 @@ export default {
         params,
         (data) => {
           console.log(data);
-          this.$message.success("操作成功");
+          this.$message.success(this.$t('commons.request_success'));
           this.getDataList();
         }
       );

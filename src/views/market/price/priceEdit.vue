@@ -78,7 +78,7 @@ export default {
       }).then(data => {
         if (data && data.code == 200) {
           this.$message({
-            message: "操作成功",
+            message: this.$t('commons.request_success'),
             type: "success",
             duration: 1500,
             onClose: () => {

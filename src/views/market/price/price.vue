@@ -41,7 +41,7 @@
           :data="tableData"
           tooltip-effect="dark"
           :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-         
+
           v-loading="dataListLoading"
           @selection-change="selectionChangeHandle"
         >
@@ -92,7 +92,7 @@ export default {
       priceImportisible: false,
       priceEditvsible: false,
 
-      
+
       showTop: false,
       tableData: [],
       pageIndex: 1,
@@ -132,7 +132,7 @@ export default {
         this.$refs.priceEdit.init(id);
       });
     },
-  
+
     getDataList() {
       this.dataListLoading = true;
       this.$http({
@@ -186,7 +186,7 @@ export default {
             return item.roleId;
           });
       this.$confirm(
-        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
+          id ? this.$t('commons.delete_single') : this.$t('commons.delete_batch'),
         "提示",
         {
           confirmButtonText: "确定",
@@ -202,7 +202,7 @@ export default {
           }).then(data => {
             if (data && data.code ==200) {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
                 duration: 1500,
                 onClose: () => {

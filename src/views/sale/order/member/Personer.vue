@@ -63,7 +63,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="220">
                     <template slot-scope="{row}">
-                        <el-button type="text" size="mini" @click="onDelete(row)">删除</el-button>
+                        <el-button type="text" size="mini" @click="onDelete(row)"{{$t('commons.delete')}}/el-button>
                         <el-button type="text" size="mini" @click="Newdata(row, 'edit')">修改</el-button>
                     </template>
                 </el-table-column>

@@ -60,7 +60,7 @@
           <template slot-scope="{row}">
             <el-button type="text" size="mini">详情</el-button>
             <el-button type="text" size="mini">立即报价</el-button>
-            <el-button type="text" size="mini" @click="deleteHandle(row.id)">删除</el-button>
+            <el-button type="text" size="mini" @click="deleteHandle(row.id)"{{$t('commons.delete')}}/el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -122,7 +122,7 @@ export default {
             return item.id;
           });
       this.$confirm(
-        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
+          id ? this.$t('commons.delete_single') : this.$t('commons.delete_batch'),
         "提示",
         {
           confirmButtonText: "确定",
@@ -134,7 +134,7 @@ export default {
           del_collect_info({ id: ids }).then(data => {
             if (data && data.code ==200) {
               this.$message({
-                message: "操作成功",
+                message: this.$t('commons.request_success'),
                 type: "success",
                 duration: 1500,
                 onClose: () => {
