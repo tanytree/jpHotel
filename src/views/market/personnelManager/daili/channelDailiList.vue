@@ -31,7 +31,7 @@
           <template slot-scope="{row}">
             <el-button size="mini" @click="lookDetail(row.id)">详情</el-button>
             <el-button size="mini" @click="levleEdit(row)">等级修改</el-button>
-            <el-button size="mini" @click="deleteHandle(row.id)"{{$t('commons.delete')}}/el-button>
+            <el-button size="mini" @click="deleteHandle(row.id)">{{$t('commons.delete')}}</el-button>
           </template>
         </el-table-column>
       </el-table>

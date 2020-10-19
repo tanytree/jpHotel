@@ -20,10 +20,6 @@
                                           :disabled="$i18n.locale == 'ri'">日本語</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
-                <!-- <el-select v-model="language" placeholder="请选择" @change="languageChange">
-                  <el-option label="中文" value="zh"> </el-option>
-                  <el-option label="日文" value="ri"> </el-option>
-                </el-select> -->
 			</span>
             <span class="itemTxt rightItem" @click="itemClick('organization')" v-if="(user.userType == 3 && user.storesNum != $F.getHQCode()) || (user.account == 'admin' && user.storesNum == $F.getHQCode())">
                 <img src="@/assets/images/topBanner/zuzhi.png" alt/>
@@ -107,6 +103,7 @@
           })
       },
       itemClick (name) {
+          debugger
         this.$router.push('/' + name)
       },
     }

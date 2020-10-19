@@ -17,9 +17,6 @@
                             <li :key="index" @click="departClick(item)" :class="{on:activeLeftDepartMent.id==item.id}">
                                 <p>{{item.menuTitle}}</p>
                             </li>
-                            <!-- <li :key="index" v-contextmenu:contextmenu @contextmenu="getDepartInfo(item)" @click="departClick(item)" :class="{on:activeLeftDepartMent.id==item.id}">
-                                <p>{{item.menuTitle}}</p>
-                            </li> -->
                         </template>
                     </ul>
                 </div>
@@ -327,7 +324,6 @@
         },
         addAndEditForm: {
           type: 'add',
-          salesFlag:'',
           accountId: '',
           userName: '',
           account: '',
@@ -356,6 +352,7 @@
     created () {
     },
     mounted () {
+        debugger
       this.department_list()
       this.fetchStoresUserCount()
       if (this.$route.name == 'employeeList') {

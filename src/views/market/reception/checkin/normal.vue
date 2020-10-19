@@ -303,7 +303,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="180">
                     <template slot-scope="scope">
-                        <el-button type="text" size="mini" @click="" v-if="scope.row.isChild && !scope.row.isIndex0"{{$t('commons.delete')}}/el-button>
+                        <el-button type="text" size="mini" @click="" v-if="scope.row.isChild && !scope.row.isIndex0">{{$t('commons.delete')}}</el-button>
                         <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
                             <template>+同来宾客</template>
                         </el-button>

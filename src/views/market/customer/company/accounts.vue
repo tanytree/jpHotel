@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账务处理   --> 
+<!--  前台部 > 客户管理 > 单位管理 > 账务处理   -->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -13,7 +13,7 @@
       >
         <el-form-item label="挂账单位">
           <el-select v-model="searchForm.enterId" class="width150">
-            <el-option label="全部" value></el-option>
+           <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item,index) in unitList"
               :key="index"

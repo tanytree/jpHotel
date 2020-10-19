@@ -58,7 +58,7 @@
           <template slot-scope="{row}">
             <el-button type="text" size="mini">合同要素编辑</el-button>
             <el-button type="text" size="mini">合同邀请</el-button>
-            <el-button type="text" size="mini" @click="deleteHandle(row.id)"{{$t('commons.delete')}}/el-button>
+            <el-button type="text" size="mini" @click="deleteHandle(row.id)">{{$t('commons.delete')}}</el-button>
           </template>
         </el-table-column>
       </el-table>

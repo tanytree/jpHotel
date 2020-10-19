@@ -86,7 +86,7 @@
                   type="text"
                   size="mini"
                   @click="clickDelete(row)"
-                {{$t('commons.delete')}}/el-button>
+                >{{$t('commons.delete')}}</el-button>
               </template>
             </el-table-column>
           </el-table>

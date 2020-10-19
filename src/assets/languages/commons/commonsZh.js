@@ -5,7 +5,9 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    checkAll: '全选',
     placeChoose: '请选择',
+    serve_other: '其它',
     confirm_delete: '确定删除吗？',
     tip_desc: '提示',
     request_success: '请求成功',

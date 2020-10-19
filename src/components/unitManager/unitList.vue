@@ -277,21 +277,16 @@ export default {
         ],
         time: [{ required: true, message: "请选择时间", trigger: "blur" }],
       },
-      weekDays: [
-        { label: "全选", value: "" },
-        { label: "周一", value: "1" },
-        { label: "周二", value: "2" },
-        { label: "周三", value: "3" },
-        { label: "周四", value: "4" },
-        { label: "周五", value: "5" },
-        { label: "周六", value: "6" },
-        { label: "周日", value: "7" },
-      ],
+      weekDays: [],
       dialogDetail: false,
       detail_info: {},
     };
   },
   mounted() {
+      this.weekDays.push({ label: this.$t('commons.checkAll'), value: "" });
+      this.$t('commons.weeks').forEach((item, i) => {
+          this.weekDays.push( { label: item, value: (i + 1)});
+      })
     this.tableData = [];
     this.ruleForm.roomStrategyJson = [];
     this.get_price_enter_strategy_list();

@@ -15,9 +15,9 @@
           <el-select
             v-model="searchForm.storesNum"
             class="width150"
-            placeholder="请选择"
+            :placeholder="$t('commons.placeChoose')"
           >
-            <el-option label="全部" value></el-option>
+           <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item, index) in storeList"
               :key="index"
@@ -30,9 +30,9 @@
           <el-select
             v-model="searchForm.enterId"
             class="width150"
-            placeholder="请选择"
+            :placeholder="$t('commons.placeChoose')"
           >
-            <el-option label="全部" value>全部</el-option>
+              <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item, index) in unitList"
               :key="index"
@@ -43,7 +43,7 @@
         </el-form-item>
         <el-form-item label="结账状态">
           <el-select v-model="searchForm.state" class="width150">
-            <el-option label="全部" value></el-option>
+           <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option label="已结" value="1"></el-option>
             <el-option label="未结" value="2"></el-option>
           </el-select>

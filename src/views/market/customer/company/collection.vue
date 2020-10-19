@@ -13,7 +13,7 @@
       >
         <el-form-item label="收款门店">
           <el-select v-model="searchForm.storesNum" class="width150">
-            <el-option label="全部" value></el-option>
+           <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item, index) in storeList"
               :key="index"
@@ -26,10 +26,10 @@
           <el-select
             v-model="searchForm.enterId"
             filterable
-            placeholder="请选择"
+            :placeholder="$t('commons.placeChoose')"
             class="width150"
           >
-            <el-option label="全部" value>全部</el-option>
+            <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item, index) in unitList"
               :key="index"

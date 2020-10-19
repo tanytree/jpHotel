@@ -27,7 +27,7 @@
           <el-form-item label="申请时间">
             <el-date-picker
               type="date"
-              placeholder="请选择"
+              :placeholder="$t('commons.placeChoose')"
               style="width:140px"
               value-format="yyyy-MM-dd"
               class="dateBox"
@@ -36,7 +36,7 @@
             <span>-</span>
             <el-date-picker
               type="date"
-              placeholder="请选择"
+              :placeholder="$t('commons.placeChoose')"
               style="width:140px"
               value-format="yyyy-MM-dd"
               class="dateBox"

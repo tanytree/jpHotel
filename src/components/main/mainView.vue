@@ -101,6 +101,7 @@ export default {
         },
 
         menulfuc(item) {
+            debugger
             if (item.childList && item.childList.length > 0) {
                 this.menul = item;
                 this.routerCompany = "";
@@ -125,6 +126,7 @@ export default {
         },
         //点击左侧导航
         toSection(item) {
+            debugger
             if (item.path) {
                 this.subMenul = item;
                 sessionStorage.sectionid = item.id;
@@ -157,7 +159,8 @@ export default {
             this.$router.push("/");
         },
         // 处理路由
-        calRouter(language) {
+        calRouter(language, action) {
+            debugger
             this.language = language;
             this.$forceUpdate();
             this.partmentId = sessionStorage.partmentId || "";
@@ -169,7 +172,7 @@ export default {
             if (sessionStorage.menul) {
                 this.menul = JSON.parse(sessionStorage.menul) || {};
             }
-            if (sessionStorage.pagePath) {
+            if (sessionStorage.pagePath && action != 'organization') {
                 this.$router.push(sessionStorage.pagePath);
             }
             this.routerCompany = "";
@@ -186,6 +189,7 @@ export default {
         },
 
         resetMenu(menus) {
+            debugger
             if (menus && menus != "undefined") {
                 this.menulfuc(JSON.parse(sessionStorage.menul));
                 // this.toSection(JSON.parse(sessionStorage.subMenul));
@@ -196,6 +200,7 @@ export default {
         }
     },
     created() {
+        debugger
         this.calRouter();
         this.$forceUpdate();
     },
@@ -204,13 +209,14 @@ export default {
     //   this.toSection(this.menul.childList[0])
     // },
     mounted() {
+        debugger
         this.refreshInto = true;
         this.resetMenu(sessionStorage.menul);
     },
     watch: {
         $route(to, from) {
             if (to.name == "main" || to.name == "organization") {
-                this.calRouter();
+                this.calRouter('', to.name);
                 if (to.name == "main") {
                     this.$nextTick(() => {
                         if (this.routermsg) {

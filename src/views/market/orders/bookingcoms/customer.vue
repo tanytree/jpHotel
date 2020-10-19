@@ -113,7 +113,7 @@
             <template slot-scope="scope">
                 <el-button type="text" size="mini" @click="editItem_live_in_person(scope.row)" v-if="scope.row.isChild&&scope.row.edit">保存</el-button>
                 <el-button type="text" size="mini" @click="edit_live_in_person(scope.row.isChild?scope.row:scope.row)" v-if="scope.row.isChild&&!scope.row.edit">编辑</el-button>
-                <el-button type="text" size="mini" @click="del_live_in_person(scope.row)" v-if="scope.row.isChild && !scope.row.isIndex0"{{$t('commons.delete')}}/el-button>
+                <el-button type="text" size="mini" @click="del_live_in_person(scope.row)" v-if="scope.row.isChild && !scope.row.isIndex0">{{$t('commons.delete')}}</el-button>
                 <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
                     <template>+同来宾客</template>
 <!--                    <template v-else>+入住人</template>-->

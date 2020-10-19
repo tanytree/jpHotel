@@ -252,7 +252,7 @@
 									<template slot-scope="scope">
 										<el-button type="text" size="small" @click="popup_kinds">修改</el-button>
 										<el-popconfirm :title="$t('commons.confirm_delete')" @onConfirm="onConfirm">
-											<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)"{{$t('commons.delete')}}/el-button>
+											<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}</el-button>
 										</el-popconfirm>
 									</template>
 								</el-table-column>
@@ -292,7 +292,7 @@
 										<template slot-scope="scope">
 											<el-button type="text" size="small" @click="popup_thing(scope.row)">修改</el-button>
 											<el-popconfirm :title="$t('commons.confirm_delete')" @onConfirm="onConfirm">
-												<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)"{{$t('commons.delete')}}/el-button>
+												<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}</el-button>
 											</el-popconfirm>
 										</template>
 									</el-table-column>
@@ -368,7 +368,7 @@
 										<template slot-scope="scope">
 											<el-button type="text" size="small" @click="popup_thing(scope.row)">编辑</el-button>
 											<el-popconfirm :title="$t('commons.confirm_delete')" @onConfirm="onConfirm">
-												<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)"{{$t('commons.delete')}}/el-button>
+												<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}</el-button>
 											</el-popconfirm>
 										</template>
 									</el-table-column>

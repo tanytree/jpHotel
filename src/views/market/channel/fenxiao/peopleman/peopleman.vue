@@ -59,7 +59,7 @@
                       <el-button type="text" size="mini">详情</el-button>
                       <el-button type="text" size="mini" @click="dimission=true">办理离职</el-button>
                       <el-button type="text" size="mini" @click="correct=true">转正</el-button>
-                      <el-button type="text" size="mini"{{$t('commons.delete')}}/el-button>
+                      <el-button type="text" size="mini">{{$t('commons.delete')}}</el-button>
                   </template>
               </el-table-column>
           </el-table>
@@ -336,7 +336,7 @@
                   <el-row>
                       <el-col >
                         <el-form-item label="离职文件:" >
-                          <el-input placeholder="请选择" style="width:220px" autocomplete="off"></el-input><el-button>选择文件</el-button>
+                          <el-input :placeholder="$t('commons.placeChoose')" style="width:220px" autocomplete="off"></el-input><el-button>选择文件</el-button>
                         </el-form-item>
                     </el-col>
 

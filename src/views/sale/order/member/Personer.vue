@@ -10,7 +10,7 @@
             <el-form :model="form" :inline="true" class="top-body" size="small" label-width="100px">
                 <el-form-item label="会员类型:">
                     <el-select v-model="form.id">
-                        <el-option label="全部" value=""></el-option>
+                        <el-option :label="$t('commons.all')" value=""></el-option>
                         <el-option
                             v-for="item in tableData"
                             :key="item.id"
@@ -63,7 +63,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="220">
                     <template slot-scope="{row}">
-                        <el-button type="text" size="mini" @click="onDelete(row)"{{$t('commons.delete')}}/el-button>
+                        <el-button type="text" size="mini" @click="onDelete(row)">{{$t('commons.delete')}}</el-button>
                         <el-button type="text" size="mini" @click="Newdata(row, 'edit')">修改</el-button>
                     </template>
                 </el-table-column>

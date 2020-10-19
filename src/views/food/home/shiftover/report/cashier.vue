@@ -4,7 +4,7 @@
             <el-row type="flex" class="row-bg">
               <el-col :span="6">
                   <el-radio-group v-model="status" style="margin-bottom: 30px;">
-                      <el-radio-button label="1">全部</el-radio-button>
+                      <el-radio-button label="1">{{$t('commons.all')}}</el-radio-button>
                       <el-radio-button label="2">已结</el-radio-button>
                       <el-radio-button label="3">未结</el-radio-button>
                   </el-radio-group>

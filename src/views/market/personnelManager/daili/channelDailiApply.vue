@@ -40,7 +40,7 @@
           <template slot-scope="scope">
             <el-button size="mini">详情</el-button>
             <el-button size="mini">等级修改</el-button>
-            <el-button size="mini" @click="editPriceF(scope.row)"{{$t('commons.delete')}}/el-button>
+            <el-button size="mini" @click="editPriceF(scope.row)">{{$t('commons.delete')}}</el-button>
           </template>
         </el-table-column>
       </el-table>

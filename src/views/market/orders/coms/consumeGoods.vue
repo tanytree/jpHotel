@@ -16,7 +16,7 @@
                             </el-form-item>
                             <el-form-item label="商品类别：">
                                 <el-select v-model="searchForm.storesNum" style="width:150px">
-                                    <el-option label="全部" value=""></el-option>
+                                    <el-option :label="$t('commons.all')" value=""></el-option>
                                     <!-- <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                                     </el-option> -->
                                 </el-select>

@@ -12,8 +12,8 @@
         label-width="80px"
       >
         <el-form-item label="单位名称">
-          <el-select v-model="searchForm.enterId" filterable placeholder="请选择" class="width150">
-            <el-option label="全部" value>全部</el-option>
+          <el-select v-model="searchForm.enterId" filterable :placeholder="$t('commons.placeChoose')" class="width150">
+            <el-option label="" value>全部</el-option>
             <el-option
               v-for="(item,index) in unitList"
               :key="index"
@@ -141,7 +141,7 @@
       <!-- 上面是内层dialog -->
       <el-form :model="addFrom" ref="outAddForm" class="demo-ruleForm" inline>
         <el-form-item label="单位:">
-          <el-select v-model="addFrom.enterId" filterable placeholder="请选择" class="width150">
+          <el-select v-model="addFrom.enterId" filterable :placeholder="$t('commons.placeChoose')" class="width150">
             <el-option
               v-for="(item,index) in unitList"
               :key="index"
@@ -248,7 +248,7 @@
             size="small"
             style="width:180px"
             disabled
-            placeholder="请选择"
+            :placeholder="$t('commons.placeChoose')"
           >
             <el-option :label="itemInfo.enterName" :value="itemInfo.enterId"></el-option>
           </el-select>

@@ -89,7 +89,7 @@ const goodsUtilsFun = {
           startTime = this.timeDayFun(this.timeStampFun() - 1000 * 60 * 60 * 24 * 15)
         } else if (data == 30) {
           startTime = this.timeDayFun(this.timeStampFun() - 1000 * 60 * 60 * 24 * 30)
-        } 
+        }
         return {
           startTime,
           endTime
@@ -137,7 +137,7 @@ const goodsUtilsFun = {
         let arr = []
         arr.push({
           id: '1',
-          label: '全部分类'
+          label: this.$t('commons.all')
         })
         data.forEach(element => {
             let objOne = {}

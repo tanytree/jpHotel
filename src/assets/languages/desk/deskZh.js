@@ -71,9 +71,6 @@ module.exports = {
     home_all: '全部',
     home_customersCategory: '客源类别',
     home_bookPeople: '预订人',
-    home_: '',
-    home_: '',
-
     //serve(前台服务)
     serve_flightTime: '班次时间',
     serve_chooseDate: '选择日期',

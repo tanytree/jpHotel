@@ -44,7 +44,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="位置筛选:">
-              <el-select style="width: 220px;" v-model="form.region" placeholder="请选择">
+              <el-select style="width: 220px;" v-model="form.region" :placeholder="$t('commons.placeChoose')">
                 <el-option label="全部" value="3">全部</el-option>
                 <el-option label="已认证" value="1">已认证</el-option>
                 <el-option label="未认证" value="2">未认证</el-option>
@@ -53,7 +53,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="所属酒店:">
-              <el-select style="width: 220px;" v-model="form.region" placeholder="请选择">
+              <el-select style="width: 220px;" v-model="form.region" :placeholder="$t('commons.placeChoose')">
                 <el-option label="全部" value="3">全部</el-option>
                 <el-option label="已认证" value="1">已认证</el-option>
                 <el-option label="未认证" value="2">未认证</el-option>

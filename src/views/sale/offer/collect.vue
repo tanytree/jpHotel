@@ -60,7 +60,7 @@
           <template slot-scope="{row}">
             <el-button type="text" size="mini">详情</el-button>
             <el-button type="text" size="mini">立即报价</el-button>
-            <el-button type="text" size="mini" @click="deleteHandle(row.id)"{{$t('commons.delete')}}/el-button>
+            <el-button type="text" size="mini" @click="deleteHandle(row.id)">{{$t('commons.delete')}}</el-button>
           </template>
         </el-table-column>
       </el-table>

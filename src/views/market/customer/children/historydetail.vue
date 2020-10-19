@@ -38,7 +38,7 @@
                         <el-select
                           style="width: 100px; margin-right: 4px"
                           v-model="editorForm.idcardType"
-                          placeholder="请选择"
+                          :placeholder="$t('commons.placeChoose')"
                           size="small"
                         >
                           <el-option
@@ -118,7 +118,7 @@
                         <el-select
                           style="width: 200px"
                           v-model="editorForm.enterId"
-                          placeholder="请选择"
+                          :placeholder="$t('commons.placeChoose')"
                           size="small"
                         >
                           <el-option

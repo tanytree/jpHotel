@@ -30,7 +30,7 @@
                     <div class="grid-content">
                         <el-form-item label="订单来源：" prop="resource">
                             <el-select v-model="checkInForm.enterStatus" class="width200">
-                                <el-option label="全部" value="3">全部</el-option>
+                                <el-option :label="$t('commons.all')" value="3"></el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>
                                 <el-option label="未认证" value="2">未认证</el-option>
                             </el-select>
@@ -41,9 +41,9 @@
                     <div class="grid-content">
                         <el-form-item label="入住类型：">
                             <el-select v-model="checkInForm.enterStatus" class="width200">
-                                <el-option label="全部" value="3">全部</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option :label="$t('commons.all')" value="3"></el-option>
+                                <el-option label="已认证" value="1"></el-option>
+                                <el-option label="未认证" value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </div>
@@ -130,9 +130,9 @@
                         <el-row>
                             <el-button>可改房价</el-button>&nbsp;&nbsp;
                             <el-select v-model="checkInForm.enterStatus" placeholder="床位数">
-                                <el-option label="全部" value="3">床位数</el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option :label="$t('commons.all')" value="3"></el-option>
+                                <el-option label="已认证" value="1"></el-option>
+                                <el-option label="未认证" value="2"></el-option>
                             </el-select>
                         </el-row>
                         <br />

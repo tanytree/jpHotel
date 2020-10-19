@@ -12,7 +12,7 @@
         <el-col :span="5">
           <el-form-item label="会员类型：">
               <el-select v-model="form.id">
-                  <el-option label="全部" value=""></el-option>
+                  <el-option :label="$t('commons.all')" value=""></el-option>
                   <el-option
                       v-for="item in memberTypeList"
                       :key="item.id"

@@ -13,7 +13,7 @@
         <el-form inline size="small" label-width="80px">
             <el-row>
                 <el-form-item label="交班模式">
-                    <el-tag>全部</el-tag>&nbsp;&nbsp;
+                    <el-tag>{{$t('commons.all')}}</el-tag>&nbsp;&nbsp;
                     <el-tag>现金流</el-tag>&nbsp;&nbsp;
                     <el-tag>应收</el-tag>&nbsp;&nbsp;
                     <el-tag>实收</el-tag>&nbsp;&nbsp;

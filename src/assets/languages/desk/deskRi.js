@@ -67,7 +67,7 @@ module.exports = {
     home_pushAnd: '催促',
     home_nowCall: '追加催促',
     home_name: '名前',
-    home_all: 'all',
+    home_all: 'ぜんぶ',
     //serve(前台服务)
     serve_flightTime: 'シフト時間（フロント会計）',
     serve_chooseDate: '期間設定',

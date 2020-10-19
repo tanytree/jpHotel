@@ -42,7 +42,7 @@
         <br />
         <el-form-item label="发生门店:">
           <el-select v-model="searchForm.storesNum" class="width150" style="width:140px">
-            <el-option label="全部" value></el-option>
+              <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item,index) in storeList"
               :key="index"
@@ -53,7 +53,7 @@
         </el-form-item>
         <el-form-item label="操作类型:">
           <el-select v-model="searchForm.consumeType" class="width150" style="width:140px">
-            <el-option label="全部" value></el-option>
+              <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option label="增加" value="2"></el-option>
             <el-option label="扣除" value="1"></el-option>
           </el-select>
@@ -64,7 +64,7 @@
         </el-form-item>
         <el-form-item label="业务说明:">
           <el-select v-model="searchForm.remark" class="width150" style="width:140px">
-            <el-option label="全部" value></el-option>
+              <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option label="房费获得" value="房费获得"></el-option>
             <el-option label="会议厅获得" value="会议厅获得"></el-option>
             <el-option label="餐费获得" value="餐费获得"></el-option>

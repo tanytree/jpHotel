@@ -11,7 +11,7 @@
                          :name="item.path"
                          :key="item.path"
                          v-if="$F.filterThirdMenu('finance', item.path, true)">
-                <!-- 财务慨览-->
+<!--                &lt;!&ndash; 财务慨览&ndash;&gt;-->
                 <incomeStatus ref="incomes" v-if="item.path == 'overView'" :list="list" :initData="getFinancialData"/>
                 <!-- 记一笔-->
                 <record v-if="item.path == 'makeNote'" :list="remember" :initData="getRememberData"/>
