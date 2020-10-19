@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-15 14:14:33
+ * @LastEditTime: 2020-10-19 14:51:44
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -11,9 +11,9 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item label="创建门店">
+        <el-form-item :label="$t('desk.customer_createStore') + ':'">
           <el-select v-model="searchForm.storesNum" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="item in storeList"
               :key="item.storesNum"
@@ -22,7 +22,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="客人类型">
+        <el-form-item :label="$t('desk.customer_guestType') + ':'">
           <el-radio-group v-model="searchForm.guestType" class="width300">
             <el-radio
               v-for="(value, key, index) of $t('commons.guestType')"
@@ -32,9 +32,9 @@
             >
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="黑名单">
+        <el-form-item :label="$t('desk.customer_isBlack') + ':'">
           <el-select v-model="searchForm.isBlacklist" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="(label, value) in $t('frontOffice.isBlacklist')"
               :label="label"
@@ -43,20 +43,20 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="姓名">
+        <el-form-item :label="$t('desk.home_name') + ':'">
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="手机号">
+        <el-form-item :label="$t('desk.order_moblePhone') + ':'">
           <el-input v-model="searchForm.mobile" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="证件类型">
+        <el-form-item :label="$t('desk.customer_documentType') + ':'">
           <el-select
             v-model="searchForm.idcardType"
-            placeholder="请选择证件类型"
+            :placeholder="$t('commons.placeChoose')"
             class="width300"
           >
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="(label, value) in $t('commons.idCardType')"
               :label="label"
@@ -65,19 +65,19 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="证件号">
+        <el-form-item :label="$t('desk.customer_documentNum') + ':'">
           <el-input v-model="searchForm.idcard" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList"
-            >查询</el-button
-          >
-          <el-button type="primary" class="white" @click="initForm"
-            >重置</el-button
-          >
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="white" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button plain>读会员卡</el-button>
+          <el-button plain>{{ $t("desk.customer_readMemCard") }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -92,21 +92,26 @@
         <el-table-column
           prop="name"
           align="center"
-          label="姓名"
+          :label="$t('desk.home_name')"
           width="120"
         ></el-table-column>
-        <el-table-column prop="sex" align="center" label="性别" width="100">
+        <el-table-column
+          prop="sex"
+          align="center"
+          :label="$t('desk.customer_sex')"
+          width="100"
+        >
           <template slot-scope="{ row }">{{ row.sex | F_sex }}</template>
         </el-table-column>
         <el-table-column
           prop="mobile"
-          label="手机号"
+          :label="$t('desk.home_phoneNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="idcardType"
           align="center"
-          label="证件类型"
+          :label="$t('desk.customer_documentType')"
           width="120"
         >
           <template slot-scope="{ row }">{{
@@ -115,19 +120,19 @@
         </el-table-column>
         <el-table-column
           prop="idcard"
-          label="证件号"
+          :label="$t('desk.customer_documentNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="memberObject.birthday"
           align="center"
-          label="生日"
+          :label="$t('desk.customer_brithday')"
           width="120"
         ></el-table-column>
         <el-table-column
           prop="guestType"
           align="center"
-          label="客人类型"
+          :label="$t('desk.customer_guestType')"
           width="100"
         >
           <template slot-scope="{ row }">{{
@@ -137,23 +142,34 @@
         <el-table-column
           prop="memberCard"
           align="center"
-          label="会员卡卡号"
+          :label="$t('desk.customer_memeberCardNum')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="storesNum" label="所属门店">
+        <el-table-column
+          prop="storesNum"
+          :label="$t('desk.customer_belongStore')"
+        >
           <template slot-scope="{ row }">{{
             F_storeName(row.storesNum)
           }}</template>
         </el-table-column>
-        <el-table-column align="center" label="累计消费" width="100">
+        <el-table-column
+          align="center"
+          :label="$t('desk.customer_cumulative')"
+          width="100"
+        >
           <template slot-scope="{ row }">{{
             row.consumeTotalPrice ? row.consumeTotalPrice : "0"
           }}</template>
         </el-table-column>
-        <el-table-column align="center" label="是否黑名单" width="120">
+        <el-table-column
+          align="center"
+          :label="$t('desk.customer_ifBalckName')"
+          width="120"
+        >
           <template slot-scope="{ row }">
             <div v-if="row.memberObject && row.memberObject.isBlacklist == 2">
-              是
+              {{ $t("desk.customer_yes") }}
             </div>
             <div
               v-if="
@@ -162,36 +178,37 @@
                   !row.memberObject.isBlacklist)
               "
             >
-              否
+              {{ $t("desk.customer_no") }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop label="操作" width="200">
+        <el-table-column prop :label="$t('commons.operating')" width="200">
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="handleHistory(row)"
-              >客史</el-button
+            <el-button type="text" size="mini" @click="handleHistory(row)">
+              {{ $t("desk.customer_guestHistory") }}</el-button
             >
-            <el-button type="text" size="mini" @click="handleDetail(row)"
-              >详情</el-button
-            >
+            <el-button type="text" size="mini" @click="handleDetail(row)">{{
+              $t("commons.detail")
+            }}</el-button>
             <el-dropdown>
               <span class="el-dropdown-link">
-                更多
+                {{ $t("desk.customer_more") }}
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="handleEdit(row)"
-                  >修改</el-dropdown-item
-                >
+                <el-dropdown-item @click.native="handleEdit(row)">{{
+                  $t("commons.modify")
+                }}</el-dropdown-item>
                 <el-dropdown-item
                   v-if="!row.memberCard"
                   @click.native="changeIntoMember(row)"
-                  >转为会员</el-dropdown-item
+                >
+                  {{ $t("desk.customer_changeMem") }}</el-dropdown-item
                 >
                 <el-dropdown-item
                   @click.native="handelblacklist(row)"
                   v-if="1 == 2"
-                  >拉黑</el-dropdown-item
+                  >{{ $t("desk.customer_pullBlack") }}</el-dropdown-item
                 >
               </el-dropdown-menu>
             </el-dropdown>
@@ -213,7 +230,11 @@
     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
-      :title="detailForm.type == 'add' ? '转为会员' : '详情'"
+      :title="
+        detailForm.type == 'add'
+          ? $t('desk.customer_changeMem')
+          : $t('commons.detail')
+      "
       :visible.sync="setMemberFormVisible"
       class="setMemberForm"
       width="60%"
@@ -228,7 +249,11 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="姓名：" class prop="name">
+              <el-form-item
+                :label="$t('desk.home_name') + ':'"
+                class
+                prop="name"
+              >
                 <el-input
                   v-model="detailForm.name"
                   class="width200"
@@ -238,7 +263,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="电话：" class prop="mobile">
+              <el-form-item
+                :label="$t('desk.customer_telephone') + ':'"
+                class
+                prop="mobile"
+              >
                 <el-input
                   v-model="detailForm.mobile"
                   class="width200"
@@ -248,7 +277,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="证件类型：" class prop="idcardType">
+              <el-form-item
+                :label="$t('desk.customer_documentType') + ':'"
+                class
+                prop="idcardType"
+              >
                 <el-select
                   v-model="detailForm.idcardType"
                   class="width200"
@@ -267,7 +300,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="证件号：" class prop="idcard">
+              <el-form-item
+                :label="$t('desk.customer_documentNum') + ':'"
+                class
+                prop="idcard"
+              >
                 <el-input
                   v-model="detailForm.idcard"
                   class="width200"
@@ -277,7 +314,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="会员卡号：" class prop="memberCard">
+              <el-form-item
+                :label="$t('desk.customer_memeberCardNum') + ':'"
+                class
+                prop="memberCard"
+              >
                 <el-input
                   v-model="detailForm.memberCard"
                   class="width200"
@@ -287,7 +328,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="会员类型：" class prop="memberTypeId">
+              <el-form-item
+                :label="$t('desk.customer_memType') + ':'"
+                class
+                prop="memberTypeId"
+              >
                 <el-select
                   v-model="detailForm.memberTypeId"
                   class="width200"
@@ -312,7 +357,7 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="性别：">
+              <el-form-item :label="$t('desk.customer_sex') + ':'">
                 <el-radio-group
                   v-model="detailForm.sex"
                   v-if="detailForm.type == 'add'"
@@ -328,12 +373,12 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="生日：">
+              <el-form-item :label="$t('desk.customer_brithday') + ':'">
                 <el-date-picker
                   v-model="detailForm.birthday"
                   value-format="yyyy-MM-dd"
                   type="date"
-                  placeholder="选择日期"
+                  :placeholder="$t('desk.serve_chooseDate')"
                   class="width200"
                   v-if="detailForm.type == 'add'"
                 ></el-date-picker>
@@ -341,7 +386,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="邮箱：">
+              <el-form-item :label="$t('desk.customer_email') + ':'">
                 <el-input
                   v-model="detailForm.email"
                   class="width200"
@@ -353,7 +398,7 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="国籍：">
+              <el-form-item :label="$t('desk.customer_international') + ':'">
                 <el-select
                   v-model="detailForm.nationality"
                   class="width200"
@@ -372,7 +417,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="地址：">
+              <el-form-item :label="$t('desk.customer_address') + ':'">
                 <el-input
                   v-model="detailForm.address"
                   class="width200"
@@ -384,7 +429,7 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="车牌号：">
+              <el-form-item :label="$t('desk.customer_carNum') + ':'">
                 <el-input
                   v-model="detailForm.carNum"
                   class="width200"
@@ -394,7 +439,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="爱好：">
+              <el-form-item :label="$t('desk.customer_hoppy') + ':'">
                 <el-input
                   v-model="detailForm.hobby"
                   class="width200"
@@ -406,7 +451,7 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="所属单位：">
+              <el-form-item :label="$t('desk.customer_subordinateUnits') + ':'">
                 <el-select
                   v-model="detailForm.enterId"
                   class="width200"
@@ -423,7 +468,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="备注：">
+              <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input
                   type="textarea"
                   v-model="detailForm.remark"
@@ -439,7 +484,7 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="销售员：">
+              <el-form-item :label="$t('desk.order_salesman') + ':'">
                 <el-select
                   v-model="detailForm.salesId"
                   v-if="detailForm.type == 'add'"
@@ -455,7 +500,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="发展途径：">
+              <el-form-item :label="$t('desk.customer_developmentWay') + ':'">
                 <el-select
                   v-model="detailForm.getWay"
                   v-if="detailForm.type == 'add'"
@@ -475,16 +520,23 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="立即发卡：" prop="state">
+              <el-form-item
+                :label="$t('desk.customer_creditCard') + ':'"
+                prop="state"
+              >
                 <el-radio-group
                   v-model="detailForm.state"
                   v-if="detailForm.type == 'add'"
                 >
-                  <el-radio label="1">是</el-radio>
-                  <el-radio label="2">待启用</el-radio>
+                  <el-radio label="1">{{ $t("desk.customer_yes") }}</el-radio>
+                  <el-radio label="2">{{
+                    $t("desk.customer_waiteUse")
+                  }}</el-radio>
                 </el-radio-group>
                 <template v-else>{{
-                  detailForm.state == 1 ? "是" : "待启用"
+                  detailForm.state == 1
+                    ? $t("desk.customer_yes")
+                    : $t("desk.customer_waiteUse")
                 }}</template>
               </el-form-item>
             </el-col>
@@ -492,15 +544,24 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="detailForm.type == 'add'">
-        <el-button @click="setMemberFormVisible = false">关闭</el-button>
-        <el-button type="primary" @click="addItem('setMemberForm')"
-          >确认</el-button
-        >
+        <el-button @click="setMemberFormVisible = false">{{
+          $t("commons.close")
+        }}</el-button>
+        <el-button type="primary" @click="addItem('setMemberForm')">{{
+          $t("commons.confirm")
+        }}</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="新增客人黑名单" :visible.sync="setBlackShow" top="0">
+    <el-dialog
+      :title="$t('desk.customer_newCusBlackName')"
+      :visible.sync="setBlackShow"
+      top="0"
+    >
       <el-form :model="setBlackForm" ref="setBlackForm">
-        <el-form-item label="拉黑备注：" required="true">
+        <el-form-item
+          :label="$t('desk.customer_pullBlackRemark') + ':'"
+          required="true"
+        >
           <el-input
             type="textarea"
             v-model="setBlackForm.remark"
@@ -510,7 +571,9 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addblacklist">确 定</el-button>
+        <el-button type="primary" @click="addblacklist">{{
+          $t("commons.determine")
+        }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -556,92 +619,7 @@ export default {
       detailForm: {
         name: "",
       },
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "请输入姓名",
-            trigger: "blur",
-          },
-        ],
-        sex: [
-          {
-            required: true,
-            message: "请选择性别",
-            trigger: "change",
-          },
-        ],
-        idcardType: [
-          {
-            required: true,
-            message: "请选择证件类型",
-            trigger: "change",
-          },
-        ],
-        idcard: [
-          {
-            required: true,
-            message: "请填入证件编号",
-            trigger: "blur",
-          },
-        ],
-        mobile: [
-          {
-            required: true,
-            message: "请输入手机号",
-            trigger: "blur",
-          },
-        ],
-        memberCard: [
-          {
-            required: true,
-            message: "请输入会员卡号",
-            trigger: "blur",
-          },
-        ],
-        memberTypeId: [
-          {
-            required: true,
-            message: "请选择会员类型",
-            trigger: "change",
-          },
-        ],
-        state: [
-          {
-            required: true,
-            message: "请选择是否立即发卡",
-            trigger: "change",
-          },
-        ],
-        remark: [
-          {
-            required: true,
-            message: "请填写备注",
-            trigger: "blur",
-          },
-        ],
-        payPrices: [
-          {
-            required: true,
-            message: "请填写支付金额",
-            trigger: "blur",
-          },
-        ],
-        payWay: [
-          {
-            required: true,
-            message: "请选择支付方式",
-            trigger: "change",
-          },
-        ],
-        operType: [
-          {
-            required: true,
-            message: "请选择操作类型",
-            trigger: "change",
-          },
-        ],
-      },
+
       setBlackForm: {
         remark: "",
       },
@@ -649,6 +627,96 @@ export default {
 
       currentItem: "",
     };
+  },
+  computed: {
+    rules() {
+      return {
+        name: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputName"),
+            trigger: "blur",
+          },
+        ],
+        sex: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseSex"),
+            trigger: "change",
+          },
+        ],
+        idcardType: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseCard"),
+            trigger: "change",
+          },
+        ],
+        idcard: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputCardNum"),
+            trigger: "blur",
+          },
+        ],
+        mobile: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputPhone"),
+            trigger: "blur",
+          },
+        ],
+        memberCard: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputMemNum"),
+            trigger: "blur",
+          },
+        ],
+        memberTypeId: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseMemType"),
+            trigger: "change",
+          },
+        ],
+        state: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseIfcard"),
+            trigger: "change",
+          },
+        ],
+        remark: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputRemark"),
+            trigger: "blur",
+          },
+        ],
+        payPrices: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputPayPrice"),
+            trigger: "blur",
+          },
+        ],
+        payWay: [
+          {
+            required: true,
+            message: this.$t("desk.customer_choosePayType"),
+            trigger: "change",
+          },
+        ],
+        operType: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseOpearType"),
+            trigger: "change",
+          },
+        ],
+      };
+    },
   },
   mounted() {
     this.initForm();
@@ -700,7 +768,7 @@ export default {
     },
     addblacklist() {
       if (!this.setBlackForm.remark) {
-        this.$message.error("请输入备注信息");
+        this.$message.error(this.$t("desk.customer_inputRemark"));
         return;
       }
       this.$F.doRequest(
@@ -779,7 +847,7 @@ export default {
             this.detailForm,
             (res) => {
               this.$message({
-                message: this.$t('commons.request_success'),
+                message: this.$t("commons.request_success"),
                 type: "success",
               });
               this.setMemberFormVisible = false;
@@ -807,7 +875,7 @@ export default {
           },
         });
       } else {
-        this.$message("无记录");
+        this.$message(this.$t("desk.customer_noRecord"));
       }
     },
     handleEdit(item) {

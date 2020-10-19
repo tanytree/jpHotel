@@ -4,14 +4,14 @@
     <div class="booking flex_column">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item label="单位名称">
+        <el-form-item :label="$t('desk.customer_unitName')">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="searchForm.state" class="width150">
             <el-option
               :value="key"
-              v-for="(item,key,index) of $t('commons.comState')"
+              v-for="(item, key, index) of $t('commons.comState')"
               :label="item"
               :key="index"
             ></el-option>
@@ -21,17 +21,23 @@
           <el-select v-model="searchForm.shareFlag" class="width150">
             <el-option
               :value="key"
-              v-for="(item,key,index) of $t('commons.comShareFlag')"
+              v-for="(item, key, index) of $t('commons.comShareFlag')"
               :label="item"
               :key="index"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="联系人">
-          <el-input v-model="searchForm.contactName" class="width150"></el-input>
+          <el-input
+            v-model="searchForm.contactName"
+            class="width150"
+          ></el-input>
         </el-form-item>
         <el-form-item label="手机号">
-          <el-input v-model="searchForm.contactPhone" class="width150"></el-input>
+          <el-input
+            v-model="searchForm.contactPhone"
+            class="width150"
+          ></el-input>
         </el-form-item>
         <br />
         <el-form-item label="销售员">
@@ -45,20 +51,49 @@
           </el-select>
         </el-form-item>
         <el-form-item label="挂账额度">
-          <el-input v-model="searchForm.startCreditLimit" class="width150" style="width:80px"></el-input>至
-          <el-input v-model="searchForm.endCreditLimit" class="width150" style="width:80px"></el-input>
+          <el-input
+            v-model="searchForm.startCreditLimit"
+            class="width150"
+            style="width: 80px"
+          ></el-input
+          >至
+          <el-input
+            v-model="searchForm.endCreditLimit"
+            class="width150"
+            style="width: 80px"
+          ></el-input>
         </el-form-item>
         <el-form-item label="已用额度">
-          <el-input v-model="searchForm.startUsedLimit" class="width150" style="width:80px"></el-input>至
-          <el-input v-model="searchForm.endUsedLimit" class="width150" style="width:80px"></el-input>
+          <el-input
+            v-model="searchForm.startUsedLimit"
+            class="width150"
+            style="width: 80px"
+          ></el-input
+          >至
+          <el-input
+            v-model="searchForm.endUsedLimit"
+            class="width150"
+            style="width: 80px"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
-          <el-button type="primary" class="submit" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList"
+            >查询</el-button
+          >
+          <el-button type="primary" class="submit" @click="initForm"
+            >重置</el-button
+          >
         </el-form-item>
-        <el-form-item style="float:right">
-          <el-button type="primary" class="submit" @click="addAndEditItem('add')">+新增</el-button>
-          <el-button type="primary" class="submit" @click="piliangClick">批量设置</el-button>
+        <el-form-item style="float: right">
+          <el-button
+            type="primary"
+            class="submit"
+            @click="addAndEditItem('add')"
+            >+新增</el-button
+          >
+          <el-button type="primary" class="submit" @click="piliangClick"
+            >批量设置</el-button
+          >
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -66,43 +101,112 @@
         ref="multipleTable"
         v-loading="loading"
         :data="tableData"
-        height="100%" header-row-class-name="default" size="small"
+        height="100%"
+        header-row-class-name="default"
+        size="small"
       >
-        <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="contactName" label="姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="contactPhone" label="手机号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterStrategyId" label="价格策略" show-overflow-tooltip>
-          <template slot-scope="{row}">{{setStrategyName(row.enterStrategyId)}}</template>
+        <el-table-column
+          prop="enterName"
+          label="单位名称"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="storesNum"
+          label="所属门店"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="contactName"
+          label="姓名"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="contactPhone"
+          label="手机号"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="enterStrategyId"
+          label="价格策略"
+          show-overflow-tooltip
+        >
+          <template slot-scope="{ row }">{{
+            setStrategyName(row.enterStrategyId)
+          }}</template>
         </el-table-column>
-        <el-table-column prop="contractNum" label="合同号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="usedLimit" label="已用额度" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="totalLimit" label="总消费" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="totalLimit" label="预收款余额" width="120px"></el-table-column>
+        <el-table-column
+          prop="contractNum"
+          label="合同号"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="creditLimit"
+          label="挂账额度"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="usedLimit"
+          label="已用额度"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="totalLimit"
+          label="总消费"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="totalLimit"
+          label="预收款余额"
+          width="120px"
+        ></el-table-column>
         <el-table-column label="状态" width="80px" align="center">
-          <template slot-scope="{row}">
-            <div>{{row.state==1?'启用':'禁用'}}</div>
+          <template slot-scope="{ row }">
+            <div>{{ row.state == 1 ? "启用" : "禁用" }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="salesName" label="销售员" show-overflow-tooltip align="center">
-          <template slot-scope="{row}">{{setSalesIdName(row.salesId)}}</template>
+        <el-table-column
+          prop="salesName"
+          label="销售员"
+          show-overflow-tooltip
+          align="center"
+        >
+          <template slot-scope="{ row }">{{
+            setSalesIdName(row.salesId)
+          }}</template>
         </el-table-column>
-        <el-table-column prop="shareFlag" label="是否共享" width="100px" align="center">
-          <template slot-scope="{row}">{{row.shareFlag==1?'是':'否'}}</template>
+        <el-table-column
+          prop="shareFlag"
+          label="是否共享"
+          width="100px"
+          align="center"
+        >
+          <template slot-scope="{ row }">{{
+            row.shareFlag == 1 ? "是" : "否"
+          }}</template>
         </el-table-column>
         <el-table-column label="操作" width="160">
-          <template slot-scope="{row}">
-            <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
-            <el-button type="text" size="mini" @click="addAndEditItem('edit',row)">修改</el-button>
+          <template slot-scope="{ row }">
+            <el-button type="text" size="mini" @click="handleDetail(row)"
+              >详情</el-button
+            >
+            <el-button
+              type="text"
+              size="mini"
+              @click="addAndEditItem('edit', row)"
+              >修改</el-button
+            >
             <el-dropdown szie="mini">
-              <span class="el-dropdown-link" style="font-size:12px">
+              <span class="el-dropdown-link" style="font-size: 12px">
                 更多
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="disableItem(row)">禁用</el-dropdown-item>
-                <el-dropdown-item @click.native="delItem(row)"{{$t('commons.delete')}}/el-dropdown-item>
+                <el-dropdown-item @click.native="disableItem(row)"
+                  >禁用</el-dropdown-item
+                >
+                <el-dropdown-item @click.native="delItem(row)">{{
+                  $t("commons.delete")
+                }}</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -121,7 +225,7 @@
     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
-      :title="addCompanyForm.type=='add'?'新增单位':'编辑单位'"
+      :title="addCompanyForm.type == 'add' ? '新增单位' : '编辑单位'"
       :visible.sync="setCompanyFormVisible"
       class="setCompanyForm"
     >
@@ -159,7 +263,7 @@
                   <el-option
                     :label="item.ruleName"
                     :value="item.id"
-                    v-for="(item,index) of strategyList"
+                    v-for="(item, index) of strategyList"
                     :key="index"
                   ></el-option>
                 </el-select>
@@ -175,7 +279,7 @@
                   <el-option
                     :label="item.ruleName"
                     :value="item.id"
-                    v-for="(item,index) of alldayList"
+                    v-for="(item, index) of alldayList"
                     :key="index"
                   ></el-option>
                 </el-select>
@@ -188,7 +292,9 @@
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item label label-width="20px">
-                <el-checkbox v-model="addCompanyForm.shareFlag">集团共享</el-checkbox>
+                <el-checkbox v-model="addCompanyForm.shareFlag"
+                  >集团共享</el-checkbox
+                >
                 <el-checkbox v-model="addCompanyForm.state">停用</el-checkbox>
               </el-form-item>
             </el-col>
@@ -203,7 +309,7 @@
                   v-model="addCompanyForm.effectiveStartTime"
                   value-format="yyyy-MM-dd"
                   type="date"
-                  style="width:100%"
+                  style="width: 100%"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
@@ -214,7 +320,7 @@
                   v-model="addCompanyForm.effectiveEndTime"
                   value-format="yyyy-MM-dd"
                   type="date"
-                  style="width:100%"
+                  style="width: 100%"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
@@ -282,14 +388,17 @@
           <el-row class="cell">
             <el-col :span="12" class="col">
               <el-form-item label="备注：">
-                <el-input type="textarea" v-model="addCompanyForm.remark"></el-input>
+                <el-input
+                  type="textarea"
+                  v-model="addCompanyForm.remark"
+                ></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="setCompanyFormVisible=false">关闭</el-button>
+        <el-button @click="setCompanyFormVisible = false">关闭</el-button>
         <el-button type="primary" @click="hotelenterAddAndEdit">确认</el-button>
       </div>
     </el-dialog>
@@ -300,7 +409,12 @@
       class="setBatchForm"
       width="1200px"
     >
-      <el-form :model="setBatchForm" ref="setBatchForm" label-width="100px" size="mini">
+      <el-form
+        :model="setBatchForm"
+        ref="setBatchForm"
+        label-width="100px"
+        size="mini"
+      >
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
@@ -309,7 +423,7 @@
                   <el-option
                     :label="item.ruleName"
                     :value="item.id"
-                    v-for="(item,index) of strategyList"
+                    v-for="(item, index) of strategyList"
                     :key="index"
                   ></el-option>
                 </el-select>
@@ -321,7 +435,7 @@
                   <el-option
                     :label="item.ruleName"
                     :value="item.id"
-                    v-for="(item,index) of alldayList"
+                    v-for="(item, index) of alldayList"
                     :key="index"
                   ></el-option>
                 </el-select>
@@ -348,7 +462,7 @@
                   v-model="setBatchForm.effectiveStartTime"
                   value-format="yyyy-MM-dd"
                   type="date"
-                  style="width:140px"
+                  style="width: 140px"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
@@ -359,7 +473,7 @@
                   v-model="setBatchForm.effectiveEndTime"
                   value-format="yyyy-MM-dd"
                   type="date"
-                  style="width:140px"
+                  style="width: 140px"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
@@ -376,7 +490,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="3" class="col" style="text-align:center">
+            <el-col :span="3" class="col" style="text-align: center">
               <el-form-item label label-width="0px">
                 <el-button type="primary" @click="totalset">设置</el-button>
               </el-form-item>
@@ -389,72 +503,76 @@
         ref="multipleTable"
         v-loading="loading"
         :data="stableData"
-        :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+        :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
         @selection-change="handleSelectionChange"
         size="mini"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="enterName"
+          label="单位名称"
+          show-overflow-tooltip
+        ></el-table-column>
         <el-table-column prop label="价格策略" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-select v-model="row.enterStrategyId" size="mini">
               <el-option
                 :label="item.ruleName"
                 :value="item.id"
-                v-for="(item,index) of strategyList"
+                v-for="(item, index) of strategyList"
                 :key="index"
               ></el-option>
             </el-select>
           </template>
         </el-table-column>
         <el-table-column label="计费规则" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-select v-model="row.ruleAlldayId" size="mini">
               <el-option
                 :label="item.ruleName"
                 :value="item.id"
-                v-for="(item,index) of alldayList"
+                v-for="(item, index) of alldayList"
                 :key="index"
               ></el-option>
             </el-select>
           </template>
         </el-table-column>
         <el-table-column prop label="挂账额度" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-input v-model="row.creditLimit" size="mini"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop label="姓名" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-input v-model="row.contactName" size="mini"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop label="生效日期" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-date-picker
               v-model="row.effectiveStartTime"
               value-format="yyyy-MM-dd"
               type="date"
-              style="width:100%"
+              style="width: 100%"
               placeholder="选择日期"
               size="mini"
             ></el-date-picker>
           </template>
         </el-table-column>
         <el-table-column prop label="失效日期" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-date-picker
               v-model="row.effectiveEndTime"
               value-format="yyyy-MM-dd"
               type="date"
-              style="width:100%"
+              style="width: 100%"
               placeholder="选择日期"
               size="mini"
             ></el-date-picker>
           </template>
         </el-table-column>
         <el-table-column prop label="发展途径" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-select v-model="row.getWay" size="mini">
               <el-option label="线上" :value="1"></el-option>
               <el-option label="线下" :value="2"></el-option>
@@ -462,7 +580,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="enterType" label="销售员" show-overflow-tooltip>
-          <template slot-scope="{row}">
+          <template slot-scope="{ row }">
             <el-select v-model="row.salesId" size="mini">
               <el-option
                 v-for="item in salesList"
@@ -474,12 +592,14 @@
           </template>
         </el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="{row}">
-            <el-button type="text" size="mini" @click="changeSate(row)">{{row.state==1?'启用中':'禁用中'}}</el-button>
+          <template slot-scope="{ row }">
+            <el-button type="text" size="mini" @click="changeSate(row)">{{
+              row.state == 1 ? "启用中" : "禁用中"
+            }}</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin-top:10px"></div>
+      <div style="margin-top: 10px"></div>
       <!--分页 -->
       <el-pagination
         @size-change="handleSizeChange"
@@ -491,7 +611,7 @@
         :total="listTotal"
       ></el-pagination>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="setBatchFormVisible=false">关闭</el-button>
+        <el-button @click="setBatchFormVisible = false">关闭</el-button>
         <el-button type="primary" @click="batchedit">确认</el-button>
       </div>
     </el-dialog>
@@ -710,7 +830,7 @@ export default {
           this.$F.doRequest(this, "/pms/hotelenter/edit", params, (res) => {
             this.setCompanyFormVisible = false;
             this.$message({
-              message: this.$t('commons.request_success'),
+              message: this.$t("commons.request_success"),
               type: "success",
             });
             this.getDataList();
@@ -725,9 +845,9 @@ export default {
       this.$router.push("/companydetail?id=" + item.id);
     },
     disableItem(item) {
-      this.$confirm("确认要禁用该单位", this.$t('commons.tip_desc'), {
-        confirmButtonText: this.$t('commons.confirm'),
-        cancelButtonText: this.$t('commons.cancel'),
+      this.$confirm("确认要禁用该单位", this.$t("commons.tip_desc"), {
+        confirmButtonText: this.$t("commons.confirm"),
+        cancelButtonText: this.$t("commons.cancel"),
         type: "warning",
       })
         .then(() => {
@@ -739,7 +859,7 @@ export default {
             },
             (res) => {
               this.$message({
-                message: this.$t('commons.request_success'),
+                message: this.$t("commons.request_success"),
                 type: "success",
               });
               this.getDataList();
@@ -749,11 +869,15 @@ export default {
         .catch(() => {});
     },
     delItem(item) {
-      this.$confirm(this.$t('commons.delete_single'), this.$t('commons.tip_desc'), {
-        confirmButtonText: this.$t('commons.confirm'),
-        cancelButtonText: this.$t('commons.cancel'),
-        type: "warning",
-      })
+      this.$confirm(
+        this.$t("commons.delete_single"),
+        this.$t("commons.tip_desc"),
+        {
+          confirmButtonText: this.$t("commons.confirm"),
+          cancelButtonText: this.$t("commons.cancel"),
+          type: "warning",
+        }
+      )
         .then(() => {
           this.$F.doRequest(
             this,
@@ -763,7 +887,7 @@ export default {
             },
             (res) => {
               this.$message({
-                message: this.$t('commons.request_success'),
+                message: this.$t("commons.request_success"),
                 type: "success",
               });
               this.getDataList();
@@ -827,7 +951,7 @@ export default {
           this.setBatchFormVisible = false;
           this.getDataList();
           this.$message({
-            message: this.$t('commons.request_success'),
+            message: this.$t("commons.request_success"),
             type: "success",
           });
         });

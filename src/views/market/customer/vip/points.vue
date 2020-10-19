@@ -4,56 +4,80 @@
   <div class="boss-index">
     <div class="booking flex_column">
       <!-- 查询部分 -->
-      <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
-        <el-form-item label="消费时间">
+      <el-form
+        class="term"
+        inline
+        size="small"
+        label-width="80px"
+        v-model="searchForm"
+      >
+        <el-form-item :label="$t('desk.customer_spendTime') + ':'">
           <el-radio-group v-model="searchForm.timeType">
-            <el-radio-button label style="margin-right:10px">不限</el-radio-button>
-            <el-radio-button label="1" style="margin-right:10px">今日</el-radio-button>
-            <el-radio-button label="2" style="margin-right:10px">昨日</el-radio-button>
-            <el-radio-button label="6" style="margin-right:10px">本周</el-radio-button>
-            <el-radio-button label="5" style="margin-right:10px">本月</el-radio-button>
-            <el-radio-button label="defined" style="margin-right:10px">自定义</el-radio-button>
+            <el-radio-button label style="margin-right: 10px">{{
+              $t("desk.home_noLimit")
+            }}</el-radio-button>
+            <el-radio-button label="1" style="margin-right: 10px">{{
+              $t("desk.customer_today")
+            }}</el-radio-button>
+            <el-radio-button label="2" style="margin-right: 10px">{{
+              $t("desk.customer_yesterday")
+            }}</el-radio-button>
+            <el-radio-button label="6" style="margin-right: 10px">{{
+              $t("desk.customer_thisWeek")
+            }}</el-radio-button>
+            <el-radio-button label="5" style="margin-right: 10px">{{
+              $t("desk.customer_thisMonth")
+            }}</el-radio-button>
+            <el-radio-button label="defined" style="margin-right: 10px">{{
+              $t("desk.book_theCustom")
+            }}</el-radio-button>
           </el-radio-group>
-          <el-form-item v-if="searchForm.timeType=='defined'">
+          <el-form-item v-if="searchForm.timeType == 'defined'">
             <el-date-picker
               v-model="searchForm.startTime"
               value-format="yyyy-MM-dd"
               type="date"
-              style="width:140px"
-              placeholder="选择日期"
+              style="width: 140px"
+              :placeholder="$t('desk.serve_chooseDate')"
             ></el-date-picker>
-            <span style="margin:0 5px">至</span>
+            <span style="margin: 0 5px"> {{ $t("desk.serve_to") }} </span>
             <el-date-picker
               v-model="searchForm.endTime"
               value-format="yyyy-MM-dd"
               type="date"
-              style="width:140px"
-              placeholder="选择日期"
+              style="width: 140px"
+              :placeholder="$t('desk.serve_chooseDate')"
             ></el-date-picker>
           </el-form-item>
         </el-form-item>
         <br />
-        <el-form-item label="发生门店">
+        <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
           <el-select v-model="searchForm.storesNum" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
-              v-for="(item,index) in storeList"
+              v-for="(item, index) in storeList"
               :key="index"
               :label="item.storesName"
               :value="item.storesNum"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="操作类型">
+        <el-form-item :label="$t('desk.customer_operationType') + ':'">
           <el-select v-model="searchForm.consumeType" class="width150">
-            <el-option label="全部" value></el-option>
-            <el-option label="增加" value="2"></el-option>
-            <el-option label="扣除" value="1"></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
+            <el-option
+              :label="$t('desk.customer_increase')"
+              value="2"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_deduct')"
+              value="1"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="会员类型">
+        <el-form-item :label="$t('desk.customer_memType') + ':'">
           <el-select v-model="searchForm.memberTypeId" class="width150">
-            <el-option label="全部" value></el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
             <el-option
               v-for="item in smembertypeList"
               :key="item.id"
@@ -62,48 +86,99 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item :label="$t('desk.home_phoneNum')">
           <el-input v-model="searchForm.mobile" class="width150"></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="卡号">
+        <el-form-item :label="$t('desk.customer_cardNum') + ':'">
           <el-input v-model="searchForm.memberCard" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="姓名">
+        <el-form-item :label="$t('desk.home_name') + ':'">
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
-          <el-button type="primary" class="submit" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="submit" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button plain>读会员卡</el-button>
+          <el-button plain>{{ $t("desk.customer_readMemCard") }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
-        <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="memberTypeName" label="会员类型" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="mobile" label="手机号" show-overflow-tooltip></el-table-column>
-        <el-table-column label="增加" show-overflow-tooltip width="80px">
-          <template slot-scope="{row}">
-            <div v-if="row.consumeType==2">{{row.scores}}</div>
+      <el-table
+        ref="multipleTable"
+        v-loading="loading"
+        :data="tableData"
+        height="100%"
+        header-row-class-name="default"
+        size="small"
+      >
+        <el-table-column
+          prop="memberCard"
+          :label="$t('desk.customer_cardNum')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="name"
+          :label="$t('desk.home_name')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="memberTypeName"
+          :label="$t('desk.customer_memType')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="mobile"
+          :label="$t('desk.home_phoneNum')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :label="$t('desk.customer_increase')"
+          show-overflow-tooltip
+          width="80px"
+        >
+          <template slot-scope="{ row }">
+            <div v-if="row.consumeType == 2">{{ row.scores }}</div>
             <div v-else>0</div>
           </template>
         </el-table-column>
-        <el-table-column label="扣除" show-overflow-tooltip width="80px">
-          <template slot-scope="{row}">
-            <div v-if="row.consumeType==1">{{row.scores}}</div>
+        <el-table-column
+          :label="$t('desk.customer_deduct')"
+          show-overflow-tooltip
+          width="80px"
+        >
+          <template slot-scope="{ row }">
+            <div v-if="row.consumeType == 1">{{ row.scores }}</div>
             <div v-else>0</div>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="发生日期" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="storesName" label="发生门店" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creatorName" label="操作员" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="createTime"
+          :label="$t('desk.customer_inTheDate')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="storesName"
+          :label="$t('desk.customer_occurrenceStore')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="creatorName"
+          :label="$t('desk.customer_operator')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="remark"
+          :label="$t('desk.home_note')"
+          show-overflow-tooltip
+        ></el-table-column>
       </el-table>
-      <div style="margin-top:10px"></div>
+      <div style="margin-top: 10px"></div>
       <!--分页 -->
       <el-pagination
         @size-change="handleSizeChange"
@@ -191,8 +266,7 @@ export default {
         pageSize: this.pageSize,
       });
       this.$F.merge(params, this.searchForm);
-      if (params.timeType == 'defined')
-          delete params['timeType'];
+      if (params.timeType == "defined") delete params["timeType"];
       this.$F.doRequest(this, "/pms/hotelmemberscore/list", params, (data) => {
         console.log(data);
         this.tableData = data.list;

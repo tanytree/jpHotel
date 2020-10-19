@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-15 14:42:12
+ * @LastEditTime: 2020-10-19 17:29:50
  * @FilePath: \jiudian\src\views\market\customer\guest.vue
  -->
 
@@ -11,9 +11,9 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item label="登记门店">
+        <el-form-item :label="$t('desk.customer_registerStore') + ':'">
           <el-select v-model="searchForm.storesNum">
-            <el-option label="全部" value=""></el-option>
+            <el-option :label="$t('desk.home_all')" value=""></el-option>
             <el-option
               v-for="item in storeList"
               :key="item.storesNum"
@@ -23,8 +23,12 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="宾客籍贯">
-          <el-select v-model="searchForm.nationality" class="width150">
+        <el-form-item :label="$t('desk.customer_guestsNative') + ':'">
+          <el-select
+            v-model="searchForm.nationality"
+            class="width150"
+            :placeholder="$t('commons.placeChoose')"
+          >
             <el-option
               v-for="item in nationalityList"
               :key="item.id"
@@ -34,44 +38,63 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="签证种类">
-          <el-select v-model="searchForm.visaType" class="width150">
-            <el-option label="普通签证" :value="1"></el-option>
-            <el-option label="外交签证" :value="2"></el-option>
-            <el-option label="公务签证" :value="3"></el-option>
+        <el-form-item :label="$t('desk.customer_visaType') + ':'">
+          <el-select
+            v-model="searchForm.visaType"
+            class="width150"
+            :placeholder="$t('commons.placeChoose')"
+          >
+            <el-option
+              :label="$t('desk.customer_ordinaryVisas')"
+              :value="1"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_diplomaticVisas')"
+              :value="2"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_businessVisa')"
+              :value="3"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="姓名">
+        <el-form-item :label="$t('desk.home_name') + ':'">
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="手机号">
+        <el-form-item :label="$t('desk.order_moblePhone') + ':'">
           <el-input v-model="searchForm.phone" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="证件类型">
+        <el-form-item :label="$t('desk.customer_documentType') + ':'">
           <el-select v-model="searchForm.idcardType" class="width150">
-            <el-option label="身份证" :value="1"></el-option>
-            <el-option label="护照" :value="2"></el-option>
-            <el-option label="驾驶证" :value="3"></el-option>
+            <el-option :label="$t('desk.home_idCard')" :value="1"></el-option>
+            <el-option
+              :label="$t('desk.customer_passport')"
+              :value="2"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_driveLicence')"
+              :value="3"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="证件号">
+        <el-form-item :label="$t('desk.customer_idNo') + ':'">
           <el-input v-model="searchForm.idcard" class="width150"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList"
-            >查询</el-button
-          >
-          <el-button type="primary" class="white" @click="initForm"
-            >重置</el-button
-          >
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="white" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
         <el-form-item style="float: right">
           <el-button
             type="primary"
             class="white"
             @click="addAndEditItemClick('add')"
-            >登记外宾</el-button
+            >{{ $t("desk.customer_registrationGusets") }}</el-button
           >
         </el-form-item>
       </el-form>
@@ -86,22 +109,27 @@
       >
         <el-table-column
           prop="name"
-          label="姓名"
+          :label="$t('desk.home_name')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="sex" label="性别" width="100" align="center">
+        <el-table-column
+          prop="sex"
+          :label="$t('desk.customer_sex')"
+          width="100"
+          align="center"
+        >
           <template slot-scope="{ row }">
             {{ row.sex | F_sex }}
           </template>
         </el-table-column>
         <el-table-column
           prop="phone"
-          label="手机号"
+          :label="$t('desk.order_moblePhone')"
           width="120"
         ></el-table-column>
         <el-table-column
           prop="nationality"
-          label="宾客籍贯"
+          :label="$t('desk.customer_guestsNative')"
           width="120"
           align="center"
         >
@@ -111,7 +139,7 @@
         </el-table-column>
         <el-table-column
           prop="idcardType"
-          label="证件类型"
+          :label="$t('desk.customer_documentType')"
           width="120"
           align="center"
         >
@@ -119,10 +147,13 @@
             {{ row.idcardType | F_idcardType }}
           </template>
         </el-table-column>
-        <el-table-column prop="idcard" label="证件号"></el-table-column>
+        <el-table-column
+          prop="idcard"
+          :label="$t('desk.customer_idNo')"
+        ></el-table-column>
         <el-table-column
           prop="visaType"
-          label="签证种类"
+          :label="$t('desk.customer_visaType')"
           width="120"
           align="center"
         >
@@ -130,46 +161,55 @@
             {{ row.visaType | F_visaType }}
           </template>
         </el-table-column>
-        <el-table-column prop="storesNum" label="登记门店">
+        <el-table-column
+          prop="storesNum"
+          :label="$t('desk.customer_registerStore')"
+        >
           <template slot-scope="{ row }">
             {{ F_storeName(row.storesNum) }}
           </template>
         </el-table-column>
         <el-table-column
           prop="createTime"
-          label="登记时间"
+          :label="$t('desk.customer_registrationTime')"
           width="180"
           align="center"
         ></el-table-column>
-        <el-table-column label="累计消费" width="120" align="center">
+        <el-table-column
+          :label="$t('desk.customer_cumulative')"
+          width="120"
+          align="center"
+        >
           <template slot-scope="{ row }">
             {{ row.cumulativePrice ? row.cumulativePrice : 0 }}
           </template>
         </el-table-column>
         <el-table-column
           prop="state"
-          label="现入住状态"
+          :label="$t('desk.customer_nowLiveState')"
           width="120"
           align="center"
         >
           <template slot-scope="{ row }">
-            <div v-if="row.checkInFlag">入住中</div>
-            <div v-if="!row.checkInFlag">未入住</div>
+            <div v-if="row.checkInFlag">{{ $t("desk.customer_stayIn") }}</div>
+            <div v-if="!row.checkInFlag">
+              {{ $t("desk.customer_notStayIn") }}
+            </div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="160">
+        <el-table-column :label="$t('commons.operating')" width="160">
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="handleHistory(row)"
-              >客史</el-button
-            >
-            <el-button type="text" size="mini" @click="handleDetail(row)"
-              >详情</el-button
-            >
+            <el-button type="text" size="mini" @click="handleHistory(row)">{{
+              $t("desk.customer_guestHistory")
+            }}</el-button>
+            <el-button type="text" size="mini" @click="handleDetail(row)">{{
+              $t("commons.detail")
+            }}</el-button>
             <el-button
               type="text"
               size="mini"
               @click="addAndEditItemClick('edit', row)"
-              >修改</el-button
+              >{{ $t("commons.modify") }}</el-button
             >
           </template>
         </el-table-column>
@@ -189,7 +229,11 @@
     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
-      :title="foreignForm.type == 'add' ? '登记外宾' : '编辑外宾'"
+      :title="
+        foreignForm.type == 'add'
+          ? $t('desk.customer_registrationGusets')
+          : $t('desk.customer_editorGuests')
+      "
       :visible.sync="setForeignFormVisible"
       class="setForeignForm"
       width="1200px"
@@ -204,7 +248,11 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item label="外宾姓名" class="" prop="name">
+              <el-form-item
+                :label="$t('desk.customer_guestsName')"
+                class=""
+                prop="name"
+              >
                 <el-input
                   v-model="foreignForm.name"
                   class="width150"
@@ -212,25 +260,50 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="性别" class="" prop="sex">
+              <el-form-item
+                :label="$t('desk.customer_sex')"
+                class=""
+                prop="sex"
+              >
                 <el-radio-group v-model="foreignForm.sex">
-                  <el-radio :label="1">男</el-radio>
-                  <el-radio :label="2">女</el-radio>
-                  <el-radio :label="3">保密</el-radio>
+                  <el-radio :label="1">{{ $t("desk.customer_man") }}</el-radio>
+                  <el-radio :label="2">{{
+                    $t("desk.customer_woman")
+                  }}</el-radio>
+                  <el-radio :label="3">{{
+                    $t("desk.customer_secret")
+                  }}</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="证件类型" class="" prop="idcardType">
+              <el-form-item
+                :label="$t('desk.customer_documentType')"
+                class=""
+                prop="idcardType"
+              >
                 <el-select v-model="foreignForm.idcardType" class="width150">
-                  <el-option label="身份证" :value="1"></el-option>
-                  <el-option label="护照" :value="2"></el-option>
-                  <el-option label="驾驶证" :value="3"></el-option>
+                  <el-option
+                    :label="$t('desk.home_idCard')"
+                    :value="1"
+                  ></el-option>
+                  <el-option
+                    :label="$t('desk.customer_passport')"
+                    :value="2"
+                  ></el-option>
+                  <el-option
+                    :label="$t('desk.customer_driveLicence')"
+                    :value="3"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="证件编号" class="" prop="idcard">
+              <el-form-item
+                :label="$t('desk.customer_idNumber')"
+                class=""
+                prop="idcard"
+              >
                 <el-input
                   v-model="foreignForm.idcard"
                   class="width150"
@@ -240,27 +313,48 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item label="签证种类" class="" prop="visaType">
+              <el-form-item
+                :label="$t('desk.customer_visaType')"
+                class=""
+                prop="visaType"
+              >
                 <el-select v-model="foreignForm.visaType" class="width150">
-                  <el-option label="普通签证" :value="1"></el-option>
-                  <el-option label="外交签证" :value="2"></el-option>
-                  <el-option label="公务签证" :value="3"></el-option>
+                  <el-option
+                    :label="$t('desk.customer_ordinaryVisas')"
+                    :value="1"
+                  ></el-option>
+                  <el-option
+                    :label="$t('desk.customer_diplomaticVisas')"
+                    :value="2"
+                  ></el-option>
+                  <el-option
+                    :label="$t('desk.customer_businessVisa')"
+                    :value="3"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="有效时间" class="" prop="dueTime">
+              <el-form-item
+                :label="$t('desk.customer_validTime')"
+                class=""
+                prop="dueTime"
+              >
                 <el-date-picker
                   v-model="foreignForm.dueTime"
                   value-format="yyyy-MM-dd"
                   type="date"
                   style="width: 150px"
-                  placeholder="选择日期"
+                  :placeholder="$t('desk.serve_chooseDate')"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="宾客国籍" class="" prop="nationality">
+              <el-form-item
+                :label="$t('desk.customer_guestNationality')"
+                class=""
+                prop="nationality"
+              >
                 <el-select v-model="foreignForm.nationality" class="width150">
                   <el-option
                     v-for="item in nationalityList"
@@ -273,7 +367,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="手机号码" class="" prop="phone">
+              <el-form-item
+                :label="$t('desk.order_moblePhone')"
+                class=""
+                prop="phone"
+              >
                 <el-input
                   v-model="foreignForm.phone"
                   class="width150"
@@ -283,7 +381,11 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="24" class="col">
-              <el-form-item label="备注" class="" prop="remark">
+              <el-form-item
+                :label="$t('desk.home_note')"
+                class=""
+                prop="remark"
+              >
                 <el-input
                   type="textarea"
                   v-model="foreignForm.remark"
@@ -295,10 +397,12 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="setForeignFormVisible = false">关闭</el-button>
-        <el-button type="primary" @click="addItem('setForeignForm')"
-          >确认</el-button
-        >
+        <el-button @click="setForeignFormVisible = false">{{
+          $t("commons.close")
+        }}</el-button>
+        <el-button type="primary" @click="addItem('setForeignForm')">{{
+          $t("commons.confirm")
+        }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -348,57 +452,6 @@ export default {
         phone: "",
         remark: "",
       },
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "请输入外宾姓名",
-            trigger: "blur",
-          },
-        ],
-        sex: [
-          {
-            required: true,
-            message: "请选择性别",
-            trigger: "change",
-          },
-        ],
-        idcardType: [
-          {
-            required: true,
-            message: "请选择证件类型",
-            trigger: "change",
-          },
-        ],
-        idcard: [
-          {
-            required: true,
-            message: "请填入证件编号",
-            trigger: "blur",
-          },
-        ],
-        visaType: [
-          {
-            required: true,
-            message: "请选择签证种类",
-            trigger: "change",
-          },
-        ],
-        dueTime: [
-          {
-            required: true,
-            message: "请选择到期时间",
-            trigger: "change",
-          },
-        ],
-        nationality: [
-          {
-            required: true,
-            message: "请选择国籍",
-            trigger: "change",
-          },
-        ],
-      },
     };
   },
   filters: {},
@@ -406,6 +459,61 @@ export default {
     this.stores_list();
     this.nationality();
     this.initForm();
+  },
+  computed: {
+    rules() {
+      return {
+        name: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputName"),
+            trigger: "blur",
+          },
+        ],
+        sex: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseSex"),
+            trigger: "change",
+          },
+        ],
+        idcardType: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseCard"),
+            trigger: "change",
+          },
+        ],
+        idcard: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputCardNum"),
+            trigger: "blur",
+          },
+        ],
+        visaType: [
+          {
+            required: true,
+            message: this.$t("desk.customer_chooseVisaType"),
+            trigger: "change",
+          },
+        ],
+        dueTime: [
+          {
+            required: true,
+            message: this.$t("desk.customer_selectDueDate"),
+            trigger: "change",
+          },
+        ],
+        nationality: [
+          {
+            required: true,
+            message: this.$t("desk.customer_selectNationality"),
+            trigger: "change",
+          },
+        ],
+      };
+    },
   },
   methods: {
     initForm() {
@@ -505,7 +613,7 @@ export default {
           return that.storeList[k].storesName;
         }
       }
-      return "未知门店";
+      return this.$t("desk.customer_unknowStore");
     },
     F_nationality(v) {
       let that = this;
@@ -516,7 +624,7 @@ export default {
             : that.nationalityList[k].cName;
         }
       }
-      return "未知";
+      return this.$t("desk.home_unknown");
     },
     handleDetail(item) {
       this.$router.push({

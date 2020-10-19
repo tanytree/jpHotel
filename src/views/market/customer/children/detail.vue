@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-17 15:06:24
+ * @LastEditTime: 2020-10-19 10:17:44
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -712,7 +712,7 @@
                 <el-form-item :label="$t('desk.order_goodsType') + ':'">
                   <el-select
                     v-model="formInline.categoryId"
-                    :placeholder="$t('desk.customer_activeAera')"
+                    :placeholder="$t('commons.placeChoose')"
                     size="small"
                   >
                     <el-option :label="$t('desk.home_all')" value></el-option>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-17 15:06:12
+ * @LastEditTime: 2020-10-19 18:01:34
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 
@@ -143,7 +143,7 @@ module.exports = {
     book_other: 'その他',
     book_meetState: '会議状態',
     book_waiteSure: '確認待ち',
-    book_sureBook: '未翻译词条',
+    book_sureBook: '予約確認済み',
     book_reject: '注文拒否',
     book_notCheckin: '未使用（未宿泊）',
     book_checkin: '滞在中',
@@ -180,49 +180,49 @@ module.exports = {
     order_totalPrice: "合計",
     order_compensationDate: "賠償時間",
     //客户管理（customer）
-    customer_openCarmen: '未翻译词条',
+    customer_openCarmen: '新規カード発行ホテル',
     customer_developmentWay: '経路',
     customer_memType: '会員種別',
-    customer_ifCancellation: '未翻译词条',
-    customer_normal: '未翻译词条',
-    customer_haveCancellation: '未翻译词条',
-    customer_cardNum: '未翻译词条',
+    customer_ifCancellation: '削除しますか',
+    customer_normal: '正常',
+    customer_haveCancellation: '削除済み',
+    customer_cardNum: '会員番号',
     customer_isBlack: 'UGリスト',
     customer_readMemCard: '会員カード読み取り',
     customer_addMem: '会員追加',
-    customer_remainPoints: '未翻译词条',
-    customer_online: '未翻译词条',
-    customer_offline: '未翻译词条',
-    customer_openCardDate: '未翻译词条',
+    customer_remainPoints: '残りポイント数',
+    customer_online: 'オンライン',
+    customer_offline: 'オフライン',
+    customer_openCardDate: '新規カード開始日',
     customer_ifBalckName: 'UGリスト',
     customer_yes: 'はい',
     customer_no: 'いいえ',
     customer_restore: '予約復活',
     customer_more: 'もっと',
-    customer_getCardPri: '未翻译词条',
-    customer_pullBlack: '未翻译词条',
-    customer_newCusBlackName: '未翻译词条',
-    customer_pullBlackRemark: '未翻译词条',
-    customer_chargeCard: '未翻译词条',
-    customer_chargeType: '未翻译词条',
-    customer_cardPri: '未翻译词条',
-    customer_upgradeCard: '未翻译词条',
-    customer_cardCost: '未翻译词条',
+    customer_getCardPri: '会員年会費を請求',
+    customer_pullBlack: 'UGリスト（に入れる）',
+    customer_newCusBlackName: 'UGリスト追加',
+    customer_pullBlackRemark: 'UGリストにする理由',
+    customer_chargeCard: '年会費を再請求',
+    customer_chargeType: '再請求種別',
+    customer_cardPri: '年会費',
+    customer_upgradeCard: 'ランクアップ',
+    customer_cardCost: 'ランクアップ追加分を補う',
     customer_payType: '支払方法',
-    customer_unionpay: '未翻译词条',
-    customer_payPrice: '未翻译词条',
-    customer_inputReason: '未翻译词条',
-    customer_notBlink: '未翻译词条',
-    customer_inputRemark: '未翻译词条',
-    customer_unknowStore: '未翻译词条',
+    customer_unionpay: 'クレジットカード',
+    customer_payPrice: '未翻译支払金額词条',
+    customer_inputReason: '復活理由を入力してください',
+    customer_notBlink: '空白は処理できません',
+    customer_inputRemark: '備考を入力してください',
+    customer_unknowStore: '該当ホテルを指定してください',
     customer_memManagement: '会員管理',
-    customer_changeCard: '未翻译词条',
-    customer_resetType: '未翻译词条',
+    customer_changeCard: '会員カード交換',
+    customer_resetType: '変更種別',
     customer_cancellation: 'ログアウト',
-    customer_reportLossCard: '未翻译词条',
-    customer_readMemNum: '未翻译词条',
+    customer_reportLossCard: 'カード紛失再発行',
+    customer_readMemNum: 'カードを読み取り',
     customer_theDetail: '明細',
-    customer_pointsFor: '未翻译词条',
+    customer_pointsFor: 'ポイント交換',
     customer_memeberCardNum: '会員番号',
     customer_documentType: '本人確認書類',
     customer_documentNum: '本人確認書No.',
@@ -231,46 +231,169 @@ module.exports = {
     customer_email: 'eメール',
     customer_international: '国籍',
     customer_address: '住所',
-    customer_carNum: '未翻译词条',
-    customer_hoppy: '未翻译词条',
-    customer_subordinateUnits: '未翻译词条',
+    customer_carNum: '車ナンバー',
+    customer_hoppy: '趣味',
+    customer_subordinateUnits: '会社',
     customer_creditCard: '会員カード発行',
-    customer_waiteUse: '未翻译词条',
-    customer_originNum: '未翻译词条',
-    customer_newCardNum: '未翻译词条',
-    customer_resetFor: '未翻译词条',
-    customer_resetReason: '未翻译词条',
-    customer_operationType: '未翻译词条',
-    customer_lossAadd: '未翻译词条',
-    customer_onlyLoss: '未翻译词条',
-    customer_pleaceInput: '未翻译词条',
-    customer_activeAera: '未翻译词条',
-    customer_useDuration: '未翻译词条',
+    customer_waiteUse: '起用待ち',
+    customer_originNum: '旧会員番号',
+    customer_newCardNum: '新会員番号',
+    customer_resetFor: '変更',
+    customer_resetReason: '変更理由',
+    customer_operationType: '操作類別',
+    customer_lossAadd: 'カード紛失届及び再発行',
+    customer_onlyLoss: 'カード紛失届のみ',
+    customer_pleaceInput: '入力してください',
+    customer_useDuration: 'ポイント使用',
     customer_inventory: '在庫数量',
     customer_add: '追加',
     customer_chooseGoods: '選択商品',
     customer_count: '数量',
     customer_remove: '削除',
-    customer_all: '未翻译词条',
-    customer_each: '未翻译词条',
-    customer_sureChange: '未翻译词条',
-    customer_changeSuccess: '未翻译词条',
-    customer_inputName: '未翻译词条',
-    customer_chooseSex: '未翻译词条',
-    customer_chooseCard: '未翻译词条',
-    customer_inputCardNum: '未翻译词条',
-    customer_inputPhone: '未翻译词条',
-    customer_inputMemNum: '未翻译词条',
-    customer_chooseMemType: '未翻译词条',
-    customer_chooseIfcard: '未翻译词条',
-    customer_inputRemark: '未翻译词条',
-    customer_inputPayPrice: '未翻译词条',
-    customer_choosePayType: '未翻译词条',
-    customer_chooseOpearType: '未翻译词条',
-    customer_changeCardOperate: '未翻译词条',
-    customer_resetMemType: '未翻译词条',
-    customer_memStop: '未翻译词条',
-    customer_lossOperate: '未翻译词条',
+    customer_all: '計',
+    customer_each: '件数',
+    customer_sureChange: 'ポイント交換確認',
+    customer_changeSuccess: 'ポイント交換成功',
+    customer_inputName: '名前を入力してください',
+    customer_chooseSex: '性別を選択してください',
+    customer_chooseCard: '身分証明書種別を選択してください',
+    customer_inputCardNum: '証明書番号を入力してください',
+    customer_inputPhone: '携帯番号を入力してください',
+    customer_inputMemNum: '会員番号を入力してください',
+    customer_chooseMemType: '会員種別を選択してください',
+    customer_chooseIfcard: '即日カード発行しますか',
+    customer_inputRemark: '備考に入力してください',
+    customer_inputPayPrice: '支払金額を入力してください',
+    customer_choosePayType: '支払方法を選択してくださいます',
+    customer_chooseOpearType: '操作類別を選択してください',
+    customer_changeCardOperate: 'ランクアップ作業',
+    customer_resetMemType: '会員種別を変更',
+    customer_memStop: '会員資格停止',
+    customer_lossOperate: '紛失/再発行作業',
+    customer_memInfo: '未翻译词条',
+    customer_integralQuery: 'ポイント情報検索',
+    customer_spendTime: '利用時間',
+    customer_today: '未翻译词条',
+    customer_yesterday: '未翻译词条',
+    customer_thisWeek: '未翻译词条',
+    customer_thisMonth: '未翻译词条',
+    customer_occurrenceStore: '发生门店',
+    customer_increase: '未翻译词条',
+    customer_deduct: '未翻译词条',
+    customer_inTheDate: '未翻译词条',
+    customer_operator: '操作員',
+    customer_createStore: 'ホテル追加',
+    customer_guestType: 'ゲストカテゴリー',
+    customer_belongStore: '該当ホテル',
+    customer_cumulative: '利用合計金額',
+    customer_guestHistory: '顧客履歴',
+    customer_changeMem: '会員登録',
+    customer_telephone: '電話番号',
+    customer_noRecord: '未翻译词条',
+    customer_registerStore: '登録ホテル',
+    customer_guestsNative: '国籍',
+    customer_visaType: 'ビザ種類',
+    customer_ordinaryVisas: '未翻译词条',
+    customer_diplomaticVisas: '未翻译词条',
+    customer_businessVisa: '未翻译词条',
+    customer_passport: '未翻译词条',
+    customer_driveLicence: '未翻译词条',
+    customer_idNo: '本人確認書番号',
+    customer_registrationGusets: '外国籍顧客登録',
+    customer_registrationTime: '予約期間',
+    customer_nowLiveState: '宿泊状況',
+    customer_stayIn: '未翻译词条',
+    customer_notStayIn: '未使用（未宿泊）',
+    customer_editorGuests: '未翻译词条',
+    customer_guestsName: '宿泊者名前',
+    customer_man: '未翻译词条',
+    customer_woman: '未翻译词条',
+    customer_secret: '未翻译词条',
+    customer_idNumber: '未翻译词条',
+    customer_validTime: '有効期間',
+    customer_guestNationality: '国籍',
+    customer_chooseVisaType: '未翻译词条',
+    customer_selectDueDate: '未翻译词条',
+    customer_selectNationality: '未翻译词条',
+    customer_guestHistoryRecord: '未翻译词条',
+    customer_historyGuest: '未翻译词条',
+    customer_roomType: '未翻译词条',
+    customer_venue: '未翻译词条',
+    customer_guestRoom: '未翻译词条',
+    customer_leaveStoreDate: '未翻译词条',
+    customer_livePeople: '未翻译词条',
+    customer_liveToleave: '未翻译词条',
+    customer_arrived: '未翻译词条',
+    customer_leave: '未翻译词条',
+    customer_dayNum: '未翻译词条',
+    customer_totalRoomPrice: '未翻译词条',
+    customer_totalConsum: '未翻译词条',
+    customer_toTheGuest: '未翻译词条',
+    customer_guestsDetail: '未翻译词条',
+    customer_unitManage: '未翻译词条',
+    customer_receivingQuery: '未翻译词条',
+    customer_zhangSet: '未翻译词条',
+    customer_accounting: '未翻译词条',
+    customer_accountQuery: '未翻译词条',
+    customer_unitName: '未翻译词条',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

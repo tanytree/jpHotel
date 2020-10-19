@@ -12,68 +12,82 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/customer' }"
-            >客史档案</el-breadcrumb-item
-          >
-          <el-breadcrumb-item>客史</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/customer' }">{{
+            $t("desk.customer_guestHistoryRecord")
+          }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{
+            $t("desk.customer_guestHistory")
+          }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="headerTitle" v-if="tableData.length > 0">
-        客史记录-{{ tableData[0].name }}
+        {{ $t("desk.customer_historyGuest") }}-{{ tableData[0].name }}
       </div>
       <!-- 查询部分 -->
       <el-form inline size="small" label-width="100px">
-        <el-form-item label="发生门店：">
+        <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
           <el-input v-model="searchForm.content" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="房类：">
+        <el-form-item :label="$t('desk.customer_roomType') + ':'">
           <el-select v-model="searchForm.roomTypeId" class="width150">
-            <el-option label="全部" value="">全部</el-option>
-            <el-option label="会场" :value="1"></el-option>
-            <el-option label="客房" :value="2"></el-option>
+            <el-option :label="$t('desk.home_all')" value="">{{
+              $t("desk.home_all")
+            }}</el-option>
+            <el-option
+              :label="$t('desk.customer_venue')"
+              :value="1"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_guestRoom')"
+              :value="2"
+            ></el-option>
           </el-select>
         </el-form-item>
         <!-- <el-form-item label="入住人：">
                 <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item> -->
         <br />
-        <el-form-item label="入住日期：">
+        <el-form-item :label="$t('desk.order_checkinTime') + ':'">
           <el-date-picker
             v-model="searchForm.inStartTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
-          <span style="margin: 0 5px">至</span>
+          <span style="margin: 0 5px"> {{ $t("desk.serve_to") }} </span>
           <el-date-picker
             v-model="searchForm.inEndTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="离店日期：">
+        <el-form-item :label="$t('desk.customer_leaveStoreDate') + ':'">
           <el-date-picker
             v-model="searchForm.outStartTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
-          <span style="margin: 0 5px">至</span>
+          <span style="margin: 0 5px">{{ $t("desk.serve_to") }}</span>
           <el-date-picker
             v-model="searchForm.outEndTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getDataList">查询</el-button>
-          <el-button type="primary" @click="initForm">重置</el-button>
+          <el-button type="primary" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -86,18 +100,18 @@
       >
         <el-table-column
           prop="name"
-          label="入住人"
+          :label="$t('desk.customer_livePeople')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="" label="入住-离店日期" width="200">
+        <el-table-column prop="" :label="$t('desk.customer_liveToleave')" width="200">
           <template slot-scope="{ row }">
             <div class="box">
               <div class="item">
                 <div>
-                  <span class="text-blue">抵</span>{{ row.checkinTime }}
+                  <span class="text-blue">{{$t('desk.customer_arrived')}}</span>{{ row.checkinTime }}
                 </div>
                 <div>
-                  <span class="text-red">离</span>{{ row.checkoutTime }}
+                  <span class="text-red">{{$t('desk.customer_leave')}}</span>{{ row.checkoutTime }}
                 </div>
               </div>
             </div>
@@ -105,46 +119,46 @@
         </el-table-column>
         <el-table-column
           prop="checkinDays"
-          label="天数"
+          :label="$t('desk.customer_dayNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="enterType"
-          label="房类"
+          :label="$t('desk.customer_roomType')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="operCheckinType"
-          label="入住方式"
+          :label="$t('desk.order_checkinWay')"
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
             {{ F_operCheckinType(row.operCheckinType) }}
           </template>
         </el-table-column>
-        <el-table-column prop="" label="房间号" show-overflow-tooltip>
+        <el-table-column prop=""  :label="$t('desk.home_roomNum')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.houseNum }}
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" label="房型" show-overflow-tooltip>
+        <el-table-column prop="enterType" :label="$t('desk.home_roomType')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.roomTypeId }}
           </template>
         </el-table-column>
-        <el-table-column prop="" label="总房价" show-overflow-tooltip>
+        <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.realPrice }}
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" label="总消费" show-overflow-tooltip>
+        <el-table-column prop="enterType" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.totalRoomPrice }}
           </template>
         </el-table-column>
         <el-table-column
           prop="enterType"
-          label="发生门店"
+          :label="$t('desk.customer_occurrenceStore')"
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
@@ -153,19 +167,21 @@
         </el-table-column>
         <el-table-column
           prop="orderNum"
-          label="订单号"
+          :label="$t('desk.book_orderNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="enterType"
-          label="同来宾客"
+          :label="$t('desk.customer_toTheGuest')"
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column label="操作" width="220">
+        <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="handelDetail(row)"
-              >详情</el-button
+              >{{
+              $t("commons.detail")
+            }}</el-button
             >
           </template>
         </el-table-column>
@@ -281,7 +297,7 @@ export default {
     },
     addblacklist() {
       if (!this.setBlackForm.remark) {
-        this.$message.error("请输入备注信息");
+        this.$message.error(this.$t("desk.customer_inputRemark"));
         return;
       }
       this.$F.doRequest(
@@ -324,7 +340,7 @@ export default {
           return that.storeList[k].storesName;
         }
       }
-      return "未知门店";
+      return  this.$t('desk.customer_unknowStore');
     },
     /**多选 */
     handleSelectionChange(val) {

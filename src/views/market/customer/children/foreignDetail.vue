@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 17:53:01
+ * @LastEditTime: 2020-10-19 17:36:42
  * @FilePath: \jiudian\src\views\market\customer\children\foreignDetail.vue
  -->
 <template>
@@ -10,10 +10,10 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item @click.native="goBack" style="cursor: pointer"
-            >外宾详情</el-breadcrumb-item
-          >
-          <el-breadcrumb-item>张三</el-breadcrumb-item>
+          <el-breadcrumb-item @click.native="goBack" style="cursor: pointer">{{
+            $t("desk.customer_guestsDetail")
+          }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ titleNmae }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="bodyInfo">
@@ -29,53 +29,59 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="姓名:">
+                      <el-form-item :label="$t('desk.home_name') + ':'">
                         {{ detailForm.name }}
                       </el-form-item>
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="性别:">
+                      <el-form-item :label="$t('desk.customer_sex') + ':'">
                         {{ detailForm.sex | F_sex }}
                       </el-form-item>
                     </el-col>
 
                     <el-col :span="6" class="col">
-                      <el-form-item label="证件类型:">
+                      <el-form-item
+                        :label="$t('desk.customer_documentType') + ':'"
+                      >
                         {{ detailForm.idcardType | F_idcardType }}
                       </el-form-item>
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="证件号:">
+                      <el-form-item :label="$t('desk.customer_idNo') + ':'">
                         {{ detailForm.idcard }}
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="签证种类:">
+                      <el-form-item :label="$t('desk.customer_visaType') + ':'">
                         {{ detailForm.visaType | F_visaType }}
                       </el-form-item>
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="有效时间:">
+                      <el-form-item
+                        :label="$t('desk.customer_validTime') + ':'"
+                      >
                         {{ detailForm.dueTime }}
                       </el-form-item>
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="国籍:">
+                      <el-form-item
+                        :label="$t('desk.customer_international') + ':'"
+                      >
                         {{ F_nationality(detailForm.nationality) }}
                       </el-form-item>
                     </el-col>
 
                     <el-col :span="6" class="col">
-                      <el-form-item label="手机号码:">
+                      <el-form-item :label="$t('desk.home_phoneNum') + ':'">
                         {{ detailForm.phone }}
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="备注:">
+                      <el-form-item :label="$t('desk.home_note') + ':'">
                         {{ detailForm.remark }}
                       </el-form-item>
                     </el-col>
@@ -104,6 +110,7 @@ export default {
   },
   data() {
     return {
+      titleNmae: "",
       storeList: "",
       nationalityList: "",
       formLabelWidth: "120px",
@@ -128,6 +135,7 @@ export default {
       },
       (res) => {
         this.detailForm = res;
+        this.titleNmae = res.name;
       }
     );
     this.stores_list();
@@ -145,7 +153,7 @@ export default {
           return that.storeList[k].storesName;
         }
       }
-      return "未知门店";
+      return this.$t("desk.customer_unknowStore");
     },
     F_nationality(v) {
       let that = this;
@@ -156,7 +164,7 @@ export default {
             : that.nationalityList[k].cName;
         }
       }
-      return "未知";
+      return this.$t("desk.home_unknown");
     },
     stores_list() {
       this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {

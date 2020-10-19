@@ -1,26 +1,26 @@
 <!--
  * @Date: 2020-05-08 08:01:35
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 17:21:17
- * @FilePath: /jiudian/src/views/market/customer/companylist.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-19 17:50:45
+ * @FilePath: \jiudian\src\views\market\customer\companylist.vue
  -->
 
 <template>
   <div class="boss-index">
     <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">
-      <el-tab-pane label="单位管理" name="first">
+      <el-tab-pane :label="$t('desk.customer_unitManage')" name="first">
         <company></company>
       </el-tab-pane>
-      <el-tab-pane label="收款查询" name="second">
+      <el-tab-pane :label="$t('desk.customer_receivingQuery')" name="second">
         <collection></collection>
       </el-tab-pane>
-      <el-tab-pane label="账套管理" name="third">
+      <el-tab-pane :label="$t('desk.customer_zhangSet')" name="third">
         <bill></bill>
       </el-tab-pane>
-      <el-tab-pane label="账务处理" name="four">
+      <el-tab-pane :label="$t('desk.customer_accounting')" name="four">
         <accounts></accounts>
       </el-tab-pane>
-      <el-tab-pane label="账务查询" name="five">
+      <el-tab-pane :label="$t('desk.customer_accountQuery')" name="five">
         <service></service>
       </el-tab-pane>
     </el-tabs>
