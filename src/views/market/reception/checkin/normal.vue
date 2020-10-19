@@ -22,7 +22,7 @@
                         <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="证件类型：" prop="idcardType">
+                <el-form-item :label="$t('commons.idCardTypeDesc')" prop="idcardType">
                     <el-select v-model="checkInForm.idcardType">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
                     </el-select>
@@ -268,7 +268,7 @@
                         </el-row>
                     </template>
                 </el-table-column>
-                <el-table-column prop="groupName" label="证件类型" width="150">
+                <el-table-column prop="groupName" :label="$t('commons.idCardTypeDesc')" width="150">
                     <template slot-scope="{row}">
                         <el-row>
                             <el-select v-model="row.idcardType" style="width:100%">

@@ -110,7 +110,7 @@
             <el-col :span="14">3019-7-1</el-col>
           </el-row>
           <el-row style="margin:10px 0">
-            <el-col :span="8">证件类型:</el-col>
+            <el-col :span="8"> {{ $t('commons.idCardTypeDesc')}}:</el-col>
             <el-col :span="14">护照</el-col>
           </el-row>
           <el-row style="margin:10px 0">

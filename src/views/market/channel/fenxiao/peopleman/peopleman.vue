@@ -97,8 +97,8 @@
                   </el-row>
                   <el-row>
                     <el-col :span="12">
-                      <el-form-item label="证件类型:">
-                      <el-select v-model="form.orderType" placeholder="请选择证件类型" >
+                      <el-form-item :label="$t('commons.idCardTypeDesc')">
+                      <el-select v-model="form.orderType" :placeholder="$t('commons.selectIdCardType')" >
                         <el-option label="当前课程" value="1"></el-option>
                         <el-option label="演出" value="3"></el-option>
                         <el-option label="场地预订" value="2"></el-option>
@@ -115,7 +115,7 @@
                   <el-row>
                     <el-col :span="12">
                       <el-form-item label="所属部门:">
-                      <el-select v-model="form.orderType" placeholder="请选择证件类型">
+                      <el-select v-model="form.orderType" :placeholder="$t('commons.selectIdCardType')">
                         <el-option label="当前课程" value="1"></el-option>
                         <el-option label="演出" value="3"></el-option>
                         <el-option label="场地预订" value="2"></el-option>
@@ -215,8 +215,8 @@
                   </el-row>
                   <el-row>
                     <el-col :span="12">
-                      <el-form-item label="证件类型:">
-                      <el-select v-model="form.orderType" placeholder="请选择证件类型" >
+                      <el-form-item :label="$t('commons.idCardTypeDesc')">
+                      <el-select v-model="form.orderType" :placeholder="$t('commons.selectIdCardType')" >
                         <el-option label="当前课程" value="1"></el-option>
                         <el-option label="演出" value="3"></el-option>
                         <el-option label="场地预订" value="2"></el-option>
@@ -233,7 +233,7 @@
                   <el-row>
                     <el-col :span="12">
                       <el-form-item label="所属部门:">
-                      <el-select v-model="form.orderType" placeholder="请选择证件类型">
+                      <el-select v-model="form.orderType" :placeholder="$t('commons.selectIdCardType')">
                         <el-option label="当前课程" value="1"></el-option>
                         <el-option label="演出" value="3"></el-option>
                         <el-option label="场地预订" value="2"></el-option>

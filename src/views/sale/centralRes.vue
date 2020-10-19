@@ -495,7 +495,7 @@
                   <el-form-item>
                     <el-col>
                       <!-- <div class="grid-content"> -->
-                      <el-form-item label="证件类型:">
+                      <el-form-item :label="$t('commons.idCardTypeDesc')">
                         <el-select style="width:120px" v-model="checkInForm.enterStatus">
                           <el-option label="全部" value="3">全部</el-option>
                           <el-option label="已认证" value="1">已认证</el-option>

@@ -256,7 +256,6 @@ module.exports = {
     customer_changeSuccess: 'ポイント交換成功',
     customer_inputName: '名前を入力してください',
     customer_chooseSex: '性別を選択してください',
-    customer_chooseCard: '身分証明書種別を選択してください',
     customer_inputCardNum: '証明書番号を入力してください',
     customer_inputPhone: '携帯番号を入力してください',
     customer_inputMemNum: '会員番号を入力してください',

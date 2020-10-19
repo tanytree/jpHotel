@@ -34,7 +34,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="10" class="col">
-                      <el-form-item label="证件类型:">
+                      <el-form-item :label="$t('commons.idCardTypeDesc')">
                         <el-select
                           style="width: 100px; margin-right: 4px"
                           v-model="editorForm.idcardType"

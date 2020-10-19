@@ -33,7 +33,7 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="groupName" label="证件类型">
+            <el-table-column prop="groupName" :label="$t('commons.idCardTypeDesc')">
                 <template slot-scope="{row}">
                     <el-row>
                         <el-select v-model="row.idcardType" style="width:100%">
@@ -237,7 +237,7 @@ export default {
                 return
             }
             if (!item.idcardType) {
-                this.$message.error('请选择证件类型');
+                this.$message.error(this.$t('commons.selectIdCardType'));
                 return
             }
             if (!item.idcard) {
@@ -275,7 +275,7 @@ export default {
                 return
             }
             if (!item.idcardType) {
-                this.$message.error('请选择证件类型');
+                this.$message.error(this.$t('commons.selectIdCardType'));
                 return
             }
             if (!item.idcard) {

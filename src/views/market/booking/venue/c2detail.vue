@@ -122,7 +122,7 @@
             ></el-table-column>
             <el-table-column
               prop="enterType"
-              label="证件类型"
+              :label="$t('commons.idCardTypeDesc')"
               show-overflow-tooltip
             ></el-table-column>
             <el-table-column
@@ -188,11 +188,11 @@
         </el-row>
         <el-row class="row">
           <el-col :span="11" class="col">
-            <el-form-item label="证件类型:" prop="idcardType">
+            <el-form-item :label="$t('commons.idCardTypeDesc')" prop="idcardType">
               <el-select
                 v-model="addCompanyForm.idcardType"
                 style="width: 180px"
-                placeholder="请选择证件类型"
+                :placeholder="$t('commons.selectIdCardType')"
               >
                 <el-option label="身份证" value="1"></el-option>
                 <el-option label="护照" value="2"></el-option>

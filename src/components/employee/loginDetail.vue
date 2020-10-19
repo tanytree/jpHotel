@@ -64,7 +64,7 @@
         <el-col :span="14">{{detailsData.inTime || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_documentType')}}</el-col>
+        <el-col :span="8">{{$t('commons.idCardTypeDesc')}}</el-col>
         <el-col
           :span="14"
         >{{$t('commons.idCardType')[detailsData.idcardType || ''] || $t('boss.loginDetail_no')}}</el-col>

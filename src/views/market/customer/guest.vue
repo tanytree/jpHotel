@@ -480,7 +480,7 @@ export default {
         idcardType: [
           {
             required: true,
-            message: this.$t("desk.customer_chooseCard"),
+            message: this.$t("commons.selectIdCardType"),
             trigger: "change",
           },
         ],

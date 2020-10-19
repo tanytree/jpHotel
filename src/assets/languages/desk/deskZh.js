@@ -264,7 +264,6 @@ module.exports = {
     customer_changeSuccess: '兑换成功',
     customer_inputName: '请输入姓名',
     customer_chooseSex: '请选择性别',
-    customer_chooseCard: '请选择证件类型',
     customer_inputCardNum: '请填入证件编号',
     customer_inputPhone: '请输入手机号',
     customer_inputMemNum: '请输入会员卡号',

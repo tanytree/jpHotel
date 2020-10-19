@@ -216,5 +216,8 @@ module.exports = {
     },
     //一周得描述
     weeks: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+
+    idCardTypeDesc: "证件类型",
+    selectIdCardType: '请选择证件类型',
 }
 

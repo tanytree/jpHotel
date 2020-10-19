@@ -187,8 +187,8 @@
                     </el-row>
                     <el-row class="margin-b-10">
                         <el-col :span="12">
-                            <el-form-item :label="$t('boss.loginDetail_documentType')">
-                                <el-select v-model="addAndEditForm.idcardType" :placeholder="$t('boss.staff_selectType')" class="width200">
+                            <el-form-item :label="$t('commons.idCardTypeDesc')">
+                                <el-select v-model="addAndEditForm.idcardType" :placeholder="$t('commons.selectIdCardType')" class="width200">
                                     <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                                 </el-select>
                             </el-form-item>

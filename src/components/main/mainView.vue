@@ -101,7 +101,6 @@ export default {
         },
 
         menulfuc(item) {
-            debugger
             if (item.childList && item.childList.length > 0) {
                 this.menul = item;
                 this.routerCompany = "";
@@ -126,7 +125,6 @@ export default {
         },
         //点击左侧导航
         toSection(item) {
-            debugger
             if (item.path) {
                 this.subMenul = item;
                 sessionStorage.sectionid = item.id;
@@ -160,7 +158,6 @@ export default {
         },
         // 处理路由
         calRouter(language, action) {
-            debugger
             this.language = language;
             this.$forceUpdate();
             this.partmentId = sessionStorage.partmentId || "";
@@ -189,7 +186,6 @@ export default {
         },
 
         resetMenu(menus) {
-            debugger
             if (menus && menus != "undefined") {
                 this.menulfuc(JSON.parse(sessionStorage.menul));
                 // this.toSection(JSON.parse(sessionStorage.subMenul));
@@ -200,7 +196,6 @@ export default {
         }
     },
     created() {
-        debugger
         this.calRouter();
         this.$forceUpdate();
     },
@@ -209,7 +204,6 @@ export default {
     //   this.toSection(this.menul.childList[0])
     // },
     mounted() {
-        debugger
         this.refreshInto = true;
         this.resetMenu(sessionStorage.menul);
     },

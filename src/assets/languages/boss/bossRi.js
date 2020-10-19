@@ -86,7 +86,6 @@ module.exports = {
     staff_editingStaff: '変更',
     staff_staffState: '従業員の状態',
     staff_inputName: '名前をご入力下さい',
-    staff_selectType: 'パスポート',
     staff_department: '所属部門',
     staff_fillInPosition: 'ポジションを記入してください',
     staff_relatedBackground: 'バックグラウンドアカウントに関連',

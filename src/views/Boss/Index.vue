@@ -80,7 +80,7 @@
         <el-col span="14">张三</el-col>
       </el-row>
       <el-row class="padding-item">
-        <el-col span="8">证件类型:</el-col>
+        <el-col span="8"> {{ $t('commons.idCardTypeDesc')}}:</el-col>
         <el-col span="14">张三</el-col>
       </el-row>
       <el-row class="padding-item">
