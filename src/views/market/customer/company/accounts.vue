@@ -11,7 +11,7 @@
         v-model="searchForm"
         label-width="80px"
       >
-        <el-form-item label="挂账单位">
+        <el-form-item  :label="$t('desk.customer_buyerUnit')">
           <el-select v-model="searchForm.enterId" class="width150">
            <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
@@ -23,7 +23,9 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -35,15 +37,15 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
-        <el-table-column label="未结算" align="center">
-          <el-table-column label="挂账总额" width="120">
+        <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creditLimit" :label="$t('desk.customer_paymentAmount')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.customer_noSettlement')" align="center">
+          <el-table-column :label="$t('desk.customer_totalPayment')" width="120">
             <template slot-scope="{row}">
               <div>{{row.finance.onAccountTotal?row.finance.onAccountTotal:0}}</div>
             </template>
           </el-table-column>
-          <el-table-column label="未结总额" width="120">
+          <el-table-column :label="$t('desk.customer_outstandingTotalAmount')" width="120">
             <template slot-scope="{row}">
               <div>{{row.finance.noSettlementTotal?row.finance.onAccountTotal:0}}</div>
             </template>
@@ -140,7 +142,7 @@
         class="demo-ruleForm"
         inline
       >
-        <el-form-item label="单位名称:">{{itemInfo.enterName}}</el-form-item>
+        <el-form-item :label="$t('desk.customer_unitName')+':'">{{itemInfo.enterName}}</el-form-item>
         <el-form-item label="预收款余额:">{{itemInfo.totalLimit}}</el-form-item>
 
         <el-form-item label="支付方式:">
@@ -175,7 +177,7 @@
       top="0"
     >
       <div>
-        <span>单位名称:蓝海一号</span>
+        <span>{{$t('desk.customer_unitName')+':'}}蓝海一号</span>
         <span style="margin-left:20px">
           选择账务：
           <el-radio-group v-model="choose">

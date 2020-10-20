@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-19 18:01:34
+ * @LastEditTime: 2020-10-20 10:20:18
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 
@@ -210,7 +210,7 @@ module.exports = {
     customer_cardCost: 'ランクアップ追加分を補う',
     customer_payType: '支払方法',
     customer_unionpay: 'クレジットカード',
-    customer_payPrice: '未翻译支払金額词条',
+    customer_payPrice: '支払金額',
     customer_inputReason: '復活理由を入力してください',
     customer_notBlink: '空白は処理できません',
     customer_inputRemark: '備考を入力してください',
@@ -269,17 +269,17 @@ module.exports = {
     customer_resetMemType: '会員種別を変更',
     customer_memStop: '会員資格停止',
     customer_lossOperate: '紛失/再発行作業',
-    customer_memInfo: '未翻译词条',
+    customer_memInfo: '会員情報master',
     customer_integralQuery: 'ポイント情報検索',
     customer_spendTime: '利用時間',
-    customer_today: '未翻译词条',
-    customer_yesterday: '未翻译词条',
-    customer_thisWeek: '未翻译词条',
-    customer_thisMonth: '未翻译词条',
+    customer_today: '本日',
+    customer_yesterday: '前日',
+    customer_thisWeek: '本週',
+    customer_thisMonth: '今月',
     customer_occurrenceStore: '发生门店',
-    customer_increase: '未翻译词条',
-    customer_deduct: '未翻译词条',
-    customer_inTheDate: '未翻译词条',
+    customer_increase: '追加',
+    customer_deduct: '控除',
+    customer_inTheDate: '利用日',
     customer_operator: '操作員',
     customer_createStore: 'ホテル追加',
     customer_guestType: 'ゲストカテゴリー',
@@ -288,53 +288,199 @@ module.exports = {
     customer_guestHistory: '顧客履歴',
     customer_changeMem: '会員登録',
     customer_telephone: '電話番号',
-    customer_noRecord: '未翻译词条',
+    customer_noRecord: '記録無い',
     customer_registerStore: '登録ホテル',
     customer_guestsNative: '国籍',
     customer_visaType: 'ビザ種類',
-    customer_ordinaryVisas: '未翻译词条',
-    customer_diplomaticVisas: '未翻译词条',
-    customer_businessVisa: '未翻译词条',
-    customer_passport: '未翻译词条',
-    customer_driveLicence: '未翻译词条',
+    customer_ordinaryVisas: '一般ビザ',
+    customer_diplomaticVisas: '外交ビザ',
+    customer_businessVisa: '公務ビザ',
+    customer_passport: 'パスポート',
+    customer_driveLicence: '運転免許証',
     customer_idNo: '本人確認書番号',
     customer_registrationGusets: '外国籍顧客登録',
     customer_registrationTime: '予約期間',
     customer_nowLiveState: '宿泊状況',
-    customer_stayIn: '未翻译词条',
+    customer_stayIn: '宿泊中',
     customer_notStayIn: '未使用（未宿泊）',
-    customer_editorGuests: '未翻译词条',
+    customer_editorGuests: '外国人顧客資料編集',
     customer_guestsName: '宿泊者名前',
-    customer_man: '未翻译词条',
-    customer_woman: '未翻译词条',
-    customer_secret: '未翻译词条',
-    customer_idNumber: '未翻译词条',
+    customer_man: '男',
+    customer_woman: '女',
+    customer_secret: '秘密',
+    customer_idNumber: '身分証明証番号',
     customer_validTime: '有効期間',
     customer_guestNationality: '国籍',
-    customer_chooseVisaType: '未翻译词条',
-    customer_selectDueDate: '未翻译词条',
-    customer_selectNationality: '未翻译词条',
-    customer_guestHistoryRecord: '未翻译词条',
-    customer_historyGuest: '未翻译词条',
-    customer_roomType: '未翻译词条',
-    customer_venue: '未翻译词条',
-    customer_guestRoom: '未翻译词条',
-    customer_leaveStoreDate: '未翻译词条',
-    customer_livePeople: '未翻译词条',
-    customer_liveToleave: '未翻译词条',
-    customer_arrived: '未翻译词条',
-    customer_leave: '未翻译词条',
-    customer_dayNum: '未翻译词条',
-    customer_totalRoomPrice: '未翻译词条',
-    customer_totalConsum: '未翻译词条',
-    customer_toTheGuest: '未翻译词条',
-    customer_guestsDetail: '未翻译词条',
-    customer_unitManage: '未翻译词条',
-    customer_receivingQuery: '未翻译词条',
-    customer_zhangSet: '未翻译词条',
-    customer_accounting: '未翻译词条',
-    customer_accountQuery: '未翻译词条',
-    customer_unitName: '未翻译词条',
+    customer_chooseVisaType: 'ビザ種類を選択してください',
+    customer_selectDueDate: '有効期限',
+    customer_selectNationality: '国籍',
+    customer_guestHistoryRecord: '顧客資料',
+    customer_historyGuest: '顧客履歴記録',
+    customer_roomType: '部屋類別',
+    customer_venue: '会場',
+    customer_guestRoom: '客室',
+    customer_leaveStoreDate: '出発日',
+    customer_livePeople: '宿泊者',
+    customer_liveToleave: '到着−出発日',
+    customer_arrived: '到着',
+    customer_leave: '出発',
+    customer_dayNum: '日数',
+    customer_totalRoomPrice: '宿泊料金',
+    customer_totalConsum: '利用合計',
+    customer_toTheGuest: '同伴者',
+    customer_guestsDetail: '外国人顧客情報',
+    customer_unitManage: '法人master',
+    customer_receivingQuery: '入金確認',
+    customer_zhangSet: '法人締め請求パッケージ管理',
+    customer_accounting: '会計処理',
+    customer_accountQuery: '会計確認',
+    customer_unitName: '法人名称',
+    customer_ifShare: '共通必要',
+    customer_contact: '担当者',
+    customer_paymentAmount: '与信限度額',
+    customer_usedLimit: '使用済み限度額',
+    customer_advancePayment: '前受残高',
+    customer_newAdd: '追加',
+    customer_volumeSet: '一括設定',
+    customer_expiryDate: '失効日',
+    customer_effectiveDate: '有効期間',
+    customer_aKeyEnable: '一括起用',
+    customer_aKeyDisable: '一括停止',
+    customer_accountRules: '料金レート',
+    customer_pricingStrategy: '料金設定規則',
+    customer_contractNo: '契約番号',
+    customer_enable: '起用',
+    customer_disable: '停止',
+    customer_newUnit: '法人追加',
+    customer_editorUnit: '未翻译词条',
+    customer_groupShare: 'グループ内共通',
+    customer_stopUse: '使用停止',
+    customer_bankAccount: '銀行口座番号',
+    customer_ein: '未翻译词条',
+    customer_resetText: '設定',
+    customer_enableIng: '利用中',
+    customer_disableIng: '停止中',
+    customer_sureDisable: '未翻译词条',
+    customer_priRuleNotBlank: '未翻译词条',
+    customer_billRuleNotBlank: '未翻译词条',
+    customer_selectUnit: '未翻译词条',
+    customer_inputUnitName: '未翻译词条',
+    customer_inputPeople: '未翻译词条',
+    customer_selectPriceRule: '未翻译词条',
+    customer_selectBillRule: '未翻译词条',
+    customer_inputPaymentAmount: '未翻译词条',
+    customer_selectIfStop: '未翻译词条',
+    customer_totalPayment: '未翻译词条',
+    customer_queryDeal: '未翻译词条',
+    customer_totalPrice: '入金合計',
+    customer_creditOperate: '請求処理',
+    customer_referred: '略称',
+    customer_hangLine: '与信限度額',
+    customer_gatheringStore: '入金ホテル',
+    customer_paymentType: '入金種別',
+    customer_settlement: '精算',
+    customer_advance: '前受金',
+    customer_bankCard: 'デビットカード',
+    customer_check: '未翻译词条',
+    customer_unitSettlement: '未翻译词条',
+    customer_collectionTime: '入金時間',
+    customer_lastWeek: '先週',
+    customer_lastMonth: '未翻译词条',
+    customer_collection: '入金',
+    customer_refund: '返金',
+    customer_sum: '金額',
+    customer_refundWay: 'デポ戻し方法',
+    customer_canRefundPri: '未翻译词条',
+    customer_advanceBill: '未翻译词条',
+    customer_orderNum: '予約番号',
+    customer_cashier: 'レジ担当',
+    customer_rechargeAmount: '未翻译词条',
+    customer_sumInsideCard: '未翻译词条',
+    customer_prepaidTime: '未翻译词条',
+    customer_vipSignature: '宿泊者サイン',
+    customer_advanceRefund: '前受金返金',
+    customer_advanceMade: '前受金受領証印刷',
+    customer_refundPriceShould: '未翻译词条',
+    customer_consumptionStore: '利用ホテル',
+    customer_buyerUnit: '売掛法人名称',
+    customer_closeAccount: '精算済',
+    customer_outStand: '未収',
+    customer_amountPrice: '売掛金額',
+    customer_roomKind: '部屋タイプ/部屋番号',
+    customer_checkoutTime: '离店时间',
+    customer_settlementStatus: '状態',
+    customer_constDate: '未翻译词条',
+    customer_noSettlement: '未収',
+    customer_outstandingTotalAmount: '未収合計',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -11,9 +11,9 @@
         label-width="100px"
         :model="searchForm"
       >
-        <el-form-item label="收款门店">
+        <el-form-item :label="$t('desk.customer_gatheringStore')">
           <el-select v-model="searchForm.storesNum" class="width150">
-           <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item, index) in storeList"
               :key="index"
@@ -22,7 +22,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="单位名称">
+        <el-form-item :label="$t('desk.customer_unitName')">
           <el-select
             v-model="searchForm.enterId"
             filterable
@@ -39,63 +39,68 @@
           </el-select>
         </el-form-item>
         <el-row>
-          <el-form-item label="收款类型">
+          <el-form-item :label="$t('desk.customer_paymentType')">
             <el-radio-group v-model="searchForm.priceType">
-              <el-radio-button label style="margin-right: 10px"
-                >不限</el-radio-button
+              <el-radio-button label style="margin-right: 10px">{{
+                $t("desk.home_noLimit")
+              }}</el-radio-button
               >&nbsp;&nbsp;
-              <el-radio-button label="2" style="margin-right: 10px"
-                >结算</el-radio-button
+              <el-radio-button label="2" style="margin-right: 10px">{{
+                $t("desk.customer_settlement")
+              }}</el-radio-button
               >&nbsp;&nbsp;
-              <el-radio-button label="1">预收款</el-radio-button>&nbsp;&nbsp;
+              <el-radio-button label="1">{{
+                $t("desk.customer_advance")
+              }}</el-radio-button
+              >&nbsp;&nbsp;
             </el-radio-group>
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item label="支付方式">
+          <el-form-item :label="$t('desk.customer_payType')">
             <el-radio-group v-model="searchForm.payType">
-              <el-radio-button label style="margin-right: 10px"
-                >不限</el-radio-button
-              >
-              <el-radio-button label="1" style="margin-right: 10px"
-                >现金</el-radio-button
-              >
-              <el-radio-button label="2" style="margin-right: 10px"
-                >银行卡</el-radio-button
-              >
-              <el-radio-button label="5" style="margin-right: 10px"
-                >支票</el-radio-button
-              >
-              <el-radio-button label="3" style="margin-right: 10px"
-                >支付宝</el-radio-button
-              >
+              <el-radio-button label style="margin-right: 10px">{{
+                $t("desk.home_noLimit")
+              }}</el-radio-button>
+              <el-radio-button label="1" style="margin-right: 10px">{{
+                $t("desk.serve_cash")
+              }}</el-radio-button>
+              <el-radio-button label="2" style="margin-right: 10px">{{
+                $t("desk.customer_bankCard")
+              }}</el-radio-button>
+              <el-radio-button label="5" style="margin-right: 10px">{{
+                $t("desk.customer_check")
+              }}</el-radio-button>
+              <el-radio-button label="3" style="margin-right: 10px">{{
+                $t("desk.serve_alipay")
+              }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item label="收款时间">
+          <el-form-item :label="$t('desk.customer_collectionTime')">
             <el-radio-group v-model="searchForm.timeType">
-              <el-radio-button label style="margin-right: 10px"
-                >不限</el-radio-button
-              >
-              <el-radio-button label="1" style="margin-right: 10px"
-                >今日</el-radio-button
-              >
-              <el-radio-button label="2" style="margin-right: 10px"
-                >昨日</el-radio-button
-              >
-              <el-radio-button label="3" style="margin-right: 10px"
-                >上周</el-radio-button
-              >
-              <el-radio-button label="4" style="margin-right: 10px"
-                >上月</el-radio-button
-              >
-              <el-radio-button label="5" style="margin-right: 10px"
-                >本月</el-radio-button
-              >
-              <el-radio-button label="defined" style="margin-right: 10px"
-                >自定义</el-radio-button
-              >
+              <el-radio-button label style="margin-right: 10px">{{
+                $t("desk.home_noLimit")
+              }}</el-radio-button>
+              <el-radio-button label="1" style="margin-right: 10px">{{
+                $t("desk.customer_today")
+              }}</el-radio-button>
+              <el-radio-button label="2" style="margin-right: 10px">{{
+                $t("desk.customer_yesterday")
+              }}</el-radio-button>
+              <el-radio-button label="3" style="margin-right: 10px">{{
+                $t("desk.customer_lastWeek")
+              }}</el-radio-button>
+              <el-radio-button label="4" style="margin-right: 10px">{{
+                $t("desk.customer_lastMonth")
+              }}</el-radio-button>
+              <el-radio-button label="5" style="margin-right: 10px">{{
+                $t("desk.customer_thisMonth")
+              }}</el-radio-button>
+              <el-radio-button label="defined" style="margin-right: 10px">{{
+                $t("desk.book_theCustom")
+              }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="searchForm.timeType == 'defined'">
@@ -104,24 +109,24 @@
               value-format="yyyy-MM-dd"
               type="date"
               style="width: 140px"
-              placeholder="选择日期"
+              :placeholder="$t('desk.serve_chooseDate')"
             ></el-date-picker>
-            <span style="margin: 0 5px">至</span>
+            <span style="margin: 0 5px">{{ $t("desk.serve_to") }}</span>
             <el-date-picker
               v-model="searchForm.endTime"
               value-format="yyyy-MM-dd"
               type="date"
               style="width: 140px"
-              placeholder="选择日期"
+              :placeholder="$t('desk.serve_chooseDate')"
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" class="submit" @click="getReceiveList"
-              >查询</el-button
-            >
-            <el-button type="primary" class="grey" @click="initForm"
-              >重置</el-button
-            >
+            <el-button type="primary" class="submit" @click="getReceiveList">{{
+              $t("commons.queryBtn")
+            }}</el-button>
+            <el-button type="primary" class="grey" @click="initForm">{{
+              $t("commons.resetBtn")
+            }}</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -136,83 +141,109 @@
       >
         <el-table-column
           prop="enterName"
-          label="单位名称"
+          :label="$t('desk.customer_unitName')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="storesName"
-          label="收款门店"
+          :label="$t('desk.customer_gatheringStore')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column label="收款类型" show-overflow-tooltip width="80px">
+        <el-table-column
+          :label="$t('desk.customer_paymentType')"
+          show-overflow-tooltip
+          width="80px"
+        >
           <template slot-scope="{ row }">
-            <div v-if="row.priceType == 1">预收款</div>
-            <div v-if="row.priceType == 2">结算</div>
-            <div v-if="row.priceType == 3">预收款</div>
-          </template>
-        </el-table-column>
-        <el-table-column label="支付方式" show-overflow-tooltip width="135px">
-          <template slot-scope="{ row }">
-            <div v-if="row.priceType == 2">
-              <span>单位结算-</span>
-              <span v-if="row.payType == 1">现金</span>
-              <span v-if="row.payType == 2">银行卡</span>
-              <span v-if="row.payType == 5">支票</span>
-              <span v-if="row.payType == 4">微信</span>
-              <span v-if="row.payType == 3">支付宝</span>
-            </div>
             <div v-if="row.priceType == 1">
-              <span>预收款</span>
-              <span v-if="row.payType == 1">现金</span>
-              <span v-if="row.payType == 2">银行卡</span>
-              <span v-if="row.payType == 5">支票</span>
-              <span v-if="row.payType == 4">微信</span>
-              <span v-if="row.payType == 3">支付宝</span>
-              <span>收款</span>
+              {{ $t("desk.customer_advance") }}
+            </div>
+            <div v-if="row.priceType == 2">
+              {{ $t("desk.customer_settlement") }}
             </div>
             <div v-if="row.priceType == 3">
-              <span>预收款-</span>
-              <span v-if="row.payType == 1">现金</span>
-              <span v-if="row.payType == 2">银行卡</span>
-              <span v-if="row.payType == 5">支票</span>
-              <span v-if="row.payType == 4">微信</span>
-              <span v-if="row.payType == 3">支付宝</span>
-              <span>退款</span>
+              {{ $t("desk.customer_advance") }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :label="$t('desk.customer_payType')"
+          show-overflow-tooltip
+          width="135px"
+        >
+          <template slot-scope="{ row }">
+            <div v-if="row.priceType == 2">
+              <span>{{ $t("desk.customer_unitSettlement") }}-</span>
+              <span v-if="row.payType == 1">{{ $t("desk.serve_cash") }}</span>
+              <span v-if="row.payType == 2">{{
+                $t("desk.customer_bankCard")
+              }}</span>
+              <span v-if="row.payType == 5">{{
+                $t("desk.customer_check")
+              }}</span>
+              <span v-if="row.payType == 4">{{ $t("desk.serve_wechat") }}</span>
+              <span v-if="row.payType == 3">{{ $t("desk.serve_alipay") }}</span>
+            </div>
+            <div v-if="row.priceType == 1">
+              <span>{{ $t("desk.customer_advance") }}</span>
+              <span v-if="row.payType == 1">{{ $t("desk.serve_cash") }}</span>
+              <span v-if="row.payType == 2">{{
+                $t("desk.customer_bankCard")
+              }}</span>
+              <span v-if="row.payType == 5">{{
+                $t("desk.customer_check")
+              }}</span>
+              <span v-if="row.payType == 4">{{ $t("desk.serve_wechat") }}</span>
+              <span v-if="row.payType == 3">{{ $t("desk.serve_alipay") }}</span>
+              <span>{{ $t("desk.customer_collection") }}</span>
+            </div>
+            <div v-if="row.priceType == 3">
+              <span>{{ $t("desk.customer_advance") }}-</span>
+              <span v-if="row.payType == 1">{{ $t("desk.serve_cash") }}</span>
+              <span v-if="row.payType == 2">{{
+                $t("desk.customer_bankCard")
+              }}</span>
+              <span v-if="row.payType == 5">{{
+                $t("desk.customer_check")
+              }}</span>
+              <span v-if="row.payType == 4">{{ $t("desk.serve_wechat") }}</span>
+              <span v-if="row.payType == 3">{{ $t("desk.serve_alipay") }}</span>
+              <span>{{ $t("desk.customer_refund") }}</span>
             </div>
           </template>
         </el-table-column>
         <el-table-column
           prop="createTime"
-          label="收款时间"
+          :label="$t('desk.customer_collectionTime')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="payPrice"
-          label="金额"
+          :label="$t('desk.customer_sum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="remark"
-          label="备注"
+          :label="$t('desk.home_note')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="creatorName"
-          label="操作人"
+          :label="$t('desk.home_operator')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column label="操作" width="220">
+        <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }" v-if="row.priceType == 1">
             <el-button
               @click="paymentsRefund(row)"
               type="text"
               v-if="row.outMoney == 1"
               size="mini"
-              >预收款退款</el-button
+              >{{ $t("desk.customer_advanceRefund") }}</el-button
             >
-            <el-button @click="printDetail(row)" type="text" size="mini"
-              >预收款补打</el-button
-            >
+            <el-button @click="printDetail(row)" type="text" size="mini">{{
+              $t("desk.customer_advanceMade")
+            }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -229,7 +260,7 @@
     </div>
     <!-- 退款dialog -->
     <el-dialog
-      title="退款"
+      :title="$t('desk.customer_refund')"
       v-if="dialogVisible"
       :visible.sync="dialogVisible"
       width="700px"
@@ -241,21 +272,21 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="退款方式:">
+        <el-form-item :label="$t('desk.customer_refundWay') + ':'">
           <el-radio-group v-model="ruleForm.payType">
-            <el-radio label="1">现金</el-radio>
-            <el-radio label="2">银行卡</el-radio>
-            <el-radio label="3">支付宝</el-radio>
-            <el-radio label="4">微信</el-radio>
+            <el-radio label="1">{{ $t("desk.serve_cash") }}</el-radio>
+            <el-radio label="2">{{ $t("desk.customer_bankCard") }}</el-radio>
+            <el-radio label="3">{{ $t("desk.serve_alipay") }}</el-radio>
+            <el-radio label="4">{{ $t("desk.serve_wechat") }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="可退金额:">
+        <el-form-item :label="$t('desk.customer_canRefundPri') + ':'">
           <span>{{ rowInfo.payPrice }}</span>
         </el-form-item>
-        <el-form-item label="金额:">
+        <el-form-item :label="$t('desk.customer_sum') + ':'">
           <el-input v-model="ruleForm.payPrice" style="width: 280px"></el-input>
         </el-form-item>
-        <el-form-item label="备注:" prop="remark">
+        <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
           <el-input
             type="textarea"
             v-model="ruleForm.remark"
@@ -265,62 +296,84 @@
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
         <span>
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="sureRefund">确 认</el-button>
+          <el-button @click="dialogVisible = false">{{
+            $t("commons.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="sureRefund">{{
+            $t("commons.confirm")
+          }}</el-button>
         </span>
       </div>
     </el-dialog>
     <!-- 寄存补打dialog -->
     <el-dialog
       top="0"
-      title="寄存补打"
+      :title="$t('desk.home_checkToPlay')"
       style="text-align: left"
       width="750px"
       v-if="checkPatch"
       :visible.sync="checkPatch"
     >
-      <h2 style="text-align: center">{{ itemInfo.storesName }} 预收款账单</h2>
+      <h2 style="text-align: center">
+        {{ itemInfo.storesName }} {{ $t("desk.customer_advanceBill") }}
+      </h2>
       <div class="bigBox">
         <div class="headInfo">
-          <span>打印时间：{{ printingTime }}</span>
-          <span>订单编号：{{ itemInfo.orderNum }}</span>
-          <span>收银员：{{ itemInfo.creatorName }}</span>
+          <span>{{ $t("desk.home_printTime") + ":" }}{{ printingTime }}</span>
+          <span
+            >{{ $t("desk.customer_orderNum") + ":"
+            }}{{ itemInfo.orderNum }}</span
+          >
+          <span
+            >{{ $t("desk.customer_cashier") + ":"
+            }}{{ itemInfo.creatorName }}</span
+          >
         </div>
         <div class="middleInfo">
           <div class="middleItem" style="margin-bottom: 26px">
             <div class="right30">
-              <div>名称</div>
+              <div>{{ $t("desk.book_name") }}</div>
               <div>Name</div>
             </div>
             <div class="right50">{{ itemInfo.enterName }}</div>
             <div class="right30">
-              <div>支付方式</div>
+              <div>{{ $t("desk.customer_payType") }}</div>
               <div>Pay Method</div>
             </div>
-            <div v-if="itemInfo.payType == 1" class="right50">现金</div>
-            <div v-if="itemInfo.payType == 2" class="right50">银行卡</div>
-            <div v-if="itemInfo.payType == 3" class="right50">支付宝</div>
-            <div v-if="itemInfo.payType == 4" class="right50">微信</div>
-            <div v-if="itemInfo.payType == 5" class="right50">支票</div>
+            <div v-if="itemInfo.payType == 1" class="right50">
+              {{ $t("desk.serve_cash") }}
+            </div>
+            <div v-if="itemInfo.payType == 2" class="right50">
+              {{ $t("desk.customer_bankCard") }}
+            </div>
+            <div v-if="itemInfo.payType == 3" class="right50">
+              {{ $t("desk.serve_alipay") }}
+            </div>
+            <div v-if="itemInfo.payType == 4" class="right50">
+              {{ $t("desk.serve_wechat") }}
+            </div>
+            <div v-if="itemInfo.payType == 5" class="right50">
+              {{ $t("desk.customer_check") }}
+            </div>
             <div class="right30">
-              <div>充值金额</div>
+              <div>{{ $t("desk.customer_rechargeAmount") }}</div>
               <div>Money</div>
             </div>
             <div>{{ itemInfo.payPrice }}</div>
           </div>
           <div class="middleItem">
             <div class="right30">
-              <div>联系人</div>
+              <div>{{ $t("desk.customer_contact") }}</div>
               <div>Contacts</div>
             </div>
             <div class="right50">{{ itemInfo.hotelEnter.contactName }}</div>
             <div class="right30">
-              <div>手机号</div>
+              <div>{{ $t("desk.home_phoneNum") }}</div>
               <div>Phone</div>
             </div>
             <div class="right50">{{ itemInfo.hotelEnter.contactPhone }}</div>
             <div class="right30">
-              <div>卡内余额</div>
+              <div>{{ $t("desk.customer_sumInsideCard") }}</div>
               <div>Balance</div>
             </div>
             <div>{{ itemInfo.hotelEnter.totalLimit }}</div>
@@ -329,26 +382,34 @@
       </div>
       <el-row :gutter="20" style="margin-bottom: 15px">
         <el-col :span="8">
-          <span>充值时间：{{ itemInfo.createTime }}</span>
+          <span
+            >{{ $t("desk.customer_prepaidTime") + ":"
+            }}{{ itemInfo.createTime }}</span
+          >
         </el-col>
         <el-col :span="8">
-          <span>备注：{{ itemInfo.remark }}</span>
+          <span>{{ $t("desk.home_note") + ":" }}{{ itemInfo.remark }}</span>
         </el-col>
         <el-col :span="8"></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
-          <span>前台电话：{{ storeInfo.phone }}</span>
+          <span
+            >{{ $t("desk.home_deskPhone") + ":" }}{{ storeInfo.phone }}</span
+          >
         </el-col>
         <el-col :span="9">
-          <span>酒店地址：{{ storeInfo.address }}</span>
+          <span
+            >{{ $t("desk.home_hotelAddress") + ":"
+            }}{{ storeInfo.address }}</span
+          >
         </el-col>
-        <el-col :span="7">贵宾签名：</el-col>
+        <el-col :span="7">{{ $t("desk.customer_vipSignature") + ":" }}</el-col>
       </el-row>
       <div slot="footer" class="dialog-footer" style="text-align: center">
-        <el-button style="width: 80px" @click="checkPatch = false"
-          >{{ $t('commons.cancel') }}</el-button
-        >
+        <el-button style="width: 80px" @click="checkPatch = false">{{
+          $t("commons.cancel")
+        }}</el-button>
         <!--        <el-button style="width:80px;" type="primary">{{$t('commons.print')}}</el-button>-->
       </div>
     </el-dialog>
@@ -453,7 +514,7 @@ export default {
           "/pms/consume/enter_consume_oper",
           params,
           (data) => {
-            this.$message.success(this.$t('commons.request_success'));
+            this.$message.success(this.$t("commons.request_success"));
             this.dialogVisible = false;
             this.ruleForm.payType = "1";
             this.ruleForm.payPrice = null;
@@ -462,7 +523,9 @@ export default {
           }
         );
       } else {
-        this.$message.error("退款金额不能高于" + this.rowInfo.payPrice);
+        this.$message.error(
+          this.$t("desk.customer_refundPriceShould") + this.rowInfo.payPrice
+        );
       }
     },
     //点击预收款退款按钮

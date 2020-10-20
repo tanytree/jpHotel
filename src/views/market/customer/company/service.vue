@@ -11,13 +11,13 @@
         label-width="80px"
         v-model="searchForm"
       >
-        <el-form-item label="消费门店">
+        <el-form-item :label="$t('desk.customer_consumptionStore')">
           <el-select
             v-model="searchForm.storesNum"
             class="width150"
             :placeholder="$t('commons.placeChoose')"
           >
-           <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item, index) in storeList"
               :key="index"
@@ -26,13 +26,13 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="挂账单位">
+        <el-form-item :label="$t('desk.customer_buyerUnit')">
           <el-select
             v-model="searchForm.enterId"
             class="width150"
             :placeholder="$t('commons.placeChoose')"
           >
-              <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               v-for="(item, index) in unitList"
               :key="index"
@@ -41,27 +41,33 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="结账状态">
+        <el-form-item :label="$t('desk.order_checkStatus')">
           <el-select v-model="searchForm.state" class="width150">
-           <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option label="已结" value="1"></el-option>
-            <el-option label="未结" value="2"></el-option>
+            <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option
+              :label="$t('desk.customer_closeAccount')"
+              value="1"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_outStand')"
+              value="2"
+            ></el-option>
           </el-select>
         </el-form-item>
         <br />
-        <el-form-item label="姓名">
+        <el-form-item :label="$t('desk.home_name')">
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="房间号">
+        <el-form-item :label="$t('desk.home_roomNum')">
           <el-input v-model="searchForm.roomNum" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="消费日期">
+        <el-form-item :label="$t('desk.customer_constDate')">
           <el-date-picker
             v-model="searchForm.startTime"
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
           <span style="margin: 0 5px">-</span>
           <el-date-picker
@@ -69,16 +75,16 @@
             value-format="yyyy-MM-dd"
             type="date"
             style="width: 140px"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="onSubmit"
-            >查询</el-button
-          >
-          <el-button type="primary" class="grey" @click="resetForm"
-            >重置</el-button
-          >
+          <el-button type="primary" class="submit" @click="onSubmit">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="grey" @click="resetForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -92,35 +98,38 @@
       >
         <el-table-column
           prop="createTime"
-          label="消费时间"
+          :label="$t('desk.customer_spendTime')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="checkInPerson.checkIn.storesName"
-          label="消费门店"
+          :label="$t('desk.customer_consumptionStore')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="creditName"
-          label="挂账单位"
+          :label="$t('desk.customer_buyerUnit')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="consumePrice"
-          label="挂账金额"
+          :label="$t('desk.customer_amountPrice')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="checkInPerson.checkIn.name"
-          label="姓名"
+          :label="$t('desk.home_name')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="checkInPerson.idcard"
-          label="证件号"
+          :label="$t('desk.customer_idNo')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column label="房型/房号" show-overflow-tooltip>
+        <el-table-column
+          :label="$t('desk.customer_roomKind')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <div v-if="row.checkInPerson">
               {{ row.checkInPerson.houseName }}/{{ row.checkInPerson.houseNum }}
@@ -129,18 +138,24 @@
         </el-table-column>
         <el-table-column
           prop="checkInPerson.checkIn.checkinTime"
-          label="入住时间"
+          :label="$t('desk.order_checkinDate')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="checkInPerson.checkIn.checkoutTime"
-          label="离店时间"
+          :label="$t('desk.customer_checkoutTime')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="state" label="结算状态" show-overflow-tooltip>
+        <el-table-column
+          prop="state"
+          :label="$t('desk.customer_settlementStatus')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
-            <div v-if="row.state == 1">未结</div>
-            <div v-if="row.state == 2">已结</div>
+            <div v-if="row.state == 1">{{ $t("desk.customer_outStand") }}</div>
+            <div v-if="row.state == 2">
+              {{ $t("desk.customer_closeAccount") }}
+            </div>
           </template>
         </el-table-column>
       </el-table>

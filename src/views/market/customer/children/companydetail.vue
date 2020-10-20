@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-30 09:55:09
- * @FilePath: /jiudian/src/views/market/customer/children/companydetail.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-20 14:36:07
+ * @FilePath: \jiudian\src\views\market\customer\children\companydetail.vue
  -->
 <template>
   <div v-loading="loading">
@@ -10,8 +10,10 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item @click.native="danweiClick()" class="point">单位管理</el-breadcrumb-item>
-          <el-breadcrumb-item>详情</el-breadcrumb-item>
+          <el-breadcrumb-item @click.native="danweiClick()" class="point">{{
+            $t("desk.customer_unitManage")
+          }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="bodyInfo" v-if="!loading">
@@ -24,26 +26,18 @@
                     <el-col :span="6" class="col">
                       <div class="item">
                         <div class="box">
-                          <div class="thisItem">挂账总额</div>
                           <div class="thisItem">
-                            <span class="text-red">{{detailForm.creditLimit}}</span>
+                            {{ $t("desk.customer_totalPayment") }}
                           </div>
                           <div class="thisItem">
-                            <span class="text-blue">查询</span>
-                            <span class="text-blue">处理</span>
-                          </div>
-                        </div>
-                      </div>
-                    </el-col>
-                    <el-col :span="6" class="col">
-                      <div class="item">
-                        <div class="box">
-                          <div class="thisItem">收款总额</div>
-                          <div class="thisItem">
-                            <span class="text-red">2000</span>
+                            <span class="text-red">{{
+                              detailForm.creditLimit
+                            }}</span>
                           </div>
                           <div class="thisItem">
-                            <span class="text-blue">收款查询</span>
+                            <span class="text-blue">
+                              {{ $t("desk.customer_queryDeal") }}</span
+                            >
                           </div>
                         </div>
                       </div>
@@ -51,12 +45,33 @@
                     <el-col :span="6" class="col">
                       <div class="item">
                         <div class="box">
-                          <div class="thisItem">预收款余额</div>
+                          <div class="thisItem">
+                            {{ $t("desk.customer_totalPrice") }}
+                          </div>
                           <div class="thisItem">
                             <span class="text-red">2000</span>
                           </div>
                           <div class="thisItem">
-                            <span class="text-blue">收款操作</span>
+                            <span class="text-blue">{{
+                              $t("desk.customer_receivingQuery")
+                            }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                      <div class="item">
+                        <div class="box">
+                          <div class="thisItem">
+                            {{ $t("desk.customer_advancePayment") }}
+                          </div>
+                          <div class="thisItem">
+                            <span class="text-red">2000</span>
+                          </div>
+                          <div class="thisItem">
+                            <span class="text-blue">{{
+                              $t("desk.customer_creditOperate")
+                            }}</span>
                           </div>
                         </div>
                       </div>
@@ -67,42 +82,69 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="单位名称：">{{detailForm.enterName}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_unitName') + ':'"
+                        >{{ detailForm.enterName }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="联系人：">{{detailForm.contactName}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_contact') + ':'"
+                        >{{ detailForm.contactName }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="手机号：">{{detailForm.mobile}}</el-form-item>
-                    </el-col>
-                  </el-row>
-                </el-row>
-                <el-row class="row">
-                  <el-row class="cell">
-                    <el-col :span="6" class="col">
-                      <el-form-item label="价格策略：">{{setStrategyName(detailForm.enterStrategyId)}}</el-form-item>
-                    </el-col>
-                    <el-col :span="6" class="col">
-                      <el-form-item label="简称：">白金卡</el-form-item>
+                      <el-form-item :label="$t('desk.home_phoneNum') + ':'">{{
+                        detailForm.mobile
+                      }}</el-form-item>
                     </el-col>
                   </el-row>
                 </el-row>
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="计费规则：">{{setAlldayName(detailForm.ruleAlldayId)}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_pricingStrategy') + ':'"
+                        >{{
+                          setStrategyName(detailForm.enterStrategyId)
+                        }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="挂帐额度：">{{detailForm.creditLimit}}</el-form-item>
+                      <el-form-item :label="$t('desk.customer_referred') + ':'"
+                        >白金卡</el-form-item
+                      >
+                    </el-col>
+                  </el-row>
+                </el-row>
+                <el-row class="row">
+                  <el-row class="cell">
+                    <el-col :span="6" class="col">
+                      <el-form-item
+                        :label="$t('desk.customer_accountRules') + ':'"
+                        >{{
+                          setAlldayName(detailForm.ruleAlldayId)
+                        }}</el-form-item
+                      >
+                    </el-col>
+                    <el-col :span="6" class="col">
+                      <el-form-item
+                        :label="$t('desk.customer_hangLine') + ':'"
+                        >{{ detailForm.creditLimit }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="3" class="col">
                       <el-form-item label label-width="0">
-                        <el-checkbox disabled v-model="detailForm.shareFlag">集团共享</el-checkbox>
+                        <el-checkbox disabled v-model="detailForm.shareFlag">{{
+                          $t("desk.customer_groupShare")
+                        }}</el-checkbox>
                       </el-form-item>
                     </el-col>
                     <el-col :span="3" class="col">
                       <el-form-item label label-width="0">
-                        <el-checkbox disabled v-model="detailForm.state">停用</el-checkbox>
+                        <el-checkbox disabled v-model="detailForm.state">{{
+                          $t("desk.customer_stopUse")
+                        }}</el-checkbox>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -111,18 +153,33 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="生效日期：">{{detailForm.effectiveStartTime}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_effectiveDate') + ':'"
+                        >{{ detailForm.effectiveStartTime }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="失效日期：">{{detailForm.effectiveEndTime}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_expiryDate') + ':'"
+                        >{{ detailForm.effectiveEndTime }}</el-form-item
+                      >
                     </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="发展途径：">{{detailForm.getWay==1?'线上':'线下'}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_developmentWay') + ':'"
+                        >{{
+                          detailForm.getWay == 1
+                            ? $t("desk.customer_online")
+                            : $t("desk.customer_offline")
+                        }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="销售员：">{{setSalesIdName(detailForm.salesId)}}</el-form-item>
+                      <el-form-item :label="$t('desk.order_salesman') + ':'">{{
+                        setSalesIdName(detailForm.salesId)
+                      }}</el-form-item>
                     </el-col>
                   </el-row>
                 </el-row>
@@ -130,29 +187,47 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="银行账号：">{{detailForm.bankCard}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_bankAccount') + ':'"
+                        >{{ detailForm.bankCard }}</el-form-item
+                      >
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="税号：">{{detailForm.taxNum}}</el-form-item>
+                      <el-form-item :label="$t('desk.customer_ein') + ':'">{{
+                        detailForm.taxNum
+                      }}</el-form-item>
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="电话：">{{detailForm.mobile}}</el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row class="cell">
-                    <el-col :span="6" class="col">
-                      <el-form-item label="合同号：">{{detailForm.contractNum}}</el-form-item>
-                    </el-col>
-                    <el-col :span="6" class="col">
-                      <el-form-item label="邮箱：">{{detailForm.email}}</el-form-item>
-                    </el-col>
-                    <el-col :span="6" class="col">
-                      <el-form-item label="地址：">{{detailForm.address}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_telephone') + ':'"
+                        >{{ detailForm.mobile }}</el-form-item
+                      >
                     </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="6" class="col">
-                      <el-form-item label="备注：">{{detailForm.remark}}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_contractNo') + ':'"
+                        >{{ detailForm.contractNum }}</el-form-item
+                      >
+                    </el-col>
+                    <el-col :span="6" class="col">
+                      <el-form-item :label="$t('desk.customer_email') + ':'">{{
+                        detailForm.email
+                      }}</el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                      <el-form-item
+                        :label="$t('desk.customer_address') + ':'"
+                        >{{ detailForm.address }}</el-form-item
+                      >
+                    </el-col>
+                  </el-row>
+                  <el-row class="cell">
+                    <el-col :span="6" class="col">
+                      <el-form-item :label="$t('desk.home_note') + ':'">{{
+                        detailForm.remark
+                      }}</el-form-item>
                     </el-col>
                   </el-row>
                 </el-row>
@@ -211,7 +286,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      resetActive: "taozi/resetActive",
+      resetActive: "resetActive",
     }),
     danweiClick() {
       console.log(this);
@@ -241,13 +316,14 @@ export default {
     },
     setCardFormBtnClick(v) {
       let enums = {
-        "1": "换卡操作",
-        "2": "修改会员类型",
-        "3": "会员停用",
-        "4": "挂失/补卡操作",
+        1: this.$t("desk.customer_changeCardOperate"),
+        2: this.$t("desk.customer_resetMemType"),
+        3: this.$t("desk.customer_memStop"),
+        4: this.$t("desk.customer_lossOperate"),
       };
       this.cardForm.type = v;
-      this.cardForm.titleName = v && enums[v] ? enums[v] : "其它";
+      this.cardForm.titleName =
+        v && enums[v] ? enums[v] : this.$t("desk.serve_other");
       this.setCardFormVisible = true;
     },
     /**价格策略单位列表 */

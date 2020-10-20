@@ -7,7 +7,7 @@
         <el-form-item :label="$t('desk.customer_unitName')">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item :label="$t('desk.home_state')">
           <el-select v-model="searchForm.state" class="width150">
             <el-option
               :value="key"
@@ -17,7 +17,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否共享">
+        <el-form-item :label="$t('desk.customer_ifShare')">
           <el-select v-model="searchForm.shareFlag" class="width150">
             <el-option
               :value="key"
@@ -27,20 +27,20 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="联系人">
+        <el-form-item :label="$t('desk.customer_contact')">
           <el-input
             v-model="searchForm.contactName"
             class="width150"
           ></el-input>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item :label="$t('desk.home_phoneNum')">
           <el-input
             v-model="searchForm.contactPhone"
             class="width150"
           ></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="销售员">
+        <el-form-item :label="$t('desk.order_salesman')">
           <el-select v-model="searchForm.salesId" class="width150">
             <el-option
               v-for="item in salesList"
@@ -50,26 +50,26 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="挂账额度">
+        <el-form-item :label="$t('desk.customer_paymentAmount')">
           <el-input
             v-model="searchForm.startCreditLimit"
             class="width150"
             style="width: 80px"
           ></el-input
-          >至
+          >{{ $t("desk.serve_to") }}
           <el-input
             v-model="searchForm.endCreditLimit"
             class="width150"
             style="width: 80px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="已用额度">
+        <el-form-item :label="$t('desk.customer_usedLimit')">
           <el-input
             v-model="searchForm.startUsedLimit"
             class="width150"
             style="width: 80px"
           ></el-input
-          >至
+          >{{ $t("desk.serve_to") }}
           <el-input
             v-model="searchForm.endUsedLimit"
             class="width150"
@@ -77,23 +77,23 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList"
-            >查询</el-button
-          >
-          <el-button type="primary" class="submit" @click="initForm"
-            >重置</el-button
-          >
+          <el-button type="primary" class="submit" @click="getDataList">{{
+            $t("commons.queryBtn")
+          }}</el-button>
+          <el-button type="primary" class="submit" @click="initForm">{{
+            $t("commons.resetBtn")
+          }}</el-button>
         </el-form-item>
         <el-form-item style="float: right">
           <el-button
             type="primary"
             class="submit"
             @click="addAndEditItem('add')"
-            >+新增</el-button
+            >{{ $t("desk.customer_newAdd") }}</el-button
           >
-          <el-button type="primary" class="submit" @click="piliangClick"
-            >批量设置</el-button
-          >
+          <el-button type="primary" class="submit" @click="piliangClick">{{
+            $t("desk.customer_volumeSet")
+          }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -107,27 +107,27 @@
       >
         <el-table-column
           prop="enterName"
-          label="单位名称"
+          :label="$t('desk.customer_unitName')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="storesNum"
-          label="所属门店"
+          :label="$t('desk.customer_belongStore')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="contactName"
-          label="姓名"
+          :label="$t('desk.home_name')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="contactPhone"
-          label="手机号"
+          :label="$t('desk.home_phoneNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="enterStrategyId"
-          label="价格策略"
+          :label="$t('desk.customer_pricingStrategy')"
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">{{
@@ -136,37 +136,47 @@
         </el-table-column>
         <el-table-column
           prop="contractNum"
-          label="合同号"
+          :label="$t('desk.customer_contractNo')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="creditLimit"
-          label="挂账额度"
+          :label="$t('desk.customer_paymentAmount')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="usedLimit"
-          label="已用额度"
+          :label="$t('desk.customer_usedLimit')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="totalLimit"
-          label="总消费"
+          :label="$t('desk.customer_totalConsum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="totalLimit"
-          label="预收款余额"
+          :label="$t('desk.customer_advancePayment')"
           width="120px"
         ></el-table-column>
-        <el-table-column label="状态" width="80px" align="center">
+        <el-table-column
+          :label="$t('desk.home_state')"
+          width="80px"
+          align="center"
+        >
           <template slot-scope="{ row }">
-            <div>{{ row.state == 1 ? "启用" : "禁用" }}</div>
+            <div>
+              {{
+                row.state == 1
+                  ? $t("desk.customer_enable")
+                  : $t("desk.customer_disable")
+              }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column
           prop="salesName"
-          label="销售员"
+          :label="$t('desk.order_salesman')"
           show-overflow-tooltip
           align="center"
         >
@@ -176,34 +186,36 @@
         </el-table-column>
         <el-table-column
           prop="shareFlag"
-          label="是否共享"
+          :label="$t('desk.customer_ifShare')"
           width="100px"
           align="center"
         >
           <template slot-scope="{ row }">{{
-            row.shareFlag == 1 ? "是" : "否"
+            row.shareFlag == 1
+              ? $t("desk.customer_yes")
+              : $t("desk.customer_no")
           }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="160">
+        <el-table-column :label="$t('commons.operating')" width="160">
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="handleDetail(row)"
-              >详情</el-button
-            >
+            <el-button type="text" size="mini" @click="handleDetail(row)">{{
+              $t("commons.detail")
+            }}</el-button>
             <el-button
               type="text"
               size="mini"
               @click="addAndEditItem('edit', row)"
-              >修改</el-button
+              >{{ $t("commons.modify") }}</el-button
             >
             <el-dropdown szie="mini">
               <span class="el-dropdown-link" style="font-size: 12px">
-                更多
+                {{ $t("desk.customer_more") }}
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="disableItem(row)"
-                  >禁用</el-dropdown-item
-                >
+                <el-dropdown-item @click.native="disableItem(row)">{{
+                  $t("desk.customer_disable")
+                }}</el-dropdown-item>
                 <el-dropdown-item @click.native="delItem(row)">{{
                   $t("commons.delete")
                 }}</el-dropdown-item>
@@ -225,7 +237,11 @@
     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
-      :title="addCompanyForm.type == 'add' ? '新增单位' : '编辑单位'"
+      :title="
+        addCompanyForm.type == 'add'
+          ? $t('desk.customer_newUnit')
+          : $t('desk.customer_editorUnit')
+      "
       :visible.sync="setCompanyFormVisible"
       class="setCompanyForm"
     >
@@ -239,17 +255,26 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="单位名称：" prop="enterName">
+              <el-form-item
+                :label="$t('desk.customer_unitName') + ':'"
+                prop="enterName"
+              >
                 <el-input v-model="addCompanyForm.enterName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="联系人：" prop="contactName">
+              <el-form-item
+                :label="$t('desk.customer_contact') + ':'"
+                prop="contactName"
+              >
                 <el-input v-model="addCompanyForm.contactName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="手机号：" prop="contactPhone">
+              <el-form-item
+                :label="$t('desk.home_phoneNum') + ':'"
+                prop="contactPhone"
+              >
                 <el-input v-model="addCompanyForm.contactPhone"></el-input>
               </el-form-item>
             </el-col>
@@ -258,7 +283,10 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="价格策略：" prop="enterStrategyId">
+              <el-form-item
+                :label="$t('desk.customer_pricingStrategy') + ':'"
+                prop="enterStrategyId"
+              >
                 <el-select v-model="addCompanyForm.enterStrategyId">
                   <el-option
                     :label="item.ruleName"
@@ -274,7 +302,11 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="计费规则：" prop required>
+              <el-form-item
+                :label="$t('desk.customer_accountRules') + ':'"
+                prop
+                required
+              >
                 <el-select v-model="addCompanyForm.ruleAlldayId">
                   <el-option
                     :label="item.ruleName"
@@ -286,16 +318,21 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="挂帐额度：" prop="creditLimit">
+              <el-form-item
+                :label="$t('desk.customer_paymentAmount') + ':'"
+                prop="creditLimit"
+              >
                 <el-input v-model="addCompanyForm.creditLimit"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item label label-width="20px">
-                <el-checkbox v-model="addCompanyForm.shareFlag"
-                  >集团共享</el-checkbox
-                >
-                <el-checkbox v-model="addCompanyForm.state">停用</el-checkbox>
+                <el-checkbox v-model="addCompanyForm.shareFlag">{{
+                  $t("desk.customer_groupShare")
+                }}</el-checkbox>
+                <el-checkbox v-model="addCompanyForm.state">{{
+                  $t("desk.customer_stopUse")
+                }}</el-checkbox>
               </el-form-item>
             </el-col>
           </el-row>
@@ -304,39 +341,45 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="生效日期：">
+              <el-form-item :label="$t('desk.customer_effectiveDate') + ':'">
                 <el-date-picker
                   v-model="addCompanyForm.effectiveStartTime"
                   value-format="yyyy-MM-dd"
                   type="date"
                   style="width: 100%"
-                  placeholder="选择日期"
+                  :placeholder="$t('desk.serve_chooseDate')"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="失效日期：">
+              <el-form-item :label="$t('desk.customer_expiryDate') + ':'">
                 <el-date-picker
                   v-model="addCompanyForm.effectiveEndTime"
                   value-format="yyyy-MM-dd"
                   type="date"
                   style="width: 100%"
-                  placeholder="选择日期"
+                  :placeholder="$t('desk.serve_chooseDate')"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="发展途径：">
+              <el-form-item :label="$t('desk.customer_developmentWay') + ':'">
                 <el-select v-model="addCompanyForm.getWay">
-                  <el-option label="线上" :value="1"></el-option>
-                  <el-option label="线下" :value="2"></el-option>
+                  <el-option
+                    :label="$t('desk.customer_online')"
+                    :value="1"
+                  ></el-option>
+                  <el-option
+                    :label="$t('desk.customer_offline')"
+                    :value="2"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="销售员：">
+              <el-form-item :label="$t('desk.order_salesman') + ':'">
                 <el-select v-model="addCompanyForm.salesId">
                   <el-option
                     v-for="item in salesList"
@@ -353,41 +396,41 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="银行账号：">
+              <el-form-item :label="$t('desk.customer_bankAccount') + ':'">
                 <el-input v-model="addCompanyForm.bankCard"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="税号：">
+              <el-form-item :label="$t('desk.customer_ein') + ':'">
                 <el-input v-model="addCompanyForm.taxNum"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="电话：">
+              <el-form-item :label="$t('desk.customer_telephone') + ':'">
                 <el-input v-model="addCompanyForm.contactPhone"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="合同号：">
+              <el-form-item :label="$t('desk.customer_contractNo') + ':'">
                 <el-input v-model="addCompanyForm.contractNum"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="邮箱：">
+              <el-form-item :label="$t('desk.customer_email') + ':'">
                 <el-input v-model="addCompanyForm.email"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="地址：">
+              <el-form-item :label="$t('desk.customer_address') + ':'">
                 <el-input v-model="addCompanyForm.address"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
             <el-col :span="12" class="col">
-              <el-form-item label="备注：">
+              <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input
                   type="textarea"
                   v-model="addCompanyForm.remark"
@@ -398,13 +441,17 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="setCompanyFormVisible = false">关闭</el-button>
-        <el-button type="primary" @click="hotelenterAddAndEdit">确认</el-button>
+        <el-button @click="setCompanyFormVisible = false">{{
+          $t("commons.close")
+        }}</el-button>
+        <el-button type="primary" @click="hotelenterAddAndEdit">{{
+          $t("commons.confirm")
+        }}</el-button>
       </div>
     </el-dialog>
     <el-dialog
       top="0"
-      title="批量设置"
+      :title="$t('desk.customer_volumeSet')"
       :visible.sync="setBatchFormVisible"
       class="setBatchForm"
       width="1200px"
@@ -418,7 +465,10 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item label="价格策略：" prop="enterStrategyId">
+              <el-form-item
+                :label="$t('desk.customer_pricingStrategy') + ':'"
+                prop="enterStrategyId"
+              >
                 <el-select v-model="setBatchForm.enterStrategyId">
                   <el-option
                     :label="item.ruleName"
@@ -430,7 +480,10 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="计费规则：" prop="ruleAlldayId">
+              <el-form-item
+                :label="$t('desk.customer_accountRules') + ':'"
+                prop="ruleAlldayId"
+              >
                 <el-select v-model="setBatchForm.ruleAlldayId">
                   <el-option
                     :label="item.ruleName"
@@ -442,44 +495,48 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="挂账额度：">
+              <el-form-item :label="$t('desk.customer_paymentAmount') + ':'">
                 <el-input v-model="setBatchForm.creditLimit"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
               <el-form-item label label-width="50px" prop="state">
                 <el-radio-group v-model="setBatchForm.state">
-                  <el-radio :label="1">一键启用</el-radio>
-                  <el-radio :label="2">一键禁用</el-radio>
+                  <el-radio :label="1">{{
+                    $t("desk.customer_aKeyEnable")
+                  }}</el-radio>
+                  <el-radio :label="2">{{
+                    $t("desk.customer_aKeyDisable")
+                  }}</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item label="生效日期：">
+              <el-form-item :label="$t('desk.customer_effectiveDate') + ':'">
                 <el-date-picker
                   v-model="setBatchForm.effectiveStartTime"
                   value-format="yyyy-MM-dd"
                   type="date"
                   style="width: 140px"
-                  placeholder="选择日期"
+                  :placeholder="$t('desk.serve_chooseDate')"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="失效日期：">
+              <el-form-item :label="$t('desk.customer_expiryDate') + ':'">
                 <el-date-picker
                   v-model="setBatchForm.effectiveEndTime"
                   value-format="yyyy-MM-dd"
                   type="date"
                   style="width: 140px"
-                  placeholder="选择日期"
+                  :placeholder="$t('desk.serve_chooseDate')"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="销售员：">
+              <el-form-item :label="$t('desk.order_salesman') + ':'">
                 <el-select v-model="setBatchForm.salesId">
                   <el-option
                     v-for="item in salesList"
@@ -492,7 +549,9 @@
             </el-col>
             <el-col :span="3" class="col" style="text-align: center">
               <el-form-item label label-width="0px">
-                <el-button type="primary" @click="totalset">设置</el-button>
+                <el-button type="primary" @click="totalset">{{
+                  $t("desk.customer_resetText")
+                }}</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -510,10 +569,14 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column
           prop="enterName"
-          label="单位名称"
+          :label="$t('desk.customer_unitName')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop label="价格策略" show-overflow-tooltip>
+        <el-table-column
+          prop
+          :label="$t('desk.customer_pricingStrategy')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-select v-model="row.enterStrategyId" size="mini">
               <el-option
@@ -525,7 +588,10 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="计费规则" show-overflow-tooltip>
+        <el-table-column
+          :label="$t('desk.customer_accountRules')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-select v-model="row.ruleAlldayId" size="mini">
               <el-option
@@ -537,49 +603,79 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column prop label="挂账额度" show-overflow-tooltip>
+        <el-table-column
+          prop
+          :label="$t('desk.customer_paymentAmount')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-input v-model="row.creditLimit" size="mini"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop label="姓名" show-overflow-tooltip>
+        <el-table-column
+          prop
+          :label="$t('desk.home_name')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-input v-model="row.contactName" size="mini"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop label="生效日期" show-overflow-tooltip>
+        <el-table-column
+          prop
+          :label="$t('desk.customer_effectiveDate')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-date-picker
               v-model="row.effectiveStartTime"
               value-format="yyyy-MM-dd"
               type="date"
               style="width: 100%"
-              placeholder="选择日期"
+              :placeholder="$t('desk.serve_chooseDate')"
               size="mini"
             ></el-date-picker>
           </template>
         </el-table-column>
-        <el-table-column prop label="失效日期" show-overflow-tooltip>
+        <el-table-column
+          prop
+          :label="$t('desk.customer_expiryDate')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-date-picker
               v-model="row.effectiveEndTime"
               value-format="yyyy-MM-dd"
               type="date"
               style="width: 100%"
-              placeholder="选择日期"
+              :placeholder="$t('desk.serve_chooseDate')"
               size="mini"
             ></el-date-picker>
           </template>
         </el-table-column>
-        <el-table-column prop label="发展途径" show-overflow-tooltip>
+        <el-table-column
+          prop
+          :label="$t('desk.customer_developmentWay')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-select v-model="row.getWay" size="mini">
-              <el-option label="线上" :value="1"></el-option>
-              <el-option label="线下" :value="2"></el-option>
+              <el-option
+                :label="$t('desk.customer_online')"
+                :value="1"
+              ></el-option>
+              <el-option
+                :label="$t('desk.customer_offline')"
+                :value="2"
+              ></el-option>
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" label="销售员" show-overflow-tooltip>
+        <el-table-column
+          prop="enterType"
+          :label="$t('desk.order_salesman')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <el-select v-model="row.salesId" size="mini">
               <el-option
@@ -591,10 +687,12 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="changeSate(row)">{{
-              row.state == 1 ? "启用中" : "禁用中"
+              row.state == 1
+                ? $t("desk.customer_enableIng")
+                : $t("desk.customer_disableIng")
             }}</el-button>
           </template>
         </el-table-column>
@@ -611,8 +709,12 @@
         :total="listTotal"
       ></el-pagination>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="setBatchFormVisible = false">关闭</el-button>
-        <el-button type="primary" @click="batchedit">确认</el-button>
+        <el-button @click="setBatchFormVisible = false">{{
+          $t("commons.close")
+        }}</el-button>
+        <el-button type="primary" @click="batchedit">{{
+          $t("commons.confirm")
+        }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -628,6 +730,59 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
+    rules() {
+      return {
+        enterName: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputUnitName"),
+            trigger: "blur",
+          },
+        ],
+        contactName: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputPeople"),
+            trigger: "blur",
+          },
+        ],
+        contactPhone: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputPhone"),
+            trigger: "blur",
+          },
+        ],
+        enterStrategyId: [
+          {
+            required: true,
+            message: this.$t("desk.customer_selectPriceRule"),
+            trigger: "change",
+          },
+        ],
+        ruleAlldayId: [
+          {
+            required: true,
+            message: this.$t("desk.customer_selectBillRule"),
+            trigger: "change",
+          },
+        ],
+        creditLimit: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputPaymentAmount"),
+            trigger: "blur",
+          },
+        ],
+        state: [
+          {
+            required: true,
+            message: this.$t("desk.customer_selectIfStop"),
+            trigger: "blur",
+          },
+        ],
+      };
+    },
   },
   data() {
     return {
@@ -682,57 +837,6 @@ export default {
         effectiveEndTime: "",
         salesId: "",
         state: "",
-      },
-      rules: {
-        enterName: [
-          {
-            required: true,
-            message: "请输入单位名称",
-            trigger: "blur",
-          },
-        ],
-        contactName: [
-          {
-            required: true,
-            message: "请填写联系人",
-            trigger: "blur",
-          },
-        ],
-        contactPhone: [
-          {
-            required: true,
-            message: "请输入手机号",
-            trigger: "blur",
-          },
-        ],
-        enterStrategyId: [
-          {
-            required: true,
-            message: "请选择价格策略",
-            trigger: "change",
-          },
-        ],
-        ruleAlldayId: [
-          {
-            required: true,
-            message: "请选择计费规则",
-            trigger: "change",
-          },
-        ],
-        creditLimit: [
-          {
-            required: true,
-            message: "请输入挂账额度",
-            trigger: "blur",
-          },
-        ],
-        state: [
-          {
-            required: true,
-            message: "请选择是否停用",
-            trigger: "blur",
-          },
-        ],
       },
     };
   },
@@ -841,15 +945,20 @@ export default {
         }
       });
     },
+    //点击 详情按钮
     handleDetail(item) {
       this.$router.push("/companydetail?id=" + item.id);
     },
     disableItem(item) {
-      this.$confirm("确认要禁用该单位", this.$t("commons.tip_desc"), {
-        confirmButtonText: this.$t("commons.confirm"),
-        cancelButtonText: this.$t("commons.cancel"),
-        type: "warning",
-      })
+      this.$confirm(
+        this.$t("desk.customer_sureDisable"),
+        this.$t("commons.tip_desc"),
+        {
+          confirmButtonText: this.$t("commons.confirm"),
+          cancelButtonText: this.$t("commons.cancel"),
+          type: "warning",
+        }
+      )
         .then(() => {
           this.$F.doRequest(
             this,
@@ -935,11 +1044,15 @@ export default {
       if (this.multipleSelection.length > 0) {
         for (let item of this.multipleSelection) {
           if (!item.enterStrategyId) {
-            this.$message.error(item.enterName + "价格策略不能为空");
+            this.$message.error(
+              item.enterName + this.$t("desk.customer_priRuleNotBlank")
+            );
             return false;
           } else {
             if (!item.ruleAlldayId) {
-              this.$message.error(item.enterName + "计费规则不能为空");
+              this.$message.error(
+                item.enterName + this.$t("desk.customer_billRuleNotBlank")
+              );
               return false;
             }
           }
@@ -956,7 +1069,7 @@ export default {
           });
         });
       } else {
-        this.$message.error("请选择单位");
+        this.$message.error(this.$t("desk.customer_selectUnit"));
       }
     },
     changeSate(item) {
@@ -1035,7 +1148,7 @@ export default {
         }
         // this.$message.success("设置成功，点击保存按钮");
       } else {
-        this.$message.error("请选择单位");
+        this.$message.error(this.$t("desk.customer_selectUnit"));
       }
     },
     /**多选 */
