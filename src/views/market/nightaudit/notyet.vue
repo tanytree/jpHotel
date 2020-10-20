@@ -19,15 +19,15 @@
                 size="small"
                 @selection-change="handleSelectionChange"
             >
-                <el-table-column prop="name" label="预订人"></el-table-column>
-                <el-table-column prop="mobile" label="手机号码"></el-table-column>
+                <el-table-column prop="name" :label="$t('desk.home_bookPeople')"></el-table-column>
+                <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
                 <el-table-column
                     prop="createTime"
-                    label="预定时间"
+                    :label="$t('desk.nightAudit.schedulerTime')"
                     width="180"
                     align="center"
                 ></el-table-column>
-                <el-table-column prop="enterName" label="抵离时间" width="220">
+                <el-table-column prop="enterName" :label="$t('desk.nightAudit.arriveTime')" width="220">
                     <template slot-scope="{ row }">
                         <div class="box">
                             <div class="item">
@@ -42,7 +42,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="deposit" label="订金" width="140" align="center">
+                <el-table-column prop="deposit" :label="$t('desk.downPayment')" width="140" align="center">
                     <template slot-scope="{ row }">
                         {{ row.deposit ? row.deposit : "0" }}
                     </template>
@@ -73,9 +73,9 @@
                     label="预定单号"
                     show-overflow-tooltip
                 ></el-table-column>
-                <el-table-column label="操作" width="100">
+                <el-table-column :label="$t('commons.operating')" width="100">
                     <template slot-scope="{ row }">
-                        <el-button type="text" size="mini">详情</el-button>
+                        <el-button type="text" size="mini">{{$t('commons.detail')}}</el-button>
                     </template>
                 </el-table-column>
             </el-table>

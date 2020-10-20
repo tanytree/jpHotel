@@ -31,9 +31,9 @@
 						<!-- 报表 -->
 						<div class="row-line">
 							<div class="top">
-								<span>首页</span>
+								<span>{{$t('commons.home')}}</span>
 								<div class="select-icon">
-									<el-checkbox v-model="open">全部开启</el-checkbox>
+									<el-checkbox v-model="open">{{$t('boss.report_openAll')}}</el-checkbox>
 								</div>
 							</div>
 							<div class="content">
@@ -54,7 +54,7 @@
 							<div class="top">
 								<span>部门负责人</span>
 								<div class="select-icon">
-									<el-checkbox v-model="open">全部开启</el-checkbox>
+									<el-checkbox v-model="open">{{$t('boss.report_openAll')}}</el-checkbox>
 								</div>
 							</div>
 							<div class="content">
@@ -75,7 +75,7 @@
 							<div class="top">
 								<span>人员管理</span>
 								<div class="select-icon">
-									<el-checkbox v-model="open">全部开启</el-checkbox>
+									<el-checkbox v-model="open">{{$t('boss.report_openAll')}}</el-checkbox>
 								</div>
 							</div>
 							<div class="content">
@@ -106,7 +106,7 @@
 							<div class="top">
 								<span>薪酬管理</span>
 								<div class="select-icon">
-									<el-checkbox v-model="open">全部开启</el-checkbox>
+									<el-checkbox v-model="open">{{$t('boss.report_openAll')}}</el-checkbox>
 								</div>
 							</div>
 							<div class="content">

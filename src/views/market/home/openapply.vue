@@ -77,21 +77,21 @@
         ></el-table-column>
         <el-table-column
           prop="updateTime"
-          label="操作时间"
+          :label="$t('commons.operatingTime')"
           width="180"
         ></el-table-column>
         <el-table-column
           prop="creatorName"
-          label="操作人"
+          :label="$t('desk.home_operator')"
           width="130"
         ></el-table-column>
-        <el-table-column label="操作" width="140">
+        <el-table-column :label="$t('commons.operating')" width="140">
           <template slot-scope="scope">
             <el-button
               size="small"
               type="text"
               @click="handleDelete(scope.$index, scope.row)"
-              >详情</el-button
+              >{{$t('commons.detail')}}</el-button
             >
           </template>
         </el-table-column>

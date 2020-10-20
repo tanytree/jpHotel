@@ -64,7 +64,7 @@
         <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
         <el-table-column prop="sellementName" label="结账人" show-overflow-tooltip></el-table-column>
         <el-table-column prop="updateTime" label="结账时间" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="220">
+        <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{row}">
             <el-button type="text" v-if="row.state==1" @click="editorClick(row)" size="mini">编辑</el-button>
             <el-button type="text" v-if="row.state==1" @click="settleAccounts(row)" size="mini">结账</el-button>
@@ -167,8 +167,8 @@
         <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="120"></el-table-column>
         <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
         <el-table-column prop="consumePrice" label="消费金额	"></el-table-column>
-        <el-table-column prop="creatorName" label="操作员"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column prop="creatorName" :label="$t('desk.customer_operator')"></el-table-column>
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{row}">
             <el-button type="text" @click="dialogNew_remove(row)" size="mini">移除</el-button>
           </template>
@@ -274,8 +274,8 @@
             <div>{{row.consumePrice?row.consumePrice:0}}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="creatorName" label="操作员" width="150px"></el-table-column>
-        <el-table-column prop="address" label="操作">
+        <el-table-column prop="creatorName" :label="$t('desk.customer_operator')" width="150px"></el-table-column>
+        <el-table-column prop="address" :label="$t('commons.operating')">
           <template slot-scope="{row}">
             <el-button type="text" @click="dialogEditor_remove(row)" size="mini">移除</el-button>
           </template>
@@ -524,7 +524,7 @@
           <el-table-column prop="name" label="营业项目" width="180"></el-table-column>
           <el-table-column prop="name" label="业务详情" width="180"></el-table-column>
           <el-table-column prop="address" label="金额"></el-table-column>
-          <el-table-column prop="address" label="操作">
+          <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
               <el-button type="text" size="mini">移除</el-button>
             </template>

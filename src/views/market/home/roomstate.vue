@@ -384,7 +384,7 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column label="操作">
+                <el-table-column :label="$t('commons.operating')">
                   <template slot-scope="scope">
                     <!-- <el-button
                                                     size="mini"
@@ -568,7 +568,7 @@
                   currentRoom.livingPersonList.length - 1 || 0
                 }}</template>
               </el-table-column>
-              <!--                            <el-table-column label="操作">-->
+              <!--                            <el-table-column :label="$t('commons.operating')">-->
               <!--                                <template slot-scope="scope">-->
               <!--                                    <el-button size="mini" type="text">查看</el-button>-->
               <!--                                    &lt;!&ndash;  @click="handleEdit(scope.$index, scope.row)" &ndash;&gt;-->

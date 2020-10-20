@@ -25,7 +25,7 @@
                     </el-button
                     >
                     <el-dropdown split-button type="primary" size="mini">
-                        更多操作
+                        {{ $t('commons.moreOperating') }}
                         <el-dropdown-menu slot="dropdown">
                             <!--                        <el-dropdown-item>改价</el-dropdown-item>-->
                             <el-dropdown-item>取消预留</el-dropdown-item>
@@ -60,7 +60,7 @@
                     <p>房价总计：{{ currentRoom.realPrice }}元</p>
                 </el-col>
                 <el-col :span="3">
-                    <p>制卡信息：{{ currentRoom.markCard == 1 ? "已制卡" : "未制卡" }}</p>
+                    <p>制卡信息：{{ currentRoom.markCard == 1 ? $t('commons.markCard')['1'] : $t('commons.markCard')['2'] }}</p>
                 </el-col>
                 <el-col :span="5">
                     <p>预抵时间：{{ checkinInfo.checkinTime }}</p>

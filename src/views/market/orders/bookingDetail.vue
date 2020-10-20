@@ -12,7 +12,7 @@
           <el-breadcrumb-item :to="{ path: '/orders?type=booking'}"
             >预订单</el-breadcrumb-item
           >
-          <el-breadcrumb-item>详情</el-breadcrumb-item>
+          <el-breadcrumb-item>{{$t('commons.detail')}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>

@@ -5,6 +5,11 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    mobile: '携帯番号',
+    operatingTime: 'そうさじかん',
+    moreOperating: 'より多くの操作',
+    goBackHome: 'トップページに戻る',
+    home: 'ホームページ',
     checkAll: '上に整数を取る',
     placeChoose: '選択してください',
     confirm_delete: 'これは削除が確定していますか?',
@@ -62,10 +67,10 @@ module.exports = {
     },
     //用户类型 用于权限空
     userRoleList: [
-        { label: '超级用户', value: 0 },
-        { label: '普通用户', value: 1 },
-        { label: '部门负责人', value: 2 },
-        { label: '门店经理', value: 3 },
+        { label: '常連', value: 0 },
+        { label: '一般', value: 1 },
+        { label: '部署責任者', value: 2 },
+        { label: 'ホテル支配人', value: 3 },
     ],
     //人员管理员工类型
     userStatus: {
@@ -82,7 +87,7 @@ module.exports = {
     //订单来源
     orderSource: {
         "1": 'フロント',
-        "2": '销售推荐',
+        "2": '営業',
         "3": 'ルート注文',
         "10": 'その他'
     },
@@ -134,14 +139,14 @@ module.exports = {
     },
     //制卡状态
     markCard: {
-        "1": '未制卡',
-        "2": '已制卡'
+        "1": 'カードキー未発行',
+        "2": 'カードキー発行済み'
     },
     bedCount: {
-        "0": '全部',
-        "1": '单床',
-        "2": '双床',
-        "3": '三床'
+        "0": 'すべて',
+        "1": 'シングル',
+        "2": 'ツイン',
+        "3": 'トリプル'
     },
     //入住状态
     //入住状态
@@ -180,8 +185,8 @@ module.exports = {
     },
     //单位是否停用
     comState: {
-        "1": '正常',
-        "2": '停用'
+        "1": 'せいじょう',
+        "2": '使用停止'
     },
     //集团内是否共享
     comShare2or1Flag: {

@@ -111,7 +111,7 @@ export default {
     return {
       activeName: "boss-report",
       active_second_name: "one",
-      first_title: "首页",
+      first_title: "Home",
       select_title: "",
       peopleList: [],
       dialogDetail: false,

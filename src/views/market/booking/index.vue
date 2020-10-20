@@ -24,17 +24,6 @@
         <hall v-if="item.path == 'hall'" operCheckinType="b3" />
       </el-tab-pane>
     </el-tabs>
-    <!--          <el-tabs class="pageTab" v-model="activeName">-->
-    <!--            <el-tab-pane label="普通预订" name="b1">-->
-    <!--              <normal :operCheckinType="activeName" />-->
-    <!--            </el-tab-pane>-->
-    <!--            <el-tab-pane label="时租房预订" name="b2">-->
-    <!--              <normal :operCheckinType="activeName" />-->
-    <!--            </el-tab-pane>-->
-    <!--            <el-tab-pane label="会场预订" name="b3">-->
-    <!--              <normal :operCheckinType="activeName"/>-->
-    <!--            </el-tab-pane>-->
-    <!--          </el-tabs>-->
   </div>
 </template>
 

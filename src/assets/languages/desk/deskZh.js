@@ -4,9 +4,20 @@
  * @LastEditTime: 2020-10-20 18:02:02
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
-
 //  前台部 中文
 module.exports = {
+    downPayment: '订金',
+    reservePersonDesc: '预约人',
+    //夜审
+    nightAudit: {
+        topSuggestTip: '建议夜审前处理以下业务',
+        notyet: '应到未到订单',
+        notleaving: '应离未离订单',
+        leave: '走结订单',
+        verify: '房价预审订单',
+        schedulerTime: '预定时间',
+        arriveTime: '抵离时间',
+    },
     //  home(首页)
     home_messageType: '留言类型',
     home_noLimit: '不限',

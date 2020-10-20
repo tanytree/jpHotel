@@ -14,7 +14,7 @@
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="预订人：">
+                        <el-form-item :label="$t('desk.home_bookPeople')">
                             <el-input v-model="checkInForm.content"  class="width200"></el-input> &nbsp;&nbsp;
                         </el-form-item>
                     </div>
@@ -118,8 +118,6 @@
                             <el-button>可改房价</el-button>&nbsp;&nbsp;
                             <el-select v-model="checkInForm.enterStatus" placeholder="床位数">
                                 <el-option :label="$t('commons.all')" value="3"></el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
                             </el-select>
                         </el-row>
                         <br />

@@ -11,7 +11,7 @@
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/company' }">企业管理</el-breadcrumb-item>
-          <el-breadcrumb-item>详情</el-breadcrumb-item>
+          <el-breadcrumb-item>{{$t('commons.detail')}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="bodyInfo">
@@ -126,7 +126,7 @@ export default {
 
         },
 
-       
+
     }
 };
 </script>
@@ -136,7 +136,7 @@ export default {
   .bodyInfo{
       .mianInfo{
           .outerWrap{
-            
+
           }
       }
     .tit{border-left:6px solid rgb(32, 117, 255);

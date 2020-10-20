@@ -56,11 +56,11 @@
             </el-table-column>
             <el-table-column prop="" label="房价差异" width="100" align="center">
             </el-table-column>
-            <el-table-column prop="" label="操作员" width="100" align="center">
+            <el-table-column prop="" :label="$t('desk.customer_operator')" width="100" align="center">
             </el-table-column>
-            <el-table-column label="操作" width="120">
+            <el-table-column :label="$t('commons.operating')" width="120">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">详情</el-button>
+                    <el-button type="text" size="mini">{{$t('commons.detail')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>

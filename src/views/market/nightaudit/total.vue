@@ -16,22 +16,22 @@
         <div class="row">
             <div class="grid-content">
                 <el-badge :value="totalObject.notyetCount" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notyet')">应到未到订单</el-button>
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notyet')"> {{$t('desk.nightAudit.notyet')}} </el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
                 <el-badge :value="totalObject.notLivingCount" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notleaving')">应离未离订单</el-button>
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notleaving')">{{$t('desk.nightAudit.notleaving')}}</el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
                 <el-badge :value="totalObject.leaveCount" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('leave')">走结订单</el-button>
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('leave')">{{$t('desk.nightAudit.leave')}}</el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
                 <el-badge :value="totalObject.verifyCount" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('verify')">房价预审订单</el-button>
+                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('verify')">{{$t('desk.nightAudit.verify')}}</el-button>
                 </el-badge>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <el-table-column prop="enterName" label="夜审时间（自然日）"></el-table-column>
             <el-table-column prop="enterName" label="夜审营业日" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterName" label="夜审结果" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="操作人" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
         <!--分页 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>

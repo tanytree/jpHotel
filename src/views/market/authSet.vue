@@ -2,9 +2,9 @@
   <div>
     <el-card>
       <el-breadcrumb slot="header" separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/market' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/market' }">{{$t('commons.home')}}</el-breadcrumb-item>
         <el-breadcrumb-item>权限设置</el-breadcrumb-item>
-      </el-breadcrumb> 
+      </el-breadcrumb>
       <div>具体权限设置（营销部）</div>
       <div>产品管理</div>
       <el-row :gutter="10">

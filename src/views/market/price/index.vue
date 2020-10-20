@@ -37,7 +37,7 @@
         <el-table-column prop="cost_price" label="成本价" show-overflow-tooltip></el-table-column>
         <el-table-column prop="use_num" label="cost_price" show-overflow-tooltip></el-table-column>
 
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope="scope">
             <el-button size="mini" @click="addOrUpdateHandle(scope.row.id)">编辑产品</el-button>
           </template>

@@ -68,9 +68,9 @@
                     ></el-switch>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column :label="$t('commons.operating')" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="details=true">详情</el-button>
+                    <el-button type="text" size="mini" @click="details=true">{{$t('commons.detail')}}</el-button>
                     <el-button type="text" size="mini" v-if="row.statu == 1">禁用</el-button>
                     <el-button type="text" size="mini"  @click="onDelete(row)">{{$t('commons.delete')}}</el-button>
                     <el-button type="text" size="mini" @click="popup('update', row)">修改</el-button>

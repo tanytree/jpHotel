@@ -87,7 +87,7 @@
                     </el-form-item>
                 </el-row>
                 <el-row>
-                    <el-form-item label="预订人：">
+                    <el-form-item :label="$t('desk.home_bookPeople')">
                         <el-input v-model="searchForm.name" class="width150"></el-input>
                     </el-form-item>
                     <el-form-item label="手机号：">
@@ -133,14 +133,14 @@
                 header-row-class-name="default"
                 size="small"
             >
-                <el-table-column prop="name" label="预订人"></el-table-column>
-                <el-table-column prop="mobile" label="手机号码"></el-table-column>
+                <el-table-column prop="name" :label="$t('desk.home_bookPeople')"></el-table-column>
+                <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
                 <el-table-column
                     prop="createTime"
                     label="预订时间"
                     width="160px"
                 ></el-table-column>
-                <el-table-column prop="" label="抵离时间" width="220">
+                <el-table-column prop="" :label="$t('desk.nightAudit.arriveTime')" width="220">
                     <template slot-scope="{ row }">
                         <div class="box">
                             <div class="item">
@@ -164,7 +164,7 @@
                         {{ F_operCheckinType(row.operCheckinType) }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="deposit" label="订金" width="100" align="center">
+                <el-table-column prop="deposit" :label="$t('desk.downPayment')" width="100" align="center">
                     <template slot-scope="{ row }">
                         {{ row.deposit || 0 }}
                     </template>
@@ -189,7 +189,7 @@
                         {{ F_reserveState(row.state) }}
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="220">
+                <el-table-column :label="$t('commons.operating')" width="220">
                     <template slot-scope="{ row }">
                         <el-button type="text" size="mini" @click="handelDetail(row)"
                         >详情
@@ -277,7 +277,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="预订人：" class="">
+                        <el-form-item :label="$t('desk.home_bookPeople')" class="">
                             {{ currentItem.name }}
                         </el-form-item>
                     </el-col>
@@ -322,12 +322,12 @@
             >
                 <el-row>
                     <el-col :span="8">预订单号：{{ currentItem.reserveOrderNum }}</el-col>
-                    <el-col :span="8">预订人：{{ currentItem.name }}</el-col>
+                    <el-col :span="8">{{$t('desk.home_bookPeople')}}：{{ currentItem.name }}</el-col>
                 </el-row>
                 <br/>
                 <el-form-item label="付款项目：">
                     <el-radio-group v-model="consumeOperForm.priceType">
-                        <el-radio-button :label="1" :value="1">订金</el-radio-button>
+                        <el-radio-button :label="1" :value="1">{{ $t('desk.downPayment') }}</el-radio-button>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="金额：">

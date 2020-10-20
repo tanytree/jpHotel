@@ -109,7 +109,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="orderRealPay" width="100" label="付款价格"></el-table-column>
-          <el-table-column align="ceneter" label="操作">
+          <el-table-column align="ceneter" :label="$t('commons.operating')">
             <template slot-scope="{row}">
               <el-button type="text" size="mini" @click="getOrderDetail(row)">订单详情</el-button>
             </template>

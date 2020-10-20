@@ -49,9 +49,9 @@
             <el-table-column prop="position" label="职位 " show-overflow-tooltip></el-table-column>
             <el-table-column prop="worknum" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="department.name" label="所在部门" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column :label="$t('commons.operating')" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="detailsHandle(row)">详情</el-button>
+                    <el-button type="text" size="mini" @click="detailsHandle(row)">{{$t('commons.detail')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>

@@ -65,10 +65,10 @@
                 </el-table-column> -->
                <!-- <el-table-column
                   width="200"
-                  label="操作"
+                  :label="$t('commons.operating')"
                  >
                   <template slot-scope="scope">
-                      <el-button @click="getInfo(scope.row)"  type="text" >详情</el-button>
+                      <el-button @click="getInfo(scope.row)"  type="text" >{{$t('commons.detail')}}</el-button>
                   </template>
                 </el-table-column> -->
               </el-table>

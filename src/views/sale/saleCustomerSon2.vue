@@ -41,7 +41,7 @@
             <div v-if="row.applyType==2">审核未通过</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope={row}>
             <el-button size="mini"  v-if="row.applyType==0" @click="clickCheck(row)">审核</el-button>
             <el-button size="mini" v-if="row.applyType==2" @click="clickDelete(row)">{{$t('commons.delete')}}</el-button>

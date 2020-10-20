@@ -11,7 +11,7 @@
             <el-button plain @click="batchCheckId">批量入住</el-button>
             <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')">修改订单</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary">
-                更多操作
+                {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">排房</el-dropdown-item>
                     <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
@@ -34,7 +34,7 @@
                 <p>入住类型：{{F_checkinType(checkinInfo.checkinType)}}</p>
             </el-col>
             <el-col :span="8">
-                <p>抵离时间：{{checkinInfo.checkinTime}} - {{checkinInfo.checkoutTime}}</p>
+                <p>{{ $t('desk.nightAudit.arriveTime') }}：{{checkinInfo.checkinTime}} - {{checkinInfo.checkoutTime}}</p>
             </el-col>
             <el-col :span="8">
                 <p>保留时间：{{checkinInfo.keepTime}}</p>
@@ -111,7 +111,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="预订人：" class="" prop="name">
+                    <el-form-item :label="$t('desk.home_bookPeople')" class="" prop="name">
                         <el-input type="text" v-model="baseInfoChangeForm.name" style="width:150px"></el-input>
                     </el-form-item>
                 </el-col>
@@ -177,7 +177,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="预订人：" class="">
+                    <el-form-item :label="$t('desk.home_bookPeople')" class="">
                         {{currentItem.name}}
                     </el-form-item>
                 </el-col>

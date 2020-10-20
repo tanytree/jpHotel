@@ -77,7 +77,7 @@
       ></el-table-column>
       <el-table-column
         prop="creatorName"
-        label="操作人"
+        :label="$t('desk.home_operator')"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column
@@ -146,7 +146,7 @@
           ></el-table-column>
           <el-table-column
             prop="creatorName"
-            label="操作人"
+            :label="$t('desk.home_operator')"
             show-overflow-tooltip
           ></el-table-column>
         </el-table>
@@ -197,13 +197,13 @@
             >预订单号：{{ detailData.checkIn.reserveOrderNum }}</el-col
           >
           <el-col :span="8" v-if="detailData.checkIn"
-            >预订人：{{ detailData.checkIn.name }}</el-col
+            >{{$t('desk.home_bookPeople')}}：{{ detailData.checkIn.name }}</el-col
           >
         </el-row>
         <br />
         <el-form-item label="付款项目：">
           <el-radio-group v-model="consumeOperForm.priceType">
-            <el-radio-button :label="1" :value="1">订金</el-radio-button>
+            <el-radio-button :label="1" :value="1">{{ $t('desk.downPayment')}}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="金额：">
@@ -247,7 +247,7 @@
             >预订单号：{{ detailData.checkIn.reserveOrderNum }}</el-col
           >
           <el-col :span="8" v-if="detailData.checkIn"
-            >预订人：{{ detailData.checkIn.name }}</el-col
+            >{{$t('desk.home_bookPeople')}}：{{ detailData.checkIn.name }}</el-col
           >
         </el-row>
         <br />

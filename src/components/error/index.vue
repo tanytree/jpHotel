@@ -8,7 +8,7 @@
     <div class="wrapper">
         <img src="@/assets/images/404.jpg" alt="">
         <div style="margin-top:50px">
-            <el-button @click="$router.back()" type="primary">返回首页</el-button>
+            <el-button @click="$router.back()" type="primary">{{$t('commons.goBackHome')}}</el-button>
         </div>
     </div>
 </template>

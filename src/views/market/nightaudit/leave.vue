@@ -12,7 +12,7 @@
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small" @selection-change="handleSelectionChange">
             <el-table-column prop="name" label="客人名称"></el-table-column>
-            <el-table-column prop="mobile" label="手机号码"></el-table-column>
+            <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
             <el-table-column prop="checkinTime" label="入住时间" width="200" align="center"></el-table-column>
             <el-table-column prop="checkoutTime" label="预离时间" width="200" align="center"></el-table-column>
             <el-table-column prop="" label="房间号" width="140" align="center">
@@ -40,9 +40,9 @@
                     {{F_billType(row.billType)}}
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="140">
+            <el-table-column :label="$t('commons.operating')" width="140">
                 <template slot-scope="{row}">
-                    <el-button type="text">详情</el-button>
+                    <el-button type="text">{{$t('commons.detail')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>

@@ -93,9 +93,9 @@
         <el-table-column prop="shareFlag" label="是否共享" show-overflow-tooltip>
           <template slot-scope="{row}">{{row.shareFlag==1?'是':'否'}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="220">
+        <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{row}">
-            <el-button type="text" size="mini" @click="handleDetail(row)">详情</el-button>
+            <el-button type="text" size="mini" @click="handleDetail(row)">{{$t('commons.detail')}}</el-button>
             <el-button type="text" size="mini" @click="addAndEditItem('edit',row)">修改</el-button>
             <el-dropdown style="margin-left: 10px;font-size:12px">
               <span class="el-dropdown-link">
@@ -192,7 +192,7 @@
             <el-col :span="8" class="col">
               <el-form-item label label-width="20px">
                 <el-checkbox v-model="addCompanyForm.shareFlag">集团共享</el-checkbox>
-                <el-checkbox v-model="addCompanyForm.state">停用</el-checkbox>
+                <el-checkbox v-model="addCompanyForm.state">{{ $t('commons.comState')['2'] }}</el-checkbox>
               </el-form-item>
             </el-col>
           </el-row>
@@ -482,7 +482,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{row}">
             <el-button type="text" size="mini" @click="changeSate(row)">{{row.state==1?'启用中':'禁用中'}}</el-button>
           </template>
@@ -634,7 +634,7 @@ export default {
         state: [
           {
             required: true,
-            message: "请选择是否停用",
+            message: this.$t('desk.customer_selectIfStop'),
             trigger: "blur",
           },
         ],

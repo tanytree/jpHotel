@@ -327,31 +327,7 @@ export default new Router({
                         import('@/views/sale/approval/preSale')
                 },
 
-                //我的报价
-                {
-                    path: '/offerStart',
-                    name: 'offerStart',
-                    component: () =>
-                        import('@/views/sale/offer/start')
-                },
-                {
-                    path: '/offerWait',
-                    name: 'offerWait',
-                    component: () =>
-                        import('@/views/sale/offer/wait')
-                },
-                {
-                    path: '/offerCollect',
-                    name: 'offerCollect',
-                    component: () =>
-                        import('@/views/sale/offer/collect')
-                },
-                {
-                    path: '/offerOnline',
-                    name: 'offerOnline',
-                    component: () =>
-                        import('@/views/sale/offer/online')
-                },
+
                 {
                     path: '/publicPool',
                     name: 'publicPool',

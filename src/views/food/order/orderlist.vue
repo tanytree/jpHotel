@@ -104,7 +104,7 @@
                 </el-table-column>
                 <el-table-column
                   width="200"
-                  label="操作"
+                  :label="$t('commons.operating')"
                  >
                   <template slot-scope="scope">
                       <el-button @click="getInfo(scope.row)"  type="text" >{{$t('food.common.detail')}}</el-button>

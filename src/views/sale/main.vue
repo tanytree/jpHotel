@@ -12,7 +12,7 @@
                          :key="item.path"
                          v-if="$F.filterThirdMenu('sale', item.path, true)">
                 <!-- 中央预定-->
-                <Centralres v-if="item.path == 'central-reservation'"/>
+                <!--                <Centralres v-if="item.path == 'central-reservation'"/>-->
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -21,34 +21,34 @@
 </template>
 
 <script>
-  import Centralres from './centralRes'
-  import EmployeeRights from '@/components/employeeRights'
+import Centralres from './centralRes'
+import EmployeeRights from '@/components/employeeRights'
 
-  export default {
-    components: { Centralres, EmployeeRights },
-    data () {
-      return {
-        activeName: ''
-      }
+export default {
+    components: {Centralres, EmployeeRights},
+    data() {
+        return {
+            menuList: [],
+            activeName: ''
+        }
     },
     created() {
-      if (sessionStorage.subMenul) {
-        this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
-        this.$forceUpdate()
-      }
-      this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
+        this.$F.handleThirdMenu(this);
+        for (let i = 0; i < this.menuList.length; i++) {
+            if (this.menuList[i].path == 'central-reservation') {
+                this.menuList.splice(i, 1)
+                break;
+            }
+        }
     },
-    mounted () {
-      let menu = this.$F.filterThirdMenu(null, null, false, true)
-      this.activeName = menu.path;
-    },
+
     methods: {
-      //二级tab切片
-      handleClick (tab, event) {
-        console.log(tab, event)
-      },
+        //二级tab切片
+        handleClick(tab, event) {
+            console.log(tab, event)
+        },
     }
-  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

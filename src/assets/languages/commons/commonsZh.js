@@ -5,6 +5,11 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    mobile: '手机号码',
+    operatingTime: '操作时间',
+    moreOperating: '更多操作',
+    goBackHome: '返回首页',
+    home: '首页',
     checkAll: '全选',
     placeChoose: '请选择',
     serve_other: '其它',
@@ -136,8 +141,8 @@ module.exports = {
     },
     //制卡状态
     markCard: {
-        '1': '未制卡',
-        '2': '已制卡'
+        '1': '已制卡',
+        '2': '未制卡'
     },
     bedCount: {
         '0': '全部',

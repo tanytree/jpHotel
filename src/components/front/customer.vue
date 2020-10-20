@@ -40,7 +40,7 @@
                 <span>-</span>
             </template>
         </el-table-column>
-        <el-table-column label="手机号码" show-overflow-tooltip>
+        <el-table-column :label="$t('commons.mobile')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 <span>{{row.checkIn.mobile}}</span>
             </template>
@@ -98,7 +98,7 @@
                 </el-row>
             </template>
         </el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column :label="$t('commons.operating')" width="180">
             <template slot-scope="scope">
                 <el-button type="text" size="mini" @click="edit_live_in_person()">编辑</el-button>
             </template>

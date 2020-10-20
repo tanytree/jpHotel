@@ -27,9 +27,9 @@
         <el-table-column prop="buy_number" label="购买商品数量" show-overflow-tooltip></el-table-column>
         <el-table-column prop="total_price" label="购买总金额" show-overflow-tooltip></el-table-column>
         <el-table-column prop="use_num" label="累计奖励" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="250">
+        <el-table-column :label="$t('commons.operating')" width="250">
           <template slot-scope="{row}">
-            <el-button size="mini" @click="lookDetail(row.id)">详情</el-button>
+            <el-button size="mini" @click="lookDetail(row.id)">{{$t('commons.detail')}}</el-button>
             <el-button size="mini" @click="levleEdit(row)">等级修改</el-button>
             <el-button size="mini" @click="deleteHandle(row.id)">{{$t('commons.delete')}}</el-button>
           </template>

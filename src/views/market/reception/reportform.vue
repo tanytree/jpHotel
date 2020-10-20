@@ -8,7 +8,7 @@
 <template>
   <div class="boss-index">
     <el-tabs v-model="activeName" type="card" editable @tab-click="handleClick">
-            <el-tab-pane label="首页" name="first">
+            <el-tab-pane :label="$t('commons.home')" name="first">
                 <c1></c1>
             </el-tab-pane>
             <el-tab-pane label="营业日报" name="second">

@@ -115,7 +115,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="ceneter" label="操作">
+          <el-table-column align="ceneter" :label="$t('commons.operating')">
             <template slot-scope="{row}">
               <div style="color: rgba(51, 51, 51, 1);">订单详情</div>
               <el-button type="text" size="mini" @click="applyDateil(row)">申请详情</el-button>

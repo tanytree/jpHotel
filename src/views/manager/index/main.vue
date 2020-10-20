@@ -57,7 +57,6 @@
 <script>
     import roomStatus from './roomStatus'
 	import nightSite from './nightSite'
-	import billMainten from './billMainten'
 	import damageCompensate from './damageCompensate'
 	import shiftSite from './shiftSite'
 	import hotelServices from './hotelServices'
@@ -65,7 +64,7 @@
     import EmployeeRights from '@/components/employeeRights'
     import { mapState, mapActions } from "vuex";
     export default {
-        components: { roomStatus,nightSite,billMainten,damageCompensate,shiftSite,hotelServices,printingMg,EmployeeRights},
+        components: { roomStatus,nightSite,damageCompensate,shiftSite,hotelServices,printingMg,EmployeeRights},
         computed: {
             ...mapState({
                 user: state => state.user

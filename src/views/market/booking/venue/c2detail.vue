@@ -18,7 +18,7 @@
           style="font-weight: 700; cursor: pointer"
           >会议核销</el-breadcrumb-item
         >
-        <el-breadcrumb-item>详情</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('commons.detail')}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <el-row :gutter="20" class="rowRoot">
@@ -143,7 +143,7 @@
               show-overflow-tooltip
               width="150px"
             ></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column :label="$t('commons.operating')">
               <template slot-scope="{ row }">
                 <el-button type="text" @click="goDetail(row)" size="mini"
                   >移除</el-button
@@ -382,7 +382,7 @@ export default {
           text = "前台";
           break;
         case 2:
-          text = "销售推荐";
+          text = this.$t('desk.book_saleTo');
           break;
         case 3:
           text = "渠道订单";

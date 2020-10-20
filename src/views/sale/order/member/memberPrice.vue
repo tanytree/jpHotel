@@ -61,7 +61,7 @@
                     <span>{{row.updateName || row.createName}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column :label="$t('commons.operating')" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini"  @click="discountEdit(row)">编辑折扣</el-button>
                 </template>

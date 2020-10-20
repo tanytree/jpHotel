@@ -11,7 +11,7 @@
                     </div>
                     <el-dropdown trigger="click" @command="(e) => handleCommand(e, item)">
                         <span class="el-dropdown-link">
-                            操作<i class="el-icon-caret-bottom el-icon--right"></i>
+                            {{$t('commons.operating')}}<i class="el-icon-caret-bottom el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="see">查看资料</el-dropdown-item>
@@ -36,7 +36,7 @@
                     <div v-for="(item, index) in setData" :key="index" class="checkItem">
                         <div class="label">
                             <span>{{item.label}}</span>
-                            <el-checkbox :indeterminate="item.isIndeterminate" v-model="item.checkAll" @change="(e) => checkAllChange(e, item)">全部开启</el-checkbox>
+                            <el-checkbox :indeterminate="item.isIndeterminate" v-model="item.checkAll" @change="(e) => checkAllChange(e, item)">{{$t('boss.report_openAll')}}</el-checkbox>
                         </div>
                         <el-row :gutter="20">
                             <el-col v-for="(child, i) in item.child" :key="index + '_' + i" :span="6">

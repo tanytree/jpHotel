@@ -120,7 +120,7 @@
             <el-table-column prop="realJobDay" label="实出勤天数">
             </el-table-column>
         </el-table-column>
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column :label="$t('commons.operating')" width="100" fixed="right">
             <template slot-scope="{row}">
                 <el-button type="text" size="mini" @click="detailsHandle(row)">员工详情</el-button>
             </template>

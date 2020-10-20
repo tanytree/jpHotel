@@ -32,7 +32,7 @@
           <el-table-column prop="goods_price" label="批复状态" show-overflow-tooltip></el-table-column>
           <el-table-column prop="goods_price" label="递交人" show-overflow-tooltip></el-table-column>
           <el-table-column prop="goods_price" label="递交日期" show-overflow-tooltip></el-table-column>
-          <el-table-column label="操作" width="150">
+          <el-table-column :label="$t('commons.operating')" width="150">
             <template slot-scope="scope">
               <el-button type="text" size="small">订单详情</el-button>
               <el-button type="text" size="small">物流信息</el-button>

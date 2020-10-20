@@ -117,7 +117,7 @@
         </el-table-column>
         <el-table-column prop="createTime" label="发生日期" show-overflow-tooltip></el-table-column>
         <el-table-column prop="storesName" label="发生门店" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creatorName" label="操作员" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creatorName" :label="$t('desk.customer_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="remark" label="业务说明" show-overflow-tooltip></el-table-column>
       </el-table>
       <div style="margin-top:10px"></div>

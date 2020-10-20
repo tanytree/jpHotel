@@ -66,9 +66,9 @@
         <el-table-column label="职位" show-overflow-tooltip></el-table-column>
         <el-table-column prop="origin" label="行业分类" show-overflow-tooltip></el-table-column>
         <el-table-column prop="origin" label="关联状态" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{row}">
-            <el-button type="text" size="mini">详情</el-button>
+            <el-button type="text" size="mini">{{$t('commons.detail')}}</el-button>
             <el-button type="text" size="mini">合同文本</el-button>
           </template>
         </el-table-column>

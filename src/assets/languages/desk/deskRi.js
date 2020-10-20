@@ -4,9 +4,20 @@
  * @LastEditTime: 2020-10-20 10:20:18
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
-
 //前台部 日文
 module.exports = {
+    reservePersonDesc: '予約者',
+    downPayment: '予約金',
+    //夜审
+    nightAudit: {
+        topSuggestTip: '建议夜审前处理以下业务',
+        notyet: 'チェックイン時間過ぎてもチェックインしなかった注文',
+        notleaving: 'チェックアウト時間過ぎてもチェックアウトしなかった注文',
+        leave: '会計せずチェックアウトの注文',
+        verify: '室料事前審査注文',
+        schedulerTime: '予約時間',
+        arriveTime: 'チェックイン/アウト時間',
+    },
     home_messageType: '類別',
     home_noLimit: 'all',
     home_myMessage: '私へのメッセージ',

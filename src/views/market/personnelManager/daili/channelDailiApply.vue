@@ -36,9 +36,9 @@
         <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip></el-table-column>
         <el-table-column prop="buy_number" label="商品购买数量" show-overflow-tooltip></el-table-column>
         <el-table-column prop="total_price" label="购买总金额" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="250">
+        <el-table-column :label="$t('commons.operating')" width="250">
           <template slot-scope="scope">
-            <el-button size="mini">详情</el-button>
+            <el-button size="mini">{{$t('commons.detail')}}</el-button>
             <el-button size="mini">等级修改</el-button>
             <el-button size="mini" @click="editPriceF(scope.row)">{{$t('commons.delete')}}</el-button>
           </template>

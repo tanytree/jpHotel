@@ -50,8 +50,8 @@
             <span style="margin-left:20px">开启后就有该项权限</span>
             <!-- 首页 -->
             <el-row style="margin-top:30px">
-              <span>首页</span>
-              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <span>{{$t('commons.home')}}</span>
+              <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
               <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
               <div style="margin-top:10px;">
                 <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -79,7 +79,7 @@
             <!-- 客房中心 -->
             <el-row style="margin-top:30px">
               <span>客房中心</span>
-              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
               <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
               <div style="margin-top:10px;">
                 <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -107,7 +107,7 @@
             <!-- 预订管理 -->
             <el-row style="margin-top:30px">
               <span>预订管理</span>
-              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
               <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
               <div style="margin-top:10px;">
                 <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -126,7 +126,7 @@
             <!-- 订单管理 -->
             <el-row style="margin-top:30px">
               <span>订单管理</span>
-              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
               <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
               <div style="margin-top:10px;">
                 <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -145,7 +145,7 @@
             <!-- 预订管理 -->
             <el-row style="margin-top:30px">
               <span>预订管理</span>
-              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
               <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
               <div style="margin-top:10px;">
                 <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -164,7 +164,7 @@
             <!-- 客户管理 -->
             <el-row style="margin-top:30px">
               <span>客户管理</span>
-              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
               <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
               <div style="margin-top:10px;">
                 <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -188,7 +188,7 @@
             <!-- 夜审 -->
             <el-row style="margin-top:30px">
               <span>夜审</span>
-              <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+              <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
               <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
               <div style="margin-top:10px;">
                 <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">

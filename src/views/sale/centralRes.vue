@@ -123,7 +123,7 @@
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column :label="$t('commons.operating')">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -173,7 +173,7 @@
                <span style="margin-left: 10px">{{ scope.row.date }}</span>
             </template>-->
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column :label="$t('commons.operating')">
             <template slot-scope="scope">
               <el-button size="mini" type="text" @click="handleEdit(scope.$index, scope.row)">普通预订</el-button>
             </template>
@@ -283,7 +283,7 @@
               <el-col :span="12" style="opacity: 0;">1</el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="预订人:" prop="name">
+                  <el-form-item :label="$t('desk.home_bookPeople')" prop="name">
                     <el-input style="width:246px" v-model="checkInForm.content"></el-input>
                   </el-form-item>
                 </div>

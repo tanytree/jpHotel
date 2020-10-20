@@ -21,7 +21,7 @@
             <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
         <el-row class="padding-tb-10">
             <span>总消费：{{detailData.consumePrice}}</span>
@@ -42,8 +42,8 @@
             </el-table-column>
             <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
             <el-table-column prop="consumePrice" label="退款" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
+            <el-table-column :label="$t('commons.operating')">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
                 </template>

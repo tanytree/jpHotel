@@ -32,7 +32,7 @@
                             <el-table-column prop="retailPrice" label="商品单价(元)" show-overflow-tooltip></el-table-column>
                             <el-table-column prop="employeePrice" label="员工价(元)" show-overflow-tooltip></el-table-column>
                             <el-table-column prop="inventoryCount" label="库存" show-overflow-tooltip></el-table-column>
-                            <el-table-column label="操作">
+                            <el-table-column :label="$t('commons.operating')">
                                 <template slot-scope="scope">
                                     <el-button :disabled="scope.row.inventoryCount == 0" size="mini" @click="addCart(scope.row,scope.$index)">添加</el-button>
                                 </template>
@@ -67,7 +67,7 @@
                                 {{parseFloat(scope.row.count) * parseFloat(scope.row.retailPrice)}}
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作">
+                        <el-table-column :label="$t('commons.operating')">
                             <template slot-scope="scope">
                                 <el-button size="mini" @click="handleDelete(scope.row,scope.$index)">移除</el-button>
                             </template>

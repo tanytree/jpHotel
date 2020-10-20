@@ -114,7 +114,7 @@
             </template>
           </el-table-column>
         </el-table-column>
-        <el-table-column label="操作" width="220">
+        <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{row}">
             <el-button type="text" @click="advancePayments(row)" size="mini">预收款</el-button>
             <el-button type="text" @click="settlement(row)" size="mini">账务结算</el-button>
@@ -402,7 +402,7 @@
           <el-table-column prop="date" label="营业项目" width="180"></el-table-column>
           <el-table-column prop="name" label="结账" width="180"></el-table-column>
           <el-table-column prop="address" label="金额"></el-table-column>
-          <el-table-column prop="address" label="操作">
+          <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
               <el-button type="text" size="mini">移除</el-button>
             </template>
@@ -441,7 +441,7 @@
           <el-table-column prop="name" label="营业项目" width="180"></el-table-column>
           <el-table-column prop="name" label="业务详情" width="180"></el-table-column>
           <el-table-column prop="address" label="金额"></el-table-column>
-          <el-table-column prop="address" label="操作">
+          <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
               <el-button type="text" size="mini">移除</el-button>
             </template>

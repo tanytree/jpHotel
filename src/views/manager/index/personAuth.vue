@@ -14,7 +14,7 @@
 					<div class="row-item">
 						<el-dropdown @command="handleCommand">
 							<span class="el-dropdown-link">
-								操作<i class="el-icon-arrow-down el-icon--right"></i>
+								{{$t('commons.operating')}}<i class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item command="a">查看资料</el-dropdown-item>

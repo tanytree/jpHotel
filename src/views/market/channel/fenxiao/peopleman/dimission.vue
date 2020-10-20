@@ -46,9 +46,9 @@
             <el-table-column prop="enterType" label="职位 " show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="离职时间" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column :label="$t('commons.operating')" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="details=true">详情</el-button>
+                    <el-button type="text" size="mini" @click="details=true">{{$t('commons.detail')}}</el-button>
                     <el-button type="text" size="mini">重新入职</el-button>
                     <el-button type="text" size="mini">{{$t('commons.delete')}}</el-button>
                 </template>

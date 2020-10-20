@@ -1,12 +1,12 @@
 <!--
- * @Date: 
+ * @Date:
  * @LastEditors: 魏轩
- * @LastEditTime: 2020-07-06 
+ * @LastEditTime: 2020-07-06
  * @FilePath: jiudian\src\views\sale\EmployeeRights.vue
  -->
 
 <template>
- <div> 
+ <div>
              <el-row>
               <div v-if="display">
                 <h4>前台部</h4>
@@ -17,7 +17,7 @@
                   </span>
                 <el-dropdown @command="handleCommand" style="float:right">
                 <span class="el-dropdown-link">
-                  操作<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{$t('commons.operating')}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="checkData">查看资料</el-dropdown-item>
@@ -39,8 +39,8 @@
 
                     <!-- 首页 -->
                     <el-row style="margin-top:30px">
-                        <span>首页</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <span>{{$t('commons.home')}}</span>
+                        <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
                         <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
                         <div style="margin-top:10px;">
                           <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -72,14 +72,14 @@
                               >
                             </el-switch>
                           </el-col>
-                          
+
                         </div>
                     </el-row>
 
                     <!-- 人员管理 -->
                     <el-row style="margin-top:30px">
                         <span>人员管理</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
                         <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
                         <div style="margin-top:10px;">
                           <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -106,7 +106,7 @@
                     <!-- 酬薪管理 -->
                     <el-row style="margin-top:30px">
                         <span>酬薪管理</span>
-                        <el-checkbox style="margin-left:30px">全部开启</el-checkbox>
+                        <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
                         <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
                         <div style="margin-top:10px;">
                           <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
@@ -126,9 +126,9 @@
                               v-model="Oswitch"
                               >
                             </el-switch>
-                          </el-col> 
+                          </el-col>
                         </div>
-                    </el-row>                
+                    </el-row>
                 </div>
                <el-row class="fixedFoot">
                   <div class="wrap">
@@ -156,7 +156,7 @@ export default {
           this.display=!this.display;
 
         }
-      }, 
+      },
       management(){
        this.display=!this.display;;
       }
@@ -184,6 +184,6 @@ export default {
   border:1px solid #1B80FF;
   font-size: 12px;
   padding: 3px 10px;
-  
+
 }
 </style>

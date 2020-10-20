@@ -2,7 +2,7 @@
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: 魏轩
  * @LastEditTime:
- * @FilePath: 
+ * @FilePath:
  -->
  <template>
   <div class="sec1">
@@ -52,10 +52,10 @@
 
         <el-form-item >
           <el-button @click="queryCourseList(form)"  type="primary">查询</el-button>
-          
+
         </el-form-item>
       </el-row>
-      
+
     </el-form>
 
      <!--表格数据 -->
@@ -66,9 +66,9 @@
             <el-table-column prop="enterType" label="职位 " show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="所在部门" show-overflow-tooltip></el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column :label="$t('commons.operating')" width="220">
                 <template slot-scope="{row}">
-                    <el-button type="text" size="mini">详情</el-button>
+                    <el-button type="text" size="mini">{{$t('commons.detail')}}</el-button>
                 </template>
             </el-table-column>
         </el-table> -->
@@ -179,20 +179,20 @@
                 width="120">
               </el-table-column>
             </el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column :label="$t('commons.operating')" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini">员工详情</el-button>
                 </template>
             </el-table-column>
           <!-- </el-table-column> -->
-        </el-table> 
+        </el-table>
 
 
 
 
         <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"  :page-sizes="[10, 50, 100, 200]"  layout=" sizes, prev, pager, next, jumper"></el-pagination>
-    
+
   </div>
 </template>
 <script>
@@ -239,7 +239,7 @@ export default {
             // this.getDataList();
             console.log(222)
         }
- 
+
 
   }
 };

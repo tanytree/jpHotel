@@ -61,9 +61,9 @@
             </template>
         </el-table-column>
         <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
             <template slot-scope="{row}">
                 <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
             </template>
@@ -339,7 +339,7 @@
                 <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="creatorName" label="操作人" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             </el-table>
             <el-form-item style="margin-top: 10px;" label="冲调方式：" prop="priceType">
                 <el-radio-group v-model="consumeOperForm.priceType">

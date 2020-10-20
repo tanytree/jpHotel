@@ -36,9 +36,9 @@
         <el-table-column prop="memberResult.edtbalance" label="会员积分" show-overflow-tooltip></el-table-column>
         <el-table-column prop="edtUser.sumConsumption" label="累计消费（元）" show-overflow-tooltip></el-table-column>
         <el-table-column prop="edtUser.createTime" label="加入时间" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{row}">
-            <el-button type="text" size="mini" @click="memberDatail(row)">详情</el-button>
+            <el-button type="text" size="mini" @click="memberDatail(row)">{{$t('commons.detail')}}</el-button>
           </template>
         </el-table-column>
 

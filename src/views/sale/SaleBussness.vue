@@ -77,7 +77,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="createTime" label="发布时间" show-overflow-tooltip></el-table-column>
-            <el-table-column width="200" align="ceneter" label="操作">
+            <el-table-column width="200" align="ceneter" :label="$t('commons.operating')">
               <template slot-scope="{row}">
                 <el-button type="text" size="mini" @click="lookButton(row)">查看</el-button>
                 <el-button v-if="status==0" type="text" size="mini" @click="auditButton(row)">审核</el-button>
