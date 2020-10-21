@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-21 10:54:40
+ * @LastEditTime: 2020-10-21 14:14:48
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -464,6 +464,24 @@ module.exports = {
     customer_undoCheckout: '撤销结账',
     customer_makeUpStatement: '结算单补打',
     customer_newAccountSet: '新增账套',
+    customer_accountingChoose: '账务选择',
+    customer_constPrice: '消费金额',
+    customer_editorAccount: '编辑账套',
+    customer_accountingText: '账务',
+    customer_zhangName: '账套名称',
+    customer_dealWay: '账务处理（按账套）',
+    customer_richReason: '冲调原因',
+    customer_addAccounting: '增加账务',
+    customer_selectAccounting: '请选择账务',
+    customer_inputAccountName: '请输入账套名称',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
     customer_: '',
     customer_: '',
     customer_: '',

@@ -26,7 +26,7 @@
           <el-input v-model="searchForm.accountSetName" class="width150"></el-input>
         </el-form-item>
 
-        <el-form-item label="状态">
+        <el-form-item :label="$t('desk.home_state')">
           <el-select v-model="searchForm.state" class="width150">
             <el-option :label="$t('desk.home_all')" value>{{$t('desk.home_all')}}</el-option>
             <el-option :label="$t('desk.customer_outStand')" value="1">{{$t('desk.customer_outStand')}}</el-option>
@@ -88,7 +88,7 @@
     <el-dialog :title="$t('desk.customer_newAccountSet')" v-if="dialogNew" :visible.sync="dialogNew" width="700px" top="0">
       <!-- 内层  账务选择 dialog -->
       <el-dialog
-        title="账务选择"
+       :title="$t('desk.customer_accountingChoose')"
         v-if="dialogChoose"
         :visible.sync="dialogChoose"
         append-to-body
@@ -96,20 +96,20 @@
         top="0"
       >
         <el-form :model="addFrom" inline ref="innerAddForm" class="demo-ruleForm">
-          <el-form-item label="消费时间:">
+          <el-form-item :label="$t('desk.customer_spendTime') + ':'">
             <el-col :span="11">
               <el-date-picker
                 type="date"
-                placeholder="请选择日期"
+               :placeholder="$t('desk.serve_chooseDate')"
                 v-model="addFrom.startTime"
                 style="width: 100%;"
               ></el-date-picker>
             </el-col>
-            <el-col class="line" style="text-align:center" :span="2">至</el-col>
+            <el-col class="line" style="text-align:center" :span="2">{{ $t("desk.serve_to") }}</el-col>
             <el-col :span="11">
               <el-date-picker
                 type="date"
-                placeholder="请选择日期"
+               :placeholder="$t('desk.serve_chooseDate')"
                 v-model="addFrom.endTime"
                 style="width: 100%;"
               ></el-date-picker>
@@ -129,7 +129,7 @@
           <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="180"></el-table-column>
           <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
           <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="180"></el-table-column>
-          <el-table-column prop="consumePrice" label="金额"></el-table-column>
+          <el-table-column prop="consumePrice" :label="$t('desk.customer_sum')"></el-table-column>
         </el-table>
         <div style="text-align:right" slot="footer" class="dialog-footer">
           <span>
@@ -140,7 +140,7 @@
       </el-dialog>
       <!-- 上面是内层dialog -->
       <el-form :model="addFrom" ref="outAddForm" class="demo-ruleForm" inline>
-        <el-form-item label="单位:">
+        <el-form-item :label="$t('desk.book_unit') + ':'">
           <el-select v-model="addFrom.enterId" filterable :placeholder="$t('commons.placeChoose')" class="width150">
             <el-option
               v-for="(item,index) in unitList"
@@ -150,12 +150,12 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="账套名称:" prop="name" style="margin-left:20px">
+        <el-form-item :label="$t('desk.customer_zhangName') + ':'" prop="name" style="margin-left:20px">
           <el-input v-model="addFrom.accountSetName" size="small" style="width:180px"></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="账务:">
-          <el-button plain size="small" @click="chooseAccount" style="margin-left:5px">请选择</el-button>
+        <el-form-item :label="$t('desk.customer_accountingText') + ':'">
+          <el-button plain size="small" @click="chooseAccount" style="margin-left:5px">{{$t('commons.placeChoose')}}</el-button>
         </el-form-item>
       </el-form>
       <el-table
@@ -166,7 +166,7 @@
         <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="180"></el-table-column>
         <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="120"></el-table-column>
         <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
-        <el-table-column prop="consumePrice" label="消费金额	"></el-table-column>
+        <el-table-column prop="consumePrice" :label="$t('desk.customer_constPrice')"></el-table-column>
         <el-table-column prop="creatorName" :label="$t('desk.customer_operator')"></el-table-column>
         <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{row}">
@@ -174,7 +174,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div>总计：{{accountList_add.length}}笔账务，共计：{{totalPrice(accountList_add)}}元</div>
+      <div>{{ $t("desk.customer_aggregate") + ":" }}{{accountList_add.length}}{{$t('desk.customer_penNum')}}，{{$t('desk.customer_gongji')+':'}}{{totalPrice(accountList_add)}}{{$t('desk.serve_yen')}}</div>
       <div style="text-align:right" slot="footer" class="dialog-footer">
         <span>
           <el-button @click="dialogNew_cancle">{{$t('commons.cancel')}}</el-button>
@@ -183,10 +183,10 @@
       </div>
     </el-dialog>
     <!-- 编辑账套dialog-->
-    <el-dialog title="编辑账套" v-if="dialogEditor" :visible.sync="dialogEditor" width="700px" top="0">
+    <el-dialog :title="$t('desk.customer_editorAccount')" v-if="dialogEditor" :visible.sync="dialogEditor" width="700px" top="0">
       <!-- 内层  账务选择 dialog -->
       <el-dialog
-        title="账务选择"
+       :title="$t('desk.customer_accountingChoose')"
         v-if="dialogChoose_editor"
         :visible.sync="dialogChoose_editor"
         append-to-body
@@ -194,20 +194,20 @@
         top="0"
       >
         <el-form :model="editorForm" inline ref="innerEditorForm" class="demo-ruleForm">
-          <el-form-item label="消费时间:">
+          <el-form-item :label="$t('desk.customer_spendTime') + ':'">
             <el-col :span="11">
               <el-date-picker
                 type="date"
-                placeholder="请选择日期"
+               :placeholder="$t('desk.serve_chooseDate')"
                 v-model="editorForm.startTime"
                 style="width: 100%;"
               ></el-date-picker>
             </el-col>
-            <el-col class="line" style="text-align:center" :span="2">至</el-col>
+            <el-col class="line" style="text-align:center" :span="2">{{ $t("desk.serve_to") }}</el-col>
             <el-col :span="11">
               <el-date-picker
                 type="date"
-                placeholder="请选择日期"
+               :placeholder="$t('desk.serve_chooseDate')"
                 v-model="editorForm.endTime"
                 style="width: 100%;"
               ></el-date-picker>
@@ -227,7 +227,7 @@
           <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="180"></el-table-column>
           <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
           <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="180"></el-table-column>
-          <el-table-column label="金额">
+          <el-table-column :label="$t('desk.customer_sum')">
             <template slot-scope="{row}">
               <div>{{row.consumePrice?row.consumePrice:0}}</div>
             </template>
@@ -242,7 +242,7 @@
       </el-dialog>
       <!-- 上面是内层dialog -->
       <el-form :model="editorForm" ref="outEditorForm" class="demo-ruleForm" inline>
-        <el-form-item label="单位:">
+        <el-form-item :label="$t('desk.book_unit') + ':'">
           <el-select
             v-model="editorForm.enterId"
             size="small"
@@ -253,12 +253,12 @@
             <el-option :label="itemInfo.enterName" :value="itemInfo.enterId"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="账套名称:" prop="name" style="margin-left:20px">
+        <el-form-item :label="$t('desk.customer_zhangName') + ':'" prop="name" style="margin-left:20px">
           <el-input v-model="editorForm.accountSetName" size="small" style="width:180px"></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="账务:">
-          <el-button plain size="small" @click="chooseAccount_editor" style="margin-left:5px">请选择</el-button>
+        <el-form-item :label="$t('desk.customer_accountingText') + ':'">
+          <el-button plain size="small" @click="chooseAccount_editor" style="margin-left:5px">{{$t('commons.placeChoose')}}</el-button>
         </el-form-item>
       </el-form>
       <el-table
@@ -269,7 +269,7 @@
         <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="160"></el-table-column>
         <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="100"></el-table-column>
         <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
-        <el-table-column label="消费金额	">
+        <el-table-column :label="$t('desk.customer_constPrice')">
           <template slot-scope="{row}">
             <div>{{row.consumePrice?row.consumePrice:0}}</div>
           </template>
@@ -281,7 +281,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div>总计：{{editorData.length}}笔账务，共计：{{totalPrice(editorData)}}元</div>
+      <div>{{ $t("desk.customer_aggregate") + ":" }}{{editorData.length}}{{$t('desk.customer_penNum')}}，{{$t('desk.customer_gongji')+':'}}{{totalPrice(editorData)}}{{$t('desk.serve_yen')}}</div>
       <div style="text-align:right" slot="footer" class="dialog-footer">
         <span>
           <el-button @click="dialogEditor_cancle">{{$t('commons.cancel')}}</el-button>
@@ -291,7 +291,7 @@
     </el-dialog>
     <!-- 账务处理（按账套）dialog -->
     <el-dialog
-      title="账务处理（按账套）"
+     :title="$t('desk.customer_dealWay')"
       v-if="settlementDialog"
       :visible.sync="settlementDialog"
       width="900px"
@@ -299,13 +299,13 @@
     >
       <div>
         <span>{{ $t("desk.customer_unitName") + ":" }}{{itemInfo.enterName}}</span>
-        <span style="margin-left:20px">账套名称: {{itemInfo.accountSetName}}</span>
+        <span style="margin-left:20px">{{$t('desk.customer_zhangName')+':'}}{{itemInfo.accountSetName}}</span>
       </div>
       <!-- 内层dailog -->
       <div>
         <!-- 内层  收款dialog -->
         <el-dialog
-          title="结算收款"
+           :title="$t('desk.customer_getMoney')"
           v-if="dialogVisible"
           :visible.sync="dialogVisible"
           append-to-body
@@ -318,16 +318,16 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">现金</el-radio>
-                <el-radio label="2">银行卡</el-radio>
+                <el-radio label="1">{{$t('desk.serve_cash')}}</el-radio>
+                <el-radio label="2">{{$t('desk.customer_bankCard')}}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="金额:">
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
               <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
               <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
             </el-form-item>
           </el-form>
@@ -340,7 +340,7 @@
         </el-dialog>
         <!-- 内层  免单dialog -->
         <el-dialog
-          title="结算收款"
+           :title="$t('desk.customer_getMoney')"
           v-if="dialogFree"
           :visible.sync="dialogFree"
           append-to-body
@@ -353,15 +353,15 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">免单</el-radio>
+                <el-radio label="1">{{$t('desk.customer_freeOfCharge')}}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="金额:">
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
               <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
               <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
             </el-form-item>
           </el-form>
@@ -374,7 +374,7 @@
         </el-dialog>
         <!-- 内层  预收款dialog -->
         <el-dialog
-          title="结算收款"
+           :title="$t('desk.customer_getMoney')"
           v-if="dialogAheadTime"
           :visible.sync="dialogAheadTime"
           append-to-body
@@ -387,18 +387,18 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">预收款</el-radio>
+                <el-radio label="1">{{$t('desk.customer_advance')}}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="预收款余额:">
+            <el-form-item :label="$t('desk.customer_advancePayment') + ':'">
               <span>300</span>
             </el-form-item>
-            <el-form-item label="金额:">
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
               <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
               <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
             </el-form-item>
           </el-form>
@@ -411,7 +411,7 @@
         </el-dialog>
         <!-- 内层  冲调dialog -->
         <el-dialog
-          title="冲调"
+           :title="$t('desk.customer_rich')"
           v-if="dialogChooseBook"
           :visible.sync="dialogChooseBook"
           append-to-body
@@ -433,7 +433,7 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="冲调原因:">
+            <el-form-item :label="$t('desk.customer_richReason') + ':'">
               <el-input v-model="inneraAccountForm.reason" style="width:280px"></el-input>
             </el-form-item>
           </el-form>
@@ -446,7 +446,7 @@
         </el-dialog>
         <!-- 内层  退款dialog -->
         <el-dialog
-          title="退款"
+          :title="$t('desk.customer_refund')"
           v-if="dialogRefoundMoney"
           :visible.sync="dialogRefoundMoney"
           append-to-body
@@ -459,16 +459,16 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">现金</el-radio>
-                <el-radio label="2">银行卡</el-radio>
+                <el-radio label="1">{{$t('desk.serve_cash')}}</el-radio>
+                <el-radio label="2">{{$t('desk.customer_bankCard')}}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="金额:">
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
               <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
               <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
             </el-form-item>
           </el-form>
@@ -498,15 +498,15 @@
             </template>
           </el-table-column>
         </el-table>
-        <div>总计：{{editorData.length}}笔账务，共计：{{-totalPrice_deal(editorData)}}元</div>
+        <div>{{ $t("desk.customer_aggregate") + ":" }}{{editorData.length}}{{$t('desk.customer_penNum')}}，{{$t('desk.customer_gongji')+':'}}{{-totalPrice_deal(editorData)}}{{$t('desk.serve_yen')}}</div>
         <div style="margin:15px 0">
-          <el-button type="primary" @click="dialogVisible=true">收款</el-button>
-          <el-button type="primary" @click="dialogRefoundMoney=true">退款</el-button>
-          <el-button type="primary" @click="dialogChooseBook = true">冲调</el-button>
-          <el-button type="primary" @click="dialogFree = true">免单</el-button>
-          <el-button type="primary" @click="dialogAheadTime = true">预收款</el-button>
+          <el-button type="primary" @click="dialogVisible=true">{{$t('desk.customer_collection')}}</el-button>
+          <el-button type="primary" @click="dialogRefoundMoney=true">{{$t('desk.customer_refund')}}</el-button>
+          <el-button type="primary" @click="dialogChooseBook = true">{{$t('desk.customer_rich')}}</el-button>
+          <el-button type="primary" @click="dialogFree = true">{{$t('desk.customer_freeOfCharge')}}</el-button>
+          <el-button type="primary" @click="dialogAheadTime = true">{{$t('desk.customer_advance')}}</el-button>
         </div>
-        <div>结算账单</div>
+        <div>{{$t('desk.customer_settleBill')}}</div>
         <el-table
           key="11"
           :data="tableData"
@@ -523,20 +523,20 @@
           </el-table-column>
           <el-table-column prop="name" :label="$t('desk.customer_businessProject')" width="180"></el-table-column>
           <el-table-column prop="name" :label="$t('desk.customer_businessDetail')" width="180"></el-table-column>
-          <el-table-column prop="address" label="金额"></el-table-column>
+          <el-table-column prop="address" :label="$t('desk.customer_sum')"></el-table-column>
           <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
               <el-button type="text" size="mini">{{$t('desk.customer_remove')}}</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top:5px">平衡数:0</div>
+        <div style="margin-top:5px">{{ $t("desk.customer_banlance") + ":" }}0</div>
       </div>
       <div slot="footer">
         <div class="dialog-footer">
           <span>
-            <el-button type="primary" @click="advanceDialog_sure('ruleForm')">增加账务</el-button>
-            <el-button type="primary" @click="advanceDialog_sure('ruleForm')">结 账</el-button>
+            <el-button type="primary" @click="advanceDialog_sure('ruleForm')">{{$t('desk.customer_addAccounting')}}</el-button>
+            <el-button type="primary" @click="advanceDialog_sure('ruleForm')">{{$t('desk.order_invoicing')}}</el-button>
             <el-button @click="settlementDialog = false">{{$t('commons.cancel')}}</el-button>
           </span>
         </div>
@@ -702,7 +702,7 @@ export default {
     //新增账套  点击确定
     dialogNew_sure() {
       if (this.accountList_add.length == 0) {
-        this.$message.error("请选择账务");
+        this.$message.error(this.$t('desk.customer_selectAccounting'));
       } else {
         if (this.addFrom.accountSetName) {
           for (let item of this.accountList_add) {
@@ -728,14 +728,14 @@ export default {
             }
           );
         } else {
-          this.$message.error("请输入账套名称");
+          this.$message.error(this.$t('commons.customer_inputAccountName'));
         }
       }
     },
     //编辑账套  点击确定
     dialogEditor_sure() {
       if (this.editorData.length == 0) {
-        this.$message.error("请选择账务");
+        this.$message.error(this.$t('desk.customer_selectAccounting'));
       } else {
         if (this.editorForm.accountSetName) {
           for (let item of this.editorData) {
@@ -761,7 +761,7 @@ export default {
             }
           );
         } else {
-          this.$message.error("请输入账套名称");
+          this.$message.error(this.$t('commons.customer_inputAccountName'));
         }
       }
     },
@@ -812,7 +812,7 @@ export default {
           }
         }
       } else {
-        this.$message.error("请选择账务");
+        this.$message.error(this.$t('desk.customer_selectAccounting'));
       }
     },
     //编辑 账务选择  点击确定
@@ -834,7 +834,7 @@ export default {
           }
         }
       } else {
-        this.$message.error("请选择账务");
+        this.$message.error(this.$t('desk.customer_selectAccounting'));
       }
     },
     //新增 点击账务选择 查询按钮
@@ -892,7 +892,7 @@ export default {
           }
         );
       } else {
-        this.$message.error("请选择单位");
+        this.$message.error(this.$t('desk.customer_selectUnit'));
       }
     },
     //点击编辑  请选择 按钮
@@ -914,7 +914,7 @@ export default {
           }
         );
       } else {
-        this.$message.error("请选择单位");
+        this.$message.error(this.$t('desk.customer_selectUnit'));
       }
     },
     //点击 撤销结账按钮

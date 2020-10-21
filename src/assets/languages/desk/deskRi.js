@@ -456,6 +456,26 @@ module.exports = {
     customer_undoCheckout: '詳細',
     customer_makeUpStatement: '未翻译词条',
     customer_newAccountSet: '未翻译词条',
+    customer_accountingChoose: '账务选择',
+    customer_constPrice: '合計金額 ',
+    customer_editorAccount: '未翻译词条',
+    customer_accountingText: '未翻译词条',
+    customer_zhangName: '未翻译词条',
+    customer_dealWay: '未翻译词条',
+    customer_richReason: '差引勘定理由',
+    customer_addAccounting: '未翻译词条',
+    customer_selectAccounting: '未翻译词条',
+    customer_inputAccountName: '未翻译词条',
+
+
+
+
+
+
+
+
+
+
 
 
 
