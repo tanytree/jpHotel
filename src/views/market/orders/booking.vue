@@ -56,7 +56,7 @@
                           </el-form-item>-->
                 </el-row>
                 <el-row>
-                    <el-form-item label="入住类型：">
+                    <el-form-item :label="$t('commons.checkInTypeDesc')">
                         <el-select v-model="searchForm.checkinType" class="width150">
                             <el-option
                                 :value="key"

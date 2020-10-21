@@ -333,7 +333,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="手机号码:">
+                  <el-form-item :label="$t('commons.mobile')">
                     <el-input
                       style="width: 246px"
                       v-model="checkInForm.content"
@@ -346,7 +346,7 @@
             <el-row>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="入住类型:" prop="name">
+                  <el-form-item :label="$t('commons.checkInTypeDesc')" prop="name">
                     <el-select
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"

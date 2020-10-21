@@ -68,7 +68,7 @@
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="入住类型" prop="checkinType">
+                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">
                     <el-select v-model="checkInForm.checkinType">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
                     </el-select>
@@ -89,7 +89,7 @@
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="入住类型" prop="checkinType" v-if="operCheckinType!='b3'">
+                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType" v-if="operCheckinType!='b3'">
                     <el-select v-model="checkInForm.checkinType">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
                     </el-select>

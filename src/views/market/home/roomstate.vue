@@ -493,7 +493,7 @@
                 <span>{{ currentRoom.createTime }}</span>
               </div>
               <div class="col">
-                入住类型：
+                  {{$t('commons.checkInTypeDesc')}}：
                 <span>{{
                   $t("commons.checkinType")[
                     (currentRoom.livingPersonList[0]

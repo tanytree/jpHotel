@@ -28,7 +28,7 @@
                     房价合计：{{detailData.checkIn.realPrice}}
                 </el-col>
                 <el-col :span="4">
-                    入住类型：{{F_checkinType(detailData.checkIn.checkinType)}}
+                    {{$t('commons.checkInTypeDesc')}}：{{F_checkinType(detailData.checkIn.checkinType)}}
                 </el-col>
                 <el-col :span="6">
                     外部订单号：{{detailData.checkIn.thirdOrdernum}}

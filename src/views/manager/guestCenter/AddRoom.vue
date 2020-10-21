@@ -270,11 +270,7 @@ export default {
         "roomType",
         "dongList",
     ],
-    computed: {
-        ...mapState({
-            user: (state) => state.user,
-        }),
-    },
+
     data() {
         return {
             files: [],

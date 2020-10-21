@@ -5,6 +5,7 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    checkInTypeDesc: '入住类型',
     mobile: '手机号码',
     operatingTime: '操作时间',
     moreOperating: '更多操作',

@@ -5,6 +5,10 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
+    nightAudit: {
+        reservationNumber: '预定单号',
+        checkInTime: '入住时间'
+    },
     //发展途径
     getWay: {
         "1": '线上',

@@ -11,7 +11,7 @@
     <div class="booking">
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small" @selection-change="handleSelectionChange">
-            <el-table-column prop="name" label="客人名称"></el-table-column>
+            <el-table-column prop="name" :label="$t('food.common.curstom_name')"></el-table-column>
             <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
             <el-table-column prop="checkinTime" label="入住时间" width="200" align="center"></el-table-column>
             <el-table-column prop="checkoutTime" label="预离时间" width="200" align="center"></el-table-column>

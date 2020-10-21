@@ -60,7 +60,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="checkinType"
-                    label="入住类型"
+                    :label="$t('commons.checkInTypeDesc')"
                     width="140"
                     align="center"
                 >
@@ -70,7 +70,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="reserveOrderNum"
-                    label="预定单号"
+                    :label="$t('frontOffice.nightAudit.reservationNumber')"
                     show-overflow-tooltip
                 ></el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="100">

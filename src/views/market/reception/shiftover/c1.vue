@@ -123,7 +123,7 @@
     <el-divider></el-divider>
     <el-row style="text-align: center">
       <elForm inline size="small">
-        <el-form-item label="入住类型：">
+        <el-form-item :label="$t('commons.checkInTypeDesc')">
           <el-select v-model="form.text">
             <el-option label="正常" value="1"></el-option>
             <el-option label="不正常" value="2"></el-option>

@@ -31,7 +31,7 @@
                 <p>{{$t('desk.book_orderSoutce')}}:：{{F_orderSource(checkinInfo.orderSource)}}</p>
             </el-col>
             <el-col :span="8">
-                <p>入住类型：{{F_checkinType(checkinInfo.checkinType)}}</p>
+                <p>$t('commons.checkInTypeDesc')：{{F_checkinType(checkinInfo.checkinType)}}</p>
             </el-col>
             <el-col :span="8">
                 <p>{{ $t('desk.nightAudit.arriveTime') }}：{{checkinInfo.checkinTime}} - {{checkinInfo.checkoutTime}}</p>
@@ -92,7 +92,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="入住类型" prop="checkinType">
+                    <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">
                         <el-select v-model="baseInfoChangeForm.checkinType" class="width150">
                             <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
                         </el-select>

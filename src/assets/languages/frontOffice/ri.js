@@ -5,10 +5,16 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
+
+    nightAudit: {
+        reservationNumber: '预定单号',
+        checkInTime: 'チェックイン時間'
+    },
+
     //发展途径
     getWay: {
-        "1": '线上',
-        "2": '线下'
+        "1": 'オンライン',
+        "2": 'オフライン'
     },
 
     // state 卡状态 1正常(已发卡) 2已挂失 3.待启用

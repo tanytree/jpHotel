@@ -19,7 +19,7 @@ export default {
     commons: commons,
     //总经理办公室
     boss: bossLang,
-    //前台部
+    //Dana 前台部
     frontOffice: frontOffice,
 
     //登录模块
