@@ -466,6 +466,7 @@ module.exports = {
     customer_addAccounting: '未翻译词条',
     customer_selectAccounting: '未翻译词条',
     customer_inputAccountName: '未翻译词条',
+    order_orderStatus: "状態",
 
 
 
