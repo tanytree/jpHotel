@@ -13,34 +13,34 @@
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small" @selection-change="handleSelectionChange">
             <el-table-column prop="name" :label="$t('food.common.curstom_name')"></el-table-column>
             <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
-            <el-table-column prop="checkinTime" :label="$t('frontOffice.nightAudit.checkInTime')" width="200" align="center"></el-table-column>
-            <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" width="200" align="center"></el-table-column>
-            <el-table-column prop="" label="房间号" width="140" align="center">
+            <el-table-column prop="checkinTime" :label="$t('frontOffice.nightAudit.checkInTime')" align="center"></el-table-column>
+            <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" align="center"></el-table-column>
+            <el-table-column prop="" :label="$t('desk.home_roomNum')" align="center">
                 <template slot-scope="{row}">
                     {{row.hotelCheckInRoom?row.hotelCheckInRoom.houseNum:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="guestType" label="客源类别" width="140" align="center">
+            <el-table-column prop="guestType" :label="$t('desk.home_customersCategory')" align="center">
                 <template slot-scope="{row}">
                     {{F_guestType(row.guestType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="总消费">
+            <el-table-column prop="" :label="$t('desk.customer_totalConsum')">
                 <template slot-scope="{row}">
                     {{row.memberObject?row.memberObject.consumeTotalPrice:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="state" label="在住状态" width="140" align="center">
+            <el-table-column prop="state" :label="$t('desk.order_liveState')"align="center">
                 <template slot-scope="{row}">
                     {{F_checkinState(row.state)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="billType" label="结账状态" width="140" align="center">
+            <el-table-column prop="billType" :label="$t('desk.order_checkStatus')" align="center">
                 <template slot-scope="{row}">
                     {{F_billType(row.billType)}}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('commons.operating')" width="140">
+            <el-table-column :label="$t('commons.operating')">
                 <template slot-scope="{row}">
                     <el-button type="text">{{$t('commons.detail')}}</el-button>
                 </template>

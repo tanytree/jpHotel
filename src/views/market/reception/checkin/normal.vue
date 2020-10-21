@@ -251,7 +251,7 @@
             <el-table v-loading="loading" :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;"
                       row-key="id" border :default-expand-all='true'
                       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-                <el-table-column label="房号/房型" width="100">
+                <el-table-column :label="$t('desk.customer_roomKind')" width="100">
                     <template slot-scope="scope">
                         {{scope.row.isChild?'':scope.row.houseNum}}
                         {{scope.row.isChild?'':scope.row.roomTypeName}}
@@ -326,7 +326,7 @@
             </el-row>
             <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column prop="name" label="房间号" width="200">
+                <el-table-column prop="name" :label="$t('desk.home_roomNum')" width="200">
                     <template slot-scope="{row}">
                         {{row.room?row.room.houseNum:''}}
                     </template>

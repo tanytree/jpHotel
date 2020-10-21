@@ -103,7 +103,7 @@
           style="width: 100%; margin-top: 10px"
           :header-cell-style="{ background: '#D9DDE2', color: '#606266' }"
         >
-          <el-table-column label="房型" width="180">
+          <el-table-column :label="$t('desk.home_roomType')" width="180">
             <template slot-scope="scope">
               <!-- <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
@@ -115,7 +115,7 @@
               <!-- <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
               <el-row>可订数：12</el-row>
-              <el-row>门市价：200</el-row>
+              <el-row>{{$t('manager.hk_doorPrice')}}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -124,7 +124,7 @@
               <!-- <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
               <el-row>可订数：12</el-row>
-              <el-row>门市价：200</el-row>
+              <el-row>{{ $t('manager.hk_doorPrice') }}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -134,7 +134,7 @@
               <!-- <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
               <el-row>可订数：12</el-row>
-              <el-row>门市价：200</el-row>
+              <el-row>{{ $t('manager.hk_doorPrice') }}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -143,7 +143,7 @@
               <!-- <i class="el-icon-time"></i> -->
               <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
               <el-row>可订数：12</el-row>
-              <el-row>门市价：200</el-row>
+              <el-row>{{ $t('manager.hk_doorPrice') }}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -170,7 +170,7 @@
           style="width: 100%; margin-top: 10px"
           :header-cell-style="{ background: '#D9DDE2', color: '#606266' }"
         >
-          <el-table-column label="房型" width="180">
+          <el-table-column :label="$t('desk.home_roomType')" width="180">
             <!-- <template slot-scope="scope">
                <i class="el-icon-time"></i>
                <span style="margin-left: 10px">{{ scope.row.date }}</span>

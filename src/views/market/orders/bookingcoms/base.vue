@@ -45,7 +45,7 @@
         <h4>预订房型</h4>
         <el-row>
             <el-col :span="24" v-for="(item,key,index) of roomTypeList" :key="index">
-                <p>{{checkKey(key)}}（{{item.length}}间）；房型：<el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
+                <p>{{checkKey(key)}}（{{item.length}}间）；{{$t('desk.home_roomType')}}：<el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
                 </p>
             </el-col>
             <!-- <el-col :span="24">

@@ -39,7 +39,7 @@
          <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column prop="enterName" label="员工姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" :label="$t('food.status')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" :label="$t('food.common.status')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="职位" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="所在部门" show-overflow-tooltip></el-table-column>

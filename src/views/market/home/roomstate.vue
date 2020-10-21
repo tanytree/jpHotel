@@ -341,7 +341,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="总消费" width="120">
+                <el-table-column :label="$t('desk.customer_totalConsum')" width="120">
                   <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
                       {{ scope.row.name }}
@@ -362,7 +362,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column :label="$t('food.status')" width="120">
+                <el-table-column :label="$t('food.common.status')" width="120">
                   <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
                       {{ scope.row.name }}
@@ -588,7 +588,7 @@
           <div class="inMsg">
             <div class="row">
               <div class="col">
-                门市价：
+                  {{ $t('manager.hk_doorPrice') }}：
                 <span>{{ currentRoom.extension }}</span>
               </div>
               <div class="col">
@@ -742,7 +742,7 @@
       <!-- <el-card>
                 <el-form>
                   <el-row>
-                    <span>房间号：A100</span>
+                    <span>{{$t('desk.home_roomNum')}}：A100</span>
                     <span>客人姓名：战三</span>
                     <span>房价：300</span>
                     <span>换房原因：</span>
@@ -811,7 +811,7 @@
       </el-card>-->
       <el-form size="small" inline class="inline">
         <el-form-item :label="$t('desk.home_roomNum') + ':'">A100</el-form-item>
-        <el-form-item label="客人姓名：">战三</el-form-item>
+        <el-form-item :label="$t('desk.order_guestName')">战三</el-form-item>
         <el-form-item label="房价：">300</el-form-item>
         <el-form-item label="换房原因:">
           <el-input></el-input>

@@ -53,7 +53,7 @@
                     width="140"
                     align="center"
                 ></el-table-column>
-                <el-table-column prop="state" :label="$t('food.status')" width="140" align="center">
+                <el-table-column prop="state" :label="$t('food.common.status')" width="140" align="center">
                     <template slot-scope="{ row }">
                         {{ checkState(row.state) }}
                     </template>

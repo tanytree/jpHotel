@@ -284,7 +284,7 @@
           }}
         </el-col>
         <el-col :span="8">
-          房间号：{{
+          {{$t('desk.home_roomNum')}}：{{
             itemInfo.hotelCheckInRoom ? itemInfo.hotelCheckInRoom.houseNum : ""
           }}
         </el-col>

@@ -160,8 +160,8 @@
 				</el-row>
 			</el-row>
 			<el-table ref="multipleTable" :data="detail_info.hotelPriceRoomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-				<el-table-column prop="houseName" label="房型"></el-table-column>
-				<el-table-column prop="marketPrice" label="门市价"></el-table-column>
+				<el-table-column prop="houseName" :label="$t('desk.home_roomType')"></el-table-column>
+				<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
 				<el-table-column prop="job_status" label="调价方式">
 					<template slot-scope="{row}">
 						<span>{{row.adjustType==1 ? '折扣率':'一口价'}}</span>

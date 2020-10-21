@@ -47,7 +47,7 @@
         ></el-table-column>
         <el-table-column
           prop="roomNum"
-          label="房间号"
+          :label="$t('desk.home_roomNum')"
           width="100"
         ></el-table-column>
         <el-table-column
@@ -122,7 +122,7 @@
             {{ invoiceDetail.name }}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px">
-            <span style="color: #888888">房间号:</span>
+            <span style="color: #888888">{{ $t('desk.home_roomNum') }}:</span>
             {{ invoiceDetail.roomNum }}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px">

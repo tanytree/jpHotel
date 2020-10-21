@@ -32,7 +32,7 @@
           </div>
           <div class="box_box">
             <div class="box_item">
-              客人姓名：
+                {{ $t('desk.order_guestName') }}：
               <span>{{ checkIn.name }}</span>
             </div>
             <div>

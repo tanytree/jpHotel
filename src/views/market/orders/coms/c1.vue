@@ -14,10 +14,10 @@
         <div class="customerInfo">
             <el-row class="row">
                 <el-col :span="4">
-                    入住方式：{{F_operCheckinType(detailData.checkIn.operCheckinType)}}
+                    {{ $t('desk.order_checkinWay') }}：{{F_operCheckinType(detailData.checkIn.operCheckinType)}}
                 </el-col>
                 <el-col :span="4">
-                    房型：{{currentRoom.roomTypeName}}
+                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
                 </el-col>
                 <el-col :span="12">
                     入离时间：{{detailData.checkIn.checkinTime}} - {{detailData.checkIn.checkoutTime}}
@@ -65,7 +65,7 @@
         </el-row>
         <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="name" label="房间号" width="200">
+            <el-table-column prop="name" :label="$t('desk.home_roomNum')" width="200">
                 <template slot-scope="{row}">
                     {{row.room?row.room.houseNum:''}}
                 </template>

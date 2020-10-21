@@ -8,7 +8,10 @@ module.exports = {
 
     nightAudit: {
         reservationNumber: '预定单号',
-        checkInTime: 'チェックイン時間'
+        checkInTime: 'チェックイン時間',
+        arriveTime: '到着時間',
+        todayPrice: '本日房价',
+        priceDifference: '房价差异',
     },
 
     //发展途径

@@ -7,7 +7,7 @@
         <el-form-item label="单位名称">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('food.status')">
+        <el-form-item :label="$t('food.common.status')">
           <el-select v-model="searchForm.state" class="width150">
             <el-option
               :value="key"
@@ -74,15 +74,15 @@
         <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
         <el-table-column prop="contactName" label="姓名" show-overflow-tooltip></el-table-column>
         <el-table-column prop="contactPhone" label="手机号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterStrategyId" label="价格策略" show-overflow-tooltip>
+        <el-table-column prop="enterStrategyId" :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>
           <template slot-scope="{row}">{{setStrategyName(row.enterStrategyId)}}</template>
         </el-table-column>
         <el-table-column prop="contractNum" label="合同号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
         <el-table-column prop="usedLimit" label="已用额度" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="totalLimit" label="总消费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="totalLimit" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="enterType" label="预收款余额" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="status" :label="$t('food.status')" show-overflow-tooltip>
+        <el-table-column prop="status" :label="$t('food.common.status')" show-overflow-tooltip>
           <template slot-scope="{row}">
             <div>{{row.state==1?'启用':'禁用'}}</div>
           </template>
@@ -157,7 +157,7 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="价格策略：" prop="enterStrategyId">
+              <el-form-item :label="$t('desk.customer_pricingStrategy')" prop="enterStrategyId">
                 <el-select v-model="addCompanyForm.enterStrategyId">
                   <el-option
                     :label="item.ruleName"
@@ -313,7 +313,7 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item label="价格策略：">
+              <el-form-item :label="$t('desk.customer_pricingStrategy')">
                 <el-select v-model="setBatchForm.enterStrategyId">
                   <el-option
                     :label="item.ruleName"
@@ -404,7 +404,7 @@
       >
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="价格策略" show-overflow-tooltip>
+        <el-table-column prop :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>
           <template slot-scope="{row}">
             <el-select v-model="row.enterStrategyId" size="mini">
               <el-option

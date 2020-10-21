@@ -93,7 +93,7 @@
                     <el-form-item label="手机号：">
                         <el-input v-model="searchForm.mobile" class="width150"></el-input>
                     </el-form-item>
-                    <el-form-item label="房型：">
+                    <el-form-item :label="$t('desk.home_roomType')">
                         <el-select v-model="searchForm.enterStatus" class="width150">
                             <el-option
                                 :label="item.houseName ? item.houseName : '未知'"
@@ -103,7 +103,7 @@
                             ></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="房间号：">
+                    <el-form-item :label="$t('desk.home_roomNum')">
                         <el-input v-model="searchForm.houseNum" class="width150"></el-input>
                     </el-form-item>
                 </el-row>
@@ -157,7 +157,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="operCheckinType"
-                    label="房型（房号）"
+                    :label="$t('desk.customer_roomKind')"
                     width="140"
                 >
                     <template slot-scope="{ row }">
@@ -184,7 +184,7 @@
                         {{ F_orderSource(row.orderSource) }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="" :label="$t('food.status')" width="100" align="center">
+                <el-table-column prop="" :label="$t('food.common.status')" width="100" align="center">
                     <template slot-scope="{ row }">
                         {{ F_reserveState(row.state) }}
                     </template>

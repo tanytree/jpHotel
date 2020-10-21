@@ -141,7 +141,7 @@
           ></el-table-column>
           <el-table-column
             prop="roomName"
-            label="房间号"
+            :label="$t('desk.home_roomNum')"
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column

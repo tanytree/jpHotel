@@ -20,11 +20,11 @@
             <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
             <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
         <el-row class="padding-tb-10">
-            <span>总消费：{{detailData.consumePrice}}</span>
+            <span>{{ $t('desk.customer_totalConsum') }}：{{detailData.consumePrice}}</span>
             <span style="padding: 0 12px;">总支付：{{detailData.payPrice}}</span>
             <span>应退：{{detailData.totalPrice}}</span>
         </el-row>

@@ -11,50 +11,50 @@
     <div class="booking">
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small" @selection-change="handleSelectionChange">
-            <el-table-column prop="index" label="房间号">
+            <el-table-column prop="index" :label="$t('desk.home_roomNum')">
                 <template slot-scope="{row}">
                     {{row.hotelCheckInRoom?row.hotelCheckInRoom.houseNum:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="房型">
+            <el-table-column prop="" :label="$t('desk.home_roomType')">
                 <template slot-scope="{row}">
                     {{roomTypeFn(row.hotelCheckInRoom?row.hotelCheckInRoom.roomTypeId:'')}}
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="客人姓名" ></el-table-column>
+            <el-table-column prop="name" :label="$t('desk.order_guestName')" ></el-table-column>
             <el-table-column prop="orderSource" :label="$t('desk.book_orderSoutce')" width="100" align="center">
                 <template slot-scope="{row}">
                     {{F_orderSource(row.orderSource)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="operCheckinType" label="入住类别" width="100" align="center">
+            <el-table-column prop="operCheckinType" :label="$t('manager.finance_kind')" width="100" align="center">
                 <template slot-scope="{row}">
                     {{F_operCheckinType(row.operCheckinType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="checkinTime" label="到店时间" width="180" align="center"></el-table-column>
+            <el-table-column prop="checkinTime" :label="$t('frontOffice.nightAudit.arriveTime')" width="180" align="center"></el-table-column>
             <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" width="180" align="center"></el-table-column>
-            <el-table-column prop="checkinType" label="入住方式" width="100" align="center">
+            <el-table-column prop="checkinType" :label="$t('desk.order_checkinWay')" width="100" align="center">
                 <template slot-scope="{row}">
                     {{F_checkinType(row.checkinType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="enterStatus" label="价格策略" width="120" align="center">
+            <el-table-column prop="enterStatus" :label="$t('desk.customer_pricingStrategy')" width="120" align="center">
                 <template slot-scope="{row}">
                     {{setStrategyName(row.salesId)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="本日房价" width="120" align="center">
+            <el-table-column prop="" :label="$t('frontOffice.nightAudit.todayPrice')" width="120" align="center">
                 <template slot-scope="{row}">
                     {{row.hotelCheckInRoom?row.hotelCheckInRoom.roomTodayPrice:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="门市价" width="120" align="center">
+            <el-table-column prop="" :label="$t('manager.hk_doorPrice')" width="120" align="center">
                 <template slot-scope="{row}">
                     {{row.hotelCheckInRoom?row.hotelCheckInRoom.roomMarkPrice:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="房价差异" width="100" align="center">
+            <el-table-column prop="" :label="$t('frontOffice.nightAudit.priceDifference')" width="100" align="center">
             </el-table-column>
             <el-table-column prop="" :label="$t('desk.customer_operator')" width="100" align="center">
             </el-table-column>

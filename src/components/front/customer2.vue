@@ -13,7 +13,7 @@
             border
             default-expand-all
             :tree-props="{children: 'personList', hasChildren: 'hasChildren'}">
-            <el-table-column label="房号/房型" width="200">
+            <el-table-column :label="$t('desk.customer_roomKind')"  width="200">
                 <template slot-scope="scope">
                 <span v-if="!scope.row.isChild">
                     {{scope.row.isChild?'':scope.row.houseNum}}

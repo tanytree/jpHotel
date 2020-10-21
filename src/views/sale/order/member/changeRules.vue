@@ -56,7 +56,7 @@
             </el-table-column>
             <el-table-column prop="updateName" label="修改人" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createName" label="创建人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" :label="$t('food.status')" show-overflow-tooltip>
+            <el-table-column prop="enterType" :label="$t('food.common.status')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <el-switch
                         style="margin-left:10px;"

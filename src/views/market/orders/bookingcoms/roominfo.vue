@@ -54,7 +54,7 @@
             <h4>客房信息</h4>
             <el-row>
                 <el-col :span="3">
-                    <p>房型：{{ currentRoom.roomTypeName }}</p>
+                    <p>{{$t('desk.home_roomType')}}：{{ currentRoom.roomTypeName }}</p>
                 </el-col>
                 <el-col :span="3">
                     <p>房价总计：{{ currentRoom.realPrice }}元</p>
@@ -129,7 +129,7 @@
                 style="width: 100%"
             >
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column prop="name" label="房间号" width="200">
+                <el-table-column prop="name" :label="$t('desk.home_roomNum')" width="200">
                     <template slot-scope="{ row }">
                         {{ row.room ? row.room.houseNum : "" }}
                     </template>

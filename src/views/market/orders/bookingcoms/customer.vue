@@ -19,13 +19,13 @@
                 <span>{{F_sex(row.checkIn.sex)}}</span>
             </template>
         </el-table-column>
-        <el-table-column :label="$t('food.status')">
+        <el-table-column :label="$t('food.common.status')">
             <template slot-scope="{row}">
                 <el-button type="text" v-if="row.inRoomList && row.inRoomList.personList > 0">点击入住</el-button>
                 <el-button type="text" v-else>点击排房</el-button>
             </template>
         </el-table-column>
-        <el-table-column label="房间号房型" show-overflow-tooltip>
+        <el-table-column :label="$t('desk.home_roomNum') + $t('desk.home_roomType')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 -
             </template>
@@ -55,7 +55,7 @@
     <el-table v-else v-loading="loading" :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;"
               row-key="id" border :default-expand-all='true'
               :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-        <el-table-column label="房号/房型" width="100">
+        <el-table-column :label="$t('desk.customer_roomKind')" width="100">
             <template slot-scope="scope">
                 {{scope.row.isChild?'':scope.row.houseNum}}
                 {{scope.row.isChild?'':scope.row.roomTypeName}}

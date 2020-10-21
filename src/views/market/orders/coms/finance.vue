@@ -43,14 +43,14 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="createTime" label="消费时间" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
         <el-table-column label="账务项目" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{F_priceType(row.priceType)}}
             </template>
         </el-table-column>
         <el-table-column label="付款" prop="payPrice"></el-table-column>
-        <el-table-column prop="state" :label="$t('food.status')" show-overflow-tooltip>
+        <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{row.state==1?'未结':'已结'}}
             </template>
@@ -160,10 +160,10 @@
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
-                    房型：{{currentRoom.roomTypeName}}
+                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
                 </el-col>
                 <el-col :span="8">
-                    房间号：{{currentRoom.houseNum}}
+                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
                     入住人：{{currentRoom.personList && currentRoom.personList.length && currentRoom.personList[0].name}}
@@ -172,10 +172,10 @@
             <el-row v-else>
                 <template v-if="detailData&&detailData.inRoomList">
                     <el-col :span="8">
-                        房型：{{detailData.inRoomList[0].roomTypeName}}
+                        {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
                     </el-col>
                     <el-col :span="8">
-                        房间号：{{detailData.inRoomList[0].houseNum}}
+                        {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
                         入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
@@ -210,10 +210,10 @@
         <el-form :model="consumeOperForm" ref="knot" :rules="rules" size="mini" label-width="20px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
-                    房型：{{currentRoom.roomTypeName}}
+                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
                 </el-col>
                 <el-col :span="8">
-                    房间号：{{currentRoom.houseNum}}
+                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
                     入住人：{{currentRoom.personList[0] && currentRoom.personList[0].name}}
@@ -222,10 +222,10 @@
             <el-row v-else>
                 <template v-if="detailData&&detailData.inRoomList">
                     <el-col :span="8">
-                        房型：{{detailData.inRoomList[0].roomTypeName}}
+                        {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
                     </el-col>
                     <el-col :span="8">
-                        房间号：{{detailData.inRoomList[0].houseNum}}
+                        {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
                         入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList
@@ -250,10 +250,10 @@
         <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
-                    房型：{{currentRoom.roomTypeName}}
+                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
                 </el-col>
                 <el-col :span="8">
-                    房间号：{{currentRoom.houseNum}}
+                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
                     入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
@@ -304,10 +304,10 @@
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
             <el-row v-if="currentRoom">
                 <el-col :span="8">
-                    房型：{{currentRoom.roomTypeName}}
+                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
                 </el-col>
                 <el-col :span="8">
-                    房间号：{{currentRoom.houseNum}}
+                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
                     入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
@@ -316,10 +316,10 @@
             <el-row v-else>
                 <template v-if="detailData&&detailData.inRoomList">
                     <el-col :span="8">
-                        房型：{{detailData.inRoomList[0].roomTypeName}}
+                        {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
                     </el-col>
                     <el-col :span="8">
-                        房间号：{{detailData.inRoomList[0].houseNum}}
+                        {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
                         入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
@@ -338,7 +338,7 @@
                 <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="roomName" label="房间号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             </el-table>
             <el-form-item style="margin-top: 10px;" label="冲调方式：" prop="priceType">
