@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-12 20:28:06
+ * @LastEditTime: 2020-10-21 16:37:03
  * @FilePath: \jiudian\src\views\market\orders\coms\invoicing.vue
  -->
 
@@ -100,10 +100,12 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="openInvoiceShow = false">{{ $t('commons.cancel') }}</el-button>
-        <el-button type="primary" @click="openInvoiceSubmit('openInvoice')"
-          {{ $t('commons.confirm') }}/el-button
-        >
+        <el-button @click="openInvoiceShow = false">{{
+          $t("commons.cancel")
+        }}</el-button>
+        <el-button type="primary" @click="openInvoiceSubmit('openInvoice')">{{
+          $t("commons.confirm")
+        }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -119,7 +121,7 @@ export default {
         checkInId: "",
         consumePrice: 0,
         invoicePrice: 0,
-          roomNum: '-',
+        roomNum: "-",
         companyName: "",
         projectName: "",
         prices: "",

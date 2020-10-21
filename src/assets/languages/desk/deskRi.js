@@ -467,6 +467,31 @@ module.exports = {
     customer_selectAccounting: '未翻译词条',
     customer_inputAccountName: '未翻译词条',
     order_orderStatus: "状態",
+    order_dateList: "到着予定",
+    order_nextWeek: "来週",
+    order_bookDate: "未翻译词条",
+    order_teamName: "団体名",
+    order_bookOrderNum: "予約番号",
+    order_outOrderNum: "未翻译词条",
+    order_bookTime: "未翻译词条",
+    order_day: "未翻译词条",
+    order_totalRoomPrice: "未翻译词条",
+    order_deposit: "デポジット",
+    order_accept: "確認",
+    order_restore: "予約復活",
+    order_accountingService: "未翻译词条",
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

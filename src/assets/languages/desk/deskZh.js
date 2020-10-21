@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-21 16:28:21
+ * @LastEditTime: 2020-10-21 17:43:19
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -197,19 +197,19 @@ module.exports = {
     order_totalPrice: "总价",
     order_compensationDate: "赔偿时间",
     order_orderStatus: "订单状态",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
+    order_dateList: "预抵日期",
+    order_nextWeek: "下周",
+    order_bookDate: "预订日期",
+    order_teamName: "团队名称",
+    order_bookOrderNum: "预订单号",
+    order_outOrderNum: "外部单号",
+    order_bookTime: "预订时间",
+    order_day: "天",
+    order_totalRoomPrice: "总房费",
+    order_deposit: "订金",
+    order_accept: "接受",
+    order_restore: "恢复",
+    order_accountingService: "账务服务",
     order_: "",
     order_: "",
     order_: "",
