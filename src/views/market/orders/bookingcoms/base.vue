@@ -87,7 +87,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="预离时间：" class="">
+                    <el-form-item :label="$t('desk.order_departureTime')" class="">
                         {{baseInfoChangeForm.checkoutTime}}
                     </el-form-item>
                 </el-col>

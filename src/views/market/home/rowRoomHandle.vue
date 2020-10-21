@@ -22,7 +22,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="预离时间：" prop="checkoutTime">
+                        <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
                             <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
                         </el-form-item>
                     </el-col>

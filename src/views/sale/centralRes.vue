@@ -40,7 +40,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="预离时间:" prop="date1">
+            <el-form-item :label="$t('desk.order_departureTime')" prop="date1">
               <el-date-picker
                 v-model="form.endTime"
                 value-format="yyyy-MM-dd"
@@ -296,7 +296,7 @@
 
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="预离时间:" prop="date1">
+                  <el-form-item :label="$t('desk.order_departureTime')" prop="date1">
                     <el-date-picker
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"

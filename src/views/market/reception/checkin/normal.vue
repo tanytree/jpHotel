@@ -31,10 +31,10 @@
                     <el-input v-model="checkInForm.idcard"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType=='a1'">
-                    <el-form-item label="入住时间：" prop="checkinTime">
+                    <el-form-item :label="$t('frontOffice.nightAudit.checkInTime')" prop="checkinTime">
                         <el-date-picker v-model="checkInForm.checkinTime" disabled type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="startTime"></el-date-picker>
                     </el-form-item>
-                    <el-form-item label="预离时间：" prop="checkoutTime">
+                    <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
                         <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" placeholder="选择日期" :picker-options="leaveTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="endTimeChange"></el-date-picker>
                     </el-form-item>
                 </template>
@@ -110,7 +110,7 @@
                 <el-form-item label="入住天数：" prop="checkinDays" v-if="operCheckinType=='b1'">
                     <el-input-number v-model="checkInForm.checkinDays" :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
                 </el-form-item>
-                <el-form-item label="预离时间：" prop="checkoutTime">
+                <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
                     <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="保留时间：" prop="keepTime">

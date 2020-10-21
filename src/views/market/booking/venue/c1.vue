@@ -59,7 +59,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="预离时间：">
+                        <el-form-item :label="$t('desk.order_departureTime')">
                             <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                     </div>

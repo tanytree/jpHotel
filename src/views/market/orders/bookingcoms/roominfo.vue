@@ -66,7 +66,7 @@
                     <p>预抵时间：{{ checkinInfo.checkinTime }}</p>
                 </el-col>
                 <el-col :span="5">
-                    <p>预离时间：{{ checkinInfo.checkoutTime }}</p>
+                    <p>{{ $t('desk.order_departureTime') }}：{{ checkinInfo.checkoutTime }}</p>
                 </el-col>
             </el-row>
         </el-row>

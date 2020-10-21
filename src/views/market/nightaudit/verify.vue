@@ -33,7 +33,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="checkinTime" label="到店时间" width="180" align="center"></el-table-column>
-            <el-table-column prop="checkoutTime" label="预离时间" width="180" align="center"></el-table-column>
+            <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" width="180" align="center"></el-table-column>
             <el-table-column prop="checkinType" label="入住方式" width="100" align="center">
                 <template slot-scope="{row}">
                     {{F_checkinType(row.checkinType)}}
