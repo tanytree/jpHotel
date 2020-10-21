@@ -423,6 +423,37 @@ module.exports = {
     customer_constDate: '未翻译词条',
     customer_noSettlement: '未収',
     customer_outstandingTotalAmount: '未収合計',
+    customer_totalCreditBalance: '利用可能額',
+    customer_paymentMethod: '未翻译词条',
+    customer_hasSettled: '精算済',
+    customer_freeOfCharge: '無料',
+    customer_billSettlement: '会計精算',
+    customer_chooseAccount: '未翻译词条',
+    customer_selectAccountSet: '未翻译词条',
+    customer_getMoney: '未翻译词条',
+    customer_accountName: '未翻译词条',
+    customer_amountMoney: '未翻译词条',
+    customer_creativeTime: '注文時間',
+    customer_nameAgroup: '未翻译词条',
+    customer_roomNumber: '部屋番号',
+    customer_settleBill: '未翻译词条',
+    customer_rich: '相殺調整',
+    customer_businessProject: '業務項目',
+    customer_selectText: '未翻译词条',
+    customer_businessDetail: '未翻译词条',
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

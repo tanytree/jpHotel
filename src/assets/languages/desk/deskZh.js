@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-20 18:02:02
+ * @LastEditTime: 2020-10-20 22:43:10
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -431,24 +431,24 @@ module.exports = {
     customer_constDate: '消费日期',
     customer_noSettlement: '未结算',
     customer_outstandingTotalAmount: '未结总额',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
+    customer_totalCreditBalance: '挂账剩余总额',
+    customer_paymentMethod: '收款方式',
+    customer_hasSettled: '已结算',
+    customer_freeOfCharge: '免单',
+    customer_billSettlement: '账务结算',
+    customer_chooseAccount: '选择账务',
+    customer_selectAccountSet: '选择账套',
+    customer_getMoney: '结算收款',
+    customer_accountName: '账套名',
+    customer_amountMoney: '结算金额',
+    customer_creativeTime: '创建时间',
+    customer_nameAgroup: '姓名/团队',
+    customer_roomNumber: '房号',
+    customer_settleBill: '结算账单',
+    customer_rich: '冲调',
+    customer_businessProject: '营业项目',
+    customer_selectText: '选择',
+    customer_businessDetail: '业务详情',
     customer_: '',
     customer_: '',
     customer_: '',

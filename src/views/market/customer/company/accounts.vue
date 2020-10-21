@@ -11,11 +11,11 @@
         v-model="searchForm"
         label-width="80px"
       >
-        <el-form-item  :label="$t('desk.customer_buyerUnit')">
+        <el-form-item :label="$t('desk.customer_buyerUnit')">
           <el-select v-model="searchForm.enterId" class="width150">
-           <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
-              v-for="(item,index) in unitList"
+              v-for="(item, index) in unitList"
               :key="index"
               :label="item.enterName"
               :value="item.id"
@@ -37,87 +37,130 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creditLimit" :label="$t('desk.customer_paymentAmount')" show-overflow-tooltip></el-table-column>
-        <el-table-column :label="$t('desk.customer_noSettlement')" align="center">
-          <el-table-column :label="$t('desk.customer_totalPayment')" width="120">
-            <template slot-scope="{row}">
-              <div>{{row.finance.onAccountTotal?row.finance.onAccountTotal:0}}</div>
+        <el-table-column
+          prop="enterName"
+          :label="$t('desk.customer_unitName')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="creditLimit"
+          :label="$t('desk.customer_paymentAmount')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :label="$t('desk.customer_noSettlement')"
+          align="center"
+        >
+          <el-table-column
+            :label="$t('desk.customer_totalPayment')"
+            width="120"
+          >
+            <template slot-scope="{ row }">
+              <div>
+                {{
+                  row.finance.onAccountTotal ? row.finance.onAccountTotal : 0
+                }}
+              </div>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('desk.customer_outstandingTotalAmount')" width="120">
-            <template slot-scope="{row}">
-              <div>{{row.finance.noSettlementTotal?row.finance.onAccountTotal:0}}</div>
+          <el-table-column
+            :label="$t('desk.customer_outstandingTotalAmount')"
+            width="120"
+          >
+            <template slot-scope="{ row }">
+              <div>
+                {{
+                  row.finance.noSettlementTotal ? row.finance.onAccountTotal : 0
+                }}
+              </div>
             </template>
           </el-table-column>
-          <el-table-column label="挂账剩余总额" width="120">
-            <template slot-scope="{row}">
-              <div>{{row.creditLimit - row.finance.noSettlementTotal}}</div>
+          <el-table-column
+            :label="$t('desk.customer_totalCreditBalance')"
+            width="120"
+          >
+            <template slot-scope="{ row }">
+              <div>{{ row.creditLimit - row.finance.noSettlementTotal }}</div>
             </template>
           </el-table-column>
-          <el-table-column label="预收款余额" width="120">
-            <template slot-scope="{row}">
-              <div>{{row.totalLimit?row.totalLimit:0}}</div>
+          <el-table-column
+            :label="$t('desk.customer_advancePayment')"
+            width="120"
+          >
+            <template slot-scope="{ row }">
+              <div>{{ row.totalLimit ? row.totalLimit : 0 }}</div>
             </template>
           </el-table-column>
         </el-table-column>
-        <el-table-column label="已结算" align="center">
-          <el-table-column label="已结算" width="80">
-            <template slot-scope="{row}">
-              <div>{{hasSettled(row)}}</div>
+        <el-table-column :label="$t('desk.customer_hasSettled')" align="center">
+          <el-table-column :label="$t('desk.customer_hasSettled')" width="80">
+            <template slot-scope="{ row }">
+              <div>{{ hasSettled(row) }}</div>
             </template>
           </el-table-column>
-          <el-table-column label="现金" width="80">
-            <template slot-scope="{row}">
-              <div v-for="(item,index) in row.finance.typeList" :key="index">
-                <div v-if="item.payType==1">{{item.payPrice}}</div>
+          <el-table-column :label="$t('desk.serve_cash')" width="80">
+            <template slot-scope="{ row }">
+              <div v-for="(item, index) in row.finance.typeList" :key="index">
+                <div v-if="item.payType == 1">{{ item.payPrice }}</div>
                 <div v-else>0</div>
               </div>
-              <div v-if="row.finance.typeList.length==0">0</div>
+              <div v-if="row.finance.typeList.length == 0">0</div>
             </template>
           </el-table-column>
-          <el-table-column label="银行卡" width="80">
-            <template slot-scope="{row}">
-              <div v-for="(item,index) in row.finance.typeList" :key="index">
-                <div v-if="item.payType==2">{{item.payPrice}}</div>
+          <el-table-column :label="$t('desk.customer_bankCard')" width="80">
+            <template slot-scope="{ row }">
+              <div v-for="(item, index) in row.finance.typeList" :key="index">
+                <div v-if="item.payType == 2">{{ item.payPrice }}</div>
                 <div v-else>0</div>
               </div>
-              <div v-if="row.finance.typeList.length==0">0</div>
+              <div v-if="row.finance.typeList.length == 0">0</div>
             </template>
           </el-table-column>
-          <el-table-column label="预收款" width="80">0</el-table-column>
-          <el-table-column label="微信" width="80">
-            <template slot-scope="{row}">
-              <div v-for="(item,index) in row.finance.typeList" :key="index">
-                <div v-if="item.payType==4">{{item.payPrice}}</div>
+          <el-table-column :label="$t('desk.customer_advance')" width="80"
+            >0</el-table-column
+          >
+          <el-table-column :label="$t('desk.serve_wechat')" width="80">
+            <template slot-scope="{ row }">
+              <div v-for="(item, index) in row.finance.typeList" :key="index">
+                <div v-if="item.payType == 4">{{ item.payPrice }}</div>
                 <div v-else>0</div>
               </div>
-              <div v-if="row.finance.typeList.length==0">0</div>
+              <div v-if="row.finance.typeList.length == 0">0</div>
             </template>
           </el-table-column>
-          <el-table-column label="支付宝" width="80">
-            <template slot-scope="{row}">
-              <div v-for="(item,index) in row.finance.typeList" :key="index">
-                <div v-if="item.payType==3">{{item.payPrice}}</div>
+          <el-table-column :label="$t('desk.serve_alipay')" width="80">
+            <template slot-scope="{ row }">
+              <div v-for="(item, index) in row.finance.typeList" :key="index">
+                <div v-if="item.payType == 3">{{ item.payPrice }}</div>
                 <div v-else>0</div>
               </div>
-              <div v-if="row.finance.typeList.length==0">0</div>
+              <div v-if="row.finance.typeList.length == 0">0</div>
             </template>
           </el-table-column>
-          <el-table-column label="免单" width="80">
-            <template slot-scope="{row}">
-              <div v-for="(item,index) in row.finance.typeList" :key="index">
-                <div v-if="item.payType==6">{{item.payPrice}}</div>
+          <el-table-column :label="$t('desk.customer_freeOfCharge')" width="80">
+            <template slot-scope="{ row }">
+              <div v-for="(item, index) in row.finance.typeList" :key="index">
+                <div v-if="item.payType == 6">{{ item.payPrice }}</div>
                 <div v-else>0</div>
               </div>
-              <div v-if="row.finance.typeList.length==0">0</div>
+              <div v-if="row.finance.typeList.length == 0">0</div>
             </template>
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
+<<<<<<< Updated upstream
           <template slot-scope="{row}">
             <el-button type="text" @click="advancePayments(row)" size="mini">预收款</el-button>
             <el-button type="text" @click="settlement(row)" size="mini">账务结算</el-button>
+=======
+          <template slot-scope="{ row }">
+            <el-button type="text" @click="advancePayments(row)" size="mini">{{
+              $t("desk.customer_advance")
+            }}</el-button>
+            <el-button type="text" @click="settlement(row)" size="mini">{{
+              $t("desk.customer_billSettlement")
+            }}</el-button>
+>>>>>>> Stashed changes
           </template>
         </el-table-column>
       </el-table>
@@ -133,7 +176,13 @@
       </div>
     </div>
     <!-- 预收款弹窗 -->
-    <el-dialog title="预收款" v-if="advanceDialog" :visible.sync="advanceDialog" width="600px" top="0">
+    <el-dialog
+      :title="$t('desk.customer_advance')"
+      v-if="advanceDialog"
+      :visible.sync="advanceDialog"
+      width="600px"
+      top="0"
+    >
       <el-form
         :model="advanceRuleForm"
         :rules="rules"
@@ -142,69 +191,92 @@
         class="demo-ruleForm"
         inline
       >
-        <el-form-item :label="$t('desk.customer_unitName')+':'">{{itemInfo.enterName}}</el-form-item>
-        <el-form-item label="预收款余额:">{{itemInfo.totalLimit}}</el-form-item>
+        <el-form-item :label="$t('desk.customer_unitName') + ':'">{{
+          itemInfo.enterName
+        }}</el-form-item>
+        <el-form-item :label="$t('desk.customer_advancePayment') + ':'">{{
+          itemInfo.totalLimit
+        }}</el-form-item>
 
-        <el-form-item label="支付方式:">
+        <el-form-item :label="$t('desk.customer_payType') + ':'">
           <el-radio-group v-model="advanceRuleForm.payType">
-            <el-radio label="1">现金</el-radio>
-            <el-radio label="2">银行卡</el-radio>
-            <el-radio label="5">支票</el-radio>
-            <el-radio label="4">微信</el-radio>
-            <el-radio label="3">支付宝</el-radio>
+            <el-radio label="1">{{ $t("desk.serve_cash") }}</el-radio>
+            <el-radio label="2">{{ $t("desk.customer_bankCard") }}</el-radio>
+            <el-radio label="5">{{ $t("desk.customer_check") }}</el-radio>
+            <el-radio label="4">{{ $t("desk.serve_wechat") }}</el-radio>
+            <el-radio label="3">{{ $t("desk.serve_alipay") }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="金额:" prop="payPrice">
-          <el-input size="small" style="width:360px" v-model="advanceRuleForm.payPrice"></el-input>
+        <el-form-item :label="$t('desk.customer_sum') + ':'" prop="payPrice">
+          <el-input
+            size="small"
+            style="width: 360px"
+            v-model="advanceRuleForm.payPrice"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="备注:">
-          <el-input type="textarea" style="width:360px" v-model="advanceRuleForm.remark"></el-input>
+        <el-form-item :label="$t('desk.home_note') + ':'">
+          <el-input
+            type="textarea"
+            style="width: 360px"
+            v-model="advanceRuleForm.remark"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
         <div class="dialog-footer">
-          <el-button @click="advanceDialog = false">取 消</el-button>
-          <el-button type="primary" @click="advanceDialog_sure('advanceRuleForm')">确 定</el-button>
+          <el-button @click="advanceDialog = false">{{
+            $t("commons.cancel")
+          }}</el-button>
+          <el-button
+            type="primary"
+            @click="advanceDialog_sure('advanceRuleForm')"
+            >{{ $t("commons.confirm") }}</el-button
+          >
         </div>
       </div>
     </el-dialog>
     <!-- 账务结算dialog -->
     <el-dialog
-      title="账务结算"
+      :title="$t('desk.customer_billSettlement')"
       v-if="settlementDialog"
       :visible.sync="settlementDialog"
       width="900px"
       top="0"
     >
       <div>
-        <span>{{$t('desk.customer_unitName')+':'}}蓝海一号</span>
-        <span style="margin-left:20px">
-          选择账务：
+        <span>{{ $t("desk.customer_unitName") + ":" }}蓝海一号</span>
+        <span style="margin-left: 20px">
+          {{ $t("desk.customer_chooseAccount") + ":" }}
           <el-radio-group v-model="choose">
-            <el-radio label="1">选择账务</el-radio>
-            <el-radio label="2">选择账套</el-radio>
+            <el-radio label="1">{{
+              $t("desk.customer_chooseAccount")
+            }}</el-radio>
+            <el-radio label="2">{{
+              $t("desk.customer_selectAccountSet")
+            }}</el-radio>
           </el-radio-group>
         </span>
         <el-input
-          v-if="choose==2"
+          v-if="choose == 2"
           v-model="input"
           :disabled="true"
           size="mini"
-          style="width:120px;margin-left:30px"
+          style="width: 120px; margin-left: 30px"
         ></el-input>
         <el-button
-          v-if="choose==2"
+          v-if="choose == 2"
           @click="dialogChooseBook = true"
           plain
           size="small"
-          style="margin-left:5px"
-        >选择账套</el-button>
+          style="margin-left: 5px"
+          >{{ $t("desk.customer_selectAccountSet") }}</el-button
+        >
       </div>
       <div>
         <!-- 内层dailog -->
         <!-- 内层  收款dialog -->
         <el-dialog
-          title="结算收款"
+          :title="$t('desk.customer_getMoney')"
           v-if="dialogVisible"
           :visible.sync="dialogVisible"
           append-to-body
@@ -217,29 +289,42 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">现金</el-radio>
-                <el-radio label="2">银行卡</el-radio>
+                <el-radio label="1">{{ $t("desk.serve_cash") }}</el-radio>
+                <el-radio label="2">{{
+                  $t("desk.customer_bankCard")
+                }}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="金额:">
-              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
+              <el-input
+                v-model="inneraAccountForm.payPrice"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
-              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
+              <el-input
+                type="textarea"
+                v-model="inneraAccountForm.remark"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
           </el-form>
-          <div style="text-align:right" slot="footer" class="dialog-footer">
+          <div style="text-align: right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogVisible')">确 认</el-button>
+              <el-button @click="dialogVisible = false">{{
+                $t("commons.cancel")
+              }}</el-button>
+              <el-button type="primary" @click="sureRefund('dialogVisible')">{{
+                $t("commons.confirm")
+              }}</el-button>
             </span>
           </div>
         </el-dialog>
         <!-- 内层  免单dialog -->
         <el-dialog
-          title="结算收款"
+          :title="$t('desk.customer_getMoney')"
           v-if="dialogFree"
           :visible.sync="dialogFree"
           append-to-body
@@ -252,28 +337,41 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">免单</el-radio>
+                <el-radio label="1">{{
+                  $t("desk.customer_freeOfCharge")
+                }}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="金额:">
-              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
+              <el-input
+                v-model="inneraAccountForm.payPrice"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
-              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
+              <el-input
+                type="textarea"
+                v-model="inneraAccountForm.remark"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
           </el-form>
-          <div style="text-align:right" slot="footer" class="dialog-footer">
+          <div style="text-align: right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogFree = false">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogFree')">确 认</el-button>
+              <el-button @click="dialogFree = false">{{
+                $t("commons.cancel")
+              }}</el-button>
+              <el-button type="primary" @click="sureRefund('dialogFree')">{{
+                $t("commons.confirm")
+              }}</el-button>
             </span>
           </div>
         </el-dialog>
         <!-- 内层  预收款dialog -->
         <el-dialog
-          title="结算收款"
+          :title="$t('desk.customer_getMoney')"
           v-if="dialogAheadTime"
           :visible.sync="dialogAheadTime"
           append-to-body
@@ -286,31 +384,44 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">预收款</el-radio>
+                <el-radio label="1">{{ $t("desk.customer_advance") }}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="预收款余额:">
+            <el-form-item :label="$t('desk.customer_advancePayment') + ':'">
               <span>300</span>
             </el-form-item>
-            <el-form-item label="金额:">
-              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
+              <el-input
+                v-model="inneraAccountForm.payPrice"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
-              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
+              <el-input
+                type="textarea"
+                v-model="inneraAccountForm.remark"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
           </el-form>
-          <div style="text-align:right" slot="footer" class="dialog-footer">
+          <div style="text-align: right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogAheadTime = false">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogAheadTime')">确 认</el-button>
+              <el-button @click="dialogAheadTime = false">{{
+                $t("commons.cancel")
+              }}</el-button>
+              <el-button
+                type="primary"
+                @click="sureRefund('dialogAheadTime')"
+                >{{ $t("commons.confirm") }}</el-button
+              >
             </span>
           </div>
         </el-dialog>
         <!-- 内层  选择账套dialog -->
         <el-dialog
-          title="选择账套"
+          :title="$t('desk.customer_selectAccountSet')"
           v-if="dialogChooseBook"
           :visible.sync="dialogChooseBook"
           append-to-body
@@ -320,24 +431,42 @@
           <el-table
             :data="tableData"
             height="250"
-            :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+            :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
           >
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="date" label="账套名" width="180"></el-table-column>
-            <el-table-column prop="address" label="挂账金额"></el-table-column>
-            <el-table-column prop="name" label="结算金额" width="180"></el-table-column>
-            <el-table-column prop="address" label="创建时间"></el-table-column>
+            <el-table-column
+              prop="date"
+              :label="$t('desk.customer_accountName')"
+              width="180"
+            ></el-table-column>
+            <el-table-column
+              prop="address"
+              :label="$t('desk.customer_amountPrice')"
+            ></el-table-column>
+            <el-table-column
+              prop="name"
+              :label="$t('desk.customer_amountMoney')"
+              width="180"
+            ></el-table-column>
+            <el-table-column
+              prop="address"
+              :label="$t('desk.customer_creativeTime')"
+            ></el-table-column>
           </el-table>
-          <div style="text-align:right" slot="footer" class="dialog-footer">
+          <div style="text-align: right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogChooseBook = false">取 消</el-button>
-              <el-button type="primary" @click="dialogChooseBook = false">确 认</el-button>
+              <el-button @click="dialogChooseBook = false">{{
+                $t("commons.cancel")
+              }}</el-button>
+              <el-button type="primary" @click="dialogChooseBook = false">{{
+                $t("commons.confirm")
+              }}</el-button>
             </span>
           </div>
         </el-dialog>
         <!-- 内层  退款dialog -->
         <el-dialog
-          title="退款"
+          :title="$t('desk.customer_refund')"
           v-if="dialogRefoundMoney"
           :visible.sync="dialogRefoundMoney"
           append-to-body
@@ -350,23 +479,38 @@
             label-width="100px"
             class="demo-ruleForm"
           >
-            <el-form-item label="收款方式:">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'">
               <el-radio-group v-model="inneraAccountForm.payType">
-                <el-radio label="1">现金</el-radio>
-                <el-radio label="2">银行卡</el-radio>
+                <el-radio label="1">{{ $t("desk.serve_cash") }}</el-radio>
+                <el-radio label="2">{{
+                  $t("desk.customer_bankCard")
+                }}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="金额:">
-              <el-input v-model="inneraAccountForm.payPrice" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.customer_sum') + ':'">
+              <el-input
+                v-model="inneraAccountForm.payPrice"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
-            <el-form-item label="备注:" prop="remark">
-              <el-input type="textarea" v-model="inneraAccountForm.remark" style="width:280px"></el-input>
+            <el-form-item :label="$t('desk.home_note') + ':'" prop="remark">
+              <el-input
+                type="textarea"
+                v-model="inneraAccountForm.remark"
+                style="width: 280px"
+              ></el-input>
             </el-form-item>
           </el-form>
-          <div style="text-align:right" slot="footer" class="dialog-footer">
+          <div style="text-align: right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogRefoundMoney = false">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogRefoundMoney')">确 认</el-button>
+              <el-button @click="dialogRefoundMoney = false">{{
+                $t("commons.cancel")
+              }}</el-button>
+              <el-button
+                type="primary"
+                @click="sureRefund('dialogRefoundMoney')"
+                >{{ $t("commons.confirm") }}</el-button
+              >
             </span>
           </div>
         </el-dialog>
@@ -378,81 +522,172 @@
           key="1"
           :data="tableData"
           height="250"
-          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
         >
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column prop="date" label="消费时间" width="180"></el-table-column>
-          <el-table-column prop="name" label="姓名/团队" width="180"></el-table-column>
-          <el-table-column prop="address" label="房号"></el-table-column>
-          <el-table-column prop="address" label="挂账金额"></el-table-column>
+          <el-table-column
+            prop="date"
+            :label="$t('desk.customer_spendTime')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="name"
+            :label="$t('desk.customer_nameAgroup')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="address"
+            :label="$t('desk.customer_roomNumber')"
+          ></el-table-column>
+          <el-table-column
+            prop="address"
+            :label="$t('desk.customer_amountPrice')"
+          ></el-table-column>
         </el-table>
 
         <div>总计:0笔账务，共计:0元</div>
-        <div style="margin:15px 0">
-          <el-button type="primary" @click="dialogVisible=true">收款</el-button>
-          <el-button type="primary" @click="dialogFree = true">免单</el-button>
-          <el-button type="primary" @click="dialogAheadTime = true">预收款</el-button>
+        <div style="margin: 15px 0">
+          <el-button type="primary" @click="dialogVisible = true">{{
+            $t("desk.customer_collection")
+          }}</el-button>
+          <el-button type="primary" @click="dialogFree = true">{{
+            $t("desk.customer_freeOfCharge")
+          }}</el-button>
+          <el-button type="primary" @click="dialogAheadTime = true">{{
+            $t("desk.customer_advance")
+          }}</el-button>
         </div>
-        <div>结算账单</div>
+        <div>{{ $t("desk.customer_settleBill") }}</div>
         <el-table
           :data="tableData"
           height="250"
-          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
         >
+<<<<<<< Updated upstream
           <el-table-column prop="date" label="营业项目" width="180"></el-table-column>
           <el-table-column prop="name" label="结账" width="180"></el-table-column>
           <el-table-column prop="address" label="金额"></el-table-column>
+=======
+          <el-table-column
+            prop="date"
+            :label="$t('desk.customer_businessProject')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="name"
+            :label="$t('desk.order_invoicing')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="address"
+            :label="$t('desk.customer_sum')"
+          ></el-table-column>
+>>>>>>> Stashed changes
           <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
-              <el-button type="text" size="mini">移除</el-button>
+              <el-button type="text" size="mini">{{
+                $t("desk.customer_remove")
+              }}</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top:5px">平衡数:0</div>
+        <div style="margin-top: 5px">平衡数:0</div>
       </div>
-      <div v-if="choose==2" class="rootA">
+      <div v-if="choose == 2" class="rootA">
         <el-table
           key="2"
           :data="tableData"
           height="250"
-          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
         >
-          <el-table-column prop="date" label="消费时间" width="180"></el-table-column>
-          <el-table-column prop="name" label="姓名/团队" width="180"></el-table-column>
-          <el-table-column prop="address" label="房号"></el-table-column>
-          <el-table-column prop="address" label="挂账金额"></el-table-column>
+          <el-table-column
+            prop="date"
+            :label="$t('desk.customer_spendTime')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="name"
+            :label="$t('desk.customer_nameAgroup')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="address"
+            :label="$t('desk.customer_roomNumber')"
+          ></el-table-column>
+          <el-table-column
+            prop="address"
+            :label="$t('desk.customer_amountPrice')"
+          ></el-table-column>
         </el-table>
 
         <div>总计:0笔账务，共计:0元</div>
-        <div style="margin:15px 0">
-          <el-button type="primary" @click="dialogVisible=true">收款</el-button>
-          <el-button type="primary" @click="dialogRefoundMoney=true">退款</el-button>
-          <el-button type="primary" @click="brewRich">冲调</el-button>
-          <el-button type="primary" @click="dialogFree = true">免单</el-button>
-          <el-button type="primary" @click="dialogAheadTime = true">预收款</el-button>
+        <div style="margin: 15px 0">
+          <el-button type="primary" @click="dialogVisible = true">{{
+            $t("desk.customer_collection")
+          }}</el-button>
+          <el-button type="primary" @click="dialogRefoundMoney = true">{{
+            $t("desk.customer_refund")
+          }}</el-button>
+          <el-button type="primary" @click="brewRich">{{
+            $t("desk.customer_rich")
+          }}</el-button>
+          <el-button type="primary" @click="dialogFree = true">{{
+            $t("desk.customer_freeOfCharge")
+          }}</el-button>
+          <el-button type="primary" @click="dialogAheadTime = true">{{
+            $t("desk.customer_advance")
+          }}</el-button>
         </div>
-        <div>结算账单</div>
+        <div>{{ $t("desk.customer_settleBill") }}</div>
         <el-table
           :data="tableData"
           height="250"
-          :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+          :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
         >
+<<<<<<< Updated upstream
           <el-table-column prop="date" label="选择" width="180"></el-table-column>
           <el-table-column prop="name" label="营业项目" width="180"></el-table-column>
           <el-table-column prop="name" label="业务详情" width="180"></el-table-column>
           <el-table-column prop="address" label="金额"></el-table-column>
+=======
+          <el-table-column
+            prop="date"
+            :label="$t('desk.customer_selectText')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="name"
+            :label="$t('desk.customer_businessProject')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="name"
+            :label="$t('desk.customer_businessDetail')"
+            width="180"
+          ></el-table-column>
+          <el-table-column
+            prop="address"
+            :label="$t('desk.customer_sum')"
+          ></el-table-column>
+>>>>>>> Stashed changes
           <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
-              <el-button type="text" size="mini">移除</el-button>
+              <el-button type="text" size="mini">{{
+                $t("desk.customer_remove")
+              }}</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top:5px">平衡数:0</div>
+        <div style="margin-top: 5px">平衡数:0</div>
       </div>
       <div slot="footer">
         <div class="dialog-footer">
-          <el-button @click="settlementDialog = false">取 消</el-button>
-          <el-button type="primary" @click="advanceDialog_sure('ruleForm')">结 账</el-button>
+          <el-button @click="settlementDialog = false">{{
+            $t("commons.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="advanceDialog_sure('ruleForm')">{{
+            $t("desk.order_invoicing")
+          }}</el-button>
         </div>
       </div>
     </el-dialog>
