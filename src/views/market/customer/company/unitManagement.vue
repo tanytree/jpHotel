@@ -7,7 +7,7 @@
         <el-form-item label="单位名称">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item :label="$t('food.status')">
           <el-select v-model="searchForm.state" class="width150">
             <el-option
               :value="key"
@@ -82,7 +82,7 @@
         <el-table-column prop="usedLimit" label="已用额度" show-overflow-tooltip></el-table-column>
         <el-table-column prop="totalLimit" label="总消费" show-overflow-tooltip></el-table-column>
         <el-table-column prop="enterType" label="预收款余额" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="status" label="状态" show-overflow-tooltip>
+        <el-table-column prop="status" :label="$t('food.status')" show-overflow-tooltip>
           <template slot-scope="{row}">
             <div>{{row.state==1?'启用':'禁用'}}</div>
           </template>

@@ -49,7 +49,7 @@
                 </el-table-column>
                 <el-table-column prop="createName" label="创建人" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="state" label="状态" show-overflow-tooltip>
+                <el-table-column prop="state" :label="$t('food.status')" show-overflow-tooltip>
                     <template slot-scope="{row}">
                         <el-switch
                             style="margin-left:10px;"

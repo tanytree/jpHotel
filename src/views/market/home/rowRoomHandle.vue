@@ -326,11 +326,6 @@ export default {
                     message: '请选择客源类型',
                     trigger: 'blur'
                 }, ],
-                orderSource: [{
-                    required: true,
-                    message: '请订单来源',
-                    trigger: 'change'
-                }, ],
                 checkinType: [{
                     required: true,
                     message: '请选择入住类型',

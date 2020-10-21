@@ -19,7 +19,7 @@
                 <span>{{F_sex(row.checkIn.sex)}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="状态">
+        <el-table-column :label="$t('food.status')">
             <template slot-scope="{row}">
                 <el-button type="text" v-if="row.inRoomList && row.inRoomList.personList > 0">点击入住</el-button>
                 <el-button type="text" v-else>点击排房</el-button>

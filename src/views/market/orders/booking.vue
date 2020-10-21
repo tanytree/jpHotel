@@ -66,7 +66,7 @@
                             ></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="订单来源：">
+                    <el-form-item :label="$t('desk.book_orderSoutce')">
                         <el-select v-model="searchForm.orderSource" class="width150">
                             <el-option
                                 :value="key"
@@ -179,12 +179,12 @@
                         {{ row.totalRoomPrice || 0 }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="" label="订单来源" width="100" align="center">
+                <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="100" align="center">
                     <template slot-scope="{ row }">
                         {{ F_orderSource(row.orderSource) }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="" label="状态" width="100" align="center">
+                <el-table-column prop="" :label="$t('food.status')" width="100" align="center">
                     <template slot-scope="{ row }">
                         {{ F_reserveState(row.state) }}
                     </template>

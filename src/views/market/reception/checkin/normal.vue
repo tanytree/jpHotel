@@ -63,7 +63,7 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="订单来源" prop="orderSource">
+                <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
                     <el-select v-model="checkInForm.orderSource">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
@@ -84,7 +84,7 @@
                 <el-form-item label="手机号：" prop="prop">
                     <el-input v-model="checkInForm.mobile"></el-input>
                 </el-form-item>
-                <el-form-item label="订单来源" prop="orderSource">
+                <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
                     <el-select v-model="checkInForm.orderSource">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
@@ -510,7 +510,7 @@ export default {
                 }, ],
                 orderSource: [{
                     required: true,
-                    message: '请订单来源',
+                    message: this.$t('desk.book_orderSoutce'),
                     trigger: 'blur'
                 }, ],
                 checkinType: [{

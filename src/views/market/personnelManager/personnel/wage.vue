@@ -58,7 +58,7 @@
                 {{scope.row.employee.userName}}
             </template>
         </el-table-column>
-        <el-table-column label="员工状态">
+        <el-table-column :label="$t('boss.staff_staffState')">
             <template slot-scope="scope">
                 {{scope.row.employee.userStatus | F_userStatus}}
             </template>

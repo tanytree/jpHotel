@@ -50,7 +50,7 @@
             </template>
         </el-table-column>
         <el-table-column label="付款" prop="payPrice"></el-table-column>
-        <el-table-column prop="state" label="状态" show-overflow-tooltip>
+        <el-table-column prop="state" :label="$t('food.status')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{row.state==1?'未结':'已结'}}
             </template>

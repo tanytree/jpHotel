@@ -13,7 +13,7 @@
                         <p>预订单号：{{ checkinInfo.reserveOrderNum }}</p>
                     </el-col>
                     <el-col :span="8">
-                        <p>订单来源：{{ F_orderSource(checkinInfo.orderSource) }}</p>
+                        <p>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</p>
                     </el-col>
                 </el-row>
             </el-col>
@@ -43,7 +43,7 @@
                     <p>订单号：{{ checkinInfo.reserveOrderNum }}</p>
                 </el-col>
                 <el-col :span="8">
-                    <p>订单来源：{{ F_orderSource(checkinInfo.orderSource) }}</p>
+                    <p>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</p>
                 </el-col>
                 <el-col :span="8">
                     <p>入住状态：{{ F_checkinState(checkinInfo.state) }}</p>

@@ -22,7 +22,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="name" label="客人姓名" ></el-table-column>
-            <el-table-column prop="orderSource" label="订单来源" width="100" align="center">
+            <el-table-column prop="orderSource" :label="$t('desk.book_orderSoutce')" width="100" align="center">
                 <template slot-scope="{row}">
                     {{F_orderSource(row.orderSource)}}
                 </template>

@@ -28,7 +28,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="订单来源：" prop="resource">
+                        <el-form-item :label="$t('desk.book_orderSoutce')" prop="resource">
                             <el-select v-model="checkInForm.enterStatus"  class="width200">
                                 <el-option :label="$t('commons.all')" value="3"></el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>

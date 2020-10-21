@@ -362,7 +362,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="订单来源:" prop="name">
+                  <el-form-item :label="$t('desk.book_orderSoutce')" prop="name">
                     <el-select
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"

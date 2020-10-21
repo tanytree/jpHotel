@@ -47,13 +47,7 @@ export default new Router({
                     component: () =>
                         import('@/views/Boss/Index')
                 },
-                {
-                    path: '/index-design',
-                    name: 'indexDesign',
-                    meta: { title: 'indexDesign' },
-                    component: () =>
-                        import('@/views/Boss/IndexDesign')
-                },
+
                 {
                     path: '/department-charge',
                     name: 'DepartmentCharge',
@@ -346,18 +340,7 @@ export default new Router({
                     component: () =>
                         import('@/views/sale/order/Channel')
                 },
-                {
-                    path: '/saleCustomer',
-                    name: 'saleCustomer',
-                    component: () =>
-                        import('@/views/sale/SaleCustomer')
-                },
-                {
-                    path: '/saleBussness',
-                    name: 'SaleBussness',
-                    component: () =>
-                        import('@/views/sale/SaleBussness')
-                },
+
                 /**财务部 */
                 {
                     path: '/finance',

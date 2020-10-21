@@ -40,7 +40,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="5">
-          <el-form-item label="员工状态">
+          <el-form-item :label="$t('boss.staff_staffState')">
             <el-select v-model="form.orderType" style="width:100px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
@@ -97,7 +97,7 @@
           </el-table-column>
           <el-table-column
             prop="date"
-            label="员工状态"
+            :label="$t('boss.staff_staffState')"
             width="150">
           </el-table-column>
           <el-table-column

@@ -343,10 +343,6 @@
         userId: state => state.user.id,
         plat_source: state => state.config.plat_source,
         company: state => state.company,
-        cardTypeArry: state => state.config.cardTypeArry,
-        industryList: state => state.config.industryList,
-        enterprisesScales: state => state.config.enterprisesScales,
-        enterprisesTypes: state => state.config.enterprisesTypes
       })
     },
     created () {

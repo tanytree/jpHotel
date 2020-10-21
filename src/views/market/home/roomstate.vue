@@ -362,7 +362,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="状态" width="120">
+                <el-table-column :label="$t('food.status')" width="120">
                   <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
                       {{ scope.row.name }}

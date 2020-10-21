@@ -49,11 +49,11 @@
                 </el-table-column>
                 <el-table-column
                     prop="orderSource"
-                    label="订单来源"
+                    :label="$t('desk.book_orderSoutce')"
                     width="140"
                     align="center"
                 ></el-table-column>
-                <el-table-column prop="state" label="状态" width="140" align="center">
+                <el-table-column prop="state" :label="$t('food.status')" width="140" align="center">
                     <template slot-scope="{ row }">
                         {{ checkState(row.state) }}
                     </template>

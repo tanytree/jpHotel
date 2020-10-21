@@ -28,7 +28,7 @@
                 <p>订单号：{{checkinInfo.reserveOrderNum || ''}}</p>
             </el-col>
             <el-col :span="8">
-                <p>订单来源：{{F_orderSource(checkinInfo.orderSource)}}</p>
+                <p>{{$t('desk.book_orderSoutce')}}:：{{F_orderSource(checkinInfo.orderSource)}}</p>
             </el-col>
             <el-col :span="8">
                 <p>入住类型：{{F_checkinType(checkinInfo.checkinType)}}</p>
@@ -154,7 +154,7 @@
                 </el-row>
                 <br />
                 <el-row>
-                    <el-form-item label="订单来源" prop="orderSource">
+                    <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
                         <el-select v-model="baseInfoChangeForm.orderSource" class="width200">
                             <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                         </el-select>
@@ -321,7 +321,7 @@ export default {
                 }, ],
                 orderSource: [{
                     required: true,
-                    message: '请订单来源',
+                    message: this.$t('desk.book_orderSoutce'),
                     trigger: 'change'
                 }, ],
                 checkinType: [{

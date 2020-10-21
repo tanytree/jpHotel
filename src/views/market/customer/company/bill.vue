@@ -26,7 +26,7 @@
           <el-input v-model="searchForm.accountSetName" class="width150"></el-input>
         </el-form-item>
 
-        <el-form-item :label="$t('desk.home_state')">
+        <el-form-item label="状态">
           <el-select v-model="searchForm.state" class="width150">
             <el-option :label="$t('desk.home_all')" value>{{$t('desk.home_all')}}</el-option>
             <el-option :label="$t('desk.customer_outStand')" value="1">{{$t('desk.customer_outStand')}}</el-option>
