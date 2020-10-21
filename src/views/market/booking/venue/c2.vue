@@ -286,7 +286,7 @@
             type="primary"
             class="submit"
             @click="dialogMeet_sure('addCompanyForm')"
-            >确认</el-button
+            >{{ $t('commons.confirm') }}</el-button
           >
         </div>
       </el-dialog>
@@ -351,8 +351,8 @@ export default {
 
         idcardType: [
           {
-            required: true,
-            message: "请选择证件类型",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],

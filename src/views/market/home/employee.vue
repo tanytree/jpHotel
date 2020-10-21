@@ -498,7 +498,6 @@ export default {
     },
     // 新增寄存
     Save() {
-      console.log("新增寄存保存");
       this.newCheck = false;
     },
 

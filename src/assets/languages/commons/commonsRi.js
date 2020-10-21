@@ -5,6 +5,7 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+
     checkInTypeDesc: '入居類型',
     mobile: '携帯番号',
     operatingTime: 'そうさじかん',
@@ -203,14 +204,14 @@ module.exports = {
     //会员卡片类型
     memberCardState: {
         '1': '正常',
-        '2': '已挂失',
-        '3': '待启用'
+        '2': '紛失届済み',
+        '3': '起用待ち'
     },
     //签证类型类型
     F_visaType: {
-        '1': '普通签证',
-        '2': '外交签证',
-        '3': '公务签证'
+        '1': '一般ビザ',
+        '2': '外交ビザ',
+        '3': '公務ビザ'
     },
     //一周得描述
     weeks: ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日に"],

@@ -388,8 +388,8 @@ export default {
       rules: {
         payType: [
           {
-            required: true,
-            message: "请选择支付方式",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],

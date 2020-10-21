@@ -105,7 +105,7 @@
             </el-form-item>
 
             <el-form-item label="">
-                <el-button type="primary">确认</el-button>
+                <el-button type="primary">{{ $t('commons.confirm') }}</el-button>
             </el-form-item>
         </elForm>
     </el-row>

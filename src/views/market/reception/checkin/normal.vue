@@ -210,8 +210,8 @@
         <!-- 编辑or详情弹窗 -->
         <div class="fixedFoot">
             <div class="wrap">
-                <el-button type="primary" class="submit" @click="hotel_check_in(2)">保存</el-button>
-                <el-button class="white" @click="hotel_check_in(3)">保存后继续办理新{{typeText}}</el-button>
+                <el-button type="primary" class="submit" @click="hotel_check_in(2)">{{ $t('commons.save') }}</el-button>
+                <el-button class="white" @click="hotel_check_in(3)">{{ $t('frontOffice.saveGoon') }}{{typeText}}</el-button>
             </div>
         </div>
 
@@ -466,7 +466,8 @@ export default {
                 }, ],
                 sex: [{
                     required: true,
-                    message: '请选择性别',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择性别',
                     trigger: 'blur'
                 }, ], mobile: [{
                     required: true,
@@ -475,7 +476,8 @@ export default {
                 }, ],
                 idcardType: [{
                     required: true,
-                    message: '请选择护照类型',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择护照类型',
                     trigger: 'change'
                 }, ],
                 idcard: [{
@@ -485,17 +487,20 @@ export default {
                 }, ],
                 checkinTime: [{
                     required: true,
-                    message: '请选择入住时间',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择入住时间',
                     trigger: 'blur'
                 }, ],
                 checkoutTime: [{
                     required: true,
-                    message: '请选择预离时间',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择预离时间',
                     trigger: 'blur'
                 }, ],
                 keepTime: [{
                     required: true,
-                    message: '请选择保留时间',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择保留时间',
                     trigger: 'blur'
                 }, ],
                 checkinDays: [{
@@ -505,7 +510,8 @@ export default {
                 }, ],
                 guestType: [{
                     required: true,
-                    message: '请选择客源类型',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择客源类型',
                     trigger: 'blur'
                 }, ],
                 orderSource: [{
@@ -515,12 +521,14 @@ export default {
                 }, ],
                 checkinType: [{
                     required: true,
-                    message: '请选择入住类型',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择入住类型',
                     trigger: 'blur'
                 }, ],
                 ruleHourId: [{
                     required: true,
-                    message: '请选择计费规则',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择计费规则',
                     trigger: 'blur'
                 }, ],
             },

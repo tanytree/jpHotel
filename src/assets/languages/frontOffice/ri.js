@@ -5,9 +5,9 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
-
+    saveGoon: '保存後引き続き新規チェックイン手続きを取り扱う',
     nightAudit: {
-        reservationNumber: '预定单号',
+        reservationNumber: '予約番号',
         checkInTime: 'チェックイン時間',
         arriveTime: '到着時間',
         todayPrice: '本日房价',

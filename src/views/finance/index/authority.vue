@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="setBtn">
-                <el-button class="submit">保存</el-button>
+                <el-button class="submit">{{ $t('commons.save') }}</el-button>
                 <el-button class="cancel">返回</el-button>
             </div>
         </div>

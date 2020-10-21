@@ -179,7 +179,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="destructionShow = false">{{ $t('commons.cancel') }}</el-button>
         <el-button type="primary" @click="consume_oper(3, 'destruction')"
-          >确认</el-button
+          >{{ $t('commons.confirm') }}</el-button
         >
       </div>
     </el-dialog>
@@ -354,8 +354,8 @@ export default {
         ],
         creditName: [
           {
-            required: true,
-            message: "请选择挂账公司",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "blur",
           },
         ],
@@ -375,8 +375,8 @@ export default {
         ],
         invoiceTime: [
           {
-            required: true,
-            message: "请选择开票日期",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "blur",
           },
         ],
@@ -389,15 +389,15 @@ export default {
         ],
         payType: [
           {
-            required: true,
-            message: "请选择支付方式",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],
         priceType: [
           {
-            required: true,
-            message: "请选择冲调方式",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],

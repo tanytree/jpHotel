@@ -283,7 +283,7 @@ export default {
                 }, ],
                 sex: [{
                     required: true,
-                    message: '请选择性别',
+                    message: this.$t('commons.placeChoose'),
                     trigger: 'blur'
                 }, ],
                 mobile: [{
@@ -293,7 +293,7 @@ export default {
                 }, ],
                 idcardType: [{
                     required: true,
-                    message: '请选择护照类型',
+                    message: this.$t('commons.placeChoose'),
                     trigger: 'blur'
                 }, ],
                 idcard: [{
@@ -303,17 +303,19 @@ export default {
                 }, ],
                 checkinTime: [{
                     required: true,
-                    message: '请选择入住时间',
+                    message: this.$t('commons.placeChoose'),
                     trigger: 'change'
                 }, ],
                 checkoutTime: [{
                     required: true,
-                    message: '请选择预离时间',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择预离时间',
                     trigger: 'change'
                 }, ],
                 keepTime: [{
                     required: true,
-                    message: '请选择保留时间',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择保留时间',
                     trigger: 'change'
                 }, ],
                 checkinDays: [{
@@ -323,17 +325,20 @@ export default {
                 }, ],
                 guestType: [{
                     required: true,
-                    message: '请选择客源类型',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择客源类型',
                     trigger: 'blur'
                 }, ],
                 checkinType: [{
                     required: true,
-                    message: '请选择入住类型',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择入住类型',
                     trigger: 'change'
                 }, ],
                 ruleHourId: [{
                     required: true,
-                    message: '请选择计费规则',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择计费规则',
                     trigger: 'change'
                 }, ],
             },

@@ -3,7 +3,7 @@
     <el-form ref="form" size="mini" :model="form" label-width="120px">
       <div class="headTop">
         <b>申请设置</b>
-        <el-button style="float:right" type="primary" @click="saveApply()">保存</el-button>
+        <el-button style="float:right" type="primary" @click="saveApply()">{{ $t('commons.save') }}</el-button>
         <span class="infoBox">
           以下信息3天可修改一次，上次修改时间为：
           <span class="red">{{channel.agent_apply_time}}</span>
@@ -51,7 +51,7 @@
     <el-form ref="form" size="mini" :model="form" label-width="120px">
       <div class="headTop">
         <b>代理方式</b>
-        <el-button style="float:right" type="primary" @click="saveRelation()">保存</el-button>
+        <el-button style="float:right" type="primary" @click="saveRelation()">{{ $t('commons.save') }}</el-button>
         <span class="infoBox">
           以下信息3天可修改一次，上次修改时间为：
           <span class="red">{{channel.agent_time}}</span>
@@ -109,7 +109,7 @@
     <el-divider></el-divider>
   </div>
 </template>
- 
+
  <script>
 import { mapState, mapActions } from "vuex";
 import { edit_agent_set_info } from "@/utils/api/market";
@@ -210,7 +210,7 @@ export default {
   }
 };
 </script>
- 
+
  <style lang="less">
 .infoBox {
   margin-left: 12px;

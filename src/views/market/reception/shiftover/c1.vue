@@ -130,7 +130,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-button type="primary" class="submit">确认</el-button>
+          <el-button type="primary" class="submit">{{ $t('commons.confirm') }}</el-button>
         </el-form-item>
       </elForm>
     </el-row>

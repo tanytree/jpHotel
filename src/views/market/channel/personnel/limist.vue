@@ -132,7 +132,7 @@
                 </div>
                <el-row class="fixedFoot">
                   <div class="wrap">
-                    <el-button type="primary">保存</el-button>
+                    <el-button type="primary">{{ $t('commons.save') }}</el-button>
                     <el-button>返回</el-button>
                   </div>
                 </el-row>

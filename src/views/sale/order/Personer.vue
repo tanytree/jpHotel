@@ -56,7 +56,7 @@
       </el-form-item>
     </el-form>
     <el-tabs class="subTab" v-model="status" @tab-click="handleClick(status)">
-      <el-tab-pane label="全部" name></el-tab-pane>
+      <el-tab-pane :label="$t('desk.home_all')" name></el-tab-pane>
       <el-tab-pane label="待付款" name="1"></el-tab-pane>
       <el-tab-pane label="交易成功" name="2"></el-tab-pane>
     </el-tabs>

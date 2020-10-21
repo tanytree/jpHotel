@@ -3,7 +3,7 @@
     <el-form ref="form" size="mini" :model="form" label-width="120px">
       <div class="headTop">
         <b>申请设置</b>
-        <el-button style="float:right" type="primary" @click="saveApply()">保存</el-button>
+        <el-button style="float:right" type="primary" @click="saveApply()">{{ $t('commons.save') }}</el-button>
         <span class="infoBox">
           以下信息3天可修改一次，上次修改时间为：
           <span class="red">{{channel.apply_time}}</span>
@@ -44,7 +44,7 @@
     <el-form ref="form" size="mini" :model="form" label-width="120px">
       <div class="headTop">
         <b>下级分销商关系及分佣</b>
-        <el-button style="float:right" type="primary" @click="saveRelation()">保存</el-button>
+        <el-button style="float:right" type="primary" @click="saveRelation()">{{ $t('commons.save') }}</el-button>
         <span class="infoBox">
           以下信息3天可修改一次，上次修改时间为：
           <span class="red">{{channel.lower_time}}</span>
@@ -93,7 +93,7 @@
     <el-form ref="form" size="mini" :model="form" label-width="120px">
       <div class="headTop">
         <b>结算方式</b>
-      
+
         <span class="infoBox">
           以下信息3天可修改一次，上次修改时间为：
           <span class="red">{{channel.apply_settle_time}}</span>
@@ -109,11 +109,11 @@
         </el-checkbox-group>
       </el-form-item>
 
-        <el-button  type="primary" @click="setSelllet()">保存</el-button>
+        <el-button  type="primary" @click="setSelllet()">{{ $t('commons.save') }}</el-button>
     </el-form>
   </div>
 </template>
- 
+
  <script>
 import { mapState, mapActions } from "vuex";
 import { edit_agent_set_info } from "@/utils/api/market";
@@ -228,7 +228,7 @@ export default {
   }
 };
 </script>
- 
+
  <style lang="less">
 .infoBox {
   margin-left: 12px;

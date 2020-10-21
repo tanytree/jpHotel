@@ -328,7 +328,7 @@ export default {
         console.log(params)
 
 
-        this.$confirm('确定提交吗?', this.$t('commons.tip_desc'), {
+        this.$confirm(this.$t('food.confirm_submit'), this.$t('commons.tip_desc'), {
             confirmButtonText: this.$t('commons.confirm'),
             cancelButtonText: this.$t('commons.cancel'),
             type: 'warning'

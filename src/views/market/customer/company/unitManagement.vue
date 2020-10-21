@@ -293,7 +293,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="setCompanyFormVisible=false">关闭</el-button>
-        <el-button type="primary" @click="hotelenterAddAndEdit">确认</el-button>
+        <el-button type="primary" @click="hotelenterAddAndEdit">{{ $t('commons.confirm') }}</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -501,7 +501,7 @@
       ></el-pagination>
       <div slot="footer" class="dialog-footer">
         <el-button @click="setBatchFormVisible=false">关闭</el-button>
-        <el-button type="primary" @click="batchedit">确认</el-button>
+        <el-button type="primary" @click="batchedit">{{ $t('commons.confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -566,15 +566,15 @@ export default {
       plRule: {
         enterStrategyId: [
           {
-            required: true,
-            message: "请选择价格策略",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],
         ruleAlldayId: [
           {
-            required: true,
-            message: "请选择计费规则",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],
@@ -612,15 +612,15 @@ export default {
         ],
         enterStrategyId: [
           {
-            required: true,
-            message: "请选择价格策略",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],
         ruleAlldayId: [
           {
-            required: true,
-            message: "请选择计费规则",
+              required: true,
+              message: this.$t('commons.placeChoose'),
             trigger: "change",
           },
         ],

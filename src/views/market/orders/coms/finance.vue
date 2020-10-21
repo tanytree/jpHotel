@@ -151,7 +151,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="payTypeShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" @click="payTypeShow = false">确认</el-button>
+            <el-button type="primary" @click="payTypeShow = false">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog> -->
 
@@ -202,7 +202,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="onAccountShow=false">关闭</el-button>
-            <el-button type="primary" @click="consume_oper(2,'onAccount')">确认</el-button>
+            <el-button type="primary" @click="consume_oper(2,'onAccount')">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--走结-->
@@ -240,7 +240,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="knotShow=false">关闭</el-button>
-            <el-button type="primary" @click="out_check_in">确认</el-button>
+            <el-button type="primary" @click="out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--开发票-->
@@ -296,7 +296,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="checkOutShow=false">关闭</el-button>
-            <el-button type="primary" @click="consume_oper(4,'checkOut')">确认</el-button>
+            <el-button type="primary" @click="consume_oper(4,'checkOut')">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--冲调-->
@@ -357,7 +357,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="destructionShow=false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" @click="consume_oper(3,'destruction')">确认</el-button>
+            <el-button type="primary" @click="consume_oper(3,'destruction')">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
 
@@ -443,7 +443,8 @@ export default {
                 }, ],
                 creditName: [{
                     required: true,
-                    message: '请选择挂账公司',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择挂账公司',
                     trigger: 'blur'
                 }, ],
                 companyName: [{
@@ -458,7 +459,8 @@ export default {
                 }, ],
                 invoiceTime: [{
                     required: true,
-                    message: '请选择开票日期',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择开票日期',
                     trigger: 'blur'
                 }, ],
                 prices: [{
@@ -468,12 +470,14 @@ export default {
                 }, ],
                 payType: [{
                     required: true,
-                    message: '请选择支付方式',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择支付方式',
                     trigger: 'change'
                 }, ],
                 priceType: [{
                     required: true,
-                    message: '请选择冲调方式',
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择冲调方式',
                     trigger: 'change'
                 }, ],
                 remark: [{

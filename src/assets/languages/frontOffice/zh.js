@@ -5,6 +5,7 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
+    saveGoon: '保存后继续办理入住',
     nightAudit: {
         reservationNumber: '预定单号',
         checkInTime: '入住时间',

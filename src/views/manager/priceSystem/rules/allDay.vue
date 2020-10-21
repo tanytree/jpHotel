@@ -219,8 +219,8 @@
 						trigger: "blur"
 					}, ],
 					checkoutTime: [{
-						required: true,
-						message: "请选择退房时间",
+                        required: true,
+                        message: this.$t('commons.placeChoose'),
 						trigger: "blur"
 					}, ],
 					outtimeMinute: [{

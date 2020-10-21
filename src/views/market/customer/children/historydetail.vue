@@ -143,7 +143,7 @@
               </el-form>
             </div>
             <div style="text-align: right">
-              <el-button type="primary" @click="saveEditor">保存</el-button>
+              <el-button type="primary" @click="saveEditor">{{ $t('commons.save') }}</el-button>
               <el-button @click="goBack()">返回</el-button>
             </div>
           </div>
@@ -209,7 +209,7 @@ export default {
         "/pms/hotelmember/edit",
         this.editorForm,
         (data) => {
-          this.$message({ message: "保存成功", type: success });
+          this.$message({ message: this.$t('commons.saveSuccess'), type: success });
         }
       );
     },

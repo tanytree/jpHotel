@@ -244,7 +244,7 @@
                 </template>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" type="primary" @click="employeesDetailsEditChange()" v-loading="loading">保存</el-button>
+            <el-button size="small" type="primary" @click="employeesDetailsEditChange()" v-loading="loading">{{ $t('commons.save') }}</el-button>
             <el-button size="small" @click="itemClose">{{ $t('commons.cancel') }}</el-button>
         </span>
         </el-dialog>

@@ -67,7 +67,7 @@
                     </el-row>
                     <el-divider></el-divider>
                     <el-form-item>
-                        <el-button type="primary" @click="editItem('newvip')">保存</el-button>
+                        <el-button type="primary" @click="editItem('newvip')">{{ $t('commons.save') }}</el-button>
                         <el-button @click="back()">{{ $t('commons.cancel') }}</el-button>
                     </el-form-item>
                 </el-form>

@@ -55,7 +55,7 @@
         </el-form-item>
       </el-row>
       <el-form-item>
-        <el-button type="primary" v-loading="loading" @click="save('ruleForm')">保存</el-button>
+        <el-button type="primary" v-loading="loading" @click="save('ruleForm')">{{ $t('commons.save') }}</el-button>
       </el-form-item>
    </el-form>
  </div>

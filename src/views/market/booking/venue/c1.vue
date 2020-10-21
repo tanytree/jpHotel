@@ -206,8 +206,8 @@
     <!-- 编辑or详情弹窗 -->
     <el-row class="fixedFoot">
         <div class="wrap">
-            <el-button type="primary">保存</el-button>
-            <el-button>保存后继续办理新入住</el-button>
+            <el-button type="primary">{{ $t('commons.save') }}</el-button>
+            <el-button>{{$t('frontOffice.saveGoon')}}</el-button>
         </div>
     </el-row>
 </div>

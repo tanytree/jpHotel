@@ -159,15 +159,7 @@ export default {
       }
     );
   },
-  // mounted() {
-  // 	this.$F.doRequest(this, '/pms/freeuser/stores_list', {
-  // 		filterHeader: true
-  // 	}, (data) => {
-  // 		this.storeList = data;
-  // 	})
-  // 	this.language = getLanguage() || 'zh';
-  //     this.$i18n.locale = this.language;
-  // },
+
   methods: {
     ...mapActions({
       saveuser: "user/saveuser",
@@ -214,6 +206,13 @@ export default {
       };
       this.onLanguageChange(); //保存选中语言
       data.data.menuList.push(array);
+      for (let i = 0; i < data.data.menuList.length; i++) {
+          let item = data.data.menuList[i];
+          if (item.id == 'a367289c90e34614a308917f5726bd03') {
+              data.data.menuList.splice(i, 1);
+              break
+          }
+      }
       this.routeractions(data.data.menuList);
       this.$forceUpdate();
       this.$router.push({

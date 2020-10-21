@@ -56,9 +56,7 @@
                 v-model="form.region"
                 :placeholder="$t('commons.placeChoose')"
               >
-                <el-option label="全部" value="3">{{
-                  $t("desk.home_all")
-                }}</el-option>
+                <el-option :label="$t('desk.home_all')" value="3"></el-option>
                 <el-option label="已认证" value="1">已认证</el-option>
                 <el-option label="未认证" value="2">未认证</el-option>
               </el-select>
@@ -71,9 +69,7 @@
                 v-model="form.region"
                 :placeholder="$t('commons.placeChoose')"
               >
-                <el-option label="全部" value="3">{{
-                  $t("desk.home_all")
-                }}</el-option>
+                  <el-option :label="$t('desk.home_all')" value="3"></el-option>
                 <el-option label="已认证" value="1">已认证</el-option>
                 <el-option label="未认证" value="2">未认证</el-option>
               </el-select>
@@ -351,9 +347,7 @@
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
                     >
-                      <el-option label="全部" value="3">{{
-                        $t("desk.home_all")
-                      }}</el-option>
+                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -367,9 +361,7 @@
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
                     >
-                      <el-option label="全部" value="3">{{
-                        $t("desk.home_all")
-                      }}</el-option>
+                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -428,7 +420,7 @@
                       v-model="checkInForm.enterStatus"
                       placeholder="床位数"
                     >
-                      <el-option label="全部" value="3">床位数</el-option>
+                      <el-option :label="$t('desk.home_all')" value="3">床位数</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -558,9 +550,7 @@
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
                     >
-                      <el-option label="全部" value="3">{{
-                        $t("desk.home_all")
-                      }}</el-option>
+                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -588,9 +578,7 @@
                           style="width: 120px"
                           v-model="checkInForm.enterStatus"
                         >
-                          <el-option label="全部" value="3">{{
-                            $t("desk.home_all")
-                          }}</el-option>
+                            <el-option :label="$t('desk.home_all')" value="3"></el-option>
                           <el-option label="已认证" value="1">已认证</el-option>
                           <el-option label="未认证" value="2">未认证</el-option>
                         </el-select>
@@ -729,9 +717,7 @@
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
                     >
-                      <el-option label="全部" value="3">{{
-                        $t("desk.home_all")
-                      }}</el-option>
+                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -762,9 +748,7 @@
                       style="width: 140px"
                       v-model="checkInForm.enterStatus"
                     >
-                      <el-option label="全部" value="3">{{
-                        $t("desk.home_all")
-                      }}</el-option>
+                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -779,9 +763,7 @@
                       style="width: 140px"
                       v-model="checkInForm.enterStatus"
                     >
-                      <el-option label="全部" value="3">{{
-                        $t("desk.home_all")
-                      }}</el-option>
+                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
