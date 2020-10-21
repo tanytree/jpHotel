@@ -148,11 +148,6 @@
           </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
-<<<<<<< Updated upstream
-          <template slot-scope="{row}">
-            <el-button type="text" @click="advancePayments(row)" size="mini">预收款</el-button>
-            <el-button type="text" @click="settlement(row)" size="mini">账务结算</el-button>
-=======
           <template slot-scope="{ row }">
             <el-button type="text" @click="advancePayments(row)" size="mini">{{
               $t("desk.customer_advance")
@@ -160,7 +155,6 @@
             <el-button type="text" @click="settlement(row)" size="mini">{{
               $t("desk.customer_billSettlement")
             }}</el-button>
->>>>>>> Stashed changes
           </template>
         </el-table-column>
       </el-table>
@@ -563,11 +557,6 @@
           height="250"
           :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
         >
-<<<<<<< Updated upstream
-          <el-table-column prop="date" label="营业项目" width="180"></el-table-column>
-          <el-table-column prop="name" label="结账" width="180"></el-table-column>
-          <el-table-column prop="address" label="金额"></el-table-column>
-=======
           <el-table-column
             prop="date"
             :label="$t('desk.customer_businessProject')"
@@ -582,7 +571,6 @@
             prop="address"
             :label="$t('desk.customer_sum')"
           ></el-table-column>
->>>>>>> Stashed changes
           <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
               <el-button type="text" size="mini">{{
@@ -644,12 +632,6 @@
           height="250"
           :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
         >
-<<<<<<< Updated upstream
-          <el-table-column prop="date" label="选择" width="180"></el-table-column>
-          <el-table-column prop="name" label="营业项目" width="180"></el-table-column>
-          <el-table-column prop="name" label="业务详情" width="180"></el-table-column>
-          <el-table-column prop="address" label="金额"></el-table-column>
-=======
           <el-table-column
             prop="date"
             :label="$t('desk.customer_selectText')"
@@ -669,7 +651,6 @@
             prop="address"
             :label="$t('desk.customer_sum')"
           ></el-table-column>
->>>>>>> Stashed changes
           <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
               <el-button type="text" size="mini">{{
