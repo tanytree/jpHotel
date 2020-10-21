@@ -327,7 +327,7 @@
       </span>
     </el-dialog>
     <!--交订金-->
-    <el-dialog title="交订金" :visible.sync="depositShow">
+    <el-dialog :title="$t('desk.order_payDeposit')" :visible.sync="depositShow">
       <el-form
         :model="consumeOperForm"
         ref="deposit"
@@ -335,13 +335,13 @@
         label-width="100px"
       >
         <el-row>
-          <el-col :span="8">预订单号：{{ currentItem.reserveOrderNum }}</el-col>
+          <el-col :span="8">{{ $t("desk.order_bookOrderNum") }}：{{ currentItem.reserveOrderNum }}</el-col>
           <el-col :span="8"
             >{{ $t("desk.home_bookPeople") }}：{{ currentItem.name }}</el-col
           >
         </el-row>
         <br />
-        <el-form-item label="付款项目：">
+        <el-form-item :label="$t('desk.order_payProject') + ':'">
           <el-radio-group v-model="consumeOperForm.priceType">
             <el-radio-button :label="1" :value="1">{{
               $t("desk.downPayment")
@@ -369,27 +369,27 @@
         <!--            </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="depositShow = false">关闭</el-button>
+        <el-button @click="depositShow = false">{{$t('commons.close')}}</el-button>
         <el-button type="primary" @click="consume_oper(1, 'deposit')"
-          >结算
+          >{{$t('desk.customer_settlement')}}
         </el-button>
       </div>
     </el-dialog>
-    <el-dialog title="选择结算方式" :visible.sync="payTypeShow">
+    <el-dialog :title="$t('desk.order_selectPayWay')" :visible.sync="payTypeShow">
       <el-form :model="consumeOperForm" size="mini">
         <el-form-item label="">
           <el-radio-group v-model="consumeOperForm.payType">
-            <el-radio :label="1" :value="1">现金</el-radio>
-            <el-radio :label="2" :value="2">银行卡</el-radio>
-            <el-radio :label="3" :value="3">支付宝</el-radio>
-            <el-radio :label="4" :value="4">微信</el-radio>
-            <el-radio :label="5" :value="5">会员卡</el-radio>
+            <el-radio :label="1" :value="1">{{$t('desk.serve_cash')}}</el-radio>
+            <el-radio :label="2" :value="2">{{$t('desk.customer_bankCard')}}</el-radio>
+            <el-radio :label="3" :value="3">{{$t('desk.serve_alipay')}}</el-radio>
+            <el-radio :label="4" :value="4">{{$t('desk.serve_wechat')}}</el-radio>
+            <el-radio :label="5" :value="5">{{$t('desk.order_memCard')}}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="payTypeShow = false">关闭</el-button>
-        <el-button type="primary" @click="payTypeShow = false">结算</el-button>
+        <el-button @click="payTypeShow = false">{{$t('commons.close')}}</el-button>
+        <el-button type="primary" @click="payTypeShow = false">{{$t('desk.customer_settlement')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -511,7 +511,7 @@ export default {
         checkInReserveId: item.id,
         state: 8,
       };
-      this.$confirm("请确认是否取消?", this.$t("commons.tip_desc"), {
+      this.$confirm( this.$t("desk.order_sureDelete"), this.$t("commons.tip_desc"), {
         confirmButtonText: this.$t("commons.confirm"),
         cancelButtonText: this.$t("commons.cancel"),
         type: "warning",
@@ -537,7 +537,7 @@ export default {
         checkInReserveId: item.id,
         state: 2,
       };
-      this.$confirm("请确认是否接受?", this.$t("commons.tip_desc"), {
+      this.$confirm(this.$t("commons.order_sureGet"), this.$t("commons.tip_desc"), {
         confirmButtonText: this.$t("commons.confirm"),
         cancelButtonText: this.$t("commons.cancel"),
         type: "warning",
@@ -563,7 +563,7 @@ export default {
         checkInReserveId: item.id,
         state: 3,
       };
-      this.$confirm("请确认是否拒绝?", this.$t("commons.tip_desc"), {
+      this.$confirm(this.$t("desk.order_sureReject"), this.$t("commons.tip_desc"), {
         confirmButtonText: this.$t("commons.confirm"),
         cancelButtonText: this.$t("commons.cancel"),
         type: "warning",
@@ -589,7 +589,7 @@ export default {
         checkInReserveId: item.id,
         state: 2,
       };
-      this.$confirm("请确认您的操作?", this.$t("commons.tip_desc"), {
+      this.$confirm(this.$t("desk.order_sureOperate"), this.$t("commons.tip_desc"), {
         confirmButtonText: this.$t("commons.confirm"),
         cancelButtonText: this.$t("commons.cancel"),
         type: "warning",
@@ -624,7 +624,7 @@ export default {
         params.roomId = this.currentItem.checkInRoomList[0].id;
         params.roomNum = this.currentItem.checkInRoomList[0].houseNum;
       } else {
-        this.$message.error("请优先排房，添加入住人");
+        this.$message.error(this.$t('desk.order_rowHouses'));
         return;
       }
 
@@ -633,7 +633,7 @@ export default {
         //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
         params.state = 2;
         if (!params.priceType) {
-          this.$message.error("请选择付款项目");
+          this.$message.error(this.$t('desk.order_selectPayProject'));
           return;
         }
         // if (params.priceType == 1 && !params.payType) {
@@ -642,14 +642,14 @@ export default {
         // }
         if (params.priceType == 1) {
           if (params.payPrice < 0 || params.payPrice == 0) {
-            this.$message.error("请输入大于0的金额");
+            this.$message.error(this.$t('desk.order_inputThan'));
             return;
           }
         }
         if (params.priceType == 4) {
           // params.priceType == 1
           if (params.consumePrice > 0 || params.consumePrice == 0) {
-            this.$message.error("请输入为负数金额");
+            this.$message.error(this.$t('desk.order_inputMinusPrice'));
             return;
           }
         }
@@ -661,7 +661,7 @@ export default {
 
         // params.priceType == 1
         if (params.consumePrice > 0 || params.consumePrice == 0) {
-          this.$message.error("请输入为负数金额");
+          this.$message.error(this.$t('desk.order_inputMinusPrice'));
           return;
         }
       }

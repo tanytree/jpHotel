@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-21 17:43:19
+ * @LastEditTime: 2020-10-21 18:34:09
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -210,18 +210,18 @@ module.exports = {
     order_accept: "接受",
     order_restore: "恢复",
     order_accountingService: "账务服务",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
-    order_: "",
+    order_payDeposit: "交订金",
+    order_payProject: "付款项目",
+    order_memCard: "会员卡",
+    order_selectPayWay: "选择结算方式",
+    order_sureDelete: "请确认是否取消",
+    order_sureGet: "请确认是否接受",
+    order_sureReject: "请确认是否拒绝",
+    order_sureOperate: "请确认您的操作",
+    order_rowHouses: "请优先排房，添加入住人",
+    order_selectPayProject: "请选择付款项目",
+    order_inputThan: "请输入大于0的金额",
+    order_inputMinusPrice: "请输入为负数金额",
     order_: "",
     order_: "",
     order_: "",

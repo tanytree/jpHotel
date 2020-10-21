@@ -480,6 +480,30 @@ module.exports = {
     order_accept: "確認",
     order_restore: "予約復活",
     order_accountingService: "未翻译词条",
+    order_payDeposit: "未翻译词条",
+    order_payProject: "入金項目",
+    order_memCard: "会員年費",
+    order_selectPayWay: "会計方法を選択",
+    order_sureDelete: "未翻译词条",
+    order_sureGet: "未翻译词条",
+    order_sureReject: "未翻译词条",
+    order_sureOperate: "未翻译词条",
+    order_rowHouses: "未翻译词条",
+    order_selectPayProject: "未翻译词条",
+    order_inputThan: "未翻译词条",
+    order_inputMinusPrice: "未翻译词条",
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
