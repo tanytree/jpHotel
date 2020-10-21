@@ -11,9 +11,9 @@
         size="small"
         label-width="80px"
       >
-        <el-form-item label="单位名称">
+        <el-form-item  :label="$t('desk.customer_unitName')">
           <el-select v-model="searchForm.enterId" filterable :placeholder="$t('commons.placeChoose')" class="width150">
-            <el-option label="" value>全部</el-option>
+            <el-option label="" value>{{$t('desk.home_all')}}</el-option>
             <el-option
               v-for="(item,index) in unitList"
               :key="index"
@@ -22,23 +22,23 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="账套名">
+        <el-form-item :label="$t('desk.customer_accountName')">
           <el-input v-model="searchForm.accountSetName" class="width150"></el-input>
         </el-form-item>
 
-        <el-form-item label="状态">
+        <el-form-item :label="$t('desk.home_state')">
           <el-select v-model="searchForm.state" class="width150">
-            <el-option label="全部" value>全部</el-option>
-            <el-option label="未结" value="1">未结</el-option>
-            <el-option label="已结" value="2">已结</el-option>
+            <el-option :label="$t('desk.home_all')" value>{{$t('desk.home_all')}}</el-option>
+            <el-option :label="$t('desk.customer_outStand')" value="1">{{$t('desk.customer_outStand')}}</el-option>
+            <el-option :label="$t('desk.customer_closeAccount')" value="2">{{$t('desk.customer_closeAccount')}}</el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="getDataList">查询</el-button>
-          <el-button type="primary" class="grey" @click="initForm">重置</el-button>
+          <el-button type="primary" class="submit" @click="getDataList">{{$t('commons.queryBtn')}}</el-button>
+          <el-button type="primary" class="grey" @click="initForm">{{$t('commons.resetBtn')}}</el-button>
         </el-form-item>
         <el-form-item class="form-inline-flex">
-          <el-button type="primary" @click="dialogNew= true" class="submit">+新增</el-button>
+          <el-button type="primary" @click="dialogNew= true" class="submit">{{$t('desk.customer_newAdd')}}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -50,26 +50,26 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="accountSetName" label="账套名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creditPrice" label="挂账金额" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="payPrice" label="结算金额" show-overflow-tooltip></el-table-column>
-        <el-table-column label="状态" show-overflow-tooltip>
+        <el-table-column prop="enterName"  :label="$t('desk.customer_unitName')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="accountSetName" :label="$t('desk.customer_accountName')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creditPrice" :label="$t('desk.customer_amountPrice')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="payPrice" :label="$t('desk.customer_amountMoney')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.home_state')" show-overflow-tooltip>
           <template slot-scope="{row}">
-            <div v-if="row.state == 2">已结</div>
-            <div v-if="row.state==1">未结</div>
+            <div v-if="row.state == 2">{{$t('desk.customer_closeAccount')}}</div>
+            <div v-if="row.state==1">{{$t('desk.customer_outStand')}}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="creatorName" label="创建人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="sellementName" label="结账人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="updateTime" label="结账时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creatorName" :label="$t('desk.customer_founder')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="createTime" :label="$t('desk.customer_creativeTime')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="sellementName" :label="$t('desk.customer_checkoutPerpson')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="updateTime" :label="$t('desk.customer_invoicingTime')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{row}">
-            <el-button type="text" v-if="row.state==1" @click="editorClick(row)" size="mini">编辑</el-button>
-            <el-button type="text" v-if="row.state==1" @click="settleAccounts(row)" size="mini">结账</el-button>
-            <el-button type="text" v-if="row.state==2" @click="undoCheckOut(row)" size="mini">撤销结账</el-button>
-            <el-button type="text" v-if="row.state==2" size="mini">结算单补打</el-button>
+            <el-button type="text" v-if="row.state==1" @click="editorClick(row)" size="mini">{{$t('desk.customer_editorText')}}</el-button>
+            <el-button type="text" v-if="row.state==1" @click="settleAccounts(row)" size="mini">{{$t('desk.order_invoicing')}}</el-button>
+            <el-button type="text" v-if="row.state==2" @click="undoCheckOut(row)" size="mini">{{$t('desk.customer_undoCheckout')}}</el-button>
+            <el-button type="text" v-if="row.state==2" size="mini">{{$t('desk.customer_makeUpStatement')}}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -85,7 +85,7 @@
       </div>
     </div>
     <!-- 新增dialog -->
-    <el-dialog title="新增账套" v-if="dialogNew" :visible.sync="dialogNew" width="700px" top="0">
+    <el-dialog :title="$t('desk.customer_newAccountSet')" v-if="dialogNew" :visible.sync="dialogNew" width="700px" top="0">
       <!-- 内层  账务选择 dialog -->
       <el-dialog
         title="账务选择"
@@ -116,7 +116,7 @@
             </el-col>
           </el-form-item>
           <el-form-item>
-            <el-button @click="dialogChoose_look" plain>查询</el-button>
+            <el-button @click="dialogChoose_look" plain>{{$t('commons.queryBtn')}}</el-button>
           </el-form-item>
         </el-form>
         <el-table
@@ -126,15 +126,15 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
-          <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
-          <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="180"></el-table-column>
+          <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="180"></el-table-column>
+          <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
+          <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="180"></el-table-column>
           <el-table-column prop="consumePrice" label="金额"></el-table-column>
         </el-table>
         <div style="text-align:right" slot="footer" class="dialog-footer">
           <span>
-            <el-button @click="dialogChoose_cancle">取 消</el-button>
-            <el-button type="primary" @click="dialogChoose_sure">确 认</el-button>
+            <el-button @click="dialogChoose_cancle">{{$t('commons.cancel')}}</el-button>
+            <el-button type="primary" @click="dialogChoose_sure">{{$t('commons.confirm')}}</el-button>
           </span>
         </div>
       </el-dialog>
@@ -163,22 +163,22 @@
         height="250"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
       >
-        <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
-        <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="120"></el-table-column>
-        <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
+        <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="180"></el-table-column>
+        <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="120"></el-table-column>
+        <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
         <el-table-column prop="consumePrice" label="消费金额	"></el-table-column>
         <el-table-column prop="creatorName" :label="$t('desk.customer_operator')"></el-table-column>
         <el-table-column :label="$t('commons.operating')">
           <template slot-scope="{row}">
-            <el-button type="text" @click="dialogNew_remove(row)" size="mini">移除</el-button>
+            <el-button type="text" @click="dialogNew_remove(row)" size="mini">{{$t('desk.customer_remove')}}</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div>总计：{{accountList_add.length}}笔账务，共计：{{totalPrice(accountList_add)}}元</div>
       <div style="text-align:right" slot="footer" class="dialog-footer">
         <span>
-          <el-button @click="dialogNew_cancle">取 消</el-button>
-          <el-button type="primary" @click="dialogNew_sure">确 认</el-button>
+          <el-button @click="dialogNew_cancle">{{$t('commons.cancel')}}</el-button>
+          <el-button type="primary" @click="dialogNew_sure">{{$t('commons.confirm')}}</el-button>
         </span>
       </div>
     </el-dialog>
@@ -214,7 +214,7 @@
             </el-col>
           </el-form-item>
           <el-form-item>
-            <el-button @click="dialogChoose_editor_look" plain>查询</el-button>
+            <el-button @click="dialogChoose_editor_look" plain>{{$t('commons.queryBtn')}}</el-button>
           </el-form-item>
         </el-form>
         <el-table
@@ -224,9 +224,9 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
-          <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
-          <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="180"></el-table-column>
+          <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="180"></el-table-column>
+          <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
+          <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="180"></el-table-column>
           <el-table-column label="金额">
             <template slot-scope="{row}">
               <div>{{row.consumePrice?row.consumePrice:0}}</div>
@@ -235,8 +235,8 @@
         </el-table>
         <div style="text-align:right" slot="footer" class="dialog-footer">
           <span>
-            <el-button @click="dialogChoose_editor_cancle">取 消</el-button>
-            <el-button type="primary" @click="dialogChoose_editor_sure">确 认</el-button>
+            <el-button @click="dialogChoose_editor_cancle">{{$t('commons.cancel')}}</el-button>
+            <el-button type="primary" @click="dialogChoose_editor_sure">{{$t('commons.confirm')}}</el-button>
           </span>
         </div>
       </el-dialog>
@@ -266,9 +266,9 @@
         height="250"
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
       >
-        <el-table-column prop="createTime" label="消费时间" width="160"></el-table-column>
-        <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="100"></el-table-column>
-        <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
+        <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="160"></el-table-column>
+        <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="100"></el-table-column>
+        <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
         <el-table-column label="消费金额	">
           <template slot-scope="{row}">
             <div>{{row.consumePrice?row.consumePrice:0}}</div>
@@ -277,15 +277,15 @@
         <el-table-column prop="creatorName" :label="$t('desk.customer_operator')" width="150px"></el-table-column>
         <el-table-column prop="address" :label="$t('commons.operating')">
           <template slot-scope="{row}">
-            <el-button type="text" @click="dialogEditor_remove(row)" size="mini">移除</el-button>
+            <el-button type="text" @click="dialogEditor_remove(row)" size="mini">{{$t('desk.customer_remove')}}</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div>总计：{{editorData.length}}笔账务，共计：{{totalPrice(editorData)}}元</div>
       <div style="text-align:right" slot="footer" class="dialog-footer">
         <span>
-          <el-button @click="dialogEditor_cancle">取 消</el-button>
-          <el-button type="primary" @click="dialogEditor_sure">确 认</el-button>
+          <el-button @click="dialogEditor_cancle">{{$t('commons.cancel')}}</el-button>
+          <el-button type="primary" @click="dialogEditor_sure">{{$t('commons.confirm')}}</el-button>
         </span>
       </div>
     </el-dialog>
@@ -298,7 +298,7 @@
       top="0"
     >
       <div>
-        <span>单位名称:{{itemInfo.enterName}}</span>
+        <span>{{ $t("desk.customer_unitName") + ":" }}{{itemInfo.enterName}}</span>
         <span style="margin-left:20px">账套名称: {{itemInfo.accountSetName}}</span>
       </div>
       <!-- 内层dailog -->
@@ -333,8 +333,8 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogCancle('dialogVisible')">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogVisible')">确 认</el-button>
+              <el-button @click="dialogCancle('dialogVisible')">{{$t('commons.cancel')}}</el-button>
+              <el-button type="primary" @click="sureRefund('dialogVisible')">{{$t('commons.confirm')}}</el-button>
             </span>
           </div>
         </el-dialog>
@@ -367,8 +367,8 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogFree = false">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogFree')">确 认</el-button>
+              <el-button @click="dialogFree = false">{{$t('commons.cancel')}}</el-button>
+              <el-button type="primary" @click="sureRefund('dialogFree')">{{$t('commons.confirm')}}</el-button>
             </span>
           </div>
         </el-dialog>
@@ -404,8 +404,8 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogCancle('dialogAheadTime')">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogAheadTime')">确 认</el-button>
+              <el-button @click="dialogCancle('dialogAheadTime')">{{$t('commons.cancel')}}</el-button>
+              <el-button type="primary" @click="sureRefund('dialogAheadTime')">{{$t('commons.confirm')}}</el-button>
             </span>
           </div>
         </el-dialog>
@@ -423,9 +423,9 @@
             height="250"
             :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
           >
-            <el-table-column prop="date" label="营业项目" width="180"></el-table-column>
-            <el-table-column prop="address" label="业务详情"></el-table-column>
-            <el-table-column prop="name" label="挂账金额" width="180"></el-table-column>
+            <el-table-column prop="date" :label="$t('desk.customer_businessProject')" width="180"></el-table-column>
+            <el-table-column prop="address" :label="$t('desk.customer_businessDetail')"></el-table-column>
+            <el-table-column prop="name" :label="$t('desk.customer_amountPrice')" width="180"></el-table-column>
           </el-table>
           <el-form
             :model="inneraAccountForm"
@@ -439,8 +439,8 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogChooseBook = false">取 消</el-button>
-              <el-button type="primary" @click="dialogChooseBook = false">确 认</el-button>
+              <el-button @click="dialogChooseBook = false">{{$t('commons.cancel')}}</el-button>
+              <el-button type="primary" @click="dialogChooseBook = false">{{$t('commons.confirm')}}</el-button>
             </span>
           </div>
         </el-dialog>
@@ -474,8 +474,8 @@
           </el-form>
           <div style="text-align:right" slot="footer" class="dialog-footer">
             <span>
-              <el-button @click="dialogCancle('dialogRefoundMoney')">取 消</el-button>
-              <el-button type="primary" @click="sureRefund('dialogRefoundMoney')">确 认</el-button>
+              <el-button @click="dialogCancle('dialogRefoundMoney')">{{$t('commons.cancel')}}</el-button>
+              <el-button type="primary" @click="sureRefund('dialogRefoundMoney')">{{$t('commons.confirm')}}</el-button>
             </span>
           </div>
         </el-dialog>
@@ -489,10 +489,10 @@
           height="250"
           :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
         >
-          <el-table-column prop="createTime" label="消费时间" width="180"></el-table-column>
-          <el-table-column prop="checkInPerson.checkIn.name" label="姓名/团队" width="180"></el-table-column>
-          <el-table-column prop="checkInPerson.houseNum" label="房号"></el-table-column>
-          <el-table-column label="挂账金额">
+          <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" width="180"></el-table-column>
+          <el-table-column prop="checkInPerson.checkIn.name" :label="$t('desk.customer_nameAgroup')" width="180"></el-table-column>
+          <el-table-column prop="checkInPerson.houseNum" :label="$t('desk.customer_roomNumber')"></el-table-column>
+          <el-table-column :label="$t('desk.customer_amountPrice')">
             <template slot-scope="{row}">
               <div>{{row.onAccountTotal?-row.onAccountTotal:0}}</div>
             </template>
@@ -521,12 +521,12 @@
               <el-radio :label="row.name" v-model="radioId">&nbsp;</el-radio>
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="营业项目" width="180"></el-table-column>
-          <el-table-column prop="name" label="业务详情" width="180"></el-table-column>
+          <el-table-column prop="name" :label="$t('desk.customer_businessProject')" width="180"></el-table-column>
+          <el-table-column prop="name" :label="$t('desk.customer_businessDetail')" width="180"></el-table-column>
           <el-table-column prop="address" label="金额"></el-table-column>
           <el-table-column prop="address" :label="$t('commons.operating')">
             <template>
-              <el-button type="text" size="mini">移除</el-button>
+              <el-button type="text" size="mini">{{$t('desk.customer_remove')}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -537,7 +537,7 @@
           <span>
             <el-button type="primary" @click="advanceDialog_sure('ruleForm')">增加账务</el-button>
             <el-button type="primary" @click="advanceDialog_sure('ruleForm')">结 账</el-button>
-            <el-button @click="settlementDialog = false">取 消</el-button>
+            <el-button @click="settlementDialog = false">{{$t('commons.cancel')}}</el-button>
           </span>
         </div>
       </div>

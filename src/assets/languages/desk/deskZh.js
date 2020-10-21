@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-20 22:43:10
+ * @LastEditTime: 2020-10-21 10:54:40
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -449,21 +449,21 @@ module.exports = {
     customer_businessProject: '营业项目',
     customer_selectText: '选择',
     customer_businessDetail: '业务详情',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
+    customer_aggregate: '总计',
+    customer_penNum: '笔账务',
+    customer_gongji: '共计',
+    customer_banlance: '平衡数',
+    customer_inputExpectPrice: '请输入预收款金额',
+    customer_expectPriceShould: '预收款金额必须大于0',
+    customer_refundShould: '退款金额必须大于0',
+    customer_chooseRich: '请选择被冲调的账务',
+    customer_founder: '创建人',
+    customer_checkoutPerpson: '结账人',
+    customer_invoicingTime: '结账时间',
+    customer_editorText: '编辑',
+    customer_undoCheckout: '撤销结账',
+    customer_makeUpStatement: '结算单补打',
+    customer_newAccountSet: '新增账套',
     customer_: '',
     customer_: '',
     customer_: '',

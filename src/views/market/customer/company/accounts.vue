@@ -539,7 +539,11 @@
           ></el-table-column>
         </el-table>
 
-        <div>总计:0笔账务，共计:0元</div>
+        <div>
+          {{ $t("desk.customer_aggregate") + ":" }}0{{
+            $t("desk.customer_penNum")
+          }}，{{ $t("desk.customer_gongji") + ":" }}0{{ $t("desk.serve_yen") }}
+        </div>
         <div style="margin: 15px 0">
           <el-button type="primary" @click="dialogVisible = true">{{
             $t("desk.customer_collection")
@@ -579,7 +583,9 @@
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top: 5px">平衡数:0</div>
+        <div style="margin-top: 5px">
+          {{ $t("desk.customer_banlance") + ":" }}0
+        </div>
       </div>
       <div v-if="choose == 2" class="rootA">
         <el-table
@@ -608,7 +614,11 @@
           ></el-table-column>
         </el-table>
 
-        <div>总计:0笔账务，共计:0元</div>
+        <div>
+          {{ $t("desk.customer_aggregate") + ":" }}0{{
+            $t("desk.customer_penNum")
+          }}，{{ $t("desk.customer_gongji") + ":" }}0{{ $t("desk.serve_yen") }}
+        </div>
         <div style="margin: 15px 0">
           <el-button type="primary" @click="dialogVisible = true">{{
             $t("desk.customer_collection")
@@ -659,7 +669,9 @@
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top: 5px">平衡数:0</div>
+        <div style="margin-top: 5px">
+          {{ $t("desk.customer_banlance") + ":" }}0
+        </div>
       </div>
       <div slot="footer">
         <div class="dialog-footer">
@@ -690,10 +702,10 @@ export default {
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入预收款金额"));
+        callback(new Error(this.$t("desk.customer_inputExpectPrice")));
       } else {
         if (value <= 0) {
-          callback(new Error("预收款金额必须大于0"));
+          callback(new Error(this.$t("desk.customer_expectPriceShould")));
         } else {
           callback();
         }
@@ -751,7 +763,7 @@ export default {
   methods: {
     sureRefund(dialogName) {
       if (this.inneraAccountForm.payPrice == 0) {
-        this.$message.error("退款金额必须大于0！");
+        this.$message.error(this.$t("desk.customer_refundShould"));
       } else {
         this[dialogName] = false;
         this.inneraAccountForm = {
@@ -763,7 +775,7 @@ export default {
     },
     //账务结算dialog ，点击 结账按钮
     brewRich() {
-      this.$message.error("请选择被冲调的账务");
+      this.$message.error(this.$t("desk.customer_chooseRich"));
     },
     //点击账务结算按钮
     settlement(row) {

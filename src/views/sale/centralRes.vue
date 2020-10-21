@@ -10,7 +10,14 @@
   <div>
     <el-row>
       <el-col :span="20">
-        <el-form ref="form" inline size="small" :model="form" :rules="rules" label-width="100px">
+        <el-form
+          ref="form"
+          inline
+          size="small"
+          :model="form"
+          :rules="rules"
+          label-width="100px"
+        >
           <el-col :span="8">
             <el-form-item label="预抵时间:" prop="date1">
               <el-date-picker
@@ -25,7 +32,7 @@
           <el-col :span="8">
             <el-form-item label="入住天数:">
               <el-input-number
-                style="width: 220px;"
+                style="width: 220px"
                 v-model="form.nums"
                 @change="handleChange"
                 :min="1"
@@ -44,8 +51,14 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="位置筛选:">
-              <el-select style="width: 220px;" v-model="form.region" :placeholder="$t('commons.placeChoose')">
-                <el-option label="全部" value="3">全部</el-option>
+              <el-select
+                style="width: 220px"
+                v-model="form.region"
+                :placeholder="$t('commons.placeChoose')"
+              >
+                <el-option label="全部" value="3">{{
+                  $t("desk.home_all")
+                }}</el-option>
                 <el-option label="已认证" value="1">已认证</el-option>
                 <el-option label="未认证" value="2">未认证</el-option>
               </el-select>
@@ -53,8 +66,14 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="所属酒店:">
-              <el-select style="width: 220px;" v-model="form.region" :placeholder="$t('commons.placeChoose')">
-                <el-option label="全部" value="3">全部</el-option>
+              <el-select
+                style="width: 220px"
+                v-model="form.region"
+                :placeholder="$t('commons.placeChoose')"
+              >
+                <el-option label="全部" value="3">{{
+                  $t("desk.home_all")
+                }}</el-option>
                 <el-option label="已认证" value="1">已认证</el-option>
                 <el-option label="未认证" value="2">未认证</el-option>
               </el-select>
@@ -62,7 +81,12 @@
           </el-col>
           <el-col :span="8">
             <el-form-item>
-              <el-button type="primary" style="margin-left:25px" @click="onSubmit">查询</el-button>
+              <el-button
+                type="primary"
+                style="margin-left: 25px"
+                @click="onSubmit"
+                >查询</el-button
+              >
             </el-form-item>
           </el-col>
         </el-form>
@@ -76,8 +100,8 @@
         <label>大仓集团第一酒店（地址：安徽省合肥市蜀山区）</label>
         <el-table
           :data="tableData"
-          style="width: 100%;margin-top:10px"
-          :header-cell-style="{background:'#D9DDE2',color:'#606266'}"
+          style="width: 100%; margin-top: 10px"
+          :header-cell-style="{ background: '#D9DDE2', color: '#606266' }"
         >
           <el-table-column label="房型" width="180">
             <template slot-scope="scope">
@@ -128,19 +152,23 @@
               <el-button
                 size="mini"
                 type="text"
-                @click="handleEdit(scope.$index, scope.row),dialogFormVisible = true"
-              >普通预订</el-button>
+                @click="
+                  handleEdit(scope.$index, scope.row),
+                    (dialogFormVisible = true)
+                "
+                >普通预订</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
       </el-row>
 
-      <el-row style="margin-top:20px">
+      <el-row style="margin-top: 20px">
         <label>大仓集团第一酒店（地址：安徽省合肥市蜀山区）</label>
         <el-table
           :data="tableData"
-          style="width: 100%;margin-top:10px"
-          :header-cell-style="{background:'#D9DDE2',color:'#606266'}"
+          style="width: 100%; margin-top: 10px"
+          :header-cell-style="{ background: '#D9DDE2', color: '#606266' }"
         >
           <el-table-column label="房型" width="180">
             <!-- <template slot-scope="scope">
@@ -175,7 +203,12 @@
           </el-table-column>
           <el-table-column :label="$t('commons.operating')">
             <template slot-scope="scope">
-              <el-button size="mini" type="text" @click="handleEdit(scope.$index, scope.row)">普通预订</el-button>
+              <el-button
+                size="mini"
+                type="text"
+                @click="handleEdit(scope.$index, scope.row)"
+                >普通预订</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -184,7 +217,12 @@
 
     <!-- 预定 -->
 
-    <el-dialog top="0" title="预定" :visible.sync="dialogFormVisible" width="100%">
+    <el-dialog
+      top="0"
+      title="预定"
+      :visible.sync="dialogFormVisible"
+      width="100%"
+    >
       <div>
         <el-row>
           <el-form inline size="small" label-width="100px" :rules="rules">
@@ -195,9 +233,11 @@
                   <el-radio label="会员"></el-radio>
                   <el-radio label="单位"></el-radio>
                 </el-radio-group>
-                <el-button @click="registerme=true" style="margin-left:25px">注册会员</el-button>
+                <el-button @click="registerme = true" style="margin-left: 25px"
+                  >注册会员</el-button
+                >
                 <el-select
-                  style="margin-left:10px"
+                  style="margin-left: 10px"
                   v-model="vipname"
                   filterable
                   placeholder="请输入会员名/手机号/卡号"
@@ -210,7 +250,7 @@
                   ></el-option>
                 </el-select>
                 <el-select
-                  style="margin-left:10px"
+                  style="margin-left: 10px"
                   v-model="unitname"
                   filterable
                   placeholder="请输入单位名称/手机号"
@@ -232,7 +272,7 @@
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
                       type="date"
-                      style="width:246px"
+                      style="width: 246px"
                       placeholder="选择日期"
                     ></el-date-picker>
                   </el-form-item>
@@ -243,7 +283,7 @@
                 <div class="grid-content">
                   <el-form-item label="入住天数:" prop="name">
                     <el-input-number
-                      style="width:246px"
+                      style="width: 246px"
                       v-model="num"
                       @change="handleChange"
                       :min="1"
@@ -261,7 +301,7 @@
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
                       type="date"
-                      style="width:246px"
+                      style="width: 246px"
                       placeholder="选择日期"
                     ></el-date-picker>
                   </el-form-item>
@@ -274,24 +314,31 @@
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
                       type="date"
-                      style="width:246px"
+                      style="width: 246px"
                       placeholder="选择日期"
                     ></el-date-picker>
                   </el-form-item>
                 </div>
               </el-col>
-              <el-col :span="12" style="opacity: 0;">1</el-col>
+              <el-col :span="12" style="opacity: 0">1</el-col>
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item :label="$t('desk.home_bookPeople')" prop="name">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input>
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="手机号码:">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
@@ -300,8 +347,13 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="入住类型:" prop="name">
-                    <el-select style="width:246px" v-model="checkInForm.enterStatus">
-                      <el-option label="全部" value="3">全部</el-option>
+                    <el-select
+                      style="width: 246px"
+                      v-model="checkInForm.enterStatus"
+                    >
+                      <el-option label="全部" value="3">{{
+                        $t("desk.home_all")
+                      }}</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -311,8 +363,13 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="订单来源:" prop="name">
-                    <el-select style="width:246px" v-model="checkInForm.enterStatus">
-                      <el-option label="全部" value="3">全部</el-option>
+                    <el-select
+                      style="width: 246px"
+                      v-model="checkInForm.enterStatus"
+                    >
+                      <el-option label="全部" value="3">{{
+                        $t("desk.home_all")
+                      }}</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -322,7 +379,10 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="销售员：">
-                    <el-select style="width:246px" v-model="checkInForm.enterStatus">
+                    <el-select
+                      style="width: 246px"
+                      v-model="checkInForm.enterStatus"
+                    >
                       <el-option label="正常" value="1"></el-option>
                       <el-option label="不正常" value="2"></el-option>
                     </el-select>
@@ -332,7 +392,10 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="外部订单号：">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input>
                   </el-form-item>
                 </div>
               </el-col>
@@ -342,14 +405,17 @@
               <el-col :span="24">
                 <div class="grid-content">
                   <el-form-item label="订单备注：">
-                    <el-input v-model="checkInForm.content" style="width:740px"></el-input>
+                    <el-input
+                      v-model="checkInForm.content"
+                      style="width: 740px"
+                    ></el-input>
                   </el-form-item>
                 </div>
               </el-col>
             </el-row>
           </el-form>
         </el-row>
-        <el-row style="margin-bottom:60px">
+        <el-row style="margin-bottom: 60px">
           <h3>房间信息</h3>
           <el-form inline size="mini">
             <el-row>
@@ -358,7 +424,10 @@
                   <el-row>
                     <el-button>可改房价</el-button>&nbsp;&nbsp;
                     <el-button>不可改房价</el-button>&nbsp;&nbsp;
-                    <el-select v-model="checkInForm.enterStatus" placeholder="床位数">
+                    <el-select
+                      v-model="checkInForm.enterStatus"
+                      placeholder="床位数"
+                    >
                       <el-option label="全部" value="3">床位数</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
@@ -382,18 +451,24 @@
                                     :max="10"
                                     label
                                     size="mini"
-                                    style="width:100px"
+                                    style="width: 100px"
                                   ></el-input-number>
                                 </div>
                               </el-col>
                             </el-row>
                             <el-row class="row">
                               <el-col :span="14">
-                                <el-button type="text" size="mini">可订12</el-button>
+                                <el-button type="text" size="mini"
+                                  >可订12</el-button
+                                >
                               </el-col>
                               <el-col :span="10">
                                 <div style="text-align: right">
-                                  <el-input placeholder size="mini" style="width:60px"></el-input>
+                                  <el-input
+                                    placeholder
+                                    size="mini"
+                                    style="width: 60px"
+                                  ></el-input>
                                   <em>666</em>
                                 </div>
                               </el-col>
@@ -407,9 +482,7 @@
               </el-col>
               <el-col :span="7">
                 <div class="grid-content">
-                  <el-row>
-                    <el-button>自动排房</el-button>&nbsp;&nbsp;
-                  </el-row>
+                  <el-row> <el-button>自动排房</el-button>&nbsp;&nbsp; </el-row>
                   <br />
                   <el-row class="roomSelect">
                     <ul>
@@ -423,7 +496,9 @@
                                 </el-col>
                                 <el-col :span="10">
                                   <div style="text-align: right">
-                                    <el-button type="primary" size="mini">排房</el-button>
+                                    <el-button type="primary" size="mini"
+                                      >排房</el-button
+                                    >
                                   </div>
                                 </el-col>
                               </el-row>
@@ -432,7 +507,9 @@
                               </el-row>
                               <el-row class="row">
                                 <el-col :span="14">
-                                  <el-button type="text" size="mini">可订12</el-button>
+                                  <el-button type="text" size="mini"
+                                    >可订12</el-button
+                                  >
                                 </el-col>
                                 <el-col :span="10">
                                   <div style="text-align: right">
@@ -442,7 +519,7 @@
                                       :max="10"
                                       label
                                       size="mini"
-                                      style="width:100px"
+                                      style="width: 100px"
                                     ></el-input-number>
                                   </div>
                                 </el-col>
@@ -460,9 +537,11 @@
         </el-row>
       </div>
 
-      <div slot="footer" class="dialog-footer" style="text-align: center;">
+      <div slot="footer" class="dialog-footer" style="text-align: center">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">预定</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false"
+          >预定</el-button
+        >
       </div>
     </el-dialog>
 
@@ -475,8 +554,13 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="会员类型:">
-                    <el-select style="width:246px" v-model="checkInForm.enterStatus">
-                      <el-option label="全部" value="3">全部</el-option>
+                    <el-select
+                      style="width: 246px"
+                      v-model="checkInForm.enterStatus"
+                    >
+                      <el-option label="全部" value="3">{{
+                        $t("desk.home_all")
+                      }}</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -486,7 +570,11 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="会员卡号:">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
@@ -496,14 +584,22 @@
                     <el-col>
                       <!-- <div class="grid-content"> -->
                       <el-form-item :label="$t('commons.idCardTypeDesc')">
-                        <el-select style="width:120px" v-model="checkInForm.enterStatus">
-                          <el-option label="全部" value="3">全部</el-option>
+                        <el-select
+                          style="width: 120px"
+                          v-model="checkInForm.enterStatus"
+                        >
+                          <el-option label="全部" value="3">{{
+                            $t("desk.home_all")
+                          }}</el-option>
                           <el-option label="已认证" value="1">已认证</el-option>
                           <el-option label="未认证" value="2">未认证</el-option>
                         </el-select>
                       </el-form-item>
                       <el-form-item>
-                        <el-input style="width:246px" v-model="checkInForm.content"></el-input>
+                        <el-input
+                          style="width: 246px"
+                          v-model="checkInForm.content"
+                        ></el-input>
                       </el-form-item>
                       <!-- </div> -->
                     </el-col>
@@ -515,14 +611,22 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="姓名:">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="电话:">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
@@ -547,7 +651,7 @@
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
                       type="date"
-                      style="width:246px"
+                      style="width: 246px"
                       placeholder="选择日期"
                     ></el-date-picker>
                   </el-form-item>
@@ -557,7 +661,11 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="邮箱:">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
@@ -567,14 +675,22 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="国籍:">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="14">
                 <div class="grid-content">
                   <el-form-item label="地址:">
-                    <el-input style="width:620px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 620px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
@@ -584,14 +700,22 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="车牌号:">
-                    <el-input style="width:246px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 246px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="14">
                 <div class="grid-content">
                   <el-form-item label="爱好:">
-                    <el-input style="width:620px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 620px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
@@ -601,8 +725,13 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="所属单位:">
-                    <el-select style="width:246px" v-model="checkInForm.enterStatus">
-                      <el-option label="全部" value="3">全部</el-option>
+                    <el-select
+                      style="width: 246px"
+                      v-model="checkInForm.enterStatus"
+                    >
+                      <el-option label="全部" value="3">{{
+                        $t("desk.home_all")
+                      }}</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -612,7 +741,11 @@
               <el-col :span="14">
                 <div class="grid-content">
                   <el-form-item label="备注:">
-                    <el-input style="width:620px" v-model="checkInForm.content"></el-input>&nbsp;&nbsp;
+                    <el-input
+                      style="width: 620px"
+                      v-model="checkInForm.content"
+                    ></el-input
+                    >&nbsp;&nbsp;
                   </el-form-item>
                 </div>
               </el-col>
@@ -625,8 +758,13 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="销售员:">
-                    <el-select style="width:140px" v-model="checkInForm.enterStatus">
-                      <el-option label="全部" value="3">全部</el-option>
+                    <el-select
+                      style="width: 140px"
+                      v-model="checkInForm.enterStatus"
+                    >
+                      <el-option label="全部" value="3">{{
+                        $t("desk.home_all")
+                      }}</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -637,8 +775,13 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item label="发展途径:">
-                    <el-select style="width:140px" v-model="checkInForm.enterStatus">
-                      <el-option label="全部" value="3">全部</el-option>
+                    <el-select
+                      style="width: 140px"
+                      v-model="checkInForm.enterStatus"
+                    >
+                      <el-option label="全部" value="3">{{
+                        $t("desk.home_all")
+                      }}</el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -653,10 +796,10 @@
             </el-row>
           </el-row>
           <el-divider></el-divider>
-          <el-row style="text-align:center">
+          <el-row style="text-align: center">
             <el-form-item>
               <el-button>取 消</el-button>
-              <el-button type="primary"{{ $t('commons.confirm') }}/el-button>
+              <el-button type="primary"{{ $t("commons.confirm") }}/el-button>
             </el-form-item>
           </el-row>
         </el-form>
