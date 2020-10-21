@@ -488,7 +488,7 @@ module.exports = {
     order_sureGet: "未翻译词条",
     order_sureReject: "未翻译词条",
     order_sureOperate: "未翻译词条",
-    order_rowHouses: "未翻译词条",
+    order_rowHouses: "宿泊者追加",
     order_selectPayProject: "未翻译词条",
     order_inputThan: "未翻译词条",
     order_inputMinusPrice: "未翻译词条",

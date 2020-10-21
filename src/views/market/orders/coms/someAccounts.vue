@@ -88,7 +88,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" {{ $t('commons.confirm') }}/el-button>
+            <el-button type="primary" >{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
 

@@ -73,7 +73,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="addChildDepartShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading"{{ $t('commons.confirm') }}/el-button>
+            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">{{ $t('commons.confirm') }}</el-button>
         </span>
         </el-dialog>
 
@@ -135,7 +135,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="clearDepartMentForm;departSetAndAddShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading"{{ $t('commons.confirm') }}/el-button>
+            <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">{{ $t('commons.confirm') }}</el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :visible.sync="selectIconAndColorShow" title="选择图标" width="600px">
@@ -166,7 +166,7 @@
             </div>
             <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="selectIconAndColorShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button size="small" type="primary" @click="iconAndColorChange()"{{ $t('commons.confirm') }}/el-button>
+            <el-button size="small" type="primary" @click="iconAndColorChange()">{{ $t('commons.confirm') }}</el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :visible.sync="employeesDetailsShow" title="查看资料" width="600px">
@@ -174,7 +174,7 @@
                 <el-form-item label="姓名" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.name"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号" class>
+                <el-form-item :label="$t('desk.order_moblePhone')" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="职务" class>
@@ -193,7 +193,7 @@
 
             <!-- <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="employeesDetailsShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button size="small" type="primary" @click="iconAndColorChange()"{{ $t('commons.confirm') }}/el-button>
+            <el-button size="small" type="primary" @click="iconAndColorChange()">{{ $t('commons.confirm') }}</el-button>
           </span>-->
         </el-dialog>
         <el-dialog top="0" :visible.sync="employeesDetailsEditShow"

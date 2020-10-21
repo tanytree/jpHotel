@@ -102,7 +102,7 @@
                 </el-row>
             </template>
         </el-table-column>
-        <el-table-column prop="groupName" label="手机号" width="150">
+        <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')" width="150">
             <template slot-scope="{row}">
                 <el-row>
                     <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>

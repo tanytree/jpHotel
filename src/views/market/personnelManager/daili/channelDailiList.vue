@@ -64,7 +64,7 @@
 
         <span slot="footer" class="dialog-footer">
           <el-button @click="visible = false">{{ $t('commons.cancel') }}</el-button>
-          <el-button type="primary" @click="levelChange()"{{ $t('commons.confirm') }}/el-button>
+          <el-button type="primary" @click="levelChange()">{{ $t('commons.confirm') }}</el-button>
         </span>
       </el-dialog>
       <!-- 等级修改 -->
@@ -80,7 +80,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="addVisible = false">{{ $t('commons.cancel') }}</el-button>
-          <el-button type="primary" @click="dataFormSubmit()"{{ $t('commons.confirm') }}/el-button>
+          <el-button type="primary" @click="dataFormSubmit()">{{ $t('commons.confirm') }}</el-button>
         </span>
       </el-dialog>
       <!-- 新增分销商 -->

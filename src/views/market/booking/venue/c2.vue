@@ -273,7 +273,7 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item label="手机号:">
+          <el-form-item :label="$t('desk.order_moblePhone')">
             <el-input
               v-model="addCompanyForm.mobile"
               style="width: 180px"

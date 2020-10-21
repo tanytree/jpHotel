@@ -30,7 +30,7 @@
         <el-form-item label="联系人">
           <el-input v-model="searchForm.contactName" class="width150"></el-input>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item :label="$t('desk.order_moblePhone')">
           <el-input v-model="searchForm.contactPhone" class="width150"></el-input>
         </el-form-item>
         <br />
@@ -73,7 +73,7 @@
         <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
         <el-table-column prop="contactName" label="姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="contactPhone" label="手机号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="contactPhone" :label="$t('desk.order_moblePhone')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="enterStrategyId" :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>
           <template slot-scope="{row}">{{setStrategyName(row.enterStrategyId)}}</template>
         </el-table-column>
@@ -148,7 +148,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="手机号：" prop="contactPhone">
+              <el-form-item :label="$t('desk.order_moblePhone')" prop="contactPhone">
                 <el-input v-model="addCompanyForm.contactPhone"></el-input>
               </el-form-item>
             </el-col>

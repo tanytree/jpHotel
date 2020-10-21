@@ -59,7 +59,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="手机号:">
+        <el-form-item :label="$t('desk.order_moblePhone')">
           <el-input v-model="searchForm.mobile" class="width150" style="width:140px"></el-input>
         </el-form-item>
         <el-form-item label="业务说明:">
@@ -102,7 +102,7 @@
         <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
         <el-table-column prop="memberTypeName" label="会员类型" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="mobile" label="手机号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="mobile" :label="$t('desk.order_moblePhone')" show-overflow-tooltip></el-table-column>
         <el-table-column label="增加" show-overflow-tooltip width="80px">
           <template slot-scope="{row}">
             <div v-if="row.consumeType==2">{{row.scores}}</div>

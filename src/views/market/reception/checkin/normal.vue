@@ -14,7 +14,7 @@
             <h3 v-if="operCheckinType=='b3'">会议登记信息</h3>
             <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules"
                      label-width="120px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
-                <el-form-item label="入住人：" prop="name">
+                <el-form-item :label="$t('desk.customer_livePeople')" prop="name">
                     <el-autocomplete v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
                 </el-form-item>
                 <el-form-item label="性别：" prop="sex">
@@ -53,7 +53,7 @@
                 <el-form-item label="外部订单号：">
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号：" prop="mobile">
+                <el-form-item :label="$t('desk.order_moblePhone')" prop="mobile">
                     <el-input v-model="checkInForm.mobile"></el-input>
                 </el-form-item>
                 <el-form-item label="客源类型" prop="guestType">
@@ -78,10 +78,10 @@
                 </el-form-item>
             </el-form>
             <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules" label-width="120px" v-if="operCheckinType=='b1' || operCheckinType=='b2'|| operCheckinType=='b3'">
-                <el-form-item label="入住人：" prop="name">
+                <el-form-item :label="$t('desk.customer_livePeople')" prop="name">
                     <el-autocomplete v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="姓名查询" @select="changeName($event)"></el-autocomplete>
                 </el-form-item>
-                <el-form-item label="手机号：" prop="prop">
+                <el-form-item :label="$t('desk.order_moblePhone')" prop="prop">
                     <el-input v-model="checkInForm.mobile"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
@@ -181,7 +181,7 @@
                     <el-form inline size="small">
                         <el-form-item>
                             <el-button @click="empty_row_houses">自动排房</el-button>
-                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading='liveLoading'></i>添加入住人</el-button>
+                            <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading='liveLoading'></i>{{ $t('desk.order_rowHouses') }}</el-button>
                             <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading="liveCardLoading"></i>制卡</el-button>
                         </el-form-item>
                     </el-form>
@@ -244,10 +244,10 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="rowRoomShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button size="small" type="primary" @click="db_row_houses"{{ $t('commons.confirm') }}/el-button>
+            <el-button size="small" type="primary" @click="db_row_houses">{{ $t('commons.confirm') }}</el-button>
         </span>
         </el-dialog>
-        <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
+        <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
             <el-table v-loading="loading" :data="liveInPersonData" style="width: 100%;margin-bottom: 20px;"
                       row-key="id" border :default-expand-all='true'
                       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
@@ -294,7 +294,7 @@
                         </el-row>
                     </template>
                 </el-table-column>checkInRoomJson
-                <el-table-column prop="groupName" label="手机号" width="150">
+                <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')" width="150">
                     <template slot-scope="{row}">
                         <el-row>
                             <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
@@ -312,7 +312,7 @@
             </el-table>
             <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="liveInPersonCancel">{{ $t('commons.cancel') }}</el-button>
-             <el-button size="small" type="primary" @click="liveInPersonShow = false"{{ $t('commons.confirm') }}/el-button>
+             <el-button size="small" type="primary" @click="liveInPersonShow = false">{{ $t('commons.confirm') }}</el-button>
         </span>
         </el-dialog>
         <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
@@ -341,7 +341,7 @@
             <el-button size="small" @click="mackcadeCancel">{{ $t('commons.cancel') }}</el-button>
         </span>
         </el-dialog>
-        <el-dialog top="0" :show-close='false' title="添加入住人" :visible.sync="addLivePersonShow" width="60%">
+        <el-dialog top="0" :show-close='false' :title="$t('desk.order_rowHouses')" :visible.sync="addLivePersonShow" width="60%">
             <customer v-if="addLivePersonShow" type="checkin" :liveData="liveData" :type="order" @personCallback="personCallback"></customer>
 
         </el-dialog>
@@ -1038,8 +1038,6 @@ export default {
             this.addLivePersonShow = false;
         },
         live_in_person_list() {
-            console.log('添加入住人');
-            console.log(this.waitingRoom);
             let waitingRoom2 =  this.$F.deepClone(this.waitingRoom);
             this.liveData = [];
             if (this.checkInForm.checkInRoomJson.length > 0 && this.checkInForm.checkInRoomJson[0].personList.length > 0) {

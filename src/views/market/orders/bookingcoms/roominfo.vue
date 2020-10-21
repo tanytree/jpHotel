@@ -97,13 +97,13 @@
             top="0"
             :visible.sync="liveInPersonShow"
             class="liveInPersonDia"
-            title="添加入住人"
+            :title="$t('desk.order_rowHouses')"
             width="80%"
         >
             <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
             <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="liveInPersonShow = false" >{{ $t('commons.cancel') }}</el-button>
-                <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false"{{ $t('commons.confirm') }}/el-button> -->
+                <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">{{ $t('commons.confirm') }}</el-button> -->
       </span>
         </el-dialog>
         <el-dialog

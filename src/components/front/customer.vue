@@ -91,7 +91,7 @@
                 </el-row>
             </template>
         </el-table-column>
-        <el-table-column prop="groupName" label="手机号" width="150">
+        <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')" width="150">
             <template slot-scope="{row}">
                 <el-row>
                     <span>{{row.mobile}}</span>
@@ -104,7 +104,7 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-dialog top="0" :show-close='false' title="添加入住人" :visible.sync="addLivePersonShow" width="80%">
+    <el-dialog top="0" :show-close='false' :title="$t('desk.order_rowHouses')" :visible.sync="addLivePersonShow" width="80%">
         <customer2 v-if="addLivePersonShow" :liveData="liveData2" @personCallback="personCallback"></customer2>
     </el-dialog>
 </div>

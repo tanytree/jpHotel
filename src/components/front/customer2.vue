@@ -59,7 +59,7 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="groupName" label="手机号">
+            <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')">
                 <template slot-scope="{row}">
                     <el-row>
                         <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
@@ -77,7 +77,7 @@
             </el-table-column>
         </el-table>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="personSubmit()"{{ $t('commons.confirm') }}/el-button>
+            <el-button type="primary" @click="personSubmit()">{{ $t('commons.confirm') }}</el-button>
         </div>
     </div>
 </template>

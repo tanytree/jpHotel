@@ -230,17 +230,9 @@
           <el-button class="white" size="small" @click="batchRoomHaldel">{{
             $t("desk.home_batchSet")
           }}</el-button>
-          <el-button class="white" size="small">{{
-            $t("desk.home_printRoomState")
-          }}</el-button>
-          <el-button
-            type="primary"
-            class="submit"
-            size="small"
-            @click="print = true"
-            icon="el-icon-message-solid"
-            >{{ $t("desk.home_pushAnd") }}</el-button
-          >
+<!--          <el-button class="white" size="small">{{ $t("desk.home_printRoomState")  }}</el-button>-->
+<!--          <el-button type="primary"  class="submit" size="small" @click="print = true"  icon="el-icon-message-solid">-->
+<!--              {{ $t("desk.home_pushAnd") }}</el-button>-->
           <!-- 催押 -->
           <el-dialog
             top="0"
@@ -334,7 +326,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="入住人" width="120">
+                <el-table-column :label="$t('desk.customer_livePeople')" width="120">
                   <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
                       {{ scope.row.name }}
@@ -888,7 +880,7 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button class="white">{{ $t('commons.cancel') }}</el-button>
-        <el-button class="submit" type="primary"{{ $t('commons.confirm') }}/el-button>
+        <el-button class="submit" type="primary">{{ $t('commons.confirm') }}</el-button>
       </div>
     </el-dialog>
     <!-- 制卡 -->

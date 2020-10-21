@@ -181,7 +181,7 @@
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="adddstaff = false">取 消</el-button>
-                <el-button type="primary"{{ $t('commons.confirm') }}/el-button>
+                <el-button type="primary">{{ $t('commons.confirm') }}</el-button>
               </div>
             </el-dialog>
           </div>
@@ -299,7 +299,7 @@
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="editstaff = false">取 消</el-button>
-                <el-button type="primary"{{ $t('commons.confirm') }}/el-button>
+                <el-button type="primary">{{ $t('commons.confirm') }}</el-button>
               </div>
             </el-dialog>
           </div>
@@ -344,7 +344,7 @@
                 </el-form>
                   <div slot="footer" class="dialog-footer">
                     <el-button @click="dimission = false">关闭</el-button>
-                    <el-button type="primary"{{ $t('commons.confirm') }}/el-button>
+                    <el-button type="primary">{{ $t('commons.confirm') }}</el-button>
 
                   </div>
                 </el-dialog>
@@ -375,7 +375,7 @@
                 </el-form>
                   <div slot="footer" class="dialog-footer">
                     <el-button @click="correct = false">关闭</el-button>
-                    <el-button type="primary"{{ $t('commons.confirm') }}/el-button>
+                    <el-button type="primary">{{ $t('commons.confirm') }}</el-button>
 
                   </div>
                 </el-dialog>

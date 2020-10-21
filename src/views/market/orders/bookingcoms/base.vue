@@ -31,7 +31,7 @@
                 <p>{{$t('desk.book_orderSoutce')}}:：{{F_orderSource(checkinInfo.orderSource)}}</p>
             </el-col>
             <el-col :span="8">
-                <p>$t('commons.checkInTypeDesc')：{{F_checkinType(checkinInfo.checkinType)}}</p>
+                <p>{{$t('commons.checkInTypeDesc')}}：{{F_checkinType(checkinInfo.checkinType)}}</p>
             </el-col>
             <el-col :span="8">
                 <p>{{ $t('desk.nightAudit.arriveTime') }}：{{checkinInfo.checkinTime}} - {{checkinInfo.checkoutTime}}</p>
@@ -70,7 +70,7 @@
             </el-col>
         </el-row>
     </el-row>
-    <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" title="添加入住人" width="80%">
+    <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
         <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
     </el-dialog>
     <el-dialog top="0" title="修改订单" :visible.sync="baseInfoChangeShow" width="900px" center>
@@ -116,7 +116,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="手机号：" prop="mobile">
+                    <el-form-item :label="$t('desk.order_moblePhone')" prop="mobile">
                         <el-input v-model="baseInfoChangeForm.mobile" class="width150"></el-input>
                     </el-form-item>
                 </el-col>

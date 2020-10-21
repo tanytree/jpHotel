@@ -60,7 +60,7 @@
       <el-input v-model="editPrice" placeholder="请输入"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="visible = false">{{ $t('commons.cancel') }}</el-button>
-        <el-button type="primary" @click="dataFormSubmit()"{{ $t('commons.confirm') }}/el-button>
+        <el-button type="primary" @click="dataFormSubmit()">{{ $t('commons.confirm') }}</el-button>
       </span>
     </el-dialog>
   </div>

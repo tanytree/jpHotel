@@ -188,7 +188,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer" center>
                 <el-button @click="newvipVisable = false">{{ $t('commons.cancel') }}</el-button>
-                <el-button type="primary" @click="editItem" v-loading="loading"{{ $t('commons.confirm') }}/el-button>
+                <el-button type="primary" @click="editItem" v-loading="loading">{{ $t('commons.confirm') }}</el-button>
             </div>
         </el-dialog>
 
