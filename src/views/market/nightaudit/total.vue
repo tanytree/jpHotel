@@ -182,6 +182,17 @@ export default {
                 &:last-child{
                     border-right: 0;
                 }
+
+                .item {
+                    max-width: 80%;
+                    margin: auto;
+
+                    .el-button {
+                        display: block;
+                        white-space: pre-wrap;
+                        line-height: 22px;
+                    }
+                }
             }
         }
     }

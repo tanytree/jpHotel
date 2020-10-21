@@ -7,7 +7,7 @@
 
 <template>
     <!-- 统一的列表格式 -->
-    <div class="boss-index">
+    <div class="boss-index ru">
         <div class="content">
             <h3 v-if="operCheckinType=='a1' || operCheckinType=='a2'">入住信息</h3>
             <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">预订信息</h3>
@@ -1271,11 +1271,22 @@ export default {
 .el-autocomplete-suggestion {
     width: 450px !important;
 }
-.boss-index {
+.ru {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 60px;
+    overflow: hidden;
     border-radius: 0 0 8px 8px;
 
     .content {
         padding: 20px;
+
+        &.last {
+            flex: 1;
+            height: 0;
+            overflow: auto;
+        }
 
         h3 {
             margin: 0 0 15px;
@@ -1386,6 +1397,10 @@ export default {
     }
 
     .fixedFoot {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
         text-align: right;
         background: #fff;
         border-top: 1px solid #eee;
