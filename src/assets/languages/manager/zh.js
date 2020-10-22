@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-09-16 16:10:23
+ * @LastEditTime: 2020-10-22 16:52:44
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -10,17 +10,17 @@ module.exports = {
 
     //   管理部 > 首页(homePage > hp)
     hp_toRoom: '房态',
-    hp_floorBuilding: '楼层楼栋',
+    hp_floorBuilding: '楼栋楼层',
     hp_floor: '楼层',
     hp_storiedBuilding: '楼栋',
     hp_room: '房型',
     hp_unknown: '未知',
     hp_layer: '层',
     hp_dealNotArrive: '处理应到未到',
-    hp_selectExplain: '如果勾选,则不处理应到未到订单将无法处理',
+    hp_selectExplain: '如果勾选，则不处理应到未到订单将无法进行夜审',
     hp_dealNotLeave: '处理应离未离',
     hp_dealGoOrder: '处理走结订单',
-    hp_roomState: '夜审房间状态OD',
+    hp_roomState: '夜审房间状态置OD',
     hp_autoSuccession: '夜审自动交班',
     hp_auditWay: '夜审方式',
     hp_auditManual: '手动夜审',
@@ -321,9 +321,7 @@ module.exports = {
     ps_accountingRules: '计费规则',
     ps_setUp: '设置',
     ps_resetSuccess: '设置成功',
-    ps_: '你好',
-    ps_: '你好',
-    ps_: '你好',
+
     //财务部 （finance）
     finance_startTime: '开始时间',
     finance_endTime: '结束时间',
@@ -406,12 +404,5 @@ module.exports = {
     finance_invoiceNum: "发票号码",
     finance_invoiceTime: "开票时间",
     finance_operationOf: "操作人",
-    finance_: "清除内容",
-    finance_: "清除内容",
-    finance_: "清除内容",
-    finance_: "清除内容",
-    finance_: "清除内容",
-
-
 
 }

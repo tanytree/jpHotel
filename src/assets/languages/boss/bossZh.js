@@ -144,10 +144,7 @@ module.exports = {
     compensation_selectDepartment: '请选择所在部门',
     compensation_wageSetting: '薪资设置',
     compensation_setSuccess: '设置成功!',
-    compensation_: '薪资修改',
-    compensation_: '薪资修改',
-    compensation_: '薪资修改',
-    compensation_: '薪资修改',
+
     //总办 > 门店管理
     store_createStore: '创建门店',
     store_storeName: '门店名称',
@@ -163,16 +160,7 @@ module.exports = {
     personnel_department: '部门',
     personnel_addDepart: '添加部门',
     personnel_editDepart: '编辑部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
-    personnel_: '部门',
+
 
 
 
