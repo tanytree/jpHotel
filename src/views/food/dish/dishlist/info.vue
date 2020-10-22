@@ -22,7 +22,7 @@
 
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">{{$t('food.common.close')}}</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.closed')}}</el-button>
         </div>
     </div>
 </template>
@@ -59,7 +59,7 @@
             font-size: 18px;
         }
         .imgs{
-            height: 200px;
+            height: auto;
             overflow: hidden;
             border-radius: 5px;
             img{

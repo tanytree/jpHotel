@@ -22,7 +22,7 @@ module.exports = {
         1:'料理修正',
         2:'料理登録',
         3:'一括削除',
-        4:'詳細'
+        4:'料理詳細'
     },
     orderTitle:{
         1:'詳細',
@@ -144,6 +144,7 @@ module.exports = {
         set_auto_emptying_time:'自動クリア時間設定 ',
         open:'ON',
         close:'OFF',
+        closed:'閉じる',
         select_date:'時間を選択してください',
         batch_set:'一括設定',
         select_food_tips:'メーニューを選んでください',

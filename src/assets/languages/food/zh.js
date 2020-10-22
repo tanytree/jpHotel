@@ -22,7 +22,7 @@ module.exports = {
         1:'修改菜品',
         2:'新增菜品',
         3:'批量删除',
-        4:'详情'
+        4:'菜品详情'
     },
     orderTitle:{
         1:'详情',
@@ -144,6 +144,7 @@ module.exports = {
         set_auto_emptying_time:'设置自动清空时间',
         open:'开启',
         close:'关闭',
+        closed:'关闭',
         select_date:'选择时间',
         batch_set:'批量设置',
         select_food_tips:'请选择菜品',
