@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-22 21:47:36
+ * @LastEditTime: 2020-10-23 00:26:28
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -242,30 +242,30 @@ module.exports = {
     grsl_makingPeople: '担当者',
     grsl_selectTime: '期間設定',
     grsl_storageContent: '入庫内容',
-    grsl_orderNo: '入庫書番号',
+    grsl_orderNo: '入庫書類No.',
     grsl_theDetail: '明細',
     grsl_audit: '審査',
-    grsl_entryDetail: '入庫書の内訳',
-    grsl_entryOrderNum: '入庫書番号',
-    grsl_reviewState: '審査状態',
-    grsl_reviewTime: '審査時間',
+    grsl_entryDetail: '入庫明細表',
+    grsl_entryOrderNum: '入庫申請番号',
+    grsl_reviewState: '検品状況',
+    grsl_reviewTime: '検品時間',
     grsl_reviewPeople: '審査員',
-    grsl_reviewSuccest: '審査意見',
-    grsl_waiteReview: '審査待ち',
-    grsl_reviewPass: '審査が通る',
-    grsl_reviewFail: '審査に失敗する',
-    grsl_resetEntryGoods: '変更',
-    grsl_waiteReviewOrder: '審査を経て入庫する',
-    grsl_orderPass: '審査は入庫伝票を通過する',
-    grsl_orderFail: '審査は入庫伝票を通らない',
+    grsl_reviewSuccest: '検品コメント',
+    grsl_waiteReview: '検品待ち',
+    grsl_reviewPass: '（検品）承認',
+    grsl_reviewFail: '（検品）却下',
+    grsl_resetEntryGoods: '商品入庫変更',
+    grsl_waiteReviewOrder: '検品待ち入庫リスト',
+    grsl_orderPass: '（検品）承認リスト',
+    grsl_orderFail: '（検品）却下リスト',
 
     //   管理部 > 价格体系 (priceSystem > ps)
     ps_member: '会員',
-    ps_unit: '会社',
+    ps_unit: '法人',
     ps_bulkPrice: 'ロットで値段を調整する',
-    ps_memberType: '会員タイプ',
-    ps_channel: '経路',
-    ps_offline: 'アウトライン',
+    ps_memberType: '会員種類',
+    ps_channel: 'チャンネル',
+    ps_offline: 'オフライン',
     ps_startDate: '開始日時',
     ps_endDate: '終了期日',
     ps_selectWeek: '曜日設定',
@@ -276,7 +276,7 @@ module.exports = {
     ps_keep: '現状保持',
     ps_changPriceWay: '割引規則',
     ps_fixedPrice: '言い値',
-    ps_japanYen: '日本円',
+    ps_japanYen: '円',
     ps_dueTo: '割引後料金',
     ps_resetRoomPrice: '価格変更',
     ps_nowSelect: '現在選択',
@@ -285,8 +285,8 @@ module.exports = {
     ps_discountFor: '割引',
     ps_newMemberPrice: '新会員価格',
     ps_memberContent: '新しい会員価格がないなら、会員価格にします',
-    ps_roomPrice: '部屋料金',
-    ps_ruleName: 'ルール名',
+    ps_roomPrice: '宿泊料',
+    ps_ruleName: '=レート名称',
     ps_modifyCalendar: 'カレンダーを直す',
     ps_addSuccess: '追加成功',
     ps_allDayRoom: '終日宿泊料金',
@@ -296,7 +296,7 @@ module.exports = {
     ps_ruleDetail: 'ルールの詳細',
     ps_fixedTime: '固定時間チェックアウトモード',
     ps_everyTime: '24時間チェックアウトモード',
-    ps_inLive: '初乗り料金',
+    ps_inLive: 'チェックイン',
     ps_minterGet: '分間チェックインしたら初乗り料金がかかります。チェックインしてから',
     ps_getAll: '分後には全日レンタルでかかります。',
     ps_nextDay: '翌日',
@@ -305,7 +305,7 @@ module.exports = {
     ps_addHalf: '半日料金加算する',
     ps_addHour: '1時間ごとに加算されます',
     ps_addSky: '加算上限を追加する',
-    ps_billingType: '課金タイプ',
+    ps_billingType: '会計分類別',
     ps_startPrice: '初乗り料金：',
     ps_thenTime: '時間オーバー料金',
     ps_minGetMoney: '分間を超えると、課金する，に基づき',
@@ -318,7 +318,7 @@ module.exports = {
     ps_thenTimeRule: 'タイムアウト規則',
     ps_fullPrice: '全价',
     ps_advanceRoomPay: '料金を事前に収める',
-    ps_accountingRules: '料金計算規則',
+    ps_accountingRules: '会計レート',
     ps_setUp: '設定',
     ps_resetSuccess: '設置に成功',
     //财务部 （finance）
@@ -326,41 +326,41 @@ module.exports = {
     finance_endTime: '終了時間',
     finance_income: '所得',
     finance_spending: '支出',
-    finance_nowChoose: '現在選択',
+    finance_nowChoose: '選択項目',
     finance_abstract: '摘要',
     finance_account: '口座',
-    finance_nowSpend: '今回の発生金額',
-    finance_payTime: '支払い時間',
-    finance_uploadImg: '画像をアップロードする',
-    finance_clearContent: "内容をクリアする",
+    finance_nowSpend: '金額',
+    finance_payTime: '支払う時間',
+    finance_uploadImg: '写真添付',
+    finance_clearContent: "クリア",
     finance_typeName: "分類名",
     finance_incomeType: "収支類型",
     finance_date: "日付",
     finance_direction: "方向",
     finance_chooseInTime: "勘定時間まで選んでください",
-    finance_creatTime: "処理した時間",
-    finance_source: "源",
+    finance_creatTime: "注文時間",
+    finance_source: "注文ルート",
     finance_autoPro: "自動的に生じる",
     finance_handPro: "手動生成",
-    finance_openProject: "営業種目",
+    finance_openProject: "業務項目",
     finance_price: "金額(円)",
     finance_accoutRemark: "記帳備考",
-    finance_auditRemark: "審査備考",
+    finance_auditRemark: "備考",
     finance_credentials: "証拠",
     finance_proCredentials: "証明書を生成する",
     finance_profits: "利益",
     finance_only: "審査されたデータだけを集計する",
-    finance_resetAccount: "配水帳を修正する",
+    finance_resetAccount: "仕分け日記帳修正",
     finance_theAmount: "発生金額",
-    finance_pass: "を通じて",
-    finance_notPass: "通らない",
+    finance_pass: "承認",
+    finance_notPass: "却下",
     finance_projectNum: "科目コード",
     finance_projectName: "科目名",
     finance_during: "まで",
     finance_borrower: "やめて",
     finance_lender: "贷",
-    finance_balance: "残高",
-    finance_project: "項目",
+    finance_balance: "請求残金",
+    finance_project: "科目・項目",
     finance_change: "高速切り替え",
     finance_beginning: "期首残高",
     finance_current: "今期発生額",
@@ -373,29 +373,29 @@ module.exports = {
     finance_creditBalance: "貸手残高",
     finance_sterilisation: "頻繁な",
     finance_kind: "種別",
-    finance_coding: "コード",
-    finance_balanceDirection: "残高方向",
+    finance_coding: "編集コード",
+    finance_balanceDirection: "残高仕訳（勘定科目の貸方、借方）",
     finance_borrrow: "借",
     finance_credit: "プライム",
     finance_normal: "正常",
     finance_deleted: "削除済み",
-    finance_addLower: "下級を加える",
+    finance_addLower: "科目追加",
     finance_printTitle: "印刷タイトル",
     finance_chooseDefault: "黙認するか否か",
     finance_setDefault: "をデフォルト",
     finance_accoutCode: "アカウントコード",
-    finance_accoutName: "アカウント名",
-    finance_accountNum: "アカウント",
+    finance_accoutName: "口座名称",
+    finance_accountNum: "口座番号",
     finance_projectKind: "科目別",
     finance_superiorSubject: "上級科目",
-    finance_accountantCourse: "会計科目",
+    finance_accountantCourse: "会計項目",
     finance_chooseSubject: "選択科目",
     finance_invoiceType: "インボイスタイプ",
-    finance_noLimit: "决断",
+    finance_noLimit: "all",
     finance_vatInvoice: "付加価値税専用領収書",
     finance_ordinaryInvoice: "付加価値税普通伝票",
     finance_electronicInvoice: "付加価値税電子計算書",
-    finance_customerName: "クライアント名",
+    finance_customerName: "顧客名前",
     finance_phone: "自宅電話番号",
     finance_invoiceHeader: "送り状の台頭",
     finance_c: "開票金額",
@@ -403,362 +403,6 @@ module.exports = {
     finance_invoiceNum: "送り状番号",
     finance_invoiceTime: "開票時間",
     finance_operationOf: "担当者",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

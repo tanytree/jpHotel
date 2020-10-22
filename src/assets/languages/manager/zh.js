@@ -253,7 +253,7 @@ module.exports = {
     grsl_reviewSuccest: '审核意见',
     grsl_waiteReview: '待审核',
     grsl_reviewPass: '审核通过',
-    grsl_reviewFail: '审核失败',
+    grsl_reviewFail: '审核未通过',
     grsl_resetEntryGoods: '修改商品入库',
     grsl_waiteReviewOrder: '待审核入库单',
     grsl_orderPass: '审核通过入库单',

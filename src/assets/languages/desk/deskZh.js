@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-22 13:37:35
+ * @LastEditTime: 2020-10-23 00:32:01
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -86,27 +86,6 @@ module.exports = {
     home_payCompanyName: '付款方公司名称',
     home_companyName: '付款公司',
     home_timeInfo: '请补全开票时间信息',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
-    home_: '',
     home_: '',
     home_: '',
     //serve(前台服务)
