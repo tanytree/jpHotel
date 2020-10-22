@@ -8,7 +8,7 @@
 <div class="roomDetails">
     <div class="hd">
         <div class="tit">
-            <el-button type="" size="mini" class="fr" @click="liveCard_in_person_list">操作房卡</el-button>
+<!--            <el-button type="" size="mini" class="fr" @click="liveCard_in_person_list">操作房卡</el-button>-->
             <h3>入住信息（房间：{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>订单号：{{detailData.checkIn.orderNum}}</span>
         </div>
         <div class="customerInfo">
@@ -27,9 +27,9 @@
                 <el-col :span="4">
                     房价合计：{{detailData.checkIn.realPrice}}
                 </el-col>
-                <el-col :span="4">
-                    {{$t('commons.checkInTypeDesc')}}：{{F_checkinType(detailData.checkIn.checkinType)}}
-                </el-col>
+<!--                <el-col :span="4">-->
+<!--                    {{$t('commons.checkInTypeDesc')}}：{{F_checkinType(detailData.checkIn.checkinType)}}-->
+<!--                </el-col>-->
                 <el-col :span="6">
                     外部订单号：{{detailData.checkIn.thirdOrdernum}}
                 </el-col>

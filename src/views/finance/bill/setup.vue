@@ -343,7 +343,7 @@ export default {
         accountName: [
           { required: true, message: "请填写名称", trigger: "blur" },
         ],
-        typeId: [{ required: true, message: "请选择类别", trigger: "blur" }],
+        typeId: [{ required: true, message: this.$t('commons.placeChoose'), trigger: "blur" }],
       },
       cateRule: {
         credentailWord: [
@@ -361,7 +361,7 @@ export default {
           { required: true, message: "请填写名称", trigger: "blur" },
         ],
         subjectsId: [
-          { required: true, message: "请选择科目", trigger: "blur" },
+          { required: true, message: this.$t('commons.placeChoose'), trigger: "blur" },
         ],
       },
       subData: [],

@@ -363,9 +363,6 @@ export default {
                 params.consumePrice = this.cartToTal
             }
             params.goodsJson = JSON.stringify(Json)
-
-
-
             console.log(params)
             this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
               this.visible = false

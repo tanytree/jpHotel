@@ -13,7 +13,7 @@
             <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">预订信息</h3>
             <h3 v-if="operCheckinType=='b3'">会议登记信息</h3>
             <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules"
-                     label-width="120px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
+                     label-width="130px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
                 <el-form-item :label="$t('desk.customer_livePeople')" prop="name">
                     <el-autocomplete v-model="checkInForm.name" name="name" :fetch-suggestions="remoteMethod" :highlight-first-item="true" popper-class="popper-class" :trigger-on-focus="false" placeholder="请输入内容" @select="changeName($event)"></el-autocomplete>
                 </el-form-item>
@@ -22,7 +22,7 @@
                         <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="key" :key="index">{{item}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('commons.idCardTypeDesc')" prop="idcardType">
+                <el-form-item :label="$t('commons.idCardTypeDesc')" prop="idcardType" >
                     <el-select v-model="checkInForm.idcardType">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
                     </el-select>
@@ -68,11 +68,11 @@
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">
-                    <el-select v-model="checkInForm.checkinType">
-                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">-->
+<!--                    <el-select v-model="checkInForm.checkinType">-->
+<!--                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item label="订单备注：">
                     <el-input type="textarea" v-model="checkInForm.remark"></el-input>
                 </el-form-item>
@@ -89,21 +89,21 @@
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType" v-if="operCheckinType!='b3'">
-                    <el-select v-model="checkInForm.checkinType">
-                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType" v-if="operCheckinType!='b3'">-->
+<!--                    <el-select v-model="checkInForm.checkinType">-->
+<!--                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item label="销售员：" v-if="operCheckinType=='b3'">
                     <el-select v-model="checkInForm.salesId">
                         <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="计费规则：" prop="ruleHourId" v-if="operCheckinType=='b2'">
-                    <el-select v-model="checkInForm.ruleHourId">
-                        <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
+<!--                <el-form-item label="计费规则：" prop="ruleHourId" v-if="operCheckinType=='b2'">-->
+<!--                    <el-select v-model="checkInForm.ruleHourId">-->
+<!--                        <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
                     <el-date-picker v-model="checkInForm.checkinTime" type="datetime" placeholder="选择日期" :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
                 </el-form-item>
@@ -262,7 +262,7 @@
                 <el-table-column label="姓名" width="150">
                     <template slot-scope="{row}">
                         <el-row>
-                            <el-input v-model="row.name" placeholder="请输入姓名"></el-input>
+                            <el-input v-model="row.name" :placeholder="$t('commons.pleaseEnter')"></el-input>
                         </el-row>
                     </template>
                 </el-table-column>
@@ -279,7 +279,7 @@
                 <el-table-column prop="groupName" label="证件号码">
                     <template slot-scope="{row}">
                         <el-row>
-                            <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>
+                            <el-input v-model="row.idcard" :placeholder="$t('commons.pleaseEnter')"></el-input>
                         </el-row>
                     </template>
                 </el-table-column>
@@ -295,7 +295,7 @@
                 <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')" width="150">
                     <template slot-scope="{row}">
                         <el-row>
-                            <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
+                            <el-input v-model="row.mobile" :placeholder="$t('commons.pleaseEnter')"></el-input>
                         </el-row>
                     </template>
                 </el-table-column>
@@ -459,7 +459,8 @@ export default {
             rules: {
                 name: [{
                     required: true,
-                    message: '请输入姓名',
+                    // message: '请输入姓名',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 sex: [{
@@ -469,7 +470,8 @@ export default {
                     trigger: 'blur'
                 }, ], mobile: [{
                     required: true,
-                    message: '请输入手机号',
+                    // message: '请输入手机号',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 idcardType: [{
@@ -480,7 +482,8 @@ export default {
                 }, ],
                 idcard: [{
                     required: true,
-                    message: '请输入证件号',
+                    // message: '请输入证件号',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 checkinTime: [{
@@ -498,7 +501,8 @@ export default {
 
                 checkinDays: [{
                     required: true,
-                    message: '请输入入住天数',
+                    // message: '请输入入住天数',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 guestType: [{

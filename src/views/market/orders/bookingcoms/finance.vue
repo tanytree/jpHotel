@@ -348,7 +348,8 @@ export default {
         consumePrice: [
           {
             required: true,
-            message: "请输入金额",
+            // message: "请输入金额",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],
@@ -362,14 +363,16 @@ export default {
         companyName: [
           {
             required: true,
-            message: "请输入付款公司名称",
+            // message: "请输入付款公司名称",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],
         projectName: [
           {
             required: true,
-            message: "请输入项目名称",
+            // message: "请输入项目名称",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],
@@ -383,7 +386,8 @@ export default {
         prices: [
           {
             required: true,
-            message: "请输入金额",
+            // message: "请输入金额",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],
@@ -404,7 +408,8 @@ export default {
         remark: [
           {
             required: true,
-            message: "请输入备注",
+            // message: "请输入备注",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],

@@ -150,10 +150,10 @@ export default {
       account: [],
       curSubId: "",
       rules: {
-        msg: [{ required: true, message: "请输入摘要", trigger: "blur" }],
-        remark: [{ required: true, message: "请输入备注", trigger: "blur" }],
-        amount: [{ required: true, message: "请输入金额", trigger: "blur" }],
-        payTime: [{ required: true, message: "请选择日期", trigger: "blur" }],
+        msg: [{ required: true, message: this.$t('commons.mustInput'), trigger: "blur" }],
+        remark: [{ required: true, message: this.$t('commons.mustInput'), trigger: "blur" }],
+        amount: [{ required: true, message: this.$t('commons.mustInput'), trigger: "blur" }],
+        payTime: [{ required: true, message: this.$t('commons.mustInput'), trigger: "blur" }],
       },
     };
   },

@@ -15,7 +15,7 @@
                 <el-button type="primary" size="mini" @click="consumeGoodsHandle">迷你吧</el-button>
                 <el-button type="primary" size="mini" @click="checkOutHandle">退房结账</el-button>
                 <el-button type="primary" size="mini" @click="invoicingHandle">开发票</el-button>
-                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>
+<!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
                 <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
                 <el-button type="primary" size="mini">撤销结账</el-button>
@@ -33,9 +33,9 @@
             <el-button plain size="mini" @click="consume_order_list(1)">未结账务</el-button>
             <el-button plain size="mini" @click="consume_order_list(2)">已结账务</el-button>
         </el-form-item>
-        <el-form-item class="fr">
-            <el-button type="primary">导出</el-button>
-        </el-form-item>
+<!--        <el-form-item class="fr">-->
+<!--            <el-button type="primary">导出</el-button>-->
+<!--        </el-form-item>-->
     </el-form>
     <!--表格数据 -->
     <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
@@ -94,7 +94,6 @@
                 </el-radio-group>
             </el-form-item>
 
-
             <el-form-item label="消费项目：">
                 <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
                     <el-radio-button :label="5" :value="5">加收全天房费</el-radio-button>
@@ -102,8 +101,6 @@
                     <el-radio-button :label="7" :value="7">损物赔偿</el-radio-button>
                 </el-radio-group>
             </el-form-item>
-
-
 
             <template v-if="consumeOperForm.priceType==7">
                 <el-form-item label="商品类别：">
@@ -122,8 +119,8 @@
                 </el-form-item>
             </template>
             <el-form-item label="金额：">
-                <el-input class="1" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
-                <el-input class="2" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
+                <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
+                <el-input class="2222" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="备注：">
                 <el-input class="" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
@@ -438,7 +435,8 @@ export default {
             rules: {
                 consumePrice: [{
                     required: true,
-                    message: '请输入金额',
+                    // message: '请输入金额',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 creditName: [{
@@ -449,12 +447,14 @@ export default {
                 }, ],
                 companyName: [{
                     required: true,
-                    message: '请输入付款公司名称',
+                    // message: '请输入付款公司名称',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 projectName: [{
                     required: true,
-                    message: '请输入项目名称',
+                    // message: '请输入项目名称',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 invoiceTime: [{
@@ -465,7 +465,8 @@ export default {
                 }, ],
                 prices: [{
                     required: true,
-                    message: '请输入金额',
+                    // message: '请输入金额',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 payType: [{
@@ -482,7 +483,8 @@ export default {
                 }, ],
                 remark: [{
                     required: true,
-                    message: '请输入备注',
+                    // message: '请输入备注',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
             },

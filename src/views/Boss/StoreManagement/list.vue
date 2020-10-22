@@ -158,28 +158,28 @@ export default {
                 userName: [
                     {
                         required: true,
-                        message: "请输入门店经理",
+                        message: this.$t('commons.mustInput'),
                         trigger: "change",
                     },
                 ],
                 account: [
                     {
                         required: true,
-                        message: "请输入登录账号",
+                        message: this.$t('commons.mustInput'),
                         trigger: "change",
                     },
                 ],
                 password: [
                     {
                         required: true,
-                        message: "请输入登录密码",
+                        message: this.$t('commons.mustInput'),
                         trigger: "change",
                     },
                 ],
                 storesName: [
                     {
                         required: true,
-                        message: "请输入门店名称",
+                        message: this.$t('commons.mustInput'),
                         trigger: "change",
                     },
                 ],

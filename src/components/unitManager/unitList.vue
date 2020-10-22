@@ -273,9 +273,9 @@ export default {
       },
       rules: {
         ruleName: [
-          { required: true, message: "请输入规格名称", trigger: "blur" },
+          { required: true, message: this.$t('commons.mustInput'), trigger: "blur" },
         ],
-        time: [{ required: true, message: "请选择时间", trigger: "blur" }],
+        time: [{ required: true, message: this.$t('commons.placeChoose'), trigger: "blur" }],
       },
       weekDays: [],
       dialogDetail: false,

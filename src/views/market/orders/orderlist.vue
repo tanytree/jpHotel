@@ -257,9 +257,7 @@
                     :label="$t('desk.order_checkStatus')"
                     width="100"
                 >
-                    <template slot-scope="{ row }">{{
-                        F_billType(row.billType)
-                    }}</template>
+                    <template slot-scope="{ row }">{{  F_billType(row.billType || '0') }} </template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="240">
                     <template slot-scope="{ row }">
@@ -437,7 +435,8 @@ export default {
                 consumePrice: [
                     {
                         required: true,
-                        message: "请输入金额",
+                        // message: "请输入金额",
+                        message: this.$t('commons.mustInput'),
                         trigger: "blur",
                     },
                 ],

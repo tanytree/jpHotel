@@ -79,7 +79,8 @@ export default {
           {
             required: true,
             trigger: "blur",
-            message: "请输入部门名称",
+            // message: "请输入部门名称",
+              message: this.$t('commons.mustInput'),
           },
         ],
       },

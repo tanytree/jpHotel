@@ -253,14 +253,16 @@ export default {
         name: [
           {
             required: true,
-            message: "请输入来客姓名",
+            // message: "请输入来客姓名",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],
         idcard: [
           {
             required: true,
-            message: "请输入证件号",
+            // message: "请输入证件号",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],

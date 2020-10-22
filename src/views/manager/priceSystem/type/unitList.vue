@@ -200,7 +200,8 @@
 				rules: {
 					ruleName: [{
 						required: true,
-						message: '请输入规格名称',
+						// message: '请输入规格名称',
+                        message: this.$t('commons.mustInput'),
 						trigger: 'blur'
 					}],
 					time: [{

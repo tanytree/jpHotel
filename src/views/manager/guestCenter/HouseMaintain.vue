@@ -265,28 +265,28 @@
                     houseName: [
                         {
                             required: true,
-                            message: "请输入房型",
+                            message: this.$t('commons.mustInput'),
                             trigger: "blur",
                         },
                     ],
                     marketPrice: [
                         {
                             required: true,
-                            message: "请输入门市价",
+                            message: this.$t('commons.mustInput'),
                             trigger: "blur",
                         },
                     ],
                     discountPrice: [
                         {
                             required: true,
-                            message: "请输入优惠价",
+                            message: this.$t('commons.mustInput'),
                             trigger: "blur",
                         },
                     ],
                     checkinNum: [
                         {
                             required: true,
-                            message: "请输入可入住数",
+                            message: this.$t('commons.mustInput'),
                             trigger: "blur",
                         },
                     ],
@@ -307,14 +307,14 @@
                     houseSizeW: [
                         {
                             required: true,
-                            message: "请输入房屋面积",
+                            message: this.$t('commons.mustInput'),
                             trigger: "blur",
                         },
                     ],
                     houseSizeH: [
                         {
                             required: true,
-                            message: "请输入房屋面积",
+                            message: this.$t('commons.mustInput'),
                             trigger: "blur",
                         },
                     ],

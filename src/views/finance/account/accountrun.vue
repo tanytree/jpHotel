@@ -274,15 +274,15 @@ export default {
             edit: {account: "", price: 1, remark: ""},
             editRule: {
                 account: [
-                    {required: true, message: "请选择账户类型", trigger: "change"},
+                    {required: true, message: this.$t('commons.placeChoose'), trigger: "change"},
                 ],
-                price: [{required: true, message: "请输入金额", trigger: "blur"}],
+                price: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
                 remark: [{required: true, message: "请填写备注", trigger: "blur"}],
             },
             examine: {type: 1, remark: ""},
             examineRule: {
                 type: [
-                    {required: true, message: "请选择审核状态", trigger: "change"},
+                    {required: true, message: this.$t('commons.placeChoose'), trigger: "change"},
                 ],
                 remark: [{required: true, message: "请填写备注", trigger: "blur"}],
             },

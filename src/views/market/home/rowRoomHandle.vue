@@ -278,7 +278,8 @@ export default {
             rules: {
                 name: [{
                     required: true,
-                    message: '请输入姓名',
+                    // message: '请输入姓名',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 sex: [{
@@ -288,7 +289,8 @@ export default {
                 }, ],
                 mobile: [{
                     required: true,
-                    message: '请输入手机号',
+                    // message: '请输入手机号',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 idcardType: [{
@@ -298,7 +300,8 @@ export default {
                 }, ],
                 idcard: [{
                     required: true,
-                    message: '请输入证件号',
+                    // message: '请输入证件号',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 checkinTime: [{
@@ -319,7 +322,8 @@ export default {
                 }, ],
                 checkinDays: [{
                     required: true,
-                    message: '请输入入住天数',
+                    // message: '请输入入住天数',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'change'
                 }, ],
                 guestType: [{

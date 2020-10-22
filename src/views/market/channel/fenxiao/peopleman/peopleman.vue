@@ -86,7 +86,7 @@
                   <el-row>
                     <el-col :span="12">
                       <el-form-item label="姓名:" >
-                        <el-input style="width:200px" placeholder="请输入姓名"  autocomplete="off"></el-input>
+                        <el-input style="width:200px" :placeholder="$t('commons.pleaseEnter')"  autocomplete="off"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -172,7 +172,7 @@
 
                       <el-col :span="12">
                         <el-form-item label="关联后台账号:" >
-                          <el-input style="width:200px" placeholder="请输入正确的后台账号"  autocomplete="off"></el-input>
+                          <el-input style="width:200px" :placeholder="$t('commons.pleaseEnter')"  autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
 
@@ -204,7 +204,7 @@
                   <el-row>
                     <el-col :span="12">
                       <el-form-item label="姓名:" >
-                        <el-input style="width:200px" placeholder="请输入姓名"  autocomplete="off"></el-input>
+                        <el-input style="width:200px" :placeholder="$t('commons.pleaseEnter')"  autocomplete="off"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -290,7 +290,7 @@
 
                       <el-col :span="12">
                         <el-form-item label="关联后台账号:" >
-                          <el-input style="width:200px" placeholder="请输入正确的后台账号"  autocomplete="off"></el-input>
+                          <el-input style="width:200px" :placeholder="$t('commons.pleaseEnter')" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-col>
 

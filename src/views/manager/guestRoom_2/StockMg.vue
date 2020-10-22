@@ -164,7 +164,7 @@
                 addGoods: {name: "", categoryId: ""},
                 categoryProps: {value: "id", label: "name", children: "child"},
                 rules: {
-                    count: [{required: true, message: "请输入库存", trigger: "blur"}],
+                    count: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
                 },
                 changeStockVisible: false,
                 goodsInVisible: false, //商品入库弹框

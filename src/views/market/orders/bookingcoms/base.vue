@@ -30,9 +30,9 @@
             <el-col :span="8">
                 <p>{{$t('desk.book_orderSoutce')}}:：{{F_orderSource(checkinInfo.orderSource)}}</p>
             </el-col>
-            <el-col :span="8">
-                <p>{{$t('commons.checkInTypeDesc')}}：{{F_checkinType(checkinInfo.checkinType)}}</p>
-            </el-col>
+<!--            <el-col :span="8">-->
+<!--                <p>{{$t('commons.checkInTypeDesc')}}：{{F_checkinType(checkinInfo.checkinType)}}</p>-->
+<!--            </el-col>-->
             <el-col :span="8">
                 <p>{{ $t('desk.nightAudit.arriveTime') }}：{{checkinInfo.checkinTime}} - {{checkinInfo.checkoutTime}}</p>
             </el-col>
@@ -88,13 +88,13 @@
                         {{baseInfoChangeForm.checkoutTime}}
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
-                    <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">
-                        <el-select v-model="baseInfoChangeForm.checkinType" class="width150">
-                            <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
+<!--                <el-col :span="8">-->
+<!--                    <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">-->
+<!--                        <el-select v-model="baseInfoChangeForm.checkinType" class="width150">-->
+<!--                            <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
+<!--                        </el-select>-->
+<!--                    </el-form-item>-->
+<!--                </el-col>-->
                 <el-col :span="8">
                     <el-form-item label="销售员：">
                         <el-select v-model="baseInfoChangeForm.salesId" class="width150">
@@ -263,7 +263,8 @@ export default {
             rules: {
                 name: [{
                     required: true,
-                    message: '请输入姓名',
+                    // message: '请输入姓名',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 sex: [{
@@ -274,7 +275,8 @@ export default {
                 }, ],
                 mobile: [{
                     required: true,
-                    message: '请输入手机号',
+                    // message: '请输入手机号',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 idcardType: [{
@@ -285,7 +287,8 @@ export default {
                 }, ],
                 idcard: [{
                     required: true,
-                    message: '请输入证件号',
+                    // message: '请输入证件号',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 }, ],
                 checkinTime: [{
@@ -302,7 +305,8 @@ export default {
                 }, ],
                 checkinDays: [{
                     required: true,
-                    message: '请输入入住天数',
+                    // message: '请输入入住天数',
+                    message: this.$t('commons.mustInput'),
                     trigger: 'change'
                 }, ],
                 guestType: [{

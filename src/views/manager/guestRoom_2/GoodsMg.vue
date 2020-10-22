@@ -133,24 +133,24 @@
                     inventoryWarning: "",
                 },
                 threerules: {
-                    name: [{required: true, message: "请输入产品名称", trigger: "blur"}],
+                    name: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
                     categoryId: [
-                        {required: true, message: "请选择产品分类", trigger: "change"},
+                        {required: true, message: this.$t('commons.placeChoose'), trigger: "change"},
                     ],
                     retailPrice: [
-                        {required: true, message: "请输入产品零售价", trigger: "blur"},
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
                     costPrice: [
-                        {required: true, message: "请输入产品成本价", trigger: "blur"},
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
                     employeePrice: [
-                        {required: true, message: "请输入产品员工价", trigger: "blur"},
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
                     buyCount: [
-                        {required: true, message: "请输入产品购买数量", trigger: "blur"},
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
                     inventoryWarning: [
-                        {required: true, message: "请输入产品预警数量", trigger: "blur"},
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
                 },
                 tab_show: true,

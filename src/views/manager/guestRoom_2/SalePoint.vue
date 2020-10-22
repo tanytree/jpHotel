@@ -216,7 +216,7 @@
                 shelfVisible: false,
                 threeForm: {name: "", kinds: ""},
                 threerules: {
-                    name: [{required: true, message: "请输入活动名称", trigger: "blur"}],
+                    name: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
                 },
                 selection: [], upshelf: {name: "", category: ""}, shelfTotal: 0
             };

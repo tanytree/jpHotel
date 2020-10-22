@@ -210,12 +210,14 @@
 				rules: {
 					ruleName: [{
 						required: true,
-						message: "请输入规格名称",
+						// message: "请输入规格名称",
+                        message: this.$t('commons.mustInput'),
 						trigger: "blur"
 					}, ],
 					checkinStartMinute: [{
 						required: true,
-						message: "请输入起步收费",
+						// message: "请输入起步收费",
+                        message: this.$t('commons.mustInput'),
 						trigger: "blur"
 					}, ],
 					checkoutTime: [{
@@ -225,7 +227,8 @@
 					}, ],
 					outtimeMinute: [{
 						required: true,
-						message: "请输入超时收费:",
+						// message: "请输入超时收费:",
+                        message: this.$t('commons.mustInput'),
 						trigger: "blur"
 					}, ],
 				},

@@ -29,7 +29,7 @@
             <el-table-column label="姓名" width="150">
                 <template slot-scope="{row, $index}">
                     <el-row>
-                        <el-input v-model="row.name" placeholder="请输入姓名" @keyup.native="personListKeyup(row, 'name', row.name, $index)"></el-input>
+                        <el-input v-model="row.name" :placeholder="$t('commons.pleaseEnter')" @keyup.native="personListKeyup(row, 'name', row.name, $index)"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
@@ -46,7 +46,7 @@
             <el-table-column prop="groupName" label="证件号码">
                 <template slot-scope="{row}">
                     <el-row>
-                        <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>
+                        <el-input v-model="row.idcard" :placeholder="$t('commons.pleaseEnter')"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
@@ -62,7 +62,7 @@
             <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')">
                 <template slot-scope="{row}">
                     <el-row>
-                        <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
+                        <el-input v-model="row.mobile" :placeholder="$t('commons.pleaseEnter')"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
@@ -115,8 +115,6 @@ export default {
     },
 
     created() {
-        console.log(this.liveData);
-        console.log(this.checkinInfo);
         this.liveInPersonData = this.$F.deepClone(this.liveData);
         this.$forceUpdate();
     },
@@ -181,7 +179,6 @@ export default {
                 });
                 //预定房办理入住
                 this.$F.doRequest(this, '/pms/reserve/reserve_to_checkin', params, (res) => {
-                    // res.checkinId
                     //然后立即办理入住
                     params = {
                         checkinId: res.checkinId,
@@ -189,7 +186,7 @@ export default {
                         personList: JSON.stringify(this.liveInPersonData[0].personList),
                     }
                     this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
-                        this.emit('checkInCallback', res.checkinId);
+                        this.$emit('checkInCallback', res.checkinId);
                     })
                 })
             } else if (this.type == 'order' || this.type == 'checkin'){

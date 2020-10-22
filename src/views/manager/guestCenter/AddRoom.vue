@@ -276,25 +276,27 @@ export default {
             files: [],
             rules: {
                 roomTypeId: [
-                    { required: true, message: "请选择房型", trigger: "blur" },
+                    { required: true, message: this.$t('commons.placeChoose'), trigger: "blur" },
                 ],
                 buildingId: [
-                    { required: true, message: "请选择楼栋", trigger: "blur" },
+                    { required: true, message: this.$t('commons.placeChoose'), trigger: "blur" },
                 ],
                 buildingFloorId: [
-                    { required: true, message: "请选择楼层", trigger: "blur" },
+                    { required: true, message: this.$t('commons.placeChoose'), trigger: "blur" },
                 ],
                 houseNum: [
                     {
                         required: true,
-                        message: "请输入房间号",
+                        // message: "请输入房间号",
+                        message: this.$t('commons.mustInput'),
                         trigger: "blur",
                     },
                 ],
                 extension: [
                     {
                         required: true,
-                        message: "请输入电话分机",
+                        // message: "请输入电话分机",
+                        message: this.$t('commons.mustInput'),
                         trigger: "blur",
                     },
                 ],

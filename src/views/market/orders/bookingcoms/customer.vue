@@ -68,7 +68,7 @@
         <el-table-column label="姓名" width="150">
             <template slot-scope="{row}">
                 <el-row>
-                    <el-input v-model="row.name" placeholder="请输入姓名"></el-input>
+                    <el-input v-model="row.name" :placeholder="$t('commons.pleaseEnter')"></el-input>
                 </el-row>
 <!--                <el-row v-else>-->
 <!--                    <el-input v-if="row.edit" v-model="row.name"></el-input>-->
@@ -89,7 +89,7 @@
         <el-table-column prop="groupName" label="证件号码">
             <template slot-scope="{row}">
                 <el-row>
-                    <el-input v-model="row.idcard" placeholder="请输入证件号码"></el-input>
+                    <el-input v-model="row.idcard" :placeholder="$t('commons.pleaseEnter')"></el-input>
                 </el-row>
             </template>
         </el-table-column>
@@ -105,7 +105,7 @@
         <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')" width="150">
             <template slot-scope="{row}">
                 <el-row>
-                    <el-input v-model="row.mobile" placeholder="请输入手机号"></el-input>
+                    <el-input v-model="row.mobile" :placeholder="$t('commons.pleaseEnter')"></el-input>
                 </el-row>
             </template>
         </el-table-column>

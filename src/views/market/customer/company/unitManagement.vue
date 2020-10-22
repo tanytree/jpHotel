@@ -592,7 +592,8 @@ export default {
         enterName: [
           {
             required: true,
-            message: "请输入单位名称",
+            // message: "请输入单位名称",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],
@@ -606,7 +607,8 @@ export default {
         contactPhone: [
           {
             required: true,
-            message: "请输入手机号",
+            // message: "请输入手机号",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],
@@ -627,7 +629,8 @@ export default {
         creditLimit: [
           {
             required: true,
-            message: "请输入挂账额度",
+            // message: "请输入挂账额度",
+              message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
         ],

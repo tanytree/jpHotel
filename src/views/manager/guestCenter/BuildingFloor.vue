@@ -251,7 +251,8 @@
                     name: [
                         {
                             required: true,
-                            message: "请输入楼栋名称",
+                            // message: "请输入楼栋名称",
+                            message: this.$t('commons.mustInput'),
                             trigger: "blur",
                         },
                     ],

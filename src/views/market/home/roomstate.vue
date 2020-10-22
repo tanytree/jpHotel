@@ -484,17 +484,17 @@
                 入住时间：
                 <span>{{ currentRoom.createTime }}</span>
               </div>
-              <div class="col">
-                  {{$t('commons.checkInTypeDesc')}}：
-                <span>{{
-                  $t("commons.checkinType")[
-                    (currentRoom.livingPersonList[0]
-                      ? currentRoom.livingPersonList[0].checkIn.checkinType
-                      : "1"
-                    ).toString()
-                  ]
-                }}</span>
-              </div>
+<!--              <div class="col">-->
+<!--                  {{$t('commons.checkInTypeDesc')}}：-->
+<!--                <span>{{-->
+<!--                  $t("commons.checkinType")[-->
+<!--                    (currentRoom.livingPersonList[0]-->
+<!--                      ? currentRoom.livingPersonList[0].checkIn.checkinType-->
+<!--                      : "1"-->
+<!--                    ).toString()-->
+<!--                  ]-->
+<!--                }}</span>-->
+<!--              </div>-->
               <div class="col">
                 消费合计：
                 <span>帮忙找下哪个字段</span>

@@ -208,12 +208,14 @@
 				rules_h: {
 					checkinStartMinute: [{
 						required: true,
-						message: "请输入起步收费",
+						// message: "请输入起步收费",
+                        message: this.$t('commons.mustInput'),
 						trigger: "blur"
 					}, ],
 					outtimeMinute: [{
 						required: true,
-						message: "请输入超时收费",
+						// message: "请输入超时收费",
+                        message: this.$t('commons.mustInput'),
 						trigger: "blur"
 					}, ],
 				},

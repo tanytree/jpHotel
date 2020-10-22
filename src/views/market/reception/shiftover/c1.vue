@@ -123,12 +123,12 @@
     <el-divider></el-divider>
     <el-row style="text-align: center">
       <elForm inline size="small">
-        <el-form-item :label="$t('commons.checkInTypeDesc')">
-          <el-select v-model="form.text">
-            <el-option label="正常" value="1"></el-option>
-            <el-option label="不正常" value="2"></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item :label="$t('commons.checkInTypeDesc')">-->
+<!--          <el-select v-model="form.text">-->
+<!--            <el-option label="正常" value="1"></el-option>-->
+<!--            <el-option label="不正常" value="2"></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="">
           <el-button type="primary" class="submit">{{ $t('commons.confirm') }}</el-button>
         </el-form-item>

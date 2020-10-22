@@ -327,20 +327,7 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
-                <div class="grid-content">
-                  <el-form-item :label="$t('commons.checkInTypeDesc')" prop="name">
-                    <el-select
-                      style="width: 246px"
-                      v-model="checkInForm.enterStatus"
-                    >
-                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
-                      <el-option label="已认证" value="1">已认证</el-option>
-                      <el-option label="未认证" value="2">未认证</el-option>
-                    </el-select>
-                  </el-form-item>
-                </div>
-              </el-col>
+
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item :label="$t('desk.book_orderSoutce')" prop="name">

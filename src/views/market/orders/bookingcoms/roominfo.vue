@@ -90,18 +90,12 @@
 <!--                </el-col>-->
 <!--            </el-row>-->
 <!--        </el-row>-->
-        <el-dialog
-            top="0"
-            :visible.sync="liveInPersonShow"
-            class="liveInPersonDia"
-            :title="$t('desk.order_rowHouses')"
-            width="80%"
-        >
+        <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
             <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
-            <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="liveInPersonShow = false" >{{ $t('commons.cancel') }}</el-button>
-                <!-- <el-button size="small" type="primary" @click="liveInPersonShow = false">{{ $t('commons.confirm') }}</el-button> -->
-      </span>
+<!--            <span slot="footer" class="dialog-footer">-->
+<!--        <el-button size="small" @click="liveInPersonShow = false" >{{ $t('commons.cancel') }}</el-button>-->
+<!--                &lt;!&ndash; <el-button size="small" type="primary" @click="liveInPersonShow = false">{{ $t('commons.confirm') }}</el-button> &ndash;&gt;-->
+<!--      </span>-->
         </el-dialog>
         <el-dialog
             top="0"

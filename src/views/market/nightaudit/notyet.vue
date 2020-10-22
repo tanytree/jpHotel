@@ -58,16 +58,16 @@
                         {{ checkState(row.state) }}
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="checkinType"
-                    :label="$t('commons.checkInTypeDesc')"
-                    width="140"
-                    align="center"
-                >
-                    <template slot-scope="{ row }">
-                        {{ F_checkinType(row.checkinType) }}
-                    </template>
-                </el-table-column>
+<!--                <el-table-column-->
+<!--                    prop="checkinType"-->
+<!--                    :label="$t('commons.checkInTypeDesc')"-->
+<!--                    width="140"-->
+<!--                    align="center"-->
+<!--                >-->
+<!--                    <template slot-scope="{ row }">-->
+<!--                        {{ F_checkinType(row.checkinType) }}-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
                 <el-table-column
                     prop="reserveOrderNum"
                     :label="$t('frontOffice.nightAudit.reservationNumber')"

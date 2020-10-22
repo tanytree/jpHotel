@@ -14,90 +14,78 @@
                 <el-row>
                     <el-form-item :label="$t('desk.order_orderStatus') + ':'">
                         <div class="tagList">
-                            <template
-                                v-for="(item, key, index) of $t(
-                                    'commons.reserveState'
-                                )"
-                            >
-                                <el-tag
-                                    class="tag"
-                                    :type="
-                                        searchForm.state == key ? '' : 'info'
-                                    "
-                                    :key="index"
-                                    @click="stateClick(key)"
-                                    >{{ item }}
-                                </el-tag>
+                            <template v-for="(item, key, index) of $t('commons.reserveState')">
+                                <el-tag class="tag" :type="searchForm.state == key ? '' : 'info' " :key="index" @click="stateClick(key)"  >{{ item }} </el-tag>
                             </template>
                         </div>
                     </el-form-item>
                 </el-row>
+<!--                <el-row>-->
+<!--                    <el-form-item :label="$t('desk.order_dateList') + ':'">-->
+<!--                        <el-tag type="info" @click="timeTypeClick('')">{{-->
+<!--                            $t("desk.home_noLimit")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info" @click="timeTypeClick('1')">{{-->
+<!--                            $t("desk.customer_lastWeek")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info" @click="timeTypeClick('7')">{{-->
+<!--                            $t("desk.customer_today")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info" @click="timeTypeClick('8')">{{-->
+<!--                            $t("desk.customer_thisWeek")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info" @click="timeTypeClick('9')">{{-->
+<!--                            $t("desk.order_nextWeek")-->
+<!--                        }}</el-tag>-->
+<!--&lt;!&ndash;                        <el-tag type="info">{{&ndash;&gt;-->
+<!--&lt;!&ndash;                            $t("desk.book_theCustom")&ndash;&gt;-->
+<!--&lt;!&ndash;                        }}</el-tag>&ndash;&gt;-->
+<!--                    </el-form-item>-->
+<!--                    &lt;!&ndash;<el-form-item label="">-->
+<!--                              <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>-->
+<!--                          </el-form-item>&ndash;&gt;-->
+<!--                </el-row>-->
+<!--                <el-row>-->
+<!--                    <el-form-item :label="$t('desk.order_bookDate') + ':'">-->
+<!--                        <el-tag type="info">{{-->
+<!--                            $t("desk.home_noLimit")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info">{{-->
+<!--                            $t("desk.customer_lastWeek")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info">{{-->
+<!--                            $t("desk.customer_today")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info">{{-->
+<!--                            $t("desk.customer_thisWeek")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info">{{-->
+<!--                            $t("desk.order_nextWeek")-->
+<!--                        }}</el-tag>-->
+<!--                        <el-tag type="info">{{-->
+<!--                            $t("desk.book_theCustom")-->
+<!--                        }}</el-tag>-->
+<!--                    </el-form-item>-->
+<!--                    &lt;!&ndash;<el-form-item label="">-->
+<!--                              <el-date-picker v-model="searchForm.createTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>-->
+<!--                          </el-form-item>&ndash;&gt;-->
+<!--                </el-row>-->
                 <el-row>
-                    <el-form-item :label="$t('desk.order_dateList') + ':'">
-                        <el-tag type="info">{{
-                            $t("desk.home_noLimit")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.customer_lastWeek")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.customer_today")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.customer_thisWeek")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.order_nextWeek")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.book_theCustom")
-                        }}</el-tag>
-                    </el-form-item>
-                    <!--<el-form-item label="">
-                              <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                          </el-form-item>-->
-                </el-row>
-                <el-row>
-                    <el-form-item :label="$t('desk.order_bookDate') + ':'">
-                        <el-tag type="info">{{
-                            $t("desk.home_noLimit")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.customer_lastWeek")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.customer_today")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.customer_thisWeek")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.order_nextWeek")
-                        }}</el-tag>
-                        <el-tag type="info">{{
-                            $t("desk.book_theCustom")
-                        }}</el-tag>
-                    </el-form-item>
-                    <!--<el-form-item label="">
-                              <el-date-picker v-model="searchForm.createTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
-                          </el-form-item>-->
-                </el-row>
-                <el-row>
-                    <el-form-item :label="$t('commons.checkInTypeDesc')">
-                        <el-select
-                            v-model="searchForm.checkinType"
-                            class="width150"
-                        >
-                            <el-option
-                                :value="key"
-                                v-for="(item, key, index) of $t(
-                                    'commons.checkinType'
-                                )"
-                                :label="item"
-                                :key="index"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
+<!--                    <el-form-item :label="$t('commons.checkInTypeDesc')">-->
+<!--                        <el-select-->
+<!--                            v-model="searchForm.checkinType"-->
+<!--                            class="width150"-->
+<!--                        >-->
+<!--                            <el-option-->
+<!--                                :value="key"-->
+<!--                                v-for="(item, key, index) of $t(-->
+<!--                                    'commons.checkinType'-->
+<!--                                )"-->
+<!--                                :label="item"-->
+<!--                                :key="index"-->
+<!--                            ></el-option>-->
+<!--                        </el-select>-->
+<!--                    </el-form-item>-->
                     <el-form-item :label="$t('desk.book_orderSoutce')">
                         <el-select
                             v-model="searchForm.orderSource"
@@ -307,7 +295,7 @@
                             <el-button
                                 type="text"
                                 size="mini"
-                                v-if="row.state != 8"
+                                v-if="row.state == 1"
                                 @click="handleCancel(row)"
                                 >{{ $t("commons.cancel") }}
                             </el-button>
@@ -567,7 +555,7 @@ export default {
                 checkinType: "",
                 checkinTime: "",
                 createTime: "",
-                state: "",
+                state: "0",
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true,
@@ -599,7 +587,15 @@ export default {
             );
         },
         stateClick(key) {
+            if (key == '0')
+                key = '';
             this.searchForm.state = key;
+            this.getDataList();
+        },
+
+        timeTypeClick(key) {
+            this.searchForm.timeType = key;
+            this.getDataList();
         },
         handleNoshow(item) {
             this.currentItem = item;
@@ -725,7 +721,7 @@ export default {
         handleReset(item) {
             let params = {
                 checkInReserveId: item.id,
-                state: 2,
+                state: 1,
             };
             this.$confirm(
                 this.$t("desk.order_sureOperate"),
@@ -759,7 +755,7 @@ export default {
              *
              * **/
             let params = this.consumeOperForm;
-
+            debugger;
             params.checkinReserveId = this.currentItem.id;
 
             if (this.currentItem.checkInRoomList.length) {
