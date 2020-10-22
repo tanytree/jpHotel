@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-23 01:24:11
+ * @LastEditTime: 2020-10-23 02:38:23
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -45,19 +45,19 @@ module.exports = {
     home_depositingTime: '預かり時間',
     home_drawTime: '受け渡す時間',
     home_state: '状態',
-    home_operator: '操作員',
+    home_operator: '担当者',
     home_receive: '受け渡す',
     home_invalid: '廃棄',
     home_cancelInvalid: '取り消しをキャンセル',
     home_checkToPlay: '預かり書を再発行',
     home_note: '備考',
     home_goodsGetOrder: '手荷物預かり証',
-    home_printTime: 'プリントアウト時間',
+    home_printTime: 'プリントアウト 時間',
     home_checkTheTime: '預かり時間',
     home_explain: '受け渡す際必要ですので、必ず大事に保存下さい',
     home_deskPhone: 'フロント電話番号',
     home_hotelAddress: 'ホテル住所',
-    home_telNum: '電話番号',
+    home_telNum: '自宅電話番号',
     home_getState: '預かり状態',
     home_saveAndPri: '保存及び印刷',
     home_inputGoodsName: '預かり内容を入力してください',

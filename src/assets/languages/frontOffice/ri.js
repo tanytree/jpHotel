@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-16 15:08:47
+ * @LastEditTime: 2020-10-23 03:07:14
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -9,10 +9,10 @@ module.exports = {
     chooseRoomType: '部屋タイプ選択してください',
     nightAudit: {
         reservationNumber: '予約番号',
-        checkInTime: 'チェックイン時間',
-        arriveTime: '到着時間',
-        todayPrice: '本日房价',
-        priceDifference: '房价差异',
+        checkInTime: '到着時間',
+        arriveTime: '到着予定',
+        todayPrice: '本日料金',
+        priceDifference: '料金差異',
     },
 
     //发展途径
@@ -29,24 +29,24 @@ module.exports = {
     },
     // 是否黑名单 1否 2是 Integer非必填
     isBlacklist: {
-        "1": '否',
-        "2": '是'
+        "1": 'いいえ',
+        "2": 'はい'
     },
     priceType: {
-        "1": '订金',
-        "2": '押金',
-        "3": '收款',
-        "4": '退款',
+        "1": '前受金',
+        "2": 'デポジット',
+        "3": '入金',
+        "4": '返金',
         "5": '加收全天房费',
         "6": '加收半天房费',
-        "7": '损物赔偿',
-        "8": '迷你吧',
-        "9": '完全冲调',
-        "10": '部分冲调',
-        "11": '免单',
-        "12": '房费',
-        "13": '挂账',
-        "100": '其他'
+        "7": '損害賠償記録master',
+        "8": 'ミニバー',
+        "9": '完全相殺',
+        "10": '部分相殺',
+        "11": '無料',
+        "12": '宿泊料金	',
+        "13": '売掛',
+        "100": 'その他'
     },
     //订单类型
     orderType: {
@@ -56,6 +56,14 @@ module.exports = {
         "3": '以前/履歴',
         "4": '売掛',
         "5": 'チェックアウト後精算'
+    },
+
+    //入住方式
+    checkInRoomType: {
+        "0": '全部',
+        "1": '一般',
+        "2": '時間貸し部屋',
+        "3": '深夜部屋'
     },
     leaveDate: {
         "0": '全部',
@@ -69,13 +77,6 @@ module.exports = {
         // "8": '本月',
         // "9": '下月',
         "10": '期間選択'
-    },
-    //入住方式
-    checkInRoomType: {
-        "0": '全部',
-        "1": '一般',
-        "2": '時間貸し部屋',
-        "3": '深夜部屋'
     },
 }
 
