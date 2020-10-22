@@ -15,9 +15,9 @@
         <el-form-item>
           <el-button type="primary" class="submit">{{$t('commons.queryBtn')}}</el-button>
         </el-form-item>
-        <div class="export">
-          <el-button type="primary" class="submit">{{$t('commons.exportBtn')}}</el-button>
-        </div>
+<!--        <div class="export">-->
+<!--          <el-button type="primary" class="submit">{{$t('commons.exportBtn')}}</el-button>-->
+<!--        </div>-->
       </el-form>
       <el-table
         :data="tableData"

@@ -70,7 +70,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" class="submit" @click="search">{{ $t('commons.queryBtn') }}</el-button>
-                    <el-button type="primary" class="submit">{{ $t('commons.exportBtn') }}</el-button>
+<!--                    <el-button type="primary" class="submit">{{ $t('commons.exportBtn') }}</el-button>-->
                 </el-form-item>
             </el-form>
             <div class="flex-col">

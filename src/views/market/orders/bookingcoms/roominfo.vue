@@ -20,15 +20,12 @@
             <el-col :span="12">
                 <div class="fr">
                     <el-button plain size="mini" @click="batchCheckId">入住</el-button>
-                    <el-button plain size="mini" @click="updateReserved"
-                    >修改预留
-                    </el-button
-                    >
+                    <el-button plain size="mini" @click="updateReserved">修改预留 </el-button>
                     <el-dropdown split-button type="primary" size="mini">
                         {{ $t('commons.moreOperating') }}
                         <el-dropdown-menu slot="dropdown">
                             <!--                        <el-dropdown-item>改价</el-dropdown-item>-->
-                            <el-dropdown-item>取消预留</el-dropdown-item>
+                            <el-dropdown-item @click="cancelRoom">取消预留</el-dropdown-item>
                             <!--                        <el-dropdown-item @click.native="liveCard_in_person_list">操作房卡</el-dropdown-item>-->
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -63,7 +60,7 @@
                     <p>制卡信息：{{ currentRoom.markCard == 1 ? $t('commons.markCard')['1'] : $t('commons.markCard')['2'] }}</p>
                 </el-col>
                 <el-col :span="5">
-                    <p>预抵时间：{{ checkinInfo.checkinTime }}</p>
+                    <p>{{ $t('desk.arrivalTime') }}：{{ checkinInfo.checkinTime }}</p>
                 </el-col>
                 <el-col :span="5">
                     <p>{{ $t('desk.order_departureTime') }}：{{ checkinInfo.checkoutTime }}</p>
@@ -80,19 +77,19 @@
                 <el-col :span="8">
                     <p>客户类别：{{ checkinInfo.memberCard ? "会员" : "非会员" }}</p>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="8" v-if="checkinInfo.memberCard">
                     <p>会员类别：</p>
                 </el-col>
             </el-row>
         </el-row>
-        <el-row>
-            <h4>计费规则</h4>
-            <el-row>
-                <el-col :span="8">
-                    <p>计费规则：{{ F_ruleHour(checkinInfo.ruleHourId) }}</p>
-                </el-col>
-            </el-row>
-        </el-row>
+<!--        <el-row>-->
+<!--            <h4>计费规则</h4>-->
+<!--            <el-row>-->
+<!--                <el-col :span="8">-->
+<!--                    <p>计费规则：{{ F_ruleHour(checkinInfo.ruleHourId) }}</p>-->
+<!--                </el-col>-->
+<!--            </el-row>-->
+<!--        </el-row>-->
         <el-dialog
             top="0"
             :visible.sync="liveInPersonShow"
@@ -201,6 +198,24 @@ export default {
     },
 
     methods: {
+        //cancel room
+        cancelRoom() {
+            let params = {
+                checkInReserveId: this.$route.query.id || '',
+                state: 8
+            }
+            this.$F.doRequest(
+                this,
+                "/pms/reserve/reserve_oper",
+                params,
+                (res) => {
+                    this.$message({
+                        message: this.$t("commons.request_success"),
+                        type: "success",
+                    });
+                }
+            );
+        },
         checkInCallback(id) {
             this.liveInPersonShow = false;
             this.$router.push('/orderdetail?id=' + id);
@@ -359,11 +374,11 @@ export default {
 
         updateReserved() {
             if (!this.$route.query.id) {
-                this.$message.error("订单信息不正确");
                 return;
             }
             let arr = [];
             arr.push(this.currentRoom);
+            debugger
             this.$refs.rowRoomHandle.initForm(
                 this.$route.query.id,
                 this.checkinInfo,

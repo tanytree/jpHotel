@@ -19,7 +19,7 @@
           label-width="100px"
         >
           <el-col :span="8">
-            <el-form-item label="预抵时间:" prop="date1">
+            <el-form-item :label="$t('desk.arrivalTime')" prop="date1">
               <el-date-picker
                 v-model="form.startTime"
                 value-format="yyyy-MM-dd"
@@ -30,7 +30,7 @@
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="入住天数:">
+            <el-form-item :label="$t('desk.checkInDays')">
               <el-input-number
                 style="width: 220px"
                 v-model="form.nums"
@@ -263,7 +263,7 @@
             <el-row>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="预抵时间:" prop="date1">
+                  <el-form-item :label="$t('desk.arrivalTime')" prop="date1">
                     <el-date-picker
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
@@ -277,7 +277,7 @@
 
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="入住天数:" prop="name">
+                  <el-form-item :label="$t('desk.checkInDays')" prop="name">
                     <el-input-number
                       style="width: 246px"
                       v-model="num"
@@ -293,19 +293,6 @@
               <el-col :span="6">
                 <div class="grid-content">
                   <el-form-item :label="$t('desk.order_departureTime')" prop="date1">
-                    <el-date-picker
-                      v-model="checkInForm.startTime"
-                      value-format="yyyy-MM-dd"
-                      type="date"
-                      style="width: 246px"
-                      placeholder="选择日期"
-                    ></el-date-picker>
-                  </el-form-item>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content">
-                  <el-form-item label="保留时间:" prop="date1">
                     <el-date-picker
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"

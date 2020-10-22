@@ -91,13 +91,6 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="保留时间：">
-                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
-                        </el-form-item>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content">
                         <el-form-item label="订单备注：">
                             <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>

@@ -11,7 +11,7 @@
             <div class="text-red text-size20 margin-t-20">
                 <el-button v-if="info.state == 1" type="primary" size="small" @click="addOrderInfo">{{$t('food.common.add_food')}}</el-button>
                 <el-button v-if="info.state == 1" type="primary" size="small" @click="action">{{$t('food.common.order_deal')}}</el-button>
-                <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>
+<!--                <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>-->
             </div>
 
             <div class="margin-t-20">
@@ -222,7 +222,7 @@
 
                 });
             },
-            
+
             //详情中点击结账
             action(){
                 this.$emit('action',this.info)

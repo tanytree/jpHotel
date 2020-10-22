@@ -30,7 +30,7 @@
           <el-button size="small" class="submit">{{$t('manager.grsl_audit')}}</el-button>
           <el-button size="small" class="submit">{{$t('manager.finance_theAudit')}}</el-button>
           <el-button size="small" class="submit">{{$t('manager.finance_batchDelete')}}</el-button>
-          <el-button size="small" class="submit">{{$t('commons.exportBtn')}}</el-button>
+<!--          <el-button size="small" class="submit">{{ $t('commons.exportBtn')}}</el-button>-->
         </div>
       </el-form>
       <el-table

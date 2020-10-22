@@ -17,9 +17,9 @@
                             <el-button type="primary" class="submit" @click="search('form')">{{$t('commons.queryBtn')}}</el-button>
                             <el-button class="grey" @click="reset">{{$t('commons.resetBtn')}}</el-button>
                         </el-form-item>
-                        <el-form-item class="form-inline-flex">
-                            <el-button class="white" @click="exportcount">{{$t('commons.exportBtn')}}</el-button>
-                        </el-form-item>
+<!--                        <el-form-item class="form-inline-flex">-->
+<!--                            <el-button class="white" @click="exportcount">{{$t('commons.exportBtn')}}</el-button>-->
+<!--                        </el-form-item>-->
                     </el-form>
                     <div class="components-edit">
                         <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">

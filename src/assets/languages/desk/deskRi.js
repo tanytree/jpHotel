@@ -6,6 +6,8 @@
  */
 //前台部 日文
 module.exports = {
+    checkInDays: '滞在日数',
+    arrivalTime: '到着予定',
     reservePersonDesc: '予約者',
     downPayment: '予約金',
     //夜审

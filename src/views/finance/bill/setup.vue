@@ -12,11 +12,11 @@
               </el-form-item>
               <div class="export">
                 <el-button size="small" class="submit" @click="addNew">{{$t('commons.newAdd')}}</el-button>
-                <el-button
-                  size="small"
-                  class="submit"
-                  v-if="item.name=='sub'"
-                >{{$t('commons.exportBtn')}}</el-button>
+<!--                <el-button-->
+<!--                  size="small"-->
+<!--                  class="submit"-->
+<!--                  v-if="item.name=='sub'"-->
+<!--                >{{$t('commons.exportBtn')}}</el-button>-->
               </div>
             </el-form>
             <el-table

@@ -14,7 +14,7 @@
                 {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">排房</el-dropdown-item>
-                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
+<!--                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>-->
                     <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
                 </el-dropdown-menu>
@@ -35,9 +35,6 @@
             </el-col>
             <el-col :span="8">
                 <p>{{ $t('desk.nightAudit.arriveTime') }}：{{checkinInfo.checkinTime}} - {{checkinInfo.checkoutTime}}</p>
-            </el-col>
-            <el-col :span="8">
-                <p>保留时间：{{checkinInfo.keepTime}}</p>
             </el-col>
         </el-row>
     </el-row>
@@ -61,7 +58,7 @@
                 <p>外部订单号：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
             </el-col>
             <el-col :span="8">
-                <p>销售员：{{checkinInfo.salesId || '无'}}</p>
+                <p>销售员：{{salesList.filter(sale => {  return sale.id == checkinInfo.salesId})[0].userName || '无'}}</p>
             </el-col>
         </el-row>
         <el-row>
@@ -77,12 +74,12 @@
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
             <el-row>
                 <el-col :span="8">
-                    <el-form-item label="预抵时间：" class="">
+                    <el-form-item :label="$t('desk.arrivalTime')" class="">
                         {{baseInfoChangeForm.checkinTime}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="入住天数：" class="">
+                    <el-form-item :label="$t('desk.checkInDays')" class="">
                         {{baseInfoChangeForm.checkinDays}}
                     </el-form-item>
                 </el-col>
@@ -103,11 +100,6 @@
                         <el-select v-model="baseInfoChangeForm.salesId" class="width150">
                             <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                         </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="保留时间：" prop="keepTime">
-                        <el-date-picker v-model="baseInfoChangeForm.keepTime" type="datetime" style="width:150px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -306,12 +298,6 @@ export default {
                     required: true,
                     message: this.$t('commons.placeChoose'),
                     // message: '请选择预离时间',
-                    trigger: 'change'
-                }, ],
-                keepTime: [{
-                    required: true,
-                    message: this.$t('commons.placeChoose'),
-                    // message: '请选择保留时间',
                     trigger: 'change'
                 }, ],
                 checkinDays: [{

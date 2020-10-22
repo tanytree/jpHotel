@@ -83,7 +83,8 @@
                     @click="checkTypeHandle('order')"
                     :class="checkType == 'order' ? 'active' : ''"
                   >
-                    <div class="wrap"><span>查看订单信息（联房）></span></div>
+                    <div class="wrap"><span>查看订单信息></span></div>
+<!--                      （联房）-->
                   </li>
                   <li
                     @click="checkTypeHandle('customer', item)"
@@ -152,19 +153,19 @@
                             <el-row class="row">
                               <h3>
                                 {{ $t("desk.serve_basicInfo") }}
-                                <el-button
-                                  style="
-                                    vertical-align: middle;
-                                    margin-left: 10px;
-                                    display: inline-block;
-                                  "
-                                  size="mini"
-                                  class="vm"
-                                  @click="yokeplateHandle"
-                                  v-if="detailData.inRoomList.length"
-                                >
-                                  {{ $t("desk.order_alRoom") }}
-                                </el-button>
+<!--                                <el-button-->
+<!--                                  style="-->
+<!--                                    vertical-align: middle;-->
+<!--                                    margin-left: 10px;-->
+<!--                                    display: inline-block;-->
+<!--                                  "-->
+<!--                                  size="mini"-->
+<!--                                  class="vm"-->
+<!--                                  @click="yokeplateHandle"-->
+<!--                                  v-if="detailData.inRoomList.length"-->
+<!--                                >-->
+<!--                                  {{ $t("desk.order_alRoom") }}-->
+<!--                                </el-button>-->
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">

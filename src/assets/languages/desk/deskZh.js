@@ -6,6 +6,8 @@
  */
 //  前台部 中文
 module.exports = {
+    checkInDays: '入住天数',
+    arrivalTime: '预抵时间',
     downPayment: '订金',
     reservePersonDesc: '预约人',
     //夜审

@@ -289,9 +289,9 @@
             <el-form-item label="备注：">
                 <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="打印单据：">
-                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
-            </el-form-item>
+<!--            <el-form-item label="打印单据：">-->
+<!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
+<!--            </el-form-item>-->
 
         </el-form>
         <div slot="footer" class="dialog-footer">

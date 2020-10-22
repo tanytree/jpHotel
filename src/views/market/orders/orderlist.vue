@@ -13,11 +13,7 @@
             <el-form class="term" inline size="small" label-width="100px">
                 <el-form-item :label="$t('desk.order_orderType')">
                     <div class="tagList">
-                        <template
-                            v-for="(item, key, index) of $t(
-                                'frontOffice.orderType'
-                            )"
-                        >
+                        <template v-for="(item, key, index) of $t( 'frontOffice.orderType' )" >
                             <el-tag
                                 class="tag"
                                 :type="
@@ -248,14 +244,7 @@
                     width="120"
                 >
                     <template slot-scope="{ row }" style="color: red">
-                        <span
-                            v-if="
-                                row.state == 3 ||
-                                row.state == 4 ||
-                                row.state == 5
-                            "
-                            style="color: red"
-                        >
+                        <span v-if="row.state == 3 || row.state == 4 || row.state == 5 " style="color: red" >
                             {{ F_checkinState(row.state) }}
                         </span>
                         <span v-if="row.state == 1 || row.state == 2">

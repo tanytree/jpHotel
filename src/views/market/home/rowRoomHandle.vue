@@ -12,12 +12,12 @@
             <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="预抵时间" prop="checkinTime">
+                        <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
                             <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="入住天数：" prop="checkinDays">
+                        <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays">
                             <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>
                         </el-form-item>
                     </el-col>
@@ -315,7 +315,6 @@ export default {
                 keepTime: [{
                     required: true,
                     message: this.$t('commons.placeChoose'),
-                    // message: '请选择保留时间',
                     trigger: 'change'
                 }, ],
                 checkinDays: [{
@@ -375,7 +374,7 @@ export default {
                         that.waitingRoom[i].num++
                         that.waitingRoom[i]['roomsArr'].push({
                             houseNum: item.houseNum,
-                            id: item.id
+                            id: item.roomId
                         })
                         exist = true
                     }
@@ -385,7 +384,7 @@ export default {
                     item.roomsArr = []
                     item.roomsArr.push({
                         houseNum: item.houseNum,
-                        id: item.id
+                        id: item.roomId
                     })
                     that.waitingRoom.push(item)
                 }
@@ -635,13 +634,13 @@ export default {
             }
         },
         hotel_check_inChange() {
-
             let checkInRoomJson = []
             this.waitingRoom.forEach(item => {
                 let array = [];
                 item.roomsArr.forEach(room=> {
                     array.push(room.id);
                 })
+                debugger
                 checkInRoomJson.push({
                     roomTypeId: item.roomTypeId,
                     roomId: array.join(','),

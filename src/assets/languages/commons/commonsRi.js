@@ -5,7 +5,8 @@
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
-
+    mustChoose: '必ず入力',
+    mustInput: '必ず入力してください',
     checkInTypeDesc: '入居類型',
     mobile: '携帯電話番号',
     operatingTime: '利用時間',
@@ -153,10 +154,10 @@ module.exports = {
     //入住状态
     checkinState: {
         '1': '在住',
-        '2': '预离',
-        '3': '离店',
-        '4': '离店(走结)',
-        '5': '离店(反结)'
+        '2': '已退房',
+        // '3': '离店',
+        // '4': '离店(走结)',
+        // '5': '离店(反结)'
     },
     //预订状态
     reserveState: {

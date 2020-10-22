@@ -104,18 +104,16 @@
                         <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="预抵时间" prop="checkinTime">
+                <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
                     <el-date-picker v-model="checkInForm.checkinTime" type="datetime" placeholder="选择日期" :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="入住天数：" prop="checkinDays" v-if="operCheckinType=='b1'">
+                <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays" v-if="operCheckinType=='b1'">
                     <el-input-number v-model="checkInForm.checkinDays" :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
                     <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="保留时间：" prop="keepTime">
-                    <el-date-picker v-model="checkInForm.keepTime" type="datetime" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime"></el-date-picker>
-                </el-form-item>
+
                 <el-form-item label="客源类型" prop="guestType">
                     <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
                         <template slot="append"><span @click="popup('guestTypeShow')">…</span></template>
@@ -341,8 +339,8 @@
             <el-button size="small" @click="mackcadeCancel">{{ $t('commons.cancel') }}</el-button>
         </span>
         </el-dialog>
-        <el-dialog top="0" :show-close='false' :title="$t('desk.order_rowHouses')" :visible.sync="addLivePersonShow" width="60%">
-            <customer v-if="addLivePersonShow" type="checkin" :liveData="liveData" :type="order" @personCallback="personCallback"></customer>
+        <el-dialog top="0" :show-close='false' :title="$t('desk.order_rowHouses')" :visible.sync="addLivePersonShow" width="80%">
+            <customer v-if="addLivePersonShow" type="checkin" :liveData="liveData" @personCallback="personCallback"></customer>
 
         </el-dialog>
         <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="checkInForm"></guestChoose>
@@ -497,12 +495,7 @@ export default {
                     // message: '请选择预离时间',
                     trigger: 'blur'
                 }, ],
-                keepTime: [{
-                    required: true,
-                    message: this.$t('commons.placeChoose'),
-                    // message: '请选择保留时间',
-                    trigger: 'blur'
-                }, ],
+
                 checkinDays: [{
                     required: true,
                     message: '请输入入住天数',
@@ -753,14 +746,12 @@ export default {
                 })
             }
             this.$refs.checkInForm.validate((valid) => {
-                console.log(this.waitingRoom);
-
                 if (valid) {
+                    if (!this.waitingRoom.length) {
+                        this.$message.error(this.$t('frontOffice.chooseRoomType'))
+                        return false;
+                    }
                     if ((operCheckinType == 'a1' || operCheckinType == 'a2')) {
-                        if (!this.waitingRoom.length) {
-                            this.$message.error('请选择房型')
-                            return false
-                        }
                         for (let k= 0;k < this.waitingRoom.length;k++) {
                             if (!this.waitingRoom[k].roomsArr) {
                                 this.$message.error('请选择房间')
@@ -1033,7 +1024,7 @@ export default {
         },
         //入住人回调
         personCallback(data) {
-
+            debugger
             this.checkInForm.checkInRoomJson = data;
             this.addLivePersonShow = false;
         },

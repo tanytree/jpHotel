@@ -444,7 +444,7 @@
                 <span class="inco i_img">
                   <img :src="require('@/assets/images/frontdesk/lian.png')" />
                 </span>
-                <span>联房</span>
+<!--                <span>联房</span>-->
               </el-col>
             </div>
 

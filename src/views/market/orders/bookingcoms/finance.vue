@@ -17,9 +17,9 @@
         <el-button type="primary" size="mini" @click="destructionHandle"
           >冲调</el-button
         >
-        <el-button type="primary" size="mini">{{
-          $t("commons.print")
-        }}</el-button>
+<!--        <el-button type="primary" size="mini">{{-->
+<!--          $t("commons.print")-->
+<!--        }}</el-button>-->
       </div>
     </el-row>
     <el-row class="clearfix padding-tb-20">
@@ -272,9 +272,9 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="打印单据：">
-          <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
-        </el-form-item>
+<!--        <el-form-item label="打印单据：">-->
+<!--          <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="refundShow = false">关闭</el-button>
@@ -419,7 +419,7 @@ export default {
 
   methods: {
     consume_order_list() {
-      this.searchForm.checkinReserveId = this.$route.query.id;
+      this.searchForm.reserveId = this.$route.query.id;
       this.$F.doRequest(
         this,
         "/pms/consume/consume_order_list",

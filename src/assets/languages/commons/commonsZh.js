@@ -5,6 +5,8 @@
  * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
  */
 module.exports = {
+    mustChoose: '必填',
+    mustInput: '必须输入',
     checkInTypeDesc: '入住类型',
     mobile: '手机号码',
     operatingTime: '操作时间',
@@ -151,10 +153,7 @@ module.exports = {
     //入住状态
     checkinState: {
         '1': '在住',
-        '2': '预离',
-        '3': '离店',
-        '4': '离店(走结)',
-        '5': '离店(反结)'
+        '2': '已退房',
     },
     //预订状态
     reserveState: {

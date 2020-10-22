@@ -12,9 +12,9 @@
               <el-col :span="3">
                   <el-button type="primary">返回本班</el-button>
               </el-col>
-              <el-col :span="5">
-                  <el-button type="primary">打印</el-button>
-              </el-col>
+<!--              <el-col :span="5">-->
+<!--                  <el-button type="primary">打印</el-button>-->
+<!--              </el-col>-->
               <el-col :span="6">
                   <el-button type="primary">关闭</el-button>
               </el-col>
@@ -62,7 +62,7 @@
         </div>
         <div class="margin-b-20 text-center">
             <span>2020-07-14 18:55:58 至 2020-07-14 23:24:16</span>
-            <span class="margin-lr-10">打印人：张三</span>
+<!--            <span class="margin-lr-10">打印人：张三</span>-->
             <span>班次号：2020-07-14-6</span>
             <span class="margin-lr-10">营业日：2020-07-14</span>
             <span>打印时间：2020-07-14 16:24:32</span>

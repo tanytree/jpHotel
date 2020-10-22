@@ -144,6 +144,7 @@ export default {
             console.log(this.liveInPersonData)
             let checkInRoomJson = [];
             let personListJSONList = [];
+
             this.liveInPersonData.forEach(item => {
                 if (!item.personList)
                     item.personList;
@@ -172,7 +173,9 @@ export default {
                 })
                 personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
+                debugger
             })
+            debugger
             if (this.type == 'reserve') {
                 let params = {};
                 this.$F.merge(params, {
@@ -191,7 +194,7 @@ export default {
                         this.emit('checkInCallback', res.checkinId);
                     })
                 })
-            } else if (this.type == 'order'){
+            } else if (this.type == 'order' || this.type == 'checkin'){
                 this.$emit('personCallback', checkInRoomJson);
             } else {
                 this.$emit('personCallback', personListJSONList);
