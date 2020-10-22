@@ -9,7 +9,7 @@
     <div class="hd">
         <div class="tit">
 <!--            <el-button type="" size="mini" class="fr" @click="liveCard_in_person_list">操作房卡</el-button>-->
-            <h3>入住信息（房间：{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>订单号：{{detailData.checkIn.orderNum}}</span>
+            <h3>入住信息（房间：{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>{{ $t('desk.book_orderNum') }}：{{detailData.checkIn.orderNum}}</span>
         </div>
         <div class="customerInfo">
             <el-row class="row">
@@ -31,7 +31,7 @@
 <!--                    {{$t('commons.checkInTypeDesc')}}：{{F_checkinType(detailData.checkIn.checkinType)}}-->
 <!--                </el-col>-->
                 <el-col :span="6">
-                    外部订单号：{{detailData.checkIn.thirdOrdernum}}
+                    {{ $t('desk.order_outOrder') }}：{{detailData.checkIn.thirdOrdernum}}
                 </el-col>
                 <el-col :span="6">
                     备注：{{detailData.checkIn.remark}}

@@ -10,7 +10,7 @@
             <el-col :span="12">
                 <el-row>
                     <el-col :span="8">
-                        <p>预订单号：{{ checkinInfo.reserveOrderNum }}</p>
+                        <p>{{ $t('desk.order_bookOrderNum') }}：{{ checkinInfo.reserveOrderNum }}</p>
                     </el-col>
                     <el-col :span="8">
                         <p>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</p>
@@ -19,7 +19,7 @@
             </el-col>
             <el-col :span="12">
                 <div class="fr">
-                    <el-button plain size="mini" @click="batchCheckId">入住</el-button>
+                    <el-button plain size="mini" @click="batchCheckId">{{ $t('manager.ps_inLive') }}</el-button>
                     <el-button plain size="mini" @click="updateReserved">修改预留 </el-button>
                     <el-dropdown split-button type="primary" size="mini">
                         {{ $t('commons.moreOperating') }}
@@ -34,10 +34,10 @@
         </el-row>
         <el-divider></el-divider>
         <el-row>
-            <h4>基本信息</h4>
+            <h4>{{ $t('desk.serve_basicInfo') }}</h4>
             <el-row>
                 <el-col :span="8">
-                    <p>订单号：{{ checkinInfo.reserveOrderNum }}</p>
+                    <p>{{ $t('desk.book_orderNum') }}：{{ checkinInfo.reserveOrderNum }}</p>
                 </el-col>
                 <el-col :span="8">
                     <p>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</p>

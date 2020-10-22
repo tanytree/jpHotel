@@ -10,7 +10,7 @@
     <div class="boss-index">
         <div class="booking flex_column">
             <!-- 查询部分 -->
-            <el-form class="term" inline size="small" label-width="100px">
+            <el-form class="term" inline size="small" label-width="130px">
                 <el-form-item :label="$t('desk.order_orderType')">
                     <div class="tagList">
                         <template v-for="(item, key, index) of $t( 'frontOffice.orderType' )" >
@@ -27,20 +27,11 @@
                         </template>
                     </div>
                 </el-form-item>
+                <br>
                 <el-form-item :label="$t('desk.order_departureDate')">
                     <div class="tagList" style="display: inline-block">
-                        <template
-                            v-for="(item, key, index) of $t(
-                                'frontOffice.leaveDate'
-                            )"
-                        >
-                            <el-tag
-                                style="cursor: pointer"
-                                class="tag"
-                                :type="
-                                    searchForm.leaveDate == key ? '' : 'info'
-                                "
-                                :key="index"
+                        <template v-for="(item, key, index) of $t('frontOffice.leaveDate')">
+                            <el-tag style="cursor: pointer" class="tag" :type="searchForm.leaveDate == key ? '' : 'info' " :key="index"
                                 @click="leaveDateClick(key)"
                                 >{{ item }}
                             </el-tag>
@@ -64,6 +55,8 @@
                         ></el-date-picker>
                     </el-form-item>
                 </el-form-item>
+
+                <br>
                 <el-form-item :label="$t('desk.order_checkinWay')">
                     <div class="tagList" style="display: inline-block">
                         <template
@@ -103,8 +96,10 @@
                         ></el-date-picker>
                     </el-form-item>
                 </el-form-item>
+                <br>
                 <el-form-item :label="$t('desk.book_orderSoutce')">
                     <el-select
+                        :placeholder="$t('commons.placeChoose')"
                         v-model="searchForm.orderSource"
                         class="width150"
                     >
@@ -118,8 +113,9 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
+
                 <el-form-item :label="$t('desk.home_customersCategory')">
-                    <el-select v-model="searchForm.guestType" class="width150">
+                    <el-select v-model="searchForm.guestType" class="width150"  :placeholder="$t('commons.placeChoose')">
                         <el-option
                             :value="key"
                             v-for="(item, key, index) of $t(
@@ -131,7 +127,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_roomType')">
-                    <el-select v-model="searchForm.roomTypeId" class="width150">
+                    <el-select v-model="searchForm.roomTypeId" class="width150"  :placeholder="$t('commons.placeChoose')">
                         <el-option :label="$t('desk.home_all')" value>{{
                             $t("desk.home_all")
                         }}</el-option>
@@ -448,6 +444,11 @@ export default {
     },
 
     methods: {
+
+        orderTypeClick(key) {
+            this.searchForm.orderType = key;
+            this.getDataList();
+        },
         initForm() {
             this.searchForm = {
                 leaveDate: "",
@@ -514,12 +515,12 @@ export default {
 
         checkInRoomTypeClick(key) {
             this.searchForm.checkInRoomType = key ? key : "";
+            this.getDataList();
         },
         leaveDateClick(key) {
             let that = this;
             let date = "";
             this.searchForm.leaveDate = key;
-
             function getCalcDate(v = 0) {
                 var datetime = new Date();
                 datetime.setDate(datetime.getDate() + v);
@@ -545,7 +546,6 @@ export default {
                     date = getCalcDate(0);
                     that.searchForm.outStartTime = date;
                     that.searchForm.outEndTime = date;
-                    alert(that.searchForm.outStartTime);
                     break;
                 case 2:
                     date = getCalcDate(-1);
@@ -634,7 +634,9 @@ export default {
                 default:
                     this.searchForm.outStartTime = "";
                     this.searchForm.outEndTime = "";
+
             }
+            this.getDataList()
         },
         /**每页数 */
         handleSizeChange(val) {

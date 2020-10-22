@@ -87,7 +87,7 @@
             <el-col :span="12"><div class="item ">微信</div></el-col>
             <el-col :span="12"><div class="item">0</div></el-col>
             <el-col :span="24"><div class="item item_t"><b class="text-size14">其他收退款</b></div></el-col>
-            <el-col :span="12"><div class="item">挂账</div></el-col>
+            <el-col :span="12"><div class="item">{{ $t('desk.charge') }}</div></el-col>
             <el-col :span="12"><div class="item text-blue">1000</div></el-col>
             <el-col :span="12"><div class="item ">积分抵现</div></el-col>
             <el-col :span="12"><div class="item text-blue">1000</div></el-col>

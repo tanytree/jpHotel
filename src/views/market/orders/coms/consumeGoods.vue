@@ -5,7 +5,7 @@
  * @FilePath: /jiudian/src/views/market/orders/coms/consumeGoods.vue
  -->
 <template>
-<el-dialog top='0' title="迷你吧" :visible.sync="visible" :lock-scroll='false' width="80%">
+<el-dialog top='0' :title="$t('desk.serve_miniPub')" :visible.sync="visible" :lock-scroll='false' width="80%">
         <el-row :gutter="20">
             <el-col :span="14">
                 <el-row>
@@ -87,7 +87,7 @@
                             </el-select>
 
                         </el-form-item>
-                        <el-form-item label="入账金额：">
+                        <el-form-item :label="$t('desk.enterAccountMoney') + ':'">
                             {{totalIn}}
                         </el-form-item>
                         <el-form-item label="备注：">
@@ -214,7 +214,7 @@ export default {
             this.tableData = []
             this.loading = true
             this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", {}, (res) => {
-                let name = '迷你吧';
+                let name = this.$t('desk.serve_miniPub');
                 for(let i in res.list){
                    if(res.list[i].name == name){
                        this.sellId = res.list[i].id

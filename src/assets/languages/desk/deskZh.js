@@ -6,6 +6,16 @@
  */
 //  前台部 中文
 module.exports = {
+    updateOrder: '修改订单',
+    batchCheckin: '批量入住',
+    clickCheckin: '点击入住',
+    financialDetails: '财务明细',
+    charge: '挂账',
+    chargeMoney: '挂账金额',
+    chargeTotal: '挂账合计',
+    enterAccountMoney: '入账金额',
+    enterAccount: '入账',
+    enterAccountTime: '入账时间',
     checkInDays: '入住天数',
     arrivalTime: '预抵时间',
     downPayment: '订金',

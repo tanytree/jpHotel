@@ -45,12 +45,12 @@
                         </el-select>
                     </el-form-item>
                 </template>
-                <el-form-item label="销售员：">
+                <el-form-item :label="$t('desk.order_salesman') + '：'">
                     <el-select v-model="checkInForm.salesId">
                         <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="外部订单号：">
+                <el-form-item :label="$t('desk.order_outOrder') + '：'">
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_moblePhone')" prop="mobile">
@@ -94,7 +94,7 @@
 <!--                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
 <!--                    </el-select>-->
 <!--                </el-form-item>-->
-                <el-form-item label="销售员：" v-if="operCheckinType=='b3'">
+                <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType=='b3'">
                     <el-select v-model="checkInForm.salesId">
                         <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
@@ -119,12 +119,12 @@
                         <template slot="append"><span @click="popup('guestTypeShow')">…</span></template>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="销售员：" v-if="operCheckinType!='b3'">
+                <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType!='b3'">
                     <el-select v-model="checkInForm.salesId">
                         <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="外部订单号：" v-if="operCheckinType!='b3'">
+                <el-form-item :label="$t('desk.order_outOrder') + '：'" v-if="operCheckinType!='b3'">
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType=='b3'">

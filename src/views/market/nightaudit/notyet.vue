@@ -174,7 +174,7 @@ export default {
                     return "已取消订单";
                     break;
                 case 9:
-                    return "应到未到订单";
+                    return this.$t('desk.nightAudit.notyet');
                     break;
             }
         },

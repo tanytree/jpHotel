@@ -25,7 +25,7 @@
       <el-col :span="6" style="height: 563px">
         <el-card>
           <div class="clearfix">
-            <span style="font-weight: bold">客人信息</span>
+            <span style="font-weight: bold">{{ $t('desk.order_guestInfo') }}</span>
 <!--            <el-button size="mini" style="float: right" type="primary"-->
 <!--              >办理会员</el-button-->
 <!--            >-->
@@ -53,7 +53,7 @@
           <div slot="header" class="card_header">
             <span>会议信息（房间：A001 {{ checkSource() }}）</span>
             <div>
-              订单号：
+                {{ $t('desk.book_orderNum') }}：
               <span>{{ checkIn.reserveOrderNum }}</span>
             </div>
           </div>

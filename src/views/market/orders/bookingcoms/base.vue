@@ -8,8 +8,8 @@
 <div class="base" v-if="checkinInfo">
     <el-row class="clearfix">
         <div class="fr">
-            <el-button plain @click="batchCheckId">批量入住</el-button>
-            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')">修改订单</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button plain @click="batchCheckId">{{ $t('desk.batchCheckin') }}</el-button>
+            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary">
                 {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
@@ -22,10 +22,10 @@
         </div>
     </el-row>
     <el-row>
-        <h4>基本信息</h4>
+        <h4>{{ $t('desk.serve_basicInfo') }}</h4>
         <el-row>
             <el-col :span="8">
-                <p>订单号：{{checkinInfo.reserveOrderNum || ''}}</p>
+                <p>{{ $t('desk.book_orderNum') }}：{{checkinInfo.reserveOrderNum || ''}}</p>
             </el-col>
             <el-col :span="8">
                 <p>{{$t('desk.book_orderSoutce')}}:：{{F_orderSource(checkinInfo.orderSource)}}</p>
@@ -55,10 +55,10 @@
         <h4>销售信息</h4>
         <el-row>
             <el-col :span="8">
-                <p>外部订单号：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
+                <p>{{ $t('desk.order_outOrder') }}：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
             </el-col>
             <el-col :span="8">
-                <p>销售员：{{salesList.filter(sale => {  return sale.id == checkinInfo.salesId})[0].userName || '无'}}</p>
+                <p>{{ $t('desk.order_salesman') }}：{{salesList.filter(sale => {  return sale.id == checkinInfo.salesId})[0].userName || '无'}}</p>
             </el-col>
         </el-row>
         <el-row>
@@ -70,7 +70,7 @@
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
         <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
     </el-dialog>
-    <el-dialog top="0" title="修改订单" :visible.sync="baseInfoChangeShow" width="900px" center>
+    <el-dialog top="0" :title="$t('desk.updateOrder')" :visible.sync="baseInfoChangeShow" width="900px" center>
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
             <el-row>
                 <el-col :span="8">
@@ -96,7 +96,7 @@
 <!--                    </el-form-item>-->
 <!--                </el-col>-->
                 <el-col :span="8">
-                    <el-form-item label="销售员：">
+                    <el-form-item :label="$t('desk.order_salesman') + '：'">
                         <el-select v-model="baseInfoChangeForm.salesId" class="width150">
                             <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                         </el-select>
@@ -113,7 +113,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="外部订单号：">
+                    <el-form-item :label="$t('desk.order_outOrder') + '：'">
                         <el-input v-model="baseInfoChangeForm.thirdOrdernum" class="width150"></el-input>
                     </el-form-item>
                 </el-col>
@@ -164,7 +164,7 @@
         <el-form :model="currentItem" style="margin-top:-20px" size="mini">
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="预订单号：" class="">
+                    <el-form-item :label="$t('desk.order_bookOrderNum') + '：'" class="">
                         {{currentItem.orderNum}}
                     </el-form-item>
                 </el-col>

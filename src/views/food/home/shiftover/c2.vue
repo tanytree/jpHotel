@@ -38,7 +38,7 @@
         </el-form>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column label="基本信息">
+            <el-table-column :label="$t('desk.serve_basicInfo')">
                 <el-table-column prop="createTime" label="班次" width="">
                 </el-table-column>
                 <el-table-column prop="createTime" label="开始-结束" width="">
@@ -49,7 +49,7 @@
             <el-table-column label="本班全责汇总">
                 <el-table-column prop="createTime" label="现金" width="">
                 </el-table-column>
-                <el-table-column prop="createTime" label="挂账" width="">
+                <el-table-column prop="createTime" :label="$t('desk.charge')" width="">
                 </el-table-column>
                 <el-table-column prop="createTime" label="银行卡" width="">
                 </el-table-column>
@@ -61,7 +61,7 @@
                 </el-table-column>
                 <el-table-column prop="createTime" label="房费" width="">
                 </el-table-column>
-                <el-table-column prop="createTime" label="迷你吧" width="">
+                <el-table-column prop="createTime" :label="$t('desk.serve_miniPub')" width="">
                 </el-table-column>
                 <el-table-column prop="createTime" label="会员卡卡费" width="">
                 </el-table-column>
@@ -70,7 +70,7 @@
             </el-table-column>
             <el-table-column prop="createTime" label="现金" width="">
             </el-table-column>
-            <el-table-column prop="createTime" label="挂账" width="">
+            <el-table-column prop="createTime" :label="$t('desk.charge')" width="">
             </el-table-column>
             <el-table-column prop="createTime" label="银行卡" width="">
             </el-table-column>

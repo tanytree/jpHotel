@@ -34,7 +34,7 @@
           <el-input v-model="searchForm.contactPhone" class="width150"></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="销售员">
+        <el-form-item :label="$t('desk.order_salesman')">
           <el-select v-model="searchForm.salesId" class="width150">
             <el-option
               v-for="item in salesList"
@@ -44,7 +44,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="挂账额度">
+        <el-form-item :label="$t('desk.customer_paymentAmount')">
           <el-input v-model="searchForm.startCreditLimit" class="width150" style="width:80px"></el-input>至
           <el-input v-model="searchForm.endCreditLimit" class="width150" style="width:80px"></el-input>
         </el-form-item>
@@ -78,7 +78,7 @@
           <template slot-scope="{row}">{{setStrategyName(row.enterStrategyId)}}</template>
         </el-table-column>
         <el-table-column prop="contractNum" label="合同号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creditLimit" label="挂账额度" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creditLimit" :label="$t('desk.customer_paymentAmount')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="usedLimit" label="已用额度" show-overflow-tooltip></el-table-column>
         <el-table-column prop="totalLimit" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="enterType" label="预收款余额" show-overflow-tooltip></el-table-column>
@@ -87,7 +87,7 @@
             <div>{{row.state==1?'启用':'禁用'}}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="salesId" label="销售员" show-overflow-tooltip>
+        <el-table-column prop="salesId" :label="$t('desk.order_salesman')" show-overflow-tooltip>
           <template slot-scope="{row}">{{setSalesIdName(row.salesId)}}</template>
         </el-table-column>
         <el-table-column prop="shareFlag" label="是否共享" show-overflow-tooltip>
@@ -233,7 +233,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="销售员：">
+              <el-form-item :label="$t('desk.order_salesman') + '：'">
                 <el-select v-model="addCompanyForm.salesId">
                   <el-option
                     v-for="item in salesList"
@@ -374,7 +374,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item label="销售员：">
+              <el-form-item :label="$t('desk.order_salesman') + '：'">
                 <el-select v-model="setBatchForm.salesId">
                   <el-option
                     v-for="item in salesList"
@@ -428,7 +428,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column prop label="挂账额度" show-overflow-tooltip>
+        <el-table-column prop :label="$t('desk.customer_paymentAmount')" show-overflow-tooltip>
           <template slot-scope="{row}">
             <el-input v-model="row.creditLimit" size="mini"></el-input>
           </template>
@@ -470,7 +470,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" label="销售员" show-overflow-tooltip>
+        <el-table-column prop="enterType" :label="$t('desk.order_salesman')" show-overflow-tooltip>
           <template slot-scope="{row}">
             <el-select v-model="row.salesId" size="mini">
               <el-option

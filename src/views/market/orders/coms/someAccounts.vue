@@ -19,7 +19,7 @@
             <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
             <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
             <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
@@ -30,7 +30,7 @@
         </el-row>
         <el-form-item label="" label-width="0">
             <el-button type="primary" size="mini" @click="openDialog(1)">收款</el-button>
-            <el-button type="primary" size="mini">挂账</el-button>
+            <el-button type="primary" size="mini">{{$t('desk.charge')}}</el-button>
             <el-button type="primary" size="mini" @click="openDialog(2)">免单</el-button>
             <el-button type="primary" size="mini" @click="openDialog(3)">退款</el-button>
         </el-form-item>
@@ -58,7 +58,7 @@
 
     <el-dialog :title="title" top="0" :visible.sync="getStatus" :modal="false">
         <el-form ref="form" :model="getForm" label-width="80px">
-          <el-form-item label="收款方式" required v-if="type == 1">
+          <el-form-item :label="$t('desk.customer_paymentMethod')" required v-if="type == 1">
             <el-radio-group v-model="getForm.payType">
                 <el-radio :label="1" :value="1">现金</el-radio>
                 <el-radio :label="2" :value="2">银行卡</el-radio>
@@ -67,13 +67,13 @@
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="收款方式" required v-if="type == 2">
+          <el-form-item :label="$t('desk.customer_paymentMethod')" required v-if="type == 2">
             <el-radio-group v-model="getForm.payType">
                 <el-radio :label="0" :value="0">免单</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="收款方式" required v-if="type == 3">
+          <el-form-item :label="$t('desk.customer_paymentMethod')" required v-if="type == 3">
             <el-radio-group v-model="getForm.payType">
                 <el-radio :label="0" :value="0">现金退款</el-radio>
             </el-radio-group>

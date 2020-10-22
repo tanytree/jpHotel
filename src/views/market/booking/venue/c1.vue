@@ -39,7 +39,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="销售员：">
+                        <el-form-item :label="$t('desk.order_salesman') + '：'">
                             <el-select v-model="checkInForm.enterStatus"  class="width200">
                                 <el-option :label="$t('commons.all')" value="3"></el-option>
                                 <el-option label="已认证" value="1">已认证</el-option>

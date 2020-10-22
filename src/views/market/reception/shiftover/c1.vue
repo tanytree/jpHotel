@@ -52,7 +52,7 @@
       <div class="total">结算总计：6000.00日元</div>
       <el-row class="padding-tb-10">
         <el-col :span="3">
-          <div class="item">挂账：<span class="blue">8000.00</span>日元</div>
+          <div class="item">{{$t('desk.charge')}}：<span class="blue">8000.00</span>日元</div>
         </el-col>
         <el-col :span="3">
           <div class="item">现金：<span class="blue">8000.00</span>日元</div>

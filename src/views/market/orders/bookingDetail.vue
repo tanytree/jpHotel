@@ -32,7 +32,7 @@
       <div class="rightContent">
         <el-row v-if="isOrder">
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="订单基本信息" name="first">
+            <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
               <div class="tabWrap">
                 <sbase
                   :checkinInfo="detailData.checkIn"
@@ -42,12 +42,12 @@
                 </sbase>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="客人信息" name="second">
-              <div class="tabWrap">
-                <customer type="detail" :detailData="detailData"></customer>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="财务明细" name="third">
+<!--            <el-tab-pane :label="$t('desk.order_guestInfo')" name="second">-->
+<!--              <div class="tabWrap">-->
+<!--                <customer type="detail" :detailData="detailData"></customer>-->
+<!--              </div>-->
+<!--            </el-tab-pane>-->
+            <el-tab-pane :label="$t('desk.financialDetails')" name="third">
               <div class="tabWrap">
                 <finance :detailData="detailData"></finance>
               </div>

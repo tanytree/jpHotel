@@ -344,7 +344,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="销售员：">
+                  <el-form-item :label="$t('desk.order_salesman') + '：'">
                     <el-select
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
@@ -357,7 +357,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="外部订单号：">
+                  <el-form-item :label="$t('desk.order_outOrder') + '：'">
                     <el-input
                       style="width: 246px"
                       v-model="checkInForm.content"
@@ -717,7 +717,7 @@
             <el-row>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item label="销售员:">
+                  <el-form-item :label="$t('desk.order_salesman') + ':'">
                     <el-select
                       style="width: 140px"
                       v-model="checkInForm.enterStatus"

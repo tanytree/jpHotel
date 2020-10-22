@@ -6,6 +6,16 @@
  */
 //前台部 日文
 module.exports = {
+    updateOrder: '予約修正',
+    batchCheckin: '一括チェックイン',
+    clickCheckin: 'チェックインをクリック',
+    financialDetails: '会計明細',
+    charge: '売掛',
+    chargeMoney: '売掛金額',
+    chargeTotal: '挂账合計',
+    enterAccountTime: '入金時間',
+    enterAccountMoney: '入金金額',
+    enterAccount: '入金',
     checkInDays: '滞在日数',
     arrivalTime: '到着予定',
     reservePersonDesc: '予約者',
@@ -13,10 +23,10 @@ module.exports = {
     //夜审
     nightAudit: {
         topSuggestTip: '建议夜审前处理以下业务',
-        notyet: 'チェックイン時間過ぎてもチェックインしなかった注文',
-        notleaving: 'チェックアウト時間過ぎてもチェックアウトしなかった注文',
-        leave: '会計せずチェックアウトの注文',
-        verify: '室料事前審査注文',
+        notyet: '客未着',
+        notleaving: '出発予定客',
+        leave: '売掛',
+        verify: '料金検証',
         schedulerTime: '予約時間',
         arriveTime: 'チェックイン/アウト時間',
     },

@@ -37,9 +37,9 @@
 <!--                        <el-tag type="info" @click="timeTypeClick('9')">{{-->
 <!--                            $t("desk.order_nextWeek")-->
 <!--                        }}</el-tag>-->
-<!--&lt;!&ndash;                        <el-tag type="info">{{&ndash;&gt;-->
-<!--&lt;!&ndash;                            $t("desk.book_theCustom")&ndash;&gt;-->
-<!--&lt;!&ndash;                        }}</el-tag>&ndash;&gt;-->
+<!--                        <el-tag type="info">{{-->
+<!--                            $t("desk.book_theCustom")-->
+<!--                        }}</el-tag>-->
 <!--                    </el-form-item>-->
 <!--                    &lt;!&ndash;<el-form-item label="">-->
 <!--                              <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>-->
@@ -566,10 +566,13 @@ export default {
         },
         /**获取表格数据 */
         getDataList() {
+            let params = this.$F.deepClone(this.searchForm);
+            if (params.state == '0')
+                params.state = '';
             this.$F.doRequest(
                 this,
                 "/pms/reserve/reserve_order_list",
-                this.searchForm,
+                params,
                 (res) => {
                     this.tableData = res.resreveList;
                     this.listTotal = res.page.count;

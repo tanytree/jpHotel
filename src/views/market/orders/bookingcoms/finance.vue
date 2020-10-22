@@ -136,7 +136,7 @@
           ></el-table-column>
           <el-table-column
             prop="createTime"
-            label="入账时间"
+            :label="$t('desk.enterAccountTime')"
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column
@@ -194,7 +194,7 @@
       >
         <el-row v-if="detailData">
           <el-col :span="8" v-if="detailData.checkIn"
-            >预订单号：{{ detailData.checkIn.reserveOrderNum }}</el-col
+            >{{ $t('desk.order_bookOrderNum') }}：{{ detailData.checkIn.reserveOrderNum }}</el-col
           >
           <el-col :span="8" v-if="detailData.checkIn"
             >{{$t('desk.home_bookPeople')}}：{{ detailData.checkIn.name }}</el-col
@@ -244,7 +244,7 @@
       >
         <el-row v-if="detailData">
           <el-col :span="8" v-if="detailData.checkIn"
-            >预订单号：{{ detailData.checkIn.reserveOrderNum }}</el-col
+            >{{ $t('desk.order_bookOrderNum') }}：{{ detailData.checkIn.reserveOrderNum }}</el-col
           >
           <el-col :span="8" v-if="detailData.checkIn"
             >{{$t('desk.home_bookPeople')}}：{{ detailData.checkIn.name }}</el-col

@@ -10,13 +10,13 @@
     <el-form inline size="small">
         <el-row>
             <el-form-item label="">
-                <el-button type="primary" size="mini" @click="entryShow=true">入账</el-button>
-                <el-button type="primary" size="mini" @click="onAccountShow=true">挂账</el-button>
-                <el-button type="primary" size="mini" @click="consumeGoodsHandle">迷你吧</el-button>
+                <el-button type="primary" size="mini" @click="entryShow=true">{{$t('desk.enterAccount')}}</el-button>
+                <el-button type="primary" size="mini" @click="onAccountShow=true">{{ $t('desk.charge') }}</el-button>
+                <el-button type="primary" size="mini" @click="consumeGoodsHandle">{{ $t('desk.serve_miniPub') }}</el-button>
                 <el-button type="primary" size="mini" @click="checkOutHandle">退房结账</el-button>
-                <el-button type="primary" size="mini" @click="invoicingHandle">开发票</el-button>
+                <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
-                <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
+                <el-button type="primary" size="mini" @click="destructionHandle">{{$t('desk.customer_rich')}}</el-button>
                 <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
                 <el-button type="primary" size="mini">撤销结账</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true">走结</el-button>
@@ -74,7 +74,7 @@
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
     <!--入账 -->
-    <el-dialog top='0' title="入账" :visible.sync="entryShow">
+    <el-dialog top='0' :title="$t('desk.enterAccount')" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
             <p>快速入账项目</p>
             <el-form-item label="付款项目：">
@@ -131,7 +131,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="entryShow = false">关闭</el-button>
-            <el-button type="primary" @click="consume_oper(1,'entry')">入账</el-button>
+            <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
         </div>
     </el-dialog>
    <!-- <el-dialog top='0' title="选择结算方式" :visible.sync="payTypeShow">
@@ -153,7 +153,7 @@
     </el-dialog> -->
 
     <!--挂账-->
-    <el-dialog top='0' title="挂账" :visible.sync="onAccountShow" width="500px">
+    <el-dialog top='0' :title="$t('desk.charge')" :visible.sync="onAccountShow" width="500px">
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -183,7 +183,7 @@
             </el-row>
             <br />
 
-            <el-form-item label="挂账金额：" class="" prop="consumePrice">
+            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="consumePrice">
                 <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice"></el-input>
             </el-form-item>
             <el-form-item label="挂账单位：" class="" prop="creditName">
@@ -271,7 +271,7 @@
             <el-form-item label="" label-width="0">
                 <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
             </el-form-item>
-            <el-form-item label="收款方式：" prop="payType" v-if="detailData.totalPrice>0">
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
                 <el-radio-group v-model="consumeOperForm.payType">
                     <el-radio :label="1" :value="1">现金</el-radio>
                     <el-radio :label="2" :value="2">银行卡</el-radio>
@@ -297,7 +297,7 @@
         </div>
     </el-dialog>
     <!--冲调-->
-    <el-dialog top='0' title="冲调" :visible.sync="destructionShow"width="800px">
+    <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow"width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -334,7 +334,7 @@
                 </el-table-column>
                 <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="createTime" label="入账时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             </el-table>
