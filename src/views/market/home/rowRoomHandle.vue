@@ -33,10 +33,10 @@
                     <el-col :span="17">
                         <div class="grid-content">
                             <el-row>
-                                <el-radio-group v-model="getRoomsForm.changeType" size="small" @change="getDataList">
-                                    <el-radio :label="1" border>可改房价</el-radio>
-                                    <el-radio :label="2" border>不可改房价</el-radio>
-                                </el-radio-group>
+<!--                                <el-radio-group v-model="getRoomsForm.changeType" size="small" @change="getDataList">-->
+<!--                                    <el-radio :label="1" border>可改房价</el-radio>-->
+<!--                                    <el-radio :label="2" border>不可改房价</el-radio>-->
+<!--                                </el-radio-group>-->
                                 <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
                                     <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                                 </el-select>
@@ -640,7 +640,6 @@ export default {
                 item.roomsArr.forEach(room=> {
                     array.push(room.id);
                 })
-                debugger
                 checkInRoomJson.push({
                     roomTypeId: item.roomTypeId,
                     roomId: array.join(','),

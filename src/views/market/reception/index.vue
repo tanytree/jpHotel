@@ -6,25 +6,25 @@
  -->
 
 <template>
-  <div id="page1" class="boss-index">
-      <el-tabs class="pageTab noBg" v-model="activeName">
-          <el-tab-pane
-                  v-for="item in menuList"
-                  :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
-                  :name="item.path"
-                  :key="item.path"
-                   v-if="$F.filterThirdMenu('frontOffice', item.path, true)"
-                  :class="item.path !== 'checkin' ? 'bg' : ''"
-          >
-              <!-- 入住办理-->
-              <checkin v-if="item.path == 'checkin'" />
-              <!-- 前台报表-->
-              <reportform v-if="item.path == 'reportform'"/>
-              <!-- 前台交班-->
-              <shiftover v-if="item.path == 'shiftover'"/>
-          </el-tab-pane>
-      </el-tabs>
-  </div>
+    <div id="page1" class="boss-index">
+        <el-tabs class="pageTab noBg" v-model="activeName">
+            <el-tab-pane
+                v-for="item in menuList"
+                :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
+                :name="item.path"
+                :key="item.path"
+                v-if="$F.filterThirdMenu('frontOffice', item.path, true)"
+                :class="item.path !== 'checkin' ? 'bg' : ''"
+            >
+                <!-- 入住办理-->
+                <checkin v-if="item.path == 'checkin'"/>
+                <!-- 前台报表-->
+                <reportform v-if="item.path == 'reportform'"/>
+                <!-- 前台交班-->
+                <shiftover v-if="item.path == 'shiftover'"/>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
 </template>
 
 <script>
@@ -33,25 +33,38 @@ import reportform from "./reportform";
 import shiftover from "./shiftover";
 
 export default {
-  components: { checkin, reportform, shiftover },
-  data() {
-    return {
-      activeName: ""
-    };
-  },
-  created() {
-    this.$F.handleThirdMenu(this);
-  },
-  mounted() {},
-  methods: {
-    //二级tab切片
-    handleClick(tab, event) {
-      // console.log(tab.index);
+    components: {checkin, reportform, shiftover},
+    data() {
+        return {
+            activeName: ""
+        };
+    },
+    created() {
+        this.$F.handleThirdMenu(this);
+        for (let i = 0; i < this.menuList.length; i++) {
+            if (this.menuList[i].path == 'reportform') {
+                this.menuList.splice(i, 1)
+                break;
+            }
+        }
+        for (let i = 0; i < this.menuList.length; i++) {
+            if (this.menuList[i].path == 'shiftover') {
+                this.menuList.splice(i, 1)
+                break;
+            }
+        }
+    },
+    mounted() {
+    },
+    methods: {
+        //二级tab切片
+        handleClick(tab, event) {
+            // console.log(tab.index);
+        }
     }
-  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" >
+<style lang="less">
 </style>

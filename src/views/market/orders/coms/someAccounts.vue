@@ -192,15 +192,10 @@ export default {
             params.remak = this.consumeOperForm.remark
             params.roomId = this.currentRoom.roorId;
             params.roomNum = this.currentRoom.houseNum
-
-
-
             this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
               this.visible = false
               this.$emit('get_consume_order_list','');
             })
-
-
         },
 
 

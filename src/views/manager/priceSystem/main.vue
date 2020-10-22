@@ -38,6 +38,12 @@
         },
         created () {
             this.$F.handleThirdMenu(this);
+            for (let i = 0; i < this.menuList.length; i++) {
+                if (this.menuList[i].path == 'billingRules') {
+                    this.menuList.splice(i, 1)
+                    break;
+                }
+            }
         },
         activated () {
         },

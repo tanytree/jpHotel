@@ -85,40 +85,36 @@
       >
         <el-table-column
           :label="$t('desk.home_customerName')"
-          width="80"
           prop="guestName"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_roomNum')"
-          width="80"
           prop="roomNum"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_phoneNum')"
-          width="100"
           prop="mobile"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_goodsName')"
-          width="80"
           prop="luggageName"
         ></el-table-column>
         <el-table-column
+            width="180"
           :label="$t('desk.home_depositingTime')"
-          width="120"
           prop="createTime"
         ></el-table-column>
         <el-table-column
+
           :label="$t('desk.home_drawTime')"
-          width="120"
           prop="receiveTime"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_getNum')"
-          width="180"
+          width="240"
           prop="luggageNum"
         ></el-table-column>
-        <el-table-column :label="$t('desk.home_state')" width="80">
+        <el-table-column :label="$t('desk.home_state')">
           <template slot-scope="{ row }">
             <div v-if="row.operStatus == 1">
               {{ $t("desk.home_toRetrieve") }}
@@ -131,10 +127,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.home_operator')" width="80">
+        <el-table-column :label="$t('desk.home_operator')">
           <template slot-scope="{ row }">{{ row.creatorName }}</template>
         </el-table-column>
-        <el-table-column :label="$t('commons.operating')">
+        <el-table-column :label="$t('commons.operating')" width="350">
           <template slot-scope="{ row }">
             <el-button
               type="primary"

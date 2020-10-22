@@ -145,12 +145,12 @@
             <div class="roomMsg">
                 <div class="left">
                     <el-form inline size="small">
-                        <el-form-item>
-                            <el-radio-group v-model="getRoomsForm.changeType" @change="getDataList">
-                                <el-radio :label="1" border>可改房价</el-radio>
-                                <el-radio :label="2" border>不可改房价</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
+<!--                        <el-form-item>-->
+<!--                            <el-radio-group v-model="getRoomsForm.changeType" @change="getDataList">-->
+<!--                                <el-radio :label="1" border>可改房价</el-radio>-->
+<!--                                <el-radio :label="2" border>不可改房价</el-radio>-->
+<!--                            </el-radio-group>-->
+<!--                        </el-form-item>-->
                         <el-form-item>
                             <el-select v-model="getRoomsForm.bedCount" @change="getDataList">
                                 <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
@@ -1024,7 +1024,6 @@ export default {
         },
         //入住人回调
         personCallback(data) {
-            debugger
             this.checkInForm.checkInRoomJson = data;
             this.addLivePersonShow = false;
         },

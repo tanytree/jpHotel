@@ -348,7 +348,6 @@
     created () {
     },
     mounted () {
-        debugger
       this.department_list()
       this.fetchStoresUserCount()
       if (this.$route.name == 'employeeList') {

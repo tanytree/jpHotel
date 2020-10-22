@@ -378,7 +378,6 @@ export default {
             }
             let arr = [];
             arr.push(this.currentRoom);
-            debugger
             this.$refs.rowRoomHandle.initForm(
                 this.$route.query.id,
                 this.checkinInfo,

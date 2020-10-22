@@ -173,9 +173,7 @@ export default {
                 })
                 personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
-                debugger
             })
-            debugger
             if (this.type == 'reserve') {
                 let params = {};
                 this.$F.merge(params, {

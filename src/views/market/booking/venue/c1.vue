@@ -107,12 +107,12 @@
             <el-row>
                 <el-col :span="17">
                     <div class="grid-content">
-                        <el-row>
-                            <el-button>可改房价</el-button>&nbsp;&nbsp;
-                            <el-select v-model="checkInForm.enterStatus" placeholder="床位数">
-                                <el-option :label="$t('commons.all')" value="3"></el-option>
-                            </el-select>
-                        </el-row>
+<!--                        <el-row>-->
+<!--                            <el-button>可改房价</el-button>&nbsp;&nbsp;-->
+<!--                            <el-select v-model="checkInForm.enterStatus" placeholder="床位数">-->
+<!--                                <el-option :label="$t('commons.all')" value="3"></el-option>-->
+<!--                            </el-select>-->
+<!--                        </el-row>-->
                         <br />
                         <el-row>
                             <el-col :span="8" v-for="v in 20" :key="v">

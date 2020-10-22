@@ -103,7 +103,6 @@
           })
       },
       itemClick (name) {
-          debugger
         this.$router.push('/' + name)
       },
     }
