@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-23 02:38:23
+ * @LastEditTime: 2020-10-23 16:54:24
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -40,8 +40,8 @@ module.exports = {
     home_messTime: '送信時間',
     home_newAddMess: 'メッセージ追加',
     home_inputMessContent: '伝言を入力してください',
-    home_sureDelete: '該当伝言削除を確認',
-    home_addSuccess: '伝言追加成功',
+    home_sureDelete: '該当伝言を削除確認しますか？',
+    home_addSuccess: '追加伝言確認',
     home_register: '預かり種別',
     home_toRetrieve: '受取待ち',
     home_haveRetrieve: '受取済み',
@@ -58,7 +58,7 @@ module.exports = {
     home_operator: '担当者',
     home_receive: '受け渡す',
     home_invalid: '廃棄',
-    home_cancelInvalid: '取り消しをキャンセル',
+    home_cancelInvalid: '廃棄取り消し',
     home_checkToPlay: '預かり書を再発行',
     home_note: '備考',
     home_goodsGetOrder: '手荷物預かり証',
@@ -68,11 +68,11 @@ module.exports = {
     home_deskPhone: 'フロント電話番号',
     home_hotelAddress: 'ホテル住所',
     home_telNum: '自宅電話番号',
-    home_getState: '預かり状態',
+    home_getState: '受け渡す状態',
     home_saveAndPri: '保存及び印刷',
     home_inputGoodsName: '預かり内容を入力してください',
     home_inputRoomNum: '部屋番号を入力してください。',
-    home_deleteSure: '該当預かり削除を確認',
+    home_deleteSure: '該当預かりを削除確認しますか？',
     home_nameAroom: '宿泊者名前/部屋番号',
     home_idCard: '身分証明書',
     home_roomCard: '部屋カード',
@@ -97,7 +97,7 @@ module.exports = {
     serve_to: '-',
     serve_peopleDuty: '担当者',
     serve_heji: '合計',
-    serve_patch: '印刷',
+    serve_patch: '再印刷',
     serve_basicInfo: '基本情報',
     serve_flight: '締め日',
     serve_startAend: '開始−終了',
@@ -148,7 +148,7 @@ module.exports = {
     book_afterTomorrow: '明後日',
     book_week: '7日分',
     book_theCustom: '自己期間選択',
-    book_dateRegistration: '予約期間',
+    book_dateRegistration: '記録日付',
     book_orderSoutce: '予約経路',
     home_customersCategory: 'ゲストカテゴリー',
     home_bookPeople: '予約者名前',

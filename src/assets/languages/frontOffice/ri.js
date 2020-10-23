@@ -1,12 +1,12 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-23 03:07:14
+ * @LastEditTime: 2020-10-23 16:47:12
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
-    saveGoon: '新予約に切り替える',
-    chooseRoomType: '部屋タイプ選択してください',
+    saveGoon: '保存及び宿泊チェックイン作業継続',
+    chooseRoomType: '部屋タイプを選択してください',
     nightAudit: {
         reservationNumber: '予約番号',
         checkInTime: '到着時間',
@@ -23,9 +23,9 @@ module.exports = {
 
     // state 卡状态 1正常(已发卡) 2已挂失 3.待启用
     state: {
-        "1": '正常(已发卡)',
-        "2": '已挂失',
-        "3": "待启用"
+        "1": '正常',
+        "2": '紛失届済み',
+        "3": "起用待ち"
     },
     // 是否黑名单 1否 2是 Integer非必填
     isBlacklist: {
@@ -37,8 +37,8 @@ module.exports = {
         "2": 'デポジット',
         "3": '入金',
         "4": '返金',
-        "5": '加收全天房费',
-        "6": '加收半天房费',
+        "5": '宿泊料金請求',
+        "6": '日帰り料金請求',
         "7": '損害賠償記録master',
         "8": 'ミニバー',
         "9": '完全相殺',

@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Dana
- * @LastEditTime: 2020-10-18 17:23:52
- * @FilePath: /jiudian/src/assets/languages/commons/commonsZh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-23 15:50:39
+ * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
     mustChoose: '必填',
@@ -163,7 +163,7 @@ module.exports = {
         '3': '拒单',
         '4': 'NOSHOW',
         '5': '未入住',
-        '6': '已入驻',
+        '6': '已入住',
         '7': '离店',
         '8': '已取消',
         '9': '应到未到订单'
