@@ -11,6 +11,12 @@ module.exports = {
     roomTitle: '大倉グループホテル管理システム',
     roomName: 'より簡単なホテル管理',
     passwordEnterTip: '请输入密码，长度为6 - 18个字符',
-    storesTip: '店舗'
+    storesTip: '店舗',
+    backLogin: '未翻译词条',
+    chinese: '未翻译词条',
+    japanese: '未翻译词条'
+
+
+
 }
 
