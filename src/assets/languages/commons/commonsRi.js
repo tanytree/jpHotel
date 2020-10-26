@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-23 18:16:00
+ * @LastEditTime: 2020-10-26 11:34:26
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -88,9 +88,10 @@ module.exports = {
     },
     //订单来源
     orderSource: {
-        "1": 'フロント',
-        "2": '営業',
+        "1": 'ウォークイン',
+        "2": '営業担当',
         "3": 'OTA/旅行社',
+        "4": '直電',
         "10": 'その他'
     },
     //正常免费

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-23 16:54:24
+ * @LastEditTime: 2020-10-26 15:31:30
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -200,7 +200,7 @@ module.exports = {
     order_guestInfo: "顧客情報",
     order_guestName: "顧客名前",
     order_sourceType: "ゲストカテゴリー",
-    order_salesman: "担当営業",
+    order_salesman: "受付担当",
     order_saleInfo: "販売情報",
     order_roomInfo: "会場",
     order_alRoom: "グルーピング",
@@ -529,6 +529,7 @@ module.exports = {
     home_payCompanyName: '支払会社名',
     home_companyName: '支払会社',
     home_timeInfo: '領収書情報を完成してください',
+    book_inputContent: '入力してください。',
 
 
 

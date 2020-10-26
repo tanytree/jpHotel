@@ -192,7 +192,7 @@ module.exports = {
     book_checkin: '已入住',
     book_leaveStore: '离店',
     book_meetConference: '会议登记',
-    book_: '',
+    book_inputContent: '请输入内容',
     book_: '',
     //订单管理（order）
     order_orderType: "订单类型",

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-23 15:50:39
+ * @LastEditTime: 2020-10-26 15:12:21
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -91,6 +91,7 @@ module.exports = {
         '1': '前台',
         '2': '销售推荐',
         "3": '渠道订单',
+        "4": '电话预定',
         '10': '其它'
     },
     //正常免费
