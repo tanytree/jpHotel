@@ -5,23 +5,25 @@
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
  -->
 <template>
-<div class="base" v-if="checkinInfo">
+<div class="base">
     <el-row class="clearfix">
         <div class="fr">
-            <el-button plain @click="batchCheckId" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">{{ $t('desk.batchCheckin') }}</el-button>
-            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-dropdown split-button type="primary">
-                {{ $t('commons.moreOperating') }}
+<!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
+            <el-button plain @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
+            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-dropdown split-button type="primary"> {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
 <!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
 <!--                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>-->
-                    <el-dropdown-item @click.native="handleCancel" v-if="checkinInfo.state == 1 || checkinInfo.state == 2">取消预订</el-dropdown-item>
-<!--                    <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>-->
+<!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
+                    <el-dropdown-item @click.native="handleCancel" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">取消预订</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleNoshow" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
     </el-row>
     <el-row>
+        <!--客房信息-->
         <h4>{{ $t('desk.serve_basicInfo') }}</h4>
         <el-row>
             <el-col :span="8">
@@ -42,12 +44,14 @@
         <h4>预订房型</h4>
         <el-row>
             <el-col :span="24" v-for="(item,key,index) of roomTypeList" :key="index">
-                <p>{{checkKey(key)}}（{{item.length}}间）；{{$t('desk.home_roomType')}}：<el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
+                <p>
+                    {{checkKey(key)}}（{{item.length}}间）；
+                    {{$t('desk.home_roomType')}}：
+                    <el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
                 </p>
             </el-col>
             <!-- <el-col :span="24">
-                <p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button>
-                </p>
+                <p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button> </p>
             </el-col> -->
         </el-row>
     </el-row>
@@ -70,6 +74,9 @@
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
         <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
     </el-dialog>
+
+
+
     <el-dialog top="0" :title="$t('desk.updateOrder')" :visible.sync="baseInfoChangeShow" width="900px" center>
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
             <el-row>
@@ -227,7 +234,7 @@ export default {
     watch: {
         roomInfo: {
             handler(n, o) {
-                console.log(n)
+                debugger
                 n.forEach(element => {
                     if (element.personList.length) {
                         if (!this.roomTypeList[element.roomTypeId + 'checkIn']) {
@@ -241,7 +248,9 @@ export default {
                         this.roomTypeList[element.roomTypeId + 'notYet'].push(element)
                     }
                 });
+                console.log(222222222222)
                 console.log(this.roomTypeList)
+
             },
             //   immediate: true,
             deep: true
@@ -353,8 +362,7 @@ export default {
     },
 
     created() {
-      console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
-      debugger
+        console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
     },
 
     mounted() {
@@ -362,7 +370,7 @@ export default {
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;
             let tempArray = this.salesList.filter(sale => {  return sale.id == this.checkinInfo.salesId}) || [{}];
-            this.currentSale = tempArray[0];
+            this.currentSale = tempArray[0] || {};
         });
     },
 
@@ -374,7 +382,6 @@ export default {
         batchCheckId() {
             console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
             console.log(JSON.parse(JSON.stringify(this.inRoomList)));
-
             this.inRoomList.forEach((item, i) => {
                 let object = {
                     checkinRoomId: this.checkinInfo.id,
@@ -467,9 +474,20 @@ export default {
         baseInfoChange() {
             this.$emit('baseInfoChange', '');
         },
+        //将订单变为NOSHOW状态
         handleNoshow() {
-            this.currentItem = this.checkinInfo;
-            this.noShowDiaShow = true
+            let params = {
+                checkInReserveId: this.$route.query.id || '',
+                state: 4
+            }
+            debugger
+            this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                this.$router.go(-1)
+                this.$message({
+                    message: this.$t('commons.request_success'),
+                    type: 'success'
+                });
+            })
         },
         rowRoomHandle() {
             if (!this.$route.query.id) {

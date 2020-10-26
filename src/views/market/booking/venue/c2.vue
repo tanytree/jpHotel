@@ -259,8 +259,8 @@
                   style="width: 180px"
                   :placeholder="$t('commons.selectIdCardType')"
                 >
-                  <el-option label="身份证" value="1"></el-option>
-                  <el-option label="护照" value="2"></el-option>
+<!--                  <el-option label="身份证" value="1"></el-option>-->
+<!--                  <el-option label="护照" value="2"></el-option>-->
                 </el-select>
               </el-form-item>
             </el-col>

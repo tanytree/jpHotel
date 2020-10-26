@@ -5,7 +5,7 @@
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/roominfo.vue
  -->
 <template>
-    <div class="base" v-if="checkinInfo">
+    <div class="base">
         <el-row class="clearfix" style="margin-bottom: -15px; padding-top: 15px">
             <el-col :span="12">
                 <el-row>
@@ -19,9 +19,12 @@
             </el-col>
             <el-col :span="12">
                 <div class="fr">
-                    <el-button plain size="mini" @click="batchCheckId" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">{{ $t('manager.ps_inLive') }}</el-button>
-                    <el-button plain size="mini" @click="updateReserved" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">修改预留 </el-button>
-                    <el-dropdown split-button type="primary" size="mini">
+<!--                    disabled="checkinInfo.state == 1 || checkinInfo.state == 2"-->
+                    <el-button plain size="mini" @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" >{{ $t('manager.ps_inLive') }}</el-button>
+<!--                    -->
+                    <el-button plain size="mini" @click="updateReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">修改预留 </el-button>
+                    <!--这块暂时隐藏 不要留太多bug-->
+                    <el-dropdown split-button type="primary" size="mini" v-show="false">
                         {{ $t('commons.moreOperating') }}
                         <el-dropdown-menu slot="dropdown">
                             <!--                        <el-dropdown-item>改价</el-dropdown-item>-->

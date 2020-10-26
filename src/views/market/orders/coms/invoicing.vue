@@ -46,32 +46,29 @@
                             ></el-input>
                         </el-form-item>
                     </el-col>
-                </el-row>
-                <el-row>
                     <el-col :span="8">
                         <el-form-item
-                            :label="$t('desk.order_payCompanyName') + ':'"
-                            prop="companyName"
+                            :label="$t('desk.home_phoneNum') + ':'"
                         >
                             <el-input
                                 class="width150"
                                 type="text"
-                                v-model="openInvoiceForm.companyName"
+                                v-model="openInvoiceForm.mobile"
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
                     </el-col>
+
+                </el-row>
+                <el-row>
                     <el-col :span="8">
-                        <el-form-item
-                            :label="$t('desk.order_project') + ':'"
-                            prop="projectName"
-                        >
-                            <el-input
-                                class="width150"
-                                type="text"
-                                v-model="openInvoiceForm.projectName"
-                                autocomplete="off"
-                            ></el-input>
+                        <el-form-item :label="$t('desk.order_payCompanyName') + ':'" prop="companyName">
+                            <el-input class="width150" type="text" v-model="openInvoiceForm.companyName" autocomplete="off" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item :label="$t('desk.order_project') + ':'" prop="projectName">
+                            <el-input class="width150"  type="text" v-model="openInvoiceForm.projectName" autocomplete="off" ></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
@@ -191,11 +188,17 @@ export default {
     mounted() {},
     methods: {
         //开发票按钮点击
-        init(item) {
-            this.openInvoiceForm.checkInId = item.id;
-            this.openInvoiceForm.consumePrice = item.consumeTotalPrice;
+        init(item, openInvoiceForm) {
+            debugger
+            this.$F.merge(this.openInvoiceForm, openInvoiceForm || {});
+            if (item.id) {
+                this.openInvoiceForm.checkInId = item.id;
+                this.openInvoiceForm.consumePrice = item.consumeTotalPrice;
+                this.openInvoiceForm.mobile = item.mobile;
+                this.openInvoiceForm.name = item.name;
+                this.openInvoiceForm.roomNum = item.hotelCheckInRoom.houseNum;
+            }
             // this.openInvoiceForm.invoicePrice = item. 这里卡住
-
             this.openInvoiceShow = true;
         },
 
@@ -209,6 +212,10 @@ export default {
                         this.openInvoiceForm,
                         (res) => {
                             this.openInvoiceShow = false;
+                            this.$message({
+                                message: this.$t('commons.request_success'),
+                                type: 'success'
+                            });
                             this.$emit("consume_order_list");
                         }
                     );

@@ -411,18 +411,10 @@
                         <!-- <p>hdfkhajkghgh</p> -->
                         <div class="icondesc">
                             <h3>图标说明</h3>
-                            <el-col :span="4" class="item">
-                                <span class="inco">钟</span>
-                                <span>钟点房</span>
-                            </el-col>
-                            <el-col :span="4" class="item">
-                                <span class="inco">免</span>
-                                <span>免费房</span>
-                            </el-col>
-                            <el-col :span="4" class="item">
-                                <span class="inco">午</span>
-                                <span>午夜房</span>
-                            </el-col>
+<!--                            <el-col :span="4" class="item">-->
+<!--                                <span class="inco">钟</span>-->
+<!--                                <span>钟点房</span>-->
+<!--                            </el-col>-->
                             <el-col :span="4" class="item">
                                 <span class="inco">订</span>
                                 <span>预订房</span>
@@ -431,10 +423,10 @@
                                 <span class="inco">离</span>
                                 <span>今日预离</span>
                             </el-col>
-                            <el-col :span="4" class="item">
-                                <span class="inco">长</span>
-                                <span>长租房</span>
-                            </el-col>
+<!--                            <el-col :span="4" class="item">-->
+<!--                                <span class="inco">长</span>-->
+<!--                                <span>长租房</span>-->
+<!--                            </el-col>-->
                             <el-col :span="4" class="item">
                 <span class="inco i_img">
                   <img
@@ -693,26 +685,9 @@
                 </el-table-column>
             </el-table>
 
-            <el-row>
-                <el-checkbox v-model="stayoerchecked">
-                    按入住时房价续住
-                    <span style="color: red">(午夜房不可按入住时房价入住)</span>
-                </el-checkbox>
-            </el-row>
-
             <div slot="footer" class="dialog-footer">
-                <el-button size="small" class="white" @click="stayoer = false"
-                >取 消
-                </el-button
-                >
-                <el-button
-                    size="small"
-                    type="primary"
-                    class="submit"
-                    @click="stayoer = false"
-                >确 定
-                </el-button
-                >
+                <el-button size="small" class="white" @click="stayoer = false">取 消</el-button>
+                <el-button size="small" type="primary" class="submit" @click="stayoer = false">确 定</el-button>
             </div>
         </el-dialog>
         <!-- 换房 -->
@@ -1137,8 +1112,8 @@ export default {
                         3: "orders_enter", //单位
                         //'4':'',//
                         5: "orders_clock", //钟点房
-                        6: "orders_night", //午夜房
-                        7: "orders_free", //免费
+                        // 6: "orders_night", //午夜房
+                        // 7: "orders_free", //免费
                     };
                     this.roomStatusList = res.roomStatusList;
                     this.personRoom = res.personRoomList;

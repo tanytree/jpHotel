@@ -708,21 +708,25 @@ export default {
             this.checkOutShow = true;
             this.consumeOperForm.consumePrice = this.detailData.totalPrice
         },
-        //开发票提交
-        openInvoiceSubmit(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.$F.doRequest(this, '/pms/invoice/open_invoice', this.openInvoiceForm, (res) => {
-                        this.openInvoiceShow = false
-                        this.consume_order_list()
-                    })
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
-
-        },
+        // //开发票提交
+        // openInvoiceSubmit(formName) {
+        //     this.$refs[formName].validate((valid) => {
+        //         if (valid) {
+        //             this.$F.doRequest(this, '/pms/invoice/open_invoice', this.openInvoiceForm, (res) => {
+        //                 this.openInvoiceShow = false
+        //                 this.$message({
+        //                     message: this.$t('commons.request_success'),
+        //                     type: 'success'
+        //                 });
+        //                 this.consume_order_list()
+        //             })
+        //         } else {
+        //             console.log('error submit!!');
+        //             return false;
+        //         }
+        //     });
+        //
+        // },
         hoteldamagetype_list() {
             let params = {
                 pageIndex: 1,
@@ -881,8 +885,6 @@ export default {
         },
 
 
-
-
         destructionHandle() {
             if (this.multipleSelection.length < 1) {
                 this.$message.error('请选择需要操作的账务');
@@ -905,7 +907,27 @@ export default {
         },
         //开发票
         invoicingHandle() {
-            this.$refs.invoicing.init(this.$route.query.id);
+            this.openInvoiceForm.checkInId = this.$route.query.id
+            if (this.currentRoom) {
+                this.openInvoiceForm.name = this.detailData.checkIn.name;
+                this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice
+                this.openInvoiceForm.invoicePrice = ''
+                this.openInvoiceForm.roomNum = this.currentRoom.houseNum
+                this.openInvoiceForm.mobile = this.detailData.checkIn.mobile
+            } else {
+                if (this.detailData.inRoomList.length) {
+                    // this.openInvoiceForm.name = this.detailData.inRoomList[0].name
+                    this.openInvoiceForm.name = this.detailData.checkIn.name;
+                    this.openInvoiceForm.consumePrice = this.detailData.inRoomList[0].roomMarkPrice
+                    this.openInvoiceForm.invoicePrice = ''
+                    this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum
+                    this.openInvoiceForm.mobile = this.detailData.checkIn.mobile
+                } else {
+                    this.$message.error('暂无入住人');
+                    return
+                }
+            }
+            this.$refs.invoicing.init(this.$route.query.id, this.openInvoiceForm);
         },
         consumeGoodsHandle() {
             this.$refs.consumeGoods.init(this.$route.query.id);
