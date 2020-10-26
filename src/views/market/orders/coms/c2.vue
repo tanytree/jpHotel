@@ -16,12 +16,12 @@
         >
         <div class="costNum">
           <el-row
-            >消费合计：<span class="text-red">{{
+            >{{ $t('desk.consumerTotal') }}：<span class="text-red">{{
               detailData.consumePrice
             }}</span></el-row
           >
           <el-row
-            >付款合计：<span class="text-green">{{
+            >{{ $t('desk.payTotal') }}：<span class="text-green">{{
               detailData.payPrice
             }}</span></el-row
           >

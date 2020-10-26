@@ -9,8 +9,8 @@
     <!-- 统一的列表格式 -->
     <div class="boss-index ru">
         <div class="content">
-            <h3 v-if="operCheckinType=='a1' || operCheckinType=='a2'">入住信息</h3>
-            <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">预订信息</h3>
+            <h3 v-if="operCheckinType=='a1' || operCheckinType=='a2'">{{ $t('frontOffice.checkInfoDesc') }}</h3>
+            <h3 v-if="operCheckinType=='b1' || operCheckinType=='b2'">{{ $t('desk.order_bookOrderInfo') }}</h3>
             <h3 v-if="operCheckinType=='b3'">会议登记信息</h3>
             <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules"
                      label-width="130px" v-if="operCheckinType=='a1' || operCheckinType=='a2'">
@@ -46,8 +46,8 @@
                     </el-form-item>
                 </template>
                 <el-form-item :label="$t('desk.order_salesman') + '：'">
-                    <el-select v-model="checkInForm.salesId">
-                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                    <el-select v-model="checkInForm.salesId"  :placeholder="$t('commons.placeChoose')">
+                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id" ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_outOrder') + '：'">
@@ -64,8 +64,8 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
-                    <el-select v-model="checkInForm.orderSource">
-                        <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                    <el-select v-model="checkInForm.orderSource"  :placeholder="$t('commons.placeChoose')">
+                        <el-option :value="key" v-for="(item,key,index) of $t('commons.orderSource')" :label="item" :key="index" ></el-option>
                     </el-select>
                 </el-form-item>
 <!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">-->
@@ -73,7 +73,7 @@
 <!--                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
 <!--                    </el-select>-->
 <!--                </el-form-item>-->
-                <el-form-item label="订单备注：">
+                <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
                     <el-input type="textarea" v-model="checkInForm.remark"></el-input>
                 </el-form-item>
             </el-form>
@@ -95,7 +95,7 @@
 <!--                    </el-select>-->
 <!--                </el-form-item>-->
                 <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType=='b3'">
-                    <el-select v-model="checkInForm.salesId">
+                    <el-select v-model="checkInForm.salesId"  :placeholder="$t('commons.placeChoose')">
                         <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -120,7 +120,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType!='b3'">
-                    <el-select v-model="checkInForm.salesId">
+                    <el-select  :placeholder="$t('commons.placeChoose')" v-model="checkInForm.salesId"  >
                         <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -135,13 +135,13 @@
                         <el-input v-model="checkInForm.enterName"></el-input>
                     </el-form-item>
                 </template>
-                <el-form-item label="订单备注：">
+                <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
                     <el-input type="textarea" v-model="checkInForm.remark"></el-input>
                 </el-form-item>
             </el-form>
         </div>
         <div class="content last">
-            <h3>房间信息</h3>
+            <h3>{{ $t('desk.roomInfoDesc') }}</h3>
             <div class="roomMsg">
                 <div class="left">
                     <el-form inline size="small">
@@ -152,7 +152,7 @@
 <!--                            </el-radio-group>-->
 <!--                        </el-form-item>-->
                         <el-form-item>
-                            <el-select v-model="getRoomsForm.bedCount" @change="getDataList">
+                            <el-select v-model="getRoomsForm.bedCount" @change="getDataList" :placeholder="$t('commons.placeChoose')">
                                 <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
@@ -178,7 +178,7 @@
                 <div class="right">
                     <el-form inline size="small">
                         <el-form-item>
-                            <el-button @click="empty_row_houses">自动排房</el-button>
+                            <el-button @click="empty_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>
                             <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading='liveLoading'></i>{{ $t('desk.order_rowHouses') }}</el-button>
                             <el-button @click="live_in_person_list" v-if="!operCheckinType.startsWith('b') && waitingRoom.length > 0"><i v-loading="liveCardLoading"></i>制卡</el-button>
                         </el-form-item>
@@ -187,8 +187,9 @@
                         <div class="checkRoom" v-for="(v,index) in waitingRoom" :key="index">
                             <div class="row rowReverse">
                                 <div>
-                                    <el-button type="primary" class="white" size="mini" @click="">附餐</el-button>
-                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
+<!--                                    <el-button type="primary" class="white" size="mini" @click="">附餐</el-button>-->
+                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v,index)">
+                                        {{ $t('desk.rowHouse') }}</el-button>
                                 </div>
                                 <div><span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span></div>
                             </div>
@@ -197,9 +198,9 @@
                                     <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}} <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
                                 </div>
                             </div>
-                            <div class="row rowReverse">
-                                <el-input-number class="margin-t-5" @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
-                            </div>
+<!--                            <div class="row rowReverse">-->
+<!--                                <el-input-number class="margin-t-5" @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -213,7 +214,7 @@
             </div>
         </div>
 
-        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" title="排房" width="800px">
+        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="800px">
             <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
                 <el-form-item label="朝向:" class="" style="margin-bottom:0">
                     <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
@@ -269,7 +270,7 @@
                 <el-table-column prop="groupName" :label="$t('commons.idCardTypeDesc')" width="150">
                     <template slot-scope="{row}">
                         <el-row>
-                            <el-select v-model="row.idcardType" style="width:100%">
+                            <el-select v-model="row.idcardType" style="width:100%" :placeholder="$t('commons.placeChoose')">
                                 <el-option :value="key" v-for="(item,key,index) of $t('commons.idCardType')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-row>
@@ -286,7 +287,7 @@
                 <el-table-column label="性别" width="120">
                     <template slot-scope="{row}">
                         <el-row>
-                            <el-select v-model="row.sex" style="width:100%">
+                            <el-select v-model="row.sex" style="width:100%" :placeholder="$t('commons.placeChoose')">
                                 <el-option v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :value="key" :key="index"></el-option>
                             </el-select>
                         </el-row>

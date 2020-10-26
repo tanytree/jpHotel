@@ -9,10 +9,10 @@
     <el-row class="clearfix">
       <div class="">
         <el-button type="primary" size="mini" @click="depositShow = true"
-          >交订金</el-button
+          >{{ $t('desk.order_payDeposit') }}</el-button
         >
         <el-button type="primary" size="mini" @click="refundShow = true"
-          >退订金</el-button
+          >{{ $t('desk.order_payBack') }}</el-button
         >
         <el-button type="primary" size="mini" @click="destructionHandle"
           >冲调</el-button
@@ -25,18 +25,18 @@
     <el-row class="clearfix padding-tb-20">
       <el-col :span="4">
         <span
-          >付款合计：<em class="text-green">{{ detailData.payPrice }}</em></span
+          >{{ $t('desk.payTotal') }}：<em class="text-green">{{ detailData.payPrice }}</em></span
         >
       </el-col>
       <el-col :span="4">
         <span
-          >消费合计：<em class="text-red">{{
+          >{{ $t('desk.consumerTotal') }}：<em class="text-red">{{
             detailData.consumePrice
           }}</em></span
         >
       </el-col>
       <el-col :span="4">
-        <span>平衡数：100</span>
+        <span>{{ $t('desk.balanceTotal') }}：100</span>
       </el-col>
     </el-row>
     <!--表格数据 -->
@@ -184,7 +184,7 @@
       </div>
     </el-dialog>
     <!--交订金-->
-    <el-dialog top="0" title="交订金" :visible.sync="depositShow">
+    <el-dialog top="0" :title="$t('desk.order_payDeposit')" :visible.sync="depositShow">
       <el-form
         :model="consumeOperForm"
         ref="deposit"
@@ -234,7 +234,7 @@
       </div>
     </el-dialog>
     <!--退订金-->
-    <el-dialog top="0" title="退订金" :visible.sync="refundShow">
+    <el-dialog top="0" :title="$t('desk.order_payBack')" :visible.sync="refundShow">
       <el-form
         :model="consumeOperForm"
         ref="refund"
@@ -253,7 +253,7 @@
         <br />
         <el-form-item label="付款项目：">
           <el-radio-group v-model="consumeOperForm.priceType">
-            <el-radio-button :label="4" :value="4">退订金</el-radio-button>
+            <el-radio-button :label="4" :value="4">{{ $t('desk.order_payBack') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="金额：">

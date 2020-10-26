@@ -6,6 +6,16 @@
  */
 //前台部 日文
 module.exports = {
+    autoRowHouse: '自動アサイン',
+    rowHouse: 'アサイン',
+    roomInfoDesc: '部屋情報',
+    customerInfoDesc: '顧客情報',
+    payTotal: '支払い合計',
+    consumerTotal: '利用合計金額',
+    balanceTotal: '差引勘定',
+    orderMarkInfo: '備考',
+    hadRowHouses: 'アサイン済み',
+    noRowHouses: '未アサイン',
     updateOrder: '予約修正',
     batchCheckin: '一括チェックイン',
     clickCheckin: 'チェックインをクリック',
@@ -484,6 +494,8 @@ module.exports = {
     order_bookDate: "予約日",
     order_teamName: "団体名",
     order_bookOrderNum: "予約番号",
+    order_bookOrder: "予約",
+    order_bookOrderInfo: "予約情報",
     order_outOrderNum: "外部予約番号",
     order_bookTime: "予約時間",
     order_day: "日",
@@ -493,6 +505,7 @@ module.exports = {
     order_restore: "予約復活",
     order_accountingService: "会計",
     order_payDeposit: "テポ入金",
+    order_payBack: "払い戻し金",
     order_payProject: "入金項目",
     order_memCard: "会員年費",
     order_selectPayWay: "会計方法を選択",

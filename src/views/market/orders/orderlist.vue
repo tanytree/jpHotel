@@ -331,8 +331,8 @@
           <span class="fee" v-if="1 == 1">应收：780</span>
           <span class="fee" v-if="1 == 2">应退：800</span>
           <div class="costNum">
-            <el-row>消费合计：<span class="text-red">800.00</span></el-row>
-            <el-row>付款合计：<span class="text-green">0.00</span></el-row>
+            <el-row>{{$t('desk.consumerTotal')}}：<span class="text-red">800.00</span></el-row>
+            <el-row>{{$t('desk.payTotal')}}：<span class="text-green">0.00</span></el-row>
           </div>
         </div>
       </div>

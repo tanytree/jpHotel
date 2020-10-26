@@ -79,7 +79,7 @@
                     <el-col :span="7">
                         <div class="grid-content">
                             <el-row>
-                                <el-button @click="page_row_houses">自动排房</el-button>&nbsp;&nbsp;
+                                <el-button @click="page_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;
                             </el-row>
                             <br />
                             <el-row class="roomSelect">
@@ -94,7 +94,8 @@
                                                         </el-col>
                                                         <el-col :span="10">
                                                             <div style="text-align: right">
-                                                                <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">排房</el-button>
+                                                                <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">
+                                                                    {{ $t('desk.rowHouse') }}</el-button>
                                                             </div>
                                                         </el-col>
                                                     </el-row>
@@ -138,7 +139,7 @@
         </span>
     </el-dialog>
 
-    <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" title="排房" width="800px">
+    <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="800px">
         <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
             <el-form-item label="朝向:" class="" style="margin-bottom:0">
                 <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">

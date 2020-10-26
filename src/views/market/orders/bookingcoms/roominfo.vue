@@ -19,13 +19,14 @@
             </el-col>
             <el-col :span="12">
                 <div class="fr">
-                    <el-button plain size="mini" @click="batchCheckId">{{ $t('manager.ps_inLive') }}</el-button>
-                    <el-button plain size="mini" @click="updateReserved">修改预留 </el-button>
+                    <el-button plain size="mini" @click="batchCheckId" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">{{ $t('manager.ps_inLive') }}</el-button>
+                    <el-button plain size="mini" @click="updateReserved" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">修改预留 </el-button>
                     <el-dropdown split-button type="primary" size="mini">
                         {{ $t('commons.moreOperating') }}
                         <el-dropdown-menu slot="dropdown">
                             <!--                        <el-dropdown-item>改价</el-dropdown-item>-->
-                            <el-dropdown-item @click="cancelRoom">取消预留</el-dropdown-item>
+                            <el-dropdown-item @click="cancelRoom"  v-if="checkinInfo.state == 1 || checkinInfo.state == 2">
+                                {{ $t('frontOffice.cancelRoomKeep') }}</el-dropdown-item>
                             <!--                        <el-dropdown-item @click.native="liveCard_in_person_list">操作房卡</el-dropdown-item>-->
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -48,7 +49,7 @@
             </el-row>
         </el-row>
         <el-row>
-            <h4>客房信息</h4>
+            <h4>{{ $t('desk.order_roomInfo') }}</h4>
             <el-row>
                 <el-col :span="3">
                     <p>{{$t('desk.home_roomType')}}：{{ currentRoom.roomTypeName }}</p>
@@ -69,7 +70,7 @@
         </el-row>
 
         <el-row v-if="currentRoom.personList">
-            <h4>客户信息</h4>
+            <h4>{{ $t('desk.customerInfoDesc') }}</h4>
             <el-row>
                 <el-col :span="8">
                     <p>客户名：{{ checkinInfo.name }}</p>

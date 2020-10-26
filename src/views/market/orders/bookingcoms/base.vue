@@ -8,15 +8,15 @@
 <div class="base" v-if="checkinInfo">
     <el-row class="clearfix">
         <div class="fr">
-            <el-button plain @click="batchCheckId">{{ $t('desk.batchCheckin') }}</el-button>
-            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button plain @click="batchCheckId" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">{{ $t('desk.batchCheckin') }}</el-button>
+            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" disabled="checkinInfo.state == 1 || checkinInfo.state == 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary">
                 {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">排房</el-dropdown-item>
+<!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
 <!--                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>-->
-                    <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
-                    <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleCancel" v-if="checkinInfo.state == 1 || checkinInfo.state == 2">取消预订</el-dropdown-item>
+<!--                    <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>-->
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -58,12 +58,12 @@
                 <p>{{ $t('desk.order_outOrder') }}：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
             </el-col>
             <el-col :span="8">
-                <p>{{ $t('desk.order_salesman') }}：{{salesList.filter(sale => {  return sale.id == checkinInfo.salesId})[0].userName || '无'}}</p>
+                <p>{{ $t('desk.order_salesman') }}：{{ currentSale.userName || '无'}}</p>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="12">
-                <p>订单备注：{{checkinInfo.remark || '无'}}</p>
+                <p>{{ $t('desk.orderMarkInfo') }}：{{checkinInfo.remark || '无'}}</p>
             </el-col>
         </el-row>
     </el-row>
@@ -249,6 +249,7 @@ export default {
     },
     data() {
         return {
+            currentSale: {},
             loading: false,
             liveInPersonShow: false,
             noShowDiaShow: false,
@@ -351,10 +352,17 @@ export default {
         };
     },
 
+    created() {
+      console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
+      debugger
+    },
+
     mounted() {
         let id = this.$route.query.id
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;
+            let tempArray = this.salesList.filter(sale => {  return sale.id == this.checkinInfo.salesId}) || [{}];
+            this.currentSale = tempArray[0];
         });
     },
 
@@ -392,10 +400,10 @@ export default {
         checkKey(key) {
             console.log(key)
             if (key.indexOf('checkIn') != -1) {
-                return '已排房'
+                return this.$t('desk.hadRowHouses');
             }
             if (key.indexOf('notYet') != -1) {
-                return '未排房'
+                return this.$t('desk.noRowHouses');
             }
         },
         handleCancel() {

@@ -10,7 +10,7 @@
       <div class="el-card__header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/orders?type=booking'}"
-            >预订单</el-breadcrumb-item
+            >{{ $t('desk.order_bookOrder') }}</el-breadcrumb-item
           >
           <el-breadcrumb-item>{{$t('commons.detail')}}</el-breadcrumb-item>
         </el-breadcrumb>
@@ -20,12 +20,12 @@
       <div class="aside">
         <ul>
           <li @click=" isOrder = true; currentRoom = {};" :class="isOrder ? 'active' : ''">
-            <p>预订单信息</p>
+            <p>{{ $t('desk.order_bookOrderInfo') }}</p>
           </li>
            <li v-for="(item, index) of detailData.inRoomList" :key="index" :class="currentRoom.id == item.id ? 'active' : ''"   @click="showRoomInfo(item)"  >
             <p>{{ item.houseNum }} {{$t('desk.home_roomType')}}：{{ item.roomTypeName }}</p>
-            <span class="ok" v-if="item.roomId">已排房</span>
-            <span class="no" v-else>未排房</span>
+            <span class="ok" v-if="item.roomId">{{ $t('desk.hadRowHouses') }}</span>
+            <span class="no" v-else>{{ $t('desk.noRowHouses') }}</span>
           </li>
         </ul>
       </div>

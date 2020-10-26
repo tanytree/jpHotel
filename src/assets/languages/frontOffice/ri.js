@@ -5,6 +5,8 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
+    cancelRoomKeep: '仮押さえ取り消し',
+    checkInfoDesc: '入居情報',
     saveGoon: '保存及び宿泊チェックイン作業継続',
     chooseRoomType: '部屋タイプを選択してください',
     nightAudit: {

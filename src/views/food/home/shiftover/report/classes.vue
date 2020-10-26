@@ -73,7 +73,7 @@
             <el-col :span="12"><div class="item item_head"><b class="text-size16">发生金额</b></div></el-col>
             <el-col :span="12"><div class="item">餐饮费</div></el-col>
             <el-col :span="12"><div class="item text-blue">7435</div></el-col>
-            <el-col :span="12"><div class="item ">消费合计</div></el-col>
+            <el-col :span="12"><div class="item ">{{ $t('desk.consumerTotal') }}</div></el-col>
             <el-col :span="12"><div class="item text-blue">550</div></el-col>
             <!--  -->
             <el-col :span="12"><div class="item item_head"><b class="text-size16">付款名称</b></div></el-col>
@@ -93,7 +93,7 @@
             <el-col :span="12"><div class="item text-blue">1000</div></el-col>
             <el-col :span="12"> <div class="item ">结算到房间</div></el-col>
             <el-col :span="12"><div class="item text-blue">10000</div></el-col>
-            <el-col :span="12"> <div class="item "><b>付款合计</b></div></el-col>
+            <el-col :span="12"> <div class="item "><b>{{ $t('desk.payTotal') }}</b></div></el-col>
             <el-col :span="12"><div class="item text-blue">10000</div></el-col>
         </el-row>
 

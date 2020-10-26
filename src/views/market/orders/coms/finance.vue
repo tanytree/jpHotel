@@ -262,8 +262,8 @@
                     <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
                     <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
                     <div class="costNum">
-                        <el-row>消费合计：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
-                        <el-row>付款合计：<span class="text-green">{{detailData.payPrice}}</span></el-row>
+                        <el-row>{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                        <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
                     </div>
                 </div>
             </div>

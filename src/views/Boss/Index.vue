@@ -45,11 +45,13 @@ export default {
         };
     },
     created() {
-        if (sessionStorage.subMenul) {
-            this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
-            this.$forceUpdate();
+        this.$F.handleThirdMenu(this);
+        for (let i = 0; i < this.menuList.length; i++) {
+            if (this.menuList[i].path == 'staff-rights') {
+                this.menuList.splice(i, 1)
+                break;
+            }
         }
-        this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
     },
     mounted() {
         // this.select_title = JSON.parse(sessionStorage.getItem('menul')).name

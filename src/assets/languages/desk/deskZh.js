@@ -6,6 +6,16 @@
  */
 //  前台部 中文
 module.exports = {
+    autoRowHouse: '自动排房',
+    rowHouse: '排房',
+    roomInfoDesc: '房间信息',
+    customerInfoDesc: '客户信息',
+    payTotal: '付款合计',
+    consumerTotal: '消费合计',
+    balanceTotal: '平衡数',
+    orderMarkInfo: '订单备注',
+    hadRowHouses: '已排房',
+    noRowHouses: '未排房',
     updateOrder: '修改订单',
     batchCheckin: '批量入住',
     clickCheckin: '点击入住',
@@ -220,6 +230,8 @@ module.exports = {
     order_bookDate: "预订日期",
     order_teamName: "团队名称",
     order_bookOrderNum: "预订单号",
+    order_bookOrder: "预订单",
+    order_bookOrderInfo: "预订单信息",
     order_outOrderNum: "外部单号",
     order_bookTime: "预订时间",
     order_day: "天",
@@ -229,6 +241,7 @@ module.exports = {
     order_restore: "恢复",
     order_accountingService: "账务服务",
     order_payDeposit: "交订金",
+    order_payBack: "退订金",
     order_payProject: "付款项目",
     order_memCard: "会员卡",
     order_selectPayWay: "选择结算方式",
