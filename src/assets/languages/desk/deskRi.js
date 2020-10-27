@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-26 15:31:30
+ * @LastEditTime: 2020-10-27 16:24:39
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -529,7 +529,7 @@ module.exports = {
     home_payCompanyName: '支払会社名',
     home_companyName: '支払会社',
     home_timeInfo: '領収書情報を完成してください',
-    book_inputContent: '入力してください。',
+    book_inputContent: '会員番号/法人番号又は会社、団体名称を入力してください。',
 
 
 

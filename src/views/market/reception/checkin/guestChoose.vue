@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-26 14:56:04
+ * @LastEditTime: 2020-10-27 16:22:53
  * @FilePath: \jiudian\src\views\market\reception\checkin\guestChoose.vue
  -->
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-22 10:07:35
+ * @LastEditTime: 2020-10-27 11:56:57
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -13,7 +13,11 @@
             <el-form class="term" inline size="small" label-width="130px">
                 <el-form-item :label="$t('desk.order_orderType')">
                     <div class="tagList">
-                        <template v-for="(item, key, index) of $t( 'frontOffice.orderType' )" >
+                        <template
+                            v-for="(item, key, index) of $t(
+                                'frontOffice.orderType'
+                            )"
+                        >
                             <el-tag
                                 class="tag"
                                 :type="
@@ -27,11 +31,21 @@
                         </template>
                     </div>
                 </el-form-item>
-                <br>
+                <br />
                 <el-form-item :label="$t('desk.order_departureDate')">
                     <div class="tagList" style="display: inline-block">
-                        <template v-for="(item, key, index) of $t('frontOffice.leaveDate')">
-                            <el-tag style="cursor: pointer" class="tag" :type="searchForm.leaveDate == key ? '' : 'info' " :key="index"
+                        <template
+                            v-for="(item, key, index) of $t(
+                                'frontOffice.leaveDate'
+                            )"
+                        >
+                            <el-tag
+                                style="cursor: pointer"
+                                class="tag"
+                                :type="
+                                    searchForm.leaveDate == key ? '' : 'info'
+                                "
+                                :key="index"
                                 @click="leaveDateClick(key)"
                                 >{{ item }}
                             </el-tag>
@@ -56,7 +70,7 @@
                     </el-form-item>
                 </el-form-item>
 
-                <br>
+                <br />
                 <el-form-item :label="$t('desk.order_checkinWay')">
                     <div class="tagList" style="display: inline-block">
                         <template
@@ -96,7 +110,7 @@
                         ></el-date-picker>
                     </el-form-item>
                 </el-form-item>
-                <br>
+                <br />
                 <el-form-item :label="$t('desk.book_orderSoutce')">
                     <el-select
                         :placeholder="$t('commons.placeChoose')"
@@ -105,17 +119,21 @@
                     >
                         <el-option
                             :value="key"
-                            v-for="(item, key, index) of $t(
+                            v-for="(value, key, index) of $t(
                                 'commons.orderSource'
                             )"
-                            :label="item"
+                            :label="value"
                             :key="index"
                         ></el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item :label="$t('desk.home_customersCategory')">
-                    <el-select v-model="searchForm.guestType" class="width150"  :placeholder="$t('commons.placeChoose')">
+                    <el-select
+                        v-model="searchForm.guestType"
+                        class="width150"
+                        :placeholder="$t('commons.placeChoose')"
+                    >
                         <el-option
                             :value="key"
                             v-for="(item, key, index) of $t(
@@ -127,7 +145,11 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_roomType')">
-                    <el-select v-model="searchForm.roomTypeId" class="width150"  :placeholder="$t('commons.placeChoose')">
+                    <el-select
+                        v-model="searchForm.roomTypeId"
+                        class="width150"
+                        :placeholder="$t('commons.placeChoose')"
+                    >
                         <el-option :label="$t('desk.home_all')" value>{{
                             $t("desk.home_all")
                         }}</el-option>
@@ -184,6 +206,7 @@
                 v-loading="loading"
                 :data="tableData"
                 header-row-class-name="default"
+                height="100%"
                 size="small"
             >
                 <el-table-column
@@ -199,12 +222,12 @@
                 <el-table-column
                     prop="checkinTime"
                     :label="$t('desk.order_checkinDate')"
-                    width="160"
+                    width="160px"
                 ></el-table-column>
                 <el-table-column
                     prop="checkoutTime"
                     :label="$t('desk.order_departureTime')"
-                    width="160"
+                    width="160px"
                 ></el-table-column>
                 <el-table-column
                     prop="hotelCheckInRoom.houseNum"
@@ -219,7 +242,7 @@
                 <el-table-column
                     prop
                     :label="$t('desk.home_customersCategory')"
-                    width="120"
+                    width="120px"
                 >
                     <template slot-scope="{ row }">{{
                         F_guestType(row.guestType)
@@ -228,7 +251,7 @@
                 <el-table-column
                     prop
                     :label="$t('desk.book_orderSoutce')"
-                    width="120"
+                    width="120px"
                 >
                     <template slot-scope="{ row }">{{
                         F_orderSource(row.orderSource)
@@ -237,23 +260,34 @@
                 <el-table-column
                     prop
                     :label="$t('desk.order_liveState')"
-                    width="120"
+                    width="120px"
                 >
                     <template slot-scope="{ row }" style="color: red">
-                        <span v-if="row.state == 3 || row.state == 4 || row.state == 5 " style="color: red" >
+                        <!-- <span
+                            v-if="
+                                row.state == 3 ||
+                                row.state == 4 ||
+                                row.state == 5
+                            "
+                            style="color: red"
+                        >
                             {{ F_checkinState(row.state) }}
                         </span>
                         <span v-if="row.state == 1 || row.state == 2">
                             {{ F_checkinState(row.state) }}
-                        </span>
+                        </span> -->
+                        <span v-if="row.state == 1">在住</span>
+                        <span v-if="row.state == 2">已退房</span>
                     </template>
                 </el-table-column>
                 <el-table-column
                     prop
                     :label="$t('desk.order_checkStatus')"
-                    width="100"
+                    width="100px"
                 >
-                    <template slot-scope="{ row }">{{  F_billType(row.billType || '0') }} </template>
+                    <template slot-scope="{ row }">
+                        {{ F_billType(row.billType || "0") }}
+                    </template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="240">
                     <template slot-scope="{ row }">
@@ -432,7 +466,7 @@ export default {
                     {
                         required: true,
                         // message: "请输入金额",
-                        message: this.$t('commons.mustInput'),
+                        message: this.$t("commons.mustInput"),
                         trigger: "blur",
                     },
                 ],
@@ -444,7 +478,6 @@ export default {
     },
 
     methods: {
-
         orderTypeClick(key) {
             this.searchForm.orderType = key;
             this.getDataList();
@@ -494,7 +527,7 @@ export default {
                 this.searchForm,
                 (res) => {
                     this.loading = false;
-                    this.roomTypeList = res.meetingtype;
+                    this.roomTypeList = res.roomtype;
                 }
             );
         },
@@ -634,9 +667,8 @@ export default {
                 default:
                     this.searchForm.outStartTime = "";
                     this.searchForm.outEndTime = "";
-
             }
-            this.getDataList()
+            this.getDataList();
         },
         /**每页数 */
         handleSizeChange(val) {
