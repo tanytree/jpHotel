@@ -293,7 +293,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="checkOutShow=false">关闭</el-button>
-            <el-button type="primary" @click="consume_oper(4,'checkOut')">{{ $t('commons.confirm') }}</el-button>
+            <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--冲调-->
@@ -681,6 +681,21 @@ export default {
                 this.consume_order_list()
             })
         },
+
+        //退房结账
+        set_out_check_in() {
+            let params = {
+                checkInId: this.$route.query.id,
+                billType: 1
+            }
+            this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                this.checkOutShow = false
+                this.consume_order_list()
+            })
+        },
+
+
+
         //开发票按钮点击
         openInvoiceHandle() {
             this.openInvoiceForm.checkInId = this.$route.query.id
