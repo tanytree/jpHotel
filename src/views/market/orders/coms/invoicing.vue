@@ -189,7 +189,7 @@ export default {
     methods: {
         //开发票按钮点击
         init(item, openInvoiceForm) {
-            debugger
+            // debugger
             this.$F.merge(this.openInvoiceForm, openInvoiceForm || {});
             if (item.id) {
                 this.openInvoiceForm.checkInId = item.id;

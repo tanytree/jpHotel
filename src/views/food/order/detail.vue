@@ -433,7 +433,6 @@
                    cancelButtonText: this.$t('food.common.cancel'),
                    type: 'warning'
                }).then(() => {
-
                     // console.log(1111)
                     let params = {
                         dishesCount:info.dishesCount,

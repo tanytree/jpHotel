@@ -23,15 +23,9 @@
             </el-form-item>
         </el-row>
         <el-form-item label="账务类别：">
-<!--            <el-tabs type="border-card">-->
-<!--                <el-tab-pane label="用户管理"></el-tab-pane>-->
-<!--                <el-tab-pane label="配置管理"></el-tab-pane>-->
-<!--                <el-tab-pane label="角色管理"></el-tab-pane>-->
-<!--            </el-tabs>-->
-
-            <el-button plain size="mini" @click="consume_order_list('')">所有账务</el-button>
-            <el-button plain size="mini" @click="consume_order_list(1)">未结账务</el-button>
-            <el-button plain size="mini" @click="consume_order_list(2)">已结账务</el-button>
+            <el-button :type="searchForm.state == '' ? 'primary' : ''" size="mini" @click="consume_order_list('')">所有账务</el-button>
+            <el-button :type="searchForm.state == '1' ? 'primary' : ''" size="mini" @click="consume_order_list(1)">未结账务</el-button>
+            <el-button :type="searchForm.state == '2' ? 'primary' : ''" size="mini" @click="consume_order_list(2)">已结账务</el-button>
         </el-form-item>
 <!--        <el-form-item class="fr">-->
 <!--            <el-button type="primary">导出</el-button>-->
@@ -516,7 +510,7 @@ export default {
     mounted() {
         let id = this.$route.query.id;
 
-        this.consume_order_list('')
+        this.consume_order_list(1)
         this.hoteldamagetype_list()
         this.hotelenter_list()
     },
