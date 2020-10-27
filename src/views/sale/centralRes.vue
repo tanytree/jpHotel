@@ -223,12 +223,10 @@
         <el-row>
           <el-form inline size="small" label-width="100px" :rules="rules">
             <el-row>
-              <el-form-item label="客人类型:">
-                <el-radio-group v-model="checkInForm.content">
-                  <el-radio label="散客"></el-radio>
-                  <el-radio label="会员"></el-radio>
-                  <el-radio label="单位"></el-radio>
-                </el-radio-group>
+              <el-form-item :label="$t('desk.customer_guestType') + ':'">
+                  <el-radio-group v-model="checkInForm.content">
+                      <el-radio v-for="(item,key,index) of $t('commons.guestType')" :label="key" :key="index">{{item}}</el-radio>
+                  </el-radio-group>
                 <el-button @click="registerme = true" style="margin-left: 25px"
                   >注册会员</el-button
                 >

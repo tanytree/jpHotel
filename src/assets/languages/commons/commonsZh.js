@@ -103,7 +103,8 @@ module.exports = {
     guestType: {
         '1': '散客',
         '2': '会员',
-        '3': '单位'
+        '3': '单位',
+        "4": '団体'
     },
     roomStatus: [{
         type: 'success',

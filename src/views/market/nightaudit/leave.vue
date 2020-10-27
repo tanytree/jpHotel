@@ -27,7 +27,7 @@
             </el-table-column>
             <el-table-column prop="" :label="$t('desk.customer_totalConsum')">
                 <template slot-scope="{row}">
-                    {{row.memberObject?row.memberObject.consumeTotalPrice:''}}
+                    {{ row.consumeTotalPrice || 0}}
                 </template>
             </el-table-column>
             <el-table-column prop="state" :label="$t('desk.order_liveState')"align="center">
@@ -37,12 +37,12 @@
             </el-table-column>
             <el-table-column prop="billType" :label="$t('desk.order_checkStatus')" align="center">
                 <template slot-scope="{row}">
-                    {{F_billType(row.billType)}}
+                    {{F_billType(row.billType || '0')}}
                 </template>
             </el-table-column>
             <el-table-column :label="$t('commons.operating')">
                 <template slot-scope="{row}">
-                    <el-button type="text">{{$t('commons.detail')}}</el-button>
+                    <el-button type="text" @click="goDetail(row)">{{$t('commons.detail')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -98,6 +98,9 @@ export default {
         this.hotel_price_enter_strategy_list()
     },
     methods: {
+        goDetail(item) {
+            this.$router.push(`/orderdetail?id=${item.id}`)
+        },
         initForm() {
             this.searchForm = {
                 mobile: '',

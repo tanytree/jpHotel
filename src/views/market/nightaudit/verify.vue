@@ -139,7 +139,7 @@
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="120">
                     <template slot-scope="{ row }">
-                        <el-button type="text" size="mini">{{
+                        <el-button type="text" size="mini" @click="goDetail(row)">{{
                             $t("commons.detail")
                         }}</el-button>
                     </template>
@@ -194,6 +194,9 @@ export default {
         this.hotel_room_type_list();
     },
     methods: {
+        goDetail(item) {
+            this.$router.push(`/orderdetail?id=${item.id}`)
+        },
         initForm() {
             this.searchForm = {
                 pageIndex: 1, //当前页

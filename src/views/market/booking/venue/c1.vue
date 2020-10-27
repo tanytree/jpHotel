@@ -82,7 +82,7 @@
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="客源类型：" prop="resource">
+                        <el-form-item :label="$t('desk.order_sourceType') + '：'" prop="resource">
                             <el-input type="input" v-model="checkInForm.content" class="width200">
                                 <template slot="append">…</template>
                             </el-input>

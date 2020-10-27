@@ -19,16 +19,17 @@ import utils from '@/utils/publicJS';
 import Video from 'video.js'
 import Distpicker from 'v-distpicker'
 import filters from '@/utils/filter.js'
+import enLocale from 'element-ui/lib/locale/lang/zh-CN'
+import jaLocale from 'element-ui/lib/locale/lang/ja'
 
 import 'video.js/dist/video-js.css'
-import VideoPlayer from 'vue-video-player'
 
 Vue.use(filters)
 
 Vue.use(VueI18n)
+Vue.use(ElementUI, {jaLocale});
 //业务组件
 Vue.component('v-distpicker', Distpicker)
-Vue.use(ElementUI);
 Vue.prototype.$F = utils;
 Vue.prototype.$http = httpRequest
 Vue.prototype.hasRole = hasRole
@@ -36,7 +37,6 @@ Vue.prototype.isAuth = isAuth //权限验证
 Vue.prototype.dateToString = formatDate //时间转换
 Vue.config.productionTip = false
 Vue.prototype.$video = Video
-Vue.use(VideoPlayer);
 // 非生产环境, 适配mockjs模拟数据
 // if (window.SITE_CONFIG.hasMock) {
 //     require('@/assets/mock')

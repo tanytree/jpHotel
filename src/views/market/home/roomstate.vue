@@ -25,14 +25,14 @@
                             v-model="searchForm.checkInType"
                             @change="handleChange"
                         >
-                            <el-checkbox-button label="1">{{
-                                    $t("desk.home_idCard")
-                                }}
-                            </el-checkbox-button>
-                            <el-checkbox-button label="2">{{
-                                    $t("desk.home_roomCard")
-                                }}
-                            </el-checkbox-button>
+<!--                            <el-checkbox-button label="1">{{-->
+<!--                                    $t("desk.home_idCard")-->
+<!--                                }}-->
+<!--                            </el-checkbox-button>-->
+<!--                            <el-checkbox-button label="2">{{-->
+<!--                                    $t("desk.home_roomCard")-->
+<!--                                }}-->
+<!--                            </el-checkbox-button>-->
                         </el-checkbox-group>
                     </el-form-item>
                 </el-form>
@@ -523,7 +523,7 @@
                                     }}
                                 </template>
                             </el-table-column>
-                            <el-table-column label="客源类型" width>
+                            <el-table-column :label="$t('desk.order_sourceType')" width>
                                 <template slot-scope="scope">{{
                                         F_guestType(scope.row.checkIn.guestType)
                                     }}

@@ -40,10 +40,11 @@
               <span>{{ checkIn.mobile }}</span>
             </div>
             <div>
-              客源类型：
-              <span v-if="checkIn.guestType == 1">散客</span>
-              <span v-if="checkIn.guestType == 2">会员</span>
-              <span v-if="checkIn.guestType == 3">单位</span>
+                {{ $t('desk.order_sourceType') }}：
+<!--                <span  v-for="(value, key) in $t('commons.guestType')" :label="key" :key="key">{{value}}</span>-->
+<!--              <span v-if="checkIn.guestType == 1">散客</span>-->
+<!--              <span v-if="checkIn.guestType == 2">会员</span>-->
+<!--              <span v-if="checkIn.guestType == 3">单位</span>-->
             </div>
           </div>
         </el-card>

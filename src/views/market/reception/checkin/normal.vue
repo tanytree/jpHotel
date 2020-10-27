@@ -53,7 +53,6 @@
                             v-model="checkInForm.checkinTime"
                             disabled
                             type="datetime"
-                            placeholder="选择日期"
                             format="yyyy-MM-dd HH:mm:ss"
                             value-format="yyyy-MM-dd HH:mm:ss"
                             :picker-options="startTime"
@@ -66,7 +65,6 @@
                         <el-date-picker
                             v-model="checkInForm.checkoutTime"
                             type="datetime"
-                            placeholder="选择日期"
                             :picker-options="leaveTime"
                             format="yyyy-MM-dd HH:mm:ss"
                             value-format="yyyy-MM-dd HH:mm:ss"
@@ -108,7 +106,7 @@
                 >
                     <el-input v-model="checkInForm.mobile"></el-input>
                 </el-form-item>
-                <el-form-item label="客源类型" prop="guestType">
+                <el-form-item :label="$t('desk.order_sourceType')" prop="guestType">
                     <el-input
                         type="input"
                         :value="$t('commons.guestType')[checkInForm.guestType]"
@@ -255,7 +253,19 @@
                     <el-date-picker
                         v-model="checkInForm.checkoutTime"
                         type="datetime"
-                        placeholder="选择日期"
+                        format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        :picker-options="leaveTime"
+                        @change="endTimeChange"
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item
+                    :label="$t('desk.keepTime')"
+                    prop="keepTime"
+                >
+                    <el-date-picker
+                        v-model="checkInForm.keepTime"
+                        type="datetime"
                         format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
                         :picker-options="leaveTime"
@@ -263,7 +273,7 @@
                     ></el-date-picker>
                 </el-form-item>
 
-                <el-form-item label="客源类型" prop="guestType">
+                <el-form-item :label="$t('desk.order_sourceType')" prop="guestType">
                     <el-input
                         type="input"
                         :value="$t('commons.guestType')[checkInForm.guestType]"
@@ -744,8 +754,7 @@
                 @personCallback="personCallback"
             ></customer>
         </el-dialog>
-        <guestChoose
-            @guestChooseCallback="guestChooseCallback"
+        <guestChoose @guestChooseCallback="guestChooseCallback"
             ref="guestChoose"
             :checkInForm="checkInForm"
         ></guestChoose>

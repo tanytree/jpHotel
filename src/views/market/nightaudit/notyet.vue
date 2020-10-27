@@ -75,7 +75,7 @@
                 ></el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="100">
                     <template slot-scope="{ row }">
-                        <el-button type="text" size="mini">{{$t('commons.detail')}}</el-button>
+                        <el-button type="text" size="mini" @click="goDetail(row)">{{$t('commons.detail')}}</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -125,6 +125,9 @@ export default {
         this.initForm();
     },
     methods: {
+        goDetail(item) {
+            this.$router.push(`/bookingDetail?id=${item.id}`)
+        },
         initForm() {
             this.searchForm = {
                 operCheckinType: "",

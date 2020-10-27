@@ -6,6 +6,7 @@
  */
 //前台部 日文
 module.exports = {
+    keepTime: 'ほりゅうじかん',
     autoRowHouse: '自動アサイン',
     rowHouse: 'アサイン',
     roomInfoDesc: '部屋情報',

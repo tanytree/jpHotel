@@ -16,8 +16,9 @@
 <!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
 <!--                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>-->
 <!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
-                    <el-dropdown-item @click.native="handleCancel" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">取消预订</el-dropdown-item>
-                    <el-dropdown-item @click.native="handleNoshow" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">取消预订</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{$t('commons.cancel')}}NOSHOW</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -141,7 +142,7 @@
             <el-row>
 
                 <el-row>
-                    <el-form-item label="客人类型:" class="" style="margin-bottom:0" prop="guestType">
+                    <el-form-item :label="$t('desk.customer_guestType') + ':'" class="" style="margin-bottom:0" prop="guestType">
                         <el-radio-group v-model="baseInfoChangeForm.guestType">
                             <el-radio v-for="(item,key,index) of $t('commons.guestType')" :label="key" :key="index">{{item}}</el-radio>
                         </el-radio-group>
@@ -475,10 +476,10 @@ export default {
             this.$emit('baseInfoChange', '');
         },
         //将订单变为NOSHOW状态
-        handleNoshow() {
+        handleNoshow(state) {
             let params = {
                 checkInReserveId: this.$route.query.id || '',
-                state: 4
+                state: state
             }
             debugger
             this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {

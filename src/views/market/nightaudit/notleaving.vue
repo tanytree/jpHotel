@@ -31,18 +31,18 @@
                     <template slot-scope="{row}">{{ F_guestType(row.guestType) }}</template>
                 </el-table-column>
                 <el-table-column prop="consumeTotalPrice" :label="$t('desk.customer_totalConsum')" width="120" align="center">
-                    <template slot-scope="{row}">{{ row.memberObject ? row.memberObject.consumeTotalPrice : '' }}
+                    <template slot-scope="{row}">{{ row.consumeTotalPrice || 0}}
                     </template>
                 </el-table-column>
                 <el-table-column prop="state" :label="$t('desk.order_liveState')"  align="center">
                     <template slot-scope="{row}">{{ F_checkinState(row.state) }}</template>
                 </el-table-column>
                 <el-table-column prop="billType" :label="$t('desk.order_checkStatus')" align="center">
-                    <template slot-scope="{row}">{{ F_billType(row.billType) }}</template>
+                    <template slot-scope="{row}">{{ F_billType(row.billType || '0') }}</template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="160">
                     <template slot-scope="{row}">
-                        <el-button type="text" size="mini">{{$t('commons.detail')}}</el-button>
+                        <el-button type="text" size="mini" @click="goDetail(row)">{{$t('commons.detail')}}</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -92,6 +92,9 @@ export default {
         this.initForm();
     },
     methods: {
+        goDetail(item) {
+            this.$router.push(`/orderdetail?id=${item.id}`)
+        },
         initForm() {
             this.searchForm = {
                 mobile: "",
