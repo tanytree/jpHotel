@@ -17,7 +17,7 @@
                 <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" size="mini" @click="destructionHandle">{{$t('desk.customer_rich')}}</el-button>
-                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
+<!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
                 <el-button type="primary" size="mini">撤销结账</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true">走结</el-button>
             </el-form-item>
@@ -407,6 +407,7 @@ export default {
                 pageSize: 10
             },
             consumeOperForm: {
+                consumePrice: '',
                 priceType: '',
                 payType: '',
                 name: '',
@@ -652,6 +653,7 @@ export default {
                         this.onAccountShow = false
                         this.destructionShow = false;
                         this.consumeOperForm = {
+                            consumePrice: '',
                             priceType: '',
                             payType: '',
                             name: ''

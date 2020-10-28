@@ -207,7 +207,7 @@ module.exports = {
     order_liveState: "在住状态",
     order_checkStatus: "结账状态",
     order_invoicing: "结账",
-    order_invoice: "开发票",
+    order_invoice: "开收据",
     order_notCheckout: "撤销退房",
     order_orderManage: "订单管理",
     order_guestInfo: "客人信息",

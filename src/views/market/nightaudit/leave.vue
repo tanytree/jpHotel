@@ -37,7 +37,8 @@
             </el-table-column>
             <el-table-column prop="billType" :label="$t('desk.order_checkStatus')" align="center">
                 <template slot-scope="{row}">
-                    {{F_billType(row.billType || '0')}}
+                    <span v-if="!row.billType || row.billType == 2 || row.billType == 3 || row.billType == 4">{{F_billType('0')}}</span>
+                    <span v-if="row.billType == 1 || row.billType == 5">{{F_billType('1')}}</span>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('commons.operating')">
