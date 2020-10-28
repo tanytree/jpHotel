@@ -58,38 +58,78 @@
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>{{$t('manager.grsl_resetGoods')}}</el-breadcrumb-item>
             </el-breadcrumb>
-            <el-form :model="rowData" size="small" :rules="threerules" ref="rowForm" label-width="100px">
-                <el-col :span="8">
-                    <el-form-item :label="$t('manager.grsl_goodsName')+':'" prop="name">
-                        <el-input v-model="rowData.name"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item :label="$t('manager.grsl_belongType')+':'" prop="categoryId">
-                        <el-cascader v-model="rowData.categoryId" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
-                    </el-form-item>
-                </el-col>
+            <el-form :model="rowData" size="small" :rules="threerules" ref="rowForm" label-width="100px" class="rowForm">
+                <el-form-item :label="$t('manager.grsl_goodsMode')+':'">
+                    <el-radio-group v-model="rowData.categoryType" @change="changeType">
+                        <el-radio :label="1">{{$t('manager.grsl_matter')}}</el-radio>
+                        <el-radio :label="2">{{$t('manager.grsl_service')}}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item :label="$t('manager.grsl_goodsName')+':'" prop="name">
+                            <el-input v-model="rowData.name"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item :label="$t('manager.grsl_belongType')+':'" prop="categoryId">
+                            <el-cascader v-model="rowData.categoryId" :options="categoryArr" :props="categoryProps" @change="casChange"></el-cascader>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-form-item v-if="rowData.categoryType == 2" :label="$t('manager.grsl_billingMode')+':'">
+                    <el-radio-group v-model="rowData.priceModel">
+                        <el-radio :label="1">{{$t('manager.grsl_billingPer')}}</el-radio>
+                        <el-radio :label="2">{{$t('manager.grsl_billingTime')}}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item v-if="rowData.categoryType == 2 && rowData.priceModel == 2" :label="$t('manager.grsl_startFee')+':'" prop="name">
+                    <el-input v-model="rowData.priceStartMinute" style="width: 80px; display: inline-block; margin-right: 10px;"></el-input>
+                    <span>{{$t('manager.grsl_startMinute')}}</span>
+                </el-form-item>
+                <el-form-item v-if="rowData.categoryType == 2 && rowData.priceModel == 2" :label="$t('manager.grsl_chargeTime')+':'" prop="name">
+                    <span>按</span>
+                    <el-input v-model="rowData.priceTime" style="width: 80px; display: inline-block; margin: 0 10px;"></el-input>
+                    <span>{{$t('manager.grsl_chargeMinute')}}</span>
+                    <el-checkbox v-model="rowData.capsPriceFlag" style="margin: 0 15px">加收封顶</el-checkbox>
+                    <span class="tip">说明：比如按60分钟收费，就是每小时算一次，最后不足1小时按照一小时收费；加收封顶就是消费金额超过某个数字将不再增加消费金额</span>
+                </el-form-item>
                 <el-col :span="16">
                     <el-form-item :label="$t('manager.grsl_goodsDescription')+':'">
-                        <el-input type="textarea" :rows="3" v-model="rowData.remark"></el-input>
+                        <el-input type="textarea" resize="none" :rows="3" v-model="rowData.remark"></el-input>
                     </el-form-item>
                 </el-col>
             </el-form>
             <div class="flex_1">
                 <el-form :model="rowData" size="small" inline :rules="threerules" ref="priceForm" label-position="top" class="price">
-                    <el-form-item prop="retailPrice" :label="$t('manager.grsl_defaultNoPrice')">
+                    <el-form-item v-if="rowData.priceModel != 2" class="cost" prop="retailPrice" :label="$t('manager.grsl_defaultNoPrice')">
                         <el-input v-model="rowData.retailPrice" class="row-width"></el-input>
                     </el-form-item>
-                    <el-form-item prop="costPrice" :label="$t('manager.grsl_costNoPrice')">
+                    <el-form-item v-if="rowData.categoryType == 1" prop="costPrice" :label="$t('manager.grsl_costNoPrice')">
                         <el-input v-model="rowData.costPrice" class="row-width"></el-input>
                     </el-form-item>
-                    <el-form-item prop="employeePrice" :label="$t('manager.grsl_defaultEmployeePrice')">
+                    <div v-if="rowData.categoryType == 2 && rowData.priceModel == 2">
+                        <el-form-item prop="startPrice" label="起步价">
+                            <el-input v-model="rowData.startPrice" class="row-width"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="minutePrice" label="每（）分钟收费">
+                            <el-input v-model="rowData.minutePrice" class="row-width"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="capsPrice" label="封顶费">
+                            <el-input v-model="rowData.capsPrice" class="row-width"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="depositPrice" label="押金">
+                            <el-input v-model="rowData.depositPrice" class="row-width"></el-input>
+                        </el-form-item>
+                    </div>
+
+                    <!--<el-form-item prop="employeePrice" :label="$t('manager.grsl_defaultEmployeePrice')">
                         <el-input v-model="rowData.employeePrice" class="row-width"></el-input>
                     </el-form-item>
                     <el-form-item prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')">
                         <el-input v-model="rowData.buyCount" class="row-width"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')">
+                    </el-form-item>-->
+                    <el-form-item class="cost" prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')">
                         <el-input v-model="rowData.inventoryWarning" class="row-width"></el-input>
                     </el-form-item>
                 </el-form>
@@ -121,6 +161,7 @@
                     status: "",
                     category: [],
                 },
+                categoryArr: [],
                 categoryProps: {value: "id", label: "name", children: "child"},
                 rowData: {
                     name: "",
@@ -128,9 +169,18 @@
                     remark: "",
                     retailPrice: "",
                     costPrice: "",
-                    employeePrice: "",
-                    buyCount: "",
+                    // employeePrice: "",
+                    buyCount: "0",
                     inventoryWarning: "",
+                    categoryType: 1,
+                    priceModel: 1,
+                    priceStartMinute: '',
+                    priceTime: '',
+                    capsPriceFlag: 1,
+                    startPrice: '',
+                    minutePrice: '',
+                    capsPrice: '',
+                    depositPrice: '',
                 },
                 threerules: {
                     name: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
@@ -143,15 +193,24 @@
                     costPrice: [
                         {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
-                    employeePrice: [
-                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
-                    ],
+                    // employeePrice: [
+                    //     {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
+                    // ],
                     buyCount: [
                         {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
                     inventoryWarning: [
                         {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
                     ],
+                    startPrice: [
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
+                    ],
+                    minutePrice: [
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
+                    ],
+                    capsPrice: [
+                        {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
+                    ]
                 },
                 tab_show: true,
                 edit: true,
@@ -160,10 +219,12 @@
         props: {
             list: Array,
             category: Array,
+            serviceList: Array,
             total: Number,
             initData: Function,
         },
         mounted() {
+            this.categoryArr = this.category;
         },
         computed: {
             downloadSuccessful: {
@@ -211,6 +272,13 @@
                     return {display: "none"};
                 }
             },
+            changeType(type) {
+                if(type == 1) {
+                    this.categoryArr = this.category;
+                } else {
+                    this.categoryArr = this.serviceList;
+                }
+            },
             popup(type, row) {
                 if (type == "add") {
                     this.edit = false;
@@ -244,11 +312,20 @@
                     name: this.rowData.name,
                     categoryId: this.rowData.categoryId,
                     remark: this.rowData.remark,
-                    retailPrice: this.rowData.retailPrice,
-                    costPrice: this.rowData.costPrice,
-                    employeePrice: this.rowData.employeePrice,
-                    buyCount: this.rowData.buyCount,
+                    retailPrice: this.rowData.categoryType == 2 ? 0 : this.rowData.retailPrice,
+                    costPrice: this.rowData.categoryType == 2 ? 0 : this.rowData.costPrice,
+                    // employeePrice: this.rowData.employeePrice,
+                    buyCount: this.rowData.categoryType == 2 ? 0 : this.rowData.buyCount,
                     inventoryWarning: this.rowData.inventoryWarning,
+                    categoryType: this.rowData.categoryType,
+                    priceModel: this.rowData.priceModel,
+                    priceStartMinute: this.rowData.priceStartMinute,
+                    priceTime: this.rowData.priceTime,
+                    capsPriceFlag: this.rowData.capsPriceFlag,
+                    startPrice: this.rowData.startPrice,
+                    minutePrice: this.rowData.minutePrice,
+                    capsPrice: this.rowData.capsPrice,
+                    depositPrice: this.rowData.depositPrice,
                 };
                 if (this.edit) {
                     param.id = this.rowData.id;
@@ -354,4 +431,13 @@
             border-top: 1px solid #e2e2e2;
         }
     }
+    .rowForm {
+        .el-cascader {
+            display: block;
+        }
+        .tip {
+            color: #888888;
+        }
+    }
+
 </style>

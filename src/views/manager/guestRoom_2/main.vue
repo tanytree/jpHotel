@@ -12,15 +12,15 @@
                          :key="item.path"
                          v-if="$F.filterThirdMenu('finance', item.path, true)">
                 <!-- 商品管理-->
-                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :total="goodsTotal" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
+                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :serviceList="serviceList" :total="goodsTotal" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
                 <!-- 售卖点-->
-                <SalePoint ref="SalePoint" :list="salesList" :category="category" :total="salesTotal" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
+                <SalePoint ref="SalePoint" :list="salesList" :category="category" :serviceList="serviceList" :total="salesTotal" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
                 <!-- 商品分类-->
-                <GoodsKinds ref="GoodsKinds" :list="category" :initData="getCategoryData" v-if="item.path == 'GoodsKinds'"/>
+                <GoodsKinds ref="GoodsKinds" :list="category" :serviceList="serviceList" :initData="getCategoryData" v-if="item.path == 'GoodsKinds'"/>
                 <!-- 库存管理-->
-                <StockMg ref="StockMg" :list="goodsList" :category="category" :total="goodsTotal" :initData="getHotelGoodsData" v-if="item.path == 'StockMg'"/>
+                <StockMg ref="StockMg" :list="goodsList" :category="category" :serviceList="serviceList" :total="goodsTotal" :initData="getHotelGoodsData" v-if="item.path == 'StockMg'"/>
                 <!-- 入库审核-->
-                <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :total="auditTotal" :initData="getAuditData" v-if="item.path == 'IntoKuAudit'"/>
+                <IntoKuAudit ref="IntoKuAudit" :list="auditList" :goodsList="goodsList" :category="category" :serviceList="serviceList" :total="auditTotal" :initData="getAuditData" v-if="item.path == 'IntoKuAudit'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -52,14 +52,15 @@
                 goodsList: [], goodsTotal: 0,
                 salesList: [], salesTotal: 0, salesSize: 0, salesPage: 1,
                 auditList: [], auditTotal: 0,
-                category: [], cateTotal: 0, cateSize: 0, catePage: 1,
+                category: [], serviceList: [], cateTotal: 0, cateSize: 0, catePage: 1,
             }
         },
         created() {
            this.$F.handleThirdMenu(this);
         },
         mounted() {
-            this.getCategoryData();
+            this.getCategoryData(1);
+            this.getCategoryData(2);
             this.tabChange()
         },
         methods: {
@@ -89,10 +90,16 @@
                     }
                 })
             },
-            getCategoryData() {
-                this.$F.doRequest(this, '/pms/hotelcategory/list', {}, (res) => {
+            getCategoryData(type) {
+                this.$F.doRequest(this, '/pms/hotelcategory/list', {
+                    categoryType: type
+                }, (res) => {
                     // this.category = res.list;
-                    this.category = this.getTreeItem(res.list);
+                    if(type == 1) {
+                        this.category = this.getTreeItem(res.list);
+                    } else {
+                        this.serviceList = this.getTreeItem(res.list);
+                    }
                 })
             },
             getTreeItem: function (arr) {

@@ -1,23 +1,46 @@
 <template>
     <div class="boss-index">
         <!-- 具体参照黄工的营销部-产品管理部-店铺产品分类 -->
-        <div class="goodsType">
-            <div class="goodsTop" style="margin-bottom: 20px;">
-                <el-button class="cancel" icon="fas fa-caret-right" @click="expanded">{{$t('manager.grsl_foldAll')}}</el-button>
-                <el-button class="cancel" @click="addCategory">{{$t('manager.grsl_addFirstGroup')}}</el-button>
+        <div class="flex_row">
+            <div class="goodsType">
+                <div class="goodsTop" style="margin-bottom: 20px;">
+                    <span>实物类商品</span>
+                    <el-button class="cancel" icon="fas fa-caret-right" @click="expanded(1)">{{$t('manager.grsl_foldAll')}}</el-button>
+                    <el-button class="cancel" @click="addCategory(1)">{{$t('manager.grsl_addFirstGroup')}}</el-button>
+                </div>
+                <div class="accountBtm">
+                    <el-tree :props="treeProps" :data="list" node-key="id" ref="treeType" default-expand-all>
+                        <div class="custom-tree-node" slot-scope="{node, data}">
+                            <span>{{ node.label }}</span>
+                            <span>
+                                <el-button class="btn-text" type="text" v-if="data.categoryLevel == 1" size="mini" @click="() => addSecond(node, data, 1)" @click.stop>{{$t('manager.grsl_addSecondGroup')}}</el-button>
+                                <el-button class="btn-text" type="text" v-if="data.categoryLevel == 2" size="mini" @click="() => addThird(node, data, 1)" @click.stop>{{$t('manager.grsl_addThridGroup')}}</el-button>
+                                <el-button class="btn-text" type="text" size="mini" @click="() => editNode(node, data, 1)" @click.stop>{{$t("manager.hp_editor")}}</el-button>
+                                <el-button class="btn-text" type="text" size="mini" @click="() => deleteNode(data)" @click.stop>{{$t('commons.delete')}}</el-button>
+                            </span>
+                        </div>
+                    </el-tree>
+                </div>
             </div>
-            <div class="accountBtm">
-                <el-tree :props="treeProps" :data="list" node-key="id" ref="treeType" default-expand-all>
-                    <div class="custom-tree-node" slot-scope="{node, data}">
-                        <span>{{ node.label }}</span>
-                        <span>
-                            <el-button class="btn-text" type="text" v-if="data.categoryLevel == 1" size="mini" @click="() => addSecond(node, data)" @click.stop>{{$t('manager.grsl_addSecondGroup')}}</el-button>
-                            <el-button class="btn-text" type="text" v-if="data.categoryLevel == 2" size="mini" @click="() => addThird(node, data)" @click.stop>{{$t('manager.grsl_addThridGroup')}}</el-button>
-                            <el-button class="btn-text" type="text" size="mini" @click="() => editNode(node, data)" @click.stop>{{$t("manager.hp_editor")}}</el-button>
-                            <el-button class="btn-text" type="text" size="mini" @click="() => deleteNode(data)" @click.stop>{{$t('commons.delete')}}</el-button>
-                        </span>
-                    </div>
-                </el-tree>
+            <div class="goodsType">
+                <div class="goodsTop" style="margin-bottom: 20px;">
+                    <span>服务类商品</span>
+                    <el-button class="cancel" icon="fas fa-caret-right" @click="expanded(2)">{{$t('manager.grsl_foldAll')}}</el-button>
+                    <el-button class="cancel" @click="addCategory(2)">{{$t('manager.grsl_addFirstGroup')}}</el-button>
+                </div>
+                <div class="accountBtm">
+                    <el-tree :props="treeProps" :data="serviceList" node-key="id" ref="serviceType" default-expand-all>
+                        <div class="custom-tree-node" slot-scope="{node, data}">
+                            <span>{{ node.label }}</span>
+                            <span>
+                                <el-button class="btn-text" type="text" v-if="data.categoryLevel == 1" size="mini" @click="() => addSecond(node, data, 2)" @click.stop>{{$t('manager.grsl_addSecondGroup')}}</el-button>
+                                <el-button class="btn-text" type="text" v-if="data.categoryLevel == 2" size="mini" @click="() => addThird(node, data, 2)" @click.stop>{{$t('manager.grsl_addThridGroup')}}</el-button>
+                                <el-button class="btn-text" type="text" size="mini" @click="() => editNode(node, data, 2)" @click.stop>{{$t("manager.hp_editor")}}</el-button>
+                                <el-button class="btn-text" type="text" size="mini" @click="() => deleteNode(data)" @click.stop>{{$t('commons.delete')}}</el-button>
+                            </span>
+                        </div>
+                    </el-tree>
+                </div>
             </div>
         </div>
         <!-- 新增分类 -->
@@ -45,7 +68,7 @@
     export default {
         data() {
             return {
-                areaActive: "category",
+                areaActive: "category", categoryType: '',
                 treeProps: {children: "child", label: "name"},
                 isexpand: true,
                 allTree: [],
@@ -64,9 +87,12 @@
         },
         props: {
             list: Array,
+            serviceList: Array,
             initData: Function,
         },
         mounted() {
+            console.log(this.serviceList)
+            console.log(this.list)
         },
         computed: {
             addFirstGroup: {
@@ -154,45 +180,61 @@
             },
         },
         methods: {
-            addCategory() {
+            addCategory(type) {
                 this.cateVisible = true;
                 this.category.categoryLevel = 1;
                 this.category.pCategoryId = 0;
                 this.category.first = "";
                 this.cateTitle = this.addFirstGroup;
+                this.categoryType = type;
                 this.add = true;
             },
-            addSecond(node, data) {
+            addSecond(node, data, type) {
                 this.cateVisible = true;
                 this.category.categoryLevel = 2;
                 this.category.pCategoryId = data.id;
                 this.category.first = data.name;
                 this.category.second = "";
                 this.cateTitle = this.addSecondGroup;
+                this.categoryType = type;
                 this.add = true;
             },
-            addThird(node, data) {
+            addThird(node, data, type) {
                 this.cateVisible = true;
                 this.category.categoryLevel = 3;
                 this.category.pCategoryId = data.id;
                 this.category.first = node.parent.data.name;
                 this.category.second = data.name;
+                this.category.third = '';
                 this.cateTitle = this.addThridGroup;
+                this.categoryType = type;
                 this.add = true;
             },
-            expanded: function () {
+            expanded: function (type) {
                 this.isexpand = !this.isexpand;
-                for (
-                    var i = 0;
-                    i < this.$refs.treeType.store._getAllNodes().length;
-                    i++
-                ) {
-                    this.$refs.treeType.store._getAllNodes()[i].expanded = this.isexpand;
+                if(type == 1) {
+                    for (
+                        var i = 0;
+                        i < this.$refs.treeType.store._getAllNodes().length;
+                        i++
+                    ) {
+                        this.$refs.treeType.store._getAllNodes()[i].expanded = this.isexpand;
+                    }
+                } else {
+                    for (
+                        var i = 0;
+                        i < this.$refs.serviceType.store._getAllNodes().length;
+                        i++
+                    ) {
+                        this.$refs.serviceType.store._getAllNodes()[i].expanded = this.isexpand;
+                    }
                 }
+
             },
-            editNode: function (node, data) {
+            editNode: function (node, data, type) {
                 this.cateVisible = true;
                 this.cateTitle = this.resetType;
+                this.categoryType = type;
                 if (data.categoryLevel == 1) {
                     this.category = {
                         id: data.id,
@@ -238,7 +280,7 @@
                         "/pms/hotelcategory/delete",
                         {id: data.id},
                         (res) => {
-                            this.initData();
+                            this.initData(this.categoryType);
                         }
                     );
                 });
@@ -257,6 +299,7 @@
                         name: name,
                         categoryLevel: this.category.categoryLevel,
                         pCategoryId: this.category.pCategoryId,
+                        categoryType: this.categoryType
                     };
                 } else {
                     param = {
@@ -264,10 +307,11 @@
                         name: name,
                         categoryLevel: this.category.categoryLevel,
                         pCategoryId: this.category.pCategoryId,
+                        categoryType: this.categoryType
                     };
                 }
                 this.$F.doRequest(this, "/pms/hotelcategory/edit", param, (res) => {
-                    this.initData();
+                    this.initData(this.categoryType);
                     this.cateVisible = false;
                 });
             },
@@ -277,12 +321,13 @@
 
 <style lang="less">
     .goodsType {
+        flex: 1;
         display: flex;
         flex-direction: column;
         background-color: #e4e7ea;
         border-radius: 8px;
         padding: 20px;
-        margin: 0 20px;
+        margin: 0 10px;
         max-height: 100%;
 
         .el-tree {
@@ -317,6 +362,11 @@
             background-color: #fff;
             border-radius: 6px;
             margin-bottom: 20px;
+            line-height: 38px;
+
+            > span {
+                margin-right: 20px;
+            }
         }
 
         .accountBtm {
