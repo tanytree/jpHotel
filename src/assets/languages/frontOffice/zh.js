@@ -1,14 +1,14 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-26 15:06:57
+ * @LastEditTime: 2020-10-28 11:20:36
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
     cancelRoomKeep: '取消预留',
     checkInfoDesc: '入住信息',
     chooseRoomType: '请选择房型',
-    saveGoon: '保存后继续办理入住',
+    saveGoon: '保存后继续办理入住预定',
     nightAudit: {
         reservationNumber: '预定单号',
         checkInTime: '入住时间',

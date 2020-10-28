@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-27 11:56:57
+ * @LastEditTime: 2020-10-28 11:52:51
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -276,8 +276,18 @@
                         <span v-if="row.state == 1 || row.state == 2">
                             {{ F_checkinState(row.state) }}
                         </span> -->
-                        <span v-if="row.state == 1">在住</span>
-                        <span v-if="row.state == 2">已退房</span>
+                        <span v-if="!row.billType">在住</span>
+                        <span
+                            v-if="
+                                row.billType == 2 ||
+                                row.billType == 3 ||
+                                row.billType == 4
+                            "
+                            >离店</span
+                        >
+                        <span v-if="row.billType == 1 || row.billType == 5"
+                            >已退房</span
+                        >
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -286,7 +296,19 @@
                     width="100px"
                 >
                     <template slot-scope="{ row }">
-                        {{ F_billType(row.billType || "0") }}
+                        <!-- {{ F_billType(row.billType || "0") }} -->
+                        <span
+                            v-if="
+                                !row.billType ||
+                                row.billType == 2 ||
+                                row.billType == 3 ||
+                                row.billType == 4
+                            "
+                            >{{ F_billType("0") }}</span
+                        >
+                        <span v-if="row.billType == 1 || row.billType == 5">{{
+                            F_billType("1")
+                        }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="240">
@@ -337,83 +359,6 @@
                 ></el-pagination>
             </div>
         </div>
-        <!-- 结账弹框 -->
-        <!-- <el-dialog
-      top="0"
-      title="退房结账"
-      :visible.sync="checkOutShow"
-      width="800px"
-    >
-      <el-row>
-        <el-col :span="8">
-          房型：{{
-            itemInfo.hotelCheckInRoom
-              ? itemInfo.hotelCheckInRoom.roomTypeName
-              : ""
-          }}
-        </el-col>
-        <el-col :span="8">
-          {{$t('desk.home_roomNum')}}：{{
-            itemInfo.hotelCheckInRoom ? itemInfo.hotelCheckInRoom.houseNum : ""
-          }}
-        </el-col>
-        <el-col :span="8"> 入住人：{{ itemInfo.name }} </el-col>
-      </el-row>
-      <br />
-      <div class="cost margin-t-10">
-        <div class="wrap" style="background: #efefef">
-          <span class="fee" v-if="1 == 1">应收：780</span>
-          <span class="fee" v-if="1 == 2">应退：800</span>
-          <div class="costNum">
-            <el-row>{{$t('desk.consumerTotal')}}：<span class="text-red">800.00</span></el-row>
-            <el-row>{{$t('desk.payTotal')}}：<span class="text-green">0.00</span></el-row>
-          </div>
-        </div>
-      </div>
-      <br />
-      <el-form
-        :model="consumeOperForm"
-        ref="checkOut"
-        :rules="rules"
-        size="mini"
-        label-width="100px"
-      >
-        <el-form-item label="收款方式：" prop="payType">
-          <el-radio-group v-model="consumeOperForm.payType">
-            <el-radio :label="1" :value="1">现金</el-radio>
-            <el-radio :label="2" :value="2">银行卡</el-radio>
-            <el-radio :label="3" :value="3">支付宝</el-radio>
-            <el-radio :label="4" :value="4">微信</el-radio>
-            <el-radio :label="5" :value="5">会员卡</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="金额：" class="" prop="consumePrice">
-          <el-input
-            class="width200"
-            type="number"
-            v-model="consumeOperForm.consumePrice"
-            autocomplete="off"
-            :disabled="true"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="备注：">
-          <el-input
-            class="width200"
-            type="textarea"
-            v-model="consumeOperForm.remark"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="打印单据：">
-          <el-checkbox v-model="consumeOperForm.ifPrint"></el-checkbox>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button>{{ $t('commons.cancel') }}</el-button>
-        <el-button type="primary">结账并退房</el-button>
-      </div>
-    </el-dialog> -->
-
         <!-- 开发票 -->
         <invoicing ref="invoicing" />
     </div>
