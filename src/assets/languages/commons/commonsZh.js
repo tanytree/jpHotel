@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-26 15:12:21
+ * @LastEditTime: 2020-10-28 15:02:09
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -164,11 +164,11 @@ module.exports = {
         '2': '已确认',
         '3': '拒单',
         '4': 'NOSHOW',
-        '5': '未入住',
-        '6': '已入住',
-        '7': '离店',
+        // '5': '未入住',
+        // '6': '已入住',
+        // '7': '离店',
         '8': '已取消',
-        '9': '应到未到订单'
+        // '9': '应到未到订单'
     },
     //结账状态  如billType字段值为null 传入0  默认为未结    有值情况下为已结
     billType: {

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-28 11:20:36
+ * @LastEditTime: 2020-10-28 15:03:20
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
@@ -63,7 +63,7 @@ module.exports = {
         "0": '不限',
         "1": '全天房',
         "2": '钟点房',
-        "3": '午夜房'
+        // "3": '午夜房'
     },
     //预离日期筛选条件
     leaveDate: {
