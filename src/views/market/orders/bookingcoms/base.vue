@@ -19,6 +19,7 @@
                     <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">取消预订</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{$t('commons.cancel')}}NOSHOW</el-dropdown-item>
+                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{ $t('desk.rowHouse') }}</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -126,7 +127,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                    <el-form-item label="备注：" class="">
+                    <el-form-item :label="$t('desk.home_note') + ':'" class="">
                         <el-input type="textarea" v-model="baseInfoChangeForm.remark" style="width:450px"></el-input>
                     </el-form-item>
                 </el-col>
@@ -192,7 +193,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                    <el-form-item label="备注：" class="">
+                    <el-form-item :label="$t('desk.home_note') + ':'" class="">
                         <el-input type="textarea" v-model="currentItem.remark" style="width:450px"></el-input>
                     </el-form-item>
                 </el-col>
@@ -492,10 +493,9 @@ export default {
         },
         rowRoomHandle() {
             if (!this.$route.query.id) {
-                this.$message.error('订单信息不正确');
                 return
             }
-            this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, this.roomInfo);
+            this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, this.roomInfo || []);
         },
 
     }

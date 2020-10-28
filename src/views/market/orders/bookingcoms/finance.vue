@@ -72,7 +72,7 @@
       ></el-table-column>
       <el-table-column
         prop="remark"
-        label="备注"
+        :label="$t('desk.home_note')"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column
@@ -214,7 +214,7 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="备注：">
+        <el-form-item :label="$t('desk.home_note') + ':'">
           <el-input
             class=""
             type="textarea"
@@ -264,7 +264,7 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="备注：">
+        <el-form-item :label="$t('desk.home_note') + ':'">
           <el-input
             class="width200"
             type="textarea"

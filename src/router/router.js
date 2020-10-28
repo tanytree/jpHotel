@@ -372,6 +372,22 @@ export default new Router({
 
 
 
+                //企划部      /**销售部 */
+                {
+                    path: '/salemain',
+                    name: 'salemain',
+                    meta: { title: '企划部首页', pid: "22" },
+                    component: () =>
+                        import ('@/views/sale/main')
+                },
+                {
+                    path: '/saleOrder',
+                    name: 'saleOrder',
+                    meta: { title: '会员管理', pid: "21" },
+                    component: () =>
+                        import ('@/views/sale/order')
+                }
+
             ]
         },
 

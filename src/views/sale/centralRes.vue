@@ -698,7 +698,7 @@
               </el-col>
               <el-col :span="14">
                 <div class="grid-content">
-                  <el-form-item label="备注:">
+                  <el-form-item :label="$t('desk.home_note') + ':'">
                     <el-input
                       style="width: 620px"
                       v-model="checkInForm.content"

@@ -173,7 +173,7 @@
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="17" class="col">
-                                            <el-form-item label="备注:">
+                                            <el-form-item :label="$t('desk.home_note') + ':'">
                                                 <el-input
                                                     v-model="editorForm.remark"
                                                     style="width: 530px"

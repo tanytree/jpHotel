@@ -82,8 +82,8 @@
           <el-form-item label="金额" required>
             <el-input size="small" placeholder="金额" v-model="getForm.amount"></el-input>
           </el-form-item>
-          <el-form-item label="备注">
-            <el-input type="textarea" placeholder="备注" v-model="getForm.remark"></el-input>
+          <el-form-item :label="$t('desk.home_note')">
+            <el-input type="textarea" :placeholder="$t('desk.home_note')" v-model="getForm.remark"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">

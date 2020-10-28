@@ -522,28 +522,14 @@
             :title="$t('desk.rowHouse')"
             width="800px"
         >
-            <el-form
-                :model="hotelRoomListParams"
-                style="margin-top: -20px"
-                v-loading="loading"
-            >
-                <el-form-item label="朝向:" class="" style="margin-bottom: 0">
-                    <el-checkbox-group
-                        v-model="hotelRoomListParams.toward"
-                        @change="hotel_room_list"
-                    >
-                        <el-checkbox
-                            v-for="(item, key, index) of $t('commons.toward')"
-                            :label="key"
-                            :value="key"
-                            :key="index"
-                            >{{ item }}</el-checkbox
-                        >
+            <el-form :model="hotelRoomListParams" style="margin-top: -20px" v-loading="loading">
+                <el-form-item :label="$t('manager.hk_toward') + ':'" class="" style="margin-bottom: 0">
+                    <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
+                        <el-checkbox v-for="(item, key, index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{ item }}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label="属性:" class="" style="margin-bottom: 0">
-                    <el-checkbox
-                        v-model="hotelRoomListParams.windowFlag"
+                    <el-checkbox  v-model="hotelRoomListParams.windowFlag"
                         @change="hotel_room_list"
                         >有窗</el-checkbox
                     >
@@ -571,23 +557,9 @@
                 <div class="rowRoomsList">
                     <div class="wrap">
                         <el-row>
-                            <!-- <h3>新加坡假日酒店</h3> -->
                             <el-row class="roomsInserted" :gutter="10">
-                                <el-col
-                                    v-for="v in rowRoomCurrentList"
-                                    :key="v.id"
-                                    :span="3"
-                                    style="margin-bottom: 10px"
-                                >
-                                    <el-tag
-                                        :type="
-                                            checkIsSelect(v) ? 'danger' : 'info'
-                                        "
-                                        effect="dark"
-                                        class="tag"
-                                        @click="rowRoomCurrentListItemAdd(v)"
-                                        >{{ v.houseNum }}</el-tag
-                                    >
+                                <el-col v-for="v in rowRoomCurrentList" :key="v.id" :span="3" style="margin-bottom: 10px">
+                                    <el-tag :type=" checkIsSelect(v) ? 'danger' : 'info'" effect="dark" class="tag" @click="rowRoomCurrentListItemAdd(v)">{{ v.houseNum }}</el-tag>
                                 </el-col>
                             </el-row>
                         </el-row>

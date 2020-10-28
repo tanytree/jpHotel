@@ -56,7 +56,7 @@
         </el-table-column>
         <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('commons.operating')">
             <template slot-scope="{row}">
                 <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
@@ -116,7 +116,7 @@
                 <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
                 <el-input class="2222" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="备注：">
+            <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input class="" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
 <!--            <el-form-item label="打印单据：">-->
@@ -187,7 +187,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="备注：">
+            <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
         </el-form>
@@ -277,7 +277,7 @@
             <el-form-item label="金额：" class="" prop="consumePrice">
                 <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="备注：">
+            <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
 <!--            <el-form-item label="打印单据：">-->

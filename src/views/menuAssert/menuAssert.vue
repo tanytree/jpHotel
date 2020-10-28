@@ -27,6 +27,9 @@
         <el-form-item label="path：">
           <el-input v-model="selected.path"></el-input>
         </el-form-item>
+        <el-form-item label="是否显示：">
+          <el-input v-model="selected.status"></el-input>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false">{{$t('commons.cancel')}}</el-button>
@@ -68,6 +71,7 @@ export default {
         menuId: this.selected.id,
         icon: this.selected.icon,
         path: this.selected.path,
+        status: this.selected.status,
       };
       this.$F.doRequest(this, "/pms/freeuser/update_menu", params, (data) => {
         this.dialogTableVisible = false;

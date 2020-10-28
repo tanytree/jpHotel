@@ -186,7 +186,7 @@
                 <el-form-item label="入职时间" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.createTime"></el-input>
                 </el-form-item>
-                <el-form-item label="备注" class>
+                <el-form-item :label="$t('desk.home_note')" class>
                     <el-input type="textarea" style="width:300px" disabled></el-input>
                 </el-form-item>
             </el-form>

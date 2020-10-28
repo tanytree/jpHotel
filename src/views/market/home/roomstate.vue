@@ -542,7 +542,7 @@
                         </el-table>
                         <div class="remark">
                             <label>
-                                备注：
+                                {{ $t('desk.home_note') }}：
                                 <span>{{ currentRoom.remark }}</span>
                             </label>
                             <!--                            <el-button type="text" @click="remark = true">修改</el-button>-->
@@ -577,7 +577,7 @@
                                 <span>{{ F_is1or2(currentRoom.temperatureFlag) }}</span>
                             </div>
                             <div class="col">
-                                朝向：
+                               {{$t('manager.hk_toward')}}
                                 <span>{{ F_is1or2(currentRoom.toward) }}</span>
                             </div>
                             <div class="col">
@@ -890,7 +890,7 @@
         <!-- 修改备注 -->
         <el-dialog top="0" title="修改备注" :visible.sync="remark" width="600px">
             <el-form>
-                <el-form-item label="备注:">
+                <el-form-item :label="$t('desk.home_note') + ':'">
                     <el-input type="textarea"></el-input>
                 </el-form-item>
             </el-form>

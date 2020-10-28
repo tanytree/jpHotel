@@ -284,7 +284,7 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="12" class="col">
-              <el-form-item label="备注：">
+              <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="addCompanyForm.remark"></el-input>
               </el-form-item>
             </el-col>

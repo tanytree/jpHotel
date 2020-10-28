@@ -80,6 +80,8 @@ module.exports = {
     home_deskPhone: '前台电话',
     home_hotelAddress: '酒店地址',
     home_telNum: '电话号码',
+    home_telNum1: '电话号码1',
+    home_telNum2: '电话号码2',
     home_getState: '领取状态',
     home_saveAndPri: '保存并打印',
     home_inputGoodsName: '请输入物品名称',

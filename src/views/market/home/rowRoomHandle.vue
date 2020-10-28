@@ -141,7 +141,7 @@
 
     <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="800px">
         <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
-            <el-form-item label="朝向:" class="" style="margin-bottom:0">
+            <el-form-item :label="$t('manager.hk_toward') + ':'" class="" style="margin-bottom:0">
                 <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
                     <el-checkbox v-for="(item,key,index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{item}}</el-checkbox>
                 </el-checkbox-group>

@@ -122,7 +122,7 @@
             <el-col :span="14">大仓集团第一酒店</el-col>
           </el-row>
           <el-row style="margin:10px 0">
-            <el-col :span="8">备注:</el-col>
+            <el-col :span="8">{{ $t('desk.home_note') }}:</el-col>
             <el-col :span="14">暂无</el-col>
           </el-row>
         </el-from>

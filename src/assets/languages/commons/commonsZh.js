@@ -5,6 +5,10 @@
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
+    roomAttribles: {
+
+    },
+
     mustChoose: '必填',
     mustInput: '必须输入',
     checkInTypeDesc: '入住类型',

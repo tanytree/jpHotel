@@ -79,6 +79,8 @@ module.exports = {
     home_deskPhone: 'フロント電話番号',
     home_hotelAddress: 'ホテル住所',
     home_telNum: '自宅電話番号',
+    home_telNum1: '自宅電話番号1',
+    home_telNum2: '自宅電話番号2',
     home_getState: '受け渡す状態',
     home_saveAndPri: '保存及び印刷',
     home_inputGoodsName: '預かり内容を入力してください',
