@@ -350,7 +350,15 @@ export default new Router({
                     meta: { title: 'warehouse' },
                     component: () =>
                         import('@/views/food/warehouse')
-                }
+                },
+                //餐饮部
+                {
+                    path: '/shop',
+                    name: 'shop',
+                    meta: { title: 'shop' },
+                    component: () =>
+                        import('@/views/shop/main')
+                },
             ]
         },
 

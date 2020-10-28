@@ -177,8 +177,8 @@
             </el-row>
             <br />
 
-            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice"></el-input>
+            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="payPrice">
+                <el-input class="width200" type="number" v-model="consumeOperForm.payPrice"></el-input>
             </el-form-item>
             <el-form-item label="挂账单位：" class="" prop="creditName">
                 <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword placeholder="请输入关键词"  :loading="loading" @change="enterNameChange">
@@ -278,12 +278,11 @@
                 <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="备注：">
-                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
 <!--            <el-form-item label="打印单据：">-->
 <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
 <!--            </el-form-item>-->
-
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="checkOutShow=false">关闭</el-button>
@@ -408,6 +407,7 @@ export default {
             },
             consumeOperForm: {
                 consumePrice: '',
+                payPrice:'',
                 priceType: '',
                 payType: '',
                 name: '',
@@ -481,7 +481,8 @@ export default {
                     // message: '请输入备注',
                     message: this.$t('commons.mustInput'),
                     trigger: 'blur'
-                }, ],
+                },
+                ],
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -607,26 +608,25 @@ export default {
                 params.priceType = 13
                 params.payType = 0 //挂账无需支付方式
                 params.state = 1
+                params.payPrice =  this.consumeOperForm.payPrice
+
                 console.log(params)
             }
+
+
+
             //冲调
             if (type == 3) {
-                params.state = 2
+
+                params.state = this.destructionList[0].state
                 params.payType = 0 //挂账无需支付方式
-                params.orderId = this.destructionList[0].id
-
-
-                // if (params.consumePrice > 0 || params.consumePrice == 0) {
-                //     this.$message.error('请输入为负数金额');
-                //     return false
-                // }
-
+                // params.orderId = this.destructionList[0].id
+                if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
+                   this.$message.error('部分冲调金额不能大于' +  parseFloat(this.destructionList[0].payPrice));
+                   return;
+                }
                 params.consumePrice = '-' + this.consumeOperForm.consumePrice
-
             }
-
-            console.log(params)
-            // return
 
             //退房结账
             if (type == 4) {
