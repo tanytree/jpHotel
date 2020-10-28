@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-23 16:47:12
+ * @LastEditTime: 2020-10-28 15:08:40
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -65,7 +65,7 @@ module.exports = {
         "0": '全部',
         "1": '一般',
         "2": '時間貸し部屋',
-        "3": '深夜部屋'
+        // "3": '深夜部屋'
     },
     leaveDate: {
         "0": '全部',
