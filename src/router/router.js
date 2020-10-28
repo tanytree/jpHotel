@@ -351,7 +351,7 @@ export default new Router({
                     component: () =>
                         import('@/views/food/warehouse')
                 },
-                //餐饮部
+                //shangdianbu
                 {
                     path: '/shop',
                     name: 'shop',
@@ -359,6 +359,19 @@ export default new Router({
                     component: () =>
                         import('@/views/shop/main')
                 },
+                {
+                    path: '/pmsshopselling',
+                    name: 'pmsshopselling',
+                    meta: { title: 'pmsshopselling' },
+                    component: () =>
+                        import('@/views/shop/pmsshopselling')
+                },
+
+
+
+
+
+
             ]
         },
 

@@ -1,18 +1,15 @@
 <template>
-  <el-container  class="boss-index">
-     <el-header>
-        <div class="shoptitle"> <span class="sub"></span> 快捷入口</div>
-     </el-header>
-     <el-main  v-loading="loading">
-        <div class="shopNavList clearfix">
-            <div class="item" v-for="(item,index) in tableData">
-                <div class="icon"><i class="el-icon-s-shop"></i></div>
-                <div class="title">{{item.name}}</div>
-            </div>        
-        </div>
-
-     </el-main>
-  </el-container>
+    <el-container  class="boss-index">
+        <el-header class="bg round" >
+            <div class="item" v-for="item in tableData"  :key="item.id" :class="active == item.id ? 'active' : ''" @click="changeTab(item.id)">{{item.name}}</div>
+        </el-header>
+        <el-main class="round bg"  v-loading="loading">
+            <div class="content">
+               <div class="left">1</div>
+               <div class="right">2</div>
+            </div>
+        </el-main>
+    </el-container>
 </template>
 
 <script>
@@ -28,6 +25,7 @@ export default {
         tabCurr:0,
         listTotal: 0, //总条数
         tableData: [],
+        active:''
     };
   },
 
@@ -59,11 +57,18 @@ export default {
             console.log(res)
             this.loading = false
             this.tableData = res.list
+            if( res.list.length > 0){
+                this.active = res.list[0].id
+            }
             // this.listTotal = res.page.count
         });
     },
 
 
+    //切换
+    changeTab(id){
+      this.active = id
+    },
     /**每页数 */
     handleSizeChange(val) {
         // console.log(val)
@@ -79,25 +84,38 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.boss-index {
+
+
+
+.bg{
     background: #fff;
+}
+.boss-index {
     border-radius: 10px;
+    .round{
+        border-radius: 10px;
+    }
+    .el-tabs__content{display: none;}
     .el-header {
-        // border-bottom: 1px solid #dedede;
+        padding: 20px;
+        height: auto !important;
         width: 100%;
-
-        .shoptitle{
-            background-color: #EEF1F7;
-            margin-top:20px;
-            padding:12px 20px;
-
-           .sub{
-               height: 18px;
-               line-height: 18px;
-               padding-left: 10px;
-               border-left:3px solid #B5C3E1;
-           }
+        margin-bottom: 20px;
+        .item{
+            cursor: pointer;
+            display: inline-block;
+            padding: 0 25px;
+            line-height: 40px;
+            min-width: 120px;
+            text-align: center;
+            font-size: 16px;
         }
+        .item.active{
+            background: #126eff;
+            border-radius: 4px;
+            color: #ffffff;
+        }
+
 
     }
     .shopNavList{
@@ -128,6 +146,24 @@ export default {
                 padding-top: 10px;
                 font-size: 15px;
             }
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        background: transparent;
+        padding: 0;
+
+        .left {
+            flex: 4;
+            margin-right: 20px;
+            padding:0 20px;
+        }
+
+        .right {
+            flex: 2;
         }
     }
 }

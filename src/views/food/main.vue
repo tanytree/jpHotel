@@ -16,7 +16,7 @@
             <!-- 交班-->
             <bookOff :categroyList = 'categoryList' ref="bookOff" v-if="item.path == 'bookOff'"/>
             <!-- 员工权限-->
-            <employeeRights v-if="item.path == 'staff-rights'"/>
+            <!-- <employeeRights v-if="item.path == 'staff-rights'"/> -->
             </el-tab-pane>
         </el-tabs>
     </div>

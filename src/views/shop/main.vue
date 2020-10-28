@@ -8,11 +8,11 @@
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                 :name="item.path"
                 :key="item.path"
-                v-if="$F.filterThirdMenu('frontOffice', item.path, true)"
+                v-if="$F.filterThirdMenu('frontOffice', item.path, true) && item.path != 'pmsshop_report' && item.path != 'pmsshop_employ_permission'"
             >
             <!-- 首页-->
             <shop  ref="shop" v-if="item.path == 'pmsshop_home'"/>
-
+            <bookOff ref="bookOff" v-if="item.path == 'pmsshop_succession'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -21,8 +21,9 @@
 <script>
     import { mapState, mapActions } from "vuex"
     import shop from "./main/pmsshop_home.vue";
+    import bookOff from "../food/home/bookOff.vue";
     export default {
-        components: {shop},
+        components: {shop,bookOff},
         data() {
             return {
                 activeName: "",

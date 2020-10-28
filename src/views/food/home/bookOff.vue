@@ -40,6 +40,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" >
+    .bookOff{background-color: #fff;padding: 20px;}
 .bookOff .el-tabs__nav{
     margin-left: 40%;
     .el-tabs__item{
