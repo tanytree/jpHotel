@@ -310,7 +310,7 @@ export default {
             if(!this.consumeOperForm.remark){
                 this.$message({
                   type: 'error',
-                  message: '请填写冲调原因!'
+                  message: '请填写备注!'
                 });
                 return false
             }

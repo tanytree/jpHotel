@@ -256,16 +256,16 @@
                     <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
                     <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
                     <div class="costNum">
-                        <el-row>{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                        <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
                         <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
                     </div>
                 </div>
             </div>
             <br />
-            <el-form-item label="" label-width="0">
+           <!-- <el-form-item label="" label-width="0">
                 <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
-            </el-form-item>
-            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
+            </el-form-item> -->
+            <!-- <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
                 <el-radio-group v-model="consumeOperForm.payType">
                     <el-radio :label="1" :value="1">现金</el-radio>
                     <el-radio :label="2" :value="2">银行卡</el-radio>
@@ -273,9 +273,9 @@
                     <el-radio :label="4" :value="4">微信</el-radio>
                     <el-radio :label="5" :value="5">会员卡</el-radio>
                 </el-radio-group>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="金额：" class="" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
+                <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
@@ -568,8 +568,6 @@ export default {
                 }
             }
 
-
-
             //入账 默认未接
             if (type == 1) {
                 params.state = 1;
@@ -629,22 +627,19 @@ export default {
             }
 
             //退房结账
-            if (type == 4) {
-                params.state = 2
-                if(params.consumePrice<0){
-                    params.payType = 0
-                }
-                if(params.isPoints){
-                    params.scoresDiscount = 200
-                    params.scoresPrice = 20
-                } else {
-                    params.scoresDiscount = ''
-                    params.scoresPrice = ''
-                }
-            }
-
-
-
+            // if (type == 4) {
+            //     params.state = 2
+            //     if(params.consumePrice<0){
+            //         params.payType = 0
+            //     }
+            //     if(params.isPoints){
+            //         params.scoresDiscount = 200
+            //         params.scoresPrice = 20
+            //     } else {
+            //         params.scoresDiscount = ''
+            //         params.scoresPrice = ''
+            //     }
+            // }
 
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -667,6 +662,8 @@ export default {
                 }
             });
         },
+
+        //走结
         out_check_in() {
             let params = {
                 checkInId: this.$route.query.id,
@@ -680,17 +677,50 @@ export default {
 
         //退房结账
         set_out_check_in() {
-            let params = {
-                checkInId: this.$route.query.id,
-                billType: 1
+            let info = {
+                checkInId:this.$route.query.id,
+                state:'',
+                pageIndex: 1,
+                pageSize: 1000
             }
-            this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
-                this.checkOutShow = false
-                this.consume_order_list()
+            this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
+               // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
+               // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
+               //未结状态 1
+               //已结状态 2
+               //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
+               // let array = [1,1,1,1]
+               // let array = [2,2,2,2]
+               // let array = [1,2,1,2]
+               let array = res.consumeOrderList.map(v=>{
+                   return v.state
+               });
+               let params = {}
+               params.checkInId = this.$route.query.id
+               if(this.isArrSame(array,1) == true){
+                   params.billType = 1
+               }else if(this.isArrSame(array,2) == true){
+                   params.billType = 3
+               }else{
+                   params.billType = 4
+               }
+               this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                   this.checkOutShow = false
+                   this.getOrderDetail();
+                   this.consume_order_list();
+               })
             })
         },
-
-
+        //判断数组中的值是否相同
+        isArrSame(array,state) {
+            if (array.length > 0) {
+                return !array.some(function(value, index) {
+                    return value !== state
+                });
+            } else {
+                return true;
+            }
+        },
 
         //开发票按钮点击
         openInvoiceHandle() {
@@ -962,7 +992,7 @@ export default {
             this.consume_order_list();
         },
         getOrderDetail(){
-            console.log(111)
+            // console.log(111)
             this.$emit('getOrderDetail')
         }
     },
