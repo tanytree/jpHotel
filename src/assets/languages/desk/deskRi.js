@@ -1,11 +1,22 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-23 16:54:24
+ * @LastEditTime: 2020-10-30 18:02:33
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
 module.exports = {
+    keepTime: 'ほりゅうじかん',
+    autoRowHouse: '自動アサイン',
+    rowHouse: 'アサイン',
+    roomInfoDesc: '部屋情報',
+    customerInfoDesc: '顧客情報',
+    payTotal: '支払い合計',
+    consumerTotal: '利用合計金額',
+    balanceTotal: '差引勘定',
+    orderMarkInfo: '備考',
+    hadRowHouses: 'アサイン済み',
+    noRowHouses: '未アサイン',
     updateOrder: '予約修正',
     batchCheckin: '一括チェックイン',
     clickCheckin: 'チェックインをクリック',
@@ -68,6 +79,8 @@ module.exports = {
     home_deskPhone: 'フロント電話番号',
     home_hotelAddress: 'ホテル住所',
     home_telNum: '自宅電話番号',
+    home_telNum1: '自宅電話番号1',
+    home_telNum2: '自宅電話番号2',
     home_getState: '受け渡す状態',
     home_saveAndPri: '保存及び印刷',
     home_inputGoodsName: '預かり内容を入力してください',
@@ -190,7 +203,7 @@ module.exports = {
     order_guestInfo: "顧客情報",
     order_guestName: "顧客名前",
     order_sourceType: "ゲストカテゴリー",
-    order_salesman: "担当営業",
+    order_salesman: "受付担当",
     order_saleInfo: "販売情報",
     order_roomInfo: "会場",
     order_alRoom: "グルーピング",
@@ -484,6 +497,8 @@ module.exports = {
     order_bookDate: "予約日",
     order_teamName: "団体名",
     order_bookOrderNum: "予約番号",
+    order_bookOrder: "予約",
+    order_bookOrderInfo: "予約情報",
     order_outOrderNum: "外部予約番号",
     order_bookTime: "予約時間",
     order_day: "日",
@@ -493,6 +508,7 @@ module.exports = {
     order_restore: "予約復活",
     order_accountingService: "会計",
     order_payDeposit: "テポ入金",
+    order_payBack: "払い戻し金",
     order_payProject: "入金項目",
     order_memCard: "会員年費",
     order_selectPayWay: "会計方法を選択",
@@ -516,6 +532,85 @@ module.exports = {
     home_payCompanyName: '支払会社名',
     home_companyName: '支払会社',
     home_timeInfo: '領収書情報を完成してください',
+    book_inputContent: '会員番号/法人番号又は会社、団体名称を入力してください。',
+    order_checkout: "C/O精算",
+    order_goTie: "未収",
+    order_addDayPrice: "宿泊料金追加",
+    order_addHalfPrice: "日帰り料金追加",
+    order_loosAndCompensation: "損害賠償記録master",
+    order_consumptionProject: "利用内容",
+    order_theDeposit: "デポジット",
+    order_businessThat: "業務内容",
+    order_accountingProgram: "会計項目",
+    order_haveAccounts: "支払済",
+    order_notHaveAccounts: "未払",
+    order_allAccounts: "請求内容",
+    order_accountsType: "会計種別",
+    order_payment: "支払い",
+    order_expense: "利用金額",
+    order_accountDeveloped: "相殺調整処理",
+    order_ifGoTie: "「未収」確認",
+    order_receivable: "会計金額",
+    order_shouldBack: "「未収」確認",
+    order_canDeduction: "200ポイントで20元を相殺",
+    order_mixingWay: "相殺方法",
+    order_completelyAgainst: "完全相殺",
+    order_partCompletely: "部分相殺",
+    order_completelyPrice: "相殺金額",
+    order_attention: "注意：相殺金額は請求金額より少なければならない。",
+    order_completelyReason: "相殺理由",
+    order_ifDelete: "該当項目削除、確認",
+    order_selectEntryItem: "入金項目を選択してください",
+    order_pleaseSelectPayWay: "精算方法を選択してください",
+    order_inputPrice: "金額を入力してください",
+    order_partComShould: "　　　より相殺金額は少なければならない。",
+    order_noPeople: "宿泊者が未入力",
+    order_selectOperateAccount: "操作する会計を選択してください",
+    order_onlyOneAccount: "相殺会計は一項目しかできないです",
+    order_autoTiePrice: "自動計上項目は相殺できないです",
+    book_venueBook: '会場予約',
+    book_meetVerification: '会場取り消し',
+    book_meetInfo: '未翻译词条',
+    book_house: '未翻译词条',
+    book_houseTotalPrice: '未翻译词条',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

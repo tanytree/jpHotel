@@ -58,16 +58,6 @@
                         {{ checkState(row.state) }}
                     </template>
                 </el-table-column>
-<!--                <el-table-column-->
-<!--                    prop="checkinType"-->
-<!--                    :label="$t('commons.checkInTypeDesc')"-->
-<!--                    width="140"-->
-<!--                    align="center"-->
-<!--                >-->
-<!--                    <template slot-scope="{ row }">-->
-<!--                        {{ F_checkinType(row.checkinType) }}-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
                 <el-table-column
                     prop="reserveOrderNum"
                     :label="$t('frontOffice.nightAudit.reservationNumber')"
@@ -75,7 +65,7 @@
                 ></el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="100">
                     <template slot-scope="{ row }">
-                        <el-button type="text" size="mini">{{$t('commons.detail')}}</el-button>
+                        <el-button type="text" size="mini" @click="goDetail(row)">{{$t('commons.detail')}}</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -109,6 +99,7 @@ export default {
             searchForm: {
                 searchType: 1,
                 content: "",
+                state: '9',
                 enterStatus: "",
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
@@ -125,6 +116,9 @@ export default {
         this.initForm();
     },
     methods: {
+        goDetail(item) {
+            this.$router.push(`/bookingDetail?id=${item.id}`)
+        },
         initForm() {
             this.searchForm = {
                 operCheckinType: "",
@@ -143,9 +137,7 @@ export default {
                 pageSize: 10, //页数
                 paging: true,
             };
-            // this.getDataList();
-            this.listTotal = this.data.page.count;
-            this.tableData = this.data.resreveList;
+            this.getDataList();
         },
         checkState(state) {
             switch (state) {
@@ -187,6 +179,7 @@ export default {
                 (res) => {
                     this.tableData = res.resreveList;
                     this.listTotal = res.page.count;
+                    this.$forceUpdate();
                 }
             );
         },

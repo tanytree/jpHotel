@@ -11,6 +11,7 @@ const TokenKey = 'TokenKey'
 const RouterKey = 'RouterKey'
 const RouterMsg = 'RouterMsg'
 const Language = 'Language'
+const OrderDetailInfo = 'OrderDetailInfo'
 
 //储存用户信息
 export function setUserInfo (data) {
@@ -69,3 +70,14 @@ export function getLanguage () {
 export function setLanguage (language) {
     return Cookies.set(Language, language)
 }
+
+/*
+//储存当前预定单信息 避免多个页面重复加载
+export function getLanguage () {
+    return Cookies.get(OrderDetailInfo) || '{}'
+}
+
+export function setLanguage (language) {
+    return Cookies.set(Language, language)
+}
+*/

@@ -11,9 +11,9 @@
       <el-tab-pane :label="$t('desk.customer_memInfo')" name="first">
         <info></info>
       </el-tab-pane>
-      <el-tab-pane :label="$t('desk.customer_integralQuery')" name="second">
-        <points></points>
-      </el-tab-pane>
+<!--      <el-tab-pane :label="$t('desk.customer_integralQuery')" name="second">-->
+<!--        <points></points>-->
+<!--      </el-tab-pane>-->
     </el-tabs>
   </div>
 </template>

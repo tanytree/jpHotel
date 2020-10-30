@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-09 16:48:56
- * @FilePath: /jiudian/src/views/market/nightaudit/leave.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-30 13:48:13
+ * @FilePath: \jiudian\src\views\market\nightaudit\leave.vue
  -->
 
 <template>
@@ -27,7 +27,7 @@
             </el-table-column>
             <el-table-column prop="" :label="$t('desk.customer_totalConsum')">
                 <template slot-scope="{row}">
-                    {{row.memberObject?row.memberObject.consumeTotalPrice:''}}
+                    {{ row.consumeTotalPrice || 0}}
                 </template>
             </el-table-column>
             <el-table-column prop="state" :label="$t('desk.order_liveState')"align="center">
@@ -37,12 +37,13 @@
             </el-table-column>
             <el-table-column prop="billType" :label="$t('desk.order_checkStatus')" align="center">
                 <template slot-scope="{row}">
-                    {{F_billType(row.billType)}}
+                    <span v-if="!row.billType || row.billType == 2 || row.billType == 3 || row.billType == 4">{{F_billType('0')}}</span>
+                    <span v-if="row.billType == 1 || row.billType == 5">{{F_billType('1')}}</span>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('commons.operating')">
                 <template slot-scope="{row}">
-                    <el-button type="text">{{$t('commons.detail')}}</el-button>
+                    <el-button type="text" @click="goDetail(row)">{{$t('commons.detail')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -63,28 +64,18 @@ import {
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
-    props: ['data'],
-    computed: {
-        ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
-        })
-    },
+    // props: ['data'],
+
     data() {
         return {
             loading: false,
             showEdit: false,
             showDetail: false,
             searchForm: {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
+                searchType: 2,
+                orderType: '4',  //订单类型  1在住订单 2今日预离 3历史订单 4走结订单 5反结订单 int选填
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -98,6 +89,9 @@ export default {
         this.hotel_price_enter_strategy_list()
     },
     methods: {
+        goDetail(item) {
+            this.$router.push(`/orderdetail?id=${item.id}`)
+        },
         initForm() {
             this.searchForm = {
                 mobile: '',
@@ -109,10 +103,7 @@ export default {
                 pageSize: 10, //页数
                 paging: true
             };
-            // this.getDataList();
-
-            this.listTotal = this.data.page.count;
-            this.tableData = this.data.roomPersonList;
+            this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {
@@ -169,7 +160,7 @@ export default {
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.page = val;
+            this.searchForm.pageIndex = val;
             this.getDataList();
         }
     }

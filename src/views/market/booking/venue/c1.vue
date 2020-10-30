@@ -73,7 +73,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="单位名称：">
+                        <el-form-item :label="$t('frontOffice.enterpriseName') + ':'">
                             <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
@@ -82,7 +82,7 @@
             <el-row>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="客源类型：" prop="resource">
+                        <el-form-item :label="$t('desk.order_sourceType') + '：'" prop="resource">
                             <el-input type="input" v-model="checkInForm.content" class="width200">
                                 <template slot="append">…</template>
                             </el-input>
@@ -91,7 +91,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="订单备注：">
+                        <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
                             <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>
@@ -102,7 +102,7 @@
         </el-form>
     </el-row>
     <el-row style="margin-bottom:60px">
-        <h3>房间信息</h3>
+        <h3>{{ $t('desk.roomInfoDesc') }}</h3>
         <el-form inline size="mini">
             <el-row>
                 <el-col :span="17">
@@ -150,7 +150,7 @@
                 <el-col :span="7">
                     <div class="grid-content">
                         <el-row>
-                            <el-button>自动排房</el-button>&nbsp;&nbsp;
+                            <el-button>{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;
                             <el-button>制卡</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />
@@ -166,7 +166,7 @@
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
-                                                            <el-button type="primary" size="mini">排房</el-button>
+                                                            <el-button type="primary" size="mini">{{$t('desk.rowHouse')}}</el-button>
                                                         </div>
                                                     </el-col>
                                                 </el-row>

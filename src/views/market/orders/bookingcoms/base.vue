@@ -5,23 +5,27 @@
  * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
  -->
 <template>
-<div class="base" v-if="checkinInfo">
+<div class="base">
     <el-row class="clearfix">
         <div class="fr">
-            <el-button plain @click="batchCheckId">{{ $t('desk.batchCheckin') }}</el-button>
-            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-dropdown split-button type="primary">
-                {{ $t('commons.moreOperating') }}
+<!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
+            <el-button plain @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
+            <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-dropdown split-button type="primary"> {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">排房</el-dropdown-item>
+<!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
 <!--                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>-->
-                    <el-dropdown-item @click.native="handleCancel">取消预订</el-dropdown-item>
-                    <el-dropdown-item @click.native="handleNoshow">NOSHOW</el-dropdown-item>
+<!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
+                    <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">取消预订</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{$t('commons.cancel')}}NOSHOW</el-dropdown-item>
+                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{ $t('desk.rowHouse') }}</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
     </el-row>
     <el-row>
+        <!--客房信息-->
         <h4>{{ $t('desk.serve_basicInfo') }}</h4>
         <el-row>
             <el-col :span="8">
@@ -42,12 +46,14 @@
         <h4>预订房型</h4>
         <el-row>
             <el-col :span="24" v-for="(item,key,index) of roomTypeList" :key="index">
-                <p>{{checkKey(key)}}（{{item.length}}间）；{{$t('desk.home_roomType')}}：<el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
+                <p>
+                    {{checkKey(key)}}（{{item.length}}间）；
+                    {{$t('desk.home_roomType')}}：
+                    <el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
                 </p>
             </el-col>
             <!-- <el-col :span="24">
-                <p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button>
-                </p>
+                <p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button> </p>
             </el-col> -->
         </el-row>
     </el-row>
@@ -58,18 +64,21 @@
                 <p>{{ $t('desk.order_outOrder') }}：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
             </el-col>
             <el-col :span="8">
-                <p>{{ $t('desk.order_salesman') }}：{{salesList.filter(sale => {  return sale.id == checkinInfo.salesId})[0].userName || '无'}}</p>
+                <p>{{ $t('desk.order_salesman') }}：{{ currentSale.userName || '无'}}</p>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="12">
-                <p>订单备注：{{checkinInfo.remark || '无'}}</p>
+                <p>{{ $t('desk.orderMarkInfo') }}：{{checkinInfo.remark || '无'}}</p>
             </el-col>
         </el-row>
     </el-row>
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
         <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
     </el-dialog>
+
+
+
     <el-dialog top="0" :title="$t('desk.updateOrder')" :visible.sync="baseInfoChangeShow" width="900px" center>
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
             <el-row>
@@ -118,7 +127,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                    <el-form-item label="备注：" class="">
+                    <el-form-item :label="$t('desk.home_note') + ':'" class="">
                         <el-input type="textarea" v-model="baseInfoChangeForm.remark" style="width:450px"></el-input>
                     </el-form-item>
                 </el-col>
@@ -134,7 +143,7 @@
             <el-row>
 
                 <el-row>
-                    <el-form-item label="客人类型:" class="" style="margin-bottom:0" prop="guestType">
+                    <el-form-item :label="$t('desk.customer_guestType') + ':'" class="" style="margin-bottom:0" prop="guestType">
                         <el-radio-group v-model="baseInfoChangeForm.guestType">
                             <el-radio v-for="(item,key,index) of $t('commons.guestType')" :label="key" :key="index">{{item}}</el-radio>
                         </el-radio-group>
@@ -184,7 +193,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                    <el-form-item label="备注：" class="">
+                    <el-form-item :label="$t('desk.home_note') + ':'" class="">
                         <el-input type="textarea" v-model="currentItem.remark" style="width:450px"></el-input>
                     </el-form-item>
                 </el-col>
@@ -227,7 +236,7 @@ export default {
     watch: {
         roomInfo: {
             handler(n, o) {
-                console.log(n)
+                debugger
                 n.forEach(element => {
                     if (element.personList.length) {
                         if (!this.roomTypeList[element.roomTypeId + 'checkIn']) {
@@ -241,7 +250,9 @@ export default {
                         this.roomTypeList[element.roomTypeId + 'notYet'].push(element)
                     }
                 });
+                console.log(222222222222)
                 console.log(this.roomTypeList)
+
             },
             //   immediate: true,
             deep: true
@@ -249,6 +260,7 @@ export default {
     },
     data() {
         return {
+            currentSale: {},
             loading: false,
             liveInPersonShow: false,
             noShowDiaShow: false,
@@ -351,10 +363,16 @@ export default {
         };
     },
 
+    created() {
+        console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
+    },
+
     mounted() {
         let id = this.$route.query.id
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;
+            let tempArray = this.salesList.filter(sale => {  return sale.id == this.checkinInfo.salesId}) || [{}];
+            this.currentSale = tempArray[0] || {};
         });
     },
 
@@ -366,7 +384,6 @@ export default {
         batchCheckId() {
             console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
             console.log(JSON.parse(JSON.stringify(this.inRoomList)));
-
             this.inRoomList.forEach((item, i) => {
                 let object = {
                     checkinRoomId: this.checkinInfo.id,
@@ -392,10 +409,10 @@ export default {
         checkKey(key) {
             console.log(key)
             if (key.indexOf('checkIn') != -1) {
-                return '已排房'
+                return this.$t('desk.hadRowHouses');
             }
             if (key.indexOf('notYet') != -1) {
-                return '未排房'
+                return this.$t('desk.noRowHouses');
             }
         },
         handleCancel() {
@@ -459,16 +476,26 @@ export default {
         baseInfoChange() {
             this.$emit('baseInfoChange', '');
         },
-        handleNoshow() {
-            this.currentItem = this.checkinInfo;
-            this.noShowDiaShow = true
+        //将订单变为NOSHOW状态
+        handleNoshow(state) {
+            let params = {
+                checkInReserveId: this.$route.query.id || '',
+                state: state
+            }
+            debugger
+            this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
+                this.$router.go(-1)
+                this.$message({
+                    message: this.$t('commons.request_success'),
+                    type: 'success'
+                });
+            })
         },
         rowRoomHandle() {
             if (!this.$route.query.id) {
-                this.$message.error('订单信息不正确');
                 return
             }
-            this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, this.roomInfo);
+            this.$refs.rowRoomHandle.initForm(this.$route.query.id, this.checkinInfo, this.roomInfo || []);
         },
 
     }

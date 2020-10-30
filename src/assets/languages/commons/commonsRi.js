@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-23 18:16:00
+ * @LastEditTime: 2020-10-26 11:34:26
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -88,9 +88,10 @@ module.exports = {
     },
     //订单来源
     orderSource: {
-        "1": 'フロント',
-        "2": '営業',
+        "1": 'ウォークイン',
+        "2": '営業担当',
         "3": 'OTA/旅行社',
+        "4": '直電',
         "10": 'その他'
     },
     //正常免费
@@ -100,9 +101,10 @@ module.exports = {
     },
     //客户类型
     guestType: {
-        "1": '一般客',
+        "1": '一般',
         "2": '会員',
-        "3": '法人'
+        "3": '法人/会社',
+        "4": '団体'
     },
     roomStatus: [{
         type: "success",
@@ -166,11 +168,11 @@ module.exports = {
         "2": '確認済',
         "3": '注文拒否',
         "4": 'NOSHOW',
-        "5": '未使用（未宿泊）',
-        "6": '滞在中',
-        "7": 'チェックアウト済',
+        // "5": '未使用（未宿泊）',
+        // "6": '滞在中',
+        // "7": 'チェックアウト済',
         "8": 'キャンセル',
-        '9': '客未着	'
+        // '9': '客未着	'
     },
     //入住状态
     billType: {

@@ -18,7 +18,7 @@
               <order v-if="item.path == 'order'" ref="order"/>
               <!-- 赔偿记录-->
               <compensate v-if="item.path == 'compensate'" ref="compensate"/>
-              <mainView v-show="mainShow" ref="mainView"/>
+<!--              <mainView v-show="mainShow" ref="mainView"/>-->
           </el-tab-pane>
       </el-tabs>
   </div>

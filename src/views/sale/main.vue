@@ -40,6 +40,8 @@ export default {
                 break;
             }
         }
+        this.activeName = 'staff-rights';
+
     },
 
     methods: {

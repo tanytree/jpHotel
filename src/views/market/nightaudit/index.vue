@@ -15,11 +15,11 @@
                 <!-- 首页-->
                 <total v-if="item.path == 'total'" @getCurrentItem="getCurrentItem" :totalObject="totalObject"/>
                 <!-- 应到未到订单-->
-                <notyet :data="notyetData" v-if="item.path == 'notyet' && notyetShow"/>
+                <notyet :data="notyetData" v-if="item.path == 'notyet'"/>
                 <!-- 应离未离订单-->
-                <notleaving  :data="notLivingData" v-if="item.path == 'notleaving' && notLivingDataShow" />
+                <notleaving  :data="notLivingData" v-if="item.path == 'notleaving'" />
                 <!-- 走结订单-->
-                <leave :data="leaveData"  v-if="item.path == 'leave' && leaveDataShow" />
+                <leave :data="leaveData"  v-if="item.path == 'leave'" />
                 <!-- 房价预审订单-->
                 <verify :data="verifyData"  v-if="item.path == 'verify' && verifyDataShow" />
             </el-tab-pane>
@@ -56,10 +56,10 @@ export default {
         };
     },
     mounted() {
-        this.getNotyetDataList();
-        this.getNotLivingDataList();
-        this.getLeaveList();
-        this.getVerifyList();
+        // this.getNotyetDataList();
+        // this.getNotLivingDataList();
+        // this.getLeaveList();
+        // this.getVerifyList();
     },
     created() {
         this.$F.handleThirdMenu(this);

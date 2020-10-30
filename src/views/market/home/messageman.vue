@@ -38,10 +38,12 @@
           <el-date-picker
             type="date"
             v-model="messageForm.startTime"
+              value-format="yyyy-MM-dd"
           ></el-date-picker>
           <span class="line">{{ $t("boss.report_toText") }}</span>
           <el-date-picker
             type="date"
+              value-format="yyyy-MM-dd"
             v-model="messageForm.endTime"
           ></el-date-picker>
         </el-form-item>

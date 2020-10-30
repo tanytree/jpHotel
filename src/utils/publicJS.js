@@ -118,7 +118,7 @@ const $F = {
         })
     },
 
-    doRequest ($instance, url, params = {}, callback) {
+    doRequest ($instance, url, params = {}, callback, errorCallback) {
         if ($instance) {
             $instance.dataListLoading = true
             $instance.loading = true
@@ -139,9 +139,14 @@ const $F = {
             if (res.code === 200) {
                 callback(res.data)
             } else {
-                if ($instance) {
-                    $instance.$message.error(res.message || res.data.message)
+                if (errorCallback) {
+                    errorCallback(res);
+                } else {
+                    if ($instance) {
+                        $instance.$message.error(res.message || res.data.message)
+                    }
                 }
+
             }
         })
     },

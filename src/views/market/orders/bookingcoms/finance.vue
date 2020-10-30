@@ -9,10 +9,10 @@
     <el-row class="clearfix">
       <div class="">
         <el-button type="primary" size="mini" @click="depositShow = true"
-          >交订金</el-button
+          >{{ $t('desk.order_payDeposit') }}</el-button
         >
         <el-button type="primary" size="mini" @click="refundShow = true"
-          >退订金</el-button
+          >{{ $t('desk.order_payBack') }}</el-button
         >
         <el-button type="primary" size="mini" @click="destructionHandle"
           >冲调</el-button
@@ -25,18 +25,18 @@
     <el-row class="clearfix padding-tb-20">
       <el-col :span="4">
         <span
-          >付款合计：<em class="text-green">{{ detailData.payPrice }}</em></span
+          >{{ $t('desk.payTotal') }}：<em class="text-green">{{ detailData.payPrice }}</em></span
         >
       </el-col>
       <el-col :span="4">
         <span
-          >消费合计：<em class="text-red">{{
+          >{{ $t('desk.consumerTotal') }}：<em class="text-red">{{
             detailData.consumePrice
           }}</em></span
         >
       </el-col>
       <el-col :span="4">
-        <span>平衡数：100</span>
+        <span>{{ $t('desk.balanceTotal') }}：100</span>
       </el-col>
     </el-row>
     <!--表格数据 -->
@@ -72,7 +72,7 @@
       ></el-table-column>
       <el-table-column
         prop="remark"
-        label="备注"
+        :label="$t('desk.home_note')"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column
@@ -112,7 +112,7 @@
         size="mini"
         label-width="100px"
       >
-        <p>正在冲调的账务</p>
+<!--        <p>正在冲调的账务</p>-->
         <el-table
           v-loading="loading"
           :data="destructionList"
@@ -184,7 +184,7 @@
       </div>
     </el-dialog>
     <!--交订金-->
-    <el-dialog top="0" title="交订金" :visible.sync="depositShow">
+    <el-dialog top="0" :title="$t('desk.order_payDeposit')" :visible.sync="depositShow">
       <el-form
         :model="consumeOperForm"
         ref="deposit"
@@ -214,7 +214,7 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="备注：">
+        <el-form-item :label="$t('desk.home_note') + ':'">
           <el-input
             class=""
             type="textarea"
@@ -234,7 +234,7 @@
       </div>
     </el-dialog>
     <!--退订金-->
-    <el-dialog top="0" title="退订金" :visible.sync="refundShow">
+    <el-dialog top="0" :title="$t('desk.order_payBack')" :visible.sync="refundShow">
       <el-form
         :model="consumeOperForm"
         ref="refund"
@@ -253,7 +253,7 @@
         <br />
         <el-form-item label="付款项目：">
           <el-radio-group v-model="consumeOperForm.priceType">
-            <el-radio-button :label="4" :value="4">退订金</el-radio-button>
+            <el-radio-button :label="4" :value="4">{{ $t('desk.order_payBack') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="金额：">
@@ -264,7 +264,7 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="备注：">
+        <el-form-item :label="$t('desk.home_note') + ':'">
           <el-input
             class="width200"
             type="textarea"
@@ -457,7 +457,6 @@ export default {
 
       //订金，退订金
       if (type == 1 || type == 2) {
-        console.log("这是交定金：" + params.priceType);
         //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
         params.state = 2;
         if (!params.priceType) {
@@ -488,10 +487,11 @@ export default {
         //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
         params.state = 2;
         params.payType == 0;
-        if (params.consumePrice > 0 || params.consumePrice == 0) {
-          this.$message.error("请输入为负数金额");
-          return;
-        }
+          params.consumePrice = -params.consumePrice;
+        // if (params.consumePrice > 0 || params.consumePrice == 0) {
+        //   this.$message.error("请输入为负数金额");
+        //   return;
+        // }
       }
 
       this.$refs[formName].validate((valid) => {
@@ -503,6 +503,7 @@ export default {
             (res) => {
               this.depositShow = false;
               this.refundShow = false;
+              this.destructionShow = false;
               this.consume_order_list();
             }
           );
@@ -526,10 +527,15 @@ export default {
           this.$message.error("自动计费项目不能冲调");
           return;
         }
+        if (this.multipleSelection[k].consumePrice < 0) {
+          this.$message.error("冲调中的财务不能再冲调");
+          return;
+        }
       }
       this.destructionList = this.multipleSelection;
-      this.destructionShow = true;
-      this.$forceUpdate();
+      this.consumeOperForm.priceType = 9;
+        this.destructionShow = true;
+        this.$forceUpdate();
     },
     /**多选 */
     handleSelectionChange(val) {

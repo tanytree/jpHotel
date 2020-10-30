@@ -4,7 +4,7 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item label="单位名称">
+        <el-form-item :label="$t('frontOffice.enterpriseName')">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
         <el-form-item :label="$t('food.common.status')">
@@ -70,7 +70,7 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="enterName" :label="$t('frontOffice.enterpriseName')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip></el-table-column>
         <el-table-column prop="contactName" label="姓名" show-overflow-tooltip></el-table-column>
         <el-table-column prop="contactPhone" :label="$t('desk.order_moblePhone')" show-overflow-tooltip></el-table-column>
@@ -138,7 +138,7 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="单位名称：" prop="enterName">
+              <el-form-item :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">
                 <el-input v-model="addCompanyForm.enterName"></el-input>
               </el-form-item>
             </el-col>
@@ -284,7 +284,7 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="12" class="col">
-              <el-form-item label="备注：">
+              <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="addCompanyForm.remark"></el-input>
               </el-form-item>
             </el-col>
@@ -403,7 +403,7 @@
         size="mini"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="enterName" label="单位名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="enterName" :label="$t('frontOffice.enterpriseName')" show-overflow-tooltip></el-table-column>
         <el-table-column prop :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>
           <template slot-scope="{row}">
             <el-select v-model="row.enterStrategyId" size="mini">

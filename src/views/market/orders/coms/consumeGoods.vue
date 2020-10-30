@@ -90,7 +90,7 @@
                         <el-form-item :label="$t('desk.enterAccountMoney') + ':'">
                             {{totalIn}}
                         </el-form-item>
-                        <el-form-item label="备注：">
+                        <el-form-item :label="$t('desk.home_note') + ':'">
                             <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off" placeholder="请填写冲调原因，必填！"></el-input>
                         </el-form-item>
 
@@ -310,7 +310,7 @@ export default {
             if(!this.consumeOperForm.remark){
                 this.$message({
                   type: 'error',
-                  message: '请填写冲调原因!'
+                  message: '请填写备注!'
                 });
                 return false
             }

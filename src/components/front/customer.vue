@@ -45,7 +45,7 @@
                 <span>{{row.checkIn.mobile}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="备注" show-overflow-tooltip>
+        <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 <span>{{row.checkIn.remark}}</span>
             </template>

@@ -41,11 +41,11 @@
                 </template>
             </el-table-column>
             <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="consumePrice" label="退款" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="refund" label="退款" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('commons.operating')">
-                <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
+                <template slot-scope="scope">
+                    <el-button type="text" size="mini" @click="consume_move(scope.$index)">移除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -82,13 +82,13 @@
           <el-form-item label="金额" required>
             <el-input size="small" placeholder="金额" v-model="getForm.amount"></el-input>
           </el-form-item>
-          <el-form-item label="备注">
-            <el-input type="textarea" placeholder="备注" v-model="getForm.remark"></el-input>
+          <el-form-item :label="$t('desk.home_note')">
+            <el-input type="textarea" :placeholder="$t('desk.home_note')" v-model="getForm.remark"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" >{{ $t('commons.confirm') }}</el-button>
+            <el-button @click="getStatus = false">{{ $t('commons.cancel') }}</el-button>
+            <el-button type="primary" @click="addDestructionList" >{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
 
@@ -144,7 +144,6 @@ export default {
     methods: {
         async init(id) {
             this.id = id
-
             this.initForm()
             this.visible = true;
         },
@@ -165,6 +164,7 @@ export default {
             })
         },
 
+
         openDialog(v){
             if(v== 1){
                 this.title = '收款'
@@ -179,6 +179,38 @@ export default {
             this.type = v
             this.getStatus = true
             console.log(this.getForm)
+        },
+
+        //添加财务数据
+        addDestructionList(){
+            let type  = this.type
+            let obj = {
+                creatorName:window.sessionStorage.getItem('account'),
+                consumePrice:this.getForm.amount,
+            }
+            if(type == 1){
+                obj.priceType = 3
+                obj.refund = 0
+            }else if(type == 2){
+                obj.priceType = 11
+                obj.refund = 0
+            }else if(type == 3){
+                obj.priceType = 4
+                obj.consumePrice = 0
+                obj.refund = this.getForm.amount
+            }
+            this.destructionList.push(obj)
+            this.getStatus = false
+            this.getForm = {
+                payType:1,
+                amount:'',
+                remark:''
+            }
+
+        },
+        //删除添加的财务数据
+        consume_move(index){
+           this.destructionList.splice(index, 1);
         },
 
 
@@ -197,6 +229,7 @@ export default {
               this.$emit('get_consume_order_list','');
             })
         },
+
 
 
 

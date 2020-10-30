@@ -1,14 +1,22 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-16 15:04:14
+ * @LastEditTime: 2020-10-28 15:03:20
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
 
+    enterpriseName: '单位名称',
+    enterpriseMobile: '单位号码',
+    enterpriseAddress: '单位地址',
+    cancelRoomKeep: '取消预留',
+    checkInfoDesc: '入住信息',
     chooseRoomType: '请选择房型',
-    saveGoon: '保存后继续办理入住',
+    saveGoon: '保存后继续办理入住预定',
     nightAudit: {
+        auditSuggest: '！建议夜审前处理以下业务',
+        auditTip: '您确定要夜审吗？一旦夜审无法撤回',
+        audit: '夜审',
         reservationNumber: '预定单号',
         checkInTime: '入住时间',
         arriveTime: '到店时间',
@@ -62,7 +70,7 @@ module.exports = {
         "0": '不限',
         "1": '全天房',
         "2": '钟点房',
-        "3": '午夜房'
+        // "3": '午夜房'
     },
     //预离日期筛选条件
     leaveDate: {

@@ -634,6 +634,11 @@ li {
         flex: 1;
         margin: 0;
 
+        &.cost {
+            width: 300px;
+            flex: none;
+        }
+
         .el-form-item__label {
             padding: 0 20px;
             display: block;
@@ -643,6 +648,10 @@ li {
 
         .el-form-item__content {
             padding: 15px;
+
+            .el-input {
+                width: 180px;
+            }
         }
     }
 }

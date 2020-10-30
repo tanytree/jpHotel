@@ -6,17 +6,17 @@
     <div class="boss-index">
         <el-tabs class="pageTab noBg" v-model="activeName">
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
-                 :name="item.path"
-                 :key="item.path"
-                 v-if="$F.filterThirdMenu('frontOffice', item.path, true) && ['orderDesk','bookOff'].indexOf(item.path) > -1"
-                 :class="item.path !== 'orderDesk' ? 'bg' : ''"
+                :name="item.path"
+                :key="item.path"
+                v-if="$F.filterThirdMenu('frontOffice', item.path, true) && ['orderDesk','bookOff'].indexOf(item.path) > -1"
+                :class="item.path !== 'orderDesk' ? 'bg' : ''"
             >
-                <!-- 餐饮收银-->
-                <orderDesk :categroyList = 'categoryList' ref="orderDesk" v-if="item.path == 'orderDesk'"/>
-                <!-- 交班-->
-                <bookOff :categroyList = 'categoryList' ref="bookOff" v-if="item.path == 'bookOff'"/>
-                <!-- 员工权限-->
-                <employeeRights v-if="item.path == 'staff-rights'"/>
+            <!-- 餐饮收银-->
+            <orderDesk :categroyList = 'categoryList' ref="orderDesk" v-if="item.path == 'orderDesk'"/>
+            <!-- 交班-->
+            <bookOff :categroyList = 'categoryList' ref="bookOff" v-if="item.path == 'bookOff'"/>
+            <!-- 员工权限-->
+            <!-- <employeeRights v-if="item.path == 'staff-rights'"/> -->
             </el-tab-pane>
         </el-tabs>
     </div>

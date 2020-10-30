@@ -15,7 +15,6 @@ Router.prototype.push = function push(location) {
 // 不需要要权限的页面默认挂载
 export default new Router({
     mode: 'history',
-
     routes: [
         // { path: '', redirect: 'main', meta: { title: '主页' } },
 
@@ -351,7 +350,44 @@ export default new Router({
                     meta: { title: 'warehouse' },
                     component: () =>
                         import('@/views/food/warehouse')
+                },
+                //shangdianbu
+                {
+                    path: '/shop',
+                    name: 'shop',
+                    meta: { title: 'shop' },
+                    component: () =>
+                        import('@/views/shop/main')
+                },
+                {
+                    path: '/pmsshopselling',
+                    name: 'pmsshopselling',
+                    meta: { title: 'pmsshopselling' },
+                    component: () =>
+                        import('@/views/shop/pmsshopselling')
+                },
+
+
+
+
+
+
+                //企划部      /**销售部 */
+                {
+                    path: '/salemain',
+                    name: 'salemain',
+                    meta: { title: '企划部首页', pid: "22" },
+                    component: () =>
+                        import ('@/views/sale/main')
+                },
+                {
+                    path: '/saleOrder',
+                    name: 'saleOrder',
+                    meta: { title: '会员管理', pid: "21" },
+                    component: () =>
+                        import ('@/views/sale/order')
                 }
+
             ]
         },
 

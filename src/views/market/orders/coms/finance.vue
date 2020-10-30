@@ -17,21 +17,15 @@
                 <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" size="mini" @click="destructionHandle">{{$t('desk.customer_rich')}}</el-button>
-                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
+<!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
                 <el-button type="primary" size="mini">撤销结账</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true">走结</el-button>
             </el-form-item>
         </el-row>
         <el-form-item label="账务类别：">
-<!--            <el-tabs type="border-card">-->
-<!--                <el-tab-pane label="用户管理"></el-tab-pane>-->
-<!--                <el-tab-pane label="配置管理"></el-tab-pane>-->
-<!--                <el-tab-pane label="角色管理"></el-tab-pane>-->
-<!--            </el-tabs>-->
-
-            <el-button plain size="mini" @click="consume_order_list('')">所有账务</el-button>
-            <el-button plain size="mini" @click="consume_order_list(1)">未结账务</el-button>
-            <el-button plain size="mini" @click="consume_order_list(2)">已结账务</el-button>
+            <el-button :type="searchForm.state == '' ? 'primary' : ''" size="mini" @click="consume_order_list('')">所有账务</el-button>
+            <el-button :type="searchForm.state == '1' ? 'primary' : ''" size="mini" @click="consume_order_list(1)">未结账务</el-button>
+            <el-button :type="searchForm.state == '2' ? 'primary' : ''" size="mini" @click="consume_order_list(2)">已结账务</el-button>
         </el-form-item>
 <!--        <el-form-item class="fr">-->
 <!--            <el-button type="primary">导出</el-button>-->
@@ -62,7 +56,7 @@
         </el-table-column>
         <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('commons.operating')">
             <template slot-scope="{row}">
                 <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
@@ -122,7 +116,7 @@
                 <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
                 <el-input class="2222" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="备注：">
+            <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input class="" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
 <!--            <el-form-item label="打印单据：">-->
@@ -183,8 +177,8 @@
             </el-row>
             <br />
 
-            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice"></el-input>
+            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="payPrice">
+                <el-input class="width200" type="number" v-model="consumeOperForm.payPrice"></el-input>
             </el-form-item>
             <el-form-item label="挂账单位：" class="" prop="creditName">
                 <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword placeholder="请输入关键词"  :loading="loading" @change="enterNameChange">
@@ -193,7 +187,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="备注：">
+            <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
         </el-form>
@@ -262,16 +256,16 @@
                     <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
                     <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
                     <div class="costNum">
-                        <el-row>消费合计：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
-                        <el-row>付款合计：<span class="text-green">{{detailData.payPrice}}</span></el-row>
+                        <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                        <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
                     </div>
                 </div>
             </div>
             <br />
-            <el-form-item label="" label-width="0">
+           <!-- <el-form-item label="" label-width="0">
                 <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
-            </el-form-item>
-            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
+            </el-form-item> -->
+            <!-- <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
                 <el-radio-group v-model="consumeOperForm.payType">
                     <el-radio :label="1" :value="1">现金</el-radio>
                     <el-radio :label="2" :value="2">银行卡</el-radio>
@@ -279,21 +273,20 @@
                     <el-radio :label="4" :value="4">微信</el-radio>
                     <el-radio :label="5" :value="5">会员卡</el-radio>
                 </el-radio-group>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="金额：" class="" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
+                <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="备注：">
-                <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+            <el-form-item :label="$t('desk.home_note') + ':'">
+                <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
 <!--            <el-form-item label="打印单据：">-->
 <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
 <!--            </el-form-item>-->
-
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="checkOutShow=false">关闭</el-button>
-            <el-button type="primary" @click="consume_oper(4,'checkOut')">{{ $t('commons.confirm') }}</el-button>
+            <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--冲调-->
@@ -413,6 +406,8 @@ export default {
                 pageSize: 10
             },
             consumeOperForm: {
+                consumePrice: '',
+                payPrice:'',
                 priceType: '',
                 payType: '',
                 name: '',
@@ -486,7 +481,8 @@ export default {
                     // message: '请输入备注',
                     message: this.$t('commons.mustInput'),
                     trigger: 'blur'
-                }, ],
+                },
+                ],
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -516,7 +512,7 @@ export default {
     mounted() {
         let id = this.$route.query.id;
 
-        this.consume_order_list('')
+        this.consume_order_list(1)
         this.hoteldamagetype_list()
         this.hotelenter_list()
     },
@@ -572,8 +568,6 @@ export default {
                 }
             }
 
-
-
             //入账 默认未接
             if (type == 1) {
                 params.state = 1;
@@ -612,44 +606,40 @@ export default {
                 params.priceType = 13
                 params.payType = 0 //挂账无需支付方式
                 params.state = 1
+                params.payPrice =  this.consumeOperForm.payPrice
+
                 console.log(params)
             }
+
+
+
             //冲调
             if (type == 3) {
-                params.state = 2
+
+                params.state = this.destructionList[0].state
                 params.payType = 0 //挂账无需支付方式
-                params.orderId = this.destructionList[0].id
-
-
-                // if (params.consumePrice > 0 || params.consumePrice == 0) {
-                //     this.$message.error('请输入为负数金额');
-                //     return false
-                // }
-
+                // params.orderId = this.destructionList[0].id
+                if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
+                   this.$message.error('部分冲调金额不能大于' +  parseFloat(this.destructionList[0].payPrice));
+                   return;
+                }
                 params.consumePrice = '-' + this.consumeOperForm.consumePrice
-
             }
-
-            console.log(params)
-            // return
 
             //退房结账
-            if (type == 4) {
-                params.state = 2
-                if(params.consumePrice<0){
-                    params.payType = 0
-                }
-                if(params.isPoints){
-                    params.scoresDiscount = 200
-                    params.scoresPrice = 20
-                } else {
-                    params.scoresDiscount = ''
-                    params.scoresPrice = ''
-                }
-            }
-
-
-
+            // if (type == 4) {
+            //     params.state = 2
+            //     if(params.consumePrice<0){
+            //         params.payType = 0
+            //     }
+            //     if(params.isPoints){
+            //         params.scoresDiscount = 200
+            //         params.scoresPrice = 20
+            //     } else {
+            //         params.scoresDiscount = ''
+            //         params.scoresPrice = ''
+            //     }
+            // }
 
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -658,6 +648,7 @@ export default {
                         this.onAccountShow = false
                         this.destructionShow = false;
                         this.consumeOperForm = {
+                            consumePrice: '',
                             priceType: '',
                             payType: '',
                             name: ''
@@ -671,6 +662,8 @@ export default {
                 }
             });
         },
+
+        //走结
         out_check_in() {
             let params = {
                 checkInId: this.$route.query.id,
@@ -681,6 +674,54 @@ export default {
                 this.consume_order_list()
             })
         },
+
+        //退房结账
+        set_out_check_in() {
+            let info = {
+                checkInId:this.$route.query.id,
+                state:'',
+                pageIndex: 1,
+                pageSize: 1000
+            }
+            this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
+               // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
+               // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
+               //未结状态 1
+               //已结状态 2
+               //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
+               // let array = [1,1,1,1]
+               // let array = [2,2,2,2]
+               // let array = [1,2,1,2]
+               let array = res.consumeOrderList.map(v=>{
+                   return v.state
+               });
+               let params = {}
+               params.checkInId = this.$route.query.id
+               if(this.isArrSame(array,1) == true){
+                   params.billType = 1
+               }else if(this.isArrSame(array,2) == true){
+                   params.billType = 3
+               }else{
+                   params.billType = 4
+               }
+               this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                   this.checkOutShow = false
+                   this.getOrderDetail();
+                   this.consume_order_list();
+               })
+            })
+        },
+        //判断数组中的值是否相同
+        isArrSame(array,state) {
+            if (array.length > 0) {
+                return !array.some(function(value, index) {
+                    return value !== state
+                });
+            } else {
+                return true;
+            }
+        },
+
         //开发票按钮点击
         openInvoiceHandle() {
             this.openInvoiceForm.checkInId = this.$route.query.id
@@ -708,21 +749,25 @@ export default {
             this.checkOutShow = true;
             this.consumeOperForm.consumePrice = this.detailData.totalPrice
         },
-        //开发票提交
-        openInvoiceSubmit(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.$F.doRequest(this, '/pms/invoice/open_invoice', this.openInvoiceForm, (res) => {
-                        this.openInvoiceShow = false
-                        this.consume_order_list()
-                    })
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
-
-        },
+        // //开发票提交
+        // openInvoiceSubmit(formName) {
+        //     this.$refs[formName].validate((valid) => {
+        //         if (valid) {
+        //             this.$F.doRequest(this, '/pms/invoice/open_invoice', this.openInvoiceForm, (res) => {
+        //                 this.openInvoiceShow = false
+        //                 this.$message({
+        //                     message: this.$t('commons.request_success'),
+        //                     type: 'success'
+        //                 });
+        //                 this.consume_order_list()
+        //             })
+        //         } else {
+        //             console.log('error submit!!');
+        //             return false;
+        //         }
+        //     });
+        //
+        // },
         hoteldamagetype_list() {
             let params = {
                 pageIndex: 1,
@@ -881,8 +926,6 @@ export default {
         },
 
 
-
-
         destructionHandle() {
             if (this.multipleSelection.length < 1) {
                 this.$message.error('请选择需要操作的账务');
@@ -905,7 +948,27 @@ export default {
         },
         //开发票
         invoicingHandle() {
-            this.$refs.invoicing.init(this.$route.query.id);
+            this.openInvoiceForm.checkInId = this.$route.query.id
+            if (this.currentRoom) {
+                this.openInvoiceForm.name = this.detailData.checkIn.name;
+                this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice
+                this.openInvoiceForm.invoicePrice = ''
+                this.openInvoiceForm.roomNum = this.currentRoom.houseNum
+                this.openInvoiceForm.mobile = this.detailData.checkIn.mobile
+            } else {
+                if (this.detailData.inRoomList.length) {
+                    // this.openInvoiceForm.name = this.detailData.inRoomList[0].name
+                    this.openInvoiceForm.name = this.detailData.checkIn.name;
+                    this.openInvoiceForm.consumePrice = this.detailData.inRoomList[0].roomMarkPrice
+                    this.openInvoiceForm.invoicePrice = ''
+                    this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum
+                    this.openInvoiceForm.mobile = this.detailData.checkIn.mobile
+                } else {
+                    this.$message.error('暂无入住人');
+                    return
+                }
+            }
+            this.$refs.invoicing.init(this.$route.query.id, this.openInvoiceForm);
         },
         consumeGoodsHandle() {
             this.$refs.consumeGoods.init(this.$route.query.id);
@@ -929,7 +992,7 @@ export default {
             this.consume_order_list();
         },
         getOrderDetail(){
-            console.log(111)
+            // console.log(111)
             this.$emit('getOrderDetail')
         }
     },

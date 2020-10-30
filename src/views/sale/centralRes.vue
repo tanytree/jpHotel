@@ -223,12 +223,10 @@
         <el-row>
           <el-form inline size="small" label-width="100px" :rules="rules">
             <el-row>
-              <el-form-item label="客人类型:">
-                <el-radio-group v-model="checkInForm.content">
-                  <el-radio label="散客"></el-radio>
-                  <el-radio label="会员"></el-radio>
-                  <el-radio label="单位"></el-radio>
-                </el-radio-group>
+              <el-form-item :label="$t('desk.customer_guestType') + ':'">
+                  <el-radio-group v-model="checkInForm.content">
+                      <el-radio v-for="(item,key,index) of $t('commons.guestType')" :label="key" :key="index">{{item}}</el-radio>
+                  </el-radio-group>
                 <el-button @click="registerme = true" style="margin-left: 25px"
                   >注册会员</el-button
                 >
@@ -370,7 +368,7 @@
             <el-row>
               <el-col :span="24">
                 <div class="grid-content">
-                  <el-form-item label="订单备注：">
+                  <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
                     <el-input
                       v-model="checkInForm.content"
                       style="width: 740px"
@@ -382,7 +380,7 @@
           </el-form>
         </el-row>
         <el-row style="margin-bottom: 60px">
-          <h3>房间信息</h3>
+          <h3>{{ $t('desk.roomInfoDesc') }}</h3>
           <el-form inline size="mini">
             <el-row>
               <el-col :span="17">
@@ -448,7 +446,7 @@
               </el-col>
               <el-col :span="7">
                 <div class="grid-content">
-                  <el-row> <el-button>自动排房</el-button>&nbsp;&nbsp; </el-row>
+                  <el-row> <el-button>{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp; </el-row>
                   <br />
                   <el-row class="roomSelect">
                     <ul>
@@ -463,7 +461,7 @@
                                 <el-col :span="10">
                                   <div style="text-align: right">
                                     <el-button type="primary" size="mini"
-                                      >排房</el-button
+                                      >{{ $t('desk.rowHouse') }}</el-button
                                     >
                                   </div>
                                 </el-col>
@@ -700,7 +698,7 @@
               </el-col>
               <el-col :span="14">
                 <div class="grid-content">
-                  <el-form-item label="备注:">
+                  <el-form-item :label="$t('desk.home_note') + ':'">
                     <el-input
                       style="width: 620px"
                       v-model="checkInForm.content"

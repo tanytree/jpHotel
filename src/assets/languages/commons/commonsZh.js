@@ -1,10 +1,14 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-23 15:50:39
+ * @LastEditTime: 2020-10-28 15:02:09
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
+    roomAttribles: {
+
+    },
+
     mustChoose: '必填',
     mustInput: '必须输入',
     checkInTypeDesc: '入住类型',
@@ -91,6 +95,7 @@ module.exports = {
         '1': '前台',
         '2': '销售推荐',
         "3": '渠道订单',
+        "4": '电话预定',
         '10': '其它'
     },
     //正常免费
@@ -102,7 +107,8 @@ module.exports = {
     guestType: {
         '1': '散客',
         '2': '会员',
-        '3': '单位'
+        '3': '单位',
+        "4": '団体'
     },
     roomStatus: [{
         type: 'success',
@@ -162,13 +168,13 @@ module.exports = {
         '2': '已确认',
         '3': '拒单',
         '4': 'NOSHOW',
-        '5': '未入住',
-        '6': '已入住',
-        '7': '离店',
+        // '5': '未入住',
+        // '6': '已入住',
+        // '7': '离店',
         '8': '已取消',
-        '9': '应到未到订单'
+        // '9': '应到未到订单'
     },
-    //入住状态
+    //结账状态  如billType字段值为null 传入0  默认为未结    有值情况下为已结
     billType: {
         '0': '未结',
         '1': '已结',
