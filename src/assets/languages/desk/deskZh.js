@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-10-23 00:32:01
+ * @LastEditTime: 2020-10-29 16:27:36
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -264,9 +264,43 @@ module.exports = {
     order_inputProjectName: "请填写项目名称",
     order_inputMoney: "请填写金额",
     order_chooseDate: "请选择日期",
+    order_checkout: "退房结账",
+    order_goTie: "走结",
+    order_addDayPrice: "加收全天房费",
+    order_addHalfPrice: "加收半天房费",
+    order_loosAndCompensation: "损物赔偿",
+    order_consumptionProject: "消费项目",
+    order_theDeposit: "押金",
+    order_businessThat: "业务说明",
+    order_accountingProgram: "账务项目",
+    order_haveAccounts: "已结账务",
+    order_notHaveAccounts: "未结账务",
+    order_allAccounts: "所有账务",
+    order_accountsType: "账务类别",
+    order_payment: "付款",
+    order_expense: "消费",
+    order_accountDeveloped: "正在冲调的账务",
+    order_ifGoTie: "是否确认改为走结？",
+    order_receivable: "应收",
+    order_shouldBack: "应退",
+    order_canDeduction: "可用200积分抵扣20日元",
+    order_mixingWay: "冲调方式",
+    order_completelyAgainst: "完全冲调",
+    order_partCompletely: "部分冲调",
+    order_completelyPrice: "冲调金额",
+    order_attention: "注意：冲调金额小于原账金额",
+    order_completelyReason: "冲调原因",
+    order_ifDelete: "请确认是否删除该项?",
+    order_selectEntryItem: "请选择入账项目",
+    order_pleaseSelectPayWay: "请选择结算方式",
+    order_inputPrice: "请输入金额",
+    order_partComShould: "部分冲调金额不能大于",
+    order_noPeople: "暂无入住人",
+    order_selectOperateAccount: "请选择需要操作的账务",
+    order_onlyOneAccount: "仅能选择一条账务冲调",
+    order_autoTiePrice: "自动计费项目不能冲调",
     order_: "",
     order_: "",
-
     //客户管理（customer）
     customer_openCarmen: '开卡门店',
     customer_developmentWay: '发展途径',

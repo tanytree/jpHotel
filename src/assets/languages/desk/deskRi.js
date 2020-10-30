@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-27 16:24:39
+ * @LastEditTime: 2020-10-30 09:43:02
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -533,6 +533,76 @@ module.exports = {
     home_companyName: '支払会社',
     home_timeInfo: '領収書情報を完成してください',
     book_inputContent: '会員番号/法人番号又は会社、団体名称を入力してください。',
+    order_checkout: "C/O精算",
+    order_goTie: "未収",
+    order_addDayPrice: "宿泊料金追加",
+    order_addHalfPrice: "日帰り料金追加",
+    order_loosAndCompensation: "損害賠償記録master",
+    order_consumptionProject: "利用内容",
+    order_theDeposit: "デポジット",
+    order_businessThat: "業務内容",
+    order_accountingProgram: "会計項目",
+    order_haveAccounts: "支払済",
+    order_notHaveAccounts: "未払",
+    order_allAccounts: "請求内容",
+    order_accountsType: "会計種別",
+    order_payment: "支払い",
+    order_expense: "利用金額",
+    order_accountDeveloped: "相殺調整処理",
+    order_ifGoTie: "「未収」確認",
+    order_receivable: "会計金額",
+    order_shouldBack: "「未収」確認",
+    order_canDeduction: "200ポイントで20元を相殺",
+    order_mixingWay: "相殺方法",
+    order_completelyAgainst: "完全相殺",
+    order_partCompletely: "部分相殺",
+    order_completelyPrice: "相殺金額",
+    order_attention: "注意：相殺金額は請求金額より少なければならない。",
+    order_completelyReason: "相殺理由",
+    order_ifDelete: "該当項目削除、確認",
+    order_selectEntryItem: "入金項目を選択してください",
+    order_pleaseSelectPayWay: "精算方法を選択してください",
+    order_inputPrice: "金額を入力してください",
+    order_partComShould: "　　　より相殺金額は少なければならない。",
+    order_noPeople: "宿泊者が未入力",
+    order_selectOperateAccount: "操作する会計を選択してください",
+    order_onlyOneAccount: "相殺会計は一項目しかできないです",
+    order_autoTiePrice: "自動計上項目は相殺できないです",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

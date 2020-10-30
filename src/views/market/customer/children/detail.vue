@@ -478,7 +478,7 @@
             type="primary"
             @click="addItem('detailForm')"
             v-loading="loading"
-            >{{ $t("commons.save") }}</el-button
+            >{{ $t("commons.save")}}</el-button
           >
           <el-button @click="$router.go(-1)">{{
             $t("commons.back")

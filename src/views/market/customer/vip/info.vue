@@ -5,34 +5,34 @@
         <div class="booking" v-if="showPageType == 'main'">
             <!-- 查询部分 -->
             <el-form class="term" inline size="small" label-width="80px">
-<!--                <el-form-item :label="$t('desk.customer_openCarmen')">-->
-<!--                    <el-select v-model="searchForm.storesNum" class="width150">-->
-<!--                        <el-option-->
-<!--                            :label="$t('desk.home_all')"-->
-<!--                            value-->
-<!--                        ></el-option>-->
-<!--                        <el-option-->
-<!--                            v-for="item in storeList"-->
-<!--                            :key="item.storesNum"-->
-<!--                            :label="item.storesName"-->
-<!--                            :value="item.storesNum"-->
-<!--                        ></el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
-<!--                <el-form-item :label="$t('desk.customer_developmentWay')">-->
-<!--                    <el-select v-model="searchForm.getWay" class="width150">-->
-<!--                        <el-option-->
-<!--                            :label="$t('desk.home_all')"-->
-<!--                            value-->
-<!--                        ></el-option>-->
-<!--                        <el-option-->
-<!--                            v-for="(label, value) in $t('frontOffice.getWay')"-->
-<!--                            :label="label"-->
-<!--                            :value="value"-->
-<!--                            :key="value"-->
-<!--                        ></el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
+                <!--                <el-form-item :label="$t('desk.customer_openCarmen')">-->
+                <!--                    <el-select v-model="searchForm.storesNum" class="width150">-->
+                <!--                        <el-option-->
+                <!--                            :label="$t('desk.home_all')"-->
+                <!--                            value-->
+                <!--                        ></el-option>-->
+                <!--                        <el-option-->
+                <!--                            v-for="item in storeList"-->
+                <!--                            :key="item.storesNum"-->
+                <!--                            :label="item.storesName"-->
+                <!--                            :value="item.storesNum"-->
+                <!--                        ></el-option>-->
+                <!--                    </el-select>-->
+                <!--                </el-form-item>-->
+                <!--                <el-form-item :label="$t('desk.customer_developmentWay')">-->
+                <!--                    <el-select v-model="searchForm.getWay" class="width150">-->
+                <!--                        <el-option-->
+                <!--                            :label="$t('desk.home_all')"-->
+                <!--                            value-->
+                <!--                        ></el-option>-->
+                <!--                        <el-option-->
+                <!--                            v-for="(label, value) in $t('frontOffice.getWay')"-->
+                <!--                            :label="label"-->
+                <!--                            :value="value"-->
+                <!--                            :key="value"-->
+                <!--                        ></el-option>-->
+                <!--                    </el-select>-->
+                <!--                </el-form-item>-->
                 <el-form-item :label="$t('desk.customer_memType')">
                     <el-select
                         v-model="searchForm.memberTypeId"
@@ -56,22 +56,22 @@
                         class="width150"
                     ></el-input>
                 </el-form-item>
-<!--                <el-form-item :label="$t('desk.customer_ifCancellation')">-->
-<!--                    <el-select v-model="searchForm.status" class="width150">-->
-<!--                        <el-option-->
-<!--                            :label="$t('desk.home_all')"-->
-<!--                            value-->
-<!--                        ></el-option>-->
-<!--                        <el-option-->
-<!--                            :label="$t('desk.customer_normal')"-->
-<!--                            value="1"-->
-<!--                        ></el-option>-->
-<!--                        <el-option-->
-<!--                            :label="$t('desk.customer_haveCancellation')"-->
-<!--                            value="2"-->
-<!--                        ></el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
+                <!--                <el-form-item :label="$t('desk.customer_ifCancellation')">-->
+                <!--                    <el-select v-model="searchForm.status" class="width150">-->
+                <!--                        <el-option-->
+                <!--                            :label="$t('desk.home_all')"-->
+                <!--                            value-->
+                <!--                        ></el-option>-->
+                <!--                        <el-option-->
+                <!--                            :label="$t('desk.customer_normal')"-->
+                <!--                            value="1"-->
+                <!--                        ></el-option>-->
+                <!--                        <el-option-->
+                <!--                            :label="$t('desk.customer_haveCancellation')"-->
+                <!--                            value="2"-->
+                <!--                        ></el-option>-->
+                <!--                    </el-select>-->
+                <!--                </el-form-item>-->
                 <el-form-item :label="$t('desk.customer_cardNum')">
                     <el-input
                         v-model="searchForm.memberCard"
@@ -98,25 +98,25 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-<!--                <el-form-item :label="$t('desk.customer_isBlack')">-->
-<!--                    <el-select-->
-<!--                        v-model="searchForm.isBlacklist"-->
-<!--                        class="width150"-->
-<!--                    >-->
-<!--                        <el-option-->
-<!--                            :label="$t('desk.home_all')"-->
-<!--                            value-->
-<!--                        ></el-option>-->
-<!--                        <el-option-->
-<!--                            v-for="(label, value) in $t(-->
-<!--                                'frontOffice.isBlacklist'-->
-<!--                            )"-->
-<!--                            :label="label"-->
-<!--                            :value="value"-->
-<!--                            :key="value"-->
-<!--                        ></el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
+                <!--                <el-form-item :label="$t('desk.customer_isBlack')">-->
+                <!--                    <el-select-->
+                <!--                        v-model="searchForm.isBlacklist"-->
+                <!--                        class="width150"-->
+                <!--                    >-->
+                <!--                        <el-option-->
+                <!--                            :label="$t('desk.home_all')"-->
+                <!--                            value-->
+                <!--                        ></el-option>-->
+                <!--                        <el-option-->
+                <!--                            v-for="(label, value) in $t(-->
+                <!--                                'frontOffice.isBlacklist'-->
+                <!--                            )"-->
+                <!--                            :label="label"-->
+                <!--                            :value="value"-->
+                <!--                            :key="value"-->
+                <!--                        ></el-option>-->
+                <!--                    </el-select>-->
+                <!--                </el-form-item>-->
                 <el-form-item>
                     <el-button
                         type="primary"
@@ -133,8 +133,11 @@
                 </el-form-item>
                 <el-row>
                     <el-form-item>
-<!--                        <el-button plain>{{ $t("desk.customer_readMemCard")}}</el-button>-->
+                        <el-button plain>{{
+                            $t("desk.customer_readMemCard")
+                        }}</el-button>
                         <el-button
+                            v-if="1 == 2"
                             type="primary"
                             class="submit"
                             @click="handleAdd"
@@ -260,29 +263,29 @@
                             v-if="row.state == 2"
                             >{{ $t("desk.customer_restore") }}</el-button
                         >
-<!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
-<!--                            <span class="el-dropdown-link">-->
-<!--                                {{ $t("desk.customer_more") }}-->
-<!--                                <i-->
-<!--                                    class="el-icon-arrow-down el-icon&#45;&#45;right"-->
-<!--                                ></i>-->
-<!--                            </span>-->
-<!--                            <el-dropdown-menu slot="dropdown">-->
-<!--                                <el-dropdown-item-->
-<!--                                    @click.native="chargeCard(row)"-->
-<!--                                    >{{-->
-<!--                                        $t("desk.customer_getCardPri")-->
-<!--                                    }}</el-dropdown-item-->
-<!--                                >-->
-<!--                                <el-dropdown-item-->
-<!--                                    @click.native="handelblacklist(row)"-->
-<!--                                    v-if="row.isBlacklist != 2"-->
-<!--                                    >{{-->
-<!--                                        $t("desk.customer_pullBlack")-->
-<!--                                    }}</el-dropdown-item-->
-<!--                                >-->
-<!--                            </el-dropdown-menu>-->
-<!--                        </el-dropdown>-->
+                        <!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
+                        <!--                            <span class="el-dropdown-link">-->
+                        <!--                                {{ $t("desk.customer_more") }}-->
+                        <!--                                <i-->
+                        <!--                                    class="el-icon-arrow-down el-icon&#45;&#45;right"-->
+                        <!--                                ></i>-->
+                        <!--                            </span>-->
+                        <!--                            <el-dropdown-menu slot="dropdown">-->
+                        <!--                                <el-dropdown-item-->
+                        <!--                                    @click.native="chargeCard(row)"-->
+                        <!--                                    >{{-->
+                        <!--                                        $t("desk.customer_getCardPri")-->
+                        <!--                                    }}</el-dropdown-item-->
+                        <!--                                >-->
+                        <!--                                <el-dropdown-item-->
+                        <!--                                    @click.native="handelblacklist(row)"-->
+                        <!--                                    v-if="row.isBlacklist != 2"-->
+                        <!--                                    >{{-->
+                        <!--                                        $t("desk.customer_pullBlack")-->
+                        <!--                                    }}</el-dropdown-item-->
+                        <!--                                >-->
+                        <!--                            </el-dropdown-menu>-->
+                        <!--                        </el-dropdown>-->
                     </template>
                 </el-table-column>
             </el-table>

@@ -1,8 +1,8 @@
 <template>
     <div class="register-index">
         <div class="body-r">
-            <div class="room-title">{{ $t("login.roomTitle") }}</div>
-            <div class="room-name">{{ $t("login.roomName") }}</div>
+            <div class="room-title">HESTA PMS</div>
+            <img class="logPng" src="~@/assets/images/login/log.png" />
         </div>
         <div
             class="register-body"
@@ -299,6 +299,15 @@ export default {
     letter-spacing: 3px;
     .room-name {
         font-size: 25px;
+    }
+    .room-title {
+        color: rgba(255, 255, 255, 100);
+        font-size: 60px;
+    }
+    .logPng {
+        width: 130px;
+        height: 130px;
+        margin-top: 20px;
     }
 }
 .register-index {

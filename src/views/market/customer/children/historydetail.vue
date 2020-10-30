@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-27 15:38:49
+ * @LastEditTime: 2020-10-29 17:32:02
  * @FilePath: \jiudian\src\views\market\customer\children\historydetail.vue
  -->
 <template>
@@ -173,7 +173,11 @@
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="17" class="col">
-                                            <el-form-item :label="$t('desk.home_note') + ':'">
+                                            <el-form-item
+                                                :label="
+                                                    $t('desk.home_note') + ':'
+                                                "
+                                            >
                                                 <el-input
                                                     v-model="editorForm.remark"
                                                     style="width: 530px"
@@ -272,8 +276,8 @@ export default {
                 this.editorForm,
                 (data) => {
                     this.$message({
-                        message: this.$t("修改成功"),
-                        type: success,
+                        message: "修改成功",
+                        type: "success",
                     });
                 }
             );
