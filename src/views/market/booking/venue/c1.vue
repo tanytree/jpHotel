@@ -73,7 +73,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="单位名称：">
+                        <el-form-item :label="$t('frontOffice.enterpriseName') + ':'">
                             <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>

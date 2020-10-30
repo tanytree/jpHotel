@@ -64,28 +64,18 @@ import {
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
-    props: ['data'],
-    computed: {
-        ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
-        })
-    },
+    // props: ['data'],
+
     data() {
         return {
             loading: false,
             showEdit: false,
             showDetail: false,
             searchForm: {
-                searchType: 1,
-                content: '',
-                enterStatus: '',
+                searchType: 2,
+                orderType: '4',  //订单类型  1在住订单 2今日预离 3历史订单 4走结订单 5反结订单 int选填
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
-                startTime: "", //考试时件
-                endTime: "" //结束时间
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -113,10 +103,7 @@ export default {
                 pageSize: 10, //页数
                 paging: true
             };
-            // this.getDataList();
-
-            this.listTotal = this.data.page.count;
-            this.tableData = this.data.roomPersonList;
+            this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {

@@ -5,34 +5,6 @@
         <div class="booking" v-if="showPageType == 'main'">
             <!-- 查询部分 -->
             <el-form class="term" inline size="small" label-width="80px">
-                <!--                <el-form-item :label="$t('desk.customer_openCarmen')">-->
-                <!--                    <el-select v-model="searchForm.storesNum" class="width150">-->
-                <!--                        <el-option-->
-                <!--                            :label="$t('desk.home_all')"-->
-                <!--                            value-->
-                <!--                        ></el-option>-->
-                <!--                        <el-option-->
-                <!--                            v-for="item in storeList"-->
-                <!--                            :key="item.storesNum"-->
-                <!--                            :label="item.storesName"-->
-                <!--                            :value="item.storesNum"-->
-                <!--                        ></el-option>-->
-                <!--                    </el-select>-->
-                <!--                </el-form-item>-->
-                <!--                <el-form-item :label="$t('desk.customer_developmentWay')">-->
-                <!--                    <el-select v-model="searchForm.getWay" class="width150">-->
-                <!--                        <el-option-->
-                <!--                            :label="$t('desk.home_all')"-->
-                <!--                            value-->
-                <!--                        ></el-option>-->
-                <!--                        <el-option-->
-                <!--                            v-for="(label, value) in $t('frontOffice.getWay')"-->
-                <!--                            :label="label"-->
-                <!--                            :value="value"-->
-                <!--                            :key="value"-->
-                <!--                        ></el-option>-->
-                <!--                    </el-select>-->
-                <!--                </el-form-item>-->
                 <el-form-item :label="$t('desk.customer_memType')">
                     <el-select
                         v-model="searchForm.memberTypeId"

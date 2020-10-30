@@ -112,7 +112,7 @@
         size="mini"
         label-width="100px"
       >
-        <p>正在冲调的账务</p>
+<!--        <p>正在冲调的账务</p>-->
         <el-table
           v-loading="loading"
           :data="destructionList"
@@ -457,7 +457,6 @@ export default {
 
       //订金，退订金
       if (type == 1 || type == 2) {
-        console.log("这是交定金：" + params.priceType);
         //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
         params.state = 2;
         if (!params.priceType) {
@@ -488,10 +487,11 @@ export default {
         //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
         params.state = 2;
         params.payType == 0;
-        if (params.consumePrice > 0 || params.consumePrice == 0) {
-          this.$message.error("请输入为负数金额");
-          return;
-        }
+          params.consumePrice = -params.consumePrice;
+        // if (params.consumePrice > 0 || params.consumePrice == 0) {
+        //   this.$message.error("请输入为负数金额");
+        //   return;
+        // }
       }
 
       this.$refs[formName].validate((valid) => {
@@ -503,6 +503,7 @@ export default {
             (res) => {
               this.depositShow = false;
               this.refundShow = false;
+              this.destructionShow = false;
               this.consume_order_list();
             }
           );
@@ -526,10 +527,15 @@ export default {
           this.$message.error("自动计费项目不能冲调");
           return;
         }
+        if (this.multipleSelection[k].consumePrice < 0) {
+          this.$message.error("冲调中的财务不能再冲调");
+          return;
+        }
       }
       this.destructionList = this.multipleSelection;
-      this.destructionShow = true;
-      this.$forceUpdate();
+      this.consumeOperForm.priceType = 9;
+        this.destructionShow = true;
+        this.$forceUpdate();
     },
     /**多选 */
     handleSelectionChange(val) {

@@ -34,7 +34,7 @@
                     <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="retailPrice" :label="$t('manager.grsl_defaultTetailPrice')"></el-table-column>
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costPrice')"></el-table-column>
-                    <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>
+<!--                    <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>-->
                     <el-table-column :label="$t('commons.operating')" width="350">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
@@ -129,9 +129,9 @@
                     <el-form-item prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')">
                         <el-input v-model="rowData.buyCount" class="row-width"></el-input>
                     </el-form-item>-->
-                    <el-form-item class="cost" prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')">
-                        <el-input v-model="rowData.inventoryWarning" class="row-width"></el-input>
-                    </el-form-item>
+<!--                    <el-form-item class="cost" prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')">-->
+<!--                        <el-input v-model="rowData.inventoryWarning" class="row-width"></el-input>-->
+<!--                    </el-form-item>-->
                 </el-form>
             </div>
 
@@ -171,7 +171,7 @@
                     costPrice: "",
                     // employeePrice: "",
                     buyCount: "0",
-                    inventoryWarning: "",
+                    inventoryWarning: "1000",
                     categoryType: 1,
                     priceModel: 1,
                     priceStartMinute: '',

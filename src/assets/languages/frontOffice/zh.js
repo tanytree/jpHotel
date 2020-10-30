@@ -5,11 +5,18 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
+
+    enterpriseName: '单位名称',
+    enterpriseMobile: '单位号码',
+    enterpriseAddress: '单位地址',
     cancelRoomKeep: '取消预留',
     checkInfoDesc: '入住信息',
     chooseRoomType: '请选择房型',
     saveGoon: '保存后继续办理入住预定',
     nightAudit: {
+        auditSuggest: '！建议夜审前处理以下业务',
+        auditTip: '您确定要夜审吗？一旦夜审无法撤回',
+        audit: '夜审',
         reservationNumber: '预定单号',
         checkInTime: '入住时间',
         arriveTime: '到店时间',

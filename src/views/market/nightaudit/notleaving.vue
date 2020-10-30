@@ -67,7 +67,7 @@ import myMixin from "@/utils/filterMixin";
 
 export default {
     mixins: [myMixin],
-    props: ['data'],
+    // props: ['data'],
     data() {
         return {
             loading: false,
@@ -102,13 +102,11 @@ export default {
                 name: "",
                 searchType: 2,
                 outType: 1,
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
+                pageIndex: 1,
+                pageSize: 10,
                 paging: true,
             };
-            // this.getDataList();
-            this.listTotal = this.data.page.count;
-            this.tableData = this.data.roomPersonList;
+            this.getDataList();
         },
         /**获取表格数据 */
         getDataList() {

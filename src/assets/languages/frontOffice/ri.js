@@ -5,11 +5,17 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
+    enterpriseName: '会社名',
+    enterpriseMobile: 'たんい番号',
+    enterpriseAddress: 'ユニットアドレス',
     cancelRoomKeep: '仮押さえ取り消し',
     checkInfoDesc: '入居情報',
     saveGoon: '保存及び次の予約へ',
     chooseRoomType: '部屋タイプを選択してください',
     nightAudit: {
+        auditSuggest: '！締め前に下記業務をご確認ください。',
+        auditTip: '日時更新を実行しますか？一度、実行しますと、修正ができなくなります。',
+        audit: '日時更新',
         reservationNumber: '予約番号',
         checkInTime: '到着時間',
         arriveTime: '到着予定',

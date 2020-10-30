@@ -24,7 +24,7 @@
                     <div class="components-edit">
                         <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
                             <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                            <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>
+<!--                            <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>-->
                             <el-table-column prop="inventoryCount" :label="$t('manager.grsl_inventoryNum')"></el-table-column>
                             <el-table-column :label="$t('commons.operating')" width="100">
                                 <template slot-scope="scope">

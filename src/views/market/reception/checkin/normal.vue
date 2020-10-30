@@ -340,7 +340,7 @@
                     <el-form-item label="会议名称：" prop="meetingName">
                         <el-input v-model="checkInForm.meetingName"></el-input>
                     </el-form-item>
-                    <el-form-item label="单位名称：" prop="enterName">
+                    <el-form-item  :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">
                         <el-input v-model="checkInForm.enterName"></el-input>
                     </el-form-item>
                 </template>
@@ -1025,7 +1025,7 @@ export default {
             roomList: [], //表格数据
             waitingRoom: [],
             rowRoomCurrentItem: "",
-            rowRoomCurrentList: "",
+            rowRoomCurrentList: [],
 
             hotelRoomListParams: {
                 buildingId: "",
@@ -1418,7 +1418,11 @@ export default {
             this.rowRoomCurrentIndex = index;
             this.hotelRoomListParams.roomTypeId = item.roomTypeId;
             this.rowRoomShow = true;
-            this.hotel_room_list();
+            let params = {
+                rowHousesTotal: item.reserveTotal,
+                roomTypeId: item.roomTypeId
+            };
+            this.hotel_room_list(params);
         },
 
         //计费规则时租房计费列表
@@ -1450,7 +1454,7 @@ export default {
             );
         },
         //获取可排房的房间
-        hotel_room_list() {
+        hotel_room_list(object) {
             let params = Object.assign({}, this.hotelRoomListParams);
             params.roadFlag !== "" &&
                 (params.roadFlag = params.roadFlag ? 1 : "");
@@ -1462,12 +1466,19 @@ export default {
                 (params.noiseFlag = params.noiseFlag ? 1 : "");
             params.temperatureFlag !== "" &&
                 (params.temperatureFlag = params.temperatureFlag ? 1 : "");
+            this.$F.merge(params, object || {});
             this.$F.doRequest(
                 this,
-                "/pms/hotel/hotel_room_list",
+                // "/pms/hotel/hotel_room_list",
+                "/pms/checkin/empty_row_houses",
                 params,
                 (res) => {
-                    this.rowRoomCurrentList = res.list;
+                    this.rowRoomCurrentList = [];
+                    if (res) {
+                        for(let id in res) {
+                            this.rowRoomCurrentList = this.rowRoomCurrentList.concat(res[id]);
+                        }
+                    }
                 }
             );
         },
@@ -1520,6 +1531,7 @@ export default {
                     }
                 }
             });
+            debugger
             if (numbers.length < 1) return;
             let params = {
                 checkinRoomType: 1,

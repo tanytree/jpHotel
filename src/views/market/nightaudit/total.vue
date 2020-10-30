@@ -8,37 +8,37 @@
 <template>
 <!-- 统一的列表格式 -->
 <div class="boss-index">
-    <el-card class="box-card">
+    <el-card class="box-card" v-loading="nightAuditShow" >
         <div slot="header" class="clearfix">
-            <span>建议夜审前处理以下业务</span>
+            <span>{{ $t('frontOffice.nightAudit.auditSuggest') }}</span>
 <!--            <el-button style="float: right; padding: 3px 0" type="text" @click="recordShow=true">夜审记录</el-button>-->
         </div>
         <div class="row">
             <div class="grid-content">
-                <el-badge :value="totalObject.notyetCount" class="item">
+                <el-badge :value="totalObject.gosettleCount" class="item">
                     <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notyet')"> {{$t('desk.nightAudit.notyet')}} </el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
-                <el-badge :value="totalObject.notLivingCount" class="item">
+                <el-badge :value="totalObject.nocheckinCount" class="item">
                     <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notleaving')">{{$t('desk.nightAudit.notleaving')}}</el-button>
                 </el-badge>
             </div>
             <div class="grid-content">
-                <el-badge :value="totalObject.leaveCount" class="item">
+                <el-badge :value="totalObject.pretrialCount" class="item">
                     <el-button size="small" icon="el-icon-document" @click="setCurrentItem('leave')">{{$t('desk.nightAudit.leave')}}</el-button>
                 </el-badge>
             </div>
-            <div class="grid-content">
-                <el-badge :value="totalObject.verifyCount" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('verify')">{{$t('desk.nightAudit.verify')}}</el-button>
-                </el-badge>
-            </div>
+<!--            <div class="grid-content">-->
+<!--                <el-badge :value="totalObject.nocheckoutCount" class="item">-->
+<!--                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('verify')">{{$t('desk.nightAudit.verify')}}</el-button>-->
+<!--                </el-badge>-->
+<!--            </div>-->
         </div>
     </el-card>
-<!--    <div class="box-card">-->
-<!--        <el-button type="primary" class="submit">夜审</el-button>-->
-<!--    </div>-->
+    <div class="box-card">
+        <el-button type="primary" class="submit" @click="nightAudit">{{ $t('frontOffice.nightAudit.audit') }}</el-button>
+    </div>
     <el-dialog top="0" :visible.sync="recordShow" title="选择企业" width="600px" class="dialogCom">
  <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
@@ -63,19 +63,18 @@ import {
     mapActions
 } from "vuex";
 export default {
-    props: ['totalObject'],
-    computed: {
-        ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
-        })
-    },
+    // props: ['totalObject'],
     data() {
         return {
+            nightAuditShow: false,
             loading: false,
             recordShow:false,
+            totalObject: {
+                "gosettleCount": 1,    //应到未到
+                "nocheckinCount": 1, //应离未离
+                "pretrialCount": 1,  //走结数量
+                "nocheckoutCount": 1  //预审订单
+            },
             searchForm: {
                 searchType: 1,
                 content: '',
@@ -91,9 +90,34 @@ export default {
         };
     },
     mounted() {
-        // this.initForm();
+        this.initForm();
     },
     methods: {
+        nightAudit() {
+            this.$confirm( this.$t('frontOffice.nightAudit.auditTip'), this.$t('food.common.tip'), {
+                confirmButtonText: this.$t('food.common.ok'),
+                cancelButtonText: this.$t('food.common.cancel'),
+                type: 'warning'
+            }).then(() => {
+                this.nightAuditShow = true;
+                this.$F.doRequest(this, "/pms/night/audit", {}, (res) => {
+                    setTimeout(() => {
+                        this.nightAuditShow = false;
+                        this.$message({
+                            message: this.$t("commons.request_success"),
+                            type: "success",
+                        });
+                    }, 3000)
+                }, res => {
+                    this.nightAuditShow = false;
+                    if (res.code == 406) {
+                        this.$message.error(res.message)
+                    }
+
+                });
+
+            })
+        },
         initForm() {
             this.searchForm = {
                 searchType: 1,
@@ -108,18 +132,22 @@ export default {
         },
         /**获取表格数据 */
         getDataList() {
-            this.searchForm.token = this.token
-            this.searchForm.plat_source = this.plat_source
-            this.searchForm.userId = this.userId
-            console.log(JSON.stringify(this.searchForm))
-            this.loading = true;
-            enterprise_list(this.searchForm).then(res => {
-                this.loading = false
-                if (res.code == 200) {
-                    this.tableData = res.data;
-                    this.listTotal = res.data.total;
+            this.$F.doRequest(
+                this,
+                "/pms/night/audit_count",
+                {
+                    searchType: 1,
+                    content: "",
+                    enterStatus: "",
+                    pageIndex: 1, //当前页
+                    pageSize: 10, //页数
+                    startTime: "", //考试时件
+                    endTime: "", //结束时间
+                },
+                (res) => {
+                    this.totalObject = res;
                 }
-            });
+            );
         },
         setCurrentItem(v) {
             this.$emit('getCurrentItem', v)

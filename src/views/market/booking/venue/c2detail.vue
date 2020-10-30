@@ -81,7 +81,7 @@
                 >
               </el-col>
               <el-col :span="7">
-                <el-form-item label="单位名称：">{{
+                <el-form-item  :label="$t('frontOffice.enterpriseName') + ':'">{{
                   checkIn.enterName
                 }}</el-form-item>
               </el-col>

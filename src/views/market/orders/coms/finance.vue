@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-29 15:42:41
- * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
+ * @LastEditors: 董林
+ * @LastEditTime: 2020-08-18 15:07:25
+ * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
  -->
 <template>
     <div class="finance">
@@ -10,53 +10,16 @@
         <el-form inline size="small">
             <el-row>
                 <el-form-item label="">
-                    <el-button
-                        type="primary"
-                        size="mini"
-                        @click="entryShow = true"
-                        >{{ $t("desk.enterAccount") }}</el-button
-                    >
-                    <el-button
-                        type="primary"
-                        size="mini"
-                        @click="onAccountShow = true"
-                        >{{ $t("desk.charge") }}</el-button
-                    >
-                    <el-button
-                        type="primary"
-                        size="mini"
-                        @click="consumeGoodsHandle"
-                        >{{ $t("desk.serve_miniPub") }}</el-button
-                    >
-                    <el-button
-                        type="primary"
-                        size="mini"
-                        @click="checkOutHandle"
-                        >{{ $t("desk.order_checkout") }}</el-button
-                    >
-                    <el-button
-                        type="primary"
-                        size="mini"
-                        @click="invoicingHandle"
-                        >{{ $t("desk.order_invoice") }}</el-button
-                    >
+                    <el-button type="primary" size="mini" @click="entryShow=true">{{$t('desk.enterAccount')}}</el-button>
+                    <el-button type="primary" size="mini" @click="onAccountShow=true">{{ $t('desk.charge') }}</el-button>
+                    <el-button type="primary" size="mini" @click="consumeGoodsHandle">{{ $t('desk.serve_miniPub') }}</el-button>
+                    <el-button type="primary" size="mini" @click="checkOutHandle">{{ $t("desk.order_checkout") }}</el-button>
+                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
                     <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
-                    <el-button
-                        type="primary"
-                        size="mini"
-                        @click="destructionHandle"
-                        >{{ $t("desk.customer_rich") }}</el-button
-                    >
+                    <el-button type="primary" size="mini" @click="destructionHandle">{{$t('desk.customer_rich')}}</el-button>
                     <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
-                    <el-button type="primary" size="mini">{{
-                        $t("desk.customer_undoCheckout")
-                    }}</el-button>
-                    <el-button
-                        type="primary"
-                        size="mini"
-                        @click="knotShow = true"
-                        >{{ $t("desk.order_goTie") }}</el-button
-                    >
+                    <el-button type="primary" size="mini">{{$t("desk.customer_undoCheckout")}}</el-button>
+                    <el-button type="primary" size="mini" @click="knotShow=true">{{ $t("desk.order_goTie") }}</el-button>
                 </el-form-item>
             </el-row>
             <el-form-item  :label="$t('desk.order_accountsType')+':'">
@@ -64,19 +27,19 @@
                     :type="searchForm.state == '' ? 'primary' : ''"
                     size="mini"
                     @click="consume_order_list('')"
-                    >{{$t('desk.order_allAccounts')}}</el-button
+                >{{$t('desk.order_allAccounts')}}</el-button
                 >
                 <el-button
                     :type="searchForm.state == '1' ? 'primary' : ''"
                     size="mini"
                     @click="consume_order_list(1)"
-                    >{{$t('desk.order_notHaveAccounts')}}</el-button
+                >{{$t('desk.order_notHaveAccounts')}}</el-button
                 >
                 <el-button
                     :type="searchForm.state == '2' ? 'primary' : ''"
                     size="mini"
                     @click="consume_order_list(2)"
-                    >{{$t('desk.order_haveAccounts')}}</el-button
+                >{{$t('desk.order_haveAccounts')}}</el-button
                 >
             </el-form-item>
             <!--        <el-form-item class="fr">-->
@@ -348,9 +311,7 @@
                 <el-row v-else>
                     <template v-if="detailData && detailData.inRoomList">
                         <el-col :span="8">
-                            {{ $t("desk.home_roomType") }}：{{
-                                detailData.inRoomList[0].roomTypeName
-                            }}
+                            {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
                         </el-col>
                         <el-col :span="8">
                             {{ $t("desk.home_roomNum") }}：{{
@@ -451,64 +412,18 @@
                             currentRoom.personList[0].name
                         }}
                     </el-col>
-<<<<<<< Updated upstream
-                </template>
-            </el-row>
-            <br />
-            <el-form-item label="" class="">
-                <p>是否确认改为走结？</p>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="knotShow=false">关闭</el-button>
-            <el-button type="primary" @click="out_check_in">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog>
-    <!--开发票-->
-
-    <!--结账退款-->
-    <el-dialog top='0' title="退房结账" :visible.sync="checkOutShow" width="800px">
-        <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
-            <el-row v-if="currentRoom">
-                <el-col :span="8">
-                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                </el-col>
-                <el-col :span="8">
-                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
-                </el-col>
-                <el-col :span="8">
-                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
-                </el-col>
-            </el-row>
-            <br />
-            <div class="cost margin-t-10" v-if="detailData">
-                <div class="wrap" style="background:#efefef">
-                    <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
-                    <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
-                    <div class="costNum">
-                        <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
-                        <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
-=======
                 </el-row>
                 <el-row v-else>
-                    <template v-if="detailData && detailData.inRoomList">
+                    <template v-if="detailData&&detailData.inRoomList">
                         <el-col :span="8">
-                            {{ $t("desk.home_roomType") }}：{{
-                                detailData.inRoomList[0].roomTypeName
-                            }}
+                            {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
                         </el-col>
                         <el-col :span="8">
-                            {{ $t("desk.home_roomNum") }}：{{
-                                detailData.inRoomList[0].houseNum
-                            }}
+                            {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
                         </el-col>
                         <el-col :span="8">
-                            {{$t('desk.customer_livePeople')+':'}}{{
-                                detailData.inRoomList &&
-                                detailData.inRoomList[0] &&
-                                detailData.inRoomList[0].personList &&
-                                detailData.inRoomList[0].personList[0].name
-                            }}
+                            入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList
+                        && detailData.inRoomList[0].personList[0].name}}
                         </el-col>
                     </template>
                 </el-row>
@@ -519,11 +434,11 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="knotShow = false">{{
-                    $t("commons.close")
-                }}</el-button>
+                        $t("commons.close")
+                    }}</el-button>
                 <el-button type="primary" @click="out_check_in">{{
-                    $t("commons.confirm")
-                }}</el-button>
+                        $t("commons.confirm")
+                    }}</el-button>
             </div>
         </el-dialog>
         <!--开发票-->
@@ -554,7 +469,7 @@
                         }}
                     </el-col>
                     <el-col :span="8">
-                       {{$t('desk.customer_livePeople')+':'}}{{
+                        {{$t('desk.customer_livePeople')+':'}}{{
                             currentRoom.personList &&
                             currentRoom.personList[0] &&
                             currentRoom.personList[0].name
@@ -565,47 +480,40 @@
                 <div class="cost margin-t-10" v-if="detailData">
                     <div class="wrap" style="background: #efefef">
                         <span class="fee" v-if="detailData.totalPrice > 0"
-                            >{{$t('desk.order_receivable')+':'}}{{ detailData.totalPrice }}</span
+                        >{{$t('desk.order_receivable')+':'}}{{ detailData.totalPrice }}</span
                         >
                         <span class="fee" v-if="detailData.totalPrice < 0"
-                            >{{$t('desk.order_shouldBack')+':'}}{{ detailData.totalPrice }}</span
+                        >{{$t('desk.order_shouldBack')+':'}}{{ detailData.totalPrice }}</span
                         >
                         <div class="costNum">
                             <el-row
-                                >{{ $t("desk.consumerTotal") }}：<span
-                                    class="text-red"
-                                    >{{ detailData.consumePrice }}</span
-                                ></el-row
+                            >{{ $t("desk.consumerTotal") }}：<span
+                                class="text-red"
+                            >{{ detailData.consumePrice }}</span
+                            ></el-row
                             >
                             <el-row
-                                >{{ $t("desk.payTotal") }}：<span
-                                    class="text-green"
-                                    >{{ detailData.payPrice }}</span
-                                ></el-row
+                            >{{ $t("desk.payTotal") }}：<span
+                                class="text-green"
+                            >{{ detailData.payPrice }}</span
+                            ></el-row
                             >
                         </div>
->>>>>>> Stashed changes
                     </div>
                 </div>
                 <br />
-                <el-form-item label="" label-width="0">
-                    <el-checkbox v-model="consumeOperForm.isPoints"
-                        >{{ $t("desk.order_canDeduction") }}</el-checkbox
-                    >
-                </el-form-item>
-                <el-form-item
-                    :label="$t('desk.customer_paymentMethod') + ':'"
-                    prop="payType"
-                    v-if="detailData.totalPrice > 0"
-                >
+                <!-- <el-form-item label="" label-width="0">
+                     <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
+                 </el-form-item> -->
+                <!-- <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
                     <el-radio-group v-model="consumeOperForm.payType">
-                        <el-radio :label="1" :value="1">{{$t('desk.serve_cash')}}</el-radio>
-                        <el-radio :label="2" :value="2">{{$t('desk.customer_bankCard')}}</el-radio>
-                        <el-radio :label="3" :value="3">{{$t('desk.serve_alipay')}}</el-radio>
-                        <el-radio :label="4" :value="4">{{$t('desk.serve_wechat')}}</el-radio>
-                        <el-radio :label="5" :value="5">{{$t('desk.order_memCard')}}</el-radio>
+                        <el-radio :label="1" :value="1">现金</el-radio>
+                        <el-radio :label="2" :value="2">银行卡</el-radio>
+                        <el-radio :label="3" :value="3">支付宝</el-radio>
+                        <el-radio :label="4" :value="4">微信</el-radio>
+                        <el-radio :label="5" :value="5">会员卡</el-radio>
                     </el-radio-group>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
                     <el-input
                         class="width200"
@@ -628,58 +536,12 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="checkOutShow = false">{{
-                    $t("commons.close")
-                }}</el-button>
+                        $t("commons.close")
+                    }}</el-button>
                 <el-button type="primary" @click="set_out_check_in">{{
-                    $t("commons.confirm")
-                }}</el-button>
+                        $t("commons.confirm")
+                    }}</el-button>
             </div>
-<<<<<<< Updated upstream
-            <br />
-           <!-- <el-form-item label="" label-width="0">
-                <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
-            </el-form-item> -->
-            <!-- <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
-                <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio :label="1" :value="1">现金</el-radio>
-                    <el-radio :label="2" :value="2">银行卡</el-radio>
-                    <el-radio :label="3" :value="3">支付宝</el-radio>
-                    <el-radio :label="4" :value="4">微信</el-radio>
-                    <el-radio :label="5" :value="5">会员卡</el-radio>
-                </el-radio-group>
-            </el-form-item> -->
-            <el-form-item label="金额：" class="" prop="consumePrice">
-                <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('desk.home_note') + ':'">
-                <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
-            </el-form-item>
-<!--            <el-form-item label="打印单据：">-->
-<!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
-<!--            </el-form-item>-->
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="checkOutShow=false">关闭</el-button>
-            <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog>
-    <!--冲调-->
-    <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow"width="800px">
-        <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
-            <el-row v-if="currentRoom">
-                <el-col :span="8">
-                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                </el-col>
-                <el-col :span="8">
-                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
-                </el-col>
-                <el-col :span="8">
-                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
-                </el-col>
-            </el-row>
-            <el-row v-else>
-                <template v-if="detailData&&detailData.inRoomList">
-=======
         </el-dialog>
         <!--冲调-->
         <el-dialog
@@ -696,7 +558,6 @@
                 label-width="100px"
             >
                 <el-row v-if="currentRoom">
->>>>>>> Stashed changes
                     <el-col :span="8">
                         {{ $t("desk.home_roomType") }}：{{
                             currentRoom.roomTypeName
@@ -728,7 +589,7 @@
                             }}
                         </el-col>
                         <el-col :span="8">
-                           {{$t('desk.customer_livePeople')+':'}}{{
+                            {{$t('desk.customer_livePeople')+':'}}{{
                                 detailData.inRoomList &&
                                 detailData.inRoomList[0] &&
                                 detailData.inRoomList[0].personList &&
@@ -738,7 +599,7 @@
                     </template>
                 </el-row>
                 <br />
-                <p> {{$t('desk.order_accountDeveloped')}}</p>
+<!--                <p> {{$t('desk.order_accountDeveloped')}}</p>-->
                 <el-table
                     v-loading="loading"
                     :data="destructionList"
@@ -847,97 +708,25 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import myMixin from "@/utils/filterMixin";
-import consumeGoods from "./consumeGoods";
-import someAccounts from "./someAccounts";
-import invoicing from "./invoicing";
+import {
+    mapState,
+    mapActions
+} from "vuex";
+import myMixin from '@/utils/filterMixin';
+import consumeGoods from './consumeGoods'
+import someAccounts from './someAccounts'
+import invoicing from './invoicing'
 export default {
     mixins: [myMixin],
-    props: ["currentRoomId", "detailData"],
+    props: ['currentRoomId', 'detailData'],
     components: {
         consumeGoods,
         someAccounts,
-        invoicing,
+        invoicing
     },
     computed: {
-        ...mapState({}),
-        rules() {
-            return {
-                consumePrice: [
-                    {
-                        required: true,
-                        // message: '请输入金额',
-                        message: this.$t("commons.mustInput"),
-                        trigger: "blur",
-                    },
-                ],
-                creditName: [
-                    {
-                        required: true,
-                        message: this.$t("commons.placeChoose"),
-                        // message: '请选择挂账公司',
-                        trigger: "blur",
-                    },
-                ],
-                companyName: [
-                    {
-                        required: true,
-                        // message: '请输入付款公司名称',
-                        message: this.$t("commons.mustInput"),
-                        trigger: "blur",
-                    },
-                ],
-                projectName: [
-                    {
-                        required: true,
-                        // message: '请输入项目名称',
-                        message: this.$t("commons.mustInput"),
-                        trigger: "blur",
-                    },
-                ],
-                invoiceTime: [
-                    {
-                        required: true,
-                        message: this.$t("commons.placeChoose"),
-                        // message: '请选择开票日期',
-                        trigger: "blur",
-                    },
-                ],
-                prices: [
-                    {
-                        required: true,
-                        // message: '请输入金额',
-                        message: this.$t("commons.mustInput"),
-                        trigger: "blur",
-                    },
-                ],
-                payType: [
-                    {
-                        required: true,
-                        message: this.$t("commons.placeChoose"),
-                        // message: '请选择支付方式',
-                        trigger: "change",
-                    },
-                ],
-                priceType: [
-                    {
-                        required: true,
-                        message: this.$t("commons.placeChoose"),
-                        // message: '请选择冲调方式',
-                        trigger: "change",
-                    },
-                ],
-                remark: [
-                    {
-                        required: true,
-                        // message: '请输入备注',
-                        message: this.$t("commons.mustInput"),
-                        trigger: "blur",
-                    },
-                ],
-            };
-        },
+        ...mapState({
+        })
     },
     data() {
         return {
@@ -952,38 +741,95 @@ export default {
             destructionShow: false,
             someAccountsShow: false,
             consumeGoodsShow: false,
-            checkType: "customer",
-            activeName: "first",
+            checkType: 'customer',
+            activeName: 'first',
             detail: {
-                text: "",
+                text: ''
             },
             searchForm: {
-                state: "",
-                checkInId: "",
+                state: '',
+                checkInId: '',
                 pageIndex: 1,
-                pageSize: 10,
+                pageSize: 10
             },
             consumeOperForm: {
-                consumePrice: "",
-                payPrice: "",
-                priceType: "",
-                payType: "",
-                name: "",
+                consumePrice: '',
+                payPrice:'',
+                priceType: '',
+                payType: '',
+                name: '',
             },
             openInvoiceForm: {
-                roomNum: "",
-                name: "",
-                checkInId: "",
-                mobile: "",
-                consumePrice: "",
-                prices: "",
-                invoicePrice: "",
-                companyName: "",
-                projectName: "",
-                invoiceTime: "",
-                remark: "",
-                invoiceId: "",
-                isPoints: false,
+                roomNum: '',
+                name: '',
+                checkInId: '',
+                mobile: '',
+                consumePrice: '',
+                prices: '',
+                invoicePrice: '',
+                companyName: '',
+                projectName: '',
+                invoiceTime: '',
+                remark: '',
+                invoiceId: '',
+                isPoints:false
+            },
+            rules: {
+                consumePrice: [{
+                    required: true,
+                    // message: '请输入金额',
+                    message: this.$t('commons.mustInput'),
+                    trigger: 'blur'
+                }, ],
+                creditName: [{
+                    required: true,
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择挂账公司',
+                    trigger: 'blur'
+                }, ],
+                companyName: [{
+                    required: true,
+                    // message: '请输入付款公司名称',
+                    message: this.$t('commons.mustInput'),
+                    trigger: 'blur'
+                }, ],
+                projectName: [{
+                    required: true,
+                    // message: '请输入项目名称',
+                    message: this.$t('commons.mustInput'),
+                    trigger: 'blur'
+                }, ],
+                invoiceTime: [{
+                    required: true,
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择开票日期',
+                    trigger: 'blur'
+                }, ],
+                prices: [{
+                    required: true,
+                    // message: '请输入金额',
+                    message: this.$t('commons.mustInput'),
+                    trigger: 'blur'
+                }, ],
+                payType: [{
+                    required: true,
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择支付方式',
+                    trigger: 'change'
+                }, ],
+                priceType: [{
+                    required: true,
+                    message: this.$t('commons.placeChoose'),
+                    // message: '请选择冲调方式',
+                    trigger: 'change'
+                }, ],
+                remark: [{
+                    required: true,
+                    // message: '请输入备注',
+                    message: this.$t('commons.mustInput'),
+                    trigger: 'blur'
+                },
+                ],
             },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
@@ -993,70 +839,59 @@ export default {
             hotelenterList: [], //挂账企业列表
             destructionList: [], //冲调的账务
             currentRoom: {
-                personList: [],
-            },
+                personList: []
+            }
         };
     },
 
     created() {
-        console.log(this.currentRoomId);
+
+        console.log(this.currentRoomId)
         if (this.currentRoomId) {
-            this.currentRoom = this.detailData.inRoomList.filter((item) => {
-                return item.id == this.currentRoomId;
+            this.currentRoom = this.detailData.inRoomList.filter(item=>{
+                return item.id == this.currentRoomId
             })[0];
         }
 
-        console.log(this.currentRoom);
+        console.log(this.currentRoom)
     },
 
     mounted() {
         let id = this.$route.query.id;
 
-        this.consume_order_list(1);
-        this.hoteldamagetype_list();
-        this.hotelenter_list();
+        this.consume_order_list(1)
+        this.hoteldamagetype_list()
+        this.hotelenter_list()
     },
 
     methods: {
         consume_order_list(state) {
-            this.searchForm.state = state || "";
+            this.searchForm.state = state || '';
             this.searchForm.checkInId = this.$route.query.id;
-            this.$F.doRequest(
-                this,
-                "/pms/consume/consume_order_list",
-                this.searchForm,
-                (res) => {
-                    this.tableData = res.consumeOrderList;
-                    this.listTotal = (res.page || {}).count || 0;
-                    this.$forceUpdate();
-                }
-            );
+            this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
+                this.tableData = res.consumeOrderList
+                this.listTotal = (res.page || {}).count || 0
+                this.$forceUpdate()
+            })
         },
         consume_move(item) {
             let params = {
-                orderId: item.id,
+                orderId: item.id
             };
             this.$confirm(this.$t('desk.order_ifDelete'), this.$t("commons.tip_desc"), {
-                confirmButtonText: this.$t("commons.confirm"),
-                cancelButtonText: this.$t("commons.cancel"),
-                type: "warning",
-            })
-                .then(() => {
-                    this.$F.doRequest(
-                        this,
-                        "/pms/consume/consume_move",
-                        params,
-                        (res) => {
-                            this.$message({
-                                type: "success",
-                                message: this.$t("commons.request_success"),
-                            });
-                            this.consume_order_list();
-                            this.getOrderDetail();
-                        }
-                    );
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, '/pms/consume/consume_move', params, (res) => {
+                    this.$message({
+                        type: 'success',
+                        message: this.$t('commons.request_success'),
+                    });
+                    this.consume_order_list()
+                    this.getOrderDetail();
                 })
-                .catch(() => {});
+            }).catch(() => {});
         },
         consume_oper(type, formName) {
             /**
@@ -1066,17 +901,17 @@ export default {
              *
              * **/
 
-            let params = this.consumeOperForm;
+            let params = this.consumeOperForm
             // params.orderId = this.$route.query.id
 
-            params.checkInId = this.$route.query.id;
+            params.checkInId = this.$route.query.id
             if (this.currentRoomId) {
                 params.roomId = this.currentRoom.id;
-                params.roomNum = this.currentRoom.houseNum;
+                params.roomNum = this.currentRoom.houseNum
             } else {
                 if (this.detailData.inRoomList.length > 0) {
                     params.roomId = this.detailData.inRoomList[0].id;
-                    params.roomNum = this.detailData.inRoomList[0].houseNum;
+                    params.roomNum = this.detailData.inRoomList[0].houseNum
                 }
             }
 
@@ -1103,46 +938,41 @@ export default {
                         return;
                     }
 
-                    if (
-                        params.priceType == 5 ||
-                        params.priceType == 6 ||
-                        params.priceType == 7
-                    ) {
-                        params.payType = 0;
+                    if(params.priceType == 5 || params.priceType == 6 || params.priceType == 7 ){
+                        params.payType = 0
                     }
                 }
+
             }
+
+
 
             //挂账
             if (type == 2) {
-                params.priceType = 13;
-                params.payType = 0; //挂账无需支付方式
-                params.state = 1;
-                params.payPrice = this.consumeOperForm.payPrice;
+                params.priceType = 13
+                params.payType = 0 //挂账无需支付方式
+                params.state = 1
+                params.payPrice =  this.consumeOperForm.payPrice
 
-                console.log(params);
+                console.log(params)
             }
+
+
 
             //冲调
             if (type == 3) {
-                params.state = this.destructionList[0].state;
-                params.payType = 0; //挂账无需支付方式
+
+                params.state = this.destructionList[0].state
+                params.payType = 0 //挂账无需支付方式
                 // params.orderId = this.destructionList[0].id
-                if (
-                    parseFloat(this.consumeOperForm.consumePrice) >
-                    parseFloat(this.destructionList[0].payPrice)
-                ) {
-                    this.$message.error(
-                        this.$t('desk.order_partComShould') +
-                            parseFloat(this.destructionList[0].payPrice)
-                    );
+                if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
+                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
                     return;
                 }
-                params.consumePrice = "-" + this.consumeOperForm.consumePrice;
+                params.consumePrice = '-' + this.consumeOperForm.consumePrice
             }
 
             //退房结账
-<<<<<<< Updated upstream
             // if (type == 4) {
             //     params.state = 2
             //     if(params.consumePrice<0){
@@ -1156,44 +986,24 @@ export default {
             //         params.scoresPrice = ''
             //     }
             // }
-=======
-            if (type == 4) {
-                params.state = 2;
-                if (params.consumePrice < 0) {
-                    params.payType = 0;
-                }
-                if (params.isPoints) {
-                    params.scoresDiscount = 200;
-                    params.scoresPrice = 20;
-                } else {
-                    params.scoresDiscount = "";
-                    params.scoresPrice = "";
-                }
-            }
->>>>>>> Stashed changes
 
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    this.$F.doRequest(
-                        this,
-                        "/pms/consume/consume_oper",
-                        params,
-                        (res) => {
-                            this.entryShow = false;
-                            this.onAccountShow = false;
-                            this.destructionShow = false;
-                            this.consumeOperForm = {
-                                consumePrice: "",
-                                priceType: "",
-                                payType: "",
-                                name: "",
-                            };
-                            this.consume_order_list();
-                            this.getOrderDetail();
+                    this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
+                        this.entryShow = false
+                        this.onAccountShow = false
+                        this.destructionShow = false;
+                        this.consumeOperForm = {
+                            consumePrice: '',
+                            priceType: '',
+                            payType: '',
+                            name: ''
                         }
-                    );
+                        this.consume_order_list()
+                        this.getOrderDetail()
+                    })
                 } else {
-                    console.log("error submit!!");
+                    console.log('error submit!!');
                     return false;
                 }
             });
@@ -1203,22 +1013,16 @@ export default {
         out_check_in() {
             let params = {
                 checkInId: this.$route.query.id,
-                billType: 4,
-            };
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/out_check_in",
-                params,
-                (res) => {
-                    this.knotShow = false;
-                    this.consume_order_list();
-                }
-            );
+                billType: 4
+            }
+            this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                this.knotShow = false
+                this.consume_order_list()
+            })
         },
 
         //退房结账
         set_out_check_in() {
-<<<<<<< Updated upstream
             let info = {
                 checkInId:this.$route.query.id,
                 state:'',
@@ -1226,31 +1030,31 @@ export default {
                 pageSize: 1000
             }
             this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
-               // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
-               // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
-               //未结状态 1
-               //已结状态 2
-               //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
-               // let array = [1,1,1,1]
-               // let array = [2,2,2,2]
-               // let array = [1,2,1,2]
-               let array = res.consumeOrderList.map(v=>{
-                   return v.state
-               });
-               let params = {}
-               params.checkInId = this.$route.query.id
-               if(this.isArrSame(array,1) == true){
-                   params.billType = 1
-               }else if(this.isArrSame(array,2) == true){
-                   params.billType = 3
-               }else{
-                   params.billType = 4
-               }
-               this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
-                   this.checkOutShow = false
-                   this.getOrderDetail();
-                   this.consume_order_list();
-               })
+                // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
+                // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
+                //未结状态 1
+                //已结状态 2
+                //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
+                // let array = [1,1,1,1]
+                // let array = [2,2,2,2]
+                // let array = [1,2,1,2]
+                let array = res.consumeOrderList.map(v=>{
+                    return v.state
+                });
+                let params = {}
+                params.checkInId = this.$route.query.id
+                if(this.isArrSame(array,1) == true){
+                    params.billType = 1
+                }else if(this.isArrSame(array,2) == true){
+                    params.billType = 3
+                }else{
+                    params.billType = 4
+                }
+                this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                    this.checkOutShow = false
+                    this.getOrderDetail();
+                    this.consume_order_list();
+                })
             })
         },
         //判断数组中的值是否相同
@@ -1263,49 +1067,33 @@ export default {
                 return true;
             }
         },
-=======
-            let params = {
-                checkInId: this.$route.query.id,
-                billType: 1,
-            };
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/out_check_in",
-                params,
-                (res) => {
-                    this.checkOutShow = false;
-                    this.consume_order_list();
-                }
-            );
-        },
->>>>>>> Stashed changes
 
         //开发票按钮点击
         openInvoiceHandle() {
-            this.openInvoiceForm.checkInId = this.$route.query.id;
+            this.openInvoiceForm.checkInId = this.$route.query.id
             if (this.currentRoom) {
-                this.openInvoiceForm.name = this.currentRoom.name;
-                this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice;
-                this.openInvoiceForm.invoicePrice = "";
-                this.openInvoiceForm.roomNum = this.currentRoom.houseNum;
-                this.openInvoiceForm.mobile = this.currentRoom.mobile;
+                this.openInvoiceForm.name = this.currentRoom.name
+                this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice
+                this.openInvoiceForm.invoicePrice = ''
+                this.openInvoiceForm.roomNum = this.currentRoom.houseNum
+                this.openInvoiceForm.mobile = this.currentRoom.mobile
             } else {
                 if (this.detailData.inRoomList.length) {
-                    this.openInvoiceForm.name = this.detailData.inRoomList[0].name;
-                    this.openInvoiceForm.consumePrice = this.detailData.inRoomList[0].roomMarkPrice;
-                    this.openInvoiceForm.invoicePrice = "";
-                    this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum;
-                    this.openInvoiceForm.mobile = this.detailData.inRoomList[0].mobile;
+                    this.openInvoiceForm.name = this.detailData.inRoomList[0].name
+                    this.openInvoiceForm.consumePrice = this.detailData.inRoomList[0].roomMarkPrice
+                    this.openInvoiceForm.invoicePrice = ''
+                    this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum
+                    this.openInvoiceForm.mobile = this.detailData.inRoomList[0].mobile
                 } else {
                     this.$message.error(this.$t('desk.order_noPeople'));
                     return;
                 }
             }
-            this.openInvoiceShow = true;
+            this.openInvoiceShow = true
         },
         checkOutHandle() {
             this.checkOutShow = true;
-            this.consumeOperForm.consumePrice = this.detailData.totalPrice;
+            this.consumeOperForm.consumePrice = this.detailData.totalPrice
         },
         // //开发票提交
         // openInvoiceSubmit(formName) {
@@ -1330,42 +1118,38 @@ export default {
             let params = {
                 pageIndex: 1,
                 pageSize: 10,
-                paging: false,
+                paging: false
             };
-            this.$F.doRequest(
-                this,
-                "/pms/hoteldamagetype/list",
-                params,
-                (res) => {
-                    this.hoteldamagetypeList = res.list;
-                    this.$forceUpdate();
-                }
-            );
+            this.$F.doRequest(this, '/pms/hoteldamagetype/list', params, (res) => {
+                this.hoteldamagetypeList = res.list
+                this.$forceUpdate()
+            })
         },
         hoteldamage_list(id) {
             let params = {
                 damageTypeId: id,
                 pageIndex: 1,
                 pageSize: 10,
-                paging: false,
+                paging: false
             };
-            this.$F.doRequest(this, "/pms/hoteldamage/list", params, (res) => {
-                this.hoteldamageList = res.list;
-                console.log(res);
-                this.$forceUpdate();
-            });
+            this.$F.doRequest(this, '/pms/hoteldamage/list', params, (res) => {
+                this.hoteldamageList = res.list
+                console.log(res)
+                this.$forceUpdate()
+            })
         },
 
+
         priceTypeChange(e) {
-            this.consumeOperForm.priceType = e;
-            console.log(e);
-            console.log(this.currentRoom);
+            this.consumeOperForm.priceType = e
+            console.log(e)
+            console.log(this.currentRoom)
             if (e == 5) {
                 if (this.currentRoom) {
-                    this.consumeOperForm.consumePrice = this.currentRoom.realPrice;
+                    this.consumeOperForm.consumePrice = this.currentRoom.realPrice
                 } else {
                     if (this.detailData && this.detailData.inRoomList.length) {
-                        this.consumeOperForm.consumePrice = this.detailData.inRoomList[0].realPrice;
+                        this.consumeOperForm.consumePrice = this.detailData.inRoomList[0].realPrice
                     } else {
                         this.consumeOperForm.consumePrice = "";
                         this.$message.error(this.$t('desk.order_noPeople'));
@@ -1373,16 +1157,13 @@ export default {
                     }
                 }
             } else if (e == 6) {
-                console.log(this.currentRoom);
+                console.log(this.currentRoom)
                 if (this.currentRoom) {
-                    this.consumeOperForm.consumePrice = (
-                        this.currentRoom.realPrice * 0.5
-                    ).toFixed(2);
+                    this.consumeOperForm.consumePrice = (this.currentRoom.realPrice * 0.5).toFixed(2)
+
                 } else {
                     if (this.detailData && this.detailData.inRoomList.length) {
-                        this.consumeOperForm.consumePrice = (
-                            this.detailData.inRoomList[0].realPrice * 0.5
-                        ).toFixed(2);
+                        this.consumeOperForm.consumePrice = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(2)
                     } else {
                         this.consumeOperForm.consumePrice = "";
                         this.$message.error(this.$t('desk.order_noPeople'));
@@ -1390,109 +1171,106 @@ export default {
                     }
                 }
             } else if (e == 7) {
-                this.consumeOperForm.damageCount = 1;
-                this.consumeOperForm.consumePrice = "";
+                this.consumeOperForm.damageCount = 1
+                this.consumeOperForm.consumePrice = ''
                 this.getDdamageInfo();
             }
 
             // console.log( this.consumeOperForm.consumePrice)
 
-            this.$forceUpdate();
+
+            this.$forceUpdate()
         },
-        getDamagePrice(value) {
+        getDamagePrice(value){
             this.getDdamageInfo();
         },
         //获取房间的物品价格
-        getDdamageInfo() {
-            console.log(this.consumeOperForm.damageId);
-            console.log(this.hoteldamageList);
-            let list = this.hoteldamageList;
-            if (
-                list.length > 0 &&
-                this.consumeOperForm.damageTypeId &&
-                this.consumeOperForm.damageId
-            ) {
-                for (let i in list) {
-                    if (this.consumeOperForm.damageId == list[i].id) {
-                        console.log(list[i]);
-                        let p =
-                            parseFloat(list[i].damagePrice) *
-                            parseFloat(this.consumeOperForm.damageCount);
-                        this.consumeOperForm.consumePrice = p.toFixed(2);
-                        this.consumeOperForm.damageName = list[i].name;
+        getDdamageInfo(){
+            console.log(this.consumeOperForm.damageId)
+            console.log(this.hoteldamageList)
+            let list = this.hoteldamageList
+            if(list.length > 0 && this.consumeOperForm.damageTypeId && this.consumeOperForm.damageId ){
+                for(let i in list){
+                    if(this.consumeOperForm.damageId == list[i].id){
+                        console.log(list[i])
+                        let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
+                        this.consumeOperForm.consumePrice = p.toFixed(2)
+                        this.consumeOperForm.damageName = list[i].name
                     }
                 }
             }
         },
 
+
+
+
         /**获取挂账企业 */
         hotelenter_list(name) {
             let searchForm = {
-                id: "",
-                state: "",
-                shareFlag: "",
-                contactName: "",
-                contactPhone: "",
-                salesId: "",
-                startCreditLimit: "",
-                endCreditLimit: "",
+                id: '',
+                state: '',
+                shareFlag: '',
+                contactName: '',
+                contactPhone: '',
+                salesId: '',
+                startCreditLimit: '',
+                endCreditLimit: '',
                 paging: false,
                 pageIndex: 1,
-                pageSize: 10,
+                pageSize: 10
             };
-            if (name) {
-                searchForm.enterName = name;
+            if(name){
+                searchForm.enterName = name
             }
-            this.loading = true;
-            this.$F.doRequest(
-                this,
-                "/pms/hotelenter/list",
-                searchForm,
-                (res) => {
-                    this.loading = false;
-                    console.log(res);
-                    this.hotelenterList = res.list;
-                }
-            );
+            this.loading = true
+            this.$F.doRequest(this, '/pms/hotelenter/list', searchForm, (res) => {
+                this.loading = false
+                console.log(res)
+                this.hotelenterList = res.list;
+
+            })
         },
         remoteMethod(query) {
-            if (query !== "") {
+            if (query !== '') {
                 this.hotelenterLoading = true;
                 setTimeout(() => {
                     this.hotelenterLoading = false;
-                    this.hotelenter_list(query);
+                    this.hotelenter_list(query)
                 }, 200);
             } else {
                 this.hotelenterList = [];
             }
         },
         enterNameChange(e) {
-            console.log(e);
-            this.consumeOperForm.enterId = e;
-            this.hotelenterList.forEach((element) => {
+            console.log(e)
+            this.consumeOperForm.enterId = e
+            this.hotelenterList.forEach(element => {
                 if (e == element.id) {
-                    this.consumeOperForm.creditName = element.enterName;
+                    this.consumeOperForm.creditName = element.enterName
                 }
             });
         },
         //获取商品分类信息
         damageTypeIdChange(e) {
-            console.log(e);
-            console.log(this.hoteldamagetypeList);
-            let list = this.hoteldamagetypeList;
-            if (list.length > 0) {
-                for (let i in list) {
-                    if (list[i].id == e) {
+            console.log(e)
+            console.log(this.hoteldamagetypeList)
+            let list = this.hoteldamagetypeList
+            if(list.length > 0){
+                for(let i in list){
+                    if(list[i].id == e){
                         // console.log(list[i])
-                        this.consumeOperForm.damageTypeName = list[i].name;
+                        this.consumeOperForm.damageTypeName  = list[i].name
                     }
                 }
             }
 
-            if (e) {
-                this.hoteldamage_list();
+
+            if(e){
+                this.hoteldamage_list()
             }
+
         },
+
 
         destructionHandle() {
             if (this.multipleSelection.length < 1) {
@@ -1508,37 +1286,35 @@ export default {
                     this.$message.error(this.$t('desk.order_autoTiePrice'));
                     return;
                 }
+
             }
-            this.destructionList = this.multipleSelection;
-            this.destructionShow = true;
-            this.$forceUpdate();
+            this.destructionList = this.multipleSelection
+            this.destructionShow = true
+            this.$forceUpdate()
         },
         //开发票
         invoicingHandle() {
-            this.openInvoiceForm.checkInId = this.$route.query.id;
+            this.openInvoiceForm.checkInId = this.$route.query.id
             if (this.currentRoom) {
                 this.openInvoiceForm.name = this.detailData.checkIn.name;
-                this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice;
-                this.openInvoiceForm.invoicePrice = "";
-                this.openInvoiceForm.roomNum = this.currentRoom.houseNum;
-                this.openInvoiceForm.mobile = this.detailData.checkIn.mobile;
+                this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice
+                this.openInvoiceForm.invoicePrice = ''
+                this.openInvoiceForm.roomNum = this.currentRoom.houseNum
+                this.openInvoiceForm.mobile = this.detailData.checkIn.mobile
             } else {
                 if (this.detailData.inRoomList.length) {
                     // this.openInvoiceForm.name = this.detailData.inRoomList[0].name
                     this.openInvoiceForm.name = this.detailData.checkIn.name;
-                    this.openInvoiceForm.consumePrice = this.detailData.inRoomList[0].roomMarkPrice;
-                    this.openInvoiceForm.invoicePrice = "";
-                    this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum;
-                    this.openInvoiceForm.mobile = this.detailData.checkIn.mobile;
+                    this.openInvoiceForm.consumePrice = this.detailData.inRoomList[0].roomMarkPrice
+                    this.openInvoiceForm.invoicePrice = ''
+                    this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum
+                    this.openInvoiceForm.mobile = this.detailData.checkIn.mobile
                 } else {
                     this.$message.error(this.$t('desk.order_noPeople'));
                     return;
                 }
             }
-            this.$refs.invoicing.init(
-                this.$route.query.id,
-                this.openInvoiceForm
-            );
+            this.$refs.invoicing.init(this.$route.query.id, this.openInvoiceForm);
         },
         consumeGoodsHandle() {
             this.$refs.consumeGoods.init(this.$route.query.id);
@@ -1561,28 +1337,19 @@ export default {
             this.searchForm.pageIndex = val;
             this.consume_order_list();
         },
-<<<<<<< Updated upstream
         getOrderDetail(){
             // console.log(111)
             this.$emit('getOrderDetail')
         }
-=======
-        getOrderDetail() {
-            console.log(111);
-            this.$emit("getOrderDetail");
-        },
     },
-    watch: {
-        "consumeOperForm.priceType": function (val, oldval) {
-            if (val == 9) {
-                this.consumeOperForm.consumePrice = this.destructionList[0]
-                    .consumePrice
-                    ? this.destructionList[0].consumePrice
-                    : this.destructionList[0].payPrice;
-            } else if (val == 10) {
-                this.consumeOperForm.consumePrice = "";
-            } else {
-                this.consumeOperForm.consumePrice = "";
+    watch:{
+        'consumeOperForm.priceType':function(val,oldval){
+            if(val == 9){
+                this.consumeOperForm.consumePrice = this.destructionList[0].consumePrice ? this.destructionList[0].consumePrice : this.destructionList[0].payPrice
+            }else if(val == 10){
+                this.consumeOperForm.consumePrice = ''
+            }else{
+                this.consumeOperForm.consumePrice = ''
             }
             // console.log(val)
             // if(val !== 3){
@@ -1597,24 +1364,25 @@ export default {
             //     this.consumeOperForm.consumePrice = ''
             // }
             // console.log(this.consumeOperForm.payType)
-        },
->>>>>>> Stashed changes
-    },
+        }
+
+
+    }
 };
 </script>
 
 <style scoped>
 .detailTab {
-    border: 0;
+    border: 0
 }
 
-.detailTab >>> .el-tabs__header {
+.detailTab>>>.el-tabs__header {
     margin: 0;
 }
 </style>
 <style lang="less" scoped>
 .base p {
-    font-size: 12px;
+    font-size: 12px
 }
 
 .cost {
@@ -1625,7 +1393,7 @@ export default {
 
         span.fee {
             font-size: 26px;
-            color: #dc3e3e;
+            color: #DC3E3E;
             display: inline-block;
             vertical-align: middle;
             margin-right: 50px;

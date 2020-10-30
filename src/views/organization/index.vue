@@ -15,7 +15,7 @@
                     <ul v-if="departmentList.length">
                         <template v-for="(item,index) of departmentList">
                             <li :key="index" @click="departClick(item)" :class="{on:activeLeftDepartMent.id==item.id}">
-                                <p>{{item.menuTitle}}</p>
+                                <p> {{ $i18n.locale == 'ri' ? item.japanese : (item.menuAliasTitle || item.menuTitle) }}</p>
                             </li>
                         </template>
                     </ul>
@@ -38,8 +38,7 @@
                                 </span>
                                 </h3>
                                 <div>
-                                    <el-input placeholder="请输入内容"
-                                              @keyup.native="employees_list(activeLeftDepartMent.id)"
+                                    <el-input @keyup.native="employees_list(activeLeftDepartMent.id)"
                                               v-model="employeesForm.content" prefix-icon="el-icon-search"></el-input>
                                 </div>
                             </div>
@@ -98,8 +97,7 @@
                 </el-form-item>
                 <el-form-item label="部门类型" class="require" v-if="setDepartmentList.length" prop="setDepartmentType">
                     <el-checkbox-group v-model="setDepartmentType" @change="departTypeSelectChange">
-                        <el-checkbox :label="item" v-for="(item,index) of setDepartmentList" :key="index"
-                                     :disabled="false" style="display:inline-block">{{item.name}}
+                        <el-checkbox :label="item" v-for="(item,index) of setDepartmentList" :key="index" :disabled="false" style="display:inline-block">{{item.name}}
                         </el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
@@ -341,8 +339,6 @@
         token: state => state.user.token,
         user: state => state.user,
         userId: state => state.user.id,
-        plat_source: state => state.config.plat_source,
-        company: state => state.company,
       })
     },
     created () {
