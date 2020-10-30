@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-30 10:44:46
+ * @LastEditTime: 2020-10-30 11:02:48
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -162,11 +162,7 @@
         ></el-pagination>
 
         <!--入账 -->
-        <el-dialog
-            top="0"
-            :title="$t('desk.enterAccount')"
-            :visible.sync="entryShow"
-        >
+        <el-dialog top="0" :title="$t('desk.enterAccount')" :visible.sync="entryShow">
             <el-form
                 :model="consumeOperForm"
                 ref="entry"
@@ -295,22 +291,22 @@
             </div>
         </el-dialog>
         <!-- <el-dialog top='0' title="选择结算方式" :visible.sync="payTypeShow">
-        <el-form :model="consumeOperForm" size="mini">
-            <el-form-item label="">
-                <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio :label="1" :value="1">现金</el-radio>
-                    <el-radio :label="2" :value="2">银行卡</el-radio>
-                    <el-radio :label="3" :value="3">支付宝</el-radio>
-                    <el-radio :label="4" :value="4">微信</el-radio>
-                    <el-radio :label="5" :value="5">会员卡</el-radio>
-                </el-radio-group>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="payTypeShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" @click="payTypeShow = false">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog> -->
+			<el-form :model="consumeOperForm" size="mini">
+				<el-form-item label="">
+					<el-radio-group v-model="consumeOperForm.payType">
+						<el-radio :label="1" :value="1">现金</el-radio>
+						<el-radio :label="2" :value="2">银行卡</el-radio>
+						<el-radio :label="3" :value="3">支付宝</el-radio>
+						<el-radio :label="4" :value="4">微信</el-radio>
+						<el-radio :label="5" :value="5">会员卡</el-radio>
+					</el-radio-group>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="payTypeShow = false">{{ $t('commons.cancel') }}</el-button>
+				<el-button type="primary" @click="payTypeShow = false">{{ $t('commons.confirm') }}</el-button>
+			</div>
+		</el-dialog> -->
 
         <!--挂账-->
         <el-dialog
@@ -370,16 +366,8 @@
                 </el-row>
                 <br />
 
-                <el-form-item
-                    :label="$t('desk.chargeMoney') + ':'"
-                    class=""
-                    prop="payPrice"
-                >
-                    <el-input
-                        class="width200"
-                        type="number"
-                        v-model="consumeOperForm.payPrice"
-                    ></el-input>
+                <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="payPrice">
+                    <el-input class="width200" type="number" v-model="consumeOperForm.payPrice"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.customer_buyerUnit') + ':'" class="" prop="creditName">
                     <el-select
@@ -420,6 +408,8 @@
                 >
             </div>
         </el-dialog>
+		
+		
         <!--走结-->
         <el-dialog
             top="0"
@@ -436,14 +426,10 @@
             >
                 <el-row v-if="currentRoom">
                     <el-col :span="8">
-                        {{ $t("desk.home_roomType") }}：{{
-                            currentRoom.roomTypeName
-                        }}
+                        {{ $t("desk.home_roomType") }}：{{currentRoom.roomTypeName}}
                     </el-col>
                     <el-col :span="8">
-                        {{ $t("desk.home_roomNum") }}：{{
-                            currentRoom.houseNum
-                        }}
+                        {{ $t("desk.home_roomNum") }}：{{currentRoom.houseNum}}
                     </el-col>
                     <el-col :span="8">
                        {{$t('desk.customer_livePeople')+':'}}{{
@@ -451,206 +437,110 @@
                             currentRoom.personList[0].name
                         }}
                     </el-col>
-                </el-row>
-                <el-row v-else>
-                    <template v-if="detailData && detailData.inRoomList">
-                        <el-col :span="8">
-                            {{ $t("desk.home_roomType") }}：{{
-                                detailData.inRoomList[0].roomTypeName
-                            }}
-                        </el-col>
-                        <el-col :span="8">
-                            {{ $t("desk.home_roomNum") }}：{{
-                                detailData.inRoomList[0].houseNum
-                            }}
-                        </el-col>
-                        <el-col :span="8">
-                            {{$t('desk.customer_livePeople')+':'}}{{
-                                detailData.inRoomList &&
-                                detailData.inRoomList[0] &&
-                                detailData.inRoomList[0].personList &&
-                                detailData.inRoomList[0].personList[0].name
-                            }}
-                        </el-col>
-                    </template>
-                </el-row>
-                <br />
-                <el-form-item label="" class="">
-                    <p> {{ $t("desk.order_ifGoTie") }}</p>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="knotShow = false">{{
-                    $t("commons.close")
-                }}</el-button>
-                <el-button type="primary" @click="out_check_in">{{
-                    $t("commons.confirm")
-                }}</el-button>
-            </div>
-        </el-dialog>
-        <!--开发票-->
+            </el-row>
+            <br />
+            <el-form-item label="" class="">
+                <p>是否确认改为走结？</p>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="knotShow=false">关闭</el-button>
+            <el-button type="primary" @click="out_check_in">{{ $t('commons.confirm') }}</el-button>
+        </div>
+    </el-dialog>
+    <!--开发票-->
 
-        <!--结账退款-->
-        <el-dialog
-            top="0"
-            :title="$t('desk.order_checkout')"
-            :visible.sync="checkOutShow"
-            width="800px"
-        >
-            <el-form
-                :model="consumeOperForm"
-                ref="checkOut"
-                :rules="rules"
-                size="mini"
-                label-width="100px"
-            >
-                <el-row v-if="currentRoom">
-                    <el-col :span="8">
-                        {{ $t("desk.home_roomType") }}：{{
-                            currentRoom.roomTypeName
-                        }}
-                    </el-col>
-                    <el-col :span="8">
-                        {{ $t("desk.home_roomNum") }}：{{
-                            currentRoom.houseNum
-                        }}
-                    </el-col>
-                    <el-col :span="8">
-                       {{$t('desk.customer_livePeople')+':'}}{{
-                            currentRoom.personList &&
-                            currentRoom.personList[0] &&
-                            currentRoom.personList[0].name
-                        }}
-                    </el-col>
-                </el-row>
-                <br />
-                <div class="cost margin-t-10" v-if="detailData">
-                    <div class="wrap" style="background: #efefef">
-                        <span class="fee" v-if="detailData.totalPrice > 0"
-                            >{{$t('desk.order_receivable')+':'}}{{ detailData.totalPrice }}</span
-                        >
-                        <span class="fee" v-if="detailData.totalPrice < 0"
-                            >{{$t('desk.order_shouldBack')+':'}}{{ detailData.totalPrice }}</span
-                        >
-                        <div class="costNum">
-                            <el-row
-                                >{{ $t("desk.consumerTotal") }}：<span
-                                    class="text-red"
-                                    >{{ detailData.consumePrice }}</span
-                                ></el-row
-                            >
-                            <el-row
-                                >{{ $t("desk.payTotal") }}：<span
-                                    class="text-green"
-                                    >{{ detailData.payPrice }}</span
-                                ></el-row
-                            >
-                        </div>
+    <!--退房结账-->
+    <el-dialog top='0' title="退房结账" :visible.sync="checkOutShow" width="800px">
+        <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
+            <el-row v-if="currentRoom">
+                <el-col :span="8">
+                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
+                </el-col>
+                <el-col :span="8">
+                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
+                </el-col>
+                <el-col :span="8">
+                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
+                </el-col>
+            </el-row>
+            <br />
+            <div class="cost margin-t-10" v-if="detailData">
+                <div class="wrap" style="background:#efefef">
+                    <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
+                    <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
+                    <div class="costNum">
+                        <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                        <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
                     </div>
-                </div>
-                <br />
-                <el-form-item label="" label-width="0">
-                    <el-checkbox v-model="consumeOperForm.isPoints"
-                        >{{ $t("desk.order_canDeduction") }}</el-checkbox
-                    >
-                </el-form-item>
-                <el-form-item
-                    :label="$t('desk.customer_paymentMethod') + ':'"
-                    prop="payType"
-                    v-if="detailData.totalPrice > 0"
-                >
-                    <el-radio-group v-model="consumeOperForm.payType">
-                        <el-radio :label="1" :value="1">{{$t('desk.serve_cash')}}</el-radio>
-                        <el-radio :label="2" :value="2">{{$t('desk.customer_bankCard')}}</el-radio>
-                        <el-radio :label="3" :value="3">{{$t('desk.serve_alipay')}}</el-radio>
-                        <el-radio :label="4" :value="4">{{$t('desk.serve_wechat')}}</el-radio>
-                        <el-radio :label="5" :value="5">{{$t('desk.order_memCard')}}</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
-                    <el-input
-                        class="width200"
-                        type="number"
-                        v-model="consumeOperForm.consumePrice"
-                        autocomplete="off"
-                        :disabled="true"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('desk.home_note') + ':'">
-                    <el-input
-                        type="textarea"
-                        v-model="consumeOperForm.remark"
-                        autocomplete="off"
-                    ></el-input>
-                </el-form-item>
-                <!--            <el-form-item label="打印单据：">-->
-                <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
-                <!--            </el-form-item>-->
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="checkOutShow = false">{{
-                    $t("commons.close")
-                }}</el-button>
-                <el-button type="primary" @click="set_out_check_in">{{
-                    $t("commons.confirm")
-                }}</el-button>
-            </div>
-        </el-dialog>
-        <!--冲调-->
-        <el-dialog
-            top="0"
-            :title="$t('desk.customer_rich')"
-            :visible.sync="destructionShow"
-            width="800px"
-        >
-            <el-form
-                :model="consumeOperForm"
-                ref="destruction"
-                :rules="rules"
-                size="mini"
-                label-width="100px"
-            >
-                <el-row v-if="currentRoom">
-                    <el-col :span="8">
-                        {{ $t("desk.home_roomType") }}：{{
-                            currentRoom.roomTypeName
-                        }}
-                    </el-col>
-                    <el-col :span="8">
-                        {{ $t("desk.home_roomNum") }}：{{
-                            currentRoom.houseNum
-                        }}
-                    </el-col>
-                    <el-col :span="8">
-                        {{$t('desk.customer_livePeople')+':'}}{{
-                            currentRoom.personList &&
-                            currentRoom.personList[0] &&
-                            currentRoom.personList[0].name
-                        }}
-                    </el-col>
-                </el-row>
-                <el-row v-else>
-                    <template v-if="detailData && detailData.inRoomList">
-                        <el-col :span="8">
-                            {{ $t("desk.home_roomType") }}：{{
-                                detailData.inRoomList[0].roomTypeName
-                            }}
-                        </el-col>
-                        <el-col :span="8">
-                            {{ $t("desk.home_roomNum") }}：{{
-                                detailData.inRoomList[0].houseNum
-                            }}
-                        </el-col>
-                        <el-col :span="8">
-                           {{$t('desk.customer_livePeople')+':'}}{{
-                                detailData.inRoomList &&
-                                detailData.inRoomList[0] &&
-                                detailData.inRoomList[0].personList &&
-                                detailData.inRoomList[0].personList[0].name
-                            }}
-                        </el-col>
-                    </template>
-                </el-row>
+                </div>  
+			</div> 				  
+            <br />
+           <!-- 
+		   <el-form-item label="" label-width="0">
+                <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
+            </el-form-item>
+            <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
+                <el-radio-group v-model="consumeOperForm.payType">
+                    <el-radio :label="1" :value="1">现金</el-radio>
+                    <el-radio :label="2" :value="2">银行卡</el-radio>
+                    <el-radio :label="3" :value="3">支付宝</el-radio>
+                    <el-radio :label="4" :value="4">微信</el-radio>
+                    <el-radio :label="5" :value="5">会员卡</el-radio>
+                </el-radio-group>
+            </el-form-item>
+			-->
+            <el-form-item label="金额：" class="" prop="consumePrice">
+                <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item :label="$t('desk.home_note') + ':'">
+                <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+            </el-form-item>
+			<!-- <el-form-item label="打印单据：">
+               <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
+           </el-form-item> -->
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="checkOutShow=false">关闭</el-button>
+            <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
+        </div>
+    </el-dialog>
+    <!--冲调-->
+    <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow"width="800px">
+        <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
+            <el-row v-if="currentRoom">
+                <el-col :span="8">
+                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
+                </el-col>
+                <el-col :span="8">
+                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
+                </el-col>
+                <el-col :span="8">
+                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
+                </el-col>
+            </el-row>
+			<el-row v-else>
+				<template v-if="detailData && detailData.inRoomList">
+					<el-col :span="8">
+						{{ $t("desk.home_roomType") }}：{{
+							detailData.inRoomList[0].roomTypeName
+						}}
+					</el-col>
+					<el-col :span="8">
+						{{ $t("desk.home_roomNum") }}：{{
+							detailData.inRoomList[0].houseNum
+						}}
+					</el-col>
+					<el-col :span="8">
+					   {{$t('desk.customer_livePeople')+':'}}{{
+							detailData.inRoomList &&
+							detailData.inRoomList[0] &&
+							detailData.inRoomList[0].personList &&
+							detailData.inRoomList[0].personList[0].name
+						}}
+					</el-col>
+				</template>
+			</el-row>
                 <br />
                 <p> {{$t('desk.order_accountDeveloped')}}</p>
                 <el-table
@@ -1056,19 +946,21 @@ export default {
             }
 
             //退房结账
-            if (type == 4) {
-                params.state = 2;
-                if (params.consumePrice < 0) {
-                    params.payType = 0;
-                }
-                if (params.isPoints) {
-                    params.scoresDiscount = 200;
-                    params.scoresPrice = 20;
-                } else {
-                    params.scoresDiscount = "";
-                    params.scoresPrice = "";
-                }
-            }
+            // if (type == 4) {
+            //     params.state = 2
+            //     if(params.consumePrice<0){
+            //         params.payType = 0
+            //     }
+            //     if(params.isPoints){
+            //         params.scoresDiscount = 200
+            //         params.scoresPrice = 20
+            //     } else {
+            //         params.scoresDiscount = ''
+            //         params.scoresPrice = ''
+            //     }
+            // }
+
+
 
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -1116,20 +1008,51 @@ export default {
 
         //退房结账
         set_out_check_in() {
-            let params = {
-                checkInId: this.$route.query.id,
-                billType: 1,
-            };
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/out_check_in",
-                params,
-                (res) => {
-                    this.checkOutShow = false;
-                    this.consume_order_list();
-                }
-            );
+            let info = {
+                checkInId:this.$route.query.id,
+                state:'',
+                pageIndex: 1,
+                pageSize: 1000
+            }
+            this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
+               // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
+               // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
+               //未结状态 1
+               //已结状态 2
+               //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
+               // let array = [1,1,1,1]
+               // let array = [2,2,2,2]
+               // let array = [1,2,1,2]
+               let array = res.consumeOrderList.map(v=>{
+                   return v.state
+               });
+               let params = {}
+               params.checkInId = this.$route.query.id
+               if(this.isArrSame(array,1) == true){
+                   params.billType = 1
+               }else if(this.isArrSame(array,2) == true){
+                   params.billType = 3
+               }else{
+                   params.billType = 4
+               }
+               this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+                   this.checkOutShow = false
+                   this.getOrderDetail();
+                   this.consume_order_list();
+               })
+            })
         },
+        //判断数组中的值是否相同
+        isArrSame(array,state) {
+            if (array.length > 0) {
+                return !array.some(function(value, index) {
+                    return value !== state
+                });
+            } else {
+                return true;
+            }
+        },
+
 
         //开发票按钮点击
         openInvoiceHandle() {
@@ -1412,10 +1335,11 @@ export default {
             this.searchForm.pageIndex = val;
             this.consume_order_list();
         },
-        getOrderDetail() {
-            console.log(111);
-            this.$emit("getOrderDetail");
-        },
+        getOrderDetail(){
+            // console.log(111)
+            this.$emit('getOrderDetail')
+        }
+
     },
     watch: {
         "consumeOperForm.priceType": function (val, oldval) {
