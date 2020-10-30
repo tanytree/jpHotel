@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-29 17:14:53
+ * @LastEditTime: 2020-10-30 13:18:01
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -46,7 +46,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('desk.customer_memeberCardNum') + ':'">
                     <el-input
-                        v-model="searchForm.idcard"
+                        v-model="searchForm.memberCardNo"
                         class="width150"
                     ></el-input>
                 </el-form-item>
@@ -756,6 +756,7 @@ export default {
                 mobile: "",
                 idcard: "",
                 name: "",
+                memberCardNo:'',
                 searchType: 3,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
@@ -888,6 +889,7 @@ export default {
                 mobile: "",
                 idcard: "",
                 name: "",
+                memberCardNo:'',
                 searchType: 3,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数

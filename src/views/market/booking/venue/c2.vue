@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-10-16 13:27:11
+ * @LastEditTime: 2020-10-30 17:12:48
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -135,7 +135,7 @@
         <el-table-column
           :label="$t('desk.book_MeetstartAend')"
           show-overflow-tooltip
-          width="150px"
+          width="200px"
         >
           <template slot-scope="{ row }">
             <div>
@@ -150,11 +150,13 @@
         </el-table-column>
         <el-table-column
           :label="$t('desk.home_roomNum')"
-          width="120px"
+          width="100px"
+          prop="checkInRoomList[0].houseNum"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.book_chamber')"
           show-overflow-tooltip
+          prop="checkInRoomList[0].roomTypeName"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_customersCategory')"
@@ -259,8 +261,8 @@
                   style="width: 180px"
                   :placeholder="$t('commons.selectIdCardType')"
                 >
-<!--                  <el-option label="身份证" value="1"></el-option>-->
-<!--                  <el-option label="护照" value="2"></el-option>-->
+                 <el-option label="身份证" value="1"></el-option>
+                 <el-option label="护照" value="2"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -371,18 +373,8 @@ export default {
     dialogMeet_sure(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.itemInfo);
-          let params = {};
-          this.$F.merge(params, {
-            checkInReserveId: this.itemInfo.id,
-          });
-          this.$F.doRequest(
-            this,
-            "/pms/reserve/reserve_to_checkin",
-            params,
-            (data) => {
-              this.$F.merge(this.addCompanyForm, {
-                checkinId: data.checkinId,
+            this.$F.merge(this.addCompanyForm, {
+                checkinId:this.itemInfo.checkInRoomList[0].checkinId,
               });
               this.$F.doRequest(
                 this,
@@ -390,14 +382,13 @@ export default {
                 this.addCompanyForm,
                 (data) => {
                   this.$message({
-                      message: this.$t('commons.request_success'),
+                      message: '登记成功',
                       type: "success",
                   });
                   this.dialogMeet_cancle();
                 }
               );
-            }
-          );
+      
         } else {
           return false;
         }
@@ -417,7 +408,6 @@ export default {
     //点击  会议登记 按钮
     meetClick(row) {
       console.log(row);
-      return false;
       this.itemInfo = row;
       this.dialogMeet = true;
     },

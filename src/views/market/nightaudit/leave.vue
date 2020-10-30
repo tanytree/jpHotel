@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-09 16:48:56
- * @FilePath: /jiudian/src/views/market/nightaudit/leave.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-30 13:48:13
+ * @FilePath: \jiudian\src\views\market\nightaudit\leave.vue
  -->
 
 <template>
@@ -160,7 +160,7 @@ export default {
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.page = val;
+            this.searchForm.pageIndex = val;
             this.getDataList();
         }
     }

@@ -1,17 +1,17 @@
 <!--
  * @Date: 2020-05-08 08:01:35
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-28 13:24:42
- * @FilePath: /jiudian/src/views/market/booking/hall.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-30 16:40:51
+ * @FilePath: \jiudian\src\views\market\booking\hall.vue
  -->
 
 <template>
   <div class="boss-index">
     <el-tabs class="tabCenter" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="会场预订" name="b3">
+      <el-tab-pane :label="$t('desk.book_venueBook')" name="b3">
         <normal :operCheckinType="activeName"></normal>
       </el-tab-pane>
-      <el-tab-pane label="会议核销" name="second">
+      <el-tab-pane :label="$t('desk.book_meetVerification')" name="second">
         <c2></c2>
       </el-tab-pane>
     </el-tabs>

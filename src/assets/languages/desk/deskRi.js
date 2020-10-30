@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-30 09:43:02
+ * @LastEditTime: 2020-10-30 18:02:33
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -568,6 +568,14 @@ module.exports = {
     order_selectOperateAccount: "操作する会計を選択してください",
     order_onlyOneAccount: "相殺会計は一項目しかできないです",
     order_autoTiePrice: "自動計上項目は相殺できないです",
+    book_venueBook: '会場予約',
+    book_meetVerification: '会場取り消し',
+    book_meetInfo: '未翻译词条',
+    book_house: '未翻译词条',
+    book_houseTotalPrice: '未翻译词条',
+
+
+
 
 
 
