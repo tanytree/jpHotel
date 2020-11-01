@@ -5,7 +5,7 @@
         </el-header>
         <el-main class="round" style="padding:0;">
             <div class="content">
-               <div class="left bg rel"  v-loading="loading" >
+               <div class="left bg rel"  v-loading="left_loading" >
                    <div class="padding-20">
                         <el-form class="term line demo-form-inline" v-model="searchform" inline size="small">
                            <el-form-item :label="$t('manager.grsl_goodsName')+':'">
@@ -71,7 +71,7 @@
                     </div>
                    <!--  -->
                </div>
-               <div class="right bg rel">
+               <div class="right bg rel" v-loading="payLoading">
                     <div class="padding-20">
                         <div class="hasTitle">已选商品</div>
                         <el-table  :data="cart" header-row-class-name="default" size="small" >
@@ -217,8 +217,9 @@ export default {
 
   data() {
     return {
-        loading: false,
+        left_loading: false,
         isloading:false,
+        payLoading:false,
         tabCurr:0,
         tableData: [],
         active:'',
@@ -340,13 +341,13 @@ export default {
     },
     //获取售卖点列表
     getDataList(){
-        this.loading = true
+        this.left_loading = true
         let params = {}
         params.userId = this.userId
         params.storesNum = this.storesNum
         this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", params, (res) => {
             console.log(res)
-            this.loading = false
+            this.left_loading = false
             this.tableData = res.list
             if( res.list.length > 0){
                 if(this.$route.query.key){
@@ -377,6 +378,7 @@ export default {
     },
     //商品列表
     getPrucuctList(){
+        this.left_loading = true
         let params = {
             goodsName:this.searchform.name,
             categoryId:this.searchform.categoryId,
@@ -391,6 +393,7 @@ export default {
         params.storesNum = this.storesNum
         this.$F.doRequest(this, "/pms/sellinglog/list", params, (res) => {
             console.log(res)
+            this.left_loading = false
             this.productList = res.list
             this.listTotal = res.page.count
         });
@@ -400,6 +403,7 @@ export default {
     changeTab(id){
       this.active = id
       this.searchform.sellId = id
+      this.left_loading = true
       this.getPrucuctList();
     },
 
@@ -596,23 +600,11 @@ export default {
 
     //提交
     submit(){
-
-
+        this.payLoading = true
         // console.log(this.isUseScore)
         // console.log(this.form.scoresDiscount)
         // console.log(this.form.scoresPrice)
-           console.log(this.form.billingType)
-
-
-
-
-
-
-
-
-
-
-
+        console.log(this.form.billingType)
         let arr  = []
         let list = this.cart
         for(let i in list){
@@ -629,23 +621,6 @@ export default {
             this.$message.error('请选择商品！');
             return
         }
-
-
-        // memberCard:'',//会员卡卡号  String选填
-        // docCoun:1,//单据份数  Integer选填
-        // billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
-        // signCheckInId:'',// 入住信息id  billingType=3必填  String选填
-        // signRoomId:'',//房间id
-        // signHouseNum:'',//房间号
-        // signEnterId:'',//签单单位id  billingType=2必填 String选填
-        // signCreditName:'',//签单单位名称  billingType=2必填  String选填
-        // signUserName:'',//签单用户名  billingType=2必填  String选填
-        // signIdcardType:'',//签单证件类型 1身份证 2护照  billingType=2必填   Integer选填
-        // signIdcard:'',//签单证件号码   billingType=2必填 String选填
-        // scoresDiscount:'',//积分抵扣分值  Integer选填
-        // scoresPrice:'',//积分抵扣额度  Double选填
-
-
 
         if(this.form.billingType == 1){
             if(this.form.memberCard == ''){
@@ -692,20 +667,22 @@ export default {
 
         params.userId = this.userId
         params.storesNum = this.storesNum
-        console.log(params)
         this.$F.doRequest(this, "/pms/shop/shop_place_order_edit", params, (res) => {
             // this.alert(200,this.$t('food.common.success'));
+            this.payLoading = false
             this.payOrder(res.orderId)
         });
     },
 
     payOrder(id){
+        this.payLoading = true
         let params = this.form
         params.orderId = id
         params.userId = this.userId
         params.storesNum = this.storesNum
         console.log(params)
         this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
+            this.payLoading = false
             this.alert(200,this.$t('food.common.success'));
             this.reset();
         });
