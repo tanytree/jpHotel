@@ -126,9 +126,9 @@
                                             </el-select>
                                         </el-form-item>
 
-                                       <!-- <el-form-item :label="$t('food.common.payPrice')">
-                                            {{getPayPrice}}
-                                        </el-form-item> -->
+                                        <el-form-item :label="$t('food.common.payPrice')">
+                                            <span class="text-red">{{getPayPrice}}</span>
+                                        </el-form-item>
 
                                         <el-form-item :label="$t('food.common.member_card')">
                                             <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.common.select_member_card')" @change="getMerberInfo">
@@ -143,9 +143,9 @@
                                         </el-form-item>
                                         <!-- 使用积分兑换操作，暂时不要 -->
 
-                                        <el-form-item v-if="selectMerberInfo.score && selectMerberInfo.score > 0">
+                                        <!-- <el-form-item v-if="selectMerberInfo.score && selectMerberInfo.score > 0">
                                             <el-checkbox v-model="isUseScore">可用{{jfInfo.jf}}积分抵扣{{jfInfo.discount}}日元</el-checkbox>
-                                        </el-form-item>
+                                        </el-form-item> -->
                                     </div>
                                     <div v-if="form.billingType == 2">
                                         <el-form-item :label="$t('food.common.select_company')" prop="signEnterId">
@@ -195,7 +195,7 @@
                                         <el-checkbox v-model="isPrint">{{$t('food.common.order_print')}}</el-checkbox>
                                     </el-form-item>
                                     <el-form-item>
-                                        <el-button type="primary" size="small"  @click="submit">{{$t('food.common.pay_order_deal')}}</el-button>
+                                        <el-button type="primary" size="small"  @click="submit">{{$t('food.common.submit')}}</el-button>
                                         <el-button size="small" @click="reset">清空</el-button>
                                     </el-form-item>
                                 </el-form>
@@ -237,7 +237,6 @@ export default {
         pageIndex:1,
         pageSize:20,
         form:{
-           orderId:'',//菜品订单id string必填
            realPayPrice:'',//实付金额  Double必填
            payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
            remark:'',//备注  String选填
@@ -401,7 +400,6 @@ export default {
     changeTab(id){
       this.active = id
       this.searchform.sellId = id
-      this.reset();
       this.getPrucuctList();
     },
 
@@ -438,7 +436,7 @@ export default {
             }
         }else{
             if(good.inventoryCount == 0){
-                this.$alert('该菜品已经没有库存啦，不能再售卖啦!', this.$t('commons.tip_desc'), {
+                this.$alert('该商品已经没有库存啦，不能再售卖啦!', this.$t('commons.tip_desc'), {
                   confirmButtonText: this.$t('commons.confirm'),
                   callback: action => {
                   }
@@ -600,20 +598,118 @@ export default {
     submit(){
 
 
-        console.log(this.isUseScore)
-        console.log(this.form.scoresDiscount)
-        console.log(this.form.scoresPrice)
+        // console.log(this.isUseScore)
+        // console.log(this.form.scoresDiscount)
+        // console.log(this.form.scoresPrice)
+           console.log(this.form.billingType)
 
 
 
 
-        // let params = this.form
-        // params.userId = this.userId
-        // params.storesNum = this.storesNum
-        // // console.log(params)
-        // this.$F.doRequest(this, "/pms/dishes/dishes_place_order_pay", params, (res) => {
-        //     this.alert(200,this.$t('food.common.success'));
-        // });
+
+
+
+
+
+
+
+        let arr  = []
+        let list = this.cart
+        for(let i in list){
+            arr.push({
+                goodsId:list[i].goodsId,
+                goodsName:list[i].goodsName,
+                unitPrice:list[i].retailPrice,
+                totalPrice:parseFloat(list[i].retailPrice)*parseFloat(list[i].count),
+                goodsCount:parseFloat(list[i].count)
+            })
+        }
+
+        if(arr.length == 0){
+            this.$message.error('请选择商品！');
+            return
+        }
+
+
+        // memberCard:'',//会员卡卡号  String选填
+        // docCoun:1,//单据份数  Integer选填
+        // billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
+        // signCheckInId:'',// 入住信息id  billingType=3必填  String选填
+        // signRoomId:'',//房间id
+        // signHouseNum:'',//房间号
+        // signEnterId:'',//签单单位id  billingType=2必填 String选填
+        // signCreditName:'',//签单单位名称  billingType=2必填  String选填
+        // signUserName:'',//签单用户名  billingType=2必填  String选填
+        // signIdcardType:'',//签单证件类型 1身份证 2护照  billingType=2必填   Integer选填
+        // signIdcard:'',//签单证件号码   billingType=2必填 String选填
+        // scoresDiscount:'',//积分抵扣分值  Integer选填
+        // scoresPrice:'',//积分抵扣额度  Double选填
+
+
+
+        if(this.form.billingType == 1){
+            if(this.form.memberCard == ''){
+                this.$message.error('请选择会员！');
+                return
+            }
+        }
+
+        if(this.form.billingType == 2){
+            if(this.form.signEnterId == ''){
+                this.$message.error('请选择单位！');
+                return
+            }
+            if(this.form.signUserName == ''){
+               this.$message.error('请输入姓名！');
+               return
+            }
+            if(this.form.signIdcardType == ''){
+                this.$message.error('请输入证件类型！');
+                return
+            }
+            if(this.form.signIdcard == ''){
+                this.$message.error('请输入证件号！');
+                return
+            }
+        }
+
+        if(this.form.billingType == 3){
+             if(this.form.signHouseNum == ''){
+                 this.$message.error('请选择房间！');
+                 return
+             }
+        }
+
+        let params = {
+            sellingId:this.searchform.sellId,
+            shopCount:this.countToTal,
+            consumePrice:this.cartToTal,
+            realPayPrice:this.cartToTal,
+            shopsJson :JSON.stringify(arr)
+        }
+
+        // console.log(params)
+
+        params.userId = this.userId
+        params.storesNum = this.storesNum
+        console.log(params)
+        this.$F.doRequest(this, "/pms/shop/shop_place_order_edit", params, (res) => {
+            // this.alert(200,this.$t('food.common.success'));
+            this.payOrder(res.orderId)
+        });
+    },
+
+    payOrder(id){
+        let params = this.form
+        params.orderId = id
+        params.userId = this.userId
+        params.storesNum = this.storesNum
+        console.log(params)
+        this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
+            this.alert(200,this.$t('food.common.success'));
+            this.reset();
+        });
+
     },
 
 
@@ -624,6 +720,7 @@ export default {
         this.isPrint = false
     },
     reset(){
+        this.cart = []
         this.form = {
            orderId:'',//菜品订单id string必填
            realPayPrice:'',//实付金额  Double必填
