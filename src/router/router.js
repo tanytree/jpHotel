@@ -365,8 +365,14 @@ export default new Router({
                     meta: { title: 'pmsshopselling' },
                     component: () =>
                         import('@/views/shop/pmsshopselling')
+                },                
+                {
+                    path: '/pmshoporder',
+                    name: 'pmshoporder',
+                    meta: { title: 'dishOrder' },
+                    component: () =>
+                        import('@/views/shop/order')
                 },
-
 
 
 

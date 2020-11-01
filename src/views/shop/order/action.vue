@@ -311,6 +311,8 @@
                     }
                     this.form.scoresDiscount =  this.jfInfo.jf
                     this.form.scoresPrice =  this.jfInfo.discount
+                // }else{
+
                 // }
             },
 
@@ -387,6 +389,9 @@
                 this.intForm()
                 this.$emit('closeDialog')
             }
+        },
+        watch:{
+
         }
     }
 </script>

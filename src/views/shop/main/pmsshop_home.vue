@@ -5,12 +5,11 @@
      </el-header>
      <el-main  v-loading="loading">
         <div class="shopNavList clearfix">
-            <div class="item" v-for="(item,index) in tableData">
+            <div class="item" v-for="(item,index) in tableData" @click="jump(item)">
                 <div class="icon"><i class="el-icon-s-shop"></i></div>
                 <div class="title">{{item.name}}</div>
-            </div>        
+            </div>
         </div>
-
      </el-main>
   </el-container>
 </template>
@@ -20,8 +19,7 @@ import {mapState,mapActions} from "vuex";
 import mixin from '../mixin';
 export default {
   mixins: [mixin],
-  components: {},
-
+  components:{},
   data() {
     return {
         loading: false,
@@ -50,6 +48,7 @@ export default {
         this.getDataList();
 
     },
+    //售卖点列表
     getDataList(){
         this.loading = true
         let params = {}
@@ -63,6 +62,17 @@ export default {
         });
     },
 
+    jump(item){
+        this.$router.push({
+            path:'/pmsshopselling',
+            query:{
+                key:item.id
+            }
+        })
+        let nextPath = 'pmsshopselling'
+        window.localStorage.setItem('currentPath',nextPath);
+        window.localStorage.setItem('pagePath',nextPath);
+    },
 
     /**每页数 */
     handleSizeChange(val) {

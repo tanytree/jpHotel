@@ -93,7 +93,6 @@
                         <el-form-item :label="$t('desk.home_note') + ':'">
                             <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off" placeholder="请填写冲调原因，必填！"></el-input>
                         </el-form-item>
-
                     </el-form>
                 </div>
             </el-col>
