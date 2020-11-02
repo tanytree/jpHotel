@@ -78,13 +78,13 @@
 
                     <!-- 人员管理 -->
                     <el-row style="margin-top:30px">
-                        <span>人员管理</span>
+                        <span>{{$t('commons.staffManagerDesc')}}</span>
                         <el-checkbox style="margin-left:30px">{{$t('boss.report_openAll')}}</el-checkbox>
                         <!--  :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" -->
                         <div style="margin-top:10px;">
                           <el-col :span="5" style="border:1px solid #ccc;padding:20px 10px;margin-right:20px">
                             <i class="el-icon-more"></i>
-                            <span>人员管理</span>
+                            <span>{{$t('commons.staffManagerDesc')}}</span>
                             <el-switch
                             style="margin-left:170px"
                               v-model="Oswitch"

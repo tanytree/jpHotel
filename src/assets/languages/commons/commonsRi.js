@@ -221,5 +221,6 @@ module.exports = {
     weeks: ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"],
     idCardTypeDesc: "本人確認書種類",
     selectIdCardType: 'ビザ種類を選択してください',
+    staffManagerDesc: 'アカウント管理',
 }
 

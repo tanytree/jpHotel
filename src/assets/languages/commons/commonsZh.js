@@ -229,5 +229,6 @@ module.exports = {
 
     idCardTypeDesc: "证件类型",
     selectIdCardType: '请选择证件类型',
+    staffManagerDesc: '人员管理',
 }
 

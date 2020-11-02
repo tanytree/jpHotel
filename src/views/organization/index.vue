@@ -32,7 +32,8 @@
                         <div class="searchInfo">
                             <div class="flex">
                                 <h3>
-                                    <span>{{activeLeftDepartMent.menuTitle}}</span>
+                                    <span>{{ $i18n.locale == 'ri' ? activeLeftDepartMent.japanese : (activeLeftDepartMent.menuAliasTitle || activeLeftDepartMent.menuTitle) }}
+                                    </span>
                                     <span class="nums">
                                     <em class="text-red">{{employeesList.length}}</em>/{{storesUserCount}}
                                 </span>
@@ -66,7 +67,7 @@
                 <el-form-item label="上级部门" class="require" v-if="isAddChild">
                     <el-input style="width:200px" disabled v-model="departMentForm.fartherName"></el-input>
                 </el-form-item>
-                <el-form-item label="部门名称" class="require">
+                <el-form-item :label="$t('boss.department_name')" class="require">
                     <el-input style="width:200px" v-model="departMentForm.departmentName"></el-input>
                 </el-form-item>
             </el-form>
@@ -84,7 +85,7 @@
                 <el-form-item label="上级部门" class="require" v-if="isAddChild">
                     <el-input style="width:200px" disabled v-model="departMentForm.fartherName"></el-input>
                 </el-form-item>
-                <el-form-item label="部门名称" class="require">
+                <el-form-item :label="$t('boss.department_name')" class="require">
                     <el-input style="width:200px" v-model="departMentForm.departmentName"></el-input>
                 </el-form-item>
                 <el-form-item label="部门图标" class="iconLabel" :class="{require:!isAddChild}">
