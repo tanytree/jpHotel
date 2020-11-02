@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-23 18:08:15
+ * @LastEditTime: 2020-11-02 13:31:25
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -31,10 +31,10 @@ module.exports = {
     hp_today: '本日',
     hp_yesterday: '昨日',
     hp_weekGo: '前1週間',
-    hp_compensationType: '損害賠償類別',
+    hp_compensationType: '資産種別',
     hp_addType: '類別追加',
     hp_bulletTitle: '削除確認いたしますか？',
-    hp_compensationGoods: '損害内容',
+    hp_compensationGoods: '物品登録',
     hp_goodsName: '預かり内容',
     hp_goodsType: '損壊類別',
     hp_compensationPrice: '損壊賠償請求単価',
