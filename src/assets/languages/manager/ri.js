@@ -427,18 +427,18 @@ module.exports = {
     hk_enable:'使用',
     hk_disable: '停止',
     hk_addRoomType:'タイプ追加',
-    hk_livePrice:'未翻译词条',
-    hk_set:'未翻译词条',
-    hk_breakfast: '未翻译词条',
-    hk_dinner:'未翻译词条',
+    hk_livePrice:'宿泊料金',
+    hk_set:'設定',
+    hk_breakfast: '朝食',
+    hk_dinner:'夕食',
     hk_placeEnterContent:'備考を入力してくだあい',
     hk_placeEnterContentA:'階を入力してください',
     hk_placeEnterContentB:'階の名称を入力してください',
     hk_placeEnterContentC: '備考を入力してくだあい',
-    grsl_physicalGoods:'未翻译词条',
-    grsl_serviceGoods:'未翻译词条',
-    
-    
+    grsl_physicalGoods:'商品',
+    grsl_serviceGoods:'サービス',
+
+
 
 
 }
