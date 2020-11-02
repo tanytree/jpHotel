@@ -43,6 +43,7 @@ module.exports = {
     hp_typeName: '物品名称',
     hp_costPrice: '物品コスト',
     hp_inputActiveName: '物品名称を入力してください',
+    hp_inputActivePrice: '賠償単価を入力してください。',
     hp_editor: '編集',
     hp_patternsSuccession: '交替使用会計モード',
     hp_deskDepartment: '客室',

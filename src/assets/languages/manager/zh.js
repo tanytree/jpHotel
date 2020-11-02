@@ -42,6 +42,7 @@ module.exports = {
     hp_typeName: '类型名称',
     hp_costPrice: '成本价格',
     hp_inputActiveName: '请输入物品名称',
+    hp_inputActivePrice: '请输入赔偿单价',
     hp_editor: '编辑',
     hp_patternsSuccession: '交班模式',
     hp_deskDepartment: '前台部',
