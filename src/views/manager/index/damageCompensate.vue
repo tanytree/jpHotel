@@ -315,7 +315,7 @@ export default {
     computed: {
         fourrules() {
             return {
-                damageTypeId: [{required: true, message: this.$t("manager.placeChoose"), trigger: "blur",}],
+                damageTypeId: [{required: true, message: this.$t("commons.placeChoose"), trigger: "blur",}],
                 name: [{required: true, message: this.$t("manager.hp_inputActiveName"), trigger: "blur",}],
                 damagePrice: [{required: true, message: this.$t("manager.hp_inputActivePrice"), trigger: "blur",}],
                 state: [{required: true, message: this.$t("manager.placeChoose"), trigger: "change",}],
