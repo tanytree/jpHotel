@@ -89,7 +89,7 @@
                         >{{$t('manager.hk_floorNote')+':'}} {{value.remark}}</el-row>
                         <el-row v-if="!selectRedio">
                             <el-input
-                                    :placeholder="$t('boss.department_placeEnterContent')"
+                                    :placeholder="$t('manager.hk_placeEnterContentC')"
                                     v-model="value.building.remark"
                             ></el-input>
                         </el-row>
@@ -116,7 +116,7 @@
                             <el-input
                                     type="textarea"
                                     :rows="2"
-                                    :placeholder="$t('boss.department_placeEnterContent')"
+                                    :placeholder="$t('manager.hk_placeEnterContent')"
                                     v-model="ruleForm_dong.remark"
                             ></el-input>
                         </el-form-item>
@@ -140,7 +140,7 @@
                     <el-col :span="20">
                         <el-form-item :label="$t('manager.hp_floor')+':'" prop="name">
                             <el-input
-                                    :placeholder="$t('boss.department_placeEnterContent')"
+                                    :placeholder="$t('manager.hk_placeEnterContentA')"
                                     v-model="ruleForm_ceng.floor"
                             ></el-input>
                         </el-form-item>
@@ -148,7 +148,7 @@
                     <el-col :span="20">
                         <el-form-item :label="$t('manager.hk_floorName')+':'" prop="name">
                             <el-input
-                                    :placeholder="$t('boss.department_placeEnterContent')"
+                                    :placeholder="$t('manager.hk_placeEnterContentB')"
                                     v-model="ruleForm_ceng.name"
                             ></el-input>
                         </el-form-item>
@@ -158,7 +158,7 @@
                             <el-input
                                     type="textarea"
                                     :rows="2"
-                                    :placeholder="$t('boss.department_placeEnterContent')"
+                                    :placeholder="$t('manager.hk_placeEnterContentC')"
                                     v-model="ruleForm_ceng.remark"
                             ></el-input>
                         </el-form-item>

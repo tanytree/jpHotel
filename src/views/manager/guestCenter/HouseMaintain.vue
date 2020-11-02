@@ -17,13 +17,13 @@
 						<el-table-column prop="checkinNum" :label="$t('manager.hk_availabilityPeople')"></el-table-column>
 						<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
 							<template slot-scope="scope">
-								<span>{{scope.row.state==1? $t('commons.enable'): $t('commons.disable')}}</span>
+								<span>{{scope.row.state==1? $t('manager.hk_enable'): $t('manager.hk_disable')}}</span>
 							</template>
 						</el-table-column>
 						<el-table-column prop="remark" :label="$t('boss.loginDetail_note')"></el-table-column>
 						<el-table-column :label="$t('commons.operating')" width="200">
 							<template slot-scope="scope">
-								<el-button type="text" size="small" @click="stop('kefang', scope.row)">{{scope.row.state==1? $t('commons.disable'): $t('commons.enable')}}
+								<el-button type="text" size="small" @click="stop('kefang', scope.row)">{{scope.row.state==1? $t('manager.hk_disable'): $t('manager.hk_enable')}}
 								</el-button>
 								<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
 								</el-button>
@@ -47,18 +47,18 @@
 						</el-col>
 					</el-row>
 					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
-						<el-table-column prop="houseName" :label="$t('manager.hk_roomName')"></el-table-column>
-						<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
+						<el-table-column prop="houseName" :label="$t('manager.hk_roomNameA')"></el-table-column>
+						<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPriceA')"></el-table-column>
 						<el-table-column prop="bedNum" :label="$t('manager.hk_seating')"></el-table-column>
 						<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
 							<template slot-scope="scope">
-								<span>{{scope.row.state==1? $t('commons.enable'): $t('commons.disable')}}</span>
+								<span>{{scope.row.state==1? $t('manager.hk_enable'): $t('manager.hk_disable')}}</span>
 							</template>
 						</el-table-column>
 						<el-table-column prop="remark" :label="$t('boss.loginDetail_note')"></el-table-column>
 						<el-table-column :label="$t('commons.operating')" width="250">
 							<template slot-scope="scope">
-								<el-button type="text" @click="stop('huiyi', scope.row)">{{scope.row.state==1? $t('commons.disable'):$t('commons.enable')}}
+								<el-button type="text" @click="stop('huiyi', scope.row)">{{scope.row.state==1? $t('manager.hk_disable'):$t('manager.hk_enable')}}
 								</el-button>
 								<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
 								</el-button>
@@ -76,7 +76,7 @@
 		</el-tabs>
 		<div class="infinite-list-wrappers flex_column" v-if="!tab_show">
 			<div class="back">
-				<el-page-header @back="back" content="新增房型"></el-page-header>
+				<el-page-header @back="back" :content="$t('manager.hk_addRoomType')"></el-page-header>
 			</div>
 			<div class="infinite">
 				<!-- 基本信息 -->
@@ -93,20 +93,20 @@
 					</el-form-item>
 
 					<!-- 住宿价格 -->
-					<el-form-item label="住宿价格" prop="marketPrice">
+					<el-form-item :label="$t('manager.hk_livePrice')" prop="marketPrice">
 						<el-row :gutter="20">
 							<el-col :span="6">
-								<el-button type="primary" plain @click="addHouse('sit')">设定</el-button>
+								<el-button type="primary" plain @click="addHouse('sit')">{{$t('manager.hk_set')}}</el-button>
 							</el-col>
 							<el-col :span="18">一份住宿【2000/人】</el-col>
 						</el-row>
 					</el-form-item>
 
 					<!-- 床宽 -->
-					<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedWidth')+'(cm):'" prop="bedSizeH">
+					<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedWidth')+'(cm):'" prop="bedSizeH" label-width="130px">
 						<div class="flex_row">
 							<el-input v-model="ruleForm.bedSizeW" :placeholder="$t('manager.hk_longitudinalWidth')" />
-							<div class="hr"></div>
+							<div > 〜 </div>
 							<el-input v-model="ruleForm.bedSizeH" :placeholder="$t('manager.hk_horizontalWidth')" />
 						</div>
 					</el-form-item>
@@ -133,7 +133,7 @@
 					<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_roomArea')+'(㎡):'" prop="houseSizeW">
 						<div class="flex_row">
 							<el-input v-model="ruleForm.houseSizeW" :placeholder="$t('manager.hk_roomAreaLon')" />
-							<div class="hr"></div>
+							<div > 〜 </div>
 							<el-input v-model="ruleForm.houseSizeH" :placeholder="$t('manager.hk_roomAreaHor')" />
 						</div>
 					</el-form-item>
@@ -144,16 +144,16 @@
 					</el-form-item>
 
 					<!-- 早餐 -->
-					<el-form-item v-if="active_tag == 'one'" label="早餐" prop="bedType">
-						<el-select v-model="ruleForm.bedNum" placeholder="请选择">
+					<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_breakfast')+':'" prop="bedType">
+						<el-select v-model="ruleForm.bedNum" :placeholder="$t('commons.placeChoose')">
 							<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 							</el-option>
 						</el-select>
 					</el-form-item>
 
 					<!-- 晚餐 -->
-					<el-form-item v-if="active_tag == 'one'" label="晚餐" prop="bedType">
-						<el-select v-model="ruleForm.bedNum" placeholder="请选择">
+					<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_dinner')+':'" prop="bedType">
+						<el-select v-model="ruleForm.bedNum" :placeholder="$t('commons.placeChoose')">
 							<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 							</el-option>
 						</el-select>
@@ -161,7 +161,7 @@
 
 
 					<!-- 床位数/座位2 -->
-					<el-form-item v-if="active_tag == 'two'" label="早餐" prop="bedNum">
+					<el-form-item v-if="active_tag == 'two'" :label="$t('manager.hk_breakfast')" prop="bedNum">
 						<el-input v-model="ruleForm.bedNum" class="input"></el-input>
 					</el-form-item>
 

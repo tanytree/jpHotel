@@ -130,7 +130,7 @@
                             prop="damagePrice"
                             :label="$t('manager.hp_compensationPrice')"
                         ></el-table-column>
-                        <el-table-column :label="$t('boss.loginDetail_state')">
+                        <el-table-column :label="$t('manager.hp_loginDetail_state')">
                             <template slot-scope="scope">{{
                                 scope.row.state == 1
                                     ? $t("commons.enable")
@@ -243,7 +243,7 @@
                 <el-form-item :label="$t('manager.hp_costPrice') + ':'">
                     <el-input v-model="goodsData.costPrice"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('boss.loginDetail_state') + ':'">
+                <el-form-item :label="$t('manager.hp_loginDetail_state') + ':'">
                     <el-radio-group v-model="goodsData.state">
                         <el-radio :label="1">{{
                             $t("commons.enable")

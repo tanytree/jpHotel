@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-22 16:58:02
+ * @LastEditTime: 2020-11-02 14:40:45
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -49,7 +49,7 @@ module.exports = {
     report_openAll: "全て開放",
     // loginDetail页面内容
     loginDetail_name: "名前",
-    loginDetail_state: "状態（all、on、off）",
+    loginDetail_state: "状態",
     loginDetail_phone: "連絡電話",
     loginDetail_stores: "該当ホテル",
     loginDetail_department: "担当セクション",

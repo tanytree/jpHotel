@@ -41,7 +41,7 @@
             <span>{{row.hotelRoomLock.hardware}}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('manager.hp_storiedBuilding')">
+        <el-table-column :label="$t('manager.hp_storiedBuildingA')">
           <template slot-scope="{row}">
             <span>{{row.hotelBuilding.name}}</span>
           </template>
@@ -82,7 +82,7 @@
             <span>{{row.hotelRoomLock.lockType}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="number" :label="$t('manager.hk_roomWhterNum')">
+        <el-table-column prop="number" :label="$t('manager.hk_roomWhterNum')" v-if="1==2">
           <template slot-scope="{row}">
             <span>{{row.hotelRoomLock.roomSerial}}</span>
           </template>
