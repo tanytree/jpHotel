@@ -19,6 +19,8 @@
                 <RoomNews v-if="item.path == 'RoomNews'"/>
                 <!-- 房锁维护-->
                 <RoomLock v-if="item.path == 'RoomLock'"/>
+                <!-- 附餐管理 -->
+                <MealManager  v-if="item.path == 'MealManager'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -29,9 +31,10 @@
     import BuildingFloor from './BuildingFloor'
     import RoomNews from './RoomNews'
 	import RoomLock from './RoomLock'
+	import MealManager from './MealManager'
     import { mapState, mapActions } from "vuex";
     export default {
-        components: { HouseMaintain,BuildingFloor,RoomNews,RoomLock},
+        components: { HouseMaintain,BuildingFloor,RoomNews,RoomLock,MealManager},
         computed: {
             ...mapState({
                 user: state => state.user
