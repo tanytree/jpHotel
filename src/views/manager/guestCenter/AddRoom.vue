@@ -304,19 +304,19 @@ export default {
             },
             towardList: [
                 {
-                    name: "朝南",
+                    name: "面山",
                     status: 1,
                 },
                 {
-                    name: "朝北",
+                    name: "面海",
                     status: 2,
                 },
                 {
-                    name: "朝东",
+                    name: "面湖",
                     status: 3,
                 },
                 {
-                    name: "朝西",
+                    name: "无",
                     status: 4,
                 },
             ],

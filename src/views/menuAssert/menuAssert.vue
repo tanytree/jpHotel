@@ -30,6 +30,12 @@
         <el-form-item label="是否显示：">
           <el-input v-model="selected.status"></el-input>
         </el-form-item>
+        <el-form-item label="菜单中文：">
+          <el-input v-model="selected.menuTitle"></el-input>
+        </el-form-item>
+        <el-form-item label="菜单英文：">
+          <el-input v-model="selected.japanese"></el-input>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false">{{$t('commons.cancel')}}</el-button>
@@ -72,6 +78,8 @@ export default {
         icon: this.selected.icon,
         path: this.selected.path,
         status: this.selected.status,
+          menuTitle: this.selected.menuTitle,
+          japanese: this.selected.japanese
       };
       this.$F.doRequest(this, "/pms/freeuser/update_menu", params, (data) => {
         this.dialogTableVisible = false;

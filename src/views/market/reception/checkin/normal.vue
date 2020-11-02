@@ -543,16 +543,7 @@
                         @change="hotel_room_list"
                         >无烟房</el-checkbox
                     >
-                    <el-checkbox
-                        v-model="hotelRoomListParams.noiseFlag"
-                        @change="hotel_room_list"
-                        >非噪音房</el-checkbox
-                    >
-                    <el-checkbox
-                        v-model="hotelRoomListParams.temperatureFlag"
-                        @change="hotel_room_list"
-                        >非高温房</el-checkbox
-                    >
+
                 </el-form-item>
                 <div class="rowRoomsList">
                     <div class="wrap">

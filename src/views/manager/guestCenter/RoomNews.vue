@@ -91,22 +91,16 @@
                                 @click="stop_p('jyong')"
                                 >{{ $t("manager.hk_batchDisabled") }}</el-button
                             >
-                            <el-button
-                                v-if="1==2"
-                                type="primary"
-                                size="mini"
-                                @click="stop('zaoyin')"
-                                >{{ $t("manager.hk_batchNoise") }}</el-button
-                            >
-                            <el-button
-                                 v-if="1==2"
-                                type="primary"
-                                size="mini"
-                                @click="stop('gaowen')"
-                                >{{
-                                    $t("manager.hk_batchTemperature")
-                                }}</el-button
-                            >
+
+<!--                            <el-button-->
+<!--                                 v-if="1==2"-->
+<!--                                type="primary"-->
+<!--                                size="mini"-->
+<!--                                @click="stop('gaowen')"-->
+<!--                                >{{-->
+<!--                                    $t("manager.hk_batchTemperature")-->
+<!--                                }}</el-button-->
+<!--                            >-->
                         </el-row>
                     </el-col>
                 </el-row>
