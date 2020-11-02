@@ -140,7 +140,7 @@
             handleDelete(row) {
                 this.$F.doRequest(this, "/pms/hotelattachmeal/delete", {
                     id: row.id,
-                    ctype: 2,
+                    ctype: 1,
                 }, (res) => {
                     this.getMealList(this.pageForm, this.mealTime);
                 });
