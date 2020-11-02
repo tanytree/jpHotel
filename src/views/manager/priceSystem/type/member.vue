@@ -37,6 +37,7 @@
           :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}"
         >
           <el-table-column
+              width="130px"
               v-for="(item, index) in memberTableHeads"
               :key="index"
               :label="item.dateStr + '' + item.weekDay"

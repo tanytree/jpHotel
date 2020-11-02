@@ -56,7 +56,7 @@
                 <el-breadcrumb-item>
                     <a @click="back">{{$t('manager.grsl_goodsManagerment')}}</a>
                 </el-breadcrumb-item>
-                <el-breadcrumb-item>{{$t('manager.grsl_resetGoods')}}</el-breadcrumb-item>
+                <el-breadcrumb-item>{{edit?$t('manager.grsl_resetGoods'):$t('manager.grsl_addGoods')}}</el-breadcrumb-item>
             </el-breadcrumb>
             <el-form :model="rowData" size="small" :rules="threerules" ref="rowForm" label-width="100px" class="rowForm">
                 <el-form-item :label="$t('manager.grsl_goodsMode')+':'">
