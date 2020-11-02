@@ -1,10 +1,9 @@
 <template>
     <div class="detail" v-loading="load">
          <!--  -->
-
         <div class="detailPanel" v-if="add == 0">
             <div class="top">
-                <span>{{$t('food.common.order_num')}}：{{info.dishesNum}} </span><span v-if= "info.deskNum">{{$t('food.common.deskNum')}}：{{info.deskNum}} </span>  <span v-if= "info.numberPlat">{{$t('food.common.numberPlat')}}：{{info.numberPlat}} </span>
+                <span>{{$t('food.common.order_num')}}：{{info.shopNum}} </span><span v-if= "info.deskNum">{{$t('food.common.deskNum')}}：{{info.deskNum}} </span>  <span v-if= "info.numberPlat">{{$t('food.common.numberPlat')}}：{{info.numberPlat}} </span>
                 </div>
             <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{info.consumePrice}}</div>
 
@@ -21,31 +20,51 @@
                   header-row-class-name="default"
                   size="small"
                 >
-                  <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>
+                  <el-table-column prop="goodsName" label="商品名称" ></el-table-column>
+                  <el-table-column label="计费规则">
+                      <template slot-scope="scope">
+                         <div v-if="scope.row.hotelGoods">
+                             <div v-if="scope.row.hotelGoods.categoryType == 1">
+                                 价格*数量
+                             </div>
+                             <div v-else>
+                                  <span v-if="scope.row.hotelGoods.priceModel == 1">
+                                  </span>
+                                  <span v-else>
+                                     {{scope.row.hotelGoods.priceStartMinute}} 分钟后收起步价，
+                                     起步价{{scope.row.hotelGoods.startPrice}}日元，每
+                                     {{scope.row.hotelGoods.minutePrice}}分钟收费{{scope.row.hotelGoods.depositPrice}}日元，
+                                     封顶消费{{scope.row.hotelGoods.capsPrice}}日元
+                                 </span>
+                             </div>
+                         </div>
+                      </template>
+                  </el-table-column>
                   <el-table-column :label="$t('food.common.price')">
                       <template slot-scope="scope">
                        ¥ {{scope.row.unitPrice}}
                       </template>
                   </el-table-column>
-                  <el-table-column :label="$t('food.common.food_count')" width="160">
+
+                  <el-table-column label="数量" width="160">
                       <template slot-scope="scope">
-                        <div class="cell" style="padding:0;" v-if="info.state == 1" >
+                        <!-- <div class="cell" style="padding:0;" v-if="info.state == 1" >
                             <div  class="el-input-number el-input-number--mini" style=" width:100px;">
                                 <span @click="changOrderSub(scope.$index,1)" role="button" class="el-input-number__decrease" ><i class="el-icon-minus"></i></span>
                                 <span @click="changOrderSub(scope.$index,2)" role="button" class="el-input-number__increase"><i class="el-icon-plus"></i></span>
                                 <div class="el-input el-input--mini">
-                                    <input type="text" min="1" v-model="scope.row.dishesCount" class="el-input__inner" disabled="disabled">
+                                    <input type="text" min="1" v-model="scope.row.goodsCount" class="el-input__inner" disabled="disabled">
                                 </div>
                             </div>
                         </div>
-                        <div v-else>
-                            {{scope.row.dishesCount}}
-                        </div>
+                        <div v-else> -->
+                            {{scope.row.goodsCount}}
+                        <!-- </div> -->
                       </template>
                   </el-table-column>
-                  <el-table-column :label="$t('food.common.action')" v-if="info.state == 1">
+                  <el-table-column :label="$t('food.common.status')" v-if="info.state == 1">
                     <template slot-scope="scope">
-                      <el-button size="mini" @click="handleDelete(scope.$index)">{{$t('food.common.remove')}}</el-button>
+                        未结/已结
                     </template>
                   </el-table-column>
                 </el-table>
@@ -208,15 +227,14 @@
 
             //获取详情
             getOrderDetail(params){
-
                 this.load = true
-                this.$F.doRequest(this, "/pms/dishes/dishes_order_detail", params, (res) => {
-                   // console.log(res.order)
+                this.$F.doRequest(this, "/pms/shop/shop_order_detail", params, (res) => {
+                   console.log(res)
                    this.load = false
                    this.info = res.order
                    let list = res.order.orderSubList
                    for(let i in list){
-                       this.cartDishIds.push(list[i].dishesId)
+                       this.cartDishIds.push(list[i].id)
                    }
                    this.cart = list
 
@@ -376,12 +394,13 @@
             },
 
             changOrderSub(index,type){
-              // console.log(index)
+              console.log(index)
               let list = this.cart
               let info = list[index]
-              let good = this.allTableData.find(v=>v.id == info.dishesId)
-              // console.log(info)
-              // console.log(good)
+              let good = this.allTableData.find(v=>v.id == info.goodsId)
+              console.log(list)
+              console.log(info)
+              console.log(good)
 
               if(type == 1){
                 // console.log('减少')

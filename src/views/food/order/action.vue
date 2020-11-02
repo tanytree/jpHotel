@@ -82,7 +82,7 @@
                 </el-form-item>
 
                 <el-form-item  :label="$t('food.common.order_count')">
-                    <el-input-number size="mini" v-model="form.docCoun" :step="1" step-strictly></el-input-number>
+                    <el-input-number size="mini" v-model="form.docCount" :step="1" step-strictly></el-input-number>
                 </el-form-item>
 
                 <el-form-item>
@@ -113,7 +113,7 @@
                    payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
                    remark:'',//备注  String选填
                    memberCard:'',//会员卡卡号  String选填
-                   docCoun:1,//单据份数  Integer选填
+                   docCount:1,//单据份数  Integer选填
                    billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
                    signCheckInId:'',// 入住信息id  billingType=3必填  String选填
                    signRoomId:'',//房间id
@@ -187,7 +187,7 @@
                     payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
                     remark:'',//备注  String选填
                     memberCard:'',//会员卡卡号  String选填
-                    docCoun:1,//单据份数  Integer选填
+                    docCount:1,//单据份数  Integer选填
                     billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
                     signCheckInId:'',// 入住信息id  billingType=3必填  String选填
                     signRoomId:'',//房间id

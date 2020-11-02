@@ -49,10 +49,14 @@
                                            价格*数量
                                        </div>
                                        <div v-else>
-                                           {{scope.row.hotelGoods.priceStartMinute}} 分钟后收起步价，
-                                           起步价{{scope.row.hotelGoods.startPrice}}日元，每
-                                           {{scope.row.hotelGoods.minutePrice}}分钟收费{{scope.row.hotelGoods.depositPrice}}日元，
-                                           封顶消费{{scope.row.hotelGoods.capsPrice}}日元
+                                            <span v-if="scope.row.hotelGoods.priceModel == 1">
+                                            </span>
+                                            <span v-else>
+                                               {{scope.row.hotelGoods.priceStartMinute}} 分钟后收起步价，
+                                               起步价{{scope.row.hotelGoods.startPrice}}日元，每
+                                               {{scope.row.hotelGoods.minutePrice}}分钟收费{{scope.row.hotelGoods.depositPrice}}日元，
+                                               封顶消费{{scope.row.hotelGoods.capsPrice}}日元
+                                           </span>
                                        </div>
                                    </div>
                                 </template>
@@ -108,6 +112,20 @@
                         <div class="action rel" v-loading="isloading">
                             <div class="margin-t-10">
                                 <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                                    <el-form-item label="订单来源" prop="orderSource">
+                                        <el-radio-group v-model="form.orderSource">
+                                           <!-- <el-select size="small" v-model="form.payType">
+                                                <el-option label="售卖点" :value="1"></el-option>
+                                                <el-option label="IPAD" :value="2"></el-option>
+                                                <el-option label="其他" :value="3"></el-option>
+                                            </el-select> -->
+                                            <el-radio :label="1">售卖点</el-radio>
+                                            <el-radio :label="2">IPAD</el-radio>
+                                            <el-radio :label="3">其他</el-radio>
+                                        </el-radio-group>
+                                    </el-form-item>
+
+
                                     <el-form-item :label="$t('food.common.billingType')" prop="billingType">
                                         <el-radio-group v-model="form.billingType" @change="changeBillingType">
                                             <el-radio :label="1">{{$t('food.billingType.1')}}</el-radio>
@@ -115,6 +133,10 @@
                                             <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                                         </el-radio-group>
                                     </el-form-item>
+
+
+
+
                                     <div v-if="form.billingType == 1">
                                         <el-form-item :label="$t('food.common.payType')">
                                             <el-select size="small" v-model="form.payType">
@@ -188,7 +210,7 @@
                                     </el-form-item>
 
                                     <el-form-item  :label="$t('food.common.order_count')">
-                                        <el-input-number size="mini" v-model="form.docCoun" :step="1" step-strictly></el-input-number>
+                                        <el-input-number size="mini" v-model="form.docCount" :step="1" :min="1" step-strictly></el-input-number>
                                     </el-form-item>
 
                                     <el-form-item>
@@ -238,11 +260,12 @@ export default {
         pageIndex:1,
         pageSize:20,
         form:{
+           orderSource:1,
            realPayPrice:'',//实付金额  Double必填
            payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
            remark:'',//备注  String选填
            memberCard:'',//会员卡卡号  String选填
-           docCoun:1,//单据份数  Integer选填
+           docCount:1,//单据份数  Integer选填
            billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
            signCheckInId:'',// 入住信息id  billingType=3必填  String选填
            signRoomId:'',//房间id
@@ -410,6 +433,7 @@ export default {
 
     //加入
     addCart(item,index){
+        console.log(item.goodsId)
         if(this.productList[index].inventoryCount > 0){
             this.productList[index].inventoryCount -= 1
             let good = this.cart.find(v=>v.goodsName==item.goodsName)
@@ -419,7 +443,7 @@ export default {
               this.cart.push({...item,count:1})
             }
         }else{
-            this.$alert('该菜品已经没有库存啦，不能再售卖啦！', this.$t('commons.tip_desc'), {
+            this.$alert('该商品已经没有库存啦，不能再售卖啦！', this.$t('commons.tip_desc'), {
               confirmButtonText: this.$t('commons.confirm'),
               callback: action => {
               }
@@ -430,7 +454,7 @@ export default {
     //购物车的加减 type = 1 是减少  2 是添加
     changeCartCount(v,type){
         let info  = this.cart[v]
-        let good = this.productList.find(v=>v.id==info.id)
+        let good = this.productList.find(v=> v.goodsId==info.goodsId)
         if(type == 1){
             info.count-= 1
             good.inventoryCount += 1
@@ -454,12 +478,15 @@ export default {
     },
     //移除
     handleDelete(item,index){
-        let good = this.productList.find(v=>v.id==item.id)
-        good.inventoryCount = good.inventoryCount + item.count
-        this.cart.splice(index,1)
-        if(this.cart.length == 0){
-            this.getPrucuctList();
+        let good = this.productList.find(v=>v.goodsId==item.goodsId)
+        if(good){
+            good.inventoryCount = good.inventoryCount + item.count
+            this.cart.splice(index,1)
+            if(this.cart.length == 0){
+                this.getPrucuctList();
+            }
         }
+
     },
 
     //获取积分换算查询
@@ -521,23 +548,30 @@ export default {
             let shop_discount_ratio = this.score.shop_discount_ratio
             let convert = this.score.convert
             let score =  this.selectMerberInfo.score
-            let jf = parseFloat(price)*parseFloat(convert)*parseFloat(shop_discount_ratio) //当前可有用的积分
-            let discount = 0
-            if(score > jf || score == jf){
-                discount = parseFloat(price)*parseFloat(shop_discount_ratio) //当前最大可抵扣金额
-                this.jfInfo = {
-                   jf:jf,
-                   discount:discount.toFixed(2)
+            // console.log(score)
+            if(score){
+                let jf = parseFloat(price)*parseFloat(convert)*parseFloat(shop_discount_ratio) //当前可有用的积分
+                let discount = 0
+                if(score > jf || score == jf){
+                    discount = parseFloat(price)*parseFloat(shop_discount_ratio) //当前最大可抵扣金额
+                    this.jfInfo = {
+                       jf:jf,
+                       discount:discount.toFixed(2)
+                    }
+                }else{
+                    discount =  parseFloat(score)/parseFloat(convert)
+                    this.jfInfo = {
+                       jf:score,
+                       discount:discount.toFixed(2)
+                    }
                 }
+                this.form.scoresDiscount =  this.jfInfo.jf
+                this.form.scoresPrice =  this.jfInfo.discount
             }else{
-                discount =  parseFloat(score)/parseFloat(convert)
-                this.jfInfo = {
-                   jf:score,
-                   discount:discount.toFixed(2)
-                }
+                this.form.scoresDiscount = ''
+                this.form.scoresPrice =  ''
             }
-            this.form.scoresDiscount =  this.jfInfo.jf
-            this.form.scoresPrice =  this.jfInfo.discount
+
         // }
     },
 
@@ -600,7 +634,7 @@ export default {
 
     //提交
     submit(){
-        this.payLoading = true
+
         // console.log(this.isUseScore)
         // console.log(this.form.scoresDiscount)
         // console.log(this.form.scoresPrice)
@@ -655,6 +689,7 @@ export default {
              }
         }
 
+        this.payLoading = true
         let params = {
             sellingId:this.searchform.sellId,
             shopCount:this.countToTal,
@@ -699,12 +734,12 @@ export default {
     reset(){
         this.cart = []
         this.form = {
-           orderId:'',//菜品订单id string必填
+           orderSource:1,
            realPayPrice:'',//实付金额  Double必填
            payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
            remark:'',//备注  String选填
            memberCard:'',//会员卡卡号  String选填
-           docCoun:1,//单据份数  Integer选填
+           docCount:1,//单据份数  Integer选填
            billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
            signCheckInId:'',// 入住信息id  billingType=3必填  String选填
            signRoomId:'',//房间id

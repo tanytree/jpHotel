@@ -14,13 +14,14 @@
                    </el-radio-group>
                 </el-form-item>
             </el-row>
+
             <el-form-item :label="$t('food.common.curstom_name')">
                 <el-input v-model="searchForm.name" :placeholder="$t('food.common.curstom_name')" class="width200"></el-input>
             </el-form-item>
             <el-form-item :label="$t('food.common.order_from')">
-                <el-select v-model="searchForm.orderSource" :placeholder="$t('food.common.order_from')">
+                <el-select v-model="searchForm.sellingId" :placeholder="$t('food.common.order_from')">
                     <el-option
-                      v-for="item in options"
+                      v-for="item in saleData"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
@@ -34,7 +35,7 @@
                 <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width:200px":placeholder="$t('food.common.order_time')"></el-date-picker>
             </el-form-item>
             <el-form-item :label="$t('food.common.order_num')">
-                <el-input v-model="searchForm.dishesNum"  :placeholder="$t('food.common.order_num')" class="width200"></el-input>
+                <el-input v-model="searchForm.shopNum"  :placeholder="$t('food.common.order_num')" class="width200"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="getDataList">{{$t('food.common.search')}}</el-button>
@@ -53,7 +54,7 @@
                 style="width: 100%"
                >
                 <el-table-column
-                  prop="dishesNum"
+                  prop="shopNum"
                   :label="$t('food.common.order_num')"
                   >
                 </el-table-column>
@@ -63,11 +64,11 @@
                   >
                 </el-table-column>
                 <el-table-column
-                  :label="$t('food.common.food_detail')"
+                  label="商品明细"
                   >
                   <template slot-scope="scope" >
                     <div v-for="sumItem in scope.row.orderSubList" class="text-size12">
-                    {{sumItem.dishesName}} * {{sumItem.dishesCount}}
+                    {{sumItem.goodsName}} * {{sumItem.goodsCount}}
                     </div>
                   </template>
                 </el-table-column>
@@ -87,6 +88,13 @@
                  >
                   <template slot-scope="scope">{{getOrderSource(scope.row.orderSource)}}</template>
                 </el-table-column>
+
+                <el-table-column
+                   prop="sellingName"
+                  label="售卖点"
+                 >
+                </el-table-column>
+
 
                 <el-table-column
                   :label="$t('food.common.total_pay')"
@@ -147,7 +155,7 @@
 
         <div class="detailPanel">
             <div class="top">
-                <span>{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
+                <span>{{$t('food.common.order_num')}}：{{detail.shopNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{detail.consumePrice}}</div>
             <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
@@ -158,9 +166,9 @@
               header-row-class-name="default"
               size="small"
             >
-              <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>
+              <el-table-column prop="goodsName" label="商品名称" ></el-table-column>
               <el-table-column :label="$t('food.common.price')" prop="unitPrice"></el-table-column>
-              <el-table-column :label="$t('food.common.food_count')" width="160" prop="dishesCount"></el-table-column>
+              <el-table-column label="商品数量" width="160" prop="goodsCount"></el-table-column>
             </el-table>
 
             <el-divider></el-divider>
@@ -186,7 +194,7 @@ import action from './action'
 import mixin from '../mixin';
 export default {
     mixins: [mixin],
-    props:['categroyList'],
+    props:['saleData'],
     components:{action,detail},
     computed: {
         ...mapState({
@@ -206,26 +214,15 @@ export default {
             showDetail: false,
             searchForm: {
                 state:'',// 状态  1未结 2已结 3取消      int选填
-                orderSource:'',//点餐来源 1前台点餐 2IPAD点餐 3H5点餐      int选填
-                dishesNum:'',// 订单号      String选填
+                sellingId:'',// 售卖点id
+                shopNum :'',// 订单号
                 name:'',//客人名称      string选填
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 startTime: "", //考试时件
                 endTime: "" //结束时间
             },
-            options: [
-                {
-                  value: '1',
-                  label: this.$t('food.orderSource.1')
-                }, {
-                  value: '2',
-                  label: this.$t('food.orderSource.2')
-                }, {
-                  value: '3',
-                  label: this.$t('food.orderSource.3')
-                }
-            ],
+
             listTotal: 0, //总条数
             tableData: [], //表格数据
             is_add:true,
@@ -240,8 +237,8 @@ export default {
         initForm() {
             this.searchForm = {
                 state:'',// 状态  1未结 2已结 3取消      int选填
-                orderSource:'',//点餐来源 1前台点餐 2IPAD点餐 3H5点餐      int选填
-                dishesNum:'',// 订单号      String选填
+                sellingId:'',// 售卖点id
+                shopNum :'',// 订单号
                 name:'',//客人名称      string选填
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
@@ -260,10 +257,10 @@ export default {
             let params = this.searchForm
             params.userId = this.userId
             params.storesNum = this.storesNum
-            this.$F.doRequest(this, "/pms/dishes/dishes_order_list", params, (res) => {
-                // console.log(res)
+            this.$F.doRequest(this, "/pms/shop/shop_order_list", params, (res) => {
+                console.log(res)
                 this.loading = false
-                this.tableData = res.dishesOrderList
+                this.tableData = res.shopOrderList
                 this.listTotal = res.page.count;
             });
         },
@@ -312,14 +309,14 @@ export default {
 
         //获取订单信息
         getInfo(data){
-            console.log(data)
+            // console.log(data.state)
             if(data.state == 2){
                this.dialogShows = true
                this.detail = data
                return false
             }else{
                 let info = {
-                    dishesOrderId:data.id
+                    shopOrderId:data.id
                 }
                 info.userId = this.userId
                 info.storesNum = this.storesNum
@@ -329,7 +326,7 @@ export default {
                 let cateList = this.getNewCateList(this.categroyList)
 
                 this.$nextTick(()=>{
-                    this.$refs.detailRef.getInfo(info,cateList)
+                    this.$refs.detailRef.getInfo(info)
                 })
             }
 
