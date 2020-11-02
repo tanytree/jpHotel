@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-16 16:12:30
+ * @LastEditTime: 2020-11-02 11:49:34
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>

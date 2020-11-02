@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-12 18:34:22
+ * @LastEditTime: 2020-11-02 11:04:19
  * @FilePath: \jiudian\src\views\market\orders\coms\c2.vue
 -->
 <template>
@@ -9,10 +9,10 @@
     <div class="cost margin-t-10">
       <div class="wrap">
         <span class="fee" v-if="detailData.totalPrice > 0"
-          >应收：{{ detailData.totalPrice }}</span
+          >{{$t('desk.order_receivable')+':'}}{{ detailData.totalPrice }}</span
         >
         <span class="fee" v-if="detailData.totalPrice < 0"
-          >应退：{{ detailData.totalPrice }}</span
+          >{{$t('desk.order_shouldBack')+':'}}{{ detailData.totalPrice }}</span
         >
         <div class="costNum">
           <el-row

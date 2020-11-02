@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-18 15:07:25
- * @FilePath: /jiudian/src/views/market/orders/coms/finance.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-02 11:56:51
+ * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
 <div class="finance">
@@ -13,19 +13,19 @@
                 <el-button type="primary" size="mini" @click="entryShow=true">{{$t('desk.enterAccount')}}</el-button>
                 <el-button type="primary" size="mini" @click="onAccountShow=true">{{ $t('desk.charge') }}</el-button>
                 <el-button type="primary" size="mini" @click="consumeGoodsHandle">{{ $t('desk.serve_miniPub') }}</el-button>
-                <el-button type="primary" size="mini" @click="checkOutHandle">退房结账</el-button>
+                <el-button type="primary" size="mini" @click="checkOutHandle">{{ $t('desk.order_checkout') }}</el-button>
                 <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" size="mini" @click="destructionHandle">{{$t('desk.customer_rich')}}</el-button>
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
-                <el-button type="primary" size="mini">撤销结账</el-button>
-                <el-button type="primary" size="mini" @click="knotShow=true">走结</el-button>
+                <el-button type="primary" size="mini">{{$t('desk.customer_undoCheckoutA')}}</el-button>
+                <el-button type="primary" size="mini" @click="knotShow=true">{{$t('desk.order_goTie')}}</el-button>
             </el-form-item>
         </el-row>
-        <el-form-item label="账务类别：">
-            <el-button :type="searchForm.state == '' ? 'primary' : ''" size="mini" @click="consume_order_list('')">所有账务</el-button>
-            <el-button :type="searchForm.state == '1' ? 'primary' : ''" size="mini" @click="consume_order_list(1)">未结账务</el-button>
-            <el-button :type="searchForm.state == '2' ? 'primary' : ''" size="mini" @click="consume_order_list(2)">已结账务</el-button>
+        <el-form-item :label="$t('desk.order_accountsType')+':'">
+            <el-button :type="searchForm.state == '' ? 'primary' : ''" size="mini" @click="consume_order_list('')">{{$t('desk.order_allAccounts')}}</el-button>
+            <el-button :type="searchForm.state == '2' ? 'primary' : ''" size="mini" @click="consume_order_list(2)">{{$t('desk.order_haveAccounts')}}</el-button>
+            <el-button :type="searchForm.state == '1' ? 'primary' : ''" size="mini" @click="consume_order_list(1)">{{$t('desk.order_notHaveAccounts')}}</el-button>
         </el-form-item>
 <!--        <el-form-item class="fr">-->
 <!--            <el-button type="primary">导出</el-button>-->
@@ -36,30 +36,30 @@
               @selection-change="handleSelectionChange" size="mini">
         <el-table-column type="selection" width="55">
         </el-table-column>
-        <el-table-column prop="createTime" label="消费时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
-        <el-table-column label="账务项目" show-overflow-tooltip>
+        <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{F_priceType(row.priceType)}}
             </template>
         </el-table-column>
-        <el-table-column label="付款" prop="payPrice"></el-table-column>
+        <el-table-column :label="$t('desk.order_payment')" prop="payPrice"></el-table-column>
         <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
             <template slot-scope="{row}">
-                {{row.state==1?'未结':'已结'}}
+                {{row.state==1? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
             </template>
         </el-table-column>
-        <el-table-column prop="consumePrice" label="消费">
+        <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
             <template slot-scope="{row}" style="color: red">
                 {{row.consumePrice}}
             </template>
         </el-table-column>
-        <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('commons.operating')">
             <template slot-scope="{row}">
-                <el-button type="text" size="mini" @click="consume_move(row)">移除</el-button>
+                <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -70,40 +70,40 @@
     <!--入账 -->
     <el-dialog top='0' :title="$t('desk.enterAccount')" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
-            <p>快速入账项目</p>
-            <el-form-item label="付款项目：">
+            <!-- <p>快速入账项目</p> -->
+            <el-form-item :label="$t('desk.order_payProject')+':'">
                 <el-radio-group v-model="consumeOperForm.priceType">
-                    <el-radio-button :label="3" :value="3">收款</el-radio-button>
-                    <el-radio-button :label="2" :value="2">押金</el-radio-button>
+                    <el-radio-button :label="3" :value="3">{{$t('desk.customer_collection')}}</el-radio-button>
+                    <el-radio-button :label="2" :value="2">{{$t('desk.order_theDeposit')}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="选择结算方式" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
+            <el-form-item :label="$t('desk.order_selectPayWay')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
                 <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio :label="1" :value="1">现金</el-radio>
-                    <el-radio :label="2" :value="2">银行卡</el-radio>
-                    <el-radio :label="3" :value="3">支付宝</el-radio>
-                    <el-radio :label="4" :value="4">微信</el-radio>
-                    <el-radio :label="5" :value="5">会员卡</el-radio>
+                    <el-radio :label="1" :value="1">{{$t('desk.serve_cash')}}</el-radio>
+                    <el-radio :label="2" :value="2">{{$t('desk.customer_bankCard')}}</el-radio>
+                    <el-radio :label="3" :value="3">{{$t('desk.serve_alipay')}}</el-radio>
+                    <el-radio :label="4" :value="4">{{$t('desk.serve_wechat')}}</el-radio>
+                    <el-radio :label="5" :value="5">{{$t('desk.order_memCard')}}</el-radio>
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="消费项目：">
+            <el-form-item :label="$t('desk.order_consumptionProject')+':'">
                 <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
-                    <el-radio-button :label="5" :value="5">加收全天房费</el-radio-button>
-                    <el-radio-button :label="6" :value="6">加收半天房费</el-radio-button>
-                    <el-radio-button :label="7" :value="7">损物赔偿</el-radio-button>
+                    <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
+                    <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
+                    <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
             <template v-if="consumeOperForm.priceType==7">
-                <el-form-item label="商品类别：">
+                <el-form-item :label="$t('desk.order_goodsType')+':'">
                     <el-select v-model="consumeOperForm.damageTypeId" @change="damageTypeIdChange">
                         <el-option v-for="item in hoteldamagetypeList" :key="item.id" :label="item.name" :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="商品名称：">
+                <el-form-item :label="$t('desk.order_goodsName')+':'">
                     <el-select v-model="consumeOperForm.damageId" @change="getDdamageInfo">
                         <el-option v-for="item in hoteldamageList" :key="item.id" :label="item.name" :value="item.id">
                         </el-option>
@@ -112,7 +112,7 @@
                     <el-input-number @change="getDamagePrice" :disabled="!consumeOperForm.damageId"  v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
                 </el-form-item>
             </template>
-            <el-form-item label="金额：">
+            <el-form-item :label="$t('desk.customer_sum')+':'">
                 <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
                 <el-input class="2222" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
@@ -124,7 +124,7 @@
 <!--            </el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="entryShow = false">关闭</el-button>
+            <el-button @click="entryShow = false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
         </div>
     </el-dialog>
@@ -157,7 +157,7 @@
                     {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList && currentRoom.personList.length && currentRoom.personList[0].name}}
+                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList.length && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <el-row v-else>
@@ -169,7 +169,7 @@
                         {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
-                        入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
+                       {{$t('desk.customer_livePeople')+':'}}{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
                         detailData.inRoomList[0].personList[0] &&
                         detailData.inRoomList[0].personList[0].name}}
                     </el-col>
@@ -180,8 +180,8 @@
             <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="payPrice">
                 <el-input class="width200" type="number" v-model="consumeOperForm.payPrice"></el-input>
             </el-form-item>
-            <el-form-item label="挂账单位：" class="" prop="creditName">
-                <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword placeholder="请输入关键词"  :loading="loading" @change="enterNameChange">
+            <el-form-item :label="$t('desk.customer_buyerUnit') + ':'" class="" prop="creditName">
+                <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword :placeholder="$t('desk.pleaseEnter')"  :loading="loading" @change="enterNameChange">
                     <el-option v-for="item in hotelenterList" :key="item.id" :label="item.enterName" :value="item.id">
                         {{item.enterName}}
                     </el-option>
@@ -192,12 +192,12 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="onAccountShow=false">关闭</el-button>
+            <el-button @click="onAccountShow=false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="consume_oper(2,'onAccount')">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--走结-->
-    <el-dialog top='0' title="走结" :visible.sync="knotShow" width="500px">
+    <el-dialog top='0' :title="$t('desk.order_goTie')" :visible.sync="knotShow" width="500px">
         <el-form :model="consumeOperForm" ref="knot" :rules="rules" size="mini" label-width="20px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -207,7 +207,7 @@
                     {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList[0] && currentRoom.personList[0].name}}
+                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <el-row v-else>
@@ -219,25 +219,25 @@
                         {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
-                        入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList
+                       {{$t('desk.customer_livePeople')+':'}}{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList
                         && detailData.inRoomList[0].personList[0].name}}
                     </el-col>
                 </template>
             </el-row>
             <br />
             <el-form-item label="" class="">
-                <p>是否确认改为走结？</p>
+                <p>{{$t('desk.order_ifGoTie')}}</p>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="knotShow=false">关闭</el-button>
+            <el-button @click="knotShow=false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--开发票-->
 
     <!--结账退款-->
-    <el-dialog top='0' title="退房结账" :visible.sync="checkOutShow" width="800px">
+    <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
         <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -247,14 +247,14 @@
                     {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
+                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <br />
             <div class="cost margin-t-10" v-if="detailData">
                 <div class="wrap" style="background:#efefef">
-                    <span class="fee" v-if="detailData.totalPrice>0">应收：{{detailData.totalPrice}}</span>
-                    <span class="fee" v-if="detailData.totalPrice<0">应退：{{detailData.totalPrice}}</span>
+                    <span class="fee" v-if="detailData.totalPrice>0">{{$t('desk.order_receivable')+':'}}{{detailData.totalPrice}}</span>
+                    <span class="fee" v-if="detailData.totalPrice<0">{{$t('desk.order_shouldBack')+':'}}{{detailData.totalPrice}}</span>
                     <div class="costNum">
                         <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
                         <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
@@ -274,7 +274,7 @@
                     <el-radio :label="5" :value="5">会员卡</el-radio>
                 </el-radio-group>
             </el-form-item> -->
-            <el-form-item label="金额：" class="" prop="consumePrice">
+            <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
                 <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item :label="$t('desk.home_note') + ':'">
@@ -285,12 +285,12 @@
 <!--            </el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="checkOutShow=false">关闭</el-button>
+            <el-button @click="checkOutShow=false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
     <!--冲调-->
-    <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow"width="800px">
+    <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -300,7 +300,7 @@
                     {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
                 <el-col :span="8">
-                    入住人：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
+                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
             <el-row v-else>
@@ -312,36 +312,36 @@
                         {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
                     </el-col>
                     <el-col :span="8">
-                        入住人：{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
+                       {{$t('desk.customer_livePeople')+':'}}{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
                         detailData.inRoomList[0].personList[0].name}}
                     </el-col>
                 </template>
             </el-row>
             <br />
-            <p>正在冲调的账务</p>
+            <p>{{$t('desk.order_accountDeveloped')}}</p>
             <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                <el-table-column label="账务项目" show-overflow-tooltip>
+                <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
                     <template slot-scope="{row}">
                         {{F_priceType(row.priceType)}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" label="业务说明" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             </el-table>
-            <el-form-item style="margin-top: 10px;" label="冲调方式：" prop="priceType">
+            <el-form-item style="margin-top: 10px;" :label="$t('desk.order_mixingWay')+':'" prop="priceType">
                 <el-radio-group v-model="consumeOperForm.priceType">
-                    <el-radio :label="9" :value="9">完全冲调</el-radio>
-                    <el-radio :label="10" :value="10">部分冲调</el-radio>
+                    <el-radio :label="9" :value="9">{{$t('desk.order_completelyAgainst')}}</el-radio>
+                    <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="冲调金额：" prop="consumePrice"  v-if="consumeOperForm.priceType == 10">
+            <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrice"  v-if="consumeOperForm.priceType == 10">
                 <el-input class="width200" type="text" v-model="consumeOperForm.consumePrice"></el-input>
-                <em style="margin-left:10px;color:#888;font-size: 12px;">注意：冲调金额小于原账金额</em>
+                <em style="margin-left:10px;color:#888;font-size: 12px;">{{$t('desk.order_attention')}}</em>
             </el-form-item>
-            <el-form-item label="冲调原因：" prop="remark">
+            <el-form-item :label="$t('desk.order_completelyReason')+':'" prop="remark">
                 <el-input type="textarea" v-model="consumeOperForm.remark"></el-input>
             </el-form-item>
         </el-form>
@@ -379,56 +379,10 @@ export default {
     },
     computed: {
         ...mapState({
-        })
-    },
-    data() {
-        return {
-            loading: false,
-            hotelenterLoading: false,
-            entryShow: false, //入账
-            payTypeShow: false,
-            onAccountShow: false,
-            knotShow: false,
-            openInvoiceShow: false,
-            checkOutShow: false,
-            destructionShow: false,
-            someAccountsShow: false,
-            consumeGoodsShow: false,
-            checkType: 'customer',
-            activeName: 'first',
-            detail: {
-                text: ''
-            },
-            searchForm: {
-                state: '',
-                checkInId: '',
-                pageIndex: 1,
-                pageSize: 10
-            },
-            consumeOperForm: {
-                consumePrice: '',
-                payPrice:'',
-                priceType: '',
-                payType: '',
-                name: '',
-            },
-            openInvoiceForm: {
-                roomNum: '',
-                name: '',
-                checkInId: '',
-                mobile: '',
-                consumePrice: '',
-                prices: '',
-                invoicePrice: '',
-                companyName: '',
-                projectName: '',
-                invoiceTime: '',
-                remark: '',
-                invoiceId: '',
-                isPoints:false
-            },
-            rules: {
-                consumePrice: [{
+        }),
+        rules(){
+            return{
+              consumePrice: [{
                     required: true,
                     // message: '请输入金额',
                     message: this.$t('commons.mustInput'),
@@ -482,8 +436,57 @@ export default {
                     message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 },
-                ],
+                ],  
+            }
+        }
+    },
+    data() {
+        return {
+            loading: false,
+            hotelenterLoading: false,
+            entryShow: false, //入账
+            payTypeShow: false,
+            onAccountShow: false,
+            knotShow: false,
+            openInvoiceShow: false,
+            checkOutShow: false,
+            destructionShow: false,
+            someAccountsShow: false,
+            consumeGoodsShow: false,
+            checkType: 'customer',
+            activeName: 'first',
+            detail: {
+                text: ''
             },
+            searchForm: {
+                state: '',
+                checkInId: '',
+                pageIndex: 1,
+                pageSize: 10
+            },
+            consumeOperForm: {
+                consumePrice: '',
+                payPrice:'',
+                priceType: '',
+                payType: '',
+                name: '',
+            },
+            openInvoiceForm: {
+                roomNum: '',
+                name: '',
+                checkInId: '',
+                mobile: '',
+                consumePrice: '',
+                prices: '',
+                invoicePrice: '',
+                companyName: '',
+                projectName: '',
+                invoiceTime: '',
+                remark: '',
+                invoiceId: '',
+                isPoints:false
+            },
+          
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [{}], //表格数据
@@ -531,7 +534,7 @@ export default {
             let params = {
                 orderId: item.id
             };
-            this.$confirm('请确认是否删除该项?', this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('desk.order_ifDelete'), this.$t('commons.tip_desc'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'
@@ -572,23 +575,23 @@ export default {
             if (type == 1) {
                 params.state = 1;
                 if (!params.priceType) {
-                    this.$message.error('请选择入账项目');
+                    this.$message.error(this.$t('desk.order_selectEntryItem'));
                     return;
                 }
                 if (params.priceType == 3 && !params.payType) {
                     // this.payTypeShow = true;
-                    this.$message.error('请选择结算方式');
+                    this.$message.error(this.$t('desk.order_pleaseSelectPayWay'));
                     return;
                 }
                 if (params.priceType == 3 || params.priceType == 2) {
                     if (!params.payPrice) {
-                        this.$message.error('请输入金额');
+                        this.$message.error(this.$t('desk.order_inputPrice'));
                         return;
                     }
                 } else {
 
                     if (!params.consumePrice) {
-                        this.$message.error('请输入金额');
+                        this.$message.error(this.$t('desk.order_inputPrice'));
                         return;
                     }
 
@@ -620,7 +623,7 @@ export default {
                 params.payType = 0 //挂账无需支付方式
                 // params.orderId = this.destructionList[0].id
                 if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
-                   this.$message.error('部分冲调金额不能大于' +  parseFloat(this.destructionList[0].payPrice));
+                   this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
                    return;
                 }
                 params.consumePrice = '-' + this.consumeOperForm.consumePrice
@@ -739,7 +742,7 @@ export default {
                     this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum
                     this.openInvoiceForm.mobile = this.detailData.inRoomList[0].mobile
                 } else {
-                    this.$message.error('暂无入住人');
+                    this.$message.error(this.$t('desk.order_noPeople'));
                     return
                 }
             }
@@ -806,7 +809,7 @@ export default {
                         this.consumeOperForm.consumePrice = this.detailData.inRoomList[0].realPrice
                     } else {
                         this.consumeOperForm.consumePrice = ''
-                        this.$message.error('暂无入住人');
+                        this.$message.error(this.$t('desk.order_noPeople'));
                         return
                     }
                 }
@@ -820,7 +823,7 @@ export default {
                         this.consumeOperForm.consumePrice = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(2)
                     } else {
                         this.consumeOperForm.consumePrice = ''
-                        this.$message.error('暂无入住人');
+                        this.$message.error(this.$t('desk.order_noPeople'));
                         return
                     }
                 }
@@ -928,16 +931,16 @@ export default {
 
         destructionHandle() {
             if (this.multipleSelection.length < 1) {
-                this.$message.error('请选择需要操作的账务');
+                this.$message.error(this.$t('desk.order_selectOperateAccount'));
                 return
             }
             if (this.multipleSelection.length > 1) {
-                this.$message.error('仅能选择一条账务冲调');
+                this.$message.error(this.$t('desk.order_onlyOneAccount'));
                 return
             }
             for (let k in this.multipleSelection) {
                 if (this.multipleSelection[k].billingType == 1) {
-                    this.$message.error('自动计费项目不能冲调');
+                    this.$message.error(this.$t('desk.order_autoTiePrice'));
                     return
                 }
 
@@ -964,7 +967,7 @@ export default {
                     this.openInvoiceForm.roomNum = this.detailData.inRoomList[0].houseNum
                     this.openInvoiceForm.mobile = this.detailData.checkIn.mobile
                 } else {
-                    this.$message.error('暂无入住人');
+                    this.$message.error(this.$t('desk.order_noPeople'));
                     return
                 }
             }
