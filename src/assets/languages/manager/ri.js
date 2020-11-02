@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 17:02:35
+ * @LastEditTime: 2020-11-02 17:58:44
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -172,8 +172,8 @@ module.exports = {
     hk_roomInfo: '部屋配置情報',
 
     //   管理部 > 客房二级库 (guestRoomSecondaryLibrary > grsl)
-    grsl_goodsMode: '商品の種類',
-    grsl_matter: '実物',
+    grsl_goodsMode: '種別',
+    grsl_matter: '商品',
     grsl_service: 'サービス',
     grsl_goodsName: '商品名',
     grsl_goodsState: '状態',
@@ -195,7 +195,7 @@ module.exports = {
     grsl_sureDelete: '削除確認',
     grsl_goodsManagerment: '商品管理',
     grsl_resetGoods: '商品変更',
-    grsl_belongType: '該当類別',
+    grsl_belongType: 'カテゴリー',
     grsl_goodsDescription: '商品詳細',
     grsl_defaultNoPrice: '小売価格',
     grsl_costNoPrice: '仕入れ価格',
@@ -204,7 +204,7 @@ module.exports = {
     grsl_saveAndAdd: '保存して続き追加',
     grsl_downloadSuccessful: 'ダウンロード確認',
     grsl_importSuccess: '一括入力確認',
-    grsl_managementSalePoint: '販売場所master',
+    grsl_managementSalePoint: '付帯登録',
     grsl_goodsShelves: '陳列商品',
     grsl_employeePriceJapen: '社員割引',
     grsl_inventory: '在庫数量',
@@ -222,7 +222,7 @@ module.exports = {
     grsl_retailPrice: '小売価格',
     grsl_resetSalePoint: '販売場所変更',
     grsl_addNewPoint: '販売場所追加',
-    grsl_foldAll: '隠す',
+    grsl_foldAll: '折りたたみ',
     grsl_addFirstGroup: '第一層分類追加',
     grsl_addSecondGroup: '第二層分類追加',
     grsl_addThridGroup: '第三層分類追加',
@@ -435,6 +435,7 @@ module.exports = {
     hk_placeEnterContentB:'階の名称を入力してください',
     hk_placeEnterContentC: '備考を入力してくだあい',
     grsl_physicalGoods:'未翻译词条',
+    grsl_serviceGoods:'未翻译词条',
     
     
 
