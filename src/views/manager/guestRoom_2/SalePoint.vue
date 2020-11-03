@@ -310,12 +310,13 @@
                     this.pageForm.pageIndex = res.pageIndex;
                 })
             },
-            getShelfData(categoryId, goodsName) {
+            getShelfData(categoryId, goodsName, type) {
                 const params = {
                     categoryId: categoryId,
                     goodsName: goodsName,
                     sellId: this.sellId,
                     state: 1,
+                    categoryType: type,
                 };
                 this.$F.merge(params, this.shelfForm);
                 this.$F.doRequest(this, "/pms/sellinglog/listusable", params, (res) => {
@@ -384,7 +385,7 @@
             search(type) {
                 if (type) {
                     const category = this.upshelf.category[this.upshelf.category.length - 1];
-                    this.getShelfData(category, this.upshelf.name);
+                    this.getShelfData(category, this.upshelf.name, this.upshelf.categoryType);
                 } else {
                     this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, this.form.categoryType);
                 }
@@ -409,7 +410,7 @@
             },
             shelfChange() {
                 this.shelfForm.pageIndex = val;
-                this.getShelfData(this.upshelf.category, this.upshelf.name)
+                this.getShelfData(this.upshelf.category, this.upshelf.name, this.upshelf.categoryType)
             },
             submit(type) {
                 if (type == "shelf") {
