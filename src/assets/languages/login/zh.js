@@ -14,7 +14,8 @@ module.exports = {
     storesTip: '门店',
     backLogin: '返回登录',
     chinese: '中文',
-    japanese: '日本语'
+    japanese: '日本语',
+    remember:'记忆HOTEL ID，USER ID',
 
 }
 

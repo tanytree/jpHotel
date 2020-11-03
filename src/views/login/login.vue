@@ -1,101 +1,118 @@
 <template>
-    <div class="register-index">
-        <div class="body-r">
-            <div class="room-title">HESTA PMS</div>
+    <div class="pageContent">
+        <div class="bodyTop">
             <img class="logPng" src="~@/assets/images/login/log.png" />
+            <el-select
+                v-model="language"
+                @change="onLanguageChange"
+                style="width: 100px"
+            >
+                <el-option :label="$t('login.chinese')" value="zh"></el-option>
+                <el-option :label="$t('login.japanese')" value="ri"></el-option>
+            </el-select>
         </div>
-        <div
-            class="register-body"
-            v-loading="loading"
-            v-if="loginType == 'login'"
-        >
-            <div v-if="!forget" class="title">{{ $t("login.title") }}</div>
-            <el-page-header
-                v-if="forget"
-                @back="
-                    () => {
-                        this.forget = false;
-                        this.forgetStep = 1;
-                    }
-                "
-                :title="$t('login.backLogin')"
-            ></el-page-header>
-            <div class="body-info">
-                <div class="body-l" v-if="!forget">
-                    <el-form
-                        :model="loginForm"
-                        size="small"
-                        validate-on-rule-change
-                        :rules="dataRule"
-                        ref="loginForm"
-                    >
-                        <el-form-item prop="storesNum">
-                            <el-select
-                                v-model="loginForm.storesNum"
-                                :placeholder="$t('login.sTip')"
-                            >
-                                <el-option
-                                    v-for="item in storeList"
-                                    :key="item.storesNum"
-                                    :label="item.storesName"
-                                    :value="item.storesNum"
-                                ></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item prop="account">
-                            <el-input
-                                prefix-icon="el-icon-s-custom"
-                                :placeholder="$t('commons.pleaseEnter') + ' ID'"
-                                v-model="loginForm.account"
-                                maxlength="18"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item prop="password">
-                            <el-input
-                                type="password"
-                                prefix-icon="el-icon-lock"
-                                :placeholder="
-                                    $t('commons.pleaseEnter') +
-                                    $t('commons.passwordDesc')
-                                "
-                                v-model.trim="loginForm.password"
-                                @keyup.enter.native="clickLoginBtn()"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item class="login-btns">
-                            <div class="btn">
-                                <el-button
-                                    type="primary"
-                                    class="submit"
-                                    @click="clickLoginBtn()"
-                                    style="width: 100px"
-                                    >{{ this.$t("login.loginBtn") }}</el-button
-                                >
+        <div class="register-index">
+            <div
+                class="register-body"
+                v-loading="loading"
+                v-if="loginType == 'login'"
+            >
+                <el-page-header
+                    v-if="forget"
+                    @back="
+                        () => {
+                            this.forget = false;
+                            this.forgetStep = 1;
+                        }
+                    "
+                    :title="$t('login.backLogin')"
+                ></el-page-header>
+                <div class="body-info">
+                    <div class="body-l" v-if="!forget">
+                        <div v-if="!forget" class="title">
+                            {{ $t("login.title") }}
+                        </div>
+                        <el-form
+                            :model="loginForm"
+                            size="small"
+                            validate-on-rule-change
+                            :rules="dataRule"
+                            ref="loginForm"
+                        >
+                            <el-form-item prop="storesNum">
                                 <el-select
-                                    v-model="language"
-                                    @change="onLanguageChange"
-                                    style="width: 100px"
+                                    v-model="loginForm.storesNum"
+                                    :placeholder="$t('login.sTip')"
                                 >
                                     <el-option
-                                        :label="$t('login.chinese')"
-                                        value="zh"
-                                    ></el-option>
-                                    <el-option
-                                        :label="$t('login.japanese')"
-                                        value="ri"
+                                        v-for="item in storeList"
+                                        :key="item.storesNum"
+                                        :label="item.storesName"
+                                        :value="item.storesNum"
                                     ></el-option>
                                 </el-select>
-                            </div>
-                        </el-form-item>
-                    </el-form>
-                </div>
-                <div class="line"></div>
-                <div class="body-l body-r">
-                    <div class="ma">
-                        <img src="@/assets/images/login/registerQr.png" alt />
+                            </el-form-item>
+                            <el-form-item prop="account">
+                                <el-input
+                                    prefix-icon="el-icon-s-custom"
+                                    :placeholder="
+                                        $t('commons.pleaseEnter') + ' ID'
+                                    "
+                                    v-model="loginForm.account"
+                                    maxlength="18"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item prop="password">
+                                <el-input
+                                    type="password"
+                                    prefix-icon="el-icon-lock"
+                                    :placeholder="
+                                        $t('commons.pleaseEnter') +
+                                        $t('commons.passwordDesc')
+                                    "
+                                    v-model.trim="loginForm.password"
+                                    @keyup.enter.native="clickLoginBtn()"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item style="text-align: left">
+                                <el-checkbox
+                                    v-model="loginForm.checked"
+                                    label="0"
+                                    >{{ $t("login.remember") }}</el-checkbox
+                                >
+                            </el-form-item>
+                            <el-form-item class="login-btns">
+                                <div class="btn">
+                                    <el-button
+                                        type="primary"
+                                        class="submit"
+                                        @click="clickLoginBtn()"
+                                        style="width: 260px"
+                                        >{{
+                                            this.$t("login.loginBtn")
+                                        }}</el-button
+                                    >
+                                </div>
+                            </el-form-item>
+                        </el-form>
                     </div>
-                    <!--          <div class="detail">扫码二维码，下载指点社区</div>-->
+                    <div class="line"></div>
+                    <div class="body-l body-r">
+                        <div class="ma">
+                            <img
+                                src="@/assets/images/login/registerQr.png"
+                                alt
+                            />
+                        </div>
+                        <!--          <div class="detail">扫码二维码，下载指点社区</div>-->
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="bodyTop">
+            <div class="leftText">HESTA PMS</div>
+            <div class="rightText">
+                Copyright©2007 ～ 2019 Okura Co.,Ltd All right reserved.
             </div>
         </div>
     </div>
@@ -172,6 +189,7 @@ export default {
                 storesNum: "",
                 account: "",
                 password: "",
+                checked: false, //是否记住密码   默认不记住
             },
         };
     },
@@ -190,6 +208,7 @@ export default {
                 this.storeList = data;
             }
         );
+        this.getCookie(); //取得cookie方法
     },
 
     methods: {
@@ -263,6 +282,20 @@ export default {
                 loginType: 5,
             }
         ) {
+            // 判断复选框是否被勾选 勾选则调用配置cookie方法
+            if (this.loginForm.checked == true) {
+                //传入账号名，密码，门店，和保存天数3个参数
+                this.setCookie(
+                    this.loginForm.account,
+                    this.loginForm.password,
+                    this.loginForm.storesNum,
+                    this.loginForm.checked,
+                    7
+                );
+            } else {
+                //清空Cookie
+                this.clearCookie();
+            }
             this.$refs["loginForm"].validate((valid) => {
                 if (valid) {
                     this.$F.merge(params, this.loginForm);
@@ -281,12 +314,98 @@ export default {
                 }
             });
         },
+        // 涉及cookie的方法
+
+        //设置cookie
+        setCookie(c_name, c_pwd, c_storesNum, c_checked, exdays) {
+            var exdate = new Date(); //获取时间
+            exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+            //字符串拼接cookie
+            window.document.cookie = //账户名
+                "userName" +
+                "=" +
+                c_name +
+                ";path=/;expires=" +
+                exdate.toGMTString();
+            window.document.cookie = //密码
+                "userPwd" +
+                "=" +
+                c_pwd +
+                ";path=/;expires=" +
+                exdate.toGMTString();
+            window.document.cookie = //门店名
+                "storesNum" +
+                "=" +
+                c_storesNum +
+                ";path=/;expires=" +
+                exdate.toGMTString();
+            window.document.cookie = //是否勾选
+                "checked" +
+                "=" +
+                c_checked +
+                ";path=/;expires=" +
+                exdate.toGMTString();
+        },
+        //读取cookie
+        getCookie: function () {
+            if (document.cookie.length > 0) {
+                var arr = document.cookie.split("; "); //这里显示的格式需要切割一下自己可输出看下
+                for (var i = 0; i < arr.length; i++) {
+                    var arr2 = arr[i].split("="); //再次切割
+                    //判断查找相对应的值
+                    if (arr2[0] == "userName") {
+                        this.loginForm.account = arr2[1]; //保存到保存数据的地方
+                    } else if (arr2[0] == "userPwd") {
+                        this.loginForm.password = arr2[1];
+                    } else if (arr2[0] == "storesNum") {
+                        this.loginForm.storesNum = arr2[1];
+                    } else if (arr2[0] == "checked") {
+                        this.loginForm.checked = true;
+                    }
+                }
+            }
+        },
+        //清除cookie
+        clearCookie: function () {
+            this.setCookie("", "", "", false, -1); //修改2值都为空，天数为负1天就好了
+        },
+
+        // 涉及cookie的方法
     },
 };
 </script>
 
 
 <style lang="less" scoped>
+.pageContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .bodyTop {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0 73px 0 63px;
+        background-color: #fff;
+        height: 100px;
+        .logPng {
+            width: 211px;
+            height: 83px;
+        }
+        .leftText {
+            color: rgba(10, 64, 139, 100);
+            font-size: 48px;
+            font-weight: bold;
+        }
+        .rightText {
+            color: rgba(102, 102, 102, 100);
+            font-size: 20px;
+        }
+    }
+}
 .login-btns .btn {
     display: flex;
     flex-direction: row;
@@ -304,16 +423,9 @@ export default {
         color: rgba(255, 255, 255, 100);
         font-size: 60px;
     }
-    .logPng {
-        width: 130px;
-        height: 130px;
-        margin-top: 20px;
-    }
 }
 .register-index {
     background: url(../../assets/images/login/background.png) no-repeat;
-    width: 100%;
-    height: 100%;
     position: relative;
     background-size: cover;
     background-position: center;
@@ -321,6 +433,7 @@ export default {
     justify-content: center;
     align-items: center;
     justify-content: space-around;
+    flex: 8;
 
     > .register-body {
         background-color: #ffffff;
@@ -329,12 +442,6 @@ export default {
         text-align: center;
         min-height: 360px;
         border-radius: 6px;
-
-        > .title {
-            font-size: 18px;
-            font-weight: bold;
-            padding-bottom: 10px;
-        }
 
         > .body-info {
             display: flex;
@@ -355,9 +462,13 @@ export default {
 
 .body-l {
     .el-form {
-        padding: 20px 0;
+        padding: 10px 0 20px;
     }
-
+    .title {
+        font-size: 18px;
+        font-weight: bold;
+        padding-top: 40px;
+    }
     // .el-form-item {
     // margin-bottom: 10px;
     // }

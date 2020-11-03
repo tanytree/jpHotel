@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-02 11:55:40
+ * @LastEditTime: 2020-11-03 09:57:32
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -571,14 +571,14 @@ module.exports = {
     book_venueBook: '会場予約',
     book_meetVerification: '会場取り消し',
     customer_undoCheckoutA: '取り消し',
-    book_meetInfo: '未翻译词条',
-    book_house: '未翻译词条',
-    book_houseTotalPrice: '未翻译词条',
-    book_meetingIn: '未翻译词条',
-    book_guestName: '未翻译词条',
-    book_removeSuccess: '未翻译词条',
-    book_enrolled: '未翻译词条',
-    book_orderNotLive: '未翻译词条',
+    book_meetInfo: '使用情報',
+    book_house: '会場',
+    book_houseTotalPrice: '利用料金合計',
+    book_meetingIn: '受付',
+    book_guestName: '来客名前',
+    book_removeSuccess: '削除成功',
+    book_enrolled: '登録成功',
+    book_orderNotLive: '該当予約が未到着の為、登録開始は未定',
 
 
 
