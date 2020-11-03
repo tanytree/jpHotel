@@ -85,10 +85,10 @@ module.exports = {
     //   管理部 > 客房中心 (houseKeeping > hk)
     hk_guestRoom: '客房房型',
     hk_roomName: '房型名称',
-    hk_doorPrice: '门市价',
+    hk_doorPrice: '价格', // h
     hk_beds: '床位数',
     hk_availabilityPeople: '可入住人',
-    hk_drawingRoomType: '会客厅房型',
+    hk_drawingRoomType: '会议厅房型',
     hk_seating: '座位数',
     hk_basicInformation: '基本信息',
     hk_preferentialPrice: '优惠价',

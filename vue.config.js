@@ -135,8 +135,8 @@ module.exports = {
       }
     },
     overlay: {
-      errors: true,
-      warnings: true
+      errors: false,
+      warnings: false
     }
   }
 }
