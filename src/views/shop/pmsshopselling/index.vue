@@ -6,78 +6,87 @@
         <el-main class="round" style="padding:0;">
             <div class="content">
                <div class="left bg rel"  v-loading="left_loading" >
-                   <div class="padding-20">
-                        <el-form class="term line demo-form-inline" v-model="searchform" inline size="small">
-                           <el-form-item :label="$t('manager.grsl_goodsName')+':'">
-                               <el-input v-model="searchform.name" :placeholder="$t('manager.grsl_goodsName')"></el-input>
-                           </el-form-item>
-                            <el-form-item label="商品类别型:">
-                                <el-select  v-model="searchform.categoryType" placeholder="请选择" @change="geProductType">
-                                    <el-option label="实物" value="1"></el-option>
-                                    <el-option label="服务" value="2"></el-option>
-                                 </el-select>
-                            </el-form-item>
-                            <el-form-item :label="$t('manager.grsl_goodsType')+':'">
-                                <el-select  v-model="searchform.categoryId" placeholder="请选择">
-                                   <el-option  v-for="item in category" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item>
-                               <el-button type="primary" class="submit" @click="getPrucuctList">{{$t('commons.queryBtn')}}</el-button>
-                               <el-button class="grey" @click="intForm">{{$t('commons.resetBtn')}}</el-button>
-                            </el-form-item>
-                        </el-form>
+                <el-main  style="padding:0;">
+                        <div class="padding-20">
+                             <el-form class="term line demo-form-inline" v-model="searchform" inline size="small">
+                                <el-form-item :label="$t('manager.grsl_goodsName')+':'">
+                                    <el-input v-model="searchform.name" :placeholder="$t('manager.grsl_goodsName')"></el-input>
+                                </el-form-item>
+                                 <el-form-item label="商品类别型:">
+                                     <el-select  v-model="searchform.categoryType" placeholder="请选择" @change="geProductType">
+                                         <el-option label="实物" value="1"></el-option>
+                                         <el-option label="服务" value="2"></el-option>
+                                      </el-select>
+                                 </el-form-item>
+                                 <el-form-item :label="$t('manager.grsl_goodsType')+':'">
+                                     <el-select  v-model="searchform.categoryId" placeholder="请选择">
+                                        <el-option  v-for="item in category" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                     </el-select>
+                                 </el-form-item>
+                                 <el-form-item>
+                                    <el-button type="primary" class="submit" @click="getPrucuctList">{{$t('commons.queryBtn')}}</el-button>
+                                    <el-button class="grey" @click="intForm">{{$t('commons.resetBtn')}}</el-button>
+                                 </el-form-item>
+                             </el-form>
 
-                   <!-- 列表开始 -->
+                        <!-- 列表开始 -->
 
-                        <el-table ref="multipleTable" :data="productList" header-row-class-name="default" size="small" >
-                            <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                            <el-table-column label="商品类型">
-                                <template slot-scope="scope">
-                                   {{scope.row.hotelGoods.categoryType == 1 ? '实物' : '服务'}}
-                                </template>
-                            </el-table-column>
-                            <el-table-column :label="$t('manager.grsl_goodsType')" >
-                                <template slot-scope="scope">
-                                    {{scope.row.hotelGoods.categoryName}}
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="计费规则">
-                                <template slot-scope="scope">
-                                   <div v-if="scope.row.hotelGoods">
-                                       <div v-if="scope.row.hotelGoods.categoryType == 1">
-                                           价格*数量
-                                       </div>
-                                       <div v-else>
-                                            <span v-if="scope.row.hotelGoods.priceModel == 1">
-                                            </span>
-                                            <span v-else>
-                                               {{scope.row.hotelGoods.priceStartMinute}} 分钟后收起步价，
-                                               起步价{{scope.row.hotelGoods.startPrice}}日元，每
-                                               {{scope.row.hotelGoods.minutePrice}}分钟收费{{scope.row.hotelGoods.depositPrice}}日元，
-                                               封顶消费{{scope.row.hotelGoods.capsPrice}}日元
-                                           </span>
-                                       </div>
-                                   </div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="retailPrice" label="商品单价(元)" width="250"></el-table-column>
-                            <el-table-column prop="inventoryCount"  label="库存"></el-table-column>
-                            <el-table-column  label="操作" width="100">
-                                <template slot-scope="scope">
-                                   <el-button :disabled="scope.row.inventoryCount == 0" size="mini" @click="addCart(scope.row,scope.$index)">添加</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <div class="pagination">
-                            <el-pagination @current-change="handleCurrentChange" :current-page="searchform.pageIndex" :page-size="searchform.pageSize" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
-                        </div>
-                    </div>
-                   <!--  -->
+                             <el-table ref="multipleTable" :data="productList" header-row-class-name="default" size="small" >
+                                 <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
+                                 <el-table-column label="商品类型">
+                                     <template slot-scope="scope">
+                                        {{scope.row.hotelGoods.categoryType == 1 ? '实物' : '服务'}}
+                                     </template>
+                                 </el-table-column>
+                                 <el-table-column :label="$t('manager.grsl_goodsType')" >
+                                     <template slot-scope="scope">
+                                         {{scope.row.hotelGoods.categoryName}}
+                                     </template>
+                                 </el-table-column>
+                                 <el-table-column label="计费规则">
+                                     <template slot-scope="scope">
+                                        <div v-if="scope.row.hotelGoods">
+                                            <div v-if="scope.row.hotelGoods.categoryType == 1">
+                                                价格*数量
+                                            </div>
+                                            <div v-else>
+                                                 <span v-if="scope.row.hotelGoods.priceModel == 1">
+                                                     一次性固定收费
+                                                 </span>
+                                                 <span v-else>
+                                                    {{scope.row.hotelGoods.priceStartMinute}}分钟后收起步价，
+                                                    起步价{{scope.row.hotelGoods.startPrice}}日元，每
+                                                    {{scope.row.hotelGoods.priceTime}}分钟收费{{scope.row.hotelGoods.minutePrice}}日元
+                                                    <span v-if="scope.row.hotelGoods.capsPriceFlag == 2">封顶消费{{scope.row.hotelGoods.capsPrice}}日元</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                     </template>
+                                 </el-table-column>
+                                 <el-table-column prop="retailPrice" label="商品单价(元)" width="250"></el-table-column>
+                                 <!-- <el-table-column prop="inventoryCount"  label="库存">
+                                     <template slot-scope="scope">
+                                         <span v-if="scope.row.hotelGoods.categoryType == 1">
+                                             {{scope.row.inventoryCount}}
+                                         </span>
+                                     </template>
+                                 </el-table-column> -->
+                                 <el-table-column  label="操作" width="100">
+                                     <template slot-scope="scope">
+                                        <el-button  size="mini" @click="addCart(scope.row,scope.$index)">添加</el-button>
+                                     </template>
+                                 </el-table-column>
+                             </el-table>
+                             <div class="pagination">
+                                 <el-pagination @current-change="handleCurrentChange" :current-page="searchform.pageIndex" :page-size="searchform.pageSize" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
+                             </div>
+                         </div>
+                </el-main>
+                <!--  -->
                </div>
                <div class="right bg rel" v-loading="payLoading">
-                    <div class="padding-20">
-                        <div class="hasTitle">已选商品</div>
+                   <div class="hasTitle">已选商品</div>
+                    <el-main class="main padding-20">
                         <el-table  :data="cart" header-row-class-name="default" size="small" >
                             <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
                             <el-table-column prop="retailPrice" label="单价(元)" show-overflow-tooltip></el-table-column>
@@ -106,19 +115,13 @@
                             </el-table-column>
                         </el-table>
                         <el-row class="padding-tb-10">
-                            <em>共 {{countToTal}} 件</em>，合计：{{cartToTal}}元
+                            <em>共 {{countToTal}} 件</em>，合计：{{cartToTal}}元 / 已结算金额：{{hasPayPrice}}
                         </el-row>
-
                         <div class="action rel" v-loading="isloading">
                             <div class="margin-t-10">
                                 <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                                     <el-form-item label="订单来源" prop="orderSource">
-                                        <el-radio-group v-model="form.orderSource">
-                                           <!-- <el-select size="small" v-model="form.payType">
-                                                <el-option label="售卖点" :value="1"></el-option>
-                                                <el-option label="IPAD" :value="2"></el-option>
-                                                <el-option label="其他" :value="3"></el-option>
-                                            </el-select> -->
+                                        <el-radio-group v-model="searchform.orderSource">
                                             <el-radio :label="1">售卖点</el-radio>
                                             <el-radio :label="2">IPAD</el-radio>
                                             <el-radio :label="3">其他</el-radio>
@@ -133,9 +136,6 @@
                                             <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                                         </el-radio-group>
                                     </el-form-item>
-
-
-
 
                                     <div v-if="form.billingType == 1">
                                         <el-form-item :label="$t('food.common.payType')">
@@ -223,7 +223,8 @@
                                 </el-form>
                             </div>
                         </div>
-                    </div>
+                        <!-- end -->
+                    </el-main>
                </div>
             </div>
         </el-main>
@@ -246,6 +247,7 @@ export default {
         tableData: [],
         active:'',
         searchform:{
+            orderSource:1,
             name:'',
             categoryId:'',
             pageIndex:1,
@@ -260,7 +262,7 @@ export default {
         pageIndex:1,
         pageSize:20,
         form:{
-           orderSource:1,
+
            realPayPrice:'',//实付金额  Double必填
            payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
            remark:'',//备注  String选填
@@ -317,13 +319,11 @@ export default {
         let sum = 0
         let cart = this.cart
         cart.forEach(element => {
-            console.log(element.hotelGoods.categoryType)
-            if(element.hotelGoods.categoryType == 1){
-                sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
-            }
+           sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
         });
         return sum.toFixed(0);
     },
+
 
     //商品数量
     countToTal(){
@@ -333,6 +333,19 @@ export default {
             sum +=  parseFloat(element.count)
         });
         return sum
+    },
+
+    //计算已结算的部分商品金额
+    hasPayPrice(){
+        let sum = 0
+        let cart = this.cart
+        cart.forEach(element => {
+           if(element.hotelGoods.categoryType == 1){
+               sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
+           }
+        });
+        return sum.toFixed(0);
+
     },
 
     //计算实际价格
@@ -387,9 +400,10 @@ export default {
 
     //
     geProductType(v){
-        this.searchform.categoryId = ''
+        // this.searchform.categoryId = ''
         let params = {
-            categoryType:v
+            categoryType:v,
+            categoryId:this.searchform.categoryId
         }
         params.userId = this.userId
         params.storesNum = this.storesNum
@@ -433,8 +447,12 @@ export default {
 
     //加入
     addCart(item,index){
-        console.log(item.goodsId)
-        if(this.productList[index].inventoryCount > 0){
+
+
+
+        // console.log(item.hotelGoods.categoryType)
+
+        // if(this.productList[index].inventoryCount > 0){
             this.productList[index].inventoryCount -= 1
             let good = this.cart.find(v=>v.goodsName==item.goodsName)
             if(good){
@@ -442,13 +460,13 @@ export default {
             }else{
               this.cart.push({...item,count:1})
             }
-        }else{
-            this.$alert('该商品已经没有库存啦，不能再售卖啦！', this.$t('commons.tip_desc'), {
-              confirmButtonText: this.$t('commons.confirm'),
-              callback: action => {
-              }
-            });
-        }
+        // }else{
+        //     this.$alert('该商品已经没有库存啦，不能再售卖啦！', this.$t('commons.tip_desc'), {
+        //       confirmButtonText: this.$t('commons.confirm'),
+        //       callback: action => {
+        //       }
+        //     });
+        // }
     },
 
     //购物车的加减 type = 1 是减少  2 是添加
@@ -457,23 +475,23 @@ export default {
         let good = this.productList.find(v=> v.goodsId==info.goodsId)
         if(type == 1){
             info.count-= 1
-            good.inventoryCount += 1
+            // good.inventoryCount += 1
             if(info.count == 0){
                 this.cart.splice(v,1)
                 return false
             }
         }else{
-            if(good.inventoryCount == 0){
-                this.$alert('该商品已经没有库存啦，不能再售卖啦!', this.$t('commons.tip_desc'), {
-                  confirmButtonText: this.$t('commons.confirm'),
-                  callback: action => {
-                  }
-                });
-                return false
-            }else{
+            // if(good.inventoryCount == 0){
+            //     this.$alert('该商品已经没有库存啦，不能再售卖啦!', this.$t('commons.tip_desc'), {
+            //       confirmButtonText: this.$t('commons.confirm'),
+            //       callback: action => {
+            //       }
+            //     });
+            //     return false
+            // }else{
                 info.count+= 1
-                good.inventoryCount -= 1
-            }
+                // good.inventoryCount -= 1
+            // }
         }
     },
     //移除
@@ -634,21 +652,24 @@ export default {
 
     //提交
     submit(){
-
         // console.log(this.isUseScore)
         // console.log(this.form.scoresDiscount)
         // console.log(this.form.scoresPrice)
         console.log(this.form.billingType)
         let arr  = []
         let list = this.cart
+        let cateArr = []
         for(let i in list){
             arr.push({
                 goodsId:list[i].goodsId,
                 goodsName:list[i].goodsName,
                 unitPrice:list[i].retailPrice,
                 totalPrice:parseFloat(list[i].retailPrice)*parseFloat(list[i].count),
-                goodsCount:parseFloat(list[i].count)
+                goodsCount:parseFloat(list[i].count),
             })
+            cateArr.push(list[i].hotelGoods.categoryType)
+
+
         }
 
         if(arr.length == 0){
@@ -688,9 +709,9 @@ export default {
                  return
              }
         }
-
         this.payLoading = true
         let params = {
+            orderSource:this.searchform.orderSource,
             sellingId:this.searchform.sellId,
             shopCount:this.countToTal,
             consumePrice:this.cartToTal,
@@ -705,22 +726,51 @@ export default {
         this.$F.doRequest(this, "/pms/shop/shop_place_order_edit", params, (res) => {
             // this.alert(200,this.$t('food.common.success'));
             this.payLoading = false
-            this.payOrder(res.orderId)
+            this.payOrder(res.orderId,cateArr)
         });
     },
 
-    payOrder(id){
-        this.payLoading = true
-        let params = this.form
-        params.orderId = id
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-        console.log(params)
-        this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
-            this.payLoading = false
-            this.alert(200,this.$t('food.common.success'));
-            this.reset();
-        });
+    payOrder(id,cateArr){
+            // console.log(arr)
+            // console.log(arr.indexOf(2))
+            // 2 表示 arr 中存在服务类型的商品
+            let state = ''
+            let hasPayGoods = []
+            let list = this.cart
+            for(let i in list){
+                if(list[i].hotelGoods.categoryType == 1){
+                   hasPayGoods.push(list[i])
+                }
+            }
+            console.log(hasPayGoods)
+            this.payLoading = true
+            let params = this.form
+            params.hasPayPrice = this.hasPayPrice
+            //cateArr 选择商品的类型是否是实体 实体1 服务2
+            if(cateArr.indexOf(2) > -1){
+                params.state = 1
+            }else{
+                params.state = 2
+            }
+            let goodsIds = hasPayGoods.map((ele,index)=>{
+                return  ele.goodsId
+            })
+
+            console.log(goodsIds)
+
+            params.goodsSubIds = goodsIds.join(',')
+            params.orderId = id
+            params.userId = this.userId
+            params.storesNum = this.storesNum
+            console.log(params)
+            this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
+                this.payLoading = false
+                this.alert(200,this.$t('food.common.success'));
+                this.reset();
+            });
+
+
+
 
     },
 
@@ -734,7 +784,6 @@ export default {
     reset(){
         this.cart = []
         this.form = {
-           orderSource:1,
            realPayPrice:'',//实付金额  Double必填
            payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
            remark:'',//备注  String选填
@@ -782,6 +831,9 @@ export default {
     background: #fff;
 }
 .boss-index {
+    .rel{
+        position: relative;
+    }
     border-radius: 10px;
     .round{
         border-radius: 10px;
@@ -859,12 +911,25 @@ export default {
         .right {
             border-radius: 10px;
             flex: 2;
-            .hasTitle{
-                padding-bottom: 20px;border-bottom: 1px solid #eee;margin-bottom: 20px;
-            }
+
             .action{
                 padding: 0 20px;
                 .el-form-item{margin-bottom: 10px;}
+            }
+            .hasTitle{
+                z-index: 500;
+                background: #fff;
+                padding: 20px;
+                border-bottom: 1px solid #eee;
+                position: absolute;
+                left: 0;top: 0; right: 0;
+            }
+            .main{
+                height: 100%;
+                padding-top: 80px;
+                overflow:auto;
+                position: relative;
+
             }
         }
     }

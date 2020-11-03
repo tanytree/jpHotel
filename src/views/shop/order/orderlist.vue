@@ -14,19 +14,22 @@
                    </el-radio-group>
                 </el-form-item>
             </el-row>
-
+            <el-form-item label="商品名称">
+                <el-input v-model="searchForm.goodsName" placeholder="商品名称" class="width200"></el-input>
+            </el-form-item>
             <el-form-item :label="$t('food.common.curstom_name')">
                 <el-input v-model="searchForm.name" :placeholder="$t('food.common.curstom_name')" class="width200"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('food.common.order_from')">
-                <el-select v-model="searchForm.sellingId" :placeholder="$t('food.common.order_from')">
+            <el-form-item label="售卖点">
+                <el-select v-model="searchForm.sellingId" placeholder="售卖点">
+                    <el-option label="全部" value=""></el-option>
                     <el-option
                       v-for="item in saleData"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
                     </el-option>
-                  </el-select>
+                </el-select>
             </el-form-item>
 
             <el-form-item :label="$t('food.common.order_time')">
@@ -86,7 +89,7 @@
                 <el-table-column
                   :label="$t('food.common.order_from')"
                  >
-                  <template slot-scope="scope">{{getOrderSource(scope.row.orderSource)}}</template>
+                  <template slot-scope="scope">{{ scope.row.orderSource ? getOrderSource(scope.row.orderSource) : ''}}</template>
                 </el-table-column>
 
                 <el-table-column
@@ -94,8 +97,6 @@
                   label="售卖点"
                  >
                 </el-table-column>
-
-
                 <el-table-column
                   :label="$t('food.common.total_pay')"
                  >
@@ -133,7 +134,7 @@
     <el-dialog
         top="0"
         :title="$t('food.orderTitle.'+ dialogType)"
-        :width="is_add ? '40%' :'70%'"
+        width="60%"
         :visible.sync="dialogShow"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
@@ -146,7 +147,7 @@
     <el-dialog
         top="0"
         :title="$t('food.orderTitle.1')"
-        width="700px"
+        width="800px"
         :visible.sync="dialogShows"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
@@ -213,6 +214,7 @@ export default {
             showEdit: false,
             showDetail: false,
             searchForm: {
+                goodsName:'',//商品名称
                 state:'',// 状态  1未结 2已结 3取消      int选填
                 sellingId:'',// 售卖点id
                 shopNum :'',// 订单号
@@ -236,6 +238,7 @@ export default {
     methods: {
         initForm() {
             this.searchForm = {
+                goodsName:'',//商品名称
                 state:'',// 状态  1未结 2已结 3取消      int选填
                 sellingId:'',// 售卖点id
                 shopNum :'',// 订单号
@@ -349,7 +352,7 @@ export default {
         cancleOrder(data){
         // console.log(data)
             let params = {
-                dishesOrderId:data.id
+                shopOrderId:data.id
             }
             params.userId = this.userId
             params.storesNum = this.storesNum
@@ -358,7 +361,7 @@ export default {
                cancelButtonText:  this.$t('food.common.cancel'),
                type: 'warning'
             }).then(() => {
-                this.$F.doRequest(this, "/pms/dishes/dishes_order_cancle", params, (res) => {
+                this.$F.doRequest(this, "/pms/shop/shop_order_cancle", params, (res) => {
                     this.alert(200, this.$t('food.common.success'));
                     this.getDataList();
                 });

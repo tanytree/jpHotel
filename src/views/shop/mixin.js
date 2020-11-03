@@ -42,6 +42,26 @@ const mixin= {
             // console.log(newArr);
             return newArr;
         },
+
+        //获取当前时间
+        getNowTime(){
+            return  Date.parse(new Date());
+        },
+
+        //日期转化时间戳
+        getTimeSample(v){
+
+        },
+
+        // Math.round(new Date() / 1000)
+
+        //时间戳转化为日期
+
+
+
+
+
+
         alert(v,msg){
              if(v == 200){
                  this.$message({
