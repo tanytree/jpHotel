@@ -428,6 +428,7 @@
                         this.$message.success("success");
                         this.getShelfData();
                         this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, this.form.categoryType);
+                        this.shelfVisible = false;
                     });
                 } else if (type == "point") {
                     if (this.pointType) {
