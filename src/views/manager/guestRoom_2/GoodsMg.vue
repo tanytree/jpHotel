@@ -267,6 +267,8 @@
             },
             reset() {
                 this.form = {name: "", status: "", categoryType: '', category: ""};
+                this.category = [];
+                this.categoryArr = [];
                 this.initData(this.pageForm, '', '', '');
             },
             casChange(value) {
@@ -401,6 +403,7 @@
                 );
             },
             geProductType(v){
+                this.cateData(v);
                 if(v === 1) {
                     this.category = this.cateList;
                 } else {

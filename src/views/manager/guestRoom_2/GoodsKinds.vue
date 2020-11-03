@@ -280,7 +280,7 @@
                         "/pms/hotelcategory/delete",
                         {id: data.id},
                         (res) => {
-                            this.initData(this.categoryType);
+                            this.initData(data.categoryType);
                         }
                     );
                 });

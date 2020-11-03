@@ -398,8 +398,7 @@
                     this.form = {name: "", categoryType: '', category: ""};
                     this.initData(this.pageForm, '', '', this.sellId);
                 }
-
-
+                this.category = [];
             },
             casChange(value) {
                 this.rowData.categoryId = value[value.length - 1];
@@ -456,6 +455,7 @@
                 }
             },
             geProductType(v){
+                this.cateData(v);
                 if(v === 1) {
                     this.category = this.cateList;
                 } else {
