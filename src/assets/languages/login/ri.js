@@ -14,7 +14,9 @@ module.exports = {
     storesTip: '店舗',
     backLogin: '登録に戻り',
     chinese: '中国語',
-    japanese: '日本語'
+    japanese: '日本語',
+    remember:'ホテルIDとユーザIDを記憶する',
+
 
 
 

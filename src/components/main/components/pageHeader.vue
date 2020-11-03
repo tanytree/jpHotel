@@ -23,7 +23,7 @@
 			</span>
             <span class="itemTxt rightItem" @click="itemClick('organization')" v-if="(user.userType == 3 && user.storesNum != $F.getHQCode()) || (user.account == 'admin' && user.storesNum == $F.getHQCode())">
                 <img src="@/assets/images/topBanner/zuzhi.png" alt/>
-                人员管理
+                {{$t('commons.staffManagerDesc')}}
               </span>
             <span class="itemTxt logoout">
 				<el-dropdown>

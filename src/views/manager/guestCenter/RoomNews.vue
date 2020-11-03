@@ -91,20 +91,16 @@
                                 @click="stop_p('jyong')"
                                 >{{ $t("manager.hk_batchDisabled") }}</el-button
                             >
-                            <el-button
-                                type="primary"
-                                size="mini"
-                                @click="stop('zaoyin')"
-                                >{{ $t("manager.hk_batchNoise") }}</el-button
-                            >
-                            <el-button
-                                type="primary"
-                                size="mini"
-                                @click="stop('gaowen')"
-                                >{{
-                                    $t("manager.hk_batchTemperature")
-                                }}</el-button
-                            >
+
+<!--                            <el-button-->
+<!--                                 v-if="1==2"-->
+<!--                                type="primary"-->
+<!--                                size="mini"-->
+<!--                                @click="stop('gaowen')"-->
+<!--                                >{{-->
+<!--                                    $t("manager.hk_batchTemperature")-->
+<!--                                }}</el-button-->
+<!--                            >-->
                         </el-row>
                     </el-col>
                 </el-row>
@@ -130,10 +126,10 @@
                         ></el-table-column>
                         <el-table-column
                             prop="roomTypeId_name"
-                            :label="$t('manager.hk_roomName')"
+                            :label="$t('manager.hk_roomNameB')"
                         ></el-table-column>
                         <el-table-column
-                            :label="$t('manager.hp_storiedBuilding')"
+                            :label="$t('manager.hp_storiedBuildingA')"
                         >
                             <template slot-scope="scope">
                                 <el-col>{{
@@ -157,7 +153,7 @@
                         ></el-table-column>
                         <el-table-column
                             prop="toward"
-                            :label="$t('manager.hk_toward')"
+                            :label="$t('manager.hk_towardA')"
                         >
                             <template slot-scope="{ row }">
                                 <span>{{
@@ -166,6 +162,7 @@
                             </template>
                         </el-table-column>
                         <el-table-column
+                            v-if="1==2"
                             prop="roadFlag"
                             :label="$t('manager.hk_byRoad')"
                         >
@@ -191,7 +188,7 @@
                                 }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="$t('manager.hk_ifNoiseRoom')">
+                        <el-table-column      v-if="1==2" :label="$t('manager.hk_ifNoiseRoom')">
                             <template slot-scope="{ row }">
                                 <span v-if="row.noiseFlag == 1">{{
                                     $t("manager.hk_yes")
@@ -202,6 +199,7 @@
                             </template>
                         </el-table-column>
                         <el-table-column
+                             v-if="1==2"
                             :label="$t('manager.hk_ifTemperatureRoom')"
                         >
                             <template slot-scope="{ row }">
@@ -219,10 +217,10 @@
                         >
                             <template slot-scope="{ row }">
                                 <span v-if="row.state == 1">{{
-                                    $t("commons.enable")
+                                    $t("manager.hk_enable")
                                 }}</span>
                                 <span v-if="row.state == 2">{{
-                                    $t("commons.disable")
+                                    $t("manager.hk_disable")
                                 }}</span>
                             </template>
                         </el-table-column>

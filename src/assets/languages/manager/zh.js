@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-22 18:02:03
+ * @LastEditTime: 2020-11-02 17:01:17
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -13,6 +13,7 @@ module.exports = {
     hp_floorBuilding: '楼栋楼层',
     hp_floor: '楼层',
     hp_storiedBuilding: '楼栋',
+    hp_storiedBuildingA: '楼栋',
     hp_room: '房型',
     hp_unknown: '未知',
     hp_layer: '层',
@@ -41,6 +42,7 @@ module.exports = {
     hp_typeName: '类型名称',
     hp_costPrice: '成本价格',
     hp_inputActiveName: '请输入物品名称',
+    hp_inputActivePrice: '请输入赔偿单价',
     hp_editor: '编辑',
     hp_patternsSuccession: '交班模式',
     hp_deskDepartment: '前台部',
@@ -81,11 +83,16 @@ module.exports = {
     hp_copies: '打印份数',
     hp_documentNote: '单据备注',
     hp_mustInput: '时间必填',
+    hp_loginDetail_state:'状态',
 
     //   管理部 > 客房中心 (houseKeeping > hk)
     hk_guestRoom: '客房房型',
     hk_roomName: '房型名称',
-    hk_doorPrice: '价格', // h
+	hk_doorPrice: '价格', // h
+    hk_roomNameA: '房型名称',
+    hk_roomNameB: '房型名称',
+
+    hk_doorPriceA: '门市价',
     hk_beds: '床位数',
     hk_availabilityPeople: '可入住人',
     hk_drawingRoomType: '会议厅房型',
@@ -93,7 +100,7 @@ module.exports = {
     hk_basicInformation: '基本信息',
     hk_preferentialPrice: '优惠价',
     hk_preferentialUse: '优惠价用于网上酒店预订',
-    hk_availableNum: '可入住数',
+    hk_availableNum: '可住人数',
     hk_bedWidth: '床宽',
     hk_longitudinalWidth: '纵向宽',
     hk_horizontalWidth: '横向宽',
@@ -131,6 +138,7 @@ module.exports = {
     hk_batchTemperature: '批量高温房',
     hk_ext: '电话分机',
     hk_toward: '朝向',
+    hk_towardA: '朝向',
     hk_byRoad: '是否靠马路',
     hk_yes: '是',
     hk_no: '否',
@@ -162,7 +170,19 @@ module.exports = {
     hk_setValue: '设置值',
     hk_doorParams: '门锁参数',
     hk_roomInfo: '房间配置信息',
-
+    hk_enable:'启用',
+    hk_disable: '禁用',
+    hk_addRoomType: '新增房型',
+    hk_livePrice:'住宿价格',
+    hk_set:'设定',
+    hk_breakfast:'早餐',
+    hk_dinner:'晚餐',
+    hk_placeEnterContent:'请输入内容',
+    hk_placeEnterContentA:'请输入内容',
+    hk_placeEnterContentB:'请输入内容',
+    hk_placeEnterContentC:'请输入内容',
+    hk_:'',
+    hk_:'',
     //   管理部 > 客房二级库 (guestRoomSecondaryLibrary > grsl)
     grsl_goodsMode: '商品类型',
     grsl_matter: '实物',
@@ -170,6 +190,7 @@ module.exports = {
     grsl_goodsName: '商品名称',
     grsl_goodsState: '商品状态',
     grsl_goodsType: '商品分类',
+    grsl_goodsTypeA: '商品分类',
     grsl_billingMode: '计费模式',
     grsl_billingPer: '按次（一次固定收费）',
     grsl_billingTime: '按时间（按时间来收取费用）',
@@ -268,7 +289,10 @@ module.exports = {
     grsl_waiteReviewOrder: '待审核入库单',
     grsl_orderPass: '审核通过入库单',
     grsl_orderFail: '审核不通过入库单',
-
+    grsl_physicalGoods:'实物类商品',
+    grsl_serviceGoods:'服务类商品',
+    grsl_:'',
+    grsl_:'',
     //   管理部 > 价格体系 (priceSystem > ps)
     ps_member: '会员',
     ps_unit: '单位',

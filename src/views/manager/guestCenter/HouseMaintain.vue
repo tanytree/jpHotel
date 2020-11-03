@@ -89,12 +89,12 @@
 						<el-form-item :label="$t('manager.hp_room')+':'" prop="houseName">
 							<el-input v-model="ruleForm.houseName" class="input"></el-input>
 						</el-form-item>
-			
+
 						<!-- 可入住数 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_availableNum')+':'" prop="checkinNum">
 							<el-input v-model="ruleForm.checkinNum" class="input" maxlength="10" type="number"></el-input>
 						</el-form-item>
-			
+
 						<!-- 住宿价格 -->
 						<el-form-item label="住宿价格">
 							<el-row :gutter="20">
@@ -105,7 +105,7 @@
 								<!-- <el-col :span="18" v-if="ruleForm_sit.two">2人住宿【{{ruleForm_sit.two}}】</el-col> -->
 							</el-row>
 						</el-form-item>
-			
+
 						<!-- 床宽 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedWidth')+'(cm):'" prop="bedSizeH">
 							<div class="flex_row">
@@ -114,17 +114,17 @@
 								<el-input v-model="ruleForm.bedSizeH" :placeholder="$t('manager.hk_horizontalWidth')" />
 							</div>
 						</el-form-item>
-			
+
 						<!-- 床位数/座位1 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_beds')+':'" prop="bedNum">
 							<el-input v-model="ruleForm.bedNum" class="input"></el-input>
 						</el-form-item>
-			
+
 						<!-- 门市价 -->
 						<!-- <el-form-item :label="$t('manager.hk_doorPrice')+':'" prop="marketPrice">
 			                <el-input v-model="ruleForm.marketPrice" class="input"></el-input>
 			            </el-form-item> -->
-			
+
 						<!-- 优惠价 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_preferentialPrice')+':'">
 							<el-row style="display: flex;align-items: center;">
@@ -132,7 +132,7 @@
 								<el-col style="color: #999999;margin-left: 10px;">{{$t('manager.hk_preferentialUse')}}(H5)</el-col>
 							</el-row>
 						</el-form-item>
-			
+
 						<!-- 房屋面积 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_roomArea')+'(㎡):'" prop="houseSizeW">
 							<div class="flex_row">
@@ -141,12 +141,12 @@
 								<el-input v-model="ruleForm.houseSizeH" :placeholder="$t('manager.hk_roomAreaHor')" />
 							</div>
 						</el-form-item>
-			
+
 						<!-- 床型 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedType')+':'" prop="bedType">
 							<el-input v-model="ruleForm.bedType" class="input"></el-input>
 						</el-form-item>
-			
+
 						<!-- 早餐 -->
 						<el-form-item label="早餐">
 							<el-select v-model="ruleForm.mealBreakfast" placeholder="请选择">
@@ -154,7 +154,7 @@
 								</el-option>
 							</el-select>
 						</el-form-item>
-			
+
 						<!-- 晚餐 -->
 						<el-form-item label="晚餐" prop="mealDinner">
 							<el-select v-model="ruleForm.mealDinner" placeholder="请选择">
@@ -162,35 +162,35 @@
 								</el-option>
 							</el-select>
 						</el-form-item>
-			
-			
+
+
 						<!-- 床位数/座位2 -->
 						<el-form-item v-if="active_tag == 'two'" label="早餐" prop="bedNum">
 							<el-input v-model="ruleForm.bedNum" class="input"></el-input>
 						</el-form-item>
-			
-			
+
+
 					</el-form>
-			
+
 					<div class="intitle">OTA价格</div>
 					<el-form :model="ruleForm" size="small" inline :rules="rules" ref="ruleForm" class="basicForm" label-width="120px">
 						<!-- 飞猪价 -->
 						<el-form-item label="飞猪价" prop="houseName">
 							<el-input v-model="ruleForm.otaFeizhuPrice" class="input"></el-input>
 						</el-form-item>
-			
+
 						<!-- 携程价 -->
 						<el-form-item label="携程价" prop="houseName">
 							<el-input v-model="ruleForm.otaXiechengPrice" class="input"></el-input>
 						</el-form-item>
-			
+
 						<!-- 美团价 -->
 						<el-form-item label="美团价" prop="houseName">
 							<el-input v-model="ruleForm.otaMeituan" class="input"></el-input>
 						</el-form-item>
-			
+
 					</el-form>
-			
+
 					<div class="intitle">{{$t('manager.hk_otherInfomation')}}</div>
 					<el-form size="small" label-width="120px">
 						<el-form-item :label="$t('manager.hk_roomImg')+':'">
@@ -224,7 +224,7 @@
 					</el-button>
 					<el-button size="small" class="white" @click="tab_show = true">{{$t('commons.back')}}</el-button>
 				</div>
-			
+
 				<!-- 价格设定 -->
 				<el-dialog top="0" :title="jiageSit_title" :visible.sync="jiageSit_show" :close-on-click-modal="false">
 					<el-row :gutter="20">
@@ -261,7 +261,7 @@
 			<div class="back">
 				<el-page-header @back="backTop"></el-page-header>
 			</div>
-			<el-row >
+			<el-row>
 				<changeRili></changeRili>
 			</el-row>
 		</el-row>
@@ -271,7 +271,7 @@
 <script>
 	import changeRili from "@/components/changeRili.vue"
 	export default {
-		components:{
+		components: {
 			changeRili
 		},
 		data() {
@@ -368,7 +368,7 @@
 				jiageSit_show: false,
 				// checkinNumList: [],
 				ruleForm_sit: [],
-				
+
 				rili_show: true, // 是否显示价格日历
 			};
 		},
@@ -455,8 +455,8 @@
 						this.jiageSit_show = true
 						break;
 					case 'rili':
-					 this.rili_show = false
-					break
+						this.rili_show = false
+						break
 				}
 			},
 			// 客房禁用

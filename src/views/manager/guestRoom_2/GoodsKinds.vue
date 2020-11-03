@@ -4,7 +4,7 @@
         <div class="flex_row">
             <div class="goodsType">
                 <div class="goodsTop" style="margin-bottom: 20px;">
-                    <span>实物类商品</span>
+                    <span>{{$t('manager.grsl_physicalGoods')}}</span>
                     <el-button class="cancel" icon="fas fa-caret-right" @click="expanded(1)">{{$t('manager.grsl_foldAll')}}</el-button>
                     <el-button class="cancel" @click="addCategory(1)">{{$t('manager.grsl_addFirstGroup')}}</el-button>
                 </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="goodsType">
                 <div class="goodsTop" style="margin-bottom: 20px;">
-                    <span>服务类商品</span>
+                    <span>{{$t('manager.grsl_serviceGoods')}}</span>
                     <el-button class="cancel" icon="fas fa-caret-right" @click="expanded(2)">{{$t('manager.grsl_foldAll')}}</el-button>
                     <el-button class="cancel" @click="addCategory(2)">{{$t('manager.grsl_addFirstGroup')}}</el-button>
                 </div>
@@ -280,7 +280,7 @@
                         "/pms/hotelcategory/delete",
                         {id: data.id},
                         (res) => {
-                            this.initData(this.categoryType);
+                            this.initData(data.categoryType);
                         }
                     );
                 });

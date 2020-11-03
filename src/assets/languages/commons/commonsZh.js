@@ -206,10 +206,10 @@ module.exports = {
     },
     //房间朝向
     towards: {
-        '1': '朝南',
-        '2': '朝北',
-        '3': '朝东',
-        '4': '朝西',
+        '1': '面山',
+        '2': '面海',
+        '3': '面湖',
+        '4': '无',
     },
 
     //会员卡片类型
@@ -229,5 +229,6 @@ module.exports = {
 
     idCardTypeDesc: "证件类型",
     selectIdCardType: '请选择证件类型',
+    staffManagerDesc: '人员管理',
 }
 

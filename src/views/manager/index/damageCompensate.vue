@@ -130,7 +130,7 @@
                             prop="damagePrice"
                             :label="$t('manager.hp_compensationPrice')"
                         ></el-table-column>
-                        <el-table-column :label="$t('boss.loginDetail_state')">
+                        <el-table-column :label="$t('manager.hp_loginDetail_state')">
                             <template slot-scope="scope">{{
                                 scope.row.state == 1
                                     ? $t("commons.enable")
@@ -221,7 +221,7 @@
                 class="demo-ruleForm"
                 ref="addGoods"
             >
-                <el-form-item :label="$t('manager.hp_goodsType') + ':'" prop="type">
+                <el-form-item :label="$t('manager.hp_goodsType') + ':'" prop="damageTypeId">
                     <el-select
                         v-model="goodsData.damageTypeId"
                         :placeholder="$t('boss.compensation_selectState')"
@@ -237,13 +237,13 @@
                 <el-form-item :label="$t('manager.hp_goodsName') + ':'" prop="name">
                     <el-input v-model="goodsData.name"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('manager.hp_compensationPrice') + ':'">
+                <el-form-item :label="$t('manager.hp_compensationPrice') + ':'" prop="damagePrice">
                     <el-input v-model="goodsData.damagePrice"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('manager.hp_costPrice') + ':'">
                     <el-input v-model="goodsData.costPrice"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('boss.loginDetail_state') + ':'">
+                <el-form-item :label="$t('boss.loginDetail_state') + ':'" prop="state">
                     <el-radio-group v-model="goodsData.state">
                         <el-radio :label="1">{{
                             $t("commons.enable")
@@ -315,13 +315,10 @@ export default {
     computed: {
         fourrules() {
             return {
-                name: [
-                    {
-                        required: true,
-                        message: this.$t("manager.hp_inputActiveName"),
-                        trigger: "blur",
-                    },
-                ],
+                damageTypeId: [{required: true, message: this.$t("commons.placeChoose"), trigger: "blur",}],
+                name: [{required: true, message: this.$t("manager.hp_inputActiveName"), trigger: "blur",}],
+                damagePrice: [{required: true, message: this.$t("manager.hp_inputActivePrice"), trigger: "blur",}],
+                state: [{required: true, message: this.$t("manager.placeChoose"), trigger: "change",}],
             };
         },
 
@@ -357,6 +354,9 @@ export default {
         },
     },
     props: { list: Array, typeTotal: Number, initData: Function },
+    mounted() {
+        this.initData('', '', '', this.typeForm);
+    },
     methods: {
         changeTab(tab) {
             if (tab.name == "type") {
@@ -475,7 +475,7 @@ export default {
                             "/pms/hoteldamagetype/edit",
                             params,
                             (res) => {
-                                this.initData("", "", "", this.typeForm, () => {
+                                this.initData("", "", "", this.typeForm, (res) => {
                                     this.typeForm.pageIndex = res.pageIndex;
                                     this.typeTotal = res.count;
                                 });

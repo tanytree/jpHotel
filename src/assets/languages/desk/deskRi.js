@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-10-30 18:02:33
+ * @LastEditTime: 2020-11-03 09:57:32
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -28,7 +28,7 @@ module.exports = {
     enterAccountMoney: '入金金額',
     enterAccount: '入金',
     checkInDays: '滞在日数',
-    arrivalTime: '到着予定',
+    arrivalTime: 'C/I時間',
     reservePersonDesc: '予約者',
     downPayment: '予約金',
     //夜审
@@ -193,7 +193,7 @@ module.exports = {
     order_outOrder: '外部予約番号',
     order_moblePhone: "携帯番号",
     order_checkinDate: "到着時間",
-    order_departureTime: "出発予定",
+    order_departureTime: "C/O時間",
     order_liveState: "状態（滞在中、出発済）",
     order_checkStatus: "精算状況（精算済み、未収）",
     order_invoicing: "精算",
@@ -358,8 +358,8 @@ module.exports = {
     customer_leaveStoreDate: '出発日',
     customer_livePeople: '宿泊者',
     customer_liveToleave: '到着−出発日',
-    customer_arrived: '到着',
-    customer_leave: '出発',
+    customer_arrived: 'C/I',
+    customer_leave: 'C/O',
     customer_dayNum: '日数',
     customer_totalRoomPrice: '宿泊料金',
     customer_totalConsum: '利用合計',
@@ -570,9 +570,19 @@ module.exports = {
     order_autoTiePrice: "自動計上項目は相殺できないです",
     book_venueBook: '会場予約',
     book_meetVerification: '会場取り消し',
-    book_meetInfo: '未翻译词条',
-    book_house: '未翻译词条',
-    book_houseTotalPrice: '未翻译词条',
+    customer_undoCheckoutA: '取り消し',
+    book_meetInfo: '使用情報',
+    book_house: '会場',
+    book_houseTotalPrice: '利用料金合計',
+    book_meetingIn: '受付',
+    book_guestName: '来客名前',
+    book_removeSuccess: '削除成功',
+    book_enrolled: '登録成功',
+    book_orderNotLive: '該当予約が未到着の為、登録開始は未定',
+
+
+
+
 
 
 

@@ -6,18 +6,24 @@
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('manager.grsl_goodsState')+':'">
-                    <el-select v-model="form.status">
-                        <el-option :label="$t('commons.enable')" :value="1"></el-option>
-                        <el-option :label="$t('commons.disable')" :value="2"></el-option>
+                <el-form-item label="商品类别型:">
+                    <el-select  v-model="form.categoryType" placeholder="请选择" @change="geProductType">
+                        <el-option label="实物" :value="1"></el-option>
+                        <el-option label="服务" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('manager.grsl_goodsType')+':'">
+                <el-form-item :label="$t('manager.grsl_goodsTypeA')+':'">
                     <el-cascader v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
+                </el-form-item>
+                <el-form-item :label="$t('manager.grsl_goodsState')+':'">
+                    <el-select v-model="form.status">
+                        <el-option :label="$t('manager.hk_enable')" :value="1"></el-option>
+                        <el-option :label="$t('manager.hk_disable')" :value="2"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" class="submit" @click="search">{{$t('commons.queryBtn')}}</el-button>
-                    <el-button class="grey" @click="reset">{{$t('commons.resetBtn')}}</el-button>
+                    <el-button class="grey" style="margin-left:0" @click="reset">{{$t('commons.resetBtn')}}</el-button>
                 </el-form-item>
                 <el-form-item class="form-inline-flex">
                     <el-row class="form-inline-flex">
@@ -37,7 +43,7 @@
 <!--                    <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>-->
                     <el-table-column :label="$t('commons.operating')" width="350">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
+                            <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? $t('manager.hk_disable') :  $t('manager.hk_enable')}}</el-button>
                             <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
                             <el-popconfirm v-if="scope.row.status == 1" :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="handleDelete(scope.row)">
                                 <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
@@ -56,7 +62,7 @@
                 <el-breadcrumb-item>
                     <a @click="back">{{$t('manager.grsl_goodsManagerment')}}</a>
                 </el-breadcrumb-item>
-                <el-breadcrumb-item>{{$t('manager.grsl_resetGoods')}}</el-breadcrumb-item>
+                <el-breadcrumb-item>{{edit?$t('manager.grsl_resetGoods'):$t('manager.grsl_addGoods')}}</el-breadcrumb-item>
             </el-breadcrumb>
             <el-form :model="rowData" size="small" :rules="threerules" ref="rowForm" label-width="100px" class="rowForm">
                 <el-form-item :label="$t('manager.grsl_goodsMode')+':'">
@@ -159,9 +165,11 @@
                 form: {
                     name: "",
                     status: "",
+                    categoryType: '',
                     category: [],
                 },
                 categoryArr: [],
+                category: [],
                 categoryProps: {value: "id", label: "name", children: "child"},
                 rowData: {
                     name: "",
@@ -218,13 +226,15 @@
         },
         props: {
             list: Array,
-            category: Array,
+            cateList: Array,
             serviceList: Array,
             total: Number,
             initData: Function,
+            cateData: Function,
         },
         mounted() {
-            this.categoryArr = this.category;
+            this.categoryArr = this.cateList;
+            this.category = this.cateList;
         },
         computed: {
             downloadSuccessful: {
@@ -256,7 +266,9 @@
                 this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
             },
             reset() {
-                this.form = {name: "", status: "", category: ""};
+                this.form = {name: "", status: "", categoryType: '', category: ""};
+                this.category = [];
+                this.categoryArr = [];
                 this.initData(this.pageForm, '', '', '');
             },
             casChange(value) {
@@ -274,7 +286,7 @@
             },
             changeType(type) {
                 if(type == 1) {
-                    this.categoryArr = this.category;
+                    this.categoryArr = this.cateList;
                 } else {
                     this.categoryArr = this.serviceList;
                 }
@@ -390,15 +402,22 @@
                     }
                 );
             },
+            geProductType(v){
+                this.cateData(v);
+                if(v === 1) {
+                    this.category = this.cateList;
+                } else {
+                    this.category = this.serviceList;
+                }
+            },
         },
     };
 </script>
 
-<style lang="less">
+<style lang="less" >
     .row-width {
         width: 120px;
     }
-
     .content {
         height: 100%;
         padding: 10px;

@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-02-15 21:08:27
- * @LastEditors: 何丽梅
- * @LastEditTime: 2020-04-27 11:14:21
- * @FilePath: /cloudAdmin/src/views/market/productManagement/index.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-02 16:29:05
+ * @FilePath: \jiudian\src\views\manager\guestCenter\AddRoom.vue
  -->
 <template>
     <div
@@ -34,7 +34,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-form-item
-                            :label="$t('manager.hp_storiedBuilding')+':'"
+                            :label="$t('manager.hp_storiedBuildingA')+':'"
                             prop="buildingId"
                         >
                             <el-select
@@ -161,7 +161,7 @@
                             </el-col>
                         </el-row>
                     </el-form-item>
-                    <el-form-item :label="$t('manager.hk_byRoad')+':'" prop="roadFlag">
+                    <el-form-item v-if="1==2" :label="$t('manager.hk_byRoad')+':'" prop="roadFlag">
                         <el-row :gutter="20" class="row-center">
                             <el-col :span="20">
                                 <el-radio-group v-model="selectFrom.roadFlag">
@@ -213,7 +213,7 @@
                             </el-col>
                         </el-row>
                     </el-form-item>
-                    <el-form-item :label="$t('manager.hk_ifNoiseRoom')+':'" prop="noiseFlag">
+                    <el-form-item :label="$t('manager.hk_ifNoiseRoom')+':'" prop="noiseFlag" v-if="1==2">
                         <el-row :gutter="20" class="row-center">
                             <el-col :span="20">
                                 <el-radio-group v-model="selectFrom.noiseFlag">
@@ -227,6 +227,7 @@
                         </el-row>
                     </el-form-item>
                     <el-form-item
+                        v-if="1==2"
                         :label="$t('manager.hk_ifTemperatureRoom')+':'"
                         prop="temperatureFlag"
                     >
@@ -303,19 +304,19 @@ export default {
             },
             towardList: [
                 {
-                    name: "朝南",
+                    name: "面山",
                     status: 1,
                 },
                 {
-                    name: "朝北",
+                    name: "面海",
                     status: 2,
                 },
                 {
-                    name: "朝东",
+                    name: "面湖",
                     status: 3,
                 },
                 {
-                    name: "朝西",
+                    name: "无",
                     status: 4,
                 },
             ],

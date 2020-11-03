@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-09-14 10:55:10
  * @Author: 陶子
- * @LastEditTime: 2020-10-30 17:57:38
+ * @LastEditTime: 2020-11-02 11:36:29
  * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
 -->
 <template>
@@ -48,7 +48,9 @@
                 <el-card style="height: 203px">
                     <div slot="header" class="card_header">
                         <span
-                            >{{$t('desk.book_meetInfo')}}（{{$t('desk.book_house')+':'}}{{
+                            >{{ $t("desk.book_meetInfo") }}（{{
+                                $t("desk.book_house") + ":"
+                            }}{{
                                 inRoomList.length > 0
                                     ? inRoomList[0].houseNum
                                     : ""
@@ -69,18 +71,26 @@
                     >
                         <el-row>
                             <el-col :span="7">
-                                <el-form-item :label="$t('desk.book_chamber')+':'"
-                                    >{{ checkIn.meetingName}}</el-form-item
+                                <el-form-item
+                                    :label="$t('desk.book_chamber') + ':'"
+                                    >{{ checkIn.meetingName }}</el-form-item
                                 >
                             </el-col>
                             <el-col :span="5">
-                                <el-form-item :label="$t('desk.book_meetName')+':'">{{
-                                   inRoomList.length>0?inRoomList[0].roomTypeName:''
-                                }}</el-form-item>
+                                <el-form-item
+                                    :label="$t('desk.book_meetName') + ':'"
+                                    >{{
+                                        inRoomList.length > 0
+                                            ? inRoomList[0].roomTypeName
+                                            : ""
+                                    }}</el-form-item
+                                >
                             </el-col>
                             <el-col :span="12">
-                                <el-form-item :label="$t('desk.book_meetTime')+':'"
-                                    >{{ checkIn.checkinTime }} {{$t('desk.serve_to')}}
+                                <el-form-item
+                                    :label="$t('desk.book_meetTime') + ':'"
+                                    >{{ checkIn.checkinTime }}
+                                    {{ $t("desk.serve_to") }}
                                     {{ checkIn.checkoutTime }}</el-form-item
                                 >
                             </el-col>
@@ -93,7 +103,7 @@
                                 >
                             </el-col>
                             <el-col :span="5">
-                                <el-form-item label="房价合计：">{{
+                                <el-form-item  :label="$t('desk.book_houseTotalPrice') + ':'">{{
                                     checkIn.totalRoomPrice
                                 }}</el-form-item>
                             </el-col>
@@ -108,12 +118,12 @@
                 </el-card>
                 <el-card style="margin-top: 10px; height: 350px">
                     <div class="clearfix" style="margin-bottom: 10px">
-                        <span>会议登记</span>
+                        <span>{{$t('desk.book_meetConference')}}</span>
                         <el-button
                             size="mini"
                             @click="meetClick()"
                             style="float: right"
-                            >会议登记</el-button
+                            >{{$t('desk.book_meetConference')}}</el-button
                         >
                     </div>
                     <!--表格数据 -->
@@ -129,17 +139,17 @@
                     >
                         <el-table-column
                             prop="name"
-                            label="姓名"
+                            :label="$t('desk.home_name')"
                             show-overflow-tooltip
                         ></el-table-column>
                         <el-table-column
                             prop="sex"
-                            label="性别"
+                           :label="$t('desk.customer_sex')"
                             show-overflow-tooltip
                         >
                             <template slot-scope="{ row }">
-                                <div v-if="row.sex == 1">男</div>
-                                <div v-if="row.sex == 2">女</div>
+                                <div v-if="row.sex == 1">{{$t('desk.customer_man')}}</div>
+                                <div v-if="row.sex == 2">{{$t('desk.customer_woman')}}</div>
                             </template>
                         </el-table-column>
                         <el-table-column
@@ -148,19 +158,19 @@
                             show-overflow-tooltip
                         >
                             <template slot-scope="{ row }">
-                                <div v-if="row.idcardType == 1">身份证</div>
-                                <div v-if="row.idcardType == 2">护照</div>
+                                <div v-if="row.idcardType == 1">{{$t('desk.home_idCard')}}</div>
+                                <div v-if="row.idcardType == 2">{{$t('desk.customer_passport')}}</div>
                             </template>
                         </el-table-column>
                         <el-table-column
                             prop="idcard"
-                            label="证件号"
+                            :label="$t('desk.customer_idNo')"
                             show-overflow-tooltip
                             width="150px"
                         ></el-table-column>
                         <el-table-column
                             prop="createTime"
-                            label="登记时间"
+                            :label="$t('desk.customer_registrationTime')"
                             show-overflow-tooltip
                             width="150px"
                         ></el-table-column>
@@ -176,7 +186,7 @@
                                     type="text"
                                     @click="clickRemove(row)"
                                     size="mini"
-                                    >移除</el-button
+                                    >{{$t('desk.customer_remove')}}</el-button
                                 >
                             </template>
                         </el-table-column>
@@ -187,7 +197,7 @@
         <!-- 会议签到dialog -->
         <el-dialog
             top="0"
-            title="会议签到"
+            :title="$t('desk.book_meetingIn')"
             :visible.sync="dialogMeet"
             class="setCompanyForm"
         >
@@ -200,7 +210,7 @@
             >
                 <el-row class="row">
                     <el-col :span="11">
-                        <el-form-item label="来客姓名:" prop="name">
+                        <el-form-item :label="$t('desk.book_guestName')+':'" prop="name">
                             <el-input
                                 v-model="addCompanyForm.name"
                                 style="width: 180px"
@@ -208,10 +218,10 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item label="性别:">
+                        <el-form-item  :label="$t('desk.customer_sex')+':'">
                             <el-radio-group v-model="addCompanyForm.sex">
-                                <el-radio label="1">男</el-radio>
-                                <el-radio label="2">女</el-radio>
+                                <el-radio label="1">{{$t('desk.customer_man')}}</el-radio>
+                                <el-radio label="2">{{$t('desk.customer_woman')}}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-col>
@@ -227,13 +237,13 @@
                                 style="width: 180px"
                                 :placeholder="$t('commons.selectIdCardType')"
                             >
-                                <el-option label="身份证" value="1"></el-option>
-                                <el-option label="护照" value="2"></el-option>
+                                <el-option :label="$t('desk.home_idCard')" value="1"></el-option>
+                                <el-option :label="$t('desk.customer_passport')" value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item label="证件号:" prop="idcard">
+                        <el-form-item :label="$t('desk.customer_idNo')+':'" prop="idcard">
                             <el-input
                                 v-model="addCompanyForm.idcard"
                                 style="width: 180px"
@@ -273,20 +283,8 @@ export default {
             msgKey: (state) => state.config.msgKey,
             plat_source: (state) => state.config.plat_source,
         }),
-    },
-    data() {
-        return {
-            loading: false,
-            form: {},
-            tableData: [],
-            addCompanyForm: {
-                name: "",
-                sex: "1",
-                idcardType: "1",
-                idcard: "",
-                mobile: "",
-            },
-            rules: {
+        rules(){
+            return{
                 name: [
                     {
                         required: true,
@@ -310,8 +308,23 @@ export default {
                         message: this.$t("commons.placeChoose"),
                         trigger: "change",
                     },
-                ],
+                ], 
+            }
+        }
+    },
+    data() {
+        return {
+            loading: false,
+            form: {},
+            tableData: [],
+            addCompanyForm: {
+                name: "",
+                sex: "1",
+                idcardType: "1",
+                idcard: "",
+                mobile: "",
             },
+           
             dialogMeet: false,
             alldayList: [],
             hotelenterAddAndEdit: false,
@@ -361,7 +374,7 @@ export default {
                 params,
                 (data) => {
                     this.$message({
-                        message: "移除成功",
+                        message: this.$t('desk.book_removeSuccess'),
                         type: "success",
                     });
                     this.getData();
@@ -381,7 +394,7 @@ export default {
                         this.addCompanyForm,
                         (data) => {
                             this.$message({
-                                message: "登记成功",
+                                message:this.$t('desk.book_enrolled'),
                                 type: "success",
                             });
                             this.getData();
@@ -424,16 +437,16 @@ export default {
             let text = "";
             switch (this.checkIn.orderSource) {
                 case 1:
-                    text = "前台";
+                    text = this.$t("desk.book_desk");
                     break;
                 case 2:
                     text = this.$t("desk.book_saleTo");
                     break;
                 case 3:
-                    text = "渠道订单";
+                    text = this.$t("desk.book_channelOrder");
                     break;
                 case 10:
-                    text = "其他";
+                    text = this.$t("desk.book_other");
                     break;
             }
             return text;
@@ -445,7 +458,7 @@ export default {
             } else {
                 this.$message({
                     showClose: true,
-                    message: "当前订单还未入住，暂不可登记",
+                    message: this.$t("desk.book_orderNotLive"),
                     type: "warning",
                 });
             }

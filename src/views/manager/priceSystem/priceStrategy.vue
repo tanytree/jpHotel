@@ -2,7 +2,7 @@
 	<div>
 		<el-row>
 			<el-tabs v-model="activName">
-				<el-tab-pane label="会员" name="member">
+				<el-tab-pane :label="$t('manager.ps_member')" name="member">
 					<Member></Member>
 				</el-tab-pane>
 				<!-- <el-tab-pane label="单位" name="unit">

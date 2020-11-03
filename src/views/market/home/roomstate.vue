@@ -561,22 +561,6 @@
                                 <span>{{ F_is1or2(currentRoom.windowFlag) }}</span>
                             </div>
                             <div class="col">
-                                靠马路：
-                                <span>{{ F_is1or2(currentRoom.roadFlag) }}</span>
-                            </div>
-                            <div class="col">
-                                噪音房：
-                                <span>{{ F_is1or2(currentRoom.noiseFlag) }}</span>
-                            </div>
-                            <div class="col">
-                                无烟房：
-                                <span>{{ F_is1or2(currentRoom.smokeFlag) }}</span>
-                            </div>
-                            <div class="col">
-                                高温房：
-                                <span>{{ F_is1or2(currentRoom.temperatureFlag) }}</span>
-                            </div>
-                            <div class="col">
                                {{$t('manager.hk_toward')}}
                                 <span>{{ F_is1or2(currentRoom.toward) }}</span>
                             </div>
