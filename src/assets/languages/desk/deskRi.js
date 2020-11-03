@@ -579,6 +579,9 @@ module.exports = {
     book_removeSuccess: '削除成功',
     book_enrolled: '登録成功',
     book_orderNotLive: '該当予約が未到着の為、登録開始は未定',
+    book_canceOrder: '未翻译词条',
+    book_shouldNoOrder: '应到未到订单',
+
 
 
 

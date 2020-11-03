@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-09-14 10:55:10
  * @Author: 陶子
- * @LastEditTime: 2020-11-02 11:36:29
+ * @LastEditTime: 2020-11-03 17:29:08
  * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
 -->
 <template>
@@ -40,7 +40,12 @@
                             {{ $t("desk.order_moblePhone") }}：
                             <span>{{ checkIn.mobile }}</span>
                         </div>
-                        <div>{{ $t("desk.order_sourceType") }}：</div>
+                        <div>
+                            {{ $t("desk.order_sourceType") }}：
+                            <span v-if="checkIn.guestType == 1">散客</span>
+                            <span v-if="checkIn.guestType == 2">会员</span>
+                            <span v-if="checkIn.guestType == 3">单位</span>
+                        </div>
                     </div>
                 </el-card>
             </el-col>
@@ -103,9 +108,12 @@
                                 >
                             </el-col>
                             <el-col :span="5">
-                                <el-form-item  :label="$t('desk.book_houseTotalPrice') + ':'">{{
-                                    checkIn.totalRoomPrice
-                                }}</el-form-item>
+                                <el-form-item
+                                    :label="
+                                        $t('desk.book_houseTotalPrice') + ':'
+                                    "
+                                    >{{ checkIn.totalRoomPrice }}</el-form-item
+                                >
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item
@@ -118,12 +126,12 @@
                 </el-card>
                 <el-card style="margin-top: 10px; height: 350px">
                     <div class="clearfix" style="margin-bottom: 10px">
-                        <span>{{$t('desk.book_meetConference')}}</span>
+                        <span>{{ $t("desk.book_meetConference") }}</span>
                         <el-button
                             size="mini"
                             @click="meetClick()"
                             style="float: right"
-                            >{{$t('desk.book_meetConference')}}</el-button
+                            >{{ $t("desk.book_meetConference") }}</el-button
                         >
                     </div>
                     <!--表格数据 -->
@@ -144,12 +152,16 @@
                         ></el-table-column>
                         <el-table-column
                             prop="sex"
-                           :label="$t('desk.customer_sex')"
+                            :label="$t('desk.customer_sex')"
                             show-overflow-tooltip
                         >
                             <template slot-scope="{ row }">
-                                <div v-if="row.sex == 1">{{$t('desk.customer_man')}}</div>
-                                <div v-if="row.sex == 2">{{$t('desk.customer_woman')}}</div>
+                                <div v-if="row.sex == 1">
+                                    {{ $t("desk.customer_man") }}
+                                </div>
+                                <div v-if="row.sex == 2">
+                                    {{ $t("desk.customer_woman") }}
+                                </div>
                             </template>
                         </el-table-column>
                         <el-table-column
@@ -158,8 +170,12 @@
                             show-overflow-tooltip
                         >
                             <template slot-scope="{ row }">
-                                <div v-if="row.idcardType == 1">{{$t('desk.home_idCard')}}</div>
-                                <div v-if="row.idcardType == 2">{{$t('desk.customer_passport')}}</div>
+                                <div v-if="row.idcardType == 1">
+                                    {{ $t("desk.home_idCard") }}
+                                </div>
+                                <div v-if="row.idcardType == 2">
+                                    {{ $t("desk.customer_passport") }}
+                                </div>
                             </template>
                         </el-table-column>
                         <el-table-column
@@ -186,7 +202,7 @@
                                     type="text"
                                     @click="clickRemove(row)"
                                     size="mini"
-                                    >{{$t('desk.customer_remove')}}</el-button
+                                    >{{ $t("desk.customer_remove") }}</el-button
                                 >
                             </template>
                         </el-table-column>
@@ -210,7 +226,10 @@
             >
                 <el-row class="row">
                     <el-col :span="11">
-                        <el-form-item :label="$t('desk.book_guestName')+':'" prop="name">
+                        <el-form-item
+                            :label="$t('desk.book_guestName') + ':'"
+                            prop="name"
+                        >
                             <el-input
                                 v-model="addCompanyForm.name"
                                 style="width: 180px"
@@ -218,10 +237,14 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item  :label="$t('desk.customer_sex')+':'">
+                        <el-form-item :label="$t('desk.customer_sex') + ':'">
                             <el-radio-group v-model="addCompanyForm.sex">
-                                <el-radio label="1">{{$t('desk.customer_man')}}</el-radio>
-                                <el-radio label="2">{{$t('desk.customer_woman')}}</el-radio>
+                                <el-radio label="1">{{
+                                    $t("desk.customer_man")
+                                }}</el-radio>
+                                <el-radio label="2">{{
+                                    $t("desk.customer_woman")
+                                }}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-col>
@@ -237,13 +260,22 @@
                                 style="width: 180px"
                                 :placeholder="$t('commons.selectIdCardType')"
                             >
-                                <el-option :label="$t('desk.home_idCard')" value="1"></el-option>
-                                <el-option :label="$t('desk.customer_passport')" value="2"></el-option>
+                                <el-option
+                                    :label="$t('desk.home_idCard')"
+                                    value="1"
+                                ></el-option>
+                                <el-option
+                                    :label="$t('desk.customer_passport')"
+                                    value="2"
+                                ></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                        <el-form-item :label="$t('desk.customer_idNo')+':'" prop="idcard">
+                        <el-form-item
+                            :label="$t('desk.customer_idNo') + ':'"
+                            prop="idcard"
+                        >
                             <el-input
                                 v-model="addCompanyForm.idcard"
                                 style="width: 180px"
@@ -283,8 +315,8 @@ export default {
             msgKey: (state) => state.config.msgKey,
             plat_source: (state) => state.config.plat_source,
         }),
-        rules(){
-            return{
+        rules() {
+            return {
                 name: [
                     {
                         required: true,
@@ -308,9 +340,9 @@ export default {
                         message: this.$t("commons.placeChoose"),
                         trigger: "change",
                     },
-                ], 
-            }
-        }
+                ],
+            };
+        },
     },
     data() {
         return {
@@ -324,7 +356,7 @@ export default {
                 idcard: "",
                 mobile: "",
             },
-           
+
             dialogMeet: false,
             alldayList: [],
             hotelenterAddAndEdit: false,
@@ -360,7 +392,9 @@ export default {
                     this.totalPrice = data.totalPrice;
                     this.payPrice = data.payPrice;
                     this.inRoomList = data.inRoomList;
-                    this.getData();
+                    if (this.checkIn.state == 6) {
+                        this.getData();
+                    }
                 }
             );
         },
@@ -374,7 +408,7 @@ export default {
                 params,
                 (data) => {
                     this.$message({
-                        message: this.$t('desk.book_removeSuccess'),
+                        message: this.$t("desk.book_removeSuccess"),
                         type: "success",
                     });
                     this.getData();
@@ -394,7 +428,7 @@ export default {
                         this.addCompanyForm,
                         (data) => {
                             this.$message({
-                                message:this.$t('desk.book_enrolled'),
+                                message: this.$t("desk.book_enrolled"),
                                 type: "success",
                             });
                             this.getData();

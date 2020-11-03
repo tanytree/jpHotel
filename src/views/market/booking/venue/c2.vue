@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-10-30 17:12:48
+ * @LastEditTime: 2020-11-03 17:03:02
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -195,6 +195,8 @@
             <div v-if="row.state == 5">{{ $t("desk.book_notCheckin") }}</div>
             <div v-if="row.state == 6">{{ $t("desk.book_checkin") }}</div>
             <div v-if="row.state == 7">{{ $t("desk.book_leaveStore") }}</div>
+            <div v-if="row.state == 8">{{ $t("desk.book_canceOrder") }}</div>
+            <div v-if="row.state == 9">{{ $t("desk.book_shouldNoOrder") }}</div>
           </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="140">

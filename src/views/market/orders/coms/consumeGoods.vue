@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-02-16 14:34:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 15:56:46
- * @FilePath: /jiudian/src/views/market/orders/coms/consumeGoods.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-03 16:31:54
+ * @FilePath: \jiudian\src\views\market\orders\coms\consumeGoods.vue
  -->
 <template>
 <el-dialog top='0' :title="$t('desk.serve_miniPub')" :visible.sync="visible" :lock-scroll='false' width="80%">
