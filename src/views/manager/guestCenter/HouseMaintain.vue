@@ -13,7 +13,15 @@
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
 							<el-table-column prop="houseName" :label="$t('manager.hk_roomName')"></el-table-column>
-							<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
+							<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')">
+								<template slot-scope="scope">
+									<div class="p-list" v-for="(value, index) in scope.row.priceList" :key="index">
+										<div class="p-item">
+											<span>{{value.pName}}</span><span>{{value.allPrice}}</span>
+										</div>
+									</div>
+								</template>
+							</el-table-column>
 							<el-table-column prop="bedNum" :label="$t('manager.hk_beds')"></el-table-column>
 							<el-table-column prop="checkinNum" :label="$t('manager.hk_availabilityPeople')"></el-table-column>
 							<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
@@ -22,7 +30,7 @@
 								</template>
 							</el-table-column>
 							<el-table-column prop="remark" :label="$t('boss.loginDetail_note')"></el-table-column>
-							<el-table-column :label="$t('commons.operating')" width="200">
+							<el-table-column :label="$t('commons.operating')" width="250">
 								<template slot-scope="scope">
 									<el-button type="text" size="small" @click="stop('kefang', scope.row)">{{scope.row.state==1? $t('commons.disable'): $t('commons.enable')}}
 									</el-button>
@@ -150,7 +158,7 @@
 						<!-- 早餐 -->
 						<el-form-item label="早餐">
 							<el-select v-model="ruleForm.mealBreakfast" placeholder="请选择">
-								<el-option v-for="item in zaocangList" :key="item.id" :label="item.name" :value="item.id">
+								<el-option v-for="item in zaocangList" :key="item.id" :label="item.mealName" :value="item.id">
 								</el-option>
 							</el-select>
 						</el-form-item>
@@ -158,7 +166,7 @@
 						<!-- 晚餐 -->
 						<el-form-item label="晚餐" prop="mealDinner">
 							<el-select v-model="ruleForm.mealDinner" placeholder="请选择">
-								<el-option v-for="item in wancangList" :key="item.id" :label="item.name" :value="item.id">
+								<el-option v-for="item in wancangList" :key="item.id" :label="item.mealName" :value="item.id">
 								</el-option>
 							</el-select>
 						</el-form-item>
@@ -241,13 +249,6 @@
 								</el-row>
 							</el-col>
 						</el-row>
-						<!-- <el-form :model="ruleForm_sit" :rules="rules" ref="ruleForm_ceng" label-width="150px">
-							<el-col :span="20">
-								<el-form-item label="2人住宿:" prop="name">
-									<el-input :placeholder="$t('boss.department_placeEnterContent')" v-model="ruleForm_sit.two"></el-input>
-								</el-form-item>
-							</el-col>
-						</el-form> -->
 					</el-row>
 					<span slot="footer" class="dialog-footer">
 						<el-button @click="jiageSit_show = false">{{$t('commons.cancel')}}</el-button>
@@ -438,11 +439,6 @@
 
 					case "sit":
                         this.ruleForm_sit = [];
-						// this.ruleForm.checkinNum.forEach((value, index) =>{
-						// 	obj.price = ''
-						// 	obj.sid = index
-						// 	arr[i] = obj
-						// })
 						for (let i = 0; i < this.ruleForm.checkinNum; i++) {
                             let obj = {}
 							obj.price = ''
@@ -532,29 +528,41 @@
 					});
 				}
 				if (this.ruleForm.roomType == 1) {
-					if (this.ruleForm_sit == '' || this.ruleForm_sit == null || this.ruleForm_sit == undefined) {
+					if (this.ruleForm_sit.length == 0) {
 						return this.$message({
 							message: '请设定住宿价格',
 							type: "warn",
 						});
 					} else {
-						this.ruleForm.personPrice = this.ruleForm_sit.one + ',' + this.ruleForm_sit.two
+						let len = ''
+						this.ruleForm_sit.forEach((value, index) =>{
+							len = len + ',' + value.price
+						})
+						this.ruleForm.personPrice = len
+						
 						if (this.ruleForm.personPrice[0] == ',') {
-							this.ruleForm.personPrice = this.ruleForm.personPrice.substring(1, this.ruleForm.personPrice.length - 1)
+							this.ruleForm.personPrice = this.ruleForm.personPrice.substring(1, this.ruleForm.personPrice.length)
 						}
+						debugger
 					}
 				} else {
-					this.ruleForm.personPrice = this.ruleForm_sit.one + ',' + this.ruleForm_sit.two
+					let len = ''
+					this.ruleForm_sit.forEach((value, index) =>{
+						len = len + ',' + value.price
+					})
+					this.ruleForm.personPrice = len
+					
 					if (this.ruleForm.personPrice[0] == ',') {
 						this.ruleForm.personPrice = this.ruleForm.personPrice.substring(1, this.ruleForm.personPrice.length)
 					}
 				}
-				debugger
+				
 				this.$refs[ruleForm].validate((valid) => {
 					if (valid) {
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
+							debugger
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",
@@ -583,6 +591,20 @@
 					"/pms/hotel/hotel_room_type_list",
 					params,
 					(res) => {
+						let obj = {}
+						let allP = 0
+						res.list.forEach((value, index) =>{
+							debugger
+							let personPriceList = value.personPrice.split(',')
+							personPriceList.forEach((item, i) =>{
+								allP = Number(item) + Number(value.bPrice) + Number(value.dPrice)
+							})
+							obj.pName = `${index+1} 住宿价+付餐价`
+							obj.allPrice = allP
+							
+							value.priceList.push(obj)
+							
+						})
 						this.tableData = res.list;
 						this.form.totalSize = res.totalSize;
 					}
