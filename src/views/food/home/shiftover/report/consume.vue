@@ -90,7 +90,7 @@
               <el-table-column prop="no" label="房间姓名"></el-table-column>
               <el-table-column prop="date" :label="$t('commons.operatingTime')"></el-table-column>
               <el-table-column prop="admin_name" :label="$t('desk.customer_operator')"></el-table-column>
-              <el-table-column prop="banci" label="班次"></el-table-column>
+<!--              <el-table-column prop="banci" label="班次"></el-table-column>-->
             </el-table>
         </div>
 

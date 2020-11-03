@@ -8,36 +8,18 @@
   <div class="finance">
     <el-row class="clearfix">
       <div class="">
-        <el-button type="primary" size="mini" @click="depositShow = true"
-          >{{ $t('desk.order_payDeposit') }}</el-button
-        >
-        <el-button type="primary" size="mini" @click="refundShow = true"
-          >{{ $t('desk.order_payBack') }}</el-button
-        >
-        <el-button type="primary" size="mini" @click="destructionHandle"
-          >冲调</el-button
-        >
+        <el-button type="primary" size="mini" @click="depositShow = true">{{ $t('desk.order_payDeposit') }}
+        </el-button><el-button type="primary" size="mini" @click="refundShow = true">{{ $t('desk.order_payBack') }}</el-button>
+          <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
 <!--        <el-button type="primary" size="mini">{{-->
 <!--          $t("commons.print")-->
 <!--        }}</el-button>-->
       </div>
     </el-row>
     <el-row class="clearfix padding-tb-20">
-      <el-col :span="4">
-        <span
-          >{{ $t('desk.payTotal') }}：<em class="text-green">{{ detailData.payPrice }}</em></span
-        >
-      </el-col>
-      <el-col :span="4">
-        <span
-          >{{ $t('desk.consumerTotal') }}：<em class="text-red">{{
-            detailData.consumePrice
-          }}</em></span
-        >
-      </el-col>
-      <el-col :span="4">
-        <span>{{ $t('desk.balanceTotal') }}：100</span>
-      </el-col>
+      <el-col :span="4"><span>{{ $t('desk.payTotal') }}：<em class="text-green">{{ detailData.payPrice }}</em></span></el-col>
+        <el-col :span="4"><span>{{ $t('desk.consumerTotal') }}：<em class="text-red">{{ detailData.consumePrice }}</em></span></el-col>
+        <el-col :span="4"><span>{{ $t('desk.balanceTotal') }}：{{ detailData.payPrice - detailData.consumePrice }}</span></el-col>
     </el-row>
     <!--表格数据 -->
     <el-table
@@ -49,42 +31,20 @@
       size="mini"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column
-        prop="createTime"
-        label="消费时间"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column prop="priceType" label="账务项目">
-        <template slot-scope="{ row }">
-          {{ F_priceType(row.priceType) }}
-        </template>
+      <el-table-column prop="createTime" label="消费时间" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="priceType" label="账务项目"><template slot-scope="{ row }">
+          {{ F_priceType(row.priceType) }}</template>
       </el-table-column>
       <el-table-column prop="payPrice" label="付款"></el-table-column>
-      <el-table-column
-        prop="consumePrice"
-        label="消费"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column
-        prop=""
-        label="业务说明"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column
-        prop="remark"
-        :label="$t('desk.home_note')"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column
-        prop="creatorName"
-        :label="$t('desk.home_operator')"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column
-        prop=""
-        label="班次"
-        show-overflow-tooltip
-      ></el-table-column>
+      <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
+<!--      <el-table-column-->
+<!--        prop=""-->
+<!--        :label="$t('desk.order_businessThat')"-->
+<!--        show-overflow-tooltip-->
+<!--      ></el-table-column>-->
+      <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
+<!--      <el-table-column prop="" label="班次" show-overflow-tooltip></el-table-column>-->
     </el-table>
     <div style="margin-top: 10px"></div>
     <!-- 分页 -->
@@ -105,82 +65,40 @@
       :visible.sync="destructionShow"
       width="800px"
     >
-      <el-form
-        :model="consumeOperForm"
-        ref="destruction"
-        :rules="rules"
-        size="mini"
-        label-width="100px"
-      >
+      <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
 <!--        <p>正在冲调的账务</p>-->
-        <el-table
-          v-loading="loading"
-          :data="destructionList"
-          :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
-          size="mini"
-        >
-          <el-table-column label="账务项目" show-overflow-tooltip>
-            <template slot-scope="{ row }">
-              {{ F_priceType(row.priceType) }}
-            </template>
+        <el-table v-loading="loading" :data="destructionList" :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }" size="mini">
+          <el-table-column label="账务项目" show-overflow-tooltip><template slot-scope="{ row }">{{ F_priceType(row.priceType) }}</template></el-table-column>
+          <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip>
+              <template scope="{row}">
+                  {{row.consumePrice || 0}}
+              </template>
           </el-table-column>
-          <el-table-column
-            prop="consumePrice"
-            label="消费"
-            show-overflow-tooltip
-          ></el-table-column>
-          <el-table-column
-            prop="enterType"
-            label="业务说明"
-            show-overflow-tooltip
-          ></el-table-column>
-          <el-table-column
-            prop="createTime"
-            :label="$t('desk.enterAccountTime')"
-            show-overflow-tooltip
-          ></el-table-column>
-          <el-table-column
-            prop="roomName"
-            :label="$t('desk.home_roomNum')"
-            show-overflow-tooltip
-          ></el-table-column>
-          <el-table-column
-            prop="creatorName"
-            :label="$t('desk.home_operator')"
-            show-overflow-tooltip
-          ></el-table-column>
+<!--          <el-table-column prop="remark" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
+          <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
+          <!--冲调方式 -->
         <el-form-item label="冲调方式：" prop="priceType">
-          <el-radio-group v-model="consumeOperForm.priceType">
-            <el-radio :label="9" :value="9">完全冲调</el-radio>
-            <el-radio :label="10" :value="10">部分冲调</el-radio>
-          </el-radio-group>
+            <el-radio-group v-model="consumeOperForm.priceType">
+                <el-radio :label="9" :value="9">完全冲调</el-radio>
+                <el-radio :label="10" :value="10">部分冲调</el-radio>
+            </el-radio-group>
         </el-form-item>
-        <el-form-item label="冲调金额：" prop="consumePrice">
-          <el-input
-            class="width200"
-            type="number"
-            v-model="consumeOperForm.consumePrice"
-            autocomplete="off"
-          ></el-input
-          ><em style="margin-left: 10px; color: #888"
-            >注意：冲调金额小于原账金额</em
-          >
+        <el-form-item label="冲调金额：" prop="consumePrice" v-if="consumeOperForm.priceType != 9">
+            <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"> </el-input>
+            <em style="margin-left: 10px; color: #888">注意：冲调金额小于原账金额</em>
         </el-form-item>
         <el-form-item label="冲调原因：" prop="remark">
-          <el-input
-            class="width200"
-            type="textarea"
-            v-model="consumeOperForm.remark"
-            autocomplete="off"
-          ></el-input>
+          <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="destructionShow = false">{{ $t('commons.cancel') }}</el-button>
-        <el-button type="primary" @click="consume_oper(3, 'destruction')"
-          >{{ $t('commons.confirm') }}</el-button
-        >
+        <el-button type="primary" @click="consume_oper(3, 'destruction')">
+            {{ $t('commons.confirm') }}
+        </el-button>
       </div>
     </el-dialog>
     <!--交订金-->
@@ -206,6 +124,11 @@
             <el-radio-button :label="1" :value="1">{{ $t('desk.downPayment')}}</el-radio-button>
           </el-radio-group>
         </el-form-item>
+          <el-form-item :label="$t('desk.order_selectPayWay') + ':'">
+              <el-radio-group v-model="consumeOperForm.payType">
+                  <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
+              </el-radio-group>
+          </el-form-item>
         <el-form-item label="金额：">
           <el-input
             class=""
@@ -222,15 +145,14 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
+
         <!--            <el-form-item label="打印单据：">-->
         <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
         <!--            </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="depositShow = false">关闭</el-button>
-        <el-button type="primary" @click="consume_oper(1, 'deposit')"
-          >结算</el-button
-        >
+        <el-button type="primary" @click="consume_oper(1, 'deposit')">结算</el-button>
       </div>
     </el-dialog>
     <!--退订金-->
@@ -283,23 +205,7 @@
         >
       </div>
     </el-dialog>
-    <el-dialog top="0" title="选择结算方式" :visible.sync="payTypeShow">
-      <el-form :model="consumeOperForm" size="mini">
-        <el-form-item label="">
-          <el-radio-group v-model="consumeOperForm.payType">
-            <el-radio :label="1" :value="1">现金</el-radio>
-            <el-radio :label="2" :value="2">银行卡</el-radio>
-            <el-radio :label="3" :value="3">支付宝</el-radio>
-            <el-radio :label="4" :value="4">微信</el-radio>
-            <el-radio :label="5" :value="5">会员卡</el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="payTypeShow = false">关闭</el-button>
-        <el-button type="primary" @click="payTypeShow = false">结算</el-button>
-      </div>
-    </el-dialog>
+
   </div>
 </template>
 
@@ -341,7 +247,7 @@ export default {
       destructionList: [],
       consumeOperForm: {
         priceType: "1",
-        payType: "",
+        payType: "1",
         name: "",
       },
       rules: {
@@ -505,6 +411,11 @@ export default {
               this.refundShow = false;
               this.destructionShow = false;
               this.consume_order_list();
+              this.consumeOperForm = {
+                  priceType: "1",
+                  payType: "1",
+                  name: "",
+              };
             }
           );
         } else {

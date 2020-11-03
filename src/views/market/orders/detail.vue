@@ -29,49 +29,26 @@
                 <div class="bd" v-if="detailData.checkIn">
                   <div class="innerWrap">
                     <el-row class="row clearfix">
-                      <el-button
-                        class="fr"
-                        size="mini"
-                        :type="
-                          detailData.checkIn.state == 1 ? 'success' : 'danger'
-                        "
-                        plain
-                      >
+                      <el-button class="fr" size="mini" :type=" detailData.checkIn.state == 1 ? 'success' : 'danger'" plain>
                         {{ F_checkinState(detailData.checkIn.state) }}
                       </el-button>
-                      {{ $t("desk.order_guestName") + ":"
-                      }}{{ detailData.checkIn.name }}
+                      {{ $t("desk.order_guestName") + ":" }}{{ detailData.checkIn.name }}
                     </el-row>
                     <el-row class="row">
-                      {{ $t("desk.home_phoneNum") + ":"
-                      }}{{ detailData.checkIn.mobile }}
+                      {{ $t("desk.home_phoneNum") + ":" }}{{ detailData.checkIn.mobile }}
                     </el-row>
                     <el-row class="row">
                       <el-col :span="12" class="cell">
-                        {{ $t("desk.order_sourceType") + ":"
-                        }}{{ F_guestType(detailData.checkIn.guestType) }}
+                        {{ $t("desk.order_sourceType") + ":" }}{{ F_guestType(detailData.checkIn.guestType) }}
                       </el-col>
-                      <el-col
-                        :span="12"
-                        class="cell"
-                        v-if="detailData.checkIn.memberObject"
-                      >
+                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
                         会员类型：白金卡
                       </el-col>
-                      <el-col
-                        :span="12"
-                        class="cell"
-                        v-if="detailData.checkIn.memberObject"
-                      >
+                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
                         余额：2
                         <el-button size="mini" type="text">充值</el-button>
                       </el-col>
-                      <el-col
-                        :span="12"
-                        class="cell"
-                        v-if="detailData.checkIn.memberObject"
-                      >
-                        积分：
+                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">积分：
                       </el-col>
                     </el-row>
                   </div>
@@ -79,38 +56,18 @@
               </div>
               <el-row class="customerCtrl">
                 <ul>
-                  <li
-                    @click="checkTypeHandle('order')"
-                    :class="checkType == 'order' ? 'active' : ''"
-                  >
+                  <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
                     <div class="wrap"><span>查看订单信息></span></div>
 <!--                      （联房）-->
                   </li>
-                  <li
-                    @click="checkTypeHandle('customer', item)"
-                    v-for="(item, index) of detailData.inRoomList"
-                    :key="index"
-                    :class="
-                      checkType == 'customer' && currentRoom.id == item.id
-                        ? 'active'
-                        : ''
-                    "
-                  >
+                  <li @click="checkTypeHandle('customer', item)" v-for="(item, index) of detailData.inRoomList" :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id ? 'active' : ''">
                     <div class="wrap">
-                      <el-button
-                        size="mini"
-                        :type="item.state == 1 ? 'success' : 'danger'"
-                        plain
-                        class="fr"
-                      >
+                      <el-button size="mini" :type="item.state == 1 ? 'success' : 'danger'" plain class="fr">
                         {{ F_checkinState(item.state) }}
                       </el-button>
                       <span>
-                        <i class="el-icon-s-custom vm"></i>
-                        {{
-                          item.personList.length ? item.personList[0].name : ""
-                        }}（{{ item.houseNum }}）</span
-                      >
+                        <i class="el-icon-s-custom vm"></i>{{ item.personList.length ? item.personList[0].name : "" }}（{{ item.houseNum }}）
+                      </span>
                     </div>
                   </li>
                 </ul>
@@ -121,102 +78,54 @@
         <el-col :span="18">
           <div class="grid-content">
             <template v-if="checkType == 'customer'">
-              <c1
-                v-if="isReset"
-                :detailData="detailData"
-                :currentRoomId="currentRoom.id"
-                @getOrderDetail="getDetail"
-              ></c1>
+              <c1 v-if="isReset" :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail"></c1>
             </template>
             <template v-if="checkType == 'order'">
               <div class="detailTabWrap">
                 <div class="el-card detailTab">
                   <div class="el-card__header" style="padding: 0 20px">
                     <el-tabs v-model="activeName">
-                      <el-tab-pane
-                        :label="$t('desk.order_billingDetails')"
-                        name="first"
-                      >
-                        <c2
-                          v-if="isReset"
-                          :detailData="detailData"
-                          :currentRoomId="currentRoom.id"
-                          @getOrderDetail="getDetail"
-                        ></c2>
+                      <el-tab-pane :label="$t('desk.order_billingDetails')" name="first">
+                        <c2 v-if="isReset" :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail"></c2>
                       </el-tab-pane>
-                      <el-tab-pane
-                        :label="$t('desk.order_orderInfo')"
-                        name="second"
-                      >
+                      <el-tab-pane :label="$t('desk.order_orderInfo')" name="second">
                         <div class="thisOrderInfo">
                           <div class="wrap">
                             <el-row class="row">
                               <h3>
                                 {{ $t("desk.serve_basicInfo") }}
-<!--                                <el-button-->
-<!--                                  style="-->
-<!--                                    vertical-align: middle;-->
-<!--                                    margin-left: 10px;-->
-<!--                                    display: inline-block;-->
-<!--                                  "-->
-<!--                                  size="mini"-->
-<!--                                  class="vm"-->
-<!--                                  @click="yokeplateHandle"-->
-<!--                                  v-if="detailData.inRoomList.length"-->
-<!--                                >-->
-<!--                                  {{ $t("desk.order_alRoom") }}-->
-<!--                                </el-button>-->
+<!--                                <el-button--><!--                                  style="--><!--                                    vertical-align: middle;--><!--                                    margin-left: 10px;--><!--                                    display: inline-block;--><!--                                  "--><!--                                  size="mini"--><!--                                  class="vm"--><!--                                  @click="yokeplateHandle"--><!--                                  v-if="detailData.inRoomList.length"--><!--                                >--><!--                                  {{ $t("desk.order_alRoom") }}--><!--                                </el-button>-->
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">
-                                  {{ $t("desk.order_checkinDate") + ":"
-                                  }}{{ detailData.checkIn.checkinTime }}
+                                  {{ $t("desk.order_checkinDate") + ":" }}{{ detailData.checkIn.checkinTime }}
                                 </el-col>
                                 <el-col :span="6">
-                                  {{ $t("desk.order_departureTime") + ":"
-                                  }}{{ detailData.checkIn.checkoutTime }}
+                                  {{ $t("desk.order_departureTime") + ":" }}{{ detailData.checkIn.checkoutTime }}
                                 </el-col>
                               </el-row>
                               <el-row class="cell">
-                                <el-col :span="6"
-                                  >{{ $t("desk.home_note") + ":"
-                                  }}{{ detailData.checkIn.remark }}
-                                </el-col>
+                                <el-col :span="6">{{ $t("desk.home_note") + ":" }}{{ detailData.checkIn.remark }}</el-col>
                               </el-row>
                             </el-row>
                             <el-divider></el-divider>
                             <el-row class="row">
                               <h3>{{ $t("desk.order_roomInfo") }}</h3>
                               <el-row class="cell">
-                                <el-col
-                                  :span="6"
-                                  v-for="(item, index) of detailData.inRoomList"
-                                  :key="index"
-                                >
-                                  {{ $t("desk.book_checkin") + ":"
-                                  }}{{ item.roomTypeName }}（{{
-                                    item.houseNum
-                                  }}）
-                                </el-col>
+                                <el-col :span="6" v-for="(item, index) of detailData.inRoomList" :key="index">{{ $t("desk.book_checkin") + ":" }}{{ item.roomTypeName }}（{{ item.houseNum }}）</el-col>
                               </el-row>
                             </el-row>
                             <el-divider></el-divider>
                             <el-row class="row">
                               <h3>{{ $t("desk.order_saleInfo") }}</h3>
                               <el-row class="cell">
-                                <el-col :span="6">
-                                  {{ $t("desk.order_salesman") + ":"
-                                  }}{{ F_salesId(detailData.checkIn.salesId) }}
-                                </el-col>
+                                <el-col :span="6">{{ $t("desk.order_salesman") + ":" }}{{ F_salesId(detailData.checkIn.salesId) }}</el-col>
                               </el-row>
                             </el-row>
                           </div>
                         </div>
                       </el-tab-pane>
-                      <el-tab-pane
-                        :label="$t('desk.order_guestInfo')"
-                        name="third"
-                      >
+                      <el-tab-pane :label="$t('desk.order_guestInfo')" name="third">
                         <customer />
                       </el-tab-pane>
                     </el-tabs>

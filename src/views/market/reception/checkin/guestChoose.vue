@@ -7,42 +7,14 @@
 
 <template>
     <div class="boss-index inRoom" v-if="guestTypeShow">
-        <el-dialog
-            top="0"
-            :visible.sync="guestTypeShow"
-            class="guestTypeDia"
-            :title="$t('desk.order_sourceType')"
-            width="500px"
-        >
+        <el-dialog top="0" :visible.sync="guestTypeShow" class="guestTypeDia" :title="$t('desk.order_sourceType')" width="500px">
             <el-form :model="checkInForm" style="margin-top: -20px">
-                <el-form-item
-                    :label="$t('desk.customer_guestType') + ':'"
-                    class=""
-                    style="margin-bottom: 0"
-                >
-                    <el-radio-group
-                        v-model="checkInForm.guestType"
-                        @change="guestTypeChange"
-                    >
-                        <el-radio
-                            v-for="(item, key, index) of $t(
-                                'commons.guestType'
-                            )"
-                            :label="key"
-                            :key="index"
-                            >{{ item }}</el-radio
-                        >
+                <el-form-item :label="$t('desk.customer_guestType') + ':'" class="" style="margin-bottom: 0">
+                    <el-radio-group v-model="checkInForm.guestType" @change="guestTypeChange">
+                        <el-radio v-for="(item, key, index) of $t( 'commons.guestType' )" :label="key" :key="index">{{ item }}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item
-                    label=""
-                    class=""
-                    style="margin-bottom: 0"
-                    label-width="0"
-                    v-if="
-                        checkInForm.guestType == 2 || checkInForm.guestType == 3
-                    "
-                >
+                <el-form-item label="" class="" style="margin-bottom: 0" label-width="0" v-if=" checkInForm.guestType == 2 || checkInForm.guestType == 3">
                     <el-autocomplete
                         v-model="checkInForm.name"
                         name="name"
@@ -111,12 +83,7 @@ export default {
                     (res) => {
                         this.options = res.list || [];
                         this.options.forEach((element) => {
-                            element.value =
-                                element.name +
-                                "+" +
-                                (element.mobile || "") +
-                                "+" +
-                                (element.memberCard || "");
+                            element.value = element.name + "+" + (element.mobile || "") + "+" + (element.memberCard || "");
                         });
                         cb(this.options);
                         this.$forceUpdate();
@@ -134,12 +101,7 @@ export default {
                     (res) => {
                         this.options = res.list || [];
                         this.options.forEach((element) => {
-                            element.value =
-                                element.enterName +
-                                "+" +
-                                (element.mobile || element.contactPhone) +
-                                "+" +
-                                (element.contractNum || "");
+                            element.value = element.enterName + "+" + (element.mobile || element.contactPhone) + "+" + (element.contractNum || "");
                         });
                         cb(this.options);
                         this.$forceUpdate();
@@ -149,7 +111,6 @@ export default {
         },
 
         changeNameGuest(e) {
-            //
             if (e.name || e.enterName) {
                 if (this.checkInForm.guestType == 2) {
                     this.checkInForm.name = e.name;

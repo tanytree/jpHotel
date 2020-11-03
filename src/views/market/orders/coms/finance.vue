@@ -18,7 +18,7 @@
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" size="mini" @click="destructionHandle">{{$t('desk.customer_rich')}}</el-button>
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
-                <el-button type="primary" size="mini">{{$t('desk.customer_undoCheckoutA')}}</el-button>
+                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true">{{$t('desk.order_goTie')}}</el-button>
             </el-form-item>
         </el-row>
@@ -54,7 +54,7 @@
                 {{row.consumePrice}}
             </template>
         </el-table-column>
-        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>
+<!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('commons.operating')">
@@ -80,11 +80,7 @@
 
             <el-form-item :label="$t('desk.order_selectPayWay')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
                 <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio :label="1" :value="1">{{$t('desk.serve_cash')}}</el-radio>
-                    <el-radio :label="2" :value="2">{{$t('desk.customer_bankCard')}}</el-radio>
-                    <el-radio :label="3" :value="3">{{$t('desk.serve_alipay')}}</el-radio>
-                    <el-radio :label="4" :value="4">{{$t('desk.serve_wechat')}}</el-radio>
-                    <el-radio :label="5" :value="5">{{$t('desk.order_memCard')}}</el-radio>
+                    <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
                 </el-radio-group>
             </el-form-item>
 
@@ -128,23 +124,6 @@
             <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
         </div>
     </el-dialog>
-   <!-- <el-dialog top='0' title="选择结算方式" :visible.sync="payTypeShow">
-        <el-form :model="consumeOperForm" size="mini">
-            <el-form-item label="">
-                <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio :label="1" :value="1">现金</el-radio>
-                    <el-radio :label="2" :value="2">银行卡</el-radio>
-                    <el-radio :label="3" :value="3">支付宝</el-radio>
-                    <el-radio :label="4" :value="4">微信</el-radio>
-                    <el-radio :label="5" :value="5">会员卡</el-radio>
-                </el-radio-group>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="payTypeShow = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" @click="payTypeShow = false">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog> -->
 
     <!--挂账-->
     <el-dialog top='0' :title="$t('desk.charge')" :visible.sync="onAccountShow" width="500px">
@@ -271,7 +250,6 @@
                     <el-radio :label="2" :value="2">银行卡</el-radio>
                     <el-radio :label="3" :value="3">支付宝</el-radio>
                     <el-radio :label="4" :value="4">微信</el-radio>
-                    <el-radio :label="5" :value="5">会员卡</el-radio>
                 </el-radio-group>
             </el-form-item> -->
             <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
@@ -326,7 +304,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>
+<!--                <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
                 <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
@@ -436,7 +414,7 @@ export default {
                     message: this.$t('commons.mustInput'),
                     trigger: 'blur'
                 },
-                ],  
+                ],
             }
         }
     },
@@ -486,7 +464,7 @@ export default {
                 invoiceId: '',
                 isPoints:false
             },
-          
+
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [{}], //表格数据
@@ -496,12 +474,13 @@ export default {
             destructionList: [], //冲调的账务
             currentRoom: {
                 personList: []
-            }
+            },
+            checkInId: '',
         };
     },
 
     created() {
-
+        this.checkInId = this.$route.query.id;
         console.log(this.currentRoomId)
         if (this.currentRoomId) {
             this.currentRoom = this.detailData.inRoomList.filter(item=>{
@@ -521,9 +500,24 @@ export default {
     },
 
     methods: {
+        //撤销结账
+        undoCheckoutA() {
+            this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', {
+                checkInId: this.checkInId
+            }, res => {
+                this.$message({
+                    type: 'success',
+                    message: this.$t('commons.request_success'),
+                });
+            }, res => {
+                this.$message(res.message);
+            })
+        },
+
+        //加载财务列表
         consume_order_list(state) {
             this.searchForm.state = state || '';
-            this.searchForm.checkInId = this.$route.query.id;
+            this.searchForm.checkInId = this.checkInId;
             this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
                 this.tableData = res.consumeOrderList
                 this.listTotal = (res.page || {}).count || 0
@@ -560,7 +554,7 @@ export default {
             let params = this.consumeOperForm
             // params.orderId = this.$route.query.id
 
-            params.checkInId = this.$route.query.id
+            params.checkInId = this.checkInId
             if (this.currentRoomId) {
                 params.roomId = this.currentRoom.id;
                 params.roomNum = this.currentRoom.houseNum
@@ -669,7 +663,7 @@ export default {
         //走结
         out_check_in() {
             let params = {
-                checkInId: this.$route.query.id,
+                checkInId: this.checkInId,
                 billType: 4
             }
             this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
@@ -681,7 +675,7 @@ export default {
         //退房结账
         set_out_check_in() {
             let info = {
-                checkInId:this.$route.query.id,
+                checkInId: this.checkInId,
                 state:'',
                 pageIndex: 1,
                 pageSize: 1000
@@ -699,7 +693,7 @@ export default {
                    return v.state
                });
                let params = {}
-               params.checkInId = this.$route.query.id
+               params.checkInId = this.checkInId
                if(this.isArrSame(array,1) == true){
                    params.billType = 1
                }else if(this.isArrSame(array,2) == true){
@@ -727,7 +721,7 @@ export default {
 
         //开发票按钮点击
         openInvoiceHandle() {
-            this.openInvoiceForm.checkInId = this.$route.query.id
+            this.openInvoiceForm.checkInId = this.checkInId
             if (this.currentRoom) {
                 this.openInvoiceForm.name = this.currentRoom.name
                 this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice
@@ -951,7 +945,7 @@ export default {
         },
         //开发票
         invoicingHandle() {
-            this.openInvoiceForm.checkInId = this.$route.query.id
+            this.openInvoiceForm.checkInId = this.checkInId
             if (this.currentRoom) {
                 this.openInvoiceForm.name = this.detailData.checkIn.name;
                 this.openInvoiceForm.consumePrice = this.currentRoom.roomMarkPrice

@@ -168,6 +168,7 @@ export default {
     methods: {
         //添加完入住人回调
         personCallback(data) {
+
             let id = this.$route.query.id
             let params = {
                 checkinId: id,
@@ -175,7 +176,7 @@ export default {
                 personList: JSON.stringify(data),
             }
             this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (res) => {
-
+                this.addLivePersonShow = false;
             })
         },
         //添加同来宾客

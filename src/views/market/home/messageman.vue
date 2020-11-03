@@ -80,17 +80,14 @@
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_roomNum')"
-          width="180"
           prop="roomNum"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_messEmployees')"
-          width="180"
           prop="creatorName"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_messTime')"
-          width="180"
           prop="createTime"
         ></el-table-column>
         <el-table-column :label="$t('commons.operating')">

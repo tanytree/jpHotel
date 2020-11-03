@@ -60,10 +60,7 @@
         <el-form ref="form" :model="getForm" label-width="80px">
           <el-form-item :label="$t('desk.customer_paymentMethod')" required v-if="type == 1">
             <el-radio-group v-model="getForm.payType">
-                <el-radio :label="1" :value="1">现金</el-radio>
-                <el-radio :label="2" :value="2">银行卡</el-radio>
-                <el-radio :label="3" :value="3">支付宝</el-radio>
-                <el-radio :label="4" :value="4">微信</el-radio>
+                <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
             </el-radio-group>
           </el-form-item>
 

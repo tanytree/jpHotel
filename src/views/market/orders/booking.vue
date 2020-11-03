@@ -473,21 +473,7 @@
             <el-form :model="consumeOperForm" size="mini">
                 <el-form-item label="">
                     <el-radio-group v-model="consumeOperForm.payType">
-                        <el-radio :label="1" :value="1">{{
-                            $t("desk.serve_cash")
-                        }}</el-radio>
-                        <el-radio :label="2" :value="2">{{
-                            $t("desk.customer_bankCard")
-                        }}</el-radio>
-                        <el-radio :label="3" :value="3">{{
-                            $t("desk.serve_alipay")
-                        }}</el-radio>
-                        <el-radio :label="4" :value="4">{{
-                            $t("desk.serve_wechat")
-                        }}</el-radio>
-                        <el-radio :label="5" :value="5">{{
-                            $t("desk.order_memCard")
-                        }}</el-radio>
+                        <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>

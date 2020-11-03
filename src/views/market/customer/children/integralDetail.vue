@@ -62,7 +62,7 @@
         <el-form-item :label="$t('desk.order_moblePhone')">
           <el-input v-model="searchForm.mobile" class="width150" style="width:140px"></el-input>
         </el-form-item>
-        <el-form-item label="业务说明:">
+        <el-form-item :label="$t('desk.order_businessThat') + ':'">
           <el-select v-model="searchForm.remark" class="width150" style="width:140px">
               <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option label="房费获得" value="房费获得"></el-option>
@@ -118,7 +118,7 @@
         <el-table-column prop="createTime" label="发生日期" show-overflow-tooltip></el-table-column>
         <el-table-column prop="storesName" label="发生门店" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creatorName" :label="$t('desk.customer_operator')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="remark" label="业务说明" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>
       </el-table>
       <div style="margin-top:10px"></div>
       <!--分页 -->

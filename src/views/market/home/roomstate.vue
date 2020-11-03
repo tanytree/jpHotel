@@ -1,9 +1,3 @@
-<!--
-
- * @LastEditors: Please set LastEditors
-
- *
- -->
 <template>
     <div class="boss-index" v-loading="loading">
         <!-- 房间动态 -->
@@ -11,20 +5,12 @@
             <div class="left">
                 <el-form class="room" v-model="searchForm" inline size="small">
                     <el-form-item>
-                        <el-input
-                            v-model="searchForm.keyword"
-                            class="search"
-                            :placeholder="$t('desk.home_nameAroom')"
-                            @keyup.native="handleChange"
-                        >
-                            <el-button slot="append" icon="el-icon-search"></el-button>
+                        <el-input v-model="searchForm.keyword" class="search" :placeholder="$t('desk.home_nameAroom')" @keyup.native="handleChange">
+                        <el-button slot="append" icon="el-icon-search"></el-button>
                         </el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-checkbox-group
-                            v-model="searchForm.checkInType"
-                            @change="handleChange"
-                        >
+                        <el-checkbox-group v-model="searchForm.checkInType" @change="handleChange">
 <!--                            <el-checkbox-button label="1">{{-->
 <!--                                    $t("desk.home_idCard")-->
 <!--                                }}-->
@@ -40,20 +26,13 @@
                 <div class="room">
                     <div class="tag-top">
                         <span class="fang">{{ $t("desk.home_toRoom") }}</span>
-                        <span class="reset" @click="clearnSelectAttr('roomStatus')">{{
-                                $t("commons.resetBtn")
-                            }}</span>
+                        <span class="reset" @click="clearnSelectAttr('roomStatus')">
+                            {{ $t("commons.resetBtn") }}
+                        </span>
                     </div>
                     <div class="tag-btm">
-                        <el-checkbox-group
-                            v-model="searchForm.roomStatus"
-                            @change="handleChange"
-                        >
-                            <el-checkbox
-                                v-for="(item, index) in $t('commons.roomStatus')"
-                                :key="index"
-                                :label="item.value"
-                            >
+                        <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
+                            <el-checkbox v-for="(item, index) in $t('commons.roomStatus')" :key="index" :label="item.value">
                                 <el-tag :type="item.type" effect="plain" size="mini">
                                     <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
                                 </el-tag>
@@ -68,26 +47,16 @@
                             <span class="fang">{{ $t("desk.home_roomType") }}</span>
                             <span class="all">{{ $t("desk.home_roomType") }}</span>
                         </div>
-                        <span class="reset" @click="clearnSelectAttr('roomTypeId')">{{
-                                $t("commons.resetBtn")
-                            }}</span>
+                        <span class="reset" @click="clearnSelectAttr('roomTypeId')">
+                            {{ $t("commons.resetBtn") }}
+                        </span>
                     </div>
 
                     <div class="tag-btm">
-                        <el-checkbox-group
-                            v-model="searchForm.roomTypeId"
-                            @change="handleChange"
-                        >
-                            <el-checkbox
-                                class="roomType"
-                                v-for="item of roomTypeList"
-                                :key="item.roomTypeId"
-                                :label="item.roomTypeId"
-                            >
+                        <el-checkbox-group v-model="searchForm.roomTypeId" @change="handleChange">
+                            <el-checkbox class="roomType" v-for="item of roomTypeList" :key="item.roomTypeId" :label="item.roomTypeId">
                                 {{ item.houseName ? item.houseName : $t("desk.home_unknown") }}
-                                <span class="total"
-                                >{{ item.reserveCount }}/{{ item.total }}</span
-                                >
+                                <span class="total">{{ item.reserveCount }}/{{ item.total }}</span>
                             </el-checkbox>
                         </el-checkbox-group>
                     </div>
@@ -96,31 +65,11 @@
                 <!-- 楼栋楼层 -->
                 <el-form class="room" v-model="searchForm" size="small">
                     <el-form-item :label="$t('desk.home_floorBuilding') + ':'">
-                        <el-select
-                            v-model="searchForm.buildingId"
-                            :placeholder="$t('desk.home_building')"
-                            class="row-width"
-                            @change="buildingSelectChange"
-                        >
-                            <el-option
-                                v-for="item in hotel_building_list"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id"
-                            ></el-option>
+                        <el-select v-model="searchForm.buildingId" :placeholder="$t('desk.home_building')" class="row-width" @change="buildingSelectChange">
+                            <el-option v-for="item in hotel_building_list" :key="item.id" :label="item.name" :value="item.id"></el-option>
                         </el-select>
-                        <el-select
-                            v-model="searchForm.buildingFloorId"
-                            :placeholder="$t('desk.home_floor')"
-                            class="row-width margin-l-8"
-                            @change="floorSelectChange"
-                        >
-                            <el-option
-                                v-for="item in hotel_building_floor_list"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id"
-                            ></el-option>
+                        <el-select v-model="searchForm.buildingFloorId" :placeholder="$t('desk.home_floor')" class="row-width margin-l-8" @change="floorSelectChange">
+                            <el-option v-for="item in hotel_building_floor_list" :key="item.id" :label="item.name" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
@@ -129,21 +78,11 @@
                 <div class="room">
                     <div class="tag-top">
                         <span class="fang">{{ $t("desk.home_channel") }}</span>
-                        <span class="reset" @click="clearnSelectAttr('channel')">{{
-                                $t("commons.resetBtn")
-                            }}</span>
+                        <span class="reset" @click="clearnSelectAttr('channel')">{{ $t("commons.resetBtn") }}</span>
                     </div>
                     <div class="tag-btm">
-                        <el-checkbox-group
-                            v-model="searchForm.channel"
-                            @change="handleChange"
-                        >
-                            <el-checkbox
-                                class="roomType"
-                                v-for="item of channel"
-                                :key="item.channel"
-                                :label="item.channel"
-                            >
+                        <el-checkbox-group v-model="searchForm.channel" @change="handleChange">
+                            <el-checkbox class="roomType" v-for="item of channel" :key="item.channel" :label="item.channel">
                                 {{ item.name ? item.name : $t("desk.home_unknown") }}
                                 <span class="total">{{ item.total }}</span>
                             </el-checkbox>
@@ -155,18 +94,10 @@
             <el-container class="right" v-loading="roomloading">
                 <el-header>
                     <el-row>
-                        <el-checkbox-group
-                            v-model="searchForm.personRoom"
-                            @change="handleChange"
-                        >
-                            <el-checkbox
-                                v-for="(item, index) in personRoom"
-                                :value="item.eName"
-                                :label="item.eName"
-                                :key="index"
-                            >{{ item.name }}({{ item.total }})
-                            </el-checkbox
-                            >
+                        <el-checkbox-group v-model="searchForm.personRoom" @change="handleChange">
+                            <el-checkbox v-for="(item, index) in personRoom" :value="item.eName" :label="item.eName" :key="index">
+                                {{ item.name }}({{ item.total }})
+                            </el-checkbox>
                         </el-checkbox-group>
                     </el-row>
                 </el-header>
@@ -174,54 +105,30 @@
                     <div v-for="(item, index) in roomList" :key="index">
                         <div v-if="item.floorRoomCount > 0">
                             <div class="floor">
-                <span class="title">
-                  {{ item.building ? item.building.name : "" }}
-                  <span>{{ item.floor }}</span
-                  >{{ $t("desk.home_layer") }}
+                <span class="title">{{ item.building ? item.building.name : "" }}
+                    <span>{{ item.floor }}</span>
+                    <span>{{ $t("desk.home_layer") }}</span>
                 </span>
-                                <span class="count">
-                  <span style="color: #126eff">{{
-                          item.reserveFloorRoomCount
-                      }}</span>
-                  /{{ item.floorRoomCount }}
+                <span class="count">
+                  <span style="color: #126eff">{{ item.reserveFloorRoomCount }}</span>/{{ item.floorRoomCount }}
                 </span>
                             </div>
                             <div class="floor-box">
-                                <div
-                                    @click="hostelmess(room, item)"
-                                    class="tag-margin"
-                                    v-for="(room, i) in item.roomList"
-                                    :key="i"
-                                >
-                                    <div
-                                        :style="`background:${F_roomStatusColor(room.roomStatus)};`"
-                                    >
+                                <div @click="hostelmess(room, item)" class="tag-margin" v-for="(room, i) in item.roomList" :key="i">
+                                    <div :style="`background:${F_roomStatusColor(room.roomStatus)};`">
                                         <div class="line">
                                             <span>{{ room.houseNum }}</span>
                                             <span>{{ room.hotelRoomType.houseName }}</span>
                                         </div>
                                         <!--                                    && (room.roomStatus==3 || room.roomStatus==4)-->
-                                        <div
-                                            class="line"
-                                            v-if="
-                        room.livingPersonList &&
-                        room.livingPersonList.length > 0 &&
-                        (room.checkInRoomType == 1 || room.checkInRoomType == 2)
-                      "
-                                        >
+                                        <div class="line" v-if=" room.livingPersonList && room.livingPersonList.length > 0 && (room.checkInRoomType == 1 || room.checkInRoomType == 2)">
                                             <span>{{ room.livingPersonList[0].name }}</span>
                                             <span>{{ F_sex(room.livingPersonList[0].sex) }}</span>
                                         </div>
                                         <!-- 清扫图标后期加 -->
                                         <div class="placeIcon text-center">
-                                            <img
-                                                v-if="room.roomStatus == 5"
-                                                :src="require('@/assets/images/frontdesk/fix.png')"
-                                            />
-                                            <img
-                                                v-if="room.roomStatus == 2 || room.roomStatus == 4"
-                                                :src="require('@/assets/images/frontdesk/clearn.png')"
-                                            />
+                                            <img v-if="room.roomStatus == 5" :src="require('@/assets/images/frontdesk/fix.png')"/>
+                                            <img v-if="room.roomStatus == 2 || room.roomStatus == 4" :src="require('@/assets/images/frontdesk/clearn.png')"/>
                                         </div>
                                     </div>
                                 </div>
@@ -238,78 +145,38 @@
                     <!--          <el-button type="primary"  class="submit" size="small" @click="print = true"  icon="el-icon-message-solid">-->
                     <!--              {{ $t("desk.home_pushAnd") }}</el-button>-->
                     <!-- 催押 -->
-                    <el-dialog
-                        top="0"
-                        :title="$t('desk.home_nowCall')"
-                        width="1160px"
-                        :visible.sync="print"
-                    >
+                    <el-dialog top="0" :title="$t('desk.home_nowCall')" width="1160px" :visible.sync="print">
                         <el-form :model="form">
                             <el-row>
                                 <el-col :span="6">
                                     <el-form-item :label="$t('desk.home_roomNum') + ':'">
-                                        <el-input
-                                            v-model="form.roomname"
-                                            style="width: 160px"
-                                            autocomplete="off"
-                                        ></el-input>
+                                        <el-input v-model="form.roomname" style="width: 160px" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-form-item
-                                        :label="$t('desk.home_phoneNum') + ':'"
-                                        :label-width="formLabelWidth"
-                                    >
-                                        <el-input
-                                            v-model="form.phonenum"
-                                            style="width: 160px"
-                                            autocomplete="off"
-                                        ></el-input>
+                                    <el-form-item :label="$t('desk.home_phoneNum') + ':'" :label-width="formLabelWidth">
+                                        <el-input v-model="form.phonenum" style="width: 160px" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-form-item
-                                        :label="$t('desk.home_name') + ':'"
-                                        :label-width="formLabelWidth"
-                                    >
-                                        <el-input
-                                            v-model="form.peoplename"
-                                            style="width: 160px"
-                                            autocomplete="off"
-                                        ></el-input>
+                                    <el-form-item :label="$t('desk.home_name') + ':'" :label-width="formLabelWidth">
+                                        <el-input v-model="form.peoplename" style="width: 160px" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-col>
 
                                 <el-col :span="6">
                                     <el-form-item>
-                                        <el-button
-                                            style="width: 80px; margin-left: 20px"
-                                            type="primary"
-                                            @click="submitForm('form')"
-                                        >{{ $t("commons.queryBtn") }}
-                                        </el-button
-                                        >
-                                        <el-button
-                                            style="width: 80px"
-                                            @click="resetForms('form')"
-                                        >{{ $t("commons.resetBtn") }}
-                                        </el-button
-                                        >
+                                        <el-button style="width: 80px; margin-left: 20px" type="primary" @click="submitForm('form')">{{ $t("commons.queryBtn") }} </el-button>
+                                        <el-button style="width: 80px" @click="resetForms('form')">{{ $t("commons.resetBtn") }}</el-button>
                                     </el-form-item>
                                 </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="2">
-                                    <el-checkbox v-model="checked"
-                                    >{{ $t("desk.home_all") }} 120
-                                    </el-checkbox
-                                    >
+                                    <el-checkbox v-model="checked">{{ $t("desk.home_all") }} 120</el-checkbox>
                                 </el-col>
                                 <el-col :span="2">
-                                    <el-checkbox v-model="checked"
-                                    >{{ $t("desk.home_pushAnd") }} 20
-                                    </el-checkbox
-                                    >
+                                    <el-checkbox v-model="checked">{{ $t("desk.home_pushAnd") }} 20</el-checkbox>
                                 </el-col>
                                 <el-col :span="2">
                                     <el-checkbox v-model="checked">欠费 120</el-checkbox>
@@ -477,7 +344,7 @@
                             </div>
                             <div class="col">
                                 {{ $t('desk.consumerTotal') }}：
-                                <span>{{ currentRoom.checkInObj.consumePrice || 0}}</span>
+                                <span>{{ currentRoom.consumePrice || 0}}</span>
                             </div>
                             <div class="col">
                                 预离时间：
@@ -493,24 +360,15 @@
 <!--                            </div>-->
                             <div class="col">
                                 入住天数：
-                                <span>{{ currentRoom.checkInObj.checkInDays }}</span>
+                                <span>{{ currentRoom.checkInObj.checkInDays || 1 }}</span>
                             </div>
                             <div class="col">
                                 {{ $t('desk.payTotal') }}：
-                                <span>{{ currentRoom.checkInObj.payPrice || 0}}</span>
+                                <span>{{ currentRoom.payPrice || 0}}</span>
                             </div>
                         </div>
-                        <el-table
-                            v-if="
-                currentRoom.livingPersonList &&
-                currentRoom.livingPersonList.length > 0
-              "
-                            :data="currentRoom.livingPersonList"
-                            style="width: 100%"
-                            border
-                            header-row-class-name="default"
-                            size="small"
-                        >
+                        <el-table v-if=" currentRoom.currentRoomData.personList && currentRoom.currentRoomData.personList.length > 0"
+                                  :data="currentRoom.currentRoomData.personList" style="width: 100%" border header-row-class-name="default" size="small">
                             <el-table-column :label="$t('desk.home_name')" width="100">
                                 <template slot-scope="scope">{{ scope.row.name }}</template>
                             </el-table-column>
@@ -518,9 +376,8 @@
                                 <template slot-scope="scope">{{ scope.row.mobile }}</template>
                             </el-table-column>
                             <el-table-column label="性别" width>
-                                <template slot-scope="scope">{{
-                                        F_sex(scope.row.sex)
-                                    }}
+                                <template slot-scope="scope">
+                                    {{ F_sex(scope.row.sex) }}
                                 </template>
                             </el-table-column>
                             <el-table-column :label="$t('desk.order_sourceType')" width>
@@ -554,7 +411,7 @@
                         <div class="row">
                             <div class="col">
                                 {{ $t('manager.hk_doorPrice') }}：
-                                <span>{{ currentRoom.extension }}</span>
+                                <span>{{ currentRoom.currentRoomData.realPrice }}</span>
                             </div>
                             <div class="col">
                                 窗户：
@@ -1213,18 +1070,27 @@ export default {
         },
         hostelmess(room, parent) {
             this.currentRoom = room || {};
+            this.$F.merge(this.currentRoom, {currentRoomData: {personList: []}});
             this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
             this.$F.merge(this.currentRoom, {livingPersonList: []});
-            this.currentRoom.personLength = 0;;
-            if (this.currentRoom.livingPersonList.length > 0) {
-                this.currentRoom.personLength = this.currentRoom.livingPersonList.length - 1;
-                this.currentRoom.livingPersonList = this.currentRoom.livingPersonList.slice(0,1);
-            }
+
             this.hosteldis = true;
             if (room.checkInRoomType == 1) {
                 let id = room.checkInObj.id;
+                debugger
                 this.getDetail(id, res => {
+                   if ( res.inRoomList &&  res.inRoomList.length > 0) {
+                       res.inRoomList.forEach((value) => {
+                           if (value.roomId == room.id)
+                               this.currentRoom.currentRoomData = value;
+                       })
+                   }
                     this.$F.merge(this.currentRoom, res);
+                    this.currentRoom.personLength = 0;;
+                    if (this.currentRoom.currentRoomData.personList.length > 0) {
+                        this.currentRoom.personLength = this.currentRoom.currentRoomData.personList.length - 1;
+                        this.currentRoom.currentRoomData.personList = this.currentRoom.currentRoomData.personList.slice(0,1);
+                    }
                     console.log(JSON.parse(JSON.stringify(this.currentRoom)));
                 })
             } else if (room.checkInRoomType == 2) {
@@ -1235,14 +1101,7 @@ export default {
 
         //获取订单详情
         getDetail(id, callback) {
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/check_in_detail",
-                {
-                    checkInId: id,
-                },
-                (res) => {
-
+            this.$F.doRequest(this,"/pms/checkin/check_in_detail", {checkInId: id,}, (res) => {
                     callback(res);
                 }
             );

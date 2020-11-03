@@ -132,8 +132,6 @@ export default {
                 this.$set(this.liveInPersonData, index2, this.liveInPersonData[index2]);
                 this.$set(this.liveInPersonData[index2].personList, object.sysIndex, this.liveInPersonData[index2].personList[object.sysIndex]);
             }
-
-
         },
         getRowKey(row) {
             return row.id + row.roomId + row.houseNum;
@@ -142,7 +140,6 @@ export default {
             console.log(this.liveInPersonData)
             let checkInRoomJson = [];
             let personListJSONList = [];
-
             this.liveInPersonData.forEach(item => {
                 if (!item.personList)
                     item.personList;
@@ -172,6 +169,7 @@ export default {
                 personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
             })
+            debugger
             if (this.type == 'reserve') {
                 let params = {};
                 this.$F.merge(params, {

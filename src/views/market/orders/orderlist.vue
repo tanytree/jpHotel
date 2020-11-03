@@ -13,42 +13,18 @@
             <el-form class="term" inline size="small" label-width="130px">
                 <el-form-item :label="$t('desk.order_orderType')">
                     <div class="tagList">
-                        <template
-                            v-for="(item, key, index) of $t(
-                                'frontOffice.orderType'
-                            )"
-                        >
-                            <el-tag
-                                class="tag"
-                                :type="
-                                    searchForm.orderType == key ? '' : 'info'
-                                "
-                                style="cursor: pointer"
-                                :key="index"
-                                @click="orderTypeClick(key)"
-                                >{{ item }}
-                            </el-tag>
+                        <template v-for="(item, key, index) of $t( 'frontOffice.orderType' )">
+                            <el-tag class="tag" :type=" searchForm.orderType == key ? '' : 'info'" style="cursor: pointer" :key="index"
+                                    @click="orderTypeClick(key)">{{ item }}</el-tag>
                         </template>
                     </div>
                 </el-form-item>
                 <br />
                 <el-form-item :label="$t('desk.order_departureDate')">
                     <div class="tagList" style="display: inline-block">
-                        <template
-                            v-for="(item, key, index) of $t(
-                                'frontOffice.leaveDate'
-                            )"
-                        >
-                            <el-tag
-                                style="cursor: pointer"
-                                class="tag"
-                                :type="
-                                    searchForm.leaveDate == key ? '' : 'info'
-                                "
-                                :key="index"
-                                @click="leaveDateClick(key)"
-                                >{{ item }}
-                            </el-tag>
+                        <template v-for="(item, key, index) of $t( 'frontOffice.leaveDate' )">
+                            <el-tag style="cursor: pointer" class="tag" :type=" searchForm.leaveDate == key ? '' : 'info'"
+                                    :key="index" @click="leaveDateClick(key)">{{ item }}</el-tag>
                         </template>
                     </div>
                     <el-form-item label v-if="searchForm.leaveDate == 10">
@@ -73,23 +49,9 @@
                 <br />
                 <el-form-item :label="$t('desk.order_checkinWay')">
                     <div class="tagList" style="display: inline-block">
-                        <template
-                            v-for="(item, key, index) of $t(
-                                'frontOffice.checkInRoomType'
-                            )"
-                        >
-                            <el-tag
-                                style="cursor: pointer"
-                                class="tag"
-                                :type="
-                                    searchForm.checkInRoomType == key
-                                        ? ''
-                                        : 'info'
-                                "
-                                :key="index"
-                                @click="checkInRoomTypeClick(key)"
-                                >{{ item }}
-                            </el-tag>
+                        <template v-for="(item, key, index) of $t( 'frontOffice.checkInRoomType' )">
+                            <el-tag style="cursor: pointer" class="tag" :type=" searchForm.checkInRoomType == key ? '' : 'info'"
+                                    :key="index" @click="checkInRoomTypeClick(key)">{{ item }}</el-tag>
                         </template>
                     </div>
                     <el-form-item :label="$t('desk.order_checkinTime')">
@@ -112,53 +74,22 @@
                 </el-form-item>
                 <br />
                 <el-form-item :label="$t('desk.book_orderSoutce')">
-                    <el-select
-                        :placeholder="$t('commons.placeChoose')"
-                        v-model="searchForm.orderSource"
-                        class="width150"
-                    >
-                        <el-option
-                            :value="key"
-                            v-for="(value, key, index) of $t(
-                                'commons.orderSource'
-                            )"
-                            :label="value"
-                            :key="index"
-                        ></el-option>
+                    <el-select :placeholder="$t('commons.placeChoose')" v-model="searchForm.orderSource" class="width150">
+                        <el-option :value="key" v-for="(value, key, index) of $t( 'commons.orderSource' )" :label="value" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item :label="$t('desk.home_customersCategory')">
-                    <el-select
-                        v-model="searchForm.guestType"
-                        class="width150"
-                        :placeholder="$t('commons.placeChoose')"
-                    >
-                        <el-option
-                            :value="key"
-                            v-for="(item, key, index) of $t(
-                                'commons.guestType'
-                            )"
-                            :label="item"
-                            :key="index"
-                        ></el-option>
+                    <el-select v-model="searchForm.guestType" class="width150" :placeholder="$t('commons.placeChoose')">
+                        <el-option :value="key" v-for="(item, key, index) of $t( 'commons.guestType' )" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_roomType')">
-                    <el-select
-                        v-model="searchForm.roomTypeId"
-                        class="width150"
-                        :placeholder="$t('commons.placeChoose')"
-                    >
+                    <el-select v-model="searchForm.roomTypeId" class="width150" :placeholder="$t('commons.placeChoose')">
                         <el-option :label="$t('desk.home_all')" value>{{
                             $t("desk.home_all")
                         }}</el-option>
-                        <el-option
-                            :value="item.id"
-                            v-for="(item, index) of roomTypeList"
-                            :label="item.houseName"
-                            :key="index"
-                        ></el-option>
+                        <el-option :value="item.id" v-for="(item, index) of roomTypeList" :label="item.houseName" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_outOrder')">
@@ -192,9 +123,9 @@
                     <el-button type="primary" @click="initForm">{{
                         $t("commons.resetBtn")
                     }}</el-button>
-                    <el-button type="primary" @click="initForm">{{
-                        $t("commons.exportBtn")
-                    }}</el-button>
+<!--                    <el-button type="primary" @click="initForm">{{-->
+<!--                        $t("commons.exportBtn")-->
+<!--                    }}</el-button>-->
                 </el-form-item>
                 <!-- <el-form-item style="float: right">
             <el-button type="text" icon="el-icon-arrow-up">收起</el-button>
