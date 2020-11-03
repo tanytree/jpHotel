@@ -6,6 +6,12 @@
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
+                <el-form-item label="商品类别型:">
+                    <el-select  v-model="form.categoryType" placeholder="请选择" @change="geProductType">
+                        <el-option label="实物" :value="1"></el-option>
+                        <el-option label="服务" :value="2"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsTypeA')+':'">
                     <el-cascader v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
@@ -159,9 +165,11 @@
                 form: {
                     name: "",
                     status: "",
+                    categoryType: '',
                     category: [],
                 },
                 categoryArr: [],
+                category: [],
                 categoryProps: {value: "id", label: "name", children: "child"},
                 rowData: {
                     name: "",
@@ -218,13 +226,15 @@
         },
         props: {
             list: Array,
-            category: Array,
+            cateList: Array,
             serviceList: Array,
             total: Number,
             initData: Function,
+            cateData: Function,
         },
         mounted() {
-            this.categoryArr = this.category;
+            this.categoryArr = this.cateList;
+            this.category = this.cateList;
         },
         computed: {
             downloadSuccessful: {
@@ -256,7 +266,7 @@
                 this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
             },
             reset() {
-                this.form = {name: "", status: "", category: ""};
+                this.form = {name: "", status: "", categoryType: '', category: ""};
                 this.initData(this.pageForm, '', '', '');
             },
             casChange(value) {
@@ -274,7 +284,7 @@
             },
             changeType(type) {
                 if(type == 1) {
-                    this.categoryArr = this.category;
+                    this.categoryArr = this.cateList;
                 } else {
                     this.categoryArr = this.serviceList;
                 }
@@ -389,6 +399,13 @@
                         this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
                     }
                 );
+            },
+            geProductType(v){
+                if(v === 1) {
+                    this.category = this.cateList;
+                } else {
+                    this.category = this.serviceList;
+                }
             },
         },
     };

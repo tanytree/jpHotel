@@ -1909,6 +1909,7 @@ export default {
 
     .content {
         padding: 20px;
+        height: auto;
 
         &.last {
             flex: 1;

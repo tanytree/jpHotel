@@ -475,7 +475,7 @@ export default {
                             "/pms/hoteldamagetype/edit",
                             params,
                             (res) => {
-                                this.initData("", "", "", this.typeForm, () => {
+                                this.initData("", "", "", this.typeForm, (res) => {
                                     this.typeForm.pageIndex = res.pageIndex;
                                     this.typeTotal = res.count;
                                 });

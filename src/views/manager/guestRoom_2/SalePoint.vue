@@ -12,6 +12,12 @@
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
+                <el-form-item label="商品类别型:">
+                    <el-select  v-model="form.categoryType" placeholder="请选择" @change="geProductType">
+                        <el-option label="实物" :value="1"></el-option>
+                        <el-option label="服务" :value="2"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsType')+':'">
                     <el-cascader v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
@@ -146,10 +152,16 @@
             </div>
         </el-dialog>
         <!-- 上架商品 -->
-        <el-dialog top="0" :title="$t('manager.grsl_goodsShelves')" :visible.sync="shelfVisible" width="1000px" :close-on-click-modal="false">
+        <el-dialog top="0" :title="$t('manager.grsl_goodsShelves')" :visible.sync="shelfVisible" width="1100px" :close-on-click-modal="false">
             <el-form class="demo-form-inline" v-model="upshelf" inline size="small">
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="upshelf.name"></el-input>
+                </el-form-item>
+                <el-form-item label="商品类别型:">
+                    <el-select  v-model="upshelf.categoryType" placeholder="请选择" @change="geProductType">
+                        <el-option label="实物" :value="1"></el-option>
+                        <el-option label="服务" :value="2"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsType')+':'">
                     <el-cascader v-model="upshelf.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
@@ -202,7 +214,7 @@
                 shelfForm: {pageIndex: 1, pageSize: 10, paging: true,},
                 sellId: "",
                 sellName: "",
-                form: {name: "", category: ""},
+                form: {name: "", categoryType: '', category: ""},
                 categoryProps: {value: "id", label: "name", children: "child"},
                 salePoint: [],
                 shelfData: [],
@@ -218,16 +230,19 @@
                 threerules: {
                     name: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
                 },
-                selection: [], upshelf: {name: "", category: ""}, shelfTotal: 0
+                selection: [], upshelf: {name: "", categoryType: '', category: ""}, shelfTotal: 0, category: [],
             };
         },
         props: {
             list: Array,
-            category: Array,
+            cateList: Array,
+            serviceList: Array,
             total: Number,
             initData: Function,
+            cateData: Function,
         },
         mounted() {
+            this.category = this.cateList;
             this.getManageData(() => {
                 this.initData(this.pageForm, '', '', this.sellId, (res)=> {
                     this.pageForm.pageIndex = res.pageIndex;
@@ -380,7 +395,7 @@
                     this.upshelf = {name: "", category: ""};
                     this.getShelfData()
                 } else {
-                    this.form = {name: "", category: ""};
+                    this.form = {name: "", categoryType: '', category: ""};
                     this.initData(this.pageForm, '', '', this.sellId);
                 }
 
@@ -389,7 +404,6 @@
             casChange(value) {
                 this.rowData.categoryId = value[value.length - 1];
             },
-
             currentChange(val) {
                 this.pageForm.pageIndex = val;
                 this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
@@ -439,6 +453,13 @@
                         this.$message.success("success");
                         this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
                     });
+                }
+            },
+            geProductType(v){
+                if(v === 1) {
+                    this.category = this.cateList;
+                } else {
+                    this.category = this.serviceList;
                 }
             },
         },

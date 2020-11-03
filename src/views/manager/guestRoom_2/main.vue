@@ -12,9 +12,9 @@
                          :key="item.path"
                          v-if="$F.filterThirdMenu('finance', item.path, true)">
                 <!-- 商品管理-->
-                <GoodsMg ref="GoodsMg" :list="goodsList" :category="category" :serviceList="serviceList" :total="goodsTotal" :initData="getHotelGoodsData" v-if="item.path == 'GoodsMg'"/>
+                <GoodsMg ref="GoodsMg" :list="goodsList" :cateList="category" :serviceList="serviceList" :total="goodsTotal" :initData="getHotelGoodsData" :cateData="getCategoryData" v-if="item.path == 'GoodsMg'"/>
                 <!-- 售卖点-->
-                <SalePoint ref="SalePoint" :list="salesList" :category="category" :serviceList="serviceList" :total="salesTotal" :initData="getSellingData" v-if="item.path == 'SalePoint'"/>
+                <SalePoint ref="SalePoint" :list="salesList" :cateList="category" :serviceList="serviceList" :total="salesTotal" :initData="getSellingData" :cateData="getCategoryData" v-if="item.path == 'SalePoint'"/>
                 <!-- 商品分类-->
                 <GoodsKinds ref="GoodsKinds" :list="category" :serviceList="serviceList" :initData="getCategoryData" v-if="item.path == 'GoodsKinds'"/>
                 <!-- 库存管理-->
