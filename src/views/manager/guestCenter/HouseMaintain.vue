@@ -236,7 +236,7 @@
 								<el-row :span="20" style="display: flex;align-items: center;justify-content: center; margin-bottom: 10px;">
 									<el-col :span="4" :offest="2">{{index+1}} 人住宿</el-col>
 									<el-col :span="18">
-										<el-input v-model="value.price" @change="changeInput(value, index)"></el-input>
+										<el-input v-model="value.price"></el-input>
 									</el-col>
 								</el-row>
 							</el-col>
@@ -410,7 +410,6 @@
 		},
 		methods: {
 			changeInput(value, index) {
-				debugger
 				// this.ruleForm_sit[index].price = value
 				// this.ruleForm_sit.splice(index, 1, this.ruleForm_sit[index])
 			},
@@ -438,21 +437,21 @@
 						break;
 
 					case "sit":
-						let arr = []
-						let obj = {}
+                        this.ruleForm_sit = [];
 						// this.ruleForm.checkinNum.forEach((value, index) =>{
 						// 	obj.price = ''
 						// 	obj.sid = index
 						// 	arr[i] = obj
 						// })
-						// for (let i = 0; i < this.ruleForm.checkinNum; i++) {
-						// 	obj.price = ''
-						// 	obj.sid = i
-						// 	arr[i] = obj
-						// }
-						this.ruleForm_sit = arr
+						for (let i = 0; i < this.ruleForm.checkinNum; i++) {
+                            let obj = {}
+							obj.price = ''
+							obj.sid = i;
+                            this.ruleForm_sit.push(obj);
+						}
 						// debugger
-						this.jiageSit_show = true
+						this.jiageSit_show = true;
+						this.$forceUpdate();
 						break;
 					case 'rili':
 						this.rili_show = false
