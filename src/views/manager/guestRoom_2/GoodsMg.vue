@@ -263,12 +263,11 @@
         },
         methods: {
             search() {
-                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
             },
             reset() {
                 this.form = {name: "", status: "", categoryType: '', category: ""};
                 this.category = [];
-                this.categoryArr = [];
                 this.initData(this.pageForm, '', '', '');
             },
             casChange(value) {
@@ -285,16 +284,21 @@
                 }
             },
             changeType(type) {
+                this.cateData(type);
+                this.rowData.categoryType = type;
                 if(type == 1) {
                     this.categoryArr = this.cateList;
                 } else {
                     this.categoryArr = this.serviceList;
+                    this.rowData.priceModel = 1;
                 }
             },
             popup(type, row) {
                 if (type == "add") {
                     this.edit = false;
                     this.tab_show = false;
+                    this.rowData.categoryType = 1;
+                    this.categoryArr = this.cateList;
                 } else if (type == "bin") {
                     this.$F.doRequest(
                         this,
@@ -312,19 +316,20 @@
                     this.edit = true;
                     this.tab_show = false;
                     this.rowData = row;
+                    console.log(row)
                 }
             },
             //切换到商品管理
             back() {
                 this.tab_show = true;
-                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
             },
             submit() {
                 const param = {
                     name: this.rowData.name,
                     categoryId: this.rowData.categoryId,
                     remark: this.rowData.remark,
-                    retailPrice: this.rowData.categoryType == 2 ? 0 : this.rowData.retailPrice,
+                    retailPrice: this.rowData.priceModel == 2 ? 0 : this.rowData.retailPrice,
                     costPrice: this.rowData.categoryType == 2 ? 0 : this.rowData.costPrice,
                     // employeePrice: this.rowData.employeePrice,
                     buyCount: this.rowData.categoryType == 2 ? 0 : this.rowData.buyCount,
@@ -343,7 +348,7 @@
                     param.id = this.rowData.id;
                 }
                 this.$F.doRequest(this, "/pms/hotelgoods/edit", param, (res) => {
-                    this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                    this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
                     if (this.edit) {
                         this.tab_show = true;
                     } else {
@@ -363,7 +368,7 @@
             },
             currentChange(val) {
                 this.pageForm.pageIndex = val;
-                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
             },
             downModel() {
                 // this.$F.doRequest(this, "/pms/hotelgoods/download", {}, (res) => {
@@ -398,7 +403,7 @@
                     },
                     (res) => {
                         this.$message.success("success");
-                        this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
+                        this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
                     }
                 );
             },

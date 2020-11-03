@@ -74,13 +74,14 @@
                     this.$refs['IntoKuAudit'][0].getCountData();
                 }
             },
-            getHotelGoodsData(obj, name, categoryId, state, haveInventory) {
+            getHotelGoodsData(obj, name, categoryId, state, type, haveInventory) {
                 const params = {
                     name: name,
                     categoryId: categoryId,
                     state: state,
                     status: 1,
-                    haveInventory: haveInventory
+                    haveInventory: haveInventory,
+                    categoryType: type
                 }
                 this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/hotelgoods/list', params, (res) => {
@@ -137,11 +138,12 @@
                     return 0;
                 }
             },
-            getSellingData(obj, name, categoryId, sellId, callback) {
+            getSellingData(obj, name, categoryId, sellId, type, callback) {
                 const params = {
                     goodsName: name,
                     categoryId: categoryId,
                     sellId: sellId,
+                    categoryType: type
                 }
                 this.$F.merge(params, obj);
                 this.$F.doRequest(this, '/pms/sellinglog/list', params, (res) => {

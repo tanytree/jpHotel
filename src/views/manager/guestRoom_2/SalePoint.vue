@@ -244,7 +244,7 @@
         mounted() {
             this.category = this.cateList;
             this.getManageData(() => {
-                this.initData(this.pageForm, '', '', this.sellId, (res)=> {
+                this.initData(this.pageForm, '', '', this.sellId, '', (res)=> {
                     this.pageForm.pageIndex = res.pageIndex;
                 })
             });
@@ -306,7 +306,7 @@
                         this.sellName = item.name;
                     }
                 })
-                this.initData(this.pageForm, '', '', val, (res)=> {
+                this.initData(this.pageForm, '', '', val, '', (res)=> {
                     this.pageForm.pageIndex = res.pageIndex;
                 })
             },
@@ -376,7 +376,7 @@
             },
             offShelf(row) {
                 this.$F.doRequest(this, "/pms/sellinglog/delete", {id: row.id,}, (res) => {
-                    this.initData(this.pageForm, '', '', this.sellId, (res) => {
+                    this.initData(this.pageForm, '', '', this.sellId, '', (res) => {
                         this.pageForm.pageIndex = res.pageIndex;
                     });
                 });
@@ -386,7 +386,7 @@
                     const category = this.upshelf.category[this.upshelf.category.length - 1];
                     this.getShelfData(category, this.upshelf.name);
                 } else {
-                    this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
+                    this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, this.form.categoryType);
                 }
 
             },
@@ -396,7 +396,7 @@
                     this.getShelfData()
                 } else {
                     this.form = {name: "", categoryType: '', category: ""};
-                    this.initData(this.pageForm, '', '', this.sellId);
+                    this.initData(this.pageForm, '', '', this.sellId, '');
                 }
                 this.category = [];
             },
@@ -405,7 +405,7 @@
             },
             currentChange(val) {
                 this.pageForm.pageIndex = val;
-                this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
+                this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, this.form.categoryType);
             },
             shelfChange() {
                 this.shelfForm.pageIndex = val;
@@ -426,7 +426,7 @@
                     this.$F.doRequest(this, "/pms/sellinglog/add", params, (res) => {
                         this.$message.success("success");
                         this.getShelfData();
-                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
+                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, this.form.categoryType);
                     });
                 } else if (type == "point") {
                     if (this.pointType) {
@@ -450,7 +450,7 @@
                     this.$F.doRequest(this, "/pms/sellinglog/edit", params, (res) => {
                         this.onshelfVisible = false;
                         this.$message.success("success");
-                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId);
+                        this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, this.form.categoryType);
                     });
                 }
             },
