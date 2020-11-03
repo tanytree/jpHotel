@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-22 10:13:46
+ * @LastEditTime: 2020-11-03 15:35:16
  * @FilePath: \jiudian\src\views\market\orders\booking.vue
  -->
 
@@ -165,7 +165,7 @@
                         <el-button type="primary" @click="initForm">{{
                             $t("commons.resetBtn")
                         }}</el-button>
-                        <el-button type="primary" @click="initForm">{{
+                        <el-button type="primary">{{
                             $t("commons.exportBtn")
                         }}</el-button>
                     </el-form-item>
@@ -221,12 +221,11 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop="operCheckinType"
                     :label="$t('desk.customer_roomKind')"
                     width="140"
                 >
                     <template slot-scope="{ row }">
-                        {{ F_operCheckinType(row.operCheckinType) }}
+                        {{ row.checkInRoomList.length>0?row.checkInRoomList[0].roomTypeName:''}}{{row.checkInRoomList.length>0?'/':''}}{{ row.checkInRoomList.length>0?row.checkInRoomList[0].houseNum:''}}
                     </template>
                 </el-table-column>
                 <el-table-column

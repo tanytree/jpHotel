@@ -392,17 +392,17 @@ export default {
         background-color: #fff;
         height: 100px;
         .logPng {
-            width: 211px;
-            height: 83px;
+            width: 150px;
+            height: 60px;
         }
         .leftText {
             color: rgba(10, 64, 139, 100);
-            font-size: 48px;
+            font-size: 35px;
             font-weight: bold;
         }
         .rightText {
             color: rgba(102, 102, 102, 100);
-            font-size: 20px;
+            font-size: 14px;
         }
     }
 }
@@ -433,7 +433,7 @@ export default {
     justify-content: center;
     align-items: center;
     justify-content: space-around;
-    flex: 8;
+    flex: 9;
 
     > .register-body {
         background-color: #ffffff;

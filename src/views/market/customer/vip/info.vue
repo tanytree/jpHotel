@@ -548,7 +548,7 @@ export default {
 
             this.$prompt(
                 this.$t("desk.customer_inputReason"),
-                this.$t("desk.home_prompt"),
+                this.$t("commons.tip_desc"),
                 {
                     confirmButtonText: this.$t("commons.determine"),
                     cancelButtonText: this.$t("commons.cancel"),
