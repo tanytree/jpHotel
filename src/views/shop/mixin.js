@@ -84,11 +84,6 @@ const mixin= {
            return minutes
         },
 
-
-
-
-
-
         alert(v,msg){
              if(v == 200){
                  this.$message({

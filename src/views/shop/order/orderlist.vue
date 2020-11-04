@@ -1,6 +1,6 @@
 <template>
 <!-- 统一的列表格式 -->
-<div>  
+<div>
     <div>
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
@@ -155,14 +155,18 @@
         >
 
         <div class="detailPanel">
-
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{detail.shopNum}} </span>
                 <span style="padding:0 50px;">售卖点：{{detail.sellingName}} </span>
                 <span>{{$t('food.common.create_time')}}：{{detail.createTime}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{detail.consumePrice}}</div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div>
+            <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">会员价格：¥{{detail.scoresPrice}}</div>
+            <div class="margin-t-10 text-gray">实付款：¥{{detail.hasPayPrice}}</div>
+            <div class="margin-t-10 text-gray">结账时间：¥{{detail.updateTime}}</div>
+            
+
             <el-table
               class="margin-t-10 "
               :data="detail.orderSubList"
@@ -315,7 +319,7 @@ export default {
 
         //获取订单信息
         getInfo(data){
-            // console.log(data.state)
+            console.log(data)
             if(data.state == 2){
                this.dialogShows = true
                this.detail = data

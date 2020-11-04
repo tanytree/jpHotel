@@ -10,6 +10,15 @@
                         <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
+                <el-form-item label="优惠金额">
+                   <el-input  size="small" placeholder="优惠金额" style="width: 180px;" ></el-input>
+                </el-form-item>
+
+                <el-form-item :label="$t('food.common.payPrice')">
+                    {{getPayPrice}}
+                </el-form-item>
+
+
                 <div v-if="form.billingType == 1">
                     <el-form-item :label="$t('food.common.payType')">
                         <el-select size="small" v-model="form.payType">
@@ -21,9 +30,11 @@
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item :label="$t('food.common.payPrice')">
+                    <!-- <el-form-item :label="$t('food.common.payPrice')">
                         {{getPayPrice}}
-                    </el-form-item>
+                    </el-form-item> -->
+
+
 
                     <el-form-item :label="$t('food.common.member_card')">
                         <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.common.select_member_card')" @change="getMerberInfo">
@@ -37,7 +48,7 @@
                         <el-button style="margin-left: 10px;" size="small">{{$t('food.common.read_member_card')}}</el-button>
                     </el-form-item>
                     <!-- 使用积分兑换操作，暂时不要 -->
-                    <!-- <el-form-item v-if="selectMerberInfo.score && selectMerberInfo.score > 0">
+                   <!-- <el-form-item v-if="selectMerberInfo.score && selectMerberInfo.score > 0">
                         <el-checkbox v-model="isUseScore">可用{{jfInfo.jf}}积分抵扣{{jfInfo.discount}}日元</el-checkbox>
                     </el-form-item> -->
                 </div>
@@ -181,7 +192,7 @@
         },
         methods: {
             intForm(){
-               this.form = {
+                this.form = {
                     orderId:'',//菜品订单id string必填
                     realPayPrice:'',//实付金额  Double必填
                     payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
@@ -209,10 +220,7 @@
                 this.jfInfo = {
                     jf:'',
                     discount:''
-
                 }
-
-
                 this.isUseScore = false
                 this.isPrint = false
             },
@@ -378,7 +386,7 @@
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 // console.log(params)
-                this.$F.doRequest(this, "/pms/dishes/dishes_place_order_pay", params, (res) => {
+                this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
                     this.alert(200,this.$t('food.common.success'));
                     this.closeDialog();
                 });
