@@ -179,7 +179,7 @@
                                     <el-checkbox v-model="checked">{{ $t("desk.home_pushAnd") }} 20</el-checkbox>
                                 </el-col>
                                 <el-col :span="2">
-                                    <el-checkbox v-model="checked">欠费 120</el-checkbox>
+                                    <el-checkbox v-model="checked">{{ $t("desk.home_owe") }} 120</el-checkbox>
                                 </el-col>
                             </el-row>
 
@@ -215,14 +215,14 @@
                                         </div>
                                     </template>
                                 </el-table-column>
-                                <el-table-column label="押金" width="120">
+                                <el-table-column :label="$t('desk.order_theDeposit')" width="120">
                                     <template slot-scope="scope">
                                         <div slot="reference" class="name-wrapper">
                                             {{ scope.row.name }}
                                         </div>
                                     </template>
                                 </el-table-column>
-                                <el-table-column label="余额" width="120">
+                                <el-table-column :label="$t('desk.home_balanceOf')" width="120">
                                     <template slot-scope="scope">
                                         <div slot="reference" class="name-wrapper">
                                             {{ scope.row.name }}
@@ -260,7 +260,7 @@
                                             type="text"
                                             @click="Edit(scope.$index, scope.row)"
                                             size="mini"
-                                        >账单详情
+                                        >{{$t('desk.home_accountDetail')}}
                                         </el-button
                                         >
                                     </template>
@@ -268,7 +268,7 @@
                             </el-table>
                         </el-row>
                         <div slot="footer" class="dialog-footer" style="text-align: center">
-                            <el-button type="primary" @click="print = false">关闭</el-button>
+                            <el-button type="primary" @click="print = false">{{$t('commons.close')}}</el-button>
                         </div>
                     </el-dialog>
 
@@ -277,18 +277,18 @@
                     <el-popover placement="top-start" width="840" trigger="hover">
                         <!-- <p>hdfkhajkghgh</p> -->
                         <div class="icondesc">
-                            <h3>图标说明</h3>
+                            <h3>{{$t('desk.home_iconShows')}}</h3>
 <!--                            <el-col :span="4" class="item">-->
 <!--                                <span class="inco">钟</span>-->
 <!--                                <span>钟点房</span>-->
 <!--                            </el-col>-->
                             <el-col :span="4" class="item">
-                                <span class="inco">订</span>
-                                <span>预订房</span>
+                                <span class="inco">{{$t('desk.home_drawUp')}}</span>
+                                <span>{{$t('desk.home_bookRoom')}}</span>
                             </el-col>
                             <el-col :span="4" class="item">
-                                <span class="inco">离</span>
-                                <span>今日预离</span>
+                                <span class="inco">{{$t('desk.home_form')}}</span>
+                                <span>{{$t('desk.home_todayDeparture')}}</span>
                             </el-col>
 <!--                            <el-col :span="4" class="item">-->
 <!--                                <span class="inco">长</span>-->
@@ -300,13 +300,13 @@
                       :src="require('@/assets/images/frontdesk/minClearn.png')"
                   />
                 </span>
-                                <span>脏房</span>
+                                <span>{{$t('desk.home_dirtyRoom')}}</span>
                             </el-col>
                             <el-col :span="4" class="item">
                 <span class="inco i_img">
                   <img :src="require('@/assets/images/frontdesk/minFix.png')"/>
                 </span>
-                                <span>维修房</span>
+                                <span>{{$t('desk.home_maintenanceRoom')}}</span>
                             </el-col>
                             <el-col :span="4" class="item">
                 <span class="inco i_img">
@@ -322,7 +322,7 @@
                             size="small"
                             slot="reference"
                             icon="el-icon-question"
-                        >图标
+                        >{{$t('desk.home_iconImg')}}
                         </el-button
                         >
                     </el-popover>
@@ -330,16 +330,15 @@
                 </el-footer>
             </el-container>
         </div>
-
         <!-- 房间信息 -->
         <el-dialog top="0" :visible.sync="hosteldis" width="800px"
-                   :title="`${currentRoom.houseNum}房间-${currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : ''}`">
+                   :title="`${currentRoom.houseNum}`+$t('desk.book_house')+'-'+`${currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : ''}`">
             <el-tabs type="border-card">
                 <el-tab-pane :label="currentRoom.label" v-if="currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2">
                     <div class="inMsg">
                         <div class="row">
                             <div class="col">
-                                入住时间：
+                               {{ $t('desk.order_checkinDate') }}：
                                 <span>{{ currentRoom.checkInObj.checkinTime }}</span>
                             </div>
                             <div class="col">
@@ -347,7 +346,7 @@
                                 <span>{{ currentRoom.consumePrice || 0}}</span>
                             </div>
                             <div class="col">
-                                预离时间：
+                                 {{ $t('desk.order_departureTime') }}：
                                 <span>{{ currentRoom.checkInObj.checkoutTime }}</span>
                             </div>
 <!--                            <div class="col">-->
@@ -359,7 +358,7 @@
 <!--                                <span>帮忙找下哪个字段</span>-->
 <!--                            </div>-->
                             <div class="col">
-                                入住天数：
+                                {{ $t('desk.checkInDays') }}：
                                 <span>{{ currentRoom.checkInObj.checkInDays || 1 }}</span>
                             </div>
                             <div class="col">
@@ -375,7 +374,7 @@
                             <el-table-column :label="$t('desk.home_phoneNum')" width>
                                 <template slot-scope="scope">{{ scope.row.mobile }}</template>
                             </el-table-column>
-                            <el-table-column label="性别" width>
+                            <el-table-column :label="$t('desk.customer_sex')" width>
                                 <template slot-scope="scope">
                                     {{ F_sex(scope.row.sex) }}
                                 </template>
@@ -386,7 +385,7 @@
                                     }}
                                 </template>
                             </el-table-column>
-                            <el-table-column label="同来宾客" width>
+                            <el-table-column :label="$t('desk.customer_toTheGuest')" width>
                                 <template>{{  currentRoom.personLength }}
                                 </template>
                             </el-table-column>
@@ -414,15 +413,15 @@
                                 <span>{{ currentRoom.currentRoomData.realPrice }}</span>
                             </div>
                             <div class="col">
-                                窗户：
+                               {{ $t('desk.home_window') }}：
                                 <span>{{ F_is1or2(currentRoom.windowFlag) }}</span>
                             </div>
                             <div class="col">
-                               {{$t('manager.hk_toward')}}
+                               {{$t('manager.hk_toward')}}:
                                 <span>{{ F_is1or2(currentRoom.toward) }}</span>
                             </div>
                             <div class="col">
-                                房间备注：
+                                 {{ $t('desk.home_roomRemark') }}：
                                 <span>{{ currentRoom.remark }}</span>
                             </div>
                         </div>
@@ -439,18 +438,18 @@
             currentRoom.roomStatus == 3
           "
                     @click="handleOperRoomStatus(2, currentRoom)"
-                >置脏
+                >{{$t('desk.home_putDirty')}}
                 </el-button
                 >
                 <el-button
                     style="width: 60px"
                     v-if="currentRoom.roomStatus == 2 || currentRoom.roomStatus == 4"
                     @click="handleOperRoomStatus(1, currentRoom)"
-                >置净
+                >{{$t('desk.home_buyNet')}}
                 </el-button
                 >
                 <el-button style="width: 60px" @click="handleFix(currentRoom)"
-                >维修
+                >{{$t('desk.home_service')}}
                 </el-button
                 >
                 <!--                <template v-if="currentRoom.checkInRoomType == 1">-->
@@ -483,9 +482,9 @@
             </div>
         </el-dialog>
         <!-- 续住 -->
-        <el-dialog top="0" title="续住" :visible.sync="stayoer" width="80%">
+        <el-dialog top="0" :title="$t('desk.home_stayOver')" :visible.sync="stayoer" width="80%">
             <el-alert
-                title="如果需要提前离店，需要在续住天数中输入负数"
+                :title="$t('desk.home_needLeave')"
                 type="error"
                 :closable="false"
                 show-icon
@@ -503,36 +502,36 @@
                 <el-table-column :label="$t('desk.home_name')" width="100">
                     <template>A100</template>
                 </el-table-column>
-                <el-table-column label="原预离时间" width="100">
+                <el-table-column :label="$t('desk.home_orignLeaveTime')" width="100">
                     <template>A100</template>
                 </el-table-column>
-                <el-table-column label="续住天数">
+                <el-table-column :label="$t('desk.home_stayOverDay')">
                     <template>
                         <el-input-number v-model="stayoernum" :step="1"></el-input-number>
                     </template>
                 </el-table-column>
-                <el-table-column label="新预离时间">
+                <el-table-column :label="$t('desk.home_newLeaveTime')">
                     <template class="block">
                         <el-date-picker
                             v-model="value1"
                             type="date"
-                            placeholder="选择日期"
+                            :placeholder="$t('desk.serve_chooseDate')"
                         ></el-date-picker>
                     </template>
                 </el-table-column>
 
-                <el-table-column label="合计房价">
+                <el-table-column :label="$t('desk.home_hejiRoomPrice')">
                     <template>A100</template>
                 </el-table-column>
             </el-table>
 
             <div slot="footer" class="dialog-footer">
-                <el-button size="small" class="white" @click="stayoer = false">取 消</el-button>
-                <el-button size="small" type="primary" class="submit" @click="stayoer = false">确 定</el-button>
+                <el-button size="small" class="white" @click="stayoer = false">{{$t('commons.cancel')}}</el-button>
+                <el-button size="small" type="primary" class="submit" @click="stayoer = false">{{$t('commons.determine')}}</el-button>
             </div>
         </el-dialog>
         <!-- 换房 -->
-        <el-dialog top="0" title="换房" :visible.sync="roomchange" width="1200px">
+        <el-dialog top="0" :title="$t('desk.home_changeRoom')" :visible.sync="roomchange" width="1200px">
             <!-- <el-card>
                       <el-form>
                         <el-row>
@@ -689,16 +688,16 @@
         <el-dialog
             top="0"
             :show-close="false"
-            title="房卡操作"
+            :title="$t('desk.home_roomCardOpreat')"
             :visible.sync="mackcade"
             width="60%"
         >
             <el-row>
-                <span>共一间&nbsp;&nbsp;本次已制卡数：{{ liveCardData.done }}</span>
+                <span>{{$t('desk.home_haveOne')}}&nbsp;&nbsp;{{$t('desk.home_haveCardNum')}}：{{ liveCardData.done }}</span>
                 <el-col :span="8" style="float: right">
-                    <el-button @click="make_card_status">制卡</el-button>
-                    <el-button>清卡</el-button>
-                    <el-button>读卡</el-button>
+                    <el-button @click="make_card_status">{{$t('desk.home_makeCard')}}</el-button>
+                    <el-button>{{$t('desk.home_clearCard')}}</el-button>
+                    <el-button>{{$t('desk.home_readCard')}}</el-button>
                 </el-col>
             </el-row>
             <el-table
@@ -716,7 +715,7 @@
                         }}
                     </template>
                 </el-table-column>
-                <el-table-column label="本次制卡状态">
+                <el-table-column :label="$t('desk.home_nowMakeState')">
                     <template slot-scope="{ row }">{{
                             F_markCard(row.markCard)
                         }}
@@ -729,7 +728,7 @@
         </el-dialog>
 
         <!-- 修改备注 -->
-        <el-dialog top="0" title="修改备注" :visible.sync="remark" width="600px">
+        <el-dialog top="0" :title="$t('desk.home_resetRemark')" :visible.sync="remark" width="600px">
             <el-form>
                 <el-form-item :label="$t('desk.home_note') + ':'">
                     <el-input type="textarea"></el-input>
@@ -737,7 +736,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button size="small" class="white" @click="remark = false"
-                >取 消
+                >{{$t('commons.cancel')}}
                 </el-button
                 >
                 <el-button
@@ -745,7 +744,7 @@
                     type="primary"
                     class="submit"
                     @click="remark = false"
-                >确 定
+                >{{$t('commons.determine')}}
                 </el-button
                 >
             </div>
@@ -778,16 +777,7 @@ export default {
             stayoerchecked: false, //续住  勾选
             tableData: [
                 //待开票表格字段
-                {
-                    name: "王小虎",
-                    roomNum: 12,
-                    phonenum: 1111111,
-                    billType: "增值税电子发票",
-                    invoiceTitle: "全购网络技术有限公司",
-                    invoiceAmount: 150,
-                    taxes: 0,
-                    billNum: 5545554,
-                },
+              
             ],
             billList: [], //点击开票按钮的数据
             checkInForm: {
@@ -1114,7 +1104,7 @@ export default {
 
         //将房间设置为维修状态
         handleFix(item) {
-            this.$confirm("请确认房间维修", this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('desk.home_sureService'), this.$t('commons.tip_desc'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: "warning",
