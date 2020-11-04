@@ -858,6 +858,7 @@ export default {
             hotel_building_list: "",
             hotel_building_floor_list: "",
             currentRoom: {
+                currentRoomData: {personList: []},
                 livingPersonList: [],
             },
             liveCardData: [],
