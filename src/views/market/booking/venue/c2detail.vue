@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-09-14 10:55:10
  * @Author: 陶子
- * @LastEditTime: 2020-11-03 17:29:08
+ * @LastEditTime: 2020-11-04 17:15:32
  * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
 -->
 <template>
@@ -42,9 +42,9 @@
                         </div>
                         <div>
                             {{ $t("desk.order_sourceType") }}：
-                            <span v-if="checkIn.guestType == 1">散客</span>
-                            <span v-if="checkIn.guestType == 2">会员</span>
-                            <span v-if="checkIn.guestType == 3">单位</span>
+                            <span v-if="checkIn.guestType == 1">{{ $t("desk.book_traveler") }}</span>
+                            <span v-if="checkIn.guestType == 2">{{ $t("desk.book_member") }}</span>
+                            <span v-if="checkIn.guestType == 3">{{ $t("desk.book_unit") }}</span>
                         </div>
                     </div>
                 </el-card>

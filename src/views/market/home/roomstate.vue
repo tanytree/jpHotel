@@ -1162,7 +1162,7 @@ export default {
             if (item.livingPersonList.length) {
                 this.$refs.rowRoomHandle.initForm(item.livingPersonList[0].checkinId);
             } else {
-                this.$message.error("暂无入住人，请添加入住人后操作");
+                this.$message.error(this.$t('desk.home_noPeopleLive'));
                 return;
             }
         },
@@ -1170,7 +1170,7 @@ export default {
         liveCard_in_person_list(item) {
             console.log(item);
             if (!item.livingPersonList || !item.livingPersonList.length) {
-                this.$message.error("暂无入住人，请添加入住人后操作");
+                this.$message.error(this.$t('desk.home_noPeopleLive'));
                 return;
             }
             let params = {
@@ -1214,7 +1214,7 @@ export default {
         make_card_status() {
             let arr = [];
             if (!this.multipleSelection.length) {
-                this.$message.error("至少选择一间房间");
+                this.$message.error(this.$t('desk.home_shouldSelectRoom'));
                 return;
             }
             this.multipleSelection.forEach((element) => {

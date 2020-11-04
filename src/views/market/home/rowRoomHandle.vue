@@ -1,19 +1,19 @@
 <!--
  * @Date: 2020-02-16 14:34:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-18 10:44:03
- * @FilePath: /jiudian/src/views/market/home/rowRoomHandle.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-04 15:26:53
+ * @FilePath: \jiudian\src\views\market\home\rowRoomHandle.vue
  -->
 <template>
 <div>
-    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" title="修改预留" width="80%">
+    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="$t('desk.home_modityReserved')" width="80%">
 
         <el-row style="margin-bottom:60px" v-loading="loading">
             <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" placeholder="选择日期" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -23,7 +23,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -53,13 +53,13 @@
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
-                                                            <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" label="描述文字" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
+                                                            <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" :label="$t('desk.home_describeText')" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
                                                         </div>
                                                     </el-col>
                                                 </el-row>
                                                 <el-row class="row">
                                                     <el-col :span="14">
-                                                        <el-button type="text" size="mini">可订{{v.reserveTotal}}</el-button>
+                                                        <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
@@ -90,7 +90,7 @@
                                                 <div class="wrap">
                                                     <el-row class="row">
                                                         <el-col :span="14">
-                                                            <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}间</span>
+                                                            <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}{{$t('manager.hk_space')}}</span>
                                                         </el-col>
                                                         <el-col :span="10">
                                                             <div style="text-align: right">
@@ -101,7 +101,7 @@
                                                     </el-row>
                                                     <el-row class="row" v-if="v.roomsArr&&v.roomsArr.length">
                                                         <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}}
-                                                            <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ 移除</span></el-button>
+                                                            <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ {{$t('desk.customer_remove')}}</span></el-button>
                                                     </el-row>
                                                     <!-- <el-row class="row">
                                                         <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
@@ -146,10 +146,10 @@
                     <el-checkbox v-for="(item,key,index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{item}}</el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
-            <el-form-item label="属性:" class="" style="margin-bottom:0">
-                <el-checkbox v-model="hotelRoomListParams.windowFlag" @change="hotel_room_list">有窗</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.roadFlag" @change="hotel_room_list">靠马路</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.smokeFlag" @change="hotel_room_list">无烟房</el-checkbox>
+            <el-form-item :label="$t('desk.home_attribute') + ':'" class="" style="margin-bottom:0">
+                <el-checkbox v-model="hotelRoomListParams.windowFlag" @change="hotel_room_list">{{$t('desk.home_haveWindow')}}</el-checkbox>
+                <el-checkbox v-model="hotelRoomListParams.roadFlag" @change="hotel_room_list">{{$t('desk.home_onRoad')}}</el-checkbox>
+                <el-checkbox v-model="hotelRoomListParams.smokeFlag" @change="hotel_room_list">{{$t('desk.home_noSmoke')}}</el-checkbox>
             </el-form-item>
             <div class="rowRoomsList">
                 <div class="wrap">
@@ -274,7 +274,29 @@ export default {
                 checkInId: '',
                 checkInReserveId: ''
             },
-            rules: {
+            hotelRoomListParams: {
+                buildingId: '',
+                buildingFloorId: '',
+                roomTypeId: '',
+                houseNum: '',
+                toward: [],
+                roadFlag: '',
+                windowFlag: '',
+                smokeFlag: '',
+                noiseFlag: '',
+                temperatureFlag: '',
+                livingRoomStatus: '',
+                pageIndex: 1,
+                pageSize: 9999
+            },
+            liveInPersonData: [],
+            liveCardData: '',
+            typeText: '入住'
+        };
+    },
+    computed: {
+        rules(){
+            return{
                 name: [{
                     required: true,
                     // message: '请输入姓名',
@@ -343,28 +365,9 @@ export default {
                     // message: '请选择计费规则',
                     trigger: 'change'
                 }, ],
-            },
-            hotelRoomListParams: {
-                buildingId: '',
-                buildingFloorId: '',
-                roomTypeId: '',
-                houseNum: '',
-                toward: [],
-                roadFlag: '',
-                windowFlag: '',
-                smokeFlag: '',
-                noiseFlag: '',
-                temperatureFlag: '',
-                livingRoomStatus: '',
-                pageIndex: 1,
-                pageSize: 9999
-            },
-            liveInPersonData: [],
-            liveCardData: '',
-            typeText: '入住'
-        };
+            }
+        }
     },
-    computed: {},
     methods: {
         initForm(checkInId, checkinInfo, reservedRoom) {
             let that = this
@@ -462,7 +465,7 @@ export default {
         },
         rowRoomByItem(item, index) {
             if (!this.checkInForm.checkInId) {
-                this.$message.error('请完善入住信息后操作');
+                this.$message.error(this.$t('desk.home_perfectLiveInfo'));
                 return
             }
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item))
@@ -486,7 +489,7 @@ export default {
         //手动排房确定
         db_row_houses() {
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
-                this.$message.error('排房数量超过订房数量');
+                this.$message.error(this.$t('desk.home_morethenNum'));
                 return
             }
             let ids = [];
@@ -516,11 +519,11 @@ export default {
         //自动排房确定
         page_row_houses() {
             if (!this.checkInForm.checkInId) {
-                this.$message.error('请输入入住信息后操作')
+                this.$message.error(this.$t('desk.home_inputLiveAfter'))
                 return false
             }
             if (this.waitingRoom.length < 1) {
-                this.$message.error('请选择房型后操作');
+                this.$message.error(this.$t('desk.home_roomTypeOperate'));
                 return
             }
             let roomTypeId = [],
@@ -627,7 +630,7 @@ export default {
         checkinDaysChange(e) {
             console.log(e)
             if (this.checkInForm.checkinTime == '') {
-                this.$message.error('请选择到店时间')
+                this.$message.error(this.$t('desk.home_selectToTime'))
                 this.checkInForm.checkinDays = 0
                 return
             } else {

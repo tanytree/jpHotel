@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-18 11:09:02
- * @FilePath: /jiudian/src/views/market/orders/bookingcoms/base.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-04 18:08:42
+ * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
 <div class="base">
@@ -16,7 +16,7 @@
 <!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
 <!--                    <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>-->
 <!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
-                    <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">取消预订</el-dropdown-item>
+                    <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{$t('desk.order_cancelOrder')}}</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
                     <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{$t('commons.cancel')}}NOSHOW</el-dropdown-item>
                     <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{ $t('desk.rowHouse') }}</el-dropdown-item>
@@ -43,11 +43,11 @@
         </el-row>
     </el-row>
     <el-row>
-        <h4>预订房型</h4>
+        <h4>{{ $t('desk.order_bookRoomType') }}</h4>
         <el-row>
             <el-col :span="24" v-for="(item,key,index) of roomTypeList" :key="index">
                 <p>
-                    {{checkKey(key)}}（{{item.length}}间）；
+                    {{checkKey(key)}}（{{item.length}}{{$t('manager.hk_space')}}）；
                     {{$t('desk.home_roomType')}}：
                     <el-button type="primary" size="mini" plain>{{item[0].roomTypeName}}({{item.length}})</el-button>
                 </p>
@@ -58,18 +58,18 @@
         </el-row>
     </el-row>
     <el-row>
-        <h4>销售信息</h4>
+        <h4>{{ $t('desk.order_saleInfo') }}</h4>
         <el-row>
             <el-col :span="8">
-                <p>{{ $t('desk.order_outOrder') }}：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:'无'}}</p>
+                <p>{{ $t('desk.order_outOrder') }}：{{checkinInfo.thirdOrdernum?checkinInfo.thirdOrdernum:$t('desk.order_noText')}}</p>
             </el-col>
             <el-col :span="8">
-                <p>{{ $t('desk.order_salesman') }}：{{ currentSale.userName || '无'}}</p>
+                <p>{{ $t('desk.order_salesman') }}：{{ currentSale.userName || $t('desk.order_noText')}}</p>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="12">
-                <p>{{ $t('desk.orderMarkInfo') }}：{{checkinInfo.remark || '无'}}</p>
+                <p>{{ $t('desk.orderMarkInfo') }}：{{checkinInfo.remark || $t('desk.order_noText')}}</p>
             </el-col>
         </el-row>
     </el-row>
@@ -134,11 +134,11 @@
             </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="baseInfoChangeShow = false">取 消</el-button>
-            <el-button type="primary" @click="hotel_check_inChange">确 定</el-button>
+            <el-button @click="baseInfoChangeShow = false">{{$t('commons.cancel')}}</el-button>
+            <el-button type="primary" @click="hotel_check_inChange">{{$t('commons.determine')}}</el-button>
         </span>
     </el-dialog>
-    <el-dialog top="0" title="更改客源" :visible.sync="gustTypeChangeShow" width="500px" center>
+    <el-dialog top="0" :title="$t('desk.order_changeSource')" :visible.sync="gustTypeChangeShow" width="500px" center>
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
             <el-row>
 
@@ -164,8 +164,8 @@
             </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="baseInfoChangeShow = false">取 消</el-button>
-            <el-button type="primary" @click="hotel_check_inChange">确 定</el-button>
+            <el-button @click="baseInfoChangeShow = false">{{$t('commons.cancel')}}</el-button>
+            <el-button type="primary" @click="hotel_check_inChange">{{$t('commons.determine')}}</el-button>
         </span>
     </el-dialog>
 
@@ -183,12 +183,12 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="账务服务：" class="">
-                        NOSHOW房费
+                    <el-form-item :label="$t('desk.order_accountingService') + '：'" class="">
+                        NOSHOW{{$t('desk.serve_roomPrice')}}
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="金额：" class="">
+                    <el-form-item :label="$t('desk.customer_sum') + '：'" class="">
                         <el-input type="text" disabled v-model="currentItem.deposit" style="width:150px"></el-input>
                     </el-form-item>
                 </el-col>
@@ -200,8 +200,8 @@
             </el-row>
         </el-form>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="noShowDiaShow = false">取 消</el-button>
-            <el-button type="primary" @click="confirmNoshow">确 定</el-button>
+            <el-button @click="noShowDiaShow = false">{{$t('commons.cancel')}}</el-button>
+            <el-button type="primary" @click="confirmNoshow">{{$t('commons.determine')}}</el-button>
         </span>
     </el-dialog>
     <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" />
@@ -231,48 +231,9 @@ export default {
             userId: state => state.user.userId,
             msgKey: state => state.config.msgKey,
             plat_source: state => state.config.plat_source
-        })
-    },
-    watch: {
-        roomInfo: {
-            handler(n, o) {
-                debugger
-                n.forEach(element => {
-                    if (element.personList.length) {
-                        if (!this.roomTypeList[element.roomTypeId + 'checkIn']) {
-                            this.roomTypeList[element.roomTypeId + 'checkIn'] = []
-                        }
-                        this.roomTypeList[element.roomTypeId + 'checkIn'].push(element)
-                    } else {
-                        if (!this.roomTypeList[element.roomTypeId + 'notYet']) {
-                            this.roomTypeList[element.roomTypeId + 'notYet'] = []
-                        }
-                        this.roomTypeList[element.roomTypeId + 'notYet'].push(element)
-                    }
-                });
-                console.log(222222222222)
-                console.log(this.roomTypeList)
-
-            },
-            //   immediate: true,
-            deep: true
-        }
-    },
-    data() {
-        return {
-            currentSale: {},
-            loading: false,
-            liveInPersonShow: false,
-            noShowDiaShow: false,
-            baseInfoChangeShow: false,
-            gustTypeChangeShow: false,
-            activeName: 'first',
-            salesList: [],
-            roomTypeList: {},
-            currentItem: {},
-            liveData: [],
-            baseInfoChangeForm: {},
-            rules: {
+        }),
+        rules(){
+            return{
                 name: [{
                     required: true,
                     // message: '请输入姓名',
@@ -344,7 +305,48 @@ export default {
                     // message: '请选择计费规则',
                     trigger: 'change'
                 }, ],
+            }
+        }
+    },
+    watch: {
+        roomInfo: {
+            handler(n, o) {
+                debugger
+                n.forEach(element => {
+                    if (element.personList.length) {
+                        if (!this.roomTypeList[element.roomTypeId + 'checkIn']) {
+                            this.roomTypeList[element.roomTypeId + 'checkIn'] = []
+                        }
+                        this.roomTypeList[element.roomTypeId + 'checkIn'].push(element)
+                    } else {
+                        if (!this.roomTypeList[element.roomTypeId + 'notYet']) {
+                            this.roomTypeList[element.roomTypeId + 'notYet'] = []
+                        }
+                        this.roomTypeList[element.roomTypeId + 'notYet'].push(element)
+                    }
+                });
+                console.log(222222222222)
+                console.log(this.roomTypeList)
+
             },
+            //   immediate: true,
+            deep: true
+        }
+    },
+    data() {
+        return {
+            currentSale: {},
+            loading: false,
+            liveInPersonShow: false,
+            noShowDiaShow: false,
+            baseInfoChangeShow: false,
+            gustTypeChangeShow: false,
+            activeName: 'first',
+            salesList: [],
+            roomTypeList: {},
+            currentItem: {},
+            liveData: [],
+            baseInfoChangeForm: {},
             leaveTime: {
                 disabledDate: time => {
                     if (this.baseInfoChangeForm.checkinTime != "" && this.baseInfoChangeForm.checkinTime) {
@@ -420,7 +422,7 @@ export default {
                 checkInReserveId: this.$route.query.id || '',
                 state: 8
             }
-            this.$confirm('请确认是否取消?', this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('desk.order_sureDelete'), this.$t('commons.tip_desc'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'

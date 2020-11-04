@@ -2,7 +2,7 @@
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  陶子修改于2020/9/14
- * @LastEditTime: 2020-11-03 17:03:02
+ * @LastEditTime: 2020-11-04 17:12:55
  * @FilePath: \jiudian\src\views\market\booking\venue\c2.vue
  -->
 
@@ -226,7 +226,7 @@
       <!-- 会议签到dialog -->
       <el-dialog
         top="0"
-        title="会议签到"
+        :title="$t('desk.book_meetingIn')"
         :visible.sync="dialogMeet"
         class="setCompanyForm"
       >
@@ -239,7 +239,7 @@
         >
           <el-row class="row">
             <el-col :span="11">
-              <el-form-item label="来客姓名:" prop="name">
+              <el-form-item :label="$t('desk.book_guestName')+':'" prop="name">
                 <el-input
                   v-model="addCompanyForm.name"
                   style="width: 180px"
@@ -247,10 +247,10 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="性别:">
+              <el-form-item :label="$t('desk.customer_sex')+':'">
                 <el-radio-group v-model="addCompanyForm.sex">
-                  <el-radio label="1">男</el-radio>
-                  <el-radio label="2">女</el-radio>
+                  <el-radio label="1">{{$t('desk.customer_man')}}</el-radio>
+                  <el-radio label="2">{{$t('desk.customer_woman')}}</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
@@ -263,13 +263,13 @@
                   style="width: 180px"
                   :placeholder="$t('commons.selectIdCardType')"
                 >
-                 <el-option label="身份证" value="1"></el-option>
-                 <el-option label="护照" value="2"></el-option>
+                 <el-option :label="$t('desk.home_idCard')" value="1"></el-option>
+                 <el-option :label="$t('desk.customer_passport')" value="2"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="证件号:" prop="idcard">
+              <el-form-item :label="$t('desk.customer_idNo')+':'" prop="idcard">
                 <el-input
                   v-model="addCompanyForm.idcard"
                   style="width: 180px"
@@ -308,6 +308,34 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
+    rules(){
+        return{
+        name: [
+          {
+            required: true,
+            // message: "请输入来客姓名",
+              message: this.$t('commons.mustInput'),
+            trigger: "blur",
+          },
+        ],
+        idcard: [
+          {
+            required: true,
+            // message: "请输入证件号",
+              message: this.$t('commons.mustInput'),
+            trigger: "blur",
+          },
+        ],
+
+        idcardType: [
+          {
+              required: true,
+              message: this.$t('commons.placeChoose'),
+            trigger: "change",
+          },
+        ],
+        }
+    }
   },
   data() {
     return {
@@ -337,32 +365,7 @@ export default {
         idcard: "",
         mobile: "",
       },
-      rules: {
-        name: [
-          {
-            required: true,
-            // message: "请输入来客姓名",
-              message: this.$t('commons.mustInput'),
-            trigger: "blur",
-          },
-        ],
-        idcard: [
-          {
-            required: true,
-            // message: "请输入证件号",
-              message: this.$t('commons.mustInput'),
-            trigger: "blur",
-          },
-        ],
-
-        idcardType: [
-          {
-              required: true,
-              message: this.$t('commons.placeChoose'),
-            trigger: "change",
-          },
-        ],
-      },
+     
       itemInfo: null,
     };
   },
@@ -384,7 +387,7 @@ export default {
                 this.addCompanyForm,
                 (data) => {
                   this.$message({
-                      message: '登记成功',
+                      message: this.$t('desk.book_enrolled'),
                       type: "success",
                   });
                   this.dialogMeet_cancle();

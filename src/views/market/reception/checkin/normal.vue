@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-03 17:52:39
+ * @LastEditTime: 2020-11-04 16:41:21
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 
@@ -15,7 +15,7 @@
             <h3 v-if="operCheckinType == 'b1' || operCheckinType == 'b2'">
                 {{ $t("desk.order_bookOrderInfo") }}
             </h3>
-            <h3 v-if="operCheckinType == 'b3'">会议登记信息</h3>
+            <h3 v-if="operCheckinType == 'b3'">{{$t('desk.serve_conferenceInfo')}}</h3>
             <el-form
                 ref="checkInForm"
                 class="inForm"
@@ -37,11 +37,11 @@
                         :highlight-first-item="true"
                         popper-class="popper-class"
                         :trigger-on-focus="false"
-                        placeholder="请输入内容"
+                        :placeholder="$t('desk.book_inputContent')"
                         @select="changeName($event)"
                     ></el-autocomplete>
                 </el-form-item>
-                <el-form-item label="性别：" prop="sex">
+                <el-form-item :label="$t('desk.customer_sex')+':'" prop="sex">
                     <el-radio-group v-model="checkInForm.sex">
                         <el-radio
                             v-for="(item, key, index) of $t('commons.F_sex')"
@@ -66,7 +66,7 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="证件号：" prop="idcard">
+                <el-form-item :label="$t('desk.customer_idNo')+':'" prop="idcard">
                     <el-input v-model="checkInForm.idcard"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'a1'">
@@ -98,7 +98,7 @@
                     </el-form-item>
                 </template>
                 <template v-if="operCheckinType == 'a2'">
-                    <el-form-item label="计费规则：" prop="ruleHourId">
+                    <el-form-item :label="$t('desk.customer_accountRules')+':'" prop="ruleHourId">
                         <el-select v-model="checkInForm.ruleHourId">
                             <el-option
                                 v-for="item in ruleHourList"
@@ -193,7 +193,7 @@
                         :highlight-first-item="true"
                         popper-class="popper-class"
                         :trigger-on-focus="false"
-                        placeholder="姓名查询"
+                        :placeholder="$t('desk.serve_nameQuery')"
                         @select="changeName($event)"
                     ></el-autocomplete>
                 </el-form-item>
@@ -248,7 +248,7 @@
                     <el-date-picker
                         v-model="checkInForm.checkinTime"
                         type="datetime"
-                        placeholder="选择日期"
+                        :placeholder="$t('desk.serve_chooseDate')"
                         :picker-options="startTime"
                         format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
@@ -321,7 +321,7 @@
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'b3'">
-                    <el-form-item label="会议名称：" prop="meetingName">
+                    <el-form-item :label="$t('desk.book_meetName') + '：'" prop="meetingName">
                         <el-input v-model="checkInForm.meetingName"></el-input>
                     </el-form-item>
                     <el-form-item  :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">
@@ -353,10 +353,10 @@
                                 <div class="row">
                                     <span>{{ v.roomTypeName }}</span>
                                     <el-input-number @change="handleNumChange($event, v)" :min="0" :max="v.reserveTotal"
-                                                     label="描述文字" size="mini" style="width: 100px" v-model.number="v.num"></el-input-number>
+                                                     :label="$t('desk.home_describeText')" size="mini" style="width: 100px" v-model.number="v.num"></el-input-number>
                                 </div>
                                 <div class="row">
-                                    <span class="allow">可订{{ v.reserveTotal }}</span>
+                                    <span class="allow">{{$t('desk.home_canOrderText')}}{{ v.reserveTotal }}</span>
                                     <div>
                                         <el-input size="mini" class="num" v-model="v.discountPrice" v-if="getRoomsForm.changeType == 1"></el-input>
                                         <del>{{ v.price }}</del>
@@ -375,7 +375,7 @@
                             <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
                                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}</el-button>
                             <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
-                                <i v-loading="liveCardLoading"></i>制卡</el-button>
+                                <i v-loading="liveCardLoading"></i>{{ $t("desk.home_makeCard") }}</el-button>
                         </el-form-item>
                     </el-form>
                     <div class="roomBtm checked">
@@ -391,13 +391,13 @@
                                 </div>
                                 <div>
                                     <span>{{ v.roomTypeName }}</span
-                                    ><span class="text-red">{{ v.num }}间</span>
+                                    ><span class="text-red">{{ v.num }}{{$t('manager.hk_space')}}</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="tags margin-t-5">
                                     <el-button class="roomNumTag" size="mini" v-for="(item, i) of v.roomsArr" :key="i">
-                                        {{ item.houseNum }}<span class="del" @click=" delete_db_row_houses( v, item.id, i )">✕ 移除</span></el-button>
+                                        {{ item.houseNum }}<span class="del" @click=" delete_db_row_houses( v, item.id, i )">✕ {{ $t("desk.customer_remove") }}</span></el-button>
                                 </div>
                             </div>
                             <!--                            <div class="row rowReverse">-->
@@ -439,20 +439,20 @@
                         <el-checkbox v-for="(item, key, index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{ item }}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
-                <el-form-item label="属性:" class="" style="margin-bottom: 0">
+                <el-form-item :label="$t('desk.home_attribute') + ':'" class="" style="margin-bottom: 0">
                     <el-checkbox  v-model="hotelRoomListParams.windowFlag"
                         @change="hotel_room_list"
-                        >有窗</el-checkbox
+                        >{{$t('desk.home_haveWindow')}}</el-checkbox
                     >
                     <el-checkbox
                         v-model="hotelRoomListParams.roadFlag"
                         @change="hotel_room_list"
-                        >靠马路</el-checkbox
+                        >{{$t('desk.home_onRoad')}}</el-checkbox
                     >
                     <el-checkbox
                         v-model="hotelRoomListParams.smokeFlag"
                         @change="hotel_room_list"
-                        >无烟房</el-checkbox
+                        >{{$t('desk.home_noSmoke')}}</el-checkbox
                     >
 
                 </el-form-item>
@@ -505,11 +505,11 @@
                         {{ scope.row.isChild ? "" : scope.row.roomTypeName }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="realPrice" label="房价" width="100">
+                <el-table-column prop="realPrice" :label="$t('desk.book_roomPriceText')" width="100">
                 </el-table-column>
                 <!-- <el-table-column prop="" label="排房" width="150">
                 </el-table-column> -->
-                <el-table-column label="姓名" width="150">
+                <el-table-column :label="$t('desk.home_name')" width="150">
                     <template slot-scope="{ row }">
                         <el-row>
                             <el-input
@@ -543,7 +543,7 @@
                         </el-row>
                     </template>
                 </el-table-column>
-                <el-table-column prop="groupName" label="证件号码">
+                <el-table-column prop="groupName" :label="$t('desk.customer_documentNum')">
                     <template slot-scope="{ row }">
                         <el-row>
                             <el-input
@@ -553,7 +553,7 @@
                         </el-row>
                     </template>
                 </el-table-column>
-                <el-table-column label="性别" width="120">
+                <el-table-column :label="$t('desk.customer_sex')" width="120">
                     <template slot-scope="{ row }">
                         <el-row>
                             <el-select
@@ -602,7 +602,7 @@
                             size="mini"
                             @click="addGuest(scope.row, scope.$index)"
                             ><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
-                            <template>+同来宾客</template>
+                            <template>+{{$t('desk.customer_toTheGuest')}}</template>
                         </el-button>
                     </template>
                 </el-table-column>
@@ -622,20 +622,20 @@
         <el-dialog
             top="0"
             :show-close="false"
-            title="房卡操作"
+             :title="$t('desk.home_roomCardOpreat')"
             :visible.sync="mackcade"
             width="60%"
         >
             <el-row>
                 <span
-                    >共一间&nbsp;&nbsp;本次已制卡数：{{
+                    >{{$t('desk.home_haveOne')}}&nbsp;&nbsp;{{$t('desk.home_haveCardNum')}}：{{
                         liveCardData.done
                     }}</span
                 >
                 <el-col :span="8" style="float: right">
-                    <el-button @click="make_card_status">制卡</el-button>
-                    <el-button>清卡</el-button>
-                    <el-button>读卡</el-button>
+                    <el-button @click="make_card_status">{{ $t("desk.home_makeCard") }}</el-button>
+                    <el-button>{{$t('desk.home_clearCard')}}</el-button>
+                    <el-button>{{$t('desk.home_readCard')}}</el-button>
                 </el-col>
             </el-row>
             <el-table
@@ -655,7 +655,7 @@
                         {{ row.room ? row.room.houseNum : "" }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="name" label="本次制卡状态">
+                <el-table-column prop="name" :label="$t('desk.home_nowMakeState')">
                     <template slot-scope="{ row }">
                         {{ F_markCard(row.markCard) }}
                     </template>
@@ -740,91 +740,8 @@ export default {
             msgKey: (state) => state.config.msgKey,
             plat_source: (state) => state.config.plat_source,
         }),
-    },
-    data() {
-        return {
-            liveData: [], //添加入住人
-            addLivePersonShow: false, //是否显示添加入住人组件
-            afterToday: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
-                },
-            },
-            leaveTime: {
-                disabledDate: (time) => {
-                    if (
-                        this.checkInForm.checkinTime != "" &&
-                        this.checkInForm.checkinTime
-                    ) {
-                        let timeStr = new Date(
-                            new Date(this.checkInForm.checkinTime)
-                                .Format("yyyy-MM-dd")
-                                .replace(/-/g, "/")
-                        );
-                        if (this.operCheckinType == "b2") {
-                            //时租预订
-                            return (
-                                new Date(time.Format("yyyy-MM-dd")).getTime() -
-                                    8.64e7 >
-                                timeStr
-                            );
-                        }
-                        return (
-                            new Date(time.Format("yyyy-MM-dd")).getTime() -
-                                8.64e7 <
-                            timeStr
-                        );
-                    } else if (this.checkInForm.checkinTime == "") {
-                        return (
-                            new Date(time.Format("yyyy-MM-dd")).getTime() <
-                            Date.now() - 8.64e7
-                        ); //如果没有后面的-8.64e7就是不可以选择今天
-                    } else {
-                        return "";
-                    }
-                },
-            },
-            startTime: {
-                disabledDate: (time) => {
-                    // if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
-                    //     let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
-                    //     if (this.operCheckinType == 'b2') { //时租预订
-                    //         return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
-                    //     }
-                    //     return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
-                    // } else if (this.checkInForm.checkoutTime == "") {
-                    //     return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
-                    // } else {
-                    //     return "";
-                    // }
-                    return time.getTime() < new Date().getTime();
-                },
-            },
-            num: 1,
-            isSubmitErr: false,
-            loading: false,
-            liveLoading: false,
-            liveCardLoading: false,
-            rowRoomShow: false,
-            showDetail: false,
-            guestTypeShow: false,
-            liveInPersonShow: false,
-            mackcade: false,
-            nameLoading: false,
-            options: [],
-            baseInfo: "",
-            getRoomsForm: {
-                changeType: 1,
-                roomType: 1,
-                bedCount: "",
-            },
-            salesList: "",
-            ruleHourList: [],
-            //预定和入住人信息
-            checkInForm: {
-                checkInRoomJson: [],
-            },
-            rules: {
+        rules(){
+            return{
                 name: [
                     {
                         required: true,
@@ -921,7 +838,93 @@ export default {
                         trigger: "blur",
                     },
                 ],
+            }
+        }
+    },
+    data() {
+        return {
+            liveData: [], //添加入住人
+            addLivePersonShow: false, //是否显示添加入住人组件
+            afterToday: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                },
             },
+            leaveTime: {
+                disabledDate: (time) => {
+                    if (
+                        this.checkInForm.checkinTime != "" &&
+                        this.checkInForm.checkinTime
+                    ) {
+                        let timeStr = new Date(
+                            new Date(this.checkInForm.checkinTime)
+                                .Format("yyyy-MM-dd")
+                                .replace(/-/g, "/")
+                        );
+                        if (this.operCheckinType == "b2") {
+                            //时租预订
+                            return (
+                                new Date(time.Format("yyyy-MM-dd")).getTime() -
+                                    8.64e7 >
+                                timeStr
+                            );
+                        }
+                        return (
+                            new Date(time.Format("yyyy-MM-dd")).getTime() -
+                                8.64e7 <
+                            timeStr
+                        );
+                    } else if (this.checkInForm.checkinTime == "") {
+                        return (
+                            new Date(time.Format("yyyy-MM-dd")).getTime() <
+                            Date.now() - 8.64e7
+                        ); //如果没有后面的-8.64e7就是不可以选择今天
+                    } else {
+                        return "";
+                    }
+                },
+            },
+            startTime: {
+                disabledDate: (time) => {
+                    // if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
+                    //     let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                    //     if (this.operCheckinType == 'b2') { //时租预订
+                    //         return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
+                    //     }
+                    //     return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
+                    // } else if (this.checkInForm.checkoutTime == "") {
+                    //     return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
+                    // } else {
+                    //     return "";
+                    // }
+                    return time.getTime() < new Date().getTime();
+                },
+            },
+            num: 1,
+            isSubmitErr: false,
+            loading: false,
+            liveLoading: false,
+            liveCardLoading: false,
+            rowRoomShow: false,
+            showDetail: false,
+            guestTypeShow: false,
+            liveInPersonShow: false,
+            mackcade: false,
+            nameLoading: false,
+            options: [],
+            baseInfo: "",
+            getRoomsForm: {
+                changeType: 1,
+                roomType: 1,
+                bedCount: "",
+            },
+            salesList: "",
+            ruleHourList: [],
+            //预定和入住人信息
+            checkInForm: {
+                checkInRoomJson: [],
+            },
+           
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             roomList: [], //表格数据
@@ -1209,14 +1212,14 @@ export default {
                     if (operCheckinType == "a1" || operCheckinType == "a2") {
                         for (let k = 0; k < this.waitingRoom.length; k++) {
                             if (!this.waitingRoom[k].roomsArr) {
-                                this.$message.error("请选择房间");
+                                this.$message.error(this.$t('desk.serve_placeChooseRoom'));
                                 return false;
                             }
                             if (
                                 this.waitingRoom[k].roomsArr.length <
                                 this.waitingRoom[k].num
                             ) {
-                                this.$message.error("请选择房间");
+                                this.$message.error(this.$t('desk.serve_placeChooseRoom'));
                                 return false;
                             }
                         }
@@ -1382,7 +1385,7 @@ export default {
                 this.rowRoomCurrentItem.roomsArr.length >
                 this.rowRoomCurrentItem.num
             ) {
-                this.$message.error("排房数量超过订房数量");
+                this.$message.error(this.$t('desk.home_morethenNum'));
                 return;
             }
             this.rowRoomCurrentItem.roomsArr.forEach((item) => {
@@ -1575,7 +1578,7 @@ export default {
         make_card_status() {
             let arr = [];
             if (!this.multipleSelection.length) {
-                this.$message.error("至少选择一间房间");
+                this.$message.error(this.$t('desk.home_shouldSelectRoom'));
                 return;
             }
             this.multipleSelection.forEach((element) => {
@@ -1759,7 +1762,7 @@ export default {
         checkinDaysChange(e) {
             console.log(e);
             if (this.checkInForm.checkinTime == "") {
-                this.$message.error("请选择到店时间");
+                this.$message.error(this.$t('desk.home_selectToTime'));
                 this.checkInForm.checkinDays = 0;
                 return;
             } else {

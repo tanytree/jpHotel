@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 11:49:34
+ * @LastEditTime: 2020-11-04 17:50:34
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -57,7 +57,7 @@
               <el-row class="customerCtrl">
                 <ul>
                   <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
-                    <div class="wrap"><span>查看订单信息></span></div>
+                    <div class="wrap"><span>{{$t('desk.order_lookOrderInfo')}}></span></div>
 <!--                      （联房）-->
                   </li>
                   <li @click="checkTypeHandle('customer', item)" v-for="(item, index) of detailData.inRoomList" :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id ? 'active' : ''">

@@ -1,15 +1,15 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 17:43:21
- * @FilePath: /jiudian/src/views/market/booking/venue/c1.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-04 17:03:27
+ * @FilePath: \jiudian\src\views\market\booking\venue\c1.vue
  -->
 
 <template>
 <!-- 统一的列表格式 -->
 <div>
     <el-row>
-        <h3>会议登记信息</h3>
+        <h3>{{$t('desk.serve_conferenceInfo')}}</h3>
         <el-form inline size="small" label-width="100px">
             <el-row>
                 <el-col :span="6">
@@ -31,8 +31,8 @@
                         <el-form-item :label="$t('desk.book_orderSoutce')" prop="resource">
                             <el-select v-model="checkInForm.enterStatus"  class="width200">
                                 <el-option :label="$t('commons.all')" value="3"></el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option :label="$t('desk.book_haveCertified')" value="1">{{$t('desk.book_haveCertified')}}</el-option>
+                                <el-option :label="$t('desk.book_notCertified')" value="2">{{$t('desk.book_notCertified')}}</el-option>
                             </el-select>
                         </el-form-item>
                     </div>
@@ -42,8 +42,8 @@
                         <el-form-item :label="$t('desk.order_salesman') + '：'">
                             <el-select v-model="checkInForm.enterStatus"  class="width200">
                                 <el-option :label="$t('commons.all')" value="3"></el-option>
-                                <el-option label="已认证" value="1">已认证</el-option>
-                                <el-option label="未认证" value="2">未认证</el-option>
+                                <el-option :label="$t('desk.book_haveCertified')" value="1">{{$t('desk.book_haveCertified')}}</el-option>
+                                <el-option :label="$t('desk.book_notCertified')" value="2">{{$t('desk.book_notCertified')}}</el-option>
                             </el-select>
                         </el-form-item>
                     </div>
@@ -53,20 +53,20 @@
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item :label="$t('frontOffice.nightAudit.arriveTime')">
-                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
                         <el-form-item :label="$t('desk.order_departureTime')">
-                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" placeholder="选择日期"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.startTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item label="会议名称：">
+                        <el-form-item :label="$t('desk.book_meetName') + '：'">
                             <el-input v-model="checkInForm.content" class="width200"></el-input>
                         </el-form-item>
                     </div>

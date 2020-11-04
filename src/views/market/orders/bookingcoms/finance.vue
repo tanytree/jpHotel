@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-10 10:35:52
+ * @LastEditTime: 2020-11-04 18:17:48
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
@@ -10,7 +10,7 @@
       <div class="">
         <el-button type="primary" size="mini" @click="depositShow = true">{{ $t('desk.order_payDeposit') }}
         </el-button><el-button type="primary" size="mini" @click="refundShow = true">{{ $t('desk.order_payBack') }}</el-button>
-          <el-button type="primary" size="mini" @click="destructionHandle">冲调</el-button>
+          <el-button type="primary" size="mini" @click="destructionHandle">{{ $t('desk.customer_rich') }}</el-button>
 <!--        <el-button type="primary" size="mini">{{-->
 <!--          $t("commons.print")-->
 <!--        }}</el-button>-->
@@ -31,12 +31,12 @@
       size="mini"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column prop="createTime" label="消费时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="priceType" label="账务项目"><template slot-scope="{ row }">
+      <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="priceType" :label="$t('desk.order_accountingProgram')"><template slot-scope="{ row }">
           {{ F_priceType(row.priceType) }}</template>
       </el-table-column>
-      <el-table-column prop="payPrice" label="付款"></el-table-column>
-      <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="payPrice" :label="$t('desk.order_payment')"></el-table-column>
+      <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
 <!--      <el-table-column-->
 <!--        prop=""-->
 <!--        :label="$t('desk.order_businessThat')"-->
@@ -61,15 +61,15 @@
     <!--冲调-->
     <el-dialog
       top="0"
-      title="冲调"
+      :title="$t('desk.customer_rich')"
       :visible.sync="destructionShow"
       width="800px"
     >
       <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
 <!--        <p>正在冲调的账务</p>-->
         <el-table v-loading="loading" :data="destructionList" :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }" size="mini">
-          <el-table-column label="账务项目" show-overflow-tooltip><template slot-scope="{ row }">{{ F_priceType(row.priceType) }}</template></el-table-column>
-          <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip>
+          <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip><template slot-scope="{ row }">{{ F_priceType(row.priceType) }}</template></el-table-column>
+          <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip>
               <template scope="{row}">
                   {{row.consumePrice || 0}}
               </template>

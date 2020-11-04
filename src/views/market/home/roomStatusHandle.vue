@@ -1,25 +1,25 @@
 <!--
  * @Date: 2020-02-16 14:34:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-05 09:44:41
- * @FilePath: /jiudian/src/views/market/home/roomStatusHandle.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-04 14:46:47
+ * @FilePath: \jiudian\src\views\market\home\roomStatusHandle.vue
  -->
 <template>
-<el-dialog top="0" title="批量置脏/置净" width="700px" :visible.sync="visible">
+<el-dialog top="0" :title="$t('desk.home_batchSet')" width="700px" :visible.sync="visible">
     <el-row style="margin:10px 20px">
 
         <el-form>
             <el-row>
                 <el-col :span="16">
-                    <el-form-item label="选择房间" label-width="120px">
+                    <el-form-item :label="$t('desk.home_chooseRoom')" label-width="120px">
                         <!-- <el-input v-model="form.name" autocomplete="off"></el-input> -->
                         <el-input autocomplete="off" v-model="searchForm.keyword"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item>
-                        <el-button style="width:80px;margin-left:20px" type="primary" @click="getDataList">查询</el-button>
-                        <el-button style="width:80px" @click="initForm">重置</el-button>
+                        <el-button style="width:80px;margin-left:20px" type="primary" @click="getDataList">{{$t('commons.queryBtn')}}</el-button>
+                        <el-button style="width:80px" @click="initForm">{{$t('commons.resetBtn')}}</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -40,10 +40,10 @@
                 <el-card>
                     <el-row>
                         <el-row>
-                            <span>请选择需要置脏/置净的房间</span>
-                            <span style="color:red;margin-left:5px">已选（{{chooseNum}}）</span>
+                            <span>{{$t('desk.home_chooseNeedRoom')}}</span>
+                            <span style="color:red;margin-left:5px">{{$t('desk.home_selected')}}（{{chooseNum}}）</span>
                             <el-form-item style="float:right">
-                                <el-checkbox @change="handleAll">全选</el-checkbox>
+                                <el-checkbox @change="handleAll">{{$t('desk.home_allSelected')}}</el-checkbox>
                             </el-form-item>
                         </el-row>
                         <template v-for="(item,index) of roomList">
@@ -66,8 +66,8 @@
         </el-form>
     </el-row>
     <div slot="footer" class="dialog-footer" style="text-align:center">
-        <el-button style="width:80px;" @click="dataFormSubmit(2)">批量置脏</el-button>
-        <el-button style="width:80px;" type="primary" @click="dataFormSubmit(1)">批量置净</el-button>
+        <el-button style="width:80px;" @click="dataFormSubmit(2)">{{$t('desk.home_bulkDirty')}}</el-button>
+        <el-button style="width:80px;" type="primary" @click="dataFormSubmit(1)">{{$t('desk.home_bulkClear')}}</el-button>
 <!--        <el-button :class="type==2?'active':''" @click="dataFormSubmit(2)">批量置脏</el-button>-->
 <!--        <el-button :class="type==1?'active':''" @click="typeChange(1)">批量置净</el-button>-->
 <!--        <el-row style="text-align:center; margin-bottom: 10px;">-->
@@ -144,7 +144,7 @@ export default {
             //   this.$message.error('请选择操作类型');
             //   return
             // }
-            let errTip = type== 2 ? '批量置脏':'批量置净'
+            let errTip = type== 2 ? this.$t('desk.home_bulkDirty'):this.$t('desk.home_bulkClear')
             let roomIds = [];
             for (let k in this.roomList) {
               console.log(this.roomList[k].checkedItems)
@@ -156,7 +156,7 @@ export default {
               roomIds:roomIds
             }
 
-            this.$confirm('此操作将'+errTip, this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('desk.home_thisOperate')+errTip, this.$t('commons.tip_desc'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'

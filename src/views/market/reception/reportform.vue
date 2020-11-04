@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:01:35
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-06 14:59:53
- * @FilePath: /jiudian/src/views/market/reception/list2.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-04 16:50:36
+ * @FilePath: \jiudian\src\views\market\reception\reportform.vue
  -->
 
 <template>
@@ -11,7 +11,7 @@
             <el-tab-pane :label="$t('commons.home')" name="first">
                 <c1></c1>
             </el-tab-pane>
-            <el-tab-pane label="营业日报" name="second">
+            <el-tab-pane :label="$t('desk.serve_tableDetailA')" name="second">
                 <c2></c2>
             </el-tab-pane>
     </el-tabs>

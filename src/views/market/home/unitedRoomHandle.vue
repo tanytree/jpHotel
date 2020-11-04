@@ -1,19 +1,19 @@
 <!--
  * @Date: 2020-02-16 14:34:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-04 16:15:00
- * @FilePath: /jiudian/src/views/market/home/unitedRoomHandle.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-04 15:42:29
+ * @FilePath: \jiudian\src\views\market\home\unitedRoomHandle.vue
  -->
 <template>
-<el-dialog top="0" title="联房" :visible.sync="visible" width="60%">
+<el-dialog top="0" :title="$t('desk.order_alRoom')" :visible.sync="visible" width="60%">
     <el-row>
-        <el-input style="width:334px" placeholder="姓名/房号"></el-input>
+        <el-input style="width:334px" :placeholder="$t('desk.home_nameAroom')"></el-input>
     </el-row>
     <el-row>
         <el-col :span="15">
             <el-row class="padding-tb-10">
-                选择列表({{totalLength}})
-                <span>点击选择房间</span>
+                {{$t('desk.home_chooseList')}}({{totalLength}})
+                <span>{{$t('desk.home_clickChoose')}}</span>
             </el-row>
             <el-row style="text-align:center;max-height:350px;min-height:350px;overflow:auto;background:#f9f9f9;border:1px solid #eee" v-loading="loading">
                 <el-row v-if="!loading">
@@ -33,12 +33,12 @@
         <el-col :span="8">
             <el-row style="margin-left:20px">
                 <el-row class="padding-tb-10">
-                    联房列表 现有联房
-                    <span>{{roomJoinList.length}}</span>间
+                    {{$t('desk.home_AlList')}} {{$t('desk.home_nowAl')}}
+                    <span>{{roomJoinList.length}}</span>{{$t('manager.hk_space')}}
                 </el-row>
                 <el-row style="max-height:350px;min-height:350px;overflow:auto;background:#f9f9f9;border:1px solid #eee">
                     <el-col :span="12" style="margin-top:10px;text-align:center" v-for="(room,index) in roomJoinList" :key="room.id">
-                        <el-button style="min-width:100px" class="roomNumTag">{{room.houseNum||room.roomNum}} <span class="del" @click="handleDel(index,room)" v-if="room.roomId!=id">✕ 移除</span></el-button>
+                        <el-button style="min-width:100px" class="roomNumTag">{{room.houseNum||room.roomNum}} <span class="del" @click="handleDel(index,room)" v-if="room.roomId!=id">✕ {{$t('desk.customer_remove')}}</span></el-button>
                     </el-col>
                 </el-row>
             </el-row>
@@ -140,7 +140,7 @@ export default {
                 roomId: this.id,
                 joinRoomIds: joinRoomIds,
             }
-            this.$confirm('请确认联房', this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('desk.home_sureAl'), this.$t('commons.tip_desc'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'
