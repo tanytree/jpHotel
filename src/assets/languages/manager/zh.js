@@ -120,6 +120,7 @@ module.exports = {
     hk_moveBack: '后移',
     hk_newBuilding: '新增楼栋',
     hk_newFloor: '新增楼层',
+    hk_newFloorA: '新增楼层',
     hk_roomNum: '房间数',
     hk_floorNote: '楼层备注',
     hk_buildingName: '楼栋名称',

@@ -200,7 +200,7 @@
             },
             newFloor: {
                 get() {
-                    return this.$t("manager.hk_newFloor");
+                    return this.$t("manager.hk_newFloorA");
                 },
                 set() {},
             },

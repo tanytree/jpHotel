@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 17:58:44
+ * @LastEditTime: 2020-11-04 10:42:23
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -119,7 +119,8 @@ module.exports = {
     hk_forward: '前へ移動',
     hk_moveBack: '後へ移動',
     hk_newBuilding: '建物追加',
-    hk_newFloor: '階を追加',
+    hk_newFloor: '建物・階設定',
+    hk_newFloorA: '階を追加',
     hk_roomNum: '部屋数',
     hk_floorNote: 'フロア備考',
     hk_buildingName: '建物名称',
