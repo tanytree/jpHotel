@@ -59,7 +59,7 @@
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
 							<el-table-column prop="houseName" :label="$t('manager.hk_roomName')"></el-table-column>
-							<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
+							<el-table-column prop="marketPrice" label="门市价"></el-table-column>
 							<el-table-column prop="bedNum" :label="$t('manager.hk_seating')"></el-table-column>
 							<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
 								<template slot-scope="scope">
@@ -72,6 +72,8 @@
 									<el-button type="text" @click="stop('huiyi', scope.row)">{{scope.row.state==1? $t('commons.disable'):$t('commons.enable')}}
 									</el-button>
 									<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
+									</el-button>
+									<el-button type="text" size="small" @click="addHouse('rili', scope.row)">价格日历
 									</el-button>
 									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="houseConfirm_delete">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
@@ -94,7 +96,7 @@
 					<div class="intitle">{{$t('manager.hk_basicInformation')}}</div>
 					<el-form :model="ruleForm" size="small" inline :rules="rules" ref="ruleForm" class="basicForm" label-width="120px">
 						<!-- 房型 -->
-						<el-form-item :label="$t('manager.hp_room')+':'" prop="houseName">
+						<el-form-item :label="$t('manager.hp_room')+':'" prop="houseName" v-if="active_tag == 'one'">
 							<el-input v-model="ruleForm.houseName" class="input"></el-input>
 						</el-form-item>
 
@@ -104,49 +106,43 @@
 						</el-form-item>
 
 						<!-- 住宿价格 -->
-						<el-form-item label="住宿价格">
+						<el-form-item label="住宿价格" v-if="active_tag == 'one'">
 							<el-row :gutter="20">
 								<el-col :span="6">
 									<el-button type="primary" plain @click="addHouse('sit')">设定</el-button>
 								</el-col>
 								<el-col :span="18" v-for="(value, index) in ruleForm_sit" :key="index">{{index+1}}人住宿【{{value.price}}】</el-col>
-								<!-- <el-col :span="18" v-if="ruleForm_sit.two">2人住宿【{{ruleForm_sit.two}}】</el-col> -->
 							</el-row>
 						</el-form-item>
 
 						<!-- 床宽 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedWidth')+'(cm):'" prop="bedSizeH">
 							<div class="flex_row">
-								<el-input v-model="ruleForm.bedSizeW" :placeholder="$t('manager.hk_longitudinalWidth')" />
+								<el-input v-model="ruleForm.bedSizeW"  type="number" :placeholder="$t('manager.hk_longitudinalWidth')" />
 								<div class="hr"></div>
-								<el-input v-model="ruleForm.bedSizeH" :placeholder="$t('manager.hk_horizontalWidth')" />
+								<el-input v-model="ruleForm.bedSizeH"  type="number" :placeholder="$t('manager.hk_horizontalWidth')" />
 							</div>
 						</el-form-item>
 
 						<!-- 床位数/座位1 -->
-						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_beds')+':'" prop="bedNum">
-							<el-input v-model="ruleForm.bedNum" class="input"></el-input>
+						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_beds')+':'">
+							<el-input v-model="ruleForm.bedNum" class="input"  type="number"></el-input>
 						</el-form-item>
-
-						<!-- 门市价 -->
-						<!-- <el-form-item :label="$t('manager.hk_doorPrice')+':'" prop="marketPrice">
-			                <el-input v-model="ruleForm.marketPrice" class="input"></el-input>
-			            </el-form-item> -->
 
 						<!-- 优惠价 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_preferentialPrice')+':'">
 							<el-row style="display: flex;align-items: center;">
-								<el-input v-model="ruleForm.discountPrice" class="input"></el-input>
+								<el-input v-model="ruleForm.discountPrice" class="input"  type="number"></el-input>
 								<el-col style="color: #999999;margin-left: 10px;">{{$t('manager.hk_preferentialUse')}}(H5)</el-col>
 							</el-row>
 						</el-form-item>
 
 						<!-- 房屋面积 -->
-						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_roomArea')+'(㎡):'" prop="houseSizeW">
+						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_roomArea')+'(㎡):'">
 							<div class="flex_row">
-								<el-input v-model="ruleForm.houseSizeW" :placeholder="$t('manager.hk_roomAreaLon')" />
+								<el-input v-model="ruleForm.houseSizeW"  type="number" :placeholder="$t('manager.hk_roomAreaLon')" />
 								<div class="hr"></div>
-								<el-input v-model="ruleForm.houseSizeH" :placeholder="$t('manager.hk_roomAreaHor')" />
+								<el-input v-model="ruleForm.houseSizeH"  type="number" :placeholder="$t('manager.hk_roomAreaHor')" />
 							</div>
 						</el-form-item>
 
@@ -156,7 +152,7 @@
 						</el-form-item>
 
 						<!-- 早餐 -->
-						<el-form-item label="早餐">
+						<el-form-item label="早餐" v-if="active_tag == 'one'"  prop="mealBreakfast">
 							<el-select v-model="ruleForm.mealBreakfast" placeholder="请选择">
 								<el-option v-for="item in zaocangList" :key="item.id" :label="item.mealName" :value="item.id">
 								</el-option>
@@ -164,17 +160,28 @@
 						</el-form-item>
 
 						<!-- 晚餐 -->
-						<el-form-item label="晚餐" prop="mealDinner">
+						<el-form-item label="晚餐" v-if="active_tag == 'one'"  prop="mealDinner">
 							<el-select v-model="ruleForm.mealDinner" placeholder="请选择">
 								<el-option v-for="item in wancangList" :key="item.id" :label="item.mealName" :value="item.id">
 								</el-option>
 							</el-select>
 						</el-form-item>
-
-
+						
+						
+						<!-- ======== 客房会议厅========================================== -->
+						<!-- 房型 -->
+						<el-form-item :label="$t('manager.hp_room')+':'" prop="houseName" v-if="active_tag == 'two'">
+							<el-input v-model="ruleForm.houseName" class="input"></el-input>
+						</el-form-item>
+						
+						<!-- 门市价 -->
+						<el-form-item :label="$t('manager.hk_doorPrice')+':'" prop="marketPrice" v-if="active_tag == 'two'">
+						    <el-input v-model="ruleForm.marketPrice"  type="number" class="input"></el-input>
+						</el-form-item>
+						
 						<!-- 床位数/座位2 -->
-						<el-form-item v-if="active_tag == 'two'" label="早餐" prop="bedNum">
-							<el-input v-model="ruleForm.bedNum" class="input"></el-input>
+						<el-form-item v-if="active_tag == 'two'" label="座位数" prop="bedNum">
+							<el-input v-model="ruleForm.bedNum"  type="number" class="input"></el-input>
 						</el-form-item>
 
 
@@ -330,30 +337,24 @@
 						message: this.$t('commons.mustInput'),
 						trigger: "blur",
 					}, ],
-					// bedNum: [
-					//   {
-					//     required: true,
-					//     message: "请输入床位数/座位",
-					//     trigger: "blur",
-					//   },
-					// ],
-					// bedSizeH: [
-					//   {
-					//     required: true,
-					//     message: "请输入床宽",
-					//     trigger: "blur",
-					//   },
-					// ],
-					houseSizeW: [{
+					bedNum: [
+					  {
+					    required: true,
+					    message: "请输入床位数/座位",
+					    trigger: "blur",
+					  },
+					],
+					
+					mealBreakfast: [{
 						required: true,
-						message: this.$t('commons.mustInput'),
+						message: '请选择早餐',
 						trigger: "blur",
-					}, ],
-					houseSizeH: [{
+					}],
+					mealDinner: [{
 						required: true,
-						message: this.$t('commons.mustInput'),
+						message: '请选择',
 						trigger: "blur",
-					}, ],
+					}],
 				},
 				selectedInfo: {}, // 选中的某条
 				formData: {},
@@ -424,9 +425,18 @@
 						this.get_wancang_list()
 						break;
 					case "change":
+						this.ruleForm_sit = [];
 						this.tab_show = false;
 						this.ruleForm = value;
 						this.files = [];
+						let arr = value.personPrice.split(',')
+						let obj ={}
+						arr.forEach((item, i) =>{
+							obj.price = item
+							obj.sid = i + 1
+							this.ruleForm_sit.push(obj)
+						})
+						debugger
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
 							arr.map((i) => {
@@ -435,9 +445,12 @@
 								});
 							});
 						}
+						this.get_zaocang_list()
+						this.get_wancang_list()
 						break;
 
 					case "sit":
+					debugger
                         this.ruleForm_sit = [];
 						for (let i = 0; i < this.ruleForm.checkinNum; i++) {
                             let obj = {}
@@ -557,6 +570,12 @@
 					}
 				}
 				
+				if (this.ruleForm.bedNum < 1) {
+					return this.$message({
+						message: '请输入大于1的数',
+						type: "warn",
+					});
+				}
 				this.$refs[ruleForm].validate((valid) => {
 					if (valid) {
 						this.$F.doUploadBatch(this, imgList, (data) => {
@@ -591,20 +610,20 @@
 					"/pms/hotel/hotel_room_type_list",
 					params,
 					(res) => {
-						let obj = {}
-						let allP = 0
-						res.list.forEach((value, index) =>{
-							debugger
-							let personPriceList = value.personPrice.split(',')
-							personPriceList.forEach((item, i) =>{
-								allP = Number(item) + Number(value.bPrice) + Number(value.dPrice)
-							})
-							obj.pName = `${index+1} 住宿价+付餐价`
-							obj.allPrice = allP
+						// let obj = {}
+						// let allP = 0
+						// res.list.forEach((value, index) =>{
+						// 	debugger
+						// 	let personPriceList = value.personPrice.split(',')
+						// 	personPriceList.forEach((item, i) =>{
+						// 		allP = Number(item) + Number(value.bPrice) + Number(value.dPrice)
+						// 	})
+						// 	obj.pName = `${index+1} 住宿价+付餐价`
+						// 	obj.allPrice = allP
 							
-							value.priceList.push(obj)
+						// 	value.priceList.push(obj)
 							
-						})
+						// })
 						this.tableData = res.list;
 						this.form.totalSize = res.totalSize;
 					}
