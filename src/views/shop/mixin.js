@@ -48,14 +48,41 @@ const mixin= {
             return  Date.parse(new Date());
         },
 
-        //日期转化时间戳
-        getTimeSample(v){
-
+        //获取时间差距的时间戳->时分秒
+        getDiffDate(date) {
+            let start = Date.parse(new Date(date))
+            let end = this.getNowTime()
+            var days = end - start
+            return this.formatDuring(days);
         },
 
-        // Math.round(new Date() / 1000)
+        //时间转化为分秒时
+        formatDuring(mss) {
+           console.log(mss)
+           var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+           var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+           var seconds = (mss % (1000 * 60)) / 1000;
+           hours = hours < 10 ? ('0' + hours) : hours;
+           minutes = minutes < 10 ? ('0' + minutes) : minutes;
+           seconds = seconds < 10 && seconds >= 1 ? ('0' + seconds) : seconds;
+           return  hours + ":" + minutes + ":" + seconds;
+        },
 
-        //时间戳转化为日期
+
+        //获取时间差距多少分钟
+        getDiffMinutes(date){
+            let start = Date.parse(new Date(date))
+            let end = this.getNowTime()
+            var days = end - start
+            console.log(days)
+            return this.getMinutes(days);
+        },
+        getMinutes(mss) {
+           console.log(mss)
+           var minutes = parseInt(mss/ (1000 * 60 ));
+           console.log(minutes)
+           return minutes
+        },
 
 
 

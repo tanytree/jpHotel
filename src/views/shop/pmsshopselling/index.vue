@@ -496,14 +496,14 @@ export default {
     },
     //移除
     handleDelete(item,index){
-        let good = this.productList.find(v=>v.goodsId==item.goodsId)
-        if(good){
-            good.inventoryCount = good.inventoryCount + item.count
+        // let good = this.productList.find(v=>v.goodsId == item.goodsId)
+        // if(good){
+            // good.inventoryCount = good.inventoryCount + item.count
             this.cart.splice(index,1)
             if(this.cart.length == 0){
                 this.getPrucuctList();
             }
-        }
+        // }
 
     },
 

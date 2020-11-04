@@ -1,6 +1,6 @@
 <template>
 <!-- 统一的列表格式 -->
-<div>
+<div>  
     <div>
         <!-- 查询部分 -->
         <el-form inline size="small" label-width="80px">
@@ -140,7 +140,7 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
-            <detail @closeDialog="closeDialog" @changeDialog="changeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
+            <detail @closeDialog="closeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
             <action @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
 
@@ -155,8 +155,11 @@
         >
 
         <div class="detailPanel">
+
             <div class="top">
-                <span>{{$t('food.common.order_num')}}：{{detail.shopNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
+                <span>{{$t('food.common.order_num')}}：{{detail.shopNum}} </span>
+                <span style="padding:0 50px;">售卖点：{{detail.sellingName}} </span>
+                <span>{{$t('food.common.create_time')}}：{{detail.createTime}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{detail.consumePrice}}</div>
             <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
@@ -325,9 +328,8 @@ export default {
                 info.storesNum = this.storesNum
                 this.dialogShow = true
                 this.dialogType = 1
-                this.is_add = true
+                // this.is_add = true
                 let cateList = this.getNewCateList(this.categroyList)
-
                 this.$nextTick(()=>{
                     this.$refs.detailRef.getInfo(info)
                 })
@@ -341,7 +343,7 @@ export default {
         //结账
         action(data){
             console.log(data)
-            this.is_add = true
+            // this.is_add = true
             this.dialogShow = true
             this.dialogType = 2
             this.$nextTick(()=>{
@@ -387,9 +389,9 @@ export default {
             this.getDataList();
             console.log(2)
         },
-        changeDialog(){
-            this.is_add = false
-        }
+        // changeDialog(){
+        //     this.is_add = false
+        // }
 
     }
 };
