@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 11:04:19
+ * @LastEditTime: 2020-11-05 10:30:14
  * @FilePath: \jiudian\src\views\market\orders\coms\c2.vue
 -->
 <template>
@@ -108,7 +108,7 @@ export default {
       let params = {
         orderId: item.id,
       };
-      this.$confirm("请确认是否删除该项?", this.$t('commons.tip_desc'), {
+      this.$confirm(this.$t('desk.order_ifDelete'), this.$t('commons.tip_desc'), {
         confirmButtonText: this.$t('commons.confirm'),
         cancelButtonText: this.$t('commons.cancel'),
         type: "warning",

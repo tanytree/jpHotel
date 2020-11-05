@@ -4,7 +4,7 @@
   <div>
     <el-card>
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/customer' }">会员管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/customer' }">{{$t('desk.customer_memManagement')}}</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path:'/customeredit',query:{ id: hyId}}">修改会员信息</el-breadcrumb-item>
 <!--        <el-breadcrumb-item>积分明细</el-breadcrumb-item>-->
       </el-breadcrumb>

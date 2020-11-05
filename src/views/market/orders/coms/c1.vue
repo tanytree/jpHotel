@@ -1,15 +1,15 @@
 <!--
  * @Date: 2020-07-07 16:59:26
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-11 17:26:45
- * @FilePath: /jiudian/src/views/market/orders/coms/c1.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-05 10:27:36
+ * @FilePath: \jiudian\src\views\market\orders\coms\c1.vue
 -->
 <template>
 <div class="roomDetails">
     <div class="hd">
         <div class="tit">
 <!--            <el-button type="" size="mini" class="fr" @click="liveCard_in_person_list">操作房卡</el-button>-->
-            <h3>{{ $t('frontOffice.checkInfoDesc') }}（房间：{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>{{ $t('desk.book_orderNum') }}：{{detailData.checkIn.orderNum}}</span>
+            <h3>{{ $t('frontOffice.checkInfoDesc') }}（{{$t('desk.book_house')+':'}}{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>{{ $t('desk.book_orderNum') }}：{{detailData.checkIn.orderNum}}</span>
         </div>
         <div class="customerInfo">
             <el-row class="row">
@@ -20,12 +20,12 @@
                     {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
                 </el-col>
                 <el-col :span="12">
-                    入离时间：{{detailData.checkIn.checkinTime}} - {{detailData.checkIn.checkoutTime}}
+                    {{ $t('desk.order_toLiveTime') }}：{{detailData.checkIn.checkinTime}} - {{detailData.checkIn.checkoutTime}}
                 </el-col>
             </el-row>
             <el-row class="row">
                 <el-col :span="4">
-                    房价合计：{{detailData.checkIn.realPrice}}
+                    {{ $t('desk.book_houseTotalPrice') }}：{{detailData.checkIn.realPrice}}
                 </el-col>
 <!--                <el-col :span="4">-->
 <!--                    {{$t('commons.checkInTypeDesc')}}：{{F_checkinType(detailData.checkIn.checkinType)}}-->
@@ -34,15 +34,15 @@
                     {{ $t('desk.order_outOrder') }}：{{detailData.checkIn.thirdOrdernum}}
                 </el-col>
                 <el-col :span="6">
-                    备注：{{detailData.checkIn.remark}}
+                   {{ $t('desk.home_note') }}：{{detailData.checkIn.remark}}
                 </el-col>
             </el-row>
         </div>
     </div>
     <div class="cost margin-t-10">
         <div class="wrap">
-            <span class="fee" v-if="detailData.totalPrice > 0">应收：{{detailData.totalPrice}}</span>
-            <span class="fee" v-if="detailData.totalPrice < 0">应退：{{detailData.totalPrice}}</span>
+            <span class="fee" v-if="detailData.totalPrice > 0">{{ $t('desk.order_receivable') }}：{{detailData.totalPrice}}</span>
+            <span class="fee" v-if="detailData.totalPrice < 0">{{ $t('desk.order_shouldBack') }}：{{detailData.totalPrice}}</span>
             <div class="costNum">
                 <el-row>{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
                 <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
@@ -54,13 +54,13 @@
             <finance ref="finance" :currentRoomId="currentRoomId" :detailData="detailData" @getOrderDetail="getOrderDetail" />
         </div>
     </div>
-    <el-dialog top="0" :show-close='false' title="房卡操作" :visible.sync="mackcade" width="60%">
+    <el-dialog top="0" :show-close='false'  :title="$t('desk.home_roomCardOpreat')" :visible.sync="mackcade" width="60%">
         <el-row>
-            <span>共一间&nbsp;&nbsp;本次已制卡数：{{liveCardData.done}}</span>
+            <span>{{$t('desk.home_haveOne')}}&nbsp;&nbsp;{{$t('desk.home_haveCardNum')}}：{{liveCardData.done}}</span>
             <el-col :span="8" style="float:right">
-                <el-button @click="make_card_status">制卡</el-button>
-                <el-button>清卡</el-button>
-                <el-button>读卡</el-button>
+                <el-button @click="make_card_status">{{$t('desk.home_makeCard')}}</el-button>
+                <el-button>{{$t('desk.home_clearCard')}}</el-button>
+                <el-button>{{$t('desk.home_readCard')}}</el-button>
             </el-col>
         </el-row>
         <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
@@ -70,7 +70,7 @@
                     {{row.room?row.room.houseNum:''}}
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="本次制卡状态">
+            <el-table-column prop="name" :label="$t('desk.home_nowMakeState')">
                 <template slot-scope="{row}">
                     {{F_markCard(row.markCard)}}
                 </template>
@@ -228,7 +228,7 @@ export default {
         make_card_status() {
             let arr = []
             if (!this.multipleSelection.length) {
-                this.$message.error('至少选择一间房间')
+                this.$message.error(this.$t('desk.home_shouldSelectRoom'))
                 return
             }
             this.multipleSelection.forEach(element => {

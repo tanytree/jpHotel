@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-03 16:31:54
+ * @LastEditTime: 2020-11-05 11:20:12
  * @FilePath: \jiudian\src\views\market\orders\coms\consumeGoods.vue
  -->
 <template>
@@ -11,10 +11,10 @@
                 <el-row>
                     <div class="padding-20 clearfix" style="border:1px solid #eee;">
                         <el-form inline size="small" label-width="100px">
-                            <el-form-item label="商品名称：">
+                            <el-form-item :label="$t('desk.order_goodsName')+':'">
                                 <el-input v-model="searchForm.name" style="width:150px"></el-input>
                             </el-form-item>
-                            <el-form-item label="商品类别：">
+                            <el-form-item :label="$t('desk.order_goodsType')+':'">
                                 <el-select v-model="searchForm.storesNum" style="width:150px">
                                     <el-option :label="$t('commons.all')" value=""></el-option>
                                     <!-- <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -22,19 +22,19 @@
                                 </el-select>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="getDataList">查询</el-button>
-                                <el-button type="primary" @click="initForm">重置</el-button>
+                                <el-button type="primary" @click="getDataList">{{$t('commons.queryBtn')}}</el-button>
+                                <el-button type="primary" @click="initForm">{{$t('commons.resetBtn')}}</el-button>
                             </el-form-item>
                         </el-form>
                         <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                            <el-table-column prop="goodsName" label="商品名称"  show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="sellName" label="商品类别" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="retailPrice" label="商品单价(元)" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="employeePrice" label="员工价(元)" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="inventoryCount" label="库存" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="goodsName" :label="$t('desk.order_goodsName')"  show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="sellName" :label="$t('desk.order_goodsType')" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="retailPrice" :label="$t('desk.order_goodsUnit')" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="employeePrice" :label="$t('desk.order_empoyeePrice')" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="inventoryCount" :label="$t('desk.customer_inventory')" show-overflow-tooltip></el-table-column>
                             <el-table-column :label="$t('commons.operating')">
                                 <template slot-scope="scope">
-                                    <el-button :disabled="scope.row.inventoryCount == 0" size="mini" @click="addCart(scope.row,scope.$index)">添加</el-button>
+                                    <el-button :disabled="scope.row.inventoryCount == 0" size="mini" @click="addCart(scope.row,scope.$index)">{{$t('desk.customer_add')}}</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -43,11 +43,11 @@
             </el-col>
             <el-col :span="10">
                 <div class="padding-20 clearfix" style="border:1px solid #eee;">
-                    <h3 style="margin-top:0;border-bottom: 1px solid #eee;padding-bottom:10px;">已选商品</h3>
+                    <h3 style="margin-top:0;border-bottom: 1px solid #eee;padding-bottom:10px;">{{$t('desk.customer_chooseGoods')}}</h3>
                     <el-table v-loading="loading" :data="cart" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                        <el-table-column label="商品名称" prop="goodsName" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="retailPrice" label="单价(元)" show-overflow-tooltip></el-table-column>
-                        <el-table-column label="数量" width="150">
+                        <el-table-column :label="$t('desk.order_goodsName')" prop="goodsName" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="retailPrice" :label="$t('desk.order_unitPrice')" show-overflow-tooltip></el-table-column>
+                        <el-table-column :label="$t('desk.order_number')" width="150">
                             <template slot-scope="scope">
                               <div class="cell" style="padding:0;">
                                   <div  class="el-input-number el-input-number--mini" style=" width:100px;">
@@ -62,25 +62,25 @@
 
 
                         </el-table-column>
-                        <el-table-column label="合计(元)" show-overflow-tooltip>
+                        <el-table-column :label="$t('desk.serve_heji')" show-overflow-tooltip>
                             <template slot-scope="scope">
                                 {{parseFloat(scope.row.count) * parseFloat(scope.row.retailPrice)}}
                             </template>
                         </el-table-column>
                         <el-table-column :label="$t('commons.operating')">
                             <template slot-scope="scope">
-                                <el-button size="mini" @click="handleDelete(scope.row,scope.$index)">移除</el-button>
+                                <el-button size="mini" @click="handleDelete(scope.row,scope.$index)">{{$t('desk.customer_remove')}}</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                     <el-row class="padding-tb-10">
-                        <em>共 {{countToTal}} 件</em>，合计：{{cartToTal}}元
+                        <em>{{$t('desk.customer_all')}} {{countToTal}} {{$t('desk.customer_each')}}</em>，{{$t('desk.serve_heji')}}：{{cartToTal}}{{$t('desk.serve_yen')}}
                     </el-row>
                     <el-form size="mini">
-                        <el-form-item label="按员工价：">
+                        <el-form-item :label="$t('desk.order_atEmpoyee')+':'">
                             <el-checkbox v-model="consumeOperForm.employeePrice"></el-checkbox>
                         </el-form-item>
-                        <el-form-item label="选择房间：">
+                        <el-form-item :label="$t('desk.home_chooseRoom')+':'">
                            <el-select v-model="consumeOperForm.roorId">
                                 <el-option v-for="item in detailData.inRoomList" :key="item.id" :label="item.houseNum" :value="item.roomId">
                                 </el-option>
@@ -91,7 +91,7 @@
                             {{totalIn}}
                         </el-form-item>
                         <el-form-item :label="$t('desk.home_note') + ':'">
-                            <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off" placeholder="请填写冲调原因，必填！"></el-input>
+                            <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -242,7 +242,7 @@ export default {
                   this.cart.push({...item,count:1})
                 }
             }else{
-                this.$alert('该菜品已经没有库存啦，不能再售卖啦！', this.$t('commons.tip_desc'), {
+                this.$alert(this.$t('desk.order_nofood'), this.$t('commons.tip_desc'), {
                   confirmButtonText: this.$t('commons.confirm'),
                   callback: action => {
                   }
@@ -263,7 +263,7 @@ export default {
                 }
             }else{
                 if(good.inventoryCount == 0){
-                    this.$alert('该菜品已经没有库存啦，不能再售卖啦!', this.$t('commons.tip_desc'), {
+                    this.$alert(this.$t('desk.order_nofood'), this.$t('commons.tip_desc'), {
                       confirmButtonText: this.$t('commons.confirm'),
                       callback: action => {
                       }
@@ -291,7 +291,7 @@ export default {
             if(this.cart.length == 0){
                 this.$message({
                   type: 'error',
-                  message: '请选择商品!'
+                  message: this.$t('desk.order_selectGoods')
                 });
                 return false
             }
@@ -300,7 +300,7 @@ export default {
             if(!this.consumeOperForm.roorId){
                 this.$message({
                   type: 'error',
-                  message: '请选择房间号!'
+                  message: this.$t('desk.order_selectRoomNum')
                 });
                 return false
             }
@@ -309,7 +309,7 @@ export default {
             if(!this.consumeOperForm.remark){
                 this.$message({
                   type: 'error',
-                  message: '请填写备注!'
+                  message: this.$t('desk.customer_inputRemark')
                 });
                 return false
             }

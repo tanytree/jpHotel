@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-28 15:13:49
+ * @LastEditTime: 2020-11-05 13:28:30
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -207,17 +207,17 @@
                         <span v-if="row.state == 1 || row.state == 2">
                             {{ F_checkinState(row.state) }}
                         </span> -->
-                        <span v-if="!row.billType">在住</span>
+                        <span v-if="!row.billType">{{$t('desk.order_keepLive')}}</span>
                         <span
                             v-if="
                                 row.billType == 2 ||
                                 row.billType == 3 ||
                                 row.billType == 4
                             "
-                            >离店</span
+                            >{{$t('desk.book_leaveStore')}}</span
                         >
                         <span v-if="row.billType == 1 || row.billType == 5"
-                            >已退房</span
+                            >{{$t('desk.order_alreadyCheckout')}}</span
                         >
                     </template>
                 </el-table-column>
@@ -311,6 +311,25 @@ export default {
             msgKey: (state) => state.config.msgKey,
             plat_source: (state) => state.config.plat_source,
         }),
+        rules(){
+            return {
+                payType: [
+                    {
+                        required: true,
+                        message: this.$t('commons.placeChoose'),
+                        trigger: "change",
+                    },
+                ],
+                consumePrice: [
+                    {
+                        required: true,
+                        // message: "请输入金额",
+                        message: this.$t("commons.mustInput"),
+                        trigger: "blur",
+                    },
+                ],
+            }
+        }
     },
     data() {
         return {
@@ -330,23 +349,7 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             roomTypeList: [],
-            rules: {
-                payType: [
-                    {
-                        required: true,
-                        message: "请选择",
-                        trigger: "change",
-                    },
-                ],
-                consumePrice: [
-                    {
-                        required: true,
-                        // message: "请输入金额",
-                        message: this.$t("commons.mustInput"),
-                        trigger: "blur",
-                    },
-                ],
-            },
+           
         };
     },
     mounted() {

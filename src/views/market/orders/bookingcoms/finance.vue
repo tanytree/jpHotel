@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 18:17:48
+ * @LastEditTime: 2020-11-05 10:05:25
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
@@ -80,17 +80,17 @@
           <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
           <!--冲调方式 -->
-        <el-form-item label="冲调方式：" prop="priceType">
+        <el-form-item :label="$t('desk.order_mixingWay')+':'" prop="priceType">
             <el-radio-group v-model="consumeOperForm.priceType">
-                <el-radio :label="9" :value="9">完全冲调</el-radio>
-                <el-radio :label="10" :value="10">部分冲调</el-radio>
+                <el-radio :label="9" :value="9">{{$t('desk.order_completelyAgainst')}}</el-radio>
+                <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio>
             </el-radio-group>
         </el-form-item>
-        <el-form-item label="冲调金额：" prop="consumePrice" v-if="consumeOperForm.priceType != 9">
+        <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrice" v-if="consumeOperForm.priceType != 9">
             <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off"> </el-input>
-            <em style="margin-left: 10px; color: #888">注意：冲调金额小于原账金额</em>
+            <em style="margin-left: 10px; color: #888">{{$t('desk.order_attention')}}</em>
         </el-form-item>
-        <el-form-item label="冲调原因：" prop="remark">
+        <el-form-item :label="$t('desk.order_completelyReason')+':'" prop="remark">
           <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -119,7 +119,7 @@
           >
         </el-row>
         <br />
-        <el-form-item label="付款项目：">
+        <el-form-item :label="$t('desk.order_payProject')+':'">
           <el-radio-group v-model="consumeOperForm.priceType">
             <el-radio-button :label="1" :value="1">{{ $t('desk.downPayment')}}</el-radio-button>
           </el-radio-group>
@@ -129,7 +129,7 @@
                   <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
               </el-radio-group>
           </el-form-item>
-        <el-form-item label="金额：">
+        <el-form-item :label="$t('desk.customer_sum')+':'">
           <el-input
             class=""
             v-model="consumeOperForm.payPrice"
@@ -151,8 +151,8 @@
         <!--            </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="depositShow = false">关闭</el-button>
-        <el-button type="primary" @click="consume_oper(1, 'deposit')">结算</el-button>
+        <el-button @click="depositShow = false">{{$t('commons.close')}}</el-button>
+        <el-button type="primary" @click="consume_oper(1, 'deposit')">{{$t('desk.customer_settlement')}}</el-button>
       </div>
     </el-dialog>
     <!--退订金-->
@@ -173,12 +173,12 @@
           >
         </el-row>
         <br />
-        <el-form-item label="付款项目：">
+        <el-form-item :label="$t('desk.order_payProject')+':'">
           <el-radio-group v-model="consumeOperForm.priceType">
             <el-radio-button :label="4" :value="4">{{ $t('desk.order_payBack') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="金额：">
+        <el-form-item :label="$t('desk.customer_sum')+':'">
           <el-input
             class="width100"
             v-model="consumeOperForm.consumePrice"
@@ -199,9 +199,9 @@
 <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="refundShow = false">关闭</el-button>
+        <el-button @click="refundShow = false">{{$t('commons.close')}}</el-button>
         <el-button type="primary" @click="consume_oper(2, 'refund')"
-          >结算</el-button
+          >{{$t('desk.customer_settlement')}}</el-button
         >
       </div>
     </el-dialog>
@@ -222,35 +222,8 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
-  },
-  data() {
-    return {
-      loading: false,
-      destructionShow: false,
-      depositShow: false,
-      payTypeShow: false,
-      refundShow: false,
-      checkType: "customer",
-      activeName: "first",
-      detail: {
-        text: "",
-      },
-      searchForm: {
-        state: "",
-        checkInId: "",
-        pageIndex: 1,
-        pageSize: 10,
-      },
-      listTotal: 0, //总条数
-      multipleSelection: [], //多选
-      tableData: [{}], //表格数据
-      destructionList: [],
-      consumeOperForm: {
-        priceType: "1",
-        payType: "1",
-        name: "",
-      },
-      rules: {
+    rules(){
+        return {
         consumePrice: [
           {
             required: true,
@@ -319,7 +292,37 @@ export default {
             trigger: "blur",
           },
         ],
+        }
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      destructionShow: false,
+      depositShow: false,
+      payTypeShow: false,
+      refundShow: false,
+      checkType: "customer",
+      activeName: "first",
+      detail: {
+        text: "",
       },
+      searchForm: {
+        state: "",
+        checkInId: "",
+        pageIndex: 1,
+        pageSize: 10,
+      },
+      listTotal: 0, //总条数
+      multipleSelection: [], //多选
+      tableData: [{}], //表格数据
+      destructionList: [],
+      consumeOperForm: {
+        priceType: "1",
+        payType: "1",
+        name: "",
+      },
+      
     };
   },
 
@@ -357,7 +360,7 @@ export default {
         params.roomId = this.detailData.inRoomList[0].id;
         params.roomNum = this.detailData.inRoomList[0].houseNum;
       } else {
-        this.$message.error("请优先排房，添加入住人");
+        this.$message.error(this.$t('desk.order_rowHouses'));
         return;
       }
 
@@ -366,7 +369,7 @@ export default {
         //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
         params.state = 2;
         if (!params.priceType) {
-          this.$message.error("请选择付款项目");
+          this.$message.error(this.$t('desk.order_selectPayProject'));
           return;
         }
         if (params.priceType == 1 && !params.payType) {
@@ -375,7 +378,7 @@ export default {
         }
         if (params.priceType == 1) {
           if (params.payPrice < 0 || params.payPrice == 0) {
-            this.$message.error("请输入大于0的金额");
+            this.$message.error(this.$t('desk.order_inputThan'));
             return;
           }
         }
@@ -426,20 +429,20 @@ export default {
     },
     destructionHandle() {
       if (this.multipleSelection.length < 1) {
-        this.$message.error("请选择需要操作的账务");
+        this.$message.error(this.$t('desk.order_selectOperateAccount'));
         return;
       }
       if (this.multipleSelection.length > 1) {
-        this.$message.error("仅能选择一条账务冲调");
+        this.$message.error(this.$t('desk.order_onlyOneAccount'));
         return;
       }
       for (let k in this.multipleSelection) {
         if (this.multipleSelection[k].billingType == 1) {
-          this.$message.error("自动计费项目不能冲调");
+          this.$message.error(this.$t('desk.order_autoTiePrice'));
           return;
         }
         if (this.multipleSelection[k].consumePrice < 0) {
-          this.$message.error("冲调中的财务不能再冲调");
+          this.$message.error(this.$t('desk.order_priceShould'));
           return;
         }
       }

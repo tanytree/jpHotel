@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-19 10:17:44
+ * @LastEditTime: 2020-11-05 13:36:00
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -140,9 +140,9 @@
                     </template>
                     <el-col :span="8" class="col">
                       <el-form-item :label="$t('desk.home_name')" prop="name">
-                        <el-input v-model="detailForm.name" v-if="type != 'detail'" class="width150" placeholder="姓名"></el-input>
+                        <el-input v-model="detailForm.name" v-if="type != 'detail'" class="width150" :placeholder="$t('desk.home_name')"></el-input>
                           <span>  </span>
-                        <el-input v-model="detailForm.pronunciation" v-if="type != 'detail'"  class="width150" placeholder="姓名拼音"></el-input>
+                        <el-input v-model="detailForm.pronunciation" v-if="type != 'detail'"  class="width150" :placeholder="$t('desk.customer_nameSpell')"></el-input>
                         <template v-if="type == 'detail'">{{detailForm.name}}</template>
                         <template v-if="type == 'detail'" style="margin-left: 15px">{{detailForm.pronunciation}}</template>
                       </el-form-item>

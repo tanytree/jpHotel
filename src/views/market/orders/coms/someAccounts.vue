@@ -1,58 +1,58 @@
 <!--
  * @Date: 2020-02-16 14:34:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-14 09:48:22
- * @FilePath: /jiudian/src/views/market/orders/coms/someAccounts.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-05 11:58:05
+ * @FilePath: \jiudian\src\views\market\orders\coms\someAccounts.vue
  -->
 <template>
-<el-dialog title="部分结账" top="0" :visible.sync="visible" :lock-scroll='false' width="800px">
+<el-dialog :title="$t('desk.order_partBill')" top="0" :visible.sync="visible" :lock-scroll='false' width="800px">
     <el-form v-loading="loading" :model="consumeOperForm" ref="someAccounts" :rules="{}" size="mini" label-width="100px">
-        <p>选择账务：自动计费、已冲调、已结的账务不可部分结账</p>
+        <p>{{$t('desk.order_billExplain')}}</p>
         <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
             <el-table-column type="selection" width="55">
             </el-table-column>
-            <el-table-column label="账务项目" show-overflow-tooltip>
+            <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     {{F_priceType(row.priceType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="consumePrice" label="消费" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="consumePrice" label="营业日" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="consumePrice" :label="$t('desk.order_payment')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="consumePrice" :label="$t('desk.order_saleDay')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
         <el-row class="padding-tb-10">
             <span>{{ $t('desk.customer_totalConsum') }}：{{detailData.consumePrice}}</span>
-            <span style="padding: 0 12px;">总支付：{{detailData.payPrice}}</span>
-            <span>应退：{{detailData.totalPrice}}</span>
+            <span style="padding: 0 12px;">{{ $t('desk.order_allPay') }}：{{detailData.payPrice}}</span>
+            <span>{{ $t('desk.order_shouldBack') }}：{{detailData.totalPrice}}</span>
         </el-row>
         <el-form-item label="" label-width="0">
-            <el-button type="primary" size="mini" @click="openDialog(1)">收款</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(1)">{{ $t('desk.customer_collection') }}</el-button>
             <el-button type="primary" size="mini">{{$t('desk.charge')}}</el-button>
-            <el-button type="primary" size="mini" @click="openDialog(2)">免单</el-button>
-            <el-button type="primary" size="mini" @click="openDialog(3)">退款</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(2)">{{ $t('desk.customer_freeOfCharge') }}</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(3)">{{ $t('desk.customer_refund') }}</el-button>
         </el-form-item>
         <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column label="账务项目" show-overflow-tooltip>
+            <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     {{F_priceType(row.priceType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="consumePrice" label="付款" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="refund" label="退款" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="consumePrice" :label="$t('desk.order_payment')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="refund" :label="$t('desk.customer_refund')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('commons.operating')">
                 <template slot-scope="scope">
-                    <el-button type="text" size="mini" @click="consume_move(scope.$index)">移除</el-button>
+                    <el-button type="text" size="mini" @click="consume_move(scope.$index)">{{ $t('desk.customer_remove') }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
     </el-form>
     <div slot="footer" class="dialog-footer">
         <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
-        <el-button type="primary" @click="consume_oper(2,'onAccount')">结账</el-button>
+        <el-button type="primary" @click="consume_oper(2,'onAccount')">{{ $t('desk.order_invoicing') }}</el-button>
     </div>
 
 
@@ -66,18 +66,18 @@
 
           <el-form-item :label="$t('desk.customer_paymentMethod')" required v-if="type == 2">
             <el-radio-group v-model="getForm.payType">
-                <el-radio :label="0" :value="0">免单</el-radio>
+                <el-radio :label="0" :value="0">{{ $t('desk.customer_freeOfCharge') }}</el-radio>
             </el-radio-group>
           </el-form-item>
 
           <el-form-item :label="$t('desk.customer_paymentMethod')" required v-if="type == 3">
             <el-radio-group v-model="getForm.payType">
-                <el-radio :label="0" :value="0">现金退款</el-radio>
+                <el-radio :label="0" :value="0">{{ $t('desk.order_cachRefund') }}</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="金额" required>
-            <el-input size="small" placeholder="金额" v-model="getForm.amount"></el-input>
+          <el-form-item :label="$t('desk.customer_sum')" required>
+            <el-input size="small" :placeholder="$t('desk.customer_sum')" v-model="getForm.amount"></el-input>
           </el-form-item>
           <el-form-item :label="$t('desk.home_note')">
             <el-input type="textarea" :placeholder="$t('desk.home_note')" v-model="getForm.remark"></el-input>
@@ -164,13 +164,13 @@ export default {
 
         openDialog(v){
             if(v== 1){
-                this.title = '收款'
+                this.title = this.$t('desk.customer_collection')
                 this.getForm.payType = 1
             }else if(v == 2){
-                this.title = '免单'
+                this.title =  this.$t('desk.customer_freeOfCharge')
                 this.getForm.payType = 0
             }else if(v == 3){
-                this.title = '退款'
+                this.title =this.$t('desk.customer_refund')
                 this.getForm.payType = 0
             }
             this.type = v

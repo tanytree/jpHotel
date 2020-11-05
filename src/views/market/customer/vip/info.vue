@@ -453,7 +453,7 @@ export default {
                     this.cardForm,
                     (res) => {
                         this.$message({
-                            message: "补收卡费成功",
+                            message:this.$t('desk.customer_payCardSucc'),
                             type: "success",
                         });
                         this.setCardVisible = false;
@@ -470,7 +470,7 @@ export default {
                     }
                 );
             } else {
-                this.$message("支付费用必须大于0");
+                this.$message(this.$t('desk.customer_payShould'));
             }
         },
         // 点击补收卡费

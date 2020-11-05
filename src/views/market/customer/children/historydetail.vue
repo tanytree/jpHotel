@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-29 17:32:02
+ * @LastEditTime: 2020-11-05 13:45:51
  * @FilePath: \jiudian\src\views\market\customer\children\historydetail.vue
  -->
 <template>
@@ -13,7 +13,7 @@
                     <el-breadcrumb-item
                         @click.native="goBack"
                         style="cursor: pointer"
-                        >客史档案</el-breadcrumb-item
+                        >{{$t('desk.customer_guestHistoryRecord')}}</el-breadcrumb-item
                     >
                     <el-breadcrumb-item>{{ itemInfo.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
@@ -26,14 +26,14 @@
                                 <el-row class="row">
                                     <el-row class="cell">
                                         <el-col :span="7" class="col">
-                                            <el-form-item label="姓名:">
+                                            <el-form-item :label="$t('desk.home_name')+':'">
                                                 <el-input
                                                     v-model="editorForm.name"
                                                 ></el-input>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="7" class="col">
-                                            <el-form-item label="电话:">
+                                            <el-form-item :label="$t('desk.customer_telephone')+':'">
                                                 <el-input
                                                     v-model="editorForm.mobile"
                                                 ></el-input>
@@ -81,24 +81,24 @@
                                 <el-row class="row">
                                     <el-row class="cell">
                                         <el-col :span="7" class="col">
-                                            <el-form-item label="性别:">
+                                            <el-form-item :label="$t('desk.customer_sex')+':'">
                                                 <el-radio-group
                                                     v-model="editorForm.sex"
                                                 >
                                                     <el-radio :label="1"
-                                                        >男</el-radio
+                                                        >{{$t('desk.customer_man')}}</el-radio
                                                     >
                                                     <el-radio :label="2"
-                                                        >女</el-radio
+                                                        >{{$t('desk.customer_woman')}}</el-radio
                                                     >
                                                 </el-radio-group>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="7" class="col">
-                                            <el-form-item label="生日:">
+                                            <el-form-item :label="$t('desk.customer_brithday')+':'">
                                                 <el-date-picker
                                                     type="date"
-                                                    placeholder="选择日期"
+                                                    :placeholder="$t('desk.serve_chooseDate')"
                                                     v-model="
                                                         editorForm.birthday
                                                     "
@@ -107,7 +107,7 @@
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="10" class="col">
-                                            <el-form-item label="邮箱:">
+                                            <el-form-item :label="$t('desk.customer_email')+':'">
                                                 <el-input
                                                     v-model="editorForm.email"
                                                 ></el-input>
@@ -116,7 +116,7 @@
                                     </el-row>
                                     <el-row class="cell">
                                         <el-col :span="7" class="col">
-                                            <el-form-item label="国籍:">
+                                            <el-form-item :label="$t('desk.customer_international')+':'">
                                                 <el-input
                                                     v-model="
                                                         editorForm.nationality
@@ -125,7 +125,7 @@
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="17" class="col">
-                                            <el-form-item label="地址:">
+                                            <el-form-item :label="$t('desk.customer_address')+':'">
                                                 <el-input
                                                     v-model="editorForm.address"
                                                     style="width: 530px"
@@ -135,14 +135,14 @@
                                     </el-row>
                                     <el-row class="cell">
                                         <el-col :span="7" class="col">
-                                            <el-form-item label="车牌号:">
+                                            <el-form-item :label="$t('desk.customer_carNum')+':'">
                                                 <el-input
                                                     v-model="editorForm.carNum"
                                                 ></el-input>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="17" class="col">
-                                            <el-form-item label="爱好:">
+                                            <el-form-item :label="$t('desk.customer_hoppy')+':'">
                                                 <el-input
                                                     v-model="editorForm.hobby"
                                                     style="width: 530px"
@@ -152,7 +152,7 @@
                                     </el-row>
                                     <el-row class="cell">
                                         <el-col :span="7" class="col">
-                                            <el-form-item label="所属单位:">
+                                            <el-form-item :label="$t('desk.customer_subordinateUnits')+':'">
                                                 <el-select
                                                     style="width: 200px"
                                                     v-model="editorForm.enterId"
@@ -192,7 +192,7 @@
                             <el-button type="primary" @click="saveEditor">{{
                                 $t("commons.save")
                             }}</el-button>
-                            <el-button @click="goBack()">返回</el-button>
+                            <el-button @click="goBack()">{{$t('commons.back')}}</el-button>
                         </div>
                     </div>
                 </div>
@@ -276,7 +276,7 @@ export default {
                 this.editorForm,
                 (data) => {
                     this.$message({
-                        message: "修改成功",
+                        message: this.$t('desk.customer_resetSuccess'),
                         type: "success",
                     });
                 }

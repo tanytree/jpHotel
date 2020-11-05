@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-12 17:15:26
+ * @LastEditTime: 2020-11-05 15:04:22
  * @FilePath: \jiudian\src\views\market\nightaudit\notyet.vue
  -->
 
@@ -32,13 +32,13 @@
                         <div class="box">
                             <div class="item">
                                 <div>
-                                    <span class="text-blue">抵</span>{{ row.checkinTime }}
+                                    <span class="text-blue">{{$t('desk.customer_arrived')}}</span>{{ row.checkinTime }}
                                 </div>
                                 <div>
-                                    <span class="text-red">离</span>{{ row.checkoutTime }}
+                                    <span class="text-red">{{$t('desk.customer_leave')}}</span>{{ row.checkoutTime }}
                                 </div>
                             </div>
-                            <div>{{ row.checkinDays }}天</div>
+                            <div>{{ row.checkinDays }}{{$t('desk.order_day')}}</div>
                         </div>
                     </template>
                 </el-table-column>
@@ -142,28 +142,28 @@ export default {
         checkState(state) {
             switch (state) {
                 case 1:
-                    return "待确认（预定中）";
+                    return this.$t('desk.book_waiteSure');
                     break;
                 case 2:
-                    return "已确认预定订单";
+                    return this.$t('desk.book_sureBook');
                     break;
                 case 3:
-                    return "拒单";
+                    return this.$t('desk.book_reject');
                     break;
                 case 4:
                     return "NOSHOW";
                     break;
                 case 5:
-                    return "未入住";
+                    return this.$t('desk.book_notCheckin');
                     break;
                 case 6:
-                    return "已入住";
+                    return this.$t('desk.book_checkin');
                     break;
                 case 7:
-                    return "离店";
+                    return this.$t('desk.book_leaveStore');
                     break;
                 case 8:
-                    return "已取消订单";
+                    return this.$t('desk.book_canceOrder');
                     break;
                 case 9:
                     return this.$t('desk.nightAudit.notyet');

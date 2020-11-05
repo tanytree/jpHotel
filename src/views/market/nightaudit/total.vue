@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-07 11:18:31
- * @FilePath: /jiudian/src/views/market/nightaudit/list1.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-05 15:17:57
+ * @FilePath: \jiudian\src\views\market\nightaudit\total.vue
  -->
 
 <template>
@@ -39,7 +39,7 @@
     <div class="box-card">
         <el-button type="primary" class="submit" @click="nightAudit">{{ $t('frontOffice.nightAudit.audit') }}</el-button>
     </div>
-    <el-dialog top="0" :visible.sync="recordShow" title="选择企业" width="600px" class="dialogCom">
+    <el-dialog top="0" :visible.sync="recordShow" :title="$t('desk.customer_chooseEnter')" width="600px" class="dialogCom">
  <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
             <el-table-column prop="enterName" label="夜审时间（自然日）"></el-table-column>
