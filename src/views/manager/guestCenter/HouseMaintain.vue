@@ -118,15 +118,9 @@
 						<!-- 床宽 -->
 						<el-form-item v-if="active_tag == 'one'" label-width="130px" :label="$t('manager.hk_bedWidth')+'(cm):'" prop="bedSizeH">
 							<div class="flex_row">
-<<<<<<< Updated upstream
 								<el-input v-model="ruleForm.bedSizeW" type="number" :placeholder="$t('manager.hk_longitudinalWidth')" />
-								<div class="hr"></div>
+								<div class="hr"> 〜</div>
 								<el-input v-model="ruleForm.bedSizeH" type="number" :placeholder="$t('manager.hk_horizontalWidth')" />
-=======
-								<el-input v-model="ruleForm.bedSizeW"  type="number" :placeholder="$t('manager.hk_longitudinalWidth')" />
-								<div class="hr"> 〜 </div>
-								<el-input v-model="ruleForm.bedSizeH"  type="number" :placeholder="$t('manager.hk_horizontalWidth')" />
->>>>>>> Stashed changes
 							</div>
 						</el-form-item>
 
@@ -146,15 +140,9 @@
 						<!-- 房屋面积 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_roomArea')+'(㎡):'">
 							<div class="flex_row">
-<<<<<<< Updated upstream
 								<el-input v-model="ruleForm.houseSizeW" type="number" :placeholder="$t('manager.hk_roomAreaLon')" />
-								<div class="hr"></div>
-								<el-input v-model="ruleForm.houseSizeH" type="number" :placeholder="$t('manager.hk_roomAreaHor')" />
-=======
-								<el-input v-model="ruleForm.houseSizeW"  type="number" :placeholder="$t('manager.hk_roomAreaLon')" />
 								<div class="hr"> 〜 </div>
-								<el-input v-model="ruleForm.houseSizeH"  type="number" :placeholder="$t('manager.hk_roomAreaHor')" />
->>>>>>> Stashed changes
+								<el-input v-model="ruleForm.houseSizeH" type="number" :placeholder="$t('manager.hk_roomAreaHor')" />
 							</div>
 						</el-form-item>
 
