@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<el-row :gutter="20" v-if="tab1_show">
-			<el-row  style="padding: 10px 15px;">
+			<el-row style="padding: 10px 15px;">
 				<el-form class="demo-form-inline" inline size="small">
 					<!-- 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 -->
 					<el-form-item :label="$t('manager.grsl_selectTime')+':'">
-						<el-date-picker v-model="ruleForm.date" value-format="yyyy-MM-dd" align="right" type="date" :placeholder="$t('commons.selectDate')"
+						<el-date-picker v-model="search_d.strategyTime" value-format="yyyy-MM-dd" align="right" type="date" :placeholder="$t('commons.selectDate')"
 						 :picker-options="pickerOptions" @blur="get_hotel_price_room_type_list"></el-date-picker>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
@@ -16,115 +16,72 @@
 				</el-form>
 			</el-row>
 			<div class="components-edit member-price">
-				<el-table :data="memberTableData.memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id2"
-				 default-expand-all header-row-class-name="default" :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}">
-					<el-table-column v-for="(item, index) in memberTableHeads" :key="index" :label="item.dateStr + '' + item.weekDay">
+				<el-table :data="roomType" style="width: 100%;margin-bottom: 20px;" row-key="id2" default-expand-all
+				 header-row-class-name="default">
+					<el-table-column :render-header="customFieldColumn" v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay">
 						<template slot-scope="{row, $index}">
 							<span v-if="index === 0">{{row.name || row.houseName}}</span>
-							<span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="priceClick(row, item, index)">{{row.marketPrice}}</span>
+							<span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="priceClick(row, item, index)">{{row.onePrice}}</span>
 						</template>
 					</el-table-column>
+
 				</el-table>
 			</div>
 		</el-row>
 
-		<el-row v-if="!tab1_show">
-			<el-row style="padding: 20px 0px;">
-				<el-page-header @back="back_1" content></el-page-header>
-			</el-row>
+		<!-- ===================批量调价==================================== -->
+		<el-dialog top="0" title="批量调价" :visible.sync="PieDialog" :close-on-click-modal="false"
+		 width="70%" class="editPriceDialog">
+			
 			<el-row :gutter="20">
-				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
-					<el-col :span="20">
-						<el-form-item :label="$t('manager.ps_memberType')+':'" prop="name">
-							<el-checkbox-group v-model="batchEditPriceForm.memberTypeId">
-								<el-checkbox v-for="(item, index) in memberTableData.memberTypeList" :label="item.id" :key="index">{{item.name}}</el-checkbox>
-							</el-checkbox-group>
-						</el-form-item>
-					</el-col>
-					<el-col :span="20">
-						<el-form-item :label="$t('manager.ps_channel')+':'" prop="name">
-							<el-button plain size="mini">{{$t('manager.ps_offline')}}</el-button>
-						</el-form-item>
-					</el-col>
+				<el-form :model="ruleForm_Pie" :rules="rules" ref="ruleForm_Pie" label-width="100px">
 					<el-col :span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')+':'">
-							<el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" value-format="yyyy-MM-dd"
+							<el-date-picker v-model="ruleForm_Pie.time" type="daterange" align="right" value-format="yyyy-MM-dd"
 							 :picker-options="expireTimeOption" unlink-panels :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')"
 							 :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
 						<el-form-item :label="$t('manager.ps_selectWeek')+':'" prop="name">
-							<el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
+							<el-checkbox-group v-model="ruleForm_Pie.weeks" @change="handleWeekDayChange">
 								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
 							</el-checkbox-group>
-
-							<!-- <el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
-                <el-checkbox
-                  v-for="(item, index) in weekDays"
-                  :label="item.value"
-                  :key="index"
-                >{{item.label}}</el-checkbox>
-              </el-checkbox-group> -->
-						</el-form-item>
-					</el-col>
-					<el-col :span="20">
-						<el-form-item :label="$t('manager.ps_discount')+':'" prop="name">
-							<el-radio-group v-model="batchEditPriceForm.discounts">
-								<el-radio :label="1">{{$t('manager.ps_upword')}}</el-radio>
-								<el-radio :label="2">{{$t('manager.ps_down')}}</el-radio>
-								<el-radio :label="3">{{$t('manager.ps_fourAndFive')}}</el-radio>
-								<el-radio :label="4">{{$t('manager.ps_keep')}}</el-radio>
-							</el-radio-group>
 						</el-form-item>
 					</el-col>
 				</el-form>
 			</el-row>
-			<el-table ref="multipleTable" :data="batchEditPriceForm.roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+			<el-table ref="multipleTable" :data="ruleForm_Pie.roomStrategyJson" tooltip-effect="dark" default-expand-all
+				 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
-				<el-table-column prop="name" :label="$t('manager.ps_changPriceWay')">
+				<el-table-column prop="personNum" label="人数"></el-table-column>
+				<el-table-column prop="customPrice" label="价格 (住宿价)"></el-table-column>
+				
+				<el-table-column prop="newCustomPrice" label="调改价" width="250">
+					<template slot-scope="scope">
+						<el-input v-model="scope.row.newCustomPrice"></el-input>
+					</template>
+				</el-table-column>
+				
+				<el-table-column prop="name" label="附餐">
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline">
-							<!-- <el-select
-                v-model="row.adjustType"
-                :placeholder="$t('manager.hk_pleaseSelect')"
-                style="width: 150px;"
-                @change="change(row)"
-              >
-                <el-option :label="$t('manager.ps_discount')" value="1"></el-option>
-                <el-option :label="$t('manager.ps_fixedPrice')" value="2"></el-option>
-              </el-select> -->
-							<el-input value="一口价" :disabled="true"></el-input>
-							<span>
-								<el-input v-model.number="row.adjustPrice" style="width: 140px;margin: 0px 15px;"></el-input>
-							</span>
-							<!-- <span v-if="row.adjustType == 2">
-                <el-input
-                  v-model.number="row.content"
-                  min="1"
-                  max="100"
-                  style="width: 140px;margin: 0px 15px;"
-                  @input="priceBlur(row, $index)"
-                ></el-input>
-                {{$t('manager.ps_japanYen')}}
-              </span> -->
+							<el-col>早餐 [A========]</el-col>
+						</el-row>
+						<el-row class="demo-form-inline">
+							<el-col>晚餐 [A========]</el-col>
 						</el-row>
 					</template>
 				</el-table-column>
-				<!-- <el-table-column prop="name" :label="$t('manager.ps_dueTo')">
-          <template slot-scope="{row}">
-            <el-input v-model="row.adjustPrice" :disabled="true"></el-input>
-          </template>
-        </el-table-column> -->
 			</el-table>
 			<el-row style="padding: 20px 0px;">
 				<el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
 				<el-button style="width: 80px;margin-left: 20px; cursor: pointer" @click="back_1">
 					{{$t('commons.back')}}</el-button>
 			</el-row>
-		</el-row>
+		</el-dialog>
 
+		<!-- ===================修改单价==================================== -->
 		<el-dialog top="0" :title="$t('manager.ps_resetRoomPrice')" :visible.sync="editPriceDialog" :close-on-click-modal="false"
 		 width="30%" class="editPriceDialog">
 			<el-form ref="discountForm" :model="editPriceForm" label-width="120px">
@@ -158,31 +115,25 @@
 
 <script>
 	export default {
+		props: ['ruleForm'],
 		data() {
 			return {
 				tab1_show: true,
-				radio: "",
-				value: "",
-				batchEditPriceForm: {
-					time: "", //开始日期跟结束日期在一起
-					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
-					channel: "1",
-					startTime: "",
-					endTime: "",
-					weeks: [],
-					discounts: 4,
-					roomStrategyJson: [],
+				search_d: {
+					strategyTime: new Date().Format("yyyy-MM-dd"),
+					priceCalend: '',
+					timeType: 1,
+					roomTypeId: ''
 				},
-				ruleForm: {
-					// date: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
-					date: new Date().Format("yyyy-MM-dd"),
-					region: "",
-					date1: "",
-					date2: "",
-					delivery: false,
-					type: [],
-					resource: "",
-					desc: "",
+				roomType: [],
+				dateList: [],
+				
+				PieDialog: false,
+
+				ruleForm_Pie: {
+					time: '',
+					weeks: [],
+					roomStrategyJson: [],
 				},
 				loading: false,
 				editPriceDialog: false, //修改房价dialog
@@ -251,6 +202,10 @@
 
 
 		mounted() {
+			// debugger
+			this.search_d.priceCalend = this.ruleForm.roomType == 1 ? '3' : '4';
+			this.search_d.roomTypeId = this.ruleForm.id
+
 			this.weekDays.push({
 				label: this.$t('commons.all'),
 				value: ""
@@ -445,45 +400,49 @@
 
 			// 会员 价格策略单位列表
 			get_hotel_price_room_type_list() {
-				let params = {
-					strategyTime: this.ruleForm.date,
-					priceCalend: 1, // 检索类型 1会员价格日历 2单位价格日历
-					timeType: 1, // 检索类型 1会员价格日历 2单位价格日历
-				};
+				// @param userId       登录者id String必填
+				//  * @param storesNum    门店编号 String 必填
+				//  * @param priceCalend  检索类型 3客房日历 4会议厅日历
+				//  * @param strategyTime 时间筛选 yyyy-MM-dd格式 String必填 默认当前时间
+				//  * @param timeType     时间前推后推类别 1前推15天 2后推15天 int必填
+				//  * @param roomTypeId   客房或会议厅房型id  string必填
+				let params = this.search_d;
 				this.$F.doRequest(
 					this,
-					"/pms/hotel/hotel_price_room_type_list",
+					"/pms/hotel/hotel_price_guest_chamber_list",
 					params,
 					(res) => {
-						let index = 1;
-						res.memberTypeList.forEach((memberType) => {
-							index += 1;
-							memberType.id2 = index;
-							memberType.roomTypeList.forEach((roomType) => {
-								index += 1;
-								roomType.id2 = index;
-							});
-						});
-						// ;
-						this.memberTableData = res;
-						this.batchEditPriceForm.roomStrategyJson = [];
-						this.memberTableData.memberTypeList[0].roomTypeList.forEach(
-							(item) => {
-								this.batchEditPriceForm.roomStrategyJson.push({
-									roomTypeId: item.id,
-									marketPrice: item.marketPrice,
-									adjustType: "2",
-									houseName: item.houseName,
-									content: "",
-									adjustPrice: "",
+
+						this.roomType.push(res.roomType)
+						this.roomType.forEach((value, index) =>{
+							if(value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
+								let arr = value.personPrice.split(',')
+								let arry = arr.filter(function(el) {
+									return el !== '';
 								});
+								
+								if (value.mealBreakfastObject) {
+									value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice)
+								}
+								if (value.mealDinnerObject) {
+									value.onePrice = Number(arr[0]) + Number(value.mealDinnerObject.mealPrice)
+								}
+								if (value.mealDinnerObject && value.mealBreakfastObject) {
+									value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
+								}
+								
+								if (!value.mealDinnerObject && !value.mealBreakfastObject) {
+									value.onePrice = Number(arr[0])
+								}
 							}
-						);
-						this.memberTableHeads = res.dateList;
-						this.memberTableHeads.unshift({
-							dateStr: this.roomPrice,
+							
+						})
+						this.dateList = res.dateList
+						this.dateList.unshift({
+							dateStr: '房型/房价',
 							weekDay: "",
 						});
+
 						this.$forceUpdate();
 					}
 				);
@@ -491,7 +450,7 @@
 			popup(type, value) {
 				switch (type) {
 					case "adjust":
-						this.tab1_show = false;
+						this.PieDialog = true;
 						break;
 					case "detail":
 						this.dialogDetail = true;
