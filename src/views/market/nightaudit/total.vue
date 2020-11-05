@@ -42,16 +42,16 @@
     <el-dialog top="0" :visible.sync="recordShow" :title="$t('desk.customer_chooseEnter')" width="600px" class="dialogCom">
  <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
-            <el-table-column prop="enterName" label="夜审时间（自然日）"></el-table-column>
-            <el-table-column prop="enterName" label="夜审营业日" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterName" label="夜审结果" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" :label="$t('desk.night_auditTime')"></el-table-column>
+            <el-table-column prop="enterName" :label="$t('desk.night_auditDay')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" :label="$t('desk.night_auditResults')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
         <!--分页 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.page" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.page_num" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
         <div slot="footer" class="dialog-footer">
-            <el-button size="small" type="primary" class="grey" @click="recordShow=false">关闭</el-button>
+            <el-button size="small" type="primary" class="grey" @click="recordShow=false">{{$t('commons.close')}}</el-button>
         </div>
     </el-dialog>
 </div>

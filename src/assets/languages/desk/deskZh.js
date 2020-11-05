@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-04 16:51:26
+ * @LastEditTime: 2020-11-05 15:28:24
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -687,24 +687,16 @@ module.exports = {
     customer_sureDelete: '确认删除该单位',
     customer_payCardSucc: '补收卡费成功',
     customer_payShould: '支付费用必须大于0',
-    customer_chooseEnter: '选择企业',
     customer_: '',
     customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
+   //夜审（night）
+    night_chooseEnter:'选择企业',
+    night_auditTime:'夜审时间（自然日）',
+    night_auditDay:'夜审营业日',
+    night_auditResults:'夜审结果',
+    night_:'',
+    night_:'',
+   
 
+    
 }

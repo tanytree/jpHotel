@@ -678,7 +678,11 @@ module.exports = {
     customer_sureDelete: '未翻译词条',
     customer_payCardSucc: '未翻译词条',
     customer_payShould: '未翻译词条',
-    customer_chooseEnter: '未翻译词条',
+    night_chooseEnter:'未翻译词条',
+    night_auditTime:'日時更新時間（営業日）',
+    night_auditDay:'日時更新日',
+    night_auditResults:'日時更新結果',
+   
     
 
  

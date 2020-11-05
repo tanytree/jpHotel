@@ -32,12 +32,12 @@
                                     <div class="pop">
                                         <div class="pop-title">{{popover.name}}</div>
                                         <ul class="printMsg">
-                                            <li><span class="label">打印时间：</span><span>{{popover.updateTime}}</span></li>
+                                            <li><span class="label">{{$t('desk.home_printTime')+':'}}</span><span>{{popover.updateTime}}</span></li>
                                             <el-divider></el-divider>
-                                            <li><span class="label">物品名称：</span><span>{{popover.ename}}</span></li>
-                                            <li><span class="label">领取编号：</span><span>{{popover.storesNum}}</span></li>
+                                            <li><span class="label">{{$t('manager.hp_goodsName')+':'}}</span><span>{{popover.ename}}</span></li>
+                                            <li><span class="label">{{$t('desk.home_getNum')+':'}}</span><span>{{popover.storesNum}}</span></li>
                                             <el-divider></el-divider>
-                                            <li><span class="label">寄存时间：</span><span>{{popover.createTime}}</span></li>
+                                            <li><span class="label">{{$t('desk.home_checkTheTime')+':'}}</span><span>{{popover.createTime}}</span></li>
                                         </ul>
                                         <div class="remark" v-html="popover.remark" />
                                     </div>
