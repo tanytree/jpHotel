@@ -31,10 +31,10 @@
                             <el-table-column prop="sellName" :label="$t('desk.order_goodsType')" show-overflow-tooltip></el-table-column>
                             <el-table-column prop="retailPrice" :label="$t('desk.order_goodsUnit')" show-overflow-tooltip></el-table-column>
                             <el-table-column prop="employeePrice" :label="$t('desk.order_empoyeePrice')" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="inventoryCount" :label="$t('desk.customer_inventory')" show-overflow-tooltip></el-table-column>
+                            <!-- <el-table-column prop="inventoryCount" :label="$t('desk.customer_inventory')" show-overflow-tooltip></el-table-column> -->
                             <el-table-column :label="$t('commons.operating')">
                                 <template slot-scope="scope">
-                                    <el-button :disabled="scope.row.inventoryCount == 0" size="mini" @click="addCart(scope.row,scope.$index)">{{$t('desk.customer_add')}}</el-button>
+                                    <el-button size="mini" @click="addCart(scope.row,scope.$index)">{{$t('desk.customer_add')}}</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -177,8 +177,6 @@ export default {
                     sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
                 });
             }
-
-
             return sum.toFixed(0);
         },
         //商品数量
@@ -233,52 +231,53 @@ export default {
         },
         //加入菜单
         addCart(item,index){
-            if(this.tableData[index].inventoryCount > 0){
-                this.tableData[index].inventoryCount -= 1
-                let good = this.cart.find(v=>v.goodsName==item.goodsName)
+            // if(this.tableData[index].inventoryCount > 0){
+            //     this.tableData[index].inventoryCount -= 1
+            //     let good = this.cart.find(v=>v.goodsName==item.goodsName)
+                let good = this.cart[index]
                 if(good){
                   good.count += 1
                 }else{
                   this.cart.push({...item,count:1})
                 }
-            }else{
-                this.$alert(this.$t('desk.order_nofood'), this.$t('commons.tip_desc'), {
-                  confirmButtonText: this.$t('commons.confirm'),
-                  callback: action => {
-                  }
-                });
-            }
+            // }else{
+            //     this.$alert(this.$t('desk.order_nofood'), this.$t('commons.tip_desc'), {
+            //       confirmButtonText: this.$t('commons.confirm'),
+            //       callback: action => {
+            //       }
+            //     });
+            // }
         },
 
         //购物车的加减 type = 1 是减少  2 是添加
         changeCartCount(v,type){
             let info  = this.cart[v]
-            let good = this.tableData.find(v=>v.id==info.id)
+            // let good = this.tableData.find(v=>v.id==info.id)
             if(type == 1){
                 info.count-= 1
-                good.inventoryCount += 1
+                // good.inventoryCount += 1
                 if(info.count == 0){
                     this.cart.splice(v,1)
                     return false
                 }
             }else{
-                if(good.inventoryCount == 0){
-                    this.$alert(this.$t('desk.order_nofood'), this.$t('commons.tip_desc'), {
-                      confirmButtonText: this.$t('commons.confirm'),
-                      callback: action => {
-                      }
-                    });
-                    return false
-                }else{
+                // if(good.inventoryCount == 0){
+                //     this.$alert(this.$t('desk.order_nofood'), this.$t('commons.tip_desc'), {
+                //       confirmButtonText: this.$t('commons.confirm'),
+                //       callback: action => {
+                //       }
+                //     });
+                //     return false
+                // }else{
                     info.count+= 1
-                    good.inventoryCount -= 1
-                }
+                //     good.inventoryCount -= 1
+                // }
             }
 
         },
         handleDelete(item,index){
-            let good = this.tableData.find(v=>v.id==item.id)
-            good.inventoryCount = good.inventoryCount + item.count
+            // let good = this.tableData.find(v=>v.id==item.id)
+            // good.inventoryCount = good.inventoryCount + item.count
             this.cart.splice(index,1)
             if(this.cart.length == 0){
                 this.getDataList();

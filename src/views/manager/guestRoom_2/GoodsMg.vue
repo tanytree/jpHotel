@@ -276,7 +276,6 @@
                 } else {
                     this.rowData.categoryId = value[value.length - 1];
                 }
-
             },
             hideRow({row, rowIndex}) {
                 if (row.status !== 1) {

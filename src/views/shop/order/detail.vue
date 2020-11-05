@@ -147,7 +147,6 @@
             },
             getFinalFee(data){
                 // console.log(this.info)
-
                 //data.priceModel == 2 按时间 data.priceModel == 1 按次
                 if(data.priceModel == 2){
                     let startPrice = data.startPrice
