@@ -10,16 +10,16 @@
     <el-form inline size="small">
         <el-row>
             <el-form-item label="">
-                <el-button type="primary" size="mini" @click="entryShow=true">{{$t('desk.enterAccount')}}</el-button>
-                <el-button type="primary" size="mini" @click="onAccountShow=true">{{ $t('desk.charge') }}</el-button>
-                <el-button type="primary" size="mini" @click="consumeGoodsHandle">{{ $t('desk.serve_miniPub') }}</el-button>
-                <el-button type="primary" size="mini" @click="checkOutHandle">{{ $t('desk.order_checkout') }}</el-button>
-                <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
+                <el-button type="primary" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccount')}}</el-button>
+                <el-button type="primary" size="mini" @click="onAccountShow=true" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
+                <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
+                <el-button type="primary" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
+                <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
-                <el-button type="primary" size="mini" @click="destructionHandle">{{$t('desk.customer_rich')}}</el-button>
+                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_rich')}}</el-button>
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
                 <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>
-                <el-button type="primary" size="mini" @click="knotShow=true">{{$t('desk.order_goTie')}}</el-button>
+                <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button>
             </el-form-item>
         </el-row>
         <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -505,10 +505,7 @@ export default {
             this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', {
                 checkInId: this.checkInId
             }, res => {
-                this.$message({
-                    type: 'success',
-                    message: this.$t('commons.request_success'),
-                });
+                this.$router.push("/orders?type=order");
             }, res => {
                 this.$message(res.message);
             })
@@ -668,7 +665,7 @@ export default {
             }
             this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
                 this.knotShow = false
-                this.consume_order_list()
+                this.$router.push("/orders?type=order");
             })
         },
 

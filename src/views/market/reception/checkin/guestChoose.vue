@@ -55,7 +55,11 @@ export default {
         },
 
         submit() {
-            this.$emit("guestChooseCallback", this.checkInForm);
+            if (this.checkInForm.guestType == 2 && this.checkInForm.memberCard) {
+                this.$emit("guestChooseCallback", this.checkInForm);
+            } else if (this.checkInForm.guestType == 3 && this.checkInForm.enterId) {
+                this.$emit("guestChooseCallback", this.checkInForm);
+            }
             this.guestTypeShow = false;
         },
 

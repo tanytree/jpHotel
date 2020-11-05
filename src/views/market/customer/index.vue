@@ -25,20 +25,6 @@
         <company v-if="item.path == 'company'" />
       </el-tab-pane>
     </el-tabs>
-    <!--    <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
-    <!--      <el-tab-pane label="会员管理" name="first">-->
-    <!--        <member />-->
-    <!--      </el-tab-pane>-->
-    <!--      <el-tab-pane label="客史档案" name="second">-->
-    <!--        <history />-->
-    <!--      </el-tab-pane>-->
-    <!--      <el-tab-pane label="外宾管理" name="third">-->
-    <!--        <guest />-->
-    <!--      </el-tab-pane>-->
-    <!--      <el-tab-pane label="单位管理" name="four">-->
-    <!--        <company />-->
-    <!--      </el-tab-pane>-->
-    <!--    </el-tabs>-->
   </div>
 </template>
 
@@ -56,10 +42,11 @@ export default {
     };
   },
   mounted() {
-    this.activeName = this.$store.state.taozi.activeName;
+
   },
   created() {
     this.$F.handleThirdMenu(this);
+      this.activeName = this.$store.state.taozi.activeName;
   },
   methods: {
     //二级tab切片

@@ -137,7 +137,7 @@
                 <el-col :span="14">{{detailsData.userName}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">状态:</el-col>
+                <el-col :span="8">{{ $t('boss.loginDetail_state') }}:</el-col>
                 <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">

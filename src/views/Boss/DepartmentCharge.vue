@@ -15,7 +15,12 @@
                     tooltip-effect="dark"
                     :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
                 >
-                    <el-table-column prop="menuTitle" :label="$t('boss.department_name')"></el-table-column>
+                    <el-table-column :label="$t('boss.department_name')">
+                        <template slot-scope="{row}">
+                            {{$i18n.locale == 'ri' ? row.japanese : row.menuTitle}}
+                        </template>
+
+                    </el-table-column>
                     <el-table-column :label="$t('boss.department_head')">
                         <template slot-scope="{row}">
                             <span v-if="row.header_name">{{row.header_name}}</span>
@@ -231,6 +236,7 @@
                 this.dialog_info.header = params.header;
                 this.dialog_info.header_name = params.header_name;
                 this.get_dialogList(value);
+
                 this.dialogTableVisible = true;
             },
         },

@@ -14,12 +14,12 @@
                 <!--            &lt;!&ndash; 会员类型管理&ndash;&gt;-->
                 <MemberTypeManager v-if="item.path == 'MemberTypeManager'" :memberTypeList="memberTypeList"/>
                 <!--            &lt;!&ndash; 会员变更规则&ndash;&gt;-->
-                <ChangeRules v-if="item.path == 'member-change'" :memberTypeList="memberTypeList"/>
+<!--                <ChangeRules v-if="item.path == 'member-change'" :memberTypeList="memberTypeList"/>-->
                 <!--            &lt;!&ndash; 会员价格&ndash;&gt;-->
-                <Memberprice v-if="item.path == 'member-price'" :memberTypeList="memberTypeList"/>
+<!--                <Memberprice v-if="item.path == 'member-price'" :memberTypeList="memberTypeList"/>-->
                 <!--            &lt;!&ndash; 会员查询&ndash;&gt;-->
                 <!--                <Vipquery v-if="item.path == 'member-query'" :memberTypeList="memberTypeList"/>-->
-                <Member v-if="item.path == 'member-query'"/>
+                <MemberInfo v-if="item.path == 'member-query'" type="header"/>
                 <!--            &lt;!&ndash; 积分设置&ndash;&gt;-->
                 <Intergtal v-if="item.path == 'member-integral-set'" :memberTypeList="memberTypeList"/>
             </el-tab-pane>
@@ -34,9 +34,10 @@ import Memberprice from './member/memberPrice'
 // import Vipquery from './member/vipquery'
 import Member from '@/views/market/customer/member'
 import Intergtal from './member/integtal'
+import MemberInfo from '@/views/market/customer/vip/info'
 
 export default {
-    components: { MemberTypeManager, ChangeRules, Memberprice, Member, Intergtal },
+    components: { MemberTypeManager, ChangeRules, Memberprice, Member, Intergtal, MemberInfo },
     data () {
         return {
             menuList: [],
@@ -50,7 +51,9 @@ export default {
             this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
             this.$forceUpdate()
         }
-        this.activeName = this.$F.filterThirdMenu(null, null, false, true).path;
+        debugger
+        let activeName = this.$F.filterThirdMenu(null, null, false, true).path;
+        this.activeName = this.$store.state.taozi.memberName || activeName;
     },
     mounted () {
         this.getMemberTypeList()

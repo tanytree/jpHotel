@@ -277,14 +277,14 @@ export default {
                     {required: true, message: this.$t('commons.placeChoose'), trigger: "change"},
                 ],
                 price: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
-                remark: [{required: true, message: "请填写备注", trigger: "blur"}],
+                remark: [{required: true, message: this.$t('desk.customer_inputRemark'), trigger: "blur"}],
             },
             examine: {type: 1, remark: ""},
             examineRule: {
                 type: [
                     {required: true, message: this.$t('commons.placeChoose'), trigger: "change"},
                 ],
-                remark: [{required: true, message: "请填写备注", trigger: "blur"}],
+                remark: [{required: true, message: this.$t('desk.customer_inputRemark'), trigger: "blur"}],
             },
         };
     },

@@ -18,12 +18,12 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="mealPrice" label="套餐价格/顿" align="center" width="150"></el-table-column>
-                <el-table-column label="状态" align="center" width="120">
+                <el-table-column :label="$t('boss.loginDetail_state')" align="center" width="120">
                     <template slot-scope="scope">
                         <span>{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="remark" label="备注" align="center" width="250"></el-table-column>
+                <el-table-column prop="remark" :label="$t('desk.home_note')" align="center" width="250"></el-table-column>
                 <el-table-column :label="$t('commons.operating')" align="center" width="200">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
@@ -54,13 +54,13 @@
                         <el-radio :label="2">晚餐</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="状态：">
+                <el-form-item :label="$t('boss.loginDetail_state')+ '：'">
                     <el-radio-group v-model="meal.state">
                         <el-radio :label="1">{{$t('commons.enable')}}</el-radio>
                         <el-radio :label="2">{{$t('commons.disable')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="备注：">
+                <el-form-item :label="$t('desk.home_note') + '：'">
                     <el-input type="textarea" :rows="4" resize="none" v-model="meal.remark"></el-input>
                 </el-form-item>
             </el-form>

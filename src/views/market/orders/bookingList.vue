@@ -165,9 +165,9 @@
                         <el-button type="primary" @click="initForm">{{
                             $t("commons.resetBtn")
                         }}</el-button>
-                        <el-button type="primary">{{
-                            $t("commons.exportBtn")
-                        }}</el-button>
+<!--                        <el-button type="primary">{{-->
+<!--                            $t("commons.exportBtn")-->
+<!--                        }}</el-button>-->
                     </el-form-item>
                 </el-row>
             </el-form>

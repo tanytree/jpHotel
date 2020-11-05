@@ -3,13 +3,17 @@
 const state = {
   "activeName": 'member',
   'bookingName': 'normal',
-  'bookingSubName': 'b3'
+  'bookingSubName': 'b3',
+    'memberName': 'MemberTypeManager',
 };
 
 
 const mutations = {
   resetActive(state, data) {
     state.activeName = data;
+  },
+    resetMemberTab(state, data) {
+    state.memberName = data;
   },
   resetBookingName(state, data) {
     state.bookingName = data;

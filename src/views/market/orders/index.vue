@@ -13,7 +13,7 @@
                        :key="item.path"
                        v-if="$F.filterThirdMenu('frontOffice', item.path, true)">
               <!-- 预订单-->
-              <booking v-if="item.path == 'booking'" ref="booking"/>
+              <bookingList v-if="item.path == 'booking'" ref="booking"/>
               <!-- 订单查询-->
               <order v-if="item.path == 'order'" ref="order"/>
               <!-- 赔偿记录-->
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import booking from "./booking";
+import bookingList from "./bookingList";
 import order from "./orderlist";
 import compensate from "./compensate";
 import mainShow from '@/components/main/mainView'
 
 export default {
-  components: { booking, order, compensate, mainShow },
+  components: { bookingList, order, compensate, mainShow },
   data() {
     return {
         mainShow: false,

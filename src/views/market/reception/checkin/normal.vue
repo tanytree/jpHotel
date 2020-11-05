@@ -51,29 +51,16 @@
                         >
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('commons.idCardTypeDesc')"
-                    prop="idcardType"
-                >
+                <el-form-item :label="$t('commons.idCardTypeDesc')" prop="idcardType">
                     <el-select v-model="checkInForm.idcardType">
-                        <el-option
-                            :value="key"
-                            v-for="(item, key, index) of $t(
-                                'commons.idCardType'
-                            )"
-                            :label="item"
-                            :key="index"
-                        ></el-option>
+                        <el-option :value="key" v-for="(item, key, index) of $t( 'commons.idCardType' )" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.customer_idNo')+':'" prop="idcard">
                     <el-input v-model="checkInForm.idcard"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'a1'">
-                    <el-form-item
-                        :label="$t('frontOffice.nightAudit.checkInTime')"
-                        prop="checkinTime"
-                    >
+                    <el-form-item :label="$t('frontOffice.nightAudit.checkInTime')" prop="checkinTime">
                         <el-date-picker
                             v-model="checkInForm.checkinTime"
                             disabled
@@ -83,10 +70,7 @@
                             :picker-options="startTime"
                         ></el-date-picker>
                     </el-form-item>
-                    <el-form-item
-                        :label="$t('desk.order_departureTime')"
-                        prop="checkoutTime"
-                    >
+                    <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
                         <el-date-picker
                             v-model="checkInForm.checkoutTime"
                             type="datetime"
@@ -100,26 +84,13 @@
                 <template v-if="operCheckinType == 'a2'">
                     <el-form-item :label="$t('desk.customer_accountRules')+':'" prop="ruleHourId">
                         <el-select v-model="checkInForm.ruleHourId">
-                            <el-option
-                                v-for="item in ruleHourList"
-                                :key="item.id"
-                                :label="item.ruleName"
-                                :value="item.id"
-                            ></el-option>
+                            <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
                 </template>
                 <el-form-item :label="$t('desk.order_salesman') + '：'">
-                    <el-select
-                        v-model="checkInForm.salesId"
-                        :placeholder="$t('commons.placeChoose')"
-                    >
-                        <el-option
-                            v-for="item in salesList"
-                            :key="item.id"
-                            :label="item.userName"
-                            :value="item.id"
-                        ></el-option>
+                    <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">
+                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_outOrder') + '：'">
@@ -133,8 +104,8 @@
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_sourceType')" prop="guestType">
                     <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
-                        <template slot="append">
-                            <span @click="popup('guestTypeShow')">…</span>
+                        <template slot="append" >
+                            <span @click="popup('guestTypeShow')" style="padding: 10px">…</span>
                         </template>
                     </el-input>
                 </el-form-item>
@@ -142,18 +113,8 @@
                     :label="$t('desk.book_orderSoutce')"
                     prop="orderSource"
                 >
-                    <el-select
-                        v-model="checkInForm.orderSource"
-                        :placeholder="$t('commons.placeChoose')"
-                    >
-                        <el-option
-                            :value="key"
-                            v-for="(item, key, index) of $t(
-                                'commons.orderSource'
-                            )"
-                            :label="item"
-                            :key="index"
-                        ></el-option>
+                    <el-select v-model="checkInForm.orderSource" :placeholder="$t('commons.placeChoose')">
+                        <el-option :value="key" v-for="(item, key, index) of $t( 'commons.orderSource' )" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">-->
@@ -168,20 +129,8 @@
                     ></el-input>
                 </el-form-item>
             </el-form>
-            <el-form
-                ref="checkInForm"
-                class="inForm"
-                inline
-                size="small"
-                :model="checkInForm"
-                :rules="rules"
-                label-width="120px"
-                v-if="
-                    operCheckinType == 'b1' ||
-                    operCheckinType == 'b2' ||
-                    operCheckinType == 'b3'
-                "
-            >
+            <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules"
+                     label-width="120px" v-if=" operCheckinType == 'b1' || operCheckinType == 'b2' || operCheckinType == 'b3'">
                 <el-form-item
                     :label="$t('desk.customer_livePeople')"
                     prop="name"
@@ -205,14 +154,7 @@
                     prop="orderSource"
                 >
                     <el-select v-model="checkInForm.orderSource">
-                        <el-option
-                            :value="key"
-                            v-for="(item, key, index) of $t(
-                                'commons.orderSource'
-                            )"
-                            :label="item"
-                            :key="index"
-                        ></el-option>
+                        <el-option :value="key" v-for="(item, key, index) of $t( 'commons.orderSource' )" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType" v-if="operCheckinType!='b3'">-->
@@ -224,16 +166,8 @@
                     :label="$t('desk.order_salesman') + '：'"
                     v-if="operCheckinType == 'b3'"
                 >
-                    <el-select
-                        v-model="checkInForm.salesId"
-                        :placeholder="$t('commons.placeChoose')"
-                    >
-                        <el-option
-                            v-for="item in salesList"
-                            :key="item.id"
-                            :label="item.userName"
-                            :value="item.id"
-                        ></el-option>
+                    <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">
+                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <!--                <el-form-item label="计费规则：" prop="ruleHourId" v-if="operCheckinType=='b2'">-->
@@ -241,10 +175,7 @@
                 <!--                        <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>-->
                 <!--                    </el-select>-->
                 <!--                </el-form-item>-->
-                <el-form-item
-                    :label="$t('desk.arrivalTime')"
-                    prop="checkinTime"
-                >
+                <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
                     <el-date-picker
                         v-model="checkInForm.checkinTime"
                         type="datetime"
@@ -255,22 +186,10 @@
                         @change="startTimeChange"
                     ></el-date-picker>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('desk.checkInDays')"
-                    prop="checkinDays"
-                    v-if="operCheckinType == 'b1'"
-                >
-                    <el-input-number
-                        v-model="checkInForm.checkinDays"
-                        :step="1"
-                        :min="1"
-                        @change="checkinDaysChange"
-                    ></el-input-number>
+                <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays" v-if="operCheckinType == 'b1'">
+                    <el-input-number v-model="checkInForm.checkinDays" step="1" min="1" @change="checkinDaysChange"></el-input-number>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('desk.order_departureTime')"
-                    prop="checkoutTime"
-                >
+                <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
                     <el-date-picker
                         v-model="checkInForm.checkoutTime"
                         type="datetime"
@@ -298,26 +217,12 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('desk.order_salesman') + '：'"
-                    v-if="operCheckinType != 'b3'"
-                >
-                    <el-select
-                        :placeholder="$t('commons.placeChoose')"
-                        v-model="checkInForm.salesId"
-                    >
-                        <el-option
-                            v-for="item in salesList"
-                            :key="item.id"
-                            :label="item.userName"
-                            :value="item.id"
-                        ></el-option>
+                <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType != 'b3'">
+                    <el-select :placeholder="$t('commons.placeChoose')" v-model="checkInForm.salesId">
+                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('desk.order_outOrder') + '：'"
-                    v-if="operCheckinType != 'b3'"
-                >
+                <el-form-item :label="$t('desk.order_outOrder') + '：'" v-if="operCheckinType != 'b3'">
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'b3'">
@@ -374,35 +279,34 @@
                             }}</el-button>
                             <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
                                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}</el-button>
-                            <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
-                                <i v-loading="liveCardLoading"></i>{{ $t("desk.home_makeCard") }}</el-button>
+<!--                            <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">-->
+<!--                                <i v-loading="liveCardLoading"></i>{{ $t("desk.home_makeCard") }}</el-button>-->
                         </el-form-item>
                     </el-form>
                     <div class="roomBtm checked">
-                        <div
-                            class="checkRoom"
-                            v-for="(v, index) in waitingRoom"
-                            :key="index"
-                        >
+                        <div class="checkRoom" v-for="(v, index) in waitingRoom" :key="index">
                             <div class="row rowReverse">
                                 <div>
                                     <!--                                    <el-button type="primary" class="white" size="mini" @click="">附餐</el-button>-->
+                                    <!-- 排房-->
                                     <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)">{{ $t("desk.rowHouse") }}</el-button>
                                 </div>
                                 <div>
-                                    <span>{{ v.roomTypeName }}</span
-                                    ><span class="text-red">{{ v.num }}{{$t('manager.hk_space')}}</span>
+                                    <span>{{ v.roomTypeName }}</span>
+                                    <span class="text-red">{{ v.num }}
+                                        {{$t('manager.hk_space')}}
+                                    </span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="tags margin-t-5">
                                     <el-button class="roomNumTag" size="mini" v-for="(item, i) of v.roomsArr" :key="i">
-                                        {{ item.houseNum }}<span class="del" @click=" delete_db_row_houses( v, item.id, i )">✕ {{ $t("desk.customer_remove") }}</span></el-button>
+                                        {{ item.houseNum }}
+                                        <span class="del" @click=" delete_db_row_houses( v, item.id, i )">✕ {{ $t("desk.customer_remove") }}</span>
+                                    </el-button>
                                 </div>
                             </div>
-                            <!--                            <div class="row rowReverse">-->
-                            <!--                                <el-input-number class="margin-t-5" @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>-->
-                            <!--                            </div>-->
+
                         </div>
                     </div>
                 </div>
@@ -440,20 +344,9 @@
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_attribute') + ':'" class="" style="margin-bottom: 0">
-                    <el-checkbox  v-model="hotelRoomListParams.windowFlag"
-                        @change="hotel_room_list"
-                        >{{$t('desk.home_haveWindow')}}</el-checkbox
-                    >
-                    <el-checkbox
-                        v-model="hotelRoomListParams.roadFlag"
-                        @change="hotel_room_list"
-                        >{{$t('desk.home_onRoad')}}</el-checkbox
-                    >
-                    <el-checkbox
-                        v-model="hotelRoomListParams.smokeFlag"
-                        @change="hotel_room_list"
-                        >{{$t('desk.home_noSmoke')}}</el-checkbox
-                    >
+                    <el-checkbox  v-model="hotelRoomListParams.windowFlag" @change="hotel_room_list">{{$t('desk.home_haveWindow')}}</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.roadFlag" @change="hotel_room_list">{{$t('desk.home_onRoad')}}</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.smokeFlag" @change="hotel_room_list">{{$t('desk.home_noSmoke')}}</el-checkbox>
 
                 </el-form-item>
                 <div class="rowRoomsList">
@@ -496,10 +389,7 @@
                     hasChildren: 'hasChildren',
                 }"
             >
-                <el-table-column
-                    :label="$t('desk.customer_roomKind')"
-                    width="100"
-                >
+                <el-table-column :label="$t('desk.customer_roomKind')" width="100">
                     <template slot-scope="scope">
                         {{ scope.row.isChild ? "" : scope.row.houseNum }}
                         {{ scope.row.isChild ? "" : scope.row.roomTypeName }}
@@ -512,33 +402,15 @@
                 <el-table-column :label="$t('desk.home_name')" width="150">
                     <template slot-scope="{ row }">
                         <el-row>
-                            <el-input
-                                v-model="row.name"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
+                            <el-input v-model="row.name" :placeholder="$t('commons.pleaseEnter')"></el-input>
                         </el-row>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('commons.idCardTypeDesc')"
-                    width="150"
-                >
+                <el-table-column prop="groupName" :label="$t('commons.idCardTypeDesc')" width="150">
                     <template slot-scope="{ row }">
                         <el-row>
-                            <el-select
-                                v-model="row.idcardType"
-                                style="width: 100%"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    :value="key"
-                                    v-for="(item, key, index) of $t(
-                                        'commons.idCardType'
-                                    )"
-                                    :label="item"
-                                    :key="index"
-                                ></el-option>
+                            <el-select v-model="row.idcardType" style="width: 100%" :placeholder="$t('commons.placeChoose')">
+                                <el-option :value="key" v-for="(item, key, index) of $t( 'commons.idCardType' )" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-row>
                     </template>
@@ -924,7 +796,7 @@ export default {
             checkInForm: {
                 checkInRoomJson: [],
             },
-           
+
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             roomList: [], //表格数据
@@ -1173,23 +1045,12 @@ export default {
                             type: "success",
                         });
                         window.setTimeout(() => {
-                            if (
-                                operCheckinType == "a1" ||
-                                operCheckinType == "a2"
-                            ) {
-                                this.$router.push(
-                                    "/orderdetail?id=" +
-                                        (data.checkInReserveId ||
-                                            data.checkinId)
-                                );
+                            if (operCheckinType == "a1" || operCheckinType == "a2") {
+                                this.$router.push("/orderdetail?id=" + (data.checkInReserveId || data.checkinId));
                             } else {
-                                this.$router.push(
-                                    "/bookingDetail?id=" +
-                                        (data.checkInReserveId ||
-                                            data.checkinId)
-                                );
+                                this.$router.push("/bookingDetail?id=" + (data.checkInReserveId || data.checkinId));
                             }
-                        }, 500);
+                        }, 200);
                     } else if (type == 3) {
                         this.$message({
                             message: this.$t("commons.request_success"),
@@ -1381,32 +1242,22 @@ export default {
         },
         //手动排房确定
         db_row_houses() {
-            if (
-                this.rowRoomCurrentItem.roomsArr.length >
-                this.rowRoomCurrentItem.num
-            ) {
+            if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t('desk.home_morethenNum'));
                 return;
             }
+            let array = [];
             this.rowRoomCurrentItem.roomsArr.forEach((item) => {
-                let ids = [];
-                this.rowRoomCurrentItem.roomsArr.map((item) => {
-                    ids.push(item.id);
-                });
-                this.checkInForm.checkInRoomJson.push({
-                    roomTypeId: this.rowRoomCurrentItem.roomTypeId,
-                    roomId: ids.join(","),
-                    reservePrice: this.rowRoomCurrentItem.todayPrice,
-                    realPrice: this.rowRoomCurrentItem.price,
-                });
+                array.push({
+                    roomTypeId: item.roomTypeId,
+                    roomId: item.id,
+                    houseNum: item.houseNum,
+                    reservePrice: this.rowRoomCurrentItem.price,
+                    realPrice: this.rowRoomCurrentItem.todayPrice,
+                })
             });
-            this.$message({
-                message: "Success",
-                type: "success",
-            });
-            this.waitingRoom[
-                this.rowRoomCurrentIndex
-            ] = this.rowRoomCurrentItem;
+            this.rowRoomCurrentItem.roomsArr = array;
+            this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
             this.rowRoomShow = false;
         },
 
@@ -1415,10 +1266,7 @@ export default {
             let roomTypeId = [],
                 numbers = [];
             this.waitingRoom.forEach((element) => {
-                let thisNum =
-                    element.num -
-                    (element.roomsArr ? element.roomsArr.length : 0);
-                // number += thisNum
+                let thisNum = element.num - (element.roomsArr ? element.roomsArr.length : 0);
                 numbers.push(thisNum);
                 if (thisNum > 0) {
                     for (let i = 0; i < thisNum; i++) {
@@ -1428,7 +1276,6 @@ export default {
                     }
                 }
             });
-            debugger
             if (numbers.length < 1) return;
             let params = {
                 checkinRoomType: 1,
@@ -1442,11 +1289,8 @@ export default {
             //     params.checkinReserveId = this.checkInForm.checkInId
             // }
             let setRooms = (key, item) => {
-                this.waitingRoom[
-                    this.rowRoomCurrentIndex
-                ] = this.rowRoomCurrentItem;
+                this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
                 this.rowRoomShow = false;
-                console.log(this.waitingRoom);
                 for (let k in this.waitingRoom) {
                     if (this.waitingRoom[k].roomTypeId == key) {
                         if (!this.waitingRoom[k].roomsArr) {
@@ -1471,6 +1315,7 @@ export default {
                 params,
                 (res) => {
                     let data = res;
+                    debugger
                     for (let k in data) {
                         let ids = [];
                         data[k].forEach((item) => {
@@ -1501,22 +1346,13 @@ export default {
                     break;
                 }
             }
-            if (!exist) {
-                // this.rowRoomCurrentItem.roomsArr.push({
-                //     houseNum: item.houseNum,
-                //     id: item.id,
-                //     checkinNum: item.hotelRoomType.checkinNum
-                // })
+            if (!exist)
                 this.rowRoomCurrentItem.roomsArr.push(item);
-            }
             this.$forceUpdate();
             console.log(this.rowRoomCurrentItem);
         },
         checkIsSelect(item) {
-            if (
-                this.rowRoomCurrentItem.roomsArr &&
-                this.rowRoomCurrentItem.roomsArr.length
-            ) {
+            if (this.rowRoomCurrentItem.roomsArr && this.rowRoomCurrentItem.roomsArr.length) {
                 for (let k in this.rowRoomCurrentItem.roomsArr) {
                     if (item.id == this.rowRoomCurrentItem.roomsArr[k].id) {
                         return true;
@@ -1532,12 +1368,10 @@ export default {
             this.addLivePersonShow = false;
         },
         live_in_person_list() {
+            debugger;
             let waitingRoom2 = this.$F.deepClone(this.waitingRoom);
             this.liveData = [];
-            if (
-                this.checkInForm.checkInRoomJson.length > 0 &&
-                this.checkInForm.checkInRoomJson[0].personList.length > 0
-            ) {
+            if (this.checkInForm.checkInRoomJson.length > 0 && this.checkInForm.checkInRoomJson[0].personList && this.checkInForm.checkInRoomJson[0].personList.length > 0) {
                 this.checkInForm.checkInRoomJson.forEach((room, index) => {
                     this.$F.merge(room, room.personList[0]);
                     room.personList.splice(0, 1);

@@ -8,33 +8,21 @@
   <div class="roomDetails">
     <div class="cost margin-t-10">
       <div class="wrap">
-        <span class="fee" v-if="detailData.totalPrice > 0"
-          >{{$t('desk.order_receivable')+':'}}{{ detailData.totalPrice }}</span
-        >
-        <span class="fee" v-if="detailData.totalPrice < 0"
-          >{{$t('desk.order_shouldBack')+':'}}{{ detailData.totalPrice }}</span
-        >
+        <span class="fee" v-if="detailData.totalPrice > 0">{{$t('desk.order_receivable')+':'}}{{ detailData.totalPrice }}</span>
+        <span class="fee" v-if="detailData.totalPrice < 0">{{$t('desk.order_shouldBack')+':'}}{{ detailData.totalPrice }}</span>
         <div class="costNum">
-          <el-row
-            >{{ $t('desk.consumerTotal') }}：<span class="text-red">{{
-              detailData.consumePrice
-            }}</span></el-row
-          >
-          <el-row
-            >{{ $t('desk.payTotal') }}：<span class="text-green">{{
-              detailData.payPrice
-            }}</span></el-row
-          >
+          <el-row>{{ $t('desk.consumerTotal') }}：
+              <span class="text-red">{{ detailData.consumePrice }}</span>
+          </el-row>
+          <el-row>{{ $t('desk.payTotal') }}：
+              <span class="text-green">{{ detailData.payPrice }}</span>
+          </el-row>
         </div>
       </div>
     </div>
     <div class="bd margin-t-10">
       <div class="wrap">
-        <finance
-          :currentRoomId="currentRoomId"
-          :detailData="detailData"
-          @getOrderDetail="getOrderDetail"
-        />
+        <finance :currentRoomId="currentRoomId" :detailData="detailData" @getOrderDetail="getOrderDetail"/>
       </div>
     </div>
   </div>

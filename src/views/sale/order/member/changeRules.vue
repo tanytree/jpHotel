@@ -18,7 +18,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="状态:">
+            <el-form-item :label="$t('boss.loginDetail_state') + ':'">
                 <el-select v-model="form.state">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="启用" value="1"></el-option>
@@ -56,7 +56,7 @@
             </el-table-column>
             <el-table-column prop="updateName" label="修改人" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createName" label="创建人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="状态" show-overflow-tooltip>
+            <el-table-column prop="enterType" :label="$t('boss.loginDetail_state')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <el-switch
                         style="margin-left:10px;"

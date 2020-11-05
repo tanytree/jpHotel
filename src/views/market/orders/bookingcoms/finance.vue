@@ -68,9 +68,11 @@
       <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
 <!--        <p>正在冲调的账务</p>-->
         <el-table v-loading="loading" :data="destructionList" :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }" size="mini">
-          <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip><template slot-scope="{ row }">{{ F_priceType(row.priceType) }}</template></el-table-column>
+          <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
+              <template slot-scope="{ row }">{{ F_priceType(row.priceType) }}</template>
+          </el-table-column>
           <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip>
-              <template scope="{row}">
+              <template slot-scope="{row}">
                   {{row.consumePrice || 0}}
               </template>
           </el-table-column>
@@ -322,7 +324,7 @@ export default {
         payType: "1",
         name: "",
       },
-      
+
     };
   },
 

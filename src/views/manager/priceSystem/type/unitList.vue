@@ -141,7 +141,7 @@
 					<el-col :span="14">{{detail_info.ruleName}}</el-col>
 				</el-row>
 				<el-row>
-					<el-col :span="4" style="color: #898B8E;">状态:</el-col>
+					<el-col :span="4" style="color: #898B8E;">{{ $t('boss.loginDetail_state') }}:</el-col>
 					<el-col :span="14">{{detail_info.state==1? '启用':'禁用'}}</el-col>
 				</el-row>
 				<el-row>
