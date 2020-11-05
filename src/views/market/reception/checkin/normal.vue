@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 16:41:21
+ * @LastEditTime: 2020-11-05 18:02:56
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 
@@ -291,7 +291,7 @@
                     ></el-date-picker>
                 </el-form-item>
 
-                <el-form-item :label="$t('desk.order_sourceType')" prop="guestType">
+                <el-form-item :label="$t('desk.order_sourceType')" prop="guestType"  label-width="140px">
                     <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
                         <template slot="append">
                             <span @click="popup('guestTypeShow')">…</span>

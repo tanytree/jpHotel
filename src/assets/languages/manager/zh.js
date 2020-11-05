@@ -88,6 +88,7 @@ module.exports = {
     //   管理部 > 客房中心 (houseKeeping > hk)
     hk_guestRoom: '客房房型',
     hk_roomName: '房型名称',
+    hk_roomNameA: '房型名称',
 	hk_doorPrice: '价格', // h
     hk_roomNameA: '房型名称',
     hk_roomNameB: '房型名称',
@@ -143,6 +144,8 @@ module.exports = {
     hk_byRoad: '是否靠马路',
     hk_yes: '是',
     hk_no: '否',
+    hk_have: '有',
+    hk_donot:'无',
     hk_ifWindow: '是否有窗',
     hk_guide: '指南',
     hk_designRule: '设计原则',
@@ -182,7 +185,9 @@ module.exports = {
     hk_placeEnterContentA:'请输入内容',
     hk_placeEnterContentB:'请输入内容',
     hk_placeEnterContentC:'请输入内容',
-    hk_:'',
+    hk_newAddRoomType: '新增房型',
+    hk_newAddRoomTypeA: '新增房型',
+    
     hk_:'',
     //   管理部 > 客房二级库 (guestRoomSecondaryLibrary > grsl)
     grsl_goodsMode: '商品类型',

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 10:42:23
+ * @LastEditTime: 2020-11-05 16:31:28
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -88,6 +88,7 @@ module.exports = {
     //   管理部 > 客房中心 (houseKeeping > hk)
     hk_guestRoom: '客室',
     hk_roomName: '部屋タイプ名称',
+    hk_roomNameA: '会場タイプ',
     hk_roomNameA: '会場タイプ',
     hk_roomNameB: '部屋タイプ',
 
@@ -438,6 +439,10 @@ module.exports = {
     hk_placeEnterContentC: '備考を入力してくだあい',
     grsl_physicalGoods:'商品',
     grsl_serviceGoods:'サービス',
+    hk_newAddRoomType:'部屋タイプ追加',
+    hk_newAddRoomTypeA: 'タイプ追加',
+    hk_have:'る',
+    hk_donot:'し',
 
 
 

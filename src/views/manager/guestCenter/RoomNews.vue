@@ -181,10 +181,10 @@
                         >
                             <template slot-scope="{ row }">
                                 <span v-if="row.windowFlag == 1">{{
-                                    $t("manager.hk_yes")
+                                    $t("manager.hk_have")
                                 }}</span>
                                 <span v-if="row.windowFlag == 2">{{
-                                    $t("manager.hk_no")
+                                    $t("manager.hk_donot")
                                 }}</span>
                             </template>
                         </el-table-column>

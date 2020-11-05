@@ -7,7 +7,7 @@
 					<el-container direction="vertical" class="boss-index">
 						<el-row :gutter="20">
 							<el-col style="display: flex;justify-content: flex-end;margin: -10px 0 10px;">
-								<el-button type="primary" style="width: 100px;" class="submit" size="small" @click="addHouse('house','')">{{$t('commons.newAdd')}}
+								<el-button type="primary" style="width: 100px;" class="submit" size="small" @click="addHouse('houseA','')">{{$t('commons.newAdd')}}
 								</el-button>
 							</el-col>
 						</el-row>
@@ -53,12 +53,12 @@
 					<el-container direction="vertical" class="boss-index">
 						<el-row :gutter="20">
 							<el-col style="display: flex;justify-content: flex-end;margin: 10px 0px;">
-								<el-button type="primary" style="width: 100px;" size="small" @click="addHouse('house', '')">{{$t('commons.newAdd')}}
+								<el-button type="primary" style="width: 100px;" size="small" @click="addHouse('houseB', '')">{{$t('commons.newAdd')}}
 								</el-button>
 							</el-col>
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
-							<el-table-column prop="houseName" :label="$t('manager.hk_roomName')"></el-table-column>
+							<el-table-column prop="houseName" :label="$t('manager.hk_roomNameA')"></el-table-column>
 							<el-table-column prop="marketPrice" label="门市价"></el-table-column>
 							<el-table-column prop="bedNum" :label="$t('manager.hk_seating')"></el-table-column>
 							<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
@@ -89,7 +89,7 @@
 			</el-tabs>
 			<div class="infinite-list-wrappers flex_column" v-if="!tab_show">
 				<div class="back">
-					<el-page-header @back="back" content="新增房型"></el-page-header>
+					<el-page-header @back="back" :content="!ifmeeting?$t('manager.hk_newAddRoomType'):$t('manager.hk_newAddRoomTypeA')"></el-page-header>
 				</div>
 				<div class="infinite">
 					<!-- 基本信息 -->
@@ -116,11 +116,17 @@
 						</el-form-item>
 
 						<!-- 床宽 -->
-						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedWidth')+'(cm):'" prop="bedSizeH">
+						<el-form-item v-if="active_tag == 'one'" label-width="130px" :label="$t('manager.hk_bedWidth')+'(cm):'" prop="bedSizeH">
 							<div class="flex_row">
+<<<<<<< Updated upstream
 								<el-input v-model="ruleForm.bedSizeW" type="number" :placeholder="$t('manager.hk_longitudinalWidth')" />
 								<div class="hr"></div>
 								<el-input v-model="ruleForm.bedSizeH" type="number" :placeholder="$t('manager.hk_horizontalWidth')" />
+=======
+								<el-input v-model="ruleForm.bedSizeW"  type="number" :placeholder="$t('manager.hk_longitudinalWidth')" />
+								<div class="hr"> 〜 </div>
+								<el-input v-model="ruleForm.bedSizeH"  type="number" :placeholder="$t('manager.hk_horizontalWidth')" />
+>>>>>>> Stashed changes
 							</div>
 						</el-form-item>
 
@@ -140,9 +146,15 @@
 						<!-- 房屋面积 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_roomArea')+'(㎡):'">
 							<div class="flex_row">
+<<<<<<< Updated upstream
 								<el-input v-model="ruleForm.houseSizeW" type="number" :placeholder="$t('manager.hk_roomAreaLon')" />
 								<div class="hr"></div>
 								<el-input v-model="ruleForm.houseSizeH" type="number" :placeholder="$t('manager.hk_roomAreaHor')" />
+=======
+								<el-input v-model="ruleForm.houseSizeW"  type="number" :placeholder="$t('manager.hk_roomAreaLon')" />
+								<div class="hr"> 〜 </div>
+								<el-input v-model="ruleForm.houseSizeH"  type="number" :placeholder="$t('manager.hk_roomAreaHor')" />
+>>>>>>> Stashed changes
 							</div>
 						</el-form-item>
 
@@ -369,7 +381,7 @@
 				jiageSit_show: false,
 				// checkinNumList: [],
 				ruleForm_sit: [],
-
+                ifmeeting:false,   //是否选择  会议厅房型
 				rili_show: true, // 是否显示价格日历
 			};
 		},
@@ -416,12 +428,21 @@
 			},
 			addHouse(type, value) {
 				switch (type) {
-					case "house":
+					case "houseA":
 						this.ruleForm = {};
 						this.tab_show = false;
 						this.files = [];
 						this.get_zaocang_list()
-						this.get_wancang_list()
+                        this.get_wancang_list()
+                        this.ifmeeting=false
+                        break;
+                    case "houseB":
+						this.ruleForm = {};
+						this.tab_show = false;
+						this.files = [];
+						this.get_zaocang_list()
+                        this.get_wancang_list()
+                        this.ifmeeting=true
 						break;
 					case "change":
 						this.ruleForm_sit = [];
@@ -747,10 +768,7 @@
 				}
 
 				.hr {
-					width: 30px;
-					height: 1px;
-					background: #979797;
-					margin: 0 10px;
+					margin: 0 5px;
 				}
 
 				.flex_row {
