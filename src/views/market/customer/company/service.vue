@@ -46,11 +46,11 @@
             <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
               :label="$t('desk.customer_closeAccount')"
-              value="1"
+              value="2"
             ></el-option>
             <el-option
               :label="$t('desk.customer_outStand')"
-              value="2"
+              value="1"
             ></el-option>
           </el-select>
         </el-form-item>
