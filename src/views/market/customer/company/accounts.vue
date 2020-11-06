@@ -234,7 +234,7 @@
       top="0"
     >
       <div>
-        <span>{{ $t("desk.customer_unitName") + ":" }}蓝海一号</span>
+        <span>{{ $t("desk.customer_unitName") + ":" }}{{itemInfo.enterName}}</span>
         <span style="margin-left: 20px">
           {{ $t("desk.customer_chooseAccount") + ":" }}
           <el-radio-group v-model="choose">
@@ -749,6 +749,7 @@ export default {
       listTotal: 0, //总条数
       multipleSelection: [], //多选
       tableData: [], //表格数据
+      input:'',
     };
   },
   created() {
@@ -775,10 +776,11 @@ export default {
     },
     //点击账务结算按钮
     settlement(row) {
-      this.settlementDialog = true;
+        this.itemInfo = row;
+        if(this.itemInfo){
+          this.settlementDialog = true;
+        }
     },
-    //账务结算dialog ，点击 结账按钮
-    settlementDialog_sure() {},
     //预收款弹框 点击确定按钮
     advanceDialog_sure(formName) {
       this.$refs[formName].validate((valid) => {
