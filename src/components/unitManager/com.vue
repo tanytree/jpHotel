@@ -4,7 +4,7 @@
         <div class="booking flex_column">
             <!-- 查询部分 -->
             <el-form class="term" inline size="small" label-width="120px">
-                <el-form-item :label="$t('boss.loginDetail_stores')">
+                <el-form-item :label="$t('boss.loginDetail_stores')" v-if="1==2">
                     <el-select v-model="searchForm.storesNum" :placeholder="$t('boss.staff_selectStores')">
                         <el-option :label="$t('commons.all')" value>{{ $t('commons.all') }}</el-option>
                         <el-option :label="item.storesName" :value="item.storesNum" :key="index" v-for="(item, index) in storeList"></el-option>
@@ -99,7 +99,7 @@
                     :label="$t('desk.customer_unitName')"
                     show-overflow-tooltip
                 ></el-table-column>
-                <el-table-column :label="$t('desk.customer_belongStore')" show-overflow-tooltip>
+                <el-table-column :label="$t('desk.customer_belongStore')" v-if="1==2" show-overflow-tooltip>
                     <template
                         slot-scope="scope"
                         v-if="scope.row.storesNum"
