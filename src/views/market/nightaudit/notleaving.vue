@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-09 15:57:47
- * @FilePath: /jiudian/src/views/market/nightaudit/notleaving.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-06 10:26:35
+ * @FilePath: \jiudian\src\views\market\nightaudit\notleaving.vue
  -->
 
 <template>
@@ -20,8 +20,8 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column prop="name" :label="$t('food.common.curstom_name')"></el-table-column>
-                <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
-                <el-table-column prop="checkinTime" :label="$t('frontOffice.nightAudit.checkInTime')" width="200" align="center"></el-table-column>
+                <el-table-column prop="mobile" :label="$t('desk.order_moblePhoneA')"></el-table-column>
+                <el-table-column prop="checkinTime" :label="$t('desk.arrivalTime')" width="200" align="center"></el-table-column>
                 <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" width="200" align="center"></el-table-column>
                 <el-table-column prop :label="$t('desk.home_roomNum')">
                     <template slot-scope="{row}">{{ row.hotelCheckInRoom ? row.hotelCheckInRoom.houseNum : '' }}
@@ -34,10 +34,10 @@
                     <template slot-scope="{row}">{{ row.consumeTotalPrice || 0}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="state" :label="$t('desk.order_liveState')"  align="center">
+                <el-table-column prop="state" :label="$t('desk.order_liveStateA')"  align="center">
                     <template slot-scope="{row}">{{ F_checkinState(row.state) }}</template>
                 </el-table-column>
-                <el-table-column prop="billType" :label="$t('desk.order_checkStatus')" align="center">
+                <el-table-column prop="billType" :label="$t('desk.order_checkStatusA')" align="center">
                     <template slot-scope="{row}">{{ F_billType(row.billType || '0') }}</template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="160">

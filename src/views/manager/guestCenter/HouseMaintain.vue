@@ -36,7 +36,7 @@
 									</el-button>
 									<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
 									</el-button>
-									<el-button type="text" size="small" @click="addHouse('rili', scope.row)">价格日历
+									<el-button type="text" size="small" @click="addHouse('rili', scope.row)">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
 									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="houseConfirm_delete">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
@@ -59,7 +59,7 @@
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
 							<el-table-column prop="houseName" :label="$t('manager.hk_roomNameA')"></el-table-column>
-							<el-table-column prop="marketPrice" label="门市价"></el-table-column>
+							<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPriceB')"></el-table-column>
 							<el-table-column prop="bedNum" :label="$t('manager.hk_seating')"></el-table-column>
 							<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
 								<template slot-scope="scope">
@@ -73,7 +73,7 @@
 									</el-button>
 									<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
 									</el-button>
-									<el-button type="text" size="small" @click="addHouse('rili', scope.row)">价格日历
+									<el-button type="text" size="small" @click="addHouse('rili', scope.row)">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
 									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="houseConfirm_delete">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
@@ -106,12 +106,12 @@
 						</el-form-item>
 
 						<!-- 住宿价格 -->
-						<el-form-item label="住宿价格" v-if="active_tag == 'one'">
+						<el-form-item :label="$t('manager.hk_livePrice')" v-if="active_tag == 'one'">
 							<el-row :gutter="20">
 								<el-col :span="6">
-									<el-button type="primary" plain @click="addHouse('sit')">设定</el-button>
+									<el-button type="primary" plain @click="addHouse('sit')">{{$t('manager.hk_set')}}</el-button>
 								</el-col>
-								<el-col :span="18" v-for="(value, index) in ruleForm_sit" :key="index">{{index+1}}人住宿【{{value.price}}】</el-col>
+								<el-col :span="18" v-for="(value, index) in ruleForm_sit" :key="index">{{index+1}}{{$t('manager.hk_peopleLive')}}【{{value.price}}】</el-col>
 							</el-row>
 						</el-form-item>
 
@@ -229,7 +229,7 @@
 							</el-dialog>
 						</el-form-item>
 						<el-form-item :label="$t('boss.loginDetail_note')+':'">
-							<el-input type="textarea" :rows="4" style="width: 800px" resize="none" :placeholder="$t('boss.department_placeEnterContent')"
+							<el-input type="textarea" :rows="4" style="width: 800px" resize="none" :placeholder="$t('manager.hk_placeEnterContentD')"
 							 v-model="ruleForm.remark"></el-input>
 						</el-form-item>
 					</el-form>
@@ -240,15 +240,15 @@
 				</div>
 
 				<!-- 价格设定 -->
-				<el-dialog top="0" :title="jiageSit_title" :visible.sync="jiageSit_show" :close-on-click-modal="false">
+				<el-dialog top="0" :title="$t('manager.hk_priceSet')" :visible.sync="jiageSit_show" :close-on-click-modal="false">
 					<el-row :gutter="20">
 						<el-row style="padding: 10px 95px;color: #909399;">
-							<el-col>这里的价格是纯住宿价格，不包含付餐的价格</el-col>
+							<el-col>{{$t('manager.hk_onlyLivePrice')}}</el-col>
 						</el-row>
 						<el-row>
 							<el-col :span="24" v-for="(value, index) in ruleForm_sit" :key="index">
 								<el-row :span="20" style="display: flex;align-items: center;justify-content: center; margin-bottom: 10px;">
-									<el-col :span="4" :offest="2">{{index+1}} 人住宿</el-col>
+									<el-col :span="4" :offest="2">{{index+1}} {{$t('manager.hk_peopleLive')}}</el-col>
 									<el-col :span="18">
 										<el-input v-model="value.price"></el-input>
 									</el-col>
@@ -317,8 +317,28 @@
 					otaXiechengPrice: '',
 					otaMeituan: '',
 				},
-				rules: {
-					houseName: [{
+				selectedInfo: {}, // 选中的某条
+				formData: {},
+				files: [],
+				fileList: [],
+				dialogImageUrl: "",
+				dialogVisible: false,
+				disabled: false,
+
+				zaocangList: [],
+				wancangList: [],
+			
+				jiageSit_show: false,
+				// checkinNumList: [],
+				ruleForm_sit: [],
+                ifmeeting:false,   //是否选择  会议厅房型
+				rili_show: true, // 是否显示价格日历
+			};
+		},
+		computed: {
+            rules(){
+                return{
+	                houseName: [{
 						required: true,
 						message: this.$t('commons.mustInput'),
 						trigger: "blur",
@@ -354,38 +374,8 @@
 						message: '请选择',
 						trigger: "blur",
 					}],
-				},
-				selectedInfo: {}, // 选中的某条
-				formData: {},
-				files: [],
-				fileList: [],
-				dialogImageUrl: "",
-				dialogVisible: false,
-				disabled: false,
-
-				zaocangList: [],
-				wancangList: [],
-				jiageSit_title: '价格设定',
-				jiageSit_show: false,
-				// checkinNumList: [],
-				ruleForm_sit: [],
-                ifmeeting:false,   //是否选择  会议厅房型
-				rili_show: true, // 是否显示价格日历
-			};
-		},
-		computed: {
-			deleteSuccess: {
-				get() {
-					return this.$t("manager.hk_deleteSuccess");
-				},
-				set() {},
-			},
-			selectRoomImg: {
-				get() {
-					return this.$t("manager.hp_selectRoomImg");
-				},
-				set() {},
-			},
+                }
+            }
 		},
 		watch: {
 			active_tag() {
@@ -398,12 +388,6 @@
 					this.ruleForm.roomType = 2;
 					this.get_house_list();
 				}
-			},
-			deleteSuccess(newValue, oldValue) {
-				this.deleteSuccess = newValue;
-			},
-			selectRoomImg(newValue, oldValue) {
-				this.selectRoomImg = newValue;
 			},
 		},
 		created() {
@@ -521,7 +505,7 @@
 					(res) => {
 						this.get_house_list();
 						this.$message({
-							message: this.deleteSuccess,
+							message: this.$t("manager.hk_deleteSuccess"),
 							type: "success",
 						});
 					}
@@ -544,14 +528,14 @@
 				let imgList = this.$refs.upload.uploadFiles || [];
 				if (imgList.length == 0) {
 					return this.$message({
-						message: this.selectRoomImg,
+						message: this.$t("manager.hp_selectRoomImg"),
 						type: "warn",
 					});
 				}
 				if (this.ruleForm.roomType == 1) {
 					if (this.ruleForm_sit.length == 0) {
 						return this.$message({
-							message: '请设定住宿价格',
+							message: this.$t('manager.hk_setLivePrice'),
 							type: "warn",
 						});
 					} else {

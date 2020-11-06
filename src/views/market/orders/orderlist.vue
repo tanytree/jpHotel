@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 13:28:30
+ * @LastEditTime: 2020-11-06 10:02:24
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -148,11 +148,11 @@
                 <el-table-column
                     prop="mobile"
                     width="140px"
-                    :label="$t('desk.order_moblePhone')"
+                    :label="$t('desk.order_moblePhoneA')"
                 ></el-table-column>
                 <el-table-column
                     prop="checkinTime"
-                    :label="$t('desk.order_checkinDate')"
+                    :label="$t('desk.order_checkinDateA')"
                     width="160px"
                 ></el-table-column>
                 <el-table-column
@@ -166,6 +166,7 @@
                     show-overflow-tooltip
                 ></el-table-column>
                 <el-table-column
+                width="90px"
                     prop="hotelCheckInRoom.roomTypeName"
                     :label="$t('desk.home_roomType')"
                     show-overflow-tooltip
@@ -173,7 +174,7 @@
                 <el-table-column
                     prop
                     :label="$t('desk.home_customersCategory')"
-                    width="120px"
+                    width="135px"
                 >
                     <template slot-scope="{ row }">{{
                         F_guestType(row.guestType)
@@ -190,7 +191,7 @@
                 </el-table-column>
                 <el-table-column
                     prop
-                    :label="$t('desk.order_liveState')"
+                    :label="$t('desk.order_liveStateA')"
                     width="120px"
                 >
                     <template slot-scope="{ row }" style="color: red">
@@ -223,7 +224,7 @@
                 </el-table-column>
                 <el-table-column
                     prop
-                    :label="$t('desk.order_checkStatus')"
+                    :label="$t('desk.order_checkStatusA')"
                     width="100px"
                 >
                     <template slot-scope="{ row }">

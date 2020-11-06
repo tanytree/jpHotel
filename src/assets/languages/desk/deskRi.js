@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-05 17:52:26
+ * @LastEditTime: 2020-11-06 10:20:47
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -166,6 +166,7 @@ module.exports = {
     book_orderSoutce: '予約経路',
     home_customersCategory: 'ゲストカテゴリー',
     home_bookPeople: '予約者名前',
+    home_bookPeopleA: '予約者',
     book_chamber: '会場No.',
     book_orderNum: '予約番号',
     book_name: '名称',
@@ -193,10 +194,14 @@ module.exports = {
     order_checkinTime: "宿泊日",
     order_outOrder: '外部予約番号',
     order_moblePhone: "携帯番号",
+    order_moblePhoneA: "電話",
+    order_checkinDateA: "C/I時間",
     order_checkinDate: "到着時間",
     order_departureTime: "C/O時間",
+    order_liveStateA: "状態",
     order_liveState: "状態（滞在中、出発済）",
     order_checkStatus: "精算状況（精算済み、未収）",
+    order_checkStatusA: "精算",
     order_invoicing: "精算",
     order_invoice: "領収書発行",
     order_notCheckout: "チェックアウト取り消し",
@@ -211,7 +216,9 @@ module.exports = {
     order_orderInfo: "予約情報",
     order_billingDetails: "会計明細",
     order_goodsType: "商品種別",
-    order_goodsName: "商品名称",
+    order_goodsTypeA: "種別を選択",
+    order_goodsTypeB: "資産種別",
+    order_goodsName: "物品内容",
     order_number: "数量",
     order_unitPrice: "単価",
     order_totalPrice: "合計",

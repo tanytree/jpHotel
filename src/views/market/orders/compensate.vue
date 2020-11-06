@@ -12,12 +12,12 @@
         label-width="80px"
       >
         <el-form-item :label="$t('desk.home_roomNum') + ':'">
-          <el-input v-model="searchForm.roomNum" class="width150"></el-input>
+          <el-input v-model="searchForm.roomNum" style="width:150px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.order_guestName') + ':'">
           <el-input v-model="searchForm.cname" class="width150"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('desk.order_goodsType') + ':'">
+        <el-form-item :label="$t('desk.order_goodsTypeA') + ':'" label-width="90px">
           <el-select v-model="searchForm.damageTypeId" class="width150">
             <el-option :label="$t('desk.home_all')" value>{{
               $t("desk.home_all")
@@ -63,7 +63,7 @@
         ></el-table-column>
         <el-table-column
           prop="damageTypeName"
-          :label="$t('desk.order_goodsType')"
+          :label="$t('desk.order_goodsTypeB')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -128,6 +128,7 @@ export default {
       pageIndex: 1, //当前页
       pageSize: 10, //页数
       searchForm: {
+          state:2,
         roomNum: "",
         cname: "",
         damageTypeId: "",
@@ -159,6 +160,7 @@ export default {
     },
     initForm() {
       this.searchForm = {
+           state:2,
         roomNum: "",
         cname: "",
         damageTypeId: "",

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 15:04:22
+ * @LastEditTime: 2020-11-06 10:23:22
  * @FilePath: \jiudian\src\views\market\nightaudit\notyet.vue
  -->
 
@@ -19,15 +19,15 @@
                 size="small"
                 @selection-change="handleSelectionChange"
             >
-                <el-table-column prop="name" :label="$t('desk.home_bookPeople')"></el-table-column>
-                <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
+                <el-table-column prop="name" :label="$t('desk.home_bookPeopleA')"></el-table-column>
+                <el-table-column prop="mobile" :label="$t('desk.order_moblePhoneA')"></el-table-column>
                 <el-table-column
                     prop="createTime"
                     :label="$t('desk.nightAudit.schedulerTime')"
                     width="180"
                     align="center"
                 ></el-table-column>
-                <el-table-column prop="enterName" :label="$t('desk.nightAudit.arriveTime')" width="220">
+                <el-table-column prop="enterName" :label="$t('desk.order_toLiveTime')" width="220">
                     <template slot-scope="{ row }">
                         <div class="box">
                             <div class="item">

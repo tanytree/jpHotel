@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 16:31:28
+ * @LastEditTime: 2020-11-06 14:58:20
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -93,6 +93,7 @@ module.exports = {
     hk_roomNameB: '部屋タイプ',
 
     hk_doorPrice: '宿泊料',
+    hk_doorPriceB: '料金',
     hk_doorPriceA: '利用料金',
     hk_beds: 'ベット数',
     hk_availabilityPeople: '宿泊可能人数',
@@ -189,7 +190,7 @@ module.exports = {
     grsl_startMinute: '分後は初乗り料金がかかります。',
     grsl_chargeTime: '有料時間',
     grsl_chargeMinute: '分は有料です',
-    grsl_import: '自動入力',
+    grsl_import: 'アップロード',
     grsl_addGoods: '商品追加',
     grsl_defaultTetailPrice: '小売価格',
     grsl_costPrice: '仕入れ価格',
@@ -214,12 +215,12 @@ module.exports = {
     grsl_shelves: '棚落ち',
     grsl_salePointManagement: '付帯管理',
     grsl_salePointName: '販売場所名称',
-    grsl_allowedToRoom: '部屋付け許可',
-    grsl_allowerToUnit: '法人付許可',
+    grsl_allowedToRoom: '〇 部屋付（売掛）',
+    grsl_allowerToUnit: '〇法人売掛',
     grsl_allowDelete: '削除可能',
     grsl_toEnble: '起用',
-    grsl_allowedCheckUnit: '会社売掛に可能',
-    grsl_allowedCheckRoom: '部屋付可能',
+    grsl_allowedCheckUnit: '〇 法人売掛',
+    grsl_allowedCheckRoom: '〇部屋付',
     grsl_resetGoodsInfo: '商品情報を編集',
     grsl_employeePrice: 'スタッフ用価格',
     grsl_retailPrice: '小売価格',
@@ -428,7 +429,7 @@ module.exports = {
     hp_loginDetail_state:'状態',
     hk_enable:'使用',
     hk_disable: '停止',
-    hk_addRoomType:'タイプ追加',
+    hk_addRoomType:'部屋タイプ追加',
     hk_livePrice:'宿泊料金',
     hk_set:'設定',
     hk_breakfast: '朝食',
@@ -436,6 +437,7 @@ module.exports = {
     hk_placeEnterContent:'備考を入力してくだあい',
     hk_placeEnterContentA:'階を入力してください',
     hk_placeEnterContentB:'階の名称を入力してください',
+    hk_placeEnterContentD:'その他追加事項を入力してください',
     hk_placeEnterContentC: '備考を入力してくだあい',
     grsl_physicalGoods:'商品',
     grsl_serviceGoods:'サービス',
@@ -443,6 +445,11 @@ module.exports = {
     hk_newAddRoomTypeA: 'タイプ追加',
     hk_have:'る',
     hk_donot:'し',
+    hk_priceCalendar:'価格カレンダー',
+    hk_setLivePrice:'宿泊料金を設定してください',
+    hk_priceSet:'価格設定',
+    hk_onlyLivePrice:'ここの料金は素泊まりの料金であります。',
+    hk_peopleLive:'人宿泊',
 
 
 
