@@ -183,9 +183,9 @@
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="searchForm.page"
-                :page-size="searchForm.page_num"
-                layout="prev, pager, next, jumper"
+                :current-page="pageIndex"
+                :page-size="pageSize"
+                layout="total,prev, pager, next, jumper"
                 :total="listTotal"
             ></el-pagination>
         </div>
@@ -659,9 +659,9 @@
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="searchForm.page"
+                :current-page="pageIndex"
                 :page-sizes="[10, 50, 100, 200]"
-                :page-size="searchForm.page_num"
+                :page-size="pageSize"
                 layout=" sizes, prev, pager, next, jumper"
                 :total="listTotal"
             ></el-pagination>
@@ -747,11 +747,12 @@ export default {
                 searchType: 1,
                 content: "",
                 enterStatus: "",
-                pageIndex: 1, //当前页
-                pageSize: 10, //页数
+             
                 startTime: "", //考试时件
                 endTime: "", //结束时间
             },
+            pageIndex: 1, //当前页
+            pageSize: 10, //页数
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [], //表格数据
@@ -838,9 +839,10 @@ export default {
                 startUsedLimit: "",
                 endUsedLimit: "",
                 paging: true,
-                pageIndex: 1,
-                pageSize: 10,
+               
             };
+            this.pageSize=10;
+            this.pageIndex=1;
             this.getDataList();
         },
         //点击 批量设置 按钮
@@ -851,6 +853,10 @@ export default {
         /**获取表格数据 */
         getDataList() {
             this.loading = true;
+            this.$F.merge(this.searchForm, {
+                pageIndex:this.pageIndex,
+                pageSize:this.pageSize,
+            });
             this.$F.doRequest(
                 this,
                 "/pms/hotelenter/list",
@@ -1133,13 +1139,13 @@ export default {
         },
         /**每页数 */
         handleSizeChange(val) {
-            this.searchForm.pageSize = val;
-            this.searchForm.pageIndex = 1;
+            this.pageSize = val;
+            this.pageIndex = 1;
             this.getDataList();
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.pageIndex = val;
+            this.pageIndex = val;
             this.getDataList();
         },
     },
