@@ -5,7 +5,7 @@
  * @FilePath:
  -->
 <template>
-    <div id="page1">
+    <div class="boss-index" id="page1">
         <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                          :name="item.path"
