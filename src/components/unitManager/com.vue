@@ -825,6 +825,7 @@ export default {
         },
         initForm() {
             this.searchForm = {
+                 storesNum: '',
                 id: "",
                 enterName: "",
                 state: "",
@@ -1132,13 +1133,13 @@ export default {
         },
         /**每页数 */
         handleSizeChange(val) {
-            this.searchForm.page_num = val;
-            this.searchForm.page = 1;
+            this.searchForm.pageSize = val;
+            this.searchForm.pageIndex = 1;
             this.getDataList();
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.page = val;
+            this.searchForm.pageIndex = val;
             this.getDataList();
         },
     },
