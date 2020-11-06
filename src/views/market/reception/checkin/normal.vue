@@ -1315,7 +1315,6 @@ export default {
                 params,
                 (res) => {
                     let data = res;
-                    debugger
                     for (let k in data) {
                         let ids = [];
                         data[k].forEach((item) => {
@@ -1368,7 +1367,6 @@ export default {
             this.addLivePersonShow = false;
         },
         live_in_person_list() {
-            debugger;
             let waitingRoom2 = this.$F.deepClone(this.waitingRoom);
             this.liveData = [];
             if (this.checkInForm.checkInRoomJson.length > 0 && this.checkInForm.checkInRoomJson[0].personList && this.checkInForm.checkInRoomJson[0].personList.length > 0) {

@@ -311,7 +311,6 @@ export default {
     watch: {
         roomInfo: {
             handler(n, o) {
-                debugger
                 n.forEach(element => {
                     if (element.personList.length) {
                         if (!this.roomTypeList[element.roomTypeId + 'checkIn']) {
@@ -484,7 +483,6 @@ export default {
                 checkInReserveId: this.$route.query.id || '',
                 state: state
             }
-            debugger
             this.$F.doRequest(this, '/pms/reserve/reserve_oper', params, (res) => {
                 this.$router.go(-1)
                 this.$message({

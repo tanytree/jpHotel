@@ -11,21 +11,21 @@
         label-width="80px"
         v-model="searchForm"
       >
-        <el-form-item :label="$t('desk.customer_consumptionStore')">
-          <el-select
-            v-model="searchForm.storesNum"
-            class="width150"
-            :placeholder="$t('commons.placeChoose')"
-          >
-            <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option
-              v-for="(item, index) in storeList"
-              :key="index"
-              :label="item.storesName"
-              :value="item.storesNum"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item :label="$t('desk.customer_consumptionStore')">-->
+<!--          <el-select-->
+<!--            v-model="searchForm.storesNum"-->
+<!--            class="width150"-->
+<!--            :placeholder="$t('commons.placeChoose')"-->
+<!--          >-->
+<!--            <el-option :label="$t('commons.all')" value=""></el-option>-->
+<!--            <el-option-->
+<!--              v-for="(item, index) in storeList"-->
+<!--              :key="index"-->
+<!--              :label="item.storesName"-->
+<!--              :value="item.storesNum"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item :label="$t('desk.customer_buyerUnit')">
           <el-select
             v-model="searchForm.enterId"
@@ -196,7 +196,7 @@ export default {
       showEdit: false,
       showDetail: false,
       searchForm: {
-        storesNum: "",
+        // storesNum: "",
         enterId: "",
         state: "",
         startTime: "", //考试时件

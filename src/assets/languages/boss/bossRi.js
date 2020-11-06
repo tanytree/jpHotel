@@ -9,7 +9,7 @@
 
 module.exports = {
     //    总办 > 首页
-
+    memberPostCode: '郵便番号',
     report_home: 'ホーム',
     report_deskReport: 'フロント帳票',
     report_day: '営業日報',

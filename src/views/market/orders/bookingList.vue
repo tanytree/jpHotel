@@ -743,7 +743,6 @@ export default {
              *
              * **/
             let params = this.consumeOperForm;
-            debugger;
             params.checkinReserveId = this.currentItem.id;
 
             if (this.currentItem.checkInRoomList.length) {

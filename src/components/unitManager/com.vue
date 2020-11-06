@@ -16,22 +16,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_state')">
                     <el-select v-model="searchForm.state" class="width150">
-                        <el-option
-                            :value="key"
-                            v-for="(item, key, index) of $t('commons.comState')"
-                            :label="item"
-                            :key="index"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('desk.customer_ifShare')">
-                    <el-select v-model="searchForm.shareFlag" class="width150">
-                        <el-option
-                            :value="key"
-                            v-for="(item, key, index) of $t('commons.comShareFlag')"
-                            :label="item"
-                            :key="index"
-                        ></el-option>
+                        <el-option :value="key" v-for="(item, key, index) of $t('commons.comState')" :label="item" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.customer_contact')">
@@ -97,18 +82,8 @@
                     </el-button>
                 </el-form-item>
                 <el-form-item style="float: right" v-if="isHeader == 1">
-                    <el-button
-
-                        type="primary"
-                        class="submit"
-                        @click="addAndEditItem('add')"
-                    >{{ $t("desk.customer_newAdd") }}
-                    </el-button
-                    >
-                    <el-button type="primary" class="submit" @click="piliangClick">{{
-                            $t("desk.customer_volumeSet")
-                        }}
-                    </el-button>
+                    <el-button type="primary" class="submit" @click="addAndEditItem('add')">{{ $t("desk.customer_newAdd") }}</el-button>
+<!--                    <el-button type="primary" class="submit" @click="piliangClick">{{ $t("desk.customer_volumeSet") }}</el-button>-->
                 </el-form-item>
             </el-form>
             <!--表格数据 -->
@@ -175,63 +150,21 @@
                     :label="$t('desk.customer_advancePayment')"
                     width="120px"
                 ></el-table-column>
-                <el-table-column
-                    :label="$t('desk.home_state')"
-                    width="80px"
-                    align="center"
-                >
-                    <template slot-scope="{ row }">
-                        <div>
-                            {{
-                                row.state == 1
-                                    ? $t("desk.customer_enable")
-                                    : $t("desk.customer_disable")
-                            }}
-                        </div>
-                    </template>
+                <el-table-column :label="$t('desk.home_state')" width="80px" align="center">
+                    <template slot-scope="{ row }"><div>{{ row.state == 1 ? $t("desk.customer_enable") : $t("desk.customer_disable") }}</div></template>
                 </el-table-column>
-                <el-table-column
-                    prop="salesName"
-                    :label="$t('desk.order_salesman')"
-                    show-overflow-tooltip
-                    align="center"
-                >
-                    <template slot-scope="{ row }">{{
-                            setSalesIdName(row.salesId)
-                        }}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="shareFlag"
-                    :label="$t('desk.customer_ifShare')"
-                    width="100px"
-                    align="center"
-                >
-                    <template slot-scope="{ row }">{{
-                            row.shareFlag == 1
-                                ? $t("desk.customer_yes")
-                                : $t("desk.customer_no")
-                        }}
-                    </template>
+                <el-table-column prop="salesName" :label="$t('desk.order_salesman')" show-overflow-tooltip align="center">
+                    <template slot-scope="{ row }">{{ setSalesIdName(row.salesId) }}</template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="160">
                     <template slot-scope="{ row }">
-                        <el-button type="text" size="mini" @click="handleDetail(row)">{{
-                                $t("commons.detail")
-                            }}
-                        </el-button>
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click="addAndEditItem('edit', row)"
-                        >{{ $t("commons.modify") }}
-                        </el-button
-                        >
-                        <el-dropdown szie="mini">
-              <span class="el-dropdown-link" style="font-size: 12px">
-                {{ $t("desk.customer_more") }}
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
+                        <el-button type="text" size="mini" @click="handleDetail(row)">{{ $t("commons.detail") }}</el-button>
+                        <el-button type="text" size="mini" @click="addAndEditItem('edit', row)"  v-if="isHeader == 1">{{ $t("commons.modify") }}</el-button>
+                        <el-dropdown szie="mini" v-if="isHeader == 1">
+                              <span class="el-dropdown-link" style="font-size: 12px">
+                                {{ $t("desk.customer_more") }}
+                                <i class="el-icon-arrow-down el-icon--right"></i>
+                              </span>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item @click.native="disableItem(row)">{{
                                         $t("desk.customer_disable")
@@ -465,14 +398,8 @@
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="setCompanyFormVisible = false">{{
-                        $t("commons.close")
-                    }}
-                </el-button>
-                <el-button type="primary" @click="hotelenterAddAndEdit">{{
-                        $t("commons.confirm")
-                    }}
-                </el-button>
+                <el-button @click="setCompanyFormVisible = false">{{ $t("commons.close") }}</el-button>
+                <el-button type="primary" @click="hotelenterAddAndEdit">{{ $t("commons.confirm") }}</el-button>
             </div>
         </el-dialog>
         <el-dialog
@@ -739,14 +666,8 @@
                 :total="listTotal"
             ></el-pagination>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="setBatchFormVisible = false">{{
-                        $t("commons.close")
-                    }}
-                </el-button>
-                <el-button type="primary" @click="batchedit">{{
-                        $t("commons.confirm")
-                    }}
-                </el-button>
+                <el-button @click="setBatchFormVisible = false">{{ $t("commons.close") }}</el-button>
+                <el-button type="primary" @click="batchedit">{{ $t("commons.confirm") }}</el-button>
             </div>
         </el-dialog>
     </div>

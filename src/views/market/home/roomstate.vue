@@ -777,7 +777,7 @@ export default {
             stayoerchecked: false, //续住  勾选
             tableData: [
                 //待开票表格字段
-              
+
             ],
             billList: [], //点击开票按钮的数据
             checkInForm: {
@@ -1068,7 +1068,6 @@ export default {
             this.hosteldis = true;
             if (room.checkInRoomType == 1) {
                 let id = room.checkInObj.id;
-                debugger
                 this.getDetail(id, res => {
                    if ( res.inRoomList &&  res.inRoomList.length > 0) {
                        res.inRoomList.forEach((value) => {

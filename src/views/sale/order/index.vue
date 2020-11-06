@@ -51,7 +51,6 @@ export default {
             this.menuList = JSON.parse(sessionStorage.subMenul).childList || [];
             this.$forceUpdate()
         }
-        debugger
         let activeName = this.$F.filterThirdMenu(null, null, false, true).path;
         this.activeName = this.$store.state.taozi.memberName || activeName;
     },

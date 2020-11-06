@@ -52,25 +52,50 @@
                     <el-col :span="8" class="col">
                       <el-form-item :label="$t('desk.home_name')" prop="name">
                         <el-input v-model="detailForm.name" v-if="type != 'detail'" class="width150" :placeholder="$t('desk.home_name')"></el-input>
-                          <span style="margin-left: 8px">  </span>
+                          <span style="margin-left: 8px"></span>
                         <el-input v-model="detailForm.pronunciation" v-if="type != 'detail'"  class="width150" :placeholder="$t('desk.customer_nameSpell')"></el-input>
                         <template v-if="type == 'detail'">{{detailForm.name}}</template>
                         <template v-if="type == 'detail'" style="margin-left: 15px">{{detailForm.pronunciation}}</template>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.home_telNum1')" prop="mobile">
-                        <el-input v-model="detailForm.mobile" v-if="type != 'detail'"></el-input>
-                        <template v-if="type == 'detail'">{{ detailForm.mobile }}</template>
-                      </el-form-item>
-                    </el-col>
-                      <el-col :span="8" class="col">
-                          <el-form-item :label="$t('desk.home_telNum2')" prop="mobile">
-                              <el-input v-model="detailForm.mobile2" v-if="type != 'detail'"></el-input>
-                              <template v-if="type == 'detail'">{{ detailForm.mobile2 }}</template>
-                          </el-form-item>
-                      </el-col>
+
                   </el-row>
+<!--                    <el-row class="cell">-->
+<!--                        <el-col :span="8" class="col">-->
+<!--                            <el-form-item :label="$t('boss.memberPostCode')" prop="name">-->
+<!--                                <el-input v-model="detailForm.zipCode1" v-if="type != 'detail'" class="width150"></el-input>-->
+<!--                                <span style="margin: 0 8px">-</span>-->
+<!--                                <el-input v-model="detailForm.zipCode2" v-if="type != 'detail'"  class="width150"></el-input>-->
+<!--                                <template v-if="type == 'detail'">{{detailForm.zipCode1}}</template>-->
+<!--                                <template v-if="type == 'detail'" style="margin-left: 15px">{{detailForm.zipCode2}}</template>-->
+<!--                            </el-form-item>-->
+<!--                        </el-col>-->
+<!--                        <el-col :span="8" class="col">-->
+<!--                            <el-form-item :label="$t('desk.home_telNum1')" prop="mobile">-->
+<!--                                <el-input v-model="detailForm.mobile" v-if="type != 'detail'"></el-input>-->
+<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile }}</template>-->
+<!--                            </el-form-item>-->
+<!--                        </el-col>-->
+<!--                        <el-col :span="8" class="col">-->
+<!--                            <el-form-item :label="$t('desk.home_telNum2')" prop="mobile">-->
+<!--                                <el-input v-model="detailForm.mobile2" v-if="type != 'detail'"></el-input>-->
+<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile2 }}</template>-->
+<!--                            </el-form-item>-->
+<!--                        </el-col>-->
+<!--                        <el-col :span="8" class="col">-->
+<!--                            <el-form-item :label="$t('desk.home_telNum1')" prop="mobile">-->
+<!--                                <el-input v-model="detailForm.mobile" v-if="type != 'detail'"></el-input>-->
+<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile }}</template>-->
+<!--                            </el-form-item>-->
+<!--                        </el-col>-->
+<!--                        <el-col :span="8" class="col">-->
+<!--                            <el-form-item :label="$t('desk.home_telNum2')" prop="mobile">-->
+<!--                                <el-input v-model="detailForm.mobile2" v-if="type != 'detail'"></el-input>-->
+<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile2 }}</template>-->
+<!--                            </el-form-item>-->
+<!--                        </el-col>-->
+
+<!--                    </el-row>-->
                   <el-row class="cell" v-if="type != 'add'">
                     <el-col :span="8" class="col">
                       <el-form-item :label="$t('desk.customer_memeberCardNum')">{{ detailForm.memberCard }}</el-form-item>
@@ -120,32 +145,18 @@
                   </el-row>
                   <el-row class="cell">
                       <el-col :span="8" class="col">
-                          <el-form-item :label="$t('frontOffice.enterpriseMobile') + '1'"
-                          >
-                              <el-input
-                                  v-model="detailForm.enterMobile1"
-                                  v-if="type != 'detail'"
-                              ></el-input>
-                              <template v-if="type == 'detail'">{{
-                                      detailForm.enterMobile1
-                                  }}</template>
+                          <el-form-item :label="$t('frontOffice.enterpriseMobile') + '1'">
+                              <el-input v-model="detailForm.enterMobile1" v-if="type != 'detail'"></el-input>
+                              <template v-if="type == 'detail'">{{ detailForm.enterMobile1 }}</template>
                           </el-form-item>
                       </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item
-                        :label="$t('frontOffice.enterpriseAddress') + '1'"
-                      >
-                        <el-input
-                          v-model="detailForm.enterAddress1"
-                          v-if="type != 'detail'" class="width300"
-                        ></el-input>
-                        <template v-if="type == 'detail'">{{
-                          detailForm.enterAddress1
-                        }}</template>
+                      <el-form-item :label="$t('frontOffice.enterpriseAddress') + '1'">
+                        <el-input v-model="detailForm.enterAddress1" v-if="type != 'detail'" class="width300"></el-input>
+                        <template v-if="type == 'detail'">{{ detailForm.enterAddress1 }}</template>
                       </el-form-item>
                     </el-col>
                   </el-row>
-
                     <el-row class="cell">
                         <el-col :span="8" class="col">
                             <el-form-item
@@ -709,9 +720,13 @@ export default {
         name: "",
       },
       detailForm: {
+          zipCode1: '',
+          zipCode2: '',
+          addressCountry: '',
+          addressCountries: '',
           enterName: '', // 单位名
           pronunciation: '',
-        id: "",
+          id: "",
           sex: '1',
           state: '1',
           idcardType:'1',

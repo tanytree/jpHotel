@@ -8,7 +8,7 @@
 //  中文语言
 module.exports = {
     //    总办 > 首页
-
+    memberPostCode: '邮编',
     report_home: '首页',
     report_deskReport: "前台部报表",
     report_day: "营业日报",

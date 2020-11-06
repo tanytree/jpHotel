@@ -56,11 +56,7 @@
             width="120"
           >
             <template slot-scope="{ row }">
-              <div>
-                {{
-                  row.finance.onAccountTotal ? row.finance.onAccountTotal : 0
-                }}
-              </div>
+              <div>{{ row.finance.onAccountTotal ? row.finance.onAccountTotal : 0 }}</div>
             </template>
           </el-table-column>
           <el-table-column

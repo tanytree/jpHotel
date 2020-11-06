@@ -284,7 +284,7 @@
 		data() {
 			return {
 				tab1_show: true, //是否显示日历组件
-				
+
 				tab_show: true,
 				active_tag: "one",
 				tableData: [],
@@ -327,7 +327,7 @@
 
 				zaocangList: [],
 				wancangList: [],
-			
+
 				jiageSit_show: false,
 				// checkinNumList: [],
 				ruleForm_sit: [],
@@ -441,7 +441,6 @@
 						break;
 
 					case "sit":
-						debugger
 						this.ruleForm_sit = [];
 						for (let i = 0; i < this.ruleForm.checkinNum; i++) {
 							let obj = {}
@@ -548,7 +547,6 @@
 						if (this.ruleForm.personPrice[0] == ',') {
 							this.ruleForm.personPrice = this.ruleForm.personPrice.substring(1, this.ruleForm.personPrice.length)
 						}
-						debugger
 					}
 				} else {
 					let len = ''
@@ -573,7 +571,6 @@
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
-							debugger
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",
@@ -627,7 +624,7 @@
 									if (value.mealDinnerObject && value.mealBreakfastObject) {
 										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
 									}
-									
+
 									if (!value.mealDinnerObject && !value.mealBreakfastObject) {
 										allP = Number(item)
 									}

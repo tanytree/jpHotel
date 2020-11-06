@@ -34,11 +34,11 @@
                               detailForm.creditLimit
                             }}</span>
                           </div>
-                          <div class="thisItem">
-                            <span class="text-blue">
-                              {{ $t("desk.customer_queryDeal") }}</span
-                            >
-                          </div>
+<!--                          <div class="thisItem">-->
+<!--                            <span class="text-blue">-->
+<!--                              {{ $t("desk.customer_queryDeal") }}</span-->
+<!--                            >-->
+<!--                          </div>-->
                         </div>
                       </div>
                     </el-col>
@@ -49,13 +49,13 @@
                             {{ $t("desk.customer_totalPrice") }}
                           </div>
                           <div class="thisItem">
-                            <span class="text-red">2000</span>
+                            <span class="text-red">{{ detailForm.totalLimit }}</span>
                           </div>
-                          <div class="thisItem">
+                          <!--<div class="thisItem">
                             <span class="text-blue">{{
                               $t("desk.customer_receivingQuery")
                             }}</span>
-                          </div>
+                          </div>-->
                         </div>
                       </div>
                     </el-col>
@@ -68,11 +68,11 @@
                           <div class="thisItem">
                             <span class="text-red">2000</span>
                           </div>
-                          <div class="thisItem">
-                            <span class="text-blue">{{
-                              $t("desk.customer_creditOperate")
-                            }}</span>
-                          </div>
+<!--                          <div class="thisItem">-->
+<!--                            <span class="text-blue">{{-->
+<!--                              $t("desk.customer_creditOperate")-->
+<!--                            }}</span>-->
+<!--                          </div>-->
                         </div>
                       </div>
                     </el-col>
@@ -133,13 +133,13 @@
                         >{{ detailForm.creditLimit }}</el-form-item
                       >
                     </el-col>
-                    <el-col :span="3" class="col">
-                      <el-form-item label label-width="0">
-                        <el-checkbox disabled v-model="detailForm.shareFlag">{{
-                          $t("desk.customer_groupShare")
-                        }}</el-checkbox>
-                      </el-form-item>
-                    </el-col>
+<!--                    <el-col :span="3" class="col">-->
+<!--                      <el-form-item label label-width="0">-->
+<!--                        <el-checkbox disabled v-model="detailForm.shareFlag">{{-->
+<!--                          $t("desk.customer_groupShare")-->
+<!--                        }}</el-checkbox>-->
+<!--                      </el-form-item>-->
+<!--                    </el-col>-->
                     <el-col :span="3" class="col">
                       <el-form-item label label-width="0">
                         <el-checkbox disabled v-model="detailForm.state">{{
@@ -289,7 +289,6 @@ export default {
       resetActive: "resetActive",
     }),
     danweiClick() {
-      console.log(this);
       this.resetActive("company");
       this.$router.go(-1);
     },
@@ -297,12 +296,7 @@ export default {
     findone(id) {
       return new Promise((resolve, reject) => {
         this.loading = true;
-        this.$F.doRequest(
-          this,
-          "/pms/hotelenter/findone",
-          {
-            id: id,
-          },
+        this.$F.doRequest(this, "/pms/hotelenter/findone", {id: id,},
           (res) => {
             this.loading = false;
             let data = res;

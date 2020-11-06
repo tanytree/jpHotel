@@ -11,17 +11,17 @@
         label-width="100px"
         :model="searchForm"
       >
-        <el-form-item :label="$t('desk.customer_gatheringStore')">
-          <el-select v-model="searchForm.storesNum" class="width150">
-            <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option
-              v-for="(item, index) in storeList"
-              :key="index"
-              :label="item.storesName"
-              :value="item.storesNum"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item :label="$t('desk.customer_gatheringStore')">-->
+<!--          <el-select v-model="searchForm.storesNum" class="width150">-->
+<!--            <el-option :label="$t('commons.all')" value=""></el-option>-->
+<!--            <el-option-->
+<!--              v-for="(item, index) in storeList"-->
+<!--              :key="index"-->
+<!--              :label="item.storesName"-->
+<!--              :value="item.storesNum"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item :label="$t('desk.customer_unitName')">
           <el-select
             v-model="searchForm.enterId"
@@ -442,7 +442,7 @@ export default {
       showEdit: false,
       showDetail: false,
       searchForm: {
-        storesNum: "",
+        // storesNum: "",
         enterId: "",
         timeType: "",
         payType: "",
