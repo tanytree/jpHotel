@@ -637,7 +637,7 @@ export default {
         email: "",
         remark: "",
       },
-     
+
       setBatchForm: {
         enterStrategyId: "",
         ruleAlldayId: "",
@@ -647,7 +647,7 @@ export default {
         salesId: "",
         state: "",
       },
-     
+
     };
   },
 

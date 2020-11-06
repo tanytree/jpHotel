@@ -12,9 +12,9 @@
                          :key="item.path"
                          v-if="$F.filterThirdMenu('sale1', item.path, true)">
                 <!-- 单位价格-->
-                <Unitquery v-if="item.path == 'Unitquery'"/>
-                <!-- 单位查询-->
-                <UnitPrice v-if="item.path == 'UnitPrice'"/>
+                <Unitquery v-if="item.path == 'Unitquery'" isHeader="1"/>
+<!--                &lt;!&ndash; 单位查询&ndash;&gt;-->
+<!--                <UnitPrice v-if="item.path == 'UnitPrice'"/>-->
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -22,12 +22,12 @@
 
 <script>
     import Unitquery from '@/components/unitManager/com';
-    import UnitPrice from '@/components/unitManager/unitList';
+    // import UnitPrice from '@/components/unitManager/unitList';
   // import UnitPrice from './unit/unitPrice'
   // import UnitQuery from './unit/unitquery'
 
   export default {
-    components: { UnitPrice, Unitquery },
+    components: { Unitquery },
     data () {
       return {
         activeName: ''
