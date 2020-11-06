@@ -3,9 +3,8 @@
     <div class="boss-index">
         <div class="booking flex_column">
             <!-- 查询部分 -->
-
             <el-form class="term" inline size="small" label-width="120px">
-                <el-form-item :label="$t('boss.loginDetail_stores')" v-if="storesNum == $F.getHQCode()">
+                <el-form-item :label="$t('boss.loginDetail_stores')">
                     <el-select v-model="searchForm.storesNum" :placeholder="$t('boss.staff_selectStores')">
                         <el-option :label="$t('commons.all')" value>{{ $t('commons.all') }}</el-option>
                         <el-option :label="item.storesName" :value="item.storesNum" :key="index" v-for="(item, index) in storeList"></el-option>
@@ -100,11 +99,12 @@
                     :label="$t('desk.customer_unitName')"
                     show-overflow-tooltip
                 ></el-table-column>
-                <el-table-column
-                    prop="storesNum"
-                    :label="$t('desk.customer_belongStore')"
-                    show-overflow-tooltip
-                ></el-table-column>
+                <el-table-column :label="$t('desk.customer_belongStore')" show-overflow-tooltip>
+                    <template
+                        slot-scope="scope"
+                        v-if="scope.row.storesNum"
+                    >{{F_storeName(scope.row.storesNum)}}</template>
+                </el-table-column>
                 <el-table-column
                     prop="contactName"
                     :label="$t('desk.home_name')"
@@ -802,7 +802,7 @@ export default {
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data) => {
             this.salesList = data.hotelUserList;
         });
-        if (this.storesNum == this.$F.getHQCode()) {
+        // if (this.storesNum == this.$F.getHQCode()) {
             this.$F.doRequest(this, "/pms/freeuser/stores_list",
                 {
                     filterHeader: true,
@@ -811,9 +811,18 @@ export default {
                     this.storeList = data;
                 }
             );
-        }
+        // }
     },
     methods: {
+        F_storeName(v) {
+            let that = this;
+            for (let k in that.storeList) {
+                if (that.storeList[k].storesNum == v) {
+                    return that.storeList[k].storesName;
+                }
+            }
+            return this.unknown;
+        },
         initForm() {
             this.searchForm = {
                 id: "",
@@ -846,7 +855,6 @@ export default {
                 "/pms/hotelenter/list",
                 this.searchForm,
                 (res) => {
-                    console.log(res);
                     this.loading = false;
                     this.tableData = res.list;
                     this.stableData = res.list;

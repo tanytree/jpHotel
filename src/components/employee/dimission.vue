@@ -52,12 +52,7 @@
         :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
         size="medium"
       >
-        <el-table-column
-          prop="storesNum"
-          :label="$t('boss.loginDetail_stores')"
-          show-overflow-tooltip
-          v-if="storesNum == $F.getHQCode()"
-        >
+        <el-table-column :label="$t('boss.loginDetail_stores')" show-overflow-tooltip v-if="storesNum == $F.getHQCode()">
           <template
             slot-scope="scope"
             v-if="scope.row.storesNum"
