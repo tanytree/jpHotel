@@ -86,10 +86,9 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column
-                  :label="$t('food.common.order_from')"
-                 >
-                  <template slot-scope="scope">{{ scope.row.orderSource ? getOrderSource(scope.row.orderSource) : ''}}</template>
+                <el-table-column :label="$t('food.common.order_from')">
+                  <template slot-scope="scope">
+                  {{ scope.row.orderSource ? getSource(scope.row.orderSource) : ''}}</template>
                 </el-table-column>
 
                 <el-table-column

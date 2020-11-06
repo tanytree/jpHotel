@@ -6,7 +6,7 @@
                 <span>售卖点：{{info.sellingName}} </span>
                 <span>{{$t('food.common.create_time')}}：{{info.createTime}} </span>
             </div>
-            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{info.consumePrice}}</div>
+            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{getFee}}<!-- {{info.consumePrice}} --></div>
             <div class="margin-t-20 clearfix">
                 <div class="fl clearfix">
                     <el-button type="primary" size="small" @click="action">{{$t('food.common.order_deal')}}</el-button>
@@ -34,6 +34,7 @@
                              </div>
                              <div v-else>
                                   <span v-if="scope.row.goods.priceModel == 1">
+                                      按次计费
                                   </span>
                                   <span v-else>
                                     {{scope.row.goods.priceStartMinute}}分钟后收起步价，
@@ -84,6 +85,7 @@
                 load:true,
                 info:{},
                 cart:[],
+                endTime:'',
                 searchForm:{
                     name:'',
                     categoryId: '',
@@ -98,7 +100,24 @@
                 userId: state => state.user.userId,
                 msgKey: state => state.config.msgKey,
                 plat_source: state => state.config.plat_source
-            })
+            }),
+            getFee(){
+                let list = this.info.orderSubList
+                let sum =  0
+                for(let i in list){
+                    if(list[i].goods.categoryType == 2){
+                        let data = list[i].goods
+                        if(data.priceModel == 2){
+                            // let fee = this.getFinalFee(data)
+                             let fee = this.getFinalFee(data,this.endTime)
+                            sum += fee
+                        }else{
+                            sum += list[i].totalPrice
+                        }
+                    }
+                }
+                return sum
+            }
         },
         mounted() {
         },
@@ -116,6 +135,7 @@
             //获取传过来的值
             getInfo(data){
                 console.log(data)
+                this.get_systime(data.createTime)
                 this.info = {}
                 this.cart = []
                 this.searchForm = {
@@ -126,6 +146,17 @@
                 }
                 let params = data
                 this.getOrderDetail(data)
+            },
+
+            get_systime(time){
+                let info = {
+                   startTime:time
+                }
+                this.$F.doRequest(this, "/pms/system/system_time", info, (res) => {
+                    console.log(res)
+                    this.endTime = res.dateStr
+                });
+
             },
 
             //获取详情
@@ -145,7 +176,7 @@
             action(){
                 this.$emit('action',this.info)
             },
-            
+
 
             closeDialog(){
                 this.info = {}

@@ -704,10 +704,10 @@ export default {
         }
 
         if(this.form.billingType == 3){
-             if(this.form.signHouseNum == ''){
-                 this.$message.error('请选择房间！');
-                 return
-             }
+            if(this.form.signHouseNum == ''){
+                this.$message.error('请选择房间！');
+                return
+            }
         }
         this.payLoading = true
         let params = {
@@ -768,10 +768,6 @@ export default {
                 this.alert(200,this.$t('food.common.success'));
                 this.reset();
             });
-
-
-
-
     },
 
 

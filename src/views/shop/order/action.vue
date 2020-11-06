@@ -1,11 +1,8 @@
 <template>
     <div class="action" v-loading="loading">
-
-        {{getFee}}
-
-
-        <div class="money text-red text-size20">{{$t('food.common.consumePrice')}} :   {{getFee}}<!-- {{info.consumePrice}} --></div>
-        <div class="money">已付金额: {{info.hasPayPrice}}</div>
+        <div class="money text-red text-size20">
+        {{$t('food.common.consumePrice')}} : {{getFee}}   <span class="text-gray text-size14 margin-l-15">已付金额: {{info.hasPayPrice}}</span> <!-- {{info.consumePrice}} --></div>
+        <!-- <div class="money">已付金额: {{info.hasPayPrice}}</div> -->
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item :label="$t('food.common.billingType')" prop="billingType">
@@ -16,11 +13,11 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="优惠金额">
-                   <el-input  size="small" v-model="form.preferentialPrice" placeholder="优惠金额" style="width: 180px;" ></el-input>
+                   <el-input  size="small" type="number" v-model="form.preferentialPrice" placeholder="优惠金额" style="width: 180px;" ></el-input>
                 </el-form-item>
-
                 <el-form-item :label="$t('food.common.payPrice')">
-                    {{getPayPrice}}
+                    <!-- {{getPayPrice}} -->
+                    {{getFee}}
                 </el-form-item>
 
                 <div v-if="form.billingType == 1">
@@ -56,7 +53,7 @@
                 </div>
                 <div v-if="form.billingType == 2">
                     <el-form-item :label="$t('food.common.select_company')" prop="signEnterId">
-                        <el-select  size="small" v-model="form.signEnterId"  filterable :placeholder="$t('food.common.select_company')" @focus="getSignList" @change="getSignInfo" >
+                        <el-select  size="small" v-model="form.signEnterId"  filterable :placeholder="$t('food.common.select_company')"  @change="getSignInfo" >
                             <el-option
                               v-for="(item,index) in signList"
                               :key="index"
@@ -79,7 +76,7 @@
 
                 <div v-if="form.billingType == 3">
                     <el-form-item :label="$t('food.common.select_room')" prop="signRoomId">
-                        <el-select  size="small" v-model="form.signRoomId"  filterable :placeholder="$t('food.common.select_room')" @focus="getSignRoomList" @change="getSignRoomInfo" >
+                        <el-select  size="small" v-model="form.signRoomId"  filterable :placeholder="$t('food.common.select_room')" @change="getSignRoomInfo" >
                             <el-option
                               v-for="(item,index) in romeList"
                               :key="index"
@@ -95,7 +92,7 @@
                 </el-form-item>
 
                 <el-form-item  :label="$t('food.common.order_count')">
-                    <el-input-number size="mini" v-model="form.docCoun" :step="1" step-strictly></el-input-number>
+                    <el-input-number size="mini" v-model="form.docCount" :step="1" step-strictly></el-input-number>
                 </el-form-item>
 
                 <el-form-item>
@@ -126,7 +123,7 @@
                    payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
                    remark:'',//备注  String选填
                    memberCard:'',//会员卡卡号  String选填
-                   docCoun:1,//单据份数  Integer选填
+                   docCount:1,//单据份数  Integer选填
                    billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
                    signCheckInId:'',// 入住信息id  billingType=3必填  String选填
                    signRoomId:'',//房间id
@@ -140,6 +137,7 @@
                    scoresPrice:'',//积分抵扣额度  Double选填
                    preferentialPrice:'',//优惠金额
                 },
+                endTime:'',
                 isUseScore:false,
                 isPrint:false,
                 memberList:[],//会员列表
@@ -176,7 +174,9 @@
             //计算实际价格
             getPayPrice(){
                 if(this.form.billingType == 1){
-                    let consumePrice = this.info.consumePrice
+                    // let consumePrice = this.info.consumePrice
+
+                    let consumePrice = this.getFee
                     let scoresPrice = this.jfInfo.discount
                     let realPayPrice = 0
                     if(this.isUseScore){
@@ -198,14 +198,15 @@
                     if(list[i].goods.categoryType == 2){
                         let data = list[i].goods
                         if(data.priceModel == 2){
-                            let fee = this.getFinalFee(data)
+                            let fee = this.getFinalFee(data,this.endTime)
                             sum += fee
                         }else{
                             sum += list[i].totalPrice
                         }
                     }
                 }
-                return sum
+
+                return  parseFloat(this.form.preferentialPrice) ? sum - parseFloat(this.form.preferentialPrice) : sum
             }
 
         },
@@ -249,13 +250,37 @@
             //获取传过来的值
             getInfo(data){
                 this.intForm();
+                this.get_systime(data.createTime)
                 // console.log(data)
+                console.log(data.billingType)
+                this.form.billingType = data.billingType
+                if(data.memberCard){
+                    this.form.memberCard = data.memberCard
+                }
+                if(data.signEnterId){
+                    this.form.signEnterId = data.signEnterId
+                    this.form.signCreditName = data.signCreditName
+                    this.form.signUserName = data.signUserName
+                    this.form.signIdcardType = data.signIdcardType
+                    this.form.signIdcard = data.signIdcard
+                }
+
+                if(data.signRoomId){
+                    this.form.signRoomId = data.signRoomId
+                    // this.form.signCheckInId = data.signCheckInId
+                    // this.signHouseNum = ''
+                }
+                this.form.docCount = data.docCount
+                this.form.remark = data.remark
                 this.info = data
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
                 // this.form.scoresPrice = data.scoresPrice
                 this.getMemberList();
                 this.getScoresDiscount();
+                this.getSignList();
+                this.getSignRoomList();
+
             },
 
             //获取积分换算查询
@@ -266,7 +291,7 @@
                 }
                 this.$F.doRequest(this, "/pms/hotelparam/convertfind", params, (res) => {
                     this.score.convert = res
-                    // console.log(res)
+                    console.log(res)
                     this.getScoresPrice();
                 });
             },
@@ -279,7 +304,7 @@
                 }
                 this.$F.doRequest(this, "/pms/hotelparam/discountfind", params, (res) => {
                     this.score.shop_discount_ratio = res.shop_discount_ratio
-                    // console.log(res.shop_discount_ratio)
+                    console.log(res.shop_discount_ratio)
                 });
             },
 
@@ -302,11 +327,15 @@
                 this.$F.doRequest(this, "/pms/hotelmember/list", params, (res) => {
                     this.memberList = res.list
                     this.loading = false
+                    this.getMerberInfo();
                 });
             },
             //选择会员
             getMerberInfo(){
                 let card = this.form.memberCard
+                if(!card){
+                    return false
+                }
                 let list = this.memberList
                 for(let i in list){
                     if(card == list[i].memberCard){
@@ -325,21 +354,31 @@
                     let shop_discount_ratio = this.score.shop_discount_ratio
                     let convert = this.score.convert
                     let score =  this.selectMerberInfo.score
+                    console.log(convert)
+                    console.log(shop_discount_ratio)
+                    console.log(score)
+                    if(!convert || !shop_discount_ratio || !score){
+                        this.form.scoresDiscount =  0
+                        this.form.scoresPrice =  0
+                        return false
+                    }
                     let jf = parseFloat(price)*parseFloat(convert)*parseFloat(shop_discount_ratio) //当前可有用的积分
                     let discount = 0
                     if(score > jf || score == jf){
                         discount = parseFloat(price)*parseFloat(shop_discount_ratio) //当前最大可抵扣金额
                         this.jfInfo = {
                            jf:jf,
-                           discount:discount.toFixed(2)
+                           discount:discount.toFixed(0)
                         }
                     }else{
                         discount =  parseFloat(score)/parseFloat(convert)
                         this.jfInfo = {
                            jf:score,
-                           discount:discount.toFixed(2)
+                           discount:discount.toFixed(0)
                         }
                     }
+                    console.log(this.jfInfo)
+
                     this.form.scoresDiscount =  this.jfInfo.jf
                     this.form.scoresPrice =  this.jfInfo.discount
                 // }else{
@@ -356,14 +395,17 @@
                 this.$F.doRequest(this,"/pms/hotelenter/list",params,(res) => {
                   this.signList = res.list;
                   this.loading = false
-                }
-              );
+                  this.getSignInfo();
+                });
             },
 
-            //获取房间列表
+            //获取单位详情
             getSignInfo(){
                 let signEnterId = this.form.signEnterId
-                // console.log(signEnterId)
+                console.log(signEnterId)
+                if(!signEnterId){
+                    return false
+                }
                 let list = this.signList
                 let obj = {}
                 for(let i in list){
@@ -373,7 +415,7 @@
                     }
                 }
                 // console.log(obj)
-                this.form.signEnterId =   obj.id      //签单单位名称  billingType=2必填  String选填
+                // this.form.signEnterId =   obj.id      //签单单位名称  billingType=2必填  String选填
                 this.form.signCreditName = obj.enterName //签单单位名称  billingType=2必填  String选填
             },
 
@@ -386,11 +428,16 @@
                 this.$F.doRequest(this, "/pms/dishes/living_rooms_list", params, (res) => {
                     this.romeList = res.roomListGroup
                     this.loading = false
+                    this.getSignRoomInfo();
                 });
             },
 
             getSignRoomInfo(){
                 let signRoomId = this.form.signRoomId
+                console.log(signRoomId)
+                if(!signRoomId){
+                    return false
+                }
                 let list = this.romeList
                 let obj = {}
                 for(let i in list){
@@ -399,17 +446,47 @@
                         break
                     }
                 }
+                // console.log(obj)
                 this.form.signCheckInId = obj.checkinId// 入住信息id  billingType=3必填  String选填
                 this.form.signRoomId = obj.roomId //房间id
                 this.form.signHouseNum = obj.houseNum //房间号
             },
+            //获取系统时间
+            get_systime(time){
+                let info = {
+                   startTime:time
+                }
+                this.$F.doRequest(this, "/pms/system/system_time", info, (res) => {
+                    // console.log(res)
+                    this.endTime = res.dateStr
+                });
+            },
+
+
+
+
+
 
             submit(){
+                // this.payLoading = true
+
                 let params = this.form
+                params.consumePrice = this.info.consumePrice + this.getFee
+
+
+                params.hasPayPrice = this.info.hasPayPrice
+                params.state = 2
+                let goodsIds = this.info.orderSubList.map((ele,index)=>{
+                    return  ele.goodsId
+                })
+                params.goodsSubIds = goodsIds.join(',')
+                params.realPayPrice = this.getFee
+                params.orderId = this.info.id
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-                // console.log(params)
+               
                 this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
+                    this.payLoading = false
                     this.alert(200,this.$t('food.common.success'));
                     this.closeDialog();
                 });
@@ -422,7 +499,13 @@
             }
         },
         watch:{
-
+            'form.signEnterId': {
+                handler(newVal,oldVal) {
+                    this.getSignInfo();
+                },
+                deep: true,
+                immediate: true
+            },
         }
     }
 </script>
