@@ -25,6 +25,23 @@
 						</template>
 					</el-table-column>
 				</el-table> -->
+				<el-table :data="roomType" style="width: 100%;margin-bottom: 20px;" row-key="id" default-expand-all
+				 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay">
+						<template slot-scope="{row, $index}" @click="changePrice(item, index, row)">
+							<span v-if="index === 0">{{row.name || row.houseName}}</span>
+							<span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="priceClick(row, item, index)">{{row.onePrice}}</span>
+						</template>
+					</el-table-column>
+				</el-table>
+				<el-table :data="tableData1" style="width: 100%" row-key="id" lazy :load="load" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+					<el-table-column prop="date" label="日期" width="180">
+					</el-table-column>
+					<el-table-column prop="name" label="姓名" width="180">
+					</el-table-column>
+					<el-table-column prop="address" label="地址">
+					</el-table-column>
+				</el-table>
 			</div>
 		</el-row>
 
@@ -70,9 +87,9 @@
 			<el-table ref="multipleTable" :data="batchEditPriceForm.roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="houseName" label="房型"></el-table-column>
 				<el-table-column prop="marketPrice" label="门市价(一人住宿+附餐费)"></el-table-column>
-				
+
 				<!-- 这是输入的住宿价,目的是为了会员享有一定的优惠,这里只展示一人住宿价 -->
-				<el-table-column prop="name" label="新住宿价格(一人住宿)"> 
+				<el-table-column prop="name" label="新住宿价格(一人住宿)">
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline">
 							<span>
@@ -126,6 +143,33 @@
 	export default {
 		data() {
 			return {
+				tableData1: [{
+					id: 1,
+					date: '2016-05-02',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1518 弄'
+				}, {
+					id: 2,
+					date: '2016-05-04',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1517 弄'
+				}, {
+					id: 3,
+					date: '2016-05-01',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1519 弄',
+					hasChildren: true
+				}, {
+					id: 4,
+					date: '2016-05-03',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1516 弄'
+				}],
+
+				dateList: [],
+				roomType: [],
+
+
 				memberChecked: false, // 会员类型全选
 				checkAll: false,
 				checkedMembers: [], //会员类型列表
@@ -281,9 +325,21 @@
 			},
 		},
 		methods: {
-			// 会员类型全选/反选
-
-
+			load(tree, treeNode, resolve) {
+				setTimeout(() => {
+					resolve([{
+						id: 31,
+						date: '2016-05-01',
+						name: '王小虎',
+						address: '上海市普陀区金沙江路 1519 弄'
+					}, {
+						id: 32,
+						date: '2016-05-01',
+						name: '王小虎',
+						address: '上海市普陀区金沙江路 1519 弄'
+					}])
+				}, 1000)
+			},
 			//保存批量修改房价
 			onSave() {
 				console.log(this.batchEditPriceForm);
@@ -326,7 +382,7 @@
 			change(row) {},
 			//选择会员类型复选框事件
 			handleMemberChange(value) {
-			
+
 				this.batchEditPriceForm.memberTypeId = value;
 				if (value.length == 0)
 					this.batchEditPriceForm.memberTypeId = [];
@@ -461,50 +517,36 @@
 					"/pms/hotel/hotel_price_room_type_list",
 					params,
 					(res) => {
-						// let index = 1;
-						// res.memberTypeList.forEach((memberType) => {
-						// 	index += 1;
-						// 	memberType.id2 = index;
-						// 	memberType.roomTypeList.forEach((roomType) => {
-						// 		index += 1;
-						// 		roomType.id2 = index;
-						// 	});
-						// })
-						// debugger
+						debugger
+						this.dateList = res.dateList
+						this.dateList.unshift({
+							dateStr: '房型/房价',
+							weekDay: "",
+						});
+
+						this.roomType = res.memberTypeList
 
 
 						// 获取会员类型列表
-						this.memberTypeY = []
-						this.memberTypeY.push({
-							name: this.$t('commons.all'),
-							id: ""
-						});
-						res.memberTypeList.forEach((item, i) => {
-							this.memberTypeY.push({
-								name: item.name,
-								id: item.id
-							});
-						})
-						console.log(this.memberTypeY)
-						
-						
-
-						// this.memberTableData = res;
-
-
-						// this.memberTableHeads = res.dateList; // 日历列表
-						// this.memberTableHeads.unshift({
-						// 	dateStr: this.roomPrice,
-						// 	weekDay: "",
+						// this.memberTypeY = []
+						// this.memberTypeY.push({
+						// 	name: this.$t('commons.all'),
+						// 	id: ""
 						// });
-						// this.$forceUpdate();
+						// res.memberTypeList.forEach((item, i) => {
+						// 	this.memberTypeY.push({
+						// 		name: item.name,
+						// 		id: item.id
+						// 	});
+						// })
+						// console.log(this.memberTypeY)
 					}
 				);
 			},
 			// 获取全部房型列表
 			get_hotel_room_type_list() {
 				let params = {
-					pageIndex:1,
+					pageIndex: 1,
 					pageSize: 999,
 					roomType: 3, // 1客房类型  2会议室房型 3全部
 				};
