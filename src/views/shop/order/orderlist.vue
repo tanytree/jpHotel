@@ -165,7 +165,7 @@
             <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">会员价格：¥{{detail.scoresPrice}}</div>
             <div class="margin-t-10 text-gray">实付款：¥{{detail.hasPayPrice}}</div>
             <div class="margin-t-10 text-gray">结账时间：¥{{detail.updateTime}}</div>
-            
+
 
             <el-table
               class="margin-t-10 "
@@ -346,7 +346,7 @@ export default {
 
         //结账
         action(data){
-            console.log(data)
+            // console.log(data)
             // this.is_add = true
             this.dialogShow = true
             this.dialogType = 2

@@ -1,6 +1,11 @@
 <template>
     <div class="action" v-loading="loading">
-        <div class="money text-red text-size20">{{$t('food.common.consumePrice')}} : {{info.consumePrice}}</div>
+
+        {{getFee}}
+
+
+        <div class="money text-red text-size20">{{$t('food.common.consumePrice')}} :   {{getFee}}<!-- {{info.consumePrice}} --></div>
+        <div class="money">已付金额: {{info.hasPayPrice}}</div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item :label="$t('food.common.billingType')" prop="billingType">
@@ -11,13 +16,12 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="优惠金额">
-                   <el-input  size="small" placeholder="优惠金额" style="width: 180px;" ></el-input>
+                   <el-input  size="small" v-model="form.preferentialPrice" placeholder="优惠金额" style="width: 180px;" ></el-input>
                 </el-form-item>
 
                 <el-form-item :label="$t('food.common.payPrice')">
                     {{getPayPrice}}
                 </el-form-item>
-
 
                 <div v-if="form.billingType == 1">
                     <el-form-item :label="$t('food.common.payType')">
@@ -33,8 +37,6 @@
                     <!-- <el-form-item :label="$t('food.common.payPrice')">
                         {{getPayPrice}}
                     </el-form-item> -->
-
-
 
                     <el-form-item :label="$t('food.common.member_card')">
                         <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.common.select_member_card')" @change="getMerberInfo">
@@ -136,6 +138,7 @@
                    signIdcard:'',//签单证件号码   billingType=2必填 String选填
                    scoresDiscount:'',//积分抵扣分值  Integer选填
                    scoresPrice:'',//积分抵扣额度  Double选填
+                   preferentialPrice:'',//优惠金额
                 },
                 isUseScore:false,
                 isPrint:false,
@@ -184,8 +187,27 @@
                     this.form.realPayPrice = parseFloat(realPayPrice).toFixed(2)
                     let p = parseFloat(realPayPrice).toFixed(2)
                     return p
+                }else{
+                    return 0
                 }
+            },
+            getFee(){
+                let list = this.info.orderSubList
+                let sum =  0
+                for(let i in list){
+                    if(list[i].goods.categoryType == 2){
+                        let data = list[i].goods
+                        if(data.priceModel == 2){
+                            let fee = this.getFinalFee(data)
+                            sum += fee
+                        }else{
+                            sum += list[i].totalPrice
+                        }
+                    }
+                }
+                return sum
             }
+
         },
         mounted() {
 
@@ -227,6 +249,7 @@
             //获取传过来的值
             getInfo(data){
                 this.intForm();
+                // console.log(data)
                 this.info = data
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
