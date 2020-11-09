@@ -462,31 +462,26 @@
                 });
             },
 
-
-
-
-
-
+            //提交结账
             submit(){
-                // this.payLoading = true
-
+                this.loading = true
                 let params = this.form
-                params.consumePrice = this.info.consumePrice + this.getFee
-
-
+                params.consumePrice = this.info.consumePrice
                 params.hasPayPrice = this.info.hasPayPrice
                 params.state = 2
                 let goodsIds = this.info.orderSubList.map((ele,index)=>{
                     return  ele.goodsId
                 })
                 params.goodsSubIds = goodsIds.join(',')
-                params.realPayPrice = this.getFee
+                // params.realPayPrice = this.getFee
+                params.realPayPrice = this.info.hasPayPrice + this.getFee
                 params.orderId = this.info.id
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-               
+                // console.log(params)
+                // return
                 this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
-                    this.payLoading = false
+                    this.loading = false
                     this.alert(200,this.$t('food.common.success'));
                     this.closeDialog();
                 });

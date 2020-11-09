@@ -99,7 +99,7 @@
                 <el-table-column
                   :label="$t('food.common.total_pay')"
                  >
-                    <template slot-scope="scope">{{scope.row.consumePrice}}</template>
+                    <template slot-scope="scope">{{scope.row.realPayPrice}}</template>
                 </el-table-column>
 
                 <el-table-column
@@ -146,7 +146,7 @@
     <el-dialog
         top="0"
         :title="$t('food.orderTitle.1')"
-        width="800px"
+        width="60%"
         :visible.sync="dialogShows"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
@@ -164,8 +164,6 @@
             <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">会员价格：¥{{detail.scoresPrice}}</div>
             <div class="margin-t-10 text-gray">实付款：¥{{detail.hasPayPrice}}</div>
             <div class="margin-t-10 text-gray">结账时间：¥{{detail.updateTime}}</div>
-
-
             <el-table
               class="margin-t-10 "
               :data="detail.orderSubList"
@@ -175,22 +173,55 @@
             >
               <el-table-column prop="goodsName" label="商品名称" ></el-table-column>
               <el-table-column :label="$t('food.common.price')" prop="unitPrice"></el-table-column>
+              <el-table-column label="计费规则">
+                <template slot-scope="scope">
+                   <div v-if="scope.row.goods">
+                       <div v-if="scope.row.goods.categoryType == 1">
+                          价格*数量
+                       </div>
+                       <div v-else>
+                            <span v-if="scope.row.goods.priceModel == 1">
+                                按次计费
+                            </span>
+                            <span v-else>
+                              {{scope.row.goods.priceStartMinute}}分钟后收起步价，
+                              起步价{{scope.row.goods.startPrice}}日元，每
+                              {{scope.row.goods.priceTime}}分钟收费{{scope.row.goods.minutePrice}}日元
+                              <span v-if="scope.row.goods.capsPriceFlag == 2">封顶消费{{scope.row.goods.capsPrice}}日元</span>
+                           </span>
+                       </div>
+                   </div>
+                </template>
+              </el-table-column>
               <el-table-column label="商品数量" width="160" prop="goodsCount"></el-table-column>
+              <el-table-column label="消费金额" width="200">
+                <template slot-scope="scope">
+                  <div v-if="scope.row.goods.categoryType == 1">
+                      {{scope.row.totalPrice}}
+                  </div>
+                  <div v-if="scope.row.goods.categoryType == 2">
+                      <span v-if="scope.row.goods.priceModel == 2">
+                          {{getFinalFee(scope.row.goods,scope.row.updateTime)}} (计时:{{getDiffDate(detail.createTime,scope.row.updateTime)}})
+                      </span>
+                      <span v-if="scope.row.goods.priceModel == 1">
+                         {{scope.row.totalPrice}}
+                      </span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column :label="$t('food.common.status')" width="80">
+                  <template slot-scope="scope">
+                      {{scope.row.state == 2 ? '已结' : '未结'}}
+                  </template>
+              </el-table-column>
             </el-table>
-
             <el-divider></el-divider>
             <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
                <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
            </div>
-
-
         </div>
         <!-- {{detail}} -->
-
     </el-dialog>
-
-
-
 </div>
 </template>
 
@@ -239,7 +270,7 @@ export default {
         };
     },
     mounted() {
-        this.getDataList();
+        this.initForm();
     },
     methods: {
         initForm() {

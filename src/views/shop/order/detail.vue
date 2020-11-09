@@ -47,14 +47,14 @@
                       </template>
                     </el-table-column>
                     <el-table-column prop="goodsCount" label="数量" width="50"></el-table-column>
-                    <el-table-column label="消费金额" width="150">
+                    <el-table-column label="消费金额" width="200">
                       <template slot-scope="scope">
                         <div v-if="scope.row.goods.categoryType == 1">
                             {{scope.row.totalPrice}}
                         </div>
                         <div v-if="scope.row.goods.categoryType == 2">
                             <span v-if="scope.row.goods.priceModel == 2">
-                                {{getFinalFee(scope.row.goods)}} (计时:{{getDiffDate(info.createTime)}})
+                                {{getFinalFee(scope.row.goods,endTime)}} (计时: {{getDiffDate(info.createTime,endTime)}})
                             </span>
                             <span v-if="scope.row.goods.priceModel == 1">
                                {{scope.row.totalPrice}}
@@ -134,8 +134,6 @@
             },
             //获取传过来的值
             getInfo(data){
-                console.log(data)
-                this.get_systime(data.createTime)
                 this.info = {}
                 this.cart = []
                 this.searchForm = {
@@ -149,6 +147,7 @@
             },
 
             get_systime(time){
+                console.log(time)
                 let info = {
                    startTime:time
                 }
@@ -161,6 +160,7 @@
 
             //获取详情
             getOrderDetail(params){
+                console.log(params)
                 this.load = true
                 this.$F.doRequest(this, "/pms/shop/shop_order_detail", params, (res) => {
                    console.log(res.order)
@@ -168,6 +168,7 @@
                    this.info = res.order
                    let list = res.order.orderSubList
                    this.cart = list
+                   this.get_systime(res.order.createTime)
 
                 });
             },
