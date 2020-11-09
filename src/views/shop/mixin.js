@@ -118,7 +118,7 @@ const mixin= {
                     let allMinutes = this.getDiffMinutes(data.createTime,systime)
                     // console.log('项目当前时间'+systime)
                     // let allMinutes =
-                    console.log(allMinutes)
+                    // console.log(allMinutes)
                     // console.log(res.poorSeconds/60)
 
                     // console.log('起步价'+startPrice)//起步价
