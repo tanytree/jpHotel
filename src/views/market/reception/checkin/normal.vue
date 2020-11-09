@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 18:02:56
+ * @LastEditTime: 2020-11-09 15:00:26
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 
@@ -187,7 +187,7 @@
                     ></el-date-picker>
                 </el-form-item>
                 <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays" v-if="operCheckinType == 'b1'">
-                    <el-input-number v-model="checkInForm.checkinDays" step="1" min="1" @change="checkinDaysChange"></el-input-number>
+                    <el-input-number v-model="checkInForm.checkinDays" :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
                     <el-date-picker
@@ -795,6 +795,7 @@ export default {
             //预定和入住人信息
             checkInForm: {
                 checkInRoomJson: [],
+               
             },
 
             listTotal: 0, //总条数
