@@ -80,11 +80,6 @@ const mixin= {
                     minuteTime = parseInt(minuteTime % 60);
                 }
             }
-
-            console.log(secondTime)
-            console.log(minuteTime)
-            console.log(hourTime)
-
             var result = parseInt(secondTime) < 10  ? "0" + parseInt(secondTime) : ""+parseInt(secondTime);
             if(minuteTime > 0) {
                 result = parseInt(minuteTime) < 10  ? "0" + parseInt(minuteTime) : "" + parseInt(minuteTime) + ":" + result;
@@ -119,22 +114,21 @@ const mixin= {
                 if(data.priceModel == 2){
                     let startPrice = data.startPrice
                     // console.log(startPrice)
-                    console.log('项目开始时间'+data.createTime)
+                    // console.log('项目开始时间'+data.createTime)
                     let allMinutes = this.getDiffMinutes(data.createTime,systime)
-                    console.log('项目当前时间'+systime)
-
+                    // console.log('项目当前时间'+systime)
                     // let allMinutes =
                     console.log(allMinutes)
                     // console.log(res.poorSeconds/60)
 
                     // console.log('起步价'+startPrice)//起步价
                     // console.log('服务项目所在的全部分钟数'+allMinutes)//服务项目所在的全部分钟数
-                    console.log('服务的使用时间是否大于起步价开始计算时间'+ allMinutes > data.priceStartMinute)//服务的使用时间是否大于起步价开始计算时间
+                    // console.log('服务的使用时间是否大于起步价开始计算时间'+ allMinutes > data.priceStartMinute)//服务的使用时间是否大于起步价开始计算时间
                     //全部分钟数》起步价设置的分钟数
                     if( allMinutes > data.priceStartMinute){
                         // 设置价格为起步价
                         let a = parseFloat(allMinutes - data.priceStartMinute)//获取减去起步时间的分钟数
-                        console.log('获取减去起步时间的分钟数'+a)
+                        // console.log('获取减去起步时间的分钟数'+a)
                         // console.log('从多少分钟开始收费'+data.priceTime)
                         let b = parseFloat(a/data.priceTime)
                         let c = parseFloat((b+'').split('.')[0])+1//除去起步时间后的次数
@@ -160,25 +154,7 @@ const mixin= {
                         return startPrice
                     }
                 }
-            //获取系统时间
-            let params = {
-                startTime:this.info.createTime
-            }
-
-
-
-
-
-
-
-            // {{scope.row.goods.priceStartMinute}}分钟后收起步价，
-            // 起步价{{scope.row.goods.startPrice}}日元，每
-            // {{scope.row.goods.priceTime}}分钟收费{{scope.row.goods.minutePrice}}日元
-            // <span v-if="scope.row.goods.capsPriceFlag == 2">封顶消费{{scope.row.goods.capsPrice}}日元</span>
-
         },
-
-
 
 
         // 1:'前台点餐',
@@ -186,7 +162,7 @@ const mixin= {
         // 3:'H5点餐'
 
         getSource(v){
-            console.log(v)
+            // console.log(v)
             let arr = {
                 1:'售卖点',
                 2:'IPAD',
@@ -208,9 +184,6 @@ const mixin= {
                 });
             }
         }
-
-
-
     },
     created() {
 
