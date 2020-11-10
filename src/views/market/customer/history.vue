@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-09 16:56:45
+ * @LastEditTime: 2020-11-10 16:49:40
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -11,23 +11,6 @@
         <div class="booking">
             <!-- 查询部分 -->
             <el-form class="term" inline size="small" label-width="80px">
-                <!-- <el-form-item
-                    v-if="1 == 2"
-                    :label="$t('desk.customer_createStore') + ':'"
-                >
-                    <el-select v-model="searchForm.storesNum" class="width150">
-                        <el-option
-                            :label="$t('desk.home_all')"
-                            value
-                        ></el-option>
-                        <el-option
-                            v-for="item in storeList"
-                            :key="item.storesNum"
-                            :label="item.storesName"
-                            :value="item.storesNum"
-                        ></el-option>
-                    </el-select>
-                </el-form-item> -->
                 <el-form-item :label="$t('desk.customer_guestType') + ':'">
                     <el-select v-model="searchForm.guestType" class="width150">
                         <el-option
@@ -44,34 +27,12 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('desk.customer_memeberCardNum') + ':'">
+                <el-form-item :label="$t('desk.customer_guestNum') + ':'">
                     <el-input
-                        v-model="searchForm.memberCardNo"
+                        v-model="searchForm.guestNum"
                         class="width150"
                     ></el-input>
                 </el-form-item>
-                <!-- <el-form-item
-                    v-if="1 == 2"
-                    :label="$t('desk.customer_isBlack') + ':'"
-                >
-                    <el-select
-                        v-model="searchForm.isBlacklist"
-                        class="width150"
-                    >
-                        <el-option
-                            :label="$t('desk.home_all')"
-                            value
-                        ></el-option>
-                        <el-option
-                            v-for="(label, value) in $t(
-                                'frontOffice.isBlacklist'
-                            )"
-                            :label="label"
-                            :value="value"
-                            :key="value"
-                        ></el-option>
-                    </el-select>
-                </el-form-item> -->
                 <el-form-item
                     :label="$t('desk.home_name') + ':'"
                     label-width="50px"
@@ -106,12 +67,6 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item :label="$t('desk.customer_documentNum') + ':'">
-                    <el-input
-                        v-model="searchForm.idcard"
-                        class="width150"
-                    ></el-input>
-                </el-form-item> -->
                 <el-form-item>
                     <el-button
                         type="primary"
@@ -123,11 +78,6 @@
                         $t("commons.resetBtn")
                     }}</el-button>
                 </el-form-item>
-                <!-- <el-form-item>
-                    <el-button plain>{{
-                        $t("desk.customer_readMemCard")
-                    }}</el-button>
-                </el-form-item> -->
             </el-form>
             <!--表格数据 -->
             <el-table
@@ -142,13 +92,13 @@
                     prop="name"
                     align="center"
                     :label="$t('desk.home_name')"
-                    width="120"
+                    width="100"
                 ></el-table-column>
                 <el-table-column
                     prop="sex"
                     align="center"
                     :label="$t('desk.customer_sex')"
-                    width="100"
+                    width="60"
                 >
                     <template slot-scope="{ row }">{{
                         row.sex | F_sex
@@ -175,13 +125,12 @@
                     show-overflow-tooltip
                 ></el-table-column>
                 <el-table-column
-                    prop="memberObject.birthday"
+                    prop="birthday"
                     align="center"
                     :label="$t('desk.customer_brithday')"
                     width="120"
                 ></el-table-column>
                 <el-table-column
-                    prop="guestType"
                     align="center"
                     :label="$t('desk.customer_guestType')"
                     width="100"
@@ -191,20 +140,11 @@
                     }}</template>
                 </el-table-column>
                 <el-table-column
-                    prop="memberCard"
+                    prop="guestNum"
                     align="center"
-                    :label="$t('desk.customer_memeberCardNum')"
+                    :label="$t('desk.customer_guestNum')"
                     show-overflow-tooltip
                 ></el-table-column>
-                <!-- <el-table-column
-                    v-if="1 == 2"
-                    prop="storesNum"
-                    :label="$t('desk.customer_belongStore')"
-                >
-                    <template slot-scope="{ row }">{{
-                        F_storeName(row.storesNum)
-                    }}</template>
-                </el-table-column> -->
                 <el-table-column
                     align="center"
                     :label="$t('desk.customer_cumulative')"
@@ -214,32 +154,6 @@
                         row.consumeTotalPrice ? row.consumeTotalPrice : "0"
                     }}</template>
                 </el-table-column>
-                <!-- <el-table-column
-                    v-if="1 == 2"
-                    align="center"
-                    :label="$t('desk.customer_ifBalckName')"
-                    width="120"
-                >
-                    <template slot-scope="{ row }">
-                        <div
-                            v-if="
-                                row.memberObject &&
-                                row.memberObject.isBlacklist == 2
-                            "
-                        >
-                            {{ $t("desk.customer_yes") }}
-                        </div>
-                        <div
-                            v-if="
-                                row.memberObject &&
-                                (row.memberObject.isBlacklist == 1 ||
-                                    !row.memberObject.isBlacklist)
-                            "
-                        >
-                            {{ $t("desk.customer_no") }}
-                        </div>
-                    </template>
-                </el-table-column> -->
                 <el-table-column
                     prop
                     :label="$t('commons.operating')"
@@ -407,18 +321,18 @@
                         <el-col :span="8" class="col">
                             <el-form-item
                                 :label="
-                                    $t('desk.customer_memeberCardNum') + ':'
+                                    $t('desk.customer_guestNum') + ':'
                                 "
                                 class
-                                prop="memberCard"
+                                prop="guestNum"
                             >
                                 <el-input
-                                    v-model="detailForm.memberCard"
+                                    v-model="detailForm.guestNum"
                                     class="width200"
                                     v-if="detailForm.type == 'add'"
                                 ></el-input>
                                 <template v-else>{{
-                                    detailForm.memberCard
+                                    detailForm.guestNum
                                 }}</template>
                             </el-form-item>
                         </el-col>
@@ -752,12 +666,11 @@ export default {
             showDetail: false,
             setMemberFormVisible: false,
             searchForm: {
-                isBlacklist: "",
+                guestNum:'',
+               name: "",
+               guestType:'',
                 mobile: "",
-                idcard: "",
-                name: "",
-                memberCardNo:'',
-                searchType: 3,
+                idcardType:'',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true,
@@ -885,12 +798,11 @@ export default {
     methods: {
         initForm() {
             this.searchForm = {
-                isBlacklist: "",
+                guestNum:'',
+                 name: "",
+               guestType:'',
                 mobile: "",
-                idcard: "",
-                name: "",
-                memberCardNo:'',
-                searchType: 3,
+                idcardType:'',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true,
@@ -902,11 +814,11 @@ export default {
             this.loading = true;
             this.$F.doRequest(
                 this,
-                "/pms/checkin/checkin_order_list",
+                 "/pms/guestarchives/guest_archives_list",
                 this.searchForm,
                 (res) => {
                     this.loading = false;
-                    this.tableData = res.roomPersonList;
+                    this.tableData = res.guestList;
                     console.log(this.tableData);
                     this.listTotal = res.page.count;
                 }

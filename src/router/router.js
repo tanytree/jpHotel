@@ -1,8 +1,8 @@
 /*
  * @Date: 2019-12-12 11:15:44
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-30 13:45:53
- * @FilePath: /jiudian/src/router/router.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-10 14:12:40
+ * @FilePath: \jiudian\src\router\router.js
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -258,6 +258,13 @@ export default new Router({
                     meta: { title: '客户历史' },
                     component: () =>
                         import('@/views/market/customer/children/history'),
+                },
+                {
+                    path: '/historyTao',
+                    name: 'historyTao',
+                    meta: { title: '总办客户历史' },
+                    component: () =>
+                        import('@/views/market/customer/children/historyTao'),
                 },
                 {
                     path: '/foreignDetail',

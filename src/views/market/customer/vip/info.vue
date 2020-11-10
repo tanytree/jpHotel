@@ -270,18 +270,30 @@ export default {
         this.$F.commons.fetchMemberTypeList({}, (res) => {
             this.smembertypeList = res.list;
         });
+        console.log(this.type);
     },
     methods: {
         //点击客史
           handleHistory(item) {
             console.log(item);
+            console.log(this.type);
             if (item.idcard) {
-                this.$router.push({
-                    name: "customerhistory",
-                    query: {
+                if(this.type=='footer'){
+                     this.$router.push({
+                        name: "customerhistory",
+                       query: {
                         idcard: item.idcard,
-                    },
-                });
+                      },
+                    });
+                }else if(this.type=='header'){
+                    this.$router.push({
+                        name: "historyTao",
+                       query: {
+                        idcard: item.idcard,
+                      },
+                    });
+                }
+
             } else {
                 this.$message(this.$t("desk.customer_noRecord"));
             }

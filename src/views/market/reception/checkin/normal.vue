@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-09 15:00:26
+ * @LastEditTime: 2020-11-10 17:54:11
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 

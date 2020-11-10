@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-30 16:40:51
+ * @LastEditTime: 2020-11-10 17:36:45
  * @FilePath: \jiudian\src\views\market\booking\hall.vue
  -->
 
@@ -11,9 +11,9 @@
       <el-tab-pane :label="$t('desk.book_venueBook')" name="b3">
         <normal :operCheckinType="activeName"></normal>
       </el-tab-pane>
-      <el-tab-pane :label="$t('desk.book_meetVerification')" name="second">
+      <!-- <el-tab-pane :label="$t('desk.book_meetVerification')" name="second">
         <c2></c2>
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

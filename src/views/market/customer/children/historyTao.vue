@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 14:00:58
- * @FilePath: \jiudian\src\views\market\customer\children\history.vue
+ * @LastEditTime: 2020-11-10 14:17:17
+ * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
 <template>
@@ -12,7 +12,7 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item   :to="{ path: '/customer' }">{{
+          <el-breadcrumb-item  @click.native="clickHistory">{{
             $t("desk.customer_guestHistoryRecord")
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{
@@ -176,15 +176,6 @@
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="220" >
-          <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="handelDetail(row)"
-              >{{
-              $t("commons.detail")
-            }}</el-button
-            >
-          </template>
-        </el-table-column>
       </el-table>
       <div style="margin-top: 10px"></div>
       <!--分页 -->
@@ -271,7 +262,10 @@ export default {
       this.searchForm.idcard = this.$route.query.idcard || "";
       this.getDataList();
     },
-    
+    //点击顶部客史档案
+    clickHistory(){
+      this.$router.go(-1)
+    },
     /**获取表格数据 */
     getDataList() {
       this.loading = true;
@@ -315,25 +309,6 @@ export default {
         }
       );
     },
-    handelDetail(item) {
-      this.$router.push("/orderdetail");
-    },
-    handleDetail(item) {
-      this.$router.push({
-        name: "historydetail",
-      });
-    },
-    handleHistory(item) {
-      this.$router.push({
-        name: "customerhistory",
-      });
-    },
-    handleEdit(item) {
-      this.$router.push({
-        name: "customeredit",
-      });
-    },
-
     F_storeName(v) {
       let that = this;
       for (let k in that.storeList) {
@@ -342,10 +317,6 @@ export default {
         }
       }
       return  this.$t('desk.customer_unknowStore');
-    },
-    /**多选 */
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
     },
     /**每页数 */
     handleSizeChange(val) {

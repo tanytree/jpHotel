@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-06 10:20:47
+ * @LastEditTime: 2020-11-10 16:16:24
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -689,6 +689,8 @@ module.exports = {
     night_auditTime:'日時更新時間（営業日）',
     night_auditDay:'日時更新日',
     night_auditResults:'日時更新結果',
+    customer_sureEnable:'該当法人を起用確認します',
+    customer_guestNum: '顧客番号',
    
     
 

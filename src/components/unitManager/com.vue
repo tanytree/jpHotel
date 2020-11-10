@@ -753,7 +753,6 @@ export default {
                 searchType: 1,
                 content: "",
                 enterStatus: "",
-             
                 startTime: "", //考试时件
                 endTime: "", //结束时间
             },
@@ -831,6 +830,8 @@ export default {
             return this.unknown;
         },
         initForm() {
+            this.pageSize=10;
+            this.pageIndex=1;
             this.searchForm = {
                  storesNum: '',
                 id: "",
@@ -845,10 +846,7 @@ export default {
                 startUsedLimit: "",
                 endUsedLimit: "",
                 paging: true,
-               
             };
-            this.pageSize=10;
-            this.pageIndex=1;
             this.getDataList();
         },
         //点击 批量设置 按钮
@@ -872,6 +870,8 @@ export default {
                     this.tableData = res.list;
                     this.stableData = res.list;
                     this.listTotal = (res.page || {}).count || 0;
+                    this.pageSize = 10;
+                    this.pageIndex = 1;
                 }
             );
         },
@@ -937,7 +937,7 @@ export default {
         //点击单位禁用
         disableItem(item) {
             this.$confirm(
-                this.$t("desk.customer_sureDisable"),
+                item.state==1?this.$t("desk.customer_sureDisable"):this.$t("desk.customer_sureEnable"),
                 this.$t("commons.tip_desc"),
                 {
                     confirmButtonText: this.$t("commons.confirm"),
@@ -1149,11 +1149,13 @@ export default {
             this.pageSize = val;
             this.pageIndex = 1;
             this.getDataList();
+           
         },
         /**当前页 */
         handleCurrentChange(val) {
             this.pageIndex = val;
             this.getDataList();
+          
         },
     },
 };

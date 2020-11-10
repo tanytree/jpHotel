@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 13:45:51
+ * @LastEditTime: 2020-11-10 17:19:34
  * @FilePath: \jiudian\src\views\market\customer\children\historydetail.vue
  -->
 <template>
@@ -60,15 +60,18 @@
                                                     "
                                                     size="small"
                                                 >
-                                                    <el-option
-                                                        v-for="(label,
-                                                        value) in $t(
+                                                    <!-- <el-option
+                                                        v-for="(key,
+                                                        value ) in $t(
                                                             'commons.idCardType'
                                                         )"
-                                                        :label="label"
+                                                        :label="key"
                                                         :value="value"
                                                         :key="value"
-                                                    ></el-option>
+                                                    ></el-option> -->
+                                                    <el-option :label="$t('desk.home_idCard')" :value="1"></el-option>
+                                                    <el-option :label="$t('desk.customer_passport')"  :value="2"></el-option>
+                                                    <el-option :label="$t('desk.customer_driveLicence')" :value="3"></el-option>
                                                 </el-select>
                                                 <el-input
                                                     v-model="editorForm.idcard"

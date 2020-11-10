@@ -1,13 +1,13 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-19 10:47:51
+ * @LastEditTime: 2020-11-10 11:06:35
  * @FilePath: \jiudian\src\views\market\customer\member.vue
  -->
 
 <template>
   <div class="boss-index">
-      <info></info>
+      <info type='footer'></info>
 <!--    <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">-->
 <!--      <el-tab-pane :label="$t('desk.customer_memInfo')" name="first">-->
 <!--        <info></info>-->
