@@ -36,7 +36,7 @@
 									</el-button>
 									<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
 									</el-button>
-									<el-button type="text" size="small" @click="addHouse('rili', scope.row)">{{$t('manager.hk_priceCalendar')}}
+									<el-button type="text" size="small" @click="addHouse('rili', scope.row, '3')">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
 									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="houseConfirm_delete">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
@@ -73,7 +73,7 @@
 									</el-button>
 									<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
 									</el-button>
-									<el-button type="text" size="small" @click="addHouse('rili', scope.row)">{{$t('manager.hk_priceCalendar')}}
+									<el-button type="text" size="small" @click="addHouse('rili', scope.row, '4')">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
 									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="houseConfirm_delete">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
