@@ -1,4 +1,4 @@
- <template>
+<template>
 	<div>
 		<el-row :gutter="20" v-if="tab1_show">
 			<el-row style="padding: 10px 15px;">
@@ -22,7 +22,7 @@
 						<template slot-scope="{row, $index}" @click="changePrice(item, index, row)">
 							<span v-if="index === 0">{{row.name || row.houseName}}</span>
 							<span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="popup('single',row, item, index)">
-								<el-col>{{row.onePrice}}</el-col>
+								<el-col>{{item.onePrice}}</el-col>
 								<!-- <el-col v-else>{{row.marketPrice}}</el-col> -->
 							</span>
 						</template>
@@ -33,15 +33,14 @@
 		</el-row>
 
 		<!-- ===================批量调价==================================== -->
-		<el-dialog top="0" title="批量调价" :visible.sync="PieDialog" :close-on-click-modal="false"
-		 width="80%" class="editPriceDialog">
-			
+		<el-dialog top="0" title="批量调价" :visible.sync="PieDialog" :close-on-click-modal="false" width="80%" class="editPriceDialog">
+
 			<el-row :gutter="20">
 				<el-form :model="ruleForm_Pie" :rules="rules" ref="ruleForm_Pie" label-width="100px">
 					<el-col :span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')+':'" prop="time">
 							<el-date-picker v-model="ruleForm_Pie.time" type="daterange" align="right" value-format="yyyy-MM-dd"
-							  unlink-panels :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')"
+							 unlink-panels :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')"
 							 :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
 						</el-form-item>
 					</el-col>
@@ -55,38 +54,53 @@
 				</el-form>
 			</el-row>
 			<el-table ref="multipleTable" :data="ruleForm_Pie.roomStrategyJson" tooltip-effect="dark" default-expand-all
-				 header-row-class-name="default">
+			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数">
+				<el-table-column prop="personNum" label="人数/座位数"  v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
-						<div style="padding: 10px 0px;">
-							<span v-if="value.roomType == 1">{{value.personNum}}</span>
-							<span v-else>{{value.bedNum}}</span>
-						</div>
+							<div style="padding: 10px 0px;">
+								<span v-if="value.roomType == 1">{{value.personNum}}</span>
+								<span v-else>{{value.bedNum}}</span>
+							</div>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="价格 (住宿价)">
+				<el-table-column prop="customPrice" label="价格 (住宿价)" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
-							<div style="padding: 10px 0px;" v-if="value.roomType == 1">{{value.customPrice}}</div>
-							<div style="padding: 10px 0px;" v-else>{{value.marketPrice}}</div>
+							<div style="padding: 10px 0px;">{{value.customPrice}}</div>
 						</div>
 					</template>
 				</el-table-column>
-				
-				<el-table-column prop="newCustomPrice" label="调改价" width="250">
+				<el-table-column prop="customPrice" label="门市价" v-else>
+					<template slot-scope="scope">
+						<div v-for="(value, index) in roomStrategyJson_p">
+							<div style="padding: 10px 0px;">{{value.marketPrice}}</div>
+						</div>
+					</template>
+				</el-table-column>
+
+				<el-table-column prop="newCustomPrice" label="调改价" width="250" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
 								<el-input v-model="value.newCustomPrice"></el-input>
-							</div>	
+							</div>
 						</div>
 					</template>
 				</el-table-column>
-				
-				<el-table-column prop="name" label="附餐">
+				<el-table-column prop="newCustomPrice" label="新门市价" width="250" v-else>
+					<template slot-scope="scope">
+						<div v-for="(value, index) in roomStrategyJson_p">
+							<div style="padding: 10px 0px;">
+								<el-input v-model="value.newCustomPrice"></el-input>
+							</div>
+						</div>
+					</template>
+				</el-table-column>
+
+				<el-table-column prop="name" label="附餐" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
@@ -114,38 +128,53 @@
 				<el-col :span="16">{{editPriceForm.dayTime}}</el-col>
 			</el-row>
 			<el-table ref="multipleTable" :data="editPriceForm.roomStrategyJson" tooltip-effect="dark" default-expand-all
-				 header-row-class-name="default">
+			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数">
+				<el-table-column prop="personNum" label="人数/座位数"  v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
-						<div style="padding: 10px 0px;">
-							<span v-if="value.roomType == 1">{{value.personNum}}</span>
-							<span v-else>{{value.bedNum}}</span>
-						</div>
+							<div style="padding: 10px 0px;">
+								<span v-if="value.roomType == 1">{{value.personNum}}</span>
+								<span v-else>{{value.bedNum}}</span>
+							</div>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="价格 (住宿价)">
+				<el-table-column prop="customPrice" label="价格 (住宿价)" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
-							<div style="padding: 10px 0px;" v-if="value.roomType == 1">{{value.customPrice}}</div>
-							<div style="padding: 10px 0px;" v-else>{{value.marketPrice}}</div>
+							<div style="padding: 10px 0px;">{{value.customPrice}}</div>
 						</div>
 					</template>
 				</el-table-column>
-				
-				<el-table-column prop="newCustomPrice" label="调改价" width="250">
+				<el-table-column prop="customPrice" label="门市价" v-else>
+					<template slot-scope="scope">
+						<div v-for="(value, index) in roomStrategyJson_p">
+							<div style="padding: 10px 0px;">{{value.marketPrice}}</div>
+						</div>
+					</template>
+				</el-table-column>
+
+				<el-table-column prop="newCustomPrice" label="调改价" width="250" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
 								<el-input v-model="value.newCustomPrice"></el-input>
-							</div>	
+							</div>
 						</div>
 					</template>
 				</el-table-column>
-				
-				<el-table-column prop="name" label="附餐">
+				<el-table-column prop="newCustomPrice" label="新门市价" width="250" v-else>
+					<template slot-scope="scope">
+						<div v-for="(value, index) in roomStrategyJson_p">
+							<div style="padding: 10px 0px;">
+								<el-input v-model="value.newCustomPrice"></el-input>
+							</div>
+						</div>
+					</template>
+				</el-table-column>
+
+				<el-table-column prop="name" label="附餐" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
@@ -181,7 +210,7 @@
 				roomType: [],
 				dateList: [],
 				weekDays: [],
-				
+
 				PieDialog: false,
 
 				ruleForm_Pie: {
@@ -191,8 +220,8 @@
 				},
 				roomStrategyJson_p: [],
 				loading: false,
-				
-				
+
+
 				editPriceDialog: false, //修改房价dialog
 				editPriceForm: {
 					priceCalend: '', //1会员日历单日定价 2单位日历单日定价 3客房单日价格  4会议厅单日价
@@ -288,13 +317,13 @@
 			//保存批量修改房价
 			onSave() {
 				console.log(this.roomType);
-				
+
 				let week = ''
 				this.ruleForm_Pie.weeks.forEach((value, index) => {
-				  week = week + ',' + value
+					week = week + ',' + value
 				})
 				if (week.substr(0, 1) === ',') {
-				  week = week.substr(1)
+					week = week.substr(1)
 				}
 				let params = {
 					roomTypeId: this.roomType[0].id,
@@ -303,7 +332,7 @@
 					endTime: this.ruleForm_Pie.time[1],
 					weeks: week,
 					strategyJson: JSON.stringify(this.roomStrategyJson_p)
-				} 
+				}
 				// debugger
 				this.$F.doRequest(
 					this,
@@ -336,7 +365,7 @@
 				this.ruleForm_Pie.weeks = value;
 				if (value.length == 0)
 					this.ruleForm_Pie.weeks = [];
-					
+
 				if (value.length == 8 || value == "") {
 					//
 					if (value.length == 8) {
@@ -380,6 +409,9 @@
 					"/pms/hotel/hotel_room_day_price_save_t",
 					params,
 					(res) => {
+						this.roomType = []
+						this.dateList = []
+						this.get_hotel_price_room_type_list()
 						this.editPriceDialog = false;
 						this.$message.success("success");
 					}
@@ -401,68 +433,54 @@
 					params,
 					(res) => {
 						this.roomType.push(res.roomType)
-						this.roomType.forEach((value, index) =>{
+						this.roomType.forEach((value, index) => {
 							// debugger
-							if(value.roomType == 1) {
-								if(value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
+							if (value.roomType == 1) {
+								if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
 									let arr = value.personPrice.split(',')
 									let arry = arr.filter(function(el) {
 										return el !== '';
 									});
-									
-									if(res.dayPriceList.length == 0) {
-										value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+
+									if (res.dayPriceList.length == 0) {
+										res.dateList.forEach((a, b) => {
+											a.onePrice = 0;
+											value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+										})
+										
 									} else {
 										// debugger
-										res.dateList.forEach((a, b) =>{
-											// debugger
-											res.dayPriceList.forEach((c, d) =>{
-												// debugger
-												if(a.dateStr == c.dayTime) {
+										res.dateList.forEach((a, b) => {
+											a.onePrice = 0;
+											res.dayPriceList.forEach((c, d) => {
+												if (a.dateStr == c.dayTime) {
 													// debugger
-													value.onePrice = Number(c.newCustomPrice) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+													a.onePrice = c.newCustomPrice + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
 												}
 											})
 										})
-										// res.dayPriceList.forEach((a, b) =>{
-										// 	value.onePrice = Number(a.newCustomPrice) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
-										// })
+										console.log(res.dateList)
+										console.log(res.dayPriceList)
 									}
-									
+
 								}
-							}
-							else {
-								if(res.dayPriceList.length == 0) {
+							} else {
+								if (res.dayPriceList.length == 0) {
 									value.onePrice = value.marketPrice
 								} else {
-									for(let i of res.dateList) {
-										
-										for(let j of res.dayPriceList) {
-											// debugger
-											if(i.dateStr == j.dayTime) {
-												// debugger
-												value.onePrice = Number(j.newCustomPrice)
-											} else {
-												value.onePrice = 0
+
+									res.dateList.forEach((a, b) => {
+										a.onePrice = 0;
+										res.dayPriceList.forEach((c, d) => {
+											if (a.dateStr == c.dayTime) {
+												a.onePrice = Number(c.newCustomPrice)
 											}
-											break
-										}
-									}
-									// res.dateList.forEach((a, b) =>{
-									// 	res.dayPriceList.forEach((c, d) =>{
-									// 		debugger
-									// 		if(a.dateStr == c.dayTime) {
-									// 			debugger
-									// 			value.onePrice = Number(c.newCustomPrice)
-									// 		}
-									// 	})
-									// })
-									// res.dayPriceList.forEach((a, b) =>{
-									// 	value.onePrice = Number(a.newCustomPrice)
-									// })
+										})
+									})
+									console.log(res.dateList)
 								}
 							}
-							
+
 						})
 						this.dateList = res.dateList
 						this.dateList.unshift({
@@ -479,35 +497,35 @@
 				this.roomStrategyJson_p = []
 				this.ruleForm_Pie.roomStrategyJson = [] // 批量
 				this.editPriceForm.roomStrategyJson = [] // 单日
-				
-				this.ruleForm_Pie.roomStrategyJson  = this.roomType
+
+				this.ruleForm_Pie.roomStrategyJson = this.roomType
 				this.editPriceForm.roomStrategyJson = this.roomType
-				
-				this.ruleForm_Pie.roomStrategyJson.forEach((item, j) =>{
-					
+
+				this.ruleForm_Pie.roomStrategyJson.forEach((item, j) => {
+
 					let obj = {}
 					let arr = []
-					if(item.roomType == 1) {
+					if (item.roomType == 1) {
 						let personList = item.personPrice.split(',')
 						let arry = personList.filter(function(el) {
 							return el !== '';
 						});
-						
-						arry.forEach((a, b) =>{
+
+						arry.forEach((a, b) => {
 							// debugger
 							obj = {}
-							obj.houseName = item.houseName ;
-							obj.roomType = item.roomType ;
-							obj.personNum = b + 1 ;
-							obj.customPrice = a ;
+							obj.houseName = item.houseName;
+							obj.roomType = item.roomType;
+							obj.personNum = b + 1;
+							obj.customPrice = a;
 							obj.newCustomPrice = '';
 							this.roomStrategyJson_p.push(obj)
 						})
 					} else {
 						obj = {};
-						obj.houseName = item.houseName ;
-						obj.roomType = item.roomType ;
-						obj.personNum = 0 ;
+						obj.houseName = item.houseName;
+						obj.roomType = item.roomType;
+						obj.personNum = 0;
 						obj.marketPrice = item.marketPrice;
 						obj.customPrice = ''
 						obj.newCustomPrice = '';
@@ -518,20 +536,20 @@
 				})
 				switch (type) {
 					case "adjust":
-					// 批量调价
+						// 批量调价
 						this.PieDialog = true;
 						break;
 					case "single":
-					// 修改单个日历价格
+						// 修改单个日历价格
 						this.editPriceForm.dayTime = item.dateStr;
-						this.editPriceDialog  = true;
+						this.editPriceDialog = true;
 						break;
 					case "add":
 						this.tab1_show = false;
 						break;
 				}
 			},
-			
+
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
 			},

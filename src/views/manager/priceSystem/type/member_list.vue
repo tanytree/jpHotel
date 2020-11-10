@@ -16,12 +16,12 @@
 				</el-form>
 			</el-row>
 			<div class="components-edit member-price">
-				<el-table :data="roomType" style="width: 100%;margin-bottom: 20px;" row-key="id" :default-expand-all="false"
+				<el-table :data="memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id" :default-expand-all="false"
 				 :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}" border lazy :load="loadRoomType">
 					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '150': ''">
 						<template slot-scope="{row, $index}" @click="changePrice(item, index, row)">
-							<span v-if="index === 0">{{row.name || row.houseName}}</span>
-							<span v-if="index > 0" style=" cursor: pointer !important;" @click="priceClick(row, item, index)">{{row.onePrice}}</span>
+							<span v-if="index == 0">{{row.name || row.houseName}}</span>
+							<span v-if="index > 0" style=" cursor: pointer !important;" @click="priceClick(row, item, index)">{{item.onePrice}}</span>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -145,7 +145,7 @@
 		data() {
 			return {
 				dateList: [],
-				roomType: [],
+				memberTypeList: [],
 
 
 				memberChecked: false, // 会员类型全选
@@ -290,36 +290,38 @@
 				},
 				set() {},
 			},
-			all: function(){
-			        let that = this;
-					let all = []
-			        that.allRoomTypeList.forEach( e => {
+			// all: function(){
+			//         let that = this;
+			// 		let all = []
+			//         that.allRoomTypeList.forEach( e => {
 
-			            if(e.roomType == 1){
-			                e.adjustPrice = Number(e.newLivePrice) + Number(e.mealBreakfastObject.mealPrice || 0) + Number(e.mealDinnerObject.mealPrice || 0)
-			            }
-						all.push(e)
+			//             if(e.roomType == 1){
+			//                 e.adjustPrice = Number(e.newLivePrice) + Number(e.mealBreakfastObject.mealPrice || 0) + Number(e.mealDinnerObject.mealPrice || 0)
+			//             }
+			// 			all.push(e)
 			                
-			        })
-					console.log('all=======', all)
-			        return all;
-			    },
+			//         })
+			// 		console.log('all=======', all)
+			//         return all;
+			//     },
 		},
 		watch: {
-			// 监听 newLivePrice 变化时 adjustPrice 的改变
-			// allRoomTypeList: {
-			// 	handler(newValue, oldValue) {
-			// 		debugger
+			//监听 newLivePrice 变化时 adjustPrice 的改变
+			allRoomTypeList: {
+				handler(newValue, oldValue) {
 					
-			// 		newValue.forEach((a, b) =>{
-			// 			debugger
-			// 			if(oldValue[i].roomType == 1) {
-			// 				// debugger
-			// 				oldValue[i].adjustPrice =  Number(oldValue[i].newLivePrice) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
-			// 			}
-			// 		})
-			// 	}
-			// },
+					this.allRoomTypeList.forEach((a, b) =>{
+						// debugger
+						if(a.roomType == 1) {
+							// debugger
+							a.adjustPrice =  Number(a.newLivePrice) + Number(a.mealBreakfastObject.mealPrice || 0) + Number(a.mealDinnerObject.mealPrice || 0)
+						} else {
+							a.adjustPrice =  Number(a.newMarketPrice || 0)
+						}
+					})
+				},
+				deep:true,
+			},
 			roomPrice(newValue, oldValue) {
 				this.roomPrice = newValue;
 			},
@@ -335,7 +337,7 @@
 				tree.roomTypeList.forEach((value, index) => {
 					obj = {}
 					obj.name = value.houseName;
-					obj.onePrice = value.onePrice
+					obj.onePrice = ''
 					obj.id = value.id
 					arr[index] = obj
 				})
@@ -543,9 +545,9 @@
 							id: "0",
 						});
 
-						this.roomType = res.memberTypeList
+						this.memberTypeList = res.memberTypeList
 
-						this.roomType.forEach((item, i) => {
+						this.memberTypeList.forEach((item, i) => {
 							this.selectedRoomtype.push({
 								name: item.name,
 								id: item.id,
@@ -557,30 +559,36 @@
 							}
 							item.roomTypeList.forEach((value, j) => {
 								value.id2 = j;
-								if (value.personPrice != '' && value.personPrice != null && value.personPrice != undefined) {
-									let arr = value.personPrice.split(',')
+								
+								if(value.roomType == 1) {
+									
+									if (res.dayPriceList.length == 0) {
+										if (value.personPrice != '' && value.personPrice != null && value.personPrice != undefined) {
+											let arr = value.personPrice.split(',')
+										
+											res.dateList.forEach((a, b) => {
+												a.onePrice = 0;
+												a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+											})
+										}
+									} else {
+										// debugger
+										res.dateList.forEach((a, b) => {
+											a.onePrice = 0;
+											res.dayPriceList.forEach((c, d) => {
+												if (a.dateStr == c.dayTime) {
+													// debugger
+													a.onePrice = c.newCustomPrice + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+												}
+											})
+										})
 
-									// 判断是否有早晚餐
-									// 页面上显示的加个是 一人住宿价+ 附餐价
-									if (value.mealBreakfastObject) {
-										value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice)
-									}
-									if (value.mealDinnerObject) {
-										value.onePrice = Number(arr[0]) + Number(value.mealDinnerObject.mealPrice)
-									}
-									if (value.mealDinnerObject && value.mealBreakfastObject) {
-										value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject
-											.mealPrice)
-									}
-
-									if (!value.mealDinnerObject && !value.mealBreakfastObject) {
-										value.onePrice = Number(arr[0])
 									}
 								}
+								
 							})
 						})
-
-						console.log(this.selectedRoomtype, 'this.selectedRoomtype')
+						console.log('this.memberTypeList-----',this.memberTypeList)
 					}
 				);
 			},
@@ -608,6 +616,8 @@
 								// debugger
 								
 								obj.newLivePrice = ''
+								obj.mealBreakfastObject = value.mealBreakfastObject
+								obj.mealDinnerObject = value.mealDinnerObject
 								
 								if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
 									
@@ -639,6 +649,7 @@
 							else {
 								obj.oldMarketPrice = value.marketPrice
 								obj.newMarketPrice = ''
+								obj.adjustPrice = obj.oldMarketPrice
 							}
 							this.allRoomTypeList.push(obj)
 							
