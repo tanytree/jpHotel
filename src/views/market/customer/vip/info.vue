@@ -124,6 +124,8 @@
                         <el-button type="text" size="mini" @click="handleDetail(row)">{{ $t("commons.detail") }}</el-button>
                         <el-button type="text" size="mini" @click="handleEdit(row)" v-if="row.state != 2">{{ $t("commons.modify") }}</el-button>
                         <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state == 2">{{ $t("desk.customer_restore") }}</el-button>
+                        <el-button type="text" size="mini" @click="handleHistory(row)"> {{ $t("desk.customer_guestHistory") }}</el-button
+                        >
                         <!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
                         <!--                            <span class="el-dropdown-link">-->
                         <!--                                {{ $t("desk.customer_more") }}-->
@@ -154,8 +156,8 @@
             <div class="block">
                 <el-pagination
                     @current-change="handleCurrentChange"
-                    :current-page="searchForm.page"
-                    :page-size="searchForm.page_num"
+                    :current-page="searchForm.pageIndex"
+                    :page-size="searchForm.pageSize"
                     :total="listTotal"
                     layout="total, prev, pager, next, jumper"
                 ></el-pagination>
@@ -270,6 +272,20 @@ export default {
         });
     },
     methods: {
+        //点击客史
+          handleHistory(item) {
+            console.log(item);
+            if (item.idcard) {
+                this.$router.push({
+                    name: "customerhistory",
+                    query: {
+                        idcard: item.idcard,
+                    },
+                });
+            } else {
+                this.$message(this.$t("desk.customer_noRecord"));
+            }
+        },
         //补收卡费弹框，点击确定按钮
         setCardFrormChange() {
             this.cardForm.cardNum = this.dialogInfo.memberCard;
@@ -466,8 +482,10 @@ export default {
         },
         /**当前页 */
         handleCurrentChange(val) {
-            this.searchForm.page = val;
+            this.searchForm.pageIndex = val;
             this.getDataList();
+            this.searchForm.pageIndex = 1;
+            
         },
     },
 };

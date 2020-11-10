@@ -82,7 +82,7 @@
                 </el-form-item>
                 <el-form-item style="float: right" v-if="isHeader == 1">
                     <el-button type="primary" class="submit" @click="addAndEditItem('add')">{{ $t("desk.customer_newAdd") }}</el-button>
-<!--                    <el-button type="primary" class="submit" @click="piliangClick">{{ $t("desk.customer_volumeSet") }}</el-button>-->
+                   <el-button type="primary" class="submit" @click="piliangClick">{{ $t("desk.customer_volumeSet") }}</el-button>
                 </el-form-item>
             </el-form>
             <!--表格数据 -->
@@ -166,8 +166,14 @@
                                 <i class="el-icon-arrow-down el-icon--right"></i>
                               </span>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item @click.native="disableItem(row)">{{
+                                <!-- 单位禁用按钮 -->
+                                <el-dropdown-item @click.native="disableItem(row)" v-if="row.state==1">{{
                                         $t("desk.customer_disable")
+                                    }}
+                                </el-dropdown-item>
+                                <!-- 单位启用按钮 -->
+                                <el-dropdown-item @click.native="disableItem(row)" v-if="row.state==2">{{
+                                        $t("desk.customer_enable")
                                     }}
                                 </el-dropdown-item>
                                 <el-dropdown-item @click.native="delItem(row)">{{
@@ -235,7 +241,7 @@
                         </el-col>
                     </el-row>
                 </el-row>
-                <el-row class="row">
+                <el-row class="row" v-if="isHeader!=1">
                     <el-row class="cell">
                         <el-col :span="8" class="col">
                             <el-form-item
@@ -256,7 +262,7 @@
                 </el-row>
                 <el-row class="row">
                     <el-row class="cell">
-                        <el-col :span="8" class="col">
+                        <!-- <el-col :span="8" class="col">
                             <el-form-item
                                 :label="$t('desk.customer_accountRules') + ':'"
                                 prop
@@ -271,7 +277,7 @@
                                     ></el-option>
                                 </el-select>
                             </el-form-item>
-                        </el-col>
+                        </el-col> -->
                         <el-col :span="8" class="col">
                             <el-form-item
                                 :label="$t('desk.customer_paymentAmount') + ':'"
@@ -281,8 +287,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8" class="col">
-                            <el-form-item label label-width="20px">
-                                <el-checkbox v-model="addCompanyForm.shareFlag">{{
+                            <el-form-item label label-width="20px" >
+                                <el-checkbox v-model="addCompanyForm.shareFlag" v-if="1==2">{{
                                         $t("desk.customer_groupShare")
                                     }}
                                 </el-checkbox>
@@ -928,6 +934,7 @@ export default {
         handleDetail(item) {
             this.$router.push("/companydetail?id=" + item.id);
         },
+        //点击单位禁用
         disableItem(item) {
             this.$confirm(
                 this.$t("desk.customer_sureDisable"),
