@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-30 13:18:01
+ * @LastEditTime: 2020-11-09 16:56:45
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -246,13 +246,13 @@
                     width="200"
                 >
                     <template slot-scope="{ row }">
-                        <el-button
+                        <!-- <el-button
                             type="text"
                             size="mini"
                             @click="handleHistory(row)"
                         >
                             {{ $t("desk.customer_guestHistory") }}</el-button
-                        >
+                        > -->
                         <el-button
                             type="text"
                             size="mini"

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-12 17:00:44
+ * @LastEditTime: 2020-11-09 15:54:59
  * @FilePath: \jiudian\src\views\market\orders\bookingDetail.vue
  -->
 <template>
@@ -111,6 +111,8 @@ export default {
         },
         showRoomInfo(item) {
             this.isOrder = false;
+            console.log(item);
+            console.log(this.detailData);
             this.currentRoom = item;
         },
     },
@@ -198,4 +200,5 @@ export default {
         padding-bottom: 5000px;
     }
 }
+
 </style>

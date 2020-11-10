@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 17:51:46
+ * @LastEditTime: 2020-11-09 16:21:28
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\roominfo.vue
  -->
 <template>
@@ -79,7 +79,7 @@
                     <p>{{ $t('desk.home_customerName') }}：{{ checkinInfo.name }}</p>
                 </el-col>
                 <el-col :span="8">
-                    <p>{{ $t('desk.order_customerType') }}：{{ checkinInfo.memberCard ? $t('desk.book_member') : $t('desk.order_notMember') }}</p>
+                    <p>{{ $t('desk.order_customerType') }}：{{ checkMember(checkinInfo.guestType) ? $t('desk.book_member') : $t('desk.order_notMember') }}</p>
                 </el-col>
                 <el-col :span="8" v-if="checkinInfo.memberCard">
                     <p>{{ $t('desk.order_memberType') }}：</p>
@@ -213,6 +213,13 @@ export default {
                     });
                 }
             );
+        },
+        checkMember(guestType){
+            if(guestType==2){
+                return true;
+            }else{
+                return false;
+            }
         },
         checkInCallback(id) {
             this.liveInPersonShow = false;

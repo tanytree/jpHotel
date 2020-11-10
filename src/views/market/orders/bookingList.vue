@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-03 15:35:16
- * @FilePath: \jiudian\src\views\market\orders\booking.vue
+ * @LastEditTime: 2020-11-09 16:13:28
+ * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
 <template>
@@ -329,8 +329,8 @@
             <div class="block">
                 <el-pagination
                     @current-change="handleCurrentChange"
-                    :current-page="searchForm.page"
-                    :page-size="searchForm.page_num"
+                    :current-page="searchForm.pageIndex"
+                    :page-size="searchForm.pageSize"
                     :total="listTotal"
                     layout="total, prev, pager, next, jumper"
                 ></el-pagination>
@@ -510,7 +510,10 @@ export default {
             showDetail: false,
             depositShow: false,
             payTypeShow: false,
-            searchForm: {},
+            searchForm: {
+                pageIndex:1,
+                pageSize:10,
+            },
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [], //表格数据
@@ -844,6 +847,7 @@ export default {
         handleCurrentChange(val) {
             this.searchForm.pageIndex = val;
             this.getDataList();
+            this.searchForm.pageIndex = 1;
         },
     },
 };
