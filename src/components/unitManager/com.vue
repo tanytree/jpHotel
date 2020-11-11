@@ -71,7 +71,7 @@
                     ></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" class="submit" @click="getDataList">{{
+                    <el-button type="primary" class="submit" @click="queryClick">{{
                             $t("commons.queryBtn")
                         }}
                     </el-button>
@@ -115,7 +115,7 @@
                     :label="$t('desk.home_phoneNum')"
                     show-overflow-tooltip
                 ></el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                     prop="enterStrategyId"
                     :label="$t('desk.customer_pricingStrategy')"
                     show-overflow-tooltip
@@ -124,7 +124,7 @@
                             setStrategyName(row.enterStrategyId)
                         }}
                     </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                     prop="contractNum"
                     :label="$t('desk.customer_contractNo')"
@@ -241,7 +241,7 @@
                         </el-col>
                     </el-row>
                 </el-row>
-                <el-row class="row" v-if="isHeader!=1">
+                <!-- <el-row class="row" v-if="isHeader!=1">
                     <el-row class="cell">
                         <el-col :span="8" class="col">
                             <el-form-item
@@ -259,7 +259,7 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-                </el-row>
+                </el-row> -->
                 <el-row class="row">
                     <el-row class="cell">
                         <!-- <el-col :span="8" class="col">
@@ -423,7 +423,7 @@
             >
                 <el-row class="row">
                     <el-row class="cell">
-                        <el-col :span="6" class="col">
+                        <!-- <el-col :span="6" class="col">
                             <el-form-item
                                 :label="$t('desk.customer_pricingStrategy') + ':'"
                                 prop="enterStrategyId"
@@ -437,7 +437,7 @@
                                     ></el-option>
                                 </el-select>
                             </el-form-item>
-                        </el-col>
+                        </el-col> -->
                         <el-col :span="6" class="col">
                             <el-form-item
                                 :label="$t('desk.customer_accountRules') + ':'"
@@ -534,7 +534,7 @@
                     :label="$t('desk.customer_unitName')"
                     show-overflow-tooltip
                 ></el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                     prop
                     :label="$t('desk.customer_pricingStrategy')"
                     show-overflow-tooltip
@@ -549,7 +549,7 @@
                             ></el-option>
                         </el-select>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                     :label="$t('desk.customer_accountRules')"
                     show-overflow-tooltip
@@ -849,6 +849,12 @@ export default {
             };
             this.getDataList();
         },
+        //点击查询按钮
+        queryClick(){
+            this.pageSize=10;
+            this.pageIndex=1;
+            this.getDataList();
+        },
         //点击 批量设置 按钮
         piliangClick() {
             this.setBatchFormVisible = true;
@@ -870,8 +876,7 @@ export default {
                     this.tableData = res.list;
                     this.stableData = res.list;
                     this.listTotal = (res.page || {}).count || 0;
-                    this.pageSize = 10;
-                    this.pageIndex = 1;
+                 
                 }
             );
         },
@@ -1149,13 +1154,11 @@ export default {
             this.pageSize = val;
             this.pageIndex = 1;
             this.getDataList();
-           
         },
         /**当前页 */
         handleCurrentChange(val) {
             this.pageIndex = val;
             this.getDataList();
-          
         },
     },
 };

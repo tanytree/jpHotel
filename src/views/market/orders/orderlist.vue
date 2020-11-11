@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-06 10:02:24
+ * @LastEditTime: 2020-11-11 16:42:24
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -415,7 +415,8 @@ export default {
         popClick(item, type) {
             if (type == "detail") {
                 //跳转至订单详情
-                this.$router.push("/orderdetail?id=" + item.id);
+                console.log(item);
+                this.$router.push("/orderdetail?id=" + item.hotelCheckInRoom.checkinId);
             } else if (type == "zoujie") {
                 //调用走结接口（这里实在不知道走结怎么翻译）
             } else if (type == "unCheckOut") {

@@ -691,6 +691,9 @@ module.exports = {
     night_auditResults:'日時更新結果',
     customer_sureEnable:'該当法人を起用確認します',
     customer_guestNum: '顧客番号',
+    order_clickPai: "未翻译词条",
+    order_inputName: "未翻译词条",
+    order_inputCardNum: "未翻译词条",
    
     
 

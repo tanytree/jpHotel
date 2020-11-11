@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-20 14:36:07
+ * @LastEditTime: 2020-11-11 15:33:41
  * @FilePath: \jiudian\src\views\market\customer\children\companydetail.vue
  -->
 <template>
@@ -102,14 +102,14 @@
                 </el-row>
                 <el-row class="row">
                   <el-row class="cell">
-                    <el-col :span="6" class="col">
+                    <!-- <el-col :span="6" class="col">
                       <el-form-item
                         :label="$t('desk.customer_pricingStrategy') + ':'"
                         >{{
                           setStrategyName(detailForm.enterStrategyId)
                         }}</el-form-item
                       >
-                    </el-col>
+                    </el-col> -->
                     <el-col :span="6" class="col">
                       <el-form-item :label="$t('desk.customer_referred') + ':'"
                         >白金卡</el-form-item

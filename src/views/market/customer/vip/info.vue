@@ -6,9 +6,20 @@
             <!-- 查询部分 -->
             <el-form class="term" inline size="small" label-width="80px">
                 <el-form-item :label="$t('desk.customer_memType')">
-                    <el-select v-model="searchForm.memberTypeId" class="width150">
-                        <el-option :label="$t('desk.home_all')" value></el-option>
-                        <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                    <el-select
+                        v-model="searchForm.memberTypeId"
+                        class="width150"
+                    >
+                        <el-option
+                            :label="$t('desk.home_all')"
+                            value
+                        ></el-option>
+                        <el-option
+                            v-for="item in smembertypeList"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                        ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_moblePhone')">
@@ -47,8 +58,16 @@
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_state')">
                     <el-select v-model="searchForm.state" class="width150">
-                        <el-option :label="$t('desk.home_all')" value></el-option>
-                        <el-option v-for="(label, value) in $t('frontOffice.state')" :label="label" :value="value" :key="value"></el-option>
+                        <el-option
+                            :label="$t('desk.home_all')"
+                            value
+                        ></el-option>
+                        <el-option
+                            v-for="(label, value) in $t('frontOffice.state')"
+                            :label="label"
+                            :value="value"
+                            :key="value"
+                        ></el-option>
                     </el-select>
                 </el-form-item>
                 <!--                <el-form-item :label="$t('desk.customer_isBlack')">-->
@@ -71,60 +90,118 @@
                 <!--                    </el-select>-->
                 <!--                </el-form-item>-->
                 <el-form-item>
-                    <el-button type="primary" class="submit" @click="getDataList">{{ $t("commons.queryBtn") }}</el-button>
-                    <el-button type="primary" class="submit" @click="initForm">{{ $t("commons.resetBtn") }}</el-button>
+                    <el-button
+                        type="primary"
+                        class="submit"
+                        @click="getDataList"
+                        >{{ $t("commons.queryBtn") }}</el-button
+                    >
+                    <el-button
+                        type="primary"
+                        class="submit"
+                        @click="initForm"
+                        >{{ $t("commons.resetBtn") }}</el-button
+                    >
                 </el-form-item>
                 <el-row>
                     <el-form-item>
-<!--                        <el-button plain>{{ $t("desk.customer_readMemCard") }}</el-button>-->
-                        <el-button v-if="type == 'header'" type="primary" class="submit" @click="handleAdd">{{ $t("desk.customer_addMem") }}</el-button>
+                        <!--                        <el-button plain>{{ $t("desk.customer_readMemCard") }}</el-button>-->
+                        <el-button
+                            v-if="type == 'header'"
+                            type="primary"
+                            class="submit"
+                            @click="handleAdd"
+                            >{{ $t("desk.customer_addMem") }}</el-button
+                        >
                     </el-form-item>
                 </el-row>
             </el-form>
 
             <!--表格数据 -->
-            <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
-                <el-table-column prop="memberCard" :label="$t('desk.customer_cardNum')" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="name" :label="$t('desk.home_name')"></el-table-column>
-                <el-table-column :label="$t('desk.customer_memType')" >
+            <el-table
+                ref="multipleTable"
+                v-loading="loading"
+                :data="tableData"
+                height="100%"
+                header-row-class-name="default"
+                size="small"
+            >
+                <el-table-column
+                    prop="memberCard"
+                    :label="$t('desk.customer_cardNum')"
+                    show-overflow-tooltip
+                ></el-table-column>
+                <el-table-column
+                    prop="name"
+                    :label="$t('desk.home_name')"
+                ></el-table-column>
+                <el-table-column :label="$t('desk.customer_memType')">
                     <template slot-scope="{ row }">{{
                         F_memberTypeId(row.memberTypeId)
                     }}</template>
                 </el-table-column>
-                <el-table-column prop="mobile" :label="$t('desk.order_moblePhone')"></el-table-column>
-<!--                <el-table-column prop="score" :label="$t('desk.customer_remainPoints')" width="100"></el-table-column>-->
+                <el-table-column
+                    prop="mobile"
+                    :label="$t('desk.order_moblePhone')"
+                ></el-table-column>
+                <!--                <el-table-column prop="score" :label="$t('desk.customer_remainPoints')" width="100"></el-table-column>-->
                 <el-table-column prop="state" :label="$t('desk.home_state')">
                     <template slot-scope="{ row }">{{
                         row.state | F_cardState
                     }}</template>
                 </el-table-column>
-<!--                <el-table-column prop="storesNum" :label="$t('desk.customer_openCarmen')">-->
-<!--                    <template slot-scope="{ row }">{{-->
-<!--                        F_storeName(row.storesNum)-->
-<!--                    }}</template>-->
-<!--                </el-table-column>-->
-<!--                <el-table-column prop="getWay" align="center" :label="$t('desk.customer_developmentWay')" width="100">-->
-<!--                    <template slot-scope="{ row }">-->
-<!--                        {{ row.getWay == 1 ? $t("desk.customer_online") : $t("desk.customer_offline") }}-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
-                <el-table-column prop="createTime" :label="$t('desk.customer_openCardDate')"></el-table-column>
-<!--                <el-table-column prop="isBlacklist" align="center" :label="$t('desk.customer_ifBalckName')" width="100">-->
-<!--                    <template slot-scope="{ row }">-->
-<!--                        {{ row.isBlacklist == 2 ? $t("desk.customer_yes") : $t("desk.customer_no") }}-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
-<!--                <el-table-column prop="isBlacklist" align="center" :label="$t('desk.customer_ifCancellation')" width="100">-->
-<!--                    <template slot-scope="{ row }">-->
-<!--                        {{ row.status == 1 ? $t("desk.customer_no") : $t("desk.customer_yes") }}-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
+                <!--                <el-table-column prop="storesNum" :label="$t('desk.customer_openCarmen')">-->
+                <!--                    <template slot-scope="{ row }">{{-->
+                <!--                        F_storeName(row.storesNum)-->
+                <!--                    }}</template>-->
+                <!--                </el-table-column>-->
+                <!--                <el-table-column prop="getWay" align="center" :label="$t('desk.customer_developmentWay')" width="100">-->
+                <!--                    <template slot-scope="{ row }">-->
+                <!--                        {{ row.getWay == 1 ? $t("desk.customer_online") : $t("desk.customer_offline") }}-->
+                <!--                    </template>-->
+                <!--                </el-table-column>-->
+                <el-table-column
+                    prop="createTime"
+                    :label="$t('desk.customer_openCardDate')"
+                ></el-table-column>
+                <!--                <el-table-column prop="isBlacklist" align="center" :label="$t('desk.customer_ifBalckName')" width="100">-->
+                <!--                    <template slot-scope="{ row }">-->
+                <!--                        {{ row.isBlacklist == 2 ? $t("desk.customer_yes") : $t("desk.customer_no") }}-->
+                <!--                    </template>-->
+                <!--                </el-table-column>-->
+                <!--                <el-table-column prop="isBlacklist" align="center" :label="$t('desk.customer_ifCancellation')" width="100">-->
+                <!--                    <template slot-scope="{ row }">-->
+                <!--                        {{ row.status == 1 ? $t("desk.customer_no") : $t("desk.customer_yes") }}-->
+                <!--                    </template>-->
+                <!--                </el-table-column>-->
                 <el-table-column :label="$t('commons.operating')">
                     <template slot-scope="{ row }">
-                        <el-button type="text" size="mini" @click="handleDetail(row)">{{ $t("commons.detail") }}</el-button>
-                        <el-button type="text" size="mini" @click="handleEdit(row)" v-if="row.state != 2">{{ $t("commons.modify") }}</el-button>
-                        <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state == 2">{{ $t("desk.customer_restore") }}</el-button>
-                        <el-button type="text" size="mini" @click="handleHistory(row)"> {{ $t("desk.customer_guestHistory") }}</el-button
+                        <el-button
+                            type="text"
+                            size="mini"
+                            @click="handleDetail(row)"
+                            >{{ $t("commons.detail") }}</el-button
+                        >
+                        <el-button
+                            type="text"
+                            size="mini"
+                            @click="handleEdit(row)"
+                            v-if="row.state != 2"
+                            >{{ $t("commons.modify") }}</el-button
+                        >
+                        <el-button
+                            type="text"
+                            size="mini"
+                            @click="handleRecovery(row)"
+                            v-if="row.state == 2"
+                            >{{ $t("desk.customer_restore") }}</el-button
+                        >
+                        <el-button
+                            type="text"
+                            size="mini"
+                            @click="handleHistory(row)"
+                        >
+                            {{ $t("desk.customer_guestHistory") }}</el-button
                         >
                         <!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
                         <!--                            <span class="el-dropdown-link">-->
@@ -164,41 +241,102 @@
             </div>
         </div>
         <!-- 编辑or详情弹窗 -->
-        <el-dialog :title="$t('desk.customer_newCusBlackName')" :visible.sync="setBlackShow" top="0">
+        <el-dialog
+            :title="$t('desk.customer_newCusBlackName')"
+            :visible.sync="setBlackShow"
+            top="0"
+        >
             <el-form :model="setBlackForm" ref="setBlackForm">
-                <el-form-item :label="$t('desk.customer_pullBlackRemark') + ':'" prop="blackRemark">
-                    <el-input type="textarea" v-model="setBlackForm.remark" autocomplete="off" style="width: 80%"></el-input>
+                <el-form-item
+                    :label="$t('desk.customer_pullBlackRemark') + ':'"
+                    prop="blackRemark"
+                >
+                    <el-input
+                        type="textarea"
+                        v-model="setBlackForm.remark"
+                        autocomplete="off"
+                        style="width: 80%"
+                    ></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="addblacklist">{{ $t("commons.determine") }}</el-button>
+                <el-button type="primary" @click="addblacklist">{{
+                    $t("commons.determine")
+                }}</el-button>
             </div>
         </el-dialog>
         <!-- 补收卡费弹框 -->
-        <el-dialog top="0" :title="$t('desk.customer_chargeCard')" :visible.sync="setCardVisible" width="470px">
+        <el-dialog
+            top="0"
+            :title="$t('desk.customer_chargeCard')"
+            :visible.sync="setCardVisible"
+            width="470px"
+        >
             <div class="dialogDiv" v-if="dialogInfo">
-                <span>{{ $t("desk.customer_cardNum") + ":" }}{{ dialogInfo.memberCard }}</span>
-                <span>{{ $t("desk.home_name") + ":" }}{{ dialogInfo.name }}</span>
-                <span>{{ $t("desk.customer_memType") + ":" }}{{ F_memberTypeId(dialogInfo.memberTypeId) }}</span>
+                <span
+                    >{{ $t("desk.customer_cardNum") + ":"
+                    }}{{ dialogInfo.memberCard }}</span
+                >
+                <span
+                    >{{ $t("desk.home_name") + ":" }}{{ dialogInfo.name }}</span
+                >
+                <span
+                    >{{ $t("desk.customer_memType") + ":"
+                    }}{{ F_memberTypeId(dialogInfo.memberTypeId) }}</span
+                >
             </div>
             <el-form :model="cardForm" ref="cardForm">
-                <el-form-item :label="$t('desk.customer_chargeType')" class prop="memberTypeId">
+                <el-form-item
+                    :label="$t('desk.customer_chargeType')"
+                    class
+                    prop="memberTypeId"
+                >
                     <el-radio-group v-model="cardForm.operType">
-                        <el-radio :label="4">{{ $t("desk.customer_cardPri") }}</el-radio>
-                        <el-radio :label="5">{{ $t("desk.customer_upgradeCard") }}</el-radio>
-                        <el-radio :label="6">{{ $t("desk.customer_cardCost") }}</el-radio>
+                        <el-radio :label="4">{{
+                            $t("desk.customer_cardPri")
+                        }}</el-radio>
+                        <el-radio :label="5">{{
+                            $t("desk.customer_upgradeCard")
+                        }}</el-radio>
+                        <el-radio :label="6">{{
+                            $t("desk.customer_cardCost")
+                        }}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('desk.customer_payType')" class prop="payWay">
+                <el-form-item
+                    :label="$t('desk.customer_payType')"
+                    class
+                    prop="payWay"
+                >
                     <el-select v-model="cardForm.payWay" style="width: 300px">
-                        <el-option :label="$t('desk.serve_cash')" :value="1"></el-option>
-                        <el-option :label="$t('desk.serve_wechat')" :value="2"></el-option>
-                        <el-option :label="$t('desk.serve_alipay')" :value="3"></el-option>
-                        <el-option :label="$t('desk.customer_unionpay')" :value="4"></el-option>
+                        <el-option
+                            :label="$t('desk.serve_cash')"
+                            :value="1"
+                        ></el-option>
+                        <el-option
+                            :label="$t('desk.serve_wechat')"
+                            :value="2"
+                        ></el-option>
+                        <el-option
+                            :label="$t('desk.serve_alipay')"
+                            :value="3"
+                        ></el-option>
+                        <el-option
+                            :label="$t('desk.customer_unionpay')"
+                            :value="4"
+                        ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('desk.customer_payPrice')" class prop="payPrices">
-                    <el-input style="width: 300px" v-model="cardForm.payPrices" placeholder></el-input>
+                <el-form-item
+                    :label="$t('desk.customer_payPrice')"
+                    class
+                    prop="payPrices"
+                >
+                    <el-input
+                        style="width: 300px"
+                        v-model="cardForm.payPrices"
+                        placeholder
+                    ></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -213,7 +351,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-    props: ['type'],
+    props: ["type"],
     computed: {
         ...mapState({
             token: (state) => state.user.token,
@@ -274,26 +412,25 @@ export default {
     },
     methods: {
         //点击客史
-          handleHistory(item) {
+        handleHistory(item) {
             console.log(item);
             console.log(this.type);
             if (item.idcard) {
-                if(this.type=='footer'){
-                     this.$router.push({
+                if (this.type == "footer") {
+                    this.$router.push({
                         name: "customerhistory",
-                       query: {
-                        idcard: item.idcard,
-                      },
+                        query: {
+                            idcard: item.idcard,
+                        },
                     });
-                }else if(this.type=='header'){
+                } else if (this.type == "header") {
                     this.$router.push({
                         name: "historyTao",
-                       query: {
-                        idcard: item.idcard,
-                      },
+                        query: {
+                            idcard: item.idcard,
+                        },
                     });
                 }
-
             } else {
                 this.$message(this.$t("desk.customer_noRecord"));
             }
@@ -310,7 +447,7 @@ export default {
                     this.cardForm,
                     (res) => {
                         this.$message({
-                            message:this.$t('desk.customer_payCardSucc'),
+                            message: this.$t("desk.customer_payCardSucc"),
                             type: "success",
                         });
                         this.setCardVisible = false;
@@ -327,7 +464,7 @@ export default {
                     }
                 );
             } else {
-                this.$message(this.$t('desk.customer_payShould'));
+                this.$message(this.$t("desk.customer_payShould"));
             }
         },
         // 点击补收卡费
@@ -373,28 +510,60 @@ export default {
                 this.storeList = data;
             });
         },
-
+        //点击新增会员按钮
         handleAdd(item) {
             // this.$router.push({name:'customeradd',query: {type:'header'}})
 
-            this.$router.push({name:'customeradd',params: {isHeader: '1'}})
+            this.$router.push({
+                name: "memberEditorTao",
+                query: { 
+                    isHeader: "1",
+                    role:'add',   //作用：新增会员
+
+                 },
+            });
         },
+        //点击详情按钮
         handleDetail(item) {
-            this.$router.push({
-                name: "customerdetails",
-                query: {
-                    id: item.id,
-                    buttonName: this.$t("commons.detail"),
-                },
-            });
+            console.log(this.type);
+            if (this.type == "footer") {
+                this.$router.push({
+                    name: "customerdetails",
+                    query: {
+                        id: item.id,
+                        buttonName: this.$t("commons.detail"),
+                    },
+                });
+            } else if (this.type == "header") {
+                this.$router.push({
+                    name: "memberEditorTao",
+                    query: {
+                        id: item.id,
+                        buttonName: this.$t("commons.detail"),
+                        role:'lookDetail',   //作用：详情
+                    },
+                });
+            }
         },
+        //点击修改按钮
         handleEdit(item) {
-            this.$router.push({
-                name: "customeredit",
-                query: {
-                    id: item.id,
-                },
-            });
+            console.log(this.type);
+            if (this.type == "footer") {
+                this.$router.push({
+                    name: "customeredit",
+                    query: {
+                        id: item.id,
+                    },
+                });
+            } else if (this.type == "header") {
+                this.$router.push({
+                    name: "memberEditorTao",
+                    query: {
+                        id: item.id,
+                        role:'modify',   //作用：修改
+                    },
+                });
+            }
         },
         handleRecovery(item) {
             let params = {
@@ -497,7 +666,6 @@ export default {
             this.searchForm.pageIndex = val;
             this.getDataList();
             this.searchForm.pageIndex = 1;
-            
         },
     },
 };

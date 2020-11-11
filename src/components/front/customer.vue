@@ -1,20 +1,20 @@
 <!--
  * @Date: 2020-05-07 20:49:20
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-10 16:36:39
- * @FilePath: /jiudian/src/views/market/orders/bookingcoms/customer.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-11 17:37:38
+ * @FilePath: \jiudian\src\components\front\customer.vue
  -->
 <template>
 <div class="customer">
     <!--表格数据 -->
      <el-table v-if="type == 'detail'" ref="multipleTable" v-loading="loading" :data="tableData"
                :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-        <el-table-column label="姓名" show-overflow-tooltip>
+        <el-table-column :label="$t('desk.home_name')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 <span>{{row.checkIn.name}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="性别" show-overflow-tooltip>
+        <el-table-column :label="$t('desk.customer_sex')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 <span>{{F_sex(row.checkIn.sex)}}</span>
             </template>
@@ -22,21 +22,21 @@
         <el-table-column :label="$t('food.common.status')">
             <template slot-scope="{row}">
                 <el-button type="text" v-if="row.inRoomList && row.inRoomList.personList > 0">{{ $t('desk.clickCheckin') }}</el-button>
-                <el-button type="text" v-else>点击排房</el-button>
+                <el-button type="text" v-else>{{$t('desk.order_clickPai')}}</el-button>
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.home_roomNum') + $t('desk.home_roomType')" show-overflow-tooltip>
-            <template slot-scope="{row}">
+            <template >
                 -
             </template>
         </el-table-column>
         <el-table-column :label="$t('commons.idCardTypeDesc')" show-overflow-tooltip>
-            <template slot-scope="{row}">
+            <template >
                 <span>-</span>
             </template>
         </el-table-column>
-        <el-table-column label="证件号码" show-overflow-tooltip>
-            <template slot-scope="{row}">
+        <el-table-column :label="$t('desk.customer_documentNum')" show-overflow-tooltip>
+            <template >
                 <span>-</span>
             </template>
         </el-table-column>
@@ -60,9 +60,9 @@
                 {{scope.row.isChild?'':scope.row.roomTypeName}}
             </template>
         </el-table-column>
-        <el-table-column prop="realPrice" label="房价" width="100">
+        <el-table-column prop="realPrice" :label="$t('desk.book_roomPriceText')" width="100">
         </el-table-column>
-        <el-table-column label="姓名" width="150">
+        <el-table-column :label="$t('desk.home_name')" width="150">
             <template slot-scope="{row}">
                 <el-row>
                     <span>{{row.name}}</span>
@@ -77,14 +77,14 @@
             </template>
 
         </el-table-column>
-        <el-table-column prop="groupName" label="证件号码">
+        <el-table-column prop="groupName" :label="$t('desk.customer_documentNum')">
             <template slot-scope="{row}">
                 <el-row>
                     <span>{{row.idcard}}</span>
                 </el-row>
             </template>
         </el-table-column>
-        <el-table-column label="性别" width="120">
+        <el-table-column :label="$t('desk.customer_sex')" width="120">
             <template slot-scope="{row}">
                 <el-row>
                     <span>{{F_sex(row.sex)}}</span>
@@ -99,8 +99,8 @@
             </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="180">
-            <template slot-scope="scope">
-                <el-button type="text" size="mini" @click="edit_live_in_person()">编辑</el-button>
+            <template >
+                <el-button type="text" size="mini" @click="edit_live_in_person()">{{$t('desk.customer_editorText')}}</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -156,6 +156,7 @@ export default {
     mounted() {
         if (this.type != 'checkin') {
             let id = this.$route.query.id;
+            console.log(this.$route.query.id);
             this.searchForm.checkinId = id
             this.live_in_person_list();
             this.tableData[0] = this.detailData;
@@ -253,10 +254,9 @@ export default {
                 }
             }
         },
-
         editItem_live_in_person(item) {
             if (!item.name) {
-                this.$message.error('请填写姓名');
+                this.$message.error(this.$t('desk.order_inputName'));
                 return
             }
             if (!item.idcardType) {
@@ -264,15 +264,15 @@ export default {
                 return
             }
             if (!item.idcard) {
-                this.$message.error('请填写证件号');
+                this.$message.error(this.$t('desk.order_inputCardNum'));
                 return
             }
             if (!item.sex) {
-                this.$message.error('请选择性别');
+                this.$message.error(this.$t('desk.customer_chooseSex'));
                 return
             }
             if (!item.mobile) {
-                this.$message.error('请输入手机号');
+                this.$message.error(this.$t('desk.customer_inputPhone'));
                 return
             }
             let params = {

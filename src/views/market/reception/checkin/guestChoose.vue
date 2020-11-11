@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-09 14:59:35
+ * @LastEditTime: 2020-11-11 09:37:56
  * @FilePath: \jiudian\src\views\market\reception\checkin\guestChoose.vue
  -->
 
@@ -53,7 +53,6 @@ export default {
         guestTypeChange() {
             this.checkInForm.name = "";
         },
-
         submit() {
             if (this.checkInForm.guestType == 2 && this.checkInForm.memberCard) {
                 this.$emit("guestChooseCallback", this.checkInForm);

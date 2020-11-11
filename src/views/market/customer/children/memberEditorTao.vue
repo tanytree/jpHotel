@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 14:45:33
- * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
+ * @LastEditTime: 2020-11-11 15:01:28
+ * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
   <div>
@@ -58,44 +58,7 @@
                         <template v-if="type == 'detail'" style="margin-left: 15px">{{detailForm.pronunciation}}</template>
                       </el-form-item>
                     </el-col>
-
                   </el-row>
-<!--                    <el-row class="cell">-->
-<!--                        <el-col :span="8" class="col">-->
-<!--                            <el-form-item :label="$t('boss.memberPostCode')" prop="name">-->
-<!--                                <el-input v-model="detailForm.zipCode1" v-if="type != 'detail'" class="width150"></el-input>-->
-<!--                                <span style="margin: 0 8px">-</span>-->
-<!--                                <el-input v-model="detailForm.zipCode2" v-if="type != 'detail'"  class="width150"></el-input>-->
-<!--                                <template v-if="type == 'detail'">{{detailForm.zipCode1}}</template>-->
-<!--                                <template v-if="type == 'detail'" style="margin-left: 15px">{{detailForm.zipCode2}}</template>-->
-<!--                            </el-form-item>-->
-<!--                        </el-col>-->
-<!--                        <el-col :span="8" class="col">-->
-<!--                            <el-form-item :label="$t('desk.home_telNum1')" prop="mobile">-->
-<!--                                <el-input v-model="detailForm.mobile" v-if="type != 'detail'"></el-input>-->
-<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile }}</template>-->
-<!--                            </el-form-item>-->
-<!--                        </el-col>-->
-<!--                        <el-col :span="8" class="col">-->
-<!--                            <el-form-item :label="$t('desk.home_telNum2')" prop="mobile">-->
-<!--                                <el-input v-model="detailForm.mobile2" v-if="type != 'detail'"></el-input>-->
-<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile2 }}</template>-->
-<!--                            </el-form-item>-->
-<!--                        </el-col>-->
-<!--                        <el-col :span="8" class="col">-->
-<!--                            <el-form-item :label="$t('desk.home_telNum1')" prop="mobile">-->
-<!--                                <el-input v-model="detailForm.mobile" v-if="type != 'detail'"></el-input>-->
-<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile }}</template>-->
-<!--                            </el-form-item>-->
-<!--                        </el-col>-->
-<!--                        <el-col :span="8" class="col">-->
-<!--                            <el-form-item :label="$t('desk.home_telNum2')" prop="mobile">-->
-<!--                                <el-input v-model="detailForm.mobile2" v-if="type != 'detail'"></el-input>-->
-<!--                                <template v-if="type == 'detail'">{{ detailForm.mobile2 }}</template>-->
-<!--                            </el-form-item>-->
-<!--                        </el-col>-->
-
-<!--                    </el-row>-->
                   <el-row class="cell" v-if="type != 'add'">
                     <el-col :span="8" class="col">
                       <el-form-item :label="$t('desk.customer_memeberCardNum')">{{ detailForm.memberCard }}</el-form-item>
@@ -219,69 +182,6 @@
                     </el-row>
                 </el-row>
                 <el-divider></el-divider>
-<!--                <el-row class="row">-->
-<!--                  <el-row class="cell">-->
-<!--                    <el-col :span="8" class="col">-->
-<!--                      <el-form-item-->
-<!--                        :label="$t('desk.order_salesman')"-->
-<!--                        prop="salesId"-->
-<!--                      >-->
-<!--                        <el-select-->
-<!--                          v-model="detailForm.salesId"-->
-<!--                          v-if="type != 'detail'"-->
-<!--                        >-->
-<!--                          <el-option-->
-<!--                            v-for="item in salesList"-->
-<!--                            :key="item.id"-->
-<!--                            :label="item.userName"-->
-<!--                            :value="item.id"-->
-<!--                          ></el-option>-->
-<!--                        </el-select>-->
-<!--                        <template v-if="type == 'detail'">{{-->
-<!--                          F_salesId(detailForm.salesId)-->
-<!--                        }}</template>-->
-<!--                      </el-form-item>-->
-<!--                    </el-col>-->
-<!--                    <el-col :span="8" class="col">-->
-<!--                      <el-form-item-->
-<!--                        :label="$t('desk.customer_developmentWay')"-->
-<!--                        prop="getWay"-->
-<!--                      >-->
-<!--                        <el-select-->
-<!--                          v-model="detailForm.getWay"-->
-<!--                          v-if="type != 'detail'"-->
-<!--                        >-->
-<!--                          <el-option-->
-<!--                            v-for="(value, key) in $t('frontOffice.getWay')"-->
-<!--                            :label="value"-->
-<!--                            :key="value"-->
-<!--                            :value="key"-->
-<!--                          ></el-option>-->
-<!--                        </el-select>-->
-<!--                        <template v-if="type == 'detail'">-->
-<!--                          <div v-if="detailForm.getWay == 1">-->
-<!--                            {{ $t("desk.customer_online") }}-->
-<!--                          </div>-->
-<!--                          <div v-if="detailForm.getWay == 2">-->
-<!--                            {{ $t("desk.customer_offline") }}-->
-<!--                          </div>-->
-<!--                        </template>-->
-<!--                      </el-form-item>-->
-<!--                    </el-col>-->
-<!--                  </el-row>-->
-<!--                </el-row>-->
-<!--                <el-row class="row" v-if="type == 'add'">-->
-<!--                  <el-row class="cell">-->
-<!--                    <el-col :span="8" class="col">-->
-<!--                      <el-form-item :label="$t('desk.customer_creditCard')" prop="state">-->
-<!--                        <el-select v-model="detailForm.state">-->
-<!--                            <el-option :label="$t('desk.customer_yes')" :value="1"></el-option>-->
-<!--                            <el-option :label="$t('desk.customer_waiteUse')" :value="2"></el-option>-->
-<!--                        </el-select>-->
-<!--                      </el-form-item>-->
-<!--                    </el-col>-->
-<!--                  </el-row>-->
-<!--                </el-row>-->
               </el-form>
             </div>
           </div>
@@ -826,12 +726,12 @@ export default {
     },
   },
   mounted() {
-      this.isHeader = this.$route.params.isHeader == 1
+         this.isHeader = this.$route.query.isHeader == 1
         this.detailForm.id = this.$route.query.id ? this.$route.query.id : "";
     //
-    if (this.$route.name == "customeradd") {
+    if (this.$route.query.role == "add") {
       this.type = "add";
-    } else if (this.$route.name == "customeredit") {
+    } else if (this.$route.query.role== "modify") {
       this.type = "edit";
     } else {
       this.type = "detail";
@@ -955,8 +855,8 @@ export default {
     },
     //跳转  会员信息管理
     goMemberManag() {
-         this.resetActive("member");
-          this.$router.push("/customer");
+          this.resetMemberTab("member-query");
+          this.$router.push("/saleOrder");
     },
     //跳转  积分明细  页面
     toIntegralDetail() {

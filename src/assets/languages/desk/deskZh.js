@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-05 15:28:24
+ * @LastEditTime: 2020-11-11 17:05:40
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -409,6 +409,15 @@ module.exports = {
     order_cachRefund: "现金退款",
     order_keepLive: "在住",
     order_alreadyCheckout: "已退房",
+    order_clickPai: "点击排房",
+    order_inputName: "请填写姓名",
+    order_inputCardNum: "请填写证件号",
+    order_: "",
+    order_: "",
+    order_: "",
+    order_: "",
+    order_: "",
+    order_: "",
     order_: "",
     order_: "",
     //客户管理（customer）
