@@ -11,9 +11,9 @@
                    @change="handleChange"></el-cascader>
               </el-form-item>
 
-              <el-form-item :label="$t('food.common.cate_name')" prop="categoryName">
+             <!-- <el-form-item :label="$t('food.common.cate_name')" prop="categoryName">
                 <el-input v-model="info.categoryName" ></el-input>
-              </el-form-item>
+              </el-form-item> -->
 
               <el-form-item :label="$t('food.common.food_price')" prop="price">
                 <el-input v-model="info.price"></el-input>
@@ -94,9 +94,9 @@
                  categoryId: [
                    { required: true, message: this.$t('food.common.input_food_cate'), trigger: 'change' }
                  ],
-                 categoryName: [
-                   {  required: true, message: this.$t('food.common.input_food_cate_name'), trigger: 'change' }
-                 ],
+                 // categoryName: [
+                 //   {  required: true, message: this.$t('food.common.input_food_cate_name'), trigger: 'change' }
+                 // ],
                  price: [
                    { required: true, message: this.$t('food.common.input_food_price'), trigger: 'change' }
                  ],
