@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 14:40:45
+ * @LastEditTime: 2020-11-12 16:03:18
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -51,6 +51,7 @@ module.exports = {
     loginDetail_name: "名前",
     loginDetail_state: "状態",
     loginDetail_phone: "連絡電話",
+    loginDetail_phoneA: "電話",
     loginDetail_stores: "該当ホテル",
     loginDetail_department: "担当セクション",
     loginDetail_position: "職務",
@@ -81,13 +82,15 @@ module.exports = {
 
     //总办 > 人员管理
     staff_name: 'スタッフ名前',
-    staff_workTime: '入職時間',
+    staff_workTime: '入社日',
+    staff_theNameA: '従業員名前（漢字、カナ）',
     staff_theName: 'スタッフ名前',
-    staff_workState: '雇用形態',
+    staff_workState: '雇用状況',
     staff_editingStaff: 'アカウント編集',
     staff_staffState: '従業員の状態',
+    staff_staffStateA: '基本資料',
     staff_inputName: '名前をご入力下さい',
-    staff_department: '該当部署',
+    staff_department: '部署',
     staff_selectDepartment: '请选择部门',
     staff_fillInPosition: 'ポジションを記入してください',
     staff_relatedBackground: 'アクセスアカウント:',
@@ -159,6 +162,36 @@ module.exports = {
     personnel_department: '所属編集',
     personnel_addDepart: '部門を加える',
     personnel_editDepart: 'セクション編集',
+    //遗漏添加
+    add_addMembers:'アカウント追加',
+    add_addSub:'未翻译词条',
+    add_superior:'未翻译词条',
+    add_departmentIcon:'未翻译词条',
+    add_departmentType:'未翻译词条',
+    add_selectIcon:'未翻译词条',
+    add_icon:'未翻译词条',
+    add_color:'未翻译词条',
+    add_position:'未翻译词条',
+    add_editorEmpe:'未翻译词条',
+    add_peopleName:'名前',
+    add_peopleAccount:'アカウント',
+    add_loginPass:'パスワード',
+    add_selectLimit:'アクセス権限を設定',
+    add_canLook:'（ここの設定はセクションまでのアクセス権限です、具体的な権限は各セクションの責任者により設定します。）',
+    add_selectAll:'すべてを選択',
+    add_save:'保存',
+    add_cancel:'取り消し',
+    add_inputName:'未翻译词条',
+    add_inputAccount:'未翻译词条',
+    add_inputPassword:'未翻译词条',
+    add_noCancel:'未翻译词条',
+    add_addPart:'未翻译词条',
+    add_partSet:'未翻译词条',
+    add_addStaff:'従業員追加',
+    add_modify:'編集',
+    add_workFor:'役職',
+    add_belong:'部署',
+    add_subPhone:'内線番号',
 
 
 

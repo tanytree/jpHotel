@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-23 15:49:21
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-24 10:32:53
- * @FilePath: /jiudian/src/views/organization/index.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-12 15:09:53
+ * @FilePath: \jiudian\src\views\organization\index.vue
  -->
 <template>
     <div class="organization" v-loading="loading">
@@ -27,7 +27,7 @@
                 <div class="hd">
                     <div class="hdWrap">
                         <div class="fr btns">
-                            <el-button plain icon="el-icon-plus" @click="addItemHandle">添加成员</el-button>
+                            <el-button plain  @click="addItemHandle">{{$t('boss.add_addMembers')}}</el-button>
                         </div>
                         <div class="searchInfo">
                             <div class="flex">
@@ -62,9 +62,9 @@
             </div>
 
         </div>
-        <el-dialog top="0" :visible.sync="addChildDepartShow" title="添加子部门" width="600px">
+        <el-dialog top="0" :visible.sync="addChildDepartShow" :title="$t('boss.add_addSub')" width="600px">
             <el-form :model="departMentForm">
-                <el-form-item label="上级部门" class="require" v-if="isAddChild">
+                <el-form-item :label="$t('boss.add_superior')" class="require" v-if="isAddChild">
                     <el-input style="width:200px" disabled v-model="departMentForm.fartherName"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('boss.department_name')" class="require">
@@ -82,13 +82,13 @@
 
         <el-dialog top="0" :visible.sync="departSetAndAddShow" :title="departSetAndAddTitle" width="800px">
             <el-form :model="departMentForm">
-                <el-form-item label="上级部门" class="require" v-if="isAddChild">
+                <el-form-item :label="$t('boss.add_superior')" class="require" v-if="isAddChild">
                     <el-input style="width:200px" disabled v-model="departMentForm.fartherName"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('boss.department_name')" class="require">
                     <el-input style="width:200px" v-model="departMentForm.departmentName"></el-input>
                 </el-form-item>
-                <el-form-item label="部门图标" class="iconLabel" :class="{require:!isAddChild}">
+                <el-form-item :label="$t('boss.add_departmentIcon')" class="iconLabel" :class="{require:!isAddChild}">
                     <i class="el-icon-full-screen" @click="selectIconAndColorShow=true"></i>
                     <!-- <img
                 v-if="departMentForm.departmentIcon"
@@ -96,7 +96,7 @@
               /> -->
                     <img v-if="departMentForm.departmentIcon" :src="checkImgNameSrc(departMentForm.departmentIcon)"/>
                 </el-form-item>
-                <el-form-item label="部门类型" class="require" v-if="setDepartmentList.length" prop="setDepartmentType">
+                <el-form-item :label="$t('boss.add_departmentType')" class="require" v-if="setDepartmentList.length" prop="setDepartmentType">
                     <el-checkbox-group v-model="setDepartmentType" @change="departTypeSelectChange">
                         <el-checkbox :label="item" v-for="(item,index) of setDepartmentList" :key="index" :disabled="false" style="display:inline-block">{{item.name}}
                         </el-checkbox>
@@ -137,10 +137,10 @@
             <el-button size="small" type="primary" @click="departMentAddNow" v-loading="loading">{{ $t('commons.confirm') }}</el-button>
         </span>
         </el-dialog>
-        <el-dialog top="0" :visible.sync="selectIconAndColorShow" title="选择图标" width="600px">
+        <el-dialog top="0" :visible.sync="selectIconAndColorShow" :title="$t('boss.add_selectIcon')" width="600px">
             <div class="iconAndColorDia">
                 <div class="row">
-                    <h3>图标</h3>
+                    <h3>{{$t('boss.add_icon')}}</h3>
                     <div class="pool clearfix">
                         <ul>
                             <li v-for="(item,index) of iconList" :key="index" class="iconPoolLi"
@@ -151,7 +151,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <h3>颜色</h3>
+                    <h3>{{$t('boss.add_color')}}</h3>
                     <div class="pool clearfix">
                         <ul>
                             <li class="colorPoolLi" v-for="(item,index) of colorList" :key="index"
@@ -168,21 +168,21 @@
             <el-button size="small" type="primary" @click="iconAndColorChange()">{{ $t('commons.confirm') }}</el-button>
         </span>
         </el-dialog>
-        <el-dialog top="0" :visible.sync="employeesDetailsShow" title="查看资料" width="600px">
+        <el-dialog top="0" :visible.sync="employeesDetailsShow" :title="$t('boss.report_checkingData')" width="600px">
             <el-form :model="employeesDetails" label-width="100px">
-                <el-form-item label="姓名" class>
+                <el-form-item :label="$t('boss.loginDetail_name')" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.name"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_moblePhone')" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.phone"></el-input>
                 </el-form-item>
-                <el-form-item label="职务" class>
+                <el-form-item :label="$t('boss.add_position')" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.roleCName"></el-input>
                 </el-form-item>
-                <el-form-item label="所在部门" class>
+                <el-form-item :label="$t('boss.loginDetail_department')" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.departCName"></el-input>
                 </el-form-item>
-                <el-form-item label="入职时间" class>
+                <el-form-item :label="$t('boss.loginDetail_workTime')" class>
                     <el-input style="width:300px" disabled v-model="employeesDetails.createTime"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_note')" class>
@@ -196,18 +196,14 @@
           </span>-->
         </el-dialog>
         <el-dialog top="0" :visible.sync="employeesDetailsEditShow"
-                   :title="addAndEditForm.type=='add'?'添加成员': (addAndEditForm.editType == 2 ? '编辑部门' : '编辑成员')"
+                   :title="addAndEditForm.type=='add'?this.$t('boss.add_addMembers'): (addAndEditForm.editType == 2 ? this.$t('boss.personnel_editDepart') : this.$t('boss.add_editorEmpe'))"
                    width="600px" @close="itemClose()">
             <el-form :model="addAndEditForm" label-width="100px" size="small">
                 <template v-if="addAndEditForm.type=='add'||(addAndEditForm.editType && addAndEditForm.editType==1)">
-                    <el-row>
-                        <el-col :span="10">
-                            <el-form-item label="人员名称：" class="require">
-                                <el-input  v-model="addAndEditForm.userName"></el-input>
+                            <el-form-item :label="$t('boss.add_peopleName')+':'" class="require">
+                                <el-input style="width:300px"  v-model="addAndEditForm.userName"></el-input>
                             </el-form-item>
-
-                        </el-col>
-                        <el-col :span="14">
+                        <!-- <el-col :span="14" >
                             <el-form-item label="销售人员：" class="">
                                 <el-radio-group v-model="addAndEditForm.salesFlag">
                                     <el-radio :label="1">是</el-radio>
@@ -215,12 +211,11 @@
                                 </el-radio-group>
                             </el-form-item>
 
-                        </el-col>
-                    </el-row>
-                    <el-form-item label="人员账号：" class="require">
+                        </el-col> -->
+                    <el-form-item :label="$t('boss.add_peopleAccount')+':'" class="require">
                         <el-input style="width:300px" v-model="addAndEditForm.account" :disabled="addAndEditForm.type !='add'"></el-input>
                     </el-form-item>
-                    <el-form-item label="登录密码：" class="require">
+                    <el-form-item :label="$t('boss.add_loginPass')+':'" class="require">
                         <el-input style="width:300px" v-model="addAndEditForm.password" type="password"
                                   @input="passwordChange"></el-input>
                     </el-form-item>
@@ -229,8 +224,8 @@
 
                 <template v-if="addAndEditForm.type == 'add'||(addAndEditForm.editType == 2)">
                     <h3 style="width:100%;text-align:right;font-size:14px;text-align:left;font-weight:normal">
-                        请选择该员工权限范围：<span style="color:#999">（该员工可以进入勾选的部门查看，具体权限由部门负责人设置）</span></h3>
-                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选
+                        {{$t('boss.add_selectLimit')}}：<span style="color:#999">{{$t('boss.add_canLook')}}</span></h3>
+                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">{{$t('boss.add_selectAll')}}
                     </el-checkbox>
                     <div style="margin: 15px 0;"></div>
                     <el-form-item label="" class prop="phone" label-width="20px">
@@ -243,8 +238,8 @@
                 </template>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="small" type="primary" @click="employeesDetailsEditChange()" v-loading="loading">{{ $t('commons.save') }}</el-button>
-            <el-button size="small" @click="itemClose">{{ $t('commons.cancel') }}</el-button>
+            <el-button size="small" type="primary" @click="employeesDetailsEditChange()" v-loading="loading">{{ $t('boss.add_save') }}</el-button>
+            <el-button size="small" @click="itemClose">{{ $t('boss.add_cancel') }}</el-button>
         </span>
         </el-dialog>
         <!-- <add-employees :employeesSetting="employeesSetting" @getInviteShow="getInviteShow" @enterprise_department_distributionFn="enterprise_department_distributionFn"></add-employees> -->
@@ -476,40 +471,40 @@
         if (this.addAndEditForm.type == 'add') {
 
           if (!this.addAndEditForm.userName) {
-            this.$message.error('请输入人员名称')
+            this.$message.error(this.$t('boss.add_inputName'))
             return
           }
           if (!this.addAndEditForm.account) {
-            this.$message.error('请输入人员账号')
+            this.$message.error(this.$t('boss.add_inputAccount'))
             return
           }
           if (!this.addAndEditForm.password) {
-            this.$message.error('请输入登录密码')
+            this.$message.error(this.$t('boss.add_inputPassword'))
             return
           }
           if (!this.addAndEditForm.departmentIds.length) {
-            this.$message.error('请选择部门')
+            this.$message.error(this.$t('boss.staff_selectDepartment'))
             return
           }
           url = '/pms/workuser/add_login_user'
         } else {
           if (this.addAndEditForm.editType == 1) {
             if (!this.addAndEditForm.userName) {
-              this.$message.error('请输入人员名称')
+              this.$message.error(this.$t('boss.add_inputName'))
               return
             }
             if (!this.addAndEditForm.account) {
-              this.$message.error('请输入人员账号')
+              this.$message.error(this.$t('boss.add_inputAccount'))
               return
             }
             if (!this.addAndEditForm.password) {
-              this.$message.error('请输入登录密码')
+              this.$message.error(this.$t('boss.add_inputPassword'))
               return
             }
           }
           if (this.addAndEditForm.editType == 2) {
             if (!this.addAndEditForm.departmentIds.length) {
-              this.$message.error('请选择部门')
+              this.$message.error(this.$t('boss.staff_selectDepartment'))
               return
             }
           }
@@ -597,7 +592,7 @@
       department_delete () {
         let item = this.activeDepartMent
         if (item.type == 1) {
-          this.$message.error('内置部门不能删除')
+          this.$message.error(this.$t('boss.add_noCancel'))
           return
         }
         let that = this
@@ -671,7 +666,7 @@
             let obj = {
               ...this.activeDepartMent
             }
-            this.departSetAndAddTitle = '添加子部门'
+            this.departSetAndAddTitle = this.$t('boss.add_addSub')
             this.departMentForm.departmentLevel = 2
             this.departMentForm.departmentParent = obj.id
             this.departMentForm.fartherName =
@@ -682,7 +677,7 @@
           } else {
             this.departMentForm.departmentParent = ''
             this.departMentForm.departmentLevel = 1
-            this.departSetAndAddTitle = '添加部门'
+            this.departSetAndAddTitle = this.$t('boss.add_addPart')
             this.departSetAndAddShow = true
           }
         } else {
@@ -741,7 +736,7 @@
               }
               console.log(this.setDepartmentType)
 
-              this.departSetAndAddTitle = '部门设置'
+              this.departSetAndAddTitle = this.$t('boss.add_partSet')
 
               this.departSetAndAddShow = true
               this.$forceUpdate()

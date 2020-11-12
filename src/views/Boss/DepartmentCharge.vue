@@ -81,7 +81,7 @@
                 </el-row>
             </el-row>
             <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogTableVisible = false">{{$t('commons.cancel')}}</el-button>
+        <el-button @click="dialogTableVisible = false">{{$t('boss.add_cancel')}}</el-button>
         <el-button type="primary" @click="defineChange">{{$t('commons.determine')}}</el-button>
       </span>
         </el-dialog>

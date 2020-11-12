@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-10 14:09:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-03 14:26:32
- * @FilePath: /jiudian/src/components/employee/employeeManager.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-12 16:07:53
+ * @FilePath: \jiudian\src\components\employee\employeeManager.vue
  -->
 <template>
     <div class="sec1 boss-index">
@@ -71,7 +71,7 @@
                     <!--                        <el-button size="small" type="primary">{{$t('commons.bulkImport')}}-->
                     <!--                        </el-button>-->
                     <!--                    </el-upload>-->
-                <el-button type="primary" class="submit" @click="addItem">{{ $t('commons.addEmployees') }}</el-button>
+                <el-button type="primary" class="submit" @click="addItem">{{ $t('boss.add_addStaff') }}</el-button>
             </el-form-item>
         </el-form>
         <div>
@@ -96,7 +96,7 @@
                     >{{ F_storeName(scope.row.storesNum) }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="userName" :label="$t('boss.staff_theName')"
+                <el-table-column prop="userName" :label="$t('boss.staff_theNameA')" width="200px"
                                  show-overflow-tooltip></el-table-column>
                 <el-table-column prop="inTime" :label="$t('boss.staff_workTime')"
                                  show-overflow-tooltip></el-table-column>
@@ -105,7 +105,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="position"
-                    :label="$t('boss.loginDetail_position')"
+                    :label="$t('boss.add_workFor')"
                     show-overflow-tooltip
                 >
                     <template slot-scope="{row}">
@@ -119,12 +119,12 @@
                 ></el-table-column>
                 <el-table-column
                     prop="department.name"
-                    :label="$t('boss.loginDetail_department')"
+                    :label="$t('boss.add_belong')"
                     show-overflow-tooltip
                 ></el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="300">
                     <template slot-scope="{row}">
-                        <el-button type="text" size="mini" @click="editItem(row)">{{ $t('commons.modify') }}</el-button>
+                        <el-button type="text" size="mini" @click="editItem(row)">{{ $t('boss.add_modify') }}</el-button>
                         <el-button type="text" size="mini" @click="detailsHandle(row)">{{ $t('commons.detail') }}
                         </el-button>
                         <el-button
@@ -155,7 +155,7 @@
             ></el-pagination>
         </div>
             <!-- 添加员工 -->
-        <el-dialog top="0" :title="addAndEditForm.employeeId?$t('commons.modify'):$t('commons.addEmployees')" :visible.sync="adddstaff" @close="addAndEditFormClose">
+        <el-dialog top="0" :title="addAndEditForm.employeeId?$t('boss.add_modify'):$t('commons.addEmployees')" :visible.sync="adddstaff" @close="addAndEditFormClose">
                 <el-form ref="addAndEditForm" :model="addAndEditForm" :rules="rules" inline :required="true" class="term line" label-width="120px" size="small">
                     <el-row class="margin-b-20">
                         <el-col :span="12" v-if="isPersonnelManager">
@@ -165,13 +165,11 @@
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('boss.staff_staffState')+'：'" prop="userStatus">
+                        <el-form-item :label="$t('boss.staff_staffStateA')+'：'" prop="userStatus">
                                 <el-radio-group v-model="addAndEditForm.userStatus">
                                     <el-radio v-for="(value, key) in $t('commons.userStatus')" :label="key" :key="key">{{ value }}</el-radio>
                                 </el-radio-group>
-                            </el-form-item>
-                        </el-col>
+                        </el-form-item>
                     </el-row>
                     <el-row class="margin-b-10">
                         <el-col :span="12">
@@ -180,7 +178,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item :label="$t('boss.loginDetail_phone')">
+                            <el-form-item :label="$t('boss.loginDetail_phoneA')">
                                 <el-input class="width200" autocomplete="off" v-model="addAndEditForm.userPhone"></el-input>
                             </el-form-item>
                         </el-col>
@@ -208,7 +206,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item :label="$t('boss.loginDetail_position')">
+                            <el-form-item :label="$t('boss.add_workFor')">
                                 <el-input v-model="addAndEditForm.position" class="width200" :placeholder="$t('boss.staff_fillInPosition')" autocomplete="off"></el-input>
                             </el-form-item>
                         </el-col>
@@ -234,7 +232,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item :label="$t('boss.loginDetail_extension')">
+                            <el-form-item :label="$t('boss.add_subPhone')">
                                 <el-input v-model="addAndEditForm.extension" class="width200"
                                           autocomplete="off"></el-input>
                             </el-form-item>
@@ -244,7 +242,7 @@
                         <el-col :span="12">
                             <div class="grid-content">
                                 <el-form-item :label="$t('boss.staff_workTime')+':'" prop="inTime">
-                                    <el-date-picker v-model="addAndEditForm.inTime" value-format="yyyy-MM-dd" type="date" style="width:200px" :placeholder="$t('commons.selectDate')"></el-date-picker>
+                                    <el-date-picker v-model="addAndEditForm.inTime" value-format="yyyy-MM-dd" type="date"  :placeholder="$t('commons.selectDate')"></el-date-picker>
                                 </el-form-item>
                             </div>
                         </el-col>
@@ -259,7 +257,7 @@
                     </el-row>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="addAndEditFormClose()">>{{ $t('commons.cancel') }}<</el-button>
+                    <el-button @click="addAndEditFormClose()">{{ $t('commons.cancel') }}</el-button>
                     <el-button type="primary" @click="addAndEditPost">{{ $t('commons.determine') }}</el-button>
                 </div>
             </el-dialog>

@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-10 14:09:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-21 10:36:03
- * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/dimission.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-12 15:47:12
+ * @FilePath: \jiudian\src\components\employee\dimission.vue
  -->
  <template>
      <!--离职人员维护-->
@@ -58,7 +58,7 @@
             v-if="scope.row.storesNum"
           >{{F_storeName(scope.row.storesNum)}}</template>
         </el-table-column>
-        <el-table-column prop="userName" :label="$t('boss.staff_theName')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="userName" :label="$t('boss.staff_theNameA')" width="200px" show-overflow-tooltip></el-table-column>
         <el-table-column
           prop="inTime"
           :label="$t('boss.loginDetail_workTime')"

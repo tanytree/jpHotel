@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-10 14:09:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-21 10:36:23
- * @FilePath: /jiudian/src/views/market/personnelManager/peopleman/peopleman.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-12 16:26:27
+ * @FilePath: \jiudian\src\components\employee\loginDetail.vue
  -->
 <template>
   <el-dialog
@@ -14,83 +14,83 @@
   >
     <el-form :model="detailsData">
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_name')}}</el-col>
-        <el-col :span="14">{{detailsData.userName}}</el-col>
+        <el-col :span="11">{{$t('boss.staff_theNameA')}}</el-col>
+        <el-col :span="12">{{detailsData.userName}}</el-col>
       </el-row>
       <el-row style="margin:10px 0" v-if="dimission != 1">
-        <el-col :span="8">{{$t('boss.loginDetail_state')}}</el-col>
-        <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
+        <el-col :span="11">{{$t('boss.staff_staffStateA')}}</el-col>
+        <el-col :span="12">{{detailsData.userStatus | F_userStatus}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_phone')}}</el-col>
-        <el-col :span="14">{{detailsData.userPhone || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_phoneA')}}</el-col>
+        <el-col :span="12">{{detailsData.userPhone || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0" v-if="isPersonnelManager && storesNum == $F.getHQCode()">
-        <el-col :span="8">{{$t('boss.loginDetail_stores')}}</el-col>
-        <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_stores')}}</el-col>
+        <el-col :span="12">{{F_storeName(detailsData.storesNum)}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_department')}}</el-col>
+        <el-col :span="11">{{$t('boss.staff_department')}}</el-col>
         <el-col
-          :span="14"
+          :span="12"
         >{{detailsData.department?detailsData.department.name:'' || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_position')}}</el-col>
-        <el-col :span="14">{{detailsData.position || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.add_workFor')}}</el-col>
+        <el-col :span="12">{{detailsData.position || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_bankAccount')}}</el-col>
-        <el-col :span="14">{{detailsData.bankcard || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_bankAccount')}}</el-col>
+        <el-col :span="12">{{detailsData.bankcard || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_email')}}</el-col>
-        <el-col :span="14">{{detailsData.email || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_email')}}</el-col>
+        <el-col :span="12">{{detailsData.email || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_backgroundAccount')}}</el-col>
-        <el-col :span="14">{{detailsData.associatedAccount || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_backgroundAccount')}}</el-col>
+        <el-col :span="12">{{detailsData.associatedAccount || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_workNumber')}}</el-col>
-        <el-col :span="14">{{detailsData.worknum ||$t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_workNumber')}}</el-col>
+        <el-col :span="12">{{detailsData.worknum ||$t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_extension')}}</el-col>
-        <el-col :span="14">{{detailsData.extension || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.add_subPhone')}}</el-col>
+        <el-col :span="12">{{detailsData.extension || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_workTime')}}</el-col>
-        <el-col :span="14">{{detailsData.inTime || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_workTime')}}</el-col>
+        <el-col :span="12">{{detailsData.inTime || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('commons.idCardTypeDesc')}}</el-col>
+        <el-col :span="11">{{$t('commons.idCardTypeDesc')}}</el-col>
         <el-col
-          :span="14"
+          :span="12"
         >{{$t('commons.idCardType')[detailsData.idcardType || ''] || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_documentNumber')}}</el-col>
-        <el-col :span="14">{{detailsData.idcard || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_documentNumber')}}</el-col>
+        <el-col :span="12">{{detailsData.idcard || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_positiveTime')}}</el-col>
-        <el-col :span="14">{{detailsData.positiveTime || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_positiveTime')}}</el-col>
+        <el-col :span="12">{{detailsData.positiveTime || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
 
       <el-row style="margin:10px 0" v-if="dimission == 1">
-        <el-col :span="8">{{$t('boss.loginDetail_outTime')}}</el-col>
-        <el-col :span="14">{{detailsData.outTime || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_outTime')}}</el-col>
+        <el-col :span="12">{{detailsData.outTime || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
 
       <el-row style="margin:10px 0" v-if="dimission == 1">
-        <el-col :span="8">{{$t('boss.loginDetail_outReason')}}</el-col>
-        <el-col :span="14">{{detailsData.outReason || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_outReason')}}</el-col>
+        <el-col :span="12">{{detailsData.outReason || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
 
       <el-row style="margin:10px 0">
-        <el-col :span="8">{{$t('boss.loginDetail_note')}}</el-col>
-        <el-col :span="14">{{detailsData.remark || $t('boss.loginDetail_no')}}</el-col>
+        <el-col :span="11">{{$t('boss.loginDetail_note')}}</el-col>
+        <el-col :span="12">{{detailsData.remark || $t('boss.loginDetail_no')}}</el-col>
       </el-row>
     </el-form>
 

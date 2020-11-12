@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 14:00:58
+ * @LastEditTime: 2020-11-12 17:26:06
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -26,7 +26,15 @@
       <!-- 查询部分 -->
       <el-form inline size="small" label-width="100px">
         <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+          <!-- <el-input v-model="searchForm.content" class="width150"></el-input> -->
+          <!-- <el-select v-model="value" placeholder="请选择">
+            <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+            </el-option>
+  </el-select> -->
         </el-form-item>
         <el-form-item :label="$t('desk.customer_roomType') + ':'">
           <el-select v-model="searchForm.roomTypeId" class="width150">
@@ -255,6 +263,7 @@ export default {
   mounted() {
     this.initForm();
     this.stores_list();
+    this.getStoreList();
   },
   methods: {
     initForm() {
@@ -271,7 +280,17 @@ export default {
       this.searchForm.idcard = this.$route.query.idcard || "";
       this.getDataList();
     },
-    
+    //获取门店列表
+    getStoreList(){
+        this.$F.doRequest(
+        this,
+        "/pms/department/department_store_list",
+        {},
+        (res) => {
+        console.log(res);
+        }
+      );
+    },
     /**获取表格数据 */
     getDataList() {
       this.loading = true;

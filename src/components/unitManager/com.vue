@@ -141,10 +141,14 @@
                     show-overflow-tooltip
                 ></el-table-column>
                 <el-table-column
-                    prop="totalLimit"
+                    prop="totalConsume"
                     :label="$t('desk.customer_totalConsum')"
                     show-overflow-tooltip
-                ></el-table-column>
+                >
+                <template slot-scope="{row}">
+                    <div>{{row.totalConsume?row.totalConsume:0}}</div>
+                </template>
+                </el-table-column>
                 <el-table-column
                     prop="totalLimit"
                     :label="$t('desk.customer_advancePayment')"
@@ -288,10 +292,6 @@
                         </el-col>
                         <el-col :span="8" class="col">
                             <el-form-item label label-width="20px" >
-                                <el-checkbox v-model="addCompanyForm.shareFlag" v-if="1==2">{{
-                                        $t("desk.customer_groupShare")
-                                    }}
-                                </el-checkbox>
                                 <el-checkbox v-model="addCompanyForm.state">{{
                                         $t("desk.customer_stopUse")
                                     }}
@@ -999,6 +999,7 @@ export default {
                 });
         },
         addAndEditItem(type, item) {
+
             this.setCompanyFormVisible = true;
             this.addCompanyForm.type = type;
             if (item) {
@@ -1006,7 +1007,7 @@ export default {
                     this.addCompanyForm[k] = item[k];
                 }
                 this.addCompanyForm.shareFlag = item.shareFlag == 1 ? true : false;
-                this.addCompanyForm.state = item.state == 1 ? true : false;
+                this.addCompanyForm.state = item.state == 2 ? true : false;
             } else {
                 for (let k in this.addCompanyForm) {
                     this.addCompanyForm[k] = "";

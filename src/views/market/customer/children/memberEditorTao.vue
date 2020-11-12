@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 15:01:28
+ * @LastEditTime: 2020-11-12 10:32:36
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -1034,7 +1034,7 @@ export default {
                 type: "success",
               });
               setTimeout(() => {
-                this.$router.replace("/customer");
+                this.$router.replace("/saleOrder");
               }, 1200);
             }
           );

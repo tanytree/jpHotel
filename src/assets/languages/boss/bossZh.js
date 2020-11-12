@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: Dana
- * @LastEditTime: 2020-07-07 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-12 15:42:16
+ * @FilePath: \jiudian\src\assets\languages\boss\bossZh.js
  */
 
 //  中文语言
@@ -50,6 +50,7 @@ module.exports = {
     loginDetail_name: "姓名",
     loginDetail_state: "状态",
     loginDetail_phone: "联系电话",
+    loginDetail_phoneA: "联系电话",
     loginDetail_stores: "所属门店：",
     loginDetail_department: "所在部门",
     loginDetail_position: "职位",
@@ -81,9 +82,11 @@ module.exports = {
     staff_name: '员工名称',
     staff_workTime: '入职日期',
     staff_theName: '员工姓名',
+    staff_theNameA: '员工姓名',
     staff_workState: '在职状态',
     staff_editingStaff: '编辑员工',
     staff_staffState: '员工状态',
+    staff_staffStateA: '员工状态',
     staff_inputName: '请输入姓名',
     staff_department: '所属部门',
     staff_selectDepartment: '请选择部门',
@@ -160,7 +163,45 @@ module.exports = {
     personnel_department: '部门',
     personnel_addDepart: '添加部门',
     personnel_editDepart: '编辑部门',
-
+    //遗漏添加
+    add_addMembers:'添加成员',
+    add_addSub:'添加子部门',
+    add_superior:'上级部门',
+    add_departmentIcon:'部门图标',
+    add_departmentType:'部门类型',
+    add_selectIcon:'选择图标',
+    add_icon:'图标',
+    add_color:'颜色',
+    add_position:'职务',
+    add_editorEmpe:'编辑成员',
+    add_peopleName:'人员名称',
+    add_peopleAccount:'人员账号',
+    add_loginPass:'登录密码',
+    add_selectLimit:'请选择该员工权限范围',
+    add_canLook:'（该员工可以进入勾选的部门查看，具体权限由部门负责人设置）',
+    add_selectAll:'全选',
+    add_save:'保存',
+    add_cancel:'取消',
+    add_inputName:'请输入人员名称',
+    add_inputAccount:'请输入人员账号',
+    add_inputPassword:'请输入登录密码',
+    add_noCancel:'内置部门不能删除',
+    add_addPart:'添加部门',
+    add_partSet:'部门设置',
+    add_addStaff:'添加员工',
+    add_modify:'修改',
+    add_workFor:'职位',
+    add_belong:'所在部门',
+    add_subPhone:'分机号',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
 
 
 

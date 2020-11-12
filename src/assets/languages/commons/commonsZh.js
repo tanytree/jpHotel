@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 17:17:49
+ * @LastEditTime: 2020-11-12 11:09:39
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -216,7 +216,7 @@ module.exports = {
     memberCardState: {
         '1': '正常',
         '2': '已挂失',
-        '3': '待启用'
+        '3': '停用'
     },
     //签证类型类型
     F_visaType: {

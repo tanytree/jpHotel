@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-26 11:34:26
+ * @LastEditTime: 2020-11-12 16:01:34
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
     backIntoJob: '再入社',
     delete: "削除",
     positive: '正社員処理master',
-    forDeparture: '退職処理master',
+    forDeparture: '退職処理',
     detail: '詳細',
     modify: '変更',
     addEmployees: 'スタッフ追加',
@@ -233,7 +233,7 @@ module.exports = {
     //一周得描述
     weeks: ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"],
     idCardTypeDesc: "本人確認書種類",
-    selectIdCardType: 'ビザ種類を選択してください',
+    selectIdCardType: '書類一覧',
     staffManagerDesc: 'アカウント管理',
 }
 

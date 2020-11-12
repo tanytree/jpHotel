@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-10 16:16:24
+ * @LastEditTime: 2020-11-12 09:44:55
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -691,9 +691,9 @@ module.exports = {
     night_auditResults:'日時更新結果',
     customer_sureEnable:'該当法人を起用確認します',
     customer_guestNum: '顧客番号',
-    order_clickPai: "未翻译词条",
-    order_inputName: "未翻译词条",
-    order_inputCardNum: "未翻译词条",
+    order_clickPai: "アサインをクリックしてください",
+    order_inputName: "名前を入力してください",
+    order_inputCardNum: "身分証明書番号を入力してください",
    
     
 
