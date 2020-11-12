@@ -115,7 +115,7 @@
                             </el-table-column>
                         </el-table>
                         <el-row class="padding-tb-10">
-                            <em>共 {{countToTal}} 件</em>，合计：{{cartToTal}}元 / 已结算金额：{{hasPayPrice}}
+                            <em>共 {{countToTal}} 件</em>，合计：{{cartToTal}}元 <!-- / 已结算金额：{{hasPayPrice}} -->
                         </el-row>
                         <div class="action rel" v-loading="isloading">
                             <div class="margin-t-10">
@@ -132,7 +132,7 @@
                                     <el-form-item :label="$t('food.common.billingType')" prop="billingType">
                                         <el-radio-group v-model="form.billingType" @change="changeBillingType">
                                             <el-radio :label="1">{{$t('food.billingType.1')}}</el-radio>
-                                            <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio>
+                                            <!-- <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio> -->
                                             <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                                         </el-radio-group>
                                     </el-form-item>

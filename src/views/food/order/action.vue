@@ -6,7 +6,7 @@
                 <el-form-item :label="$t('food.common.billingType')" prop="billingType">
                     <el-radio-group v-model="form.billingType" @change="changeBillingType">
                         <el-radio :label="1">{{$t('food.billingType.1')}}</el-radio>
-                        <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio>
+                        <!-- <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio> -->
                         <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
