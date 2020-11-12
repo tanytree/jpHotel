@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 16:02:49
+ * @LastEditTime: 2020-11-12 18:14:13
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -9,7 +9,7 @@
     <div class="el-card" style="height: auto">
       <div class="el-card__header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/orders?type=order' }">{{
+          <el-breadcrumb-item  @click.native="clickGo">{{
             $t("desk.order_orderManage")
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
@@ -206,6 +206,21 @@ export default {
     });
   },
   methods: {
+      //点击顶部订单管理
+    clickGo(){
+      console.log(this.$route.query.member);
+       if(this.$route.query.member){
+           this.$router.go(-1)
+       }else{
+            // :to="{ path: '/orders?type=order' }"
+            this.$router.replace({
+                path:'/orders',
+                query:{
+                   type:this.order,
+                }
+            })
+       }
+    },
     getDetail() {
       console.log(111);
       let id = this.$route.query.id;

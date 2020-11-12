@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 17:26:06
+ * @LastEditTime: 2020-11-12 18:03:52
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -27,14 +27,14 @@
       <el-form inline size="small" label-width="100px">
         <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
           <!-- <el-input v-model="searchForm.content" class="width150"></el-input> -->
-          <!-- <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="searchForm.storesNum" placeholder="请选择">
             <el-option
-            v-for="item in options"
+            v-for="item in storeList"
             :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :label="item.storesName"
+            :value="item.storesNum">
             </el-option>
-  </el-select> -->
+            </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_roomType') + ':'">
           <el-select v-model="searchForm.roomTypeId" class="width150">
@@ -226,9 +226,6 @@ export default {
   data() {
     return {
       loading: false,
-      showEdit: false,
-      showDetail: false,
-      setMemberFormVisible: false,
       searchForm: {
         mobile: "",
         idcard: "",
@@ -263,7 +260,7 @@ export default {
   mounted() {
     this.initForm();
     this.stores_list();
-    this.getStoreList();
+    
   },
   methods: {
     initForm() {
@@ -308,6 +305,7 @@ export default {
     },
     stores_list() {
       this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {
+          console.log(data);
         this.storeList = data;
       });
     },
@@ -335,7 +333,14 @@ export default {
       );
     },
     handelDetail(item) {
-      this.$router.push("/orderdetail");
+    //   this.$router.push("/orderdetail?id=" + item.hotelCheckInRoom.checkinId);
+      this.$router.push({
+          path:'orderdetail',
+          query:{
+              id: item.hotelCheckInRoom.checkinId,
+              member:'member'
+          }
+      });
     },
     handleDetail(item) {
       this.$router.push({
