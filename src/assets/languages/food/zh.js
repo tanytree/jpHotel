@@ -106,6 +106,8 @@ module.exports = {
         food_count:'菜品数量',
         action:'操作',
         food_total:'共 {count} 件菜品，合计:',
+        product_total:'合计',
+        amount:'金额',
         save:'提交',
         all:'全部',
         food_surplus:'预估剩余',

@@ -106,6 +106,8 @@ module.exports = {
         food_count:'数量',
         action:'設定',
         food_total:'数量 {count}，合計',
+        product_total:'合計',
+        amount:'金額',
         save:'送信確認',
         all:'全て',
         food_surplus:'注文可能数',

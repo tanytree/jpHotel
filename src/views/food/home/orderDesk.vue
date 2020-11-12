@@ -38,10 +38,10 @@
         </div>
         <div class="block flex " >
             <div class=" text-size14 text-left"  style="justify-content: flex-start">
-                {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20">{{cartToTal}}</span>
+                {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20"> {{cartToTal}}</span>
              </div>
             <div style="max-width: 100px;">
-               <el-button type="primary" :disabled="cartToTal == '0.00'" style="width: 100%;" @click="submit">{{$t('food.common.submit')}}</el-button>
+               <el-button type="primary" :disabled="cartToTal == '0.00'" style="width: 100%;" @click="openDialog">{{$t('food.common.submit')}}</el-button>
             </div>
          </div>
       </div>
@@ -116,6 +116,56 @@
         </div>
       </el-container>
     </div>
+
+    <!-- submit_status -->
+
+    <el-dialog
+        top="0"
+        :title="$t('food.common.submit')"
+        width="700px"
+        :visible.sync="submit_status"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        @close="closeDialog"
+        >
+       <el-table
+             :data="cart"
+             border
+             header-row-class-name="default"
+             size="small"
+           >
+             <el-table-column prop="name" :label="$t('food.common.food_title')" ></el-table-column>
+             <el-table-column :label="$t('food.common.food_price')">
+                 <template slot-scope="scope">
+                  ¥ {{scope.row.price}}
+                 </template>
+             </el-table-column>
+             <el-table-column :label="$t('food.common.food_count')" width="160">
+                 <template slot-scope="scope">
+                   {{scope.row.count}}
+                 </template>
+             </el-table-column>
+             <el-table-column :label="$t('desk.order_totalPrice')" width="160">
+                 <template slot-scope="scope">
+                   {{scope.row.count * scope.row.price}}
+                 </template>
+             </el-table-column>
+        </el-table>
+        <div class="margin-t-20 margin-b-20">{{$t('food.common.product_total')}}, {{$t('food.common.food_count')}} : {{countToTal}}  {{$t('food.common.amount')}} : {{cartToTal}}</div>
+        <el-form :model="desk" :rules="rules" ref="deskform"  :inline="true" >
+              <el-form-item :label="$t('food.common.deskNum')" prop="deskNum">
+                <el-input type="number" size="small" :placeholder="$t('food.common.deskNum')" v-model="desk.deskNum"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('food.common.numberPlat')" prop="numberPlat">
+                <el-input  type="number" size="small" :placeholder="$t('food.common.numberPlat')" v-model="desk.numberPlat"></el-input>
+              </el-form-item>
+        </el-form>
+        <div class="text-center"  style="padding-top: 20px;border-top: 1px solid #ddd;">
+           <el-button @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+           <el-button :disabled="!desk.deskNum || !desk.numberPlat" type="primary" @click="submit('deskform')">{{$t('food.common.ok')}}</el-button>
+        </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -131,6 +181,7 @@ export default {
     return {
         loading: true,
         list_loading:false,
+        submit_status:false,
         searchForm:{
            name:'',
            categoryId: '',
@@ -140,6 +191,18 @@ export default {
         listTotal: 0, //总条数
         cateList:[],
         tableData: [],
+        desk:{
+            deskNum:'',
+            numberPlat:''
+        },
+        rules:{
+            deskNum: [
+              { required: true, message: '请填写桌号',trigger: 'change' },
+            ],
+            deskNum: [
+              { numberPlat: true, message: '请填写号码牌',trigger: 'change' },
+            ]
+        }
     };
   },
 
@@ -251,7 +314,7 @@ export default {
             }
 
         }else if(this.tableData[index].remainingCount  ==  0 && this.tableData[index].soldOut == 1){
-            this.$alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', this.$t('commons.tip_desc'), {
+            this.$alert(this.$t('food.common.soldOut'), this.$t('commons.tip_desc'), {
               confirmButtonText: this.$t('commons.confirm'),
               callback: action => {
 
@@ -283,7 +346,7 @@ export default {
         }else{
             // console.log('添加')
             if(good.remainingCount == 0){
-                this.$alert('该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!', this.$t('commons.tip_desc'), {
+                this.$alert(this.$t('food.common.soldOut'), this.$t('commons.tip_desc'), {
                   confirmButtonText: this.$t('commons.confirm'),
                   callback: action => {
                   }
@@ -304,60 +367,60 @@ export default {
         }
     },
     //提交
-    submit(){
-        let params = {}
-        let list = this.cart
-        let dishesJson  = []
-        let sum = 0
-        for(let i in list){
-            dishesJson.push({
-                dishesId:list[i].id,
-                dishesName:list[i].name,
-                unitPrice:list[i].price,
-                totalPrice:parseFloat(parseFloat(list[i].price) * parseFloat(list[i].count)).toFixed(2),
-                dishesCount:list[i].count
+    submit(form){
+
+        this.$refs[form].validate((valid) => {
+          if (valid) {
+            let params = {}
+            let list = this.cart
+            let dishesJson  = []
+            let sum = 0
+            for(let i in list){
+                dishesJson.push({
+                    dishesId:list[i].id,
+                    dishesName:list[i].name,
+                    unitPrice:list[i].price,
+                    totalPrice:parseFloat(parseFloat(list[i].price) * parseFloat(list[i].count)).toFixed(2),
+                    dishesCount:list[i].count
+                });
+                sum += list[i].count
+            }
+            params.dishesCount = sum
+            params.consumePrice = parseFloat(this.cartToTal).toFixed(2)
+            params.dishesJson  = JSON.stringify(dishesJson);
+            params.deskNum = this.desk.deskNum
+            params.numberPlat = this.desk.numberPlat
+            params.orderSource = 1
+            params.userId = this.userId
+            params.storesNum = this.storesNum
+            this.$confirm(this.$t('food.common.confirm_submit'), this.$t('commons.tip_desc'), {
+                confirmButtonText: this.$t('commons.confirm'),
+                cancelButtonText: this.$t('commons.cancel'),
+                type: 'warning'
+            }).then(() => {
+                this.$F.doRequest(this, "/pms/dishes/dishes_place_order_edit", params, (res) => {
+                   // console.log(res)
+                   if(res.orderId){
+                     this.cart = []
+                     this.closeDialog();
+                     this.getDataList();
+                     this.alert(200, this.$t('commons.request_success'))
+                   }else{
+                     this.alert(200, this.$t('commons.request_fail'))
+                   }
+                });
             });
-            sum += list[i].count
-        }
-        params.dishesCount = sum
-        params.consumePrice = parseFloat(this.cartToTal).toFixed(2)
-        params.dishesJson  = JSON.stringify(dishesJson);
-        params.orderSource = 1
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-        console.log(params)
-
-
-        this.$confirm(this.$t('food.confirm_submit'), this.$t('commons.tip_desc'), {
-            confirmButtonText: this.$t('commons.confirm'),
-            cancelButtonText: this.$t('commons.cancel'),
-            type: 'warning'
-        }).then(() => {
-
-            this.$F.doRequest(this, "/pms/dishes/dishes_place_order_edit", params, (res) => {
-               console.log(res)
-               if(res.orderId){
-                 this.cart = []
-                 this.getDataList();
-                 this.alert(200, this.$t('commons.request_success'))
-               }else{
-                 this.alert(200, this.$t('commons.request_fail'))
-               }
-            });
-
-
-
-        }).catch(() => {
-
+          }else{
+            console.log('error submit!!');
+            return false;
+          }
         });
-
-
-
-
-
-
-
-
+    },
+    openDialog(){
+        this.submit_status = true
+    },
+    closeDialog(){
+        this.submit_status = false
     },
 
     /**每页数 */

@@ -1,21 +1,20 @@
 <template>
     <el-form :model="info" ref="form"  :rules="rules"  label-width="150px" >
-        <el-form-item label="上级分类" v-if="list.length > 0 && info.categoryId !== 0" >
-          <el-select v-model="info.pCategoryId" placeholder="请选择上级分类">
+        <el-form-item :label="$t('food.common.up_level')" v-if="list.length > 0 && info.categoryId !== 0" >
+          <el-select v-model="info.pCategoryId" :placeholder="$t('food.common.up_level')">
 
             <el-option key="0" label="--" value="0"></el-option>
             <el-option v-for="cate in list" :key="cate.id" :label="cate.name" :value="cate.id"></el-option>
           </el-select>
+        </el-form-item>      
+        <el-form-item :label="info.categoryLevel == 1 ?  $t('food.common.add_first_level') : (info.categoryLevel== 2 ? $t('food.common.add_second_level') : $t('food.common.add_three_level')) " prop="name" >
+            <el-input v-model="info.name"></el-input>
         </el-form-item>
-
-      <el-form-item :label="info.categoryLevel == 1 ?  '一级分类名称：' : (info.categoryLevel== 2 ? '二级分类名称：' : '三级分类名称：') " prop="name" >
-        <el-input v-model="info.name"></el-input>
-      </el-form-item>
-      <el-divider></el-divider>
-      <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
+        <el-divider></el-divider>
+        <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
            <el-button size="small" @click="closeDialog">{{ $t('commons.cancel') }}</el-button>
-           <el-button size="small" type="primary" :disabled="!info.name" @click="submitForm('form')">提交</el-button>
-      </div>
+           <el-button size="small" type="primary" :disabled="!info.name" @click="submitForm('form')">{{$t('food.common.submit')}}</el-button>
+        </div>
     </el-form>
 </template>
 
@@ -34,7 +33,7 @@
                rules: {
                  name: [{
                    required: true,
-                   message: '分类名称不能为空',
+                   message: this.$t('food.common.input_food_cate_name'),
                    trigger: 'change'
                  }]
                },

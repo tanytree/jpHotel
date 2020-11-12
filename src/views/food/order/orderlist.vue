@@ -3,7 +3,7 @@
 <div>
     <div>
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form inline size="small" label-width="100px">
             <el-row>
                 <el-form-item :label="$t('food.common.order_status')">
                    <el-radio-group v-model="searchForm.state" size="small" @change="changeOrderStatus">
@@ -36,6 +36,10 @@
             <el-form-item :label="$t('food.common.order_num')">
                 <el-input v-model="searchForm.dishesNum"  :placeholder="$t('food.common.order_num')" class="width200"></el-input>
             </el-form-item>
+
+            <el-form-item :label="$t('food.common.deskNum')">
+                <el-input v-model="searchForm.deskNum"  :placeholder="$t('food.common.deskNum')" class="width200"></el-input>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="getDataList">{{$t('food.common.search')}}</el-button>
                 <el-button type="primary" @click="initForm">{{$t('food.common.reset')}}</el-button>
@@ -55,6 +59,12 @@
                 <el-table-column
                   prop="dishesNum"
                   :label="$t('food.common.order_num')"
+                  >
+                </el-table-column>
+
+                <el-table-column
+                  prop="deskNum"
+                  :label="$t('food.common.deskNum')"
                   >
                 </el-table-column>
                 <el-table-column
@@ -205,6 +215,7 @@ export default {
             showEdit: false,
             showDetail: false,
             searchForm: {
+                deskNum:'',
                 state:'',// 状态  1未结 2已结 3取消      int选填
                 orderSource:'',//点餐来源 1前台点餐 2IPAD点餐 3H5点餐      int选填
                 dishesNum:'',// 订单号      String选填
