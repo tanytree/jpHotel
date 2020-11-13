@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 16:03:18
+ * @LastEditTime: 2020-11-13 14:05:55
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -164,15 +164,15 @@ module.exports = {
     personnel_editDepart: 'セクション編集',
     //遗漏添加
     add_addMembers:'アカウント追加',
-    add_addSub:'未翻译词条',
-    add_superior:'未翻译词条',
-    add_departmentIcon:'未翻译词条',
-    add_departmentType:'未翻译词条',
-    add_selectIcon:'未翻译词条',
-    add_icon:'未翻译词条',
-    add_color:'未翻译词条',
-    add_position:'未翻译词条',
-    add_editorEmpe:'未翻译词条',
+    add_addSub:'セクション追加',
+    add_superior:'管理セクション',
+    add_departmentIcon:'セクションアイコン',
+    add_departmentType:'セクション種別',
+    add_selectIcon:'アイコン選択',
+    add_icon:'アイコン',
+    add_color:'色',
+    add_position:'役職',
+    add_editorEmpe:'編集',
     add_peopleName:'名前',
     add_peopleAccount:'アカウント',
     add_loginPass:'パスワード',
@@ -181,17 +181,35 @@ module.exports = {
     add_selectAll:'すべてを選択',
     add_save:'保存',
     add_cancel:'取り消し',
-    add_inputName:'未翻译词条',
-    add_inputAccount:'未翻译词条',
-    add_inputPassword:'未翻译词条',
-    add_noCancel:'未翻译词条',
-    add_addPart:'未翻译词条',
-    add_partSet:'未翻译词条',
+    add_inputName:'名前を入力してください',
+    add_inputAccount:'アカウントを入力してください',
+    add_inputPassword:'パスワードを入力してください',
+    add_noCancel:'PMS設定メニューは削除できません',
+    add_addPart:'セクション追加',
+    add_partSet:'セクション設定',
     add_addStaff:'従業員追加',
     add_modify:'編集',
     add_workFor:'役職',
     add_belong:'部署',
     add_subPhone:'内線番号',
+    add_paymentManage:'薪酬管理',
+    add_paymentSet:'薪酬设置',
+    add_level:'該当ランク',
+    add_usefulTime:'有効期限',
+    add_permanent:'永久',
+    add_resetTime:'変更日',
+    add_resetPeople:'変更担当者',
+    add_creator:'開始担当者',
+    add_memtypeManage:'会員類別管理',
+    add_addMemType:'会員類別追加',
+    add_basicInfo:'基本情報',
+    add_memType:'会員類別',
+    add_levelA:'類別ランク',
+    add_yearPrice:'会員年会費',
+    add_inputMemtypeName:'会員種別名称を入力してください',
+    add_visible:'表示しますか',
+    add_chinese:'メニュー中国語',
+    add_japan:'メニュー日本語',
 
 
 

@@ -2,11 +2,11 @@
 	<div class="boss-index">
 		<el-tabs class="pageTab" v-model="activeName">
             <!--薪酬管理-->
-			<el-tab-pane label="薪酬管理" name="pay-manager">
+			<el-tab-pane :label="$t('boss.add_paymentManage')" name="pay-manager">
                 <Manager></Manager>
 			</el-tab-pane>
 			<!-- 薪酬设置 -->
-			<el-tab-pane label="薪酬设置" name="pay-set">
+			<el-tab-pane :label="$t('boss.add_paymentSet')" name="pay-set">
 				<Set></Set>
 			</el-tab-pane>
 		</el-tabs>

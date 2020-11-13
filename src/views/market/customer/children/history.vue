@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 18:03:52
+ * @LastEditTime: 2020-11-13 14:26:48
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -12,7 +12,7 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item   :to="{ path: '/customer' }">{{
+          <el-breadcrumb-item  @click.native="goBack">{{
             $t("desk.customer_guestHistoryRecord")
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{
@@ -211,7 +211,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions,mapMutations } from "vuex";
 import myMixin from "@/utils/filterMixin";
 export default {
   mixins: [myMixin],
@@ -263,6 +263,9 @@ export default {
     
   },
   methods: {
+    ...mapMutations({
+       resetActive: "resetActive",
+    }),
     initForm() {
       this.searchForm = {
         mobile: "",
@@ -276,6 +279,14 @@ export default {
       console.log(this.$route.query);
       this.searchForm.idcard = this.$route.query.idcard || "";
       this.getDataList();
+    },
+    //点击 客史档案
+    goBack(){
+       if(this.$route.query.form=='member'){
+      this.resetActive("member");
+       this.$router.replace('/customer')
+
+       }
     },
     //获取门店列表
     getStoreList(){

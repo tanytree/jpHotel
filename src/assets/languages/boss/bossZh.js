@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 15:42:16
+ * @LastEditTime: 2020-11-13 13:29:10
  * @FilePath: \jiudian\src\assets\languages\boss\bossZh.js
  */
 
@@ -193,6 +193,36 @@ module.exports = {
     add_workFor:'职位',
     add_belong:'所在部门',
     add_subPhone:'分机号',
+    add_paymentManage:'薪酬管理',
+    add_paymentSet:'薪酬设置',
+    add_level:'对应等级',
+    add_usefulTime:'有效期',
+    add_permanent:'永久有效',
+    add_resetTime:'修改时间',
+    add_resetPeople:'修改人',
+    add_creator:'创建人',
+    add_memtypeManage:'会员类型管理',
+    add_addMemType:'新增会员类型',
+    add_basicInfo:'基本信息',
+    add_memType:'会员类型',
+    add_levelA:'等级',
+    add_yearPrice:'年费',
+    add_inputMemtypeName:'请输入会员类型名称',
+    add_visible:'是否显示',
+    add_chinese:'菜单中文',
+    add_japan:'菜单日文',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
+    add_:'',
     add_:'',
     add_:'',
     add_:'',

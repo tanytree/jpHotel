@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-01-04 15:46:19
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-09-16 13:19:18
+ * @LastEditTime: 2020-11-13 13:56:00
  * @FilePath: \jiudian\src\views\menuAssert\menuAssert.vue
  -->
 <template>
@@ -27,13 +27,13 @@
         <el-form-item label="path：">
           <el-input v-model="selected.path"></el-input>
         </el-form-item>
-        <el-form-item label="是否显示：">
+        <el-form-item :label="$t('boss.add_visible')+':'">
           <el-input v-model="selected.status"></el-input>
         </el-form-item>
-        <el-form-item label="菜单中文：">
+        <el-form-item :label="$t('boss.add_chinese')+':'">
           <el-input v-model="selected.menuTitle"></el-input>
         </el-form-item>
-        <el-form-item label="菜单英文：">
+        <el-form-item :label="$t('boss.add_japan')+':'">
           <el-input v-model="selected.japanese"></el-input>
         </el-form-item>
       </el-form>

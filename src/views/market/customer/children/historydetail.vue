@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 17:19:34
+ * @LastEditTime: 2020-11-13 14:31:33
  * @FilePath: \jiudian\src\views\market\customer\children\historydetail.vue
  -->
 <template>
@@ -205,7 +205,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions,mapMutations } from "vuex";
 // import {
 //     get_user_enterprise
 // } from "@/utils/api/company";
@@ -270,6 +270,9 @@ export default {
     },
 
     methods: {
+      ...mapMutations({
+        resetActive: "resetActive",
+      }),
         //点击保存按钮
         saveEditor() {
             console.log(this.editorForm);
@@ -306,6 +309,7 @@ export default {
             });
         },
         goBack() {
+            this.resetActive("history");
             this.$router.history.go(-1);
         },
     },

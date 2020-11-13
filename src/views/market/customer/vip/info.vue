@@ -421,6 +421,7 @@ export default {
                         name: "customerhistory",
                         query: {
                             idcard: item.idcard,
+                            form:'member'
                         },
                     });
                 } else if (this.type == "header") {

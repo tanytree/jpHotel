@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-16 14:59:17
- * @FilePath: /jiudian/src/views/Boss/StoreManagement/list.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-13 13:27:26
+ * @FilePath: \jiudian\src\views\Boss\StoreManagement\list.vue
  -->
 
 <template>
@@ -305,7 +305,7 @@ export default {
             );
         },
         deleteItem(row) {
-            this.$confirm("请确认删除此用户?", this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('boss.staff_sureDelete'), this.$t('commons.tip_desc'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: "warning",
