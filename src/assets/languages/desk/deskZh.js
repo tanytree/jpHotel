@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-11 17:05:40
+ * @LastEditTime: 2020-11-13 17:42:25
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -64,6 +64,7 @@ module.exports = {
     home_goodsName: '物品名称',
     home_addRegister: '新增寄存',
     home_phoneNum: '手机号',
+    home_phoneNumA: '联络电话',
     home_depositingTime: '寄放时间',
     home_drawTime: '领取时间',
     home_state: '状态',
@@ -104,6 +105,7 @@ module.exports = {
     home_pushAnd: '催押',
     home_nowCall: '当前催交',
     home_name: '姓名',
+    home_nameA: '姓名【拼音】',
     home_all: '全部',
     home_customersCategory: '客源类别',
     home_bookPeople: '预订人',
@@ -434,7 +436,7 @@ module.exports = {
     customer_remainPoints: '剩余积分',
     customer_online: '线上',
     customer_offline: '线下',
-    customer_openCardDate: '开卡日期',
+    customer_openCardDate: '开始日期',
     customer_ifBalckName: '是否黑名单',
     customer_yes: '是',
     customer_no: '否',
@@ -465,9 +467,9 @@ module.exports = {
     customer_theDetail: '明细',
     customer_pointsFor: '积分兑换',
     customer_memeberCardNum: '会员卡号',
-    customer_guestNum: '用户编号',
+    customer_guestNum: '客户编号',
     customer_documentType: '证件类型',
-    customer_documentNum: '证件号码',
+    customer_documentNum: '证件号',
     customer_sex: '性别',
     customer_brithday: '生日',
     customer_email: '邮箱',
@@ -579,6 +581,7 @@ module.exports = {
     customer_unitName: '单位名称',
     customer_ifShare: '是否共享',
     customer_contact: '联系人',
+    customer_contactA: '联络人',
     customer_paymentAmount: '挂账额度',
     customer_usedLimit: '已用额度',
     customer_advancePayment: '预收款余额',
@@ -705,6 +708,27 @@ module.exports = {
     customer_sureDelete: '确认删除该单位',
     customer_payCardSucc: '补收卡费成功',
     customer_payShould: '支付费用必须大于0',
+    customer_namePY: '姓名发音',
+    customer_resetguestInfo: '修改客户资料',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
     customer_: '',
     customer_: '',
    //夜审（night）

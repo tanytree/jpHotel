@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-19 17:50:45
+ * @LastEditTime: 2020-11-13 17:55:12
  * @FilePath: \jiudian\src\views\market\customer\companylist.vue
  -->
 
@@ -9,7 +9,7 @@
   <div class="boss-index">
     <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">
       <el-tab-pane :label="$t('desk.customer_unitManage')" name="first">
-        <company></company>
+        <company footer='footer'></company>
       </el-tab-pane>
       <el-tab-pane :label="$t('desk.customer_receivingQuery')" name="second">
         <collection></collection>

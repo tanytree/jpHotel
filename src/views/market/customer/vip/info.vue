@@ -133,8 +133,12 @@
                 ></el-table-column>
                 <el-table-column
                     prop="name"
-                    :label="$t('desk.home_name')"
-                ></el-table-column>
+                    :label="$t('desk.home_nameA')"
+                >
+                <template slot-scope="{row}">
+                  {{row.name}}【{{row.pronunciation}}】
+                </template>
+                </el-table-column>
                 <el-table-column :label="$t('desk.customer_memType')">
                     <template slot-scope="{ row }">{{
                         F_memberTypeId(row.memberTypeId)

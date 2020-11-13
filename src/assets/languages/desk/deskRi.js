@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-12 09:44:55
+ * @LastEditTime: 2020-11-13 15:23:41
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -103,6 +103,7 @@ module.exports = {
     home_pushAnd: '催促',
     home_nowCall: '追加催促',
     home_name: '名前',
+    home_nameA: '未翻译词条',
     home_all: 'ぜんぶ',
     //serve(前台服务)
     serve_flightTime: 'シフト時間（フロント会計）',
@@ -237,7 +238,7 @@ module.exports = {
     customer_remainPoints: '残りポイント数',
     customer_online: 'オンライン',
     customer_offline: 'オフライン',
-    customer_openCardDate: '新規カード開始日',
+    customer_openCardDate: '未翻译词条',
     customer_ifBalckName: 'UGリスト',
     customer_yes: 'はい',
     customer_no: 'いいえ',
@@ -690,10 +691,14 @@ module.exports = {
     night_auditDay:'日時更新日',
     night_auditResults:'日時更新結果',
     customer_sureEnable:'該当法人を起用確認します',
-    customer_guestNum: '顧客番号',
+    customer_guestNum: '未翻译词条',
     order_clickPai: "アサインをクリックしてください",
     order_inputName: "名前を入力してください",
     order_inputCardNum: "身分証明書番号を入力してください",
+    customer_namePY: '未翻译词条',
+    customer_resetguestInfo: '未翻译词条',
+    customer_contactA: '未翻译词条',
+    home_phoneNumA: '未翻译词条',
    
     
 

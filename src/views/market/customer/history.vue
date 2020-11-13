@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 16:49:40
+ * @LastEditTime: 2020-11-13 16:11:58
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -11,22 +11,6 @@
         <div class="booking">
             <!-- 查询部分 -->
             <el-form class="term" inline size="small" label-width="80px">
-                <el-form-item :label="$t('desk.customer_guestType') + ':'">
-                    <el-select v-model="searchForm.guestType" class="width150">
-                        <el-option
-                            :label="$t('desk.home_all')"
-                            value
-                        ></el-option>
-                        <el-option
-                            v-for="(value, key, index) of $t(
-                                'commons.guestType'
-                            )"
-                            :key="index"
-                            :label="value"
-                            :value="key"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item :label="$t('desk.customer_guestNum') + ':'">
                     <el-input
                         v-model="searchForm.guestNum"
@@ -48,24 +32,6 @@
                         v-model="searchForm.mobile"
                         class="width150"
                     ></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('desk.customer_documentType') + ':'">
-                    <el-select
-                        v-model="searchForm.idcardType"
-                        :placeholder="$t('commons.placeChoose')"
-                        class="width300"
-                    >
-                        <el-option
-                            :label="$t('desk.home_all')"
-                            value
-                        ></el-option>
-                        <el-option
-                            v-for="(label, value) in $t('commons.idCardType')"
-                            :label="label"
-                            :value="value"
-                            :key="value"
-                        ></el-option>
-                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-button
@@ -91,9 +57,13 @@
                 <el-table-column
                     prop="name"
                     align="center"
-                    :label="$t('desk.home_name')"
-                    width="100"
-                ></el-table-column>
+                    :label="$t('desk.home_nameA')"
+                    width="200"
+                >
+                <template slot-scope="{row}">
+                  {{row.name}}【{{row.pronunciation}}】
+                </template>
+                </el-table-column>
                 <el-table-column
                     prop="sex"
                     align="center"
@@ -130,15 +100,6 @@
                     :label="$t('desk.customer_brithday')"
                     width="120"
                 ></el-table-column>
-                <el-table-column
-                    align="center"
-                    :label="$t('desk.customer_guestType')"
-                    width="100"
-                >
-                    <template slot-scope="{ row }">{{
-                        F_guestType(row.guestType)
-                    }}</template>
-                </el-table-column>
                 <el-table-column
                     prop="guestNum"
                     align="center"
@@ -667,10 +628,8 @@ export default {
             setMemberFormVisible: false,
             searchForm: {
                 guestNum:'',
-               name: "",
-               guestType:'',
+                name: "",
                 mobile: "",
-                idcardType:'',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true,
@@ -800,9 +759,7 @@ export default {
             this.searchForm = {
                 guestNum:'',
                  name: "",
-               guestType:'',
                 mobile: "",
-                idcardType:'',
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true,
@@ -947,7 +904,7 @@ export default {
         },
         handleEdit(item) {
             this.$router.push({
-                name: "historydetail",
+                name: "hsitorydetailTao",
                 query: {
                     item: item,
                 },
