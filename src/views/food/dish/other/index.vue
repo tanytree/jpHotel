@@ -61,8 +61,8 @@
                 </el-table-column>
 
                 <el-table-column
-                  :label="$t('food.common.is_solt')">
-                  <template slot-scope="scope">{{ scope.row.soldOut == 1 ? $t('food.common.no') : $t('food.common.yes')}}</template>
+                  :label="$t('food.common.status')">
+                  <template slot-scope="scope">{{ scope.row.soldOut == 1 ? $t('food.common.solt_text') : ''}}</template>
                 </el-table-column>
 
                 <el-table-column
