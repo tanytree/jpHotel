@@ -15,7 +15,7 @@
               :placeholder="$t('food.common.select_date')">
             </el-time-select>
              <span class="margin-l-15">
-                 <el-checkbox v-model="info.check">{{$t('food.common.hanlde_auto_empty_warning')}}</el-checkbox>
+                <el-checkbox v-model="checked">{{$t('food.common.hanlde_auto_empty_warning')}}</el-checkbox>
              </span>
         </div>
         <el-divider></el-divider>
@@ -37,8 +37,8 @@
                 info:{
                     flag:true,
                     content:'',
-                    check:false
-                }
+                },
+                checked:false
             };
         },
         computed: {
@@ -53,9 +53,13 @@
         },
         methods: {
             submitForm() {
-                // console.log(this.info)
                 if( this.info.content ){
                     let params =this.info
+                    if(this.checked){
+                        params.clearWaring = 1
+                    }else{
+                        params.clearWaring = 2
+                    }
                     params.userId = this.userId
                     params.storesNum = this.storesNum
                     this.$F.doRequest(this, "/pms/dishes/dishes_manage_set_auto", params, (res) => {
@@ -64,15 +68,14 @@
                         this.closeDialog();
                     });
                 }
-
             },
             closeDialog(){
                 this.$emit('closeDialog');
                 this.info = {
                     flag:true,
                     content:'',
-                    check:false
                 }
+                checked:false
             }
         }
     }

@@ -34,8 +34,12 @@
         },
         methods: {
             submitForm() {
-                // if(this.checked){
                     let params = {}
+                    if(this.checked){
+                        params.clearWaring = 1
+                    }else{
+                        params.clearWaring = 2
+                    }
                     params.userId = this.userId
                     params.storesNum = this.storesNum
                     this.$F.doRequest(this, "/pms/dishes/dishes_manage_clear_waring", params, (res) => {
@@ -43,7 +47,6 @@
                         this.alert(200,this.$t('food.common.success'));
                         this.closeDialog();
                     });
-                // }
             },
             closeDialog(){
                 this.$emit('closeDialog');
