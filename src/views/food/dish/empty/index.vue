@@ -20,13 +20,18 @@
                   header-row-class-name="default"
                   size="small"
                 >
-                  <el-table-column prop="name" :label="$t('food.common.food_title')"></el-table-column>
-                  <el-table-column :label="$t('food.common.food_price')">
+                  <el-table-column prop="name" :label="$t('food.common.food_title')" width="120"></el-table-column>
+                  <el-table-column :label="$t('food.common.food_surplus')">
                       <template slot-scope="scope">
-                        ¥{{scope.row.price}}
+                        {{scope.row.remainingCount}}
                       </template>
                   </el-table-column>
-                  <el-table-column prop="remainingCount" :label="$t('food.common.food_count')"></el-table-column>
+                  <el-table-column :label="$t('food.common.solt_text')">
+                    <template slot-scope="scope">
+                        {{scope.row.soldOut == 2 ? $t('food.common.yes') : $t('food.common.no') }}
+                    </template>
+
+                  </el-table-column>
                   <el-table-column :label="$t('food.common.action')" width="80">
                     <template slot-scope="scope">
                       <el-button size="mini" @click="clear(scope.row,1)">{{$t('food.common.remove')}}</el-button>

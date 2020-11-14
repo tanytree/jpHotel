@@ -7,7 +7,7 @@
             <div class="items text-size20"><b>{{info.name}}</b></div>
             <div class="items text-red text-size18"> ￥{{info.price}}</div>
             <div class="items flex text-gray">
-               <div class="label" style="width:100px;">【{{$t('food.common.cate')}}】</div>
+               <div class="label">【{{$t('food.common.cate')}}】</div>
                <div>{{info.categoryName}}</div>
             </div>
             <div class="items flex text-gray">
@@ -75,7 +75,7 @@
                 padding-right: 10px;
             }
             .label{
-                flex-grow:1;
+                flex-grow:1.5;
             }
         }
     }

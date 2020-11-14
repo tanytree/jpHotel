@@ -121,7 +121,7 @@ module.exports = {
         set:'设置',
         select_food:'请先选择菜品',
         //沽清管理
-        is_served:'已沽清菜品',
+        is_served:'已沽清菜品数',
         cancel_all:'全部取消',
         solt_text:'沽清',
         tip:'提示',
@@ -140,7 +140,7 @@ module.exports = {
         search:'查询',
         reset:'重置',
         hanlde_empty:'手动清空',
-        hanlde_empty_remain:'手动清空将清空所有菜品剩余份数，所有菜品可以重新设置剩余份数',
+        hanlde_empty_remain:'手动清空将清空所有菜品剩馀份数, 所以菜品可以重新设置剩馀份数',
         hanlde_empty_warning:'清除所有菜品预警数',
         hanlde_auto_empty_warning:'自动清除所有菜品预警数',
         set_auto_emptying_time:'设置自动清空时间',
