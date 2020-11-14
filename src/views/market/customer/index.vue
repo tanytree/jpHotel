@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {mapMutations} from 'Vuex';
+import {mapMutations} from 'vuex';
 import member from "./member";
 import history from "./history";
 import guest from "./guest";
