@@ -116,6 +116,7 @@ module.exports = {
         confirm_remove_tips:'确定移除吗?',
         is_solt:'已沽清',
         cate:'菜品分类',
+        has:'剩馀',
         cate_name:'菜品分类名称',
         no_set:'未设置',
         set:'设置',

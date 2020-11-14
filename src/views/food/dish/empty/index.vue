@@ -21,7 +21,7 @@
                   size="small"
                 >
                   <el-table-column prop="name" :label="$t('food.common.food_title')" width="120"></el-table-column>
-                  <el-table-column :label="$t('food.common.food_surplus')">
+                  <el-table-column :label="$t('food.common.has')">
                       <template slot-scope="scope">
                         {{scope.row.remainingCount}}
                       </template>

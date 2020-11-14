@@ -117,6 +117,7 @@ module.exports = {
         is_solt:'品切れ',
         cate:'カテゴリー設定',
         cate_name:'カテゴリ',
+        has:'在庫',
         no_set:'未設定',
         set:'設定',
         select_food:'先にクリアする料理名をクリックして選択ください。',
