@@ -11,7 +11,7 @@
                          :name="item.path"
                          :key="item.path"
                          v-if="$F.filterThirdMenu('sale1', item.path, true)">
-                <!-- 单位价格-->
+                <!-- 单位查询-->
                 <Unitquery v-if="item.path == 'Unitquery'" isHeader="1"/>
 <!--                &lt;!&ndash; 单位查询&ndash;&gt;-->
 <!--                <UnitPrice v-if="item.path == 'UnitPrice'"/>-->

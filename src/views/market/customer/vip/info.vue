@@ -6,20 +6,9 @@
             <!-- 查询部分 -->
             <el-form class="term" inline size="small" label-width="80px">
                 <el-form-item :label="$t('desk.customer_memType')">
-                    <el-select
-                        v-model="searchForm.memberTypeId"
-                        class="width150"
-                    >
-                        <el-option
-                            :label="$t('desk.home_all')"
-                            value
-                        ></el-option>
-                        <el-option
-                            v-for="item in smembertypeList"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                        ></el-option>
+                    <el-select v-model="searchForm.memberTypeId" class="width150">
+                        <el-option :label="$t('desk.home_all')" value></el-option>
+                        <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_moblePhone')">
@@ -45,29 +34,15 @@
                 <!--                    </el-select>-->
                 <!--                </el-form-item>-->
                 <el-form-item :label="$t('desk.customer_cardNum')">
-                    <el-input
-                        v-model="searchForm.memberCard"
-                        class="width150"
-                    ></el-input>
+                    <el-input v-model="searchForm.memberCard" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_name')">
-                    <el-input
-                        v-model="searchForm.name"
-                        class="width150"
-                    ></el-input>
+                    <el-input v-model="searchForm.name" class="width150"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_state')">
                     <el-select v-model="searchForm.state" class="width150">
-                        <el-option
-                            :label="$t('desk.home_all')"
-                            value
-                        ></el-option>
-                        <el-option
-                            v-for="(label, value) in $t('frontOffice.state')"
-                            :label="label"
-                            :value="value"
-                            :key="value"
-                        ></el-option>
+                        <el-option :label="$t('desk.home_all')" value></el-option>
+                        <el-option v-for="(label, value) in $t('frontOffice.state')" :label="label" :value="value" :key="value"></el-option>
                     </el-select>
                 </el-form-item>
                 <!--                <el-form-item :label="$t('desk.customer_isBlack')">-->
@@ -90,64 +65,31 @@
                 <!--                    </el-select>-->
                 <!--                </el-form-item>-->
                 <el-form-item>
-                    <el-button
-                        type="primary"
-                        class="submit"
-                        @click="getDataList"
-                        >{{ $t("commons.queryBtn") }}</el-button
-                    >
-                    <el-button
-                        type="primary"
-                        class="submit"
-                        @click="initForm"
-                        >{{ $t("commons.resetBtn") }}</el-button
-                    >
+                    <el-button type="primary" class="submit" @click="getDataList">{{ $t("commons.queryBtn") }}</el-button>
+                    <el-button type="primary" class="submit" @click="initForm">{{ $t("commons.resetBtn") }}</el-button>
                 </el-form-item>
                 <el-row>
                     <el-form-item>
                         <!--                        <el-button plain>{{ $t("desk.customer_readMemCard") }}</el-button>-->
-                        <el-button
-                            v-if="type == 'header'"
-                            type="primary"
-                            class="submit"
-                            @click="handleAdd"
-                            >{{ $t("desk.customer_addMem") }}</el-button
-                        >
+                        <el-button v-if="type == 'header'" type="primary" class="submit" @click="handleAdd">{{ $t("desk.customer_addMem") }}</el-button>
                     </el-form-item>
                 </el-row>
             </el-form>
 
             <!--表格数据 -->
-            <el-table
-                ref="multipleTable"
-                v-loading="loading"
-                :data="tableData"
-                height="100%"
-                header-row-class-name="default"
-                size="small"
-            >
-                <el-table-column
-                    prop="memberCard"
-                    :label="$t('desk.customer_cardNum')"
-                    show-overflow-tooltip
-                ></el-table-column>
-                <el-table-column
-                    prop="name"
-                    :label="$t('desk.home_nameA')"
-                >
-                <template slot-scope="{row}">
-                  {{row.name}}【{{row.pronunciation}}】
-                </template>
+            <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+                <el-table-column prop="memberCard" :label="$t('desk.customer_cardNum')" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="name" :label="$t('desk.home_nameA')">
+                    <template slot-scope="{row}">
+                      {{row.name}}【{{row.pronunciation}}】
+                    </template>
                 </el-table-column>
                 <el-table-column :label="$t('desk.customer_memType')">
                     <template slot-scope="{ row }">{{
                         F_memberTypeId(row.memberTypeId)
                     }}</template>
                 </el-table-column>
-                <el-table-column
-                    prop="mobile"
-                    :label="$t('desk.order_moblePhone')"
-                ></el-table-column>
+                <el-table-column prop="mobile" :label="$t('desk.order_moblePhone')"></el-table-column>
                 <!--                <el-table-column prop="score" :label="$t('desk.customer_remainPoints')" width="100"></el-table-column>-->
                 <el-table-column prop="state" :label="$t('desk.home_state')">
                     <template slot-scope="{ row }">{{
@@ -164,10 +106,7 @@
                 <!--                        {{ row.getWay == 1 ? $t("desk.customer_online") : $t("desk.customer_offline") }}-->
                 <!--                    </template>-->
                 <!--                </el-table-column>-->
-                <el-table-column
-                    prop="createTime"
-                    :label="$t('desk.customer_openCardDate')"
-                ></el-table-column>
+                <el-table-column prop="createTime" :label="$t('desk.customer_openCardDate')"></el-table-column>
                 <!--                <el-table-column prop="isBlacklist" align="center" :label="$t('desk.customer_ifBalckName')" width="100">-->
                 <!--                    <template slot-scope="{ row }">-->
                 <!--                        {{ row.isBlacklist == 2 ? $t("desk.customer_yes") : $t("desk.customer_no") }}-->
@@ -186,27 +125,11 @@
                             @click="handleDetail(row)"
                             >{{ $t("commons.detail") }}</el-button
                         >
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click="handleEdit(row)"
-                            v-if="row.state != 2"
-                            >{{ $t("commons.modify") }}</el-button
-                        >
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click="handleRecovery(row)"
-                            v-if="row.state == 2"
-                            >{{ $t("desk.customer_restore") }}</el-button
-                        >
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click="handleHistory(row)"
-                        >
-                            {{ $t("desk.customer_guestHistory") }}</el-button
-                        >
+                        <el-button type="text" size="mini" @click="handleEdit(row)" v-if="row.state != 2">{{ $t("commons.modify") }}</el-button>
+                        <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state == 2">
+                            {{ $t("desk.customer_restore") }}
+                        </el-button>
+                        <el-button type="text" size="mini" @click="handleHistory(row)">{{ $t("desk.customer_guestHistory") }}</el-button>
                         <!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
                         <!--                            <span class="el-dropdown-link">-->
                         <!--                                {{ $t("desk.customer_more") }}-->
@@ -521,7 +444,7 @@ export default {
 
             this.$router.push({
                 name: "memberEditorTao",
-                query: { 
+                query: {
                     isHeader: "1",
                     role:'add',   //作用：新增会员
 

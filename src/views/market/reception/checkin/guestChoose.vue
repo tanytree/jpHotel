@@ -58,6 +58,10 @@ export default {
                 this.$emit("guestChooseCallback", this.checkInForm);
             } else if (this.checkInForm.guestType == 3 && this.checkInForm.enterId) {
                 this.$emit("guestChooseCallback", this.checkInForm);
+            } else if (this.checkInForm.guestType == 1) {
+                this.checkInForm.memberCard = '';
+                this.checkInForm.enterId = '';
+                this.$emit("guestChooseCallback", this.checkInForm);
             }
             this.guestTypeShow = false;
         },
@@ -73,11 +77,15 @@ export default {
                 pageIndex: 1,
                 pageSize: 999,
                 paging: false,
+                state: 1,
+                status: 1,
+                isBlacklist: 1,
             };
+            //会员
             if (this.checkInForm.guestType == 2) {
                 this.$F.merge(params, {
                     name: query,
-                    searchType: 1,
+                    searchType: 1
                 });
                 this.$F.doRequest(
                     this,
@@ -92,7 +100,7 @@ export default {
                         this.$forceUpdate();
                     }
                 );
-            } else {
+            } else {  //单位
                 this.$F.merge(params, {
                     enterName: query,
                     state: 1,

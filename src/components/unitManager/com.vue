@@ -15,12 +15,7 @@
         </el-form-item>
         <el-form-item :label="$t('desk.home_state')">
           <el-select v-model="searchForm.state" class="width150">
-            <el-option
-              :value="key"
-              v-for="(item, key, index) of $t('commons.comState')"
-              :label="item"
-              :key="index"
-            ></el-option>
+            <el-option :value="key" v-for="(item, key, index) of $t('commons.comState')" :label="item" :key="index"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_contactA')">
@@ -102,30 +97,14 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column
-          prop="enterName"
-          :label="$t('desk.customer_unitName')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_belongStore')"
-          v-if="1 == 2"
-          show-overflow-tooltip
-        >
+        <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.customer_belongStore')" v-if="1 == 2" show-overflow-tooltip>
           <template slot-scope="scope" v-if="scope.row.storesNum">{{
             F_storeName(scope.row.storesNum)
           }}</template>
         </el-table-column>
-        <el-table-column
-          prop="contactName"
-          :label="$t('desk.home_name')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="contactPhone"
-          :label="$t('desk.home_phoneNum')"
-          show-overflow-tooltip
-        ></el-table-column>
+        <el-table-column prop="contactName" :label="$t('desk.home_name')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="contactPhone" :label="$t('desk.home_phoneNum')" show-overflow-tooltip></el-table-column>
         <!-- <el-table-column
                     prop="enterStrategyId"
                     :label="$t('desk.customer_pricingStrategy')"
@@ -136,55 +115,22 @@
                         }}
                     </template>
                 </el-table-column> -->
-        <el-table-column
-          prop="contractNum"
-          :label="$t('desk.customer_contractNo')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="creditLimit"
-          :label="$t('desk.customer_paymentAmount')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="usedLimit"
-          :label="$t('desk.customer_usedLimit')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="totalConsume"
-          :label="$t('desk.customer_totalConsum')"
-          show-overflow-tooltip
-        >
+<!--        <el-table-column prop="contractNum" :label="$t('desk.customer_contractNo')" show-overflow-tooltip></el-table-column>-->
+        <el-table-column prop="creditLimit" :label="$t('desk.customer_paymentAmount')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="usedLimit" :label="$t('desk.customer_usedLimit')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="totalConsume" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            <div>{{ row.totalConsume ? row.totalConsume : 0 }}</div>
+            <div>{{ row.totalConsume || 0 }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="totalLimit"
-          :label="$t('desk.customer_advancePayment')"
-          width="120px"
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.home_state')"
-          width="80px"
-          align="center"
-        >
-          <template slot-scope="{ row }"
-            ><div>
-              {{
-                row.state == 1
-                  ? $t("desk.customer_enable")
-                  : $t("desk.customer_disable")
-              }}
+        <el-table-column prop="totalLimit" :label="$t('desk.customer_advancePayment')" width="120px"></el-table-column>
+        <el-table-column :label="$t('desk.home_state')" width="80px" align="center">
+          <template slot-scope="{ row }"><div>
+              {{ row.state == 1 ? $t("desk.customer_enable") : $t("desk.customer_disable") }}
             </div></template
           >
         </el-table-column>
-        <el-table-column
-          prop="salesName"
-          :label="$t('desk.order_salesman')"
-          show-overflow-tooltip
-          align="center"
+        <el-table-column prop="salesName" :label="$t('desk.order_salesman')" show-overflow-tooltip align="center"
         >
           <template slot-scope="{ row }">{{
             setSalesIdName(row.salesId)
@@ -195,13 +141,7 @@
             <el-button type="text" size="mini" @click="handleDetail(row)">{{
               $t("commons.detail")
             }}</el-button>
-            <el-button
-              type="text"
-              size="mini"
-              @click="addAndEditItem('edit', row)"
-              v-if="isHeader == 1"
-              >{{ $t("commons.modify") }}</el-button
-            >
+            <el-button type="text" size="mini" @click="addAndEditItem('edit', row)" v-if="isHeader == 1">{{ $t("commons.modify") }}</el-button>
             <el-dropdown szie="mini" v-if="isHeader == 1">
               <span class="el-dropdown-link" style="font-size: 12px">
                 {{ $t("desk.customer_more") }}

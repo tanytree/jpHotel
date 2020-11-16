@@ -105,6 +105,7 @@
                 <el-form-item :label="$t('desk.order_sourceType')" prop="guestType">
                     <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
                         <template slot="append" >
+<!--                            客源类型-->
                             <span @click="popup('guestTypeShow')" style="padding: 10px">…</span>
                         </template>
                     </el-input>
@@ -315,28 +316,15 @@
         <!-- 编辑or详情弹窗 -->
         <div class="fixedFoot">
             <div class="wrap">
-                <el-button
-                    type="primary"
-                    class="submit"
-                    @click="hotel_check_in(2)"
-                    >{{ $t("commons.save") }}</el-button
-                >
+                <el-button type="primary" class="submit" @click="hotel_check_in(2)">{{ $t("commons.save") }}</el-button>
                 <!-- <el-button class="white" @click="hotel_check_in(3)"
                     >{{ $t("frontOffice.saveGoon") }}{{ typeText }}</el-button
                 > -->
-                <el-button class="white" @click="hotel_check_in(3)">{{
-                    $t("frontOffice.saveGoon")
-                }}</el-button>
+                <el-button class="white" @click="hotel_check_in(3)">{{ $t("frontOffice.saveGoon") }}</el-button>
             </div>
         </div>
 
-        <el-dialog
-            top="0"
-            :visible.sync="rowRoomShow"
-            class="rowRoomDia"
-            :title="$t('desk.rowHouse')"
-            width="800px"
-        >
+        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="800px">
             <el-form :model="hotelRoomListParams" style="margin-top: -20px" v-loading="loading">
                 <el-form-item :label="$t('manager.hk_toward') + ':'" class="" style="margin-bottom: 0">
                     <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
@@ -362,33 +350,13 @@
                 </div>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="rowRoomShow = false">{{
-                    $t("commons.cancel")
-                }}</el-button>
-                <el-button size="small" type="primary" @click="db_row_houses">{{
-                    $t("commons.confirm")
-                }}</el-button>
+                <el-button size="small" @click="rowRoomShow = false">{{ $t("commons.cancel") }}</el-button>
+                <el-button size="small" type="primary" @click="db_row_houses">{{ $t("commons.confirm") }}</el-button>
             </span>
         </el-dialog>
-        <el-dialog
-            top="0"
-            :visible.sync="liveInPersonShow"
-            class="liveInPersonDia"
-            :title="$t('desk.order_rowHouses')"
-            width="80%"
-        >
-            <el-table
-                v-loading="loading"
-                :data="liveInPersonData"
-                style="width: 100%; margin-bottom: 20px"
-                row-key="id"
-                border
-                :default-expand-all="true"
-                :tree-props="{
-                    children: 'children',
-                    hasChildren: 'hasChildren',
-                }"
-            >
+        <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
+            <el-table v-loading="loading" :data="liveInPersonData" style="width: 100%; margin-bottom: 20px" row-key="id" border :default-expand-all="true"
+                      :tree-props="{ children: 'children', hasChildren: 'hasChildren', }">
                 <el-table-column :label="$t('desk.customer_roomKind')" width="100">
                     <template slot-scope="scope">
                         {{ scope.row.isChild ? "" : scope.row.houseNum }}
@@ -428,52 +396,26 @@
                 <el-table-column :label="$t('desk.customer_sex')" width="120">
                     <template slot-scope="{ row }">
                         <el-row>
-                            <el-select
-                                v-model="row.sex"
-                                style="width: 100%"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    v-for="(item, key, index) of $t(
-                                        'commons.F_sex'
-                                    )"
-                                    :label="item"
-                                    :value="key"
-                                    :key="index"
-                                ></el-option>
+                            <el-select v-model="row.sex" style="width: 100%" :placeholder="$t('commons.placeChoose')">
+                                <el-option v-for="(item, key, index) of $t( 'commons.F_sex' )" :label="item" :value="key" :key="index"></el-option>
                             </el-select>
                         </el-row>
                     </template> </el-table-column
-                >checkInRoomJson
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('desk.order_moblePhone')"
-                    width="150"
                 >
+                <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')" width="150">
                     <template slot-scope="{ row }">
                         <el-row>
-                            <el-input
-                                v-model="row.mobile"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
+                            <el-input v-model="row.mobile" :placeholder="$t('commons.pleaseEnter')"></el-input>
                         </el-row>
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="180">
                     <template slot-scope="scope">
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click=""
-                            v-if="scope.row.isChild && !scope.row.isIndex0"
-                            >{{ $t("commons.delete") }}</el-button
-                        >
-                        <el-button
-                            type="text"
-                            v-if="!scope.row.isChild"
-                            size="mini"
-                            @click="addGuest(scope.row, scope.$index)"
-                            ><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
+                        <el-button type="text" size="mini" @click="" v-if="scope.row.isChild && !scope.row.isIndex0">
+                            {{ $t("commons.delete") }}
+                        </el-button>
+                        <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)">
+                            <!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
                             <template>+{{$t('desk.customer_toTheGuest')}}</template>
                         </el-button>
                     </template>
@@ -553,11 +495,8 @@
                 @personCallback="personCallback"
             ></customer>
         </el-dialog>
-        <guestChoose
-            @guestChooseCallback="guestChooseCallback"
-            ref="guestChoose"
-            :checkInForm="checkInForm"
-        ></guestChoose>
+<!--        客源类型-->
+        <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="checkInForm"></guestChoose>
     </div>
 </template>
 
@@ -795,7 +734,7 @@ export default {
             //预定和入住人信息
             checkInForm: {
                 checkInRoomJson: [],
-               
+
             },
 
             listTotal: 0, //总条数
@@ -907,8 +846,6 @@ export default {
                         "mobile",
                     ];
                 }
-                console.log(this.operCheckinType);
-                console.log(arr);
                 if (!this.checkInForm.checkInId && arr.length) {
                     let len = 0;
                     for (let k in arr) {
@@ -1027,6 +964,7 @@ export default {
             }
         },
 
+        //保存 保存并继续
         hotel_check_in(type) {
             this.isSubmitErr = false;
             let url = "";
@@ -1071,7 +1009,14 @@ export default {
                         );
                         return false;
                     }
+                    debugger
                     if (operCheckinType == "a1" || operCheckinType == "a2") {
+                        if (!this.checkInForm.checkInRoomJson || this.checkInForm.checkInRoomJson.length == 0) {
+                            this.$message.error(
+                                this.$t("desk.home_noPeopleLive")
+                            );
+                            return false;
+                        }
                         for (let k = 0; k < this.waitingRoom.length; k++) {
                             if (!this.waitingRoom[k].roomsArr) {
                                 this.$message.error(this.$t('desk.serve_placeChooseRoom'));
