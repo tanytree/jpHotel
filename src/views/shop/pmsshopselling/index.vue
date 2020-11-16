@@ -574,13 +574,15 @@ export default {
                     discount = parseFloat(price)*parseFloat(shop_discount_ratio) //当前最大可抵扣金额
                     this.jfInfo = {
                        jf:jf,
-                       discount:discount.toFixed(2)
+                       // discount:discount.toFixed(2)
+                       discount: discount ? discount.toFixed(2) : ''
                     }
                 }else{
                     discount =  parseFloat(score)/parseFloat(convert)
                     this.jfInfo = {
                        jf:score,
-                       discount:discount.toFixed(2)
+                       // discount:discount.toFixed(2)
+                       discount: discount ? discount.toFixed(2) : ''
                     }
                 }
                 this.form.scoresDiscount =  this.jfInfo.jf

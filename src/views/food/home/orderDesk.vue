@@ -162,7 +162,7 @@
         </el-form>
         <div class="text-center"  style="padding-top: 20px;border-top: 1px solid #ddd;">
            <el-button @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
-           <el-button :disabled="!desk.deskNum || !desk.numberPlat" type="primary" @click="submit('deskform')">{{$t('food.common.ok')}}</el-button>
+           <el-button :disabled="!desk.deskNum" type="primary" @click="submit('deskform')">{{$t('food.common.ok')}}</el-button>
         </div>
     </el-dialog>
 
