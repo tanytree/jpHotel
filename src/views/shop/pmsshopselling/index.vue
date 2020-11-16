@@ -63,7 +63,11 @@
                                         </div>
                                      </template>
                                  </el-table-column>
-                                 <el-table-column prop="retailPrice" label="商品单价(元)" width="250"></el-table-column>
+                                 <el-table-column label="商品单价(元)" width="250">
+                                     <template slot-scope="scope">
+                                     {{numFormate(scope.row.retailPrice)}}
+                                     </template>
+                                 </el-table-column>
                                  <!-- <el-table-column prop="inventoryCount"  label="库存">
                                      <template slot-scope="scope">
                                          <span v-if="scope.row.hotelGoods.categoryType == 1">
@@ -89,7 +93,11 @@
                     <el-main class="main padding-20">
                         <el-table  :data="cart" header-row-class-name="default" size="small" >
                             <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                            <el-table-column prop="retailPrice" label="单价(元)" show-overflow-tooltip></el-table-column>
+                            <el-table-column label="单价(元)" show-overflow-tooltip>
+                                <template slot-scope="scope">
+                                {{numFormate(scope.row.retailPrice)}}
+                                </template>
+                            </el-table-column>
                             <el-table-column label="数量" width="150">
                                 <template slot-scope="scope">
                                   <div class="cell" style="padding:0;">
@@ -105,7 +113,7 @@
                             </el-table-column>
                             <el-table-column label="合计(元)" show-overflow-tooltip>
                                 <template slot-scope="scope">
-                                    {{parseFloat(scope.row.count) * parseFloat(scope.row.retailPrice)}}
+                                    {{numFormate(parseFloat(scope.row.count) * parseFloat(scope.row.retailPrice)) }}
                                 </template>
                             </el-table-column>
                             <el-table-column :label="$t('commons.operating')">
@@ -115,7 +123,7 @@
                             </el-table-column>
                         </el-table>
                         <el-row class="padding-tb-10">
-                            <em>共 {{countToTal}} 件</em>，合计：{{cartToTal}}元 <!-- / 已结算金额：{{hasPayPrice}} -->
+                            <em>共 {{countToTal}} 件</em>，合计：{{numFormate(cartToTal)}}元 <!-- / 已结算金额：{{hasPayPrice}} -->
                         </el-row>
                         <div class="action rel" v-loading="isloading">
                             <div class="margin-t-10">
@@ -149,7 +157,9 @@
                                         </el-form-item>
 
                                         <el-form-item :label="$t('food.common.payPrice')">
-                                            <span class="text-red">{{getPayPrice}}</span>
+                                            <span class="text-red">
+                                            {{numFormate(getPayPrice)}}                                            
+                                            </span>
                                         </el-form-item>
 
                                         <el-form-item :label="$t('food.common.member_card')">

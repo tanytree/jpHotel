@@ -89,7 +89,7 @@
                                   </div>
                               </div>
                               <div class="bot margin-t-10 clearfix">
-                                  <span>¥{{item.price}}</span>
+                                  <span>¥{{numFormate(item.price)}}</span>
                                   <el-button v-if="item.soldOut  == 1" @click="clear(item,2)" size="mini" plain>{{$t('food.common.solt_text')}}</el-button>
                                   <el-button v-else @click="clear(item,1)" size="mini" plain>{{$t('food.common.cancel')}}</el-button>
                               </div>

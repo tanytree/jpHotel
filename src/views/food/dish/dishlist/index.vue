@@ -52,7 +52,7 @@
             <el-table-column
               :label="$t('food.common.price')"
              >
-              <template slot-scope="scope">¥ {{ scope.row.price}}</template>
+              <template slot-scope="scope">¥ {{ numFormate(scope.row.price)}}</template>
             </el-table-column>
 
             <el-table-column

@@ -1,7 +1,7 @@
 <template>
     <div class="action" v-loading="loading">
         <div class="money text-red text-size20">
-        {{$t('food.common.consumePrice')}} : {{getFee}}   <span class="text-gray text-size14 margin-l-15">已付金额: {{info.hasPayPrice}}</span> <!-- {{info.consumePrice}} --></div>
+        {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}}   <span class="text-gray text-size14 margin-l-15">已付金额: {{numFormate(info.hasPayPrice)}}</span> <!-- {{info.consumePrice}} --></div>
         <!-- <div class="money">已付金额: {{info.hasPayPrice}}</div> -->
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -17,7 +17,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('food.common.payPrice')">
                     <!-- {{getPayPrice}} -->
-                    {{getFee}}
+                    {{numFormate(getFee)}}
                 </el-form-item>
 
                 <div v-if="form.billingType == 1">

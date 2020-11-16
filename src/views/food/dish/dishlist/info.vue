@@ -5,7 +5,7 @@
               <img :src="info.images">
             </div>
             <div class="items text-size20"><b>{{info.name}}</b></div>
-            <div class="items text-red text-size18"> ￥{{info.price}}</div>
+            <div class="items text-red text-size18"> ￥{{numFormate(info.price)}}</div>
             <div class="items flex text-gray">
                <div class="label">【{{$t('food.common.cate')}}】</div>
                <div>{{info.categoryName}}</div>
@@ -28,7 +28,10 @@
 </template>
 
 <script>
+    
+    import mixin from '../../mixin';      
     export default {
+        mixins: [mixin],
         data() {
             return {
                info:{}

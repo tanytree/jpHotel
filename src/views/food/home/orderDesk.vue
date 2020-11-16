@@ -13,7 +13,7 @@
               <el-table-column prop="name" :label="$t('food.common.food_title')" ></el-table-column>
               <el-table-column :label="$t('food.common.food_price')">
                   <template slot-scope="scope">
-                   ¥ {{scope.row.price}}
+                   ¥ {{numFormate(scope.row.price)}}
                   </template>
               </el-table-column>
               <el-table-column :label="$t('food.common.food_count')" width="160">
@@ -38,7 +38,7 @@
         </div>
         <div class="block flex " >
             <div class=" text-size14 text-left"  style="justify-content: flex-start">
-                {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20"> {{cartToTal}}</span>
+                {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20"> {{numFormate(cartToTal)}}</span>
              </div>
             <div style="max-width: 100px;">
                <el-button type="primary" :disabled="cartToTal == '0.00'" style="width: 100%;" @click="openDialog">{{$t('food.common.submit')}}</el-button>
@@ -94,7 +94,7 @@
                                    </div>
                                </div>
                                 <div class="bot margin-t-10 clearfix">
-                                    <span>¥{{item.price}}</span><el-button @click="addCart(item,index)" size="mini" plain>{{$t('food.common.isadd')}}</el-button>
+                                    <span>¥{{numFormate(item.price)}}</span><el-button @click="addCart(item,index)" size="mini" plain>{{$t('food.common.isadd')}}</el-button>
                                 </div>
                             </div>
                         </div>

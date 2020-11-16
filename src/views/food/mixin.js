@@ -42,6 +42,14 @@ const mixin= {
             // console.log(newArr);
             return newArr;
         },
+        numFormate(a){
+            // console.log(value);
+              if (!a){
+               return ' '
+                }
+              var intPartFormat = (Math.round(a * 100) / 100).toFixed(2).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
+              return intPartFormat
+        },
         alert(v,msg){
              if(v == 200){
                  this.$message({
