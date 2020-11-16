@@ -11,22 +11,8 @@
         label-width="80px"
         v-model="searchForm"
       >
-<!--        <el-form-item :label="$t('desk.customer_consumptionStore')">-->
-<!--          <el-select-->
-<!--            v-model="searchForm.storesNum"-->
-<!--            class="width150"-->
-<!--            :placeholder="$t('commons.placeChoose')"-->
-<!--          >-->
-<!--            <el-option :label="$t('commons.all')" value=""></el-option>-->
-<!--            <el-option-->
-<!--              v-for="(item, index) in storeList"-->
-<!--              :key="index"-->
-<!--              :label="item.storesName"-->
-<!--              :value="item.storesNum"-->
-<!--            ></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-        <el-form-item :label="$t('desk.customer_buyerUnit')">
+
+        <el-form-item :label="$t('desk.customer_buyerUnit')+':'">
           <el-select
             v-model="searchForm.enterId"
             class="width150"
@@ -41,7 +27,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.order_checkStatus')">
+        <el-form-item :label="$t('desk.customer_settlementStatus')+':'">
           <el-select v-model="searchForm.state" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
@@ -55,13 +41,10 @@
           </el-select>
         </el-form-item>
         <br />
-        <el-form-item :label="$t('desk.home_name')">
+        <el-form-item :label="$t('desk.home_name')+':'">
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('desk.home_roomNum')">
-          <el-input v-model="searchForm.roomNum" class="width150"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('desk.customer_constDate')">
+        <el-form-item :label="$t('desk.customer_constDate')+':'">
           <el-date-picker
             v-model="searchForm.startTime"
             value-format="yyyy-MM-dd"
@@ -102,28 +85,26 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="checkInPerson.checkIn.storesName"
-          :label="$t('desk.customer_consumptionStore')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
           prop="creditName"
           :label="$t('desk.customer_buyerUnit')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="consumePrice"
           :label="$t('desk.customer_amountPrice')"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="{row}">
+            {{row.consumePrice?row.consumePrice:0}}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="checkInPerson.checkIn.name"
           :label="$t('desk.home_name')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="checkInPerson.idcard"
-          :label="$t('desk.customer_idNo')"
+          prop="checkInPerson.checkIn.id"
+          :label="$t('desk.customer_originOrderNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -163,8 +144,8 @@
       <div class="block">
         <el-pagination
           @current-change="handleCurrentChange"
-          :current-page="searchForm.page"
-          :page-size="searchForm.page_num"
+          :current-page="pageIndex"
+          :page-size="pageSize"
           :total="listTotal"
           layout="total, prev, pager, next, jumper"
         ></el-pagination>
@@ -202,7 +183,7 @@ export default {
         startTime: "", //考试时件
         endTime: "", //结束时间
         name: "",
-        roomNum: "",
+       
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -244,7 +225,6 @@ export default {
         startTime: "", //考试时件
         endTime: "", //结束时间
         name: "",
-        roomNum: "",
       };
       this.pageIndex = 1;
       this.getDataList();
@@ -271,13 +251,14 @@ export default {
 
     /**每页数 */
     handleSizeChange(val) {
-      this.searchForm.page_num = val;
-      this.searchForm.page = 1;
+      this.pageSize = val;
+      this.pageIndex = 1;
       this.getDataList();
     },
     /**当前页 */
     handleCurrentChange(val) {
-      this.searchForm.page = val;
+      this.pageIndex = val;
+      this.pageSize = 10;
       this.getDataList();
     },
   },

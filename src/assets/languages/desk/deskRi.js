@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-13 15:23:41
+ * @LastEditTime: 2020-11-16 17:45:33
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -376,8 +376,8 @@ module.exports = {
     customer_guestsDetail: '外国人顧客情報',
     customer_unitManage: '法人master',
     customer_receivingQuery: '入金確認',
-    customer_zhangSet: '法人締め請求パッケージ管理',
-    customer_accounting: '会計処理',
+    customer_zhangSet: '未翻译词条',
+    customer_accounting: '未翻译词条',
     customer_accountQuery: '会計確認',
     customer_unitName: '法人名称',
     customer_ifShare: '共通必要',
@@ -699,8 +699,23 @@ module.exports = {
     customer_resetguestInfo: '未翻译词条',
     customer_contactA: '未翻译词条',
     home_phoneNumA: '未翻译词条',
-   
-    
+    customer_unitNum: '未翻译词条',
+    customer_unitAddress: '未翻译词条',
+    customer_unitPhone: '未翻译词条',
+    customer_faxNum: '未翻译词条',
+    customer_bankName: '未翻译词条',
+    customer_bankNo: '未翻译词条',
+    customer_branchName: '未翻译词条',
+    customer_branchNo: '未翻译词条',
+    customer_branchAddress: '未翻译词条',
+    customer_branchPhone: '未翻译词条',
+    customer_accountNum: '未翻译词条',
+    customer_accName: '未翻译词条',
+    customer_unitHeader: '未翻译词条',
+    customer_amountCapital: '未翻译词条',
+    customer_employeeNum: '未翻译词条',
+    customer_originOrderNum: '未翻译词条',
+    customer_billState: '未翻译词条',
 
  
     
