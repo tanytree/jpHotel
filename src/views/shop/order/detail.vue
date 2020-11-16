@@ -6,14 +6,14 @@
                 <span>售卖点：{{info.sellingName}} </span>
                 <span>{{$t('food.common.create_time')}}：{{info.createTime}} </span>
             </div>
-            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{getFee}}<!-- {{info.consumePrice}} --></div>
+            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{numFormate(getFee)}}<!-- {{info.consumePrice}} --></div>
             <div class="margin-t-20 clearfix">
                 <div class="fl clearfix">
                     <el-button type="primary" size="small" @click="action">{{$t('food.common.order_deal')}}</el-button>
                     <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>
                 </div>
                 <div class="fr clearfix">
-                    总消费：{{info.consumePrice}};  已结:{{info.hasPayPrice}}
+                    总消费：{{numFormate(info.consumePrice)}};  已结:{{numFormate(info.hasPayPrice)}}
                 </div>
             </div>
             <div class="margin-t-20">
@@ -22,7 +22,7 @@
                     <el-table-column :label="$t('food.common.price')" width="80">
                       <template slot-scope="scope">
                           <div v-if="scope.row.unitPrice > 0">
-                           ¥ {{scope.row.unitPrice}}
+                           ¥ {{numFormate(scope.row.unitPrice)}}
                           </div>
                       </template>
                     </el-table-column>
@@ -50,14 +50,16 @@
                     <el-table-column label="消费金额" width="200">
                       <template slot-scope="scope">
                         <div v-if="scope.row.goods.categoryType == 1">
-                            {{scope.row.totalPrice}}
+                            <!-- {{scope.row.totalPrice}} -->
+                            ¥ {{numFormate(scope.row.totalPrice)}}
                         </div>
                         <div v-if="scope.row.goods.categoryType == 2">
                             <span v-if="scope.row.goods.priceModel == 2">
-                                {{getFinalFee(scope.row.goods,endTime)}} (计时: {{getDiffDate(info.createTime,endTime)}})
+                                {{numFormate(getFinalFee(scope.row.goods,endTime))}} (计时: {{getDiffDate(info.createTime,endTime)}})
                             </span>
                             <span v-if="scope.row.goods.priceModel == 1">
-                               {{scope.row.totalPrice}}
+                               <!-- {{scope.row.totalPrice}} -->
+                                ¥ {{numFormate(scope.row.totalPrice)}}
                             </span>
                         </div>
                       </template>

@@ -202,7 +202,7 @@ module.exports = {
         consumePrice:'会計金額',
         order_deal:'会計',
         deskNum:'テーブル番号',
-        numberPlat:'番号票',
+        numberPlat:'部屋番号',
         cancel_order:'予約キャンセル',
         cancel_confirm_order_tips:'注文をキャンセルしますか?',
         confirm_submit:'提出確認しますか?',

@@ -6,7 +6,7 @@
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{info.dishesNum}} </span><span v-if= "info.deskNum">{{$t('food.common.deskNum')}}：{{info.deskNum}} </span>  <span v-if= "info.numberPlat">{{$t('food.common.numberPlat')}}：{{info.numberPlat}} </span>
                 </div>
-            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{info.consumePrice}}</div>
+            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{numFormate(info.consumePrice)}}</div>
 
             <div class="text-red text-size20 margin-t-20">
                 <el-button v-if="info.state == 1" type="primary" size="small" @click="addOrderInfo">{{$t('food.common.add_food')}}</el-button>
@@ -24,7 +24,7 @@
                   <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>
                   <el-table-column :label="$t('food.common.price')">
                       <template slot-scope="scope">
-                       ¥ {{scope.row.unitPrice}}
+                       ¥ {{numFormate(scope.row.unitPrice)}}
                       </template>
                   </el-table-column>
                   <el-table-column :label="$t('food.common.food_count')" width="160">

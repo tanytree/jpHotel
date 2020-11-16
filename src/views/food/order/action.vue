@@ -1,6 +1,6 @@
 <template>
     <div class="action" v-loading="loading">
-        <div class="money text-red text-size20">{{$t('food.common.consumePrice')}} : {{info.consumePrice}}</div>
+        <div class="money text-red text-size20">{{$t('food.common.consumePrice')}} : {{numFormate(info.consumePrice)}}</div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item :label="$t('food.common.billingType')" prop="billingType">
@@ -22,7 +22,7 @@
                     </el-form-item>
 
                     <el-form-item :label="$t('food.common.payPrice')">
-                        {{getPayPrice}}
+                        {{numFormate(getPayPrice)}}
                     </el-form-item>
 
                     <el-form-item :label="$t('food.common.member_card')">
@@ -288,29 +288,33 @@
 
             //计算当前的积分和抵扣金额
             getScore(){
-                console.log(this.isUseScore)
+                // console.log(this.isUseScore)
                 // if(this.isUseScore){
                     let price = this.info.consumePrice
                     let shop_discount_ratio = this.score.shop_discount_ratio
                     let convert = this.score.convert
                     let score =  this.selectMerberInfo.score
                     let jf = parseFloat(price)*parseFloat(convert)*parseFloat(shop_discount_ratio) //当前可有用的积分
+                    // console.log(jf)
                     let discount = 0
                     if(score > jf || score == jf){
                         discount = parseFloat(price)*parseFloat(shop_discount_ratio) //当前最大可抵扣金额
                         this.jfInfo = {
                            jf:jf,
-                           discount:discount.toFixed(2)
+                           discount: discount ? discount.toFixed(2) : ''
                         }
                     }else{
                         discount =  parseFloat(score)/parseFloat(convert)
                         this.jfInfo = {
                            jf:score,
-                           discount:discount.toFixed(2)
+                           discount:discount ? discount.toFixed(2) : ''
                         }
                     }
+                    // console.log(discount)
                     this.form.scoresDiscount =  this.jfInfo.jf
                     this.form.scoresPrice =  this.jfInfo.discount
+                    // console.log(this.jfInfo)
+
                 // }
             },
 

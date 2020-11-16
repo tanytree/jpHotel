@@ -99,7 +99,7 @@
                 <el-table-column
                   :label="$t('food.common.total_pay')"
                  >
-                    <template slot-scope="scope">{{scope.row.realPayPrice}}</template>
+                    <template slot-scope="scope">{{numFormate(scope.row.realPayPrice)}}</template>
                 </el-table-column>
 
                 <el-table-column
@@ -159,10 +159,10 @@
                 <span style="padding:0 50px;">售卖点：{{detail.sellingName}} </span>
                 <span>{{$t('food.common.create_time')}}：{{detail.createTime}} </span>
             </div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{detail.consumePrice}}</div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{numFormate(detail.consumePrice)}}</div>
             <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div>
-            <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">会员价格：¥{{detail.scoresPrice}}</div>
-            <div class="margin-t-10 text-gray">实付款：¥{{detail.hasPayPrice}}</div>
+            <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">会员价格：¥{{numFormate(detail.scoresPrice)}}</div>
+            <div class="margin-t-10 text-gray">实付款：¥{{numFormate(detail.hasPayPrice)}}</div>
             <div class="margin-t-10 text-gray">结账时间：¥{{detail.updateTime}}</div>
             <el-table
               class="margin-t-10 "
@@ -172,7 +172,11 @@
               size="small"
             >
               <el-table-column prop="goodsName" label="商品名称" ></el-table-column>
-              <el-table-column :label="$t('food.common.price')" prop="unitPrice"></el-table-column>
+              <el-table-column :label="$t('food.common.price')">
+                <template slot-scope="scope">
+                    {{numFormate(scope.row.unitPrice)}}
+                </template>                    
+              </el-table-column>
               <el-table-column label="计费规则">
                 <template slot-scope="scope">
                    <div v-if="scope.row.goods">

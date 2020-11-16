@@ -169,8 +169,17 @@ const mixin= {
                 3:'其他'
             }
             return arr[v]
-
         },
+
+        numFormate(a){
+            // console.log(a);
+              if (!a){
+               return ' '
+                }
+              var intPartFormat = (Math.round(a * 100) / 100).toFixed(2).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
+              return intPartFormat
+        },
+
         alert(v,msg){
              if(v == 200){
                  this.$message({
