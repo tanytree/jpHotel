@@ -29,7 +29,6 @@ module.exports = {
     confirm: '确定',
     time: '时间',
     week: '星期',
-    confirm: '确认',
     saveSuccess: '保存成功',
     disable: '禁用',
     enable: '启用',

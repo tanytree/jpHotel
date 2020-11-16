@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-13 17:55:12
+ * @LastEditTime: 2020-11-16 17:47:27
  * @FilePath: \jiudian\src\views\market\customer\companylist.vue
  -->
 
@@ -11,23 +11,25 @@
       <el-tab-pane :label="$t('desk.customer_unitManage')" name="first">
         <company footer='footer'></company>
       </el-tab-pane>
-      <el-tab-pane :label="$t('desk.customer_receivingQuery')" name="second">
-        <collection></collection>
+       <el-tab-pane :label="$t('desk.customer_accountQuery')" name="five">
+        <service></service>
       </el-tab-pane>
+      <!-- <el-tab-pane :label="$t('desk.customer_receivingQuery')" name="second">
+        <collection></collection>
+      </el-tab-pane> -->
+      <!-- 请款管理 -->
       <el-tab-pane :label="$t('desk.customer_zhangSet')" name="third">
         <bill></bill>
       </el-tab-pane>
+      <!-- 入账管理 -->
       <el-tab-pane :label="$t('desk.customer_accounting')" name="four">
         <accounts></accounts>
-      </el-tab-pane>
-      <el-tab-pane :label="$t('desk.customer_accountQuery')" name="five">
-        <service></service>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
-import company from "@/components/unitManager/com";
+import company from "@/components/unitManager/comTao";
 import collection from "./company/collection";
 import bill from "./company/bill";
 import accounts from "./company/accounts";

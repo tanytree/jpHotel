@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账务处理   -->
+<!--  前台部 > 客户管理 > 单位管理 > 入账管理   -->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -11,7 +11,7 @@
         v-model="searchForm"
         label-width="80px"
       >
-        <el-form-item :label="$t('desk.customer_buyerUnit')">
+        <el-form-item :label="$t('desk.customer_unitName')">
           <el-select v-model="searchForm.enterId" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
@@ -22,10 +22,19 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item :label="$t('desk.customer_billState')">
+          <el-select v-model="searchForm.enterId" class="width150">
+            <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option label="已结" value="1"></el-option
+            ><el-option label="未结" value="2"></el-option
+            ><el-option label="部分结账" value="3"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" class="submit" @click="getDataList">{{
             $t("commons.queryBtn")
           }}</el-button>
+           <el-button type="primary" class="grey" @click="initForm">{{$t('commons.resetBtn')}}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -56,7 +65,11 @@
             width="120"
           >
             <template slot-scope="{ row }">
-              <div>{{ row.finance.onAccountTotal ? row.finance.onAccountTotal : 0 }}</div>
+              <div>
+                {{
+                  row.finance.onAccountTotal ? row.finance.onAccountTotal : 0
+                }}
+              </div>
             </template>
           </el-table-column>
           <el-table-column
@@ -234,7 +247,10 @@
       top="0"
     >
       <div>
-        <span>{{ $t("desk.customer_unitName") + ":" }}{{itemInfo.enterName}}</span>
+        <span
+          >{{ $t("desk.customer_unitName") + ":"
+          }}{{ itemInfo.enterName }}</span
+        >
         <span style="margin-left: 20px">
           {{ $t("desk.customer_chooseAccount") + ":" }}
           <el-radio-group v-model="choose">
@@ -749,7 +765,7 @@ export default {
       listTotal: 0, //总条数
       multipleSelection: [], //多选
       tableData: [], //表格数据
-      input:'',
+      input: "",
     };
   },
   created() {
@@ -776,10 +792,10 @@ export default {
     },
     //点击账务结算按钮
     settlement(row) {
-        this.itemInfo = row;
-        if(this.itemInfo){
-          this.settlementDialog = true;
-        }
+      this.itemInfo = row;
+      if (this.itemInfo) {
+        this.settlementDialog = true;
+      }
     },
     //预收款弹框 点击确定按钮
     advanceDialog_sure(formName) {
