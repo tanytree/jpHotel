@@ -57,7 +57,7 @@
           </el-row>
           <!-- <el-row>
             <el-form-item label="有效期">
-             
+
               <el-checkbox v-model="checked">永久</el-checkbox>
             </el-form-item>
           </el-row> -->
@@ -129,25 +129,30 @@ export default {
     editItem(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          var array = this.memberTypeList.filter((row) => {
-            return row.level == this.newvip.level && row.id != this.newvip.id;
-          });
-          if (array.length == 0) {
-            console.log(this.newvip);
+          // var array = this.memberTypeList.filter((row) => {
+          //   return row.level == this.newvip.level && row.id != this.newvip.id;
+          // });
+            let params = this.$F.deepClone(this.newvip);
+            if (!params.level) {
+                params.level = 0;
+            }
             this.$F.doRequest(
-              this,
-              "/pms/membertype/edit",
-              this.newvip,
-              (res) => {
-                this.$message.success("edit success");
-                setTimeout(() => {
-                  this.back();
-                }, 1000);
-              }
+                this,
+                "/pms/membertype/edit",
+                params,
+                (res) => {
+                    this.$message.success("edit success");
+                    setTimeout(() => {
+                        this.back();
+                    }, 500);
+                }
             );
-          } else {
-            this.$message.error("Level can not repeat");
-          }
+          // if (array.length == 0) {
+          //   console.log(this.newvip);
+          //
+          // } else {
+          //  // this.$message.error("Level can not repeat");
+          // }
         } else {
           console.log("error submit!!");
           return false;

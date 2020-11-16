@@ -45,6 +45,12 @@
                         <el-option v-for="(label, value) in $t('frontOffice.state')" :label="label" :value="value" :key="value"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item :label="$t('desk.customer_ifCancellation')">
+                    <el-select v-model="searchForm.status" class="width150">
+<!--                        <el-option :label="$t('desk.home_all')" value></el-option>-->
+                        <el-option v-for="(label, value) in $t('frontOffice.isBlacklist')" :label="label" :value="value" :key="value"></el-option>
+                    </el-select>
+                </el-form-item>
                 <!--                <el-form-item :label="$t('desk.customer_isBlack')">-->
                 <!--                    <el-select-->
                 <!--                        v-model="searchForm.isBlacklist"-->
@@ -129,7 +135,7 @@
                         <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state == 2">
                             {{ $t("desk.customer_restore") }}
                         </el-button>
-                        <el-button type="text" size="mini" @click="handleHistory(row)">{{ $t("desk.customer_guestHistory") }}</el-button>
+<!--                        <el-button type="text" size="mini" @click="handleHistory(row)">{{ $t("desk.customer_guestHistory") }}</el-button>-->
                         <!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
                         <!--                            <span class="el-dropdown-link">-->
                         <!--                                {{ $t("desk.customer_more") }}-->
@@ -304,7 +310,8 @@ export default {
             showEdit: false,
             showDetail: false,
             searchForm: {
-                status: "",
+                state: '',
+                status: 1,
                 storesNum: "",
             },
             dialogInfo: null,
@@ -332,7 +339,7 @@ export default {
     mounted() {
         this.initForm();
         this.stores_list();
-        this.$F.commons.fetchMemberTypeList({}, (res) => {
+        this.$F.commons.fetchMemberTypeList({state: 1}, (res) => {
             this.smembertypeList = res.list;
         });
         console.log(this.type);
