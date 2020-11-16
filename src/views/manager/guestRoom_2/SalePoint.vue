@@ -37,9 +37,9 @@
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costPrice')"></el-table-column>
                     <el-table-column prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')"></el-table-column>
                     <el-table-column prop="inventoryCount" :label="$t('manager.grsl_inventory')"></el-table-column>
-                    <el-table-column :label="$t('commons.operating')" width="150">
+                    <el-table-column :label="$t('commons.operating')" align="center" width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="popup('sale', scope.row)">{{$t('commons.modify')}}</el-button>
+<!--                            <el-button type="text" size="small" @click="popup('sale', scope.row)">{{$t('commons.modify')}}</el-button>-->
                             <el-button type="text" size="small" @click="offShelf(scope.row)">{{$t('manager.grsl_shelves')}}</el-button>
                         </template>
                     </el-table-column>
@@ -174,22 +174,23 @@
             <el-table ref="multipleTable" :data="shelfData" height="100%" style="min-height: 250px" header-row-class-name="default" size="small" @selection-change="shelfSelect">
                 <el-table-column type="selection" width="70"></el-table-column>
                 <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                <el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')" width="200"></el-table-column>
+                <el-table-column prop="categoryName" :label="$t('manager.grsl_goodsMode')"></el-table-column>
+                <!--<el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')" width="200"></el-table-column>
                 <el-table-column :label="$t('manager.grsl_employeePriceJapen')" width="150">
                     <template slot-scope="scope">
                         <el-input v-model="scope.row.employeePrice" :disabled="scope.row.his" size="small"></el-input>
                     </template>
-                </el-table-column>
+                </el-table-column>-->
                 <el-table-column :label="$t('manager.grsl_retailPrice')" width="150">
-                    <template slot-scope="scope">
-                        <el-input v-model="scope.row.retailPrice" :disabled="scope.row.his" size="small"></el-input>
+                    <template slot-scope="scope">{{scope.row.retailPrice}}元
+<!--                        <el-input v-model="" :disabled="scope.row.his" size="small"></el-input>-->
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('manager.grsl_defaultBuyNum')" width="250">
+                <!--<el-table-column :label="$t('manager.grsl_defaultBuyNum')" width="250">
                     <template slot-scope="scope">
                         <el-input v-model="scope.row.buyCount" :disabled="scope.row.his" size="small" style="width: 200px;"></el-input>
                     </template>
-                </el-table-column>
+                </el-table-column>-->
             </el-table>
             <div class="pagination">
                 <el-pagination @current-change="shelfChange" :current-page="shelfForm.pageIndex" :page-size="shelfForm.pageSize" :total="shelfTotal" layout="total, prev, pager, next, jumper"></el-pagination>
@@ -320,9 +321,9 @@
                 };
                 this.$F.merge(params, this.shelfForm);
                 this.$F.doRequest(this, "/pms/sellinglog/listusable", params, (res) => {
-                    res.list.map((item) => {
-                        item.his = true;
-                    });
+                    // res.list.map((item) => {
+                    //     item.his = true;
+                    // });
                     this.shelfData = res.list;
                     this.shelfForm.pageIndex = res.page.pageIndex;
                     this.shelfTotal = res.page.count;
@@ -333,12 +334,12 @@
                 this.getShelfData();
             },
             shelfSelect(val) {
-                this.shelfData.map(item => {
-                    item.his = true;
-                })
-                val.map((item) => {
-                    item.his = false;
-                });
+                // this.shelfData.map(item => {
+                //     item.his = true;
+                // })
+                // val.map((item) => {
+                //     item.his = false;
+                // });
                 this.selection = val;
             },
             popup(type, row) {
@@ -408,7 +409,7 @@
                 this.pageForm.pageIndex = val;
                 this.initData(this.pageForm, this.form.name, this.form.category, this.sellId, this.form.categoryType);
             },
-            shelfChange() {
+            shelfChange(val) {
                 this.shelfForm.pageIndex = val;
                 this.getShelfData(this.upshelf.category, this.upshelf.name, this.upshelf.categoryType)
             },
