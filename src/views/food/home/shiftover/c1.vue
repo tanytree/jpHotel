@@ -9,84 +9,91 @@
 <!-- 统一的列表格式 -->
 <div class="shiftOver" v-loading="loading">
     <el-row>
-        <h3>预交班基本信息</h3>
+        <h3>{{$t('food.shift.tabs_title_1')}}</h3>
         <el-row>
             <el-col :span="12">
-                <div class="item">班次时间：2020/04/20 06:01:03 至 2020/04/20 16:10:00</div>
+                <div class="item">{{$t('food.shift.tabs_time_1')}}：2020/04/20 06:01:03 至 2020/04/20 16:10:00</div>
             </el-col>
             <el-col :span="12">
-                <div class="item">班次号：2020-04-20-1</div>
+                <div class="item">{{$t('food.shift.tabs_num')}}：2020-04-20-1</div>
             </el-col>
             <el-col :span="12">
-                <div class="item">交班操作员：张三</div>
+                <div class="item">{{$t('food.shift.acter')}}：张三</div>
             </el-col>
-            <el-col :span="12">
+            <!-- <el-col :span="12">
                 <div class="item">当前模式：应收模式</div>
-            </el-col>
+            </el-col> -->
         </el-row>
     </el-row>
     <el-divider></el-divider>
     <el-row>
-        <h3>本班账务汇总信息</h3>
-        <div class="total">收入总计：10000.00日元</div>
+        <h3>{{$t('food.shift.tabs_title_2')}}</h3>
+        <div class="total">{{$t('food.shift.total')}}：10000.00日元</div>
         <el-row>
             <el-col :span="6">
-                <div class="item">餐饮费：<span class="red">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.foodFee')}}：<span class="red">8000.00</span>日元</div>
             </el-col>
         </el-row>
-        <div class="total">结算总计：6000.00日元</div>
+        <div class="total">{{$t('food.shift.totalFee')}}：6000.00日元</div>
         <el-row>
 
             <el-col :span="4">
-                <div class="item">现金：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.cash')}}：<span class="blue">8000.00</span>日元</div>
+            </el-col>
+            <!-- <el-col :span="4">
+                <div class="item">{{$t('food.shift.wechart')}}：<span class="blue">8000.00</span>日元</div>
             </el-col>
             <el-col :span="4">
-                <div class="item">微信：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.alipay')}}：<span class="blue">8000.00</span>日元</div>
+            </el-col> -->
+            <el-col :span="4">
+                <div class="item">{{$t('food.shift.signRoom')}}：<span class="blue">8000.00</span>日元</div>
             </el-col>
             <el-col :span="4">
-                <div class="item">支付宝：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.creadCard')}}：<span class="blue">8000.00</span>日元</div>
             </el-col>
+
             <el-col :span="4">
-                <div class="item">其它：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.other')}}：<span class="blue">8000.00</span>日元</div>
             </el-col>
         </el-row>
     </el-row>
     <el-row>
-        <h3>本班现金上交&nbsp;&nbsp;<el-tag size="mini">当前交班模式：现金流模式</el-tag></h3>
+        <h3>{{$t('food.shift.tabs_title_3')}}&nbsp;&nbsp;<el-tag size="mini">当前交班模式：现金流模式</el-tag></h3>
         <div class="handInCash">
             <el-row>
                 <el-col :span="6" class="li">
-                    <div class="item">本班现金上交：-100.00</div>
-                    <div class="item">本班现金留存：-10000.00</div>
+                    <div class="item">{{$t('food.shift.tabs_title_3')}}：-100.00</div>
+                    <div class="item">{{$t('food.shift.onHas')}}：-10000.00</div>
                 </el-col>
                 <el-col :span="6" class="li">
-                    <div class="item">本班微信上交：100.00</div>
-                    <div class="item">本班下方备用金：100.00</div>
+                    <div class="item">{{$t('food.shift.wechart_stitle')}}：100.00</div>
+                    <div class="item">{{$t('food.shift.offHas')}}：100.00</div>
                 </el-col>
                 <el-col :span="6" class="li">
-                    <div class="item">本班支付宝上交：100.00</div>
+                    <div class="item">{{$t('food.shift.alipay_stitle')}}：100.00</div>
                 </el-col>
             </el-row>
-            <el-row class="ftRow">本班走结订单金额：6000.00</el-row>
+            <el-row class="ftRow">{{$t('food.shift.leaveHas')}}：6000.00</el-row>
         </div>
     </el-row>
     <el-row>
-        <h3>本班报表</h3>
+        <h3>{{$t('food.shift.onReport')}}</h3>
         <el-row>
             <el-col :span="4">
-                <div class="item">交班报表(按班次)&nbsp; &nbsp;<el-button size="mini" @click="openReport(1)">预览</el-button>
+                <div class="item">{{$t('food.shift.onDuty')}}&nbsp; &nbsp;<el-button size="mini" @click="openReport(1)">{{$t('food.shift.look')}}</el-button>
                 </div>
             </el-col>
             <el-col :span="4">
-                <div class="item">交班报表(按收银员)&nbsp; &nbsp;<el-button size="mini" @click="openReport(2)">预览</el-button>
+                <div class="item">{{$t('food.shift.onCasher')}}&nbsp; &nbsp;<el-button size="mini" @click="openReport(2)">{{$t('food.shift.look')}}</el-button>
                 </div>
             </el-col>
             <el-col :span="4">
-                <div class="item">消费明细表&nbsp; &nbsp;<el-button size="mini" @click="openReport(3)">预览</el-button>
+                <div class="item">{{$t('food.shift.listReport')}}&nbsp; &nbsp;<el-button size="mini" @click="openReport(3)">{{$t('food.shift.look')}}</el-button>
                 </div>
             </el-col>
             <el-col :span="4">
-                <div class="item">收款明细表&nbsp; &nbsp;<el-button size="mini" @click="openReport(4)">预览</el-button>
+                <div class="item">{{$t('food.shift.payReport')}}&nbsp; &nbsp;<el-button size="mini" @click="openReport(4)">{{$t('food.shift.look')}}</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -94,14 +101,14 @@
     <el-divider></el-divider>
     <el-row style="text-align:center">
         <elForm inline size="small">
-            <el-form-item label="请选择接班员工：">
+            <el-form-item :label="$t('food.shift.selectOnDutyer')">
                 <el-select v-model="form.text">
                     <el-option label="正常" value="1"></el-option>
                     <el-option label="不正常" value="2"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="接班员工密码：">
-                <el-input v-model="form.password" placeholder="接班员工密码"></el-input>
+            <el-form-item :label="$t('food.shift.password')">
+                <el-input v-model="form.password" :placeholder="$t('food.shift.password')"></el-input>
             </el-form-item>
 
             <el-form-item label="">
