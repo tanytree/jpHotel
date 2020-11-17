@@ -1,7 +1,7 @@
 <template>
         <el-form :model="info" :rules="rules" ref="form" label-width="150px" class="demo-ruleForm">
               <el-form-item :label="$t('food.common.food_title')" prop="name" style="margin-top: -15px;">
-                <el-input v-model="info.name"></el-input>
+                <el-input v-model="info.name" :placeholder="$t('food.common.food_title')"></el-input>
               </el-form-item>
 
               <el-form-item :label="$t('food.common.cate')" prop="categoryId">
@@ -11,12 +11,12 @@
                    @change="handleChange"></el-cascader>
               </el-form-item>
 
-             <el-form-item :label="$t('food.common.cate_name')" prop="categoryName">
+              <!-- <el-form-item :label="$t('food.common.cate_name')" prop="categoryName">
                 <el-input v-model="info.categoryName" ></el-input>
-              </el-form-item>
+              </el-form-item> -->
 
               <el-form-item :label="$t('food.common.food_price')" prop="price">
-                <el-input v-model="info.price"></el-input>
+                <el-input :placeholder="$t('food.common.food_price')" v-model="info.price" type="number" name="price"></el-input>
               </el-form-item>
               <el-form-item :label="$t('food.common.food_pic')" prop="files">
                 <div>
@@ -45,11 +45,11 @@
               </el-form-item>
 
               <el-form-item :label="$t('food.common.material')" prop="desc" :style="files.length == 0 ? '' : 'margin-top: -25px;'">
-                <el-input  v-model="info.marterial"></el-input>
+                <el-input  :placeholder="$t('food.common.material')"  v-model="info.marterial"></el-input>
               </el-form-item>
 
              <el-form-item :label="$t('food.common.food_desc')" prop="desc">
-               <el-input type="textarea" v-model="info.remark"></el-input>
+               <el-input  :placeholder="$t('food.common.food_desc')" type="textarea" v-model="info.remark"></el-input>
              </el-form-item>
 
              <el-form-item :label="$t('food.common.status')">
@@ -94,9 +94,9 @@
                  categoryId: [
                    { required: true, message: this.$t('food.common.input_food_cate'), trigger: 'change' }
                  ],
-                 categoryName: [
-                   {  required: true, message: this.$t('food.common.input_food_cate_name'), trigger: 'change' }
-                 ],
+                 // categoryName: [
+                 //   {  required: true, message: this.$t('food.common.input_food_cate_name'), trigger: 'change' }
+                 // ],
                  price: [
                    { required: true, message: this.$t('food.common.input_food_price'), trigger: 'change' }
                  ],
@@ -214,6 +214,7 @@
                     this.$F.doUploadBatch(this, imgList, (data) => {
                         this.info.images = data;
                         let params = this.info
+                        params.categoryName = '默认'
                         params.userId = this.userId
 
                         this.$F.doRequest(this, "/pms/dishes/dishes_manage_edit", params, (res) => {

@@ -47,7 +47,7 @@ const mixin= {
               if (!a){
                return ' '
                 }
-              var intPartFormat = (Math.round(a * 100) / 100).toFixed(2).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
+              var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
               return intPartFormat
         },
         alert(v,msg){

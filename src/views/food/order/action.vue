@@ -374,9 +374,20 @@
                 this.form.signRoomId = obj.roomId //房间id
                 this.form.signHouseNum = obj.houseNum //房间号
             },
-
+            //提交结账
             submit(){
                 let params = this.form
+                if(params.billingType == 1 && !this.form.memberCard ){
+                    this.alert(-1,this.$t('food.common.select_member_card'));
+                    return false
+                }
+
+                if(params.billingType == 3  &&  !this.form.signRoomId){
+                    // this.alert(-1,'请选择房间');
+                    this.alert(-1,this.$t('food.common.select_rooms'));
+                    return false
+                }
+
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 // console.log(params)

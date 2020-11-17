@@ -227,6 +227,7 @@ module.exports = {
         card_type:'証明書の種類',
         card_no:'身分証明書',
         select_room:'部屋情報入力',
+        select_rooms:'部屋情報入力を選択して下さい',
 
         //库房管理
         storage_name:'倉庫名',

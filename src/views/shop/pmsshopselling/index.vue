@@ -369,8 +369,8 @@ export default {
             }else{
                 realPayPrice = parseFloat(consumePrice)
             }
-            this.form.realPayPrice = parseFloat(realPayPrice).toFixed(2)
-            let p = parseFloat(realPayPrice).toFixed(2)
+            this.form.realPayPrice = parseFloat(realPayPrice).toFixed(0)
+            let p = parseFloat(realPayPrice).toFixed(0)
             return p
         }
     }
