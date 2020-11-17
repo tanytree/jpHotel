@@ -71,11 +71,10 @@
                   >
                   <template slot-scope="scope" >
                     <div v-for="sumItem in scope.row.orderSubList" class="text-size12">
-                    {{sumItem.goodsName}} * {{sumItem.goodsCount}}
+                        {{sumItem.goodsName}} * {{sumItem.goodsCount}}
                     </div>
                   </template>
                 </el-table-column>
-
                 <el-table-column
                   :label="$t('food.common.curstom_info')">
                   <template slot-scope="scope">
@@ -85,41 +84,38 @@
                       </span>
                   </template>
                 </el-table-column>
-
                 <el-table-column :label="$t('food.common.order_from')">
                   <template slot-scope="scope">
                   {{ scope.row.orderSource ? getSource(scope.row.orderSource) : ''}}</template>
                 </el-table-column>
-
                 <el-table-column
                    prop="sellingName"
-                  label="售卖点"
-                 >
+                   label="售卖点"
+                >
                 </el-table-column>
                 <el-table-column
                   :label="$t('food.common.total_pay')"
-                 >
+                >
                     <template slot-scope="scope">{{numFormate(scope.row.realPayPrice)}}</template>
                 </el-table-column>
-
                 <el-table-column
                   :label="$t('food.common.status')"
                  >
-                  <template slot-scope="scope">
+                    <template slot-scope="scope">
                       <span v-if="scope.row.state">{{$t('food.order_status.'+ scope.row.state)}}</span>
                       <!-- {{scope.row.state == 1 ? '未结' : (scope.row.state == 2 ? '已结' : '已取消') }} -->
-                  </template>
+                    </template>
                 </el-table-column>
                 <el-table-column
                   width="200"
                   :label="$t('commons.operating')"
-                 >
-                  <template slot-scope="scope">
+                >
+                    <template slot-scope="scope">
                       <el-button @click="getInfo(scope.row)"  type="text" >{{$t('food.common.detail')}}</el-button>
                       <el-button @click="action(scope.row)" v-if="scope.row.state == 1" type="text">{{$t('food.common.order_deal')}}</el-button>
                       <el-button @click="cancleOrder(scope.row)" v-if="scope.row.state == 1"  type="text">{{$t('food.common.cancel_order')}}</el-button>
                       <!-- <el-button v-if="scope.row.state == 3"  type="text">恢复</el-button> -->
-                  </template>
+                    </template>
                 </el-table-column>
               </el-table>
             </div>
@@ -175,7 +171,7 @@
               <el-table-column :label="$t('food.common.price')">
                 <template slot-scope="scope">
                     {{numFormate(scope.row.unitPrice)}}
-                </template>                    
+                </template>
               </el-table-column>
               <el-table-column label="计费规则">
                 <template slot-scope="scope">
