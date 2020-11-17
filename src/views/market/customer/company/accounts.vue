@@ -110,11 +110,11 @@
               $t("desk.customer_lookBuyDetail")
             }}</el-button>
             <!-- 入账 -->
-            <el-button type="text" @click="settlement(row)" size="mini">{{
+            <el-button type="text" v-if="row.requestPrice > row.intoPrice" @click="settlement(row)" size="mini">{{
               $t("desk.enterAccount")
             }}</el-button>
             <!-- 入账记录 -->
-            <el-button type="text" @click="settlement(row)" size="mini">{{
+            <el-button type="text" @click="bookRecord(row)" size="mini">{{
               $t("desk.customer_bookRecord")
             }}</el-button>
           </template>
@@ -152,13 +152,13 @@
         size="small"
       >
         <el-table-column
-          prop="enterName"
+          prop="createTime"
           :label="$t('desk.customer_spendTime')"
           show-overflow-tooltip
           width="100px"
         ></el-table-column>
         <el-table-column
-          prop="requestNum"
+          prop="onAccountTotal"
           :label="$t('desk.customer_amountPrice')"
           width="150"
         >
@@ -168,7 +168,7 @@
           prop="requestPrice"
           width="100"
         >
-          <template slot-scope="{ row }"> </template>
+         
         </el-table-column>
         <el-table-column
           prop="intoPrice"
@@ -207,6 +207,45 @@
       <div slot="footer">
         <div class="dialog-footer">
           <el-button type="primary" @click="advanceDialog = false">{{
+            $t("commons.close")
+          }}</el-button>
+        </div>
+      </div>
+    </el-dialog>
+    <!-- 入账记录dialog -->
+    <el-dialog
+      :title="$t('desk.customer_bookRecord')"
+      v-if="bookDialog"
+      :visible.sync="bookDialog"
+      top="0"
+    >
+      <el-table
+        ref="multipleTable"
+        v-loading="loading"
+        :data="recordList"
+        height="100%"
+        header-row-class-name="default"
+        size="small"
+      >
+        <el-table-column
+          prop="creatorName"
+          :label="$t('desk.home_operator')"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="createTime"
+          :label="$t('desk.customer_operateTime')"
+        >
+        </el-table-column>
+        <el-table-column
+          :label="$t('desk.enterAccountMoney')"
+          prop="operPrice"
+        >
+        </el-table-column>
+      </el-table>
+      <div slot="footer">
+        <div class="dialog-footer">
+          <el-button type="primary" @click="bookDialog = false">{{
             $t("commons.close")
           }}</el-button>
         </div>
@@ -282,9 +321,10 @@ export default {
         ],
       },
 
-      settlementDialog: false, //入账 结算弹框
+      settlementDialog: false, //入账 dialog
       itemInfo: null,
-      advanceDialog: false,
+      advanceDialog: false,  //查看挂账明细 dialog
+      bookDialog:false,  //入账记录 dialog
       pageIndex: 1, //当前页
       pageSize: 10, //页数
       loading: false,
@@ -296,6 +336,7 @@ export default {
       listTotal: 0, //总条数
       tableData: [], //表格数据
       buyTable: [], //挂账明细dialog表格数据
+      recordList:[], // 入账记录dialog表格数据
       pageIndex: 1,
       pageSize: 10,
       enterForm: {
@@ -353,6 +394,17 @@ export default {
         this.settlementDialog = true;
       }
     },
+    //点击 入账记录 按钮
+    bookRecord(row) {
+      let params = {
+        enterId: row.enterId,
+        searchType: 1,
+      };
+      this.$F.doRequest(this, "/pms/request/request_account_log_list", params, (res) => {
+        this.recordList = res.list;
+        this.bookDialog = true;
+      });
+    },
     //预收款弹框 点击确定按钮
     advanceDialog_sure(formName) {
       this.$refs[formName].validate((valid) => {
@@ -390,8 +442,8 @@ export default {
           enterId: row.enterId,
           startTime: row.startTime,
           endTime: row.endTime,
-          pageIndex:this.pageIndex,
-          pageSize:this.pageSize,
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize,
           paging: true,
         };
         this.$F.doRequest(
@@ -399,7 +451,7 @@ export default {
           "/pms/consume/enter_credit_order_list",
           params,
           (res) => {
-           this.buyTable = res.consumeOrderList;
+            this.buyTable = res.consumeOrderList;
             this.advanceDialog = true;
           }
         );

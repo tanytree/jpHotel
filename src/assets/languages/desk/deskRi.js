@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-17 10:42:19
+ * @LastEditTime: 2020-11-17 16:25:59
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -724,6 +724,16 @@ module.exports = {
     customer_lookBuyDetail: '未翻译词条',
     customer_bookRecord: '未翻译词条',
     customer_placeMoney: '未翻译词条',
+    customer_operateTime: '未翻译词条',
+    customer_unitNameA: '会社名',
+    customer_pleaseState: '未翻译词条',
+    customer_notRequest: '未翻译词条',
+    customer_areadyRequest: '未翻译词条',
+    customer_partRequest: '未翻译词条',
+    customer_newRequest: '未翻译词条',
+    customer_waiteRequestPri: '未翻译词条',
+    customer_continueRequest: '未翻译词条',
+    customer_requestRecord: '未翻译词条',
 
  
     
