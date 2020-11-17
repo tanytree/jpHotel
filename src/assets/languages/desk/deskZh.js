@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-16 17:43:52
+ * @LastEditTime: 2020-11-17 11:42:00
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -727,6 +727,43 @@ module.exports = {
     customer_employeeNum: '员工人数',
     customer_originOrderNum: '源订单号',
     customer_billState: '入账状态',
+    customer_arage: '结算范围',
+    customer_paragraphNum: '请款编号',
+    customer_areadyPrice: '已请款金额',
+    customer_areadyBookPrice: '已入账金额',
+    customer_waiteBookPrice: '待入账金额',
+    customer_lookBuyDetail: '查看挂账明细',
+    customer_bookRecord: '入账记录',
+    customer_placeMoney: '请款金额',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
+    customer_: '',
     customer_: '',
     customer_: '',
     customer_: '',
