@@ -28,7 +28,7 @@
 					<el-table-column prop="ruleName" :label="$t('manager.ps_ruleName')"></el-table-column>
 					<el-table-column :label="$t('boss.loginDetail_state')">
 						<template slot-scope="{row}">
-							<span>{{row.state ? $t('commons.enable'):$t('commons.disable')}}</span>
+							<span>{{row.state == '1' ? $t('commons.enable'):$t('commons.disable')}}</span>
 						</template>
 					</el-table-column>
 					<el-table-column prop="ruleName" :label="$t('boss.loginDetail_note')"></el-table-column>

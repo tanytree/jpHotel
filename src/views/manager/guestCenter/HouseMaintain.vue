@@ -423,11 +423,14 @@
 						this.files = [];
 						let arr = value.personPrice.split(',')
 						let obj = {}
+						debugger
 						arr.forEach((item, i) => {
+							obj = {}
 							obj.price = item
 							obj.sid = i + 1
 							this.ruleForm_sit.push(obj)
 						})
+						debugger
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
 							arr.map((i) => {
@@ -615,19 +618,20 @@
 								});
 								arry.forEach((item, i) => {
 									obj = {}
-									if (value.mealBreakfastObject) {
-										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)
-									}
-									if (value.mealDinnerObject) {
-										allP = Number(item) + Number(value.mealDinnerObject.mealPrice)
-									}
-									if (value.mealDinnerObject && value.mealBreakfastObject) {
-										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
-									}
+									// if (value.mealBreakfastObject) {
+									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)
+									// }
+									// if (value.mealDinnerObject) {
+									// 	allP = Number(item) + Number(value.mealDinnerObject.mealPrice)
+									// }
+									// if (value.mealDinnerObject && value.mealBreakfastObject) {
+									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
+									// }
 
-									if (!value.mealDinnerObject && !value.mealBreakfastObject) {
-										allP = Number(item)
-									}
+									// if (!value.mealDinnerObject && !value.mealBreakfastObject) {
+									// 	allP = Number(item)
+									// }
+									allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
 
 									obj.pName = `${i+1} 人住宿价+付餐价`
 									obj.allPrice = allP
@@ -651,7 +655,8 @@
 				let params = Object.assign({
 					mealTime: 1,
 					pageIndex: 1,
-					pageSize: 999
+					pageSize: 999,
+					state: 1
 				}, this.form);
 				this.$F.doRequest(
 					this,
@@ -667,7 +672,8 @@
 				let params = Object.assign({
 					mealTime: 2,
 					pageIndex: 1,
-					pageSize: 999
+					pageSize: 999,
+					state: 1
 				}, this.form);
 				this.$F.doRequest(
 					this,

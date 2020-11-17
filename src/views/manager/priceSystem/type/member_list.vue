@@ -9,7 +9,7 @@
 						 :picker-options="pickerOptions" @blur="get_hotel_price_room_type_list"></el-date-picker>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
-						<el-row>
+						<el-row style="margin-right: -10px;">
 							<el-button type="primary" @click="popup('adjust')" style="width: 100px;" size="mini">{{$t('manager.ps_bulkPrice')}}</el-button>
 						</el-row>
 					</el-form-item>
