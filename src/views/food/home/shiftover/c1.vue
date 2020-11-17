@@ -66,13 +66,18 @@
                     <div class="item">{{$t('food.shift.tabs_title_3')}}：-100.00</div>
                     <div class="item">{{$t('food.shift.onHas')}}：-10000.00</div>
                 </el-col>
-                <el-col :span="6" class="li">
+                <!-- <el-col :span="6" class="li">
                     <div class="item">{{$t('food.shift.wechart_stitle')}}：100.00</div>
                     <div class="item">{{$t('food.shift.offHas')}}：100.00</div>
                 </el-col>
                 <el-col :span="6" class="li">
                     <div class="item">{{$t('food.shift.alipay_stitle')}}：100.00</div>
+                </el-col> -->
+                <el-col :span="6" class="li">
+                    <div class="item">{{$t('food.shift.creadCard_stitle')}}：100.00</div>
                 </el-col>
+
+
             </el-row>
             <el-row class="ftRow">{{$t('food.shift.leaveHas')}}：6000.00</el-row>
         </div>
