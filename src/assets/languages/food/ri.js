@@ -79,10 +79,10 @@ module.exports = {
     //支付方式
     payType:{
         1:'キャッシュ',
-        2:'デビットカード',
+        2:'クレジットカード',
         // 3:'支付宝',
         // 4:'支票',
-        5:'会員カード'
+        // 5:'会員カード'
     },
     //身份类型
     card_type:{
@@ -285,12 +285,12 @@ module.exports = {
     shift:{
         tabs_1:'前台交班',
         tabs_2:'交班纪录',
-    
+
         tabs_title_1:'预交班基本信息',
         tabs_time_1:'班次时间',
         tabs_num:'班次号',
         acter:'交班操作员',
-    
+
         tabs_title_2:'本班账务汇总信息',
         total:'收入总计',
         foodFee:'餐饮费',
@@ -301,7 +301,7 @@ module.exports = {
         signRoom:'签单到房间',
         creadCard:'信用卡',
         other:'其他',
-    
+
         tabs_title_3:'本班现金上交',
         wechart_stitle:'本班微信上交',
         alipay_stitle:'本班支付宝上交',
@@ -309,22 +309,22 @@ module.exports = {
         onHas:'上班留存备用金',
         offHas:'本班下放备用金',
         leaveHas:'本班走结订单金额',
-    
+
         onReport:'本班报表',
         onDuty:'交班报表(按班次)',
         onCasher:'交班报表(按收银员)',
         listReport:'消费明细表',
         payReport:'收款明细表',
         look:'预览',
-    
+
         selectOnDutyer:'请选择接班员工',
         password:'接班员工密码'
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     }
-    
+
 }
