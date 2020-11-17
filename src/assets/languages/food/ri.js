@@ -73,16 +73,16 @@ module.exports = {
     //计费类型
     billingType:{
       1:'直払い',
-      2:'部屋付け',
-      3:'法人会社請求'
+      2:'法人会社請求',
+      3:'部屋付け'
     },
     //支付方式
     payType:{
         1:'キャッシュ',
-        2:'デビットカード',
+        2:'クレジットカード',
         // 3:'支付宝',
         // 4:'支票',
-        5:'会員カード'
+        // 5:'会員カード'
     },
     //身份类型
     card_type:{
@@ -281,5 +281,50 @@ module.exports = {
         applyer_name:'申請者',
         viewer_name:'審査員 ',
         storage_detail:'明細'
+    },
+    shift:{
+        tabs_1:'シフト交替',
+        tabs_2:'交替記録',
+
+        tabs_title_1:'交替前の基本情報',
+        tabs_time_1:'シフト時間',
+        tabs_num:'シフト',
+        acter:'担当者',
+
+        tabs_title_2:'売上情報  ',
+        total:'売上合計￥',
+        foodFee:'飲食代',
+        totalFee:'精算合計￥',
+        cash:'現金',
+        wechart:'WeChat Pay',
+        alipay:'Alipay',
+        signRoom:'部屋付け',
+        creadCard:'クレジットカード',
+        other:'その他',
+
+        tabs_title_3:'現金入金',
+        wechart_stitle:'ウェチャットペイ入金',
+        alipay_stitle:'アリペイ入金',
+        creadCard_stitle:'クレジットカード入金',
+        onHas:'準備金',
+        offHas:'繰越金',
+        leaveHas:'売掛金額',
+
+        onReport:'本シフト帳票',
+        onDuty:'交替表（シフト別）',
+        onCasher:'交替表（担当者別）',
+        listReport:'売上明細表',
+        payReport:'入金明細書',
+        look:'プレビュー',
+
+        selectOnDutyer:'次シフト担当を選択してください',
+        password:'パワワード'
+
+
+
+
+
+
     }
+
 }

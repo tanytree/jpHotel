@@ -6,12 +6,12 @@
  -->
 
 <template>
-  <div class="bookOff">
+  <div class="bookOff">    
     <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="前台交班" name="first">
+            <el-tab-pane :label="$t('food.shift.tabs_1')" name="first">
                 <c1></c1>
             </el-tab-pane>
-            <el-tab-pane label="交班记录" name="second">
+            <el-tab-pane :label="$t('food.shift.tabs_2')" name="second">
                 <c2></c2>
             </el-tab-pane>
     </el-tabs>

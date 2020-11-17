@@ -1,4 +1,4 @@
-<!--  前台部 > 客户管理 > 单位管理 > 账套管理  -->
+<!--  前台部 > 客户管理 > 单位管理 > 请款管理  -->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -11,26 +11,40 @@
         size="small"
         label-width="80px"
       >
-        <el-form-item  :label="$t('desk.customer_unitName')">
-          <el-select v-model="searchForm.enterId" filterable :placeholder="$t('commons.placeChoose')" class="width150">
+        <el-form-item  :label="$t('desk.customer_unitName')+':'">
+          <el-select v-model="searchForm.enterName" filterable :placeholder="$t('commons.placeChoose')" class="width150">
             <el-option label="" value>{{$t('desk.home_all')}}</el-option>
             <el-option
               v-for="(item,index) in unitList"
               :key="index"
               :label="item.enterName"
-              :value="item.id"
+              :value="item.enterName"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_accountName')">
-          <el-input v-model="searchForm.accountSetName" class="width150"></el-input>
+        <el-form-item :label="$t('desk.customer_arage')+':'">
+          <el-date-picker
+            v-model="searchForm.startTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width: 140px"
+            :placeholder="$t('desk.serve_chooseDate')"
+          ></el-date-picker>
+          <span style="margin: 0 5px">-</span>
+          <el-date-picker
+            v-model="searchForm.endTime"
+            value-format="yyyy-MM-dd"
+            type="date"
+            style="width: 140px"
+            :placeholder="$t('desk.serve_chooseDate')"
+          ></el-date-picker>
         </el-form-item>
-
-        <el-form-item :label="$t('desk.home_state')">
+        <el-form-item :label="$t('desk.customer_pleaseState')+':'">
           <el-select v-model="searchForm.state" class="width150">
-            <el-option :label="$t('desk.home_all')" value>{{$t('desk.home_all')}}</el-option>
-            <el-option :label="$t('desk.customer_outStand')" value="1">{{$t('desk.customer_outStand')}}</el-option>
-            <el-option :label="$t('desk.customer_closeAccount')" value="2">{{$t('desk.customer_closeAccount')}}</el-option>
+            <el-option :label="$t('desk.home_all')" value></el-option>
+            <el-option :label="$t('desk.customer_notRequest')" value="1"></el-option>
+            <el-option :label="$t('desk.customer_areadyRequest')" value="3"></el-option>
+            <el-option :label="$t('desk.customer_partRequest')" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -38,7 +52,7 @@
           <el-button type="primary" class="grey" @click="initForm">{{$t('commons.resetBtn')}}</el-button>
         </el-form-item>
         <el-form-item class="form-inline-flex">
-          <el-button type="primary" @click="dialogNew= true" class="submit">{{$t('desk.customer_newAdd')}}</el-button>
+          <el-button type="primary" @click="dialogNew= true" class="submit">{{$t('desk.customer_newRequest')}}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
@@ -51,25 +65,43 @@
         size="small"
       >
         <el-table-column prop="enterName"  :label="$t('desk.customer_unitName')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="accountSetName" :label="$t('desk.customer_accountName')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="creditPrice" :label="$t('desk.customer_amountPrice')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="payPrice" :label="$t('desk.customer_amountMoney')" show-overflow-tooltip></el-table-column>
-        <el-table-column :label="$t('desk.home_state')" show-overflow-tooltip>
-          <template slot-scope="{row}">
-            <div v-if="row.state == 2">{{$t('desk.customer_closeAccount')}}</div>
-            <div v-if="row.state==1">{{$t('desk.customer_outStand')}}</div>
+        <el-table-column
+          :label="$t('desk.customer_arage')"
+          show-overflow-tooltip
+          width="120px"
+        >
+          <template slot-scope="{ row }">
+            <div><span style="color: #F11717">开</span>{{ row.startTime }}</div>
+            <div><span style="color: #1A3BF1">结</span>{{ row.endTime }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="creatorName" :label="$t('desk.customer_founder')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="requestNum" :label="$t('desk.customer_paragraphNum')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="putupPrice" :label="$t('desk.customer_amountPrice')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="requestPrice" :label="$t('desk.customer_areadyPrice')" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          :label="$t('desk.customer_waiteRequestPri')"
+          width="100"
+        >
+          <template slot-scope="{ row }">
+            <div>{{ row.putupPrice - row.requestPrice }}</div>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" :label="$t('desk.customer_creativeTime')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="sellementName" :label="$t('desk.customer_checkoutPerpson')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="updateTime" :label="$t('desk.customer_invoicingTime')" show-overflow-tooltip></el-table-column>
+        <el-table-column  :label="$t('desk.customer_pleaseState')" show-overflow-tooltip>
+              <template slot-scope="{ row }">
+            <div v-if="row.requestStatus==1">{{ $t('desk.customer_notRequest') }}</div>
+            <div v-if="row.requestStatus==2">{{ $t('desk.customer_partRequest') }}</div>
+            <div v-if="row.requestStatus==3">{{ $t('desk.customer_areadyRequest') }}</div>
+          </template>
+
+        </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{row}">
-            <el-button type="text" v-if="row.state==1" @click="editorClick(row)" size="mini">{{$t('desk.customer_editorText')}}</el-button>
-            <el-button type="text" v-if="row.state==1" @click="settleAccounts(row)" size="mini">{{$t('desk.order_invoicing')}}</el-button>
-            <el-button type="text" v-if="row.state==2" @click="undoCheckOut(row)" size="mini">{{$t('desk.customer_undoCheckout')}}</el-button>
-            <el-button type="text" v-if="row.state==2" size="mini">{{$t('desk.customer_makeUpStatement')}}</el-button>
+            <el-button type="text"  @click="editorClick(row)" size="mini">{{$t('desk.customer_editorText')}}</el-button>
+            <el-button type="text"  @click="settleAccounts(row)" size="mini">{{$t('desk.customer_lookBuyDetail')}}</el-button>
+            <el-button type="text"  @click="undoCheckOut(row)" size="mini">{{$t('desk.customer_continueRequest')}}</el-button>
+            <el-button type="text"  @click="undoCheckOut(row)" size="mini">{{$t('desk.customer_requestRecord')}}</el-button>
+            <el-button type="text"  size="mini">{{$t('commons.delete')}}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -77,8 +109,8 @@
       <div class="block">
         <el-pagination
           @current-change="handleCurrentChange"
-          :current-page="searchForm.page"
-          :page-size="searchForm.page_num"
+          :current-page="pageIndex"
+          :page-size="pageSize"
           :total="listTotal"
           layout="total, prev, pager, next, jumper"
         ></el-pagination>
@@ -572,9 +604,10 @@ export default {
         endTime: "",
       },
       searchForm: {
-        enterId: "",
-        accountSetName: "",
-        state: "",
+        enterName: "",
+       startTime: "",
+        endTime: "",
+        requestStatus:'',
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -943,9 +976,10 @@ export default {
     },
     initForm() {
       this.searchForm = {
-        enterId: "",
-        accountSetName: "",
-        state: "",
+        enterName: "",
+       startTime: "",
+        endTime: "",
+        requestStatus:'',
       };
       this.pageIndex = 1;
       this.pageSize = 10;
@@ -961,11 +995,11 @@ export default {
       this.$F.merge(params, this.searchForm);
       this.$F.doRequest(
         this,
-        "/pms/consume/enter_cridet_order_list",
+        "/pms/request/request_account_list",
         params,
         (data) => {
           console.log(data);
-          this.tableData = data.accountSetList;
+          this.tableData = data.list;
           this.listTotal = data.page.count;
         }
       );

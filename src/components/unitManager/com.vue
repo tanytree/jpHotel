@@ -4,12 +4,7 @@
     <div class="booking flex_column">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="120px">
-        <!-- <el-form-item :label="$t('boss.loginDetail_stores')">
-                    <el-select v-model="searchForm.storesNum" :placeholder="$t('boss.staff_selectStores')">
-                        <el-option :label="$t('commons.all')" value>{{ $t('commons.all') }}</el-option>
-                        <el-option :label="item.storesName" :value="item.storesNum" :key="index" v-for="(item, index) in storeList"></el-option>
-                    </el-select>
-              </el-form-item> -->
+      
         <el-form-item :label="$t('desk.customer_unitName')">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
@@ -36,43 +31,6 @@
             class="width150"
           ></el-input>
         </el-form-item>
-
-        <el-form-item :label="$t('desk.order_salesman')">
-          <el-select v-model="searchForm.salesId" class="width150">
-            <el-option
-              v-for="item in salesList"
-              :key="item.id"
-              :label="item.userName"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('desk.customer_paymentAmount')">
-          <el-input
-            v-model="searchForm.startCreditLimit"
-            class="width150"
-            style="width: 80px"
-          ></el-input>
-          {{ $t("desk.serve_to") }}
-          <el-input
-            v-model="searchForm.endCreditLimit"
-            class="width150"
-            style="width: 80px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('desk.customer_usedLimit')">
-          <el-input
-            v-model="searchForm.startUsedLimit"
-            class="width150"
-            style="width: 80px"
-          ></el-input>
-          {{ $t("desk.serve_to") }}
-          <el-input
-            v-model="searchForm.endUsedLimit"
-            class="width150"
-            style="width: 80px"
-          ></el-input>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" class="submit" @click="queryClick"
             >{{ $t("commons.queryBtn") }}
@@ -88,12 +46,12 @@
             @click="addAndEditItem('add')"
             >{{ $t("desk.customer_newAdd") }}</el-button
           >
-          <el-button type="primary" class="submit" @click="piliangClick">{{
+          <!-- <el-button type="primary" class="submit" @click="piliangClick">{{
             $t("desk.customer_volumeSet")
-          }}</el-button>
+          }}</el-button> -->
         </el-form-item>
       </el-form>
-      <!--表格数据 -->
+     <!--表格数据 -->
       <el-table
         ref="multipleTable"
         v-loading="loading"
@@ -106,64 +64,32 @@
           prop="enterName"
           :label="$t('desk.customer_unitName')"
           show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_belongStore')"
-          v-if="1 == 2"
-          show-overflow-tooltip
         >
-          <template slot-scope="scope" v-if="scope.row.storesNum">{{
-            F_storeName(scope.row.storesNum)
-          }}</template>
+          <template slot-scope="{ row }">
+            {{ row.enterName }}
+            <span v-if="row.enterPinyin">【{{ row.enterPinyin }}】</span>
+          </template>
         </el-table-column>
         <el-table-column
           prop="contactName"
-          :label="$t('desk.home_name')"
+          :label="$t('desk.customer_contactA')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           prop="contactPhone"
-          :label="$t('desk.home_phoneNum')"
+          :label="$t('desk.home_phoneNumA')"
           show-overflow-tooltip
         ></el-table-column>
-        <!-- <el-table-column
-                    prop="enterStrategyId"
-                    :label="$t('desk.customer_pricingStrategy')"
-                    show-overflow-tooltip
-                >
-                    <template slot-scope="{ row }">{{
-                            setStrategyName(row.enterStrategyId)
-                        }}
-                    </template>
-                </el-table-column> -->
+
         <el-table-column
-          prop="contractNum"
-          :label="$t('desk.customer_contractNo')"
+          prop="enterStrategyName"
+          :label="$t('desk.customer_pricingStrategy')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="creditLimit"
-          :label="$t('desk.customer_paymentAmount')"
+          prop="enterNo"
+          :label="$t('desk.customer_unitNum')"
           show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="usedLimit"
-          :label="$t('desk.customer_usedLimit')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="totalConsume"
-          :label="$t('desk.customer_totalConsum')"
-          show-overflow-tooltip
-        >
-          <template slot-scope="{ row }">
-            <div>{{ row.totalConsume ? row.totalConsume : 0 }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="totalLimit"
-          :label="$t('desk.customer_advancePayment')"
-          width="120px"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.home_state')"
@@ -180,28 +106,12 @@
             </div></template
           >
         </el-table-column>
-        <el-table-column
-          prop="salesName"
-          :label="$t('desk.order_salesman')"
-          show-overflow-tooltip
-          align="center"
-        >
-          <template slot-scope="{ row }">{{
-            setSalesIdName(row.salesId)
-          }}</template>
-        </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="160">
+          <el-table-column :label="$t('commons.operating')" width="160">
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="handleDetail(row)">{{
               $t("commons.detail")
             }}</el-button>
-            <el-button
-              type="text"
-              size="mini"
-              @click="addAndEditItem('edit', row)"
-              v-if="isHeader == 1"
-              >{{ $t("commons.modify") }}</el-button
-            >
+            <el-button type="text" size="mini" @click="addAndEditItem('edit', row)" >{{ $t("commons.modify") }}</el-button>
             <el-dropdown szie="mini" v-if="isHeader == 1">
               <span class="el-dropdown-link" style="font-size: 12px">
                 {{ $t("desk.customer_more") }}
@@ -238,7 +148,7 @@
         :total="listTotal"
       ></el-pagination>
     </div>
-    <!-- 编辑or详情弹窗 -->
+     <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
       :title="
@@ -257,188 +167,159 @@
         size="mini"
       >
         <el-row class="row">
-          <el-row class="cell">
-            <el-col :span="8" class="col">
-              <el-form-item
-                :label="$t('desk.customer_unitName') + ':'"
-                prop="enterName"
-              >
-                <el-input v-model="addCompanyForm.enterName"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item
-                :label="$t('desk.customer_contact') + ':'"
-                prop="contactName"
-              >
-                <el-input v-model="addCompanyForm.contactName"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item
-                :label="$t('desk.home_phoneNum') + ':'"
-                prop="contactPhone"
-              >
-                <el-input v-model="addCompanyForm.contactPhone"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <el-col :span="24" class="col">
+            <el-form-item
+              :label="$t('desk.customer_unitName') + ':'"
+              prop="enterName"
+            >
+              <el-input
+                v-model="addCompanyForm.enterName"
+                style="width: 128px"
+              ></el-input>
+              <el-input
+                v-model="addCompanyForm.enterPinyin"
+                style="width: 128px; margin-left: 10px"
+              ></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
-        <!-- <el-row class="row" v-if="isHeader!=1">
-                    <el-row class="cell">
-                        <el-col :span="8" class="col">
-                            <el-form-item
-                                :label="$t('desk.customer_pricingStrategy') + ':'"
-                                prop="enterStrategyId"
-                            >
-                                <el-select v-model="addCompanyForm.enterStrategyId">
-                                    <el-option
-                                        :label="item.ruleName"
-                                        :value="item.id"
-                                        v-for="(item, index) of strategyList"
-                                        :key="index"
-                                    ></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-row> -->
         <el-row class="row">
-          <el-row class="cell">
-            <!-- <el-col :span="8" class="col">
-                            <el-form-item
-                                :label="$t('desk.customer_accountRules') + ':'"
-                                prop
-                                required
-                            >
-                                <el-select v-model="addCompanyForm.ruleAlldayId">
-                                    <el-option
-                                        :label="item.ruleName"
-                                        :value="item.id"
-                                        v-for="(item, index) of alldayList"
-                                        :key="index"
-                                    ></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col> -->
-            <el-col :span="8" class="col">
-              <el-form-item
-                :label="$t('desk.customer_paymentAmount') + ':'"
-                prop="creditLimit"
-              >
-                <el-input v-model="addCompanyForm.creditLimit"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item label label-width="20px">
-                <el-checkbox v-model="addCompanyForm.state"
-                  >{{ $t("desk.customer_stopUse") }}
-                </el-checkbox>
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <el-col :span="8" class="col">
+            <el-form-item
+              :label="$t('desk.customer_contactA') + ':'"
+              prop="contactName"
+            >
+              <el-input v-model="addCompanyForm.contactName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item
+              :label="$t('desk.home_phoneNumA') + ':'"
+              prop="contactPhone"
+            >
+              <el-input v-model="addCompanyForm.contactPhone"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item label="email:">
+              <el-input v-model="addCompanyForm.email"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
-        <el-divider></el-divider>
         <el-row class="row">
-          <el-row class="cell">
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_effectiveDate') + ':'">
-                <el-date-picker
-                  v-model="addCompanyForm.effectiveStartTime"
-                  value-format="yyyy-MM-dd"
-                  type="date"
-                  style="width: 100%"
-                  :placeholder="$t('desk.serve_chooseDate')"
-                ></el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_expiryDate') + ':'">
-                <el-date-picker
-                  v-model="addCompanyForm.effectiveEndTime"
-                  value-format="yyyy-MM-dd"
-                  type="date"
-                  style="width: 100%"
-                  :placeholder="$t('desk.serve_chooseDate')"
-                ></el-date-picker>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row class="cell">
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_developmentWay') + ':'">
-                <el-select v-model="addCompanyForm.getWay">
-                  <el-option
-                    :label="$t('desk.customer_online')"
-                    :value="1"
-                  ></el-option>
-                  <el-option
-                    :label="$t('desk.customer_offline')"
-                    :value="2"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.order_salesman') + ':'">
-                <el-select v-model="addCompanyForm.salesId">
-                  <el-option
-                    v-for="item in salesList"
-                    :key="item.id"
-                    :label="item.userName"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_unitAddress') + ':'">
+              <el-input v-model="addCompanyForm.address"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_unitPhone') + ':'">
+              <el-input v-model="addCompanyForm.mobile"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_faxNum') + ':'">
+              <el-input v-model="addCompanyForm.fax"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="8" class="col">
+            <el-form-item
+              :label="$t('desk.customer_pricingStrategy') + ':'"
+              prop="enterStrategyId"
+            >
+              <el-select v-model="addCompanyForm.enterStrategyId">
+                <el-option
+                  :label="item.ruleName"
+                  :value="item.id"
+                  v-for="(item, index) of strategyList"
+                  :key="index"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item label label-width="20px">
+              <el-checkbox v-model="addCompanyForm.state"
+                >{{ $t("desk.customer_stopUse") }}
+              </el-checkbox>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-divider></el-divider>
         <el-row class="row">
-          <el-row class="cell">
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_bankAccount') + ':'">
-                <el-input v-model="addCompanyForm.bankCard"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_ein') + ':'">
-                <el-input v-model="addCompanyForm.taxNum"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_telephone') + ':'">
-                <el-input v-model="addCompanyForm.contactPhone"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row class="cell">
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_contractNo') + ':'">
-                <el-input v-model="addCompanyForm.contractNum"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_email') + ':'">
-                <el-input v-model="addCompanyForm.email"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_address') + ':'">
-                <el-input v-model="addCompanyForm.address"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row class="cell">
-            <el-col :span="12" class="col">
-              <el-form-item :label="$t('desk.home_note') + ':'">
-                <el-input
-                  type="textarea"
-                  v-model="addCompanyForm.remark"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_bankName') + ':'">
+              <el-input v-model="addCompanyForm.bankName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_bankNo') + ':'">
+              <el-input v-model="addCompanyForm.bankCard"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_branchName') + ':'">
+              <el-input v-model="addCompanyForm.branchEnterName"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_branchNo') + ':'">
+              <el-input v-model="addCompanyForm.branchEnterNo"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_branchAddress') + ':'">
+              <el-input v-model="addCompanyForm.branchEnterAddress"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_branchPhone') + ':'">
+              <el-input v-model="addCompanyForm.branchEnterTelephone"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_accountNum') + ':'">
+              <el-input v-model="addCompanyForm.accountNo"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_accName') + ':'">
+              <el-input v-model="addCompanyForm.accountName"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row class="row">
+          <el-col :span="24" class="col">
+            <el-form-item :label="$t('desk.customer_unitHeader') + ':'">
+              <el-input
+                v-model="addCompanyForm.headeName"
+                style="width: 128px"
+              ></el-input>
+              <el-input
+                v-model="addCompanyForm.headePinyin"
+                style="width: 128px; margin-left: 10px"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row class="row">
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_amountCapital') + ':'">
+              <el-input v-model="addCompanyForm.totalFee"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" class="col">
+            <el-form-item :label="$t('desk.customer_employeeNum') + ':'">
+              <el-input v-model="addCompanyForm.personNo"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -922,7 +803,7 @@ export default {
           this.loading = false;
           this.tableData = res.list;
           this.stableData = res.list;
-          this.listTotal = (res.page || {}).count || 0;
+          this.listTotal =res.page.count;
         }
       );
     },
@@ -983,7 +864,7 @@ export default {
     },
     //点击 详情按钮
     handleDetail(item) {
-      this.$router.push("/companydetail?id=" + item.id);
+      this.$router.push("/comTaodetail?id=" + item.id);
     },
     //点击单位禁用
     disableItem(item) {

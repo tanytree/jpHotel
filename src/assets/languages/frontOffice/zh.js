@@ -1,14 +1,15 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 10:59:46
+ * @LastEditTime: 2020-11-17 16:39:13
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
 
     enterpriseName: '单位名称',
-    enterpriseMobile: '单位号码',
-    enterpriseAddress: '单位地址',
+    enterpriseMobile: '单位电话',
+  enterpriseAddress: '单位地址',
+  englishM:'memo',
     cancelRoomKeep: '取消预留',
     checkInfoDesc: '入住信息',
     chooseRoomType: '请选择房型',
@@ -32,7 +33,7 @@ module.exports = {
     state: {
         "1": '正常(已发卡)',
         "2": '已挂失',
-        "3": "停用"
+        // "3": "停用"
     },
 
     // 是否黑名单 1否 2是 Integer非必填

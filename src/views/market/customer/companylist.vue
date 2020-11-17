@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-16 17:47:27
+ * @LastEditTime: 2020-11-17 17:04:11
  * @FilePath: \jiudian\src\views\market\customer\companylist.vue
  -->
 
@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-import company from "@/components/unitManager/comTao";
+import company from "@/components/unitManager/com";
 import collection from "./company/collection";
 import bill from "./company/bill";
 import accounts from "./company/accounts";

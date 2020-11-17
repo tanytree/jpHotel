@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 14:45:33
+ * @LastEditTime: 2020-11-17 16:36:14
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -135,7 +135,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                         <!--这里邮箱改为单位名-->
-                      <el-form-item :label="$t('desk.customer_unitName')" prop="email" >
+                      <el-form-item :label="$t('desk.customer_unitNameA')" prop="email" >
                         <el-input v-model="detailForm.enterName" v-if="type != 'detail'" ></el-input>
                         <template v-if="type == 'detail'">
                             {{  detailForm.enterName }}
@@ -189,7 +189,7 @@
 
                     <el-row class="cell">
                         <el-col :span="8" class="col">
-                            <el-form-item label="memo1"
+                            <el-form-item :label="$t('frontOffice.englishM')+'1'"
                             >
                                 <el-input
                                     class="width300"
@@ -203,7 +203,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8" class="col">
-                            <el-form-item label="memo2"
+                            <el-form-item :label="$t('frontOffice.englishM')+'2'"
                             >
                                 <el-input
                                     class="width300"

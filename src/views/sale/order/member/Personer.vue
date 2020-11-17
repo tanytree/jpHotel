@@ -14,23 +14,23 @@
         size="small"
         label-width="100px"
       >
-        <el-form-item :label="$t('desk.customer_memType')+':'">
-          <el-select v-model="form.id">
-            <el-option :label="$t('desk.home_all')" value=""></el-option>
-            <el-option
-              v-for="item in memberKind"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button @click="getMemberList(form)" type="primary"
-            >{{$t('commons.queryBtn')}}</el-button
-          >
-        </el-form-item>
+<!--        <el-form-item :label="$t('desk.customer_memType')+':'">-->
+<!--          <el-select v-model="form.id">-->
+<!--            <el-option :label="$t('desk.home_all')" value=""></el-option>-->
+<!--            <el-option-->
+<!--              v-for="item in memberKind"-->
+<!--              :key="item.id"-->
+<!--              :label="item.name"-->
+<!--              :value="item.id"-->
+<!--            >-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <el-button @click="getMemberList(form)" type="primary"-->
+<!--            >{{$t('commons.queryBtn')}}</el-button-->
+<!--          >-->
+<!--        </el-form-item>-->
         <el-form-item style="float: right">
           <el-button type="primary" @click="Newdata()">{{$t('commons.newAdd')}}</el-button>
           <!-- @click="resetForm"  -->

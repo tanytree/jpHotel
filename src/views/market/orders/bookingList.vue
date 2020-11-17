@@ -270,56 +270,15 @@
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="220">
                     <template slot-scope="{ row }">
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click="handelDetail(row)"
-                            >{{ $t("commons.detail") }}
-                        </el-button>
+                        <el-button type="text" size="mini" @click="handelDetail(row)">{{ $t("commons.detail") }}</el-button>
                         <template v-if="row.state != 7">
-                            <el-button
-                                type="text"
-                                size="mini"
-                                v-if="!row.deposit"
-                                @click="handleDeposit(row)"
-                                >{{ $t("desk.order_deposit") }}
-                            </el-button>
-                            <el-button
-                                type="text"
-                                size="mini"
-                                v-if="row.state == 5"
-                                @click="handleNoshow(row)"
-                                >NOSHOW
-                            </el-button>
-                            <el-button
-                                type="text"
-                                size="mini"
-                                v-if="row.state == 1"
-                                @click="handleCancel(row)"
-                                >{{ $t("commons.cancel") }}
-                            </el-button>
+                            <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>
+                            <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>
+                            <el-button type="text" size="mini" v-if="row.state == 1" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
                             <!--                        只有当渠道订单才会有接收和拒单-->
-                            <el-button
-                                type="text"
-                                size="mini"
-                                v-if="row.state == 1 && row.orderSource == 3"
-                                @click="handleAccept(row)"
-                                >{{ $t("desk.order_accept") }}
-                            </el-button>
-                            <el-button
-                                type="text"
-                                size="mini"
-                                v-if="row.state == 1 && row.orderSource == 3"
-                                @click="handleRefuse(row)"
-                                >{{ $t("desk.book_reject") }}
-                            </el-button>
-                            <el-button
-                                type="text"
-                                size="mini"
-                                v-if="row.state == 8"
-                                @click="handleReset(row)"
-                                >{{ $t("desk.order_restore") }}
-                            </el-button>
+                            <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleAccept(row)">{{ $t("desk.order_accept") }}</el-button>
+                            <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleRefuse(row)">{{ $t("desk.book_reject") }}</el-button>
+                            <el-button type="text" size="mini" v-if="row.state == 8" @click="handleReset(row)">{{ $t("desk.order_restore") }}</el-button>
                             <!--                        <el-button type="text" size="mini" v-if="row.state==4" @click="handleReset(row)">撤销</el-button>-->
                         </template>
                     </template>
@@ -714,25 +673,15 @@ export default {
                 checkInReserveId: item.id,
                 state: 1,
             };
-            this.$confirm(
-                this.$t("desk.order_sureOperate"),
-                this.$t("commons.tip_desc"),
-                {
-                    confirmButtonText: this.$t("commons.confirm"),
-                    cancelButtonText: this.$t("commons.cancel"),
-                    type: "warning",
-                }
-            )
+            this.$confirm(this.$t("desk.order_sureOperate"), this.$t("commons.tip_desc"),
+                {confirmButtonText: this.$t("commons.confirm"), cancelButtonText: this.$t("commons.cancel"), type: "warning",})
                 .then(() => {
-                    this.$F.doRequest(
-                        this,
-                        "/pms/reserve/reserve_oper",
-                        params,
+                    this.$F.doRequest(this, "/pms/reserve/reserve_oper", params,
                         (res) => {
                             this.getDataList();
                             this.$message({
-                                message: this.$t("commons.request_success"),
                                 type: "success",
+                                message: this.$t("commons.request_success"),
                             });
                         }
                     );

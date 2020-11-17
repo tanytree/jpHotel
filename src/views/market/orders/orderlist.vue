@@ -117,12 +117,8 @@
                     ></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="getDataList">{{
-                        $t("commons.queryBtn")
-                    }}</el-button>
-                    <el-button type="primary" @click="initForm">{{
-                        $t("commons.resetBtn")
-                    }}</el-button>
+                    <el-button type="primary" @click="getDataList">{{ $t("commons.queryBtn") }}</el-button>
+                    <el-button type="primary" @click="initForm">{{ $t("commons.resetBtn") }}</el-button>
 <!--                    <el-button type="primary" @click="initForm">{{-->
 <!--                        $t("commons.exportBtn")-->
 <!--                    }}</el-button>-->
@@ -132,68 +128,25 @@
           </el-form-item> -->
             </el-form>
             <!--表格数据 -->
-            <el-table
-                ref="multipleTable"
-                v-loading="loading"
-                :data="tableData"
-                header-row-class-name="default"
-                height="100%"
-                size="small"
-            >
-                <el-table-column
-                    prop="name"
-                    :label="$t('desk.home_name')"
-                    show-overflow-tooltip
-                ></el-table-column>
-                <el-table-column
-                    prop="mobile"
-                    width="140px"
-                    :label="$t('desk.order_moblePhoneA')"
-                ></el-table-column>
-                <el-table-column
-                    prop="checkinTime"
-                    :label="$t('desk.order_checkinDateA')"
-                    width="160px"
-                ></el-table-column>
-                <el-table-column
-                    prop="checkoutTime"
-                    :label="$t('desk.order_departureTime')"
-                    width="160px"
-                ></el-table-column>
-                <el-table-column
-                    prop="hotelCheckInRoom.houseNum"
-                    :label="$t('desk.home_roomNum')"
-                    show-overflow-tooltip
-                ></el-table-column>
-                <el-table-column
-                width="90px"
-                    prop="hotelCheckInRoom.roomTypeName"
-                    :label="$t('desk.home_roomType')"
-                    show-overflow-tooltip
-                ></el-table-column>
-                <el-table-column
-                    prop
-                    :label="$t('desk.home_customersCategory')"
-                    width="135px"
-                >
+            <el-table ref="multipleTable" v-loading="loading" :data="tableData" header-row-class-name="default" height="100%" size="small">
+                <el-table-column prop="name" :label="$t('desk.home_name')" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="mobile" width="140px" :label="$t('desk.order_moblePhoneA')"></el-table-column>
+                <el-table-column prop="checkinTime" :label="$t('desk.order_checkinDateA')" width="160px"></el-table-column>
+                <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" width="160px"></el-table-column>
+                <el-table-column prop="hotelCheckInRoom.houseNum" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
+                <el-table-column width="90px" prop="hotelCheckInRoom.roomTypeName" :label="$t('desk.home_roomType')" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop :label="$t('desk.home_customersCategory')" width="135px">
                     <template slot-scope="{ row }">{{
                         F_guestType(row.guestType)
                     }}</template>
                 </el-table-column>
-                <el-table-column
-                    prop
-                    :label="$t('desk.book_orderSoutce')"
-                    width="120px"
-                >
+                <el-table-column prop :label="$t('desk.book_orderSoutce')" width="120px">
                     <template slot-scope="{ row }">{{
                         F_orderSource(row.orderSource)
                     }}</template>
                 </el-table-column>
-                <el-table-column
-                    prop
-                    :label="$t('desk.order_liveStateA')"
-                    width="120px"
-                >
+                <el-table-column prop :label="$t('desk.order_liveStateA')" width="120px">
                     <template slot-scope="{ row }" style="color: red">
                         <!-- <span
                             v-if="
@@ -209,17 +162,8 @@
                             {{ F_checkinState(row.state) }}
                         </span> -->
                         <span v-if="!row.billType">{{$t('desk.order_keepLive')}}</span>
-                        <span
-                            v-if="
-                                row.billType == 2 ||
-                                row.billType == 3 ||
-                                row.billType == 4
-                            "
-                            >{{$t('desk.book_leaveStore')}}</span
-                        >
-                        <span v-if="row.billType == 1 || row.billType == 5"
-                            >{{$t('desk.order_alreadyCheckout')}}</span
-                        >
+                        <span v-if=" row.billType == 2 || row.billType == 3 || row.billType == 4">{{$t('desk.book_leaveStore')}}</span>
+                        <span v-if="row.billType == 1 || row.billType == 5">{{$t('desk.order_alreadyCheckout')}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -229,54 +173,18 @@
                 >
                     <template slot-scope="{ row }">
                         <!-- {{ F_billType(row.billType || "0") }} -->
-                        <span
-                            v-if="
-                                !row.billType ||
-                                row.billType == 2 ||
-                                row.billType == 3 ||
-                                row.billType == 4
-                            "
-                            >{{ F_billType("0") }}</span
-                        >
-                        <span v-if="row.billType == 1 || row.billType == 5">{{
-                            F_billType("1")
-                        }}</span>
+                        <span v-if=" !row.billType || row.billType == 2 || row.billType == 3 || row.billType == 4">{{ F_billType("0") }}</span>
+                        <span v-if="row.billType == 1 || row.billType == 5">{{ F_billType("1") }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="240">
                     <template slot-scope="{ row }">
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click="popClick(row, 'detail')"
-                            >{{ $t("commons.detail") }}</el-button
-                        >
+                        <el-button type="text" size="mini" @click="popClick(row, 'detail')">{{ $t("commons.detail") }}</el-button>
                         <!--              这里未退房或者今日预离订单才可以操作结账-->
-                        <el-button
-                            type="text"
-                            size="mini"
-                            v-if="row.orderType == 1 || row.orderType == 2"
-                            @click="popClick(row, 'detail')"
-                            >{{ $t("desk.order_invoicing") }}</el-button
-                        >
+                        <el-button type="text" size="mini" v-if="row.orderType == 1 || row.orderType == 2" @click="popClick(row, 'detail')">{{ $t("desk.order_invoicing") }}</el-button>
                         <!--              @click="settleAccounts(row)"-->
-                        <el-button
-                            type="text"
-                            size="mini"
-                            @click="popClick(row, 'invoicing')"
-                            >{{ $t("desk.order_invoice") }}</el-button
-                        >
-                        <el-button
-                            type="text"
-                            size="mini"
-                            v-if="
-                                row.orderType == 3 ||
-                                row.orderType == 4 ||
-                                row.orderType == 5
-                            "
-                            @click="popClick(row, 'unCheckOut')"
-                            >{{ $t("desk.order_notCheckout") }}</el-button
-                        >
+                        <el-button type="text" size="mini" @click="popClick(row, 'invoicing')">{{ $t("desk.order_invoice") }}</el-button>
+                        <el-button type="text" size="mini" v-if=" row.orderType == 3 || row.orderType == 4 || row.orderType == 5" @click="popClick(row, 'unCheckOut')">{{ $t("desk.order_notCheckout") }}</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -350,7 +258,7 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             roomTypeList: [],
-           
+
         };
     },
     mounted() {
