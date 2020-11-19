@@ -28,17 +28,17 @@
     <el-divider></el-divider>
     <el-row>
         <h3>{{$t('food.shift.tabs_title_2')}}</h3>
-        <div class="total">{{$t('food.shift.total')}}：10000.00日元</div>
+        <div class="total">{{$t('food.shift.total')}}：10000日元</div>
         <el-row>
             <el-col :span="6">
-                <div class="item">{{$t('food.shift.foodFee')}}：<span class="red">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.foodFee')}}：<span class="red">8000</span>日元</div>
             </el-col>
         </el-row>
-        <div class="total">{{$t('food.shift.totalFee')}}：6000.00日元</div>
+        <div class="total">{{$t('food.shift.totalFee')}}：6000日元</div>
         <el-row>
 
             <el-col :span="4">
-                <div class="item">{{$t('food.shift.cash')}}：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.cash')}}：<span class="blue">8000</span>日元</div>
             </el-col>
             <!-- <el-col :span="4">
                 <div class="item">{{$t('food.shift.wechart')}}：<span class="blue">8000.00</span>日元</div>
@@ -47,14 +47,14 @@
                 <div class="item">{{$t('food.shift.alipay')}}：<span class="blue">8000.00</span>日元</div>
             </el-col> -->
             <el-col :span="4">
-                <div class="item">{{$t('food.shift.signRoom')}}：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.signRoom')}}：<span class="blue">8000</span>日元</div>
             </el-col>
             <el-col :span="4">
-                <div class="item">{{$t('food.shift.creadCard')}}：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.creadCard')}}：<span class="blue">8000</span>日元</div>
             </el-col>
 
             <el-col :span="4">
-                <div class="item">{{$t('food.shift.other')}}：<span class="blue">8000.00</span>日元</div>
+                <div class="item">{{$t('food.shift.other')}}：<span class="blue">8000</span>日元</div>
             </el-col>
         </el-row>
     </el-row>
@@ -63,8 +63,8 @@
         <div class="handInCash">
             <el-row>
                 <el-col :span="6" class="li">
-                    <div class="item">{{$t('food.shift.tabs_title_3')}}：-100.00</div>
-                    <div class="item">{{$t('food.shift.onHas')}}：-10000.00</div>
+                    <div class="item">{{$t('food.shift.tabs_title_3')}}：-100</div>
+                    <div class="item">{{$t('food.shift.onHas')}}：-10000</div>
                 </el-col>
                 <!-- <el-col :span="6" class="li">
                     <div class="item">{{$t('food.shift.wechart_stitle')}}：100.00</div>
@@ -74,12 +74,12 @@
                     <div class="item">{{$t('food.shift.alipay_stitle')}}：100.00</div>
                 </el-col> -->
                 <el-col :span="6" class="li">
-                    <div class="item">{{$t('food.shift.creadCard_stitle')}}：100.00</div>
+                    <div class="item">{{$t('food.shift.creadCard_stitle')}}：100</div>
                 </el-col>
 
 
             </el-row>
-            <el-row class="ftRow">{{$t('food.shift.leaveHas')}}：6000.00</el-row>
+            <el-row class="ftRow">{{$t('food.shift.leaveHas')}}：6000</el-row>
         </div>
     </el-row>
     <el-row>

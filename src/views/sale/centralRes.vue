@@ -595,14 +595,14 @@
           <el-divider></el-divider>
           <el-row>
             <el-row>
-              <el-col :span="6">
-                <el-form-item label="性别:">
-                  <el-radio-group v-model="checkInForm.content">
-                    <el-radio label="男"></el-radio>
-                    <el-radio label="女"></el-radio>
-                  </el-radio-group>
-                </el-form-item>
-              </el-col>
+<!--              <el-col :span="6">-->
+<!--                <el-form-item label="性别:">-->
+<!--                  <el-radio-group v-model="checkInForm.content">-->
+<!--                    <el-radio label="男"></el-radio>-->
+<!--                    <el-radio label="女"></el-radio>-->
+<!--                  </el-radio-group>-->
+<!--                </el-form-item>-->
+<!--              </el-col>-->
 
               <el-col :span="6">
                 <div class="grid-content">

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-13 14:26:48
+ * @LastEditTime: 2020-11-19 15:19:22
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -12,7 +12,7 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item  @click.native="goBack">{{
+          <el-breadcrumb-item  @click.native="goBack" style="cursor:pointer">{{
             $t("desk.customer_guestHistoryRecord")
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{
@@ -146,22 +146,22 @@
         </el-table-column>
         <el-table-column prop=""  :label="$t('desk.home_roomNum')" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom.houseNum }}
+            {{ row.hotelCheckInRoom?row.hotelCheckInRoom.houseNum:'' }}
           </template>
         </el-table-column>
         <el-table-column prop="enterType" :label="$t('desk.home_roomType')" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom.roomTypeId }}
+             {{ row.hotelCheckInRoom?row.hotelCheckInRoom.roomTypeId:'' }}
           </template>
         </el-table-column>
         <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom.realPrice }}
+            {{ row.hotelCheckInRoom?row.hotelCheckInRoom.realPrice:'' }}
           </template>
         </el-table-column>
         <el-table-column prop="enterType" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom.totalRoomPrice }}
+             {{ row.hotelCheckInRoom?row.hotelCheckInRoom.totalRoomPrice:'' }}
           </template>
         </el-table-column>
         <el-table-column
@@ -170,7 +170,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
-            {{ F_storeName(row.hotelCheckInRoom.storesNum) }}
+            {{ F_storeName(row.hotelCheckInRoom?row.hotelCheckInRoom.storesNum:'') }}
           </template>
         </el-table-column>
         <el-table-column
@@ -285,7 +285,9 @@ export default {
        if(this.$route.query.form=='member'){
       this.resetActive("member");
        this.$router.replace('/customer')
-
+       }else{
+          this.resetActive("history");
+        this.$router.replace('/customer')
        }
     },
     //获取门店列表

@@ -4,7 +4,6 @@
     <div class="booking flex_column">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="120px">
-      
         <el-form-item :label="$t('desk.customer_unitName')">
           <el-input v-model="searchForm.enterName" class="width150"></el-input>
         </el-form-item>
@@ -44,14 +43,14 @@
             type="primary"
             class="submit"
             @click="addAndEditItem('add')"
-            >{{ $t("desk.customer_newAdd") }}</el-button
+            >{{ $t("desk.customer_newAddA") }}</el-button
           >
           <!-- <el-button type="primary" class="submit" @click="piliangClick">{{
             $t("desk.customer_volumeSet")
           }}</el-button> -->
         </el-form-item>
       </el-form>
-     <!--表格数据 -->
+      <!--表格数据 -->
       <el-table
         ref="multipleTable"
         v-loading="loading"
@@ -82,10 +81,13 @@
         ></el-table-column>
 
         <el-table-column
-          prop="enterStrategyName"
           :label="$t('desk.customer_pricingStrategy')"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+        <template slot-scope="{row}">
+          {{checkEnterStrategyId(row)}}
+        </template>
+        </el-table-column>
         <el-table-column
           prop="enterNo"
           :label="$t('desk.customer_unitNum')"
@@ -106,12 +108,17 @@
             </div></template
           >
         </el-table-column>
-          <el-table-column :label="$t('commons.operating')" width="160">
+        <el-table-column :label="$t('commons.operating')" width="160">
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="handleDetail(row)">{{
               $t("commons.detail")
             }}</el-button>
-            <el-button type="text" size="mini" @click="addAndEditItem('edit', row)" >{{ $t("commons.modify") }}</el-button>
+            <el-button
+              type="text"
+              size="mini"
+              @click="addAndEditItem('edit', row)"
+              >{{ $t("commons.modify") }}</el-button
+            >
             <el-dropdown szie="mini" v-if="isHeader == 1">
               <span class="el-dropdown-link" style="font-size: 12px">
                 {{ $t("desk.customer_more") }}
@@ -148,7 +155,7 @@
         :total="listTotal"
       ></el-pagination>
     </div>
-     <!-- 编辑or详情弹窗 -->
+    <!-- 编辑or详情弹窗 -->
     <el-dialog
       top="0"
       :title="
@@ -278,7 +285,9 @@
           </el-col>
           <el-col :span="8" class="col">
             <el-form-item :label="$t('desk.customer_branchPhone') + ':'">
-              <el-input v-model="addCompanyForm.branchEnterTelephone"></el-input>
+              <el-input
+                v-model="addCompanyForm.branchEnterTelephone"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -608,7 +617,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  props: ["isHeader",'footer'],
+  props: ["isHeader", "footer"],
   computed: {
     ...mapState({
       storesNum: (state) => state.user.storesInfo.storesNum,
@@ -696,21 +705,36 @@ export default {
         id: "",
         type: "",
         enterName: "",
+        enterPinyin: "",
         contactName: "",
         contactPhone: "",
+        email: "",
+        address: "",
+        mobile: "",
+        fax: "",
         enterStrategyId: "",
+        state: "",
+        bankName: "",
+        bankCard: "",
+        branchEnterName: "",
+        branchEnterNo: "",
+        branchEnterAddress: "",
+        branchEnterTelephone: "",
+        accountName: "",
+        accountNo: "",
+        headeName: "",
+        headePinyin: "",
+        totalFee: "",
+        personNo: "",
         ruleAlldayId: "",
         creditLimit: "",
         shareFlag: "",
-        state: "",
         effectiveStartTime: "",
         effectiveEndTime: "",
         getWay: "",
         salesId: "",
-        bankCard: "",
         taxNum: "",
         contractNum: "",
-        email: "",
         remark: "",
       },
 
@@ -727,10 +751,9 @@ export default {
   },
 
   mounted() {
-    console.log(this.footer);
-    this.initForm();
     this.hotel_price_enter_strategy_list();
     this.hotel_rule_allday_list();
+    this.initForm();
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
       this.salesList = data.hotelUserList;
     });
@@ -777,6 +800,7 @@ export default {
       };
       this.getDataList();
     },
+   
     //点击查询按钮
     queryClick() {
       this.pageSize = 10;
@@ -803,9 +827,16 @@ export default {
           this.loading = false;
           this.tableData = res.list;
           this.stableData = res.list;
-          this.listTotal =res.page.count;
+          this.listTotal = res.page.count;
         }
       );
+    },
+     checkEnterStrategyId(row){
+      for(let i = 0;i < this.strategyList.length;i++){
+        if( row.enterStrategyId == this.strategyList[i].id){
+          return this.strategyList[i].ruleName;
+        }
+      }
     },
     /**价格策略单位列表 */
     hotel_price_enter_strategy_list() {
@@ -815,6 +846,7 @@ export default {
         {},
         (res) => {
           this.strategyList = res;
+           
         }
       );
     },

@@ -66,7 +66,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="价格 (住宿价)" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="customPrice" :label="$t('manager.hk_livePrice')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">{{value.customPrice}}</div>
@@ -100,7 +100,7 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="name" label="附餐" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="name" :label="$t('desk.attachedMeal')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
@@ -140,7 +140,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="价格 (住宿价)" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="customPrice" :label="$t('manager.hk_livePrice')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">{{value.customPrice}}</div>
@@ -174,7 +174,7 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="name" label="附餐" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="name" :label="$t('desk.attachedMeal')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
@@ -447,7 +447,7 @@
 											a.onePrice = 0;
 											value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
 										})
-										
+
 									} else {
 										// debugger
 										res.dateList.forEach((a, b) => {

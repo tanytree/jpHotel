@@ -80,12 +80,12 @@ export default {
                 state: 1,
                 status: 1,
                 isBlacklist: 1,
+                storesNum: ''
             };
             //会员
             if (this.checkInForm.guestType == 2) {
                 this.$F.merge(params, {
-                    name: query,
-                    searchType: 1
+                    name: query
                 });
                 this.$F.doRequest(
                     this,

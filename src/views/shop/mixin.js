@@ -171,13 +171,21 @@ const mixin= {
             return arr[v]
         },
 
-        numFormate(a){
-            // console.log(a);
-              if (!a){
-               return ' '
-                }
-              var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
-              return intPartFormat
+        numFormate(num){
+            
+            if (num){
+                return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+                    return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
+                        return $1 + ",";
+                    });
+                });
+            }
+            // // console.log(a);
+            //   if (!a){
+            //    return ' '
+            //     }
+            //   var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
+            //   return intPartFormat
         },
 
         alert(v,msg){

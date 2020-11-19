@@ -20,7 +20,7 @@
                 <el-table-column prop="mealPrice" label="套餐价格/顿" align="center" width="150"></el-table-column>
                 <el-table-column :label="$t('boss.loginDetail_state')" align="center" width="120">
                     <template slot-scope="scope">
-                        <span>{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</span>
+                        <span>{{scope.row.state == 2 ? $t('commons.disable') : $t('commons.enable')}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="remark" :label="$t('desk.home_note')" align="center" width="250"></el-table-column>

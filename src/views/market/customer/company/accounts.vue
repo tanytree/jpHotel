@@ -200,7 +200,7 @@
           @current-change="handleCurrentChange"
           :current-page="pageIndex"
           :page-size="pageSize"
-          :total="listTotal"
+          :total="detailListTotal"
           layout="total, prev, pager, next, jumper"
         ></el-pagination>
       </div>
@@ -334,6 +334,7 @@ export default {
         intoStatus: "",
       },
       listTotal: 0, //总条数
+      detailListTotal:0, //查看账务明细dialog总条数
       tableData: [], //表格数据
       buyTable: [], //挂账明细dialog表格数据
       recordList:[], // 入账记录dialog表格数据
@@ -398,7 +399,7 @@ export default {
     bookRecord(row) {
       let params = {
         enterId: row.enterId,
-        searchType: 1,
+        searchType: 2,
       };
       this.$F.doRequest(this, "/pms/request/request_account_log_list", params, (res) => {
         this.recordList = res.list;
@@ -452,6 +453,7 @@ export default {
           params,
           (res) => {
             this.buyTable = res.consumeOrderList;
+            // this.detailListTotal = res.page.count;
             this.advanceDialog = true;
           }
         );

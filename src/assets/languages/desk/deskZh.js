@@ -6,6 +6,7 @@
  */
 //  前台部 中文
 module.exports = {
+    attachedMeal: '附餐',
     keepTime: '保留时间',
     autoRowHouse: '自动排房',
     rowHouse: '排房',
@@ -587,6 +588,7 @@ module.exports = {
     customer_usedLimit: '已用额度',
     customer_advancePayment: '预收款余额',
     customer_newAdd: '新增',
+    customer_newAddA: '新增单位',
     customer_volumeSet: '批量设置',
     customer_expiryDate: '失效日期',
     customer_effectiveDate: '生效日期',

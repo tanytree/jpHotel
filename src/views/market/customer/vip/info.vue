@@ -135,7 +135,7 @@
                         <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state == 2">
                             {{ $t("desk.customer_restore") }}
                         </el-button>
-<!--                        <el-button type="text" size="mini" @click="handleHistory(row)">{{ $t("desk.customer_guestHistory") }}</el-button>-->
+                       <el-button type="text" size="mini" @click="handleHistory(row)">{{ $t("desk.customer_guestHistory") }}</el-button>
                         <!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
                         <!--                            <span class="el-dropdown-link">-->
                         <!--                                {{ $t("desk.customer_more") }}-->
@@ -285,14 +285,6 @@
 import { mapState, mapActions } from "vuex";
 export default {
     props: ["type"],
-    computed: {
-        ...mapState({
-            token: (state) => state.user.token,
-            userId: (state) => state.user.userId,
-            msgKey: (state) => state.config.msgKey,
-            plat_source: (state) => state.config.plat_source,
-        }),
-    },
     data() {
         return {
             setCardVisible: false,
@@ -336,13 +328,15 @@ export default {
         };
     },
 
+    created() {
+        this.$F.commons.fetchMemberTypeList({state: 1}, (res) => {
+            this.smembertypeList = res.list;
+            this.$forceUpdate();
+        });
+    },
     mounted() {
         this.initForm();
         this.stores_list();
-        this.$F.commons.fetchMemberTypeList({state: 1}, (res) => {
-            this.smembertypeList = res.list;
-        });
-        console.log(this.type);
     },
     methods: {
         //点击客史
