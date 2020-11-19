@@ -399,7 +399,7 @@ export default {
     bookRecord(row) {
       let params = {
         enterId: row.enterId,
-        searchType: 1,
+        searchType: 2,
       };
       this.$F.doRequest(this, "/pms/request/request_account_log_list", params, (res) => {
         this.recordList = res.list;
