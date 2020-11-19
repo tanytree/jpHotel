@@ -6,7 +6,7 @@
 					<!-- 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 -->
 					<el-form-item :label="$t('manager.grsl_selectTime')+':'">
 						<el-date-picker v-model="search_d.strategyTime" value-format="yyyy-MM-dd" align="right" type="date" :placeholder="$t('commons.selectDate')"
-						 :picker-options="pickerOptions" @blur="get_hotel_price_room_type_list"></el-date-picker>
+						 :picker-options="pickerOptions"></el-date-picker>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
 						<el-row>
@@ -303,11 +303,19 @@
 				},
 				set() {},
 			},
+			strategyTime: {
+				get() {
+					return this.search_d.strategyTime
+				},
+				set() {},
+			}
 		},
 		watch: {
-			// roomPrice(newValue, oldValue) {
-			// 	this.roomPrice = newValue;
-			// },
+			strategyTime() {
+				this.dateList = []
+				this.roomType = [];
+				this.get_hotel_price_room_type_list()
+			},
 
 			// deleteSuccess(newValue, oldValue) {
 			// 	this.deleteSuccess = newValue;
@@ -434,7 +442,7 @@
 					(res) => {
 						this.roomType.push(res.roomType)
 						this.roomType.forEach((value, index) => {
-							// debugger
+							debugger
 							if (value.roomType == 1) {
 								if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
 									let arr = value.personPrice.split(',')
@@ -444,14 +452,15 @@
 
 									if (res.dayPriceList.length == 0) {
 										res.dateList.forEach((a, b) => {
-											a.onePrice = 0;
-											value.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+											// debugger
+											// a.onePrice = 0;
+											a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
 										})
 
 									} else {
 										// debugger
 										res.dateList.forEach((a, b) => {
-											a.onePrice = 0;
+											// a.onePrice = 0;
 											res.dayPriceList.forEach((c, d) => {
 												if (a.dateStr == c.dayTime) {
 													// debugger
@@ -459,14 +468,18 @@
 												}
 											})
 										})
-										console.log(res.dateList)
-										console.log(res.dayPriceList)
+										
 									}
+									console.log(res.dateList)
+									console.log(res.dayPriceList)
 
 								}
 							} else {
 								if (res.dayPriceList.length == 0) {
-									value.onePrice = value.marketPrice
+									res.dateList.forEach((a, b) => {
+										a.onePrice = value.marketPrice
+									})
+									
 								} else {
 
 									res.dateList.forEach((a, b) => {

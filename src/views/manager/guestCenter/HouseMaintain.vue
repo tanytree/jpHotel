@@ -618,20 +618,20 @@
 								});
 								arry.forEach((item, i) => {
 									obj = {}
-									// if (value.mealBreakfastObject) {
-									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)
-									// }
-									// if (value.mealDinnerObject) {
-									// 	allP = Number(item) + Number(value.mealDinnerObject.mealPrice)
-									// }
-									// if (value.mealDinnerObject && value.mealBreakfastObject) {
-									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
-									// }
+									if (value.mealBreakfastObject) {
+										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)
+									}
+									if (value.mealDinnerObject) {
+										allP = Number(item) + Number(value.mealDinnerObject.mealPrice)
+									}
+									if (value.mealDinnerObject && value.mealBreakfastObject) {
+										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
+									}
 
-									// if (!value.mealDinnerObject && !value.mealBreakfastObject) {
-									// 	allP = Number(item)
-									// }
-									allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
+									if (!value.mealDinnerObject && !value.mealBreakfastObject) {
+										allP = Number(item)
+									}
+									// allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
 
 									obj.pName = `${i+1} 人住宿价+付餐价`
 									obj.allPrice = allP

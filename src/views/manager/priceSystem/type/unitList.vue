@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-row :gutter="20" v-if="tab1_show">
+		<el-row :gutter="20" v-if="tab1_show && rili_show == false">
 			<el-row>
 				<el-form class="demo-form-inline" inline size="small">
 					<el-form-item :label="$t('manager.ps_ruleName')+':'">
@@ -39,7 +39,7 @@
 							<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="get_price_enter_strategy_delete(scope.row)">
 								<el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
 							</el-popconfirm>
-							<el-button type="text" size="small" @click="popup('changerili')">{{$t('manager.ps_modifyCalendar')}}</el-button>
+							<el-button type="text" size="small" @click="popup('changerili', scope.row)">{{$t('manager.ps_modifyCalendar')}}</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -173,13 +173,28 @@
 				<el-button @click="dialogDetail = false">关 闭</el-button>
 			</span>
 		</el-dialog>
+		
+		
+		<el-row v-if="rili_show">
+			<div class="back">
+				<el-page-header @back="backTop"></el-page-header>
+			</div>
+			<el-row>
+				<unitListRili :selectInfo="selectInfo" ></unitListRili>
+			</el-row>
+		</el-row>
 	</div>
 </template>
 
 <script>
+	import unitListRili from "./unitListRili.vue"
 	export default {
+		components:{
+			unitListRili
+		},
 		data() {
 			return {
+				rili_show: false,
 				tab1_show: true,
 				searchForm: { // 搜索列表参数
 					ruleName: '',
@@ -222,7 +237,8 @@
 					state: 1,
 					roomStrategyJson: []
 				},
-				type: ''
+				type: '',
+				selectInfo: {}
 			}
 		},
 		mounted() {
@@ -316,7 +332,10 @@
 						this.hotel_price_enter_strategy_detail(value)
 						break
 					case 'changerili':
-						this.$emit('backMember')
+						this.selectInfo = value;
+						debugger
+						this.tab1_show = true
+						this.rili_show = true
 						break
 				}
 			},
@@ -424,6 +443,13 @@
 				this.detail_info.state = 1
 				this.detail_info.roomStrategyJson = []
 				this.tab1_show = true;
+			},
+			backTop() {
+				this.rili_show = false
+				this.tab1_show = true
+				this.tableData = []
+				
+				this.get_price_enter_strategy_list();
 			},
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
