@@ -189,6 +189,12 @@ export default {
 			// 	this.info = res
 			// });
 
+            this.$F.doRequest(this, "/pms/dishes/handover/handover_base_info", params, (res) => {
+                console.log(res)
+            });
+
+
+
 
         },
         openReport(v){
@@ -196,6 +202,7 @@ export default {
            this.dialogShow = true
         }
     }
+    
 };
 </script>
 

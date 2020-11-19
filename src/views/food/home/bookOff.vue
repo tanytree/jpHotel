@@ -6,14 +6,14 @@
  -->
 
 <template>
-  <div class="bookOff">    
+  <div class="bookOff">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane :label="$t('food.shift.tabs_1')" name="first">
-                <c1></c1>
-            </el-tab-pane>
-            <el-tab-pane :label="$t('food.shift.tabs_2')" name="second">
-                <c2></c2>
-            </el-tab-pane>
+        <el-tab-pane :label="$t('food.shift.tabs_1')" name="first">
+            <c1  ref="c1" ></c1>
+        </el-tab-pane>
+        <el-tab-pane  :label="$t('food.shift.tabs_2')" name="second">
+            <c2  ref="c2"></c2>
+        </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -32,8 +32,19 @@ export default {
   methods: {
     //二级tab切片
     handleClick(tab, event) {
-      // console.log(tab.index);
+      console.log(tab.index);
     }
+  },
+  watch:{
+      activeName(val, oldVal){//普通的watch监听
+          // console.log(val)
+          if(val == 'first'){
+              this.$refs.c1.getList();
+          }
+          // if(val == 'bookOff'){
+          //     this.$refs.bookOff[0].getDataList();
+          // }
+      },
   }
 };
 </script>
