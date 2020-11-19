@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 14:09:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-13 12:01:18
+ * @LastEditTime: 2020-11-19 11:23:48
  * @FilePath: \jiudian\src\views\sale\order\member\Personer.vue
  -->
 <template>
@@ -56,12 +56,12 @@
           :label="$t('boss.add_level')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="duration" :label="$t('boss.add_usefulTime')" show-overflow-tooltip>
+        <!-- <el-table-column prop="duration" :label="$t('boss.add_usefulTime')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             <span v-if="row.duration == '9999'">{{$t('boss.add_permanent')}}</span>
             <span v-else>{{ row.duration }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop="updateTime"
           :label="$t('boss.add_resetTime')"

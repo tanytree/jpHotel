@@ -587,6 +587,7 @@ module.exports = {
     customer_usedLimit: '已用额度',
     customer_advancePayment: '预收款余额',
     customer_newAdd: '新增',
+    customer_newAddA: '新增单位',
     customer_volumeSet: '批量设置',
     customer_expiryDate: '失效日期',
     customer_effectiveDate: '生效日期',

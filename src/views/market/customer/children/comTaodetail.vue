@@ -76,7 +76,9 @@
                   <el-col :span="7" class="col">
                     <el-form-item
                       :label="$t('desk.customer_pricingStrategy') + ':'"
-                      >{{ detailForm.enterStrategyName }}</el-form-item
+                      >
+                      {{checkEnterStrategyId(detailForm.enterStrategyId)}}
+                      </el-form-item
                     >
                   </el-col>
                 </el-row>
@@ -202,9 +204,9 @@ export default {
   async mounted() {
     console.log(this.$route);
     let id = this.$route.query.id;
-    await this.findone(id);
     this.hotel_price_enter_strategy_list();
     this.hotel_rule_allday_list();
+     await this.findone(id);
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
       this.salesList = data.hotelUserList;
     });
@@ -259,6 +261,13 @@ export default {
           this.strategyList = res;
         }
       );
+    },
+     checkEnterStrategyId(enterStrategyId){
+      for(let i = 0;i < this.strategyList.length;i++){
+        if( enterStrategyId == this.strategyList[i].id){
+          return this.strategyList[i].ruleName;
+        }
+      }
     },
     /**计费规则全天房计费列表 */
     hotel_rule_allday_list() {

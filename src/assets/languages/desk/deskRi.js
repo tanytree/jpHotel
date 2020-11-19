@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-17 16:25:59
+ * @LastEditTime: 2020-11-19 14:05:45
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -386,6 +386,7 @@ module.exports = {
     customer_usedLimit: '使用済み限度額',
     customer_advancePayment: '前受残高',
     customer_newAdd: '追加',
+    customer_newAddA: '未翻译词条',
     customer_volumeSet: '一括設定',
     customer_expiryDate: '失効日',
     customer_effectiveDate: '有効期間',

@@ -135,7 +135,7 @@
                         <el-button type="text" size="mini" @click="handleRecovery(row)" v-if="row.state == 2">
                             {{ $t("desk.customer_restore") }}
                         </el-button>
-<!--                        <el-button type="text" size="mini" @click="handleHistory(row)">{{ $t("desk.customer_guestHistory") }}</el-button>-->
+                       <el-button type="text" size="mini" @click="handleHistory(row)">{{ $t("desk.customer_guestHistory") }}</el-button>
                         <!--                        <el-dropdown style="margin-left: 10px; font-size: 12px">-->
                         <!--                            <span class="el-dropdown-link">-->
                         <!--                                {{ $t("desk.customer_more") }}-->
