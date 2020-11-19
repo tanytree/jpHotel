@@ -6,6 +6,7 @@
  */
 //前台部 日文
 module.exports = {
+    attachedMeal: '食付',
     keepTime: 'ほりゅうじかん',
     autoRowHouse: '自動アサイン',
     rowHouse: 'アサイン',
@@ -736,8 +737,8 @@ module.exports = {
     customer_continueRequest: '未翻译词条',
     customer_requestRecord: '未翻译词条',
 
- 
-    
+
+
 
 
 }

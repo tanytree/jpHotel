@@ -18,22 +18,30 @@
                 <span v-if="!scope.row.isChild">
                     {{scope.row.isChild?'':scope.row.houseNum}}
                 </span>
-                    <span v-if="!scope.row.isChild">/</span>
-                    <span v-if="!scope.row.isChild">
+                <span v-if="!scope.row.isChild">/</span>
+                <span v-if="!scope.row.isChild">
                     {{scope.row.isChild?'':scope.row.roomTypeName}}
                 </span>
                 </template>
             </el-table-column>
-            <el-table-column prop="realPrice" label="房价">
-            </el-table-column>
-            <el-table-column label="姓名" width="150">
+            <el-table-column prop="housePrice" :label="$t('manager.hk_livePrice')">
                 <template slot-scope="{row, $index}">
-                    <el-row>
-                        <el-input v-model="row.name" :placeholder="$t('commons.pleaseEnter')" @keyup.native="personListKeyup(row, 'name', row.name, $index)"></el-input>
+                    <el-row v-if="!row.isChild">
+                        <el-input v-model.number="row.housePrice" :placeholder="$t('commons.pleaseEnter')" @keyup.native="personListKeyup(row, 'housePrice', row.name, $index)"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="groupName" :label="$t('commons.idCardTypeDesc')">
+            <el-table-column :label="$t('boss.loginDetail_name')" width="232">
+                <template slot-scope="{row, $index}">
+                    <el-row>
+                        <el-input v-model="row.name" @keyup.native="personListKeyup(row, 'name', row.name, $index)"
+                                  style="width: 100px;margin-right: 10px" :placeholder="$t('desk.home_name')"></el-input>
+                        <el-input v-model="row.pronunciation" @keyup.native="personListKeyup(row, 'pronunciation', row.pronunciation, $index)"
+                                  style="width: 100px" :placeholder="$t('desk.customer_nameSpell')"></el-input>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('commons.idCardTypeDesc')">
                 <template slot-scope="{row}">
                     <el-row>
                         <el-select v-model="row.idcardType" style="width:100%">
@@ -41,16 +49,15 @@
                         </el-select>
                     </el-row>
                 </template>
-
             </el-table-column>
-            <el-table-column prop="groupName" label="证件号码">
+            <el-table-column label="証明番号">
                 <template slot-scope="{row}">
                     <el-row>
-                        <el-input v-model="row.idcard" :placeholder="$t('commons.pleaseEnter')"></el-input>
+                        <el-input v-model="row.idcard"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column label="性别">
+            <el-table-column :label="$t('desk.customer_sex')">
                 <template slot-scope="{row}">
                     <el-row>
                         <el-select v-model="row.sex" style="width:100%">
@@ -59,10 +66,33 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="groupName" :label="$t('desk.order_moblePhone')">
+            <el-table-column :label="$t('desk.customer_guestType')">
+                <template slot-scope="{row}">
+                    <el-row>
+                        <el-select v-model="row.customerType" style="width:100%">
+                            <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index" ></el-option>
+                        </el-select>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('desk.order_moblePhone')">
                 <template slot-scope="{row}">
                     <el-row>
                         <el-input v-model="row.mobile" :placeholder="$t('commons.pleaseEnter')"></el-input>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('desk.attachedMeal')">
+                <template slot-scope="{row}">
+                    <el-row>
+                        <el-select v-model="row.attachMealId" style="width:100%">
+                            <el-option
+                                v-for="item in hotelattaChmealList"
+                                :key="item.id"
+                                :label="item.mealName"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
                     </el-row>
                 </template>
             </el-table-column>
@@ -70,8 +100,7 @@
                 <template slot-scope="scope">
                     <el-button type="text" size="mini" @click="del_live_in_person(scope.row, scope.$index)" v-if="scope.row.isChild">{{$t('commons.delete')}}</el-button>
                     <el-button type="text" v-if="!scope.row.isChild" size="mini" @click="addGuest(scope.row, scope.$index)"><!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
-                        <template>+同来宾客</template>
-                        <!--                    <template v-else>+入住人</template>-->
+                        <template>+{{$t('desk.customer_toTheGuest')}}</template>
                     </el-button>
                 </template>
             </el-table-column>
@@ -110,12 +139,16 @@ export default {
                 checkinId: '',
                 pageIndex: 1,
                 pageSize: 999
-            }
+            },
+
+            //附餐列表
+            hotelattaChmealList: []
         };
     },
 
     created() {
         this.liveInPersonData = this.$F.deepClone(this.liveData);
+        this.fetchHotelattaChmealList();
         this.$forceUpdate();
     },
 
@@ -133,6 +166,16 @@ export default {
                 this.$set(this.liveInPersonData[index2].personList, object.sysIndex, this.liveInPersonData[index2].personList[object.sysIndex]);
             }
         },
+        fetchHotelattaChmealList() {
+            this.$F.doRequest(this, '/pms/hotelattachmeal/list', {
+                pageIndex: 1,
+                pageSize: 999,
+                state: 1,  //1启用 2禁用
+            }, (res) => {
+                this.hotelattaChmealList = res.list;
+                this.$forceUpdate();
+            })
+        },
         getRowKey(row) {
             return row.id + row.roomId + row.houseNum;
         },
@@ -142,13 +185,13 @@ export default {
             let personListJSONList = [];
             this.liveInPersonData.forEach(item => {
                 if (!item.personList)
-                    item.personList;
+                    item.personList = [];
                 let temp = {
                     checkinRoomId: item.roomId,
                     roomTypeId: item.roomTypeId,
                     roomId: item.roomId,
-                    reservePrice: item.reservePrice,
-                    realPrice: item.realPrice,
+                    reservePrice: item.reservePrice || 0,
+                    realPrice: item.realPrice || 0,
                     personList: item.personList || []
                 }
                 let tempObject = {
@@ -158,7 +201,11 @@ export default {
                     idcard: item.idcard,
                     sex: item.sex,
                     mobile: item.mobile,
-                    id: item.id
+                    id: item.id || '',
+                    customerType: item.customerType,  //客户类型
+                    attachMealId: item.attachMealId,   //附餐
+                    pronunciation: item.pronunciation,  //拼音
+                    housePrice: (temp.personList.length > 0 ? temp.personList[0].housePrice : 0)
                 }
                 temp.personList.unshift(tempObject);
                 temp.personList.forEach(temp => {
@@ -169,6 +216,7 @@ export default {
                 personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
             })
+            debugger
             if (this.type == 'reserve') {
                 let params = {};
                 this.$F.merge(params, {
@@ -196,7 +244,6 @@ export default {
 
         //添加同来宾客
         addGuest(row, index) {
-
             let newRow = this.$F.deepClone(row);
             let sysIndex = 0;
             for (let i = 0; i < this.liveInPersonData.length; i++) {
@@ -219,87 +266,15 @@ export default {
                 sysIndex: this.liveInPersonData[index].personList.length,
                 sex: '1',
                 mobile: '',
+                customerType: '1',  //客户类型
+                attachMealId: '',   //附餐
+                pronunciation: '',  //拼音
+                housePrice: '',    //房价
             });
             this.liveInPersonData.forEach((item, i) => {
                 this.$set(this.liveInPersonData, i, this.liveInPersonData[i]);
             })
             this.$forceUpdate()
-        },
-
-        editItem_live_in_person(item) {
-            if (!item.name) {
-                this.$message.error('请填写姓名');
-                return
-            }
-            if (!item.idcardType) {
-                this.$message.error(this.$t('commons.selectIdCardType'));
-                return
-            }
-            if (!item.idcard) {
-                this.$message.error('请填写证件号');
-                return
-            }
-            if (!item.sex) {
-                this.$message.error('请选择性别');
-                return
-            }
-            if (!item.mobile) {
-                this.$message.error('请输入手机号');
-                return
-            }
-            let params = {
-                checkinRoomId: item.checkinRoomId,
-                name: item.name,
-                idcardType: item.idcardType,
-                idcard: item.idcard,
-                sex: item.sex,
-                mobile: item.mobile,
-                checkinId: item.checkinId,
-                checkInPersonId: item.checkInPersonId
-            };
-            this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
-        },
-        addItem_live_in_person(i, item) {
-            console.log(item)
-            return
-            if (!item.name) {
-                this.$message.error('请填写姓名');
-                return
-            }
-            if (!item.idcardType) {
-                this.$message.error(this.$t('commons.selectIdCardType'));
-                return
-            }
-            if (!item.idcard) {
-                this.$message.error('请填写证件号');
-                return
-            }
-            if (!item.sex) {
-                this.$message.error('请选择性别');
-                return
-            }
-            if (!item.mobile) {
-                this.$message.error('请输入手机号');
-                return
-            }
-            let params = {
-                checkinRoomId: item.checkinRoomId,
-                name: item.name,
-                idcardType: item.idcardType,
-                idcard: item.idcard,
-                sex: item.sex,
-                mobile: item.mobile,
-                checkinId: this.checkInForm.checkInId,
-                checkInPersonId: '',
-
-            };
-            this.$F.doRequest(this, '/pms/checkin/live_in_person', params, (res) => {
-                this.live_in_person_list()
-                this.$forceUpdate()
-            })
         },
         del_live_in_person(item, index) {
             let currentIndex = 0;

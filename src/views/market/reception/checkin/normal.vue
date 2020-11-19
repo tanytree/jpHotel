@@ -1237,6 +1237,7 @@ export default {
             let setRooms = (key, item) => {
                 this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
                 this.rowRoomShow = false;
+                debugger
                 for (let k in this.waitingRoom) {
                     if (this.waitingRoom[k].roomTypeId == key) {
                         if (!this.waitingRoom[k].roomsArr) {
@@ -1342,6 +1343,10 @@ export default {
                                 mobile: this.checkInForm.mobile,
                                 checkinId: "",
                                 checkInPersonId: "",
+                                housePrice: "",
+                                customerType: '1',  //客户类型
+                                attachMealId: '',   //附餐
+                                pronunciation: '',  //拼音
                             });
                         }
                         this.liveData.push(room);

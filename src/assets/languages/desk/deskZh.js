@@ -6,6 +6,7 @@
  */
 //  前台部 中文
 module.exports = {
+    attachedMeal: '附餐',
     keepTime: '保留时间',
     autoRowHouse: '自动排房',
     rowHouse: '排房',
