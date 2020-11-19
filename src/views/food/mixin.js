@@ -42,13 +42,21 @@ const mixin= {
             // console.log(newArr);
             return newArr;
         },
-        numFormate(a){
+        numFormate(num){
             // console.log(value);
-              if (!a){
-               return ' '
-                }
-              var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
-              return intPartFormat
+            if (num){
+                return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+                    return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
+                        return $1 + ",";
+                    });
+                });
+            }
+
+
+
+
+            // var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
+            // return intPartFormat
         },
         alert(v,msg){
              if(v == 200){

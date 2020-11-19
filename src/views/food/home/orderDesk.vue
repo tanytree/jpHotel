@@ -41,7 +41,7 @@
                 {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20"> {{numFormate(cartToTal)}}</span>
              </div>
             <div style="max-width: 100px;">
-               <el-button type="primary" :disabled="cartToTal == '0.00'" style="width: 100%;" @click="openDialog">{{$t('food.common.submit')}}</el-button>
+               <el-button type="primary" :disabled="cartToTal == '0.00' || cartToTal == 0" style="width: 100%;" @click="openDialog">{{$t('food.common.submit')}}</el-button>
             </div>
          </div>
       </div>
@@ -223,9 +223,9 @@ export default {
             for(let k in this.cart){
                sum +=  parseFloat(this.cart[k].price) *  parseFloat(this.cart[k].count)
             }
-            return sum.toFixed(2);
+            return sum.toFixed(0);
         }else{
-            return sum.toFixed(2);
+            return sum.toFixed(0);
         }
     },
     countToTal(){
