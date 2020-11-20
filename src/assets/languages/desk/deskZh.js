@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-17 17:53:55
+ * @LastEditTime: 2020-11-20 13:41:13
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -731,6 +731,7 @@ module.exports = {
     customer_originOrderNum: '源订单号',
     customer_billState: '入账状态',
     customer_arage: '结算范围',
+    customer_arageDate: '结算范围日期',
     customer_paragraphNum: '请款编号',
     customer_areadyPrice: '已请款金额',
     customer_areadyBookPrice: '已入账金额',
@@ -747,10 +748,10 @@ module.exports = {
     customer_waiteRequestPri: '待请款金额',
     customer_continueRequest: '继续请款',
     customer_requestRecord: '请款记录',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
+    customer_chooseUnit: '选择单位',
+    customer_newPlaceOrder: '新增请款单',
+    customer_numBefore: '编号前缀',
+    customer_settlementAll: '结算该范围内所有未结算的单位挂账',
     customer_: '',
     customer_: '',
     customer_: '',
