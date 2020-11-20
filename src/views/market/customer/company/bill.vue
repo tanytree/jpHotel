@@ -118,7 +118,7 @@
     </div>
     <!-- 新增dialog -->
     <el-dialog :title="$t('desk.customer_newAccountSet')" v-if="dialogNew" :visible.sync="dialogNew" width="700px" top="0">
-      <!-- 内层  账务选择 dialog -->
+      <!-- 内层  账务选择 dialog -->                 
       <el-dialog
        :title="$t('desk.customer_accountingChoose')"
         v-if="dialogChoose"
