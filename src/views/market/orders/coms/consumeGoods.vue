@@ -11,15 +11,11 @@
                 <el-row>
                     <div class="padding-20 clearfix" style="border:1px solid #eee;">
                         <el-form inline size="small" label-width="100px">
-                            <el-form-item :label="$t('desk.order_goodsName')+':'">
-                                <el-input v-model="searchForm.name" style="width:150px"></el-input>
+                            <el-form-item :label="$t('desk.order_goodsName') + ':'">
+                                <el-input v-model="category.goodsName" :placeholder="$t('desk.order_goodsName')" style="width:150px"></el-input>
                             </el-form-item>
                             <el-form-item :label="$t('desk.order_goodsType')+':'">
-                                <el-select v-model="searchForm.storesNum" style="width:150px">
-                                    <el-option :label="$t('commons.all')" value=""></el-option>
-                                    <!-- <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
-                                    </el-option> -->
-                                </el-select>
+                                <el-cascader v-model="category.categoryId" :options="categoryList" ></el-cascader>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" @click="getDataList">{{$t('commons.queryBtn')}}</el-button>
@@ -91,7 +87,7 @@
                             {{totalIn}}
                         </el-form-item>
                         <el-form-item :label="$t('desk.home_note') + ':'">
-                            <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                            <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off" :placeholder="$t('desk.home_note')"></el-input>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -125,6 +121,10 @@ export default {
             type: '',
             visible: false,
             loading: true,
+            category:{
+                goodsName:'',
+                categoryId:''
+            },
             searchForm: {
                 mobile: '',
                 idcard: '',
@@ -145,6 +145,7 @@ export default {
                 remark:'',
                 roorId:''
             },
+            categoryList:[]
 
         };
     },
@@ -204,30 +205,119 @@ export default {
                 pageIndex:1,
                 pageSize:10
             };
+            this.category = {
+                goodsName:'',
+                categoryId:''
+            }
             this.getDataList();
+            this.getCategoryData();
         },
         //获取列表
         getDataList() {
             this.tableData = []
             this.loading = true
             this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", {}, (res) => {
+                // console.log(res)
                 let name = this.$t('desk.serve_miniPub');
                 for(let i in res.list){
                    if(res.list[i].name == name){
                        this.sellId = res.list[i].id
-                       this.$F.doRequest(this, '/pms/sellinglog/list', this.searchForm, (res) => {
-                            let Goodlist = res.list;
-                            for(let j in Goodlist){
-                               if(Goodlist[j].sellId == this.sellId){
-                                   this.tableData.push(Goodlist[j])
-                               }
-                            }
-                        })
-                        break;
+                       this.getProductsList(res.list[i].id)
+                       break;
                    }
                }
 
             });
+        },
+
+        getProductsList(id){
+            let info = {
+                sellId:id,
+                paging:false,
+                pageIndex:1,
+                pageSize:10,
+                goodsName:this.category.goodsName,
+                categoryId:this.category.categoryId,
+                categoryType:1
+            }
+            console.log(info)
+            this.$F.doRequest(this, '/pms/sellinglog/list', info, (res) => {
+                 let Goodlist = res.list;
+                 for(let j in Goodlist){
+                    if(Goodlist[j].sellId == this.sellId){
+                        this.tableData.push(Goodlist[j])
+                    }
+                 }
+             })
+        },
+
+        //获取商品实物分类
+
+        getCategoryData() {
+            let info =  {
+                categoryType: 1
+            }
+            this.$F.doRequest(this, '/pms/hotelcategory/list',info, (res) => {
+                // this.category = res.list;
+                let categoryList = this.getTreeItem(res.list);
+                this.categoryList = this.getNewCateList(categoryList)
+                console.log('商品分类')
+                console.log(categoryList)
+                console.log('商品分类')
+
+            })
+        },
+        getTreeItem(arr) {
+            let newarr = []
+            arr.sort(this.compare('categoryOrder'))
+            newarr = arr.filter(father => {
+                const branchArr = arr.filter((child) => {
+                    if (father.id == child.pCategoryId ) child._hasParent = true;
+                    return father.id == child.pCategoryId;
+                });
+                if (branchArr.length > 0) father.child = branchArr;
+                return !father._hasParent;
+            })
+
+            newarr = newarr.filter((item) => {
+                return !item._hasParent;
+            })
+            return newarr;
+        },
+        //重组分类
+        getNewCateList(list){
+           if(list && list.length > 0 ){
+               let arr = []
+               for(let i in list){
+                   arr.push({
+                       value:list[i].id,
+                       label:list[i].name,
+                       children:this.getNewCateList(list[i].child)
+                   })
+               }
+               console.log(arr)
+               return arr
+            }
+        },
+
+        //排序
+        compare (attr, rev){
+            if(rev ==  undefined){
+                rev = 1;
+            } else {
+                rev = (rev) ? 1 : -1;
+            }
+            return function(a,b){
+                a = a[attr];
+                b = b[attr];
+                if(a < b){
+                    return rev * -1;
+                }
+                if(a > b){
+                    return rev * 1;
+                }
+                return 0;
+            }
         },
         //加入菜单
         addCart(item,index){
@@ -324,6 +414,9 @@ export default {
             params.employeePrice = this.consumeOperForm.employeePrice ? 1 : 2
             params.goodsTotal = this.cartToTal
 
+
+
+
             let roomList = this.detailData.inRoomList
             let choose = {}
             roomList.forEach(element => {
@@ -363,14 +456,13 @@ export default {
             params.goodsJson = JSON.stringify(Json)
             console.log(params)
             this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
+                this.consumeOperForm.remark = ''
+                this.consumeOperForm.roorId = ''
+                this.cart = []
               this.visible = false
               this.$emit('get_consume_order_list','');
             })
-
-
         },
-
-
 
         /**多选 */
         handleSelectionChange(val) {
