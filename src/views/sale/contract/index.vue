@@ -13,21 +13,28 @@
                          v-if="$F.filterThirdMenu('sale1', item.path, true)">
                 <!-- 单位查询-->
                 <Unitquery v-if="item.path == 'Unitquery'" isHeader="1"/>
-<!--                &lt;!&ndash; 单位查询&ndash;&gt;-->
-<!--                <UnitPrice v-if="item.path == 'UnitPrice'"/>-->
+
+                <service v-if="item.path == 'accountingQuery'"></service>
+                <!-- 请款管理 -->
+                <bill v-if="item.path == 'accountingManagement'"></bill>
+                <!-- 入账管理 -->
+                <accounts v-if="item.path == 'inAccountingManagement'"></accounts>
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
-    import Unitquery from '@/components/unitManager/com';
-    // import UnitPrice from '@/components/unitManager/unitList';
-  // import UnitPrice from './unit/unitPrice'
-  // import UnitQuery from './unit/unitquery'
 
+import Unitquery from '@/components/unitManager/com';
+import bill from "@/views/market/customer/company/bill";
+import accounts from "@/views/market/customer/company/accounts";
+import service from "@/views/market/customer/company/service";
+// import UnitPrice from '@/components/unitManager/unitList';
+// import UnitPrice from './unit/unitPrice'
+// import UnitQuery from './unit/unitquery'
   export default {
-    components: { Unitquery },
+    components: { Unitquery, bill, accounts, service },
     data () {
       return {
         activeName: ''

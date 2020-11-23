@@ -12,19 +12,9 @@
         label-width="80px"
       >
         <el-form-item :label="$t('desk.customer_unitName') + ':'">
-          <el-select
-            v-model="searchForm.enterName"
-            filterable
-            :placeholder="$t('commons.placeChoose')"
-            class="width150"
-          >
+          <el-select v-model="searchForm.enterName" filterable :placeholder="$t('commons.placeChoose')" class="width150">
             <el-option label="" value>{{ $t("desk.home_all") }}</el-option>
-            <el-option
-              v-for="(item, index) in unitList"
-              :key="index"
-              :label="item.enterName"
-              :value="item.enterName"
-            ></el-option>
+            <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.enterName"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_arage') + ':'">
@@ -44,23 +34,23 @@
             :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_pleaseState') + ':'">
-          <el-select v-model="searchForm.state" class="width150">
-            <el-option :label="$t('desk.home_all')" value></el-option>
-            <el-option
-              :label="$t('desk.customer_notRequest')"
-              value="1"
-            ></el-option>
-            <el-option
-              :label="$t('desk.customer_areadyRequest')"
-              value="3"
-            ></el-option>
-            <el-option
-              :label="$t('desk.customer_partRequest')"
-              value="2"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item :label="$t('desk.customer_pleaseState') + ':'">-->
+<!--          <el-select v-model="searchForm.state" class="width150">-->
+<!--            <el-option :label="$t('desk.home_all')" value></el-option>-->
+<!--            <el-option-->
+<!--              :label="$t('desk.customer_notRequest')"-->
+<!--              value="1"-->
+<!--            ></el-option>-->
+<!--            <el-option-->
+<!--              :label="$t('desk.customer_areadyRequest')"-->
+<!--              value="3"-->
+<!--            ></el-option>-->
+<!--            <el-option-->
+<!--              :label="$t('desk.customer_partRequest')"-->
+<!--              value="2"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item>
           <el-button type="primary" class="submit" @click="getDataList">{{
             $t("commons.queryBtn")
@@ -145,24 +135,11 @@
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
-            <el-button
-              type="text"
-              @click="addAeditor('editor', row)"
-              size="mini"
-              >{{ $t("desk.customer_editorText") }}</el-button
-            >
-            <el-button type="text" @click="advancePayments(row)" size="mini">{{
-              $t("desk.customer_lookBuyDetail")
-            }}</el-button>
-            <el-button v-if='row.requestStatus !=3 ' type="text" @click="settlement(row)"  size="mini">{{
-              $t("desk.customer_continueRequest")
-            }}</el-button>
-            <el-button type="text" @click="bookRecord(row)" size="mini">{{
-              $t("desk.customer_requestRecord")
-            }}</el-button>
-            <el-button type="text" @click="dialogNew_remove(row)" size="mini">{{
-              $t("commons.delete")
-            }}</el-button>
+            <el-button type="text" v-if="row.requestStatus != 3" @click="addAeditor('editor', row)" size="mini">{{ $t("desk.customer_editorText") }}</el-button>
+            <el-button type="text" @click="advancePayments(row)" size="mini">{{ $t("desk.customer_lookBuyDetail") }}</el-button>
+            <el-button v-if='row.requestStatus !=3 ' type="text" @click="settlement(row)"  size="mini">{{ $t("desk.customer_continueRequest") }}</el-button>
+            <el-button type="text" @click="bookRecord(row)" size="mini">{{ $t("desk.customer_requestRecord") }}</el-button>
+            <el-button type="text" @click="dialogNew_remove(row)" size="mini">{{ $t("commons.delete") }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -178,11 +155,7 @@
       </div>
     </div>
     <!-- 新增请款单dialog -->
-    <el-dialog
-      :title="
-        clickType == 'add' ? $t('desk.customer_newPlaceOrder') : '编辑请款单'
-      "
-      v-if="dialogNew"
+    <el-dialog :title="clickType == 'add' ? $t('desk.customer_newPlaceOrder') : '编辑请款单'"
       :visible.sync="dialogNew"
       width="700px"
       top="0"
@@ -213,10 +186,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item
-          :label="$t('desk.customer_paragraphNum') + ':'"
-          prop="prefix"
-        >
+        <el-form-item :label="$t('desk.customer_paragraphNum') + ':'" prop="prefix" v-if="clickType == 'add'">
           <el-input
             v-model="addPlaceFrom.prefix"
             style="width: 150px"
@@ -228,22 +198,24 @@
         </el-form-item>
         <el-form-item :label="$t('desk.customer_arageDate') + ':'" required>
           <el-col :span="8">
-            <el-form-item prop="startTime" label-width="0">
+            <el-form-item label-width="0">
               <el-date-picker
                 type="date"
                 :placeholder="$t('desk.serve_chooseDate')"
                 v-model="addPlaceFrom.startTime"
+                value-format="yyyy-MM-dd"
                 style="width: 170px"
               ></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="1">-</el-col>
           <el-col :span="8">
-            <el-form-item prop="endTime" label-width="0">
+            <el-form-item label-width="0">
               <el-date-picker
                 type="date"
                 :placeholder="$t('desk.serve_chooseDate')"
                 v-model="addPlaceFrom.endTime"
+                value-format="yyyy-MM-dd"
                 style="width: 170px"
               ></el-date-picker>
             </el-form-item>
@@ -284,10 +256,10 @@
     >
       <div class="flexBox">
         <div>
-          <span>总挂账金额：120000</span>
-          <span>挂账记录：{{ buyTable.length }}条</span>
+          <span>总挂账金额：{{ totalConsumerPrice }}</span>
+          <span  style="margin-left: 10px">挂账记录：{{ buyTable.length }}条</span>
         </div>
-        <el-button type="primary">导出EXCEL</el-button>
+<!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
       <el-table
         ref="multipleTable"
@@ -308,36 +280,42 @@
           :label="$t('desk.customer_amountPrice')"
           width="100"
         >
+            <template slot-scope="{ row }">
+                {{row.consumePrice || 0}}
+            </template>
         </el-table-column>
         <el-table-column
           :label="$t('desk.home_name')"
-          prop="checkInPerson.name"
+          prop="checkIn.name"
           width="120"
         >
+            <template slot-scope="{ row }">
+                {{row.checkIn.name + `【${row.checkIn.pronunciation || ''}】`}}
+            </template>
         </el-table-column>
         <el-table-column
-          prop="checkInPerson.checkinId"
+          prop="checkIn.id"
           :label="$t('desk.customer_originOrderNum')"
           width="300"
         >
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_roomKind')" width="100">
+        <el-table-column :label="$t('desk.customer_roomKind')"  show-overflow-tooltip>
           <template slot-scope="{ row }">
             <div>
-              {{ row.checkInPerson ? row.checkInPerson.houseName : ""
-              }}<span v-if="row.checkInPerson">/</span
-              >{{ row.checkInPerson ? row.checkInPerson.houseNum : "" }}
+              {{ row.checkIn.hotelCheckInRoom.roomTypeName || '' }}
+                <span>/</span>
+                {{ row.checkIn.hotelCheckInRoom.houseNum || "" }}
             </div>
           </template>
         </el-table-column>
         <el-table-column
-          prop="checkInPerson.checkIn.checkinTime"
+          prop="checkIn.checkinTime"
           :label="$t('desk.order_checkinDateA')"
           width="160"
         >
         </el-table-column>
         <el-table-column
-          prop="checkInPerson.checkIn.checkoutTime"
+          prop="checkIn.checkoutTime"
           :label="$t('desk.customer_checkoutTime')"
           width="160"
         >
@@ -392,48 +370,22 @@
       </div>
     </el-dialog>
     <!-- 继续请款 dialog -->
-    <el-dialog
-      :title="$t('desk.customer_continueRequest')"
-      v-if="settlementDialog"
-      :visible.sync="settlementDialog"
-      width="600px"
-      top="0"
-    >
+    <el-dialog :title="$t('desk.customer_continueRequest')" v-if="settlementDialog" :visible.sync="settlementDialog" width="600px" top="0">
       <div style="margin-left: 34px">
-        <span
-          >{{ $t("desk.customer_amountPrice") + ":"
-          }}{{ itemInfo.putupPrice }}；</span
-        >
+        <span>{{ $t("desk.customer_amountPrice") + ":" }}{{ itemInfo.putupPrice }}；</span>
         <span style="margin-left: 6px">
           {{ $t("desk.customer_areadyPrice") + ":" }}{{ itemInfo.requestPrice }}
         </span>
       </div>
-      <el-form
-        class="term demo-form-inline"
-        inline
-        size="small"
-        :model="enterForm"
-        label-width="80px"
-        ref="enterForm"
-        :rules="enterRules"
-      >
-        <el-form-item
-          :label="$t('desk.customer_placeMoney')"
-          prop="requestPrice"
-        >
-          <el-input v-model="enterForm.requestPrice"></el-input>
+      <el-form class="term demo-form-inline" inline size="small" :model="enterForm" ref="enterForm" :rules="enterRules">
+        <el-form-item :label="$t('desk.customer_placeMoney')" prop="requestPrice">
+          <el-input-number v-model.number="enterForm.requestPrice" :max="(itemInfo.putupPrice - itemInfo.requestPrice)"></el-input-number>
         </el-form-item>
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
         <span>
-          <el-button @click="settlementDialog_cancel">{{
-            $t("commons.cancel")
-          }}</el-button>
-          <el-button
-            type="primary"
-            @click="settlementDialog_save('enterForm')"
-            >{{ $t("commons.save") }}</el-button
-          >
+          <el-button @click="settlementDialog_cancel">{{ $t("commons.cancel") }}</el-button>
+          <el-button type="primary" @click="settlementDialog_save('enterForm')">{{ $t("commons.save") }}</el-button>
         </span>
       </div>
     </el-dialog>
@@ -445,14 +397,10 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapState({
-      token: (state) => state.user.token,
-      userId: (state) => state.user.userId,
-      msgKey: (state) => state.config.msgKey,
-      plat_source: (state) => state.config.plat_source,
-    }),
+
     addRules() {
       return {
+          totalConsumerPrice: 0,
         enterId: [{ required: true, message: "请选择单位", trigger: "change" }],
         prefix: [
           { required: true, message: "请填写编号前缀", trigger: "blur" },
@@ -535,6 +483,7 @@ export default {
         startTime: "",
         endTime: "",
         requestStatus: "",
+          // storesNum: ''
       },
       enterForm: {
         requestPrice: "",
@@ -548,7 +497,7 @@ export default {
       advanceDialog: false,
       dialogNew: false, // 新增账套  dialog
       settlementDialog: false,
-      itemInfo: null,
+      itemInfo: {},
       detailListTotal: 0,
       bookDialog: false,
       recordList: [],
@@ -561,15 +510,14 @@ export default {
     this.getUnitList();
   },
   methods: {
+      //新增\编辑请款
     addAeditor(type, row) {
       this.clickType = type;
       console.log(row);
       if (type == "editor") {
-        for (let i in this.addPlaceFrom) {
-          this.addPlaceFrom[i] = row[i];
-        }
+          this.addPlaceFrom = this.$F.deepClone(row);
       }
-      this.dialogNew = true;
+        this.dialogNew = true;
     },
     dialogClose() {
       this.dialogNew_cancle();
@@ -595,6 +543,13 @@ export default {
             console.log(res);
             this.buyTable = res.consumeOrderList;
             // this.detailListTotal = res.page.count;
+            this.totalConsumerPrice = 0;
+              res.consumeOrderList.forEach(item => {
+                  if (item.priceType == 13) {
+                      this.totalConsumerPrice += (item.consumePrice || 0)
+                  }
+              })
+
             this.advanceDialog = true;
           }
         );
@@ -649,29 +604,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.enterForm.requestPrice && this.enterForm.requestPrice > 0) {
-            if (
-              this.itemInfo.putupPrice - this.itemInfo.requestPrice >
-              this.enterForm.requestPrice
-            ) {
+            if (this.itemInfo.putupPrice - this.itemInfo.requestPrice > this.enterForm.requestPrice) {
               this.enterForm.requestStatus = 2;
-            } else if (
-              this.itemInfo.putupPrice - this.itemInfo.requestPrice ==
-              this.enterForm.requestPrice
-            ) {
+            } else if (this.itemInfo.putupPrice - this.itemInfo.requestPrice == this.enterForm.requestPrice) {
               this.enterForm.requestStatus = 3;
-            } else {
-              this.$message({
-                message: "请款金额不得超过挂账金额减去已请款金额",
-                type: "warning",
-              });
-              return false;
             }
-          } else {
-            this.$message({
-              message: "请款金额不能为0",
-              type: "warning",
-            });
-            return false;
           }
           let params = {
             operType: 3,
@@ -684,6 +621,7 @@ export default {
             intoStatus: this.itemInfo.intoStatus,
             requestAccountId: this.itemInfo.id,
           };
+          // this.enterForm.requestPrice = this.enterForm.requestPrice + this.itemInfo.requestPrice;
           this.$F.merge(params, this.enterForm);
           this.$F.doRequest(
             this,
@@ -745,15 +683,13 @@ export default {
             }
             this.addPlaceFrom.intoStatus = 1;
             this.addPlaceFrom.intoPrice = 0;
+            this.addPlaceFrom.operType = this.clickType == 'add' ? 1 : 2;
+            this.addPlaceFrom.requestAccountId = this.addPlaceFrom.id;
             this.$F.doRequest(
               this,
               "/pms/request/request_account_edit",
               this.addPlaceFrom,
               (res) => {
-                this.$message({
-                  message: "新增成功",
-                  type: "success",
-                });
                 this.addPlaceFrom = {
                   enterId: "",
                   prefix: "",
@@ -804,17 +740,15 @@ export default {
     },
     //点击 继续请款 按钮
     settlement(row) {
-      this.itemInfo = row;
-      console.log(this.itemInfo);
-      if (this.itemInfo) {
-        this.settlementDialog = true;
-      }
+      this.itemInfo = this.$F.deepClone(row);
+      debugger
+      this.settlementDialog = true;
     },
 
     //点击 请款记录 按钮
     bookRecord(row) {
       let params = {
-        enterId: row.enterId,
+        enterId: row.id,
         searchType: 1,
       };
       this.$F.doRequest(
@@ -852,6 +786,7 @@ export default {
         paging: true,
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
+          // storesNum: ''
       });
       this.$F.merge(params, this.searchForm);
       this.$F.doRequest(

@@ -12,7 +12,7 @@
                          :key="item.path"
                          v-if="$F.filterThirdMenu('sale', item.path, true)">
                 <!-- 中央预定-->
-                <!--                <Centralres v-if="item.path == 'central-reservation'"/>-->
+                <Centralres v-if="item.path == 'central-reservation'"/>
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -34,13 +34,13 @@ export default {
     },
     created() {
         this.$F.handleThirdMenu(this);
-        for (let i = 0; i < this.menuList.length; i++) {
-            if (this.menuList[i].path == 'central-reservation') {
-                this.menuList.splice(i, 1)
-                break;
-            }
-        }
-        this.activeName = 'staff-rights';
+        // for (let i = 0; i < this.menuList.length; i++) {
+        //     if (this.menuList[i].path == 'central-reservation') {
+        //         this.menuList.splice(i, 1)
+        //         break;
+        //     }
+        // }
+        // this.activeName = 'staff-rights';
 
     },
 

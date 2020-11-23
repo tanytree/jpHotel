@@ -154,9 +154,9 @@ export default {
         },
     },
     mounted() {
+        debugger
         if (this.type != 'checkin') {
             let id = this.$route.query.id;
-            console.log(this.$route.query.id);
             this.searchForm.checkinId = id
             this.live_in_person_list();
             this.tableData[0] = this.detailData;
@@ -169,7 +169,6 @@ export default {
     methods: {
         //添加完入住人回调
         personCallback(data) {
-
             let id = this.$route.query.id
             let params = {
                 checkinId: id,
@@ -208,6 +207,7 @@ export default {
                 pageSize: 999
             };
             this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
+                debugger
                 let data = res.checkInRoomList;
                 this.handleData(data);
                 this.liveInPersonData = data;

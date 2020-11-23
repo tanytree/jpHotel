@@ -41,9 +41,9 @@
                       <el-col :span="12" class="cell">
                         {{ $t("desk.order_sourceType") + ":" }}{{ F_guestType(detailData.checkIn.guestType) }}
                       </el-col>
-                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">
-                        会员类型：白金卡
-                      </el-col>
+<!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
+<!--                        会员类型：白金卡-->
+<!--                      </el-col>-->
 <!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
 <!--                        余额：2-->
 <!--                        <el-button size="mini" type="text">充值</el-button>-->

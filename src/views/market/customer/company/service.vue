@@ -4,40 +4,19 @@
   <div class="boss-index">
     <div class="booking">
       <!-- 查询部分 -->
-      <el-form
-        class="term"
-        inline
-        size="small"
-        label-width="80px"
-        v-model="searchForm"
-      >
+      <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
 
         <el-form-item :label="$t('desk.customer_buyerUnit')+':'">
-          <el-select
-            v-model="searchForm.enterId"
-            class="width150"
-            :placeholder="$t('commons.placeChoose')"
-          >
+          <el-select v-model="searchForm.enterId" class="width150" :placeholder="$t('commons.placeChoose')">
             <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option
-              v-for="(item, index) in unitList"
-              :key="index"
-              :label="item.enterName"
-              :value="item.id"
-            ></el-option>
+            <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_settlementStatus')+':'">
           <el-select v-model="searchForm.state" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option
-              :label="$t('desk.customer_closeAccount')"
-              value="2"
-            ></el-option>
-            <el-option
-              :label="$t('desk.customer_outStand')"
-              value="1"
-            ></el-option>
+            <el-option :label="$t('desk.customer_closeAccount')" value="2"></el-option>
+            <el-option :label="$t('desk.customer_outStand')" value="1"></el-option>
           </el-select>
         </el-form-item>
         <br />
@@ -62,28 +41,13 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="onSubmit">{{
-            $t("commons.queryBtn")
-          }}</el-button>
-          <el-button type="primary" class="grey" @click="resetForm">{{
-            $t("commons.resetBtn")
-          }}</el-button>
+          <el-button type="primary" class="submit" @click="onSubmit">{{ $t("commons.queryBtn") }}</el-button>
+          <el-button type="primary" class="grey" @click="resetForm">{{ $t("commons.resetBtn") }}</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="tableData"
-        height="100%"
-        header-row-class-name="default"
-        size="small"
-      >
-        <el-table-column
-          prop="createTime"
-          :label="$t('desk.customer_spendTime')"
-          show-overflow-tooltip
-        ></el-table-column>
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+        <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
         <el-table-column
           prop="creditName"
           :label="$t('desk.customer_buyerUnit')"
@@ -94,7 +58,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="{row}">
-            {{row.consumePrice?row.consumePrice:0}}
+            {{row.onAccountTotal || row.consumePrice || 0}}
           </template>
         </el-table-column>
         <el-table-column
@@ -103,9 +67,10 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="checkInPerson.checkIn.id"
+          prop="checkinId"
           :label="$t('desk.customer_originOrderNum')"
           show-overflow-tooltip
+          width="300"
         ></el-table-column>
         <el-table-column
           :label="$t('desk.customer_roomKind')"
@@ -183,7 +148,7 @@ export default {
         startTime: "", //考试时件
         endTime: "", //结束时间
         name: "",
-       
+
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选

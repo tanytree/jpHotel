@@ -9,12 +9,7 @@
         </el-form-item>
         <el-form-item :label="$t('desk.home_state')">
           <el-select v-model="searchForm.state" class="width150">
-            <el-option
-              :value="key"
-              v-for="(item, key, index) of $t('commons.comState')"
-              :label="item"
-              :key="index"
-            ></el-option>
+            <el-option :value="key" v-for="(item, key, index) of $t('commons.comState')" :label="item" :key="index"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_contactA')">
@@ -39,12 +34,7 @@
           </el-button>
         </el-form-item>
         <el-form-item style="float: right" v-if="isHeader == 1">
-          <el-button
-            type="primary"
-            class="submit"
-            @click="addAndEditItem('add')"
-            >{{ $t("desk.customer_newAddA") }}</el-button
-          >
+          <el-button type="primary" class="submit" @click="addAndEditItem('add')">{{ $t("desk.customer_newAddA") }}</el-button>
           <!-- <el-button type="primary" class="submit" @click="piliangClick">{{
             $t("desk.customer_volumeSet")
           }}</el-button> -->
@@ -310,10 +300,12 @@
               <el-input
                 v-model="addCompanyForm.headeName"
                 style="width: 128px"
+                :placeholder="$t('desk.home_name')"
               ></el-input>
               <el-input
                 v-model="addCompanyForm.headePinyin"
                 style="width: 128px; margin-left: 10px"
+                :placeholder="$t('desk.home_nameA')"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -702,42 +694,7 @@ export default {
       setCompanyFormVisible: false,
       setBatchFormVisible: false,
       addCompanyForm: {
-        id: "",
-        type: "",
-        enterName: "",
-        enterPinyin: "",
-        contactName: "",
-        contactPhone: "",
-        email: "",
-        address: "",
-        mobile: "",
-        fax: "",
-        enterStrategyId: "",
-        state: "",
-        bankName: "",
-        bankCard: "",
-        branchEnterName: "",
-        branchEnterNo: "",
-        branchEnterAddress: "",
-        branchEnterTelephone: "",
-        accountName: "",
-        accountNo: "",
-        headeName: "",
-        headePinyin: "",
-        totalFee: "",
-        personNo: "",
-        ruleAlldayId: "",
-        creditLimit: "",
-        shareFlag: "",
-        effectiveStartTime: "",
-        effectiveEndTime: "",
-        getWay: "",
-        salesId: "",
-        taxNum: "",
-        contractNum: "",
-        remark: "",
       },
-
       setBatchForm: {
         enterStrategyId: "",
         ruleAlldayId: "",
@@ -751,6 +708,7 @@ export default {
   },
 
   mounted() {
+      this.initAddCompanyForm();
     this.hotel_price_enter_strategy_list();
     this.hotel_rule_allday_list();
     this.initForm();
@@ -771,6 +729,44 @@ export default {
     // }
   },
   methods: {
+      initAddCompanyForm() {
+          this.addCompanyForm = {
+              id: "",
+              type: "",
+              enterName: "",
+              enterPinyin: "",
+              contactName: "",
+              contactPhone: "",
+              email: "",
+              address: "",
+              mobile: "",
+              fax: "",
+              enterStrategyId: "",
+              state: "",
+              bankName: "",
+              bankCard: "",
+              branchEnterName: "",
+              branchEnterNo: "",
+              branchEnterAddress: "",
+              branchEnterTelephone: "",
+              accountName: "",
+              accountNo: "",
+              headeName: "",
+              headePinyin: "",
+              totalFee: "",
+              personNo: "",
+              ruleAlldayId: "dev",
+              creditLimit: "1024",
+              shareFlag: "",
+              effectiveStartTime: "",
+              effectiveEndTime: "",
+              getWay: "",
+              salesId: "",
+              taxNum: "",
+              contractNum: "",
+              remark: "",
+          }
+      },
     F_storeName(v) {
       let that = this;
       for (let k in that.storeList) {
@@ -800,7 +796,7 @@ export default {
       };
       this.getDataList();
     },
-   
+
     //点击查询按钮
     queryClick() {
       this.pageSize = 10;
@@ -846,7 +842,7 @@ export default {
         {},
         (res) => {
           this.strategyList = res;
-           
+
         }
       );
     },
@@ -967,9 +963,7 @@ export default {
         this.addCompanyForm.shareFlag = item.shareFlag == 1 ? true : false;
         this.addCompanyForm.state = item.state == 2 ? true : false;
       } else {
-        for (let k in this.addCompanyForm) {
-          this.addCompanyForm[k] = "";
-        }
+          this.initAddCompanyForm();
       }
     },
     // 验证材料

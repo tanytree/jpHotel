@@ -15,15 +15,15 @@
 					</el-form-item>
 				</el-form>
 			</el-row>
-			<div class="components-edit member-price">
+			<div class="components-edit member-price" v-loading="loading">
 				<el-table :data="memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id" :default-expand-all="false"
 				 :tree-props="{children: 'roomTypeList', hasChildren: 'hasChildren'}" border lazy :load="loadRoomType">
-					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '150': ''">
-						<template slot-scope="scope">
-							<span v-if="index == 0">{{scope.row.name || scope.row.houseName}}</span>
-							<span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">{{scope.row.discount || item.onePrice}}</span>
-						</template>
-					</el-table-column>
+                        <el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '150': ''">
+                            <template slot-scope="scope">
+                                <span v-if="index == 0">{{scope.row.name || scope.row.houseName}}</span>
+                                <span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">{{scope.row.discount || item.onePrice}}</span>
+                            </template>
+                        </el-table-column>
 				</el-table>
 			</div>
 		</el-row>
@@ -190,8 +190,6 @@
 			return {
 				dateList: [],
 				memberTypeList: [],
-
-
 				memberChecked: false, // 会员类型全选
 				checkAll: false,
 				checkedMembers: [], //会员类型列表
@@ -539,12 +537,8 @@
 					priceCalend: 1, // 检索类型 1会员价格日历 2单位价格日历
 					timeType: 1, // 检索类型 1会员价格日历 2单位价格日历
 				};
-				this.$F.doRequest(
-					this,
-					"/pms/hotel/hotel_price_room_type_list",
-					params,
-					(res) => {
-
+				this.$F.doRequest(this, "/pms/hotel/hotel_price_room_type_list", params,
+                    (res) => {
 						this.dateList = res.dateList
 						this.dateList.unshift({
 							dateStr: '房型/房价',
@@ -557,7 +551,6 @@
 						});
 
 						this.memberTypeList = res.memberTypeList
-
 						this.memberTypeList.forEach((item, i) => {
 							// debugger
 							this.selectedRoomtype.push({
@@ -572,7 +565,7 @@
 							}
 							item.roomTypeList.forEach((value, j) => {
 								value.id2 = j;
-
+                                value.memberTypeObject = item;
 								if (value.roomType == 1) {
 
 									if (res.dayPriceList.length == 0) {
@@ -603,8 +596,9 @@
 
 							})
 						})
-						// debugger
-						console.log('this.memberTypeList-----', this.memberTypeList)
+                        this.$forceUpdate();
+                        console.log('this.memberTypeList-----', this.memberTypeList)
+                        console.log('this.memberTypeList-----', this.dateList)
 					}
 				);
 			},

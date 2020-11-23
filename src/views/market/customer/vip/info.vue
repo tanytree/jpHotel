@@ -328,15 +328,13 @@ export default {
         };
     },
 
-    created() {
+    mounted() {
+        this.initForm();
+        this.stores_list();
         this.$F.commons.fetchMemberTypeList({state: 1}, (res) => {
             this.smembertypeList = res.list;
             this.$forceUpdate();
         });
-    },
-    mounted() {
-        this.initForm();
-        this.stores_list();
     },
     methods: {
         //点击客史

@@ -16,21 +16,11 @@
                 {{ $t("desk.order_bookOrderInfo") }}
             </h3>
             <h3 v-if="operCheckinType == 'b3'">{{$t('desk.serve_conferenceInfo')}}</h3>
-            <el-form
-                ref="checkInForm"
-                class="inForm"
-                inline
-                size="small"
-                :model="checkInForm"
-                :rules="rules"
-                label-width="130px"
-                v-if="operCheckinType == 'a1' || operCheckinType == 'a2'"
-            >
-                <el-form-item
-                    :label="$t('desk.customer_livePeople')"
-                    prop="name"
-                >
+            <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules" label-width="130px"
+                     v-if="operCheckinType == 'a1' || operCheckinType == 'a2'">
+                <el-form-item :label="$t('desk.customer_livePeople')" prop="name">
                     <el-autocomplete
+                        style="width: 100px"
                         v-model="checkInForm.name"
                         name="name"
                         :fetch-suggestions="remoteMethod"
@@ -40,15 +30,11 @@
                         :placeholder="$t('desk.book_inputContent')"
                         @select="changeName($event)"
                     ></el-autocomplete>
+                    <el-input  style="width: 110px;margin-left: 10px" v-model="checkInForm.pronunciation" :placeholder="$t('desk.home_nameA')"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.customer_sex')+':'" prop="sex">
                     <el-radio-group v-model="checkInForm.sex">
-                        <el-radio
-                            v-for="(item, key, index) of $t('commons.F_sex')"
-                            :label="key"
-                            :key="index"
-                            >{{ item }}</el-radio
-                        >
+                        <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item :label="$t('commons.idCardTypeDesc')" prop="idcardType">
@@ -264,8 +250,8 @@
                                 <div class="row">
                                     <span class="allow">{{$t('desk.home_canOrderText')}}{{ v.reserveTotal }}</span>
                                     <div>
-                                        <el-input size="mini" class="num" v-model="v.discountPrice" v-if="getRoomsForm.changeType == 1"></el-input>
-                                        <del>{{ v.price }}</del>
+<!--                                        <el-input size="mini" class="num" v-model="v.withMealPrice" v-if="getRoomsForm.changeType == 1"></el-input>-->
+                                        <span>一人总价（含餐） {{ v.withMealPrice }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -433,38 +419,18 @@
                 >
             </span>
         </el-dialog>
-        <el-dialog
-            top="0"
-            :show-close="false"
-             :title="$t('desk.home_roomCardOpreat')"
-            :visible.sync="mackcade"
-            width="60%"
-        >
+        <el-dialog top="0" :show-close="false" :title="$t('desk.home_roomCardOpreat')" :visible.sync="mackcade" width="60%">
             <el-row>
-                <span
-                    >{{$t('desk.home_haveOne')}}&nbsp;&nbsp;{{$t('desk.home_haveCardNum')}}：{{
-                        liveCardData.done
-                    }}</span
-                >
+                <span>{{$t('desk.home_haveOne')}}&nbsp;&nbsp;{{$t('desk.home_haveCardNum')}}：{{ liveCardData.done }}</span>
                 <el-col :span="8" style="float: right">
                     <el-button @click="make_card_status">{{ $t("desk.home_makeCard") }}</el-button>
                     <el-button>{{$t('desk.home_clearCard')}}</el-button>
                     <el-button>{{$t('desk.home_readCard')}}</el-button>
                 </el-col>
             </el-row>
-            <el-table
-                ref="multipleTable"
-                :data="liveCardData.checkInRoomList"
-                @selection-change="handleSelectionChange"
-                tooltip-effect="dark"
-                style="width: 100%"
-            >
+            <el-table ref="multipleTable" :data="liveCardData.checkInRoomList" @selection-change="handleSelectionChange" tooltip-effect="dark" style="width: 100%">
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column
-                    prop="name"
-                    :label="$t('desk.home_roomNum')"
-                    width="200"
-                >
+                <el-table-column prop="name" :label="$t('desk.home_roomNum')" width="200">
                     <template slot-scope="{ row }">
                         {{ row.room ? row.room.houseNum : "" }}
                     </template>
@@ -476,18 +442,10 @@
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-                <el-button size="small" @click="mackcadeCancel">{{
-                    $t("commons.cancel")
-                }}</el-button>
+                    <el-button size="small" @click="mackcadeCancel">{{ $t("commons.cancel") }}</el-button>
             </span>
         </el-dialog>
-        <el-dialog
-            top="0"
-            :show-close="false"
-            :title="$t('desk.order_rowHouses')"
-            :visible.sync="addLivePersonShow"
-            width="80%"
-        >
+        <el-dialog top="0" :show-close="false" :title="$t('desk.order_rowHouses')" :visible.sync="addLivePersonShow" width="80%">
             <customer
                 v-if="addLivePersonShow"
                 type="checkin"
@@ -880,6 +838,7 @@ export default {
             this.checkInForm = {
                 operCheckinType: operTypeEM[this.operCheckinType] || "", //预定办理类型  1普通预定 2时租房预定 3会场预定 Integer必填
                 name: "", //入住人姓名  String必填
+                pronunciation: "", // 拼音
                 mobile: "", //电话  String选填
                 orderSource: "1", //订单来源  1前台 2销售推荐 3渠道订单 10其他  Integer必填
                 sex: "1", //    入住人性别 1男 2女 3保密  Integer必填
@@ -923,10 +882,12 @@ export default {
                         if (coverData) {
                             element.price = coverData.todayPrice;
                             element.num = coverData.num;
+
                         } else {
                             element.price = element.todayPrice;
                             element.num = 0;
                         }
+                        element.withMealPrice = (element.onePersonPrice || 0) + element.breakfastMealPrice + element.dinnerMealPrice;
                     });
 
                     function check(id) {
@@ -1009,7 +970,6 @@ export default {
                         );
                         return false;
                     }
-                    debugger
                     if (operCheckinType == "a1" || operCheckinType == "a2") {
                         if (!this.checkInForm.checkInRoomJson || this.checkInForm.checkInRoomJson.length == 0) {
                             this.$message.error(
@@ -1237,7 +1197,6 @@ export default {
             let setRooms = (key, item) => {
                 this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
                 this.rowRoomShow = false;
-                debugger
                 for (let k in this.waitingRoom) {
                     if (this.waitingRoom[k].roomTypeId == key) {
                         if (!this.waitingRoom[k].roomsArr) {
@@ -1696,10 +1655,10 @@ export default {
                                     background: #d6d6d6;
                                 }
                             }
-                            del {
+                            span {
                                 margin-left: 10px;
-                                color: #999;
-                                font-size: 13px;
+                                //color: #999;
+                                font-size: 12px;
                             }
                         }
                     }

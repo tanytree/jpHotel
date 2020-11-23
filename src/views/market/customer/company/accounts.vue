@@ -148,7 +148,7 @@
           <span>总挂账金额：120000</span>
           <span>挂账记录：{{ buyTable.length }}条</span>
         </div>
-        <el-button type="primary">导出EXCEL</el-button>
+<!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
       <el-table
         ref="multipleTable"

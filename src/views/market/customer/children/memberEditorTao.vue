@@ -611,7 +611,7 @@ export default {
       formLabelWidth: "120px",
       nationalityList: [],
       storeList: "",
-      smembertypeList: "",
+      smembertypeList: [],
       salesList: "",
       hotelenterList: "",
       cardForm: {
@@ -986,7 +986,7 @@ export default {
       });
     },
     smembertype_list() {
-      this.$F.commons.fetchMemberTypeList({}, (res) => {
+      this.$F.commons.fetchMemberTypeList({state: 1}, (res) => {
         this.smembertypeList = res.list;
       });
     },

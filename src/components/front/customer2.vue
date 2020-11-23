@@ -27,7 +27,7 @@
             <el-table-column prop="housePrice" :label="$t('manager.hk_livePrice')">
                 <template slot-scope="{row, $index}">
                     <el-row v-if="!row.isChild">
-                        <el-input v-model.number="row.housePrice" :placeholder="$t('commons.pleaseEnter')" @keyup.native="personListKeyup(row, 'housePrice', row.name, $index)"></el-input>
+                        <el-input v-model.number="row.realPrice" :placeholder="$t('commons.pleaseEnter')" @keyup.native="personListKeyup(row, 'realPrice', row.name, $index)"></el-input>
                     </el-row>
                 </template>
             </el-table-column>
@@ -148,6 +148,7 @@ export default {
 
     created() {
         this.liveInPersonData = this.$F.deepClone(this.liveData);
+        debugger
         this.fetchHotelattaChmealList();
         this.$forceUpdate();
     },
@@ -187,10 +188,10 @@ export default {
                 if (!item.personList)
                     item.personList = [];
                 let temp = {
-                    checkinRoomId: item.roomId,
+                    // checkinRoomId: item.roomId,
                     roomTypeId: item.roomTypeId,
                     roomId: item.roomId,
-                    reservePrice: item.reservePrice || 0,
+                    reservePrice: item.realPrice || 0,
                     realPrice: item.realPrice || 0,
                     personList: item.personList || []
                 }
@@ -205,7 +206,8 @@ export default {
                     customerType: item.customerType,  //客户类型
                     attachMealId: item.attachMealId,   //附餐
                     pronunciation: item.pronunciation,  //拼音
-                    housePrice: (temp.personList.length > 0 ? temp.personList[0].housePrice : 0)
+                    // housePrice: (temp.personList.length > 0 ? temp.personList[0].housePrice : 0)
+                    housePrice: 0
                 }
                 temp.personList.unshift(tempObject);
                 temp.personList.forEach(temp => {
@@ -216,7 +218,6 @@ export default {
                 personListJSONList = personListJSONList.concat(temp.personList);
                 checkInRoomJson.push(temp);
             })
-            debugger
             if (this.type == 'reserve') {
                 let params = {};
                 this.$F.merge(params, {
@@ -269,7 +270,7 @@ export default {
                 customerType: '1',  //客户类型
                 attachMealId: '',   //附餐
                 pronunciation: '',  //拼音
-                housePrice: '',    //房价
+                housePrice: 0,    //房价
             });
             this.liveInPersonData.forEach((item, i) => {
                 this.$set(this.liveInPersonData, i, this.liveInPersonData[i]);
