@@ -60,8 +60,8 @@
           width="120px"
         >
           <template slot-scope="{ row }">
-            <div><span style="color: #F11717">开</span>{{ row.startTime }}</div>
-            <div><span style="color: #1A3BF1">结</span>{{ row.endTime }}</div>
+            <div><span style="color: #f11717">开</span>{{ row.startTime }}</div>
+            <div><span style="color: #1a3bf1">结</span>{{ row.endTime }}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -110,9 +110,13 @@
               $t("desk.customer_lookBuyDetail")
             }}</el-button>
             <!-- 入账 -->
-            <el-button type="text" v-if="row.requestPrice > row.intoPrice" @click="settlement(row)" size="mini">{{
-              $t("desk.enterAccount")
-            }}</el-button>
+            <el-button
+              type="text"
+              v-if="row.requestPrice > row.intoPrice"
+              @click="settlement(row)"
+              size="mini"
+              >{{ $t("desk.enterAccount") }}</el-button
+            >
             <!-- 入账记录 -->
             <el-button type="text" @click="bookRecord(row)" size="mini">{{
               $t("desk.customer_bookRecord")
@@ -136,11 +140,14 @@
       :title="$t('desk.customer_lookBuyDetail')"
       v-if="advanceDialog"
       :visible.sync="advanceDialog"
-      width="900px"
+      width="1160px"
       top="0"
     >
       <div class="flexBox">
-        <div><span>总挂账金额：120000</span> <span>挂账记录：3条</span></div>
+        <div>
+          <span>总挂账金额：120000</span>
+          <span>挂账记录：{{ buyTable.length }}条</span>
+        </div>
         <el-button type="primary">导出EXCEL</el-button>
       </div>
       <el-table
@@ -155,55 +162,49 @@
           prop="createTime"
           :label="$t('desk.customer_spendTime')"
           show-overflow-tooltip
-          width="100px"
+          width="180px"
         ></el-table-column>
         <el-table-column
           prop="onAccountTotal"
           :label="$t('desk.customer_amountPrice')"
-          width="150"
+          width="100"
         >
         </el-table-column>
         <el-table-column
           :label="$t('desk.home_name')"
-          prop="requestPrice"
-          width="100"
+          prop="checkInPerson.name"
+          width="120"
         >
-         
         </el-table-column>
         <el-table-column
-          prop="intoPrice"
+          prop="checkInPerson.checkinId"
           :label="$t('desk.customer_originOrderNum')"
-          width="100"
+          width="300"
         >
         </el-table-column>
         <el-table-column :label="$t('desk.customer_roomKind')" width="100">
           <template slot-scope="{ row }">
-            <div>{{ row.requestPrice - row.intoPrice }}</div>
+            <div>
+              {{ row.checkInPerson ? row.checkInPerson.houseName : ""
+              }}<span v-if="row.checkInPerson">/</span
+              >{{ row.checkInPerson ? row.checkInPerson.houseNum : "" }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column
-          prop="createTime"
+          prop="checkInPerson.checkIn.checkinTime"
           :label="$t('desk.order_checkinDateA')"
           width="160"
         >
         </el-table-column>
         <el-table-column
-          prop="createTime"
+          prop="checkInPerson.checkIn.checkoutTime"
           :label="$t('desk.customer_checkoutTime')"
           width="160"
         >
         </el-table-column>
       </el-table>
-      <!--分页 -->
-      <div class="block">
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="pageIndex"
-          :page-size="pageSize"
-          :total="detailListTotal"
-          layout="total, prev, pager, next, jumper"
-        ></el-pagination>
-      </div>
+
       <div slot="footer">
         <div class="dialog-footer">
           <el-button type="primary" @click="advanceDialog = false">{{
@@ -237,10 +238,7 @@
           :label="$t('desk.customer_operateTime')"
         >
         </el-table-column>
-        <el-table-column
-          :label="$t('desk.enterAccountMoney')"
-          prop="operPrice"
-        >
+        <el-table-column :label="$t('desk.enterAccountMoney')" prop="operPrice">
         </el-table-column>
       </el-table>
       <div slot="footer">
@@ -259,7 +257,7 @@
       width="600px"
       top="0"
     >
-      <div style="margin-left: 60px">
+      <div style="margin-left: 30px">
         <span
           >{{ $t("desk.customer_placeMoney") + ":"
           }}{{ itemInfo.requestPrice }}；</span
@@ -273,14 +271,30 @@
         class="term demo-form-inline"
         inline
         size="small"
-        v-model="enterForm"
-        label-width="80px"
+        :model="enterForm"
+        ref="enterForm"
+        label-width="90px"
         :rules="enterRules"
       >
-        <el-form-item :label="$t('desk.customer_billState')" prop="">
-          <el-input v-model="enterForm.name"></el-input>
+        <el-form-item
+          :label="$t('desk.enterAccountMoney') + ':'"
+          prop="intoPrice"
+        >
+          <el-input v-model="enterForm.intoPrice"></el-input>
         </el-form-item>
       </el-form>
+      <div style="text-align: right" slot="footer" class="dialog-footer">
+        <span>
+          <el-button @click="settlementDialog_cancel">{{
+            $t("commons.cancel")
+          }}</el-button>
+          <el-button
+            type="primary"
+            @click="settlementDialog_save('enterForm')"
+            >{{ $t("desk.order_invoicing") }}</el-button
+          >
+        </span>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -296,35 +310,25 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
+    enterRules() {
+      return {
+        intoPrice: [
+          { required: true, message: "请款金额不得为空", trigger: "blur" },
+        ],
+      };
+    },
   },
   data() {
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error(this.$t("desk.customer_inputExpectPrice")));
-      } else {
-        if (value <= 0) {
-          callback(new Error(this.$t("desk.customer_expectPriceShould")));
-        } else {
-          callback();
-        }
-      }
-    };
     return {
       advanceRuleForm: {
         payType: "1",
         payPrice: "0",
         remark: "",
       },
-      rules: {
-        payPrice: [
-          { validator: validatePass, trigger: "blur", required: true },
-        ],
-      },
-
       settlementDialog: false, //入账 dialog
       itemInfo: null,
-      advanceDialog: false,  //查看挂账明细 dialog
-      bookDialog:false,  //入账记录 dialog
+      advanceDialog: false, //查看挂账明细 dialog
+      bookDialog: false, //入账记录 dialog
       pageIndex: 1, //当前页
       pageSize: 10, //页数
       loading: false,
@@ -334,13 +338,15 @@ export default {
         intoStatus: "",
       },
       listTotal: 0, //总条数
-      detailListTotal:0, //查看账务明细dialog总条数
+      detailListTotal: 0, //查看账务明细dialog总条数
       tableData: [], //表格数据
       buyTable: [], //挂账明细dialog表格数据
-      recordList:[], // 入账记录dialog表格数据
+      recordList: [], // 入账记录dialog表格数据
       pageIndex: 1,
       pageSize: 10,
       enterForm: {
+        intoPrice: "",
+        intoStatus: null,
         //入账form表单
       },
     };
@@ -360,6 +366,71 @@ export default {
       this.pageIndex = 1;
       this.pageSize = 10;
       this.getDataList();
+    },
+    //入账dialog 点击取消
+    settlementDialog_cancel() {
+      this.enterForm = {
+        intoPrice: "",
+        intoStatus: null,
+      };
+      this.settlementDialog = false;
+    },
+    //入账dialog 点击保存   入账operType值为4
+    settlementDialog_save(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (this.enterForm.intoPrice && this.enterForm.intoPrice > 0) {
+            if (this.itemInfo.requestPrice > this.enterForm.intoPrice) {
+              this.enterForm.intoStatus = 2;
+            } else if (this.itemInfo.requestPrice == this.enterForm.intoPrice) {
+              this.enterForm.intoStatus = 3;
+            } else {
+              this.$message({
+                message: "入账金额不得超过请款金额",
+                type: "warning",
+              });
+              return false;
+            }
+          } else {
+            this.$message({
+              message: "入账金额必须大于0",
+              type: "warning",
+            });
+            return false;
+          }
+          let params = {
+            operType: 4,
+            enterId: this.itemInfo.enterId,
+            startTime: this.itemInfo.startTime,
+            endTime: this.itemInfo.endTime,
+            requestNum: this.itemInfo.requestNum,
+            putupPrice: this.itemInfo.putupPrice,
+            requestAccountId: this.itemInfo.id,
+            requestPrice: this.itemInfo.requestPrice,
+            requestStatus: this.itemInfo.requestStatus,
+          };
+          this.$F.merge(params, this.enterForm);
+          this.$F.doRequest(
+            this,
+            "/pms/request/request_account_edit",
+            params,
+            (res) => {
+              this.$message({
+                message: "入账成功",
+                type: "success",
+              });
+              this.enterForm = {
+                intoPrice: "",
+                intoStatus: null,
+              };
+              this.settlementDialog = false;
+              this.getDataList();
+            }
+          );
+        } else {
+          return false;
+        }
+      });
     },
     /**获取表格数据 */
     getDataList(params = {}) {
@@ -401,39 +472,17 @@ export default {
         enterId: row.enterId,
         searchType: 2,
       };
-      this.$F.doRequest(this, "/pms/request/request_account_log_list", params, (res) => {
-        this.recordList = res.list;
-        this.bookDialog = true;
-      });
-    },
-    //预收款弹框 点击确定按钮
-    advanceDialog_sure(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          let params = {
-            enterId: this.itemInfo.id,
-            priceType: 1,
-          };
-          this.$F.merge(params, this.advanceRuleForm);
-          this.$F.doRequest(
-            this,
-            "/pms/consume/enter_consume_oper",
-            params,
-            (data) => {
-              this.advanceRuleForm = {
-                payType: "1",
-                payPrice: "0",
-                remark: "",
-              };
-              this.advanceDialog = false;
-              this.getDataList();
-            }
-          );
-        } else {
-          return false;
+      this.$F.doRequest(
+        this,
+        "/pms/request/request_account_log_list",
+        params,
+        (res) => {
+          this.recordList = res.list;
+          this.bookDialog = true;
         }
-      });
+      );
     },
+
     //点击 挂账明细 按钮
     advancePayments(row) {
       console.log(row);
