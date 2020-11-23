@@ -158,7 +158,7 @@
 
                                         <el-form-item :label="$t('food.common.payPrice')">
                                             <span class="text-red">
-                                            {{numFormate(getPayPrice)}}                                            
+                                            {{numFormate(getPayPrice)}}
                                             </span>
                                         </el-form-item>
 
@@ -334,7 +334,6 @@ export default {
         return sum.toFixed(0);
     },
 
-
     //商品数量
     countToTal(){
         let sum = 0
@@ -355,7 +354,6 @@ export default {
            }
         });
         return sum.toFixed(0);
-
     },
 
     //计算实际价格
@@ -689,38 +687,38 @@ export default {
             return
         }
 
-        if(this.form.billingType == 1){
-            if(this.form.memberCard == ''){
-                this.$message.error('请选择会员！');
-                return
-            }
-        }
+        // if(this.form.billingType == 1){
+        //     if(this.form.memberCard == ''){
+        //         this.$message.error('请选择会员！');
+        //         return
+        //     }
+        // }
 
-        if(this.form.billingType == 2){
-            if(this.form.signEnterId == ''){
-                this.$message.error('请选择单位！');
-                return
-            }
-            if(this.form.signUserName == ''){
-               this.$message.error('请输入姓名！');
-               return
-            }
-            if(this.form.signIdcardType == ''){
-                this.$message.error('请输入证件类型！');
-                return
-            }
-            if(this.form.signIdcard == ''){
-                this.$message.error('请输入证件号！');
-                return
-            }
-        }
+        // if(this.form.billingType == 2){
+        //     if(this.form.signEnterId == ''){
+        //         this.$message.error('请选择单位！');
+        //         return
+        //     }
+        //     if(this.form.signUserName == ''){
+        //        this.$message.error('请输入姓名！');
+        //        return
+        //     }
+        //     if(this.form.signIdcardType == ''){
+        //         this.$message.error('请输入证件类型！');
+        //         return
+        //     }
+        //     if(this.form.signIdcard == ''){
+        //         this.$message.error('请输入证件号！');
+        //         return
+        //     }
+        // }
 
-        if(this.form.billingType == 3){
-            if(this.form.signHouseNum == ''){
-                this.$message.error('请选择房间！');
-                return
-            }
-        }
+        // if(this.form.billingType == 3){
+        //     if(this.form.signHouseNum == ''){
+        //         this.$message.error('请选择房间！');
+        //         return
+        //     }
+        // }
         this.payLoading = true
         let params = {
             orderSource:this.searchform.orderSource,
@@ -758,6 +756,7 @@ export default {
             this.payLoading = true
             let params = this.form
             params.hasPayPrice = this.hasPayPrice
+            params.realPayPrice = this.hasPayPrice
             //cateArr 选择商品的类型是否是实体 实体1 服务2
             if(cateArr.indexOf(2) > -1){
                 params.state = 1

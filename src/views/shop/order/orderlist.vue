@@ -78,10 +78,10 @@
                 <el-table-column
                   :label="$t('food.common.curstom_info')">
                   <template slot-scope="scope">
-                      <span v-if="!scope.row.memberCard">{{$t('food.common.guests')}}</span>
-                      <span v-else>
+                      <span v-if="scope.row.memberTypeName">
                           {{scope.row.memberTypeName}}
                       </span>
+                      <span v-else>{{$t('food.common.guests')}}</span>
                   </template>
                 </el-table-column>
                 <el-table-column :label="$t('food.common.order_from')">
@@ -158,7 +158,7 @@
             <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{numFormate(detail.consumePrice)}}</div>
             <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div>
             <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">会员价格：¥{{numFormate(detail.scoresPrice)}}</div>
-            <div class="margin-t-10 text-gray">实付款：¥{{numFormate(detail.hasPayPrice)}}</div>
+            <div class="margin-t-10 text-gray">实付款：¥{{numFormate(detail.realPayPrice)}}</div>
             <div class="margin-t-10 text-gray">结账时间：¥{{detail.updateTime}}</div>
             <el-table
               class="margin-t-10 "

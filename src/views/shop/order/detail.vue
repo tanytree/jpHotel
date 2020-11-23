@@ -13,7 +13,7 @@
                     <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>
                 </div>
                 <div class="fr clearfix">
-                    总消费：{{numFormate(info.consumePrice)}};  已结:{{numFormate(info.hasPayPrice)}}
+                    总消费：{{numFormate(getFee + info.hasPayPrice)}};  已结:{{numFormate(info.hasPayPrice)}}
                 </div>
             </div>
             <div class="margin-t-20">
@@ -55,7 +55,7 @@
                         </div>
                         <div v-if="scope.row.goods.categoryType == 2">
                             <span v-if="scope.row.goods.priceModel == 2">
-                                {{numFormate(getFinalFee(scope.row.goods,endTime))}} (计时: {{getDiffDate(info.createTime,endTime)}})
+                                {{numFormate(getFinalFee(scope.row.goods,endTime,info.createTime))}} (计时: {{getDiffDate(info.createTime,endTime)}})
                             </span>
                             <span v-if="scope.row.goods.priceModel == 1">
                                <!-- {{scope.row.totalPrice}} -->

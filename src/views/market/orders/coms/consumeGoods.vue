@@ -15,7 +15,7 @@
                                 <el-input v-model="category.goodsName" :placeholder="$t('desk.order_goodsName')" style="width:150px"></el-input>
                             </el-form-item>
                             <el-form-item :label="$t('desk.order_goodsType')+':'">
-                                <el-cascader v-model="category.categoryId" :options="categoryList" ></el-cascader>
+                                <el-cascader v-model="category.categoryId" :options="categoryList" @change="changeCategoryId"></el-cascader>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" @click="getDataList">{{$t('commons.queryBtn')}}</el-button>
@@ -211,6 +211,11 @@ export default {
             }
             this.getDataList();
             this.getCategoryData();
+        },
+
+        changeCategoryId(value){
+            this.category.categoryId = value[value.length - 1].toString();
+                console.log(this.category.categoryId)
         },
         //获取列表
         getDataList() {

@@ -97,6 +97,11 @@ const mixin= {
             if(systime){
                 end =  Date.parse(new Date(systime))
             }
+
+            // console.log('date-------'+date)
+            // console.log('systime----'+systime)
+
+
             var days = (end - start)/1000
             // console.log(systime)
             // console.log(start)
@@ -108,14 +113,14 @@ const mixin= {
            var minutes = parseInt(v/ 60);
            return minutes
         },
-        getFinalFee(data,systime){
+        getFinalFee(data,systime,createTime){
             console.log(data)
                 //data.priceModel == 2 按时间 data.priceModel == 1 按次
                 if(data.priceModel == 2){
                     let startPrice = data.startPrice
                     // console.log(startPrice)
-                    // console.log('项目开始时间'+data.createTime)
-                    let allMinutes = this.getDiffMinutes(data.createTime,systime)
+                    console.log('项目开始时间'+createTime)
+                    let allMinutes = this.getDiffMinutes(createTime,systime)
                     // console.log('项目当前时间'+systime)
                     // let allMinutes =
                     // console.log(allMinutes)
@@ -172,7 +177,7 @@ const mixin= {
         },
 
         numFormate(num){
-            
+
             if (num){
                 return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
                     return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
