@@ -154,7 +154,7 @@
             <el-button type="text" @click="advancePayments(row)" size="mini">{{
               $t("desk.customer_lookBuyDetail")
             }}</el-button>
-            <el-button type="text" @click="settlement(row)" size="mini">{{
+            <el-button v-if='row.requestStatus !=3 ' type="text" @click="settlement(row)"  size="mini">{{
               $t("desk.customer_continueRequest")
             }}</el-button>
             <el-button type="text" @click="bookRecord(row)" size="mini">{{
