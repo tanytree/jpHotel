@@ -619,13 +619,13 @@
 								arry.forEach((item, i) => {
 									obj = {}
 									if (value.mealBreakfastObject) {
-										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)
+										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1)
 									}
 									if (value.mealDinnerObject) {
-										allP = Number(item) + Number(value.mealDinnerObject.mealPrice)
+										allP = Number(item) + Number(value.mealDinnerObject.mealPrice)*(i+1)
 									}
 									if (value.mealDinnerObject && value.mealBreakfastObject) {
-										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
+										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
 									}
 
 									if (!value.mealDinnerObject && !value.mealBreakfastObject) {

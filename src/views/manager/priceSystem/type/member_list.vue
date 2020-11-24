@@ -420,7 +420,7 @@
 					arr[b] = obj
 				})
 				params.roomStrategyJson = JSON.stringify(arr);
-				debugger
+				// debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_price_member_strategy_save",
@@ -571,9 +571,9 @@
 									if (res.dayPriceList.length == 0) {
 										if (value.personPrice != '' && value.personPrice != null && value.personPrice != undefined) {
 											let arr = value.personPrice.split(',')
-											debugger
 											res.dateList.forEach((a, b) => {
 												a.onePrice = 0;
+												// debugger
 												a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject
 													.mealPrice || 0)
 											})
@@ -676,7 +676,7 @@
 			},
 			// 修改单日价格日历
 			changePopup(row, item, index) {
-				debugger
+				// debugger
 				this.editPriceForm.dayTime = item.dateStr;
 				this.editPriceForm.priceCalend = 1;
 				this.editPriceForm.roomTypeId = row.id;
