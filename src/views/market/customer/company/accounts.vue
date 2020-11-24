@@ -145,8 +145,8 @@
     >
       <div class="flexBox">
         <div>
-          <span>总挂账金额：120000</span>
-          <span>挂账记录：{{ buyTable.length }}条</span>
+          <span>总挂账金额：{{ totalConsumerPrice }}</span>
+          <span  style="margin-left: 10px">挂账记录：{{ buyTable.length }}条</span>
         </div>
 <!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
@@ -169,36 +169,42 @@
           :label="$t('desk.customer_amountPrice')"
           width="100"
         >
+            <template slot-scope="{ row }">
+                {{row.consumePrice || 0}}
+            </template>
         </el-table-column>
         <el-table-column
           :label="$t('desk.home_name')"
-          prop="checkInPerson.name"
+          prop="checkIn.name"
           width="120"
         >
+            <template slot-scope="{ row }">
+                {{row.checkIn.name + `【${row.checkIn.pronunciation || ''}】`}}
+            </template>
         </el-table-column>
         <el-table-column
-          prop="checkInPerson.checkinId"
+          prop="checkIn.id"
           :label="$t('desk.customer_originOrderNum')"
           width="300"
         >
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_roomKind')" width="100">
+        <el-table-column :label="$t('desk.customer_roomKind')"  show-overflow-tooltip>
           <template slot-scope="{ row }">
             <div>
-              {{ row.checkInPerson ? row.checkInPerson.houseName : ""
-              }}<span v-if="row.checkInPerson">/</span
-              >{{ row.checkInPerson ? row.checkInPerson.houseNum : "" }}
+              {{ row.checkIn.hotelCheckInRoom.roomTypeName || '' }}
+                <span>/</span>
+                {{ row.checkIn.hotelCheckInRoom.houseNum || "" }}
             </div>
           </template>
         </el-table-column>
         <el-table-column
-          prop="checkInPerson.checkIn.checkinTime"
+          prop="checkIn.checkinTime"
           :label="$t('desk.order_checkinDateA')"
           width="160"
         >
         </el-table-column>
         <el-table-column
-          prop="checkInPerson.checkIn.checkoutTime"
+          prop="checkIn.checkoutTime"
           :label="$t('desk.customer_checkoutTime')"
           width="160"
         >
@@ -314,6 +320,31 @@ export default {
       return {
         intoPrice: [
           { required: true, message: "请款金额不得为空", trigger: "blur" },
+        ],
+      };
+    },
+     addRules() {
+      return {
+          totalConsumerPrice: 0,
+        enterId: [{ required: true, message: "请选择单位", trigger: "change" }],
+        prefix: [
+          { required: true, message: "请填写编号前缀", trigger: "blur" },
+        ],
+        startTime: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择日期",
+            trigger: "change",
+          },
+        ],
+        endTime: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择日期",
+            trigger: "change",
+          },
         ],
       };
     },
@@ -483,7 +514,7 @@ export default {
       );
     },
 
-    //点击 挂账明细 按钮
+     //点击 挂账明细 按钮
     advancePayments(row) {
       console.log(row);
       this.itemInfo = row;
@@ -501,8 +532,16 @@ export default {
           "/pms/consume/enter_credit_order_list",
           params,
           (res) => {
+            console.log(res);
             this.buyTable = res.consumeOrderList;
             // this.detailListTotal = res.page.count;
+            this.totalConsumerPrice = 0;
+              res.consumeOrderList.forEach(item => {
+                  if (item.priceType == 13) {
+                      this.totalConsumerPrice += (item.consumePrice || 0)
+                  }
+              })
+
             this.advanceDialog = true;
           }
         );
