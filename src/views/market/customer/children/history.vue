@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-19 15:19:22
+ * @LastEditTime: 2020-11-24 17:59:26
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -126,15 +126,19 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="checkinDays"
+          prop="checkInDays"
           :label="$t('desk.customer_dayNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="enterType"
           :label="$t('desk.customer_roomType')"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+        <template slot-scope="{row}">
+          <div v-if="row.operCheckinType==1||2">客房</div>
+          <div v-if="row.operCheckinType==3">会场</div>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="operCheckinType"
           :label="$t('desk.order_checkinWay')"
@@ -149,23 +153,16 @@
             {{ row.hotelCheckInRoom?row.hotelCheckInRoom.houseNum:'' }}
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" :label="$t('desk.home_roomType')" show-overflow-tooltip>
-          <template slot-scope="{ row }">
-             {{ row.hotelCheckInRoom?row.hotelCheckInRoom.roomTypeId:'' }}
-          </template>
+        <el-table-column  :label="$t('desk.home_roomType')" prop="hotelCheckInRoom.roomTypeName" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom?row.hotelCheckInRoom.realPrice:'' }}
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
-          <template slot-scope="{ row }">
-             {{ row.hotelCheckInRoom?row.hotelCheckInRoom.totalRoomPrice:'' }}
-          </template>
+        <el-table-column prop="consumeTotalPrice" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="enterType"
           :label="$t('desk.customer_occurrenceStore')"
           show-overflow-tooltip
         >
@@ -183,6 +180,9 @@
           :label="$t('desk.customer_toTheGuest')"
           show-overflow-tooltip
         >
+        <template slot-scope="{row}">
+          <span v-for="(item,index) in row.personList" :key='index' style="margin-right:6px">{{item.name}}</span>
+        </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220" >
           <template slot-scope="{ row }">

@@ -423,14 +423,14 @@
 						this.files = [];
 						let arr = value.personPrice.split(',')
 						let obj = {}
-						debugger
+						//debugger
 						arr.forEach((item, i) => {
 							obj = {}
 							obj.price = item
 							obj.sid = i + 1
 							this.ruleForm_sit.push(obj)
 						})
-						debugger
+						//debugger
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
 							arr.map((i) => {

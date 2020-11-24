@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-10 16:36:39
- * @FilePath: /jiudian/src/views/market/orders/bookingcoms/customer.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-24 17:10:15
+ * @FilePath: \jiudian\src\components\front\customer2.vue
  -->
 <template>
     <div class="customer">
@@ -148,7 +148,7 @@ export default {
 
     created() {
         this.liveInPersonData = this.$F.deepClone(this.liveData);
-        debugger
+        //debugger
         this.fetchHotelattaChmealList();
         this.$forceUpdate();
     },

@@ -442,7 +442,7 @@
 					(res) => {
 						this.roomType.push(res.roomType)
 						this.roomType.forEach((value, index) => {
-							debugger
+							//debugger
 							if (value.roomType == 1) {
 								if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
 									let arr = value.personPrice.split(',')

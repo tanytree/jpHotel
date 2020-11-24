@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-02 11:56:51
+ * @LastEditTime: 2020-11-24 16:03:56
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -349,7 +349,7 @@ import someAccounts from './someAccounts'
 import invoicing from './invoicing'
 export default {
     mixins: [myMixin],
-    props: ['currentRoomId', 'detailData'],
+   props: ["detailData", "currentRoomId"],
     components: {
         consumeGoods,
         someAccounts,
@@ -689,6 +689,7 @@ export default {
                let array = res.consumeOrderList.map(v=>{
                    return v.state
                });
+               console.log(array);
                let params = {}
                params.checkInId = this.checkInId
                if(this.isArrSame(array,1) == true){
