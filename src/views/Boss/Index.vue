@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import EmployeeRights from "@/components/employeeRights";
+import EmployeeRights from "@/components/storeLookTao";
 import Report from "@/views/finance/report/main";
 
 export default {

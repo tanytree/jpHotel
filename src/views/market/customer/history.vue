@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-19 14:53:58
+ * @LastEditTime: 2020-11-25 10:54:32
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -632,6 +632,7 @@ export default {
                 mobile: "",
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
+                guestType:1,
                 paging: true,
             },
             listTotal: 0, //总条数
@@ -760,6 +761,7 @@ export default {
                 guestNum:'',
                  name: "",
                 mobile: "",
+                guestType:1,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
                 paging: true,
@@ -903,6 +905,7 @@ export default {
             }
         },
         handleEdit(item) {
+          console.log(item);
             this.$router.push({
                 name: "hsitorydetailTao",
                 query: {
