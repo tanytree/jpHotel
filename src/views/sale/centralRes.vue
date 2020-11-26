@@ -1,28 +1,20 @@
-<!--
- * @Date:
- * @LastEditors: 魏轩
- * @LastEditTime: 2020-07-06
- * @FilePath: jiudian\src\views\sale\centralRes.vue
- -->
-
-
 <template>
   <div>
     <el-row>
       <el-col :span="20">
         <el-form
-          ref="form"
+          ref="centerForm"
           inline
           size="small"
-          :model="form"
+          :model="centerForm"
           :rules="rules"
           label-width="100px"
         >
           <el-col :span="8">
             <el-form-item :label="$t('desk.arrivalTime')" prop="date1">
               <el-date-picker
-                v-model="form.startTime"
-                value-format="yyyy-MM-dd"
+                v-model="centerForm.startTime"
+                value-format="yyyy-MM-dd,HH-mm-ss"
                 type="date"
                 placeholder="选择日期"
               ></el-date-picker>
@@ -33,7 +25,7 @@
             <el-form-item :label="$t('desk.checkInDays')">
               <el-input-number
                 style="width: 220px"
-                v-model="form.nums"
+                v-model="centerForm.nums"
                 @change="handleChange"
                 :min="1"
               ></el-input-number>
@@ -42,7 +34,7 @@
           <el-col :span="8">
             <el-form-item :label="$t('desk.order_departureTime')" prop="date1">
               <el-date-picker
-                v-model="form.endTime"
+                v-model="centerForm.endTime"
                 value-format="yyyy-MM-dd"
                 type="date"
                 placeholder="选择日期"
@@ -50,28 +42,17 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="位置筛选:">
-              <el-select
-                style="width: 220px"
-                v-model="form.region"
-                :placeholder="$t('commons.placeChoose')"
-              >
-                <el-option :label="$t('desk.home_all')" value="3"></el-option>
-                <el-option label="已认证" value="1">已认证</el-option>
-                <el-option label="未认证" value="2">未认证</el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
             <el-form-item label="所属酒店:">
               <el-select
-                style="width: 220px"
-                v-model="form.region"
-                :placeholder="$t('commons.placeChoose')"
+                v-model="centerForm.storesNum"
+                :placeholder="$t('login.sTip')"
               >
-                  <el-option :label="$t('desk.home_all')" value="3"></el-option>
-                <el-option label="已认证" value="1">已认证</el-option>
-                <el-option label="未认证" value="2">未认证</el-option>
+                <el-option
+                  v-for="item in storeList"
+                  :key="item.storesNum"
+                  :label="item.storesName"
+                  :value="item.storesNum"
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -111,7 +92,7 @@
               <!-- <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
               <el-row>可订数：12</el-row>
-              <el-row>{{$t('manager.hk_doorPrice')}}：200</el-row>
+              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -120,7 +101,7 @@
               <!-- <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
               <el-row>可订数：12</el-row>
-              <el-row>{{ $t('manager.hk_doorPrice') }}：200</el-row>
+              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -130,7 +111,7 @@
               <!-- <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
               <el-row>可订数：12</el-row>
-              <el-row>{{ $t('manager.hk_doorPrice') }}：200</el-row>
+              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -139,7 +120,7 @@
               <!-- <i class="el-icon-time"></i> -->
               <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
               <el-row>可订数：12</el-row>
-              <el-row>{{ $t('manager.hk_doorPrice') }}：200</el-row>
+              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
               <el-row>优惠价：150</el-row>
             </template>
           </el-table-column>
@@ -224,9 +205,14 @@
           <el-form inline size="small" label-width="100px" :rules="rules">
             <el-row>
               <el-form-item :label="$t('desk.customer_guestType') + ':'">
-                  <el-radio-group v-model="checkInForm.content">
-                      <el-radio v-for="(item,key,index) of $t('commons.guestType')" :label="key" :key="index">{{item}}</el-radio>
-                  </el-radio-group>
+                <el-radio-group v-model="checkInForm.content">
+                  <el-radio
+                    v-for="(item, key, index) of $t('commons.guestType')"
+                    :label="key"
+                    :key="index"
+                    >{{ item }}</el-radio
+                  >
+                </el-radio-group>
                 <el-button @click="registerme = true" style="margin-left: 25px"
                   >注册会员</el-button
                 >
@@ -290,7 +276,10 @@
 
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item :label="$t('desk.order_departureTime')" prop="date1">
+                  <el-form-item
+                    :label="$t('desk.order_departureTime')"
+                    prop="date1"
+                  >
                     <el-date-picker
                       v-model="checkInForm.startTime"
                       value-format="yyyy-MM-dd"
@@ -325,15 +314,20 @@
               </el-col>
             </el-row>
             <el-row>
-
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item :label="$t('desk.book_orderSoutce')" prop="name">
+                  <el-form-item
+                    :label="$t('desk.book_orderSoutce')"
+                    prop="name"
+                  >
                     <el-select
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
                     >
-                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
+                      <el-option
+                        :label="$t('desk.home_all')"
+                        value="3"
+                      ></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -380,23 +374,23 @@
           </el-form>
         </el-row>
         <el-row style="margin-bottom: 60px">
-          <h3>{{ $t('desk.roomInfoDesc') }}</h3>
+          <h3>{{ $t("desk.roomInfoDesc") }}</h3>
           <el-form inline size="mini">
             <el-row>
               <el-col :span="17">
                 <div class="grid-content">
-<!--                  <el-row>-->
-<!--                    <el-button>可改房价</el-button>&nbsp;&nbsp;-->
-<!--                    <el-button>不可改房价</el-button>&nbsp;&nbsp;-->
-<!--                    <el-select-->
-<!--                      v-model="checkInForm.enterStatus"-->
-<!--                      placeholder="床位数"-->
-<!--                    >-->
-<!--                      <el-option :label="$t('desk.home_all')" value="3">床位数</el-option>-->
-<!--                      <el-option label="已认证" value="1">已认证</el-option>-->
-<!--                      <el-option label="未认证" value="2">未认证</el-option>-->
-<!--                    </el-select>-->
-<!--                  </el-row>-->
+                  <!--                  <el-row>-->
+                  <!--                    <el-button>可改房价</el-button>&nbsp;&nbsp;-->
+                  <!--                    <el-button>不可改房价</el-button>&nbsp;&nbsp;-->
+                  <!--                    <el-select-->
+                  <!--                      v-model="checkInForm.enterStatus"-->
+                  <!--                      placeholder="床位数"-->
+                  <!--                    >-->
+                  <!--                      <el-option :label="$t('desk.home_all')" value="3">床位数</el-option>-->
+                  <!--                      <el-option label="已认证" value="1">已认证</el-option>-->
+                  <!--                      <el-option label="未认证" value="2">未认证</el-option>-->
+                  <!--                    </el-select>-->
+                  <!--                  </el-row>-->
                   <br />
                   <el-row>
                     <el-col :span="8" v-for="v in 9" :key="v">
@@ -446,7 +440,10 @@
               </el-col>
               <el-col :span="7">
                 <div class="grid-content">
-                  <el-row> <el-button>{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp; </el-row>
+                  <el-row>
+                    <el-button>{{ $t("desk.autoRowHouse") }}</el-button
+                    >&nbsp;&nbsp;
+                  </el-row>
                   <br />
                   <el-row class="roomSelect">
                     <ul>
@@ -460,9 +457,9 @@
                                 </el-col>
                                 <el-col :span="10">
                                   <div style="text-align: right">
-                                    <el-button type="primary" size="mini"
-                                      >{{ $t('desk.rowHouse') }}</el-button
-                                    >
+                                    <el-button type="primary" size="mini">{{
+                                      $t("desk.rowHouse")
+                                    }}</el-button>
                                   </div>
                                 </el-col>
                               </el-row>
@@ -522,7 +519,10 @@
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
                     >
-                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
+                      <el-option
+                        :label="$t('desk.home_all')"
+                        value="3"
+                      ></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -550,7 +550,10 @@
                           style="width: 120px"
                           v-model="checkInForm.enterStatus"
                         >
-                            <el-option :label="$t('desk.home_all')" value="3"></el-option>
+                          <el-option
+                            :label="$t('desk.home_all')"
+                            value="3"
+                          ></el-option>
                           <el-option label="已认证" value="1">已认证</el-option>
                           <el-option label="未认证" value="2">未认证</el-option>
                         </el-select>
@@ -595,14 +598,14 @@
           <el-divider></el-divider>
           <el-row>
             <el-row>
-<!--              <el-col :span="6">-->
-<!--                <el-form-item label="性别:">-->
-<!--                  <el-radio-group v-model="checkInForm.content">-->
-<!--                    <el-radio label="男"></el-radio>-->
-<!--                    <el-radio label="女"></el-radio>-->
-<!--                  </el-radio-group>-->
-<!--                </el-form-item>-->
-<!--              </el-col>-->
+              <!--              <el-col :span="6">-->
+              <!--                <el-form-item label="性别:">-->
+              <!--                  <el-radio-group v-model="checkInForm.content">-->
+              <!--                    <el-radio label="男"></el-radio>-->
+              <!--                    <el-radio label="女"></el-radio>-->
+              <!--                  </el-radio-group>-->
+              <!--                </el-form-item>-->
+              <!--              </el-col>-->
 
               <el-col :span="6">
                 <div class="grid-content">
@@ -689,7 +692,10 @@
                       style="width: 246px"
                       v-model="checkInForm.enterStatus"
                     >
-                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
+                      <el-option
+                        :label="$t('desk.home_all')"
+                        value="3"
+                      ></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -720,7 +726,10 @@
                       style="width: 140px"
                       v-model="checkInForm.enterStatus"
                     >
-                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
+                      <el-option
+                        :label="$t('desk.home_all')"
+                        value="3"
+                      ></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -735,7 +744,10 @@
                       style="width: 140px"
                       v-model="checkInForm.enterStatus"
                     >
-                        <el-option :label="$t('desk.home_all')" value="3"></el-option>
+                      <el-option
+                        :label="$t('desk.home_all')"
+                        value="3"
+                      ></el-option>
                       <el-option label="已认证" value="1">已认证</el-option>
                       <el-option label="未认证" value="2">未认证</el-option>
                     </el-select>
@@ -802,7 +814,7 @@ export default {
       unitname: "",
       registerme: false,
       dialogFormVisible: false,
-      form: {
+      centerForm: {
         region: "",
         startTime: "", //开始时间
         endTime: "", //结束时间
@@ -813,6 +825,7 @@ export default {
         name: [{ required: true, trigger: "blur" }],
         date1: [{ type: "date", trigger: "change" }],
       },
+      storeList: [],
       loading: false,
       checked: false,
       showEdit: false,
@@ -832,6 +845,16 @@ export default {
       num: "",
     };
   },
+  mounted() {
+    let params = {
+      filterHeader:true,
+    };
+    this.$F.doRequest(this, "/pms/freeuser/stores_list", params, (data) => {
+      this.storeList = data;
+    });
+
+  },
+
   methods: {
     onSubmit() {
       console.log("submit!");
