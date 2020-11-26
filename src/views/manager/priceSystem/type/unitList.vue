@@ -376,6 +376,9 @@
 						time_arr.push(res.endTime)
 						this.ruleForm.time = time_arr
 						this.ruleForm.weeks = res.weeks.split(',')
+						res.hotelPriceRoomTypeList.forEach((value, index) =>{
+							value.adjustPrice = value.newLivePrice
+						})
 						this.roomStrategyJson = res.hotelPriceRoomTypeList
 						debugger
 						console.log('this.ruleForm---', this.ruleForm)
