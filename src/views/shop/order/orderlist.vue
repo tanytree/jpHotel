@@ -78,8 +78,11 @@
                 <el-table-column
                   :label="$t('food.common.curstom_info')">
                   <template slot-scope="scope">
-                      <span v-if="scope.row.memberTypeName">
+                      <span v-if="scope.row.memberCard">
                           {{scope.row.memberTypeName}}
+                      </span>
+                      <span v-else-if="scope.row.signRoomId">
+                          {{scope.row.roomObject.houseNum}} {{scope.row.roomObject.houseName ? '+' + scope.row.roomObject.houseName : ''}}
                       </span>
                       <span v-else>{{$t('food.common.guests')}}</span>
                   </template>

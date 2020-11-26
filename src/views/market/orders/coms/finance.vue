@@ -692,6 +692,9 @@ export default {
                console.log(array);
                let params = {}
                params.checkInId = this.checkInId
+
+                console.log(this.isArrSame(array,1))
+                console.log(this.isArrSame(array,2))
                if(this.isArrSame(array,1) == true){
                    params.billType = 1
                }else if(this.isArrSame(array,2) == true){
@@ -708,13 +711,9 @@ export default {
         },
         //判断数组中的值是否相同
         isArrSame(array,state) {
-            if (array.length > 0) {
                 return !array.some(function(value, index) {
                     return value !== state
                 });
-            } else {
-                return true;
-            }
         },
 
         //开发票按钮点击

@@ -267,7 +267,7 @@ export default {
                 let categoryList = this.getTreeItem(res.list);
                 this.categoryList = this.getNewCateList(categoryList)
                 console.log('商品分类')
-                console.log(categoryList)
+                console.log( this.categoryList)
                 console.log('商品分类')
 
             })
@@ -294,13 +294,15 @@ export default {
            if(list && list.length > 0 ){
                let arr = []
                for(let i in list){
-                   arr.push({
-                       value:list[i].id,
-                       label:list[i].name,
-                       children:this.getNewCateList(list[i].child)
-                   })
+                   if(list[i].child){
+                       arr.push({
+                           value:list[i].id,
+                           label:list[i].name,
+                           children:this.getNewCateList(list[i].child)
+                       })
+                   }
+                  
                }
-               console.log(arr)
                return arr
             }
         },
