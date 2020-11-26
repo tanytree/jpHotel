@@ -300,10 +300,10 @@
 		},
 
 		mounted() {
-			this.weekDays.push({
-				label: this.$t('commons.all'),
-				value: ""
-			});
+			// this.weekDays.push({
+			// 	label: this.$t('commons.all'),
+			// 	value: ""
+			// });
 			this.$t('commons.weeks').forEach((item, i) => {
 				this.weekDays.push({
 					label: item,

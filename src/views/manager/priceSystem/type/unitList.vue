@@ -70,17 +70,8 @@
 					<el-col :span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')+':'" prop="time">
 							<el-date-picker v-model="ruleForm.time" type="datetimerange" range-separator="至" start-placeholder="开始日期"
-							 end-placeholder="结束日期" @change="changeTime">
+							 end-placeholder="结束日期" @change="changeTime" :picker-options="expireTimeOption" value-format="yyyy-MM-dd">
 							</el-date-picker>
-							<!-- <el-date-picker
-							      v-model="value1"
-							      type="daterange"
-							      range-separator="至"
-							      start-placeholder="开始日期"
-							      end-placeholder="结束日期">
-							    </el-date-picker> -->
-							<!-- <el-date-picker v-model="ruleForm.time" type="daterange" align="right" value-format="yyyy-MM-dd" unlink-panels
-							 :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')" :end-placeholder="$t('manager.ps_endDate')"></el-date-picker> -->
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
@@ -90,41 +81,25 @@
 							</el-checkbox-group>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20">
-						<el-form-item :label="$t('manager.ps_discount')+':'" prop="name">
-							<el-radio-group v-model="ruleForm.discounts">
-								<el-radio label="1">{{$t('manager.ps_upword')}}</el-radio>
-								<el-radio label="2">{{$t('manager.ps_down')}}</el-radio>
-								<el-radio label="3">{{$t('manager.ps_fourAndFive')}}</el-radio>
-								<el-radio label="4">{{$t('manager.ps_keep')}}</el-radio>
-							</el-radio-group>
-						</el-form-item>
-					</el-col>
 				</el-form>
 			</el-row>
-			<el-table ref="multipleTable" :data="ruleForm.roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
+			<el-table ref="multipleTable" :data="roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
-				<el-table-column :label="$t('manager.ps_changPriceWay')">
-					<template slot-scope="{row, $index}">
-						<el-row class="demo-form-inline">
-							<el-select v-model="row.adjustType" :placeholder="$t('manager.hk_pleaseSelect')" style="width: 150px;" @change="change(row)">
-								<el-option :label="$t('manager.ps_discount')" :value="1"></el-option>
-								<el-option :label="$t('manager.ps_fixedPrice')" :value="2"></el-option>
-							</el-select>
-							<span v-if="row.adjustType == 1">
-								<el-input v-model.number="row.content" min="1" max="100" style="width: 120px;margin: 0px 15px;" @input="priceBlur(row, $index)"></el-input>%
-							</span>
-							<span v-if="row.adjustType == 2">
-								<el-input v-model.number="row.content" min="1" max="100" style="width: 120px;margin: 0px 15px;" @input="priceBlur(row, $index)"></el-input>
-								{{$t('manager.ps_japanYen')}}
-							</span>
-						</el-row>
+				<el-table-column prop="marketPrice" label="门市价(一人住宿价+附餐价)">
+					<template slot-scope="scope">
+						<div>
+							<div style="padding: 10px 0px;">{{scope.row.marketPrice}}</div>
+						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="name" :label="$t('manager.ps_dueTo')">
-					<template slot-scope="{row}">
-						<el-input v-model="row.adjustPrice" :disabled="true"></el-input>
+				<el-table-column label="新价格(一人住宿价+附餐价)" width="400">
+					<template slot-scope="scope">
+						<div>
+							<div style="padding: 10px 0px;display: flex;align-items: center;">
+								<el-input v-model="scope.row.adjustPrice" placeholder="请输入新价格" style="width: 200px;"></el-input>
+								<span style="padding-left: 20px;">日元</span>
+							</div>
+						</div>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -173,14 +148,14 @@
 				<el-button @click="dialogDetail = false">关 闭</el-button>
 			</span>
 		</el-dialog>
-		
-		
+
+
 		<el-row v-if="rili_show">
 			<div class="back">
 				<el-page-header @back="backTop"></el-page-header>
 			</div>
 			<el-row>
-				<unitListRili :selectInfo="selectInfo" ></unitListRili>
+				<unitListRili :selectInfo="selectInfo"></unitListRili>
 			</el-row>
 		</el-row>
 	</div>
@@ -189,7 +164,7 @@
 <script>
 	import unitListRili from "./unitListRili.vue"
 	export default {
-		components:{
+		components: {
 			unitListRili
 		},
 		data() {
@@ -202,12 +177,14 @@
 					status: 1
 				},
 				tableData: [],
+				checkAll: false,
+				isIndeterminate: true,
 				ruleForm: {
 					ruleName: '',
 					time: [],
 					startTime: '',
 					endTime: '',
-					weeks: [],
+					weeks: '',
 					discounts: '1',
 					state: 1,
 					roomStrategyJson: []
@@ -216,7 +193,7 @@
 					ruleName: [{
 						required: true,
 						// message: '请输入规格名称',
-                        message: this.$t('commons.mustInput'),
+						message: this.$t('commons.mustInput'),
 						trigger: 'blur'
 					}],
 					time: [{
@@ -225,6 +202,7 @@
 						trigger: 'blur'
 					}]
 				},
+				roomStrategyJson: [],
 				weekDays: [],
 				dialogDetail: false,
 				detail_info: {
@@ -237,15 +215,28 @@
 					state: 1,
 					roomStrategyJson: []
 				},
+				expireTimeOption: {
+					disabledDate(date) {
+						//disabledDate 文档上：设置禁用状态，参数为当前日期，要求返回 Boolean
+						return date.getTime() < Date.now() - 24 * 60 * 60 * 1000;
+					},
+				},
+
 				type: '',
 				selectInfo: {}
 			}
 		},
 		mounted() {
-            this.weekDays.push({ label: this.$t('commons.checkAll'), value: "" });
-            this.$t('commons.weeks').forEach((item, i) => {
-                this.weekDays.push( { label: item, value: (i + 1)});
-            })
+			// this.weekDays.push({
+			// 	label: this.$t('commons.checkAll'),
+			// 	value: ""
+			// });
+			this.$t('commons.weeks').forEach((item, i) => {
+				this.weekDays.push({
+					label: item,
+					value: JSON.stringify(i + 1)
+				});
+			})
 			this.tableData = []
 			this.ruleForm.roomStrategyJson = []
 			this.get_price_enter_strategy_list();
@@ -256,18 +247,26 @@
 				this.tableData = []
 				this.get_price_enter_strategy_list();
 			},
-			changeTime(e) {
-
-			},
 			//单位-增加-修改
 			onSave() {
 				console.log(this.ruleForm);
-				//
-				let params = this.$F.deepClone(this.ruleForm);
-				params.startTime = params.time[0];
-				params.endTime = params.time[1];
-				params.weeks = params.weeks.join(',');
-				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
+
+				let params = {};
+				params.ruleName = this.ruleForm.ruleName;
+				params.state = this.ruleForm.state;
+				params.startTime = this.ruleForm.time[0];
+				params.endTime = this.ruleForm.time[1];
+				params.weeks = this.ruleForm.weeks.join(',');
+				this.roomStrategyJson.forEach((value) => {
+					if (value.marketPrice == null) {
+						value.marketPrice = ''
+					}
+					if (value.adjustPrice == null) {
+						value.adjustPrice = ''
+					}
+				})
+				params.roomStrategyJson = JSON.stringify(this.roomStrategyJson);
+				debugger
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_save', params, (res) => {
 					return this.$message({
 						message: this.$t('commons.request_success'),
@@ -290,9 +289,7 @@
 				this.ruleForm.weeks = value;
 				if (value.length == 0)
 					this.ruleForm.weeks = [];
-				// console.log(value== "")
-				//
-				// let i = typeof(value)
+
 				if (value.length == 8 || value == "") {
 					//
 					if (value.length == 8) {
@@ -349,17 +346,16 @@
 					roomType: 3, // 房屋类型  1客房类型  2会议室房型 3全部
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_room_type_list', params, (res) => {
-					//
 					res.list.forEach(item => {
-						this.ruleForm.roomStrategyJson.push({
+						this.roomStrategyJson.push({
 							roomTypeId: item.id,
 							marketPrice: item.marketPrice,
-							adjustType: 1,
 							houseName: item.houseName,
-							content: '',
 							adjustPrice: ''
 						})
 					})
+					console.log(this.roomStrategyJson)
+					debugger
 					this.$forceUpdate();
 				})
 			},
@@ -369,21 +365,7 @@
 					id: value.id
 				}
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_detail', params, (res) => {
-					switch (res.discounts) {
-						case '1':
-							res.discounts_name = '向上取整'
-							break;
-						case '2':
-							res.discounts_name = '向下取整'
-							break;
-						case '3':
-							res.discounts_name = '四舍五入(取整)'
-							break;
-						case '4':
-							res.discounts_name = '保持不变'
-							break;
-					}
-					//
+
 					if (this.type == 'see') {
 						this.detail_info = res;
 						this.detail_info.weeks = res.weeks.split(',')
@@ -394,7 +376,8 @@
 						time_arr.push(res.endTime)
 						this.ruleForm.time = time_arr
 						this.ruleForm.weeks = res.weeks.split(',')
-						this.ruleForm.roomStrategyJson = res.hotelPriceRoomTypeList
+						this.roomStrategyJson = res.hotelPriceRoomTypeList
+						debugger
 						console.log('this.ruleForm---', this.ruleForm)
 
 					}
@@ -432,7 +415,7 @@
 				this.ruleForm.weeks = []
 				this.ruleForm.discounts = '1'
 				this.ruleForm.state = 1
-				this.ruleForm.roomStrategyJson = []
+				this.roomStrategyJson = []
 
 				this.detail_info.ruleName = ''
 				this.detail_info.time = ''
@@ -448,7 +431,7 @@
 				this.rili_show = false
 				this.tab1_show = true
 				this.tableData = []
-				
+
 				this.get_price_enter_strategy_list();
 			},
 			handleSizeChange(val) {
