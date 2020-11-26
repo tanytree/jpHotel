@@ -11,7 +11,7 @@
         v-model="searchForm"
         label-width="80px"
       >
-        <el-form-item :label="$t('desk.customer_unitName')">
+        <el-form-item :label="$t('desk.customer_unitName') + ':'">
           <el-select v-model="searchForm.enterName" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option
@@ -22,12 +22,21 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_billState')">
+        <el-form-item :label="$t('desk.customer_billState') + ':'">
           <el-select v-model="searchForm.intoStatus" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option label="已结" value="3"></el-option
-            ><el-option label="未结" value="1"></el-option
-            ><el-option label="部分结账" value="2"></el-option>
+            <el-option
+              :label="$t('desk.customer_closeAccount')"
+              value="3"
+            ></el-option
+            ><el-option
+              :label="$t('desk.customer_outStand')"
+              value="1"
+            ></el-option
+            ><el-option
+              :label="$t('desk.order_partBill')"
+              value="2"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -60,8 +69,14 @@
           width="120px"
         >
           <template slot-scope="{ row }">
-            <div><span style="color: #f11717">开</span>{{ row.startTime }}</div>
-            <div><span style="color: #1a3bf1">结</span>{{ row.endTime }}</div>
+            <div>
+              <span style="color: #f11717">{{ $t("desk.serve_open") }}</span
+              >{{ row.startTime }}
+            </div>
+            <div>
+              <span style="color: #1a3bf1">{{ $t("desk.serve_tie") }}</span
+              >{{ row.endTime }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column
@@ -98,9 +113,15 @@
         </el-table-column>
         <el-table-column :label="$t('desk.customer_billState')" width="80">
           <template slot-scope="{ row }">
-            <div v-if="row.intoStatus == 1">未结</div>
-            <div v-if="row.intoStatus == 2">部分结账</div>
-            <div v-if="row.intoStatus == 3">已结</div>
+            <div v-if="row.intoStatus == 1">
+              {{ $t("desk.customer_outStand") }}
+            </div>
+            <div v-if="row.intoStatus == 2">
+              {{ $t("desk.order_partBill") }}
+            </div>
+            <div v-if="row.intoStatus == 3">
+              {{ $t("desk.customer_closeAccount") }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
@@ -145,10 +166,16 @@
     >
       <div class="flexBox">
         <div>
-          <span>总挂账金额：{{ totalConsumerPrice }}</span>
-          <span  style="margin-left: 10px">挂账记录：{{ buyTable.length }}条</span>
+          <span
+            >{{ $t("desk.customer_totalCreditAmount") + ":"
+            }}{{ totalConsumerPrice }}</span
+          >
+          <span style="margin-left: 10px"
+            >{{ $t("desk.customer_cardRecords") + ":" }}{{ buyTable.length
+            }}{{ $t("desk.customer_article") }}</span
+          >
         </div>
-<!--        <el-button type="primary">导出EXCEL</el-button>-->
+        <!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
       <el-table
         ref="multipleTable"
@@ -169,18 +196,18 @@
           :label="$t('desk.customer_amountPrice')"
           width="100"
         >
-            <template slot-scope="{ row }">
-                {{row.consumePrice || 0}}
-            </template>
+          <template slot-scope="{ row }">
+            {{ row.consumePrice || 0 }}
+          </template>
         </el-table-column>
         <el-table-column
           :label="$t('desk.home_name')"
           prop="checkIn.name"
           width="120"
         >
-            <template slot-scope="{ row }">
-                {{row.checkIn.name + `【${row.checkIn.pronunciation || ''}】`}}
-            </template>
+          <template slot-scope="{ row }">
+            {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
+          </template>
         </el-table-column>
         <el-table-column
           prop="checkIn.id"
@@ -188,12 +215,15 @@
           width="300"
         >
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_roomKind')"  show-overflow-tooltip>
+        <el-table-column
+          :label="$t('desk.customer_roomKind')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <div>
-              {{ row.checkIn.hotelCheckInRoom.roomTypeName || '' }}
-                <span>/</span>
-                {{ row.checkIn.hotelCheckInRoom.houseNum || "" }}
+              {{ row.checkIn.hotelCheckInRoom.roomTypeName || "" }}
+              <span>/</span>
+              {{ row.checkIn.hotelCheckInRoom.houseNum || "" }}
             </div>
           </template>
         </el-table-column>
@@ -319,35 +349,11 @@ export default {
     enterRules() {
       return {
         intoPrice: [
-          { required: true, message: "请款金额不得为空", trigger: "blur" },
+          { required: true, message: this.$t('desk.customer_bookPriceNotEmpty'), trigger: "blur" },
         ],
       };
     },
-     addRules() {
-      return {
-          totalConsumerPrice: 0,
-        enterId: [{ required: true, message: "请选择单位", trigger: "change" }],
-        prefix: [
-          { required: true, message: "请填写编号前缀", trigger: "blur" },
-        ],
-        startTime: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
-        endTime: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
-      };
-    },
+    
   },
   data() {
     return {
@@ -417,14 +423,14 @@ export default {
               this.enterForm.intoStatus = 3;
             } else {
               this.$message({
-                message: "入账金额不得超过请款金额",
+                message: this.$t('desk.customer_bookPriceShouldSmall'),
                 type: "warning",
               });
               return false;
             }
           } else {
             this.$message({
-              message: "入账金额必须大于0",
+              message: this.$t('desk.customer_bookPriceMorethan'),
               type: "warning",
             });
             return false;
@@ -447,7 +453,7 @@ export default {
             params,
             (res) => {
               this.$message({
-                message: "入账成功",
+                message:this.$t('desk.customer_bookSuccess'),
                 type: "success",
               });
               this.enterForm = {
@@ -514,7 +520,7 @@ export default {
       );
     },
 
-     //点击 挂账明细 按钮
+    //点击 挂账明细 按钮
     advancePayments(row) {
       console.log(row);
       this.itemInfo = row;
@@ -536,11 +542,11 @@ export default {
             this.buyTable = res.consumeOrderList;
             // this.detailListTotal = res.page.count;
             this.totalConsumerPrice = 0;
-              res.consumeOrderList.forEach(item => {
-                  if (item.priceType == 13) {
-                      this.totalConsumerPrice += (item.consumePrice || 0)
-                  }
-              })
+            res.consumeOrderList.forEach((item) => {
+              if (item.priceType == 13) {
+                this.totalConsumerPrice += item.consumePrice || 0;
+              }
+            });
 
             this.advanceDialog = true;
           }

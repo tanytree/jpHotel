@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-20 13:41:13
+ * @LastEditTime: 2020-11-26 15:25:57
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -752,24 +752,24 @@ module.exports = {
     customer_newPlaceOrder: '新增请款单',
     customer_numBefore: '编号前缀',
     customer_settlementAll: '结算该范围内所有未结算的单位挂账',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
-    customer_: '',
+    customer_totalCreditAmount: '总挂账金额',
+    customer_cardRecords: '挂账记录',
+    customer_article: '条',
+    customer_bookPriceNotEmpty: '入账金额不得为空',
+    customer_bookPriceShouldSmall: '入账金额不得超过请款金额',
+    customer_bookPriceMorethan: '入账金额必须大于0',
+    customer_bookSuccess: '入账成功',
+    customer_editorRequestOrder: '编辑请款单',
+    customer_inputNumBefore: '请填写编号前缀',
+    customer_ifSureDelete: '确认要删除吗？',
+    customer_continueRequestSuccess: '继续请款成功',
+    customer_requestPriceNotMorethan: '请款金额不得高于挂账金额',
+    customer_putPriceNot: '挂账金额不得为0',
+    customer_zipCode: '邮编',
+    customer_selectTheCounty: '选择县',
+    customer_selectCity: '选择国',
+    customer_unitPhoneNum: '单位号码',
+    customer_inputPY: '请输入拼音',
     customer_: '',
     customer_: '',
    //夜审（night）

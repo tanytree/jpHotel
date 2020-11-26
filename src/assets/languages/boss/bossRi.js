@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-13 14:05:55
+ * @LastEditTime: 2020-11-26 13:27:58
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -210,7 +210,37 @@ module.exports = {
     add_visible:'表示しますか',
     add_chinese:'メニュー中国語',
     add_japan:'メニュー日本語',
-
+    add_chooseDate:'未翻译词条',
+    add_chooseStore:'未翻译词条',
+    add_roomData:'未翻译词条',
+    add_rents:'未翻译词条',
+    add_housePrice:'未翻译词条',
+    add_totalRevenue:'未翻译词条',
+    add_meetingData:'未翻译词条',
+    add_requestSuccess:'未翻译词条',
+    add_integralConversion:'未翻译词条',
+    add_gain:'未翻译词条',
+    add_deduction:'未翻译词条',
+    add_conversionRatio:'未翻译词条',
+    add_theFormula:'未翻译词条',
+    add_roomPriceGet:'未翻译词条',
+    add_ifEnabel:'未翻译词条',
+    add_yes:'未翻译词条',
+    add_not:'未翻译词条',
+    add_obtain:'未翻译词条',
+    add_orange:'未翻译词条',
+    add_getDeduction:'未翻译词条',
+    add_meetingGet:'未翻译词条',
+    add_foodGet:'未翻译词条',
+    add_goodGet:'未翻译词条',
+    add_discount:'未翻译词条',
+    add_getgoodDeduction:'未翻译词条',
+    add_housePriceDeduction:'未翻译词条',
+    add_deductionRoomprice:'未翻译词条',
+    add_meetingDiscount:'未翻译词条',
+    add_foodDiscount:'未翻译词条',
+    add_goodDiscount:'未翻译词条',
+    add_deductionGoodsprice:'未翻译词条',
 
 
 

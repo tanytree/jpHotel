@@ -1,20 +1,20 @@
 <!--
  * @Date: 2020-05-08 08:01:35
- * @LastEditors: 魏轩
- * @LastEditTime:
- * @FilePath:
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-26 10:59:52
+ * @FilePath: \jiudian\src\views\sale\order\member\integtal.vue
  -->
 
 <template>
     <div id="page1">
         <el-tabs  v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="积分换算" name="first">
+            <el-tab-pane :label="$t('boss.add_integralConversion')" name="first">
                 <list1 />
             </el-tab-pane>
-            <el-tab-pane label="积分获取" name="second">
+            <el-tab-pane :label="$t('boss.add_gain')" name="second">
                 <list2 />
             </el-tab-pane>
-            <el-tab-pane label="积分抵扣" name="third">
+            <el-tab-pane :label="$t('boss.add_deduction')" name="third">
                 <list3 />
             </el-tab-pane>
         </el-tabs>

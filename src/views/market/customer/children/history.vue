@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-24 17:59:26
+ * @LastEditTime: 2020-11-26 17:16:14
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -12,7 +12,7 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item  @click.native="goBack" style="cursor:pointer">{{
+          <el-breadcrumb-item @click.native="goBack" style="cursor: pointer">{{
             $t("desk.customer_guestHistoryRecord")
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{
@@ -27,14 +27,18 @@
       <el-form inline size="small" label-width="100px">
         <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
           <!-- <el-input v-model="searchForm.content" class="width150"></el-input> -->
-          <el-select v-model="searchForm.storesNum" placeholder="请选择">
+          <el-select
+            v-model="searchForm.storesNum"
+            :placeholder="$t('commons.placeChoose')"
+          >
             <el-option
-            v-for="item in storeList"
-            :key="item.value"
-            :label="item.storesName"
-            :value="item.storesNum">
+              v-for="item in storeList"
+              :key="item.value"
+              :label="item.storesName"
+              :value="item.storesNum"
+            >
             </el-option>
-            </el-select>
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_roomType') + ':'">
           <el-select v-model="searchForm.roomTypeId" class="width150">
@@ -111,15 +115,23 @@
           :label="$t('desk.customer_livePeople')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="" :label="$t('desk.customer_liveToleave')" width="200">
+        <el-table-column
+          prop=""
+          :label="$t('desk.customer_liveToleave')"
+          width="200"
+        >
           <template slot-scope="{ row }">
             <div class="box">
               <div class="item">
                 <div>
-                  <span class="text-blue">{{$t('desk.customer_arrived')}}</span>{{ row.checkinTime }}
+                  <span class="text-blue">{{
+                    $t("desk.customer_arrived")
+                  }}</span
+                  >{{ row.checkinTime }}
                 </div>
                 <div>
-                  <span class="text-red">{{$t('desk.customer_leave')}}</span>{{ row.checkoutTime }}
+                  <span class="text-red">{{ $t("desk.customer_leave") }}</span
+                  >{{ row.checkoutTime }}
                 </div>
               </div>
             </div>
@@ -134,10 +146,14 @@
           :label="$t('desk.customer_roomType')"
           show-overflow-tooltip
         >
-        <template slot-scope="{row}">
-          <div v-if="row.operCheckinType==1||2">客房</div>
-          <div v-if="row.operCheckinType==3">会场</div>
-        </template>
+          <template slot-scope="{ row }">
+            <div v-if="row.operCheckinType == 1 || 2">
+              {{ $t("desk.customer_guestRoom") }}
+            </div>
+            <div v-if="row.operCheckinType == 3">
+              {{ $t("desk.customer_venue") }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
           prop="operCheckinType"
@@ -148,26 +164,46 @@
             {{ F_operCheckinType(row.operCheckinType) }}
           </template>
         </el-table-column>
-        <el-table-column prop=""  :label="$t('desk.home_roomNum')" show-overflow-tooltip>
+        <el-table-column
+          prop=""
+          :label="$t('desk.home_roomNum')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom?row.hotelCheckInRoom.houseNum:'' }}
+            {{ row.hotelCheckInRoom ? row.hotelCheckInRoom.houseNum : "" }}
           </template>
         </el-table-column>
-        <el-table-column  :label="$t('desk.home_roomType')" prop="hotelCheckInRoom.roomTypeName" show-overflow-tooltip>
+        <el-table-column
+          :label="$t('desk.home_roomType')"
+          prop="hotelCheckInRoom.roomTypeName"
+          show-overflow-tooltip
+        >
         </el-table-column>
-        <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
+        <el-table-column
+          prop=""
+          :label="$t('desk.customer_totalRoomPrice')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom?row.hotelCheckInRoom.realPrice:'' }}
+            {{ row.hotelCheckInRoom ? row.hotelCheckInRoom.realPrice : "" }}
           </template>
         </el-table-column>
-        <el-table-column prop="consumeTotalPrice" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
+        <el-table-column
+          prop="consumeTotalPrice"
+          :label="$t('desk.customer_totalConsum')"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column
           :label="$t('desk.customer_occurrenceStore')"
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
-            {{ F_storeName(row.hotelCheckInRoom?row.hotelCheckInRoom.storesNum:'') }}
+            {{
+              F_storeName(
+                row.hotelCheckInRoom ? row.hotelCheckInRoom.storesNum : ""
+              )
+            }}
           </template>
         </el-table-column>
         <el-table-column
@@ -180,17 +216,20 @@
           :label="$t('desk.customer_toTheGuest')"
           show-overflow-tooltip
         >
-        <template slot-scope="{row}">
-          <span v-for="(item,index) in row.personList" :key='index' style="margin-right:6px">{{item.name}}</span>
-        </template>
-        </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="220" >
           <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="handelDetail(row)"
-              >{{
-              $t("commons.detail")
-            }}</el-button
+            <span
+              v-for="(item, index) in row.personList"
+              :key="index"
+              style="margin-right: 6px"
+              >{{ item.name }}</span
             >
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('commons.operating')" width="220">
+          <template slot-scope="{ row }">
+            <el-button type="text" size="mini" @click="handelDetail(row)">{{
+              $t("commons.detail")
+            }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -199,9 +238,9 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="searchForm.page"
+        :current-page="searchForm.pageIndex"
         :page-sizes="[10, 50, 100, 200]"
-        :page-size="searchForm.page_num"
+        :page-size="searchForm.pageSize"
         layout=" sizes, prev, pager, next, jumper"
         :total="listTotal"
       ></el-pagination>
@@ -211,7 +250,7 @@
 </template>
 
 <script>
-import { mapState, mapActions,mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import myMixin from "@/utils/filterMixin";
 export default {
   mixins: [myMixin],
@@ -227,77 +266,74 @@ export default {
     return {
       loading: false,
       searchForm: {
-        mobile: "",
-        idcard: "",
+        storesNum: "",
+        roomTypeId: "",
+        inStartTime: "",
+        inEndTime: "",
+        outStartTime: "",
+        outEndTime: "",
+        //////////
+        pronunciation: "", //入住人发音
         name: "",
-        searchType: 3,
+         idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
       },
       listTotal: 0, //总条数
-      multipleSelection: [], //多选
       tableData: [], //表格数据
       storeList: [],
-      detailForm: {
-        name: "",
-      },
-      setBlackForm: {
-        remark: "",
-      },
-      setBlackShow: false,
-      setBlackRules: {
-        blackRemark: [
-          {
-            required: true,
-            message: "not emply",
-            trigger: "change",
-          },
-        ],
-      },
     };
   },
   mounted() {
     this.initForm();
     this.stores_list();
-    
   },
   methods: {
     ...mapMutations({
-       resetActive: "resetActive",
+      resetActive: "resetActive",
     }),
     initForm() {
-      this.searchForm = {
-        mobile: "",
-        idcard: "",
+       this.searchForm= {
+        storesNum: "",
+        roomTypeId: "",
+        inStartTime: "",
+        inEndTime: "",
+        outStartTime: "",
+        outEndTime: "",
+        //////////
+        pronunciation: "", //入住人发音
         name: "",
-        searchType: 1,
+         idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
-      };
+      },
       console.log(this.$route.query);
-      this.searchForm.idcard = this.$route.query.idcard || "";
+      this.searchForm.idcard = this.$route.query.item.idcard || "";
+      this.searchForm.name = this.$route.query.item.name;
+      this.searchForm.pronunciation = this.$route.query.item.pronunciation;
+      this.searchForm.storesNum = this.$route.query.item.storesNum;
       this.getDataList();
     },
     //点击 客史档案
-    goBack(){
-       if(this.$route.query.form=='member'){
-      this.resetActive("member");
-       this.$router.replace('/customer')
-       }else{
-          this.resetActive("history");
-        this.$router.replace('/customer')
-       }
+    goBack() {
+      if (this.$route.query.form == "member") {
+        this.resetActive("member");
+        this.$router.replace("/customer");
+      } else {
+        this.resetActive("history");
+        this.$router.replace("/customer");
+      }
     },
     //获取门店列表
-    getStoreList(){
-        this.$F.doRequest(
+    getStoreList() {
+      this.$F.doRequest(
         this,
         "/pms/department/department_store_list",
         {},
         (res) => {
-        console.log(res);
+          console.log(res);
         }
       );
     },
@@ -318,41 +354,18 @@ export default {
     },
     stores_list() {
       this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {
-          console.log(data);
+        console.log(data);
         this.storeList = data;
       });
     },
-    handelblacklist(row) {
-      this.setBlackForm.id = row.id;
-      this.setBlackShow = true;
-    },
-    addblacklist() {
-      if (!this.setBlackForm.remark) {
-        this.$message.error(this.$t("desk.customer_inputRemark"));
-        return;
-      }
-      this.$F.doRequest(
-        this,
-        "/pms/hotelmember/addblacklist",
-        this.setBlackForm,
-        (data) => {
-          this.setBlackShow = false;
-          this.getDataList();
-          this.$message({
-            message: "success",
-            type: "success",
-          });
-        }
-      );
-    },
     handelDetail(item) {
-    //   this.$router.push("/orderdetail?id=" + item.hotelCheckInRoom.checkinId);
+      //   this.$router.push("/orderdetail?id=" + item.hotelCheckInRoom.checkinId);
       this.$router.push({
-          path:'orderdetail',
-          query:{
-              id: item.hotelCheckInRoom.checkinId,
-              member:'member'
-          }
+        path: "orderdetail",
+        query: {
+          id: item.hotelCheckInRoom.checkinId,
+          member: "member",
+        },
       });
     },
     handleDetail(item) {
@@ -378,12 +391,9 @@ export default {
           return that.storeList[k].storesName;
         }
       }
-      return  this.$t('desk.customer_unknowStore');
+      return this.$t("desk.customer_unknowStore");
     },
-    /**多选 */
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
+  
     /**每页数 */
     handleSizeChange(val) {
       this.searchForm.pageSize = val;

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-10 14:17:17
+ * @LastEditTime: 2020-11-26 17:33:08
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -25,8 +25,20 @@
       </div>
       <!-- 查询部分 -->
       <el-form inline size="small" label-width="100px">
-        <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
-          <el-input v-model="searchForm.content" class="width150"></el-input>
+       <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
+          <!-- <el-input v-model="searchForm.content" class="width150"></el-input> -->
+          <el-select
+            v-model="searchForm.storesNum"
+            :placeholder="$t('commons.placeChoose')"
+          >
+            <el-option
+              v-for="item in storeList"
+              :key="item.value"
+              :label="item.storesName"
+              :value="item.storesNum"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_roomType') + ':'">
           <el-select v-model="searchForm.roomTypeId" class="width150">
@@ -182,9 +194,9 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="searchForm.page"
+        :current-page="searchForm.pageIndex"
         :page-sizes="[10, 50, 100, 200]"
-        :page-size="searchForm.page_num"
+        :page-size="searchForm.pageSize"
         layout=" sizes, prev, pager, next, jumper"
         :total="listTotal"
       ></el-pagination>
@@ -209,38 +221,24 @@ export default {
   data() {
     return {
       loading: false,
-      showEdit: false,
-      showDetail: false,
-      setMemberFormVisible: false,
       searchForm: {
-        mobile: "",
-        idcard: "",
+       storesNum: "",
+        roomTypeId: "",
+        inStartTime: "",
+        inEndTime: "",
+        outStartTime: "",
+        outEndTime: "",
+        //////////
+        pronunciation: "", //入住人发音
         name: "",
-        searchType: 3,
+         idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
       },
       listTotal: 0, //总条数
-      multipleSelection: [], //多选
       tableData: [], //表格数据
       storeList: [],
-      detailForm: {
-        name: "",
-      },
-      setBlackForm: {
-        remark: "",
-      },
-      setBlackShow: false,
-      setBlackRules: {
-        blackRemark: [
-          {
-            required: true,
-            message: "not emply",
-            trigger: "change",
-          },
-        ],
-      },
     };
   },
   mounted() {
@@ -250,16 +248,25 @@ export default {
   methods: {
     initForm() {
       this.searchForm = {
-        mobile: "",
-        idcard: "",
+       storesNum: "",
+        roomTypeId: "",
+        inStartTime: "",
+        inEndTime: "",
+        outStartTime: "",
+        outEndTime: "",
+        //////////
+        pronunciation: "", //入住人发音
         name: "",
-        searchType: 1,
+         idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
       };
       console.log(this.$route.query);
-      this.searchForm.idcard = this.$route.query.idcard || "";
+      this.searchForm.idcard = this.$route.query.item.idcard || "";
+      this.searchForm.name = this.$route.query.item.name;
+      this.searchForm.pronunciation = this.$route.query.item.pronunciation;
+      this.searchForm.storesNum = this.$route.query.item.storesNum;
       this.getDataList();
     },
     //点击顶部客史档案
@@ -282,33 +289,15 @@ export default {
       );
     },
     stores_list() {
-      this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {
+      let params = {
+        filterHeader:true,
+      }
+      this.$F.doRequest(this, "/pms/freeuser/stores_list", params, (data) => {
         this.storeList = data;
       });
     },
-    handelblacklist(row) {
-      this.setBlackForm.id = row.id;
-      this.setBlackShow = true;
-    },
-    addblacklist() {
-      if (!this.setBlackForm.remark) {
-        this.$message.error(this.$t("desk.customer_inputRemark"));
-        return;
-      }
-      this.$F.doRequest(
-        this,
-        "/pms/hotelmember/addblacklist",
-        this.setBlackForm,
-        (data) => {
-          this.setBlackShow = false;
-          this.getDataList();
-          this.$message({
-            message: "success",
-            type: "success",
-          });
-        }
-      );
-    },
+   
+   
     F_storeName(v) {
       let that = this;
       for (let k in that.storeList) {

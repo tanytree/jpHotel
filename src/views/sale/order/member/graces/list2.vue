@@ -1,61 +1,61 @@
 <!--
  * @Date: 2020-03-10 14:09:08
- * @LastEditors: 魏轩
- * @LastEditTime:
- * @FilePath:
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-11-26 11:29:50
+ * @FilePath: \jiudian\src\views\sale\order\member\graces\list2.vue
  -->
 
 <template>
     <div>
         <el-form :model="ruleForm" ref="ruleForm" :rules="rules">
             <el-row>
-                <div class="header">房费获得</div>
-                <el-form-item label="是否开启：" prop="house_get_flag">
+                <div class="header">{{$t('boss.add_roomPriceGet')}}</div>
+                <el-form-item :label="$t('boss.add_ifEnabel')+':'" prop="house_get_flag">
                     <el-radio-group v-model="ruleForm.house_get_flag">
-                        <el-radio label="1">是</el-radio>
-                        <el-radio label="2">否</el-radio>
+                        <el-radio label="1">{{$t('boss.add_yes')}}</el-radio>
+                        <el-radio label="2">{{$t('boss.add_not')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="获取比例：" prop="house_get_ratio">
-                    <el-input style="width:200px" v-model="ruleForm.house_get_ratio" placeholder="0到1之间的数"></el-input>
-                    <span style="color:#666666">获取积分=实际房费*获取比例*换算比例</span>
+                <el-form-item :label="$t('boss.add_obtain')+':'" prop="house_get_ratio">
+                    <el-input style="width:200px" v-model="ruleForm.house_get_ratio" :placeholder="$t('boss.add_orange')"></el-input>
+                    <span style="color:#666666">{{$t('boss.add_getDeduction')}}</span>
                 </el-form-item>
             </el-row>
 
             <el-row>
-                <div class="header">会议厅获得</div>
-                <el-form-item label="是否开启：" prop="chamber_get_flag">
+                <div class="header">{{$t('boss.add_meetingGet')}}</div>
+                <el-form-item :label="$t('boss.add_ifEnabel')+':'" prop="chamber_get_flag">
                     <el-radio-group v-model="ruleForm.chamber_get_flag">
-                        <el-radio label="1">是</el-radio>
-                        <el-radio label="2">否</el-radio>
+                        <el-radio label="1">{{$t('boss.add_yes')}}</el-radio>
+                        <el-radio label="2">{{$t('boss.add_not')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-row>
 
             <el-row>
-                <div class="header">餐费获得</div>
-                <el-form-item label="是否开启：" prop="meeting_get_flag">
+                <div class="header">{{$t('boss.add_foodGet')}}</div>
+                <el-form-item :label="$t('boss.add_ifEnabel')+':'" prop="meeting_get_flag">
                     <el-radio-group v-model="ruleForm.meeting_get_flag">
-                        <el-radio label="1">是</el-radio>
-                        <el-radio label="2">否</el-radio>
+                        <el-radio label="1">{{$t('boss.add_yes')}}</el-radio>
+                        <el-radio label="2">{{$t('boss.add_not')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-row>
             <el-row>
-                <div class="header">商品费获得</div>
-                <el-form-item label="是否开启：" prop="shop_get_flag">
+                <div class="header">{{$t('boss.add_goodGet')}}</div>
+                <el-form-item :label="$t('boss.add_ifEnabel')+':'" prop="shop_get_flag">
                     <el-radio-group v-model="ruleForm.shop_get_flag">
-                        <el-radio label="1">是</el-radio>
-                        <el-radio label="2">否</el-radio>
+                        <el-radio label="1">{{$t('boss.add_yes')}}</el-radio>
+                        <el-radio label="2">{{$t('boss.add_not')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="折扣比例：" prop="shop_get_ratio">
-                    <el-input style="width:200px;" v-model="ruleForm.shop_get_ratio" placeholder="0到1之间的数"></el-input>
-                    <span style="color:#666666;margin-left:5px;">获取积分=实际商品费*获取比例*换算比例</span>
+                <el-form-item :label="$t('boss.add_discount')+':'" prop="shop_get_ratio">
+                    <el-input style="width:200px;" v-model="ruleForm.shop_get_ratio" :placeholder="$t('boss.add_orange')"></el-input>
+                    <span style="color:#666666;margin-left:5px;">{{$t('boss.add_getgoodDeduction')}}</span>
                 </el-form-item>
             </el-row>
             <el-form-item>
-                <el-button type="primary" v-loading="loading" @click="save('ruleForm')">保存</el-button>
+                <el-button type="primary" v-loading="loading" @click="save('ruleForm')">{{$t('commons.save')}}</el-button>
             </el-form-item>
         </el-form>
     </div>

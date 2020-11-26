@@ -304,7 +304,7 @@ export default {
             searchForm: {
                 state: '',
                 status: 1,
-                storesNum: "",
+              
             },
             dialogInfo: null,
             listTotal: 0, //总条数
@@ -341,12 +341,11 @@ export default {
         handleHistory(item) {
             console.log(item);
             console.log(this.type);
-            if (item.idcard) {
                 if (this.type == "footer") {
                     this.$router.push({
                         name: "customerhistory",
                         query: {
-                            idcard: item.idcard,
+                            item:item,
                             form:'member'
                         },
                     });
@@ -354,13 +353,10 @@ export default {
                     this.$router.push({
                         name: "historyTao",
                         query: {
-                            idcard: item.idcard,
+                            item:item,
                         },
                     });
                 }
-            } else {
-                this.$message(this.$t("desk.customer_noRecord"));
-            }
         },
         //补收卡费弹框，点击确定按钮
         setCardFrormChange() {
@@ -403,7 +399,6 @@ export default {
         initForm() {
             this.searchForm = {
                 status: "",
-                storesNum: "",
                 id: "",
                 getWay: "",
                 memberTypeId: "",

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-25 16:22:15
+ * @LastEditTime: 2020-11-26 16:21:07
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -136,7 +136,7 @@
                   <el-row class="cell">
                     <template>
                       <el-col :span="7" class="col">
-                        <el-form-item label="邮编:" prop="memberTypeId">
+                        <el-form-item :label="$t('desk.customer_zipCode') + ':'" prop="memberTypeId">
                           <el-input
                             v-if="type != 'detail'"
                             v-model="detailForm.zipCode1"
@@ -154,13 +154,13 @@
                         </el-form-item>
                       </el-col>
                       <el-col :span="7" class="col">
-                        <el-form-item label="地址:">
+                        <el-form-item :label="$t('desk.customer_address') + ':'">
                           <el-select
                            v-if="type != 'detail'"
                             style="width: 90px"
                             v-model="detailForm.addressCountry"
                             filterable
-                            placeholder="选择县"
+                             :placeholder="$t('desk.customer_selectTheCounty')"
                           >
                             <el-option
                               v-for="item in options"
@@ -175,7 +175,7 @@
                             style="width: 90px; margin-left: 10px"
                             v-model="detailForm.addressCountries"
                             filterable
-                            placeholder="选择国"
+                           :placeholder="$t('desk.customer_selectCity')"
                           >
                             <el-option
                               v-for="item in options"
@@ -190,10 +190,10 @@
                       </el-col>
                     </template>
                     <el-col :span="10" class="col">
-                      <el-form-item label="地址1:" v-if="type != 'detail'">
+                      <el-form-item :label="$t('desk.customer_address') +'1'+ ':'" v-if="type != 'detail'">
                         <el-input v-model="detailForm.address"></el-input>
                       </el-form-item>
-                      <el-form-item label="地址1:" v-if="type == 'detail'">
+                      <el-form-item :label="$t('desk.customer_address') +'1'+ ':'" v-if="type == 'detail'">
                        <template
                           >{{ detailForm.address }}</template
                         >
@@ -203,30 +203,30 @@
                   <el-row class="row">
                     <el-row class="cell">
                       <el-col :span="7" class="col">
-                        <el-form-item label="地址2:" v-if="type != 'detail'">
+                        <el-form-item :label="$t('desk.customer_address') +'2'+ ':'" v-if="type != 'detail'">
                           <el-input v-model="detailForm.address2"></el-input>
                         </el-form-item>
-                         <el-form-item label="地址2:" v-if="type == 'detail'">
+                         <el-form-item :label="$t('desk.customer_address') +'2'+ ':'" v-if="type == 'detail'">
                           <template
                           >{{ detailForm.address2 }}</template
                         >
                         </el-form-item>
                       </el-col>
                       <el-col :span="7" class="col">
-                        <el-form-item label="电话号码1:"  v-if="type != 'detail'">
+                        <el-form-item :label="$t('desk.home_telNum1') + ':'"  v-if="type != 'detail'">
                           <el-input v-model="detailForm.mobile"></el-input>
                         </el-form-item>
-                         <el-form-item label="电话号码1:"  v-if="type == 'detail'">
+                         <el-form-item :label="$t('desk.home_telNum1') + ':'"  v-if="type == 'detail'">
                           <template
                           >{{ detailForm.mobile }}</template
                         >
                         </el-form-item>
                       </el-col>
                       <el-col :span="10" class="col">
-                        <el-form-item label="电话号码2:" v-if="type!= 'detail'" >
+                        <el-form-item :label="$t('desk.home_telNum2') + ':'" v-if="type!= 'detail'" >
                           <el-input v-model="detailForm.mobile2"></el-input>
                         </el-form-item>
-                          <el-form-item label="电话号码2:"  v-if="type == 'detail'">
+                          <el-form-item :label="$t('desk.home_telNum2') + ':'"  v-if="type == 'detail'">
                           <template
                           >{{ detailForm.mobile2 }}</template
                         >

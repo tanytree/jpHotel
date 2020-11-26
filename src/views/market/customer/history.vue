@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-25 10:54:32
+ * @LastEditTime: 2020-11-26 17:42:27
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -893,16 +893,13 @@ export default {
         },
         handleHistory(item) {
             console.log(item.idcard);
-            if (item.idcard) {
+          
                 this.$router.push({
                     name: "customerhistory",
                     query: {
-                        idcard: item.idcard,
+                        item:item,
                     },
                 });
-            } else {
-                this.$message(this.$t("desk.customer_noRecord"));
-            }
         },
         handleEdit(item) {
           console.log(item);

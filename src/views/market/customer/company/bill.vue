@@ -12,9 +12,19 @@
         label-width="80px"
       >
         <el-form-item :label="$t('desk.customer_unitName') + ':'">
-          <el-select v-model="searchForm.enterName" filterable :placeholder="$t('commons.placeChoose')" class="width150">
+          <el-select
+            v-model="searchForm.enterName"
+            filterable
+            :placeholder="$t('commons.placeChoose')"
+            class="width150"
+          >
             <el-option label="" value>{{ $t("desk.home_all") }}</el-option>
-            <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.enterName"></el-option>
+            <el-option
+              v-for="(item, index) in unitList"
+              :key="index"
+              :label="item.enterName"
+              :value="item.enterName"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_arage') + ':'">
@@ -34,23 +44,23 @@
             :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
-<!--        <el-form-item :label="$t('desk.customer_pleaseState') + ':'">-->
-<!--          <el-select v-model="searchForm.state" class="width150">-->
-<!--            <el-option :label="$t('desk.home_all')" value></el-option>-->
-<!--            <el-option-->
-<!--              :label="$t('desk.customer_notRequest')"-->
-<!--              value="1"-->
-<!--            ></el-option>-->
-<!--            <el-option-->
-<!--              :label="$t('desk.customer_areadyRequest')"-->
-<!--              value="3"-->
-<!--            ></el-option>-->
-<!--            <el-option-->
-<!--              :label="$t('desk.customer_partRequest')"-->
-<!--              value="2"-->
-<!--            ></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item :label="$t('desk.customer_pleaseState') + ':'">-->
+        <!--          <el-select v-model="searchForm.state" class="width150">-->
+        <!--            <el-option :label="$t('desk.home_all')" value></el-option>-->
+        <!--            <el-option-->
+        <!--              :label="$t('desk.customer_notRequest')"-->
+        <!--              value="1"-->
+        <!--            ></el-option>-->
+        <!--            <el-option-->
+        <!--              :label="$t('desk.customer_areadyRequest')"-->
+        <!--              value="3"-->
+        <!--            ></el-option>-->
+        <!--            <el-option-->
+        <!--              :label="$t('desk.customer_partRequest')"-->
+        <!--              value="2"-->
+        <!--            ></el-option>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
         <el-form-item>
           <el-button type="primary" class="submit" @click="getDataList">{{
             $t("commons.queryBtn")
@@ -85,8 +95,14 @@
           width="120px"
         >
           <template slot-scope="{ row }">
-            <div><span style="color: #f11717">开</span>{{ row.startTime }}</div>
-            <div><span style="color: #1a3bf1">结</span>{{ row.endTime }}</div>
+            <div>
+              <span style="color: #f11717">{{ $t("desk.serve_open") }}</span
+              >{{ row.startTime }}
+            </div>
+            <div>
+              <span style="color: #1a3bf1">{{ $t("desk.serve_tie") }}</span
+              >{{ row.endTime }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column
@@ -135,11 +151,29 @@
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
-            <el-button type="text" v-if="row.requestStatus != 3" @click="addAeditor('editor', row)" size="mini">{{ $t("desk.customer_editorText") }}</el-button>
-            <el-button type="text" @click="advancePayments(row)" size="mini">{{ $t("desk.customer_lookBuyDetail") }}</el-button>
-            <el-button v-if='row.requestStatus !=3 ' type="text" @click="settlement(row)"  size="mini">{{ $t("desk.customer_continueRequest") }}</el-button>
-            <el-button type="text" @click="bookRecord(row)" size="mini">{{ $t("desk.customer_requestRecord") }}</el-button>
-            <el-button type="text" @click="dialogNew_remove(row)" size="mini">{{ $t("commons.delete") }}</el-button>
+            <el-button
+              type="text"
+              v-if="row.requestStatus != 3"
+              @click="addAeditor('editor', row)"
+              size="mini"
+              >{{ $t("desk.customer_editorText") }}</el-button
+            >
+            <el-button type="text" @click="advancePayments(row)" size="mini">{{
+              $t("desk.customer_lookBuyDetail")
+            }}</el-button>
+            <el-button
+              v-if="row.requestStatus != 3"
+              type="text"
+              @click="settlement(row)"
+              size="mini"
+              >{{ $t("desk.customer_continueRequest") }}</el-button
+            >
+            <el-button type="text" @click="bookRecord(row)" size="mini">{{
+              $t("desk.customer_requestRecord")
+            }}</el-button>
+            <el-button type="text" @click="dialogNew_remove(row)" size="mini">{{
+              $t("commons.delete")
+            }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -155,7 +189,12 @@
       </div>
     </div>
     <!-- 新增请款单dialog -->
-    <el-dialog :title="clickType == 'add' ? $t('desk.customer_newPlaceOrder') : '编辑请款单'"
+    <el-dialog
+      :title="
+        clickType == 'add'
+          ? $t('desk.customer_newPlaceOrder')
+          : $t('desk.customer_editorRequestOrder')
+      "
       :visible.sync="dialogNew"
       width="700px"
       top="0"
@@ -186,7 +225,11 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_paragraphNum') + ':'" prop="prefix" v-if="clickType == 'add'">
+        <el-form-item
+          :label="$t('desk.customer_paragraphNum') + ':'"
+          prop="prefix"
+          v-if="clickType == 'add'"
+        >
           <el-input
             v-model="addPlaceFrom.prefix"
             style="width: 150px"
@@ -198,7 +241,7 @@
         </el-form-item>
         <el-form-item :label="$t('desk.customer_arageDate') + ':'" required>
           <el-col :span="8">
-            <el-form-item label-width="0">
+            <el-form-item label-width="0" >
               <el-date-picker
                 type="date"
                 :placeholder="$t('desk.serve_chooseDate')"
@@ -256,10 +299,16 @@
     >
       <div class="flexBox">
         <div>
-          <span>总挂账金额：{{ totalConsumerPrice }}</span>
-          <span  style="margin-left: 10px">挂账记录：{{ buyTable.length }}条</span>
+          <span
+            >{{ $t("desk.customer_totalCreditAmount") + ":"
+            }}{{ totalConsumerPrice }}</span
+          >
+          <span style="margin-left: 10px"
+            >{{ $t("desk.customer_cardRecords") + ":" }}{{ buyTable.length
+            }}{{ $t("desk.customer_article") }}</span
+          >
         </div>
-<!--        <el-button type="primary">导出EXCEL</el-button>-->
+        <!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
       <el-table
         ref="multipleTable"
@@ -280,18 +329,18 @@
           :label="$t('desk.customer_amountPrice')"
           width="100"
         >
-            <template slot-scope="{ row }">
-                {{row.consumePrice || 0}}
-            </template>
+          <template slot-scope="{ row }">
+            {{ row.consumePrice || 0 }}
+          </template>
         </el-table-column>
         <el-table-column
           :label="$t('desk.home_name')"
           prop="checkIn.name"
           width="120"
         >
-            <template slot-scope="{ row }">
-                {{row.checkIn.name + `【${row.checkIn.pronunciation || ''}】`}}
-            </template>
+          <template slot-scope="{ row }">
+            {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
+          </template>
         </el-table-column>
         <el-table-column
           prop="checkIn.id"
@@ -299,12 +348,15 @@
           width="300"
         >
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_roomKind')"  show-overflow-tooltip>
+        <el-table-column
+          :label="$t('desk.customer_roomKind')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             <div>
-              {{ row.checkIn.hotelCheckInRoom.roomTypeName || '' }}
-                <span>/</span>
-                {{ row.checkIn.hotelCheckInRoom.houseNum || "" }}
+              {{ row.checkIn.hotelCheckInRoom.roomTypeName || "" }}
+              <span>/</span>
+              {{ row.checkIn.hotelCheckInRoom.houseNum || "" }}
             </div>
           </template>
         </el-table-column>
@@ -370,22 +422,47 @@
       </div>
     </el-dialog>
     <!-- 继续请款 dialog -->
-    <el-dialog :title="$t('desk.customer_continueRequest')" v-if="settlementDialog" :visible.sync="settlementDialog" width="600px" top="0">
+    <el-dialog
+      :title="$t('desk.customer_continueRequest')"
+      v-if="settlementDialog"
+      :visible.sync="settlementDialog"
+      width="600px"
+      top="0"
+    >
       <div style="margin-left: 34px">
-        <span>{{ $t("desk.customer_amountPrice") + ":" }}{{ itemInfo.putupPrice }}；</span>
+        <span
+          >{{ $t("desk.customer_amountPrice") + ":"
+          }}{{ itemInfo.putupPrice }}；</span
+        >
         <span style="margin-left: 6px">
           {{ $t("desk.customer_areadyPrice") + ":" }}{{ itemInfo.requestPrice }}
         </span>
       </div>
-      <el-form class="term demo-form-inline" inline size="small" :model="enterForm" ref="enterForm" :rules="enterRules">
-        <el-form-item :label="$t('desk.customer_placeMoney')" prop="requestPrice">
-          <el-input-number v-model.number="enterForm.requestPrice" :max="(itemInfo.putupPrice - itemInfo.requestPrice)"></el-input-number>
+      <el-form
+        style="margin:30px 0 0 30px"
+        inline
+        size="small"
+        :model="enterForm"
+        ref="enterForm"
+      >
+        <el-form-item :label="$t('desk.customer_placeMoney')" required>
+          <el-input-number
+            v-model.number="enterForm.requestPrice"
+            :min='0'
+            :max="itemInfo.putupPrice - itemInfo.requestPrice"
+          ></el-input-number>
         </el-form-item>
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
         <span>
-          <el-button @click="settlementDialog_cancel">{{ $t("commons.cancel") }}</el-button>
-          <el-button type="primary" @click="settlementDialog_save('enterForm')">{{ $t("commons.save") }}</el-button>
+          <el-button @click="settlementDialog_cancel">{{
+            $t("commons.cancel")
+          }}</el-button>
+          <el-button
+            type="primary"
+            @click="settlementDialog_save('enterForm')"
+            >{{ $t("commons.save") }}</el-button
+          >
         </span>
       </div>
     </el-dialog>
@@ -397,30 +474,24 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
-
     addRules() {
       return {
-          totalConsumerPrice: 0,
-        enterId: [{ required: true, message: "请选择单位", trigger: "change" }],
+        totalConsumerPrice: 0,
+        enterId: [
+          {
+            required: true,
+            message: this.$t("desk.customer_selectUnit"),
+            trigger: "change",
+          },
+        ],
         prefix: [
-          { required: true, message: "请填写编号前缀", trigger: "blur" },
-        ],
-        startTime: [
           {
-            type: "date",
             required: true,
-            message: "请选择日期",
-            trigger: "change",
+            message: this.$t("desk.customer_inputNumBefore"),
+            trigger: "blur",
           },
         ],
-        endTime: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
+       
       };
     },
     calculate() {
@@ -449,13 +520,6 @@ export default {
         return 0;
       }
     },
-    enterRules() {
-      return {
-        requestPrice: [
-          { required: true, message: "请款金额不得为空", trigger: "blur" },
-        ],
-      };
-    },
   },
   data() {
     return {
@@ -483,7 +547,7 @@ export default {
         startTime: "",
         endTime: "",
         requestStatus: "",
-          // storesNum: ''
+        // storesNum: ''
       },
       enterForm: {
         requestPrice: "",
@@ -510,14 +574,14 @@ export default {
     this.getUnitList();
   },
   methods: {
-      //新增\编辑请款
+    //新增\编辑请款
     addAeditor(type, row) {
       this.clickType = type;
       console.log(row);
       if (type == "editor") {
-          this.addPlaceFrom = this.$F.deepClone(row);
+        this.addPlaceFrom = this.$F.deepClone(row);
       }
-        this.dialogNew = true;
+      this.dialogNew = true;
     },
     dialogClose() {
       this.dialogNew_cancle();
@@ -544,11 +608,11 @@ export default {
             this.buyTable = res.consumeOrderList;
             // this.detailListTotal = res.page.count;
             this.totalConsumerPrice = 0;
-              res.consumeOrderList.forEach(item => {
-                  if (item.priceType == 13) {
-                      this.totalConsumerPrice += (item.consumePrice || 0)
-                  }
-              })
+            res.consumeOrderList.forEach((item) => {
+              if (item.priceType == 13) {
+                this.totalConsumerPrice += item.consumePrice || 0;
+              }
+            });
 
             this.advanceDialog = true;
           }
@@ -574,9 +638,9 @@ export default {
 
     //点击删除按钮
     dialogNew_remove(row) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('desk.customer_ifSureDelete'), this.$t('commons.tip_desc'), {
+        confirmButtonText:this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -589,7 +653,7 @@ export default {
             params,
             (res) => {
               this.$message({
-                message: "删除成功",
+                message: this.$t('commons.delete_success'),
                 type: "success",
               });
               this.getDataList();
@@ -604,9 +668,15 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.enterForm.requestPrice && this.enterForm.requestPrice > 0) {
-            if (this.itemInfo.putupPrice - this.itemInfo.requestPrice > this.enterForm.requestPrice) {
+            if (
+              this.itemInfo.putupPrice - this.itemInfo.requestPrice >
+              this.enterForm.requestPrice
+            ) {
               this.enterForm.requestStatus = 2;
-            } else if (this.itemInfo.putupPrice - this.itemInfo.requestPrice == this.enterForm.requestPrice) {
+            } else if (
+              this.itemInfo.putupPrice - this.itemInfo.requestPrice ==
+              this.enterForm.requestPrice
+            ) {
               this.enterForm.requestStatus = 3;
             }
           }
@@ -629,7 +699,7 @@ export default {
             params,
             (res) => {
               this.$message({
-                message: "继续请款成功",
+                message:this.$t('desk.customer_continueRequestSuccess'),
                 type: "success",
               });
               this.enterForm = {
@@ -672,7 +742,7 @@ export default {
                 this.addPlaceFrom.requestStatus = 3;
               } else {
                 this.$message({
-                  message: "请款金额不得高于挂账金额",
+                  message: this.$t('desk.customer_requestPriceNotMorethan'),
                   type: "warning",
                 });
                 return false;
@@ -683,7 +753,7 @@ export default {
             }
             this.addPlaceFrom.intoStatus = 1;
             this.addPlaceFrom.intoPrice = 0;
-            this.addPlaceFrom.operType = this.clickType == 'add' ? 1 : 2;
+            this.addPlaceFrom.operType = this.clickType == "add" ? 1 : 2;
             this.addPlaceFrom.requestAccountId = this.addPlaceFrom.id;
             this.$F.doRequest(
               this,
@@ -710,7 +780,7 @@ export default {
             );
           } else {
             this.$message({
-              message: "挂账金额不得为0",
+              message: this.$t('desk.customer_putPriceNot'),
               type: "warning",
             });
           }
@@ -736,6 +806,7 @@ export default {
         intoPrice: "",
         intoStatus: null,
       };
+      this.date_serial = null;
       this.dialogNew = false;
     },
     //点击 继续请款 按钮
@@ -786,7 +857,7 @@ export default {
         paging: true,
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
-          // storesNum: ''
+        // storesNum: ''
       });
       this.$F.merge(params, this.searchForm);
       this.$F.doRequest(

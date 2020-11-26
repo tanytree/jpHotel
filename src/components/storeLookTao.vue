@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-11-25 16:27:58
  * @Author: 陶子
- * @LastEditTime: 2020-11-25 18:43:19
+ * @LastEditTime: 2020-11-26 10:34:35
  * @FilePath: \jiudian\src\components\storeLookTao.vue
 -->
  <!-- 总后台 > 总办 > 首页 > 门店概览 -->
@@ -17,7 +17,7 @@
         label-width="80px"
         :model="storeForm"
       >
-        <el-form-item label="选择日期:">
+        <el-form-item :label="$t('boss.add_chooseDate')+':'">
           <el-date-picker
             v-model="storeForm.startTime"
             value-format="yyyy-MM-dd"
@@ -32,7 +32,7 @@
             :placeholder="$t('commons.selectDate')"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="选择门店:">
+        <el-form-item :label="$t('boss.add_chooseStore')+':'">
           <el-select
             v-model="storeForm.storesNum"
             :placeholder="$t('login.sTip')"
@@ -48,7 +48,7 @@
       </el-form>
       <div v-if="itemInfo">
         <div class="container">
-          <div class="title">门店客房数据概览</div>
+          <div class="title">{{$t('boss.add_roomData')}}</div>
           <div class="flexBox">
             <div class="itemBox">
               <img
@@ -56,7 +56,7 @@
                 class="boxLeft"
               />
               <div class="boxRight">
-                <div class="boxRight_top">出租率</div>
+                <div class="boxRight_top">{{$t('boss.add_rents')}}</div>
                 <div class="botRight_bottom">
                   {{ itemInfo.guest_rents * 100 }}%
                 </div>
@@ -68,7 +68,7 @@
                 class="boxLeft"
               />
               <div class="boxRight">
-                <div class="boxRight_top">平均房价</div>
+                <div class="boxRight_top">{{$t('boss.add_housePrice')}}</div>
                 <div class="botRight_bottom">
                   {{ itemInfo.guest_avg_prices }}
                 </div>
@@ -90,7 +90,7 @@
                 class="boxLeft"
               />
               <div class="boxRight">
-                <div class="boxRight_top">总收入</div>
+                <div class="boxRight_top">{{$t('boss.add_totalRevenue')}}</div>
                 <div class="botRight_bottom">
                   {{ itemInfo.guest_total_prices }}
                 </div>
@@ -100,7 +100,7 @@
           <el-divider></el-divider>
         </div>
         <div class="container">
-          <div class="title">门店会议厅数据概览</div>
+          <div class="title">{{$t('boss.add_meetingData')}}</div>
           <div class="flexBox">
             <div class="itemBox">
               <img
@@ -108,7 +108,7 @@
                 class="boxLeft"
               />
               <div class="boxRight">
-                <div class="boxRight_top">出租率</div>
+                <div class="boxRight_top">{{$t('boss.add_rents')}}</div>
                 <div class="botRight_bottom">
                   {{ itemInfo.meeting_rents * 100 }}%
                 </div>
@@ -120,7 +120,7 @@
                 class="boxLeft"
               />
               <div class="boxRight">
-                <div class="boxRight_top">平均房价</div>
+                <div class="boxRight_top">{{$t('boss.add_housePrice')}}</div>
                 <div class="botRight_bottom">
                   {{ itemInfo.meeting_avg_prices }}
                 </div>
@@ -142,7 +142,7 @@
                 class="boxLeft"
               />
               <div class="boxRight">
-                <div class="boxRight_top">总收入</div>
+                <div class="boxRight_top">{{$t('boss.add_totalRevenue')}}</div>
                 <div class="botRight_bottom">
                   {{ itemInfo.meeting_total_prices }}
                 </div>
@@ -211,7 +211,7 @@ export default {
             this.loading = false;
             this.itemInfo = res;
             this.$message({
-              message: "请求成功",
+              message: this.$t('boss.add_requestSuccess'),
               type: "success",
             });
           }

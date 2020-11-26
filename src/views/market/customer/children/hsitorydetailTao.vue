@@ -55,7 +55,7 @@
                   </el-form-item>
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="邮编:">
+                      <el-form-item :label="$t('desk.customer_zipCode') + ':'">
                         <el-input
                           v-model="editorForm.zipCode1"
                           style="width: 120px"
@@ -68,12 +68,12 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="9" class="col">
-                      <el-form-item label="地址:" label-width="45px">
+                      <el-form-item :label="$t('desk.customer_address') + ':'" label-width="45px">
                         <el-select
                           style="width: 160px"
                           v-model="editorForm.addressCountry"
                           filterable
-                          placeholder="选择县"
+                          :placeholder="$t('desk.customer_selectTheCounty')"
                         >
                           <el-option
                             v-for="item in options"
@@ -87,7 +87,7 @@
                           style="width: 160px; margin-left: 10px"
                           v-model="editorForm.addressCountries"
                           filterable
-                          placeholder="选择国"
+                         :placeholder="$t('desk.customer_selectCity')"
                         >
                           <el-option
                             v-for="item in options"
@@ -100,7 +100,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="7" class="col">
-                      <el-form-item label="地址1:" label-width="55px">
+                      <el-form-item :label="$t('desk.customer_address') +'1'+ ':'" label-width="55px">
                         <el-input v-model="editorForm.address"></el-input>
                       </el-form-item>
                     </el-col>
@@ -109,17 +109,17 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item label="地址2:">
+                      <el-form-item :label="$t('desk.customer_address') +'2'+ ':'">
                         <el-input v-model="editorForm.address2"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="电话号码1:" label-width="80px">
+                      <el-form-item :label="$t('desk.home_telNum1') + ':'" label-width="80px">
                         <el-input v-model="editorForm.mobile"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="电话号码2:" label-width="80px">
+                      <el-form-item :label="$t('desk.home_telNum2') + ':'" label-width="80px">
                         <el-input v-model="editorForm.mobile2"></el-input>
                       </el-form-item>
                     </el-col>
@@ -137,7 +137,7 @@
                           <el-radio :label="2">{{
                             $t("desk.customer_woman")
                           }}</el-radio>
-                          <el-radio :label="3">其他</el-radio>
+                          <el-radio :label="3">{{$t('desk.book_other')}}</el-radio>
                         </el-radio-group>
                       </el-form-item>
                     </el-col>
@@ -152,19 +152,19 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="10" class="col">
-                      <el-form-item label="单位名:">
+                      <el-form-item :label="$t('desk.customer_unitNameA') + ':'">
                         <el-input v-model="editorForm.enterName"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="7" class="col">
-                      <el-form-item label="单位号码1:">
+                      <el-form-item :label="$t('desk.customer_unitPhoneNum')  +'1'+':'">
                         <el-input v-model="editorForm.enterMobile1"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="17" class="col">
-                      <el-form-item label="单位地址1:">
+                      <el-form-item :label="$t('desk.customer_unitAddress')  +'1'+':'">
                         <el-input
                           v-model="editorForm.enterAddress1"
                           style="width: 530px"
@@ -174,12 +174,12 @@
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="7" class="col">
-                      <el-form-item label="单位号码2:">
+                      <el-form-item :label="$t('desk.customer_unitPhoneNum')  +'2'+':'">
                         <el-input v-model="editorForm.enterMobile2"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="17" class="col">
-                      <el-form-item label="单位地址2">
+                      <el-form-item :label="$t('desk.customer_unitAddress')  +'2'+':'">
                         <el-input
                           v-model="editorForm.enterAddress2"
                           style="width: 530px"
@@ -193,7 +193,7 @@
                     <el-input
                       type="textarea"
                       :autosize="{ minRows: 1, maxRows: 4 }"
-                      placeholder="请输入内容"
+                      :placeholder="$t('desk.book_inputContent')"
                       v-model="editorForm.memo1"
                       style="width: 800px"
                     >
@@ -206,7 +206,7 @@
                       style="width: 800px"
                       type="textarea"
                       :autosize="{ minRows: 1, maxRows: 4 }"
-                      placeholder="请输入内容"
+                      :placeholder="$t('desk.book_inputContent')"
                       v-model="editorForm.memo2"
                     >
                     </el-input>
@@ -244,10 +244,10 @@ export default {
     rulese() {
       return {
         name: [
-          { required: true, message: "请输入姓名", trigger: "blur" },
+          { required: true, message: this.$t('desk.customer_inputName'), trigger: "blur" },
         ],
          pronunciation: [
-          { required: true, message: "请输入拼音", trigger: "blur" },
+          { required: true, message: this.$t('desk.customer_inputPY'), trigger: "blur" },
         ],
       };
     },
