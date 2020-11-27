@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-27 13:46:41
+ * @LastEditTime: 2020-11-27 16:11:54
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -156,8 +156,8 @@
             </el-row>
             <br />
 
-            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="consumePrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice"></el-input>
+            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="payPrice">
+                <el-input class="width200" type="number" v-model="consumeOperForm.payPrice"></el-input>
             </el-form-item>
             <el-form-item :label="$t('desk.customer_buyerUnit') + ':'" class="" prop="creditName">
                 <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword :placeholder="$t('commons.pleaseEnter')"  :loading="loading" @change="enterNameChange">
@@ -600,7 +600,7 @@ export default {
                 params.priceType = 13
                 params.payType = 0 //挂账无需支付方式
                 params.state = 1
-                params.consumePrice =  this.consumeOperForm.consumePrice
+                params.payPrice =  this.consumeOperForm.payPrice
 
                 console.log(params)
             }

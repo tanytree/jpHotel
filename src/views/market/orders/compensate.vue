@@ -142,7 +142,7 @@ export default {
 
   created() {
     this.goodsType();
-    this.getDataList();
+    this.initForm();
   },
   methods: {
     //计算商品总价
@@ -160,7 +160,7 @@ export default {
     },
     initForm() {
       this.searchForm = {
-           state:2,
+        state:2,
         roomNum: "",
         cname: "",
         damageTypeId: "",
@@ -171,13 +171,13 @@ export default {
       this.getDataList();
     },
     /**获取表格数据 */
-    getDataList(params = {}) {
-      this.$F.merge(params, {
+    getDataList() {
+     let params =  {
         paging: true,
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
         priceType: 7,
-      });
+      };
       this.$F.merge(params, this.searchForm);
       this.$F.doRequest(
         this,

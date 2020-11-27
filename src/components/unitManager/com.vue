@@ -954,8 +954,6 @@ export default {
         .catch(() => {});
     },
     addAndEditItem(type, item) {
-      this.setCompanyFormVisible = true;
-      this.addCompanyForm.type = type;
       if (item) {
         for (let k in this.addCompanyForm) {
           this.addCompanyForm[k] = item[k];
@@ -965,6 +963,8 @@ export default {
       } else {
           this.initAddCompanyForm();
       }
+      this.addCompanyForm.type = type;
+      this.setCompanyFormVisible = true;
     },
     // 验证材料
     //  this.$refs.setBatchForm.validate((valid) => {
