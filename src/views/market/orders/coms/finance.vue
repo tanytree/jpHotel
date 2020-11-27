@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-24 16:03:56
+ * @LastEditTime: 2020-11-27 13:46:41
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -156,11 +156,11 @@
             </el-row>
             <br />
 
-            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="payPrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.payPrice"></el-input>
+            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="consumePrice">
+                <el-input class="width200" type="number" v-model="consumeOperForm.consumePrice"></el-input>
             </el-form-item>
             <el-form-item :label="$t('desk.customer_buyerUnit') + ':'" class="" prop="creditName">
-                <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword :placeholder="$t('desk.pleaseEnter')"  :loading="loading" @change="enterNameChange">
+                <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword :placeholder="$t('commons.pleaseEnter')"  :loading="loading" @change="enterNameChange">
                     <el-option v-for="item in hotelenterList" :key="item.id" :label="item.enterName" :value="item.id">
                         {{item.enterName}}
                     </el-option>
@@ -600,7 +600,7 @@ export default {
                 params.priceType = 13
                 params.payType = 0 //挂账无需支付方式
                 params.state = 1
-                params.payPrice =  this.consumeOperForm.payPrice
+                params.consumePrice =  this.consumeOperForm.consumePrice
 
                 console.log(params)
             }

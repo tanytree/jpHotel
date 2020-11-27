@@ -304,6 +304,7 @@ export default {
             searchForm: {
                 state: '',
                 status: 1,
+                storesNum: "",
               
             },
             dialogInfo: null,
@@ -410,6 +411,7 @@ export default {
                 paging: true,
                 pageIndex: 1, //当前页
                 pageSize: 10, //页数
+                storesNum:'',
             };
             this.getDataList();
         },

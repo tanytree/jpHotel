@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-11-26 13:57:38
+ * @LastEditTime: 2020-11-27 10:21:36
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -713,9 +713,9 @@ module.exports = {
     customer_branchPhone: '支店電話',
     customer_accountNum: '口座番号',
     customer_accName: '講座名義人',
-    customer_unitHeader: '未翻译词条',
-    customer_amountCapital: '未翻译词条',
-    customer_employeeNum: '未翻译词条',
+    customer_unitHeader: '会社代表者',
+    customer_amountCapital: '資本金',
+    customer_employeeNum: '社員数',
     customer_originOrderNum: '予約番号',
     customer_billState: '入金状況',
     customer_arage: '精算期間',
@@ -741,24 +741,24 @@ module.exports = {
     customer_arageDate: '請求期間',
     customer_numBefore: '請求書接頭辞',
     customer_settlementAll: '請求期間内おける全ての未請求売掛',
-    customer_totalCreditAmount: '未翻译词条',
-    customer_cardRecords: '未翻译词条',
-    customer_article: '未翻译词条',
-    customer_bookPriceNotEmpty: '未翻译词条',
-    customer_bookPriceShouldSmall: '未翻译词条',
-    customer_bookPriceMorethan: '未翻译词条',
-    customer_bookSuccess: '未翻译词条',
-    customer_editorRequestOrder: '未翻译词条',
-    customer_inputNumBefore: '未翻译词条',
-    customer_ifSureDelete: '未翻译词条',
-    customer_continueRequestSuccess: '未翻译词条',
-    customer_requestPriceNotMorethan: '未翻译词条',
-    customer_putPriceNot: '未翻译词条',
-    customer_zipCode: '未翻译词条',
-    customer_selectTheCounty: '未翻译词条',
-    customer_selectCity: '未翻译词条',
-    customer_unitPhoneNum: '未翻译词条',
-    customer_inputPY: '未翻译词条',
+    customer_totalCreditAmount: '売掛合計金額',
+    customer_cardRecords: '売掛明細',
+    customer_article: '件',
+    customer_bookPriceNotEmpty: '入金金額は空白できません',
+    customer_bookPriceShouldSmall: '入金金額は請求金額より超過できません',
+    customer_bookPriceMorethan: '入金金額は０円より大きくなければなりません',
+    customer_bookSuccess: '入金確認',
+    customer_editorRequestOrder: '請求書を編集',
+    customer_inputNumBefore: '接頭辞を入力してください',
+    customer_ifSureDelete: '削除しますか？',
+    customer_continueRequestSuccess: '請求作業を確認',
+    customer_requestPriceNotMorethan: '請求金額は売掛金額より多くなりません',
+    customer_putPriceNot: '売掛金額は０円にできません',
+    customer_zipCode: '郵便番号',
+    customer_selectTheCounty: '都道府県を選択',
+    customer_selectCity: '国籍を選択',
+    customer_unitPhoneNum: '法人・会社番号',
+    customer_inputPY: 'カナを入力してください',
 
 
 

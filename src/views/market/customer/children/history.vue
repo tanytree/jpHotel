@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-26 17:16:14
+ * @LastEditTime: 2020-11-27 11:57:38
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -32,6 +32,11 @@
             :placeholder="$t('commons.placeChoose')"
           >
             <el-option
+              label="全部"
+              value="0000000000"
+            >
+            </el-option>
+            <el-option
               v-for="item in storeList"
               :key="item.value"
               :label="item.storesName"
@@ -40,7 +45,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_roomType') + ':'">
+        <!-- <el-form-item :label="$t('desk.customer_roomType') + ':'">
           <el-select v-model="searchForm.roomTypeId" class="width150">
             <el-option :label="$t('desk.home_all')" value="">{{
               $t("desk.home_all")
@@ -54,6 +59,14 @@
               :value="2"
             ></el-option>
           </el-select>
+        </el-form-item> -->
+        <el-form-item :label="$t('manager.hp_room') + ':'">
+          <el-cascader
+            v-model="searchForm.roomTypeId"
+            :options="roomType"
+            @change="handleChange"
+            style="width: 180px"
+          ></el-cascader>
         </el-form-item>
         <!-- <el-form-item label="入住人：">
                 <el-input v-model="searchForm.content" class="width150"></el-input>
@@ -261,6 +274,26 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
+    guestRooms: {
+      get() {
+        return this.$t("manager.hk_guestRooms");
+      },
+      set() {},
+    },
+    chamber: {
+      get() {
+        return this.$t("manager.hk_chamber");
+      },
+      set() {},
+    },
+  },
+  watch: {
+    guestRooms(newValue, oldValue) {
+      this.guestRooms = newValue;
+    },
+    chamber(newValue, oldValue) {
+      this.chamber = newValue;
+    },
   },
   data() {
     return {
@@ -275,7 +308,7 @@ export default {
         //////////
         pronunciation: "", //入住人发音
         name: "",
-         idcard: "",
+        idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
@@ -283,18 +316,55 @@ export default {
       listTotal: 0, //总条数
       tableData: [], //表格数据
       storeList: [],
+
+      //////
+      roomType: [
+        {
+          label: this.guestRooms,
+          value: "1",
+          children: [],
+        },
+        {
+          label: this.chamber,
+          value: "2",
+          children: [],
+        },
+      ],
     };
   },
   mounted() {
-    this.initForm();
     this.stores_list();
+    this.get_room_type_list();
   },
   methods: {
     ...mapMutations({
       resetActive: "resetActive",
     }),
+    // 选择--获取房型
+    get_room_type_list() {
+      // this.roomType = []
+      this.$F.doRequest(this, "/pms/hotel/room_type_list", {}, (res) => {
+        res.roomtype.forEach((item, index) => {
+          item.label = item.houseName;
+          item.value = item.id;
+          this.roomType[0].children.push(item);
+        });
+        this.roomType[0].label = this.guestRooms;
+        res.meetingtype.forEach((item, index) => {
+          item.label = item.houseName;
+          item.value = item.id;
+          this.roomType[1].children.push(item);
+        });
+        this.roomType[1].label = this.chamber;
+        console.log(this.roomType);
+      });
+    },
+    // 获取联级选择--房屋类型
+    handleChange(value) {
+      this.searchForm.roomTypeId = value[1];
+    },
     initForm() {
-       this.searchForm= {
+      (this.searchForm = {
         storesNum: "",
         roomTypeId: "",
         inStartTime: "",
@@ -304,16 +374,16 @@ export default {
         //////////
         pronunciation: "", //入住人发音
         name: "",
-         idcard: "",
+        idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
-      },
-      console.log(this.$route.query);
+      }),
+        console.log(this.$route.query);
       this.searchForm.idcard = this.$route.query.item.idcard || "";
       this.searchForm.name = this.$route.query.item.name;
       this.searchForm.pronunciation = this.$route.query.item.pronunciation;
-      this.searchForm.storesNum = this.$route.query.item.storesNum;
+      this.searchForm.storesNum = sessionStorage.getItem('storesNum');
       this.getDataList();
     },
     //点击 客史档案
@@ -326,17 +396,7 @@ export default {
         this.$router.replace("/customer");
       }
     },
-    //获取门店列表
-    getStoreList() {
-      this.$F.doRequest(
-        this,
-        "/pms/department/department_store_list",
-        {},
-        (res) => {
-          console.log(res);
-        }
-      );
-    },
+   
     /**获取表格数据 */
     getDataList() {
       this.loading = true;
@@ -353,9 +413,13 @@ export default {
       );
     },
     stores_list() {
-      this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {
+      let params = {
+       
+      }
+      this.$F.doRequest(this, "/pms/freeuser/stores_list", params, (data) => {
         console.log(data);
         this.storeList = data;
+        this.initForm();
       });
     },
     handelDetail(item) {
@@ -393,7 +457,7 @@ export default {
       }
       return this.$t("desk.customer_unknowStore");
     },
-  
+
     /**每页数 */
     handleSizeChange(val) {
       this.searchForm.pageSize = val;

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-26 17:33:08
+ * @LastEditTime: 2020-11-27 11:58:54
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -12,7 +12,7 @@
       <!-- 头部导航 -->
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item  @click.native="clickHistory">{{
+          <el-breadcrumb-item @click.native="clickHistory" style="cursor: pointer">{{
             $t("desk.customer_guestHistoryRecord")
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{
@@ -25,12 +25,17 @@
       </div>
       <!-- 查询部分 -->
       <el-form inline size="small" label-width="100px">
-       <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
+        <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
           <!-- <el-input v-model="searchForm.content" class="width150"></el-input> -->
           <el-select
             v-model="searchForm.storesNum"
             :placeholder="$t('commons.placeChoose')"
           >
+            <el-option
+              label="全部"
+              value="0000000000"
+            >
+            </el-option>
             <el-option
               v-for="item in storeList"
               :key="item.value"
@@ -40,7 +45,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_roomType') + ':'">
+        <!-- <el-form-item :label="$t('desk.customer_roomType') + ':'">
           <el-select v-model="searchForm.roomTypeId" class="width150">
             <el-option :label="$t('desk.home_all')" value="">{{
               $t("desk.home_all")
@@ -54,6 +59,14 @@
               :value="2"
             ></el-option>
           </el-select>
+        </el-form-item> -->
+        <el-form-item :label="$t('manager.hp_room') + ':'">
+          <el-cascader
+            v-model="searchForm.roomTypeId"
+            :options="roomType"
+            @change="handleChange"
+            style="width: 180px"
+          ></el-cascader>
         </el-form-item>
         <!-- <el-form-item label="入住人：">
                 <el-input v-model="searchForm.content" class="width150"></el-input>
@@ -115,15 +128,23 @@
           :label="$t('desk.customer_livePeople')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="" :label="$t('desk.customer_liveToleave')" width="200">
+        <el-table-column
+          prop=""
+          :label="$t('desk.customer_liveToleave')"
+          width="200"
+        >
           <template slot-scope="{ row }">
             <div class="box">
               <div class="item">
                 <div>
-                  <span class="text-blue">{{$t('desk.customer_arrived')}}</span>{{ row.checkinTime }}
+                  <span class="text-blue">{{
+                    $t("desk.customer_arrived")
+                  }}</span
+                  >{{ row.checkinTime }}
                 </div>
                 <div>
-                  <span class="text-red">{{$t('desk.customer_leave')}}</span>{{ row.checkoutTime }}
+                  <span class="text-red">{{ $t("desk.customer_leave") }}</span
+                  >{{ row.checkoutTime }}
                 </div>
               </div>
             </div>
@@ -148,22 +169,38 @@
             {{ F_operCheckinType(row.operCheckinType) }}
           </template>
         </el-table-column>
-        <el-table-column prop=""  :label="$t('desk.home_roomNum')" show-overflow-tooltip>
+        <el-table-column
+          prop=""
+          :label="$t('desk.home_roomNum')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.houseNum }}
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" :label="$t('desk.home_roomType')" show-overflow-tooltip>
+        <el-table-column
+          prop="enterType"
+          :label="$t('desk.home_roomType')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.roomTypeId }}
           </template>
         </el-table-column>
-        <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
+        <el-table-column
+          prop=""
+          :label="$t('desk.customer_totalRoomPrice')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.realPrice }}
           </template>
         </el-table-column>
-        <el-table-column prop="enterType" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
+        <el-table-column
+          prop="enterType"
+          :label="$t('desk.customer_totalConsum')"
+          show-overflow-tooltip
+        >
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.totalRoomPrice }}
           </template>
@@ -217,12 +254,32 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
+    guestRooms: {
+      get() {
+        return this.$t("manager.hk_guestRooms");
+      },
+      set() {},
+    },
+    chamber: {
+      get() {
+        return this.$t("manager.hk_chamber");
+      },
+      set() {},
+    },
+  },
+  watch: {
+    guestRooms(newValue, oldValue) {
+      this.guestRooms = newValue;
+    },
+    chamber(newValue, oldValue) {
+      this.chamber = newValue;
+    },
   },
   data() {
     return {
       loading: false,
       searchForm: {
-       storesNum: "",
+        storesNum: "",
         roomTypeId: "",
         inStartTime: "",
         inEndTime: "",
@@ -231,7 +288,7 @@ export default {
         //////////
         pronunciation: "", //入住人发音
         name: "",
-         idcard: "",
+        idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
@@ -239,16 +296,52 @@ export default {
       listTotal: 0, //总条数
       tableData: [], //表格数据
       storeList: [],
+      //////
+      roomType: [
+        {
+          label: this.guestRooms,
+          value: "1",
+          children: [],
+        },
+        {
+          label: this.chamber,
+          value: "2",
+          children: [],
+        },
+      ],
     };
   },
   mounted() {
-    this.initForm();
     this.stores_list();
+    this.get_room_type_list();
   },
   methods: {
+    // 选择--获取房型
+    get_room_type_list() {
+      // this.roomType = []
+      this.$F.doRequest(this, "/pms/hotel/room_type_list", {}, (res) => {
+        res.roomtype.forEach((item, index) => {
+          item.label = item.houseName;
+          item.value = item.id;
+          this.roomType[0].children.push(item);
+        });
+        this.roomType[0].label = this.guestRooms;
+        res.meetingtype.forEach((item, index) => {
+          item.label = item.houseName;
+          item.value = item.id;
+          this.roomType[1].children.push(item);
+        });
+        this.roomType[1].label = this.chamber;
+        console.log(this.roomType);
+      });
+    },
+    // 获取联级选择--房屋类型
+    handleChange(value) {
+      this.searchForm.roomTypeId = value[1];
+    },
     initForm() {
       this.searchForm = {
-       storesNum: "",
+        storesNum: "",
         roomTypeId: "",
         inStartTime: "",
         inEndTime: "",
@@ -257,7 +350,7 @@ export default {
         //////////
         pronunciation: "", //入住人发音
         name: "",
-         idcard: "",
+        idcard: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
@@ -266,12 +359,12 @@ export default {
       this.searchForm.idcard = this.$route.query.item.idcard || "";
       this.searchForm.name = this.$route.query.item.name;
       this.searchForm.pronunciation = this.$route.query.item.pronunciation;
-      this.searchForm.storesNum = this.$route.query.item.storesNum;
+      this.searchForm.storesNum = sessionStorage.getItem("storesNum");
       this.getDataList();
     },
     //点击顶部客史档案
-    clickHistory(){
-      this.$router.go(-1)
+    clickHistory() {
+      this.$router.go(-1);
     },
     /**获取表格数据 */
     getDataList() {
@@ -290,14 +383,13 @@ export default {
     },
     stores_list() {
       let params = {
-        filterHeader:true,
-      }
+      };
       this.$F.doRequest(this, "/pms/freeuser/stores_list", params, (data) => {
         this.storeList = data;
+        this.initForm();
       });
     },
-   
-   
+
     F_storeName(v) {
       let that = this;
       for (let k in that.storeList) {
@@ -305,7 +397,7 @@ export default {
           return that.storeList[k].storesName;
         }
       }
-      return  this.$t('desk.customer_unknowStore');
+      return this.$t("desk.customer_unknowStore");
     },
     /**每页数 */
     handleSizeChange(val) {

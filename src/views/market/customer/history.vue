@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-26 17:42:27
+ * @LastEditTime: 2020-11-27 14:17:08
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -68,7 +68,7 @@
                     prop="sex"
                     align="center"
                     :label="$t('desk.customer_sex')"
-                    width="60"
+                    width="100"
                 >
                     <template slot-scope="{ row }">{{
                         row.sex | F_sex
@@ -78,8 +78,9 @@
                     prop="mobile"
                     :label="$t('desk.home_phoneNum')"
                     show-overflow-tooltip
+                    width="200px"
                 ></el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                     prop="idcardType"
                     align="center"
                     :label="$t('desk.customer_documentType')"
@@ -93,7 +94,7 @@
                     prop="idcard"
                     :label="$t('desk.customer_documentNum')"
                     show-overflow-tooltip
-                ></el-table-column>
+                ></el-table-column> -->
                 <el-table-column
                     prop="birthday"
                     align="center"

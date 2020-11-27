@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-26 16:21:07
+ * @LastEditTime: 2020-11-27 14:37:13
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -234,7 +234,7 @@
                       </el-col>
                     </el-row>
                   </el-row>
-                  <el-row class="cell" v-if="type != 'add'">
+                  <el-row class="cell" v-if="type != 'add'&&type!='edit'">
                     <el-col :span="8" class="col">
                       <el-form-item
                         :label="$t('desk.customer_memeberCardNum')+':'"
@@ -940,6 +940,8 @@ export default {
     this.isHeader = this.$route.query.isHeader == 1;
     this.detailForm.id = this.$route.query.id ? this.$route.query.id : "";
     //
+    console.log(this.$route.query.role);
+
     if (this.$route.query.role == "add") {
       this.type = "add";
     } else if (this.$route.query.role == "modify") {
