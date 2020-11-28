@@ -257,7 +257,6 @@ export default {
         },
 
         //获取商品实物分类
-
         getCategoryData() {
             let info =  {
                 categoryType: 1

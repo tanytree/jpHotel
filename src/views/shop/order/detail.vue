@@ -13,7 +13,7 @@
                     <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>
                 </div>
                 <div class="fr clearfix">
-                    总消费：{{numFormate(getFee + info.hasPayPrice)}};  已结:{{numFormate(info.hasPayPrice)}}
+                    总消费：{{numFormate(getFee + info.hasPayPrice)}};  已结:{{ info.hasPayPrice ? numFormate(info.hasPayPrice) : 0}}
                 </div>
             </div>
             <div class="margin-t-20">
