@@ -109,9 +109,10 @@
                 for(let i in list){
                     if(list[i].goods.categoryType == 2){
                         let data = list[i].goods
+                        console.log(list[i])
                         if(data.priceModel == 2){
                             // let fee = this.getFinalFee(data)
-                             let fee = this.getFinalFee(data,this.endTime)
+                             let fee = this.getFinalFee(data,this.endTime,this.info.createTime)
                             sum += fee
                         }else{
                             sum += list[i].totalPrice

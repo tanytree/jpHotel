@@ -130,7 +130,9 @@ const mixin= {
                     // console.log('服务项目所在的全部分钟数'+allMinutes)//服务项目所在的全部分钟数
                     // console.log('服务的使用时间是否大于起步价开始计算时间'+ allMinutes > data.priceStartMinute)//服务的使用时间是否大于起步价开始计算时间
                     //全部分钟数》起步价设置的分钟数
-                    if( allMinutes > data.priceStartMinute){
+                    console.log(allMinutes)
+                    console.log(data.priceStartMinute)
+                    if( allMinutes && allMinutes > data.priceStartMinute){
                         // 设置价格为起步价
                         let a = parseFloat(allMinutes - data.priceStartMinute)//获取减去起步时间的分钟数
                         // console.log('获取减去起步时间的分钟数'+a)
@@ -158,6 +160,7 @@ const mixin= {
                     }else{
                         return startPrice
                     }
+
                 }
         },
 
