@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row>
+    <!-- <el-row>
       <el-col :span="20">
         <el-form
           ref="centerForm"
@@ -68,122 +68,40 @@
           </el-col>
         </el-form>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <!-- 酒店信息表格 -->
-    <el-row>
+    <el-row >
       <h4>酒店信息:</h4>
-      <el-row>
-        <label>大仓集团第一酒店（地址：安徽省合肥市蜀山区）</label>
+      <el-row v-for="(item,index) in infoArray" :key="index" style="margin-top:30px">
+        <label>{{item.name}}</label>
         <el-table
           :data="tableData"
           style="width: 100%; margin-top: 10px"
           :header-cell-style="{ background: '#D9DDE2', color: '#606266' }"
         >
-          <el-table-column :label="$t('desk.home_roomType')" width="180">
-            <template slot-scope="scope">
-              <!-- <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
+          <el-table-column :label="$t('desk.home_roomType')" width="130"   fixed>
+            <template>
               <el-row>房间详情</el-row>
             </template>
           </el-table-column>
-          <el-table-column label="标准间" width="180">
-            <template slot-scope="scope">
-              <!-- <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
-              <el-row>可订数：12</el-row>
-              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
-              <el-row>优惠价：150</el-row>
+          <el-table-column v-for="(each,index) in item.array" :key="index" :label="each.roomTypeName"  width="160">
+            <template >
+              <el-row>可订数：{{each.reserveTotal}}</el-row>
+              <el-row v-if="each.personPrice">1人总价：{{each.personPrice.split(",")[0]}}</el-row>
+              <el-row v-if="each.personPrice&&each.personPrice.split(',').length>1">2人总价：{{each.personPrice.split(",")[1]}}</el-row>
             </template>
           </el-table-column>
-          <el-table-column label="大床房" width="180">
-            <template slot-scope="scope">
-              <!-- <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
-              <el-row>可订数：12</el-row>
-              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
-              <el-row>优惠价：150</el-row>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="总统套房" width="180">
-            <template slot-scope="scope">
-              <!-- <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
-              <el-row>可订数：12</el-row>
-              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
-              <el-row>优惠价：150</el-row>
-            </template>
-          </el-table-column>
-          <el-table-column label="单间" width="180">
-            <template slot-scope="scope">
-              <!-- <i class="el-icon-time"></i> -->
-              <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
-              <el-row>可订数：12</el-row>
-              <el-row>{{ $t("manager.hk_doorPrice") }}：200</el-row>
-              <el-row>优惠价：150</el-row>
-            </template>
-          </el-table-column>
-          <el-table-column :label="$t('commons.operating')">
-            <template slot-scope="scope">
+          <el-table-column :label="$t('commons.operating')"   fixed="right" >
+            <template   >
               <el-button
+              :disabled='item.array.length>0?false:true'
                 size="mini"
                 type="text"
                 @click="
                   handleEdit(scope.$index, scope.row),
                     (dialogFormVisible = true)
                 "
-                >普通预订</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-row>
-
-      <el-row style="margin-top: 20px">
-        <label>大仓集团第一酒店（地址：安徽省合肥市蜀山区）</label>
-        <el-table
-          :data="tableData"
-          style="width: 100%; margin-top: 10px"
-          :header-cell-style="{ background: '#D9DDE2', color: '#606266' }"
-        >
-          <el-table-column :label="$t('desk.home_roomType')" width="180">
-            <!-- <template slot-scope="scope">
-               <i class="el-icon-time"></i>
-               <span style="margin-left: 10px">{{ scope.row.date }}</span>
-            </template>-->
-          </el-table-column>
-          <el-table-column label="标准间" width="180">
-            <!-- <template slot-scope="scope">
-               <i class="el-icon-time"></i>
-               <span style="margin-left: 10px">{{ scope.row.date }}</span>
-            </template>-->
-          </el-table-column>
-          <el-table-column label="大床房" width="180">
-            <!-- <template slot-scope="scope">
-               <i class="el-icon-time"></i>
-               <span style="margin-left: 10px">{{ scope.row.date }}</span>
-            </template>-->
-          </el-table-column>
-
-          <el-table-column label="总统套房" width="180">
-            <!-- <template slot-scope="scope">
-               <i class="el-icon-time"></i>
-               <span style="margin-left: 10px">{{ scope.row.date }}</span>
-            </template>-->
-          </el-table-column>
-          <el-table-column label="单间" width="180">
-            <!-- <template slot-scope="scope">
-               <i class="el-icon-time"></i>
-               <span style="margin-left: 10px">{{ scope.row.date }}</span>
-            </template>-->
-          </el-table-column>
-          <el-table-column :label="$t('commons.operating')">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                type="text"
-                @click="handleEdit(scope.$index, scope.row)"
                 >普通预订</el-button
               >
             </template>
@@ -843,6 +761,7 @@ export default {
       multipleSelection: [], //多选
       tableData: [{}], //表格数据
       num: "",
+      infoArray:[],
     };
   },
   mounted() {
@@ -852,10 +771,39 @@ export default {
     this.$F.doRequest(this, "/pms/freeuser/stores_list", params, (data) => {
       this.storeList = data;
     });
+    this.getInfoList();
 
   },
 
   methods: {
+    getInfoList(){
+      let params = {
+         storesNum:'',
+         changeType:1,
+         roomType:1,
+      }
+       this.$F.doRequest(this, "/pms/checkin/hotel_checkin_roominfo", params, (res) => {
+         for(let i in this.storeList){
+           let number = this.storeList[i].storesNum;
+           let name = this.storeList[i].storesName;
+           let object = {}
+           object.name = name;
+           object.number = number;
+           object.array = [];
+           for(let t in res.roomTypeList){
+             if(number==res.roomTypeList[t].storesNum){
+               object.array.push(res.roomTypeList[t])
+             }
+           }
+           this.infoArray.push(object)
+         }
+        this.infoArray=this.infoArray.filter((item)=>{
+        return item.number!="0000000000"
+      })
+          console.log(this.infoArray);
+    });
+
+    },
     onSubmit() {
       console.log("submit!");
     },
