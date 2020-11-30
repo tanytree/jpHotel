@@ -728,9 +728,6 @@ export default {
             realPayPrice:this.cartToTal,
             shopsJson :JSON.stringify(arr)
         }
-
-        // console.log(params)
-
         params.userId = this.userId
         params.storesNum = this.storesNum
         this.$F.doRequest(this, "/pms/shop/shop_place_order_edit", params, (res) => {
