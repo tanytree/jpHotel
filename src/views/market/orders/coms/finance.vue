@@ -45,8 +45,8 @@
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" prop="payPrice"></el-table-column>
         <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
-            <template slot-scope="{row}">
-                {{row.state==1? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
+            <template slot-scope="{row}">                
+                {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
             </template>
         </el-table-column>
         <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
@@ -599,14 +599,10 @@ export default {
             if (type == 2) {
                 params.priceType = 13
                 params.payType = 0 //挂账无需支付方式
-                params.state = 1
+                params.state = 2
                 params.payPrice =  this.consumeOperForm.payPrice
-
                 console.log(params)
             }
-
-
-
             //冲调
             if (type == 3) {
 
