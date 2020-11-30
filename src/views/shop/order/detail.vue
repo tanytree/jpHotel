@@ -103,23 +103,28 @@
                 msgKey: state => state.config.msgKey,
                 plat_source: state => state.config.plat_source
             }),
+            //计算价格            
             getFee(){
-                let list = this.info.orderSubList
-                let sum =  0
-                for(let i in list){
-                    if(list[i].goods.categoryType == 2){
-                        let data = list[i].goods
-                        console.log(list[i])
-                        if(data.priceModel == 2){
-                            // let fee = this.getFinalFee(data)
-                             let fee = this.getFinalFee(data,this.endTime,this.info.createTime)
-                            sum += fee
-                        }else{
-                            sum += list[i].totalPrice
+                if(this.endTime && this.info.orderSubList && this.info.orderSubList.length > 0){
+                    let list = this.info.orderSubList
+                    let sum =  0
+                    list.forEach(element => {
+                        console.log(element)
+                        if(element.goods.categoryType == 2){
+                            if(element.goods.priceModel == 2){
+                                let fee = this.getFinalFee(element.goods,this.endTime,this.info.createTime)
+                                sum += fee
+                            }else{
+                                sum += element.totalPrice
+                            }
                         }
-                    }
+                    });
+
+                    return sum
+                }else{
+                    return 0
                 }
-                return sum
+
             }
         },
         mounted() {

@@ -190,24 +190,39 @@
                     return 0
                 }
             },
+            //计算价格
             getFee(){
-                let list = this.info.orderSubList
-                let sum =  0
-                for(let i in list){
-                    if(list[i].goods.categoryType == 2){
-                        console.log(list[i].createTime)
-                        let data = list[i].goods
-
-                        if(data.priceModel == 2){
-                            let fee = this.getFinalFee(data,this.endTime,list[i].createTime)
-                            sum += fee
-                        }else{
-                            sum += list[i].totalPrice
+                if(this.endTime && this.info.orderSubList && this.info.orderSubList.length > 0){
+                    let list = this.info.orderSubList
+                    let sum = 0
+                    list.forEach(element => {
+                        if(element.goods.categoryType == 2){
+                            if(element.goods.priceModel == 2){
+                                sum += this.getFinalFee(element.goods,this.endTime,this.info.createTime)
+                            }else{
+                                sum += element.totalPrice
+                            }
                         }
-                    }
+                    });
+                    return parseFloat(this.form.preferentialPrice) ? sum - parseFloat(this.form.preferentialPrice) : sum
+
+                    // for(let i in list){
+                    //     if(list[i].goods.categoryType == 2){
+                    //         console.log(list[i].createTime)
+                    //         let data = list[i].goods
+
+                    //         if(data.priceModel == 2){
+                    //             let fee = this.getFinalFee(data,this.endTime,list[i].createTime)
+                    //             sum += fee
+                    //         }else{
+                    //             sum += list[i].totalPrice
+                    //         }
+                    //     }
+                    // }
+
+                    // return  parseFloat(this.form.preferentialPrice) ? sum - parseFloat(this.form.preferentialPrice) : sum
                 }
 
-                return  parseFloat(this.form.preferentialPrice) ? sum - parseFloat(this.form.preferentialPrice) : sum
             }
 
         },
@@ -464,6 +479,7 @@
                 });
             },
 
+
             //提交结账
             submit(){
                 this.loading = true
@@ -503,6 +519,19 @@
                 deep: true,
                 immediate: true
             },
+            getFee:{
+                handler(newVal,oldVal) {
+                   console.log(newVal)
+                   if(newVal < 0){
+                       this.form.preferentialPrice = ''
+                       this.alert(0,'优惠金额不能大于结算金额,请重新输入优惠金额！');
+                   }
+                },
+                deep: true,
+                immediate: true
+            }
+
+
         }
     }
 </script>

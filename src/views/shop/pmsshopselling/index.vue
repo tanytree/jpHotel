@@ -92,7 +92,7 @@
                    <div class="hasTitle">已选商品</div>
                     <el-main class="main padding-20">
                         <el-table  :data="cart" header-row-class-name="default" size="small" >
-                            <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
+                             <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
                             <el-table-column label="单价(元)" show-overflow-tooltip>
                                 <template slot-scope="scope">
                                 {{numFormate(scope.row.retailPrice)}}
@@ -379,7 +379,7 @@ export default {
         this.searchform.categoryType = '1'
         this.searchform.categoryId = ''
         this.getDataList();
-        this.geProductType(1);
+        this.geProductType('1');
         this.getMemberList();
         this.getScoresDiscount();
     },
@@ -408,7 +408,8 @@ export default {
 
     //
     geProductType(v){
-        // this.searchform.categoryId = ''
+        this.searchform.categoryType = v
+        console.log(v)
         let params = {
             categoryType:v,
             categoryId:this.searchform.categoryId
@@ -665,35 +666,53 @@ export default {
         // console.log(this.isUseScore)
         // console.log(this.form.scoresDiscount)
         // console.log(this.form.scoresPrice)
-        console.log(this.form.billingType)
-        let arr  = []
+        // console.log(this.form.billingType)
         let list = this.cart
-        let cateArr = []
-        for(let i in list){
-            arr.push({
-                goodsId:list[i].goodsId,
-                goodsName:list[i].goodsName,
-                unitPrice:list[i].retailPrice,
-                totalPrice:parseFloat(list[i].retailPrice)*parseFloat(list[i].count),
-                goodsCount:parseFloat(list[i].count),
-            })
-            cateArr.push(list[i].hotelGoods.categoryType)
-
-
-        }
-
-        if(arr.length == 0){
+        if(list.length == 0){
             this.$message.error('请选择商品！');
             return
         }
+        let arr  = []
+        let cateArr = []
 
+
+        list.forEach(element => {
+            arr.push({
+                goodsId:element.goodsId,
+                goodsName:element.goodsName,
+                unitPrice:element.retailPrice,
+                totalPrice:parseFloat(element.retailPrice)*parseFloat(element.count),
+                goodsCount:parseFloat(element.count),
+            })
+           
+            cateArr.push(element.hotelGoods.categoryType)
+        });
+
+
+
+        // for(let i in list){
+        //     console.log(list[i])
+        //     console.log(list[i].retailPrice)
+        //     console.log(list[i].count)
+        //     arr.push({
+        //         goodsId:list[i].goodsId,
+        //         goodsName:list[i].goodsName,
+        //         unitPrice:list[i].retailPrice,
+        //         totalPrice:parseFloat(list[i].retailPrice)*parseFloat(list[i].count),
+        //         goodsCount:parseFloat(list[i].count),
+        //     })
+        //     if(list[i].hotelGoods){
+        //         cateArr.push(list[i].hotelGoods.categoryType)
+        //     }
+        // }
+        console.log(arr)
+        console.log(cateArr)
         // if(this.form.billingType == 1){
         //     if(this.form.memberCard == ''){
         //         this.$message.error('请选择会员！');
         //         return
         //     }
         // }
-
         // if(this.form.billingType == 2){
         //     if(this.form.signEnterId == ''){
         //         this.$message.error('请选择单位！');
@@ -712,7 +731,6 @@ export default {
         //         return
         //     }
         // }
-
         // if(this.form.billingType == 3){
         //     if(this.form.signHouseNum == ''){
         //         this.$message.error('请选择房间！');
@@ -728,8 +746,19 @@ export default {
             realPayPrice:this.cartToTal,
             shopsJson :JSON.stringify(arr)
         }
+        if(this.form.memberCard){
+            params.memberCard = this.form.memberCard
+        }
+        if(this.form.signRoomId){
+            params.signRoomId = this.form.signRoomId //房间id
+            params.signHouseNum = this.form.signHouseNum //房间号
+        }
         params.userId = this.userId
         params.storesNum = this.storesNum
+        console.log(params)
+
+
+
         this.$F.doRequest(this, "/pms/shop/shop_place_order_edit", params, (res) => {
             // this.alert(200,this.$t('food.common.success'));
             this.payLoading = false
@@ -743,12 +772,19 @@ export default {
             // 2 表示 arr 中存在服务类型的商品
             let state = ''
             let hasPayGoods = []
-            let list = this.cart
-            for(let i in list){
-                if(list[i].hotelGoods.categoryType == 1){
-                   hasPayGoods.push(list[i])
+            let list = this.cart            
+            list.forEach(element => {                
+                if(element.hotelGoods.categoryType == 1){
+                   hasPayGoods.push(element)
                 }
-            }
+            });
+            
+            
+            // for(let i in list){
+            //     if(list[i].hotelGoods.categoryType == 1){
+            //        hasPayGoods.push(list[i])
+            //     }
+            // }
             console.log(hasPayGoods)
             this.payLoading = true
             let params = this.form
