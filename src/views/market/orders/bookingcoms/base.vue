@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 18:08:42
+ * @LastEditTime: 2020-11-30 13:31:54
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -389,6 +389,7 @@ export default {
                 let object = {
                     checkinRoomId: this.checkinInfo.id,
                     name: this.checkinInfo.name,
+                    pronunciation:this.checkinInfo.pronunciation,
                     idcardType: this.checkinInfo.idcardType || '1',
                     idcard: this.checkinInfo.idcard,
                     sex: this.checkinInfo.sex || '1',

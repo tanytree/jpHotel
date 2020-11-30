@@ -90,7 +90,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="payTime"
+          prop="createTime"
           :label="$t('desk.order_compensationDate')"
           show-overflow-tooltip
         ></el-table-column>

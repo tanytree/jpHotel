@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-26 15:25:57
+ * @LastEditTime: 2020-11-30 13:46:21
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -691,7 +691,7 @@ module.exports = {
     customer_invoicingTime: '结账时间',
     customer_editorText: '编辑',
     customer_undoCheckout: '撤销结账',
-    customer_undoCheckoutA: '撤销结账',
+    customer_undoCheckoutA: '撤销退房',
     customer_makeUpStatement: '结算单补打',
     customer_newAccountSet: '新增账套',
     customer_accountingChoose: '账务选择',

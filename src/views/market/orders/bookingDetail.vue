@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-09 15:54:59
+ * @LastEditTime: 2020-11-30 13:24:37
  * @FilePath: \jiudian\src\views\market\orders\bookingDetail.vue
  -->
 <template>
@@ -9,7 +9,7 @@
         <div class="el-card" style="height: auto">
             <div class="el-card__header">
                 <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item :to="{ path: '/orders?type=booking'}"
+                    <el-breadcrumb-item @click.native="goBack"
                     >{{ $t('desk.order_bookOrder') }}
                     </el-breadcrumb-item
                     >
@@ -115,6 +115,9 @@ export default {
             console.log(this.detailData);
             this.currentRoom = item;
         },
+        goBack(){
+          this.$router.go(-1);
+        }
     },
 };
 </script>

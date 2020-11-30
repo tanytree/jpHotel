@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-30 10:44:21
+ * @LastEditTime: 2020-11-30 11:02:00
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -364,7 +364,7 @@ export default {
       this.searchForm.roomTypeId = value[1];
     },
     initForm() {
-      (this.searchForm = {
+      this.searchForm = {
         storesNum: "",
         roomTypeId: "",
         inStartTime: "",
@@ -378,7 +378,7 @@ export default {
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
-      }),
+      }
         console.log(this.$route.query);
       this.searchForm.idcard = this.$route.query.item.idcard || "";
       this.searchForm.name = this.$route.query.item.name;
