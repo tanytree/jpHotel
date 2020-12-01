@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-27 10:43:30
+ * @LastEditTime: 2020-12-01 14:13:09
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -213,10 +213,6 @@ module.exports = {
     add_chooseDate:'期間設定',
     add_chooseStore:'ホテル選択',
     add_roomData:'各客室ダッシュボード',
-    add_rents:'未翻译词条',
-    add_housePrice:'未翻译词条',
-    add_totalRevenue:'未翻译词条',
-    add_meetingData:'未翻译词条',
     add_requestSuccess:'未翻译词条',
     add_integralConversion:'ポイント換算',
     add_gain:'ポイント獲得',
@@ -241,6 +237,19 @@ module.exports = {
     add_foodDiscount:'料飲料金利用',
     add_goodDiscount:'付帯料金利用',
     add_deductionGoodsprice:'利用金額＝料金＊利用比率',
+    add_allRoomNum:'総客室数',
+    add_canSaleRoom:'販売可能客室数',
+    add_allSaleRoom:'使用客室数',
+    add_allSaleCustormer:'宿泊人数',
+    add_rents:'稼働率（OCC）',
+    add_averageRoomprice:'DOR',
+    add_averageCoustormerprice:'ADR',
+    add_roomSaleNum:'宿泊売上',
+    add_foodAstore:'料飲・付帯',
+    add_saleTotal:'総売上',
+    add_teamNum:'団体客組数',
+    add_teamAllPerpson:'団体客人数',
+    add_teamAllGet:'団体売上合計',
 
 
 
