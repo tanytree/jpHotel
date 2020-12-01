@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-27 16:11:54
+ * @LastEditTime: 2020-12-01 17:38:44
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -20,6 +20,7 @@
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
                 <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button>
+                <el-button type="primary" size="mini" :disabled="detailData.checkIn.state == 2">附餐</el-button>
             </el-form-item>
         </el-row>
         <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -328,13 +329,14 @@
             <el-button type="primary" @click="consume_oper(3,'destruction')">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
-
     <!--部分结账-->
     <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
     <!--迷你吧-->
     <consumeGoods ref="consumeGoods" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
     <!--开发票-->
     <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
+    <!-- 附餐 -->
+    <sideOrder ref='sideOrder'></sideOrder>
 </div>
 </template>
 
@@ -347,13 +349,15 @@ import myMixin from '@/utils/filterMixin';
 import consumeGoods from './consumeGoods'
 import someAccounts from './someAccounts'
 import invoicing from './invoicing'
+import invoicing from './sideOrder'
 export default {
     mixins: [myMixin],
    props: ["detailData", "currentRoomId"],
     components: {
         consumeGoods,
         someAccounts,
-        invoicing
+        invoicing,
+        sideOrder
     },
     computed: {
         ...mapState({
