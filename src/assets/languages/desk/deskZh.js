@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-11-30 13:46:21
+ * @LastEditTime: 2020-12-02 13:30:52
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -91,6 +91,7 @@ module.exports = {
     home_deleteSure: '确认删除该寄存',
     home_nameAroom: '姓名/房号',
     home_idCard: '身份证',
+    home_idCardNum: '证件号码',
     home_roomCard: '房卡',
     home_toRoom: '房态',
     home_roomType: '房型',
@@ -779,7 +780,37 @@ module.exports = {
     night_auditResults:'夜审结果',
     night_:'',
     night_:'',
-
+    //editor
+    editor_asideBreakfast:'附餐-早餐',
+    editor_asideDinner:'附餐-晚餐',
+    editor_:'',
+    editor_:'',
+   //附餐（side）
+    side_sideBooked:'附餐入账',
+    side_changePackage:'更换套餐',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
+    side_:'',
 
 
 }

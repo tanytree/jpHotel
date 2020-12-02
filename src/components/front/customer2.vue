@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-30 11:57:43
+ * @LastEditTime: 2020-12-02 13:34:49
  * @FilePath: \jiudian\src\components\front\customer2.vue
  -->
 <template>
@@ -13,7 +13,7 @@
             border
             default-expand-all
             :tree-props="{children: 'personList', hasChildren: 'hasChildren'}">
-            <el-table-column :label="$t('desk.customer_roomKind')"  width="200">
+            <el-table-column :label="$t('desk.customer_roomKind')"  width="130">
                 <template slot-scope="scope">
                 <span v-if="!scope.row.isChild">
                     {{scope.row.isChild?'':scope.row.houseNum}}
@@ -50,7 +50,7 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column label="証明番号">
+            <el-table-column :label="$t('desk.home_idCardNum')">
                 <template slot-scope="{row}">
                     <el-row>
                         <el-input v-model="row.idcard"></el-input>
@@ -82,7 +82,8 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('desk.attachedMeal')">
+            <!-- 附餐 -->
+            <el-table-column :label="$t('desk.editor_asideBreakfast')">
                 <template slot-scope="{row}">
                     <el-row>
                         <el-select v-model="row.attachMealId" style="width:100%">
@@ -96,6 +97,22 @@
                     </el-row>
                 </template>
             </el-table-column>
+            <!-- ---------- -->
+             <el-table-column :label="$t('desk.editor_asideDinner')">
+                <template slot-scope="{row}">
+                    <el-row>
+                        <el-select v-model="row.attachMealIdDinner" style="width:100%">
+                            <el-option
+                                v-for="item in hotelattaChmealList"
+                                :key="item.id"
+                                :label="item.mealName"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-row>
+                </template>
+            </el-table-column>
+            <!-- 附餐 -->
             <el-table-column :label="$t('commons.operating')">
                 <template slot-scope="scope">
                     <el-button type="text" size="mini" @click="del_live_in_person(scope.row, scope.$index)" v-if="scope.row.isChild">{{$t('commons.delete')}}</el-button>
@@ -204,7 +221,8 @@ export default {
                     mobile: item.mobile,
                     id: item.id || '',
                     customerType: item.customerType,  //客户类型
-                    attachMealId: item.attachMealId,   //附餐
+                    attachMealId: item.attachMealId,   //附餐-早餐
+                    attachMealIdDinner:item.attachMealIdDinner, //附餐-晚餐
                     pronunciation: item.pronunciation,  //拼音
                     // housePrice: (temp.personList.length > 0 ? temp.personList[0].housePrice : 0)
                     housePrice: 0
@@ -268,7 +286,8 @@ export default {
                 sex: '1',
                 mobile: '',
                 customerType: '1',  //客户类型
-                attachMealId: '',   //附餐
+                attachMealId: '',   //附餐-早餐
+                attachMealIdDinner:'',  //附餐-晚餐
                 pronunciation: '',  //拼音
                 housePrice: 0,    //房价
             });

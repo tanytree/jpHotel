@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-02 09:19:41
+ * @LastEditTime: 2020-12-02 11:54:33
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -20,7 +20,7 @@
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
                 <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>
                 <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button>
-                <el-button type="primary" size="mini" :disabled="detailData.checkIn.state == 2">附餐</el-button>
+                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">附餐</el-button>
             </el-form-item>
         </el-row>
         <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -960,9 +960,16 @@ export default {
             this.$refs.invoicing.init(this.$route.query.id, this.openInvoiceForm);
         },
         consumeGoodsHandle() {
+          //该id为checkinId
             this.$refs.consumeGoods.init(this.$route.query.id);
         },
+        //点击 附餐 按钮
+        sideOrderHandle(){
+          //该id为checkinId
+            this.$refs.sideOrder.init(this.$route.query.id);
+        },
         someAccountsHandle() {
+          //该id为checkinId
             this.$refs.someAccounts.init(this.$route.query.id);
         },
         /**多选 */

@@ -759,6 +759,11 @@ module.exports = {
     customer_selectCity: '国籍を選択',
     customer_unitPhoneNum: '法人・会社番号',
     customer_inputPY: 'カナを入力してください',
+    home_idCardNum: '証明番号',
+    editor_asideBreakfast:'未翻译词条',
+    editor_asideDinner:'未翻译词条',
+    side_sideBooked:'未翻译词条',
+    side_changePackage:'コース変更',
 
 
 

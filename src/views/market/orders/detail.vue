@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 18:14:13
+ * @LastEditTime: 2020-12-02 11:53:55
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -223,7 +223,7 @@ export default {
     },
     getDetail() {
       console.log(111);
-      let id = this.$route.query.id;
+      let id = this.$route.query.id;   //该id为checkinId
       this.$F.doRequest(
         this,
         "/pms/checkin/check_in_detail",
