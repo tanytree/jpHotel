@@ -154,7 +154,7 @@ const mixin= {
                         // console.log('获取减去起步时间的分钟数'+a)
                         // console.log('从多少分钟开始收费'+data.priceTime)
                         let b = parseFloat(a/data.priceTime)
-                        let c = parseFloat((b+'').split('.')[0])//+1//除去起步时间后的次数
+                        let c = parseFloat((b+'').split('.')[0])+1//除去起步时间后的次数
                         // console.log("除去起步时间后的次数"+c)
                         let d = parseFloat(c * data.minutePrice )//  除去起步时间后的总费用
                         // console.log("除去起步时间后的总费用"+d)
@@ -174,6 +174,7 @@ const mixin= {
                         let fee = parseFloat(startPrice) + parseFloat(ap)
                         return fee
                     }else{
+                        console.log(startPrice)
                         return startPrice
                     }
 
