@@ -1,7 +1,7 @@
 <template>
     <div class="action" v-loading="loading">
         <div class="money text-red text-size20">
-        {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}}   <!--span class="text-gray text-size14 margin-l-15">已付金额: {{numFormate(info.hasPayPrice)}}</span> {{info.consumePrice}} --></div>
+        {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}}   <span class="text-gray text-size14 margin-l-15">已付金额: {{numFormate(info.hasPayPrice)}}</span> <!-- {{info.consumePrice}} --></div>
         <!-- <div class="money">已付金额: {{info.hasPayPrice}}</div> -->
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -202,8 +202,6 @@
                             }else{
                                 sum += element.totalPrice
                             }
-                        }else{
-                            sum += parseFloat(element.totalPrice)
                         }
                     });
                     return parseFloat(this.form.preferentialPrice) ? sum - parseFloat(this.form.preferentialPrice) : sum
@@ -493,12 +491,13 @@
                     return  ele.goodsId
                 })
                 params.goodsSubIds = goodsIds.join(',')
-                params.realPayPrice = this.getFee
-                // params.realPayPrice = this.info.hasPayPrice + this.getFee
+                // params.realPayPrice = this.getFee
+                params.realPayPrice = this.info.hasPayPrice + this.getFee
                 params.orderId = this.info.id
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-               
+                // console.log(params)
+                // return
                 this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
                     this.loading = false
                     this.alert(200,this.$t('food.common.success'));

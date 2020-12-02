@@ -53,20 +53,31 @@ const mixin= {
 
         //获取时间差距的时间戳->时分秒
         getDiffDate(date,over){
+
+
+
             let start = Date.parse(new Date(date))
             let end = this.getNowTime();
             if(over){
                 end = Date.parse(new Date(over))
             }
-            var days = end - start
+
+            // console.log(date)
+            // console.log(over)
+
+
+            let days = end - start
+            // console.log(days)
             return this.formatDuring(days);
         },
 
         //秒转化为分秒时
         formatDuring(value) {
             var secondTime = parseInt(value/1000);// 秒
+            console.log(secondTime)
             var minuteTime = 0;// 分
             var hourTime = 0;// 小时
+            var s = 0
             if(secondTime > 60) {//如果秒数大于60，将秒数转换成整数
                 //获取分钟，除以60取整数，得到整数分钟
                 minuteTime = parseInt(secondTime / 60);
@@ -78,15 +89,20 @@ const mixin= {
                     hourTime = parseInt(minuteTime / 60);
                     //获取小时后取佘的分，获取分钟除以60取佘的分
                     minuteTime = parseInt(minuteTime % 60);
+                    // s = parseInt(minuteTime % 60);
                 }
             }
             var result = parseInt(secondTime) < 10  ? "0" + parseInt(secondTime) : ""+parseInt(secondTime);
+            if(s > 0) {
+                result = parseInt(s) < 10  ? "0" + parseInt(s) : "" + parseInt(s) + ":" + result;
+            }
             if(minuteTime > 0) {
                 result = parseInt(minuteTime) < 10  ? "0" + parseInt(minuteTime) : "" + parseInt(minuteTime) + ":" + result;
             }
             if(hourTime > 0) {
                 result = "" + parseInt(hourTime) + ":" + result;
             }
+            // console.log(result)
             return result;
         },
 
@@ -138,7 +154,7 @@ const mixin= {
                         // console.log('获取减去起步时间的分钟数'+a)
                         // console.log('从多少分钟开始收费'+data.priceTime)
                         let b = parseFloat(a/data.priceTime)
-                        let c = parseFloat((b+'').split('.')[0])+1//除去起步时间后的次数
+                        let c = parseFloat((b+'').split('.')[0])//+1//除去起步时间后的次数
                         // console.log("除去起步时间后的次数"+c)
                         let d = parseFloat(c * data.minutePrice )//  除去起步时间后的总费用
                         // console.log("除去起步时间后的总费用"+d)

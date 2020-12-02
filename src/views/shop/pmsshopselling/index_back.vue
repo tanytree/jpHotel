@@ -43,11 +43,11 @@
                                          {{scope.row.hotelGoods.categoryName}}
                                      </template>
                                  </el-table-column>
-                                 <el-table-column label="商品单价(元)">
+                                 <el-table-column label="计费规则">
                                      <template slot-scope="scope">
                                         <div v-if="scope.row.hotelGoods">
                                             <div v-if="scope.row.hotelGoods.categoryType == 1">
-                                                 {{numFormate(scope.row.retailPrice)}}
+                                                价格*数量
                                             </div>
                                             <div v-else>
                                                  <span v-if="scope.row.hotelGoods.priceModel == 1">
@@ -63,12 +63,12 @@
                                         </div>
                                      </template>
                                  </el-table-column>
-                                 <!-- <el-table-column label="商品单价(元)" width="250">
+                                 <el-table-column label="商品单价(元)" width="250">
                                      <template slot-scope="scope">
                                      {{numFormate(scope.row.retailPrice)}}
                                      </template>
-                                 </el-table-column> -->
-                                <!-- <el-table-column prop="inventoryCount"  label="库存">
+                                 </el-table-column>
+                                 <!-- <el-table-column prop="inventoryCount"  label="库存">
                                      <template slot-scope="scope">
                                          <span v-if="scope.row.hotelGoods.categoryType == 1">
                                              {{scope.row.inventoryCount}}
@@ -92,21 +92,10 @@
                    <div class="hasTitle">已选商品</div>
                     <el-main class="main padding-20">
                         <el-table  :data="cart" header-row-class-name="default" size="small" >
-                            <el-table-column width="100"  show-overflow-tooltip prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                            <el-table-column label="单价(元)">
+                             <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
+                            <el-table-column label="单价(元)" show-overflow-tooltip>
                                 <template slot-scope="scope">
-                                     <div v-if="scope.row.hotelGoods.categoryType == 1"> {{numFormate(scope.row.retailPrice)}}</div>
-                                     <div v-else>
-                                         <span v-if="scope.row.hotelGoods.priceModel == 1">
-                                              一次性固定收费
-                                          </span>
-                                          <span v-else>
-                                             {{scope.row.hotelGoods.priceStartMinute}}分钟后收起步价，
-                                             起步价{{scope.row.hotelGoods.startPrice}}日元，每
-                                             {{scope.row.hotelGoods.priceTime}}分钟收费{{scope.row.hotelGoods.minutePrice}}日元
-                                             <span v-if="scope.row.hotelGoods.capsPriceFlag == 2">封顶消费{{scope.row.hotelGoods.capsPrice}}日元</span>
-                                         </span>
-                                     </div>
+                                {{numFormate(scope.row.retailPrice)}}
                                 </template>
                             </el-table-column>
                             <el-table-column label="数量" width="150">
@@ -122,27 +111,124 @@
                                   </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column width="100" :label="$t('commons.operating')">
+                            <el-table-column label="合计(元)" show-overflow-tooltip>
+                                <template slot-scope="scope">
+                                    {{numFormate(parseFloat(scope.row.count) * parseFloat(scope.row.retailPrice)) }}
+                                </template>
+                            </el-table-column>
+                            <el-table-column :label="$t('commons.operating')">
                                 <template slot-scope="scope">
                                     <el-button size="mini" @click="handleDelete(scope.row,scope.$index)">移除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
                         <el-row class="padding-tb-10">
-                            <em>共 {{countToTal}} 件</em> ，合计：{{numFormate(cartToTal)}}元<!-- / 已结算金额：{{hasPayPrice}} -->
+                            <em>共 {{countToTal}} 件</em>，合计：{{numFormate(cartToTal)}}元 <!-- / 已结算金额：{{hasPayPrice}} -->
                         </el-row>
                         <div class="action rel" v-loading="isloading">
                             <div class="margin-t-10">
                                 <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                                     <el-form-item label="订单来源" prop="orderSource">
                                         <el-radio-group v-model="searchform.orderSource">
-                                            <el-radio :label="1">PC</el-radio>
+                                            <el-radio :label="1">售卖点</el-radio>
                                             <el-radio :label="2">IPAD</el-radio>
                                             <el-radio :label="3">其他</el-radio>
                                         </el-radio-group>
                                     </el-form-item>
+
+
+                                    <el-form-item :label="$t('food.common.billingType')" prop="billingType">
+                                        <el-radio-group v-model="form.billingType" @change="changeBillingType">
+                                            <el-radio :label="1">{{$t('food.billingType.1')}}</el-radio>
+                                            <!-- <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio> -->
+                                            <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
+                                        </el-radio-group>
+                                    </el-form-item>
+
+                                    <div v-if="form.billingType == 1">
+                                        <el-form-item :label="$t('food.common.payType')">
+                                            <el-select size="small" v-model="form.payType">
+                                                <el-option :label="$t('food.payType.1')" :value="1"></el-option>
+                                                <el-option :label="$t('food.payType.2')" :value="2"></el-option>
+                                                <!-- <el-option :label="$t('food.payType.3')" :value="3"></el-option>
+                                                <el-option :label="$t('food.payType.4')" :value="4"></el-option> -->
+                                                <!-- <el-option :label="$t('food.payType.5')" :value="5"></el-option> -->
+                                            </el-select>
+                                        </el-form-item>
+
+                                        <el-form-item :label="$t('food.common.payPrice')">
+                                            <span class="text-red">
+                                            {{numFormate(getPayPrice)}}
+                                            </span>
+                                        </el-form-item>
+
+                                        <el-form-item :label="$t('food.common.member_card')">
+                                            <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.common.select_member_card')" @change="getMerberInfo">
+                                                <el-option
+                                                  v-for="(item,index) in memberList"
+                                                  :key="index"
+                                                  :label="item.name +'('+ item.mobile +')'"
+                                                  :value="item.memberCard">
+                                                </el-option>
+                                            </el-select>
+                                            <el-button style="margin-left: 10px;" size="small">{{$t('food.common.read_member_card')}}</el-button>
+                                        </el-form-item>
+                                        <!-- 使用积分兑换操作，暂时不要 -->
+
+                                        <!-- <el-form-item v-if="selectMerberInfo.score && selectMerberInfo.score > 0">
+                                            <el-checkbox v-model="isUseScore">可用{{jfInfo.jf}}积分抵扣{{jfInfo.discount}}日元</el-checkbox>
+                                        </el-form-item> -->
+                                    </div>
+                                    <div v-if="form.billingType == 2">
+                                        <el-form-item :label="$t('food.common.select_company')" prop="signEnterId">
+                                            <el-select  size="small" v-model="form.signEnterId"  filterable :placeholder="$t('food.common.select_company')" @focus="getSignList" @change="getSignInfo" >
+                                                <el-option
+                                                  v-for="(item,index) in signList"
+                                                  :key="index"
+                                                  :label="item.enterName +'('+ item.contactPhone +')'"
+                                                  :value="item.id">
+                                                </el-option>
+                                            </el-select>
+                                        </el-form-item>
+
+                                        <el-form-item :label="$t('food.common.acount_info')" prop="signUserName" class="signUserBox">
+                                            <el-input  size="small" placeholder="姓名" v-model="form.signUserName" style="width: 180px;" ></el-input>
+                                            <el-select size="small" v-model="form.signIdcardType" :placeholder="$t('food.common.card_type')" style="width: 120px;" >
+                                                <el-option :label="$t('food.card_type.1')" :value="1"></el-option>
+                                                <el-option :label="$t('food.card_type.2')" :value="2"></el-option>
+                                            </el-select>
+                                            <el-input size="small" :placeholder="$t('food.common.card_no')" v-model="form.signIdcard" style="width: 180px;" ></el-input>
+                                        </el-form-item>
+                                    </div>
+
+
+                                    <div v-if="form.billingType == 3">
+                                        <el-form-item :label="$t('food.common.select_room')" prop="signRoomId">
+                                            <el-select  size="small" v-model="form.signRoomId"  filterable :placeholder="$t('food.common.select_room')" @focus="getSignRoomList" @change="getSignRoomInfo" >
+                                                <el-option
+                                                  v-for="(item,index) in romeList"
+                                                  :key="index"
+                                                  :label="item.houseName + '(' + item.houseNum +')'"
+                                                  :value="item.roomId">
+                                                </el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                    </div>
+
+                                    <el-form-item  :label="$t('food.common.remark')">
+                                        <el-input type="textarea" :placeholder="$t('food.common.remark')" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
+                                    </el-form-item>
+
+                                    <el-form-item  :label="$t('food.common.order_count')">
+                                        <el-input-number size="mini" v-model="form.docCount" :step="1" :min="1" step-strictly></el-input-number>
+                                    </el-form-item>
+
                                     <el-form-item>
-                                        <el-button style="width: 50%;"  type="primary"  @click="submit">{{$t('food.common.submit')}}</el-button>
+                                        <el-checkbox v-model="isPrint">{{$t('food.common.order_print')}}</el-checkbox>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="primary" size="small"  @click="submit">{{$t('food.common.submit')}}</el-button>
+                                        <el-button size="small" @click="reset">清空</el-button>
                                     </el-form-item>
                                 </el-form>
                             </div>
@@ -238,14 +324,13 @@ export default {
         msgKey: state => state.config.msgKey,
         plat_source: state => state.config.plat_source
     }),
-
+    //商品总金额
     cartToTal(){
         let sum = 0
         let cart = this.cart
         cart.forEach(element => {
            sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
         });
-        console.log(sum)
         return sum.toFixed(0);
     },
 
@@ -258,6 +343,35 @@ export default {
         });
         return sum
     },
+
+    //计算已结算的部分商品金额
+    hasPayPrice(){
+        let sum = 0
+        let cart = this.cart
+        cart.forEach(element => {
+           if(element.hotelGoods.categoryType == 1){
+               sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
+           }
+        });
+        return sum.toFixed(0);
+    },
+
+    //计算实际价格
+    getPayPrice(){
+        if(this.form.billingType == 1){
+            let consumePrice = this.cartToTal
+            let scoresPrice = this.jfInfo.discount
+            let realPayPrice = 0
+            if(this.isUseScore){
+                realPayPrice =  parseFloat(consumePrice) - parseFloat(scoresPrice)
+            }else{
+                realPayPrice = parseFloat(consumePrice)
+            }
+            this.form.realPayPrice = parseFloat(realPayPrice).toFixed(0)
+            let p = parseFloat(realPayPrice).toFixed(0)
+            return p
+        }
+    }
   },
   methods: {
     intForm(){
@@ -266,6 +380,8 @@ export default {
         this.searchform.categoryId = ''
         this.getDataList();
         this.geProductType('1');
+        this.getMemberList();
+        this.getScoresDiscount();
     },
     //获取售卖点列表
     getDataList(){
@@ -322,6 +438,7 @@ export default {
         params.userId = this.userId
         params.storesNum = this.storesNum
         this.$F.doRequest(this, "/pms/sellinglog/list", params, (res) => {
+            console.log(res)
             this.left_loading = false
             this.productList = res.list
             this.listTotal = res.page.count
@@ -399,7 +516,150 @@ export default {
 
     },
 
+    //获取积分换算查询
+    getScoresDiscount(){
+        let params = {
+            storesNum:this.storesNum,
+            userId: this.userId
+        }
+        this.$F.doRequest(this, "/pms/hotelparam/convertfind", params, (res) => {
+            this.score.convert = res
+            console.log(res)
+            this.getScoresPrice();
+        });
+    },
 
+    //获取积分抵扣比例
+    getScoresPrice(){
+        let params = {
+            storesNum:this.storesNum,
+            userId: this.userId
+        }
+        this.$F.doRequest(this, "/pms/hotelparam/discountfind", params, (res) => {
+            this.score.shop_discount_ratio = res.shop_discount_ratio
+            console.log(res.shop_discount_ratio)
+        });
+    },
+
+    //获取会员列表
+    getMemberList(){
+        this.isloading = true
+        let params = {
+            storesNum:'',
+            paging: false
+        }
+        this.$F.doRequest(this, "/pms/hotelmember/list", params, (res) => {
+            this.memberList = res.list
+            this.isloading = false
+        });
+    },
+    //选择会员
+    getMerberInfo(){
+        let card = this.form.memberCard
+        let list = this.memberList
+        for(let i in list){
+            if(card == list[i].memberCard){
+                this.selectMerberInfo = list[i]
+                console.log(this.selectMerberInfo)
+                this.getScore();
+                break
+            }
+        }
+    },
+
+    //计算当前的积分和抵扣金额
+    getScore(){
+        console.log(this.isUseScore)
+        // if(this.isUseScore){
+            let price = this.cartToTal
+            let shop_discount_ratio = this.score.shop_discount_ratio
+            let convert = this.score.convert
+            let score =  this.selectMerberInfo.score
+            // console.log(score)
+            if(score){
+                let jf = parseFloat(price)*parseFloat(convert)*parseFloat(shop_discount_ratio) //当前可有用的积分
+                let discount = 0
+                if(score > jf || score == jf){
+                    discount = parseFloat(price)*parseFloat(shop_discount_ratio) //当前最大可抵扣金额
+                    this.jfInfo = {
+                       jf:jf,
+                       // discount:discount.toFixed(2)
+                       discount: discount ? discount.toFixed(2) : ''
+                    }
+                }else{
+                    discount =  parseFloat(score)/parseFloat(convert)
+                    this.jfInfo = {
+                       jf:score,
+                       // discount:discount.toFixed(2)
+                       discount: discount ? discount.toFixed(2) : ''
+                    }
+                }
+                this.form.scoresDiscount =  this.jfInfo.jf
+                this.form.scoresPrice =  this.jfInfo.discount
+            }else{
+                this.form.scoresDiscount = ''
+                this.form.scoresPrice =  ''
+            }
+
+        // }
+    },
+
+    //获取单位列表
+    getSignList() {
+        this.isloading = true
+        let params = {
+            paging: false
+        }
+        this.$F.doRequest(this,"/pms/hotelenter/list",params,(res) => {
+          this.signList = res.list;
+          this.isloading = false
+        }
+      );
+    },
+
+    //获取房间列表
+    getSignInfo(){
+        let signEnterId = this.form.signEnterId
+        // console.log(signEnterId)
+        let list = this.signList
+        let obj = {}
+        for(let i in list){
+            if(signEnterId == list[i].id){
+                obj = list[i]
+                break
+            }
+        }
+        // console.log(obj)
+        this.form.signEnterId =   obj.id      //签单单位名称  billingType=2必填  String选填
+        this.form.signCreditName = obj.enterName //签单单位名称  billingType=2必填  String选填
+    },
+
+    //获取房间详情
+    getSignRoomList(){
+        this.isloading = true
+        let params = {}
+        params.userId = this.userId
+        params.storesNum = this.storesNum
+        this.$F.doRequest(this, "/pms/dishes/living_rooms_list", params, (res) => {
+            this.romeList = res.roomListGroup
+            this.isloading = false
+        });
+    },
+
+    getSignRoomInfo(){
+        let signRoomId = this.form.signRoomId
+        let list = this.romeList
+        let obj = {}
+        for(let i in list){
+            if(signRoomId == list[i].roomId){
+                obj = list[i]
+                break
+            }
+        }
+        this.form.signCheckInId = obj.checkinId// 入住信息id  billingType=3必填  String选填
+        this.form.signRoomId = obj.roomId //房间id
+        this.form.signHouseNum = obj.houseNum //房间号
+    },
 
     //提交
     submit(){
@@ -423,8 +683,60 @@ export default {
                 unitPrice:element.retailPrice,
                 totalPrice:parseFloat(element.retailPrice)*parseFloat(element.count),
                 goodsCount:parseFloat(element.count),
-            });
+            })
+           
+            cateArr.push(element.hotelGoods.categoryType)
         });
+
+
+
+        // for(let i in list){
+        //     console.log(list[i])
+        //     console.log(list[i].retailPrice)
+        //     console.log(list[i].count)
+        //     arr.push({
+        //         goodsId:list[i].goodsId,
+        //         goodsName:list[i].goodsName,
+        //         unitPrice:list[i].retailPrice,
+        //         totalPrice:parseFloat(list[i].retailPrice)*parseFloat(list[i].count),
+        //         goodsCount:parseFloat(list[i].count),
+        //     })
+        //     if(list[i].hotelGoods){
+        //         cateArr.push(list[i].hotelGoods.categoryType)
+        //     }
+        // }
+        console.log(arr)
+        console.log(cateArr)
+        // if(this.form.billingType == 1){
+        //     if(this.form.memberCard == ''){
+        //         this.$message.error('请选择会员！');
+        //         return
+        //     }
+        // }
+        // if(this.form.billingType == 2){
+        //     if(this.form.signEnterId == ''){
+        //         this.$message.error('请选择单位！');
+        //         return
+        //     }
+        //     if(this.form.signUserName == ''){
+        //        this.$message.error('请输入姓名！');
+        //        return
+        //     }
+        //     if(this.form.signIdcardType == ''){
+        //         this.$message.error('请输入证件类型！');
+        //         return
+        //     }
+        //     if(this.form.signIdcard == ''){
+        //         this.$message.error('请输入证件号！');
+        //         return
+        //     }
+        // }
+        // if(this.form.billingType == 3){
+        //     if(this.form.signHouseNum == ''){
+        //         this.$message.error('请选择房间！');
+        //         return
+        //     }
+        // }
         this.payLoading = true
         let params = {
             orderSource:this.searchform.orderSource,
@@ -434,17 +746,102 @@ export default {
             realPayPrice:this.cartToTal,
             shopsJson :JSON.stringify(arr)
         }
-
+        if(this.form.memberCard){
+            params.memberCard = this.form.memberCard
+        }
+        if(this.form.signRoomId){
+            params.signRoomId = this.form.signRoomId //房间id
+            params.signHouseNum = this.form.signHouseNum //房间号
+        }
         params.userId = this.userId
         params.storesNum = this.storesNum
         console.log(params)
+
+
+
         this.$F.doRequest(this, "/pms/shop/shop_place_order_edit", params, (res) => {
-            this.alert(200,this.$t('food.common.success'));
+            // this.alert(200,this.$t('food.common.success'));
             this.payLoading = false
-            this.cart = []
+            this.payOrder(res.orderId,cateArr)
         });
     },
 
+    payOrder(id,cateArr){
+            // console.log(arr)
+            // console.log(arr.indexOf(2))
+            // 2 表示 arr 中存在服务类型的商品
+            let state = ''
+            let hasPayGoods = []
+            let list = this.cart            
+            list.forEach(element => {                
+                if(element.hotelGoods.categoryType == 1){
+                   hasPayGoods.push(element)
+                }
+            });
+            
+            
+            // for(let i in list){
+            //     if(list[i].hotelGoods.categoryType == 1){
+            //        hasPayGoods.push(list[i])
+            //     }
+            // }
+            console.log(hasPayGoods)
+            this.payLoading = true
+            let params = this.form
+            params.hasPayPrice = this.hasPayPrice
+            params.realPayPrice = this.hasPayPrice
+            //cateArr 选择商品的类型是否是实体 实体1 服务2
+            if(cateArr.indexOf(2) > -1){
+                params.state = 1
+            }else{
+                params.state = 2
+            }
+            let goodsIds = hasPayGoods.map((ele,index)=>{
+                return  ele.goodsId
+            })
+
+            console.log(goodsIds)
+
+            params.goodsSubIds = goodsIds.join(',')
+            params.orderId = id
+            params.userId = this.userId
+            params.storesNum = this.storesNum
+            console.log(params)
+            this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
+                this.payLoading = false
+                this.alert(200,this.$t('food.common.success'));
+                this.reset();
+            });
+    },
+
+
+
+    changeBillingType(value){
+        // console.log(value)
+        this.isUseScore = false
+        this.isPrint = false
+    },
+    reset(){
+        this.cart = []
+        this.form = {
+           realPayPrice:'',//实付金额  Double必填
+           payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
+           remark:'',//备注  String选填
+           memberCard:'',//会员卡卡号  String选填
+           docCount:1,//单据份数  Integer选填
+           billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
+           signCheckInId:'',// 入住信息id  billingType=3必填  String选填
+           signRoomId:'',//房间id
+           signHouseNum:'',//房间号
+           signEnterId:'',//签单单位id  billingType=2必填 String选填
+           signCreditName:'',//签单单位名称  billingType=2必填  String选填
+           signUserName:'',//签单用户名  billingType=2必填  String选填
+           signIdcardType:'',//签单证件类型 1身份证 2护照  billingType=2必填   Integer选填
+           signIdcard:'',//签单证件号码   billingType=2必填 String选填
+           scoresDiscount:'',//积分抵扣分值  Integer选填
+           scoresPrice:'',//积分抵扣额度  Double选填
+        }
+    },
     /**每页数 */
     handleSizeChange(val) {
         // console.log(val)
@@ -455,6 +852,13 @@ export default {
     handleCurrentChange(val) {
         this.searchform.pageIndex = val;
         this.getPrucuctList();
+    }
+  },
+  watch:{
+
+    cart(val){
+        //监听购物车添加商品的积分计算
+        this.getScore()
     }
   }
 };

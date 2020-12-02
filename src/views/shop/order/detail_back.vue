@@ -19,19 +19,18 @@
             <div class="margin-t-20">
                 <el-table :data="cart" border header-row-class-name="default" size="small">
                     <el-table-column prop="goodsName" label="商品名称"  ></el-table-column>
-                    <!-- <el-table-column :label="$t('food.common.price')" width="80">
+                    <el-table-column :label="$t('food.common.price')" width="80">
                       <template slot-scope="scope">
                           <div v-if="scope.row.unitPrice > 0">
                            ¥ {{numFormate(scope.row.unitPrice)}}
                           </div>
                       </template>
-                    </el-table-column> -->
-                    <el-table-column label="单价">
+                    </el-table-column>
+                    <el-table-column label="计费规则">
                       <template slot-scope="scope">
-
                          <div v-if="scope.row.goods">
                              <div v-if="scope.row.goods.categoryType == 1">
-                                  ¥ {{numFormate(scope.row.unitPrice)}}
+                                价格*数量
                              </div>
                              <div v-else>
                                   <span v-if="scope.row.goods.priceModel == 1">
@@ -104,7 +103,7 @@
                 msgKey: state => state.config.msgKey,
                 plat_source: state => state.config.plat_source
             }),
-            //计算价格
+            //计算价格            
             getFee(){
                 if(this.endTime && this.info.orderSubList && this.info.orderSubList.length > 0){
                     let list = this.info.orderSubList
@@ -118,8 +117,6 @@
                             }else{
                                 sum += element.totalPrice
                             }
-                        }else{
-                            sum += parseFloat(element.totalPrice)
                         }
                     });
 
