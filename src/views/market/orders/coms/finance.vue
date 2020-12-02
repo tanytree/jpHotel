@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-01 17:38:44
+ * @LastEditTime: 2020-12-02 09:19:41
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -349,7 +349,7 @@ import myMixin from '@/utils/filterMixin';
 import consumeGoods from './consumeGoods'
 import someAccounts from './someAccounts'
 import invoicing from './invoicing'
-import invoicing from './sideOrder'
+import sideOrder from './sideOrder'
 export default {
     mixins: [myMixin],
    props: ["detailData", "currentRoomId"],
