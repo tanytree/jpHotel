@@ -189,7 +189,7 @@ const mixin= {
         getSource(v){
             // console.log(v)
             let arr = {
-                1:'售卖点',
+                1:'PC',
                 2:'IPAD',
                 3:'其他'
             }
