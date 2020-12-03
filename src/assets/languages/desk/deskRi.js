@@ -764,6 +764,9 @@ module.exports = {
     editor_asideDinner:'未翻译词条',
     side_sideBooked:'未翻译词条',
     side_changePackage:'コース変更',
+    customer_intoPrcieShould: '未翻译词条',
+    customer_requestPriceShould: '未翻译词条',
+    customer_conReShould: '未翻译词条',
 
 
 

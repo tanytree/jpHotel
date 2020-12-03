@@ -771,7 +771,9 @@ module.exports = {
     customer_selectCity: '选择国',
     customer_unitPhoneNum: '单位号码',
     customer_inputPY: '请输入拼音',
-    customer_: '',
+    customer_intoPrcieShould: '入账金额不得超过请款金额减去已入账金额',
+    customer_requestPriceShould: '请款金额不得超过挂账金额减去已请款金额',
+    customer_conReShould: '继续请款操作，请款金额不得为0',
     customer_: '',
    //夜审（night）
     night_chooseEnter:'选择企业',

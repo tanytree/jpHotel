@@ -697,7 +697,7 @@ export default {
               this.enterForm.requestStatus = 3;
             } else {
               this.$message({
-                message: "请款金额不得超过挂账金额减去已请款金额",
+                message: this.$t('desk.customer_requestPriceShould'),
                 type: "warning",
               });
               this.enterForm.requestPrice =
@@ -706,7 +706,7 @@ export default {
             }
           } else {
             this.$message({
-              message: "继续请款操作，请款金额不得为0",
+              message:  this.$t('desk.customer_conReShould'),
               type: "warning",
             });
             return false;

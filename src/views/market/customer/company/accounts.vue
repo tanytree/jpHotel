@@ -429,7 +429,7 @@ export default {
                 }
             }else{
                this.$message({
-                message: '入账金额不得超过请款金额减去已入账金额',
+                message: this.$t('desk.customer_intoPrcieShould'),
                 type: "warning",
               });
               this.enterForm.intoPrice=this.itemInfo.requestPrice-this.itemInfo.intoPrice;
@@ -512,8 +512,9 @@ export default {
     },
     //点击 入账记录 按钮
     bookRecord(row) {
+      console.log(row);
       let params = {
-        enterId: row.enterId,
+        enterId: row.id,
         searchType: 2,
       };
       this.$F.doRequest(
