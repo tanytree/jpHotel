@@ -103,7 +103,7 @@
         <el-divider></el-divider>
         <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
            <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
-           <el-button type="primary" size="small"  @click="submit">{{$t('food.common.pay_order_deal')}}</el-button>
+           <el-button type="primary" size="small"  @click="submit">{{$t('shop.pay_order_deal')}}</el-button>
         </div>
     </div>
 </template>

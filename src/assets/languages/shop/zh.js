@@ -25,7 +25,8 @@ module.exports = {
     customePrice:'消费金额',
     close:'关闭',
     payType:'结账类型',
-    yhPrice:'优惠金额'
+    yhPrice:'优惠金额',
+    pay_order_deal:'立即结账'
 
 
 

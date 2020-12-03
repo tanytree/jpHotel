@@ -25,6 +25,7 @@ module.exports = {
     customePrice:'利用合計金額',
     close:'閉じる',
     payType:'会計種別',
-    yhPrice:'割引金額'
+    yhPrice:'割引金額',
+    pay_order_deal:'精算'
 
 }
