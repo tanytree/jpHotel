@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-27 14:17:08
+ * @LastEditTime: 2020-12-03 16:33:42
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -75,11 +75,15 @@
                     }}</template>
                 </el-table-column>
                 <el-table-column
-                    prop="mobile"
-                    :label="$t('desk.home_phoneNum')"
+                    :label="$t('desk.home_telNum')"
                     show-overflow-tooltip
                     width="200px"
-                ></el-table-column>
+                >
+                 <template slot-scope="{row}">
+                    <div>{{row.mobile}}</div>
+                    <div>{{row.mobile2}}</div>
+                  </template>
+                </el-table-column>
                 <!-- <el-table-column
                     prop="idcardType"
                     align="center"

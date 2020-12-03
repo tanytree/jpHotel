@@ -93,7 +93,6 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="state"
           :label="$t('desk.customer_settlementStatus')"
           show-overflow-tooltip
         >

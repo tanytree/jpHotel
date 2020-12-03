@@ -241,7 +241,7 @@
         </el-form-item>
         <el-form-item :label="$t('desk.customer_arageDate') + ':'" required>
           <el-col :span="8">
-            <el-form-item label-width="0" >
+            <el-form-item label-width="0">
               <el-date-picker
                 type="date"
                 :placeholder="$t('desk.serve_chooseDate')"
@@ -327,7 +327,7 @@
         <el-table-column
           prop="onAccountTotal"
           :label="$t('desk.customer_amountPrice')"
-          width="100"
+          width="90"
         >
           <template slot-scope="{ row }">
             {{ row.consumePrice || 0 }}
@@ -336,10 +336,12 @@
         <el-table-column
           :label="$t('desk.home_name')"
           prop="checkIn.name"
-          width="120"
+          width="150"
         >
           <template slot-scope="{ row }">
-            {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
+            {{
+              row.checkIn.name + `【${row.checkInPerson.pronunciation || ""}】`
+            }}
           </template>
         </el-table-column>
         <el-table-column
@@ -439,18 +441,18 @@
         </span>
       </div>
       <el-form
-        style="margin:30px 0 0 30px"
+        style="margin: 30px 0 0 30px"
         inline
         size="small"
         :model="enterForm"
         ref="enterForm"
+        :rules="continueRules"
       >
-        <el-form-item :label="$t('desk.customer_placeMoney')" required>
-          <el-input-number
-            v-model.number="enterForm.requestPrice"
-            :min='0'
-            :max="itemInfo.putupPrice - itemInfo.requestPrice"
-          ></el-input-number>
+        <el-form-item
+          :label="$t('desk.customer_placeMoney')"
+          prop="requestPrice"
+        >
+          <el-input type="number"  v-model.number="enterForm.requestPrice"></el-input>
         </el-form-item>
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
@@ -474,6 +476,17 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
+    continueRules() {
+      return {
+        requestPrice: [
+          {
+            required: true,
+            message: this.$t("commons.mustInput"),
+           trigger: 'blur'
+          },
+        ],
+      };
+    },
     addRules() {
       return {
         totalConsumerPrice: 0,
@@ -491,7 +504,6 @@ export default {
             trigger: "blur",
           },
         ],
-       
       };
     },
     calculate() {
@@ -566,6 +578,7 @@ export default {
       bookDialog: false,
       recordList: [],
       clickType: "",
+      newIntoStatus:null,
     };
   },
 
@@ -638,11 +651,15 @@ export default {
 
     //点击删除按钮
     dialogNew_remove(row) {
-      this.$confirm(this.$t('desk.customer_ifSureDelete'), this.$t('commons.tip_desc'), {
-        confirmButtonText:this.$t('commons.confirm'),
-        cancelButtonText: this.$t('commons.cancel'),
-        type: "warning",
-      })
+      this.$confirm(
+        this.$t("desk.customer_ifSureDelete"),
+        this.$t("commons.tip_desc"),
+        {
+          confirmButtonText: this.$t("commons.confirm"),
+          cancelButtonText: this.$t("commons.cancel"),
+          type: "warning",
+        }
+      )
         .then(() => {
           let params = {
             requestAccountId: row.id,
@@ -653,7 +670,7 @@ export default {
             params,
             (res) => {
               this.$message({
-                message: this.$t('commons.delete_success'),
+                message: this.$t("commons.delete_success"),
                 type: "success",
               });
               this.getDataList();
@@ -678,8 +695,32 @@ export default {
               this.enterForm.requestPrice
             ) {
               this.enterForm.requestStatus = 3;
+            } else {
+              this.$message({
+                message: "请款金额不得超过挂账金额减去已请款金额",
+                type: "warning",
+              });
+              this.enterForm.requestPrice =
+                this.itemInfo.putupPrice - this.itemInfo.requestPrice;
+                return false;
             }
+          } else {
+            this.$message({
+              message: "继续请款操作，请款金额不得为0",
+              type: "warning",
+            });
+            return false;
           }
+          if(this.itemInfo.intoPrice>0){
+              if(this.itemInfo.intoPrice<this.itemInfo.putupPrice){
+                this.newIntoStatus = 2;
+              }else if(this.itemInfo.intoPrice==this.itemInfo.putupPrice){
+                this.newIntoStatus = 3;
+              }
+          }else{
+              this.newIntoStatus = 1;
+          }
+
           let params = {
             operType: 3,
             enterId: this.itemInfo.enterId,
@@ -688,7 +729,7 @@ export default {
             requestNum: this.itemInfo.requestNum,
             putupPrice: this.itemInfo.putupPrice,
             intoPrice: this.itemInfo.intoPrice,
-            intoStatus: this.itemInfo.intoStatus,
+            intoStatus: this.newIntoStatus,
             requestAccountId: this.itemInfo.id,
           };
           // this.enterForm.requestPrice = this.enterForm.requestPrice + this.itemInfo.requestPrice;
@@ -699,7 +740,7 @@ export default {
             params,
             (res) => {
               this.$message({
-                message:this.$t('desk.customer_continueRequestSuccess'),
+                message: this.$t("desk.customer_continueRequestSuccess"),
                 type: "success",
               });
               this.enterForm = {
@@ -742,7 +783,7 @@ export default {
                 this.addPlaceFrom.requestStatus = 3;
               } else {
                 this.$message({
-                  message: this.$t('desk.customer_requestPriceNotMorethan'),
+                  message: this.$t("desk.customer_requestPriceNotMorethan"),
                   type: "warning",
                 });
                 return false;
@@ -780,7 +821,7 @@ export default {
             );
           } else {
             this.$message({
-              message: this.$t('desk.customer_putPriceNot'),
+              message: this.$t("desk.customer_putPriceNot"),
               type: "warning",
             });
           }

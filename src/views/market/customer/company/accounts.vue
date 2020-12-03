@@ -316,7 +316,7 @@
           :label="$t('desk.enterAccountMoney') + ':'"
           prop="intoPrice"
         >
-          <el-input v-model="enterForm.intoPrice"></el-input>
+          <el-input type='number' v-model="enterForm.intoPrice"></el-input>
         </el-form-item>
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
@@ -417,15 +417,33 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.enterForm.intoPrice && this.enterForm.intoPrice > 0) {
-            if (this.itemInfo.requestPrice > this.enterForm.intoPrice) {
-              this.enterForm.intoStatus = 2;
-            } else if (this.itemInfo.requestPrice == this.enterForm.intoPrice) {
-              this.enterForm.intoStatus = 3;
-            } else {
-              this.$message({
-                message: this.$t('desk.customer_bookPriceShouldSmall'),
+            // if (this.itemInfo.requestPrice > this.enterForm.intoPrice) {
+            //   this.enterForm.intoStatus = 2;
+            // } else if (this.itemInfo.requestPrice == this.enterForm.intoPrice) {
+            //   this.enterForm.intoStatus = 3;
+            // } else {
+            //   this.$message({
+            //     message: this.$t('desk.customer_bookPriceShouldSmall'),
+            //     type: "warning",
+            //   });
+            //   return false;
+            // }
+            if(this.enterForm.intoPrice<=this.itemInfo.requestPrice-this.itemInfo.intoPrice){
+              console.log(this.enterForm.intoPrice);
+              console.log(this.itemInfo.intoPrice );
+                 let nowIntoPrice = this.enterForm.intoPrice*1 + this.itemInfo.intoPrice*1
+                 console.log(nowIntoPrice);
+                if(nowIntoPrice < this.itemInfo.putupPrice){
+                  this.enterForm.intoStatus = 2;
+                }else if(nowIntoPrice = this.itemInfo.putupPrice){
+                  this.enterForm.intoStatus = 3;
+                }
+            }else{
+               this.$message({
+                message: '入账金额不得超过请款金额减去已入账金额',
                 type: "warning",
               });
+              this.enterForm.intoPrice=this.itemInfo.requestPrice-this.itemInfo.intoPrice;
               return false;
             }
           } else {

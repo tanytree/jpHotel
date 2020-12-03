@@ -95,7 +95,12 @@
                         F_memberTypeId(row.memberTypeId)
                     }}</template>
                 </el-table-column>
-                <el-table-column prop="mobile" :label="$t('desk.order_moblePhone')"></el-table-column>
+                <el-table-column  :label="$t('desk.home_telNum')">
+                  <template slot-scope="{row}">
+                    <div>{{row.mobile}}</div>
+                    <div>{{row.mobile2}}</div>
+                  </template>
+                </el-table-column>
                 <!--                <el-table-column prop="score" :label="$t('desk.customer_remainPoints')" width="100"></el-table-column>-->
                 <el-table-column prop="state" :label="$t('desk.home_state')">
                     <template slot-scope="{ row }">{{
