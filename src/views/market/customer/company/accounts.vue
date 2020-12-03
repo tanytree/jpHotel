@@ -417,17 +417,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.enterForm.intoPrice && this.enterForm.intoPrice > 0) {
-            // if (this.itemInfo.requestPrice > this.enterForm.intoPrice) {
-            //   this.enterForm.intoStatus = 2;
-            // } else if (this.itemInfo.requestPrice == this.enterForm.intoPrice) {
-            //   this.enterForm.intoStatus = 3;
-            // } else {
-            //   this.$message({
-            //     message: this.$t('desk.customer_bookPriceShouldSmall'),
-            //     type: "warning",
-            //   });
-            //   return false;
-            // }
             if(this.enterForm.intoPrice<=this.itemInfo.requestPrice-this.itemInfo.intoPrice){
               console.log(this.enterForm.intoPrice);
               console.log(this.itemInfo.intoPrice );
