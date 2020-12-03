@@ -32,7 +32,8 @@
         data() {
             return {
                 activeName: "",
-                categoryList:[]
+                categoryList:[],
+
             }
         },
         created() {
@@ -58,11 +59,11 @@
                    this.activeName =  'other'
                    this.$forceUpdate();
                 }
-                console.log(q)
+                // console.log(q)
             },
 
             getCateList(){
-                this.loading = false
+                // this.loading = false
                 let params = {
                     userId:this.userId,
                     storesNum:this.storesNum,
@@ -73,6 +74,7 @@
                     this.categoryList = list
                 });
             },
+            
         },
         watch:{
             activeName(val, oldVal){//普通的watch监听

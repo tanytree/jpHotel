@@ -281,7 +281,11 @@ module.exports = {
         view_time:'审核时间',
         applyer_name:'制单人',
         viewer_name:'审批人',
-        storage_detail:'明细'
+        storage_detail:'明细',
+        taxStatus:'是否包含税',
+        seviceStatus:'是否包含服务费',
+        costPrice:'成本价格'
+        
     },
     shift:{
         tabs_1:'前台交班',

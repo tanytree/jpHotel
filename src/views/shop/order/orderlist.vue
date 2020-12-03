@@ -3,7 +3,7 @@
 <div>
     <div>
         <!-- 查询部分 -->
-        <el-form inline size="small" label-width="80px">
+        <el-form inline size="small" label-width="100px">
             <el-row>
                 <el-form-item :label="$t('food.common.order_status')">
                    <el-radio-group v-model="searchForm.state" size="small" @change="changeOrderStatus">
@@ -14,15 +14,15 @@
                    </el-radio-group>
                 </el-form-item>
             </el-row>
-            <el-form-item label="商品名称">
-                <el-input v-model="searchForm.goodsName" placeholder="商品名称" class="width200"></el-input>
+            <el-form-item :label="$t('manager.grsl_goodsName')">
+                <el-input v-model="searchForm.goodsName" :placeholder="$t('manager.grsl_goodsName')" class="width200"></el-input>
             </el-form-item>
             <el-form-item :label="$t('food.common.curstom_name')">
                 <el-input v-model="searchForm.name" :placeholder="$t('food.common.curstom_name')" class="width200"></el-input>
             </el-form-item>
-            <el-form-item label="售卖点">
-                <el-select v-model="searchForm.sellingId" placeholder="售卖点">
-                    <el-option label="全部" value=""></el-option>
+            <el-form-item :label="$t('shop.salePoint')">
+                <el-select v-model="searchForm.sellingId" :placeholder="$t('shop.salePoint')">
+                    <el-option :label="$t('food.common.all')" value=""></el-option>
                     <el-option
                       v-for="item in saleData"
                       :key="item.value"
@@ -93,7 +93,7 @@
                 </el-table-column>
                 <el-table-column
                    prop="sellingName"
-                   label="售卖点"
+                   :label="$t('shop.salePoint')"
                 >
                 </el-table-column>
                 <el-table-column
@@ -155,14 +155,14 @@
         <div class="detailPanel">
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{detail.shopNum}} </span>
-                <span style="padding:0 50px;">售卖点：{{detail.sellingName}} </span>
+                <span style="padding:0 50px;">{{$t('shop.salePoint')}}：{{detail.sellingName}} </span>
                 <span>{{$t('food.common.create_time')}}：{{detail.createTime}} </span>
             </div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{numFormate(detail.consumePrice)}}</div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div>
-            <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">会员价格：¥{{numFormate(detail.scoresPrice)}}</div>
-            <div class="margin-t-10 text-gray">实付款：¥{{numFormate(detail.realPayPrice)}}</div>
-            <div class="margin-t-10 text-gray">结账时间：¥{{detail.updateTime}}</div>
+            <div class="margin-t-10 text-gray">{{$t('shop.orderTotal')}}：¥ {{numFormate(detail.consumePrice)}}</div>
+            <!-- <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div> -->
+            <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">{{$t('shop.vipPrice')}}：¥{{numFormate(detail.scoresPrice)}}</div>
+            <div class="margin-t-10 text-gray">{{$t('shop.realPrice')}}：¥{{numFormate(detail.realPayPrice)}}</div>
+            <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：¥{{detail.updateTime}}</div>
             <el-table
               class="margin-t-10 "
               :data="detail.orderSubList"
@@ -170,13 +170,13 @@
               header-row-class-name="default"
               size="small"
             >
-              <el-table-column prop="goodsName" label="商品名称" ></el-table-column>
+              <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')" ></el-table-column>
               <el-table-column :label="$t('food.common.price')">
                 <template slot-scope="scope">
                     {{numFormate(scope.row.unitPrice)}}
                 </template>
               </el-table-column>
-              <el-table-column label="计费规则">
+              <el-table-column :label="$t('shop.rule')">
                 <template slot-scope="scope">
                    <div v-if="scope.row.goods">
                        <div v-if="scope.row.goods.categoryType == 1">
@@ -196,8 +196,8 @@
                    </div>
                 </template>
               </el-table-column>
-              <el-table-column label="商品数量" width="160" prop="goodsCount"></el-table-column>
-              <el-table-column label="消费金额" width="200">
+              <el-table-column :label="$t('shop.count')" width="160" prop="goodsCount"></el-table-column>
+              <el-table-column :label="$t('shop.customePrice')" width="200">
                 <template slot-scope="scope">
                   <div v-if="scope.row.goods.categoryType == 1">
                       {{scope.row.totalPrice}}
@@ -220,7 +220,7 @@
             </el-table>
             <el-divider></el-divider>
             <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-               <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+               <el-button size="small" @click="closeDialog">{{$t('shop.close')}}</el-button>
            </div>
         </div>
         <!-- {{detail}} -->

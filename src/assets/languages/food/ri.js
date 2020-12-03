@@ -26,7 +26,7 @@ module.exports = {
     },
     orderTitle:{
         1:'詳細',
-        2:'结账'
+        2:'会計'
     },
     houseTitle:{
         1:'倉庫追加',
@@ -281,7 +281,10 @@ module.exports = {
         view_time:'審査日',
         applyer_name:'申請者',
         viewer_name:'審査員 ',
-        storage_detail:'明細'
+        storage_detail:'明細',
+        taxStatus:'是否包含税',
+        seviceStatus:'是否包含服务费',
+        costPrice:'成本价格'
     },
     shift:{
         tabs_1:'シフト交替',

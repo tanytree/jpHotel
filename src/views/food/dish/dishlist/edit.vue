@@ -1,24 +1,34 @@
 <template>
         <el-form :model="info" :rules="rules" ref="form" label-width="150px" class="demo-ruleForm">
-              <el-form-item :label="$t('food.common.food_title')" prop="name" style="margin-top: -15px;">
-                <el-input v-model="info.name" :placeholder="$t('food.common.food_title')"></el-input>
+              <el-form-item  size="small"  :label="$t('food.common.food_title')" prop="name" style="margin-top: -15px;">
+                <el-input size="small" v-model="info.name" :placeholder="$t('food.common.food_title')"></el-input>
               </el-form-item>
-
-              <el-form-item :label="$t('food.common.cate')" prop="categoryId">
+              <el-form-item  size="small" :label="$t('food.common.taxStatus')" prop="taxStatus">
+                   <el-radio v-model="info.taxStatus" :label="1">不含税</el-radio>
+                   <el-radio v-model="info.taxStatus" :label="2">含税</el-radio>
+              </el-form-item>
+              <el-form-item  size="small"  :label="$t('food.common.seviceStatus')" prop="seviceStatus">
+                   <el-radio v-model="info.seviceStatus" :label="1">不含服务费</el-radio>
+                   <el-radio v-model="info.seviceStatus" :label="2">含服务费</el-radio>
+              </el-form-item>
+              <el-form-item  size="small"  :label="$t('food.common.cate')" prop="categoryId">
                 <el-cascader
                    :options="getNewCateList(categoryList)"
                    v-model="info.categoryId"
-                   @change="handleChange"></el-cascader>
+                   @change="handleChange">
+                </el-cascader>
               </el-form-item>
-
               <!-- <el-form-item :label="$t('food.common.cate_name')" prop="categoryName">
                 <el-input v-model="info.categoryName" ></el-input>
               </el-form-item> -->
-
-              <el-form-item :label="$t('food.common.food_price')" prop="price">
-                <el-input :placeholder="$t('food.common.food_price')" v-model="info.price" type="number" name="price"></el-input>
+              <el-form-item  size="small"  :label="$t('food.common.food_price')" prop="price">
+                <el-input  size="small" :placeholder="$t('food.common.food_price')" v-model="info.price" type="number" name="price"></el-input>
               </el-form-item>
-              <el-form-item :label="$t('food.common.food_pic')" prop="files">
+              <el-form-item  size="small"  :label="$t('food.common.costPrice')" prop="costPrice">
+                <el-input  size="small" :placeholder="$t('food.common.costPrice')" v-model="info.costPrice" type="number" name="costPrice"></el-input>
+              </el-form-item>
+
+              <el-form-item  size="small" :label="$t('food.common.food_pic')" prop="files">
                 <div>
                      <el-upload
                        action="#"
@@ -45,14 +55,14 @@
               </el-form-item>
 
               <el-form-item :label="$t('food.common.material')" prop="desc" :style="files.length == 0 ? '' : 'margin-top: -25px;'">
-                <el-input  :placeholder="$t('food.common.material')"  v-model="info.marterial"></el-input>
+                <el-input  size="small" :placeholder="$t('food.common.material')"  v-model="info.marterial"></el-input>
               </el-form-item>
 
              <el-form-item :label="$t('food.common.food_desc')" prop="desc">
-               <el-input  :placeholder="$t('food.common.food_desc')" type="textarea" v-model="info.remark"></el-input>
+               <el-input  size="small" :placeholder="$t('food.common.food_desc')" type="textarea" v-model="info.remark"></el-input>
              </el-form-item>
 
-             <el-form-item :label="$t('food.common.status')">
+             <el-form-item  size="small" :label="$t('food.common.status')">
                 <el-radio v-model="info.state" :label="1">{{$t('food.common.active')}}</el-radio>
                 <el-radio v-model="info.state" :label="2">{{$t('food.common.disable')}}</el-radio>
              </el-form-item>
@@ -68,7 +78,7 @@
     import mixin from '../../mixin';
     import { mapState, mapActions } from "vuex"
     export default {
-         mixins: [mixin],
+        mixins: [mixin],
         data() {
             return {
                categoryList:[],//上级获取的分类列表
@@ -76,6 +86,9 @@
                    name:'',
                    categoryId:'',
                    categoryName:'',
+                   taxStatus:1,
+                   seviceStatus:1,
+                   costPrice:'',
                    price:'',
                    remark:'',
                    marterial:'',
@@ -100,6 +113,15 @@
                  price: [
                    { required: true, message: this.$t('food.common.input_food_price'), trigger: 'change' }
                  ],
+                 seviceStatus:[
+                     { required: true, message: '请选择是否包含服务费', trigger: 'change' }
+                 ],
+                 taxStatus:[
+                     { required: true, message:'请选择是否包含税', trigger: 'change' }
+                 ],
+
+
+
                  // files: [
                  //   { required: true, message: this.$t('food.common.input_food_pic'), trigger: 'blur' }
                  // ],
@@ -121,7 +143,7 @@
         methods: {
             //获取传过来的值
             getData(data){
-                // console.log(data)
+                console.log(data)
                 this.files = []
                 this.info = {
                      name:data.name,
@@ -133,7 +155,10 @@
                      images:data.images,
                      state:data.state,
                      dishesId:data.id,
-                     state:data.state
+                     state:data.state,
+                     taxStatus:data.taxStatus,
+                     seviceStatus:data.seviceStatus,
+                     costPrice:data.costPrice
                 }
                 if(data.images){
                     this.files.push({
@@ -241,5 +266,5 @@
 
 
 <style lang="less" scoped>
-
+    // .el-form-item{margin-bottom: 5px;}
 </style>

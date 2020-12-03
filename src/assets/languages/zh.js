@@ -10,6 +10,7 @@ import frontOffice from './frontOffice/zh'
 import login from './login/zh'
 import manager from './manager/zh'
 import food from './food/zh'
+import shop from './shop/zh.js'
 import desk from './desk/deskZh'
 
 export default {
@@ -32,5 +33,7 @@ export default {
     //餐饮部
     food: food,
     //前台部
-    desk: desk
+    desk: desk,
+    //商店部
+    shop:shop
 }

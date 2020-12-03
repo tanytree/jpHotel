@@ -28,12 +28,14 @@
         data() {
             return {
                 activeName: "",
-                categoryList:[]
+                categoryList:[],
+                taxInfo:{}
             }
         },
         created() {
             this.$F.handleThirdMenu(this);
             this.getCateList();
+            this.get_consume_tax();
         },
         computed: {
             ...mapState({
@@ -55,6 +57,17 @@
                     let list = res.categoryList
                     this.categoryList = list
                 });
+            },
+            get_consume_tax(){
+                let params = {
+                    userId:this.userId,
+                    storesNum:this.storesNum,
+                }
+                this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
+                    console.log(res)
+                    // this.taxInfo = res
+                });
+
             },
         }
     };

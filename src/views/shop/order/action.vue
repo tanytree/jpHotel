@@ -5,15 +5,15 @@
         <!-- <div class="money">已付金额: {{info.hasPayPrice}}</div> -->
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-form-item :label="$t('food.common.billingType')" prop="billingType">
+                <el-form-item :label="$t('shop.payType')" prop="billingType">
                     <el-radio-group v-model="form.billingType" @change="changeBillingType">
                         <el-radio :label="1">{{$t('food.billingType.1')}}</el-radio>
                         <!-- <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio> -->
                         <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="优惠金额">
-                   <el-input  size="small" type="number" v-model="form.preferentialPrice" placeholder="优惠金额" style="width: 180px;" ></el-input>
+                <el-form-item :label="$t('shop.yhPrice')">
+                   <el-input  size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;" ></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('food.common.payPrice')">
                     <!-- {{getPayPrice}} -->
@@ -498,7 +498,7 @@
                 params.orderId = this.info.id
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-               
+
                 this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
                     this.loading = false
                     this.alert(200,this.$t('food.common.success'));

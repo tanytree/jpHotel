@@ -1,7 +1,7 @@
 <template>
   <el-container  class="boss-index">
      <el-header>
-        <div class="shoptitle"> <span class="sub"></span> 快捷入口</div>
+        <div class="shoptitle"> <span class="sub"></span> {{$t('shop.shopDoor')}}</div>
      </el-header>
      <el-main  v-loading="loading">
         <div class="shopNavList clearfix">

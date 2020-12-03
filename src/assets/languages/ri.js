@@ -10,6 +10,7 @@ import frontOffice from "./frontOffice/ri";
 import login from './login/ri'
 import manager from './manager/ri'
 import food from './food/ri'
+import shop from './shop/ri'
 import desk from './desk/deskRi'
 
 export default {
@@ -30,5 +31,7 @@ export default {
     //餐饮部
     food: food,
     //前台部
-    desk: desk
+    desk: desk,
+	//商店部
+	shop:shop
 }

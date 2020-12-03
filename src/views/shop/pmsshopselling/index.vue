@@ -12,10 +12,10 @@
                                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                                     <el-input v-model="searchform.name" :placeholder="$t('manager.grsl_goodsName')"></el-input>
                                 </el-form-item>
-                                 <el-form-item label="商品类别型:">
+                                 <el-form-item :label="$t('shop.categoryType')">
                                      <el-select  v-model="searchform.categoryType" placeholder="请选择" @change="geProductType">
-                                         <el-option label="实物" value="1"></el-option>
-                                         <el-option label="服务" value="2"></el-option>
+                                         <el-option :label="$t('shop.goods')" value="1"></el-option>
+                                         <el-option :label="$t('shop.serve')" value="2"></el-option>
                                       </el-select>
                                  </el-form-item>
                                  <el-form-item :label="$t('manager.grsl_goodsType')+':'">
@@ -32,10 +32,10 @@
                         <!-- 列表开始 -->
 
                              <el-table ref="multipleTable" :data="productList" header-row-class-name="default" size="small" >
-                                 <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                                 <el-table-column label="商品类型">
+                                 <el-table-column prop="goodsName" :label="$t('shop.productTitle')"></el-table-column>
+                                 <el-table-column :label="$t('shop.categoryType2')">
                                      <template slot-scope="scope">
-                                        {{scope.row.hotelGoods.categoryType == 1 ? '实物' : '服务'}}
+                                        {{scope.row.hotelGoods.categoryType == 1 ? $t('shop.goods') : $t('shop.serve')}}
                                      </template>
                                  </el-table-column>
                                  <el-table-column :label="$t('manager.grsl_goodsType')" >
@@ -43,7 +43,7 @@
                                          {{scope.row.hotelGoods.categoryName}}
                                      </template>
                                  </el-table-column>
-                                 <el-table-column label="商品单价(元)">
+                                 <el-table-column :label="$t('shop.rule')">
                                      <template slot-scope="scope">
                                         <div v-if="scope.row.hotelGoods">
                                             <div v-if="scope.row.hotelGoods.categoryType == 1">
@@ -75,9 +75,9 @@
                                          </span>
                                      </template>
                                  </el-table-column> -->
-                                 <el-table-column  label="操作" width="100">
+                                 <el-table-column  :label="$t('food.common.action')" width="100">
                                      <template slot-scope="scope">
-                                        <el-button  size="mini" @click="addCart(scope.row,scope.$index)">添加</el-button>
+                                        <el-button  size="mini" @click="addCart(scope.row,scope.$index)">{{$t('food.common.add')}}</el-button>
                                      </template>
                                  </el-table-column>
                              </el-table>
@@ -89,11 +89,11 @@
                 <!--  -->
                </div>
                <div class="right bg rel" v-loading="payLoading">
-                   <div class="hasTitle">已选商品</div>
+                   <div class="hasTitle">{{$t('shop.isChoose')}}</div>
                     <el-main class="main padding-20">
                         <el-table  :data="cart" header-row-class-name="default" size="small" >
                             <el-table-column width="100"  show-overflow-tooltip prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                            <el-table-column label="单价(元)">
+                            <el-table-column :label="$t('shop.rule')">
                                 <template slot-scope="scope">
                                      <div v-if="scope.row.hotelGoods.categoryType == 1"> {{numFormate(scope.row.retailPrice)}}</div>
                                      <div v-else>
@@ -109,7 +109,7 @@
                                      </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="数量" width="150">
+                            <el-table-column :label="$t('shop.count')" width="150">
                                 <template slot-scope="scope">
                                   <div class="cell" style="padding:0;">
                                       <div  class="el-input-number el-input-number--mini" style=" width:100px;">
@@ -122,23 +122,25 @@
                                   </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column width="100" :label="$t('commons.operating')">
+                            <el-table-column width="100" :label="$t('food.common.action')">
                                 <template slot-scope="scope">
-                                    <el-button size="mini" @click="handleDelete(scope.row,scope.$index)">移除</el-button>
+                                    <el-button size="mini" @click="handleDelete(scope.row,scope.$index)">
+                                        {{$t('shop.remove')}}
+                                    </el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
                         <el-row class="padding-tb-10">
-                            <em>共 {{countToTal}} 件</em> ，合计：{{numFormate(cartToTal)}}元<!-- / 已结算金额：{{hasPayPrice}} -->
+                             {{$t('food.common.food_total',{count:countToTal})}}{{numFormate(cartToTal)}}<!-- / 已结算金额：{{hasPayPrice}} -->
                         </el-row>
                         <div class="action rel" v-loading="isloading">
                             <div class="margin-t-10">
                                 <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                                    <el-form-item label="订单来源" prop="orderSource">
+                                    <el-form-item :label="$t('food.common.order_from')" prop="orderSource">
                                         <el-radio-group v-model="searchform.orderSource">
                                             <el-radio :label="1">PC</el-radio>
                                             <el-radio :label="2">IPAD</el-radio>
-                                            <el-radio :label="3">其他</el-radio>
+                                            <el-radio :label="3">{{$t('shop.other')}}</el-radio>
                                         </el-radio-group>
                                     </el-form-item>
                                     <el-form-item>
@@ -409,7 +411,7 @@ export default {
         // console.log(this.form.billingType)
         let list = this.cart
         if(list.length == 0){
-            this.$message.error('请选择商品！');
+            this.$message.error(this.$t('food.common.select_product'));
             return
         }
         let arr  = []
