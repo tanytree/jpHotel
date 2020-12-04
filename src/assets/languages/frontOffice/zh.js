@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-17 16:39:13
+ * @LastEditTime: 2020-12-04 15:25:35
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
     state: {
         "1": '正常(已发卡)',
         "2": '已挂失',
-        // "3": "停用"
+        "3": "停用"
     },
 
     // 是否黑名单 1否 2是 Integer非必填

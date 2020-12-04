@@ -44,23 +44,6 @@
             :placeholder="$t('desk.serve_chooseDate')"
           ></el-date-picker>
         </el-form-item>
-        <!--        <el-form-item :label="$t('desk.customer_pleaseState') + ':'">-->
-        <!--          <el-select v-model="searchForm.state" class="width150">-->
-        <!--            <el-option :label="$t('desk.home_all')" value></el-option>-->
-        <!--            <el-option-->
-        <!--              :label="$t('desk.customer_notRequest')"-->
-        <!--              value="1"-->
-        <!--            ></el-option>-->
-        <!--            <el-option-->
-        <!--              :label="$t('desk.customer_areadyRequest')"-->
-        <!--              value="3"-->
-        <!--            ></el-option>-->
-        <!--            <el-option-->
-        <!--              :label="$t('desk.customer_partRequest')"-->
-        <!--              value="2"-->
-        <!--            ></el-option>-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
         <el-form-item>
           <el-button type="primary" class="submit" @click="getDataList">{{
             $t("commons.queryBtn")
@@ -330,7 +313,7 @@
           width="90"
         >
           <template slot-scope="{ row }">
-            {{ row.consumePrice || 0 }}
+            {{ row.payPrice || 0 }}
           </template>
         </el-table-column>
         <el-table-column
@@ -339,9 +322,7 @@
           width="150"
         >
           <template slot-scope="{ row }">
-            {{
-              row.checkIn.name + `【${row.checkInPerson.pronunciation || ""}】`
-            }}
+            {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
           </template>
         </el-table-column>
         <el-table-column
@@ -452,7 +433,10 @@
           :label="$t('desk.customer_placeMoney')"
           prop="requestPrice"
         >
-          <el-input type="number"  v-model.number="enterForm.requestPrice"></el-input>
+          <el-input
+            type="number"
+            v-model.number="enterForm.requestPrice"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
@@ -482,7 +466,7 @@ export default {
           {
             required: true,
             message: this.$t("commons.mustInput"),
-           trigger: 'blur'
+            trigger: "blur",
           },
         ],
       };
@@ -578,7 +562,7 @@ export default {
       bookDialog: false,
       recordList: [],
       clickType: "",
-      newIntoStatus:null,
+      newIntoStatus: null,
     };
   },
 
@@ -623,7 +607,7 @@ export default {
             this.totalConsumerPrice = 0;
             res.consumeOrderList.forEach((item) => {
               if (item.priceType == 13) {
-                this.totalConsumerPrice += item.consumePrice || 0;
+                this.totalConsumerPrice += item.payPrice || 0;
               }
             });
 
@@ -697,28 +681,28 @@ export default {
               this.enterForm.requestStatus = 3;
             } else {
               this.$message({
-                message: this.$t('desk.customer_requestPriceShould'),
+                message: this.$t("desk.customer_requestPriceShould"),
                 type: "warning",
               });
               this.enterForm.requestPrice =
                 this.itemInfo.putupPrice - this.itemInfo.requestPrice;
-                return false;
+              return false;
             }
           } else {
             this.$message({
-              message:  this.$t('desk.customer_conReShould'),
+              message: this.$t("desk.customer_conReShould"),
               type: "warning",
             });
             return false;
           }
-          if(this.itemInfo.intoPrice>0){
-              if(this.itemInfo.intoPrice<this.itemInfo.putupPrice){
-                this.newIntoStatus = 2;
-              }else if(this.itemInfo.intoPrice==this.itemInfo.putupPrice){
-                this.newIntoStatus = 3;
-              }
-          }else{
-              this.newIntoStatus = 1;
+          if (this.itemInfo.intoPrice > 0) {
+            if (this.itemInfo.intoPrice < this.itemInfo.putupPrice) {
+              this.newIntoStatus = 2;
+            } else if (this.itemInfo.intoPrice == this.itemInfo.putupPrice) {
+              this.newIntoStatus = 3;
+            }
+          } else {
+            this.newIntoStatus = 1;
           }
 
           let params = {

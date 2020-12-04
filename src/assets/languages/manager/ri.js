@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-06 14:58:20
+ * @LastEditTime: 2020-12-04 14:51:16
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -152,7 +152,7 @@ module.exports = {
     hk_consistent: '一致',
     hk_guestRooms: '客室',
     hk_chamber: '会場No.',
-    hk_pleaseSelect: '選択',
+    hk_pleaseSelect: '選択してください',
     hk_roomStructure: '部屋構図',
     hk_roomIMg: '部屋写真',
     hk_smokeRoom: '禁煙（はい、いいえ）',
@@ -180,16 +180,17 @@ module.exports = {
     grsl_matter: '商品',
     grsl_service: 'サービス',
     grsl_goodsName: '商品名',
+    grsl_goodsNameA: '商品/サービス名',
     grsl_goodsState: '状態',
     grsl_goodsType: '商品類別',
     grsl_goodsTypeA: 'カテゴリー',
-    grsl_billingMode: '課金モード',
-    grsl_billingPer: '一回（一回の固定料金）でお願いします。',
-    grsl_billingTime: '時間によって（時間によって費用がかかります）',
-    grsl_startFee: '初乗り料金',
-    grsl_startMinute: '分後は初乗り料金がかかります。',
+    grsl_billingMode: '料金プラン',
+    grsl_billingPer: '回数（一回利用費用は固定）',
+    grsl_billingTime: '時間（利用時間によって、費用請求）',
+    grsl_startFee: '使用',
+    grsl_startMinute: '分後から、料金が発生します。',
     grsl_chargeTime: '有料時間',
-    grsl_chargeMinute: '分は有料です',
+    grsl_chargeMinute: '分',
     grsl_import: 'アップロード',
     grsl_addGoods: '商品追加',
     grsl_defaultTetailPrice: '小売価格',
@@ -200,8 +201,8 @@ module.exports = {
     grsl_goodsManagerment: '商品管理',
     grsl_resetGoods: '商品変更',
     grsl_belongType: 'カテゴリー',
-    grsl_goodsDescription: '商品詳細',
-    grsl_defaultNoPrice: '小売価格',
+    grsl_goodsDescription: '商品/サービス詳細',
+    grsl_defaultNoPrice: '単価',
     grsl_costNoPrice: '仕入れ価格',
     grsl_defaultEmployeePrice: 'スタッフ価格',
     grsl_defaultBuyNum: '数量',
@@ -327,7 +328,7 @@ module.exports = {
     ps_letterMin: '分間を超えると、課金する，に基づき,',
     ps_addHalf: '日帰り料金',
     ps_addHour: '1時間ごとに加算されます',
-    ps_addSky: '最多請求料金',
+    ps_addSky: '最多料金制使用',
     ps_billingType: '会計分類別',
     ps_startPrice: '初期請求',
     ps_thenTime: '超過料金',
@@ -450,6 +451,19 @@ module.exports = {
     hk_priceSet:'価格設定',
     hk_onlyLivePrice:'ここの料金は素泊まりの料金であります。',
     hk_peopleLive:'人宿泊',
+    add_tax: '未翻译词条',
+    add_maxNum: '未翻译词条',
+    add_serverPrice: '未翻译词条',
+    add_inputNum: '未翻译词条',
+    add_moreThanNot: '未翻译词条',
+    add_inputNumShould: '未翻译词条',
+    add_editorSuccess: '未翻译词条',
+    hk_goodsType:'カテゴリー',
+    hk_an:'料金計算単位：',
+    hk_startAt:'初期料金',
+    hk_getPriceRule:'計算単位料金',
+    hk_deposit:'押金',
+    hk_addGetContent:'説明：60分未満の場合に、30分以内は0.5；30分以上は１計算単位として請求します。',
 
 
 

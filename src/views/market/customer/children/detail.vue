@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-27 14:46:33
+ * @LastEditTime: 2020-12-04 16:44:17
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -930,6 +930,7 @@ export default {
         // idcard: '----'
         name: "",
       },
+      options:[]
     };
   },
   computed: {

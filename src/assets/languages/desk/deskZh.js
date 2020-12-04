@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-12-02 13:30:52
+ * @LastEditTime: 2020-12-04 15:24:38
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -432,6 +432,7 @@ module.exports = {
     customer_normal: '正常',
     customer_haveCancellation: '已注销',
     customer_cardNum: '卡号',
+    customer_membermun: '会员号码',
     customer_isBlack: '黑名单',
     customer_readMemCard: '读会员卡',
     customer_addMem: '新增会员',
@@ -785,6 +786,21 @@ module.exports = {
     //editor
     editor_asideBreakfast:'附餐-早餐',
     editor_asideDinner:'附餐-晚餐',
+    editor_memberName:'会员名',
+    editor_memAenter:'会员名/单位名称',
+    editor_age:'年龄',
+    editor_hand:'手',
+    editor_home:'家',
+    editor_only:'单',
+    editor_:'',
+    editor_:'',
+    editor_:'',
+    editor_:'',
+    editor_:'',
+    editor_:'',
+    editor_:'',
+    editor_:'',
+    editor_:'',
     editor_:'',
     editor_:'',
    //附餐（side）

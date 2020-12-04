@@ -197,7 +197,7 @@
           width="100"
         >
           <template slot-scope="{ row }">
-            {{ row.consumePrice || 0 }}
+            {{ row.payPrice || 0 }}
           </template>
         </el-table-column>
         <el-table-column
@@ -552,7 +552,7 @@ export default {
             this.totalConsumerPrice = 0;
             res.consumeOrderList.forEach((item) => {
               if (item.priceType == 13) {
-                this.totalConsumerPrice += item.consumePrice || 0;
+                this.totalConsumerPrice += item.payPrice || 0;
               }
             });
 

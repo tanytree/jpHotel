@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-04 09:50:32
  * @Author: 陶子
- * @LastEditTime: 2020-12-04 11:04:36
+ * @LastEditTime: 2020-12-04 11:32:51
  * @FilePath: \jiudian\src\views\manager\index\consumptionTax.vue
 -->
 <template>
@@ -12,28 +12,28 @@
       :rules="taxRules"
       label-width="80px"
     >
-      <el-form-item label="消费税:" prop="consumeTax">
+      <el-form-item :label="$t('manager.add_tax')+':'" prop="consumeTax">
         <el-input
           style="width: 200px"
           size="small"
           v-model.number="taxForm.consumeTax"
-          placeholder="最大不超过100"
+          :placeholder="$t('manager.add_maxNum')"
         ></el-input
         ><span style="margin-left: 4px">%</span>
       </el-form-item>
-      <el-form-item label="服务费:" prop="servicePrice">
+      <el-form-item :label="$t('manager.add_serverPrice')+':'" prop="servicePrice">
         <el-input
           style="width: 200px"
           size="small"
           v-model.number="taxForm.servicePrice"
-          placeholder="最大不超过100"
+          :placeholder="$t('manager.add_maxNum')"
         ></el-input
         ><span style="margin-left: 4px">%</span>
       </el-form-item>
     </el-form>
     <el-divider></el-divider>
     <div>
-      <el-button type="primary" @click="saveInput('taxForm')">保存</el-button>
+      <el-button type="primary" @click="saveInput('taxForm')">{{$t('commons.save')}}</el-button>
     </div>
   </div>
 </template>
@@ -53,23 +53,23 @@ export default {
         consumeTax: [
           {
             required: true,
-            message: "必须输入",
+            message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
           {
             type: "number",
-            message: "请输入数字",
+            message: this.$t('manager.add_inputNum'),
           },
         ],
         servicePrice: [
           {
             required: true,
-            message: "必须输入",
+            message: this.$t('commons.mustInput'),
             trigger: "blur",
           },
           {
             type: "number",
-            message: "请输入数字",
+            message: this.$t('manager.add_inputNum'),
           },
         ],
       };
@@ -87,20 +87,20 @@ export default {
             this.taxForm,
             (res) => {
              this.$message({
-             message:'编辑成功',
+             message:this.$t('manager.add_editorSuccess'),
              type:'success'
            })
             }
           );
          }else{
            this.$message({
-             message:'最大输入数值不超过100',
+             message:this.$t('manager.add_moreThanNot'),
              type:'warning'
            })
          }
         }else{
           this.$message({
-             message:'输入数值不小于0',
+             message:this.$t('manager.add_inputNumShould'),
              type:'warning'
            })
         }

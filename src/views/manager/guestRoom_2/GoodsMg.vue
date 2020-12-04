@@ -6,17 +6,17 @@
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="商品类别型:">
-                    <el-select  v-model="form.categoryType" placeholder="请选择" @change="geProductType">
-                        <el-option label="实物" :value="1"></el-option>
-                        <el-option label="服务" :value="2"></el-option>
+                <el-form-item :label="$t('manager.hk_goodsType')+':'">
+                    <el-select  v-model="form.categoryType" :placeholder="$t('manager.hk_pleaseSelect')" @change="geProductType">
+                        <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
+                        <el-option :label="$t('manager.grsl_service')" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsTypeA')+':'">
-                    <el-cascader v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
+                    <el-cascader :placeholder="$t('manager.hk_pleaseSelect')" v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsState')+':'">
-                    <el-select v-model="form.status">
+                    <el-select v-model="form.status" :placeholder="$t('manager.hk_pleaseSelect')">
                         <el-option :label="$t('manager.hk_enable')" :value="1"></el-option>
                         <el-option :label="$t('manager.hk_disable')" :value="2"></el-option>
                     </el-select>
@@ -73,7 +73,7 @@
                 </el-form-item>
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item :label="$t('manager.grsl_goodsName')+':'" prop="name">
+                        <el-form-item :label="$t('manager.grsl_goodsNameA')+':'" prop="name">
                             <el-input v-model="rowData.name"></el-input>
                         </el-form-item>
                     </el-col>
@@ -94,11 +94,11 @@
                     <span>{{$t('manager.grsl_startMinute')}}</span>
                 </el-form-item>
                 <el-form-item v-if="rowData.categoryType == 2 && rowData.priceModel == 2" :label="$t('manager.grsl_chargeTime')+':'" prop="name">
-                    <span>按</span>
+                    <span>{{$t('manager.hk_an')}}</span>
                     <el-input v-model="rowData.priceTime" style="width: 80px; display: inline-block; margin: 0 10px;"></el-input>
                     <span>{{$t('manager.grsl_chargeMinute')}}</span>
-                    <el-checkbox v-model="rowData.capsPriceFlag" style="margin: 0 15px">加收封顶</el-checkbox>
-                    <span class="tip">说明：比如按60分钟收费，就是每小时算一次，最后不足1小时按照一小时收费；加收封顶就是消费金额超过某个数字将不再增加消费金额</span>
+                    <el-checkbox v-model="rowData.capsPriceFlag" style="margin: 0 15px">{{$t('manager.ps_addSky')}}</el-checkbox>
+                    <span class="tip">{{$t('manager.hk_addGetContent')}}</span>
                 </el-form-item>
                 <el-col :span="16">
                     <el-form-item :label="$t('manager.grsl_goodsDescription')+':'">
@@ -115,16 +115,16 @@
                         <el-input v-model="rowData.costPrice" class="row-width"></el-input>
                     </el-form-item>
                     <div v-if="rowData.categoryType == 2 && rowData.priceModel == 2">
-                        <el-form-item prop="startPrice" label="起步价">
+                        <el-form-item prop="startPrice" :label="$t('manager.hk_startAt')">
                             <el-input v-model="rowData.startPrice" class="row-width"></el-input>
                         </el-form-item>
-                        <el-form-item prop="minutePrice" label="每（）分钟收费">
+                        <el-form-item prop="minutePrice" :label="$t('manager.hk_getPriceRule')">
                             <el-input v-model="rowData.minutePrice" class="row-width"></el-input>
                         </el-form-item>
-                        <el-form-item prop="capsPrice" label="封顶费">
+                        <el-form-item prop="capsPrice" :label="$t('manager.ps_skyPrice')">
                             <el-input v-model="rowData.capsPrice" class="row-width"></el-input>
                         </el-form-item>
-                        <el-form-item prop="depositPrice" label="押金">
+                        <el-form-item prop="depositPrice" :label="$t('manager.hk_deposit')">
                             <el-input v-model="rowData.depositPrice" class="row-width"></el-input>
                         </el-form-item>
                     </div>
