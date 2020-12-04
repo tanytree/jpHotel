@@ -47,6 +47,8 @@
                 <hotelServices v-if="item.path == 'hotelServices'" ref="hotelServices" :hotelData="hotelData" :initData="getHotelServiceData"/>
                 <!-- 打印管理-->
                 <printingMg v-if="item.path == 'printingMg'"  ref="printingMg" :printData="printData" :initData="getPrintParamData"/>
+                <!-- 消费税管理 -->
+                <consumptionTax v-if="item.path=='salesTax'"/>
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -58,13 +60,14 @@
     import roomStatus from './roomStatus'
 	import nightSite from './nightSite'
 	import damageCompensate from './damageCompensate'
+	import consumptionTax from './consumptionTax'
 	import shiftSite from './shiftSite'
 	import hotelServices from './hotelServices'
 	import printingMg from './printingMg'
     import EmployeeRights from '@/components/employeeRights'
     import { mapState, mapActions } from "vuex";
     export default {
-        components: { roomStatus,nightSite,damageCompensate,shiftSite,hotelServices,printingMg,EmployeeRights},
+        components: { roomStatus,nightSite,damageCompensate,shiftSite,hotelServices,printingMg,consumptionTax,EmployeeRights},
         computed: {
             ...mapState({
                 user: state => state.user
@@ -87,6 +90,7 @@
           created() {
             this.$F.handleThirdMenu(this);
             this.activeName = 'damageCompensate';
+            console.log(this.menuList);
           },
         activated () {
         },
