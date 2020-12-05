@@ -51,12 +51,16 @@ const mixin= {
                     });
                 });
             }
-
-
-
-
             // var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
             // return intPartFormat
+        },
+        //计算税
+        getTaxInfo(tax,info){
+            //taxStatus      是否包含税  空或1不包含 2包含 
+            //seviceStatus   是否包含服务费 空或1不包含 2包含
+
+          console.log(tax)
+          console.log(info.orderSubList)
         },
         alert(v,msg){
              if(v == 200){

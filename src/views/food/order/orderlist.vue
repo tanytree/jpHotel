@@ -89,8 +89,8 @@
                       <span v-else>
                           <!-- {{scope.row.memberTypeName}} -->
                           {{scope.row.numberPlat}}
-                          
-                          
+
+
                       </span>
                   </template>
                 </el-table-column>
@@ -145,7 +145,7 @@
         @close="closeDialog"
         >
             <detail @closeDialog="closeDialog" @changeDialog="changeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
-            <action @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
+            <action :taxInfo="tax" @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
 
     <el-dialog
@@ -190,7 +190,6 @@
     </el-dialog>
 
 
-
 </div>
 </template>
 
@@ -201,7 +200,7 @@ import action from './action'
 import mixin from '../mixin';
 export default {
     mixins: [mixin],
-    props:['categroyList'],
+    props:['categroyList','tax'],
     components:{action,detail},
     computed: {
         ...mapState({

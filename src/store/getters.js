@@ -23,7 +23,6 @@ const getters = {
   user:state => state.user.userInfo || localStorage.getItem('user'),
 
   request:state => state.request
-
   // createTime: state => state.user.createTime,
   // uptime: state => state.user.uptime,
   // downtime: state => state.user.downtime

@@ -1,6 +1,12 @@
 <template>
     <div class="action" v-loading="loading">
-        <div class="money text-red text-size20">{{$t('food.common.consumePrice')}} : {{numFormate(info.consumePrice)}}</div>
+        <div class="money text-red text-size20">
+            {{$t('food.common.consumePrice')}} : {{numFormate(info.consumePrice)}}
+             
+            {{getTaxInfo(taxInfo,info)}}
+
+
+        </div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item :label="$t('food.common.billingType')" prop="billingType">
@@ -102,6 +108,7 @@
     import { mapState, mapActions } from "vuex"
     import mixin from '../mixin';
     export default {
+        props:['taxInfo'],
         mixins: [mixin],
         data() {
             return {

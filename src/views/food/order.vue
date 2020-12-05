@@ -13,7 +13,7 @@
 
             >
                 <!-- 沽清管理-->
-                <orderlist :categroyList = 'categoryList' v-if="item.path == 'dishOrderList'"/>
+                <orderlist :tax="taxInfos" :categroyList = 'categoryList' :taxInfo="taxInfos" v-if="item.path == 'dishOrderList'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -29,7 +29,7 @@
             return {
                 activeName: "",
                 categoryList:[],
-                taxInfo:{}
+                taxInfos:{}
             }
         },
         created() {
@@ -64,8 +64,10 @@
                     storesNum:this.storesNum,
                 }
                 this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
-                    console.log(res)
-                    // this.taxInfo = res
+                    if(res && res.content){
+                        this.taxInfos = JSON.parse(res.content)
+                        console.log(this.taxInfos)
+                    }
                 });
 
             },
