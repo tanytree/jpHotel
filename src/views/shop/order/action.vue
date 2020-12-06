@@ -1,7 +1,16 @@
 <template>
     <div class="action" v-loading="loading">
-        <div class="money text-red text-size20">
-        {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}}   <!--span class="text-gray text-size14 margin-l-15">已付金额: {{numFormate(info.hasPayPrice)}}</span> {{info.consumePrice}} --></div>
+        <div class="money">
+
+            <div class=" text-red text-size20">{{$t('food.common.consumePrice')}} : {{numFormate(getFee)}} </div>
+            <div v-if="!!orderTax" class=" text-size14 text-gray margin-t-10">
+            其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
+            </div>
+
+
+
+        <!-- {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}} -->
+          <!--span class="text-gray text-size14 margin-l-15">已付金额: {{numFormate(info.hasPayPrice)}}</span> {{info.consumePrice}} --></div>
         <!-- <div class="money">已付金额: {{info.hasPayPrice}}</div> -->
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -112,6 +121,7 @@
     import { mapState, mapActions } from "vuex"
     import mixin from '../mixin';
     export default {
+        props:['taxInfo'],
         mixins: [mixin],
         data() {
             return {
@@ -159,7 +169,9 @@
                 },
                 rules: {
 
-                }
+                },
+                orderTax:{}
+
             }
         },
         computed: {
@@ -206,7 +218,11 @@
                             sum += parseFloat(element.totalPrice)
                         }
                     });
-                    return parseFloat(this.form.preferentialPrice) ? sum - parseFloat(this.form.preferentialPrice) : sum
+
+                    let total = sum + parseFloat(this.orderTax.taxAfter) + parseFloat(this.orderTax.service)
+                    console.log(this.orderTax.taxAfter)
+                    console.log(this.orderTax.service)
+                    return parseFloat(this.form.preferentialPrice) ? total - parseFloat(this.form.preferentialPrice) : total
 
                     // for(let i in list){
                     //     if(list[i].goods.categoryType == 2){
@@ -269,8 +285,8 @@
             getInfo(data){
                 this.intForm();
                 this.get_systime(data.createTime)
-                // console.log(data)
-                console.log(data.billingType)
+                console.log(data)
+                // console.log(data.billingType)
                 this.form.billingType = data.billingType
                 if(data.memberCard){
                     this.form.memberCard = data.memberCard
@@ -291,6 +307,14 @@
                 this.form.docCount = data.docCount
                 this.form.remark = data.remark
                 this.info = data
+                // console.log(data.orderSubList)
+                let orderGoodsList = data.orderSubList
+                for(let i in orderGoodsList){
+                    orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
+                    orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
+                }
+                console.log(orderGoodsList)
+                this.orderTax = this.getTaxInfo(this.taxInfo,orderGoodsList)
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
                 // this.form.scoresPrice = data.scoresPrice
@@ -372,9 +396,9 @@
                     let shop_discount_ratio = this.score.shop_discount_ratio
                     let convert = this.score.convert
                     let score =  this.selectMerberInfo.score
-                    console.log(convert)
-                    console.log(shop_discount_ratio)
-                    console.log(score)
+                    // console.log(convert)
+                    // console.log(shop_discount_ratio)
+                    // console.log(score)
                     if(!convert || !shop_discount_ratio || !score){
                         this.form.scoresDiscount =  0
                         this.form.scoresPrice =  0
@@ -396,7 +420,7 @@
                            discount: discount ? discount.toFixed(2) : ''
                         }
                     }
-                    console.log(this.jfInfo)
+                    // console.log(this.jfInfo)
 
                     this.form.scoresDiscount =  this.jfInfo.jf
                     this.form.scoresPrice =  this.jfInfo.discount
@@ -493,7 +517,7 @@
                     return  ele.goodsId
                 })
                 params.goodsSubIds = goodsIds.join(',')
-                params.realPayPrice = this.getFee
+                params.realPayPrice = this.getFee + parseFloat(this.orderTax.taxAfter) + parseFloat(this.orderTax.service)
                 // params.realPayPrice = this.info.hasPayPrice + this.getFee
                 params.orderId = this.info.id
                 params.userId = this.userId

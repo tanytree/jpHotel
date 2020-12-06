@@ -66,10 +66,9 @@
                 this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
                     if(res && res.content){
                         this.taxInfos = JSON.parse(res.content)
-                        console.log(this.taxInfos)
+                        // console.log(this.taxInfos)
                     }
                 });
-
             },
         }
     };

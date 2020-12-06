@@ -13,7 +13,7 @@
 
             >
                 <!-- 沽清管理-->
-                <orderlist :saleData = 'saleData' v-if="item.path == 'pmshoporder_child'"/>
+                <orderlist :tax="taxInfos" :saleData = 'saleData' v-if="item.path == 'pmshoporder_child'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -28,7 +28,8 @@
             return {
                 activeName: "",
                 categoryList:[],
-                saleData:[]
+                saleData:[],
+                taxInfos:{}
             }
         },
         created() {
@@ -73,6 +74,18 @@
                         })
                     }
                     this.saleData = array
+                });
+            },
+            get_consume_tax(){
+                let params = {
+                    userId:this.userId,
+                    storesNum:this.storesNum,
+                }
+                this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
+                    if(res && res.content){
+                        this.taxInfos = JSON.parse(res.content)
+                        // console.log(this.taxInfos)
+                    }
                 });
             },
         }

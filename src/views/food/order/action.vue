@@ -1,11 +1,12 @@
 <template>
     <div class="action" v-loading="loading">
-        <div class="money text-red text-size20">
-            {{$t('food.common.consumePrice')}} : {{numFormate(info.consumePrice)}}
-             
-            {{getTaxInfo(taxInfo,info)}}
-
-
+        <div class="money">
+            <div class=" text-red text-size20">
+            {{$t('food.common.consumePrice')}} : {{numFormate(parseFloat(info.consumePrice) + parseFloat(orderTax.taxBefore) + parseFloat(orderTax.service))}}
+            </div>
+            <div v-if="!!orderTax" class=" text-size14 text-gray">
+            其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
+            </div>
         </div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -155,7 +156,8 @@
                 },
                 rules: {
 
-                }
+                },
+                orderTax:{}
             }
         },
         computed: {
@@ -177,8 +179,8 @@
                     }else{
                         realPayPrice = parseFloat(consumePrice)
                     }
-                    this.form.realPayPrice = parseFloat(realPayPrice).toFixed(2)
-                    let p = parseFloat(realPayPrice).toFixed(2)
+                    // this.form.realPayPrice = parseFloat(realPayPrice) + parseFloat(this.orderTax.taxBefore)
+                    let p = parseFloat(realPayPrice) + parseFloat(this.orderTax.taxBefore) +  parseFloat(this.orderTax.service)
                     return p
                 }
             }
@@ -227,6 +229,15 @@
             getInfo(data){
                 this.intForm();
                 this.info = data
+                console.log(data)
+                this.orderTax = this.getTaxInfo(this.taxInfo,data.orderSubList)
+                console.log(data)
+                // this.form.consumePrice =  parseFloat(consumePrice) + parseFloat(this.orderTax.taxBefore)
+                this.form.realPayPrice = parseFloat(data.consumePrice) + parseFloat(this.orderTax.taxBefore) + parseFloat(this.orderTax.service)
+                console.log(parseFloat( this.info.consumePrice))
+                console.log(parseFloat(this.orderTax.taxBefore))
+                console.log(parseFloat(this.orderTax.service))
+
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
                 // this.form.scoresPrice = data.scoresPrice
@@ -394,10 +405,9 @@
                     this.alert(-1,this.$t('food.common.select_rooms'));
                     return false
                 }
-
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-                // console.log(params)
+                console.log(params)
                 this.$F.doRequest(this, "/pms/dishes/dishes_place_order_pay", params, (res) => {
                     this.alert(200,this.$t('food.common.success'));
                     this.closeDialog();

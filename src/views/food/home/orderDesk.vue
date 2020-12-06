@@ -380,7 +380,7 @@ export default {
                     dishesId:list[i].id,
                     dishesName:list[i].name,
                     unitPrice:list[i].price,
-                    totalPrice:parseFloat(parseFloat(list[i].price) * parseFloat(list[i].count)).toFixed(2),
+                    totalPrice:parseFloat(parseFloat(list[i].price) * parseFloat(list[i].count)).toFixed(0),
                     dishesCount:list[i].count
                 });
                 sum += list[i].count
@@ -406,7 +406,7 @@ export default {
                      this.getDataList();
                      this.alert(200, this.$t('commons.request_success'))
                    }else{
-                     this.alert(200, this.$t('commons.request_fail'))
+                     this.alert(0, this.$t('commons.request_fail'))
                    }
                 });
             });

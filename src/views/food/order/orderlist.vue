@@ -104,7 +104,7 @@
                 <el-table-column
                   :label="$t('food.common.total_pay')"
                  >
-                    <template slot-scope="scope">¥{{numFormate(scope.row.consumePrice)}}</template>
+                    <template slot-scope="scope">  {{ scope.row.realPayPrice ? '¥'+ numFormate(scope.row.realPayPrice) : '¥'+ numFormate(scope.row.consumePrice)}}</template>
                 </el-table-column>
 
                 <el-table-column
@@ -162,7 +162,10 @@
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
             </div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{numFormate(detail.consumePrice)}}</div>
+            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{numFormate(detail.realPayPrice)}}</div>
+            <div v-if="!!orderTax" class=" text-size14 text-gray">
+            【其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};】
+            </div>
             <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
             <el-table
               class="margin-t-10 "
@@ -244,7 +247,8 @@ export default {
             listTotal: 0, //总条数
             tableData: [], //表格数据
             is_add:true,
-            detail:{}
+            detail:{},
+            orderTax:{}
 
         };
     },
@@ -331,6 +335,7 @@ export default {
             if(data.state == 2){
                this.dialogShows = true
                this.detail = data
+               this.orderTax = this.getTaxInfo(this.tax,data.orderSubList)
                return false
             }else{
                 let info = {

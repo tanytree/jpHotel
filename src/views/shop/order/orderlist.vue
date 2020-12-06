@@ -99,7 +99,10 @@
                 <el-table-column
                   :label="$t('food.common.total_pay')"
                 >
-                    <template slot-scope="scope">{{numFormate(scope.row.realPayPrice)}}</template>
+                    <template slot-scope="scope">
+                    {{numFormate(scope.row.realPayPrice)}}
+
+                    </template>
                 </el-table-column>
                 <el-table-column
                   :label="$t('food.common.status')"
@@ -139,7 +142,7 @@
         @close="closeDialog"
         >
             <detail @closeDialog="closeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
-            <action @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
+            <action :taxInfo="tax" @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
 
     <el-dialog
@@ -162,6 +165,10 @@
             <!-- <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div> -->
             <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">{{$t('shop.vipPrice')}}：¥{{numFormate(detail.scoresPrice)}}</div>
             <div class="margin-t-10 text-gray">{{$t('shop.realPrice')}}：¥{{numFormate(detail.realPayPrice)}}</div>
+            <div v-if="!!orderTax" class=" text-size14 text-gray margin-t-10">
+            其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
+            </div>
+
             <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：¥{{detail.updateTime}}</div>
             <el-table
               class="margin-t-10 "
@@ -235,7 +242,7 @@ import action from './action'
 import mixin from '../mixin';
 export default {
     mixins: [mixin],
-    props:['saleData'],
+    props:['saleData','tax'],
     components:{action,detail},
     computed: {
         ...mapState({
@@ -268,7 +275,8 @@ export default {
             listTotal: 0, //总条数
             tableData: [], //表格数据
             is_add:true,
-            detail:{}
+            detail:{},
+            orderTax:{}
 
         };
     },
@@ -356,6 +364,13 @@ export default {
             if(data.state == 2){
                this.dialogShows = true
                this.detail = data
+               let orderGoodsList = data.orderSubList
+               for(let i in orderGoodsList){
+                   orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
+                   orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
+               }
+               console.log(orderGoodsList)
+               this.orderTax = this.getTaxInfo(this.tax,orderGoodsList)
                return false
             }else{
                 let info = {
