@@ -15,7 +15,7 @@
                 v-if="$F.filterThirdMenu('sale', item.path, true)"
             >
                 <!-- 门店慨然-->
-                <EmployeeRights v-if="item.path == 'stores-overview'"/>
+                <storeLookTao v-if="item.path == 'stores-overview'"/>
                 <!-- 报表-->
                 <Report v-if="item.path == 'boss-report'"/>
                 <!-- 员工权限-->
@@ -26,11 +26,12 @@
 </template>
 
 <script>
-import EmployeeRights from "@/components/storeLookTao";
+import storeLookTao from "@/components/storeLookTao";
+import EmployeeRights from "@/components/employeeRights";
 import Report from "@/views/finance/report/main";
 
 export default {
-    components: {EmployeeRights, Report},
+    components: {storeLookTao, Report,EmployeeRights},
     data() {
         return {
             activeName: "boss-report",
