@@ -13,7 +13,7 @@
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
 							<el-table-column prop="houseName" :label="$t('manager.hk_roomName')"></el-table-column>
-							<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')" width="250">
+							<!-- <el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')" width="250">
 								<template slot-scope="scope">
 									<div class="p-list" v-for="(value, index) in scope.row.priceList" :key="index">
 										<div class="p-item">
@@ -21,7 +21,7 @@
 										</div>
 									</div>
 								</template>
-							</el-table-column>
+							</el-table-column> -->
 							<el-table-column prop="bedNum" :label="$t('manager.hk_beds')"></el-table-column>
 							<el-table-column prop="checkinNum" :label="$t('manager.hk_availabilityPeople')"></el-table-column>
 							<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
@@ -149,6 +149,18 @@
 						<!-- 床型 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedType')+':'" prop="bedType">
 							<el-input v-model="ruleForm.bedType" class="input"></el-input>
+						</el-form-item>
+						
+						<!-- 是否含消费税 -->
+						<el-form-item v-if="active_tag == 'one'" label="是否含消费税:" prop="taxStatus">
+							<el-radio v-model="ruleForm.taxStatus" :label="1">不含税</el-radio>
+							 <el-radio v-model="ruleForm.taxStatus" :label="2">含税</el-radio>
+						</el-form-item>
+						
+						<!-- 是否包含服务费 -->
+						<el-form-item v-if="active_tag == 'one'" label="是否包含服务费:" prop="seviceStatus">
+							<el-radio v-model="ruleForm.seviceStatus" :label="1">不含服务费</el-radio>
+							 <el-radio v-model="ruleForm.seviceStatus" :label="2">含服务费</el-radio>
 						</el-form-item>
 
 						<!-- 早餐 -->
@@ -316,6 +328,8 @@
 					otaFeizhuPrice: '',
 					otaXiechengPrice: '',
 					otaMeituan: '',
+					taxStatus: 1,
+					seviceStatus: 2
 				},
 				selectedInfo: {}, // 选中的某条
 				formData: {},
@@ -370,6 +384,16 @@
 						trigger: "blur",
 					}],
 					mealDinner: [{
+						required: true,
+						message: '请选择',
+						trigger: "blur",
+					}],
+					taxStatus: [{
+						required: true,
+						message: '请选择',
+						trigger: "blur",
+					}],
+					seviceStatus: [{
 						required: true,
 						message: '请选择',
 						trigger: "blur",
@@ -430,6 +454,7 @@
 							obj.sid = i + 1
 							this.ruleForm_sit.push(obj)
 						})
+						
 						//debugger
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
@@ -457,7 +482,113 @@
 						break;
 					case 'rili':
 						this.rili_show = false
-						this.ruleForm = value;
+						let arry = [{
+							houseName1: '纯住宿',
+						},{
+							houseName1: '住宿+早',
+						},{
+							houseName1: '住宿+晚',
+						},{
+							houseName1: '住宿+早+晚',
+						}]
+						debugger
+						let a = value;
+						arry.forEach((c,d) =>{
+							let obj = {}
+							// let arrr = []
+							let allP = 0
+							if(a.personPrice !== '' && a.personPrice !== undefined && a.personPrice !== null) {
+								let personPriceList = a.personPrice.split(',')
+								let arr = personPriceList.filter(function(el) {
+									return el !== '';
+								});
+								arr.forEach((item, i) => {
+									// obj = {}
+									
+									obj.name = c.houseName1;
+									if(c.houseName1 == '纯住宿') {
+										allP = Number(item)
+									} else if (c.houseName1 == '住宿+早') {
+										c.id = a.roomTypeId;
+										allP = Number(item)+Number(value.mealBreakfastObject.mealPrice)*(i+1)
+									} else if (c.houseName1 == '住宿+晚') {
+										id = a.roomTypeId;
+										allP = Number(item)+Number(value.mealDinnerObject.mealPrice)*(i+1)
+									} else if (c.houseName1 == '住宿+早+晚') {
+										c.id = a.roomTypeId;
+										allP = Number(item)+Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+									}
+									
+									// if (value.mealBreakfastObject) {
+									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1)
+									// }
+									// if (value.mealDinnerObject) {
+									// 	allP = Number(item) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+									// }
+									// if (value.mealDinnerObject && value.mealBreakfastObject) {
+									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+									// }
+															
+									// if (!value.mealDinnerObject && !value.mealBreakfastObject) {
+									// 	allP = Number(item)
+									// }
+									// // allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
+															
+									c.pName = `${i+1} 人价`
+									c.allPrice = c.allP
+									// arr.push(obj)
+								})
+							}
+							
+						})
+						// value.forEach((a,b) =>{
+							
+						// 	// value.priceList = []
+							
+						// 	// let obj = {}
+						// 	// let arr = []
+						// 	// let allP = 0
+							
+						// 	// obj.houseName1 = '纯住宿';
+						// 	// obj.roomTypeId = i.id;
+						// 	// obj.type = i
+							
+						// 	// if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
+							
+						// 	// 	let personPriceList = value.personPrice.split(',')
+						// 	// 	let arry = personPriceList.filter(function(el) {
+						// 	// 		return el !== '';
+						// 	// 	});
+						// 	// 	arry.forEach((item, i) => {
+						// 	// 		obj = {}
+						// 	// 		if (value.mealBreakfastObject) {
+						// 	// 			allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1)
+						// 	// 		}
+						// 	// 		if (value.mealDinnerObject) {
+						// 	// 			allP = Number(item) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+						// 	// 		}
+						// 	// 		if (value.mealDinnerObject && value.mealBreakfastObject) {
+						// 	// 			allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+						// 	// 		}
+							
+						// 	// 		if (!value.mealDinnerObject && !value.mealBreakfastObject) {
+						// 	// 			allP = Number(item)
+						// 	// 		}
+						// 	// 		// allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
+							
+						// 	// 		obj.pName = `${i+1} 人住宿价+付餐价`
+						// 	// 		obj.allPrice = allP
+						// 	// 		arr.push(obj)
+						// 	// 	})
+							
+						// 	// } else {
+						// 	// 	obj.pName = null
+						// 	// 	obj.allPrice = null
+						// 	// }
+						// 	// value.priceList = arr
+						// })
+						debugger
+						this.ruleForm = arry;
 						break
 				}
 			},
@@ -574,6 +705,7 @@
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
+							debugger
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",
