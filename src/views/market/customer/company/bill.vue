@@ -422,7 +422,7 @@
         </span>
       </div>
       <el-form
-        style="margin: 30px 0 0 30px"
+        style="margin:30px 0 0 30px"
         inline
         size="small"
         :model="enterForm"

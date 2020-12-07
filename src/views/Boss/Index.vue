@@ -46,12 +46,14 @@ export default {
     },
     created() {
         this.$F.handleThirdMenu(this);
-        for (let i = 0; i < this.menuList.length; i++) {
-            if (this.menuList[i].path == 'staff-rights') {
-                this.menuList.splice(i, 1)
-                break;
-            }
-        }
+        console.log(this.menuList);
+        debugger
+        // for (let i = 0; i < this.menuList.length; i++) {
+        //     if (this.menuList[i].path == 'staff-rights') {
+        //         this.menuList.splice(i, 1)
+        //         break;
+        //     }
+        // }
     },
     mounted() {
         // this.select_title = JSON.parse(sessionStorage.getItem('menul')).name

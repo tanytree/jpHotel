@@ -7,7 +7,15 @@
 
 <template>
   <!-- 统一的列表格式 -->
-  <div class="boss-index ru">
+<div class="task-list" v-if="1==2">
+    <table style="border: 1px solid black;" v-if="content!==''"> <!-- 设置居中,如果没获取到内容则不显示 -->
+        <tr><th v-for="h in content[0]" :key="h.id">{{h}}</th></tr> <!-- 循环读取数据并显示 -->
+        <tr v-for="row in content.slice(1,)" :key=row.id>
+            <td v-for="item in row" :key=item.id>{{item}}</td>
+        </tr>
+    </table>
+</div>
+  <div class="boss-index ru" v-else>
     <div class="content">
       <h3 v-if="operCheckinType == 'a1' || operCheckinType == 'a2'">
         {{ $t("frontOffice.checkInfoDesc") }}
@@ -816,8 +824,10 @@ function getDaysBetween(dateString1, dateString2) {
 }
 import { mapState, mapActions } from "vuex";
 const vm = window.vm;
+import XLSX from 'xlsx'
 import customer from "@/components/front/customer2";
 import guestChoose from "@/views/market/reception/checkin/guestChoose";
+import axios from 'axios'
 export default {
   props: ["operCheckinType"], //b1：普通预定 b2:时租房预定 b3:会场预定     a1: 普通入住  a2:时租入住
   components: {
@@ -833,6 +843,7 @@ export default {
     }),
     rules() {
       return {
+          content: '',
         name: [
           {
             required: true,
@@ -1056,6 +1067,21 @@ export default {
     this.getDataList();
     this.initForm();
   },
+//     created() {
+//         var url = "http://39.104.116.153:8887/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
+// //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
+//         axios.get(url, {responseType:'arraybuffer'})
+//             .then((res) => {
+//                 debugger
+//                 var data = new Uint8Array(res.data)
+//                 var wb = XLSX.read(data, {type:"array"})
+//                 var sheets = wb.Sheets
+//                 this.content = this.transformSheets(sheets)
+//             }).catch( err =>{
+//             this.err = err
+//         })
+//
+//     },
   watch: {
     operCheckinType() {
       this.initForm();
@@ -1148,6 +1174,36 @@ export default {
     },
   },
   methods: {
+      transformSheets(sheets) {
+          var content = []
+          var content1 = []
+          var tmplist = []
+          for (let key in sheets){
+//读出来的workbook数据很难读,转换为json格式,参考https://github.com/SheetJS/js-xlsx#utility-functions
+              tmplist.push(XLSX.utils.sheet_to_json(sheets[key]).length)
+              content1.push(XLSX.utils.sheet_to_json(sheets[key]))
+          }
+          var maxLength = Math.max.apply(Math, tmplist)
+//进行行列转换
+          for (let y in [...Array(maxLength)]){
+              content.push([])
+              for (let x in [...Array(tmplist.length)]) {
+                  try {
+                      for (let z in content1[x][y]){
+                          content[y].push(content1[x][y][z])
+                      }
+                  } catch (error) {
+                      content[y].push(' ')
+                  }
+              }
+          }
+          content.unshift([])
+          for (let key in sheets){
+              content[0].push(key)
+          }
+          return content
+
+      },
     initForm() {
       this.getRoomsForm = {
         changeType: 1,

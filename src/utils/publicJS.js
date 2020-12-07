@@ -302,6 +302,7 @@ const $F = {
                 },
                 responseType: 'blob', //二进制流
             }).then(function (res) {
+                debugger
                 if(!res) return
                 let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
                 let url = window.URL.createObjectURL(blob);
