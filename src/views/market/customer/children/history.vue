@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-30 11:02:00
+ * @LastEditTime: 2020-12-07 15:57:25
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -32,7 +32,7 @@
             :placeholder="$t('commons.placeChoose')"
           >
             <el-option
-              label="全部"
+              :label="$t('commons.all')"
               value="0000000000"
             >
             </el-option>
@@ -225,13 +225,12 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="enterType"
           :label="$t('desk.customer_toTheGuest')"
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
             <span
-              v-for="(item, index) in row.personList"
+              v-for="(item, index) in checkinPersonList(row)"
               :key="index"
               style="margin-right: 6px"
               >{{ item.name }}</span
@@ -286,6 +285,7 @@ export default {
       },
       set() {},
     },
+    
   },
   watch: {
     guestRooms(newValue, oldValue) {
@@ -340,6 +340,14 @@ export default {
     ...mapMutations({
       resetActive: "resetActive",
     }),
+    checkinPersonList(row){
+      console.log(row);
+      let newArray = [];
+      newArray = row.hotelCheckInRoom.personList.filter((item)=>{
+        return item.name != row.name
+     })
+      return newArray
+    },
     // 选择--获取房型
     get_room_type_list() {
       // this.roomType = []

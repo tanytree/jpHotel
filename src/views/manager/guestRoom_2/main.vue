@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-02-15 21:08:27
- * @LastEditors: Dana
- * @LastEditTime: 2020-04-27 11:14:21
- * @FilePath: /cloudAdmin/src/views/market/productManagement/index.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-07 10:04:01
+ * @FilePath: \jiudian\src\views\manager\guestRoom_2\main.vue
  -->
 <template>
     <div id="page1" class="boss-index">

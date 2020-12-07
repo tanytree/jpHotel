@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-12-04 15:31:37
+ * @LastEditTime: 2020-12-07 16:06:30
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -114,6 +114,7 @@ module.exports = {
     serve_heji: '合計',
     serve_patch: '再印刷',
     serve_basicInfo: '基本情報',
+    serve_basicInfoA: '基本情報',
     serve_flight: '締め日',
     serve_startAend: '開始−終了',
     serve_open: '始',

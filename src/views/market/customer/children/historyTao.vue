@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-27 11:58:54
+ * @LastEditTime: 2020-12-07 15:59:18
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -32,7 +32,7 @@
             :placeholder="$t('commons.placeChoose')"
           >
             <el-option
-              label="全部"
+             :label="$t('commons.all')"
               value="0000000000"
             >
             </el-option>
@@ -220,10 +220,17 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="enterType"
           :label="$t('desk.customer_toTheGuest')"
           show-overflow-tooltip
         >
+         <template slot-scope="{ row }">
+            <span
+              v-for="(item, index) in checkinPersonList(row)"
+              :key="index"
+              style="margin-right: 6px"
+              >{{ item.name }}</span
+            >
+          </template>
         </el-table-column>
       </el-table>
       <div style="margin-top: 10px"></div>
@@ -334,6 +341,14 @@ export default {
         this.roomType[1].label = this.chamber;
         console.log(this.roomType);
       });
+    },
+     checkinPersonList(row){
+      console.log(row);
+      let newArray = [];
+      newArray = row.hotelCheckInRoom.personList.filter((item)=>{
+        return item.name != row.name
+     })
+      return newArray
     },
     // 获取联级选择--房屋类型
     handleChange(value) {

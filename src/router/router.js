@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-19 14:26:25
+ * @LastEditTime: 2020-12-07 11:29:48
  * @FilePath: \jiudian\src\router\router.js
  */
 import Vue from 'vue'
@@ -53,12 +53,12 @@ export default new Router({
                     component: () =>
                         import('@/views/Boss/DepartmentCharge')
                 },
-                // {
-                //     path: '/person-mg',
-                //     name: 'PersonMg',
-                //     component: () =>
-                //         import ('@/views/Boss/PersonMg')
-                // },
+                {
+                    path: '/table',
+                    name: 'table',
+                    component: () =>
+                        import ('@/views/finance/report/table')
+                },
                 {
                     path: '/pay-mg',
                     name: 'PayMg',

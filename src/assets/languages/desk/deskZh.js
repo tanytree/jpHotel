@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-12-04 15:24:38
+ * @LastEditTime: 2020-12-07 15:38:48
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -184,6 +184,7 @@ module.exports = {
     serve_heji: '合计',
     serve_patch: '补打',
     serve_basicInfo: '基本信息',
+    serve_basicInfoA: '订单基本信息',
     serve_flight: '班次',
     serve_startAend: '开始-结束',
     serve_open: '开',
@@ -656,7 +657,7 @@ module.exports = {
     customer_closeAccount: '已结',
     customer_outStand: '未结',
     customer_amountPrice: '挂账金额',
-    customer_roomKind: '房型/房号',
+    customer_roomKind: '房型(房号)',
     customer_checkoutTime: '离店时间',
     customer_settlementStatus: '结算状态',
     customer_constDate: '消费日期',
