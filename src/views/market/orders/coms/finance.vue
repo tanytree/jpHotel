@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-02 11:54:33
+ * @LastEditTime: 2020-12-08 11:43:07
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -19,7 +19,7 @@
                 <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_rich')}}</el-button>
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
                 <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>
-                <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button>
+                <!-- <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button> -->
                 <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">附餐</el-button>
             </el-form-item>
         </el-row>

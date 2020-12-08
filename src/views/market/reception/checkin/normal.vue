@@ -1,20 +1,24 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-02 18:23:37
+ * @LastEditTime: 2020-12-08 11:25:38
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 
 <template>
   <!-- 统一的列表格式 -->
-<div class="task-list" v-if="1==2">
-    <table style="border: 1px solid black;" v-if="content!==''"> <!-- 设置居中,如果没获取到内容则不显示 -->
-        <tr><th v-for="h in content[0]" :key="h.id">{{h}}</th></tr> <!-- 循环读取数据并显示 -->
-        <tr v-for="row in content.slice(1,)" :key=row.id>
-            <td v-for="item in row" :key=item.id>{{item}}</td>
-        </tr>
+  <div class="task-list" v-if="1 == 2">
+    <table style="border: 1px solid black" v-if="content !== ''">
+      <!-- 设置居中,如果没获取到内容则不显示 -->
+      <tr>
+        <th v-for="h in content[0]" :key="h.id">{{ h }}</th>
+      </tr>
+      <!-- 循环读取数据并显示 -->
+      <tr v-for="row in content.slice(1)" :key="row.id">
+        <td v-for="item in row" :key="item.id">{{ item }}</td>
+      </tr>
     </table>
-</div>
+  </div>
   <div class="boss-index ru" v-else>
     <div class="content">
       <h3 v-if="operCheckinType == 'a1' || operCheckinType == 'a2'">
@@ -209,7 +213,7 @@
             <el-col :span="12">
               <el-form-item prop="pronunciation">
                 <el-input
-                  style="width: 110px;"
+                  style="width: 110px"
                   v-model="checkInForm.pronunciation"
                   :placeholder="$t('desk.home_nameA')"
                 ></el-input>
@@ -492,7 +496,7 @@
         }}</el-button>
       </div>
     </div>
-
+<!-- 排房dialog -->
     <el-dialog
       top="0"
       :visible.sync="rowRoomShow"
@@ -500,81 +504,76 @@
       :title="$t('desk.rowHouse')"
       width="800px"
     >
-      <el-form
-        :model="hotelRoomListParams"
-        style="margin-top: -20px"
-        v-loading="loading"
-      >
-        <el-form-item
-          :label="$t('manager.hk_toward') + ':'"
-          class=""
-          style="margin-bottom: 0"
-        >
-          <el-checkbox-group
-            v-model="hotelRoomListParams.toward"
-            @change="hotel_room_list"
-          >
-            <el-checkbox
-              v-for="(item, key, index) of $t('commons.toward')"
-              :label="key"
-              :value="key"
-              :key="index"
-              >{{ item }}</el-checkbox
-            >
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item
-          :label="$t('desk.home_attribute') + ':'"
-          class=""
-          style="margin-bottom: 0"
-        >
-          <el-checkbox
-            v-model="hotelRoomListParams.windowFlag"
-            @change="hotel_room_list"
-            >{{ $t("desk.home_haveWindow") }}</el-checkbox
-          >
-          <el-checkbox
-            v-model="hotelRoomListParams.roadFlag"
-            @change="hotel_room_list"
-            >{{ $t("desk.home_onRoad") }}</el-checkbox
-          >
-          <el-checkbox
-            v-model="hotelRoomListParams.smokeFlag"
-            @change="hotel_room_list"
-            >{{ $t("desk.home_noSmoke") }}</el-checkbox
-          >
-        </el-form-item>
-        <div class="rowRoomsList">
-          <div class="wrap">
-            <el-row>
-              <el-row class="roomsInserted" :gutter="10">
-                <el-col
-                  v-for="v in rowRoomCurrentList"
-                  :key="v.id"
-                  :span="3"
-                  style="margin-bottom: 10px"
-                >
-                  <el-tag
-                    :type="checkIsSelect(v) ? 'danger' : 'info'"
-                    effect="dark"
-                    class="tag"
-                    @click="rowRoomCurrentListItemAdd(v)"
-                    >{{ v.houseNum }}</el-tag
-                  >
-                </el-col>
-              </el-row>
-            </el-row>
+    <!-- 房间选择块 -->
+      <div class="topBigbox">
+        <div class="eackBlock">
+          <div>大仓集团第一酒店 3层 4间</div>
+          <div style="margin-top: 10px">
+            <el-checkbox-group v-model="checkboxGroup3" size="small">
+              <el-checkbox-button
+                style="margin-right: 8px"
+                v-for="city in cities"
+                :label="city"
+                :disabled="city === 'A002'"
+                :key="city"
+                >{{ city }}</el-checkbox-button
+              >
+            </el-checkbox-group>
           </div>
         </div>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
+        <div class="eackBlock">
+          <div>大仓集团第一酒店 3层 4间</div>
+          <div style="margin-top: 10px">
+            <el-checkbox-group v-model="checkboxGroup3" size="small">
+              <el-checkbox-button
+                style="margin-right: 8px"
+                v-for="city in cities"
+                :label="city"
+                :disabled="city === 'A002'"
+                :key="city"
+                >{{ city }}</el-checkbox-button
+              >
+            </el-checkbox-group>
+          </div>
+        </div>
+      </div>
+      <!-- 时间选择块 -->
+      <div class="spanBox">
+        <span style="margin-right: 15px">&lt;&lt;前14天</span
+        ><span>后14天&gt;&gt;</span>
+      </div>
+      <!-- 日历表格块 -->
+      <div class="tableBox" v-loading="loading">
+        <el-table
+          :data="roominfoList"
+          style="width: 100%; margin-bottom: 20px"
+          border
+          lazy
+           header-row-class-name="default"
+        >
+          <el-table-column type="index"  :index="indexMethod" width="80px"> </el-table-column>
+          <el-table-column
+            v-for="(item, index) in dateList"
+            :key="index"
+            :label="item.dateStr + '' + item.weekDay"
+            :width="index == 0 ? '150' : ''"
+          >
+            <template slot-scope="{row}">
+              <span >{{
+               checkRoomInfo(row,index)
+              }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div slot="footer" class="dialog-footer" style="text-align:right">
         <el-button size="small" @click="rowRoomShow = false">{{
           $t("commons.cancel")
         }}</el-button>
         <el-button size="small" type="primary" @click="db_row_houses">{{
           $t("commons.confirm")
         }}</el-button>
-      </span>
+      </div>
     </el-dialog>
     <el-dialog
       top="0"
@@ -824,10 +823,10 @@ function getDaysBetween(dateString1, dateString2) {
 }
 import { mapState, mapActions } from "vuex";
 const vm = window.vm;
-import XLSX from 'xlsx'
+import XLSX from "xlsx";
 import customer from "@/components/front/customer2";
 import guestChoose from "@/views/market/reception/checkin/guestChoose";
-import axios from 'axios'
+import axios from "axios";
 export default {
   props: ["operCheckinType"], //b1：普通预定 b2:时租房预定 b3:会场预定     a1: 普通入住  a2:时租入住
   components: {
@@ -843,7 +842,7 @@ export default {
     }),
     rules() {
       return {
-          content: '',
+        content: "",
         name: [
           {
             required: true,
@@ -1056,6 +1055,11 @@ export default {
       liveInPersonData: [],
       liveCardData: "",
       // typeText: "入住",
+      ///////////*************/ */
+      cities: ["A002", "A003", "A004", "A005"],
+      checkboxGroup3: ["A004"],
+      roominfoList: [{name:"A002",checked1:'未选',checked2:'已选'},{name:"A004",checked1:'已选',checked2:'未选'}],   //房间列表数据
+      dateList: [{dateStr:'10/26',weekDay:'周一'},{dateStr:'10/27',weekDay:'周二'}],      //时间列表数据
     };
   },
   mounted() {
@@ -1067,21 +1071,21 @@ export default {
     this.getDataList();
     this.initForm();
   },
-//     created() {
-//         var url = "http://39.104.116.153:8887/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
-// //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
-//         axios.get(url, {responseType:'arraybuffer'})
-//             .then((res) => {
-//                 debugger
-//                 var data = new Uint8Array(res.data)
-//                 var wb = XLSX.read(data, {type:"array"})
-//                 var sheets = wb.Sheets
-//                 this.content = this.transformSheets(sheets)
-//             }).catch( err =>{
-//             this.err = err
-//         })
-//
-//     },
+  //     created() {
+  //         var url = "http://39.104.116.153:8887/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
+  // //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
+  //         axios.get(url, {responseType:'arraybuffer'})
+  //             .then((res) => {
+  //                 debugger
+  //                 var data = new Uint8Array(res.data)
+  //                 var wb = XLSX.read(data, {type:"array"})
+  //                 var sheets = wb.Sheets
+  //                 this.content = this.transformSheets(sheets)
+  //             }).catch( err =>{
+  //             this.err = err
+  //         })
+  //
+  //     },
   watch: {
     operCheckinType() {
       this.initForm();
@@ -1174,36 +1178,45 @@ export default {
     },
   },
   methods: {
-      transformSheets(sheets) {
-          var content = []
-          var content1 = []
-          var tmplist = []
-          for (let key in sheets){
-//读出来的workbook数据很难读,转换为json格式,参考https://github.com/SheetJS/js-xlsx#utility-functions
-              tmplist.push(XLSX.utils.sheet_to_json(sheets[key]).length)
-              content1.push(XLSX.utils.sheet_to_json(sheets[key]))
+    checkRoomInfo(row,index){
+      console.log(row);
+      console.log(index);
+      let newCheck = 'checked'+(index+1);
+      console.log(newCheck);
+      return row[newCheck];
+    },
+    indexMethod(index){
+        return this.roominfoList[index].name;
+    },
+    transformSheets(sheets) {
+      var content = [];
+      var content1 = [];
+      var tmplist = [];
+      for (let key in sheets) {
+        //读出来的workbook数据很难读,转换为json格式,参考https://github.com/SheetJS/js-xlsx#utility-functions
+        tmplist.push(XLSX.utils.sheet_to_json(sheets[key]).length);
+        content1.push(XLSX.utils.sheet_to_json(sheets[key]));
+      }
+      var maxLength = Math.max.apply(Math, tmplist);
+      //进行行列转换
+      for (let y in [...Array(maxLength)]) {
+        content.push([]);
+        for (let x in [...Array(tmplist.length)]) {
+          try {
+            for (let z in content1[x][y]) {
+              content[y].push(content1[x][y][z]);
+            }
+          } catch (error) {
+            content[y].push(" ");
           }
-          var maxLength = Math.max.apply(Math, tmplist)
-//进行行列转换
-          for (let y in [...Array(maxLength)]){
-              content.push([])
-              for (let x in [...Array(tmplist.length)]) {
-                  try {
-                      for (let z in content1[x][y]){
-                          content[y].push(content1[x][y][z])
-                      }
-                  } catch (error) {
-                      content[y].push(' ')
-                  }
-              }
-          }
-          content.unshift([])
-          for (let key in sheets){
-              content[0].push(key)
-          }
-          return content
-
-      },
+        }
+      }
+      content.unshift([]);
+      for (let key in sheets) {
+        content[0].push(key);
+      }
+      return content;
+    },
     initForm() {
       this.getRoomsForm = {
         changeType: 1,
@@ -2181,5 +2194,24 @@ export default {
 
 .el-select {
   display: inline-block;
+}
+.topBigbox {
+  background-color: rgba(246, 247, 247, 1);
+  box-sizing: border-box;
+  padding: 15px 10px;
+  .eackBlock {
+    margin-bottom: 10px;
+    &:nth-last-child() {
+      margin-bottom: 0px;
+    }
+  }
+}
+.spanBox {
+  margin: 10px 0;
+  span {
+    color: rgba(18, 110, 255, 100);
+    font-size: 13px;
+    text-decoration: underline;
+  }
 }
 </style>
