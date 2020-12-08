@@ -603,7 +603,6 @@ export default {
                 params.payPrice =  this.consumeOperForm.payPrice
                 console.log(params)
             }
-            return
             //冲调
             if (type == 3) {
                 params.state = this.destructionList[0].state
