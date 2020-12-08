@@ -7,7 +7,7 @@
 
 // 管理部 (manager) || 中文
 module.exports = {
-
+    shiftOver: '交班',
     //   管理部 > 首页(homePage > hp)
     hp_toRoom: '房态',
     hp_floorBuilding: '楼栋楼层',
@@ -494,5 +494,5 @@ module.exports = {
     add_: '',
     add_: '',
     add_: '',
-  
+
 }

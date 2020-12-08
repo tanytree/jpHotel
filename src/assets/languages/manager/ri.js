@@ -7,7 +7,7 @@
 
 // 管理部 || 日语
 module.exports = {
-
+    shiftOver: '交班交替表',
     //   管理部 > 首页(homePage > hp)
     hp_toRoom: '部屋状態',
     hp_floorBuilding: '建物・階設定',

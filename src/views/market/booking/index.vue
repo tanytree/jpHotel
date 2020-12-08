@@ -18,10 +18,12 @@
       >
         <!-- 普通预订-->
         <normal v-if="item.path == 'normal'" operCheckinType="b1" />
-        <!-- 时租房预订-->
-        <normal v-if="item.path == 'hour'" operCheckinType="b2" />
+        <!-- 当日回预订-->
+        <normal v-if="item.path == 'dayBack'" operCheckinType="b2" />
         <!-- 会场预订-->
         <hall v-if="item.path == 'hall'" operCheckinType="b3" />
+        <!-- 入住办理-->
+        <checkin v-if="item.path == 'checkin'" operCheckinType="a1" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -29,10 +31,11 @@
 
 <script>
 import normal from "@/views/market/reception/checkin/normal";
+import checkin from "@/views/market/reception/checkin";
 import hall from "./hall";
 
 export default {
-  components: { normal, hall },
+  components: { normal, hall, checkin },
   data() {
     return {
         menuList: [],

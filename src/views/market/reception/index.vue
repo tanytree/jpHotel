@@ -17,11 +17,12 @@
                 :class="item.path !== 'checkin' ? 'bg' : ''"
             >
                 <!-- 入住办理-->
-                <checkin v-if="item.path == 'checkin'"/>
+<!--                <checkin v-if="item.path == 'checkin'"/>-->
                 <!-- 前台报表-->
-                <reportform v-if="item.path == 'reportform'"/>
+<!--                <reportform v-if="item.path == 'reportform'"/>&lt;!&ndash; 报表&ndash;&gt;-->
+                <Report v-if="item.path == 'reportform'"/>
                 <!-- 前台交班-->
-                <shiftover v-if="item.path == 'shiftover'"/>
+<!--                <shiftover v-if="item.path == 'shiftover'"/>-->
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -31,9 +32,11 @@
 import checkin from "./checkin";
 import reportform from "./reportform";
 import shiftover from "./shiftover";
+import Report from "@/views/finance/report/main";
+
 
 export default {
-    components: {checkin, reportform, shiftover},
+    components: {checkin, reportform, shiftover, Report},
     data() {
         return {
             activeName: ""
@@ -41,18 +44,18 @@ export default {
     },
     created() {
         this.$F.handleThirdMenu(this);
-        for (let i = 0; i < this.menuList.length; i++) {
-            if (this.menuList[i].path == 'reportform') {
-                this.menuList.splice(i, 1)
-                break;
-            }
-        }
-        for (let i = 0; i < this.menuList.length; i++) {
-            if (this.menuList[i].path == 'shiftover') {
-                this.menuList.splice(i, 1)
-                break;
-            }
-        }
+        // for (let i = 0; i < this.menuList.length; i++) {
+        //     if (this.menuList[i].path == 'reportform') {
+        //         this.menuList.splice(i, 1)
+        //         break;
+        //     }
+        // }
+        // for (let i = 0; i < this.menuList.length; i++) {
+        //     if (this.menuList[i].path == 'shiftover') {
+        //         this.menuList.splice(i, 1)
+        //         break;
+        //     }
+        // }
     },
     mounted() {
     },

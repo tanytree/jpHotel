@@ -1,35 +1,6 @@
 
 <template>
     <div class="boss-index" id="page1">
-<!--        <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">-->
-<!--            <el-tab-pane label="房间动态" name="a">-->
-<!--                <roomStatus ref="roomStatus"/>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="夜审设置" name="b" >-->
-<!--                <nightSite ref="nightSite" :findOne="findOne" :initData="getFindOneData"/>-->
-<!--            </el-tab-pane>-->
-<!--            &lt;!&ndash;<el-tab-pane label="发票维护" name="c" >-->
-<!--                <billMainten ref="billMainten"/>-->
-<!--            </el-tab-pane>&ndash;&gt;-->
-<!--            <el-tab-pane label="损物赔偿" name="d" >-->
-<!--                <damageCompensate ref="damageCompensate" :list="damageData" :initData="getDamageTypeData"/>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="交班设置" name="hand" >-->
-<!--                <shiftSite ref="shiftSite" :handData="handData" :initData="getHandOverData" />-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="酒店服务" name="hotel" >-->
-<!--                <hotelServices ref="hotelServices" :hotelData="hotelData" :initData="getHotelServiceData"/>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="打印管理" name="print" >-->
-<!--                <printingMg ref="printingMg" :printData="printData" :initData="getPrintParamData"/>-->
-<!--            </el-tab-pane>-->
-<!--            &lt;!&ndash; 员工权限&ndash;&gt;-->
-<!--            <el-tab-pane :label="$F.filterThirdMenu('manager', 'staff-rights').thirdMenu"-->
-<!--                         v-if="$F.filterThirdMenu('manager', 'staff-rights', true)">-->
-<!--                <EmployeeRights/>-->
-<!--            </el-tab-pane>-->
-<!--        </el-tabs>-->
-
         <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                          :name="item.path"

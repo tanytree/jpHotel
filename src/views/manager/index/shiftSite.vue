@@ -1,6 +1,12 @@
 <template>
     <div class="boss-index">
         <el-tabs v-model="activeName" @tab-click="changeTab" class="tabCenter">
+            <el-tab-pane :label="$t('manager.shiftOver')" name="shiftOver">
+                <c1></c1>
+            </el-tab-pane>
+            <el-tab-pane :label="$t('desk.serve_changeRecord')" name="changeRecord">
+                <c2></c2>
+            </el-tab-pane>
             <el-tab-pane :label="$t('manager.hp_patternsSuccession')" name="handover">
                 <div class="content">
                     <div class="manage">
@@ -80,15 +86,19 @@
                     </div>
                 </el-dialog>
             </el-tab-pane>
+
         </el-tabs>
     </div>
 </template>
 
 <script>
+import c1 from "./shiftover/c1";
+import c2 from "./shiftover/c2";
     export default {
+        components: { c1, c2 },
         data() {
             return {
-                activeName: "handover",
+                activeName: "shiftOver",
                 handType: {},
                 pageForm: {
                     pageIndex: 1,
