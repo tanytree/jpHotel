@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 11:29:48
+ * @LastEditTime: 2020-12-08 16:09:41
  * @FilePath: \jiudian\src\router\router.js
  */
 import Vue from 'vue'
@@ -148,6 +148,13 @@ export default new Router({
                     component: () =>
                         import('@/views/market/orders/bookingDetail')
                 },
+                {
+                  path: '/checktheDetails',
+                  name: 'checktheDetails',
+                  meta: { title: '入住管理', pid: "13" },
+                  component: () =>
+                      import('@/components/checktheDetails')
+              },
                 {
                     path: '/reception',
                     name: 'reception',

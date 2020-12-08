@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 16:13:54
+ * @LastEditTime: 2020-12-08 16:10:15
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -9,6 +9,7 @@
     <el-row class="clearfix">
         <div class="fr">
 <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
+            <el-button plain @click="goCheckinDetail">入住人管理</el-button>
             <el-button plain @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
             <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary"> {{ $t('commons.moreOperating') }}
@@ -375,6 +376,12 @@ export default {
     },
 
     methods: {
+      //跳转到入住详情
+      goCheckinDetail(){
+        this.$router.push({
+          path:'/checktheDetails'
+        })
+      },
         checkInCallback(id) {
             this.liveInPersonShow = false;
             this.$router.push('/orderdetail?id=' + id);
