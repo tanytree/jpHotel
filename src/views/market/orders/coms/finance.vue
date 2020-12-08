@@ -599,10 +599,11 @@ export default {
             if (type == 2) {
                 params.priceType = 13
                 params.payType = 0 //挂账无需支付方式
-                params.state = 2
+                params.state = 1
                 params.payPrice =  this.consumeOperForm.payPrice
                 console.log(params)
             }
+            return
             //冲调
             if (type == 3) {
                 params.state = this.destructionList[0].state
