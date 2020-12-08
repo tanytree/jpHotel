@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 15:57:25
+ * @LastEditTime: 2020-12-08 14:52:49
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -31,10 +31,7 @@
             v-model="searchForm.storesNum"
             :placeholder="$t('commons.placeChoose')"
           >
-            <el-option
-              :label="$t('commons.all')"
-              value="0000000000"
-            >
+            <el-option :label="$t('commons.all')" value="0000000000">
             </el-option>
             <el-option
               v-for="item in storeList"
@@ -285,7 +282,6 @@ export default {
       },
       set() {},
     },
-    
   },
   watch: {
     guestRooms(newValue, oldValue) {
@@ -340,13 +336,15 @@ export default {
     ...mapMutations({
       resetActive: "resetActive",
     }),
-    checkinPersonList(row){
+    checkinPersonList(row) {
       console.log(row);
       let newArray = [];
-      newArray = row.hotelCheckInRoom.personList.filter((item)=>{
-        return item.name != row.name
-     })
-      return newArray
+      if (row.hotelCheckInRoom && row.hotelCheckInRoom.personList.length > 0) {
+        newArray = row.hotelCheckInRoom.personList.filter((item) => {
+          return item.name != row.name;
+        });
+      }
+      return newArray;
     },
     // 选择--获取房型
     get_room_type_list() {
@@ -386,12 +384,12 @@ export default {
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
-      }
-        console.log(this.$route.query);
+      };
+      console.log(this.$route.query);
       this.searchForm.idcard = this.$route.query.item.idcard || "";
       this.searchForm.name = this.$route.query.item.name;
       this.searchForm.pronunciation = this.$route.query.item.pronunciation;
-      this.searchForm.storesNum = sessionStorage.getItem('storesNum');
+      this.searchForm.storesNum = sessionStorage.getItem("storesNum");
       this.getDataList();
     },
     //点击 客史档案
@@ -404,7 +402,7 @@ export default {
         this.$router.replace("/customer");
       }
     },
-   
+
     /**获取表格数据 */
     getDataList() {
       this.loading = true;
@@ -421,9 +419,7 @@ export default {
       );
     },
     stores_list() {
-      let params = {
-       
-      }
+      let params = {};
       this.$F.doRequest(this, "/pms/freeuser/stores_list", params, (data) => {
         console.log(data);
         this.storeList = data;

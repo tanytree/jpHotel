@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-04 16:44:17
+ * @LastEditTime: 2020-12-08 15:13:28
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -55,7 +55,7 @@
                       type="primary"
                       size="mini"
                       @click="setCardFormBtnClick(3)"
-                      >{{ $t("desk.customer_cancellation") }}</el-button
+                      >{{ $t("desk.customer_stopUse") }}</el-button
                     >
                     <el-button
                       type="primary"
@@ -108,7 +108,7 @@
                       </el-col>
                     </template>
                     <el-col :span="10" class="col">
-                      <el-form-item :label="$t('desk.home_name')" prop="name">
+                      <el-form-item :label="$t('desk.home_name')+':'" prop="name">
                         <el-input
                           v-model="detailForm.name"
                           v-if="type != 'detail'"
@@ -128,7 +128,7 @@
                         <template
                           v-if="type == 'detail'"
                           style="margin-left: 15px"
-                          >{{ detailForm.pronunciation }}</template
+                          >【{{ detailForm.pronunciation }}】</template
                         >
                       </el-form-item>
                     </el-col>
@@ -268,7 +268,7 @@
                       >
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.customer_memType')">{{
+                      <el-form-item :label="$t('desk.customer_memType')+':'">{{
                         F_memberTypeId(detailForm.memberTypeId)
                       }}</el-form-item>
                     </el-col>
@@ -278,7 +278,7 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.customer_sex')" prop="sex">
+                      <el-form-item :label="$t('desk.customer_sex')+':'" prop="sex">
                         <el-radio-group
                           v-model="detailForm.sex"
                           v-show="type != 'detail'"
@@ -297,7 +297,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('desk.customer_brithday')"
+                        :label="$t('desk.customer_brithday')+':'"
                         prop="birthday"
                       >
                         <el-date-picker
@@ -315,7 +315,7 @@
                     <el-col :span="8" class="col">
                       <!--这里邮箱改为单位名-->
                       <el-form-item
-                        :label="$t('desk.customer_unitNameA')"
+                        :label="$t('desk.customer_unitNameA')+':'"
                         prop="email"
                       >
                         <el-input
@@ -331,7 +331,7 @@
                   <el-row class="cell">
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseMobile') + '1'"
+                        :label="$t('frontOffice.enterpriseMobile') + '1'+':'"
                       >
                         <el-input
                           v-model="detailForm.enterMobile1"
@@ -344,7 +344,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseAddress') + '1'"
+                        :label="$t('frontOffice.enterpriseAddress') + '1'+':'"
                       >
                         <el-input
                           v-model="detailForm.enterAddress1"
@@ -356,11 +356,20 @@
                         }}</template>
                       </el-form-item>
                     </el-col>
+                    <el-col :span="8" class="col" v-if="type == 'detail'">
+                      <el-form-item
+                        :label="$t('desk.editor_age') +':'"
+                      >
+                        <template >{{
+                          detailForm.age
+                        }}</template>
+                      </el-form-item>
+                    </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseMobile') + '2'"
+                        :label="$t('frontOffice.enterpriseMobile') + '2'+':'"
                       >
                         <el-input
                           v-model="detailForm.enterMobile2"
@@ -373,7 +382,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseAddress') + '2'"
+                        :label="$t('frontOffice.enterpriseAddress') + '2'+':'"
                       >
                         <el-input
                           class="width300"
@@ -389,7 +398,7 @@
 
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('frontOffice.englishM') + '1'">
+                      <el-form-item :label="$t('frontOffice.englishM') + '1'+':'">
                         <el-input
                           class="width300"
                           type="textarea"
@@ -402,7 +411,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('frontOffice.englishM') + '2'">
+                      <el-form-item :label="$t('frontOffice.englishM') + '2'+':'">
                         <el-input
                           class="width300"
                           type="textarea"
@@ -1202,6 +1211,7 @@ export default {
     },
     setCardFormBtnClick(v) {
       let enums = {
+        // 1、换卡；2、修改类型；3、停用；4、挂失补卡
         1: this.$t("desk.customer_changeCardOperate"),
         2: this.$t("desk.customer_resetMemType"),
         3: this.$t("desk.customer_memStop"),
@@ -1241,10 +1251,12 @@ export default {
             };
           }
           if (this.cardForm.type == 3) {
-            url = "/pms/hotelmember/delete";
+            // url = "/pms/hotelmember/delete";
+            url = "/pms/hotelmember/enable_disable";
             params = {
               id: this.detailForm.id,
               remark: this.cardForm.remark,
+              state:3,
             };
           }
           if (this.cardForm.type == 4) {
@@ -1271,7 +1283,8 @@ export default {
             }
           }
           this.$F.doRequest(this, url, params, (data) => {
-            if (this.cardForm.type != 3 || this.cardForm.type != 4) {
+                 // 1、换卡；2、修改类型；3、停用；4、挂失补卡
+            if (this.cardForm.type != 3 && this.cardForm.type != 4) {
               this.setCardFormVisible = false;
               this.findone(this.detailForm.id);
             } else {

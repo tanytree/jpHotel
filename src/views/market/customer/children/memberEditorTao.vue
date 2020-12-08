@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-27 14:37:13
+ * @LastEditTime: 2020-12-08 15:14:49
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -55,7 +55,7 @@
                       type="primary"
                       size="mini"
                       @click="setCardFormBtnClick(3)"
-                      >{{ $t("desk.customer_cancellation") }}</el-button
+                      >{{ $t("desk.customer_stopUse") }}</el-button
                     >
                     <el-button
                       type="primary"
@@ -128,7 +128,7 @@
                         <template
                           v-if="type == 'detail'"
                           style="margin-left: 15px"
-                          >{{ detailForm.pronunciation }}</template
+                          >【{{ detailForm.pronunciation }}】</template
                         >
                       </el-form-item>
                     </el-col>
@@ -1155,10 +1155,11 @@ export default {
             };
           }
           if (this.cardForm.type == 3) {
-            url = "/pms/hotelmember/delete";
+            url = "/pms/hotelmember/enable_disable";
             params = {
               id: this.detailForm.id,
               remark: this.cardForm.remark,
+               state:3,
             };
           }
           if (this.cardForm.type == 4) {
@@ -1185,7 +1186,7 @@ export default {
             }
           }
           this.$F.doRequest(this, url, params, (data) => {
-            if (this.cardForm.type != 3 || this.cardForm.type != 4) {
+            if (this.cardForm.type != 3 && this.cardForm.type != 4) {
               this.setCardFormVisible = false;
               this.findone(this.detailForm.id);
             } else {

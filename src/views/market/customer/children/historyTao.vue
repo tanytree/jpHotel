@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 15:59:18
+ * @LastEditTime: 2020-12-08 14:53:58
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -345,9 +345,11 @@ export default {
      checkinPersonList(row){
       console.log(row);
       let newArray = [];
-      newArray = row.hotelCheckInRoom.personList.filter((item)=>{
-        return item.name != row.name
-     })
+     if (row.hotelCheckInRoom && row.hotelCheckInRoom.personList.length > 0) {
+        newArray = row.hotelCheckInRoom.personList.filter((item) => {
+          return item.name != row.name;
+        });
+      }
       return newArray
     },
     // 获取联级选择--房屋类型
