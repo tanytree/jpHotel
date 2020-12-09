@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-03 16:33:42
+ * @LastEditTime: 2020-12-09 10:20:53
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -117,7 +117,7 @@
                     width="100"
                 >
                     <template slot-scope="{ row }">{{
-                        row.consumeTotalPrice ? row.consumeTotalPrice : "0"
+                        row.consumTotal ? row.consumTotal : "0"
                     }}</template>
                 </el-table-column>
                 <el-table-column

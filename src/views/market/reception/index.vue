@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:01:35
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 09:12:09
- * @FilePath: /jiudian/src/views/market/reception/index.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-09 15:30:08
+ * @FilePath: \jiudian\src\views\market\reception\index.vue
  -->
 
 <template>
@@ -20,7 +20,7 @@
 <!--                <checkin v-if="item.path == 'checkin'"/>-->
                 <!-- 前台报表-->
 <!--                <reportform v-if="item.path == 'reportform'"/>&lt;!&ndash; 报表&ndash;&gt;-->
-                <Report v-if="item.path == 'reportform'"/>
+                <Report v-if="item.path == 'reportform'"  sourcePage='desk'/>
                 <!-- 前台交班-->
 <!--                <shiftover v-if="item.path == 'shiftover'"/>-->
             </el-tab-pane>

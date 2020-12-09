@@ -1,14 +1,16 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2020-12-07 13:21:52
+ * @LastEditTime: 2020-12-09 17:29:35
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
   <div>
     <el-card class="box-card" :body-style="{ padding: '10px  20px 0px' }">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/boss-index' }"
+        <el-breadcrumb-item
+          style="cursor: pointer; font-weight: 600"
+          @click.native="backLastStack"
           >报表</el-breadcrumb-item
         >
         <el-breadcrumb-item style="font-weight: 700">详情</el-breadcrumb-item>
@@ -26,13 +28,34 @@
         </el-form>
         <div class="overLine"></div>
         <el-form ref="searchForm" :model="searchForm" inline>
-          <el-form-item label="营业时间：">
+          <el-form-item label="营业时间：" v-if="sourcePage == 'boss'">
             <el-date-picker
               v-model="searchForm.time"
               type="date"
               placeholder="选择日期"
             >
             </el-date-picker>
+          </el-form-item>
+          <el-form-item label="选择日期：" v-if="sourcePage == 'desk'">
+            <el-date-picker
+              v-model="searchForm.time"
+              type="date"
+              placeholder="选择日期"
+            >
+            </el-date-picker>
+            <span style="margin: 0 5px">-</span>
+            <el-date-picker
+              v-model="searchForm.time"
+              type="date"
+              placeholder="选择日期"
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="选择单位：">
+            <el-select v-model="searchForm.region">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary">查询</el-button>
@@ -55,7 +78,17 @@ export default {
       searchForm: {
         time: "",
       },
+      sourcePage: null,
     };
+  },
+  mounted() {
+    console.log(this.$route);
+    this.sourcePage = this.$route.query.sourcePage;
+  },
+  methods: {
+    backLastStack() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>

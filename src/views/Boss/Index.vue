@@ -17,7 +17,7 @@
                 <!-- 门店慨然-->
                 <storeLookTao v-if="item.path == 'stores-overview'"/>
                 <!-- 报表-->
-                <Report v-if="item.path == 'boss-report'"/>
+                <Report v-if="item.path == 'boss-report'" sourcePage='boss'/>
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -48,7 +48,7 @@ export default {
     created() {
         this.$F.handleThirdMenu(this);
         console.log(this.menuList);
-        debugger
+        // debugger
         // for (let i = 0; i < this.menuList.length; i++) {
         //     if (this.menuList[i].path == 'staff-rights') {
         //         this.menuList.splice(i, 1)

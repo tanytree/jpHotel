@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:01:35
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-13 09:11:35
- * @FilePath: /jiudian/src/views/market/booking/index.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-09 15:19:46
+ * @FilePath: \jiudian\src\views\market\booking\index.vue
  -->
 
 <template>
@@ -52,6 +52,7 @@ export default {
             break;
         }
     }
+    console.log(this.menuList);
   },
   methods: {
     //二级tab切片

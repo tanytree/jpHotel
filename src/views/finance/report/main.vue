@@ -12,37 +12,40 @@
         <el-button type="primary">查询</el-button>
       </el-form-item>
     </el-form>
-    <div class="diaryTable">日记表</div>
-    <el-divider></el-divider>
-    <div class="reportHome">
-      <div class="listBox">
-        <ul v-for="(item, index) in arr" :key="index">
-          <li
-            v-for="(son, i) in item"
-            :key="index + '_' + i"
-            @click="addReport(son)"
-          >
-            <img src="../../../assets/images/star.png" alt width="20" />
-            <span>{{ son.title }}</span>
-          </li>
-        </ul>
+    <div style="margin-bottom:20px;" v-for='(item,index) in checkArrayList' :key="index">
+      <div class="diaryTable">{{item}}</div>
+      <el-divider></el-divider>
+      <div class="reportHome">
+        <div class="listBox">
+          <ul v-for="(item, index) in arr" :key="index">
+            <li
+              v-for="(son, i) in item"
+              :key="index + '_' + i"
+              @click="addReport(son)"
+            >
+              <img src="../../../assets/images/star.png" alt width="20" />
+              <span>{{ son.title }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="diaryTable">月度报表</div>
-    <el-divider></el-divider>
-    <div class="reportHome">
-      <div class="listBox">
-        <ul v-for="(item, index) in arr" :key="index">
-          <li
-            v-for="(son, i) in item"
-            :key="index + '_' + i"
-            @click="addReport(son)"
-          >
-            <img src="../../../assets/images/star.png" alt width="20" />
-            <span>{{ son.title }}</span>
-          </li>
-        </ul>
-      </div>
+
+      <!-- <div class="diaryTable">月度报表</div>
+      <el-divider></el-divider>
+      <div class="reportHome">
+        <div class="listBox">
+          <ul v-for="(item, index) in arr" :key="index">
+            <li
+              v-for="(son, i) in item"
+              :key="index + '_' + i"
+              @click="addReport(son)"
+            >
+              <img src="../../../assets/images/star.png" alt width="20" />
+              <span>{{ son.title }}</span>
+            </li>
+          </ul>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -50,6 +53,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
+  props: ["sourcePage"],
   computed: {
     reports: {
       get() {
@@ -79,6 +83,7 @@ export default {
         ];
       },
       set() {},
+     
     },
   },
 
@@ -88,10 +93,18 @@ export default {
         name: "",
       },
       arr: [],
+      bossArray:['日记表','月度报表'],
+      deskArray:['估价单 请款单 消费明细 收据','预约相关表','前台报表','日计表','月度报表'],
+      checkArrayList:null,
     };
   },
   mounted() {
     this.arr = this.group(this.reports, 5);
+      if(this.sourcePage=='boss'){
+          this.checkArrayList = this.bossArray;
+        }else{
+           this.checkArrayList = this.deskArray;
+        }
   },
   watch: {
     reports(newValue, oldValue) {
@@ -111,6 +124,9 @@ export default {
     addReport(item) {
       this.$router.push({
         path: "/table",
+        query: {
+          sourcePage: this.sourcePage,
+        },
       });
     },
   },
@@ -119,10 +135,8 @@ export default {
 
 <style lang="scss">
 .reportHome {
-  height: 42%;
   display: flex;
   flex-direction: column;
-
   .title {
     padding: 0 0 20px;
     font-size: 16px;
@@ -132,7 +146,6 @@ export default {
 
   .listBox {
     flex: 1;
-    height: 0;
     overflow: auto;
     display: flex;
 
