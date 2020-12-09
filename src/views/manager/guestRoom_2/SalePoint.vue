@@ -243,7 +243,8 @@
             cateData: Function,
         },
         mounted() {
-            this.category = this.cateList;
+            this.cateData(2);
+            this.category = this.serviceList;
             this.getManageData(() => {
                 this.initData(this.pageForm, '', '', this.sellId, '', (res)=> {
                     this.pageForm.pageIndex = res.pageIndex;
@@ -400,7 +401,7 @@
                     this.form = {name: "", categoryType: '', category: ""};
                     this.initData(this.pageForm, '', '', this.sellId, '');
                 }
-                this.category = [];
+                // this.category = [];
             },
             casChange(value) {
                 this.rowData.categoryId = value[value.length - 1];
@@ -459,11 +460,7 @@
             },
             geProductType(v){
                 this.cateData(v);
-                if(v === 1) {
-                    this.category = this.cateList;
-                } else {
-                    this.category = this.serviceList;
-                }
+                this.category = this.serviceList;
             },
         },
     };

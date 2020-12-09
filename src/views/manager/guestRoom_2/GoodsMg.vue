@@ -184,7 +184,7 @@
                     priceModel: 1,
                     priceStartMinute: '',
                     priceTime: '',
-                    capsPriceFlag: 1,
+                    capsPriceFlag: false,
                     startPrice: '',
                     minutePrice: '',
                     capsPrice: '',
@@ -314,6 +314,7 @@
                 } else if (type == "change") {
                     this.edit = true;
                     this.tab_show = false;
+                    row.capsPriceFlag = row.capsPriceFlag == 2 ? true : false;
                     this.rowData = row;
                     console.log(row)
                 }
@@ -364,7 +365,7 @@
                             priceModel: 1,
                             priceStartMinute: '',
                             priceTime: '',
-                            capsPriceFlag: 1,
+                            capsPriceFlag: false,
                             startPrice: '',
                             minutePrice: '',
                             capsPrice: '',
