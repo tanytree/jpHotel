@@ -9,23 +9,15 @@
     top="0"
     :visible.sync="hosteldis"
     width="800px"
-    :title="
-      `${currentRoom.houseNum}` +
-      '  ' +
-      `${
-        currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : ''
-      }` +
-      `${currentRoom.checkIn ? '-' : ''}` +
-      checkTitleEnd()
-    "
+    :title=" `${currentRoom.houseNum}` + '  ' + `${ currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : '' }`
+    + `${currentRoom.checkIn ? '-' : ''}` + checkTitleEnd()"
   >
     <el-tabs type="border-card">
       <el-tab-pane
         :label="currentRoom.label"
-        v-if="
-          currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2
-        "
+        v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2"
         :key="0"
+        name="0"
       >
         <div class="inMsg">
           <div class="row">
@@ -90,7 +82,7 @@
         </div>
       </el-tab-pane>
       <!-- 房间信息 -->
-      <el-tab-pane :label="$t('desk.roomInfoDesc')" :key="1">
+      <el-tab-pane :label="$t('desk.roomInfoDesc')" :key="1" name="1">
         <div class="inMsg">
           <div class="row">
             <div class="col">
