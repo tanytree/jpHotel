@@ -331,156 +331,7 @@
             </el-container>
         </div>
         <!-- 房间信息 -->
-        <el-dialog top="0" :visible.sync="hosteldis" width="800px"
-                   :title="`${currentRoom.houseNum}`+$t('desk.book_house')+'-'+`${currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : ''}`">
-            <el-tabs type="border-card">
-                <el-tab-pane :label="currentRoom.label" v-if="currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2">
-                    <div class="inMsg">
-                        <div class="row">
-                            <div class="col">
-                               {{ $t('desk.order_checkinDate') }}：
-                                <span>{{ currentRoom.checkInObj.checkinTime }}</span>
-                            </div>
-                            <div class="col">
-                                {{ $t('desk.consumerTotal') }}：
-                                <span>{{ currentRoom.consumePrice || 0}}</span>
-                            </div>
-                            <div class="col">
-                                 {{ $t('desk.order_departureTime') }}：
-                                <span>{{ currentRoom.checkInObj.checkoutTime }}</span>
-                            </div>
-<!--                            <div class="col">-->
-<!--                                制卡数量：-->
-<!--                                <span>帮忙找下哪个字段</span>-->
-<!--                            </div>-->
-<!--                            <div class="col">-->
-<!--                                余额：-->
-<!--                                <span>帮忙找下哪个字段</span>-->
-<!--                            </div>-->
-                            <div class="col">
-                                {{ $t('desk.checkInDays') }}：
-                                <span>{{ currentRoom.checkInObj.checkInDays || 1 }}</span>
-                            </div>
-                            <div class="col">
-                                {{ $t('desk.payTotal') }}：
-                                <span>{{ currentRoom.payPrice || 0}}</span>
-                            </div>
-                        </div>
-                        <el-table v-if=" currentRoom.currentRoomData.personList && currentRoom.currentRoomData.personList.length > 0"
-                                  :data="currentRoom.currentRoomData.personList" style="width: 100%" border header-row-class-name="default" size="small">
-                            <el-table-column :label="$t('desk.home_name')" width="100">
-                                <template slot-scope="scope">{{ scope.row.name }}</template>
-                            </el-table-column>
-                            <el-table-column :label="$t('desk.home_phoneNum')" width>
-                                <template slot-scope="scope">{{ scope.row.mobile }}</template>
-                            </el-table-column>
-                            <el-table-column :label="$t('desk.customer_sex')" width>
-                                <template slot-scope="scope">
-                                    {{ F_sex(scope.row.sex) }}
-                                </template>
-                            </el-table-column>
-                            <el-table-column :label="$t('desk.order_sourceType')" width>
-                                <template slot-scope="scope">{{
-                                        F_guestType(scope.row.checkIn.guestType)
-                                    }}
-                                </template>
-                            </el-table-column>
-                            <el-table-column :label="$t('desk.customer_toTheGuest')" width>
-                                <template>{{  currentRoom.personLength }}
-                                </template>
-                            </el-table-column>
-                            <!--                            <el-table-column :label="$t('commons.operating')">-->
-                            <!--                                <template slot-scope="scope">-->
-                            <!--                                    <el-button size="mini" type="text">查看</el-button>-->
-                            <!--                                    &lt;!&ndash;  @click="handleEdit(scope.$index, scope.row)" &ndash;&gt;-->
-                            <!--                                </template>-->
-                            <!--                            </el-table-column>-->
-                        </el-table>
-                        <div class="remark">
-                            <label>
-                                {{ $t('desk.home_note') }}：
-                                <span>{{ currentRoom.remark }}</span>
-                            </label>
-                            <!--                            <el-button type="text" @click="remark = true">修改</el-button>-->
-                        </div>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane :label="$t('desk.roomInfoDesc')">
-                    <div class="inMsg">
-                        <div class="row">
-                            <div class="col">
-                                {{ $t('manager.hk_doorPrice') }}：
-                                <span>{{ currentRoom.currentRoomData.realPrice }}</span>
-                            </div>
-                            <div class="col">
-                               {{ $t('desk.home_window') }}：
-                                <span>{{ F_is1or2(currentRoom.windowFlag) }}</span>
-                            </div>
-                            <div class="col">
-                               {{$t('manager.hk_toward')}}:
-                                <span>{{ F_is1or2(currentRoom.toward) }}</span>
-                            </div>
-                            <div class="col">
-                                 {{ $t('desk.home_roomRemark') }}：
-                                <span>{{ currentRoom.remark }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </el-tab-pane>
-            </el-tabs>
-            <div slot="footer" class="dialog-footer">
-                <el-button
-                    style="width: 60px"
-                    v-if="
-            currentRoom.roomStatus == 'null' ||
-            currentRoom.roomStatus == null ||
-            currentRoom.roomStatus == 1 ||
-            currentRoom.roomStatus == 3
-          "
-                    @click="handleOperRoomStatus(2, currentRoom)"
-                >{{$t('desk.home_putDirty')}}
-                </el-button
-                >
-                <el-button
-                    style="width: 60px"
-                    v-if="currentRoom.roomStatus == 2 || currentRoom.roomStatus == 4"
-                    @click="handleOperRoomStatus(1, currentRoom)"
-                >{{$t('desk.home_buyNet')}}
-                </el-button
-                >
-                <el-button style="width: 60px" @click="handleFix(currentRoom)"
-                >{{$t('desk.home_service')}}
-                </el-button
-                >
-                <!--                <template v-if="currentRoom.checkInRoomType == 1">-->
-                <!--                    <el-button style="width:60px;" @click="stayoer=true">续住</el-button>-->
-                <!--                    <el-button style="width:60px;" @click="yokeplateHandle(currentRoom)">联房</el-button>-->
-                <!--                    <el-button style="width:60px;" @click="rowRoomHandle(currentRoom)">换房</el-button>-->
-                <!--                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>-->
-                <!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1||currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">-->
-                <!--                        置脏-->
-                <!--                    </el-button>-->
-                <!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2||currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>-->
-                <!--                </template>-->
-                <!--                <template v-else-if="currentRoom.checkInRoomType==2">-->
-                <!--                    <el-button style="width:60px;">入住</el-button>-->
-                <!--                    <el-button style="width:60px;" @click="liveCard_in_person_list(currentRoom)">制卡</el-button>-->
-                <!--                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>-->
-                <!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null'||currentRoom.roomStatus==null||currentRoom.roomStatus==1|| currentRoom.roomStatus==3" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">-->
-                <!--                        置脏-->
-                <!--                    </el-button>-->
-                <!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus==2 || currentRoom.roomStatus==4" @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置净</el-button>-->
-                <!--                </template>-->
-                <!--                <template v-else>-->
-                <!--                    <el-button style="width:60px;" @click="stayoer=true">入住</el-button>-->
-                <!--                    <el-button style="width:60px;" @click="handleFix(currentRoom)">维修</el-button>-->
-                <!--                    <el-button style="width:60px;" v-if="currentRoom.roomStatus=='null' ||currentRoom.roomStatus==null ||currentRoom.roomStatus==1 || currentRoom.roomStatus==3"-->
-                <!--                               @click="handleOperRoomStatus(currentRoom.roomStatus,currentRoom)">置脏-->
-                <!--                    </el-button>-->
-
-                <!--                </template>-->
-            </div>
-        </el-dialog>
+       <room-info :currentRoom='currentRoom' ref="roomInfo"></room-info>
         <!-- 续住 -->
         <el-dialog top="0" :title="$t('desk.home_stayOver')" :visible.sync="stayoer" width="80%">
             <el-alert
@@ -757,6 +608,7 @@
 
 <script>
 import unitedRoomHandle from "./unitedRoomHandle";
+import roomInfo from "./roomInfo";
 import roomStatusHandle from "./roomStatusHandle";
 import rowRoomHandle from "./rowRoomHandle";
 import myMixin from "@/utils/filterMixin";
@@ -766,6 +618,7 @@ export default {
         roomStatusHandle,
         unitedRoomHandle,
         rowRoomHandle,
+        roomInfo
     },
     mixins: [myMixin],
     data() {
@@ -867,6 +720,7 @@ export default {
         this.initForm();
     },
     methods: {
+     
         initForm() {
             this.searchForm = {
                 keyword: "",
@@ -1036,36 +890,21 @@ export default {
             return array.length > 0 ? array[0].total : 0;
         },
 
-        handleOperRoomStatus(status, item) {
-            // console.log(s) // ; // let status = ''; // if (s == 1 || s == null || s == 'null') { //     status = 2 // } // if (s == 3) { //     status = 4 // } // if (s == 2) { //     status = 1 // } // if (s == 4) { //     status = 1 // }
-            item.roomStatus = status;
-            this.$F.doRequest(
-                this,
-                "/pms/hotel/oper_room_status",
-                {
-                    roomIds: item.id,
-                    roomStatus: status,
-                },
-                (res) => {
-                    this.hosteldis = false;
-                    this.$message({
-                        message: this.$t('commons.request_success'),
-                        type: "success",
-                    });
-                    // this.getDataList()
-                }
-            );
-        },
+       
         handleChange(e) {
             this.getDataList();
         },
         hostelmess(room, parent) {
+          console.log(room);
+          console.log(parent);
             this.currentRoom = room || {};
             this.$F.merge(this.currentRoom, {currentRoomData: {personList: []}});
             this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
             this.$F.merge(this.currentRoom, {livingPersonList: []});
 
-            this.hosteldis = true;
+            // this.hosteldis = true;
+            console.log(this.$refs.roomInfo);
+            this.$refs.roomInfo.changeVisible();
             if (room.checkInRoomType == 1) {
                 let id = room.checkInObj.id;
                 this.getDetail(id, res => {
@@ -1101,33 +940,7 @@ export default {
             this.$refs.unitedRoomHandle.init(item.id);
         },
 
-        //将房间设置为维修状态
-        handleFix(item) {
-            this.$confirm(this.$t('desk.home_sureService'), this.$t('commons.tip_desc'), {
-                confirmButtonText: this.$t('commons.confirm'),
-                cancelButtonText: this.$t('commons.cancel'),
-                type: "warning",
-            })
-                .then(() => {
-                    this.$F.doRequest(
-                        this,
-                        "/pms/hotel/oper_room_status",
-                        {
-                            roomStatus: 5,
-                            roomIds: item.id,
-                        },
-                        (res) => {
-                            this.$message({
-                                message: this.$t('commons.request_success'),
-                                type: "success",
-                            });
-                            this.hosteldis = false;
-                        }
-                    );
-                })
-                .catch(() => {
-                });
-        },
+       
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
         },
