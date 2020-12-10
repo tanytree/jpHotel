@@ -1,45 +1,79 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2020-12-10 15:02:54
+ * @LastEditTime: 2020-12-10 18:02:37
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
   <el-dialog
     top="0"
     :visible.sync="hosteldis"
-    width="800px"
-    :title=" `${currentRoom.houseNum}` + '  ' + `${ currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : '' }`
-    + `${currentRoom.checkIn ? '-' : ''}` + checkTitleEnd()"
+    width="80%"
+    :title="
+      `${currentRoom.houseNum}` +
+      '  ' +
+      `${
+        currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : ''
+      }` +
+      `${currentRoom.checkIn ? '-' : ''}` +
+      checkTitleEnd()
+    "
   >
-    <el-tabs type="border-card">
+    <el-tabs type="border-card" v-model="activeName">
+      <!-- 基本信息 -->
       <el-tab-pane
-        :label="currentRoom.label"
-        v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2"
+        :label="$t('desk.serve_basicInfo')"
+        v-if="
+          currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2
+        "
         :key="0"
-        name="0"
+        name="first"
       >
-        <div class="inMsg">
-          <div class="row">
-            <div class="col">
-              {{ $t("desk.order_checkinDate") }}：
-              <span>{{ currentRoom.checkInObj.checkinTime }}</span>
+        <div class="buttonBox">
+          <el-button type="primary" size="small" plain>置脏</el-button>
+          <el-button type="primary" size="small" plain>账务</el-button>
+          <el-button type="primary" size="small" plain>挂账</el-button>
+          <el-button type="primary" size="small" plain>结账退房</el-button>
+        </div>
+        <div class="infoBox">
+          <div class="public">
+            <div class="infoTitle">入住信息：</div>
+            <div class="itemDetail">
+              <el-row>
+                <el-col :span="6">预订单号：498576890458</el-col>
+                <el-col :span="6" :offset="1">订单来源：前台</el-col>
+                <el-col :span="6" :offset="1">外部订单号：398759487430</el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">地区：安徽省合肥市蜀山区</el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">入住时间：2020-04-26 12:00</el-col>
+                <el-col :span="6" :offset="1"
+                  >预离时间：2020-04-27 12:00</el-col
+                >
+                <el-col :span="6" :offset="1">入住天数：1</el-col>
+              </el-row>
             </div>
-            <div class="col">
-              {{ $t("desk.consumerTotal") }}：
-              <span>{{ currentRoom.consumePrice || 0 }}</span>
-            </div>
-            <div class="col">
-              {{ $t("desk.order_departureTime") }}：
-              <span>{{ currentRoom.checkInObj.checkoutTime }}</span>
-            </div>
-            <div class="col">
-              {{ $t("desk.checkInDays") }}：
-              <span>{{ currentRoom.checkInObj.checkInDays || 1 }}</span>
-            </div>
-            <div class="col">
-              {{ $t("desk.payTotal") }}：
-              <span>{{ currentRoom.payPrice || 0 }}</span>
+          </div>
+          <div class="public otherStyle">
+            <div class="infoTitle">预约内容/住宿plan：</div>
+            <div class="itemDetail">
+              <el-row>
+                <el-col :span="6">消费合计：80000</el-col>
+                <el-col :span="6" :offset="1">付款合计：9000</el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="18"
+                  >付款方式：现金（2000）；信用卡（4000）；挂账（1000）；其他（2000））</el-col
+                >
+              </el-row>
+              <el-row>
+                <el-col :span="6">预约人：张三【zhangsan】</el-col>
+                <el-col :span="8" :offset="1"
+                  >预约人电话：（手）18077689906</el-col
+                >
+              </el-row>
             </div>
           </div>
           <el-table
@@ -48,12 +82,12 @@
               currentRoom.currentRoomData.personList.length > 0
             "
             :data="currentRoom.currentRoomData.personList"
-            style="width: 100%"
+            style="width: 100%" 
             border
             header-row-class-name="default"
             size="small"
           >
-            <el-table-column :label="$t('desk.home_name')" width="100">
+            <el-table-column label="入住人/单位名称/团队名" width="150">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
             <el-table-column :label="$t('desk.home_phoneNum')" width>
@@ -73,16 +107,10 @@
               <template>{{ currentRoom.personLength }} </template>
             </el-table-column>
           </el-table>
-          <div class="remark">
-            <label>
-              {{ $t("desk.home_note") }}：
-              <span>{{ currentRoom.remark }}</span>
-            </label>
-          </div>
         </div>
       </el-tab-pane>
       <!-- 房间信息 -->
-      <el-tab-pane :label="$t('desk.roomInfoDesc')" :key="1" name="1">
+      <el-tab-pane :label="$t('desk.roomInfoDesc')" :key="1" name="second">
         <div class="inMsg">
           <div class="row">
             <div class="col">
@@ -134,6 +162,21 @@
 import myMixin from "@/utils/filterMixin";
 export default {
   props: ["currentRoom"],
+  computed: {
+    activeName: {
+      get() {
+        if (
+          this.currentRoom.checkInRoomType == 1 ||
+          this.currentRoom.checkInRoomType == 2
+        ) {
+          return "first";
+        } else {
+          return "second";
+        }
+      },
+      set() {},
+    },
+  },
   mixins: [myMixin],
   data() {
     return {
@@ -221,36 +264,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.inMsg {
-  padding: 20px;
+.buttonBox {
+  box-sizing: border-box;
+  padding: 10px;
+}
 
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    line-height: 26px;
-
-    .col {
-      width: 33%;
-
-      span {
-        margin-left: 5px;
+.infoBox {
+  box-sizing: border-box;
+  padding: 10px;
+  padding-top: 0;
+  .public {
+    margin-bottom: 20px;
+    .infoTitle {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .itemDetail {
+      .el-row {
+        margin-bottom: 10px;
       }
     }
   }
-
-  .el-table {
-    margin: 10px 0;
-  }
-
-  .remark {
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    line-height: 30px;
-
-    .el-button {
-      font-size: 14px;
-    }
+  .otherStyle {
+    margin-bottom: 10px;
   }
 }
 </style>
