@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 16:10:15
+ * @LastEditTime: 2020-12-11 09:53:23
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -378,9 +378,10 @@ export default {
     methods: {
       //跳转到入住详情
       goCheckinDetail(){
-        this.$router.push({
-          path:'/checktheDetails'
-        })
+        // 暂时未放开
+        // this.$router.push({
+        //   path:'/checktheDetails'
+        // })
       },
         checkInCallback(id) {
             this.liveInPersonShow = false;
