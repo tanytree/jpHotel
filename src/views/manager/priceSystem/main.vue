@@ -14,7 +14,7 @@
                 <!-- 价格策略-->
                 <priceStrategy v-if="item.path == 'priceStrategy'"/>
                 <!-- 计费规则-->
-                <billingRules v-if="item.path == 'billingRules'"/>
+<!--                <billingRules v-if="item.path == 'billingRules'"/>-->
             </el-tab-pane>
         </el-tabs>
     </div>

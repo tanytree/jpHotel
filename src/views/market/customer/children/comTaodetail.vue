@@ -73,14 +73,14 @@
                   </el-col>
                 </el-row>
                 <el-row class="row">
-                  <el-col :span="7" class="col">
-                    <el-form-item
-                      :label="$t('desk.customer_pricingStrategy') + ':'"
-                      >
-                      {{checkEnterStrategyId(detailForm.enterStrategyId)}}
-                      </el-form-item
-                    >
-                  </el-col>
+<!--                  <el-col :span="7" class="col">-->
+<!--                    <el-form-item-->
+<!--                      :label="$t('desk.customer_pricingStrategy') + ':'"-->
+<!--                      >-->
+<!--                      {{checkEnterStrategyId(detailForm.enterStrategyId)}}-->
+<!--                      </el-form-item-->
+<!--                    >-->
+<!--                  </el-col>-->
                 </el-row>
                 <el-divider></el-divider>
                 <el-row class="row">

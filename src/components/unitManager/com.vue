@@ -70,14 +70,11 @@
           show-overflow-tooltip
         ></el-table-column>
 
-        <el-table-column
-          :label="$t('desk.customer_pricingStrategy')"
-          show-overflow-tooltip
-        >
-        <template slot-scope="{row}">
-          {{checkEnterStrategyId(row)}}
-        </template>
-        </el-table-column>
+<!--        <el-table-column :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>-->
+<!--            <template slot-scope="{row}">-->
+<!--              {{checkEnterStrategyId(row)}}-->
+<!--            </template>-->
+<!--        </el-table-column>-->
         <el-table-column
           prop="enterNo"
           :label="$t('desk.customer_unitNum')"
@@ -221,21 +218,21 @@
           </el-col>
         </el-row>
         <el-row class="row">
-          <el-col :span="8" class="col">
-            <el-form-item
-              :label="$t('desk.customer_pricingStrategy') + ':'"
-              prop="enterStrategyId"
-            >
-              <el-select v-model="addCompanyForm.enterStrategyId">
-                <el-option
-                  :label="item.ruleName"
-                  :value="item.id"
-                  v-for="(item, index) of strategyList"
-                  :key="index"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
+<!--          <el-col :span="8" class="col">-->
+<!--            <el-form-item-->
+<!--              :label="$t('desk.customer_pricingStrategy') + ':'"-->
+<!--              prop="enterStrategyId"-->
+<!--            >-->
+<!--              <el-select v-model="addCompanyForm.enterStrategyId">-->
+<!--                <el-option-->
+<!--                  :label="item.ruleName"-->
+<!--                  :value="item.id"-->
+<!--                  v-for="(item, index) of strategyList"-->
+<!--                  :key="index"-->
+<!--                ></el-option>-->
+<!--              </el-select>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
           <el-col :span="8" class="col">
             <el-form-item label label-width="20px">
               <el-checkbox v-model="addCompanyForm.state"

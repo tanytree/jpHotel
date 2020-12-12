@@ -74,9 +74,9 @@
         <el-table-column prop="storesNum" :label="$t('desk.customer_belongStore')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="contactName" :label="$t('desk.home_name')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="contactPhone" :label="$t('desk.order_moblePhone')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="enterStrategyId" :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>
-          <template slot-scope="{row}">{{setStrategyName(row.enterStrategyId)}}</template>
-        </el-table-column>
+<!--        <el-table-column prop="enterStrategyId" :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>-->
+<!--          <template slot-scope="{row}">{{setStrategyName(row.enterStrategyId)}}</template>-->
+<!--        </el-table-column>-->
         <el-table-column prop="contractNum" :label="$t('desk.customer_contractNo')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="creditLimit" :label="$t('desk.customer_paymentAmount')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="usedLimit" :label="$t('desk.customer_usedLimit')" show-overflow-tooltip></el-table-column>

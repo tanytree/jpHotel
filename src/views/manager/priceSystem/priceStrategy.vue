@@ -5,9 +5,9 @@
 				<el-tab-pane :label="$t('manager.ps_member')" name="member">
 					<Member :tab1_show= 'tab1_show'></Member>
 				</el-tab-pane>
-				<el-tab-pane label="单位" name="unit">
-					<unitList @backMember="backMember"></unitList>
-				</el-tab-pane>
+<!--				<el-tab-pane label="单位" name="unit">-->
+<!--					<unitList @backMember="backMember"></unitList>-->
+<!--				</el-tab-pane>-->
 			</el-tabs>
 		</el-row>
 	</div>
@@ -53,15 +53,15 @@
 		font-size: 12px;
 		color: #b1b1b1;
 	}
-	
+
 	.row-width {
 		width: 120px;
 	}
-	
+
 	.padding-item {
 		padding-bottom: 5px;
 	}
-	
+
 	.btn-click {
 		height: 200px;
 		width: 300px;
@@ -70,18 +70,18 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	
+
 		i {
 			font-size: 30px;
 		}
-	
+
 		span {
 			font-size: 20px;
 			color: #666666;
 			margin-left: 10px;
 		}
 	}
-	
+
 	.btn-click:hover {
 		height: 200px;
 		width: 300px;
@@ -90,19 +90,19 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	
+
 		i {
 			font-size: 30px;
 			color: #fff;
 		}
-	
+
 		span {
 			font-size: 20px;
 			color: #fff;
 			margin-left: 10px;
 		}
 	}
-	
+
 	.member-price .el-table .cell {
 		cursor: pointer !important;
 	}
