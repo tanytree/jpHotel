@@ -85,16 +85,11 @@
                         {{ F_checkinType(row.checkinType) }}
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="enterStatus"
-                    :label="$t('desk.customer_pricingStrategy')"
-                    width="120"
-                    align="center"
-                >
-                    <template slot-scope="{ row }">
-                        {{ setStrategyName(row.salesId) }}
-                    </template>
-                </el-table-column>
+<!--                <el-table-column prop="enterStatus" :label="$t('desk.customer_pricingStrategy')" width="120" align="center">-->
+<!--                    <template slot-scope="{ row }">-->
+<!--                        {{ setStrategyName(row.salesId) }}-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
                 <el-table-column
                     prop=""
                     :label="$t('frontOffice.nightAudit.todayPrice')"

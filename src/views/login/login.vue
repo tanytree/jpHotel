@@ -2,11 +2,7 @@
     <div class="pageContent">
         <div class="bodyTop">
             <img class="logPng" src="~@/assets/images/login/log.png" />
-            <el-select
-                v-model="language"
-                @change="onLanguageChange"
-                style="width: 100px"
-            >
+            <el-select v-model="language" @change="onLanguageChange" style="width: 100px">
                 <el-option :label="$t('login.chinese')" value="zh"></el-option>
                 <el-option :label="$t('login.japanese')" value="ri"></el-option>
             </el-select>

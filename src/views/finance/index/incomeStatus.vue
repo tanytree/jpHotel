@@ -204,6 +204,7 @@ export default {
         this.chartLine.resize();
       });
     },
+
     onSubmit() {
       this.tabChange();
     },

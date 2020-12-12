@@ -154,22 +154,22 @@
             </el-col>
           </el-row>
         </el-row>
-        <el-row class="row">
-          <el-row class="cell">
-            <el-col :span="8" class="col">
-              <el-form-item :label="$t('desk.customer_pricingStrategy')" prop="enterStrategyId">
-                <el-select v-model="addCompanyForm.enterStrategyId">
-                  <el-option
-                    :label="item.ruleName"
-                    :value="item.id"
-                    v-for="(item,index) of strategyList"
-                    :key="index"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-row>
+<!--        <el-row class="row">-->
+<!--          <el-row class="cell">-->
+<!--            <el-col :span="8" class="col">-->
+<!--              <el-form-item :label="$t('desk.customer_pricingStrategy')" prop="enterStrategyId">-->
+<!--                <el-select v-model="addCompanyForm.enterStrategyId">-->
+<!--                  <el-option-->
+<!--                    :label="item.ruleName"-->
+<!--                    :value="item.id"-->
+<!--                    v-for="(item,index) of strategyList"-->
+<!--                    :key="index"-->
+<!--                  ></el-option>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+<!--            </el-col>-->
+<!--          </el-row>-->
+<!--        </el-row>-->
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
@@ -312,18 +312,18 @@
       >
         <el-row class="row">
           <el-row class="cell">
-            <el-col :span="6" class="col">
-              <el-form-item :label="$t('desk.customer_pricingStrategy')">
-                <el-select v-model="setBatchForm.enterStrategyId">
-                  <el-option
-                    :label="item.ruleName"
-                    :value="item.id"
-                    v-for="(item,index) of strategyList"
-                    :key="index"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
+<!--            <el-col :span="6" class="col">-->
+<!--              <el-form-item :label="$t('desk.customer_pricingStrategy')">-->
+<!--                <el-select v-model="setBatchForm.enterStrategyId">-->
+<!--                  <el-option-->
+<!--                    :label="item.ruleName"-->
+<!--                    :value="item.id"-->
+<!--                    v-for="(item,index) of strategyList"-->
+<!--                    :key="index"-->
+<!--                  ></el-option>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+<!--            </el-col>-->
             <el-col :span="6" class="col">
               <el-form-item :label="$t('desk.customer_accountRules')+':'">
                 <el-select v-model="setBatchForm.ruleAlldayId">
@@ -404,18 +404,18 @@
       >
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="enterName" :label="$t('frontOffice.enterpriseName')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>
-          <template slot-scope="{row}">
-            <el-select v-model="row.enterStrategyId" size="mini">
-              <el-option
-                :label="item.ruleName"
-                :value="item.id"
-                v-for="(item,index) of strategyList"
-                :key="index"
-              ></el-option>
-            </el-select>
-          </template>
-        </el-table-column>
+<!--        <el-table-column prop :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>-->
+<!--          <template slot-scope="{row}">-->
+<!--            <el-select v-model="row.enterStrategyId" size="mini">-->
+<!--              <el-option-->
+<!--                :label="item.ruleName"-->
+<!--                :value="item.id"-->
+<!--                v-for="(item,index) of strategyList"-->
+<!--                :key="index"-->
+<!--              ></el-option>-->
+<!--            </el-select>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
         <el-table-column :label="$t('desk.customer_accountRules')" show-overflow-tooltip>
           <template slot-scope="{row}">
             <el-select v-model="row.ruleAlldayId" size="mini">

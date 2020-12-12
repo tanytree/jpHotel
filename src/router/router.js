@@ -54,8 +54,8 @@ export default new Router({
                         import('@/views/Boss/DepartmentCharge')
                 },
                 {
-                    path: '/table',
-                    name: 'table',
+                    path: '/browseReport',
+                    name: 'browseReport',
                     component: () =>
                         import ('@/views/finance/report/table')
                 },
@@ -400,7 +400,7 @@ export default new Router({
                     meta: { title: 'pmsshopselling' },
                     component: () =>
                         import('@/views/shop/pmsshopselling')
-                },                
+                },
                 {
                     path: '/pmshoporder',
                     name: 'pmshoporder',
