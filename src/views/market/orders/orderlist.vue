@@ -129,12 +129,24 @@
             </el-form>
             <!--表格数据 -->
             <el-table ref="multipleTable" v-loading="loading" :data="tableData" header-row-class-name="default" height="100%" size="small">
-                <el-table-column prop="name" :label="$t('desk.home_name')" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')">
+                    <template slot-scope="{ row }">
+                        <span>{{$t('desk.home_bookPeople') + ": "}}   {{`${row.name} 【${row.pronunciation}】` }}</span>
+                        <span v-if="row.teamName">
+                            <br>
+                            {{$t('desk.order_teamName') + ": "}}   {{`${row.teamName} 【${row.teamPronunciation}】` }}
+                        </span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="mobile" width="140px" :label="$t('desk.order_moblePhoneA')"></el-table-column>
                 <el-table-column prop="checkinTime" :label="$t('desk.order_checkinDateA')" width="160px"></el-table-column>
                 <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" width="160px"></el-table-column>
-                <el-table-column prop="hotelCheckInRoom.houseNum" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
-                <el-table-column width="90px" prop="hotelCheckInRoom.roomTypeName" :label="$t('desk.home_roomType')" show-overflow-tooltip>
+<!--                <el-table-column prop="hotelCheckInRoom.houseNum" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>-->
+<!--                <el-table-column width="90px" prop="hotelCheckInRoom.roomTypeName" :label="$t('desk.home_roomType')" show-overflow-tooltip></el-table-column>-->
+                <el-table-column :label="$t('desk.customer_roomKind')" show-overflow-tooltip>
+                    <template slot-scope="{ row }">
+                        {{row.hotelCheckInRoom ? (row.hotelCheckInRoom.roomTypeName + '/' + row.hotelCheckInRoom.houseNum) : ''}}
+                    </template>
                 </el-table-column>
                 <el-table-column prop :label="$t('desk.home_customersCategory')" width="135px">
                     <template slot-scope="{ row }">{{

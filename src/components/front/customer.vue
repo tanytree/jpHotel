@@ -40,7 +40,7 @@
                 <span>-</span>
             </template>
         </el-table-column>
-        <el-table-column :label="$t('commons.mobile')" show-overflow-tooltip>
+        <el-table-column :label="$t('boss.loginDetail_phone')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 <span>{{row.checkIn.mobile}}</span>
             </template>

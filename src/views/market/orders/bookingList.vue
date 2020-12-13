@@ -163,13 +163,18 @@
         header-row-class-name="default"
         size="small"
       >
-        <el-table-column
-          prop="name"
-          :label="$t('desk.home_bookPeople')"
-        ></el-table-column>
+        <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')">
+            <template slot-scope="{ row }">
+                <span>{{$t('desk.home_bookPeople') + ": "}}   {{`${row.name} 【${row.pronunciation}】` }}</span>
+                <span v-if="row.teamName">
+                    <br>
+                    {{$t('desk.order_teamName') + ": "}}   {{`${row.teamName} 【${row.teamPronunciation}】` }}
+                </span>
+            </template>
+        </el-table-column>
         <el-table-column
           prop="mobile"
-          :label="$t('commons.mobile')"
+          :label="$t('boss.loginDetail_phone')"
         ></el-table-column>
         <el-table-column
           prop="createTime"
@@ -203,16 +208,9 @@
           <template slot-scope="{ row }">
             <div v-if="row.checkInRoomList.length>1">{{row.checkInRoomList.length}}</div>
             <div v-else>
-              {{
-              row.checkInRoomList.length > 0
-                ? row.checkInRoomList[0].roomTypeName
-                : ""
-            }}{{ row.checkInRoomList.length > 0 ? "/" : ""
-            }}{{
-              row.checkInRoomList.length > 0
-                ? row.checkInRoomList[0].houseNum
-                : "未排房"
-            }}
+              {{ row.checkInRoomList.length > 0 ? row.checkInRoomList[0].roomTypeName : "" }}
+                {{ row.checkInRoomList.length > 0 ? "/" : "" }}
+                {{ row.checkInRoomList.length > 0 ? row.checkInRoomList[0].houseNum : $t('desk.noRowHouses') }}
           </div>
           </template>
         </el-table-column>

@@ -12,7 +12,7 @@
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small" @selection-change="handleSelectionChange">
             <el-table-column prop="name" :label="$t('food.common.curstom_name')"></el-table-column>
-            <el-table-column prop="mobile" :label="$t('commons.mobile')"></el-table-column>
+            <el-table-column prop="mobile" :label="$t('boss.loginDetail_phone')"></el-table-column>
             <el-table-column prop="checkinTime" :label="$t('frontOffice.nightAudit.checkInTime')" align="center"></el-table-column>
             <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" align="center"></el-table-column>
             <el-table-column prop="" :label="$t('desk.home_roomNum')" align="center">

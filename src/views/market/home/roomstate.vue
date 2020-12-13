@@ -11,14 +11,6 @@
                     </el-form-item>
                     <el-form-item>
                         <el-checkbox-group v-model="searchForm.checkInType" @change="handleChange">
-<!--                            <el-checkbox-button label="1">{{-->
-<!--                                    $t("desk.home_idCard")-->
-<!--                                }}-->
-<!--                            </el-checkbox-button>-->
-<!--                            <el-checkbox-button label="2">{{-->
-<!--                                    $t("desk.home_roomCard")-->
-<!--                                }}-->
-<!--                            </el-checkbox-button>-->
                         </el-checkbox-group>
                     </el-form-item>
                 </el-form>
@@ -694,7 +686,7 @@ export default {
                 channel: [],
                 personRoom: [],
             },
-            personRoom: "",
+            personRoom: [],
             roomTypeList: [],
             channel: "",
             iconDesList: "",
@@ -720,7 +712,7 @@ export default {
         this.initForm();
     },
     methods: {
-     
+
         initForm() {
             this.searchForm = {
                 keyword: "",
@@ -795,9 +787,10 @@ export default {
                         0: "orders_today_out", //今日预离
                         1: "orders_individual", //散客
                         2: "orders_member", //会员
-                        3: "orders_enter", //单位
-                        //'4':'',//
                         5: "orders_clock", //钟点房
+                        // 3: "orders_enter", //单位
+                        4: 'orders_team',//  团体
+
                         // 6: "orders_night", //午夜房
                         // 7: "orders_free", //免费
                     };
@@ -808,15 +801,32 @@ export default {
                     this.channel.forEach((element) => {
                         element.name = checkIdInDict(element.channel, this.dict_channel);
                     });
+                    let personRoomNoExistArray = [];
+                    let array = [];
                     this.personRoom.forEach((element) => {
+                        array.push(parseInt(element.personRoomType));
                         element.eName = menu[element.personRoomType];
                         element.name = checkIdInDict(
                             element.eName,
-                            this.dict_personRoom,
+                            that.dict_personRoom,
                             "icon"
                         );
                     });
-
+                    for (let key in menu) {
+                        if (array.indexOf(parseInt(key)) == -1) {
+                            let temp = {
+                                eName: menu[key],
+                                total: 0,
+                                personRoomType: key,
+                            }
+                            temp.name = checkIdInDict(
+                                temp.eName,
+                                that.dict_personRoom,
+                                "icon"
+                            );
+                            that.personRoom.push(temp)
+                        }
+                    }
                     function checkIdInDict(id, arr, eName) {
                         for (let k in arr) {
                             if (eName) {
@@ -890,7 +900,7 @@ export default {
             return array.length > 0 ? array[0].total : 0;
         },
 
-       
+
         handleChange(e) {
             this.getDataList();
         },
@@ -940,7 +950,7 @@ export default {
             this.$refs.unitedRoomHandle.init(item.id);
         },
 
-       
+
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
         },

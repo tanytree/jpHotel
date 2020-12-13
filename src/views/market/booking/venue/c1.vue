@@ -21,7 +21,7 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="grid-content">
-                        <el-form-item :label="$t('commons.mobile')">
+                        <el-form-item :label="$t('boss.loginDetail_phone')">
                             <el-input v-model="checkInForm.content"  class="width200"></el-input> &nbsp;&nbsp;
                         </el-form-item>
                     </div>

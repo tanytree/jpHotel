@@ -12,7 +12,7 @@
                 <el-breadcrumb-item style="font-weight: 700">详情</el-breadcrumb-item>
             </el-breadcrumb>
         </el-card>
-        <div style="margin-top: 10px">
+        <div style="margin-top: 10px" v-loading="loading">
             <el-card class="box-card2" :body-style="{ height: 'min: 600px' }">
                 <el-form ref="searchForm" :model="searchForm" inline>
                     <!--  总经理办公室日计报表-->
@@ -59,6 +59,7 @@ export default {
     props: [],
     data() {
         return {
+            loading: false,
             reportNum: '',
             reportType: '',   //报表类型  reportNum 的子集
             currentReport: {},  //当前report
@@ -92,6 +93,7 @@ export default {
         },
 
         queryReport() {
+            this.content = '';
             this.searchForm.languageType = getLanguage() == 'ri' ? 2 : 1;  //语言类型  1中文  2日文
             if (this.searchForm.reportNum == 1001 || this.searchForm.reportNum == 1003) {
                 this.searchForm.endTime = this.searchForm.startTime;

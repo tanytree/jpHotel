@@ -253,7 +253,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content">
-                  <el-form-item :label="$t('commons.mobile')">
+                  <el-form-item :label="$t('boss.loginDetail_phone')">
                     <el-input
                       style="width: 200px"
                       v-model="checkInForm.content"

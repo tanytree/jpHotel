@@ -6,6 +6,7 @@
  */
 //前台部 日文
 module.exports = {
+    reserveInfoDesc: '予定情報',
     attachedMeal: '食付',
     keepTime: 'ほりゅうじかん',
     autoRowHouse: '自動アサイン',
