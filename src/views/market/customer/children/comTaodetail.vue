@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-16 16:16:04
+ * @LastEditTime: 2020-12-14 16:26:15
  * @FilePath: \jiudian\src\views\market\customer\children\comTaodetail.vue
  -->
 <template>
@@ -56,11 +56,19 @@
                 <el-row class="row">
                   <el-col :span="6" class="col">
                     <el-form-item
-                      :label="$t('desk.customer_unitAddress') + ':'"
-                      >{{ detailForm.address }}</el-form-item
+                      :label="$t('desk.customer_unitAddress') + '1:'"
+                      >{{ detailForm.enterAddress1 }}</el-form-item
                     >
                   </el-col>
-                  <el-col :span="7" class="col">
+                  <el-col :span="6" class="col">
+                    <el-form-item
+                      :label="$t('desk.customer_unitAddress') + '2:'"
+                      >{{ detailForm.enterAddress2 }}</el-form-item
+                    >
+                  </el-col>
+                </el-row>
+                <el-row class="row">
+                  <el-col :span="6" class="col">
                     <el-form-item
                       :label="$t('desk.customer_unitPhone') + ':'"
                       >{{ detailForm.mobile }}</el-form-item
@@ -73,14 +81,14 @@
                   </el-col>
                 </el-row>
                 <el-row class="row">
-<!--                  <el-col :span="7" class="col">-->
-<!--                    <el-form-item-->
-<!--                      :label="$t('desk.customer_pricingStrategy') + ':'"-->
-<!--                      >-->
-<!--                      {{checkEnterStrategyId(detailForm.enterStrategyId)}}-->
-<!--                      </el-form-item-->
-<!--                    >-->
-<!--                  </el-col>-->
+                  <!--                  <el-col :span="7" class="col">-->
+                  <!--                    <el-form-item-->
+                  <!--                      :label="$t('desk.customer_pricingStrategy') + ':'"-->
+                  <!--                      >-->
+                  <!--                      {{checkEnterStrategyId(detailForm.enterStrategyId)}}-->
+                  <!--                      </el-form-item-->
+                  <!--                    >-->
+                  <!--                  </el-col>-->
                 </el-row>
                 <el-divider></el-divider>
                 <el-row class="row">
@@ -158,6 +166,18 @@
                     >
                   </el-col>
                 </el-row>
+                 <el-row class="row">
+                    <el-form-item
+                      label="memo1:'"
+                      >{{ detailForm.memo1 }}</el-form-item
+                    >
+                </el-row>
+                 <el-row class="row">
+                  <el-form-item
+                      label="memo2:'"
+                      >{{ detailForm.memo2 }}</el-form-item
+                    >
+                </el-row>
               </el-form>
             </div>
           </div>
@@ -206,7 +226,7 @@ export default {
     let id = this.$route.query.id;
     this.hotel_price_enter_strategy_list();
     this.hotel_rule_allday_list();
-     await this.findone(id);
+    await this.findone(id);
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
       this.salesList = data.hotelUserList;
     });
@@ -262,9 +282,9 @@ export default {
         }
       );
     },
-     checkEnterStrategyId(enterStrategyId){
-      for(let i = 0;i < this.strategyList.length;i++){
-        if( enterStrategyId == this.strategyList[i].id){
+    checkEnterStrategyId(enterStrategyId) {
+      for (let i = 0; i < this.strategyList.length; i++) {
+        if (enterStrategyId == this.strategyList[i].id) {
           return this.strategyList[i].ruleName;
         }
       }

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 15:13:28
+ * @LastEditTime: 2020-12-14 14:05:38
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -16,9 +16,9 @@
             >{{ $t("desk.customer_memManagement") }}</el-breadcrumb-item
           >
           <el-breadcrumb-item v-if="type != 'add'"
-            >{{ detailForm.memberCard }}-{{ detailForm.name }}-{{
+            >{{ detailForm.memberCard }}【会员号码】-{{ detailForm.name }}-{{
               F_memberTypeId(detailForm.memberTypeId)
-            }}</el-breadcrumb-item
+            }}卡</el-breadcrumb-item
           >
           <el-breadcrumb-item v-else>{{
             $t("desk.customer_addMem")
@@ -26,6 +26,14 @@
         >
       </div>
       <div class="bodyInfo">
+        <div class="someBox">
+          <div>累计收取：<span>10000000</span></div>
+          <div>
+            <el-button type="text" @click="yearDetail = true"
+              >年费明细</el-button
+            ><el-button type="text" @click="annualFee = true">收年费</el-button>
+          </div>
+        </div>
         <div class="mianInfo">
           <div class="thisOrderInfo">
             <div class="wrap">
@@ -108,7 +116,10 @@
                       </el-col>
                     </template>
                     <el-col :span="10" class="col">
-                      <el-form-item :label="$t('desk.home_name')+':'" prop="name">
+                      <el-form-item
+                        :label="$t('desk.home_name') + ':'"
+                        prop="name"
+                      >
                         <el-input
                           v-model="detailForm.name"
                           v-if="type != 'detail'"
@@ -268,9 +279,12 @@
                       >
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.customer_memType')+':'">{{
-                        F_memberTypeId(detailForm.memberTypeId)
-                      }}</el-form-item>
+                      <el-form-item
+                        :label="$t('desk.customer_memType') + ':'"
+                        >{{
+                          F_memberTypeId(detailForm.memberTypeId)
+                        }}</el-form-item
+                      >
                     </el-col>
                   </el-row>
                 </el-row>
@@ -278,7 +292,10 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.customer_sex')+':'" prop="sex">
+                      <el-form-item
+                        :label="$t('desk.customer_sex') + ':'"
+                        prop="sex"
+                      >
                         <el-radio-group
                           v-model="detailForm.sex"
                           v-show="type != 'detail'"
@@ -297,7 +314,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('desk.customer_brithday')+':'"
+                        :label="$t('desk.customer_brithday') + ':'"
                         prop="birthday"
                       >
                         <el-date-picker
@@ -315,7 +332,7 @@
                     <el-col :span="8" class="col">
                       <!--这里邮箱改为单位名-->
                       <el-form-item
-                        :label="$t('desk.customer_unitNameA')+':'"
+                        :label="$t('desk.customer_unitNameA') + ':'"
                         prop="email"
                       >
                         <el-input
@@ -331,7 +348,7 @@
                   <el-row class="cell">
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseMobile') + '1'+':'"
+                        :label="$t('frontOffice.enterpriseMobile') + '1' + ':'"
                       >
                         <el-input
                           v-model="detailForm.enterMobile1"
@@ -344,7 +361,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseAddress') + '1'+':'"
+                        :label="$t('frontOffice.enterpriseAddress') + '1' + ':'"
                       >
                         <el-input
                           v-model="detailForm.enterAddress1"
@@ -357,19 +374,15 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col" v-if="type == 'detail'">
-                      <el-form-item
-                        :label="$t('desk.editor_age') +':'"
-                      >
-                        <template >{{
-                          detailForm.age
-                        }}</template>
+                      <el-form-item :label="$t('desk.editor_age') + ':'">
+                        <template>{{ detailForm.age }}</template>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseMobile') + '2'+':'"
+                        :label="$t('frontOffice.enterpriseMobile') + '2' + ':'"
                       >
                         <el-input
                           v-model="detailForm.enterMobile2"
@@ -382,7 +395,7 @@
                     </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseAddress') + '2'+':'"
+                        :label="$t('frontOffice.enterpriseAddress') + '2' + ':'"
                       >
                         <el-input
                           class="width300"
@@ -398,7 +411,9 @@
 
                   <el-row class="cell">
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('frontOffice.englishM') + '1'+':'">
+                      <el-form-item
+                        :label="$t('frontOffice.englishM') + '1' + ':'"
+                      >
                         <el-input
                           class="width300"
                           type="textarea"
@@ -411,7 +426,9 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item :label="$t('frontOffice.englishM') + '2'+':'">
+                      <el-form-item
+                        :label="$t('frontOffice.englishM') + '2' + ':'"
+                      >
                         <el-input
                           class="width300"
                           type="textarea"
@@ -511,7 +528,112 @@
         </div>
       </el-row>
     </template>
-
+    <!-- 年费明细dialog -->
+    <el-dialog title="年费明细" :visible.sync="yearDetail" width="70%" top="0">
+      <div class="searcBox">
+        <el-form ref="yearForm" :model="yearForm" label-width="80px" inline>
+          <el-form-item label="缴费年份">
+            <el-date-picker
+              size="small"
+              type="year"
+              placeholder="选择年份"
+              v-model="yearForm.date1"
+              format="yyyy"
+              value-format="yyyy"
+              style="width: 100%"
+            ></el-date-picker>
+          </el-form-item>
+          <el-form-item label="缴费门店">
+            <el-select
+              v-model="yearForm.region"
+              placeholder="请选择活动区域"
+              size="small"
+            >
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="small">查询</el-button>
+            <el-button size="small">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <!--表格数据 -->
+      <el-table
+        ref="multipleTable"
+        v-loading="loading"
+        :data="yearTabel"
+        height="100%"
+        header-row-class-name="default"
+        size="small"
+      >
+        <el-table-column
+          prop="memberCard"
+          label="缴费金额"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column prop="name" label="缴费时间"> </el-table-column>
+        <el-table-column label="缴费年份 "> </el-table-column>
+        <el-table-column label="备注" prop="age" width="80px">
+        </el-table-column>
+      </el-table>
+    </el-dialog>
+    <!-- 添加年费记录dialog -->
+    <el-dialog
+      title="添加年费记录"
+      :visible.sync="annualFee"
+      width="40%"
+      top="0"
+    >
+      <div class="textBox">
+        <span>卡号：0002</span><span>姓名：孙小宝</span
+        ><span>会员类型：会员类型1</span>
+      </div>
+      <el-form ref="addfeeFrom" :model="addfeeFrom" label-width="150px">
+        <el-form-item label="选择年份：">
+          <el-date-picker
+            type="year"
+            placeholder="选择年份"
+            v-model="addfeeFrom.date1"
+            format="yyyy"
+            value-format="yyyy"
+            style="width: 270px"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="支付方式：">
+          <el-select
+            v-model="addfeeFrom.region"
+            placeholder="请选择支付方式"
+            style="width: 270px"
+          >
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="缴费时间:">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="addfeeFrom.date1"
+            style="width: 270px"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="支付费用：">
+          <el-input v-model="addfeeFrom.name" style="width: 270px"></el-input>
+        </el-form-item>
+        <el-form-item label="备注：">
+          <el-input v-model="addfeeFrom.name" style="width: 270px"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" style="text-align:right">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确认</el-button
+        >
+      </div>
+    </el-dialog>
+    <!-- //点击这些的弹框 1、换卡；2、修改类型；3、停用；4、挂失补卡 -->
     <el-dialog
       top="0"
       :title="cardForm.titleName"
@@ -901,6 +1023,11 @@ import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
+      yearDetail: false, //年费明细dialog
+      yearForm: {}, //年费明细表单
+      yearTabel: [{}], //年费明细表格
+      annualFee: false, //收年费dialog
+      addfeeFrom: {}, //添加年费表单
       isHeader: false,
       combined: 0,
       goodsKind: [],
@@ -939,7 +1066,7 @@ export default {
         // idcard: '----'
         name: "",
       },
-      options:[]
+      options: [],
     };
   },
   computed: {
@@ -1256,7 +1383,7 @@ export default {
             params = {
               id: this.detailForm.id,
               remark: this.cardForm.remark,
-              state:3,
+              state: 3,
             };
           }
           if (this.cardForm.type == 4) {
@@ -1283,7 +1410,7 @@ export default {
             }
           }
           this.$F.doRequest(this, url, params, (data) => {
-                 // 1、换卡；2、修改类型；3、停用；4、挂失补卡
+            // 1、换卡；2、修改类型；3、停用；4、挂失补卡
             if (this.cardForm.type != 3 && this.cardForm.type != 4) {
               this.setCardFormVisible = false;
               this.findone(this.detailForm.id);
@@ -1502,5 +1629,27 @@ export default {
   border-radius: 8px;
 
   border: 1px solid rgba(211, 211, 211, 1);
+}
+.someBox {
+  span {
+    margin-left: 10px;
+    color: rgba(18, 110, 255, 100);
+  }
+  padding: 20px;
+  height: 80px;
+  background-color: rgba(239, 239, 239, 1);
+}
+.searcBox {
+  height: 76px;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: rgba(248, 248, 248, 1);
+}
+.textBox {
+  color: rgba(30, 30, 30, 100);
+  font-size: 16px;
+  box-sizing: border-box;
+  padding-left: 80px;
+  margin-bottom: 20px;
 }
 </style>

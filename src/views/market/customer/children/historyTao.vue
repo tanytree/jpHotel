@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 14:53:58
+ * @LastEditTime: 2020-12-14 17:04:15
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -151,22 +151,28 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="checkinDays"
+          prop="checkInDays"
           :label="$t('desk.customer_dayNum')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="enterType"
           :label="$t('desk.customer_roomType')"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+        <template slot-scope="{row}">
+          <div v-if="row.operCheckinType==1||2">客房</div>
+          <div v-if="row.operCheckinType==3">会场</div>
+          </template>
+          </el-table-column>
         <el-table-column
           prop="operCheckinType"
           :label="$t('desk.order_checkinWay')"
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
-            {{ F_operCheckinType(row.operCheckinType) }}
+           <div v-if="row.operCheckinType==1">普通入住</div>
+           <div v-if="row.operCheckinType==2">时租房入住</div>
+           <div v-if="row.operCheckinType==3">会场</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -184,7 +190,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom.roomTypeId }}
+            {{ row.hotelCheckInRoom.roomTypeName }}
           </template>
         </el-table-column>
         <el-table-column
@@ -197,13 +203,10 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="enterType"
+          prop="consumeTotalPrice"
           :label="$t('desk.customer_totalConsum')"
           show-overflow-tooltip
         >
-          <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom.totalRoomPrice }}
-          </template>
         </el-table-column>
         <el-table-column
           prop="enterType"
@@ -343,7 +346,6 @@ export default {
       });
     },
      checkinPersonList(row){
-      console.log(row);
       let newArray = [];
      if (row.hotelCheckInRoom && row.hotelCheckInRoom.personList.length > 0) {
         newArray = row.hotelCheckInRoom.personList.filter((item) => {

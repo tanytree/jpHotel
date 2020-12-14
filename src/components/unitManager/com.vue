@@ -9,7 +9,12 @@
         </el-form-item>
         <el-form-item :label="$t('desk.home_state')">
           <el-select v-model="searchForm.state" class="width150">
-            <el-option :value="key" v-for="(item, key, index) of $t('commons.comState')" :label="item" :key="index"></el-option>
+            <el-option
+              :value="key"
+              v-for="(item, key, index) of $t('commons.comState')"
+              :label="item"
+              :key="index"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_contactA')">
@@ -34,7 +39,12 @@
           </el-button>
         </el-form-item>
         <el-form-item style="float: right" v-if="isHeader == 1">
-          <el-button type="primary" class="submit" @click="addAndEditItem('add')">{{ $t("desk.customer_newAddA") }}</el-button>
+          <el-button
+            type="primary"
+            class="submit"
+            @click="addAndEditItem('add')"
+            >{{ $t("desk.customer_newAddA") }}</el-button
+          >
           <!-- <el-button type="primary" class="submit" @click="piliangClick">{{
             $t("desk.customer_volumeSet")
           }}</el-button> -->
@@ -49,6 +59,11 @@
         header-row-class-name="default"
         size="small"
       >
+        <el-table-column
+          prop="enterNo"
+          :label="$t('desk.customer_unitNum')"
+          show-overflow-tooltip
+        ></el-table-column>
         <el-table-column
           prop="enterName"
           :label="$t('desk.customer_unitName')"
@@ -70,16 +85,12 @@
           show-overflow-tooltip
         ></el-table-column>
 
-<!--        <el-table-column :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>-->
-<!--            <template slot-scope="{row}">-->
-<!--              {{checkEnterStrategyId(row)}}-->
-<!--            </template>-->
-<!--        </el-table-column>-->
-        <el-table-column
-          prop="enterNo"
-          :label="$t('desk.customer_unitNum')"
-          show-overflow-tooltip
-        ></el-table-column>
+        <!--        <el-table-column :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>-->
+        <!--            <template slot-scope="{row}">-->
+        <!--              {{checkEnterStrategyId(row)}}-->
+        <!--            </template>-->
+        <!--        </el-table-column>-->
+
         <el-table-column
           :label="$t('desk.home_state')"
           width="80px"
@@ -200,12 +211,31 @@
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row class="row">
-          <el-col :span="8" class="col">
-            <el-form-item :label="$t('desk.customer_unitAddress') + ':'">
-              <el-input v-model="addCompanyForm.address"></el-input>
-            </el-form-item>
-          </el-col>
+          <el-form-item :label="$t('desk.customer_unitAddress') + '1:'">
+            <el-input
+             style="width:80px;"
+              v-model="addCompanyForm.enterAddress1C1"
+            ></el-input>
+            <span style="margin: 0 5px">-</span>
+            <el-input v-model="addCompanyForm.enterAddress1C2" style="width:80px"></el-input>
+            <el-input v-model="addCompanyForm.enterAddress1" style="width:260px;margin-left:10px;"></el-input>
+          </el-form-item>
+        </el-row>
+       <el-row class="row">
+          <el-form-item :label="$t('desk.customer_unitAddress') + '2:'">
+            <el-input
+             style="width:80px;"
+              v-model="addCompanyForm.enterAddress2C1"
+            ></el-input>
+            <span style="margin: 0 5px">-</span>
+            <el-input v-model="addCompanyForm.enterAddress2C2" style="width:80px"></el-input>
+            <el-input v-model="addCompanyForm.enterAddress2" style="width:260px;margin-left:10px;"></el-input>
+          </el-form-item>
+        </el-row>
+
+        <el-row class="row">
           <el-col :span="8" class="col">
             <el-form-item :label="$t('desk.customer_unitPhone') + ':'">
               <el-input v-model="addCompanyForm.mobile"></el-input>
@@ -216,23 +246,6 @@
               <el-input v-model="addCompanyForm.fax"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row class="row">
-<!--          <el-col :span="8" class="col">-->
-<!--            <el-form-item-->
-<!--              :label="$t('desk.customer_pricingStrategy') + ':'"-->
-<!--              prop="enterStrategyId"-->
-<!--            >-->
-<!--              <el-select v-model="addCompanyForm.enterStrategyId">-->
-<!--                <el-option-->
-<!--                  :label="item.ruleName"-->
-<!--                  :value="item.id"-->
-<!--                  v-for="(item, index) of strategyList"-->
-<!--                  :key="index"-->
-<!--                ></el-option>-->
-<!--              </el-select>-->
-<!--            </el-form-item>-->
-<!--          </el-col>-->
           <el-col :span="8" class="col">
             <el-form-item label label-width="20px">
               <el-checkbox v-model="addCompanyForm.state"
@@ -265,11 +278,20 @@
               <el-input v-model="addCompanyForm.branchEnterNo"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8" class="col">
+          <el-col :span="16" class="col">
             <el-form-item :label="$t('desk.customer_branchAddress') + ':'">
-              <el-input v-model="addCompanyForm.branchEnterAddress"></el-input>
+               <el-input
+             style="width:80px;"
+              v-model="addCompanyForm.branchEnterC1"
+            ></el-input>
+            <span style="margin: 0 5px">-</span>
+            <el-input v-model="addCompanyForm.branchEnterC2" style="width:80px"></el-input>
+            <el-input v-model="addCompanyForm.branchEnterAddress" style="width:165px;margin-left:10px;"></el-input>
             </el-form-item>
           </el-col>
+          
+        </el-row>
+        <el-row class="row">
           <el-col :span="8" class="col">
             <el-form-item :label="$t('desk.customer_branchPhone') + ':'">
               <el-input
@@ -277,8 +299,6 @@
               ></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row class="row">
           <el-col :span="8" class="col">
             <el-form-item :label="$t('desk.customer_accountNum') + ':'">
               <el-input v-model="addCompanyForm.accountNo"></el-input>
@@ -318,6 +338,16 @@
               <el-input v-model="addCompanyForm.personNo"></el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+            <el-form-item label="memo1:">
+             <el-input type="textarea" v-model="addCompanyForm.memo1"></el-input>
+            </el-form-item>
+        </el-row>
+         <el-row>
+            <el-form-item label="memo2:">
+             <el-input type="textarea" v-model="addCompanyForm.memo2"></el-input>
+            </el-form-item>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -690,8 +720,7 @@ export default {
       salesList: [],
       setCompanyFormVisible: false,
       setBatchFormVisible: false,
-      addCompanyForm: {
-      },
+      addCompanyForm: {},
       setBatchForm: {
         enterStrategyId: "",
         ruleAlldayId: "",
@@ -705,7 +734,7 @@ export default {
   },
 
   mounted() {
-      this.initAddCompanyForm();
+    this.initAddCompanyForm();
     this.hotel_price_enter_strategy_list();
     this.hotel_rule_allday_list();
     this.initForm();
@@ -726,44 +755,55 @@ export default {
     // }
   },
   methods: {
-      initAddCompanyForm() {
-          this.addCompanyForm = {
-              id: "",
-              type: "",
-              enterName: "",
-              enterPinyin: "",
-              contactName: "",
-              contactPhone: "",
-              email: "",
-              address: "",
-              mobile: "",
-              fax: "",
-              enterStrategyId: "",
-              state: "",
-              bankName: "",
-              bankCard: "",
-              branchEnterName: "",
-              branchEnterNo: "",
-              branchEnterAddress: "",
-              branchEnterTelephone: "",
-              accountName: "",
-              accountNo: "",
-              headeName: "",
-              headePinyin: "",
-              totalFee: "",
-              personNo: "",
-              ruleAlldayId: "dev",
-              creditLimit: "1024",
-              shareFlag: "",
-              effectiveStartTime: "",
-              effectiveEndTime: "",
-              getWay: "",
-              salesId: "",
-              taxNum: "",
-              contractNum: "",
-              remark: "",
-          }
-      },
+    initAddCompanyForm() {
+      this.addCompanyForm = {
+        id: "",
+        type: "",
+        enterName: "",
+        enterPinyin: "",
+        contactName: "",
+        contactPhone: "",
+        email: "",
+        address: "",
+        mobile: "",
+        fax: "",
+        enterStrategyId: "",
+        state: "",
+        bankName: "",
+        bankCard: "",
+        branchEnterName: "",
+        branchEnterNo: "",
+        branchEnterC1:'',
+        branchEnterC2:'',
+        branchEnterAddress: "",
+        branchEnterTelephone: "",
+        accountName: "",
+        accountNo: "",
+        headeName: "",
+        headePinyin: "",
+        totalFee: "",
+        personNo: "",
+        ruleAlldayId: "dev",
+        creditLimit: "1024",
+        shareFlag: "",
+        effectiveStartTime: "",
+        effectiveEndTime: "",
+        getWay: "",
+        salesId: "",
+        taxNum: "",
+        contractNum: "",
+        remark: "",
+        memo1:'',
+        memo2:'',
+        enterAddress1C1:'',
+        enterAddress1C2:'',
+        enterAddress1:'',
+        enterAddress2C1:'',
+        enterAddress2C2:'',
+        enterAddress2:'',
+
+      };
+    },
     F_storeName(v) {
       let that = this;
       for (let k in that.storeList) {
@@ -824,9 +864,9 @@ export default {
         }
       );
     },
-     checkEnterStrategyId(row){
-      for(let i = 0;i < this.strategyList.length;i++){
-        if( row.enterStrategyId == this.strategyList[i].id){
+    checkEnterStrategyId(row) {
+      for (let i = 0; i < this.strategyList.length; i++) {
+        if (row.enterStrategyId == this.strategyList[i].id) {
           return this.strategyList[i].ruleName;
         }
       }
@@ -839,7 +879,6 @@ export default {
         {},
         (res) => {
           this.strategyList = res;
-
         }
       );
     },
@@ -958,8 +997,9 @@ export default {
         this.addCompanyForm.shareFlag = item.shareFlag == 1 ? true : false;
         this.addCompanyForm.state = item.state == 2 ? true : false;
       } else {
-          this.initAddCompanyForm();
+        this.initAddCompanyForm();
       }
+      console.log(this.addCompanyForm);
       this.addCompanyForm.type = type;
       this.setCompanyFormVisible = true;
     },
