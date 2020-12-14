@@ -108,6 +108,7 @@ module.exports = {
     home_pushAnd: '催押',
     home_nowCall: '当前催交',
     home_name: '姓名',
+    home_consumerNames: '消费人名',
     home_nameA: '姓名【拼音】',
     home_all: '全部',
     home_customersCategory: '客源类别',

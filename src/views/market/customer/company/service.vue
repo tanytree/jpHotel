@@ -20,7 +20,7 @@
           </el-select>
         </el-form-item>
         <br />
-        <el-form-item :label="$t('desk.home_name')+':'">
+        <el-form-item :label="$t('desk.home_consumerNames')+':'">
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_constDate')+':'">
@@ -63,7 +63,7 @@
         </el-table-column>
         <el-table-column
           prop="checkInPerson.checkIn.name"
-          :label="$t('desk.home_name')"
+          :label="$t('desk.home_consumerNames')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column

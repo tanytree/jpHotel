@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-09 10:20:53
+ * @LastEditTime: 2020-12-14 18:04:53
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -892,6 +892,7 @@ export default {
             });
         },
         handleDetail(item) {
+          console.log(item);
             this.detailForm = item;
             this.detailForm.type = "detail";
             this.setMemberFormVisible = true;
