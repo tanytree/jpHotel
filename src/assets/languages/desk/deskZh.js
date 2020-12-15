@@ -795,7 +795,7 @@ module.exports = {
     editor_hand:'手',
     editor_home:'家',
     editor_only:'单',
-    editor_:'',
+    editor_nameAenter:'姓名/单位名称',
     editor_:'',
     editor_:'',
     editor_:'',

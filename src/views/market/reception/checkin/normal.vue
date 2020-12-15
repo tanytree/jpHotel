@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-10 10:09:32
+ * @LastEditTime: 2020-12-15 13:35:27
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 
@@ -1232,6 +1232,7 @@ export default {
     },
 
     //保存 保存并继续
+    // type为2是保存，为3是保存后继续办理入住预定
     hotel_check_in(type) {
       this.isSubmitErr = false;
       let url = "";

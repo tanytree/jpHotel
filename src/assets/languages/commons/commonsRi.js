@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 16:01:34
+ * @LastEditTime: 2020-12-15 11:33:47
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -113,7 +113,7 @@ module.exports = {
     guestType: {
         "1": '一般',
         "2": '会員',
-        // "3": '法人/会社',
+        "3": '法人/会社',
         "4": '団体'
     },
     roomStatus: [{

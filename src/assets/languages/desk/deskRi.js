@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2020-12-14 17:43:47
+ * @LastEditTime: 2020-12-15 10:05:21
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -777,6 +777,7 @@ module.exports = {
     editor_home:'未翻译词条',
     editor_only:'未翻译词条',
     home_consumerNames: '未翻译词条',
+    editor_nameAenter:'未翻译词条',
 
 
 

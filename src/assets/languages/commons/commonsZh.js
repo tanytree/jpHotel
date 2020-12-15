@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-12 11:09:39
+ * @LastEditTime: 2020-12-15 11:33:38
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -111,7 +111,7 @@ module.exports = {
     guestType: {
         '1': '散客',
         '2': '会员',
-        // '3': '单位',
+        '3': '单位',
         "4": '団体'
     },
     roomStatus: [{
