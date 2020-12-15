@@ -83,6 +83,24 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
+                            <el-radio-group v-model="rowData.taxStatus">
+                                <el-radio :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>
+                                <el-radio :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
+                            <el-radio-group v-model="rowData.seviceStatus">
+                                <el-radio :label="1">{{$t('manager.grsl_goodsServiceN')}}</el-radio>
+                                <el-radio :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
                 <el-form-item v-if="rowData.categoryType == 2" :label="$t('manager.grsl_billingMode')+':'">
                     <el-radio-group v-model="rowData.priceModel">
                         <el-radio :label="1">{{$t('manager.grsl_billingPer')}}</el-radio>
@@ -189,6 +207,8 @@
                     minutePrice: '',
                     capsPrice: '',
                     depositPrice: '',
+                    taxStatus: 1,
+                    seviceStatus: 1,
                 },
                 threerules: {
                     name: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
@@ -218,7 +238,13 @@
                     ],
                     capsPrice: [
                         {required: true, message: this.$t('commons.mustInput'), trigger: "blur"},
-                    ]
+                    ],
+                    taxStatus: [
+                        {required: true, message: this.$t('commons.placeChoose'), trigger: "change"},
+                    ],
+                    seviceStatus: [
+                        {required: true, message: this.$t('commons.placeChoose'), trigger: "change"},
+                    ],
                 },
                 tab_show: true,
                 edit: true,
@@ -343,6 +369,8 @@
                     minutePrice: this.rowData.minutePrice,
                     capsPrice: this.rowData.capsPrice,
                     depositPrice: this.rowData.depositPrice,
+                    taxStatus: this.rowData.taxStatus,
+                    seviceStatus: this.rowData.seviceStatus
                 };
                 if (this.edit) {
                     param.id = this.rowData.id;
