@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-15 13:26:06
+ * @LastEditTime: 2020-12-15 17:47:46
  * @FilePath: \jiudian\src\views\market\reception\checkin\guestChoose.vue
  -->
 
@@ -14,7 +14,7 @@
       :title="$t('desk.order_sourceType')"
       width="500px"
     >
-      <el-form :model="checkInForm" style="margin-top: -20px" label-width="100px">
+      <el-form :model="checkInForm" ref="checkInForm" style="margin-top: -20px" label-width="100px">
         <el-form-item
           :label="$t('desk.customer_guestType') + ':'"
           class=""
@@ -51,67 +51,59 @@
           ></el-autocomplete>
         </el-form-item>
         <!-- 当客人类型为团队时 -->
-       <template v-if="checkInForm.guestType == 4" >
+       <div v-if="checkInForm.guestType == 4" >
           <el-form-item label="团队名:"  >
-          <el-input v-model="checkInForm.name" placeholder="团队名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+          <el-input v-model="checkInForm.teamName" placeholder="团队名" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.teamPronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item>
          <el-form-item label="导游姓名:"  >
-          <el-input v-model="checkInForm.name" placeholder="导游姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+          <el-input v-model="checkInForm.guideName" placeholder="导游姓名" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.guidePronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item>
         <el-form-item label="领队姓名:"  >
-          <el-input v-model="checkInForm.name" placeholder="领队姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+          <el-input v-model="checkInForm.leaderName" placeholder="领队姓名" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.leaderPronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
         <el-form-item label="团体电话:"  >
-          <el-input v-model="checkInForm.name" placeholder="团体电话" style="width:330px" size="small"></el-input>
+          <el-input v-model="checkInForm.teamMobile" placeholder="团体电话" style="width:330px" size="small"></el-input>
         </el-form-item>
         <el-form-item label="团体地址:"  >
-          <el-input v-model="checkInForm.name"  style="width:75px" size="small"></el-input>
+          <el-input v-model="checkInForm.teamAdd1" minlength='3' maxlength='3'  style="width:75px" size="small"></el-input>
           <span style="margin:0 5px">-</span>
-          <el-input v-model="checkInForm.name"  style="width:75px;" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:5px;" size="small"></el-input>
+          <el-input v-model="checkInForm.teamAdd2" minlength='4' maxlength='4' @blur="checkAddress(checkInForm.teamAdd1,checkInForm.teamAdd2,'team')" style="width:75px;" size="small"></el-input>
+          <el-input v-model="checkInForm.teamAdd3" placeholder="输入邮编检索出地址" style="width:160px;margin-left:5px;" size="small"></el-input>
         </el-form-item> 
         <el-form-item label="联络人姓名:"  >
-          <el-input v-model="checkInForm.name" placeholder="联络人姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+          <el-input v-model="checkInForm.contactName" placeholder="联络人姓名" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.contactPinyin" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
         <el-form-item label="联络人手机号:"  >
-          <el-input v-model="checkInForm.name" placeholder="联络人手机号" style="width:330px" size="small"></el-input>
+          <el-input v-model="checkInForm.contactPhone" placeholder="联络人手机号" style="width:330px" size="small"></el-input>
         </el-form-item>
         <el-form-item label="联络人信箱:"  >
-          <el-input v-model="checkInForm.name" placeholder="联络人信箱" style="width:330px" size="small"></el-input>
+          <el-input v-model="checkInForm.contactEmail" placeholder="联络人信箱" style="width:330px" size="small"></el-input>
         </el-form-item>
         <el-form-item label="旅行社名称:"  >
-          <el-input v-model="checkInForm.name" placeholder="旅行社名称" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
-        </el-form-item> 
-        <el-form-item label="导游姓名:"  >
-          <el-input v-model="checkInForm.name" placeholder="导游姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
-        </el-form-item> 
-        <el-form-item label="领队姓名:"  >
-          <el-input v-model="checkInForm.name" placeholder="领队姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+          <el-input v-model="checkInForm.travelTeam" placeholder="旅行社名称" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.travelPronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
          <el-form-item label="旅行社地址:"  >
-          <el-input v-model="checkInForm.name"  style="width:75px" size="small"></el-input>
+          <el-input v-model="checkInForm.travelAdd1"  style="width:75px" size="small"></el-input>
           <span style="margin:0 5px">-</span>
-          <el-input v-model="checkInForm.name"  style="width:75px;" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:5px;" size="small"></el-input>
+          <el-input v-model="checkInForm.travelAdd2"  style="width:75px;" @blur="checkAddress(checkInForm.travelAdd1,checkInForm.travelAdd2,'travel')" size="small"></el-input>
+          <el-input v-model="checkInForm.travelAdd3" placeholder="输入邮编检索出地址" style="width:160px;margin-left:5px;" size="small"></el-input>
         </el-form-item> 
          <el-form-item label="联络人姓名:"  >
-          <el-input v-model="checkInForm.name" placeholder="联络人姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.name" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+          <el-input v-model="checkInForm.travelContactName" placeholder="联络人姓名" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.travelContactPinyin" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
         <el-form-item label="联络人手机号:"  >
-          <el-input v-model="checkInForm.name" placeholder="联络人手机号" style="width:330px" size="small"></el-input>
+          <el-input v-model="checkInForm.travelContactPhone" placeholder="联络人手机号" style="width:330px" size="small"></el-input>
         </el-form-item>
         <el-form-item label="联络人信箱:"  >
-          <el-input v-model="checkInForm.name" placeholder="联络人信箱" style="width:330px" size="small"></el-input>
+          <el-input v-model="checkInForm.tarvelContactEmail" placeholder="联络人信箱" style="width:330px" size="small"></el-input>
         </el-form-item>
-       </template>
+       </div>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="guestTypeShow = false">{{
@@ -130,12 +122,29 @@ export default {
   // props: ['checkInForm'],
   data() {
     return {
-      checkInForm: {},
+      checkInForm: {
+      },
       guestTypeShow: false,
     };
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
+    // 输入邮编检索地址
+    checkAddress(code1,code2,type){
+        this.$F.commons.zipCode(code1,code2).then(res=>{
+         if(res.results.length>0){
+            if(type=='team'){
+           let addA =res.results[0].address1+res.results[0].address2+res.results[0].address3;
+           this.$set(this.checkInForm,'teamAdd3',addA)
+          }else{
+            let addB =res.results[0].address1+res.results[0].address2+res.results[0].address3;
+            this.$set(this.checkInForm,"travelAdd3",addB)
+          }
+         }
+        })
+    },
+    
     guestTypeChange() {
       this.checkInForm.name = "";
     },

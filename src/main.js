@@ -1,8 +1,8 @@
 /*
  * @Date: 2019-12-12 11:15:44
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-27 17:56:57
- * @FilePath: /jiudian/src/main.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-15 17:36:45
+ * @FilePath: \jiudian\src\main.js
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -77,8 +77,7 @@ Date.prototype.Format = function (fmt) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
-
-
+Vue.prototype.$set = Vue.set,
 new Vue({
     el: '#app',
     router,
