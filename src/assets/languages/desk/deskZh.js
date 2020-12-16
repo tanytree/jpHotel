@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-12-07 15:38:48
+ * @LastEditTime: 2020-12-16 15:44:29
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -720,7 +720,7 @@ module.exports = {
     customer_resetguestInfo: '修改客户资料',
     customer_unitNum: '单位编号',
     customer_unitAddress: '单位地址',
-    customer_unitPhone: '单位电话',
+    customer_unitPhone: '单位号码',
     customer_faxNum: '传真号码',
     customer_bankName: '银行名',
     customer_bankNo: '银行号',
