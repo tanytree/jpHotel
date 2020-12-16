@@ -18,16 +18,20 @@
 			<div class="components-edit member-price">
 				<el-table :data="roomType" style="width: 100%;margin-bottom: 20px;" row-key="id2" default-expand-all
 				 header-row-class-name="default">
-					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '130': ''">
+					<!-- <el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '130': ''">
 						<template slot-scope="{row, $index}" @click="changePrice(item, index, row)">
-							<span v-if="index === 0">{{row.name || row.houseName}}</span>
-							<span v-if="index > 0 && row.houseName" style=" cursor: pointer !important;" @click="popup('single',row, item, index)">
+							<span v-if="index == 0">纯住宿</span>
+							<span v-if="index > 0" @click="popup('single',row, item, index)">
 								<el-col>{{item.onePrice}}</el-col>
-								<!-- <el-col v-else>{{row.marketPrice}}</el-col> -->
 							</span>
 						</template>
+					</el-table-column> -->
+					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '150': ''">
+						<template slot-scope="scope">
+							<span v-if="index == 0">{{scope.row.name || scope.row.houseName}}</span>
+							<span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">{{scope.row.discount || item.onePrice}}</span>
+						</template>
 					</el-table-column>
-
 				</el-table>
 			</div>
 		</el-row>
@@ -56,7 +60,7 @@
 			<el-table ref="multipleTable" :data="ruleForm_Pie.roomStrategyJson" tooltip-effect="dark" default-expand-all
 			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数"  v-if="ruleForm.roomType == 1">
+				<el-table-column prop="personNum" label="人数/座位数" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -130,7 +134,7 @@
 			<el-table ref="multipleTable" :data="editPriceForm.roomStrategyJson" tooltip-effect="dark" default-expand-all
 			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数"  v-if="ruleForm.roomType == 1">
+				<el-table-column prop="personNum" label="人数/座位数" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -221,7 +225,7 @@
 				roomStrategyJson_p: [],
 				loading: false,
 
-
+				memberTypeList: [],
 				editPriceDialog: false, //修改房价dialog
 				editPriceForm: {
 					priceCalend: '', //1会员日历单日定价 2单位日历单日定价 3客房单日价格  4会议厅单日价
@@ -435,75 +439,114 @@
 				//  * @param timeType     时间前推后推类别 1前推15天 2后推15天 int必填
 				//  * @param roomTypeId   客房或会议厅房型id  string必填
 				let params = this.search_d;
-				this.$F.doRequest(
-					this,
-					"/pms/hotel/hotel_price_guest_chamber_list",
-					params,
-					(res) => {
-						this.roomType.push(res.roomType)
-						this.roomType.forEach((value, index) => {
-							//debugger
-							if (value.roomType == 1) {
-								if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
-									let arr = value.personPrice.split(',')
-									let arry = arr.filter(function(el) {
-										return el !== '';
-									});
-
-									if (res.dayPriceList.length == 0) {
-										res.dateList.forEach((a, b) => {
+				params.roomTypeId =
+					this.$F.doRequest(
+						this,
+						"/pms/hotel/hotel_price_guest_chamber_list",
+						params,
+						(res) => {
+							this.dateList = res.dateList
+							this.dateList.unshift({
+								dateStr: '类型',
+								weekDay: "",
+							});
+							this.roomType = [{
+								name: '纯住宿'
+							}, {
+								name: '住宿+早'
+							}, {
+								name: '住宿+晚'
+							}, {
+								name: '住宿+早+晚'
+							}]
+							// let dd = []
+							// let obj = {}
+							let ss = ''
+							let x = ''
+							let y = ''
+							this.roomType.forEach((value, index) => {
+								value.roomType = res.roomType
+								// debugger
+								if (value.roomType.roomType == 1) {
+									if (value.roomType.personPrice !== '' && value.roomType.personPrice !== undefined && value.roomType.personPrice !==
+										null) {
+										let arr = value.roomType.personPrice.split(',')
+										let arry = arr.filter(function(el) {
+											return el !== '';
+										});
+										
+										if (res.dayPriceList.length == 0) {
+											arry.forEach((c, d) => {
+												// debugger
+												if(index == 0) {
+													x += `${d+1}人价` + Number(arr[d])
+													this.dateList.forEach((a, b) => {
+														a.onePrice = x
+													}) 
+												}
+												else if(index== 1) {
+													y += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
+													this.dateList.forEach((a, b) => {
+														a.onePrice = y
+													})
+												}
+												
+											})
+											
+										} else {
 											// debugger
-											// a.onePrice = 0;
-											a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+											this.dateList.forEach((a, b) => {
+												// a.onePrice = 0;
+												res.dayPriceList.forEach((c, d) => {
+													if (a.dateStr == c.dayTime) {
+														// debugger
+														a.onePrice = c.newCustomPrice + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(
+															value.roomType.mealDinnerObject.mealPrice || 0)
+													}
+												})
+											})
+
+										}
+									}
+									
+									// this.dateList.forEach((a, b) => {
+									// 	if(index == 0) {
+									// 		a.onePrice = x
+									// 	}
+									// 	else if(index== 1) {
+									// 		a.onePrice = y
+									// 	}
+									// })
+								}
+								else {
+									if (res.dayPriceList.length == 0) {
+										this.dateList.forEach((a, b) => {
+											a.onePrice = value.roomType.marketPrice
 										})
 
 									} else {
-										// debugger
-										res.dateList.forEach((a, b) => {
-											// a.onePrice = 0;
+
+										this.dateList.forEach((a, b) => {
+											a.onePrice = 0;
 											res.dayPriceList.forEach((c, d) => {
 												if (a.dateStr == c.dayTime) {
-													// debugger
-													a.onePrice = c.newCustomPrice + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
+													a.onePrice = Number(c.newCustomPrice)
 												}
 											})
 										})
-										
+										console.log(res.dateList)
 									}
-									console.log(res.dateList)
-									console.log(res.dayPriceList)
-
 								}
-							} else {
-								if (res.dayPriceList.length == 0) {
-									res.dateList.forEach((a, b) => {
-										a.onePrice = value.marketPrice
-									})
-									
-								} else {
 
-									res.dateList.forEach((a, b) => {
-										a.onePrice = 0;
-										res.dayPriceList.forEach((c, d) => {
-											if (a.dateStr == c.dayTime) {
-												a.onePrice = Number(c.newCustomPrice)
-											}
-										})
-									})
-									console.log(res.dateList)
-								}
-							}
+							})
+							
+							console.log('this.roomType=====', this.roomType)
+							console.log('this.dateList========', this.dateList)
+							debugger
 
-						})
-						this.dateList = res.dateList
-						this.dateList.unshift({
-							dateStr: '房型/房价',
-							weekDay: "",
-						});
-
-						this.$forceUpdate();
-					}
-				);
+							this.$forceUpdate();
+						}
+					);
 			},
 			popup(type, row, item, index) {
 				// debugger

@@ -482,113 +482,51 @@
 						break;
 					case 'rili':
 						this.rili_show = false
-						let arry = [{
-							houseName1: '纯住宿',
-						},{
-							houseName1: '住宿+早',
-						},{
-							houseName1: '住宿+晚',
-						},{
-							houseName1: '住宿+早+晚',
-						}]
-						debugger
-						let a = value;
-						arry.forEach((c,d) =>{
-							let obj = {}
-							// let arrr = []
-							let allP = 0
-							if(a.personPrice !== '' && a.personPrice !== undefined && a.personPrice !== null) {
-								let personPriceList = a.personPrice.split(',')
-								let arr = personPriceList.filter(function(el) {
-									return el !== '';
-								});
-								arr.forEach((item, i) => {
-									// obj = {}
+						this.ruleForm = value
+						// let arry = [{
+						// 	houseName1: '纯住宿',
+						// },{
+						// 	houseName1: '住宿+早',
+						// },{
+						// 	houseName1: '住宿+晚',
+						// },{
+						// 	houseName1: '住宿+早+晚',
+						// }]
+						// debugger
+						// let a = value;
+						// arry.forEach((c,d) =>{
+						// 	debugger
+						// 	let obj = {}
+						// 	let allP = 0
+						// 	if(a.personPrice !== '' && a.personPrice !== undefined && a.personPrice !== null) {
+						// 		let personPriceList = a.personPrice.split(',')
+						// 		let arr = personPriceList.filter(function(el) {
+						// 			return el !== '';
+						// 		});
+						// 		arr.forEach((item, i) => {
+						// 			debugger
 									
-									obj.name = c.houseName1;
-									if(c.houseName1 == '纯住宿') {
-										allP = Number(item)
-									} else if (c.houseName1 == '住宿+早') {
-										c.id = a.roomTypeId;
-										allP = Number(item)+Number(value.mealBreakfastObject.mealPrice)*(i+1)
-									} else if (c.houseName1 == '住宿+晚') {
-										id = a.roomTypeId;
-										allP = Number(item)+Number(value.mealDinnerObject.mealPrice)*(i+1)
-									} else if (c.houseName1 == '住宿+早+晚') {
-										c.id = a.roomTypeId;
-										allP = Number(item)+Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
-									}
-									
-									// if (value.mealBreakfastObject) {
-									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1)
-									// }
-									// if (value.mealDinnerObject) {
-									// 	allP = Number(item) + Number(value.mealDinnerObject.mealPrice)*(i+1)
-									// }
-									// if (value.mealDinnerObject && value.mealBreakfastObject) {
-									// 	allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
-									// }
+						// 			obj.name = c.houseName1;
+						// 			if(c.houseName1 == '纯住宿') {
+						// 				allP = Number(item)
+						// 			} else if (c.houseName1 == '住宿+早') {
+						// 				c.id = a.roomTypeId;
+						// 				allP = Number(item)+Number(value.mealBreakfastObject.mealPrice)*(i+1)
+						// 			} else if (c.houseName1 == '住宿+晚') {
+						// 				id = a.roomTypeId;
+						// 				allP = Number(item)+Number(value.mealDinnerObject.mealPrice)*(i+1)
+						// 			} else if (c.houseName1 == '住宿+早+晚') {
+						// 				c.id = a.roomTypeId;
+						// 				allP = Number(item)+Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+						// 			}
 															
-									// if (!value.mealDinnerObject && !value.mealBreakfastObject) {
-									// 	allP = Number(item)
-									// }
-									// // allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
-															
-									c.pName = `${i+1} 人价`
-									c.allPrice = c.allP
-									// arr.push(obj)
-								})
-							}
+						// 			c.pName = `${i+1} 人价`
+						// 			c.allPrice = c.allP
+						// 		})
+						// 	}
 							
-						})
-						// value.forEach((a,b) =>{
-							
-						// 	// value.priceList = []
-							
-						// 	// let obj = {}
-						// 	// let arr = []
-						// 	// let allP = 0
-							
-						// 	// obj.houseName1 = '纯住宿';
-						// 	// obj.roomTypeId = i.id;
-						// 	// obj.type = i
-							
-						// 	// if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
-							
-						// 	// 	let personPriceList = value.personPrice.split(',')
-						// 	// 	let arry = personPriceList.filter(function(el) {
-						// 	// 		return el !== '';
-						// 	// 	});
-						// 	// 	arry.forEach((item, i) => {
-						// 	// 		obj = {}
-						// 	// 		if (value.mealBreakfastObject) {
-						// 	// 			allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1)
-						// 	// 		}
-						// 	// 		if (value.mealDinnerObject) {
-						// 	// 			allP = Number(item) + Number(value.mealDinnerObject.mealPrice)*(i+1)
-						// 	// 		}
-						// 	// 		if (value.mealDinnerObject && value.mealBreakfastObject) {
-						// 	// 			allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
-						// 	// 		}
-							
-						// 	// 		if (!value.mealDinnerObject && !value.mealBreakfastObject) {
-						// 	// 			allP = Number(item)
-						// 	// 		}
-						// 	// 		// allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
-							
-						// 	// 		obj.pName = `${i+1} 人住宿价+付餐价`
-						// 	// 		obj.allPrice = allP
-						// 	// 		arr.push(obj)
-						// 	// 	})
-							
-						// 	// } else {
-						// 	// 	obj.pName = null
-						// 	// 	obj.allPrice = null
-						// 	// }
-						// 	// value.priceList = arr
 						// })
-						debugger
-						this.ruleForm = arry;
+						
 						break
 				}
 			},
