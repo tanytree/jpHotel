@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-11-13 16:09:32
  * @Author: 陶子
- * @LastEditTime: 2020-11-25 12:34:35
+ * @LastEditTime: 2020-12-16 18:31:18
  * @FilePath: \jiudian\src\views\market\customer\children\hsitorydetailTao.vue
 -->
 <template>
@@ -23,195 +23,314 @@
               <el-form
                 inline
                 size="small"
-                ref="editorForm"
+                label-width="90px"
                 :model="editorForm"
-                label-width="80px"
+                ref="editorForm"
                 :rules="rulese"
               >
-                <el-row class="row">
-                  <el-form-item :label="$t('desk.home_name') + ':'" prop="name">
-                    <el-row>
-                      <el-col :span="11">
-                        <el-form-item
-                          prop="name"
-                        >
-                          <el-input
-                            v-model="editorForm.name"
-                            style="width: 160px"
-                          ></el-input>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="10">
-                        <el-form-item
-                          prop="pronunciation"
-                        >
-                          <el-input
-                            v-model="editorForm.pronunciation"
-                            style="width: 160px; margin-left: 10px"
-                          ></el-input>
-                        </el-form-item>
-                      </el-col>
-                    </el-row>
-                  </el-form-item>
-                  <el-row class="cell">
-                    <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.customer_zipCode') + ':'">
-                        <el-input
-                          v-model="editorForm.zipCode1"
-                          style="width: 120px"
-                        ></el-input>
-                        <span style="margin: 0 5px">-</span>
-                        <el-input
-                          v-model="editorForm.zipCode2"
-                          style="width: 120px"
-                        ></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="9" class="col">
-                      <el-form-item :label="$t('desk.customer_address') + ':'" label-width="45px">
-                        <el-select
-                          style="width: 160px"
-                          v-model="editorForm.addressCountry"
-                          filterable
-                          :placeholder="$t('desk.customer_selectTheCounty')"
-                        >
-                          <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                          >
-                          </el-option>
-                        </el-select>
-                        <el-select
-                          style="width: 160px; margin-left: 10px"
-                          v-model="editorForm.addressCountries"
-                          filterable
-                         :placeholder="$t('desk.customer_selectCity')"
-                        >
-                          <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                          >
-                          </el-option>
-                        </el-select>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="7" class="col">
-                      <el-form-item :label="$t('desk.customer_address') +'1'+ ':'" label-width="55px">
-                        <el-input v-model="editorForm.address"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+                <el-row>
+                  <el-col :span="8" class="col">
+                    <el-form-item
+                      :label="$t('desk.home_name') + ':'"
+                      prop="name"
+                    >
+                      <el-input
+                        style="width: 120px"
+                        v-model="editorForm.name"
+                        :placeholder="$t('desk.home_name')"
+                      ></el-input>
+                      <span style="margin-left: 8px"></span>
+                      <el-input
+                        style="width: 120px"
+                        v-model="editorForm.pronunciation"
+                        :placeholder="$t('desk.customer_nameSpell')"
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8" class="col">
+                    <el-form-item label="证件类型:">
+                      <el-select v-model="editorForm.idcardType">
+                        <el-option
+                          v-for="(label, value) in $t('commons.idCardType')"
+                          :label="label"
+                          :value="value"
+                          :key="value"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8" class="col">
+                    <el-form-item label="证件号码:">
+                      <el-input v-model="editorForm.idcard"></el-input>
+                    </el-form-item>
+                  </el-col>
                 </el-row>
-                <el-row class="row">
-                  <el-row class="cell">
-                    <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.customer_address') +'2'+ ':'">
-                        <el-input v-model="editorForm.address2"></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.home_telNum1') + ':'" label-width="80px">
-                        <el-input v-model="editorForm.mobile"></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8" class="col">
-                      <el-form-item :label="$t('desk.home_telNum2') + ':'" label-width="80px">
-                        <el-input v-model="editorForm.mobile2"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+                <el-row>
+                  <el-col :span="8" class="col">
+                    <el-form-item :label="$t('desk.home_telNum1') + ':'">
+                      <el-input v-model="editorForm.mobile"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8" class="col">
+                    <el-form-item :label="$t('desk.home_telNum2') + ':'">
+                      <el-input v-model="editorForm.mobile2"></el-input>
+                    </el-form-item>
+                  </el-col>
                 </el-row>
-                <div class="lineThrough"></div>
+                <el-row class="cell">
+                  <el-col :span="8" class="col">
+                    <el-form-item label="地区:" prop="addressCountries">
+                      <el-input
+                        placeholder="请填写地区"
+                        v-model="editorForm.addressCountries"
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="16">
+                    <el-form-item label="地址1:">
+                      <el-input
+                        v-model="editorForm.address1C1"
+                        minlength="3"
+                        maxlength="3"
+                        @blur="checkNextcode(editorForm.address1C1)"
+                        style="width: 75px"
+                        size="small"
+                      ></el-input>
+                      <span style="margin: 0 5px">-</span>
+                      <el-input
+                        v-model="editorForm.address1C2"
+                        minlength="4"
+                        maxlength="4"
+                        style="width: 75px"
+                        @blur="
+                          checkAddress(
+                            editorForm.address1C1,
+                            editorForm.address1C2,
+                            'addressA'
+                          )
+                        "
+                        size="small"
+                      ></el-input>
+                      <el-input
+                        v-model="editorForm.address"
+                        placeholder="输入邮编检索出地址"
+                        style="width: 160px; margin-left: 5px"
+                        size="small"
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="16">
+                    <el-form-item label="地址2:">
+                      <el-input
+                        v-model="editorForm.address2C1"
+                        minlength="3"
+                        maxlength="3"
+                        @blur="checkNextcode(editorForm.address1C1)"
+                        style="width: 75px"
+                        size="small"
+                      ></el-input>
+                      <span style="margin: 0 5px">-</span>
+                      <el-input
+                        v-model="editorForm.address2C2"
+                        minlength="4"
+                        maxlength="4"
+                        style="width: 75px"
+                        @blur="
+                          checkAddress(
+                            editorForm.address2C1,
+                            editorForm.address2C2,
+                            'addressB'
+                          )
+                        "
+                        size="small"
+                      ></el-input>
+                      <el-input
+                        v-model="editorForm.address2"
+                        placeholder="输入邮编检索出地址"
+                        style="width: 160px; margin-left: 5px"
+                        size="small"
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-divider></el-divider>
                 <el-row class="row">
                   <el-row class="cell">
-                    <el-col :span="7" class="col">
-                      <el-form-item :label="$t('desk.customer_sex') + ':'">
+                    <el-col :span="6" class="col">
+                      <el-form-item
+                        :label="$t('desk.customer_sex') + ':'"
+                        label-width="60px"
+                      >
                         <el-radio-group v-model="editorForm.sex">
-                          <el-radio :label="1">{{
-                            $t("desk.customer_man")
-                          }}</el-radio>
-                          <el-radio :label="2">{{
-                            $t("desk.customer_woman")
-                          }}</el-radio>
-                          <el-radio :label="3">{{$t('desk.book_other')}}</el-radio>
+                            <el-radio
+                            v-for="(item, key, index) of $t('commons.F_sex')"
+                            :label="key"
+                            :key="index"
+                            >{{ item }}</el-radio
+                          >
                         </el-radio-group>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="7" class="col">
-                      <el-form-item :label="$t('desk.customer_brithday') + ':'">
+                    <el-col :span="6" class="col">
+                      <el-form-item
+                        :label="$t('desk.customer_brithday') + ':'"
+                        prop="birthday"
+                      >
                         <el-date-picker
+                          style="width: 180px"
+                          v-model="editorForm.birthday"
+                          value-format="yyyy-MM-dd"
                           type="date"
                           :placeholder="$t('desk.serve_chooseDate')"
-                          v-model="editorForm.birthday"
-                          style="width: 200px"
                         ></el-date-picker>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="10" class="col">
-                      <el-form-item :label="$t('desk.customer_unitNameA') + ':'">
-                        <el-input v-model="editorForm.enterName"></el-input>
+                    <el-col :span="6" class="col">
+                      <el-form-item label="邮箱:">
+                        <el-input
+                          style="width: 180px"
+                          placeholder="请填写邮箱"
+                          v-model="editorForm.email"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col">
+                      <el-form-item
+                        :label="$t('desk.customer_unitNameA') + ':'"
+                      >
+                        <el-input
+                          style="width: 85px"
+                          v-model="editorForm.enterName"
+                        ></el-input>
+                        <el-input
+                          style="width: 85px; margin-left: 10px"
+                          v-model="editorForm.enterPinyin"
+                          placeholder="发音"
+                        ></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
+
                   <el-row class="cell">
-                    <el-col :span="7" class="col">
-                      <el-form-item :label="$t('desk.customer_unitPhoneNum')  +'1'+':'">
+                    <el-col :span="8" class="col">
+                      <el-form-item
+                        :label="$t('frontOffice.enterpriseMobile') + '1' + ':'"
+                      >
                         <el-input v-model="editorForm.enterMobile1"></el-input>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="17" class="col">
-                      <el-form-item :label="$t('desk.customer_unitAddress')  +'1'+':'">
+
+                    <el-col :span="16" class="col">
+                      <el-form-item
+                        :label="$t('frontOffice.enterpriseAddress') + '1' + ':'"
+                      >
+                        <el-input
+                          v-model="editorForm.enterAddress1C1"
+                          minlength="3"
+                          maxlength="3"
+                          @blur="checkNextcode(editorForm.enterAddress1C1)"
+                          style="width: 75px"
+                          size="small"
+                        ></el-input>
+                        <span style="margin: 0 5px">-</span>
+                        <el-input
+                          v-model="editorForm.enterAddress1C2"
+                          minlength="4"
+                          maxlength="4"
+                          style="width: 75px"
+                          @blur="
+                            checkAddress(
+                              editorForm.enterAddress1C1,
+                              editorForm.enterAddress1C2,
+                              'addressC'
+                            )
+                          "
+                          size="small"
+                        ></el-input>
                         <el-input
                           v-model="editorForm.enterAddress1"
-                          style="width: 530px"
+                          placeholder="输入邮编检索出地址"
+                          style="width: 160px; margin-left: 5px"
+                          size="small"
                         ></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row class="cell">
-                    <el-col :span="7" class="col">
-                      <el-form-item :label="$t('desk.customer_unitPhoneNum')  +'2'+':'">
+                    <el-col :span="8" class="col">
+                      <el-form-item
+                        :label="$t('frontOffice.enterpriseMobile') + '2' + ':'"
+                      >
                         <el-input v-model="editorForm.enterMobile2"></el-input>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="17" class="col">
-                      <el-form-item :label="$t('desk.customer_unitAddress')  +'2'+':'">
+                    <el-col :span="16" class="col">
+                      <el-form-item
+                        :label="$t('frontOffice.enterpriseAddress') + '2' + ':'"
+                      >
+                        <el-input
+                          v-model="editorForm.enterAddress2C1"
+                          minlength="3"
+                          maxlength="3"
+                          @blur="checkNextcode(editorForm.enterAddress2C1)"
+                          style="width: 75px"
+                          size="small"
+                        ></el-input>
+                        <span style="margin: 0 5px">-</span>
+                        <el-input
+                          v-model="editorForm.enterAddress2C2"
+                          minlength="4"
+                          maxlength="4"
+                          style="width: 75px"
+                          @blur="
+                            checkAddress(
+                              editorForm.enterAddress2C1,
+                              editorForm.enterAddress2C2,
+                              'addressD'
+                            )
+                          "
+                          size="small"
+                        ></el-input>
                         <el-input
                           v-model="editorForm.enterAddress2"
-                          style="width: 530px"
+                          placeholder="输入邮编检索出地址"
+                          style="width: 160px; margin-left: 5px"
+                          size="small"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+
+                  <el-row class="cell">
+                    <el-col :span="24" class="col">
+                      <el-form-item
+                        :label="$t('frontOffice.englishM') + '1' + ':'"
+                      >
+                        <el-input
+                          style="width: 800px"
+                          type="textarea"
+                          v-model="editorForm.memo1"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row class="cell">
+                    <el-col :span="24" class="col">
+                      <el-form-item
+                        :label="$t('frontOffice.englishM') + '2' + ':'"
+                      >
+                        <el-input
+                          style="width: 800px"
+                          type="textarea"
+                          v-model="editorForm.memo2"
                         ></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                 </el-row>
-                <el-row>
-                  <el-form-item label="memo1:">
-                    <el-input
-                      type="textarea"
-                      :autosize="{ minRows: 1, maxRows: 4 }"
-                      :placeholder="$t('desk.book_inputContent')"
-                      v-model="editorForm.memo1"
-                      style="width: 800px"
-                    >
-                    </el-input>
-                  </el-form-item>
-                </el-row>
-                <el-row>
-                  <el-form-item label="memo2:">
-                    <el-input
-                      style="width: 800px"
-                      type="textarea"
-                      :autosize="{ minRows: 1, maxRows: 4 }"
-                      :placeholder="$t('desk.book_inputContent')"
-                      v-model="editorForm.memo2"
-                    >
-                    </el-input>
-                  </el-form-item>
-                </el-row>
+                <el-divider></el-divider>
               </el-form>
             </div>
             <div style="text-align: right">
@@ -244,10 +363,25 @@ export default {
     rulese() {
       return {
         name: [
-          { required: true, message: this.$t('desk.customer_inputName'), trigger: "blur" },
+          {
+            required: true,
+            message: this.$t("desk.customer_inputName"),
+            trigger: "blur",
+          },
         ],
-         pronunciation: [
-          { required: true, message: this.$t('desk.customer_inputPY'), trigger: "blur" },
+        pronunciation: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputPY"),
+            trigger: "blur",
+          },
+        ],
+        addressCountries: [
+          {
+            required: true,
+            message: "请填写地区",
+            trigger: "blur",
+          },
         ],
       };
     },
@@ -255,26 +389,47 @@ export default {
   data() {
     return {
       editorForm: {
-        name: "",
-        pronunciation: "",
-        zipCode1: "",
-        zipCode2: "",
-        addressCountry: "", //所属县
-        addressCountries: "", //所属国
-        address: "",
-        address2: "",
-        mobile: "",
-        mobile2: "",
-        sex: "",
-        birthday: "",
-        enterName: "",
-        enterMobile1: "",
-        enterMobile2: "",
-        enterAddress1: "",
-        enterAddress2: "",
-        memo1: "",
-        memo2: "",
-        guestId: "",
+        address: null,
+        address2: null,
+        addressCountries: null,
+        addressCountry: null,
+        age: null,
+        birthday: null,
+        carNum: null,
+        checkInId: null,
+        consumTotal: null,
+        createTime: null,
+        email: null,
+        enterAddress1: null,
+        enterAddress2: null,
+        enterMobile1: null,
+        enterMobile2: null,
+        enterName: null,
+        enterPinyin: null,
+        guestNum: null,
+        guestType: 1,
+        hobby: null,
+        id: null,
+        idcard: null,
+        idcardType: null,
+        isBlacklist: null,
+        memberCard: null,
+        memberTypeId: null,
+        memberTypeName: null,
+        memo1: null,
+        memo2: null,
+        mobile:null,
+        mobile2: null,
+        name: null,
+        nationality: null,
+        pronunciation: null,
+        remark: null,
+        sex: "1",
+        status: null,
+        storesNum: null,
+        updateTime: null,
+        zipCode1: null,
+        zipCode2: null,
       },
 
       itemInfo: null,
@@ -283,37 +438,76 @@ export default {
   },
   created() {
     this.itemInfo = this.$route.query.item;
+     for (let i in this.itemInfo) {
+      this.editorForm[i] = this.itemInfo[i];
+    }
+  this.$set(this.editorForm,'guestId',this.itemInfo.id)
+  this.editorForm.sex = this.editorForm.sex.toString()
   },
   mounted() {
-    console.log(this.itemInfo);
-    this.editorForm.name = this.itemInfo.name;
-    this.editorForm.pronunciation = this.itemInfo.pronunciation;
-    this.editorForm.zipCode1 = this.itemInfo.zipCode1;
-    this.editorForm.zipCode2 = this.itemInfo.zipCode2;
-    this.editorForm.addressCountry = this.itemInfo.addressCountry;
-    this.editorForm.addressCountries = this.itemInfo.addressCountries;
-    this.editorForm.address = this.itemInfo.address;
-    this.editorForm.address2 = this.itemInfo.address2;
-    this.editorForm.mobile = this.itemInfo.mobile;
-    this.editorForm.mobile2 = this.itemInfo.mobile2;
-    this.editorForm.sex = this.itemInfo.sex;
-    this.editorForm.birthday = this.itemInfo.birthday;
-    this.editorForm.enterName = this.itemInfo.enterName;
-    this.editorForm.enterMobile1 = this.itemInfo.enterMobile1;
-    this.editorForm.enterMobile2 = this.itemInfo.enterMobile2;
-    this.editorForm.enterAddress1 = this.itemInfo.enterAddress1;
-    this.editorForm.enterAddress2 = this.itemInfo.enterAddress2;
-    this.editorForm.memo1 = this.itemInfo.memo1;
-    this.editorForm.memo2 = this.itemInfo.memo2;
-    this.editorForm.guestId = this.itemInfo.id;
+   
   },
 
   methods: {
+    checkNextcode(code1) {
+      if (!code1 || code1.length !== 3) {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
+      }
+    },
+    // 输入邮编检索地址
+    checkAddress(code1, code2, type) {
+      if (code1 && code2) {
+        if (code1.length == 3 && code2.length == 4) {
+          this.$F.commons.zipCode(code1, code2, (res) => {
+            if (res.results.length > 0) {
+              switch (type) {
+                case "addressA":
+                  this.editorForm.address =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressB":
+                  this.editorForm.address2 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressC":
+                  this.editorForm.enterAddress1 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressD":
+                  this.editorForm.enterAddress2 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+              }
+            }
+          });
+        } else {
+          this.$message({
+            message: "请正确填写邮编",
+            type: "warning",
+          });
+        }
+      } else {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
+      }
+    },
     //点击保存按钮
     saveEditor(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.editorForm);
           this.$F.doRequest(
             this,
             "/pms/guestarchives/dishes_manage_edit",
@@ -323,9 +517,9 @@ export default {
                 message: this.$t("desk.customer_resetSuccess"),
                 type: "success",
               });
-             setTimeout(() => {
+              setTimeout(() => {
                 this.goBack();
-             }, 300);
+              }, 300);
             }
           );
         } else {
@@ -334,7 +528,7 @@ export default {
         }
       });
     },
-   
+
     goBack() {
       this.$router.history.go(-1);
     },

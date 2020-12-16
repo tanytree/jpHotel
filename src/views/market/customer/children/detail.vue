@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-14 14:05:38
+ * @LastEditTime: 2020-12-16 18:36:10
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -16,6 +16,7 @@
             >{{ $t("desk.customer_memManagement") }}</el-breadcrumb-item
           >
           <el-breadcrumb-item v-if="type != 'add'"
+            ><span v-if="type == 'edit'">修改会员信息-</span
             >{{ detailForm.memberCard }}【会员号码】-{{ detailForm.name }}-{{
               F_memberTypeId(detailForm.memberTypeId)
             }}卡</el-breadcrumb-item
@@ -26,7 +27,7 @@
         >
       </div>
       <div class="bodyInfo">
-        <div class="someBox">
+        <div class="someBox" v-if="type == 'detail'">
           <div>累计收取：<span>10000000</span></div>
           <div>
             <el-button type="text" @click="yearDetail = true"
@@ -40,11 +41,12 @@
               <el-form
                 inline
                 size="small"
-                label-width="120px"
+                :label-width="type == 'detail' ? '80px' : '90px'"
                 :model="detailForm"
                 ref="detailForm"
                 :rules="type != 'detail' ? rules : {}"
               >
+                <!-- 点击 修改按钮 进来后显示的一排按钮 -->
                 <el-row v-if="type == 'edit'">
                   <el-form-item label>
                     <el-button
@@ -73,6 +75,7 @@
                     >
                   </el-form-item>
                 </el-row>
+                <!-- 点击 新增按钮 进来后显示的内容 -->
                 <el-row v-if="type == 'add'">
                   <el-form-item label>
                     <el-button type="primary" size="mini">{{
@@ -80,221 +83,252 @@
                     }}</el-button>
                   </el-form-item>
                 </el-row>
-                <br />
-                <el-row class="row">
-                  <el-row class="cell">
-                    <template v-if="type == 'add'">
-                      <el-col :span="8" class="col">
-                        <el-form-item
-                          :label="$t('desk.customer_memType')"
-                          prop="memberTypeId"
-                        >
-                          <el-select
-                            v-model="detailForm.memberTypeId"
-                            v-if="type != 'detail'"
-                            class
-                          >
-                            <el-option
-                              v-for="item in smembertypeList"
-                              :key="item.id"
-                              :label="item.name"
-                              :value="item.id"
-                            ></el-option>
-                          </el-select>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="8" class="col">
-                        <el-form-item
-                          :label="$t('desk.customer_memeberCardNum')"
-                          prop="memberCard"
-                        >
-                          <el-input
-                            v-model="detailForm.memberCard"
-                            v-if="type != 'detail'"
-                          ></el-input>
-                        </el-form-item>
-                      </el-col>
-                    </template>
-                    <el-col :span="10" class="col">
+                <el-row>
+                  <template v-if="type == 'add'">
+                    <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('desk.home_name') + ':'"
-                        prop="name"
+                        :label="$t('desk.customer_memType')"
+                        prop="memberTypeId"
                       >
-                        <el-input
-                          v-model="detailForm.name"
+                        <el-select
+                          v-model="detailForm.memberTypeId"
                           v-if="type != 'detail'"
-                          class="width150"
-                          :placeholder="$t('desk.home_name')"
-                        ></el-input>
-                        <span style="margin-left: 8px"></span>
-                        <el-input
-                          v-model="detailForm.pronunciation"
-                          v-if="type != 'detail'"
-                          class="width150"
-                          :placeholder="$t('desk.customer_nameSpell')"
-                        ></el-input>
-                        <template v-if="type == 'detail'">{{
-                          detailForm.name
-                        }}</template>
-                        <template
-                          v-if="type == 'detail'"
-                          style="margin-left: 15px"
-                          >【{{ detailForm.pronunciation }}】</template
+                          class
                         >
+                          <el-option
+                            v-for="item in smembertypeList"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                          ></el-option>
+                        </el-select>
                       </el-form-item>
                     </el-col>
-                  </el-row>
-                  <el-row class="cell">
-                    <template>
-                      <el-col :span="7" class="col">
-                        <el-form-item
-                          :label="$t('desk.customer_zipCode') + ':'"
-                          prop="memberTypeId"
-                        >
-                          <el-input
-                            v-if="type != 'detail'"
-                            v-model="detailForm.zipCode1"
-                            style="width: 90px"
-                          ></el-input>
-                          <span style="margin: 0 5px" v-if="type != 'detail'"
-                            >-</span
-                          >
-                          <el-input
-                            v-if="type != 'detail'"
-                            v-model="detailForm.zipCode2"
-                            style="width: 90px"
-                          ></el-input>
-                          <template v-if="type == 'detail'">
-                            {{ detailForm.zipCode1 + detailForm.zipCode2 }}
-                          </template>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="7" class="col">
-                        <el-form-item
-                          :label="$t('desk.customer_address') + ':'"
-                        >
-                          <el-select
-                            v-if="type != 'detail'"
-                            style="width: 90px"
-                            v-model="detailForm.addressCountry"
-                            filterable
-                            :placeholder="$t('desk.customer_selectTheCounty')"
-                          >
-                            <el-option
-                              v-for="item in options"
-                              :key="item.value"
-                              :label="item.label"
-                              :value="item.value"
-                            >
-                            </el-option>
-                          </el-select>
-                          <el-select
-                            v-if="type != 'detail'"
-                            style="width: 90px; margin-left: 10px"
-                            v-model="detailForm.addressCountries"
-                            filterable
-                            :placeholder="$t('desk.customer_selectCity')"
-                          >
-                            <el-option
-                              v-for="item in options"
-                              :key="item.value"
-                              :label="item.label"
-                              :value="item.value"
-                            >
-                            </el-option>
-                          </el-select>
-                          <template v-if="type == 'detail'">{{
-                            detailForm.addressCountries +
-                            detailForm.addressCountry
-                          }}</template>
-                        </el-form-item>
-                      </el-col>
-                    </template>
-                    <el-col :span="10" class="col">
-                      <el-form-item
-                        :label="$t('desk.customer_address') + '1' + ':'"
-                        v-if="type != 'detail'"
-                      >
-                        <el-input v-model="detailForm.address"></el-input>
-                      </el-form-item>
-                      <el-form-item
-                        :label="$t('desk.customer_address') + '1' + ':'"
-                        v-if="type == 'detail'"
-                      >
-                        <template>{{ detailForm.address }}</template>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row class="row">
-                    <el-row class="cell">
-                      <el-col :span="7" class="col">
-                        <el-form-item
-                          :label="$t('desk.customer_address') + '2' + ':'"
-                          v-if="type != 'detail'"
-                        >
-                          <el-input v-model="detailForm.address2"></el-input>
-                        </el-form-item>
-                        <el-form-item
-                          :label="$t('desk.customer_address') + '2' + ':'"
-                          v-if="type == 'detail'"
-                        >
-                          <template>{{ detailForm.address2 }}</template>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="7" class="col">
-                        <el-form-item
-                          :label="$t('desk.home_telNum1') + ':'"
-                          v-if="type != 'detail'"
-                        >
-                          <el-input v-model="detailForm.mobile"></el-input>
-                        </el-form-item>
-                        <el-form-item
-                          :label="$t('desk.home_telNum1') + ':'"
-                          v-if="type == 'detail'"
-                        >
-                          <template>{{ detailForm.mobile }}</template>
-                        </el-form-item>
-                      </el-col>
-                      <el-col :span="10" class="col">
-                        <el-form-item
-                          :label="$t('desk.home_telNum2') + ':'"
-                          v-if="type != 'detail'"
-                        >
-                          <el-input v-model="detailForm.mobile2"></el-input>
-                        </el-form-item>
-                        <el-form-item
-                          :label="$t('desk.home_telNum2') + ':'"
-                          v-if="type == 'detail'"
-                        >
-                          <template>{{ detailForm.mobile2 }}</template>
-                        </el-form-item>
-                      </el-col>
-                    </el-row>
-                  </el-row>
-                  <el-row class="cell" v-if="type != 'add' && type != 'edit'">
                     <el-col :span="8" class="col">
                       <el-form-item
                         :label="$t('desk.customer_memeberCardNum')"
-                        >{{ detailForm.memberCard }}</el-form-item
+                        prop="memberCard"
                       >
+                        <el-input
+                          v-model="detailForm.memberCard"
+                          v-if="type != 'detail'"
+                        ></el-input>
+                      </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="col">
-                      <el-form-item
-                        :label="$t('desk.customer_memType') + ':'"
-                        >{{
-                          F_memberTypeId(detailForm.memberTypeId)
-                        }}</el-form-item
+                  </template>
+                  <el-col :span="type != 'detail' ? 8 : 6" class="col">
+                    <el-form-item
+                      :label="$t('desk.home_name') + ':'"
+                      prop="name"
+                    >
+                      <el-input
+                        style="width: 120px"
+                        v-model="detailForm.name"
+                        v-if="type != 'detail'"
+                        :placeholder="$t('desk.home_name')"
+                      ></el-input>
+                      <span style="margin-left: 8px"></span>
+                      <el-input
+                        style="width: 120px"
+                        v-model="detailForm.pronunciation"
+                        v-if="type != 'detail'"
+                        :placeholder="$t('desk.customer_nameSpell')"
+                      ></el-input>
+                      <template v-if="type == 'detail'">{{
+                        detailForm.name
+                      }}</template>
+                      <template
+                        v-if="type == 'detail'"
+                        style="margin-left: 15px"
+                        >【{{ detailForm.pronunciation }}】</template
                       >
-                    </el-col>
-                  </el-row>
+                    </el-form-item>
+                  </el-col>
+                  <el-col
+                    :span="type != 'detail' ? 8 : 6"
+                    class="col"
+                    v-if="type != 'detail'"
+                  >
+                    <el-form-item label="证件类型:" prop="name">
+                      <el-select v-model="detailForm.idcardType">
+                        <el-option
+                          v-for="(label, value) in $t('commons.idCardType')"
+                          :label="label"
+                          :value="value"
+                          :key="value"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="type != 'detail' ? 8 : 6" class="col">
+                    <el-form-item label="证件号码:" prop="name">
+                      <template v-if="type == 'detail'">
+                        <span v-if="detailForm.idcardType == 1">(身份证)</span>
+                        <span v-if="detailForm.idcardType == 2">(护照)</span>
+                        <span>{{ detailForm.idcard }}</span>
+                      </template>
+                      <template v-if="type != 'detail'">
+                        <el-input v-model="detailForm.idcard"></el-input>
+                      </template>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="type != 'detail' ? 8 : 6" class="col">
+                    <el-form-item
+                      :label="$t('desk.home_telNum1') + ':'"
+                      v-if="type == 'detail'"
+                    >
+                      <template>{{ detailForm.mobile }}</template>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="type != 'detail' ? 8 : 6" class="col">
+                    <el-form-item
+                      :label="$t('desk.home_telNum2') + ':'"
+                      v-if="type == 'detail'"
+                    >
+                      <template>{{ detailForm.mobile2 }}</template>
+                    </el-form-item>
+                  </el-col>
                 </el-row>
-                <el-divider></el-divider>
+                <el-row>
+                  <el-col :span="type != 'detail' ? 8 : 6" class="col">
+                    <el-form-item
+                      :label="$t('desk.home_telNum1') + ':'"
+                      v-if="type != 'detail'"
+                    >
+                      <el-input v-model="detailForm.mobile"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="type != 'detail' ? 8 : 6" class="col">
+                    <el-form-item
+                      :label="$t('desk.home_telNum2') + ':'"
+                      v-if="type != 'detail'"
+                    >
+                      <el-input v-model="detailForm.mobile2"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row v-if="type != 'add' && type != 'edit'">
+                  <el-col :span="6" class="col">
+                    <el-form-item
+                      :label="$t('desk.customer_memeberCardNum') + ':'"
+                      >{{ detailForm.memberCard }}</el-form-item
+                    >
+                  </el-col>
+                  <el-col :span="6" class="col">
+                    <el-form-item :label="$t('desk.customer_memType') + ':'">{{
+                      F_memberTypeId(detailForm.memberTypeId)
+                    }}</el-form-item>
+                  </el-col>
+                  <el-col :span="6" class="col">
+                    <el-form-item label="状态:">
+                      <div v-if="detailForm.state == 1">已发卡</div>
+                      <div v-if="detailForm.state == 2">已挂失</div>
+                      <div v-if="detailForm.state == 3">待启用</div>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+                <el-divider v-if="type == 'detail'"></el-divider>
+                <el-row class="cell">
+                  <el-col :span="8" class="col">
+                    <el-form-item label="地区:" prop="addressCountries">
+                      <el-input
+                        v-if="type != 'detail'"
+                        placeholder="请填写地区"
+                        v-model="detailForm.addressCountries"
+                      ></el-input>
+                      <template v-if="type == 'detail'">{{
+                        detailForm.addressCountries
+                      }}</template>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="16" v-if="type != 'detail'">
+                    <el-form-item label="地址1:">
+                      <el-input
+                        v-model="detailForm.address1C1"
+                        minlength="3"
+                        maxlength="3"
+                        @blur="checkNextcode(detailForm.address1C1)"
+                        style="width: 75px"
+                        size="small"
+                      ></el-input>
+                      <span style="margin: 0 5px">-</span>
+                      <el-input
+                        v-model="detailForm.address1C2"
+                        minlength="4"
+                        maxlength="4"
+                        style="width: 75px"
+                        @blur="
+                          checkAddress(
+                            detailForm.address1C1,
+                            detailForm.address1C2,
+                            'addressA'
+                          )
+                        "
+                        size="small"
+                      ></el-input>
+                      <el-input
+                        v-model="detailForm.address"
+                        placeholder="输入邮编检索出地址"
+                        style="width: 160px; margin-left: 5px"
+                        size="small"
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8" class="col">
+                    <el-form-item label="地址1:" v-if="type == 'detail'">
+                      <template>{{ detailForm.address }}</template>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8" class="col">
+                    <el-form-item label="地址2:" v-if="type == 'detail'">
+                      <template>{{ detailForm.address2 }}</template>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row v-if="type != 'detail'">
+                  <el-col :span="16">
+                    <el-form-item label="地址2:">
+                      <el-input
+                        v-model="detailForm.address2C1"
+                        minlength="3"
+                        maxlength="3"
+                        @blur="checkNextcode(detailForm.address1C1)"
+                        style="width: 75px"
+                        size="small"
+                      ></el-input>
+                      <span style="margin: 0 5px">-</span>
+                      <el-input
+                        v-model="detailForm.address2C2"
+                        minlength="4"
+                        maxlength="4"
+                        style="width: 75px"
+                        @blur="
+                          checkAddress(
+                            detailForm.address2C1,
+                            detailForm.address2C2,
+                            'addressB'
+                          )
+                        "
+                        size="small"
+                      ></el-input>
+                      <el-input
+                        v-model="detailForm.address2"
+                        placeholder="输入邮编检索出地址"
+                        style="width: 160px; margin-left: 5px"
+                        size="small"
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-divider v-if="type != 'detail'"></el-divider>
                 <el-row class="row">
                   <el-row class="cell">
-                    <el-col :span="8" class="col">
+                    <el-col :span="type != 'detail' ? 6 : 8" class="col">
                       <el-form-item
                         :label="$t('desk.customer_sex') + ':'"
                         prop="sex"
+                        label-width="60px"
                       >
                         <el-radio-group
                           v-model="detailForm.sex"
@@ -312,12 +346,13 @@
                         }}</template>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="col">
+                    <el-col :span="type != 'detail' ? 6 : 8" class="col">
                       <el-form-item
                         :label="$t('desk.customer_brithday') + ':'"
                         prop="birthday"
                       >
                         <el-date-picker
+                          style="width: 180px"
                           v-model="detailForm.birthday"
                           value-format="yyyy-MM-dd"
                           type="date"
@@ -329,23 +364,54 @@
                         }}</template>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="col">
-                      <!--这里邮箱改为单位名-->
+                    <el-col :span="6" class="col" v-if="type != 'detail'">
+                      <el-form-item label="邮箱:">
+                        <el-input
+                          style="width: 180px"
+                          placeholder="请填写邮箱"
+                          v-model="detailForm.email"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="col" v-if="type != 'detail'">
                       <el-form-item
                         :label="$t('desk.customer_unitNameA') + ':'"
-                        prop="email"
                       >
                         <el-input
+                          style="width: 85px"
                           v-model="detailForm.enterName"
-                          v-if="type != 'detail'"
                         ></el-input>
-                        <template v-if="type == 'detail'">
-                          {{ detailForm.enterName }}
-                        </template>
+                        <el-input
+                          style="width: 85px; margin-left: 10px"
+                          v-model="detailForm.enterPinyin"
+                          placeholder="发音"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row class="cell" v-if="type == 'detail'">
+                    <el-col :span="8" class="col">
+                      <el-form-item :label="$t('desk.editor_age') + ':'">
+                        <template>{{ detailForm.age }}</template>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="8" class="col">
+                      <el-form-item label="邮箱:">
+                        <template>{{ detailForm.email }}</template>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row class="cell">
+                    <el-col :span="8" class="col" v-if="type == 'detail'">
+                      <el-form-item
+                        :label="$t('desk.customer_unitNameA') + ':'"
+                        prop="email"
+                      >
+                        <template v-if="type == 'detail'">
+                          {{ detailForm.enterName }}<span v-if="detailForm.enterPinyin">【{{detailForm.enterPinyin}}】</span>
+                        </template>
+                      </el-form-item>
+                    </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
                         :label="$t('frontOffice.enterpriseMobile') + '1' + ':'"
@@ -359,58 +425,115 @@
                         }}</template>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="col">
+                    <el-col :span="8" class="col" v-if="type == 'detail'">
+                      <el-form-item
+                        :label="$t('frontOffice.enterpriseMobile') + '2' + ':'"
+                      >
+                        {{ detailForm.enterMobile2 }}
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="16" class="col" v-if="type != 'detail'">
                       <el-form-item
                         :label="$t('frontOffice.enterpriseAddress') + '1' + ':'"
                       >
                         <el-input
-                          v-model="detailForm.enterAddress1"
-                          v-if="type != 'detail'"
-                          class="width300"
+                          v-model="detailForm.enterAddress1C1"
+                          minlength="3"
+                          maxlength="3"
+                          @blur="checkNextcode(detailForm.enterAddress1C1)"
+                          style="width: 75px"
+                          size="small"
                         ></el-input>
-                        <template v-if="type == 'detail'">{{
-                          detailForm.enterAddress1
-                        }}</template>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="8" class="col" v-if="type == 'detail'">
-                      <el-form-item :label="$t('desk.editor_age') + ':'">
-                        <template>{{ detailForm.age }}</template>
+                        <span style="margin: 0 5px">-</span>
+                        <el-input
+                          v-model="detailForm.enterAddress1C2"
+                          minlength="4"
+                          maxlength="4"
+                          style="width: 75px"
+                          @blur="
+                            checkAddress(
+                              detailForm.enterAddress1C1,
+                              detailForm.enterAddress1C2,
+                              'addressC'
+                            )
+                          "
+                          size="small"
+                        ></el-input>
+                        <el-input
+                          v-model="detailForm.enterAddress1"
+                          placeholder="输入邮编检索出地址"
+                          style="width: 160px; margin-left: 5px"
+                          size="small"
+                        ></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  <el-row class="cell">
+                  <el-row class="cell" v-if="type != 'detail'">
                     <el-col :span="8" class="col">
                       <el-form-item
                         :label="$t('frontOffice.enterpriseMobile') + '2' + ':'"
                       >
+                        <el-input v-model="detailForm.enterMobile2"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="16" class="col" v-if="type != 'detail'">
+                      <el-form-item
+                        :label="$t('frontOffice.enterpriseAddress') + '2' + ':'"
+                      >
                         <el-input
-                          v-model="detailForm.enterMobile2"
-                          v-if="type != 'detail'"
+                          v-model="detailForm.enterAddress2C1"
+                          minlength="3"
+                          maxlength="3"
+                          @blur="checkNextcode(detailForm.enterAddress2C1)"
+                          style="width: 75px"
+                          size="small"
                         ></el-input>
-                        <template v-if="type == 'detail'">{{
-                          detailForm.enterMobile2
+                        <span style="margin: 0 5px">-</span>
+                        <el-input
+                          v-model="detailForm.enterAddress2C2"
+                          minlength="4"
+                          maxlength="4"
+                          style="width: 75px"
+                          @blur="
+                            checkAddress(
+                              detailForm.enterAddress2C1,
+                              detailForm.enterAddress2C2,
+                              'addressD'
+                            )
+                          "
+                          size="small"
+                        ></el-input>
+                        <el-input
+                          v-model="detailForm.enterAddress2"
+                          placeholder="输入邮编检索出地址"
+                          style="width: 160px; margin-left: 5px"
+                          size="small"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row class="cell" v-if="type == 'detail'">
+                    <el-col :span="8" class="col">
+                      <el-form-item
+                        label="单位地址1:"
+                      >
+                        <template >{{
+                          detailForm.enterAddress1
                         }}</template>
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
                       <el-form-item
-                        :label="$t('frontOffice.enterpriseAddress') + '2' + ':'"
+                        label="单位地址2:"
                       >
-                        <el-input
-                          class="width300"
-                          v-model="detailForm.enterAddress2"
-                          v-if="type != 'detail'"
-                        ></el-input>
-                        <template v-if="type == 'detail'">{{
+                        <template >{{
                           detailForm.enterAddress2
                         }}</template>
                       </el-form-item>
                     </el-col>
                   </el-row>
-
                   <el-row class="cell">
-                    <el-col :span="8" class="col">
+                    <el-col :span="24" class="col">
                       <el-form-item
                         :label="$t('frontOffice.englishM') + '1' + ':'"
                       >
@@ -425,7 +548,9 @@
                         }}</template>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="col">
+                  </el-row>
+                  <el-row class="cell">
+                    <el-col :span="24" class="col">
                       <el-form-item
                         :label="$t('frontOffice.englishM') + '2' + ':'"
                       >
@@ -443,69 +568,6 @@
                   </el-row>
                 </el-row>
                 <el-divider></el-divider>
-                <!--                <el-row class="row">-->
-                <!--                  <el-row class="cell">-->
-                <!--                    <el-col :span="8" class="col">-->
-                <!--                      <el-form-item-->
-                <!--                        :label="$t('desk.order_salesman')"-->
-                <!--                        prop="salesId"-->
-                <!--                      >-->
-                <!--                        <el-select-->
-                <!--                          v-model="detailForm.salesId"-->
-                <!--                          v-if="type != 'detail'"-->
-                <!--                        >-->
-                <!--                          <el-option-->
-                <!--                            v-for="item in salesList"-->
-                <!--                            :key="item.id"-->
-                <!--                            :label="item.userName"-->
-                <!--                            :value="item.id"-->
-                <!--                          ></el-option>-->
-                <!--                        </el-select>-->
-                <!--                        <template v-if="type == 'detail'">{{-->
-                <!--                          F_salesId(detailForm.salesId)-->
-                <!--                        }}</template>-->
-                <!--                      </el-form-item>-->
-                <!--                    </el-col>-->
-                <!--                    <el-col :span="8" class="col">-->
-                <!--                      <el-form-item-->
-                <!--                        :label="$t('desk.customer_developmentWay')"-->
-                <!--                        prop="getWay"-->
-                <!--                      >-->
-                <!--                        <el-select-->
-                <!--                          v-model="detailForm.getWay"-->
-                <!--                          v-if="type != 'detail'"-->
-                <!--                        >-->
-                <!--                          <el-option-->
-                <!--                            v-for="(value, key) in $t('frontOffice.getWay')"-->
-                <!--                            :label="value"-->
-                <!--                            :key="value"-->
-                <!--                            :value="key"-->
-                <!--                          ></el-option>-->
-                <!--                        </el-select>-->
-                <!--                        <template v-if="type == 'detail'">-->
-                <!--                          <div v-if="detailForm.getWay == 1">-->
-                <!--                            {{ $t("desk.customer_online") }}-->
-                <!--                          </div>-->
-                <!--                          <div v-if="detailForm.getWay == 2">-->
-                <!--                            {{ $t("desk.customer_offline") }}-->
-                <!--                          </div>-->
-                <!--                        </template>-->
-                <!--                      </el-form-item>-->
-                <!--                    </el-col>-->
-                <!--                  </el-row>-->
-                <!--                </el-row>-->
-                <!--                <el-row class="row" v-if="type == 'add'">-->
-                <!--                  <el-row class="cell">-->
-                <!--                    <el-col :span="8" class="col">-->
-                <!--                      <el-form-item :label="$t('desk.customer_creditCard')" prop="state">-->
-                <!--                        <el-select v-model="detailForm.state">-->
-                <!--                            <el-option :label="$t('desk.customer_yes')" :value="1"></el-option>-->
-                <!--                            <el-option :label="$t('desk.customer_waiteUse')" :value="2"></el-option>-->
-                <!--                        </el-select>-->
-                <!--                      </el-form-item>-->
-                <!--                    </el-col>-->
-                <!--                  </el-row>-->
-                <!--                </el-row>-->
               </el-form>
             </div>
           </div>
@@ -626,7 +688,7 @@
           <el-input v-model="addfeeFrom.name" style="width: 270px"></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" style="text-align:right">
+      <div slot="footer" style="text-align: right">
         <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary" @click="dialogVisible = false"
           >确认</el-button
@@ -844,173 +906,6 @@
         }}</el-button>
       </div>
     </el-dialog>
-    <!-- 积分兑换弹窗 -->
-    <el-dialog
-      :title="$t('desk.customer_pointsFor')"
-      :visible.sync="exchangeDialog"
-      width="90%"
-      top="0"
-    >
-      <el-row :gutter="20">
-        <!-- 左边 -->
-        <el-col :span="14">
-          <div class="ex_border">
-            <div class="ex15_top">
-              <el-form
-                :inline="true"
-                :model="formInline"
-                class="demo-form-inline"
-              >
-                <el-form-item :label="$t('desk.order_goodsName') + ':'">
-                  <el-input
-                    v-model="formInline.name"
-                    size="small"
-                    :placeholder="$t('desk.customer_pleaceInput')"
-                  ></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('desk.order_goodsType') + ':'">
-                  <el-select
-                    v-model="formInline.categoryId"
-                    :placeholder="$t('commons.placeChoose')"
-                    size="small"
-                  >
-                    <el-option :label="$t('desk.home_all')" value></el-option>
-                    <el-option
-                      v-for="item in goodsKind"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" @click="ex_lookFor" size="small">{{
-                    $t("commons.queryBtn")
-                  }}</el-button>
-                  <el-button type="primary" @click="ex_reset" size="small">{{
-                    $t("commons.resetBtn")
-                  }}</el-button>
-                </el-form-item>
-              </el-form>
-            </div>
-            <el-table
-              ref="multipleTable"
-              v-loading="loading"
-              :data="chooseList"
-              :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
-              size="mini"
-            >
-              <el-table-column
-                prop="name"
-                :label="$t('desk.order_goodsName')"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                prop="categoryName"
-                :label="$t('desk.order_goodsType')"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                prop="score"
-                :label="$t('desk.customer_useDuration')"
-                show-overflow-tooltip
-                width="280px"
-              ></el-table-column>
-              <el-table-column
-                prop="inventoryCount"
-                :label="$t('desk.customer_inventory')"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                :label="$t('commons.operating')"
-                show-overflow-tooltip
-              >
-                <template slot-scope="{ row }">
-                  <el-button type="text" size="mini" @click="addGoods(row)">{{
-                    $t("desk.customer_add")
-                  }}</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </el-col>
-        <!-- 右边 -->
-        <el-col :span="10">
-          <div class="ex_border">
-            <div class="ex9_top">{{ $t("desk.customer_chooseGoods") }}</div>
-            <el-table
-              ref="multipleTable"
-              v-loading="loading"
-              :data="selectList"
-              :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
-              size="mini"
-            >
-              <el-table-column
-                prop="goodsName"
-                :label="$t('desk.order_goodsName')"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                prop="score"
-                :label="$t('desk.customer_useDuration')"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                :label="$t('desk.customer_count')"
-                align="center"
-                show-overflow-tooltip
-                width="120px"
-              >
-                <template slot-scope="{ row }">
-                  <el-input-number
-                    v-model="row.number"
-                    @change="handleChange"
-                    :min="1"
-                    :max="row.inventoryCount"
-                    style="width: 100px"
-                    size="mini"
-                  ></el-input-number>
-                </template>
-              </el-table-column>
-              <el-table-column
-                :label="$t('desk.serve_heji')"
-                show-overflow-tooltip
-              >
-                <template slot-scope="{ row }">
-                  <div>{{ addUpTo(row) }}</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                :label="$t('commons.operating')"
-                show-overflow-tooltip
-              >
-                <template slot-scope="{ row }">
-                  <el-button
-                    type="text"
-                    size="mini"
-                    @click="removeClick(row)"
-                    >{{ $t("desk.customer_remove") }}</el-button
-                  >
-                </template>
-              </el-table-column>
-            </el-table>
-            <div style="margin: 20px 0 40px 0">
-              {{ $t("desk.customer_all") }}{{ common(selectList)
-              }}{{ $t("desk.customer_each") }}，
-              <span class="hejiClass"
-                >{{ $t("desk.serve_heji") + ":" }}{{ combined }}</span
-              >
-            </div>
-            <el-button
-              type="primary"
-              @click="sureExchange"
-              style="margin: 0 0 16px 16px"
-              >{{ $t("desk.customer_sureChange") }}</el-button
-            >
-          </div>
-        </el-col>
-      </el-row>
-    </el-dialog>
   </div>
 </template>
 
@@ -1029,15 +924,6 @@ export default {
       annualFee: false, //收年费dialog
       addfeeFrom: {}, //添加年费表单
       isHeader: false,
-      combined: 0,
-      goodsKind: [],
-      chooseList: [],
-      selectList: [],
-      formInline: {
-        name: "",
-        categoryId: "",
-      },
-      exchangeDialog: false,
       loading: false,
       type: "edit",
       setCardFormVisible: false,
@@ -1072,6 +958,13 @@ export default {
   computed: {
     rules() {
       return {
+         addressCountries: [
+          {
+            required: true,
+            message: "请填写地区",
+            trigger: "blur",
+          },
+        ],
         name: [
           {
             required: true,
@@ -1188,135 +1081,67 @@ export default {
       resetMemberTab: "resetMemberTab",
       resetActive: "resetActive",
     }),
-
-    //计算 共   多少件
-    common(selectList) {
-      let total = 0;
-      let gongji = 0;
-      for (let item of selectList) {
-        total += item.number;
-        gongji += item.heji;
+    checkNextcode(code1) {
+      if (!code1 || code1.length !== 3) {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
       }
-      this.combined = gongji;
-      return total;
     },
-    //积分兑换  点击 确认兑换
-    sureExchange(params = {}) {
-      this.$F.merge(params, {
-        memberCard: this.detailForm.memberCard,
-        content: JSON.stringify(this.selectList),
-      });
-      this.$F.doRequest(
-        this,
-        "/pms/hotelmemberscore/get_total_member",
-        params,
-        (res) => {
-          console.log(res);
-          this.$message.success(this.$t("desk.customer_changeSuccess"));
-          this.exchangeDialog = false;
+    // 输入邮编检索地址
+    checkAddress(code1, code2, type) {
+      if (code1 && code2) {
+        if (code1.length == 3 && code2.length == 4) {
+          this.$F.commons.zipCode(code1, code2, (res) => {
+            if (res.results.length > 0) {
+              switch (type) {
+                case "addressA":
+                  this.detailForm.address =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressB":
+                  this.detailForm.address2 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressC":
+                  this.detailForm.enterAddress1 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressD":
+                  this.detailForm.enterAddress2 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+              }
+            }
+          });
+        } else {
+          this.$message({
+            message: "请正确填写邮编",
+            type: "warning",
+          });
         }
-      );
-    },
-
-    //积分兑换  点击查询
-    ex_lookFor() {
-      let params = {
-        name: "",
-        categoryId: "",
-        state: 1,
-        status: 1,
-      };
-      this.$F.merge(params, this.formInline);
-      this.$F.doRequest(this, "/pms/hotelgoods/list", params, (res) => {
-        console.log(res);
-        this.chooseList = res.list;
-      });
-    },
-    //积分兑换  点击重置
-    ex_reset() {
-      this.formInline = { name: "", categoryId: "" };
-      this.ex_lookFor();
-    },
-    //点击 积分兑换
-    exchangeClick() {
-      let params = {
-        name: "",
-        categoryId: "",
-        state: 1,
-        status: 1,
-      };
-      this.$F.doRequest(this, "/pms/hotelgoods/list", params, (res) => {
-        console.log(res);
-        this.chooseList = res.list;
-        this.goodsType();
-      });
-    },
-    //商品分裂接口
-    goodsType() {
-      this.$F.doRequest(this, "/pms/hotelcategory/list", {}, (res) => {
-        console.log(res);
-        this.goodsKind = res.list;
-        this.exchangeDialog = true;
-      });
-    },
-    //积分兑换  点击移除
-    removeClick(row) {
-      this.selectList = this.selectList.filter((item) => {
-        return item.goodsId != row.goodsId;
-      });
-      console.log(this.selectList.length);
-    },
-
-    //积分兑换  点击添加
-    addGoods(row) {
-      console.log(row);
-      let each = {
-        goodsId: row.id,
-        goodsName: row.name,
-        score: row.score,
-        number: row.buyCount,
-        inventoryCount: row.inventoryCount,
-
-        heji: 0,
-      };
-      let id = row.id;
-      for (let item = 0; item < this.selectList.length; item++) {
-        if (id == this.selectList[item].goodsId) {
-          this.selectList[item].number += row.buyCount;
-          return false;
-        }
+      } else {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
       }
-      this.selectList.push(each);
     },
     //跳转  会员信息管理
     goMemberManag() {
       this.resetActive("member");
       this.$router.push("/customer");
     },
-    //跳转  积分明细  页面
-    toIntegralDetail() {
-      if (this.$route.query.buttonName == this.$t("commons.detail")) {
-        return false;
-      } else {
-        this.$router.push({
-          path: "/integralDetail",
-          query: {
-            id: this.detailForm.id,
-          },
-        });
-      }
-    },
-    //计算合计
-    addUpTo(row) {
-      let heji = 0;
-      heji = row.score * row.number;
-      row.heji = heji;
-      return heji;
-    },
-    //计数器改变
-    handleChange(value) {
-      console.log(value);
-    },
+
     findone(id) {
       this.$F.doRequest(
         this,
@@ -1631,6 +1456,8 @@ export default {
   border: 1px solid rgba(211, 211, 211, 1);
 }
 .someBox {
+  margin-bottom: 20px;
+
   span {
     margin-left: 10px;
     color: rgba(18, 110, 255, 100);
@@ -1651,5 +1478,12 @@ export default {
   box-sizing: border-box;
   padding-left: 80px;
   margin-bottom: 20px;
+}
+.el-form-item--mini.el-form-item,
+.el-form-item--small.el-form-item {
+  margin-bottom: 10px;
+}
+.el-row[data-v-b37f780e] {
+  margin-bottom: 10px;
 }
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-15 17:47:46
+ * @LastEditTime: 2020-12-16 10:40:14
  * @FilePath: \jiudian\src\views\market\reception\checkin\guestChoose.vue
  -->
 
@@ -14,7 +14,7 @@
       :title="$t('desk.order_sourceType')"
       width="500px"
     >
-      <el-form :model="checkInForm" ref="checkInForm" style="margin-top: -20px" label-width="100px">
+      <el-form :model="checkInForm" ref="checkInForm" style="margin-top: -20px" :rules="checkRules" label-width="100px">
         <el-form-item
           :label="$t('desk.customer_guestType') + ':'"
           class=""
@@ -52,10 +52,18 @@
         </el-form-item>
         <!-- 当客人类型为团队时 -->
        <div v-if="checkInForm.guestType == 4" >
-          <el-form-item label="团队名:"  >
-          <el-input v-model="checkInForm.teamName" placeholder="团队名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.teamPronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
-        </el-form-item>
+          <el-row>
+            <el-col :span="14">
+              <el-form-item label="团队名:"  prop="teamName" >
+                <el-input v-model="checkInForm.teamName" placeholder="团队名" style="width:160px" size="small"></el-input>
+              </el-form-item>
+            </el-col>
+             <el-col :span="10">
+              <el-form-item label-width="0" prop="teamPronunciation">
+                <el-input v-model="checkInForm.teamPronunciation" placeholder="发音" style="width:160px;margin-left:5px;" size="small"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
          <el-form-item label="导游姓名:"  >
           <el-input v-model="checkInForm.guideName" placeholder="导游姓名" style="width:160px" size="small"></el-input>
           <el-input v-model="checkInForm.guidePronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
@@ -68,7 +76,7 @@
           <el-input v-model="checkInForm.teamMobile" placeholder="团体电话" style="width:330px" size="small"></el-input>
         </el-form-item>
         <el-form-item label="团体地址:"  >
-          <el-input v-model="checkInForm.teamAdd1" minlength='3' maxlength='3'  style="width:75px" size="small"></el-input>
+          <el-input v-model="checkInForm.teamAdd1" minlength='3' maxlength='3' @blur="checkNextcode(checkInForm.teamAdd1)"  style="width:75px" size="small"></el-input>
           <span style="margin:0 5px">-</span>
           <el-input v-model="checkInForm.teamAdd2" minlength='4' maxlength='4' @blur="checkAddress(checkInForm.teamAdd1,checkInForm.teamAdd2,'team')" style="width:75px;" size="small"></el-input>
           <el-input v-model="checkInForm.teamAdd3" placeholder="输入邮编检索出地址" style="width:160px;margin-left:5px;" size="small"></el-input>
@@ -88,9 +96,9 @@
           <el-input v-model="checkInForm.travelPronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
          <el-form-item label="旅行社地址:"  >
-          <el-input v-model="checkInForm.travelAdd1"  style="width:75px" size="small"></el-input>
+          <el-input v-model="checkInForm.travelAdd1"  minlength='3' maxlength='3' @blur="checkNextcode(checkInForm.travelAdd1)" style="width:75px" size="small"></el-input>
           <span style="margin:0 5px">-</span>
-          <el-input v-model="checkInForm.travelAdd2"  style="width:75px;" @blur="checkAddress(checkInForm.travelAdd1,checkInForm.travelAdd2,'travel')" size="small"></el-input>
+          <el-input v-model="checkInForm.travelAdd2" minlength='4' maxlength='4'  style="width:75px;" @blur="checkAddress(checkInForm.travelAdd1,checkInForm.travelAdd2,'travel')" size="small"></el-input>
           <el-input v-model="checkInForm.travelAdd3" placeholder="输入邮编检索出地址" style="width:160px;margin-left:5px;" size="small"></el-input>
         </el-form-item> 
          <el-form-item label="联络人姓名:"  >
@@ -109,7 +117,7 @@
         <el-button size="small" @click="guestTypeShow = false">{{
           $t("commons.cancel")
         }}</el-button>
-        <el-button size="small" type="primary" @click="submit">{{
+        <el-button size="small" type="primary" @click="submit('checkInForm')">{{
           $t("commons.confirm")
         }}</el-button>
       </span>
@@ -127,13 +135,35 @@ export default {
       guestTypeShow: false,
     };
   },
+  computed:{
+    checkRules(){
+      return{
+         teamName: [
+            { required: true, message: '请输入团队名', trigger: 'blur' },
+           ],
+         teamPronunciation: [
+            { required: true, message: '请输入发音', trigger: 'blur' },
+          ],
+      }
+    }
+  },
   mounted() {
   },
   methods: {
+    checkNextcode(code1){
+      if(!code1||code1.length!==3){
+        this.$message({
+           message:'请正确填写邮编',
+           type: 'warning'
+         })
+      }
+    },
     // 输入邮编检索地址
     checkAddress(code1,code2,type){
-        this.$F.commons.zipCode(code1,code2).then(res=>{
-         if(res.results.length>0){
+       if(code1&&code2){
+         if(code1.length==3&&code2.length==4){
+          this.$F.commons.zipCode(code1,code2,res=>{
+            if(res.results.length>0){
             if(type=='team'){
            let addA =res.results[0].address1+res.results[0].address2+res.results[0].address3;
            this.$set(this.checkInForm,'teamAdd3',addA)
@@ -143,22 +173,40 @@ export default {
           }
          }
         })
+       }else{
+         this.$message({
+           message:'请正确填写邮编',
+           type: 'warning'
+         })
+       }
+       }else{
+         this.$message({
+           message:'请正确填写邮编',
+           type: 'warning'
+         })
+       }
     },
     
     guestTypeChange() {
       this.checkInForm.name = "";
     },
-    submit() {
-      if (this.checkInForm.guestType == 2 && this.checkInForm.memberCard) {
-        this.$emit("guestChooseCallback", this.checkInForm);
-      } else if (this.checkInForm.guestType == 3 && this.checkInForm.enterId) {
-        this.$emit("guestChooseCallback", this.checkInForm);
-      } else if (this.checkInForm.guestType == 1) {
-        this.checkInForm.memberCard = "";
-        this.checkInForm.enterId = "";
-        this.$emit("guestChooseCallback", this.checkInForm);
-      }
-      this.guestTypeShow = false;
+    submit(formName) {
+       this.$refs[formName].validate((valid) => {
+          if (valid) {
+             if (this.checkInForm.guestType == 2 && this.checkInForm.memberCard) {
+              this.$emit("guestChooseCallback", this.checkInForm);
+            } else if (this.checkInForm.guestType == 3 && this.checkInForm.enterId) {
+              this.$emit("guestChooseCallback", this.checkInForm);
+            } else if (this.checkInForm.guestType == 1) {
+              this.checkInForm.memberCard = "";
+              this.checkInForm.enterId = "";
+              this.$emit("guestChooseCallback", this.checkInForm);
+            }
+            this.guestTypeShow = false;
+          } else {
+            return false;
+          }
+        });
     },
 
     dialogOpen(data) {
@@ -244,6 +292,6 @@ export default {
   padding: 0 10px 10px !important;
 }
 .el-form-item{
-  margin-bottom: 5px;
+  margin-bottom: 12px;
 }
 </style>

@@ -215,23 +215,59 @@
         <el-row class="row">
           <el-form-item :label="$t('desk.customer_unitAddress') + '1:'">
             <el-input
-             style="width:80px;"
+              minlength="3"
+              maxlength="3"
+              @blur="checkNextcode(addCompanyForm.enterAddress1C1)"
+              style="width: 80px"
               v-model="addCompanyForm.enterAddress1C1"
             ></el-input>
             <span style="margin: 0 5px">-</span>
-            <el-input v-model="addCompanyForm.enterAddress1C2" style="width:80px"></el-input>
-            <el-input v-model="addCompanyForm.enterAddress1" style="width:260px;margin-left:10px;"></el-input>
+            <el-input
+              minlength="4"
+              maxlength="4"
+              @blur="
+                checkAddress(
+                  addCompanyForm.enterAddress1C1,
+                  addCompanyForm.enterAddress1C2,
+                  'addressA'
+                )
+              "
+              v-model="addCompanyForm.enterAddress1C2"
+              style="width: 80px"
+            ></el-input>
+            <el-input
+              v-model="addCompanyForm.enterAddress1"
+              style="width: 260px; margin-left: 10px"
+            ></el-input>
           </el-form-item>
         </el-row>
-       <el-row class="row">
+        <el-row class="row">
           <el-form-item :label="$t('desk.customer_unitAddress') + '2:'">
             <el-input
-             style="width:80px;"
+              minlength="3"
+              maxlength="3"
+              @blur="checkNextcode(addCompanyForm.enterAddress2C1)"
+              style="width: 80px"
               v-model="addCompanyForm.enterAddress2C1"
             ></el-input>
             <span style="margin: 0 5px">-</span>
-            <el-input v-model="addCompanyForm.enterAddress2C2" style="width:80px"></el-input>
-            <el-input v-model="addCompanyForm.enterAddress2" style="width:260px;margin-left:10px;"></el-input>
+            <el-input
+              minlength="4"
+              maxlength="4"
+              @blur="
+                checkAddress(
+                  addCompanyForm.enterAddress2C1,
+                  addCompanyForm.enterAddress2C2,
+                  'addressB'
+                )
+              "
+              v-model="addCompanyForm.enterAddress2C2"
+              style="width: 80px"
+            ></el-input>
+            <el-input
+              v-model="addCompanyForm.enterAddress2"
+              style="width: 260px; margin-left: 10px"
+            ></el-input>
           </el-form-item>
         </el-row>
 
@@ -280,16 +316,21 @@
           </el-col>
           <el-col :span="16" class="col">
             <el-form-item :label="$t('desk.customer_branchAddress') + ':'">
-               <el-input
-             style="width:80px;"
-              v-model="addCompanyForm.branchEnterC1"
-            ></el-input>
-            <span style="margin: 0 5px">-</span>
-            <el-input v-model="addCompanyForm.branchEnterC2" style="width:80px"></el-input>
-            <el-input v-model="addCompanyForm.branchEnterAddress" style="width:165px;margin-left:10px;"></el-input>
+              <el-input
+                style="width: 80px"
+                v-model="addCompanyForm.branchEnterC1"
+              ></el-input>
+              <span style="margin: 0 5px">-</span>
+              <el-input
+                v-model="addCompanyForm.branchEnterC2"
+                style="width: 80px"
+              ></el-input>
+              <el-input
+                v-model="addCompanyForm.branchEnterAddress"
+                style="width: 165px; margin-left: 10px"
+              ></el-input>
             </el-form-item>
           </el-col>
-          
         </el-row>
         <el-row class="row">
           <el-col :span="8" class="col">
@@ -340,14 +381,14 @@
           </el-col>
         </el-row>
         <el-row>
-            <el-form-item label="memo1:">
-             <el-input type="textarea" v-model="addCompanyForm.memo1"></el-input>
-            </el-form-item>
+          <el-form-item label="memo1:">
+            <el-input type="textarea" v-model="addCompanyForm.memo1"></el-input>
+          </el-form-item>
         </el-row>
-         <el-row>
-            <el-form-item label="memo2:">
-             <el-input type="textarea" v-model="addCompanyForm.memo2"></el-input>
-            </el-form-item>
+        <el-row>
+          <el-form-item label="memo2:">
+            <el-input type="textarea" v-model="addCompanyForm.memo2"></el-input>
+          </el-form-item>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -755,6 +796,47 @@ export default {
     // }
   },
   methods: {
+    checkNextcode(code1) {
+      if (!code1 || code1.length !== 3) {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
+      }
+    },
+    // 输入邮编检索地址
+    checkAddress(code1, code2, type) {
+      if (code1 && code2) {
+        if (code1.length == 3 && code2.length == 4) {
+          this.$F.commons.zipCode(code1, code2, (res) => {
+            if (res.results.length > 0) {
+              if (type == "addressA") {
+                this.addCompanyForm.enterAddress1 =
+                  res.results[0].address1 +
+                  res.results[0].address2 +
+                  res.results[0].address3;
+              } else {
+                this.addCompanyForm.enterAddress2 =
+                  res.results[0].address1 +
+                  res.results[0].address2 +
+                  res.results[0].address3;
+              }
+            }
+          });
+        } else {
+          this.$message({
+            message: "请正确填写邮编",
+            type: "warning",
+          });
+        }
+      } else {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
+      }
+    },
+
     initAddCompanyForm() {
       this.addCompanyForm = {
         id: "",
@@ -773,8 +855,8 @@ export default {
         bankCard: "",
         branchEnterName: "",
         branchEnterNo: "",
-        branchEnterC1:'',
-        branchEnterC2:'',
+        branchEnterC1: "",
+        branchEnterC2: "",
         branchEnterAddress: "",
         branchEnterTelephone: "",
         accountName: "",
@@ -793,15 +875,14 @@ export default {
         taxNum: "",
         contractNum: "",
         remark: "",
-        memo1:'',
-        memo2:'',
-        enterAddress1C1:'',
-        enterAddress1C2:'',
-        enterAddress1:'',
-        enterAddress2C1:'',
-        enterAddress2C2:'',
-        enterAddress2:'',
-
+        memo1: "",
+        memo2: "",
+        enterAddress1C1: "",
+        enterAddress1C2: "",
+        enterAddress1: "",
+        enterAddress2C1: "",
+        enterAddress2C2: "",
+        enterAddress2: "",
       };
     },
     F_storeName(v) {

@@ -1,13 +1,13 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-04 15:25:35
+ * @LastEditTime: 2020-12-16 15:56:35
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
 
     enterpriseName: '单位名称',
-    enterpriseMobile: '单位电话',
+    enterpriseMobile: '单位号码',
   enterpriseAddress: '单位地址',
   englishM:'memo',
     cancelRoomKeep: '取消预留',

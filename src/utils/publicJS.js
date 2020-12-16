@@ -269,31 +269,31 @@ const $F = {
         callback(data);
       })
     },
-    // //邮编检索
-    zipCode(code1, code2) {
-      let code = code1 + code2;
-      let params = {
-        zipcode: code,
-      };
-      let interfance =  new Promise((resolve, reject) => {
-        $F.doRequest(null, '/pms/system/j_code_address', params, (res) => {
-          resolve(res);
-          reject('not find');
-        })
-      })
-      return interfance;
-    },
-
-    //邮编检索
-    // zipCode(code1, code2, callBack) {
+    // //邮编检索promise方法
+    // zipCode(code1, code2) {
     //   let code = code1 + code2;
     //   let params = {
     //     zipcode: code,
     //   };
-    //   $F.doRequest(null, '/pms/system/j_code_address', params, (res) => {
-    //     callBack(res)
+    //   let interfance =  new Promise((resolve, reject) => {
+    //     $F.doRequest(null, '/pms/system/j_code_address', params, (res) => {
+    //       resolve(res);
+    //       reject('not find');
+    //     })
     //   })
+    //   return interfance;
     // },
+
+    //邮编检索 回调函数方法
+    zipCode(code1, code2, callBack) {
+      let code = code1 + code2;
+      let params = {
+        zipcode: code,
+      };
+      $F.doRequest(null, '/pms/system/j_code_address', params, (res) => {
+        callBack(res)
+      })
+    },
 
 
     //获取会员类型列表 这里封装统一方法 很多地方用到
