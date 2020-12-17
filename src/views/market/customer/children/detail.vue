@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-16 18:36:10
+ * @LastEditTime: 2020-12-17 16:05:46
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -30,8 +30,7 @@
         <div class="someBox" v-if="type == 'detail'">
           <div>累计收取：<span>10000000</span></div>
           <div>
-            <el-button type="text" @click="yearDetail = true"
-              >年费明细</el-button
+            <el-button type="text" @click="yearPrice">年费明细</el-button
             ><el-button type="text" @click="annualFee = true">收年费</el-button>
           </div>
         </div>
@@ -408,7 +407,10 @@
                         prop="email"
                       >
                         <template v-if="type == 'detail'">
-                          {{ detailForm.enterName }}<span v-if="detailForm.enterPinyin">【{{detailForm.enterPinyin}}】</span>
+                          {{ detailForm.enterName
+                          }}<span v-if="detailForm.enterPinyin"
+                            >【{{ detailForm.enterPinyin }}】</span
+                          >
                         </template>
                       </el-form-item>
                     </el-col>
@@ -514,21 +516,13 @@
                   </el-row>
                   <el-row class="cell" v-if="type == 'detail'">
                     <el-col :span="8" class="col">
-                      <el-form-item
-                        label="单位地址1:"
-                      >
-                        <template >{{
-                          detailForm.enterAddress1
-                        }}</template>
+                      <el-form-item label="单位地址1:">
+                        <template>{{ detailForm.enterAddress1 }}</template>
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item
-                        label="单位地址2:"
-                      >
-                        <template >{{
-                          detailForm.enterAddress2
-                        }}</template>
+                      <el-form-item label="单位地址2:">
+                        <template>{{ detailForm.enterAddress2 }}</template>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -599,7 +593,7 @@
               size="small"
               type="year"
               placeholder="选择年份"
-              v-model="yearForm.date1"
+              v-model="yearForm.year"
               format="yyyy"
               value-format="yyyy"
               style="width: 100%"
@@ -607,17 +601,24 @@
           </el-form-item>
           <el-form-item label="缴费门店">
             <el-select
-              v-model="yearForm.region"
-              placeholder="请选择活动区域"
+              v-model="yearForm.storesNum"
+              placeholder="请选择缴费门店"
               size="small"
             >
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+              <el-option
+                v-for="item in storeList"
+                :key="item.value"
+                :label="item.storesName"
+                :value="item.storesNum"
+              >
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="small">查询</el-button>
-            <el-button size="small">重置</el-button>
+            <el-button type="primary" @click="getYearDate" size="small"
+              >查询</el-button
+            >
+            <el-button size="small" @click="resetYearform">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -631,13 +632,13 @@
         size="small"
       >
         <el-table-column
-          prop="memberCard"
+          prop="fee"
           label="缴费金额"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="name" label="缴费时间"> </el-table-column>
-        <el-table-column label="缴费年份 "> </el-table-column>
-        <el-table-column label="备注" prop="age" width="80px">
+        <el-table-column prop="createDate" label="缴费时间"> </el-table-column>
+        <el-table-column label="缴费年份" prop="year"> </el-table-column>
+        <el-table-column label="备注" prop="remark" width="80px">
         </el-table-column>
       </el-table>
     </el-dialog>
@@ -649,48 +650,54 @@
       top="0"
     >
       <div class="textBox">
-        <span>卡号：0002</span><span>姓名：孙小宝</span
-        ><span>会员类型：会员类型1</span>
+        <span>卡号：{{ detailForm.memberCard }}</span
+        ><span>姓名：{{ detailForm.name }}</span
+        ><span>会员类型：{{ F_memberTypeId(detailForm.memberTypeId) }}</span>
       </div>
-      <el-form ref="addfeeFrom" :model="addfeeFrom" label-width="150px">
-        <el-form-item label="选择年份：">
+      <el-form
+        ref="addfeeFrom"
+        :model="addfeeFrom"
+        :rules="addfeeRules"
+        label-width="150px"
+      >
+        <el-form-item label="选择年份：" prop="year">
           <el-date-picker
             type="year"
-            placeholder="选择年份"
-            v-model="addfeeFrom.date1"
+            placeholder="请选择年份"
+            v-model="addfeeFrom.year"
             format="yyyy"
             value-format="yyyy"
             style="width: 270px"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="支付方式：">
+        <el-form-item label="支付方式：" prop="type">
           <el-select
-            v-model="addfeeFrom.region"
+            v-model="addfeeFrom.type"
             placeholder="请选择支付方式"
             style="width: 270px"
           >
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+            <el-option label="线下缴费" value="1"></el-option>
+            <el-option label="线上缴费" value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="缴费时间:">
+        <el-form-item label="缴费时间:" prop="createDate">
           <el-date-picker
             type="date"
             placeholder="选择日期"
-            v-model="addfeeFrom.date1"
+            v-model="addfeeFrom.createDate"
             style="width: 270px"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="支付费用：">
-          <el-input v-model="addfeeFrom.name" style="width: 270px"></el-input>
+        <el-form-item label="支付费用：" prop="fee">
+          <el-input v-model="addfeeFrom.fee" style="width: 270px"></el-input>
         </el-form-item>
         <el-form-item label="备注：">
-          <el-input v-model="addfeeFrom.name" style="width: 270px"></el-input>
+          <el-input v-model="addfeeFrom.remark" style="width: 270px"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" style="text-align: right">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
+        <el-button @click="cancelAdd">取消</el-button>
+        <el-button type="primary" @click="sureAdd('addfeeFrom')"
           >确认</el-button
         >
       </div>
@@ -919,10 +926,27 @@ export default {
   data() {
     return {
       yearDetail: false, //年费明细dialog
-      yearForm: {}, //年费明细表单
-      yearTabel: [{}], //年费明细表格
+      yearForm: {
+        //年费明细表单
+        year: "",
+        storesNum: "",
+        memberCard: "",
+      },
+      yearTabel: [], //年费明细表格
       annualFee: false, //收年费dialog
-      addfeeFrom: {}, //添加年费表单
+      addfeeFrom: {
+        //添加年费表单
+        status: 1,
+        fee: "",
+        year: "",
+        remark: "",
+        type: "",
+        createDate: "",
+        memberCard: "",
+        userName: "",
+        memberType: "",
+        userId: "",
+      },
       isHeader: false,
       loading: false,
       type: "edit",
@@ -956,9 +980,33 @@ export default {
     };
   },
   computed: {
+    addfeeRules() {
+      return {
+        year: [
+          {
+            type: "string",
+            required: true,
+            message: "请选择年份",
+            trigger: "change",
+          },
+        ],
+        type: [
+          { required: true, message: "请选择支付方式", trigger: "change" },
+        ],
+        createDate: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择缴费时间",
+            trigger: "change",
+          },
+        ],
+        fee: [{ required: true, message: "请填写支付费用", trigger: "blur" }],
+      };
+    },
     rules() {
       return {
-         addressCountries: [
+        addressCountries: [
           {
             required: true,
             message: "请填写地区",
@@ -1075,7 +1123,6 @@ export default {
     this.hotelenter_list();
     this.smembertype_list();
   },
-
   methods: {
     ...mapMutations({
       resetMemberTab: "resetMemberTab",
@@ -1088,6 +1135,61 @@ export default {
           type: "warning",
         });
       }
+    },
+    yearPrice() {
+      this.resetYearform();
+      this.yearDetail = true;
+    },
+    // 年费明细dialog，点击重置按钮
+    resetYearform() {
+      this.yearForm = {
+        year: "",
+        storesNum: "",
+        memberCard: this.detailForm.memberCard,
+      };
+      this.getYearDate();
+    },
+    getYearDate() {
+      this.$F.doRequest(
+        this,
+        "/pms/hotelmember/year_fee_log",
+        this.yearForm,
+        (res) => {
+          this.yearTabel = res.list;
+        }
+      );
+    },
+    cancelAdd() {
+      this.addfeeFrom = {
+        status: 1,
+        year: "",
+         type: "",
+           createDate: "",
+        fee: "",
+        remark: "",
+       
+      
+        memberCard: "",
+        userName: "",
+        memberType: "",
+        userId: "",
+      };
+      this.annualFee = false;
+    },
+    sureAdd(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.addfeeFrom.memberCard = this.detailForm.memberCard;
+          this.addfeeFrom.userName = this.detailForm.name;
+          this.addfeeFrom.memberType = this.detailForm.memberTypeId;
+          this.addfeeFrom.userId = this.detailForm.id;
+          this.$F.doRequest(this,'/pms/hotelmember/add_fee',this.addfeeFrom,res=>{
+            console.log(res);
+          })
+        } else {
+          return false;
+        }
+      });
     },
     // 输入邮编检索地址
     checkAddress(code1, code2, type) {
@@ -1276,7 +1378,10 @@ export default {
       });
     },
     stores_list() {
-      this.$F.doRequest(null, "/pms/freeuser/stores_list", {}, (data) => {
+      let params = {
+        filterHeader: true,
+      };
+      this.$F.doRequest(this, "/pms/freeuser/stores_list", params, (data) => {
         this.storeList = data;
       });
     },
@@ -1322,44 +1427,6 @@ export default {
       for (let k in that.smembertypeList) {
         if (that.smembertypeList[k].id == v) {
           return that.smembertypeList[k].name;
-        }
-      }
-      return "";
-    },
-    F_storeName(v) {
-      let that = this;
-      for (let k in that.storeList) {
-        if (that.storeList[k].storesNum == v) {
-          return that.storeList[k].storesName;
-        }
-      }
-      return "";
-    },
-    F_nationality(v) {
-      let that = this;
-      for (let k in that.nationalityList) {
-        if (that.nationalityList[k].id == v) {
-          return this.$i18n.locale == "ri"
-            ? that.nationalityList[k].jName
-            : that.nationalityList[k].cName;
-        }
-      }
-      return "";
-    },
-    F_salesId(v) {
-      let that = this;
-      for (let k in that.salesList) {
-        if (that.salesList[k].id == v) {
-          return that.salesList[k].userName;
-        }
-      }
-      return "";
-    },
-    F_enterId(v) {
-      let that = this;
-      for (let k in that.hotelenterList) {
-        if (that.hotelenterList[k].id == v) {
-          return that.hotelenterList[k].enterName;
         }
       }
       return "";
@@ -1476,8 +1543,11 @@ export default {
   color: rgba(30, 30, 30, 100);
   font-size: 16px;
   box-sizing: border-box;
-  padding-left: 80px;
+  padding-left: 65px;
   margin-bottom: 20px;
+  span {
+    margin-right: 15px;
+  }
 }
 .el-form-item--mini.el-form-item,
 .el-form-item--small.el-form-item {

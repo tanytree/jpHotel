@@ -778,6 +778,12 @@ module.exports = {
     editor_only:'未翻译词条',
     home_consumerNames: '未翻译词条',
     editor_nameAenter:'未翻译词条',
+    customer_region: '未翻译词条',
+    customer_inputRegion: '未翻译词条',
+    customer_zipcodeTo: '未翻译词条',
+    customer_inputEmail: '未翻译词条',
+    customer_faying: '未翻译词条',
+    customer_sureZipcode: '未翻译词条',
 
 
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-11-13 16:09:32
  * @Author: 陶子
- * @LastEditTime: 2020-12-17 10:59:12
+ * @LastEditTime: 2020-12-17 14:01:23
  * @FilePath: \jiudian\src\views\market\customer\children\hsitorydetailTao.vue
 -->
 <template>
@@ -48,7 +48,9 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="8" class="col">
-                    <el-form-item label="证件类型:">
+                    <el-form-item
+                      :label="$t('desk.customer_documentType') + ':'"
+                    >
                       <el-select v-model="editorForm.idcardType">
                         <el-option
                           v-for="(label, value) in $t('commons.idCardType')"
@@ -60,7 +62,7 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="8" class="col">
-                    <el-form-item label="证件号码:">
+                    <el-form-item :label="$t('desk.home_idCardNum') + ':'">
                       <el-input v-model="editorForm.idcard"></el-input>
                     </el-form-item>
                   </el-col>
@@ -79,25 +81,30 @@
                 </el-row>
                 <el-row class="cell">
                   <el-col :span="8" class="col">
-                    <el-form-item label="地区:" prop="addressCountries">
+                    <el-form-item
+                      :label="$t('desk.customer_region') + ':'"
+                      prop="addressCountries"
+                    >
                       <el-input
-                        placeholder="请填写地区"
+                        :placeholder="$t('desk.customer_inputRegion')"
                         v-model="editorForm.addressCountries"
                       ></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="16">
-                    <el-form-item label="地址1:">
+                    <el-form-item :label="$t('desk.customer_address') + '1:'">
                       <el-input
                         v-model="editorForm.address1C1"
                         minlength="3"
                         maxlength="3"
+                        @input="change($event)"
                         @blur="checkNextcode(editorForm.address1C1)"
                         style="width: 75px"
                         size="small"
                       ></el-input>
                       <span style="margin: 0 5px">-</span>
                       <el-input
+                        @input="change($event)"
                         v-model="editorForm.address1C2"
                         minlength="4"
                         maxlength="4"
@@ -113,7 +120,7 @@
                       ></el-input>
                       <el-input
                         v-model="editorForm.address"
-                        placeholder="输入邮编检索出地址"
+                        :placeholder="$t('desk.customer_zipcodeTo')"
                         style="width: 160px; margin-left: 5px"
                         size="small"
                       ></el-input>
@@ -122,8 +129,9 @@
                 </el-row>
                 <el-row>
                   <el-col :span="16">
-                    <el-form-item label="地址2:">
+                    <el-form-item :label="$t('desk.customer_address') + '2:'">
                       <el-input
+                        @input="change($event)"
                         v-model="editorForm.address2C1"
                         minlength="3"
                         maxlength="3"
@@ -133,6 +141,7 @@
                       ></el-input>
                       <span style="margin: 0 5px">-</span>
                       <el-input
+                        @input="change($event)"
                         v-model="editorForm.address2C2"
                         minlength="4"
                         maxlength="4"
@@ -148,7 +157,7 @@
                       ></el-input>
                       <el-input
                         v-model="editorForm.address2"
-                        placeholder="输入邮编检索出地址"
+                        :placeholder="$t('desk.customer_zipcodeTo')"
                         style="width: 160px; margin-left: 5px"
                         size="small"
                       ></el-input>
@@ -164,7 +173,7 @@
                         label-width="60px"
                       >
                         <el-radio-group v-model="editorForm.sex">
-                            <el-radio
+                          <el-radio
                             v-for="(item, key, index) of $t('commons.F_sex')"
                             :label="key"
                             :key="index"
@@ -188,10 +197,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="6" class="col">
-                      <el-form-item label="邮箱:">
+                      <el-form-item :label="$t('desk.customer_email') + ':'">
                         <el-input
                           style="width: 180px"
-                          placeholder="请填写邮箱"
+                          :placeholder="$t('desk.customer_inputEmail')"
                           v-model="editorForm.email"
                         ></el-input>
                       </el-form-item>
@@ -207,7 +216,7 @@
                         <el-input
                           style="width: 85px; margin-left: 10px"
                           v-model="editorForm.enterPinyin"
-                          placeholder="发音"
+                          :placeholder="$t('desk.customer_faying')"
                         ></el-input>
                       </el-form-item>
                     </el-col>
@@ -227,6 +236,7 @@
                         :label="$t('frontOffice.enterpriseAddress') + '1' + ':'"
                       >
                         <el-input
+                          @input="change($event)"
                           v-model="editorForm.enterAddress1C1"
                           minlength="3"
                           maxlength="3"
@@ -236,6 +246,7 @@
                         ></el-input>
                         <span style="margin: 0 5px">-</span>
                         <el-input
+                          @input="change($event)"
                           v-model="editorForm.enterAddress1C2"
                           minlength="4"
                           maxlength="4"
@@ -251,7 +262,7 @@
                         ></el-input>
                         <el-input
                           v-model="editorForm.enterAddress1"
-                          placeholder="输入邮编检索出地址"
+                          :placeholder="$t('desk.customer_zipcodeTo')"
                           style="width: 160px; margin-left: 5px"
                           size="small"
                         ></el-input>
@@ -271,6 +282,7 @@
                         :label="$t('frontOffice.enterpriseAddress') + '2' + ':'"
                       >
                         <el-input
+                          @input="change($event)"
                           v-model="editorForm.enterAddress2C1"
                           minlength="3"
                           maxlength="3"
@@ -280,6 +292,7 @@
                         ></el-input>
                         <span style="margin: 0 5px">-</span>
                         <el-input
+                          @input="change($event)"
                           v-model="editorForm.enterAddress2C2"
                           minlength="4"
                           maxlength="4"
@@ -295,7 +308,7 @@
                         ></el-input>
                         <el-input
                           v-model="editorForm.enterAddress2"
-                          placeholder="输入邮编检索出地址"
+                          :placeholder="$t('desk.customer_zipcodeTo')"
                           style="width: 160px; margin-left: 5px"
                           size="small"
                         ></el-input>
@@ -379,7 +392,7 @@ export default {
         addressCountries: [
           {
             required: true,
-            message: "请填写地区",
+            message: this.$t("desk.customer_inputRegion"),
             trigger: "blur",
           },
         ],
@@ -418,7 +431,7 @@ export default {
         memberTypeName: null,
         memo1: null,
         memo2: null,
-        mobile:null,
+        mobile: null,
         mobile2: null,
         name: null,
         nationality: null,
@@ -438,21 +451,27 @@ export default {
   },
   created() {
     this.itemInfo = this.$route.query.item;
-     for (let i in this.itemInfo) {
+    for (let i in this.itemInfo) {
       this.editorForm[i] = this.itemInfo[i];
     }
-  this.$set(this.editorForm,'guestId',this.itemInfo.id)
-  this.editorForm.sex = this.editorForm.sex.toString()
+    this.$set(this.editorForm, "guestId", this.itemInfo.id);
+    if (this.editorForm.sex) {
+      this.editorForm.sex = this.editorForm.sex.toString();
+    }
+    if (this.editorForm.idcardType) {
+      this.editorForm.idcardType = this.editorForm.idcardType.toString();
+    }
   },
-  mounted() {
-   
-  },
+  mounted() {},
 
   methods: {
+    change() {
+      this.$forceUpdate();
+    },
     checkNextcode(code1) {
       if (!code1 || code1.length !== 3) {
         this.$message({
-          message: "请正确填写邮编",
+          message: this.$t("desk.customer_sureZipcode"),
           type: "warning",
         });
       }
@@ -493,13 +512,13 @@ export default {
           });
         } else {
           this.$message({
-            message: "请正确填写邮编",
+            message: this.$t("desk.customer_sureZipcode"),
             type: "warning",
           });
         }
       } else {
         this.$message({
-          message: "请正确填写邮编",
+          message: this.$t("desk.customer_sureZipcode"),
           type: "warning",
         });
       }
