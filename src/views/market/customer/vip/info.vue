@@ -382,8 +382,6 @@ export default {
     },
     //点击新增会员按钮
     handleAdd(item) {
-      // this.$router.push({name:'customeradd',query: {type:'header'}})
-
       this.$router.push({
         name: "memberEditorTao",
         query: {

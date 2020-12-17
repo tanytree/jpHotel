@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-17 13:44:31
+ * @LastEditTime: 2020-12-17 18:04:33
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -76,8 +76,9 @@
           width="200px"
         >
           <template slot-scope="{ row }">
-            <div>{{ row.mobile }}</div>
-            <div>{{ row.mobile2 }}</div>
+            <div v-if="row.mobile">({{$t('desk.editor_hand')}}){{ row.mobile }}</div>
+            <div v-if="row.mobile2">({{$t('desk.editor_home')}}){{ row.mobile2 }}</div>
+            <div v-if="row.enterMobile1">({{$t('desk.editor_only')}}){{ row.enterMobile1 }}</div>
           </template>
         </el-table-column>
         <el-table-column

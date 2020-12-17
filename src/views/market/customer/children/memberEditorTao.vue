@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-16 18:37:40
+ * @LastEditTime: 2020-12-17 17:49:56
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -408,7 +408,10 @@
                         prop="email"
                       >
                         <template v-if="type == 'detail'">
-                          {{ detailForm.enterName }}<span v-if="detailForm.enterPinyin">【{{detailForm.enterPinyin}}】</span>
+                          {{ detailForm.enterName
+                          }}<span v-if="detailForm.enterPinyin"
+                            >【{{ detailForm.enterPinyin }}】</span
+                          >
                         </template>
                       </el-form-item>
                     </el-col>
@@ -514,21 +517,13 @@
                   </el-row>
                   <el-row class="cell" v-if="type == 'detail'">
                     <el-col :span="8" class="col">
-                      <el-form-item
-                        label="单位地址1:"
-                      >
-                        <template >{{
-                          detailForm.enterAddress1
-                        }}</template>
+                      <el-form-item label="单位地址1:">
+                        <template>{{ detailForm.enterAddress1 }}</template>
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item
-                        label="单位地址2:"
-                      >
-                        <template >{{
-                          detailForm.enterAddress2
-                        }}</template>
+                      <el-form-item label="单位地址2:">
+                        <template>{{ detailForm.enterAddress2 }}</template>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -918,7 +913,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
-       yearDetail: false, //年费明细dialog
+      yearDetail: false, //年费明细dialog
       yearForm: {}, //年费明细表单
       yearTabel: [{}], //年费明细表格
       annualFee: false, //收年费dialog
@@ -939,22 +934,46 @@ export default {
         name: "",
       },
       detailForm: {
-        zipCode1: "",
-        zipCode2: "",
-        addressCountry: "",
-        addressCountries: "",
-        address: "",
-          address2: "",
-        mobile: "",
-        mobile2: "",
-        enterName: "", // 单位名
-        pronunciation: "",
-        id: "",
-        sex: "1",
-        state: "1",
-        idcardType: "1",
-        // idcard: '----'
+        memberTypeId: "",
+        memberCard: "",
+        idcardType: "",
+        idcard: "",
         name: "",
+        pronunciation: "",
+        mobile: "",
+        sex: "",
+        birthday: "",
+        email: "",
+        nationality: "",
+        address: "",
+        carNum: "",
+        hobby: "",
+        enterId: "",
+        remark: "",
+        salesId: "",
+        getWay: null,
+        state: 1,
+        id: "",
+        mobile2: "",
+        addressCountries: "",
+        address1C1: "",
+        address1C2: "",
+        address2: "",
+        address2C1: "",
+        address2C2: "",
+        enterName: "",
+        enterPinyin: "",
+        enterAddress1: "",
+        enterAddress1C1: "",
+        enterAddress1C2: "",
+        enterAddress2: "",
+        enterAddress2C1: "",
+        enterAddress2C2: "",
+        enterMobile1: "",
+        enterMobile2: "",
+        memo1: "",
+        memo2: "",
+        age: "",
       },
       options: [],
     };
@@ -962,7 +981,7 @@ export default {
   computed: {
     rules() {
       return {
-         addressCountries: [
+        addressCountries: [
           {
             required: true,
             message: "请填写地区",
@@ -1086,7 +1105,62 @@ export default {
       resetMemberTab: "resetMemberTab",
       resetActive: "resetActive",
     }),
-  //跳转  会员信息管理
+    checkNextcode(code1) {
+      if (!code1 || code1.length !== 3) {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
+      }
+    },
+    // 输入邮编检索地址
+    checkAddress(code1, code2, type) {
+      if (code1 && code2) {
+        if (code1.length == 3 && code2.length == 4) {
+          this.$F.commons.zipCode(code1, code2, (res) => {
+            if (res.results.length > 0) {
+              switch (type) {
+                case "addressA":
+                  this.detailForm.address =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressB":
+                  this.detailForm.address2 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressC":
+                  this.detailForm.enterAddress1 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+                case "addressD":
+                  this.detailForm.enterAddress2 =
+                    res.results[0].address1 +
+                    res.results[0].address2 +
+                    res.results[0].address3;
+                  break;
+              }
+            }
+          });
+        } else {
+          this.$message({
+            message: "请正确填写邮编",
+            type: "warning",
+          });
+        }
+      } else {
+        this.$message({
+          message: "请正确填写邮编",
+          type: "warning",
+        });
+      }
+    },
+    //跳转  会员信息管理
     goMemberManag() {
       this.resetMemberTab("member-query");
       this.$router.push("/saleOrder");
@@ -1155,7 +1229,7 @@ export default {
             params = {
               id: this.detailForm.id,
               remark: this.cardForm.remark,
-               state:3,
+              state: 3,
             };
           }
           if (this.cardForm.type == 4) {
