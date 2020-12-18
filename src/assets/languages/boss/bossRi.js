@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-01 14:13:09
+ * @LastEditTime: 2020-12-18 17:58:56
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -213,7 +213,7 @@ module.exports = {
     add_chooseDate:'期間設定',
     add_chooseStore:'ホテル選択',
     add_roomData:'各客室ダッシュボード',
-    add_requestSuccess:'未翻译词条',
+    add_requestSuccess:'変換確認',
     add_integralConversion:'ポイント換算',
     add_gain:'ポイント獲得',
     add_deduction:'ポイント利用',

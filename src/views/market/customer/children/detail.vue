@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-17 16:05:46
+ * @LastEditTime: 2020-12-18 14:36:05
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -16,10 +16,13 @@
             >{{ $t("desk.customer_memManagement") }}</el-breadcrumb-item
           >
           <el-breadcrumb-item v-if="type != 'add'"
-            ><span v-if="type == 'edit'">修改会员信息-</span
-            >{{ detailForm.memberCard }}【会员号码】-{{ detailForm.name }}-{{
+            ><span v-if="type == 'edit'"
+              >{{ $t("desk.customer_resetmemInfo") }}-</span
+            >{{ detailForm.memberCard }}【{{
+              $t("desk.customer_membermun")
+            }}】-{{ detailForm.name }}-{{
               F_memberTypeId(detailForm.memberTypeId)
-            }}卡</el-breadcrumb-item
+            }}{{ $t("desk.customer_ka") }}</el-breadcrumb-item
           >
           <el-breadcrumb-item v-else>{{
             $t("desk.customer_addMem")
@@ -28,10 +31,19 @@
       </div>
       <div class="bodyInfo">
         <div class="someBox" v-if="type == 'detail'">
-          <div>累计收取：<span>10000000</span></div>
           <div>
-            <el-button type="text" @click="yearPrice">年费明细</el-button
-            ><el-button type="text" @click="annualFee = true">收年费</el-button>
+            {{ $t("desk.customer_totalCharge") + ":"
+            }}<span>{{
+              detailForm.totalYearFee ? detailForm.totalYearFee : 0
+            }}</span>
+          </div>
+          <div>
+            <el-button type="text" @click="yearPrice">{{
+              $t("desk.customer_yearPriceDetail")
+            }}</el-button
+            ><el-button type="text" @click="annualFee = true">{{
+              $t("desk.customer_getYearPrice")
+            }}</el-button>
           </div>
         </div>
         <div class="mianInfo">
@@ -148,7 +160,10 @@
                     class="col"
                     v-if="type != 'detail'"
                   >
-                    <el-form-item label="证件类型:" prop="name">
+                    <el-form-item
+                      :label="$t('desk.customer_documentType') + ':'"
+                      prop="name"
+                    >
                       <el-select v-model="detailForm.idcardType">
                         <el-option
                           v-for="(label, value) in $t('commons.idCardType')"
@@ -160,10 +175,17 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="type != 'detail' ? 8 : 6" class="col">
-                    <el-form-item label="证件号码:" prop="name">
+                    <el-form-item
+                      :label="$t('desk.home_idCardNum') + ':'"
+                      prop="name"
+                    >
                       <template v-if="type == 'detail'">
-                        <span v-if="detailForm.idcardType == 1">(身份证)</span>
-                        <span v-if="detailForm.idcardType == 2">(护照)</span>
+                        <span v-if="detailForm.idcardType == 1"
+                          >({{ $t("desk.home_idCard") }})</span
+                        >
+                        <span v-if="detailForm.idcardType == 2"
+                          >({{ $t("desk.customer_passport") }})</span
+                        >
                         <span>{{ detailForm.idcard }}</span>
                       </template>
                       <template v-if="type != 'detail'">
@@ -219,10 +241,16 @@
                     }}</el-form-item>
                   </el-col>
                   <el-col :span="6" class="col">
-                    <el-form-item label="状态:">
-                      <div v-if="detailForm.state == 1">已发卡</div>
-                      <div v-if="detailForm.state == 2">已挂失</div>
-                      <div v-if="detailForm.state == 3">待启用</div>
+                    <el-form-item :label="$t('desk.home_state') + ':'">
+                      <div v-if="detailForm.state == 1">
+                        {{ $t("desk.customer_haveCard") }}
+                      </div>
+                      <div v-if="detailForm.state == 2">
+                        {{ $t("desk.customer_haveLoss") }}
+                      </div>
+                      <div v-if="detailForm.state == 3">
+                        {{ $t("desk.customer_waiteUse") }}
+                      </div>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -230,10 +258,13 @@
                 <el-divider v-if="type == 'detail'"></el-divider>
                 <el-row class="cell">
                   <el-col :span="8" class="col">
-                    <el-form-item label="地区:" prop="addressCountries">
+                    <el-form-item
+                      :label="$t('desk.customer_region') + ':'"
+                      prop="addressCountries"
+                    >
                       <el-input
                         v-if="type != 'detail'"
-                        placeholder="请填写地区"
+                        :placeholder="$t('desk.customer_inputRegion')"
                         v-model="detailForm.addressCountries"
                       ></el-input>
                       <template v-if="type == 'detail'">{{
@@ -242,7 +273,7 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="16" v-if="type != 'detail'">
-                    <el-form-item label="地址1:">
+                    <el-form-item :label="$t('desk.customer_address') + '1:'">
                       <el-input
                         v-model="detailForm.address1C1"
                         minlength="3"
@@ -268,26 +299,32 @@
                       ></el-input>
                       <el-input
                         v-model="detailForm.address"
-                        placeholder="输入邮编检索出地址"
+                        :placeholder="$t('desk.customer_zipcodeTo')"
                         style="width: 160px; margin-left: 5px"
                         size="small"
                       ></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8" class="col">
-                    <el-form-item label="地址1:" v-if="type == 'detail'">
+                    <el-form-item
+                      :label="$t('desk.customer_address') + '1:'"
+                      v-if="type == 'detail'"
+                    >
                       <template>{{ detailForm.address }}</template>
                     </el-form-item>
                   </el-col>
                   <el-col :span="8" class="col">
-                    <el-form-item label="地址2:" v-if="type == 'detail'">
+                    <el-form-item
+                      :label="$t('desk.customer_address') + '2:'"
+                      v-if="type == 'detail'"
+                    >
                       <template>{{ detailForm.address2 }}</template>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row v-if="type != 'detail'">
                   <el-col :span="16">
-                    <el-form-item label="地址2:">
+                    <el-form-item :label="$t('desk.customer_address') + '2:'">
                       <el-input
                         v-model="detailForm.address2C1"
                         minlength="3"
@@ -313,7 +350,7 @@
                       ></el-input>
                       <el-input
                         v-model="detailForm.address2"
-                        placeholder="输入邮编检索出地址"
+                        :placeholder="$t('desk.customer_zipcodeTo')"
                         style="width: 160px; margin-left: 5px"
                         size="small"
                       ></el-input>
@@ -364,10 +401,10 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="6" class="col" v-if="type != 'detail'">
-                      <el-form-item label="邮箱:">
+                      <el-form-item :label="$t('desk.customer_email') + ':'">
                         <el-input
                           style="width: 180px"
-                          placeholder="请填写邮箱"
+                          :placeholder="$t('desk.customer_inputEmail')"
                           v-model="detailForm.email"
                         ></el-input>
                       </el-form-item>
@@ -383,7 +420,7 @@
                         <el-input
                           style="width: 85px; margin-left: 10px"
                           v-model="detailForm.enterPinyin"
-                          placeholder="发音"
+                          :placeholder="$t('desk.customer_faying')"
                         ></el-input>
                       </el-form-item>
                     </el-col>
@@ -395,7 +432,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="邮箱:">
+                      <el-form-item :label="$t('desk.customer_email') + ':'">
                         <template>{{ detailForm.email }}</template>
                       </el-form-item>
                     </el-col>
@@ -463,7 +500,7 @@
                         ></el-input>
                         <el-input
                           v-model="detailForm.enterAddress1"
-                          placeholder="输入邮编检索出地址"
+                          :placeholder="$t('desk.customer_zipcodeTo')"
                           style="width: 160px; margin-left: 5px"
                           size="small"
                         ></el-input>
@@ -507,7 +544,7 @@
                         ></el-input>
                         <el-input
                           v-model="detailForm.enterAddress2"
-                          placeholder="输入邮编检索出地址"
+                          :placeholder="$t('desk.customer_zipcodeTo')"
                           style="width: 160px; margin-left: 5px"
                           size="small"
                         ></el-input>
@@ -516,12 +553,16 @@
                   </el-row>
                   <el-row class="cell" v-if="type == 'detail'">
                     <el-col :span="8" class="col">
-                      <el-form-item label="单位地址1:">
+                      <el-form-item
+                        :label="$t('desk.customer_unitAddress') + '1:'"
+                      >
                         <template>{{ detailForm.enterAddress1 }}</template>
                       </el-form-item>
                     </el-col>
                     <el-col :span="8" class="col">
-                      <el-form-item label="单位地址2:">
+                      <el-form-item
+                        :label="$t('desk.customer_unitAddress') + '2:'"
+                      >
                         <template>{{ detailForm.enterAddress2 }}</template>
                       </el-form-item>
                     </el-col>
@@ -585,24 +626,29 @@
       </el-row>
     </template>
     <!-- 年费明细dialog -->
-    <el-dialog title="年费明细" :visible.sync="yearDetail" width="70%" top="0">
+    <el-dialog
+      :title="$t('desk.customer_yearPriceDetail')"
+      :visible.sync="yearDetail"
+      width="70%"
+      top="0"
+    >
       <div class="searcBox">
         <el-form ref="yearForm" :model="yearForm" label-width="80px" inline>
-          <el-form-item label="缴费年份">
+          <el-form-item :label="$t('desk.customer_feeYear') + ':'">
             <el-date-picker
               size="small"
               type="year"
-              placeholder="选择年份"
+              :placeholder="$t('desk.customer_selectYears')"
               v-model="yearForm.year"
               format="yyyy"
               value-format="yyyy"
               style="width: 100%"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="缴费门店">
+          <el-form-item :label="$t('desk.customer_feeStore') + ':'">
             <el-select
               v-model="yearForm.storesNum"
-              placeholder="请选择缴费门店"
+              :placeholder="$t('desk.customer_selectFeeStore')"
               size="small"
             >
               <el-option
@@ -615,10 +661,12 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="getYearDate" size="small"
-              >查询</el-button
-            >
-            <el-button size="small" @click="resetYearform">重置</el-button>
+            <el-button type="primary" @click="getYearDate" size="small">{{
+              $t("commons.queryBtn")
+            }}</el-button>
+            <el-button size="small" @click="resetYearform">{{
+              $t("commons.resetBtn")
+            }}</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -627,32 +675,55 @@
         ref="multipleTable"
         v-loading="loading"
         :data="yearTabel"
-        height="100%"
+        max-height="400px"
         header-row-class-name="default"
         size="small"
       >
         <el-table-column
+          align="center"
+          width="150px;"
           prop="fee"
-          label="缴费金额"
+          :label="$t('desk.customer_feePrice')"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="createDate" label="缴费时间"> </el-table-column>
-        <el-table-column label="缴费年份" prop="year"> </el-table-column>
-        <el-table-column label="备注" prop="remark" width="80px">
+        <el-table-column
+          prop="createDate"
+          :label="$t('desk.customer_feeTime')"
+          align="center"
+          width="200px;"
+        >
+        </el-table-column>
+        <el-table-column
+          :label="$t('desk.customer_feeYear')"
+          prop="year"
+          align="center"
+          width="180px;"
+        >
+        </el-table-column>
+        <el-table-column
+          :label="$t('desk.home_note')"
+          align="center"
+          prop="remark"
+        >
         </el-table-column>
       </el-table>
     </el-dialog>
     <!-- 添加年费记录dialog -->
     <el-dialog
-      title="添加年费记录"
+      :title="$t('desk.customer_addFeeNote')"
       :visible.sync="annualFee"
       width="40%"
       top="0"
     >
       <div class="textBox">
-        <span>卡号：{{ detailForm.memberCard }}</span
-        ><span>姓名：{{ detailForm.name }}</span
-        ><span>会员类型：{{ F_memberTypeId(detailForm.memberTypeId) }}</span>
+        <span
+          >{{ $t("desk.customer_cardNum") + ":"
+          }}{{ detailForm.memberCard }}</span
+        ><span>{{ $t("desk.home_name") + ":" }}{{ detailForm.name }}</span
+        ><span
+          >{{ $t("desk.customer_memType") + ":"
+          }}{{ F_memberTypeId(detailForm.memberTypeId) }}</span
+        >
       </div>
       <el-form
         ref="addfeeFrom"
@@ -660,46 +731,59 @@
         :rules="addfeeRules"
         label-width="150px"
       >
-        <el-form-item label="选择年份：" prop="year">
+        <el-form-item
+          :label="$t('desk.customer_selectYears') + ':'"
+          prop="year"
+        >
           <el-date-picker
             type="year"
-            placeholder="请选择年份"
+            :placeholder="$t('desk.customer_selectYears')"
             v-model="addfeeFrom.year"
             format="yyyy"
             value-format="yyyy"
             style="width: 270px"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="支付方式：" prop="type">
+        <el-form-item :label="$t('desk.customer_payType') + ':'" prop="type">
           <el-select
             v-model="addfeeFrom.type"
-            placeholder="请选择支付方式"
+            :placeholder="$t('desk.customer_choosePayType')"
             style="width: 270px"
           >
-            <el-option label="线下缴费" value="1"></el-option>
-            <el-option label="线上缴费" value="2"></el-option>
+            <el-option
+              :label="$t('desk.customer_offlinePayment')"
+              value="1"
+            ></el-option>
+            <el-option
+              :label="$t('desk.customer_onlinePayment')"
+              value="2"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="缴费时间:" prop="createDate">
+        <el-form-item
+          :label="$t('desk.customer_feeTime') + ':'"
+          prop="createDate"
+        >
           <el-date-picker
             type="date"
-            placeholder="选择日期"
+            :placeholder="$t('desk.serve_chooseDate')"
+            value-format="yyyy-MM-dd"
             v-model="addfeeFrom.createDate"
             style="width: 270px"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="支付费用：" prop="fee">
+        <el-form-item :label="$t('desk.customer_payPrice') + ':'" prop="fee">
           <el-input v-model="addfeeFrom.fee" style="width: 270px"></el-input>
         </el-form-item>
-        <el-form-item label="备注：">
+        <el-form-item :label="$t('desk.home_note') + ':'">
           <el-input v-model="addfeeFrom.remark" style="width: 270px"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" style="text-align: right">
-        <el-button @click="cancelAdd">取消</el-button>
-        <el-button type="primary" @click="sureAdd('addfeeFrom')"
-          >确认</el-button
-        >
+        <el-button @click="cancelAdd">{{ $t("commons.cancel") }}</el-button>
+        <el-button type="primary" @click="sureAdd('addfeeFrom')">{{
+          $t("commons.confirm")
+        }}</el-button>
       </div>
     </el-dialog>
     <!-- //点击这些的弹框 1、换卡；2、修改类型；3、停用；4、挂失补卡 -->
@@ -942,10 +1026,11 @@ export default {
         remark: "",
         type: "",
         createDate: "",
+        ///////
         memberCard: "",
         userName: "",
         memberType: "",
-        userId: "",
+        createrId: "",
       },
       isHeader: false,
       loading: false,
@@ -986,22 +1071,32 @@ export default {
           {
             type: "string",
             required: true,
-            message: "请选择年份",
+            message: this.$t("desk.customer_pleaseSelectYear"),
             trigger: "change",
           },
         ],
         type: [
-          { required: true, message: "请选择支付方式", trigger: "change" },
-        ],
-        createDate: [
           {
-            type: "date",
             required: true,
-            message: "请选择缴费时间",
+            message: this.$t("desk.customer_choosePayType"),
             trigger: "change",
           },
         ],
-        fee: [{ required: true, message: "请填写支付费用", trigger: "blur" }],
+        createDate: [
+          {
+            type: "string",
+            required: true,
+            message: this.$t("desk.customer_chooseFeeTime"),
+            trigger: "change",
+          },
+        ],
+        fee: [
+          {
+            required: true,
+            message: this.$t("desk.customer_inputPayFee"),
+            trigger: "blur",
+          },
+        ],
       };
     },
     rules() {
@@ -1009,7 +1104,7 @@ export default {
         addressCountries: [
           {
             required: true,
-            message: "请填写地区",
+            message: this.$t("desk.customer_inputRegion"),
             trigger: "blur",
           },
         ],
@@ -1131,7 +1226,7 @@ export default {
     checkNextcode(code1) {
       if (!code1 || code1.length !== 3) {
         this.$message({
-          message: "请正确填写邮编",
+          message: this.$t("desk.customer_sureZipcode"),
           type: "warning",
         });
       }
@@ -1163,12 +1258,11 @@ export default {
       this.addfeeFrom = {
         status: 1,
         year: "",
-         type: "",
-           createDate: "",
+        type: "",
+        createDate: "",
         fee: "",
         remark: "",
-       
-      
+
         memberCard: "",
         userName: "",
         memberType: "",
@@ -1182,10 +1276,16 @@ export default {
           this.addfeeFrom.memberCard = this.detailForm.memberCard;
           this.addfeeFrom.userName = this.detailForm.name;
           this.addfeeFrom.memberType = this.detailForm.memberTypeId;
-          this.addfeeFrom.userId = this.detailForm.id;
-          this.$F.doRequest(this,'/pms/hotelmember/add_fee',this.addfeeFrom,res=>{
-            console.log(res);
-          })
+          this.addfeeFrom.createrId = this.detailForm.id;
+          this.$F.doRequest(
+            this,
+            "/pms/hotelmember/add_fee",
+            this.addfeeFrom,
+            (res) => {
+              this.annualFee = false;
+              this.findone(this.$route.query.id);
+            }
+          );
         } else {
           return false;
         }
@@ -1227,13 +1327,13 @@ export default {
           });
         } else {
           this.$message({
-            message: "请正确填写邮编",
+            message: this.$t("desk.customer_sureZipcode"),
             type: "warning",
           });
         }
       } else {
         this.$message({
-          message: "请正确填写邮编",
+          message: this.$t("desk.customer_sureZipcode"),
           type: "warning",
         });
       }

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-16 10:40:14
+ * @LastEditTime: 2020-12-18 16:26:36
  * @FilePath: \jiudian\src\views\market\reception\checkin\guestChoose.vue
  -->
 
@@ -54,62 +54,62 @@
        <div v-if="checkInForm.guestType == 4" >
           <el-row>
             <el-col :span="14">
-              <el-form-item label="团队名:"  prop="teamName" >
-                <el-input v-model="checkInForm.teamName" placeholder="团队名" style="width:160px" size="small"></el-input>
+              <el-form-item :label="$t('desk.book_teamName')+':'"  prop="teamName" >
+                <el-input v-model="checkInForm.teamName" :placeholder="$t('desk.book_teamName')" style="width:160px" size="small"></el-input>
               </el-form-item>
             </el-col>
              <el-col :span="10">
               <el-form-item label-width="0" prop="teamPronunciation">
-                <el-input v-model="checkInForm.teamPronunciation" placeholder="发音" style="width:160px;margin-left:5px;" size="small"></el-input>
+                <el-input v-model="checkInForm.teamPronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:5px;" size="small"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
-         <el-form-item label="导游姓名:"  >
-          <el-input v-model="checkInForm.guideName" placeholder="导游姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.guidePronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+         <el-form-item :label="$t('desk.book_guideName')+':'" >
+          <el-input v-model="checkInForm.guideName" :placeholder="$t('desk.book_guideName')" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.guidePronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="领队姓名:"  >
-          <el-input v-model="checkInForm.leaderName" placeholder="领队姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.leaderPronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_leaderName')+':'" >
+          <el-input v-model="checkInForm.leaderName" :placeholder="$t('desk.book_leaderName')" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.leaderPronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
-        <el-form-item label="团体电话:"  >
-          <el-input v-model="checkInForm.teamMobile" placeholder="团体电话" style="width:330px" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_teamMoible')+':'">
+          <el-input v-model="checkInForm.teamMobile" :placeholder="$t('desk.book_teamMoible')" style="width:330px" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="团体地址:"  >
+        <el-form-item :label="$t('desk.book_teamAddress')+':'">
           <el-input v-model="checkInForm.teamAdd1" minlength='3' maxlength='3' @blur="checkNextcode(checkInForm.teamAdd1)"  style="width:75px" size="small"></el-input>
           <span style="margin:0 5px">-</span>
           <el-input v-model="checkInForm.teamAdd2" minlength='4' maxlength='4' @blur="checkAddress(checkInForm.teamAdd1,checkInForm.teamAdd2,'team')" style="width:75px;" size="small"></el-input>
-          <el-input v-model="checkInForm.teamAdd3" placeholder="输入邮编检索出地址" style="width:160px;margin-left:5px;" size="small"></el-input>
+          <el-input v-model="checkInForm.teamAdd3" :placeholder="$t('desk.customer_zipcodeTo')" style="width:160px;margin-left:5px;" size="small"></el-input>
         </el-form-item> 
-        <el-form-item label="联络人姓名:"  >
-          <el-input v-model="checkInForm.contactName" placeholder="联络人姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.contactPinyin" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_contactName')+':'">
+          <el-input v-model="checkInForm.contactName" :placeholder="$t('desk.book_contactName')" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.contactPinyin" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
-        <el-form-item label="联络人手机号:"  >
-          <el-input v-model="checkInForm.contactPhone" placeholder="联络人手机号" style="width:330px" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_contactPhone')+':'" >
+          <el-input v-model="checkInForm.contactPhone" :placeholder="$t('desk.book_contactPhone')" style="width:330px" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="联络人信箱:"  >
-          <el-input v-model="checkInForm.contactEmail" placeholder="联络人信箱" style="width:330px" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_contactEmail')+':'">
+          <el-input v-model="checkInForm.contactEmail" :placeholder="$t('desk.book_contactEmail')" style="width:330px" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="旅行社名称:"  >
-          <el-input v-model="checkInForm.travelTeam" placeholder="旅行社名称" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.travelPronunciation" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_travelName')+':'">
+          <el-input v-model="checkInForm.travelTeam" :placeholder="$t('desk.book_travelName')" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.travelPronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
-         <el-form-item label="旅行社地址:"  >
+         <el-form-item :label="$t('desk.book_travelAddress')+':'">
           <el-input v-model="checkInForm.travelAdd1"  minlength='3' maxlength='3' @blur="checkNextcode(checkInForm.travelAdd1)" style="width:75px" size="small"></el-input>
           <span style="margin:0 5px">-</span>
           <el-input v-model="checkInForm.travelAdd2" minlength='4' maxlength='4'  style="width:75px;" @blur="checkAddress(checkInForm.travelAdd1,checkInForm.travelAdd2,'travel')" size="small"></el-input>
-          <el-input v-model="checkInForm.travelAdd3" placeholder="输入邮编检索出地址" style="width:160px;margin-left:5px;" size="small"></el-input>
+          <el-input v-model="checkInForm.travelAdd3" :placeholder="$t('desk.customer_zipcodeTo')" style="width:160px;margin-left:5px;" size="small"></el-input>
         </el-form-item> 
-         <el-form-item label="联络人姓名:"  >
-          <el-input v-model="checkInForm.travelContactName" placeholder="联络人姓名" style="width:160px" size="small"></el-input>
-          <el-input v-model="checkInForm.travelContactPinyin" placeholder="发音" style="width:160px;margin-left:10px;" size="small"></el-input>
+         <el-form-item :label="$t('desk.book_contactName')+':'"  >
+          <el-input v-model="checkInForm.travelContactName" :placeholder="$t('desk.book_contactName')" style="width:160px" size="small"></el-input>
+          <el-input v-model="checkInForm.travelContactPinyin" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
         </el-form-item> 
-        <el-form-item label="联络人手机号:"  >
-          <el-input v-model="checkInForm.travelContactPhone" placeholder="联络人手机号" style="width:330px" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_contactPhone')+':'">
+          <el-input v-model="checkInForm.travelContactPhone" :placeholder="$t('desk.book_contactPhone')" style="width:330px" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="联络人信箱:"  >
-          <el-input v-model="checkInForm.tarvelContactEmail" placeholder="联络人信箱" style="width:330px" size="small"></el-input>
+        <el-form-item :label="$t('desk.book_contactEmail')+':'">
+          <el-input v-model="checkInForm.tarvelContactEmail" :placeholder="$t('desk.book_contactEmail')" style="width:330px" size="small"></el-input>
         </el-form-item>
        </div>
       </el-form>
@@ -139,10 +139,10 @@ export default {
     checkRules(){
       return{
          teamName: [
-            { required: true, message: '请输入团队名', trigger: 'blur' },
+            { required: true, message: this.$t('desk.book_inputTeamName'), trigger: 'blur' },
            ],
          teamPronunciation: [
-            { required: true, message: '请输入发音', trigger: 'blur' },
+            { required: true, message: this.$t('desk.book_inputFayin'), trigger: 'blur' },
           ],
       }
     }
@@ -153,7 +153,7 @@ export default {
     checkNextcode(code1){
       if(!code1||code1.length!==3){
         this.$message({
-           message:'请正确填写邮编',
+            message:this.$t('desk.customer_sureZipcode'),
            type: 'warning'
          })
       }
@@ -175,13 +175,13 @@ export default {
         })
        }else{
          this.$message({
-           message:'请正确填写邮编',
+           message:this.$t('desk.customer_sureZipcode'),
            type: 'warning'
          })
        }
        }else{
          this.$message({
-           message:'请正确填写邮编',
+            message:this.$t('desk.customer_sureZipcode'),
            type: 'warning'
          })
        }

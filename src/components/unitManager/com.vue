@@ -319,11 +319,19 @@
               <el-input
                 style="width: 80px"
                 v-model="addCompanyForm.branchEnterC1"
+                  @blur="checkNextcode(addCompanyForm.branchEnterC1)"
               ></el-input>
               <span style="margin: 0 5px">-</span>
               <el-input
                 v-model="addCompanyForm.branchEnterC2"
                 style="width: 80px"
+                @blur="
+                checkAddress(
+                  addCompanyForm.branchEnterC1,
+                  addCompanyForm.branchEnterC2,
+                  'addressC'
+                )
+              "
               ></el-input>
               <el-input
                 v-model="addCompanyForm.branchEnterAddress"
@@ -799,7 +807,7 @@ export default {
     checkNextcode(code1) {
       if (!code1 || code1.length !== 3) {
         this.$message({
-          message: "请正确填写邮编",
+           message: this.$t("desk.customer_sureZipcode"),
           type: "warning",
         });
       }
@@ -815,8 +823,13 @@ export default {
                   res.results[0].address1 +
                   res.results[0].address2 +
                   res.results[0].address3;
-              } else {
+              } else if(type=='addressB') {
                 this.addCompanyForm.enterAddress2 =
+                  res.results[0].address1 +
+                  res.results[0].address2 +
+                  res.results[0].address3;
+              }else{
+                this.addCompanyForm.branchEnterAddress =
                   res.results[0].address1 +
                   res.results[0].address2 +
                   res.results[0].address3;
@@ -825,13 +838,13 @@ export default {
           });
         } else {
           this.$message({
-            message: "请正确填写邮编",
+             message: this.$t("desk.customer_sureZipcode"),
             type: "warning",
           });
         }
       } else {
         this.$message({
-          message: "请正确填写邮编",
+           message: this.$t("desk.customer_sureZipcode"),
           type: "warning",
         });
       }

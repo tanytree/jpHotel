@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-04 14:51:16
+ * @LastEditTime: 2020-12-18 17:55:27
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -457,13 +457,13 @@ module.exports = {
     hk_priceSet:'価格設定',
     hk_onlyLivePrice:'ここの料金は素泊まりの料金であります。',
     hk_peopleLive:'人宿泊',
-    add_tax: '未翻译词条',
-    add_maxNum: '未翻译词条',
-    add_serverPrice: '未翻译词条',
-    add_inputNum: '未翻译词条',
-    add_moreThanNot: '未翻译词条',
-    add_inputNumShould: '未翻译词条',
-    add_editorSuccess: '未翻译词条',
+    add_tax: '消費税',
+    add_maxNum: '最大値≦100',
+    add_serverPrice: 'サービス料',
+    add_inputNum: '数字を入力してください',
+    add_moreThanNot: '入力最大値≦100',
+    add_inputNumShould: '入力最小値≧0',
+    add_editorSuccess: '編集確認',
     hk_goodsType:'カテゴリー',
     hk_an:'料金計算単位：',
     hk_startAt:'初期料金',
