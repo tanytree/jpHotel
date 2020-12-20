@@ -9,7 +9,8 @@
     <el-row class="clearfix">
         <div class="fr">
 <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-            <el-button plain @click="goCheckinDetail">入住人管理</el-button>
+            <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">添加房间</el-button>
+            <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail">入住人管理</el-button>
             <el-button plain @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
             <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary"> {{ $t('commons.moreOperating') }}
@@ -203,33 +204,26 @@
         </span>
     </el-dialog>
     <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" />
-
+    <checkTheDetails ref="checkTheDetails" @baseInfoChange="baseInfoChange" :checkinInfo="checkinInfo" :inRoomList="inRoomList"/>
 </div>
 </template>
 
 <script>
-import {
-    mapState,
-    mapActions
-} from "vuex";
 import myMixin from '@/utils/filterMixin';
 import customer2 from '@/components/front/customer2'
+//入住人
+import checkTheDetails from '@/components/checktheDetails'
 import rowRoomHandle from "@/views/market/home/rowRoomHandle";
 
 export default {
     components: {
         customer2,
-        rowRoomHandle
+        rowRoomHandle,
+        checkTheDetails //入住人管理
     },
     mixins: [myMixin],
     props: ['checkinInfo', 'inRoomList'],
     computed: {
-        ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
-        }),
         rules(){
             return{
                 name: [{
@@ -332,6 +326,7 @@ export default {
     },
     data() {
         return {
+            reserveId: '',
             currentSale: {},
             loading: false,
             liveInPersonShow: false,
@@ -367,7 +362,7 @@ export default {
     },
 
     mounted() {
-        let id = this.$route.query.id
+        this.reserveId = this.$route.query.id
         this.$F.commons.fetchSalesList({salesFlag: 1}, (data)=> {
             this.salesList = data.hotelUserList;
             let tempArray = this.salesList.filter(sale => {  return sale.id == this.checkinInfo.salesId}) || [{}];
@@ -376,6 +371,19 @@ export default {
     },
 
     methods: {
+        //添加房间
+        addRoom() {
+            let arr = [];
+            if (this.currentRoom)
+                arr.push(this.currentRoom);
+            this.$refs.rowRoomHandle.initForm(
+                this.reserveId,
+                this.checkinInfo,
+                arr,
+                1,
+                2
+            );
+        },
       //跳转到入住详情
       goCheckinDetail(){
         // 暂时未放开

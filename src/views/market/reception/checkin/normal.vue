@@ -121,7 +121,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.order_outOrder') + '：'">
+        <el-form-item :label="$t('desk.order_outOrder')">
           <el-input v-model="checkInForm.thirdOrdernum"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.order_moblePhone')" prop="mobile">
@@ -208,6 +208,12 @@
         <el-form-item :label="$t('desk.order_moblePhone')" prop="prop">
           <el-input v-model="checkInForm.mobile"></el-input>
         </el-form-item>
+          <el-form-item label="住家电话" prop="prop">
+              <el-input v-model="checkInForm.mobile"></el-input>
+          </el-form-item>
+          <el-form-item label="单位电话" prop="prop">
+              <el-input v-model="checkInForm.mobile"></el-input>
+          </el-form-item>
         <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
           <el-select v-model="checkInForm.orderSource">
             <el-option
@@ -299,6 +305,19 @@
             </template>
           </el-input>
         </el-form-item>
+          <el-form-item
+              :label="$t('desk.customer_payType')"
+              v-if="operCheckinType != 'b3'"
+          >
+              <el-select v-model="checkInForm.payType">
+                  <el-option
+                      :value="key"
+                      v-for="(item, key, index) of $t('commons.payType')"
+                      :label="item"
+                      :key="index"
+                  ></el-option>
+              </el-select>
+          </el-form-item>
         <el-form-item
           :label="$t('desk.order_salesman') + '：'"
           v-if="operCheckinType != 'b3'"
@@ -316,7 +335,7 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          :label="$t('desk.order_outOrder') + '：'"
+          :label="$t('desk.order_outOrder')"
           v-if="operCheckinType != 'b3'"
         >
           <el-input v-model="checkInForm.thirdOrdernum"></el-input>
@@ -335,10 +354,26 @@
             <el-input v-model="checkInForm.enterName"></el-input>
           </el-form-item>
         </template>
+          <el-form-item :label="$t('desk.customer_region')" prop="prop">
+              <el-input v-model="checkInForm.region"></el-input>
+          </el-form-item>
         <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
           <el-input type="textarea" v-model="checkInForm.remark"></el-input>
         </el-form-item>
+
       </el-form>
+        <el-form>
+            <el-form-item label="预定项目">
+                <template>
+                    <div  v-for="(value, index) in checkInForm.reserveProjects" :key="index">
+                        <el-input v-model="value.projectName" style="width: 300px"></el-input>
+                        <el-input v-model="value.projectCount" style="width: 100px;margin-left: 10px"></el-input>
+                        <el-input v-model="value.price" style="width: 100px;margin-left: 10px"></el-input>
+                    </div>
+                </template>
+                <el-button type="primary" @click="addProject()">添加项目</el-button>
+            </el-form-item>
+        </el-form>
     </div>
     <div class="content last">
       <h3>{{ $t("desk.roomInfoDesc") }}</h3>
@@ -346,26 +381,14 @@
         <div class="left">
           <el-form inline size="small">
             <el-form-item>
-              <el-select
-                v-model="getRoomsForm.bedCount"
-                @change="getDataList"
-                :placeholder="$t('commons.placeChoose')"
-              >
-                <el-option
-                  :value="key"
-                  v-for="(item, key, index) of $t('commons.bedCount')"
-                  :label="item"
-                  :key="index"
-                ></el-option>
+              <el-select v-model="getRoomsForm.bedCount" @change="getDataList" :placeholder="$t('commons.placeChoose')">
+                <el-option :value="key" v-for="(item, key, index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
               </el-select>
             </el-form-item>
           </el-form>
           <div class="roomBtm">
             <div class="roomBox" v-for="v in roomList" :key="v.roomTypeId">
-              <div
-                class="rooms"
-                :class="activeRoomCheck(v.roomTypeId) ? 'active' : ''"
-              >
+              <div class="rooms" :class="activeRoomCheck(v.roomTypeId) ? 'active' : ''">
                 <div class="row">
                   <span>{{ v.roomTypeName }}</span>
                   <el-input-number
@@ -379,12 +402,8 @@
                   ></el-input-number>
                 </div>
                 <div class="row">
-                  <span class="allow"
-                    >{{ $t("desk.home_canOrderText")
-                    }}{{ v.reserveTotal }}</span
-                  >
+                  <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>
                   <div>
-                    <!--                                        <el-input size="mini" class="num" v-model="v.withMealPrice" v-if="getRoomsForm.changeType == 1"></el-input>-->
                     <span>一人总价（含餐） {{ v.withMealPrice }}</span>
                   </div>
                 </div>
@@ -975,6 +994,7 @@ export default {
       ruleHourList: [],
       //预定和入住人信息
       checkInForm: {
+          reserveProjects: [],
         checkInRoomJson: [],
       },
 
@@ -1112,6 +1132,17 @@ export default {
     },
   },
   methods: {
+      //新需求 添加项目
+      addProject() {
+          if (this.checkInForm.reserveProjects.length > 0) {
+              let lastObject = this.checkInForm.reserveProjects[this.checkInForm.reserveProjects.length - 1];
+              if (lastObject.projectName && lastObject.price && lastObject.projectName) {
+                  this.checkInForm.reserveProjects.push({});
+              }
+          } else {
+              this.checkInForm.reserveProjects.push({});
+          }
+      },
     checkRoomInfo(row,index){
       console.log(row);
       console.log(index);
@@ -1163,47 +1194,48 @@ export default {
         meetingName: "", //会议名称  String选填
         enterName: "", //单位名称 String选填
         checkInRoomJson: [], //排房信息json集合字符串
+          reserveProjects: []  //项目list
       };
       this.handleOperCheckinType();
       this.getDataList();
     },
-    /**获取房间信息数据 */
-    getDataList() {
-      let that = this;
-      this.$F.doRequest(
-        this,
-        "/pms/checkin/hotel_checkin_roominfo",
-        this.getRoomsForm,
-        (res) => {
-          let list = res.roomTypeList;
-          list.forEach((element) => {
-            let coverData = check(element.roomTypeId);
-            if (coverData) {
-              element.price = coverData.todayPrice;
-              element.num = coverData.num;
-            } else {
-              element.price = element.todayPrice;
-              element.num = 0;
-            }
-            element.withMealPrice =
-              (element.onePersonPrice || 0) +
-              element.breakfastMealPrice +
-              element.dinnerMealPrice;
-          });
+      /**获取房间信息数据 */
+      getDataList() {
+          let that = this;
+          this.$F.doRequest(
+              this,
+              "/pms/checkin/hotel_checkin_roominfo",
+              this.getRoomsForm,
+              (res) => {
+                  let list = res.roomTypeList;
+                  list.forEach((element) => {
+                      let coverData = check(element.roomTypeId);
+                      if (coverData) {
+                          element.price = coverData.todayPrice;
+                          element.num = coverData.num;
+                      } else {
+                          element.price = element.todayPrice;
+                          element.num = 0;
+                      }
+                      element.withMealPrice =
+                          (element.onePersonPrice || 0) +
+                          element.breakfastMealPrice +
+                          element.dinnerMealPrice;
+                  });
 
-          function check(id) {
-            for (let k in that.waitingRoom) {
-              if (that.waitingRoom[k].roomTypeId == id) {
-                return that.waitingRoom[k];
+                  function check(id) {
+                      for (let k in that.waitingRoom) {
+                          if (that.waitingRoom[k].roomTypeId == id) {
+                              return that.waitingRoom[k];
+                          }
+                      }
+                      return false;
+                  }
+                  this.roomList = list;
+                  this.$forceUpdate();
               }
-            }
-            return false;
-          }
-          this.roomList = list;
-          this.$forceUpdate();
-        }
-      );
-    },
+          );
+      },
 
     //页面上点击事件都在这里
     popup(type, row) {

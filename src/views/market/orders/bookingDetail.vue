@@ -24,6 +24,7 @@
                         <p>{{ $t('desk.order_bookOrderInfo') }}</p>
                     </li>
                     <li v-for="(item, index) of detailData.inRoomList" :key="index" :class="currentRoom.id == item.id ? 'active' : ''" @click="showRoomInfo(item)">
+
                         <p>{{ item.houseNum }} {{ $t('desk.home_roomType') }}：{{ item.roomTypeName }}</p>
                         <span class="ok" v-if="detailData.checkIn.state <= 2">{{ $t('desk.hadRowHouses') }}</span>
                         <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>

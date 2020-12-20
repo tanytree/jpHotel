@@ -33,10 +33,6 @@
                     <el-col :span="17">
                         <div class="grid-content">
                             <el-row>
-<!--                                <el-radio-group v-model="getRoomsForm.changeType" size="small" @change="getDataList">-->
-<!--                                    <el-radio :label="1" border>可改房价</el-radio>-->
-<!--                                    <el-radio :label="2" border>不可改房价</el-radio>-->
-<!--                                </el-radio-group>-->
                                 <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
                                     <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                                 </el-select>
@@ -103,23 +99,6 @@
                                                         <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}}
                                                             <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ {{$t('desk.customer_remove')}}</span></el-button>
                                                     </el-row>
-                                                    <!-- <el-row class="row">
-                                                        <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
-                                                        <el-button class="roomNumTag" size="mini" >A145<em class="del">✕ 移除</em></el-button>
-                                                    </el-row> -->
-                                                    <!-- <el-row class="row">
-                                                        <el-col :span="14">
-                                                            <el-button type="text" size="mini">可订{{v.reserveTotal}}</el-button>
-                                                        </el-col>
-                                                        <el-col :span="10">
-                                                            <div style="text-align: right">
-                                                                <el-button type="text" style="color:#666">
-                                                                    {{v.num}}间
-                                                                </el-button>
-
-                                                            </div>
-                                                        </el-col>
-                                                    </el-row> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -291,7 +270,9 @@ export default {
             },
             liveInPersonData: [],
             liveCardData: '',
-            typeText: '入住'
+            typeText: '入住',
+            handleType: '',
+            orderType: '',
         };
     },
     computed: {
@@ -369,7 +350,11 @@ export default {
         }
     },
     methods: {
-        initForm(checkInId, checkinInfo, reservedRoom) {
+        // handleType： 操作类型  默认为空 修改预留   1： 添加房间
+         // orderType ： 订单类型 1： 预订单  2：订单
+        initForm(checkInId, checkinInfo, reservedRoom, handleType, orderType = 2) {
+            this.handleType = handleType;
+            this.orderType = orderType;
             let that = this
             that.waitingRoom = [];
             //初始化已排房
@@ -508,13 +493,6 @@ export default {
             this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem
             this.rowRoomShow = false
             this.$forceUpdate()
-            // this.$F.doRequest(this, '/pms/checkin/db_row_houses', params, (res) => {
-            //     this.$message({
-            //         message: '排房成功',
-            //         type: 'success'
-            //     });
-            //
-            // })
         },
         //自动排房确定
         page_row_houses() {
@@ -641,6 +619,11 @@ export default {
         },
         hotel_check_inChange() {
             let checkInRoomJson = []
+            debugger
+            if (this.waitingRoom.length == 0) {
+                this.rowRoomHandleShow = false;
+                return;
+            }
             this.waitingRoom.forEach(item => {
                 let array = [];
                 item.roomsArr.forEach(room=> {
@@ -653,14 +636,28 @@ export default {
                     realPrice: item.realPrice
                 })
             })
+
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
-            console.log(this.checkInForm);
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
-                    this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
-                        this.rowRoomHandleShow = false
-                        this.$emit('baseInfoChange', '');
-                    })
+                    debugger
+                    if (this.handleType == 1) {
+                        this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
+                            checkinRoomType:  this.orderType,
+                            checkinId:  this.checkInForm.checkInId,
+                            checkinReserveId: this.checkInForm.checkInReserveId,
+                            checkInRoomJson: this.checkInForm.checkInRoomJson
+                    }, (data) => {
+                            this.rowRoomHandleShow = false
+                            this.$emit('baseInfoChange', '');
+                        })
+                    } else {
+                        this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
+                            this.rowRoomHandleShow = false
+                            this.$emit('baseInfoChange', '');
+                        })
+                    }
+
                 } else {
                     console.log('error submit!!');
                     return false;

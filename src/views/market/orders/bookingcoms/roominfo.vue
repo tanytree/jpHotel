@@ -21,7 +21,6 @@
                 <div class="fr">
 <!--                    disabled="checkinInfo.state == 1 || checkinInfo.state == 2"-->
                     <el-button plain size="mini" @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" >{{ $t('manager.ps_inLive') }}</el-button>
-<!--                    -->
                     <el-button plain size="mini" @click="updateReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{$t('desk.home_modityReserved')}} </el-button>
                     <!--这块暂时隐藏 不要留太多bug-->
                     <el-dropdown split-button type="primary" size="mini" v-show="false">

@@ -129,10 +129,7 @@
                     </div>
                 </el-main>
                 <el-footer>
-                    <el-button class="white" size="small" @click="batchRoomHaldel">{{
-                            $t("desk.home_batchSet")
-                        }}
-                    </el-button>
+                    <el-button class="white" size="small" @click="batchRoomHaldel">{{ $t("desk.home_batchSet") }}</el-button>
                     <!--          <el-button class="white" size="small">{{ $t("desk.home_printRoomState")  }}</el-button>-->
                     <!--          <el-button type="primary"  class="submit" size="small" @click="print = true"  icon="el-icon-message-solid">-->
                     <!--              {{ $t("desk.home_pushAnd") }}</el-button>-->
@@ -323,7 +320,7 @@
             </el-container>
         </div>
         <!-- 房间信息 -->
-       <room-info :currentRoom='currentRoom' ref="roomInfo"></room-info>
+       <room-info ref="roomInfo"></room-info>
         <!-- 续住 -->
         <el-dialog top="0" :title="$t('desk.home_stayOver')" :visible.sync="stayoer" width="80%">
             <el-alert
@@ -693,8 +690,7 @@ export default {
             hotel_building_list: "",
             hotel_building_floor_list: "",
             currentRoom: {
-                currentRoomData: {personList: []},
-                livingPersonList: [],
+
             },
             liveCardData: [],
             liveCardLoading: false,
@@ -904,46 +900,12 @@ export default {
         handleChange(e) {
             this.getDataList();
         },
+
+        //查看房间详情
         hostelmess(room, parent) {
-          console.log(room);
-          console.log(parent);
-            this.currentRoom = room || {};
-            this.$F.merge(this.currentRoom, {currentRoomData: {personList: []}});
-            this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
-            this.$F.merge(this.currentRoom, {livingPersonList: []});
-
-            // this.hosteldis = true;
-            console.log(this.$refs.roomInfo);
-            this.$refs.roomInfo.changeVisible();
-            if (room.checkInRoomType == 1) {
-                let id = room.checkInObj.id;
-                this.getDetail(id, res => {
-                   if ( res.inRoomList &&  res.inRoomList.length > 0) {
-                       res.inRoomList.forEach((value) => {
-                           if (value.roomId == room.id)
-                               this.currentRoom.currentRoomData = value;
-                       })
-                   }
-                    this.$F.merge(this.currentRoom, res);
-                    this.currentRoom.personLength = 0;;
-                    if (this.currentRoom.currentRoomData.personList.length > 0) {
-                        this.currentRoom.personLength = this.currentRoom.currentRoomData.personList.length - 1;
-                        this.currentRoom.currentRoomData.personList = this.currentRoom.currentRoomData.personList.slice(0,1);
-                    }
-                    console.log(JSON.parse(JSON.stringify(this.currentRoom)));
-                })
-            } else if (room.checkInRoomType == 2) {
-
-            }
-
-        },
-
-        //获取订单详情
-        getDetail(id, callback) {
-            this.$F.doRequest(this,"/pms/checkin/check_in_detail", {checkInId: id,}, (res) => {
-                    callback(res);
-                }
-            );
+            console.log(room);
+            console.log(parent);
+            this.$refs.roomInfo.changeVisible(room || {});
         },
 
         yokeplateHandle(item) {

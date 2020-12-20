@@ -206,12 +206,7 @@
         </el-table-column>
         <el-table-column :label="$t('desk.customer_roomKind')" width="140">
           <template slot-scope="{ row }">
-            <div v-if="row.checkInRoomList.length>1">{{row.checkInRoomList.length}}</div>
-            <div v-else>
-              {{ row.checkInRoomList.length > 0 ? row.checkInRoomList[0].roomTypeName : "" }}
-                {{ row.checkInRoomList.length > 0 ? "/" : "" }}
-                {{ row.checkInRoomList.length > 0 ? row.checkInRoomList[0].houseNum : $t('desk.noRowHouses') }}
-          </div>
+              <span v-for="i in row.roomInfo.split(',')" :key="i">{{i}}</span><br>
           </template>
         </el-table-column>
         <el-table-column
@@ -461,19 +456,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 import myMixin from "@/utils/filterMixin";
 
 export default {
   mixins: [myMixin],
-  computed: {
-    ...mapState({
-      token: (state) => state.user.token,
-      userId: (state) => state.user.userId,
-      msgKey: (state) => state.config.msgKey,
-      plat_source: (state) => state.config.plat_source,
-    }),
-  },
   data() {
     return {
       loading: false,
@@ -533,8 +520,29 @@ export default {
         "/pms/reserve/reserve_order_list",
         params,
         (res) => {
-          this.tableData = res.resreveList;
-          this.listTotal = res.page.count;
+            if (res.resreveList) {
+                //这里吧房型/间解析出来  可能没有房间 可能多间房
+                res.resreveList.forEach(order => {
+                    if (order.checkInRoomList)  {
+                        if (order.checkInRoomList.length == 1) {
+                            order.roomInfo = (order.checkInRoomList[0].roomTypeName || '') + '/';
+                            order.roomInfo += order.checkInRoomList[0].houseNum ? order.checkInRoomList[0].houseNum : '(未排房)'
+                        } else {
+                            order.roomInfo = '';
+                            order.checkInRoomList.forEach(room => {
+                                order.roomInfo += (room.roomTypeName || '') + '/';
+                                order.roomInfo += room.houseNum ? room.houseNum : '(未排房)'
+                                order.roomInfo += ',';
+                            })
+                            order.roomInfo = order.roomInfo.substring(0, order.roomInfo.length -1);
+                        }
+                    } else {
+                        order.roomInfo = '未排房';
+                    }
+                })
+                this.tableData = res.resreveList;
+                this.listTotal = res.page.count;
+            }
         }
       );
     },
@@ -821,4 +829,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-table .cell{
+    white-space:pre-line;
+}
 </style>

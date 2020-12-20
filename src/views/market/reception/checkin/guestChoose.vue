@@ -37,7 +37,7 @@
           class=""
           style="margin-bottom: 0"
           label-width="0"
-          v-if="checkInForm.guestType == 2 || checkInForm.guestType == 3"
+          v-if="checkInForm.guestType == 2 "
         >
           <el-autocomplete
             v-model="checkInForm.name"
@@ -71,7 +71,7 @@
         <el-form-item :label="$t('desk.book_leaderName')+':'" >
           <el-input v-model="checkInForm.leaderName" :placeholder="$t('desk.book_leaderName')" style="width:160px" size="small"></el-input>
           <el-input v-model="checkInForm.leaderPronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
-        </el-form-item> 
+        </el-form-item>
         <el-form-item :label="$t('desk.book_teamMoible')+':'">
           <el-input v-model="checkInForm.teamMobile" :placeholder="$t('desk.book_teamMoible')" style="width:330px" size="small"></el-input>
         </el-form-item>
@@ -80,11 +80,11 @@
           <span style="margin:0 5px">-</span>
           <el-input v-model="checkInForm.teamAdd2" minlength='4' maxlength='4' @blur="checkAddress(checkInForm.teamAdd1,checkInForm.teamAdd2,'team')" style="width:75px;" size="small"></el-input>
           <el-input v-model="checkInForm.teamAdd3" :placeholder="$t('desk.customer_zipcodeTo')" style="width:160px;margin-left:5px;" size="small"></el-input>
-        </el-form-item> 
+        </el-form-item>
         <el-form-item :label="$t('desk.book_contactName')+':'">
           <el-input v-model="checkInForm.contactName" :placeholder="$t('desk.book_contactName')" style="width:160px" size="small"></el-input>
           <el-input v-model="checkInForm.contactPinyin" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
-        </el-form-item> 
+        </el-form-item>
         <el-form-item :label="$t('desk.book_contactPhone')+':'" >
           <el-input v-model="checkInForm.contactPhone" :placeholder="$t('desk.book_contactPhone')" style="width:330px" size="small"></el-input>
         </el-form-item>
@@ -94,17 +94,17 @@
         <el-form-item :label="$t('desk.book_travelName')+':'">
           <el-input v-model="checkInForm.travelTeam" :placeholder="$t('desk.book_travelName')" style="width:160px" size="small"></el-input>
           <el-input v-model="checkInForm.travelPronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
-        </el-form-item> 
+        </el-form-item>
          <el-form-item :label="$t('desk.book_travelAddress')+':'">
           <el-input v-model="checkInForm.travelAdd1"  minlength='3' maxlength='3' @blur="checkNextcode(checkInForm.travelAdd1)" style="width:75px" size="small"></el-input>
           <span style="margin:0 5px">-</span>
           <el-input v-model="checkInForm.travelAdd2" minlength='4' maxlength='4'  style="width:75px;" @blur="checkAddress(checkInForm.travelAdd1,checkInForm.travelAdd2,'travel')" size="small"></el-input>
           <el-input v-model="checkInForm.travelAdd3" :placeholder="$t('desk.customer_zipcodeTo')" style="width:160px;margin-left:5px;" size="small"></el-input>
-        </el-form-item> 
+        </el-form-item>
          <el-form-item :label="$t('desk.book_contactName')+':'"  >
           <el-input v-model="checkInForm.travelContactName" :placeholder="$t('desk.book_contactName')" style="width:160px" size="small"></el-input>
           <el-input v-model="checkInForm.travelContactPinyin" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:10px;" size="small"></el-input>
-        </el-form-item> 
+        </el-form-item>
         <el-form-item :label="$t('desk.book_contactPhone')+':'">
           <el-input v-model="checkInForm.travelContactPhone" :placeholder="$t('desk.book_contactPhone')" style="width:330px" size="small"></el-input>
         </el-form-item>
@@ -186,7 +186,7 @@ export default {
          })
        }
     },
-    
+
     guestTypeChange() {
       this.checkInForm.name = "";
     },
@@ -194,14 +194,12 @@ export default {
        this.$refs[formName].validate((valid) => {
           if (valid) {
              if (this.checkInForm.guestType == 2 && this.checkInForm.memberCard) {
-              this.$emit("guestChooseCallback", this.checkInForm);
-            } else if (this.checkInForm.guestType == 3 && this.checkInForm.enterId) {
-              this.$emit("guestChooseCallback", this.checkInForm);
+            } else if (this.checkInForm.guestType == 3) {
             } else if (this.checkInForm.guestType == 1) {
               this.checkInForm.memberCard = "";
               this.checkInForm.enterId = "";
-              this.$emit("guestChooseCallback", this.checkInForm);
             }
+          this.$emit("guestChooseCallback", this.checkInForm);
             this.guestTypeShow = false;
           } else {
             return false;
