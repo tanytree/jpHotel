@@ -36,6 +36,7 @@
             this.$F.handleThirdMenu(this);
             this.getSaleData();//获取售卖点
             // this.getCateList();
+            this.get_consume_tax();
         },
         computed: {
             ...mapState({
@@ -84,7 +85,7 @@
                 this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
                     if(res && res.content){
                         this.taxInfos = JSON.parse(res.content)
-                        // console.log(this.taxInfos)
+                        console.log(this.taxInfos)
                     }
                 });
             },

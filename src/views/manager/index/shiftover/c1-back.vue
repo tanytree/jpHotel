@@ -9,12 +9,6 @@
   <!-- 统一的列表格式 -->
   <div class="shiftOver">
     <el-row>
-        <el-button v-for="(item,index) in tabs" :key="index"  :type="tabCurr == item.handoverType ? 'primary' : ''">
-        {{$t('manager.typeNameList.'+item.handoverType)}}
-
-        </el-button>
-    </el-row>
-    <el-row>
       <h3>预交班基本信息</h3>
       <el-row>
         <el-col :span="12">
@@ -157,31 +151,80 @@ export default {
   },
   data() {
     return {
-      tabCurr:1,
-      tabs:[],
       loading: false,
-      searchForm:{}
+      form: {
+        text: "",
+      },
+      list: [
+        {
+          type: "",
+          name: "营业日报",
+        },
+        {
+          type: "",
+          name: "营业月报",
+        },
+        {
+          type: "",
+          name: "营业年报",
+        },
+        {
+          type: "",
+          name: "现金流明细表",
+        },
+        {
+          type: "",
+          name: "迷你吧销售报表",
+        },
+        {
+          type: "",
+          name: "结账汇总报表",
+        },
+        {
+          type: "",
+          name: "结账明细报表",
+        },
+        {
+          type: "",
+          name: "会员卡积分兑换报表",
+        },
+        {
+          type: "",
+          name: "单位挂账明细表",
+        },
+        {
+          type: "",
+          name: "单位挂账汇总表",
+        },
+        {
+          type: "",
+          name: "销售员业绩明细表",
+        },
+        {
+          type: "",
+          name: "销售员业绩汇总表",
+        },
+      ],
     };
   },
 
   mounted() {
-    this.initForm();
+    // this.initForm();
   },
   methods: {
     initForm() {
-      this.getList();
+      this.searchForm = {
+        searchType: 1,
+        content: "",
+        enterStatus: "",
+        pageIndex: 1, //当前页
+        pageSize: 10, //页数
+        startTime: "", //考试时件
+        endTime: "", //结束时间
+      };
+      this.getDataList();
     },
     /**获取表格数据 */
-    getList(){
-    	this.loading = false
-    	let params = {}
-    	params.userId = this.userId
-    	params.storesNum = this.storesNum
-        this.$F.doRequest(this, "/pms/handover/list", params, (res) => {
-            console.log(res)
-            this.tabs = res
-        });
-    },
     getDataList() {
       this.searchForm.token = this.token;
       this.searchForm.plat_source = this.plat_source;
@@ -194,6 +237,26 @@ export default {
           this.tableData = res.data;
           this.listTotal = res.data.total;
         }
+      });
+    },
+    /**编辑 */
+    editRowItem(row) {
+      // 加载组件
+      this.showEdit = true;
+      //   组件加载完成调用组件内initdata 方法
+      this.$nextTick(() => {
+        //   可能没有详情接口的直接传row显示
+        this.refs.editRef.initdata(row.id);
+      });
+    },
+
+    handelRowItem(row) {
+      // 加载组件
+      this.showDetail = true;
+      //   组件加载完成调用组件内initdata 方法
+      this.$nextTick(() => {
+        //   可能没有详情接口的直接传row显示
+        this.refs.detailRef.initdata(row.id);
       });
     },
 

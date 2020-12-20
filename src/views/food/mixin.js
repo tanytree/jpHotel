@@ -76,15 +76,15 @@ const mixin= {
                     console.log(list[i].taxStatus)
                     console.log(list[i])
                 }
-                // console.log(total)
-                // console.log(service)
-                // console.log(taxBefore)
-                // console.log(taxAfter)
+                console.log(total)
+                console.log(service)
+                console.log(taxBefore)
+                console.log(taxAfter)
                 let parms = {
-                    total: parseFloat(total).toFixed(0),
-                    service:parseFloat(service).toFixed(0),
-                    taxBefore:parseFloat(taxBefore).toFixed(0),
-                    taxAfter:parseFloat(taxAfter).toFixed(0)
+                    total: total ? parseFloat(total).toFixed(0) : 0,
+                    service: service ? parseFloat(service).toFixed(0) :0,
+                    taxBefore:taxBefore ? parseFloat(taxBefore).toFixed(0) : 0,
+                    taxAfter:taxAfter ? parseFloat(taxAfter).toFixed(0) : 0
                 }
                 return parms
             }

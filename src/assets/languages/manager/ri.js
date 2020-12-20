@@ -7,6 +7,11 @@
 
 // 管理部 || 日语
 module.exports = {
+    typeNameList:{
+        1:'前台部',
+        2:'餐饮部',
+        3:'商店部'
+    },
     shiftOver: '交班交替表',
     //   管理部 > 首页(homePage > hp)
     hp_toRoom: '部屋状態',

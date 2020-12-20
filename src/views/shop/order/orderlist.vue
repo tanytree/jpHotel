@@ -154,7 +154,6 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
-
         <div class="detailPanel">
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{detail.shopNum}} </span>
@@ -162,13 +161,15 @@
                 <span>{{$t('food.common.create_time')}}：{{detail.createTime}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('shop.orderTotal')}}：¥ {{numFormate(detail.consumePrice)}}</div>
+
+            <div v-if="!!orderTax" class="margin-t-10 text-gray">消费税：¥{{orderTax.total}}</div>
+            <div v-if="!!orderTax" class="margin-t-10 text-gray">服务费：¥{{orderTax.service}}</div>
+           <!-- <div v-if="!!orderTax" class=" text-size14 text-gray margin-t-10">
+                其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
+            </div> -->
             <!-- <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div> -->
             <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">{{$t('shop.vipPrice')}}：¥{{numFormate(detail.scoresPrice)}}</div>
             <div class="margin-t-10 text-gray">{{$t('shop.realPrice')}}：¥{{numFormate(detail.realPayPrice)}}</div>
-            <div v-if="!!orderTax" class=" text-size14 text-gray margin-t-10">
-            其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
-            </div>
-
             <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：¥{{detail.updateTime}}</div>
             <el-table
               class="margin-t-10 "
