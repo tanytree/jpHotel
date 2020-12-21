@@ -1,219 +1,350 @@
-<!--
- * @Date: 2020-03-10 14:09:08
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-19 11:23:48
- * @FilePath: \jiudian\src\views\sale\order\member\Personer.vue
- -->
 <template>
-  <div>
-    <div class="sec1" v-if="!secondShow">
-      <el-form
-        :model="form"
-        :inline="true"
-        class="top-body"
-        size="small"
-        label-width="100px"
-      >
-<!--        <el-form-item :label="$t('desk.customer_memType')+':'">-->
-<!--          <el-select v-model="form.id">-->
-<!--            <el-option :label="$t('desk.home_all')" value=""></el-option>-->
-<!--            <el-option-->
-<!--              v-for="item in memberKind"-->
-<!--              :key="item.id"-->
-<!--              :label="item.name"-->
-<!--              :value="item.id"-->
-<!--            >-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-button @click="getMemberList(form)" type="primary"-->
-<!--            >{{$t('commons.queryBtn')}}</el-button-->
-<!--          >-->
-<!--        </el-form-item>-->
-        <el-form-item style="float: right">
-          <el-button type="primary" @click="Newdata()">{{$t('commons.newAdd')}}</el-button>
-          <!-- @click="resetForm"  -->
-        </el-form-item>
-      </el-form>
-
-      <!--表格数据 -->
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="tableData"
-        :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
-        size="medium"
-      >
-        <el-table-column
-          prop="name"
-          :label="$t('desk.customer_memType')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <!--                <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>-->
-        <el-table-column
-          prop="level"
-          :label="$t('boss.add_level')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <!-- <el-table-column prop="duration" :label="$t('boss.add_usefulTime')" show-overflow-tooltip>
-          <template slot-scope="{ row }">
-            <span v-if="row.duration == '9999'">{{$t('boss.add_permanent')}}</span>
-            <span v-else>{{ row.duration }}</span>
-          </template>
-        </el-table-column> -->
-        <el-table-column
-          prop="updateTime"
-          :label="$t('boss.add_resetTime')"
-          show-overflow-tooltip
-        >
-          <template slot-scope="{ row }">
-            <span>{{ row.createTime || row.updateTime }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="updateName" :label="$t('boss.add_resetPeople')" show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column prop="createName" :label="$t('boss.add_creator')" show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          prop="state"
-          :label="$t('boss.loginDetail_state')"
-          show-overflow-tooltip
-        >
-          <template slot-scope="{ row }">
-            <el-switch
-              style="margin-left: 10px"
-              v-model="row.state"
-              :active-value="1"
-              :inactive-value="2"
-              :active-text="row.state == 1 ?$t('desk.customer_enable'): $t('desk.customer_disable')"
-              @change="(val) => changeStatus(row, val)"
-            ></el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="220">
-          <template slot-scope="{ row }">
-            <el-button type="text" size="mini" @click="onDelete(row)"
-              >{{$t('commons.delete')}}</el-button
-            >
-            <el-button type="text" size="mini" @click="Newdata(row, 'edit')"
-              >{{$t('commons.modify')}}</el-button
-            >
-          </template>
-        </el-table-column>
-      </el-table>
+    <div class="boss-index">
+        <!-- 具体参照黄工的营销部-产品管理部-店铺产品分类 -->
+        <div class="flex_row">
+            <div class="goodsType">
+                <div class="goodsTop" style="margin-bottom: 20px;">
+                    <el-button class="cancel" :icon="1==1?'el-icon-caret-right':'el-icon-caret-bottom'" @click="expanded(1)">{{$t('manager.grsl_foldAll')}}</el-button>
+                    <el-button class="cancel" @click="addCategory(1)">{{$t('manager.grsl_addFirstGroup')}}</el-button>
+                </div>
+                <div class="accountBtm">
+                    <el-tree :props="treeProps"  node-key="id" ref="treeType" default-expand-all>
+                        <div class="custom-tree-node" slot-scope="{node, data}">
+                            <span>{{ node.label }}</span>
+                            <span>
+                                <el-button class="btn-text" type="text"  size="mini" @click="() => addSecond(node, data, 1)" @click.stop>{{$t('manager.grsl_addSecondGroup')}}</el-button>
+                                <el-button class="btn-text" type="text"  size="mini" @click="() => addThird(node, data, 1)" @click.stop>{{$t('manager.grsl_addThridGroup')}}</el-button>
+                                <el-button class="btn-text" type="text" size="mini" @click="() => editNode(node, data, 1)" @click.stop>{{$t("manager.hp_editor")}}</el-button>
+                                <el-button class="btn-text" type="text" size="mini" @click="() => deleteNode(data)" @click.stop>{{$t('commons.delete')}}</el-button>
+                            </span>
+                        </div>
+                    </el-tree>
+                </div>
+            </div>
+        </div>
+        <!-- 新增分类 -->
+        <el-dialog :title="cateTitle" :visible.sync="cateVisible" top="0" width="600px" :close-on-click-modal="false">
+            <el-form label-position="right" label-width="120px" size="medium">
+                <el-form-item :label="$t('manager.grsl_firstGroupName')+':'">
+                    <el-input :disabled="category.categoryLevel==2 || category.categoryLevel==3 ? true: false" v-model="category.first"></el-input>
+                </el-form-item>
+                <el-form-item v-if="category.categoryLevel==2 || category.categoryLevel==3" :label="$t('manager.grsl_secondGroupName')+':'">
+                    <el-input :disabled="category.categoryLevel==3 ? true: false" v-model="category.second"></el-input>
+                </el-form-item>
+                <el-form-item v-if="category.categoryLevel==3" :label="$t('manager.grsl_thridGroupName')+':'">
+                    <el-input v-model="category.third"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="primary" class="blueBtn mini" @click="submit">{{$t('commons.confirm')}}</el-button>
+                <el-button class="defaultBtn mini" @click="cateVisible = false">{{$t('commons.cancel')}}</el-button>
+            </div>
+        </el-dialog>
     </div>
-    <div v-if="secondShow">
-      <NewDetail
-        @addShowFunc="addShowFunc"
-        :selected="selected"
-        :memberTypeList="memberTypeList"
-      />
-    </div>
-  </div>
 </template>
-<script>
-import NewDetail from "./graces/new";
-export default {
-  components: { NewDetail },
-  props: ["memberTypeList"], //会员类型列表
-  data() {
-    return {
-      memberKind:[],
-      secondShow: false,
-      loading: false,
-      pageIndex: 1,
-      pageSize: 10,
-      form: {
-        id: "",
-        pageIndex: 1,
-        pageSize: 10,
-        paging: true,
-      },
-      tableData: [{}], //表格数据
-      selected: {},
-    };
-  },
-  mounted() {
-    console.log(this.memberTypeList);
-    this.getMembeType();
-    this.getMemberList();
-  },
-  methods: {
-    //禁用/启用
-    changeStatus(row, val) {
-      this.$F.doRequest(
-        this,
-        "/pms/membertype/enable_disable",
-        { id: row.id, state: val },
-        (res) => {
-          this.$message.success("Success");
-        }
-      );
-    },
-    onDelete(row) {
-      this.$confirm(this.$t('boss.staff_sureDelete'), this.$t('commons.tip_desc'), {
-        confirmButtonText: this.$t('commons.determine'),
-        cancelButtonText: this.$t('commons.cancel'),
-        type: "warning",
-      }).then((res) => {
-        this.$F.doRequest(
-          this,
-          "/pms/membertype/delete",
-          { id: row.id },
-          (res) => {
-            this.$message.success("Delete Success");
-            this.getMemberList();
-          }
-        );
-      });
-    },
-    //请求会员类型接口
-    getMembeType() {
-       this.$F.doRequest(
-          this,
-          "/pms/membertype/list",
-          {  },
-          (res) => {
-           console.log(res);
-           this.memberKind = res.list;
-          }
-        );
-    },
-    addShowFunc(flag) {
-      this.getMemberList();
-      this.secondShow = flag;
-    },
 
-    getMemberList(params = {}) {
-      // this.$F.merge(params, { storesNum: '' })
-      this.$F.merge(params, this.form);
-      this.$F.commons.fetchMemberTypeList(params, (res) => {
-        this.tableData = res.list;
-        this.$forceUpdate();
-      });
-    },
-    Newdata(row = {}, type) {
-      this.selected = row;
-      if (type) {
-        this.selected = {
-          name: row.name,
-          level: row.level,
-          prices: row.prices,
-          interests: row.interests,
-          duration: row.duration,
-          id: row.id,
-        };
-      }
-      this.secondShow = true;
-      // this.$router.push('/newdetail')
-    },
-  },
-};
+<script>
+    export default {
+        data() {
+            return {
+                treeProps: {children: "child", label: "name"},
+                isexpand: true,
+                allTree: [],
+                cateVisible: false,
+                cateTitle: "",
+                add: true,
+                category: {
+                    id: "",
+                    categoryLevel: "",
+                    first: "",
+                    second: "",
+                    third: "",
+                    pCategoryId: "",
+                },
+            };
+        },
+     
+        mounted() {
+          
+        },
+        computed: {
+            addFirstGroup: {
+                get() {
+                    return this.$t("manager.grsl_addFirstGroup");
+                },
+                set() {
+                },
+            },
+
+            addSecondGroup: {
+                get() {
+                    return this.$t("manager.grsl_addSecondGroup");
+                },
+                set() {
+                },
+            },
+            addThridGroup: {
+                get() {
+                    return this.$t("manager.grsl_addThridGroup");
+                },
+                set() {
+                },
+            },
+            resetType: {
+                get() {
+                    return this.$t("manager.grsl_resetType");
+                },
+                set() {
+                },
+            },
+            confirm: {
+                get() {
+                    return this.$t("manager.grsl_confirm");
+                },
+                set() {
+                },
+            },
+            cancle: {
+                get() {
+                    return this.$t("manager.grsl_cancle");
+                },
+                set() {
+                },
+            },
+            alertTitle: {
+                get() {
+                    return this.$t("boss.loginDetail_alertTitle");
+                },
+                set() {
+                },
+            },
+            deleteContent: {
+                get() {
+                    return this.$t("manager.grsl_deleteContent");
+                },
+                set() {
+                },
+            },
+        },
+        watch: {
+            addFirstGroup(newValue, oldValue) {
+                this.addFirstGroup = newValue;
+            },
+            addSecondGroup(newValue, oldValue) {
+                this.addSecondGroup = newValue;
+            },
+            addThridGroup(newValue, oldValue) {
+                this.addThridGroup = newValue;
+            },
+            resetType(newValue, oldValue) {
+                this.resetType = newValue;
+            },
+            confirm(newValue, oldValue) {
+                this.confirm = newValue;
+            },
+            cancle(newValue, oldValue) {
+                this.cancle = newValue;
+            },
+            alertTitle(newValue, oldValue) {
+                this.alertTitle = newValue;
+            },
+            deleteContent(newValue, oldValue) {
+                this.deleteContent = newValue;
+            },
+        },
+        methods: {
+            addCategory(type) {
+                this.cateVisible = true;
+                this.category.categoryLevel = 1;
+                this.category.pCategoryId = 0;
+                this.category.first = "";
+                this.cateTitle = this.addFirstGroup;
+                this.categoryType = type;
+                this.add = true;
+            },
+            addSecond(node, data, type) {
+                this.cateVisible = true;
+                this.category.categoryLevel = 2;
+                this.category.pCategoryId = data.id;
+                this.category.first = data.name;
+                this.category.second = "";
+                this.cateTitle = this.addSecondGroup;
+                this.categoryType = type;
+                this.add = true;
+            },
+            addThird(node, data, type) {
+                this.cateVisible = true;
+                this.category.categoryLevel = 3;
+                this.category.pCategoryId = data.id;
+                this.category.first = node.parent.data.name;
+                this.category.second = data.name;
+                this.category.third = '';
+                this.cateTitle = this.addThridGroup;
+                this.categoryType = type;
+                this.add = true;
+            },
+            expanded: function (type) {
+                this.isexpand = !this.isexpand;
+                if(type == 1) {
+                    for (
+                        var i = 0;
+                        i < this.$refs.treeType.store._getAllNodes().length;
+                        i++
+                    ) {
+                        this.$refs.treeType.store._getAllNodes()[i].expanded = this.isexpand;
+                    }
+                } else {
+                    for (
+                        var i = 0;
+                        i < this.$refs.serviceType.store._getAllNodes().length;
+                        i++
+                    ) {
+                        this.$refs.serviceType.store._getAllNodes()[i].expanded = this.isexpand;
+                    }
+                }
+
+            },
+            editNode: function (node, data, type) {
+                this.cateVisible = true;
+                this.cateTitle = this.resetType;
+                this.categoryType = type;
+                if (data.categoryLevel == 1) {
+                    this.category = {
+                        id: data.id,
+                        categoryLevel: data.categoryLevel,
+                        first: data.name,
+                        second: "**",
+                        third: "**",
+                        pCategoryId: data.pCategoryId,
+                    };
+                } else if (data.categoryLevel == 2) {
+                    this.category = {
+                        id: data.id,
+                        categoryLevel: data.categoryLevel,
+                        first: node.parent.data.name,
+                        second: data.name,
+                        third: "**",
+                        pCategoryId: data.pCategoryId,
+                    };
+                } else {
+                    this.category = {
+                        id: data.id,
+                        categoryLevel: data.categoryLevel,
+                        first: node.parent.parent.data.name,
+                        second: node.parent.data.name,
+                        third: data.name,
+                        pCategoryId: data.pCategoryId,
+                    };
+                }
+                this.add = false;
+            },
+
+            //删除
+            deleteNode: function (data) {
+                var a = this;
+
+                this.$confirm(this.deleteContent, this.alertTitle, {
+                    confirmButtonText: this.confirm,
+                    cancelButtonText: this.cancle,
+                    type: "warning",
+                }).then(() => {
+                    this.$F.doRequest(
+                        this,
+                        "/pms/hotelcategory/delete",
+                        {id: data.id},
+                        (res) => {
+                            // this.initData(data.categoryType);
+                        }
+                    );
+                });
+            },
+            submit: function () {
+                const a = this;
+                let param = {};
+                const name =
+                    a.category.categoryLevel == 1
+                        ? a.category.first
+                        : a.category.categoryLevel == 2
+                        ? a.category.second
+                        : a.category.third;
+                if (a.add) {
+                    param = {
+                        name: name,
+                        categoryLevel: this.category.categoryLevel,
+                        pCategoryId: this.category.pCategoryId,
+                        categoryType: this.categoryType
+                    };
+                } else {
+                    param = {
+                        id: this.category.id,
+                        name: name,
+                        categoryLevel: this.category.categoryLevel,
+                        pCategoryId: this.category.pCategoryId,
+                        categoryType: this.categoryType
+                    };
+                }
+                this.$F.doRequest(this, "/pms/hotelcategory/edit", param, (res) => {
+                    // this.initData(this.categoryType);
+                    this.cateVisible = false;
+                });
+            },
+        },
+    };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
+<style lang="less" scope>
+    .goodsType {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: #e4e7ea;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 0 10px;
+        max-height: 100%;
+
+        .el-tree {
+            background: transparent;
+
+            & > .el-tree-node {
+                background-color: #fff;
+                margin-bottom: 20px;
+                border-radius: 6px;
+            }
+
+            .custom-tree-node {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 14px;
+                padding-right: 8px;
+            }
+
+            .el-tree-node__content {
+                height: 54px;
+                border-bottom: 1px solid #dfdfdf;
+                color: #333;
+            }
+        }
+
+        .goodsTop {
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            background-color: #fff;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            line-height: 38px;
+
+            > span {
+                margin-right: 20px;
+            }
+        }
+
+        .accountBtm {
+            padding: 0;
+            overflow: auto;
+        }
+    }
 </style>
-
-
