@@ -2,10 +2,10 @@
     <div class="boss-index">
         <el-tabs v-model="activeName" @tab-click="changeTab" class="tabCenter">
             <el-tab-pane :label="$t('manager.shiftOver')" name="shiftOver">
-                <c1></c1>
+                <c1 :tabs="tabLists" :employeeList="employeeList"></c1>
             </el-tab-pane>
             <el-tab-pane :label="$t('desk.serve_changeRecord')" name="changeRecord">
-                <c2></c2>
+                <c2 :tabs="tabLists"></c2>
             </el-tab-pane>
             <el-tab-pane :label="$t('manager.hp_patternsSuccession')" name="handover">
                 <div class="content">
@@ -113,6 +113,8 @@ import c2 from "./shiftover/c2";
                 addTypeTitle: "",
                 startPicker: {start: '00:00', end: '24:00'},
                 endPicker: {start: '00:00', end: '24:00'},
+                tabLists:[],//部门列表
+                employeeList:[],//员工列表
             };
         },
         props: {
@@ -152,6 +154,10 @@ import c2 from "./shiftover/c2";
             saveSuccess(newValue, oldValue) {
                 this.saveSuccess = newValue;
             },
+        },
+        mounted() {
+            this.getTabsList();
+            this.getEmployeelist();
         },
         methods: {
             changeTab(tab) {
@@ -241,6 +247,32 @@ import c2 from "./shiftover/c2";
                 } else {
                 }
             },
+            /**获取部门列表 */
+            getTabsList(){
+            	// this.loading = false
+            	let params = {}
+            	params.userId = this.userId
+            	params.storesNum = this.storesNum
+                this.$F.doRequest(this, "/pms/handover/list", params, (res) => {
+                    this.tabLists = res
+                });
+            },
+
+            getEmployeelist(){
+                let params = {
+                    paging:false,
+                    workingState:2,
+                    pageIndex: 1, //当前页
+                    pageSize: 10, //页数
+                }
+                params.userId = this.userId
+                params.storesNum = this.storesNum
+                this.$F.doRequest(this, "/pms/employee/employee_list", params, (res) => {
+                    console.log(res.employeesList)
+                    this.employeeList = res.employeesList
+                });
+            }
+
             // startFocus(e) {
             //     let start = '00:00', end = '24:00'
             //     if(this.manageData.length > 0) {

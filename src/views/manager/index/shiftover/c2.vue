@@ -8,9 +8,15 @@
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
-    <div class="booking flex_column">
+    <div class="booking flex_column" style="padding:0;margin:0 -10px;">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
+        <el-row style="margin-bottom:10px;">
+            <el-button type="text" style="color: #333;font-size: 14px;">所有部门</el-button>
+            <el-button v-for="(item,index) in tabs" :key="index"  :type="tabCurr == item.handoverType ? 'primary' : ''" @click="changeTabs(item.handoverType)">
+            {{$t('manager.typeNameList.'+item.handoverType)}}
+            </el-button>
+        </el-row>
         <el-form-item :label="$t('desk.serve_flightTime')">
           <el-date-picker
             v-model="searchForm.workStarTime"
@@ -231,6 +237,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
+  props:['tabs'],
   computed: {
     ...mapState({
       token: (state) => state.user.token,
@@ -241,6 +248,7 @@ export default {
   },
   data() {
     return {
+      tabCurr:'1',
       lookMoney: false,
       loading: false,
       searchForm: {
