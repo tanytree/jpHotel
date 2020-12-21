@@ -5,7 +5,48 @@
  * @FilePath: \jiudian\src\components\front\customer.vue
  -->
 <template>
-<div class="customer">
+<div>
+    <div class="item-info" v-if="showOrderInfo">
+        <div class="public">
+            <div class="itemDetail">
+                <el-row>
+                    <el-col :span="6">{{$t('desk.order_bookOrderNum') + ': ' + (orderInfo.reserveOrderNum || '')}}</el-col>
+                    <el-col :span="6" :offset="1">
+                        <span>{{ $t('desk.book_orderSoutce') + ': ' + $t('commons.orderSource')[orderInfo.orderSource + ''] }}</span>
+<!--                        <span v-if="orderInfo.orderSource == 5"></span>-->
+                    </el-col>
+                    <el-col :span="6" :offset="1">{{ $t('desk.order_outOrder') + ': ' + (orderInfo.thirdOrdernum || '') }}</el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="6"> {{$t('desk.customer_region') + ': ' + (orderInfo.region || '')}}</el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="6">{{$t('desk.order_checkinDate') + ': ' + orderInfo.checkinTime}}</el-col>
+                    <el-col :span="6">{{$t('desk.order_departureTime') + ': ' + orderInfo.checkoutTime}}</el-col>
+                    <el-col :span="6">{{$t('desk.checkInDays') + ': ' + (orderInfo.checkinDays || '')}}</el-col>
+                </el-row>
+            </div>
+        </div>
+        <div class="public otherStyle">
+            <div class="infoTitle">预约内容/住宿plan：</div>
+            <div class="itemDetail">
+                <el-row>
+                    <el-col :span="6">消费合计：80000</el-col>
+                    <el-col :span="6" :offset="1">付款合计：9000</el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="18"
+                    >付款方式：现金（2000）；信用卡（4000）；挂账（1000）；其他（2000））</el-col
+                    >
+                </el-row>
+                <el-row>
+                    <el-col :span="6">{{ `${$t('desk.reservePersonDesc')}: ${orderInfo.name}【${orderInfo.pronunciation}】` }}</el-col>
+                    <el-col :span="8" :offset="1">预约人电话：（手）{{ orderInfo.mobile || orderInfo.homeMobile }}</el-col>
+                </el-row>
+            </div>
+        </div>
+    </div>
+
     <!--表格数据 -->
     <el-table :data="checkInPersonList" header-row-class-name="default" border style="width: 100%" :span-method="arraySpanMethod">
         <el-table-column prop="name" label="入住人/单位名称/团队名">
@@ -42,7 +83,7 @@
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
-    props: ['checkInPersonList', 'currentRoom'],
+    props: ['checkInPersonList', 'currentRoom', 'showOrderInfo', 'orderInfo'],
     data() {
         return {
         };

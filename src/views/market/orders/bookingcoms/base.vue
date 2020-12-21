@@ -204,7 +204,7 @@
         </span>
     </el-dialog>
     <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" />
-    <checkTheDetails ref="checkTheDetails" @baseInfoChange="baseInfoChange" :checkinInfo="checkinInfo" :inRoomList="inRoomList"/>
+<!--    <checkTheDetails ref="checkTheDetails" @baseInfoChange="baseInfoChange" :checkinInfo="checkinInfo" :inRoomList="inRoomList" />-->
 </div>
 </template>
 
@@ -326,6 +326,7 @@ export default {
     },
     data() {
         return {
+            checkTheDetailsShow: false,
             reserveId: '',
             currentSale: {},
             loading: false,
@@ -387,9 +388,9 @@ export default {
       //跳转到入住详情
       goCheckinDetail(){
         // 暂时未放开
-        // this.$router.push({
-        //   path:'/checktheDetails'
-        // })
+        this.$router.push({
+          path:'/checktheDetails'
+        })
       },
         checkInCallback(id) {
             this.liveInPersonShow = false;

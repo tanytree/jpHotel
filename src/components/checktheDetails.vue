@@ -5,7 +5,7 @@
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
-  <div>
+  <div v-if="">
     <el-card>
       <!-- 头部导航 -->
       <div slot="header">

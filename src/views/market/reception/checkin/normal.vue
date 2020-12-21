@@ -156,7 +156,7 @@
               :key="index"
             ></el-option>
           </el-select>
-         
+
         </el-form-item>
         <!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">-->
         <!--                    <el-select v-model="checkInForm.checkinType">-->
@@ -213,10 +213,10 @@
           <el-input v-model="checkInForm.mobile"></el-input>
         </el-form-item>
         <el-form-item label="住家电话" prop="prop">
-          <el-input v-model="checkInForm.mobile"></el-input>
+          <el-input v-model="checkInForm.homeMobile"></el-input>
         </el-form-item>
         <el-form-item label="单位电话" prop="prop">
-          <el-input v-model="checkInForm.mobile"></el-input>
+          <el-input v-model="checkInForm.enterMobile"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
           <el-select v-model="checkInForm.orderSource">
@@ -227,34 +227,25 @@
               :key="index"
             ></el-option>
           </el-select>
-          <el-select  v-model="checkInForm.channel" v-if="checkInForm.orderSource==5" >
-            <el-option
-              :value="item.id"
-              v-for="(item, index) of otaList"
-              :label="item.otaName"
-              :key="index"
-            ></el-option>
-          </el-select>
         </el-form-item>
+          <el-form-item label="OTA" prop="orderSource" v-if="checkInForm.orderSource==5" >
+              <el-select  v-model="checkInForm.otaChannelId" >
+                  <el-option
+                      :value="item.id"
+                      v-for="(item, index) of otaList"
+                      :label="item.otaName"
+                      :key="index"
+                  ></el-option>
+              </el-select>
+          </el-form-item>
         <!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType" v-if="operCheckinType!='b3'">-->
         <!--                    <el-select v-model="checkInForm.checkinType">-->
         <!--                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
         <!--                    </el-select>-->
         <!--                </el-form-item>-->
-        <el-form-item
-          :label="$t('desk.order_salesman') + '：'"
-          v-if="operCheckinType == 'b3'"
-        >
-          <el-select
-            v-model="checkInForm.salesId"
-            :placeholder="$t('commons.placeChoose')"
-          >
-            <el-option
-              v-for="item in salesList"
-              :key="item.id"
-              :label="item.userName"
-              :value="item.id"
-            ></el-option>
+        <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType == 'b3'">
+          <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">
+            <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <!--                <el-form-item label="计费规则：" prop="ruleHourId" v-if="operCheckinType=='b2'">-->
@@ -987,7 +978,7 @@ export default {
         ],
       };
     },
-  
+
   },
   data() {
     return {
@@ -1283,6 +1274,11 @@ export default {
         enterName: "", //单位名称 String选填
         checkInRoomJson: [], //排房信息json集合字符串
         reserveProjects: [], //项目list
+          otaChannelId: '',   //渠道订单
+          homeMobile:'',      //住家电话  String选填
+          enterMobile:'',      //单位电话  String选填
+          payType:'',      //支付方式  String选填
+          region: '',  //地区
       };
       this.handleOperCheckinType();
       this.getDataList();

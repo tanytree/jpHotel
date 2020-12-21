@@ -179,45 +179,8 @@
             append-to-body
         >
             <div class="infoBox">
-                <div class="public">
-                    <div class="itemDetail">
-                        <el-row>
-                            <el-col :span="6">预订单号：498576890458</el-col>
-                            <el-col :span="6" :offset="1">订单来源：前台</el-col>
-                            <el-col :span="6" :offset="1">外部订单号：398759487430</el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="6">地区：安徽省合肥市蜀山区</el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="6">入住时间：2020-04-26 12:00</el-col>
-                            <el-col :span="6" :offset="1">预离时间：2020-04-27 12:00</el-col>
-                            <el-col :span="6" :offset="1">入住天数：1</el-col>
-                        </el-row>
-                    </div>
-                </div>
-                <div class="public otherStyle">
-                    <div class="infoTitle">预约内容/住宿plan：</div>
-                    <div class="itemDetail">
-                        <el-row>
-                            <el-col :span="6">消费合计：80000</el-col>
-                            <el-col :span="6" :offset="1">付款合计：9000</el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="18"
-                            >付款方式：现金（2000）；信用卡（4000）；挂账（1000）；其他（2000））</el-col
-                            >
-                        </el-row>
-                        <el-row>
-                            <el-col :span="6">预约人：张三【zhangsan】</el-col>
-                            <el-col :span="8" :offset="1"
-                            >预约人电话：（手）18077689906</el-col
-                            >
-                        </el-row>
-                    </div>
-                </div>
-                <!--            入住人信息展示-->
-                <checkInPerson :checkInPersonList="checkInPersonList" :currentRoom="currentRoom"></checkInPerson>
+                <!--            房间信息展示  包含订单信息 入住人同来宾客-->
+                <checkInInfo :checkInPersonList="checkInPersonList" :currentRoom="currentRoom" :orderInfo="orderInfo" showOrderInfo="true"></checkInInfo>
             </div>
 
             <div slot="footer" class="dialog-footer" style="text-align: center">
@@ -235,64 +198,12 @@
                 <div class="buttonBox">
                     <el-button type="primary" size="small" plain>置脏</el-button>
                     <el-button type="primary" size="small" plain>账务</el-button>
-                    <el-button
-                        type="primary"
-                        @click="paymentVisible = true"
-                        size="small"
-                        plain
-                    >挂账</el-button
-                    >
-                    <el-button
-                        type="primary"
-                        @click="checkoutVisible = true"
-                        size="small"
-                        plain
-                    >结账退房</el-button
-                    >
+                    <el-button type="primary" @click="paymentVisible = true" size="small" plain>挂账</el-button>
+                    <el-button type="primary" @click="checkoutVisible = true" size="small" plain>结账退房</el-button>
                 </div>
                 <div class="infoBox">
-                    <div class="public" v-if="currentRoom.checkInRoomType  == 1">
-                        <div class="infoTitle">入住信息：</div>
-                        <div class="itemDetail">
-                            <el-row>
-                                <el-col :span="6">预订单号：498576890458</el-col>
-                                <el-col :span="6" :offset="1">订单来源：前台</el-col>
-                                <el-col :span="6" :offset="1">外部订单号：398759487430</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="6">地区：安徽省合肥市蜀山区</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="6">入住时间：2020-04-26 12:00</el-col>
-                                <el-col :span="6" :offset="1"
-                                >预离时间：2020-04-27 12:00</el-col
-                                >
-                                <el-col :span="6" :offset="1">入住天数：1</el-col>
-                            </el-row>
-                        </div>
-                    </div>
-                    <div class="public otherStyle" v-if="currentRoom.checkInRoomType  == 2">
-                        <div class="infoTitle">预约内容/住宿plan：</div>
-                        <div class="itemDetail">
-                            <el-row>
-                                <el-col :span="6">消费合计：80000</el-col>
-                                <el-col :span="6" :offset="1">付款合计：9000</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="18"
-                                >付款方式：现金（2000）；信用卡（4000）；挂账（1000）；其他（2000））</el-col
-                                >
-                            </el-row>
-                            <el-row>
-                                <el-col :span="6">预约人：张三【zhangsan】</el-col>
-                                <el-col :span="8" :offset="1"
-                                >预约人电话：（手）18077689906</el-col
-                                >
-                            </el-row>
-                        </div>
-                    </div>
                     <!--            入住人信息展示-->
-                    <checkInPerson :checkInPersonList="checkInPersonList" :currentRoom="currentRoom"></checkInPerson>
+                    <checkInInfo :checkInPersonList="checkInPersonList" :currentRoom="currentRoom" :orderInfo="orderInfo" showOrderInfo="true"></checkInInfo>
                 </div>
             </el-tab-pane>
             <!-- 房间信息 -->
@@ -303,13 +214,19 @@
                     <el-button type="primary" size="small" plain @click="dateLater21">往后21天&gt;&gt;</el-button>
                 </div>
                 <div class="riliBox">
-                    <div v-for="date in dates" :key="date" class="itemRi">
+                    <div v-for="date in dates" :key="date.date" class="itemRi">
                         <div class="riTop">
-                            <span>{{date.split(',')[0]}}</span>
+                            <span>{{date.date}}</span>
                             <br>
-                            <span>{{date.split(',')[1]}}</span>
+                            <span>{{date.week}}</span>
                         </div>
-                        <div class="riBottom" @click="lookBookVisible = true">空</div>
+
+                        <div class="riBottom" @click="lookRoomClick(date)" v-if="date.reserveObj">
+                            <span>{{date.reserveObj.name}}</span>
+                            <span>{{date.reserveObj.pronunciation}}</span>
+                            <span>{{$t('commons.guestType')[date.reserveObj.guestType + '']}}</span>
+                        </div>
+                        <div class="riBottom" v-else>空</div>
                     </div>
                 </div>
             </el-tab-pane>
@@ -319,10 +236,10 @@
 
 <script>
 import myMixin from "@/utils/filterMixin";
-import checkInPerson from "@/components/front/checkInPerson";
+import checkInInfo from "@/components/front/checkInInfo";
 export default {
     components: {
-        checkInPerson,
+        checkInInfo,
     },
     computed: {
         activeName: {
@@ -405,12 +322,18 @@ export default {
             ],
             inputMessage: false,
             nowDateString: '',
+            orderInfo: {}, //需要展示订单的信息
         };
     },
     mounted() {
         this.nowDateString= this.$F.formatDate('yyyy-MM-dd');
     },
     methods: {
+        lookRoomClick(data) {
+            debugger
+            this.lookBookVisible = true;
+            this.orderInfo = data.reserveObj;
+        },
         dateLater21() {
             this.startTime = this.endTime;
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 21, this.endTime);
@@ -424,23 +347,36 @@ export default {
         },
         initRoomPlan() {
             this.dates = [];
-            this.getDateStr(this.startTime, this.endTime, 0);
-            this.dates.forEach( (value, index) => {
-                let week = this.$F.getWeekNumber(this, value)
-                this.dates[index] += ',';
-                this.dates[index] += week;
+            let tempArray = this.getDateStr(this.startTime, this.endTime, 0);
+            tempArray.forEach( (value, index) => {
+                this.dates.push({
+                    date: value,
+                    week: this.$F.getWeekNumber(this, value)
+                });
             })
-            console.log(this.dates);
-            console.log(this.startTime);
-            console.log(this.endTime);
             this.$F.doRequest(this, "/pms/reserve/reserve_room_list", {
                     roomId: this.currentRoom.id,
                     startTime: this.startTime,
                     endTime: this.endTime,
                     searchType: this.currentRoom.checkInRoomType || 1
                 }, (res) => {
-
-
+                    if (res && res.length > 0) {
+                        res.forEach( (value, index) => {
+                            if (value.reserveObj) {
+                                let tempArray = this.getDateStr(value.reserveObj.checkinTime, value.reserveObj.checkoutTime, 0);
+                                if (tempArray.length > 0) {
+                                    this.dates.forEach( (temp, index) => {
+                                        if (tempArray.includes(temp.date)) {
+                                            value.reserveObj.checkInRoomType = 2; //预定
+                                            temp.reserveObj = value.reserveObj;
+                                        }
+                                    })
+                                }
+                                console.log(this.dates);
+                            }
+                        })
+                        this.$forceUpdate()
+                    }
                 }
             );
         },
@@ -501,32 +437,35 @@ export default {
             this.initRoomPlan();
             this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
             if (this.currentRoom.checkInRoomType == 1) {   //订单详情
-                let id = this.currentRoom.checkInObj.id;
-                this.getOrderDetail(id, res => {
-                    if ( res.inRoomList &&  res.inRoomList.length > 0) {
-                        res.inRoomList.forEach((value) => {
-                            if (value.roomId == this.currentRoom.id)
-                                this.currentRoom.currentRoomData = value;
-                        })
-                    }
-                    console.log(JSON.parse(JSON.stringify(this.currentRoom)));
-                    this.hosteldis = true;
-                })
+                if (this.currentRoom.checkInObj) {
+                    let id = this.currentRoom.checkInObj.id;
+                    this.orderInfo = this.currentRoom.checkInObj;
+                    this.getOrderDetail(id, res => {
+                        if ( res.inRoomList &&  res.inRoomList.length > 0) {
+                            res.inRoomList.forEach((value) => {
+                                if (value.roomId == this.currentRoom.id)
+                                    this.currentRoom.currentRoomData = value;
+                            })
+                        }
+                    })
+                } else
+                    this.currentRoom.checkInRoomType = ''
             } else if (this.currentRoom.checkInRoomType == 2) {
-                let id = this.currentRoom.reseverCheckInObj.id;
-                this.getReserveDetail(id, res => {
-                    if ( res.inRoomList &&  res.inRoomList.length > 0) {
-                        res.inRoomList.forEach((value) => {
-                            if (value.roomId == room.id)
-                                this.currentRoom.currentRoomData = value;
-                        })
-                    }
-                    console.log(JSON.parse(JSON.stringify(this.currentRoom)));
-                    this.hosteldis = true;
-                })
-            } else {
-                this.hosteldis = true;
+                if (this.currentRoom.reseverCheckInObj) {
+                    let id = this.currentRoom.reseverCheckInObj.id;
+                    this.orderInfo = this.currentRoom.reseverCheckInObj;
+                    this.getReserveDetail(id, res => {
+                        if ( res.inRoomList &&  res.inRoomList.length > 0) {
+                            res.inRoomList.forEach((value) => {
+                                if (value.roomId == room.id)
+                                    this.currentRoom.currentRoomData = value;
+                            })
+                        }
+                    })
+                } else
+                    this.currentRoom.checkInRoomType = ''
             }
+            this.hosteldis = true;
         },
         checkTitleEnd() {
             if (this.currentRoom.checkIn && this.currentRoom.checkIn.operCheckinType) {
@@ -596,17 +535,17 @@ export default {
                 .catch(() => {});
         },
         getDateStr(startTime, endTime, dayLength) {
-            var str = startTime;
-            this.dates.push(startTime);
+            var str = startTime, tempArray = [startTime];
             for (var i = 0 ;; i++) {
                 var getDate = this.getTargetDate(startTime, dayLength);
                 startTime = getDate;
                 if (getDate < endTime) {
-                    this.dates.push(getDate);
+                    tempArray.push(getDate);
                 } else {
                     break;
                 }
             }
+            return tempArray;
         },
 
 // startTime: 开始时间；dayLength：每隔几天，0-代表获取每天，1-代表日期间隔一天
