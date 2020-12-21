@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-04 09:50:32
  * @Author: 陶子
- * @LastEditTime: 2020-12-04 11:32:51
+ * @LastEditTime: 2020-12-21 16:58:13
  * @FilePath: \jiudian\src\views\manager\index\consumptionTax.vue
 -->
 <template>
@@ -10,9 +10,10 @@
       ref="taxForm"
       :model="taxForm"
       :rules="taxRules"
-      label-width="80px"
+      label-width="100px"
+      inline
     >
-      <el-form-item :label="$t('manager.add_tax')+':'" prop="consumeTax">
+      <el-form-item :label="$t('manager.add_taxIn')+':'" prop="consumeTax">
         <el-input
           style="width: 200px"
           size="small"
@@ -21,6 +22,16 @@
         ></el-input
         ><span style="margin-left: 4px">%</span>
       </el-form-item>
+       <el-form-item :label="$t('manager.add_taxOut')+':'" prop="outConsumeTax">
+        <el-input
+          style="width: 200px"
+          size="small"
+          v-model.number="taxForm.outConsumeTax"
+          :placeholder="$t('manager.add_maxNum')"
+        ></el-input
+        ><span style="margin-left: 4px">%</span>
+      </el-form-item>
+      <br/>
       <el-form-item :label="$t('manager.add_serverPrice')+':'" prop="servicePrice">
         <el-input
           style="width: 200px"
@@ -42,7 +53,8 @@ export default {
   data() {
     return {
       taxForm: {
-        consumeTax: "", //消费税
+        consumeTax: "", //in消费税
+        outConsumeTax:"",  //out消费税
         servicePrice: "", //服务费
       },
     };
@@ -51,6 +63,17 @@ export default {
     taxRules() {
       return {
         consumeTax: [
+          {
+            required: true,
+            message: this.$t('commons.mustInput'),
+            trigger: "blur",
+          },
+          {
+            type: "number",
+            message: this.$t('manager.add_inputNum'),
+          },
+        ],
+         outConsumeTax: [
           {
             required: true,
             message: this.$t('commons.mustInput'),
@@ -79,8 +102,8 @@ export default {
     saveInput(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-        if(this.taxForm.consumeTax>=0&&this.taxForm.servicePrice>=0){
-           if(this.taxForm.consumeTax<=100&&this.taxForm.servicePrice<=100){
+        if(this.taxForm.consumeTax>=0&&this.taxForm.servicePrice>=0&&this.taxForm.outConsumeTax>=0){
+           if(this.taxForm.consumeTax<=100&&this.taxForm.servicePrice<=100&&this.taxForm.outConsumeTax<=100){
             this.$F.doRequest(
             this,
             "/pms/hotelparam/manage_consume_tax",

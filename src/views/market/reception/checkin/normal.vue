@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-15 13:35:27
+ * @LastEditTime: 2020-12-21 17:50:54
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 
@@ -96,23 +96,26 @@
             ></el-date-picker>
           </el-form-item>
         </template>
-<!--        <template v-if="operCheckinType == 'a2'">-->
-<!--          <el-form-item-->
-<!--            :label="$t('desk.customer_accountRules') + ':'"-->
-<!--            prop="ruleHourId"-->
-<!--          >-->
-<!--            <el-select v-model="checkInForm.ruleHourId">-->
-<!--              <el-option-->
-<!--                v-for="item in ruleHourList"-->
-<!--                :key="item.id"-->
-<!--                :label="item.ruleName"-->
-<!--                :value="item.id"-->
-<!--              ></el-option>-->
-<!--            </el-select>-->
-<!--          </el-form-item>-->
-<!--        </template>-->
-        <el-form-item :label="$t('desk.order_salesman') + '：'">
-          <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">
+        <!--        <template v-if="operCheckinType == 'a2'">-->
+        <!--          <el-form-item-->
+        <!--            :label="$t('desk.customer_accountRules') + ':'"-->
+        <!--            prop="ruleHourId"-->
+        <!--          >-->
+        <!--            <el-select v-model="checkInForm.ruleHourId">-->
+        <!--              <el-option-->
+        <!--                v-for="item in ruleHourList"-->
+        <!--                :key="item.id"-->
+        <!--                :label="item.ruleName"-->
+        <!--                :value="item.id"-->
+        <!--              ></el-option>-->
+        <!--            </el-select>-->
+        <!--          </el-form-item>-->
+        <!--        </template>-->
+        <el-form-item :label="$t('desk.order_salesman') + ':'">
+          <el-select
+            v-model="checkInForm.salesId"
+            :placeholder="$t('commons.placeChoose')"
+          >
             <el-option
               v-for="item in salesList"
               :key="item.id"
@@ -153,6 +156,7 @@
               :key="index"
             ></el-option>
           </el-select>
+         
         </el-form-item>
         <!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">-->
         <!--                    <el-select v-model="checkInForm.checkinType">-->
@@ -208,18 +212,26 @@
         <el-form-item :label="$t('desk.order_moblePhone')" prop="prop">
           <el-input v-model="checkInForm.mobile"></el-input>
         </el-form-item>
-          <el-form-item label="住家电话" prop="prop">
-              <el-input v-model="checkInForm.mobile"></el-input>
-          </el-form-item>
-          <el-form-item label="单位电话" prop="prop">
-              <el-input v-model="checkInForm.mobile"></el-input>
-          </el-form-item>
+        <el-form-item label="住家电话" prop="prop">
+          <el-input v-model="checkInForm.mobile"></el-input>
+        </el-form-item>
+        <el-form-item label="单位电话" prop="prop">
+          <el-input v-model="checkInForm.mobile"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
           <el-select v-model="checkInForm.orderSource">
             <el-option
               :value="key"
               v-for="(item, key, index) of $t('commons.orderSource')"
               :label="item"
+              :key="index"
+            ></el-option>
+          </el-select>
+          <el-select  v-model="checkInForm.channel" v-if="checkInForm.orderSource==5" >
+            <el-option
+              :value="item.id"
+              v-for="(item, index) of otaList"
+              :label="item.otaName"
               :key="index"
             ></el-option>
           </el-select>
@@ -261,7 +273,11 @@
             @change="startTimeChange"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays" v-if="operCheckinType == 'b1'">
+        <el-form-item
+          :label="$t('desk.checkInDays')"
+          prop="checkinDays"
+          v-if="operCheckinType == 'b1'"
+        >
           <el-input-number
             v-model="checkInForm.checkinDays"
             :step="1"
@@ -269,7 +285,10 @@
             @change="checkinDaysChange"
           ></el-input-number>
         </el-form-item>
-        <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
+        <el-form-item
+          :label="$t('desk.order_departureTime')"
+          prop="checkoutTime"
+        >
           <el-date-picker
             v-model="checkInForm.checkoutTime"
             type="datetime"
@@ -305,19 +324,19 @@
             </template>
           </el-input>
         </el-form-item>
-          <el-form-item
-              :label="$t('desk.customer_payType')"
-              v-if="operCheckinType != 'b3'"
-          >
-              <el-select v-model="checkInForm.payType">
-                  <el-option
-                      :value="key"
-                      v-for="(item, key, index) of $t('commons.payType')"
-                      :label="item"
-                      :key="index"
-                  ></el-option>
-              </el-select>
-          </el-form-item>
+        <el-form-item
+          :label="$t('desk.customer_payType')"
+          v-if="operCheckinType != 'b3'"
+        >
+          <el-select v-model="checkInForm.payType">
+            <el-option
+              :value="key"
+              v-for="(item, key, index) of $t('commons.payType')"
+              :label="item"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item
           :label="$t('desk.order_salesman') + '：'"
           v-if="operCheckinType != 'b3'"
@@ -354,26 +373,37 @@
             <el-input v-model="checkInForm.enterName"></el-input>
           </el-form-item>
         </template>
-          <el-form-item :label="$t('desk.customer_region')" prop="prop">
-              <el-input v-model="checkInForm.region"></el-input>
-          </el-form-item>
+        <el-form-item :label="$t('desk.customer_region')" prop="prop">
+          <el-input v-model="checkInForm.region"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
           <el-input type="textarea" v-model="checkInForm.remark"></el-input>
         </el-form-item>
-
       </el-form>
-        <el-form>
-            <el-form-item label="预定项目">
-                <template>
-                    <div  v-for="(value, index) in checkInForm.reserveProjects" :key="index">
-                        <el-input v-model="value.projectName" style="width: 300px"></el-input>
-                        <el-input v-model="value.projectCount" style="width: 100px;margin-left: 10px"></el-input>
-                        <el-input v-model="value.price" style="width: 100px;margin-left: 10px"></el-input>
-                    </div>
-                </template>
-                <el-button type="primary" @click="addProject()">添加项目</el-button>
-            </el-form-item>
-        </el-form>
+      <el-form>
+        <el-form-item label="预定项目">
+          <template>
+            <div
+              v-for="(value, index) in checkInForm.reserveProjects"
+              :key="index"
+            >
+              <el-input
+                v-model="value.projectName"
+                style="width: 300px"
+              ></el-input>
+              <el-input
+                v-model="value.projectCount"
+                style="width: 100px; margin-left: 10px"
+              ></el-input>
+              <el-input
+                v-model="value.price"
+                style="width: 100px; margin-left: 10px"
+              ></el-input>
+            </div>
+          </template>
+          <el-button type="primary" @click="addProject()">添加项目</el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div class="content last">
       <h3>{{ $t("desk.roomInfoDesc") }}</h3>
@@ -381,14 +411,26 @@
         <div class="left">
           <el-form inline size="small">
             <el-form-item>
-              <el-select v-model="getRoomsForm.bedCount" @change="getDataList" :placeholder="$t('commons.placeChoose')">
-                <el-option :value="key" v-for="(item, key, index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
+              <el-select
+                v-model="getRoomsForm.bedCount"
+                @change="getDataList"
+                :placeholder="$t('commons.placeChoose')"
+              >
+                <el-option
+                  :value="key"
+                  v-for="(item, key, index) of $t('commons.bedCount')"
+                  :label="item"
+                  :key="index"
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-form>
           <div class="roomBtm">
             <div class="roomBox" v-for="v in roomList" :key="v.roomTypeId">
-              <div class="rooms" :class="activeRoomCheck(v.roomTypeId) ? 'active' : ''">
+              <div
+                class="rooms"
+                :class="activeRoomCheck(v.roomTypeId) ? 'active' : ''"
+              >
                 <div class="row">
                   <span>{{ v.roomTypeName }}</span>
                   <el-input-number
@@ -402,7 +444,10 @@
                   ></el-input-number>
                 </div>
                 <div class="row">
-                  <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>
+                  <span class="allow"
+                    >{{ $t("desk.home_canOrderText")
+                    }}{{ v.reserveTotal }}</span
+                  >
                   <div>
                     <span>一人总价（含餐） {{ v.withMealPrice }}</span>
                   </div>
@@ -417,7 +462,12 @@
               <el-button @click="empty_row_houses">{{
                 $t("desk.autoRowHouse")
               }}</el-button>
-              <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
+              <el-button
+                @click="live_in_person_list"
+                v-if="
+                  !operCheckinType.startsWith('b') && waitingRoom.length > 0
+                "
+              >
                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}
               </el-button>
               <!--                            <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">-->
@@ -434,18 +484,35 @@
                 <div>
                   <!--<el-button type="primary" class="white" size="mini" @click="">附餐</el-button>-->
                   <!-- 排房-->
-                  <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)">{{ $t("desk.rowHouse") }}</el-button>
+                  <el-button
+                    type="primary"
+                    class="submit"
+                    size="mini"
+                    @click="rowRoomByItem(v, index)"
+                    >{{ $t("desk.rowHouse") }}</el-button
+                  >
                 </div>
                 <div>
                   <span>{{ v.roomTypeName }}</span>
-                  <span class="text-red">{{ v.num }}{{ $t("manager.hk_space") }}</span>
+                  <span class="text-red"
+                    >{{ v.num }}{{ $t("manager.hk_space") }}</span
+                  >
                 </div>
               </div>
               <div class="row">
                 <div class="tags margin-t-5">
-                  <el-button class="roomNumTag" size="mini" v-for="(item, i) of v.roomsArr" :key="i">
+                  <el-button
+                    class="roomNumTag"
+                    size="mini"
+                    v-for="(item, i) of v.roomsArr"
+                    :key="i"
+                  >
                     {{ item.houseNum }}
-                    <span class="del" @click="delete_db_row_houses(v, item.id, i)">✕ {{ $t("desk.customer_remove") }}</span>
+                    <span
+                      class="del"
+                      @click="delete_db_row_houses(v, item.id, i)"
+                      >✕ {{ $t("desk.customer_remove") }}</span
+                    >
                   </el-button>
                 </div>
               </div>
@@ -468,7 +535,7 @@
         }}</el-button>
       </div>
     </div>
-<!-- 排房dialog -->
+    <!-- 排房dialog -->
     <el-dialog
       top="0"
       :visible.sync="rowRoomShow"
@@ -476,7 +543,7 @@
       :title="$t('desk.rowHouse')"
       width="800px"
     >
-    <!-- 房间选择块 -->
+      <!-- 房间选择块 -->
       <div class="topBigbox">
         <div class="eackBlock">
           <div>大仓集团第一酒店 3层 4间</div>
@@ -521,24 +588,23 @@
           style="width: 100%; margin-bottom: 20px"
           border
           lazy
-           header-row-class-name="default"
+          header-row-class-name="default"
         >
-          <el-table-column type="index"  :index="indexMethod" width="80px"> </el-table-column>
+          <el-table-column type="index" :index="indexMethod" width="80px">
+          </el-table-column>
           <el-table-column
             v-for="(item, index) in dateList"
             :key="index"
             :label="item.dateStr + '' + item.weekDay"
             :width="index == 0 ? '150' : ''"
           >
-            <template slot-scope="{row}">
-              <span >{{
-               checkRoomInfo(row,index)
-              }}</span>
+            <template slot-scope="{ row }">
+              <span>{{ checkRoomInfo(row, index) }}</span>
             </template>
           </el-table-column>
         </el-table>
       </div>
-      <div slot="footer" class="dialog-footer" style="text-align:right">
+      <div slot="footer" class="dialog-footer" style="text-align: right">
         <el-button size="small" @click="rowRoomShow = false">{{
           $t("commons.cancel")
         }}</el-button>
@@ -921,6 +987,7 @@ export default {
         ],
       };
     },
+  
   },
   data() {
     return {
@@ -935,7 +1002,9 @@ export default {
         disabledDate: (time) => {
           if (this.checkInForm.checkinTime) {
             let timeStr = new Date(
-              new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd").replace(/-/g, "/")
+              new Date(this.checkInForm.checkinTime)
+                .Format("yyyy-MM-dd")
+                .replace(/-/g, "/")
             );
             if (this.operCheckinType == "b2") {
               //时租预订
@@ -973,6 +1042,7 @@ export default {
         },
       },
       num: 1,
+      otaList:[],   //OTA数组
       isSubmitErr: false,
       loading: false,
       liveLoading: false,
@@ -994,7 +1064,7 @@ export default {
       ruleHourList: [],
       //预定和入住人信息
       checkInForm: {
-          reserveProjects: [],
+        reserveProjects: [],
         checkInRoomJson: [],
       },
 
@@ -1026,9 +1096,21 @@ export default {
       ///////////*************/ */
       cities: ["A002", "A003", "A004", "A005"],
       checkboxGroup3: ["A004"],
-      roominfoList: [{name:"A002",checked1:'未选',checked2:'已选'},{name:"A004",checked1:'已选',checked2:'未选'}],   //房间列表数据
-      dateList: [{dateStr:'10/26',weekDay:'周一'},{dateStr:'10/27',weekDay:'周二'}],      //时间列表数据
+      roominfoList: [
+        { name: "A002", checked1: "未选", checked2: "已选" },
+        { name: "A004", checked1: "已选", checked2: "未选" },
+      ], //房间列表数据
+      dateList: [
+        { dateStr: "10/26", weekDay: "周一" },
+        { dateStr: "10/27", weekDay: "周二" },
+      ], //时间列表数据
     };
+  },
+  created(){
+    this.$F.doRequest(this,'/pms/oat/oat_list',{},res=>{
+      console.log(res);
+      this.otaList = res.oatList;
+    })
   },
   mounted() {
     this.handleOperCheckinType();
@@ -1132,26 +1214,32 @@ export default {
     },
   },
   methods: {
-      //新需求 添加项目
-      addProject() {
-          if (this.checkInForm.reserveProjects.length > 0) {
-              let lastObject = this.checkInForm.reserveProjects[this.checkInForm.reserveProjects.length - 1];
-              if (lastObject.projectName && lastObject.price && lastObject.projectName) {
-                  this.checkInForm.reserveProjects.push({});
-              }
-          } else {
-              this.checkInForm.reserveProjects.push({});
-          }
-      },
-    checkRoomInfo(row,index){
+    //新需求 添加项目
+    addProject() {
+      if (this.checkInForm.reserveProjects.length > 0) {
+        let lastObject = this.checkInForm.reserveProjects[
+          this.checkInForm.reserveProjects.length - 1
+        ];
+        if (
+          lastObject.projectName &&
+          lastObject.price &&
+          lastObject.projectName
+        ) {
+          this.checkInForm.reserveProjects.push({});
+        }
+      } else {
+        this.checkInForm.reserveProjects.push({});
+      }
+    },
+    checkRoomInfo(row, index) {
       console.log(row);
       console.log(index);
-      let newCheck = 'checked'+(index+1);
+      let newCheck = "checked" + (index + 1);
       console.log(newCheck);
       return row[newCheck];
     },
-    indexMethod(index){
-        return this.roominfoList[index].name;
+    indexMethod(index) {
+      return this.roominfoList[index].name;
     },
     initForm() {
       this.getRoomsForm = {
@@ -1194,48 +1282,48 @@ export default {
         meetingName: "", //会议名称  String选填
         enterName: "", //单位名称 String选填
         checkInRoomJson: [], //排房信息json集合字符串
-          reserveProjects: []  //项目list
+        reserveProjects: [], //项目list
       };
       this.handleOperCheckinType();
       this.getDataList();
     },
-      /**获取房间信息数据 */
-      getDataList() {
-          let that = this;
-          this.$F.doRequest(
-              this,
-              "/pms/checkin/hotel_checkin_roominfo",
-              this.getRoomsForm,
-              (res) => {
-                  let list = res.roomTypeList;
-                  list.forEach((element) => {
-                      let coverData = check(element.roomTypeId);
-                      if (coverData) {
-                          element.price = coverData.todayPrice;
-                          element.num = coverData.num;
-                      } else {
-                          element.price = element.todayPrice;
-                          element.num = 0;
-                      }
-                      element.withMealPrice =
-                          (element.onePersonPrice || 0) +
-                          element.breakfastMealPrice +
-                          element.dinnerMealPrice;
-                  });
+    /**获取房间信息数据 */
+    getDataList() {
+      let that = this;
+      this.$F.doRequest(
+        this,
+        "/pms/checkin/hotel_checkin_roominfo",
+        this.getRoomsForm,
+        (res) => {
+          let list = res.roomTypeList;
+          list.forEach((element) => {
+            let coverData = check(element.roomTypeId);
+            if (coverData) {
+              element.price = coverData.todayPrice;
+              element.num = coverData.num;
+            } else {
+              element.price = element.todayPrice;
+              element.num = 0;
+            }
+            element.withMealPrice =
+              (element.onePersonPrice || 0) +
+              element.breakfastMealPrice +
+              element.dinnerMealPrice;
+          });
 
-                  function check(id) {
-                      for (let k in that.waitingRoom) {
-                          if (that.waitingRoom[k].roomTypeId == id) {
-                              return that.waitingRoom[k];
-                          }
-                      }
-                      return false;
-                  }
-                  this.roomList = list;
-                  this.$forceUpdate();
+          function check(id) {
+            for (let k in that.waitingRoom) {
+              if (that.waitingRoom[k].roomTypeId == id) {
+                return that.waitingRoom[k];
               }
-          );
-      },
+            }
+            return false;
+          }
+          this.roomList = list;
+          this.$forceUpdate();
+        }
+      );
+    },
 
     //页面上点击事件都在这里
     popup(type, row) {
@@ -1821,8 +1909,7 @@ export default {
     },
     startTimeChange(e) {
       let day = 0;
-      if (this.operCheckinType == 'b2') {
-
+      if (this.operCheckinType == "b2") {
       }
       if (this.checkInForm.checkoutTime) {
         day = getDaysBetween(

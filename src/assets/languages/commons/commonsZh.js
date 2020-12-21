@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-15 11:33:38
+ * @LastEditTime: 2020-12-21 16:28:06
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
     confirm_delete: '确定删除吗？',
     tip_desc: '提示',
     request_success: '请求成功',
-    delete_success: '删除成功',
+    delete_success: '删除成功！',
     delete_batch: '确定执行批量删除操作',
     delete_single: '确定执行删除操作',
     request_fail: '请求失败',
@@ -33,6 +33,7 @@ module.exports = {
     disable: '禁用',
     enable: '启用',
     newAdd: '新增',
+    newAddA: '+新增',
     name: '名称',
     other: '其他',
     backIntoJob: '重新入职',

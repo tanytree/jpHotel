@@ -31,6 +31,7 @@ module.exports = {
     disable: '停止',
     enable: '利用中',
     newAdd: '追加',
+    newAddA: '追加',
     name: '名称',
     other: 'その他',
     backIntoJob: '再入社',

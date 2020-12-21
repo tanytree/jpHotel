@@ -21,7 +21,7 @@
                 <!-- 消费税管理 -->
                 <consumptionTax v-if="item.path=='salesTax'"/>
                 <!-- 渠道设置 -->
-                <consumptionTax v-if="item.path=='channelSetting'"/>
+                <sourceSet v-if="item.path=='channelSetting'"/>
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -34,13 +34,14 @@
 	import nightSite from './nightSite'
 	import damageCompensate from './damageCompensate'
 	import consumptionTax from './consumptionTax'
+	import sourceSet from './sourceSet'
 	import shiftSite from './shiftSite'
 	import hotelServices from './hotelServices'
 	import printingMg from './printingMg'
     import EmployeeRights from '@/components/employeeRights'
     import { mapState, mapActions } from "vuex";
     export default {
-        components: { roomStatus,nightSite,damageCompensate,shiftSite,hotelServices,printingMg,consumptionTax,EmployeeRights},
+        components: { roomStatus,nightSite,damageCompensate,shiftSite,hotelServices,printingMg,consumptionTax,EmployeeRights,sourceSet},
         computed: {
             ...mapState({
                 user: state => state.user
