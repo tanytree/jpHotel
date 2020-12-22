@@ -815,6 +815,13 @@ module.exports = {
   book_travelAddress: '旅行社住所',
   book_inputTeamName: '団体名を入力してください',
   book_inputFayin: 'カナを入力してください',
+  book_bookProject: '未翻译词条',
+  book_projectName: '未翻译词条',
+  book_projectCount: '未翻译词条',
+  book_price: '未翻译词条',
+  book_addProject: '未翻译词条',
+  book_canAdd: '未翻译词条',
+  book_perfectProjectInfo: '未翻译词条',
 
 
 

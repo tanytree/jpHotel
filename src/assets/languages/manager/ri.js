@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-21 17:00:17
+ * @LastEditTime: 2020-12-22 09:49:37
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -491,11 +491,11 @@ module.exports = {
   hk_getPriceRule: '計算単位料金',
   hk_deposit: '押金',
   hk_addGetContent: '説明：60分未満の場合に、30分以内は0.5；30分以上は１計算単位として請求します。',
-  add_taxIn: '未翻译词条',
-  add_taxOut: '未翻译词条',
-  hk_oatName: '未翻译词条',
-  hk_inputOat: '未翻译词条',
-  hk_resetSuccess: '未翻译词条',
+  add_taxIn: '消費税率',
+  add_taxOut: '消費税軽減税率',
+  hk_oatName: 'OTA名称',
+  hk_inputOat: 'OTA名称を入力してください',
+  hk_resetSuccess: '変更確認',
 
 
 

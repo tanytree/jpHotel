@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-12-18 16:26:51
+ * @LastEditTime: 2020-12-22 11:56:38
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -292,6 +292,13 @@ module.exports = {
   book_travelAddress: '旅行社地址',
   book_inputTeamName: '请输入团体名',
   book_inputFayin: '请输入发音',
+  book_bookProject: '预订项目',
+  book_projectName: '项目名称',
+  book_projectCount: '项目数量',
+  book_price: '项目单价',
+  book_addProject: '+添加项目',
+  book_canAdd: '以上信息填写完毕，方可继续添加',
+  book_perfectProjectInfo: '请完善预定项目信息',
   book_: '',
   book_: '',
   //订单管理（order）

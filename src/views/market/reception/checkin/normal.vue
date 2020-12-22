@@ -1,10 +1,9 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-21 17:50:54
+ * @LastEditTime: 2020-12-22 11:56:26
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
-
 <template>
   <div class="boss-index ru">
     <div class="content">
@@ -367,32 +366,39 @@
         <el-form-item :label="$t('desk.customer_region')" prop="prop">
           <el-input v-model="checkInForm.region"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
+        <el-form-item :label="$t('desk.orderMarkInfo') + ':'">
           <el-input type="textarea" v-model="checkInForm.remark"></el-input>
         </el-form-item>
       </el-form>
-      <el-form>
-        <el-form-item label="预定项目">
+      <el-form  label-width="120px">
+        <el-form-item :label="$t('desk.book_bookProject') + ':'" required>
           <template>
             <div
               v-for="(value, index) in checkInForm.reserveProjects"
               :key="index"
             >
               <el-input
+                :placeholder="$t('desk.book_projectName')+(index+1)"
+                size="small"
                 v-model="value.projectName"
                 style="width: 300px"
               ></el-input>
               <el-input
+              :placeholder="$t('desk.book_projectCount')"
+               size="small"
                 v-model="value.projectCount"
                 style="width: 100px; margin-left: 10px"
               ></el-input>
               <el-input
+               :placeholder="$t('desk.book_price')"
+                size="small"
                 v-model="value.price"
                 style="width: 100px; margin-left: 10px"
               ></el-input>
+              <img src="~@/assets/images/close.png" @click="deleteProject(index)" v-if="checkInForm.reserveProjects.length>1" class="closePng">
             </div>
           </template>
-          <el-button type="primary" @click="addProject()">添加项目</el-button>
+          <el-button type="text"  @click="addProject()">{{$t('desk.book_addProject')}}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -1055,7 +1061,7 @@ export default {
       ruleHourList: [],
       //预定和入住人信息
       checkInForm: {
-        reserveProjects: [],
+        reserveProjects: [{}],
         checkInRoomJson: [],
       },
 
@@ -1217,11 +1223,20 @@ export default {
           lastObject.projectName
         ) {
           this.checkInForm.reserveProjects.push({});
+        }else{
+          this.$message({
+              message: this.$t('desk.book_canAdd'),
+              type: 'warning'
+        });
         }
       } else {
         this.checkInForm.reserveProjects.push({});
       }
     },
+    //预定项目，点击删除
+      deleteProject(index){
+        this.checkInForm.reserveProjects.splice(index,1);
+      },
     checkRoomInfo(row, index) {
       console.log(row);
       console.log(index);
@@ -1273,7 +1288,7 @@ export default {
         meetingName: "", //会议名称  String选填
         enterName: "", //单位名称 String选填
         checkInRoomJson: [], //排房信息json集合字符串
-        reserveProjects: [], //项目list
+        reserveProjects: [{}], //项目list
           otaChannelId: '',   //渠道订单
           homeMobile:'',      //住家电话  String选填
           enterMobile:'',      //单位电话  String选填
@@ -1347,9 +1362,25 @@ export default {
       }
     },
 
-    //保存 保存并继续
-    // type为2是保存，为3是保存后继续办理入住预定
+    // 保存 保存并继续
+    // type:{
+    //  2: 保存；
+    //  3: 保存后继续办理入住预定
+    // }
     hotel_check_in(type) {
+        for(let item of this.checkInForm.reserveProjects){
+        if (
+          !item||!item.projectName ||
+          !item.price ||
+          !item.projectName
+        ){
+            this.$message({
+              message: this.$t('desk.book_perfectProjectInfo'),
+              type: 'warning'
+          });
+          return false;
+        }
+      }      
       this.isSubmitErr = false;
       let url = "";
       let operCheckinType = this.operCheckinType;
@@ -2237,5 +2268,12 @@ export default {
     font-size: 13px;
     text-decoration: underline;
   }
+}
+.closePng{
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 5px;
+  margin-left: 5px;
 }
 </style>
