@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-22 11:56:26
+ * @LastEditTime: 2020-12-22 13:16:34
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -722,7 +722,6 @@
             <el-button
               type="text"
               size="mini"
-              @click=""
               v-if="scope.row.isChild && !scope.row.isIndex0"
             >
               {{ $t("commons.delete") }}
@@ -2273,7 +2272,7 @@ export default {
   width: 20px;
   height: 20px;
   position: relative;
-  top: 5px;
+  top: 6px;
   margin-left: 5px;
 }
 </style>

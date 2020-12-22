@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-13 13:47:12
+ * @LastEditTime: 2020-12-22 16:38:41
  * @FilePath: \jiudian\src\views\sale\order\member\graces\new.vue
  -->
 <template>
@@ -123,7 +123,7 @@ export default {
       this.newvip.interests = value ? 1 : 0;
     },
     back() {
-      this.$emit("addShowFunc", false);
+     this.$router.go(-1);
     },
 
     editItem(formName) {

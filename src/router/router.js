@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 16:09:41
+ * @LastEditTime: 2020-12-22 16:37:18
  * @FilePath: \jiudian\src\router\router.js
  */
 import Vue from 'vue'
@@ -252,6 +252,13 @@ export default new Router({
                     component: () =>
                         import('@/views/market/customer/children/memberEditorTao'),
                 },
+                {
+                  path: '/newDetail',
+                  name: 'newDetail',
+                  meta: { title: '新增会员类型' },
+                  component: () =>
+                      import('@/views/sale/order/member/graces/new'),
+              },
                 {
                     path: '/customeradd',
                     name: 'customeradd',
