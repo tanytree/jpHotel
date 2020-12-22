@@ -259,17 +259,17 @@ import c2 from "./shiftover/c2";
             },
 
             getEmployeelist(){
-                let params = {
+                let params ={
+                    searchType:1,
                     paging:false,
-                    workingState:2,
                     pageIndex: 1, //当前页
                     pageSize: 10, //页数
                 }
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-                this.$F.doRequest(this, "/pms/employee/employee_list", params, (res) => {
-                    console.log(res.employeesList)
-                    this.employeeList = res.employeesList
+                this.$F.doRequest(this, "/pms/workuser/login_user_list", params, (res) => {
+                    console.log(res)
+                    this.employeeList = res.hotelUserList
                 });
             }
 

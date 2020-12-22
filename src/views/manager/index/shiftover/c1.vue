@@ -42,12 +42,9 @@
       <h3>本班账务汇总信息</h3>
       <div class="total">收入总计：{{info.income}}日元</div>
       <el-row class="padding-tb-10">
-
-
         <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList">
           <div class="item">{{$t('manager.priceType.'+item.priceType)}}：<span class="red">{{item.total}}</span>日元</div>
         </el-col>
-
       </el-row>
       <div class="total">结算总计：{{info.settlement}}日元</div>
       <el-row class="padding-tb-10">
@@ -83,8 +80,8 @@
             <div class="item">本班支付宝留存：{{info.upAliRetained}}</div>
           </el-col> -->
           <el-col :span="12" class="li">
-            <div class="item">本班信用卡上交：100.00</div>
-            <div class="item">本班信用卡留存：100.00</div>
+            <div class="item">本班信用卡上交：{{info.nowCreditCardHandin}}</div>
+            <!-- <div class="item">本班信用卡留存：{{info.nowCreditCardRetained}}</div> -->
           </el-col>
         </el-row>
         <!-- <el-row class="ftRow">本班走结订单金额：{{info.goSettlement}}</el-row> -->
