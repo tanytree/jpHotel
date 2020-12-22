@@ -229,14 +229,14 @@
             getInfo(data){
                 this.intForm();
                 this.info = data
-                console.log(data)
+                // console.log(data)
                 this.orderTax = this.getTaxInfo(this.taxInfo,data.orderSubList)
-                console.log(data)
+                // console.log(data)
                 // this.form.consumePrice =  parseFloat(consumePrice) + parseFloat(this.orderTax.taxBefore)
                 this.form.realPayPrice = parseFloat(data.consumePrice) + parseFloat(this.orderTax.taxBefore) + parseFloat(this.orderTax.service)
-                console.log(parseFloat( this.info.consumePrice))
-                console.log(parseFloat(this.orderTax.taxBefore))
-                console.log(parseFloat(this.orderTax.service))
+                // console.log(parseFloat( this.info.consumePrice))
+                // console.log(parseFloat(this.orderTax.taxBefore))
+                // console.log(parseFloat(this.orderTax.service))
 
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
@@ -395,11 +395,10 @@
             //提交结账
             submit(){
                 let params = this.form
-                if(params.billingType == 1 && !this.form.memberCard ){
-                    this.alert(-1,this.$t('food.common.select_member_card'));
-                    return false
-                }
-
+                // if(params.billingType == 1 && !this.form.memberCard ){
+                //     this.alert(-1,this.$t('food.common.select_member_card'));
+                //     return false
+                // }
                 if(params.billingType == 3  &&  !this.form.signRoomId){
                     // this.alert(-1,'请选择房间');
                     this.alert(-1,this.$t('food.common.select_rooms'));
