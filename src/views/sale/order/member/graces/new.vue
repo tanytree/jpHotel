@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-22 16:38:41
+ * @LastEditTime: 2020-12-23 13:26:45
  * @FilePath: \jiudian\src\views\sale\order\member\graces\new.vue
  -->
 <template>
@@ -25,10 +25,10 @@
       </div>
       <div style="margin-left: 20px">
         <el-form
-          :model="newvip"
+          :model="newMemberType"
           :inline="true"
           :rules="rules"
-          ref="newvip"
+          ref="newMemberType"
           class="top-body"
           size="small"
           label-width="100px"
@@ -37,35 +37,49 @@
             <h3>{{ $t("boss.add_basicInfo") }}</h3>
           </el-row>
           <el-row>
+             <div class="nextLevel" v-if="$route.query.type">
+              上级：<span
+                >{{ itemNode.parent.parent.data.name }} > {{ itemNode.parent.data.name }}</span
+              >
+            </div>
+            <div class="nextLevel" v-else>
+              上级：<span
+                >{{ itemNode.parent.data.name }} > {{ itemData.name }}</span
+              >
+            </div>
+          </el-row>
+          <el-row>
             <el-form-item :label="$t('boss.add_memType') + ':'" prop="name">
-              <el-input v-model="newvip.name" style="width: 264px"></el-input>
+              <el-input
+                v-model="newMemberType.name"
+                style="width: 264px"
+              ></el-input>
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item :label="$t('boss.add_levelA') + ':'">
-              <el-input v-model="newvip.level" style="width: 264px"></el-input>
+              <el-input
+                v-model="newMemberType.level"
+                style="width: 264px"
+              ></el-input>
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item :label="$t('boss.add_yearPrice') + ':'">
               <el-input
-                v-model.number="newvip.prices"
+                v-model.number="newMemberType.prices"
                 min="0"
                 style="width: 264px"
               ></el-input>
             </el-form-item>
           </el-row>
-          <!-- <el-row>
-            <el-form-item label="有效期">
-
-              <el-checkbox v-model="checked">永久</el-checkbox>
-            </el-form-item>
-          </el-row> -->
           <el-divider></el-divider>
           <el-form-item>
-            <el-button type="primary" @click="editItem('newvip')">{{
-              $t("commons.save")
-            }}</el-button>
+            <el-button
+              type="primary"
+              @click="saveMemberType('newMemberType')"
+              >{{ $t("commons.save") }}</el-button
+            >
             <el-button @click="back()">{{ $t("commons.back") }}</el-button>
           </el-form-item>
         </el-form>
@@ -75,28 +89,33 @@
 </template>
 <script>
 export default {
-  props: ["selected"],
   data() {
     return {
-      memberTypeList: [],
-      durationType: "1", // 1永久  2固定日期
-      newvip: {
+      itemNode: null, //用来接收传递过来的node信息
+      itemData: null, //用来接收传递过来的data信息
+      newMemberType: {
         name: "",
         level: "",
         prices: "",
-        interests: "",
-        duration: "",
+        ////////
+        id: "",
+        parentId: "",
+        hierarchy: 3,
       },
+     
+      nameSecond:'',
     };
   },
 
-  mounted() {
-    this.$F.merge(this.newvip, this.selected);
-    console.log(this.newvip);
-    if (this.newvip.duration != 9999) {
-      this.durationType = "2";
+  created() {
+    this.itemNode = this.$route.query.node;
+    this.itemData = this.$route.query.data;
+    console.log(this.$route.query.type);
+    if (this.$route.query.type) {
+      this.newMemberType.name = this.itemData.name;
+      this.newMemberType.level = this.itemData.level;
+      this.newMemberType.prices = this.itemData.prices;
     }
-    this.getMemberTypeList();
   },
   computed: {
     rules() {
@@ -105,64 +124,54 @@ export default {
           {
             required: true,
             trigger: "blur",
-            message: this.$t('boss.add_inputMemtypeName'),
+            message: this.$t("boss.add_inputMemtypeName"),
           },
         ],
       };
     },
   },
   methods: {
-    durationchange(val) {
-      if (val == 2) {
-        this.newvip.duration = "";
-      } else {
-        this.newvip.duration = "9999";
-      }
-    },
-    interestsChange(value) {
-      this.newvip.interests = value ? 1 : 0;
-    },
     back() {
-     this.$router.go(-1);
+      this.$router.go(-1);
     },
 
-    editItem(formName) {
+    saveMemberType(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // var array = this.memberTypeList.filter((row) => {
-          //   return row.level == this.newvip.level && row.id != this.newvip.id;
-          // });
-            let params = this.$F.deepClone(this.newvip);
-            if (!params.level) {
-                params.level = 0;
-            }
+          if (this.$route.query.type) {
+            this.newMemberType.hierarchy = 3;
+            this.newMemberType.parentId = this.itemNode.parent.data.id;
+            this.newMemberType.id = this.itemData.id;
             this.$F.doRequest(
-                this,
-                "/pms/membertype/edit",
-                params,
-                (res) => {
-                    this.$message.success("edit success");
-                    setTimeout(() => {
-                        this.back();
-                    }, 500);
-                }
+              this,
+              "/pms/membertype/edit",
+              this.newMemberType,
+              (res) => {
+                this.$message.success("修改成功");
+                setTimeout(() => {
+                  this.back();
+                }, 500);
+              }
             );
-          // if (array.length == 0) {
-          //   console.log(this.newvip);
-          //
-          // } else {
-          //  // this.$message.error("Level can not repeat");
-          // }
+          } else {
+            this.newMemberType.id = '';
+            this.newMemberType.hierarchy = 3;
+            this.newMemberType.parentId = this.itemData.id;
+            this.$F.doRequest(
+              this,
+              "/pms/membertype/edit",
+              this.newMemberType,
+              (res) => {
+                this.$message.success("新增成功");
+                setTimeout(() => {
+                  this.back();
+                }, 500);
+              }
+            );
+          }
         } else {
-          console.log("error submit!!");
           return false;
         }
-      });
-    },
-
-    getMemberTypeList() {
-      this.$F.commons.fetchMemberTypeList({}, (res) => {
-        this.memberTypeList = res.list;
       });
     },
   },
@@ -181,5 +190,14 @@ export default {
 <style lang="less" scoped>
 .last-breadcrumb .el-breadcrumb__inner {
   font-weight: 800 !important;
+}
+.nextLevel {
+  margin-left: 50px;
+  margin-bottom: 20px;
+  color: rgba(30, 30, 30, 100);
+  font-size: 15px;
+  span {
+    color: rgba(136, 136, 136, 100);
+  }
 }
 </style>

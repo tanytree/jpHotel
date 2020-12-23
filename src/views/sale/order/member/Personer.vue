@@ -5,7 +5,7 @@
         <div class="goodsTop" style="margin-bottom: 20px">
           <el-button
             class="cancel"
-            :icon="!isexpand? 'el-icon-caret-right' : 'el-icon-caret-bottom'"
+            :icon="!isexpand ? 'el-icon-caret-right' : 'el-icon-caret-bottom'"
             @click="expanded(1)"
             >{{ $t("manager.grsl_foldAll") }}</el-button
           >
@@ -25,7 +25,7 @@
               <span>{{ node.label }}</span>
               <span>
                 <el-button
-                  v-if="data.hierarchy==2"
+                  v-if="data.hierarchy == 1"
                   class="btn-text"
                   type="text"
                   size="mini"
@@ -34,6 +34,7 @@
                   >新增二级分类</el-button
                 >
                 <el-button
+                  v-if="data.hierarchy == 2"
                   class="btn-text"
                   type="text"
                   size="mini"
@@ -42,7 +43,7 @@
                   >新增会员类型</el-button
                 >
                 <el-button
-                v-if="data.state==2"
+                  v-if="data.state == 2 && data.hierarchy == 3"
                   class="btn-text"
                   type="text"
                   size="mini"
@@ -51,7 +52,7 @@
                   >启用</el-button
                 >
                 <el-button
-                  v-if="data.state==1"
+                  v-if="data.state == 1 && data.hierarchy == 3"
                   class="btn-text"
                   type="text"
                   size="mini"
@@ -63,7 +64,7 @@
                   class="btn-text"
                   type="text"
                   size="mini"
-                  @click="() => editNode(node, data, 1)"
+                  @click="editNode(node, data)"
                   @click.stop
                   >{{ $t("manager.hp_editor") }}</el-button
                 >
@@ -96,10 +97,13 @@
         size="medium"
       >
         <el-form-item label="一级分类名称:">
-          <el-input v-model="addForm.first" :disabled="addForm.hierarchy==1?false:true"></el-input>
+          <el-input
+            v-model="addForm.first"
+            :disabled="addForm.hierarchy == 1 ? false : true"
+          ></el-input>
         </el-form-item>
-           <el-form-item label="二级分类名称:" v-if="addForm.hierarchy==2">
-          <el-input v-model="addForm.second" ></el-input>
+        <el-form-item label="二级分类名称:" v-if="addForm.hierarchy == 2">
+          <el-input v-model="addForm.second"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -118,22 +122,27 @@
 export default {
   data() {
     return {
+      itemNode: null, //每一个节点的node信息
+      itemData: null, //每一个节点的数据
+      type: null,
       memberTypeList: [],
       treeProps: { children: "memberTypeList", label: "name" },
       addVisible: false, // 新增分类弹框
       dialogTitle: "", //dialog 的 title
       addForm: {
         //新增表单
-        first:'',    //一级目录
-        second:'',   //二级目录
-        hierarchy:null,  //目录级别 1为一级目录；2为二级目录；3为会员类型
+        first: "", //一级目录
+        second: "", //二级目录
+        hierarchy: null, //目录级别 1为一级目录；2为二级目录；3为会员类型
         name: "",
         level: null,
         prices: "",
+        /////////
+        id: "",
         parentId: "",
       },
-      itemInfo:null,
-      isexpand:true,
+      itemInfo: null,
+      isexpand: true,
     };
   },
 
@@ -147,42 +156,98 @@ export default {
         this.memberTypeList = res.list;
       });
     },
+    innitData() {
+      this.addForm = {
+        //新增表单
+        first: "", //一级目录
+        second: "", //二级目录
+        hierarchy: null, //目录级别 1为一级目录；2为二级目录；3为会员类型
+        name: "",
+        level: null,
+        prices: "",
+        /////////
+        id: "",
+        parentId: "",
+      };
+    },
     //点击新增一级分类按钮
     addFirstClass() {
+      this.innitData();
+      this.type = "addFirst";
       this.addVisible = true;
       this.addForm.hierarchy = 1;
       this.dialogTitle = "新增一级分类";
     },
-     //点击新增二级分类按钮
+    //点击新增二级分类按钮
     addSecond(node, data) {
-     this.addVisible = true;
+      this.innitData();
+      this.type = "addSecond";
+      this.addVisible = true;
       this.addForm.hierarchy = 2;
       this.addForm.first = data.name;
       this.dialogTitle = "新增二级分类";
       this.itemInfo = data;
     },
-    //点击启用按钮
-    startUse(node,data){
-      let params = {
-        id:data.id,
-        state:2,
+    //点击 编辑 按钮
+    editNode(node, data) {
+      this.innitData();
+      console.log(data);
+      this.type = "editor";
+      this.itemNode = node;
+      this.itemData = data;
+      if (data.hierarchy == 1) {
+        this.addVisible = true;
+        this.addForm.hierarchy = 1;
+        this.dialogTitle = "编辑一级分类";
+        this.addForm.first = data.name;
+      } else if (data.hierarchy == 2) {
+        this.addVisible = true;
+        this.addForm.hierarchy = 2;
+        this.dialogTitle = "编辑二级分类";
+        this.addForm.first = node.parent.data.name;
+        this.addForm.second = data.name;
+      } else {
+        this.$router.push({
+          path: "/newdetail",
+          query: {
+            node: node,
+            data: data,
+            type: "editor",
+          },
+        });
       }
-      this.$F.doRequest(this,'/pms/membertype/enable_disable',params,res=>{
+    },
+    //点击启用按钮
+    startUse(node, data) {
+      let params = {
+        id: data.id,
+        state: 2,
+      };
+      this.$F.doRequest(
+        this,
+        "/pms/membertype/enable_disable",
+        params,
+        (res) => {
           this.getMemTypeList();
-      })
+        }
+      );
     },
     //点击禁用按钮
-    disabledUse(node,data){
-       let params = {
-        id:data.id,
-        state:1,
-      }
-      this.$F.doRequest(this,'/pms/membertype/enable_disable',params,res=>{
+    disabledUse(node, data) {
+      let params = {
+        id: data.id,
+        state: 1,
+      };
+      this.$F.doRequest(
+        this,
+        "/pms/membertype/enable_disable",
+        params,
+        (res) => {
           this.getMemTypeList();
-
-      })
+        }
+      );
     },
-   
+
     addThird(node, data, type) {
       this.cateVisible = true;
       this.category.categoryLevel = 3;
@@ -194,8 +259,14 @@ export default {
       this.categoryType = type;
       this.add = true;
     },
-    Newdata(node,data) {
-      this.$router.push('/newdetail')
+    Newdata(node, data) {
+      this.$router.push({
+        path: "/newdetail",
+        query: {
+          node: node,
+          data: data,
+        },
+      });
     },
     expanded: function (type) {
       console.log(this.isexpand);
@@ -220,40 +291,6 @@ export default {
         }
       }
     },
-    editNode: function (node, data, type) {
-      this.cateVisible = true;
-      this.cateTitle = this.resetType;
-      this.categoryType = type;
-      if (data.categoryLevel == 1) {
-        this.category = {
-          id: data.id,
-          categoryLevel: data.categoryLevel,
-          first: data.name,
-          second: "**",
-          third: "**",
-          pCategoryId: data.pCategoryId,
-        };
-      } else if (data.categoryLevel == 2) {
-        this.category = {
-          id: data.id,
-          categoryLevel: data.categoryLevel,
-          first: node.parent.data.name,
-          second: data.name,
-          third: "**",
-          pCategoryId: data.pCategoryId,
-        };
-      } else {
-        this.category = {
-          id: data.id,
-          categoryLevel: data.categoryLevel,
-          first: node.parent.parent.data.name,
-          second: node.parent.data.name,
-          third: data.name,
-          pCategoryId: data.pCategoryId,
-        };
-      }
-      this.add = false;
-    },
 
     //删除
     deleteNode: function (data) {
@@ -268,23 +305,38 @@ export default {
           { id: data.id },
           (res) => {
             this.getMemTypeList();
-
           }
         );
       });
     },
     submit() {
-      if(this.addForm.hierarchy==1){
-        this.addForm.name = this.addForm.first;
-      }else if(this.addForm.hierarchy==2){
-        this.addForm.name = this.addForm.second;
-        this.addForm.parentId = this.itemInfo.id;
+      if (this.type == "editor") {
+        if (this.addForm.hierarchy == 1) {
+          this.addForm.name = this.addForm.first;
+          this.addForm.id = this.itemData.id;
+        } else if (this.addForm.hierarchy == 2) {
+          this.addForm.name = this.addForm.second;
+          this.addForm.parentId = this.itemNode.parent.data.id;
+          this.addForm.id = this.itemData.id;
+        }
+        this.$F.doRequest(this, "/pms/membertype/edit", this.addForm, (res) => {
+          this.addVisible = false;
+          this.getMemTypeList();
+        });
+      } else {
+        if (this.addForm.hierarchy == 1) {
+          this.addForm.id = "";
+          this.addForm.name = this.addForm.first;
+        } else if (this.addForm.hierarchy == 2) {
+          this.addForm.id = "";
+          this.addForm.name = this.addForm.second;
+          this.addForm.parentId = this.itemInfo.id;
+        }
+        this.$F.doRequest(this, "/pms/membertype/edit", this.addForm, (res) => {
+          this.addVisible = false;
+          this.getMemTypeList();
+        });
       }
-      this.addForm.level = 1;
-      this.$F.doRequest(this, "/pms/membertype/edit", this.addForm, (res) => {
-        this.addVisible = false;
-        this.getMemTypeList();
-      });
     },
   },
 };

@@ -202,7 +202,7 @@ module.exports = {
     add_resetPeople:'修改人',
     add_creator:'创建人',
     add_memtypeManage:'会员类型管理',
-    add_addMemType:'新增会员类型',
+    add_addMemType:'新增三级会员类型',
     add_basicInfo:'基本信息',
     add_memType:'会员类型',
     add_levelA:'等级',

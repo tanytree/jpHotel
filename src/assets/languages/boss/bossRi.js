@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-18 17:58:56
+ * @LastEditTime: 2020-12-23 10:13:04
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -201,7 +201,7 @@ module.exports = {
     add_resetPeople:'変更担当者',
     add_creator:'開始担当者',
     add_memtypeManage:'会員類別管理',
-    add_addMemType:'会員類別追加',
+    add_addMemType:'未翻译词条',
     add_basicInfo:'基本情報',
     add_memType:'会員類別',
     add_levelA:'類別ランク',
