@@ -11,7 +11,7 @@
 <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
             <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">添加房间</el-button>
             <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail">入住人管理</el-button>
-            <el-button plain @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
+            <el-button plain @click="goCheckinDetail" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
             <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary"> {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
@@ -222,7 +222,7 @@ export default {
         checkTheDetails //入住人管理
     },
     mixins: [myMixin],
-    props: ['checkinInfo', 'inRoomList'],
+    props: ['checkinInfo', 'inRoomList', 'detailData'],
     computed: {
         rules(){
             return{
@@ -387,9 +387,12 @@ export default {
         },
       //跳转到入住详情
       goCheckinDetail(){
-        // 暂时未放开
         this.$router.push({
-          path:'/checktheDetails'
+            name:'checktheDetails',
+            params: {
+                detailData: this.detailData,
+                currentRoom: this.currentRoom
+            },
         })
       },
         checkInCallback(id) {

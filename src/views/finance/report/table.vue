@@ -22,7 +22,7 @@
 
                     <!-- 总经理办公室月计报表-->
                     <el-form-item label="营业时间：" v-if="searchForm.reportNum == '1003'">
-                        <el-date-picker v-model="searchForm.startTime" type="month" value-format="yyyy-MM-dd" placeholder="营业时间"></el-date-picker>
+                        <el-date-picker v-model="searchForm.startTime" type="month" value-format="yyyy-MM" placeholder="营业时间"></el-date-picker>
                     </el-form-item>
 
                     <!--  其他等等 陶子弄下-->
@@ -63,7 +63,7 @@ export default {
             reportType: '',   //报表类型  reportNum 的子集
             currentReport: {},  //当前report
             exportPrintShow: false,
-            content: '',
+            content: '',   //excel显示的内容
             selectForm: {
                 region: "shanghai",
             },
@@ -78,10 +78,11 @@ export default {
             startTime: '',
             endTime: '',
             time: "",
-        },
-        this.sourcePage = this.$route.query.sourcePage;
-        this.searchForm.reportNum = this.$route.query.reportNum;
-        this.reportType = this.$route.query.reportType || 1;
+        };
+        this.content = '';
+        this.sourcePage = this.$route.params.sourcePage;
+        this.searchForm.reportNum = this.$route.params.reportNum;
+        this.reportType = this.$route.params.reportType || 1;
     },
     methods: {
         exportReport() {
@@ -92,11 +93,12 @@ export default {
         },
 
         queryReport() {
+            //组织报表入参 需要根据不同得reportType做判断
             this.content = '';
             this.searchForm.languageType = getLanguage() == 'ri' ? 2 : 1;  //语言类型  1中文  2日文
             if (this.searchForm.reportNum == 1001 || this.searchForm.reportNum == 1003) {
                 this.searchForm.endTime = this.searchForm.startTime;
-            } else {
+            } else if (this.searchForm.reportNum == 1004) {
                 //陶子加下
             }
             this.$F.doRequest(
@@ -114,7 +116,7 @@ export default {
             );
         },
         showReport(url) {
-            var url = "http://39.104.116.153:8887/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
+            // var url = "http://39.104.116.153:8887/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
             //               http://39.104.116.153:8887/report/fs/1001/20201203/%E6%97%A5%E8%A8%88%E8%A1%A8201203.xlsx
             //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
             axios.get(url, {responseType: 'arraybuffer'})

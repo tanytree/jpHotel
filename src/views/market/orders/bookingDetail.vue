@@ -9,10 +9,7 @@
         <div class="el-card" style="height: auto">
             <div class="el-card__header">
                 <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item @click.native="goBack"
-                    >{{ $t('desk.order_bookOrder') }}
-                    </el-breadcrumb-item
-                    >
+                    <el-breadcrumb-item @click.native="goBack">{{ $t('desk.order_bookOrder') }}</el-breadcrumb-item>
                     <el-breadcrumb-item>{{ $t('commons.detail') }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
@@ -38,7 +35,7 @@
                         <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
                             <div class="tabWrap">
                                 <!-- 基本信息--->
-                                <sbase v-if="detailData.checkIn.id" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList" @baseInfoChange="baseInfoChange"> </sbase>
+                                <sbase v-if="detailData.checkIn.id" :detailData="detailData" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList" @baseInfoChange="baseInfoChange"> </sbase>
                             </div>
                         </el-tab-pane>
                         <!--- 客人信息-->

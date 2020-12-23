@@ -20,6 +20,7 @@
                         </li>
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
@@ -34,7 +35,7 @@ export default {
         reports: {
             get() {
                 return [
-                    {title: this.$t("boss.report_day"), path: "day", reportType: 1, reportNum: 1001},
+                    {title: this.$t("boss.report_day"), reportType: 1, reportNum: 1001},
                     {title: this.$t("boss.report_month"), path: "month", reportType: 2, reportNum: 1002},
                     {title: this.$t("boss.report_year"), path: "year", reportType: 3, reportNum: 1003},
                     {title: this.$t("boss.report_detailed"), path: "detailed"},
@@ -97,7 +98,7 @@ export default {
         addReport(item) {
             this.$router.push({
                 name: "browseReport",
-                query: {
+                params: {
                     sourcePage: this.sourcePage,
                     reportNum: item.reportNum || 1001,
                     reportType: item.reportType || 1,
