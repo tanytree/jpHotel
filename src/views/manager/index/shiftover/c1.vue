@@ -60,7 +60,8 @@
             <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
             <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
             <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
-        </el-tag>
+        </el-tag>&nbsp;&nbsp;
+        <a @click="show = true" class="el-icon-question" style="color: #126EFF;"></a>
       </h3>
       <div class="handInCash margin-tb-10">
         <el-row class="padding-tb-10">
@@ -117,14 +118,38 @@
                 </el-select>
             </el-form-item>
             <el-form-item :label="$t('food.shift.password')">
-                <el-input v-model="form.password" :placeholder="$t('food.shift.password')"></el-input>
+                <el-input type="password" v-model="form.password" :placeholder="$t('food.shift.password')"></el-input>
             </el-form-item>
             <el-form-item label="">
                 <el-button type="primary" @click="save">{{ $t('commons.confirm') }}</el-button>
             </el-form-item>
          </el-form>
      </el-row>
+
+
+     <el-dialog title="交班详情" :visible.sync="show"  width="700px"  top="0">
+        <div class="margin-b-20">
+            <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
+            <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
+            <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
+        </div>
+
+        <div class="margin-b-10">备用金额度=(100)</div>
+        <div class="margin-b-10">上班留存备用金+本班现金收款=(0) + (53801.02)=(53801.02)＞(100)</div>
+        <div class="margin-b-10">本班下放备用金=备用金额度=(100)</div>
+        <div class="margin-b-10">本班现金上交=上班留存备用金+本班现金收款-本班下放备用金=(0)+(53801.02)-(100)=(53701.02)</div>
+        <!-- <div>本班微信上交=本班微信收款=(0)</div> -->
+        <div class="margin-b-10">本班信用卡上交=本班信用卡收款</div>
+        <div class="margin-b-10"></div>
+
+
+
+     </el-dialog>
+
+
   </div>
+
+
 </template>
 
 <script>
@@ -148,7 +173,8 @@ export default {
       form:{
           handoveEmployeedId:'',
           password:''
-      }
+      },
+      show:false
     };
   },
 
@@ -213,7 +239,7 @@ export default {
            url = '/pms/dishes/handover/handover_up'
         }
         if(this.tabCurr == 3){
-            url = '/shop/pms/handover/handover_up'
+            url = '/pms/shop/handover/handover_up'
         }
         let params = {
             workStarTime:this.info.workStarTime,
@@ -226,7 +252,8 @@ export default {
         params.userId = this.userId
         params.storesNum = this.storesNum
         this.$F.doRequest(this, url, params, (res) => {
-           console.log(res)
+           // console.log(res)
+           this.$message.success(this.$t('food.common.success'));
         });
 
     },

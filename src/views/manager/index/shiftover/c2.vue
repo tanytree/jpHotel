@@ -270,6 +270,7 @@ export default {
   },
   methods: {
     initForm() {
+      this.tabCurr = '1'
       this.searchForm = {
         workStarTime: "",
         workEndTime: "",
@@ -282,16 +283,27 @@ export default {
     },
     /**获取表格数据 */
     getDataList() {
-      this.$F.doRequest(
-        this,
-        "/pms/handover/handover_list_list",
-        this.searchForm,
-        (res) => {
-          console.log(res);
+        let url = ''
+        if(this.tabCurr == 1){
+            url = '/pms/handover/handover_list_list'
+        }else if(this.tabCurr == 2){
+            url = '/pms/dishes/handover/handover_list_list'
+        }else{
+            url = '/pms/shop/handover/handover_list_list'
+        }
+
+
+        this.$F.doRequest(this,url,this.searchForm,(res) => {
+          // console.log(res);
           this.tableData = res.handoverListList;
           this.listTotal = res.page.count;
         }
       );
+    },
+    changeTabs(v){
+        console.log(v)
+      this.tabCurr = v
+      this.getDataList();
     },
     //点击眼睛图标
     lookDetail(row) {
