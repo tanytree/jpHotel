@@ -903,8 +903,7 @@ export default {
 
         //查看房间详情
         hostelmess(room, parent) {
-            console.log(room);
-            console.log(parent);
+          // room为房间信息，parent为楼层信息
             this.$refs.roomInfo.changeVisible(room || {});
         },
 

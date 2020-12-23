@@ -509,6 +509,13 @@ module.exports = {
   hk_oatName: 'OTA名称',
   hk_inputOat: 'OTA名称を入力してください',
   hk_resetSuccess: '変更確認',
+  grsl_newMemberType: '未翻译词条',
+  grsl_editorOneClass: '未翻译词条',
+  grsl_editorTwoClass: '未翻译词条',
+  grsl_sureEnable: '未翻译词条',
+  grsl_sureDisable: '未翻译词条',
+  grsl_ifSureDelete: '未翻译词条',
+  grsl_superior: '未翻译词条',
 
 
 

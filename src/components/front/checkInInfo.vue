@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 17:37:38
- * @FilePath: \jiudian\src\components\front\customer.vue
+ * @LastEditTime: 2020-12-23 16:14:48
+ * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
 <div>
@@ -36,7 +36,7 @@
                 </el-row>
                 <el-row>
                     <el-col :span="18"
-                    >付款方式：现金（2000）；信用卡（4000）；挂账（1000）；其他（2000））</el-col
+                    >付款方式：现金（2000）；信用卡（4000）；挂账（1000）；其他（2000）</el-col
                     >
                 </el-row>
                 <el-row>
@@ -71,9 +71,6 @@
         <el-table-column label="客源类型" prop="amount1" align="center">
         </el-table-column><el-table-column align="center" prop="amount2" label="会员号码/单位号码"></el-table-column>
         <el-table-column prop="amount2" label="同来宾客" align="center">
-            <el-table-column prop="name" label="姓名" width="100" align="center"></el-table-column>
-            <el-table-column prop="amount3" label="性别" width="100" align="center"></el-table-column>
-            <el-table-column prop="name" label="类型" width="100" align="center"></el-table-column>
         </el-table-column>
     </el-table>
 </div>
@@ -88,7 +85,9 @@ export default {
         return {
         };
     },
-
+  mounted(){
+    console.log(this.checkInPersonList);
+  },
     methods: {
         arraySpanMethod({ row, column, rowIndex, columnIndex }) {
             if (rowIndex === 0) {

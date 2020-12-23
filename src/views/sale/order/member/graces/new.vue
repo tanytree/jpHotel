@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-23 13:26:45
+ * @LastEditTime: 2020-12-23 15:05:14
  * @FilePath: \jiudian\src\views\sale\order\member\graces\new.vue
  -->
 <template>
@@ -38,12 +38,12 @@
           </el-row>
           <el-row>
              <div class="nextLevel" v-if="$route.query.type">
-              上级：<span
+              {{$t('manager.grsl_superior')+':'}}<span
                 >{{ itemNode.parent.parent.data.name }} > {{ itemNode.parent.data.name }}</span
               >
             </div>
             <div class="nextLevel" v-else>
-              上级：<span
+              {{$t('manager.grsl_superior')+':'}}<span
                 >{{ itemNode.parent.data.name }} > {{ itemData.name }}</span
               >
             </div>
@@ -147,7 +147,7 @@ export default {
               "/pms/membertype/edit",
               this.newMemberType,
               (res) => {
-                this.$message.success("修改成功");
+                this.$message.success(this.$t('manager.hk_resetSuccess'));
                 setTimeout(() => {
                   this.back();
                 }, 500);
@@ -162,7 +162,7 @@ export default {
               "/pms/membertype/edit",
               this.newMemberType,
               (res) => {
-                this.$message.success("新增成功");
+                this.$message.success(this.$t('manager.hk_newSuccess'));
                 setTimeout(() => {
                   this.back();
                 }, 500);

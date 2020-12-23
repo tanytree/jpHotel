@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2020-12-09 17:29:35
+ * @LastEditTime: 2020-12-23 17:26:23
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
@@ -56,7 +56,6 @@ import axios from "axios";
 import XLSX from "xlsx";
 
 export default {
-    props: [],
     data() {
         return {
             loading: false,
@@ -80,9 +79,9 @@ export default {
             endTime: '',
             time: "",
         },
-        this.sourcePage = this.$route.params.sourcePage;
-        this.searchForm.reportNum = this.$route.params.reportNum;
-        this.reportType = this.$route.params.reportType || 1;
+        this.sourcePage = this.$route.query.sourcePage;
+        this.searchForm.reportNum = this.$route.query.reportNum;
+        this.reportType = this.$route.query.reportType || 1;
     },
     methods: {
         exportReport() {

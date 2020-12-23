@@ -1,43 +1,26 @@
 <template>
     <div class="boss-index">
-        <el-form ref="searchForm" :model="searchForm" inline>
+        <!-- <el-form ref="searchForm" :model="searchForm" inline>
             <el-form-item>
                 <el-input style="width: 300px" v-model="searchForm.name" placeholder="请输入账表名称查询"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary">查询</el-button>
             </el-form-item>
-        </el-form>
+        </el-form> -->
         <div style="margin-bottom:20px;" v-for='(item,index) in checkArrayList' :key="index">
             <div class="diaryTable">{{ item }}</div>
             <el-divider></el-divider>
             <div class="reportHome">
                 <div class="listBox">
                     <ul v-for="(item, index) in arr" :key="index">
-                        <li v-for="(son, i) in item" :key="index + '_' + i" @click="addReport(son)">
+                        <li v-for="(each, i) in item" :key="index + '_' + i" @click="addReport(each)">
                             <img src="../../../assets/images/star.png" alt width="20"/>
-                            <span>{{ son.title }}</span>
+                            <span>{{ each.title }}</span>
                         </li>
                     </ul>
                 </div>
             </div>
-
-            <!-- <div class="diaryTable">月度报表</div>
-            <el-divider></el-divider>
-            <div class="reportHome">
-              <div class="listBox">
-                <ul v-for="(item, index) in arr" :key="index">
-                  <li
-                    v-for="(son, i) in item"
-                    :key="index + '_' + i"
-                    @click="addReport(son)"
-                  >
-                    <img src="../../../assets/images/star.png" alt width="20" />
-                    <span>{{ son.title }}</span>
-                  </li>
-                </ul>
-              </div>
-            </div> -->
         </div>
     </div>
 </template>
@@ -95,17 +78,12 @@ export default {
     },
     mounted() {
         this.arr = this.group(this.reports, 5);
+        console.log(this.arr);
         if (this.sourcePage == 'boss') {
             this.checkArrayList = this.bossArray;
         } else {
             this.checkArrayList = this.deskArray;
         }
-    },
-    watch: {
-        reports(newValue, oldValue) {
-            this.reports = newValue;
-            this.arr = this.group(this.reports, 5);
-        },
     },
     methods: {
         group(array, length) {
@@ -119,7 +97,7 @@ export default {
         addReport(item) {
             this.$router.push({
                 name: "browseReport",
-                params: {
+                query: {
                     sourcePage: this.sourcePage,
                     reportNum: item.reportNum || 1001,
                     reportType: item.reportType || 1,

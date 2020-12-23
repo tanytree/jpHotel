@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2020-12-11 17:52:50
+ * @LastEditTime: 2020-12-23 15:45:53
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -282,44 +282,7 @@ export default {
             checkoutForm: {
                 resource: "现金",
             }, //退房结账弹框的表单
-            checkInPersonList: [
-                //   {
-                //     id: "12987122",
-                //     name: "王小虎",
-                //     amount1: "234",
-                //     amount2: "3.2",
-                //     amount3: 10,
-                //   },
-                //   {
-                //     id: "12987123",
-                //     name: "王小虎",
-                //     amount1: "165",
-                //     amount2: "4.43",
-                //     amount3: 12,
-                //   },
-                //   {
-                //     id: "12987124",
-                //     name: "王小虎",
-                //     amount1: "324",
-                //     amount2: "1.9",
-                //     amount3: 9,
-                //   },
-                //   {
-                //     id: "12987125",
-                //     name: "王小虎",
-                //     amount1: "621",
-                //     amount2: "2.2",
-                //     amount3: 17,
-                //   },
-                //   {
-                //     id: "12987125",
-                //     name: "王小虎",
-                //     amount1: "621",
-                //     amount2: "2.2",
-                //     amount3: 17,
-                //     remark: "你好啊，打工人",
-                //   },
-            ],
+            checkInPersonList: [],
             inputMessage: false,
             nowDateString: '',
             orderInfo: {}, //需要展示订单的信息
@@ -431,6 +394,7 @@ export default {
             );
         },
         changeVisible(currentRoom) {
+          console.log(currentRoom);
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 21);
             this.currentRoom = currentRoom;

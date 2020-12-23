@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-21 16:51:53
+ * @LastEditTime: 2020-12-23 15:05:24
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -366,6 +366,23 @@ module.exports = {
   grsl_orderFail: '审核不通过入库单',
   grsl_physicalGoods: '实物类商品',
   grsl_serviceGoods: '服务类商品',
+  grsl_newMemberType: '新增会员类型',
+  grsl_editorOneClass: '编辑一级分类',
+  grsl_editorTwoClass: '编辑二级分类',
+  grsl_sureEnable: '是否确认启用',
+  grsl_sureDisable: '是否确认禁用',
+  grsl_ifSureDelete: '是否确认删除',
+  grsl_superior: '上级',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
+  grsl_: '',
   grsl_: '',
   grsl_: '',
   //   管理部 > 价格体系 (priceSystem > ps)

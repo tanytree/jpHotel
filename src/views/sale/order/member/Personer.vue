@@ -31,7 +31,7 @@
                   size="mini"
                   @click="addSecond(node, data)"
                   @click.stop
-                  >新增二级分类</el-button
+                  >{{$t('manager.grsl_addSecondGroup')}}</el-button
                 >
                 <el-button
                   v-if="data.hierarchy == 2"
@@ -40,7 +40,7 @@
                   size="mini"
                   @click="Newdata(node, data)"
                   @click.stop
-                  >新增会员类型</el-button
+                  >{{$t('manager.grsl_newMemberType')}}</el-button
                 >
                 <el-button
                   v-if="data.state == 2 && data.hierarchy == 3"
@@ -49,7 +49,7 @@
                   size="mini"
                   @click="() => startUse(node, data)"
                   @click.stop
-                  >启用</el-button
+                  >{{$t('manager.hk_enable')}}</el-button
                 >
                 <el-button
                   v-if="data.state == 1 && data.hierarchy == 3"
@@ -58,7 +58,7 @@
                   size="mini"
                   @click="disabledUse(node, data)"
                   @click.stop
-                  >禁用</el-button
+                  >{{$t('manager.hk_disable')}}</el-button
                 >
                 <el-button
                   class="btn-text"
@@ -96,13 +96,13 @@
         label-width="120px"
         size="medium"
       >
-        <el-form-item label="一级分类名称:">
+        <el-form-item :label="$t('manager.grsl_firstGroupName')+':'">
           <el-input
             v-model="addForm.first"
             :disabled="addForm.hierarchy == 1 ? false : true"
           ></el-input>
         </el-form-item>
-        <el-form-item label="二级分类名称:" v-if="addForm.hierarchy == 2">
+        <el-form-item :label="$t('manager.grsl_secondGroupName')+':'" v-if="addForm.hierarchy == 2">
           <el-input v-model="addForm.second"></el-input>
         </el-form-item>
       </el-form>
@@ -176,7 +176,7 @@ export default {
       this.type = "addFirst";
       this.addVisible = true;
       this.addForm.hierarchy = 1;
-      this.dialogTitle = "新增一级分类";
+      this.dialogTitle = this.$t('manager.grsl_addFirstGroup');
     },
     //点击新增二级分类按钮
     addSecond(node, data) {
@@ -185,7 +185,7 @@ export default {
       this.addVisible = true;
       this.addForm.hierarchy = 2;
       this.addForm.first = data.name;
-      this.dialogTitle = "新增二级分类";
+      this.dialogTitle = this.$t('manager.grsl_addSecondGroup');
       this.itemInfo = data;
     },
     //点击 编辑 按钮
@@ -198,12 +198,12 @@ export default {
       if (data.hierarchy == 1) {
         this.addVisible = true;
         this.addForm.hierarchy = 1;
-        this.dialogTitle = "编辑一级分类";
+        this.dialogTitle = this.$t('manager.grsl_editorOneClass');
         this.addForm.first = data.name;
       } else if (data.hierarchy == 2) {
         this.addVisible = true;
         this.addForm.hierarchy = 2;
-        this.dialogTitle = "编辑二级分类";
+        this.dialogTitle =  this.$t('manager.grsl_editorTwoClass');
         this.addForm.first = node.parent.data.name;
         this.addForm.second = data.name;
       } else {
@@ -219,33 +219,45 @@ export default {
     },
     //点击启用按钮
     startUse(node, data) {
-      let params = {
-        id: data.id,
-        state: 2,
-      };
-      this.$F.doRequest(
-        this,
-        "/pms/membertype/enable_disable",
-        params,
-        (res) => {
-          this.getMemTypeList();
-        }
-      );
+      this.$confirm(this.$t('manager.grsl_sureEnable'), this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
+        type: "warning",
+      }).then(() => {
+        let params = {
+          id: data.id,
+          state: 2,
+        };
+        this.$F.doRequest(
+          this,
+          "/pms/membertype/enable_disable",
+          params,
+          (res) => {
+            this.getMemTypeList();
+          }
+        );
+      });
     },
     //点击禁用按钮
     disabledUse(node, data) {
-      let params = {
-        id: data.id,
-        state: 1,
-      };
-      this.$F.doRequest(
-        this,
-        "/pms/membertype/enable_disable",
-        params,
-        (res) => {
-          this.getMemTypeList();
-        }
-      );
+      this.$confirm(this.$t('manager.grsl_sureDisable'), this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
+        type: "warning",
+      }).then(() => {
+        let params = {
+          id: data.id,
+          state: 1,
+        };
+        this.$F.doRequest(
+          this,
+          "/pms/membertype/enable_disable",
+          params,
+          (res) => {
+            this.getMemTypeList();
+          }
+        );
+      });
     },
 
     addThird(node, data, type) {
@@ -294,9 +306,9 @@ export default {
 
     //删除
     deleteNode: function (data) {
-      this.$confirm("请确认删除", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('manager.grsl_ifSureDelete'), this.$t('commons.tip_desc'), {
+        confirmButtonText: this.$t('commons.confirm'),
+        cancelButtonText: this.$t('commons.cancel'),
         type: "warning",
       }).then(() => {
         this.$F.doRequest(
@@ -304,6 +316,7 @@ export default {
           "/pms/membertype/delete",
           { id: data.id },
           (res) => {
+          	this.$message.success(this.$t('commons.delete_success'));
             this.getMemTypeList();
           }
         );
@@ -320,6 +333,7 @@ export default {
           this.addForm.id = this.itemData.id;
         }
         this.$F.doRequest(this, "/pms/membertype/edit", this.addForm, (res) => {
+          this.$message.success(this.$t('manager.hk_resetSuccess'));
           this.addVisible = false;
           this.getMemTypeList();
         });
@@ -333,6 +347,7 @@ export default {
           this.addForm.parentId = this.itemInfo.id;
         }
         this.$F.doRequest(this, "/pms/membertype/edit", this.addForm, (res) => {
+             this.$message.success(this.$t('manager.hk_newSuccess'));
           this.addVisible = false;
           this.getMemTypeList();
         });
