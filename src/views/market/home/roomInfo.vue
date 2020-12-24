@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2020-12-23 15:45:53
+ * @LastEditTime: 2020-12-24 17:04:55
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -14,62 +14,7 @@
     "
     >
         <!-- 内层挂账dialog -->
-        <el-dialog
-            top="0"
-            width="40%"
-            title="挂账"
-            :visible.sync="paymentVisible"
-            append-to-body
-        >
-            <div class="innerBoxTop">
-                <span>房型：标准间 </span>
-                <span>房间号：A001</span><span>入住人：张三</span>
-            </div>
-
-            <el-form
-                ref="paymentForm"
-                :rules="paymentRules"
-                :model="paymentForm"
-                label-width="110px"
-            >
-                <el-form-item label="挂账金额" prop="name">
-                    <el-input v-model="paymentForm.name" style="width: 260px"></el-input>
-                </el-form-item>
-                <el-form-item label="挂账方式" prop="region">
-                    <el-select
-                        v-model="paymentForm.region"
-                        placeholder="请选择活动区域"
-                        style="width: 260px"
-                    >
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="挂账单位" prop="date1">
-                    <el-select
-                        v-model="paymentForm.date1"
-                        placeholder="请选择活动区域"
-                        style="width: 260px"
-                    >
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="备注">
-                    <el-input
-                        type="textarea"
-                        v-model="paymentForm.desc"
-                        style="width: 260px"
-                    ></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-        <el-button @click="paymentVisible = false">取消</el-button>
-        <el-button type="primary" @click="paymentVisible = false"
-        >确认</el-button
-        >
-      </span>
-        </el-dialog>
+        <cardTao ref="cardTao"></cardTao>
         <!-- 内层结账退房dialog -->
         <el-dialog
             top="0"
@@ -198,7 +143,7 @@
                 <div class="buttonBox">
                     <el-button type="primary" size="small" plain>置脏</el-button>
                     <el-button type="primary" size="small" plain>账务</el-button>
-                    <el-button type="primary" @click="paymentVisible = true" size="small" plain>挂账</el-button>
+                    <el-button type="primary" @click="paymentVisible" size="small" plain>挂账</el-button>
                     <el-button type="primary" @click="checkoutVisible = true" size="small" plain>结账退房</el-button>
                 </div>
                 <div class="infoBox">
@@ -223,7 +168,7 @@
 
                         <div class="riBottom" @click="lookRoomClick(date)" v-if="date.reserveObj">
                             <span>{{date.reserveObj.name}}</span>
-                            <span>{{date.reserveObj.pronunciation}}</span>
+                            <span v-if="date.reserveObj.pronunciation">【{{date.reserveObj.pronunciation}}】</span>
                             <span>{{$t('commons.guestType')[date.reserveObj.guestType + '']}}</span>
                         </div>
                         <div class="riBottom" v-else>空</div>
@@ -237,9 +182,11 @@
 <script>
 import myMixin from "@/utils/filterMixin";
 import checkInInfo from "@/components/front/checkInInfo";
+import cardTao from "@/components/cardTao";
 export default {
     components: {
         checkInInfo,
+        cardTao
     },
     computed: {
         activeName: {
@@ -275,7 +222,6 @@ export default {
             startTime: '',
             endTime: '',
             hosteldis: false, //最外层入住弹框
-            paymentVisible: false, //内层挂账dialog
             checkoutVisible: false, //内层结账退房dialog
             lookBookVisible: false, //内层查看预订信息dialog
             paymentForm: {}, //挂账弹框的表单
@@ -292,6 +238,10 @@ export default {
         this.nowDateString= this.$F.formatDate('yyyy-MM-dd');
     },
     methods: {
+      //点击挂账按钮
+      paymentVisible(){
+        this.$refs.cardTao.resetVisibel();
+      },
         lookRoomClick(data) {
             debugger
             this.lookBookVisible = true;
@@ -317,6 +267,7 @@ export default {
                     week: this.$F.getWeekNumber(this, value)
                 });
             })
+            console.log(this.dates);
             this.$F.doRequest(this, "/pms/reserve/reserve_room_list", {
                     roomId: this.currentRoom.id,
                     startTime: this.startTime,
@@ -658,21 +609,25 @@ export default {
     flex-wrap: wrap;
     .itemRi {
         .riTop {
-            width: 100px;
-            height: 80px;
-            background-color: rgba(234, 234, 234, 1);
-            border: 1px solid rgba(218, 218, 218, 1);
-            text-align: center;
-            line-height: 50px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          height: 80px;
+          background-color: rgba(234, 234, 234, 1);
+          border: 1px solid rgba(218, 218, 218, 1);
         }
         .riBottom {
-            text-align: center;
-            width: 100px;
-            height: 100px;
-            background-color: rgba(255, 255, 255, 1);
-            border: 1px solid rgba(218, 218, 218, 1);
-            text-align: center;
-            line-height: 80px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          height: 100px;
+          background-color: rgba(255, 255, 255, 1);
+          border: 1px solid rgba(218, 218, 218, 1);
+          
         }
     }
 }

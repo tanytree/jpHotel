@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 11:43:07
+ * @LastEditTime: 2020-12-24 17:29:27
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -11,7 +11,7 @@
         <el-row>
             <el-form-item label="">
                 <el-button type="primary" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccount')}}</el-button>
-                <el-button type="primary" size="mini" @click="onAccountShow=true" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
+                <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
                 <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
                 <el-button type="primary" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                 <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
@@ -125,9 +125,10 @@
             <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
         </div>
     </el-dialog>
-
+    <!-- 挂账组件 -->
+    <cardTao ref="cardTao" :dataInfo = 'currentRoom'></cardTao>
     <!--挂账-->
-    <el-dialog top='0' :title="$t('desk.charge')" :visible.sync="onAccountShow" width="500px">
+    <!-- <el-dialog top='0' :title="$t('desk.charge')" :visible.sync="onAccountShow" width="500px">
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -175,7 +176,7 @@
             <el-button @click="onAccountShow=false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="consume_oper(2,'onAccount')">{{ $t('commons.confirm') }}</el-button>
         </div>
-    </el-dialog>
+    </el-dialog> -->
     <!--走结-->
     <el-dialog top='0' :title="$t('desk.order_goTie')" :visible.sync="knotShow" width="500px">
         <el-form :model="consumeOperForm" ref="knot" :rules="rules" size="mini" label-width="20px">
@@ -350,6 +351,8 @@ import consumeGoods from './consumeGoods'
 import someAccounts from './someAccounts'
 import invoicing from './invoicing'
 import sideOrder from './sideOrder'
+import cardTao from "@/components/cardTao";
+
 export default {
     mixins: [myMixin],
    props: ["detailData", "currentRoomId"],
@@ -357,7 +360,8 @@ export default {
         consumeGoods,
         someAccounts,
         invoicing,
-        sideOrder
+        sideOrder,
+        cardTao
     },
     computed: {
         ...mapState({
@@ -428,7 +432,6 @@ export default {
             hotelenterLoading: false,
             entryShow: false, //入账
             payTypeShow: false,
-            onAccountShow: false,
             knotShow: false,
             openInvoiceShow: false,
             checkOutShow: false,
@@ -504,6 +507,10 @@ export default {
     },
 
     methods: {
+      //点击挂账按钮
+      onAccountShow(){
+        this.$refs.cardTao.resetVisibel();
+      },
         //撤销结账
         undoCheckoutA() {
             this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', {
@@ -634,7 +641,6 @@ export default {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
                         this.entryShow = false
-                        this.onAccountShow = false
                         this.destructionShow = false;
                         this.consumeOperForm = {
                             consumePrice: '',
