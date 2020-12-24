@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-24 17:29:27
+ * @LastEditTime: 2020-12-24 19:16:48
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -126,7 +126,7 @@
         </div>
     </el-dialog>
     <!-- 挂账组件 -->
-    <cardTao ref="cardTao" :dataInfo = 'currentRoom'></cardTao>
+    <cardTao @updataInfo="updataInfo" ref="cardTao" :detailData = "detailData" :dataInfo = 'currentRoom'  :checkInId='checkInId' :currentRoomId='currentRoomId'></cardTao>
     <!--挂账-->
     <!-- <el-dialog top='0' :title="$t('desk.charge')" :visible.sync="onAccountShow" width="500px">
         <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
@@ -507,6 +507,10 @@ export default {
     },
 
     methods: {
+      updataInfo(){
+          this.consume_order_list()
+          this.getOrderDetail()
+      },
       //点击挂账按钮
       onAccountShow(){
         this.$refs.cardTao.resetVisibel();

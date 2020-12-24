@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-24 16:54:56
  * @Author: 陶子
- * @LastEditTime: 2020-12-24 17:37:23
+ * @LastEditTime: 2020-12-24 19:18:57
  * @FilePath: \jiudian\src\components\cardTao.vue
 -->
 <template>
@@ -14,8 +14,15 @@
     append-to-body
   >
     <div class="innerBoxTop">
-      <span>房型：{{dataInfo.roomTypeName}} </span>
-      <span>房间号：{{dataInfo.houseNum}}</span><span>入住人：{{dataInfo.personList && dataInfo.personList.length && dataInfo.personList[0].name}}</span>
+      <span>房型：{{ dataInfo.roomTypeName }} </span>
+      <span>房间号：{{ dataInfo.houseNum }}</span
+      ><span
+        >入住人：{{
+          dataInfo.personList &&
+          dataInfo.personList.length &&
+          dataInfo.personList[0].name
+        }}</span
+      >
     </div>
 
     <el-form
@@ -24,72 +31,170 @@
       :model="paymentForm"
       label-width="110px"
     >
-      <el-form-item label="挂账金额" prop="name">
-        <el-input v-model="paymentForm.name" style="width: 260px"></el-input>
+      <el-form-item label="挂账金额" prop="payPrice">
+        <el-input
+          v-model="paymentForm.payPrice"
+          style="width: 260px"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="挂账方式" prop="region">
+      <el-form-item label="挂账方式" prop="putUp">
         <el-select
-          v-model="paymentForm.region"
-          placeholder="请选择活动区域"
+          v-model="paymentForm.putUp"
+          placeholder="请选择挂账方式"
           style="width: 260px"
         >
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+          <el-option
+            v-for="(item, index) in $t('commons.paymentWay')"
+            :key="index"
+            :value="index"
+            :label="item"
+          >
+          </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="挂账单位" prop="date1">
+      <el-form-item label="挂账单位" prop="enterId">
         <el-select
-          v-model="paymentForm.date1"
-          placeholder="请选择活动区域"
+          v-model="paymentForm.enterId"
+          filterable
+          remote
+          reserve-keyword
+          @change="enterNameChange"
           style="width: 260px"
+          :placeholder="$t('commons.pleaseEnter')"
         >
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+          <el-option
+            v-for="item in hotelenterList"
+            :key="item.id"
+            :value="item.id"
+            :label="item.enterName"
+          >
+            {{ item.enterName }}【{{ item.enterPinyin }}】
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="备注">
         <el-input
           type="textarea"
-          v-model="paymentForm.desc"
+          v-model="paymentForm.remark"
           style="width: 260px"
         ></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="paymentVisible = false">取消</el-button>
-      <el-button type="primary" @click="paymentVisible = false">确认</el-button>
+      <el-button type="primary" @click="consume_oper('paymentForm')"
+        >确认</el-button
+      >
     </span>
   </el-dialog>
 </template>
 <script>
 export default {
-  props:['dataInfo'],
+  props: ["dataInfo", "checkInId", "currentRoomId"],
   data() {
     return {
       paymentVisible: false,
       paymentForm: {},
+      hotelenterList: [], //挂账企业列表
+      paymentForm: {
+        payPrice: "", //挂账金额
+        putUp: "", //挂账方式
+        enterId: "", //挂账单位
+        priceType: 13, // 13代表挂账
+      },
     };
   },
   computed: {
     paymentRules() {
       return {
-        name: [{ required: true, message: "请输入活动名称", trigger: "blur" }],
-        region: [
-          { required: true, message: "请选择活动区域", trigger: "change" },
+        payPrice: [
+          { required: true, message: "请填写挂账金额", trigger: "blur" },
         ],
-        date1: [
-          { required: true, message: "请选择活动区域", trigger: "change" },
+        putUp: [
+          { required: true, message: "请选择挂账方式", trigger: "change" },
         ],
-        resource: [
-          { required: true, message: "请选择活动区域", trigger: "change" },
+        enterId: [
+          { required: true, message: "请选择挂账单位", trigger: "change" },
         ],
       };
     },
   },
+  created() {
+    this.hotelenter_list();
+  },
   methods: {
     resetVisibel() {
       this.paymentVisible = true;
-       console.log(this.dataInfo);
+    },
+    consume_oper(formName) {
+      let params = this.paymentForm;
+      params.checkInId = this.checkInId;
+      if (this.currentRoomId) {
+        params.roomId = this.dataInfo.id;
+        params.roomNum = this.dataInfo.houseNum;
+      } else {
+        if (this.detailData.inRoomList.length > 0) {
+          params.roomId = this.detailData.inRoomList[0].id;
+          params.roomNum = this.detailData.inRoomList[0].houseNum;
+        }
+      }
+      params.priceType = 13;
+      params.payType = 0; //挂账无需支付方式
+      params.state = 1;
+      params.payPrice = this.paymentForm.payPrice;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$F.doRequest(
+            this,
+            "/pms/consume/consume_oper",
+            params,
+            (res) => {
+              this.paymentVisible = false;
+              this.paymentForm = {
+                payPrice: "", //挂账金额
+                putUp: "", //挂账方式
+                enterId: "", //挂账单位
+                priceType: 13, // 13代表挂账
+              };
+              this.$emit("updataInfo");
+            }
+          );
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    enterNameChange(e) {
+      console.log(e);
+      this.paymentForm.enterId = e;
+      this.hotelenterList.forEach((element) => {
+        if (e == element.id) {
+          this.paymentForm.creditName = element.enterName;
+        }
+      });
+    },
+    /**获取挂账企业 */
+    hotelenter_list() {
+      let searchForm = {
+        id: "",
+        state: "",
+        shareFlag: "",
+        contactName: "",
+        contactPhone: "",
+        salesId: "",
+        startCreditLimit: "",
+        endCreditLimit: "",
+        paging: false,
+        pageIndex: 1,
+        pageSize: 10,
+      };
+      this.loading = true;
+      this.$F.doRequest(this, "/pms/hotelenter/list", searchForm, (res) => {
+        this.loading = false;
+        console.log(res);
+        this.hotelenterList = res.list;
+      });
     },
   },
 };
