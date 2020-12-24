@@ -505,7 +505,7 @@ export default {
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
-        filterType: 0,  //数据类型过滤  1过滤已办理入住数据     int选填
+        filterType: 1,  //数据类型过滤  1过滤已办理入住数据     int选填
         timeType:'',
       };
       this.realtime_room_statistics();

@@ -1367,19 +1367,18 @@ export default {
     //  3: 保存后继续办理入住预定
     // }
     hotel_check_in(type) {
-        for(let item of this.checkInForm.reserveProjects){
-        if (
-          !item||!item.projectName ||
-          !item.price ||
-          !item.projectName
-        ){
-            this.$message({
-              message: this.$t('desk.book_perfectProjectInfo'),
-              type: 'warning'
-          });
-          return false;
+        let params = this.$F.deepClone(this.checkInForm);
+        for(let item of params.reserveProjects){
+            if (!item||!item.projectName || !item.price || !item.projectName){
+                this.$message({
+                  message: this.$t('desk.book_perfectProjectInfo'),
+                  type: 'warning'
+              });
+              return false;
+            }
         }
-      }      
+        params.reserveProjects = JSON.stringify(params.reserveProjects);
+
       this.isSubmitErr = false;
       let url = "";
       let operCheckinType = this.operCheckinType;
@@ -1389,7 +1388,6 @@ export default {
         url = "/pms/reserve/reserve_check_in";
       }
       let ajax = () => {
-        let params = this.$F.deepClone(this.checkInForm);
         params.checkInRoomJson = JSON.stringify(params.checkInRoomJson);
         this.$F.doRequest(this, url, params, (data) => {
           if (type == 2) {

@@ -21,7 +21,6 @@
                         <p>{{ $t('desk.order_bookOrderInfo') }}</p>
                     </li>
                     <li v-for="(item, index) of detailData.inRoomList" :key="index" :class="currentRoom.id == item.id ? 'active' : ''" @click="showRoomInfo(item)">
-
                         <p>{{ item.houseNum }} {{ $t('desk.home_roomType') }}：{{ item.roomTypeName }}</p>
                         <span class="ok" v-if="detailData.checkIn.state <= 2">{{ $t('desk.hadRowHouses') }}</span>
                         <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>
@@ -35,7 +34,8 @@
                         <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
                             <div class="tabWrap">
                                 <!-- 基本信息--->
-                                <sbase v-if="detailData.checkIn.id" :detailData="detailData" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList" @baseInfoChange="baseInfoChange"> </sbase>
+                                <sbase v-if="detailData.checkIn.id" :detailData="detailData" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList"
+                                       @baseInfoChange="baseInfoChange"> </sbase>
                             </div>
                         </el-tab-pane>
                         <!--- 客人信息-->

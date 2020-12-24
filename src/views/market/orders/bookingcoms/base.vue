@@ -10,8 +10,8 @@
         <div class="fr">
 <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
             <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">添加房间</el-button>
-            <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail">入住人管理</el-button>
-            <el-button plain @click="goCheckinDetail" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
+            <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)" >入住人管理</el-button>
+            <el-button plain @click="goCheckinDetail(2)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.batchCheckin') }}</el-button>
             <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t('desk.updateOrder') }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <el-dropdown split-button type="primary"> {{ $t('commons.moreOperating') }}
                 <el-dropdown-menu slot="dropdown">
@@ -96,13 +96,6 @@
                         {{baseInfoChangeForm.checkoutTime}}
                     </el-form-item>
                 </el-col>
-<!--                <el-col :span="8">-->
-<!--                    <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType">-->
-<!--                        <el-select v-model="baseInfoChangeForm.checkinType" class="width150">-->
-<!--                            <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
-<!--                        </el-select>-->
-<!--                    </el-form-item>-->
-<!--                </el-col>-->
                 <el-col :span="8">
                     <el-form-item :label="$t('desk.order_salesman') + '：'">
                         <el-select v-model="baseInfoChangeForm.salesId" class="width150">
@@ -140,7 +133,6 @@
     <el-dialog top="0" :title="$t('desk.order_changeSource')" :visible.sync="gustTypeChangeShow" width="500px" center>
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
             <el-row>
-
                 <el-row>
                     <el-form-item :label="$t('desk.customer_guestType') + ':'" class="" style="margin-bottom:0" prop="guestType">
                         <el-radio-group v-model="baseInfoChangeForm.guestType">
@@ -149,7 +141,6 @@
                     </el-form-item>
                     <el-form-item label-width="100px" label="" class="" style="margin-bottom:0" v-if="baseInfoChangeForm.guestType==2||baseInfoChangeForm.guestType==3">
                         <el-input type="text" class="width200"></el-input>
-
                     </el-form-item>
                 </el-row>
                 <br />
@@ -386,12 +377,13 @@ export default {
             );
         },
       //跳转到入住详情
-      goCheckinDetail(){
+      goCheckinDetail(type){
         this.$router.push({
             name:'checktheDetails',
             params: {
                 detailData: this.detailData,
-                currentRoom: this.currentRoom
+                currentRoom: this.currentRoom,
+                type: type,
             },
         })
       },

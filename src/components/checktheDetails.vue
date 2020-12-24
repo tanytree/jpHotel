@@ -15,41 +15,35 @@
           <span style="font-size: 16px">入住人管理</span>
         </div>
       </div>
-      <div class="infoBlock">
-        <div class="roomItem">A1001/总统套房</div>
-        <el-form
-          ref="form"
-          :model="form"
-          label-width="75px"
-          label-position="right"
-          inline
-        >
+      <div class="infoBlock" v-for="(roomInfo, topIndex) of inRoomList" :key="topIndex">
+        <div class="roomItem">{{ roomInfo.room.houseNum }}/{{ roomInfo.room.roomTypeName }}</div>
+        <el-form ref="form" :model="form" label-width="75px" label-position="right" inline>
           <el-row>
             <el-col :span="6">
                 <el-form-item label="住宿价:">
-                    <el-input placeholder="请填写纯住宿价格" v-model="checkinInfo.headerObj.housePrice" size="small" style="width: 180px"></el-input>
+                    <el-input placeholder="请填写纯住宿价格" v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 180px"></el-input>
                 </el-form-item >
             </el-col>
             <el-col :span="6">
                 <el-form-item label="入住人:">
-                <el-input placeholder="请输入姓名" v-model="checkinInfo.headerObj.name" size="small" style="width: 95px"></el-input>
+                <el-input placeholder="请输入姓名" v-model="roomInfo.headerObj.name" size="small" style="width: 95px"></el-input>
                 <el-input
                   placeholder="请输入发音"
-                  v-model="form.name"
+                  v-model="roomInfo.headerObj.pronunciation"
                   size="small"
                   style="width: 95px; margin-left: 5px"
                 ></el-input> </el-form-item
             ></el-col>
             <el-col :span="6">
               <el-form-item label="性别:">
-                <el-radio-group v-model="checkinInfo.headerObj.sex">
-                  <el-radio v-for="(item,key,index) of $t('commons.F_sex')" :label="item" :key="index" ></el-radio>
-                </el-radio-group>
+                  <el-radio-group v-model="roomInfo.headerObj.sex">
+                      <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
+                  </el-radio-group>
               </el-form-item>
             </el-col>
             <el-col :span="6">
                 <el-form-item label="客人分类:">
-                    <el-select v-model="checkinInfo.headerObj.customerType" style="width:100%">
+                    <el-select v-model="roomInfo.headerObj.customerType + ''" style="width:100%">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index" ></el-option>
                     </el-select>
                 </el-form-item>
@@ -58,26 +52,26 @@
           <el-row>
             <el-col :span="6">
                 <el-form-item label="证件类型:">
-                    <el-select v-model="checkinInfo.headerObj.idcardType" :placeholder="$t('commons.selectIdCardType')" class="width200">
+                    <el-select v-model="roomInfo.headerObj.idcardType + ''" :placeholder="$t('commons.selectIdCardType')" class="width200">
                         <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
             <el-col :span="6"
               ><el-form-item label="证件号:">
-                <el-input placeholder="请输入证件号" v-model="checkinInfo.headerObj.idcard" size="small" style="width: 180px"></el-input>
+                <el-input placeholder="请输入证件号" v-model="roomInfo.headerObj.idcard" size="small" style="width: 180px"></el-input>
             </el-form-item
             ></el-col>
             <el-col :span="6"
               ><el-form-item label="E-mail:">
-                <el-input placeholder="请输入" v-model="checkinInfo.headerObj.email" size="small" style="width: 180px"></el-input>
+                <el-input placeholder="请输入" v-model="roomInfo.headerObj.email" size="small" style="width: 180px"></el-input>
             </el-form-item
             ></el-col>
             <el-col :span="6"
               ><el-form-item label="地区:">
                 <el-input
                   placeholder="请填写"
-                  v-model="checkinInfo.headerObj.region"
+                  v-model="roomInfo.headerObj.region"
                   size="small"
                   style="width: 180px"
                 ></el-input>
@@ -87,12 +81,12 @@
           <el-row>
             <el-col :span="12"
               ><el-form-item label="住家地址:">
-                <el-input v-model="checkinInfo.headerObj.homeAddressZip1" size="small" style="width: 80px"></el-input>
+                <el-input v-model="roomInfo.headerObj.homeAddressZip1" size="small" style="width: 80px"></el-input>
                 <span style="margin: 0 5px">-</span>
-                <el-input v-model="checkinInfo.headerObj.homeAddressZip2" size="small" style="width: 80px"></el-input>
+                <el-input v-model="roomInfo.headerObj.homeAddressZip2" size="small" style="width: 80px"></el-input>
                 <el-input
                   placeholder="可输入前面的邮编检索出地址"
-                  v-model="checkinInfo.headerObj.homeAddress"
+                  v-model="roomInfo.headerObj.homeAddress"
                   size="small"
                   style="width: 280px; margin-left: 10px"
                 ></el-input> </el-form-item
@@ -101,7 +95,7 @@
               ><el-form-item label="住家号码:">
                 <el-input
                   placeholder="请填写"
-                  v-model="checkinInfo.headerObj.homeMobile"
+                  v-model="roomInfo.headerObj.homeMobile"
                   size="small"
                   style="width: 180px"
                 ></el-input>
@@ -111,7 +105,7 @@
               ><el-form-item label="手机号:">
                 <el-input
                   placeholder="请填写"
-                  v-model="checkinInfo.headerObj.phone"
+                  v-model="roomInfo.headerObj.phone"
                   size="small"
                   style="width: 180px"
                 ></el-input> </el-form-item
@@ -122,13 +116,13 @@
               ><el-form-item label="单位名称:">
                 <el-input
                   placeholder="请输入"
-                  v-model="checkinInfo.headerObj.enterName"
+                  v-model="roomInfo.headerObj.enterName"
                   size="small"
                   style="width: 95px"
                 ></el-input>
                 <el-input
                   placeholder="发音"
-                  v-model="checkinInfo.headerObj.enterPinyin"
+                  v-model="roomInfo.headerObj.enterPinyin"
                   size="small"
                   style="width: 95px; margin-left: 5px"
                 ></el-input> </el-form-item
@@ -137,7 +131,7 @@
               ><el-form-item label="单位电话:">
                 <el-input
                   placeholder="请输入"
-                  v-model="checkinInfo.headerObj.enterMobile"
+                  v-model="roomInfo.headerObj.enterMobile"
                   size="small"
                   style="width: 180px"
                 ></el-input> </el-form-item
@@ -145,19 +139,19 @@
             <el-col :span="12"
               ><el-form-item label="单位地址:">
                 <el-input
-                  v-model="checkinInfo.headerObj.enterAddressZip1"
+                  v-model="roomInfo.headerObj.enterAddressZip1"
                   size="small"
                   style="width: 80px"
                 ></el-input>
                 <span style="margin: 0 5px">-</span>
                 <el-input
-                  v-model="checkinInfo.headerObj.enterAddressZip2"
+                  v-model="roomInfo.headerObj.enterAddressZip2"
                   size="small"
                   style="width: 80px"
                 ></el-input
                 ><el-input
                   placeholder="可输入前面的邮编检索出地址"
-                  v-model="checkinInfo.headerObj.enterAddress"
+                  v-model="roomInfo.headerObj.enterAddress"
                   size="small"
                   style="width: 280px; margin-left: 10px"
                 ></el-input> </el-form-item
@@ -166,19 +160,14 @@
           <el-row>
             <el-col :span="6">
                 <el-form-item label="附餐-早:">
-                    <el-select v-model="checkinInfo.headerObj.attachMealId" style="width:100%">
-                        <el-option
-                            v-for="item in breakfastList"
-                            :key="item.id"
-                            :label="item.mealName"
-                            :value="item.id"
-                        ></el-option>
+                    <el-select v-model="roomInfo.headerObj.attachMealId" style="width:100%">
+                        <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
             <el-col :span="6"
               ><el-form-item label="附餐-晚:">
-                <el-select v-model="checkinInfo.headerObj.attachMealIdDinner" style="width:100%">
+                <el-select v-model="roomInfo.headerObj.attachMealIdDinner" style="width:100%">
                     <el-option
                         v-for="item in dinnerList"
                         :key="item.id"
@@ -192,103 +181,64 @@
         </el-form>
         <div class="overLine"></div>
         <!--表格数据 -->
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          max-height="500px;"
-          header-row-class-name="default"
-          size="small"
-        >
-          <el-table-column label="姓名" align="center" width="200px;">
+        <el-table ref="multipleTable" :data="roomInfo.personList" max-height="500px;" header-row-class-name="default" size="small">
+          <el-table-column label="姓名" align="center" width="260px">
             <template slot-scope="{ row }">
-              <el-input
-                v-model="row.name"
-                size="small"
-                style="width: 85px"
-              ></el-input>
-              <el-input
-                placeholder="发音"
-                v-model="row.pinyin"
-                size="small"
-                style="width: 85px; margin-left: 5px"
-              ></el-input>
+              <el-input v-model="row.name" size="small"  style="width: 150px"></el-input>
+              <el-input placeholder="发音" v-model="row.pronunciation" size="small" style="width: 100px; margin-left: 5px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="证件类型" width="100px;">
+          <el-table-column align="center" label="证件类型">
+              <template slot-scope="{ row }">
+                  <el-select v-model="row.idcardType" :placeholder="$t('commons.selectIdCardType')" class="width200">
+                      <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
+                  </el-select>
+              </template>
+          </el-table-column>
+          <el-table-column align="center" label="证件号码">
             <template slot-scope="{ row }">
-              <el-select
-                v-model="row.cardType"
-                size="small"
-                style="width: 90px"
-              >
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+              <el-input v-model="row.idcard" size="small" style="width: 120px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="证件号码" width="130px;">
+          <el-table-column align="center" label="性别" width="300px">
             <template slot-scope="{ row }">
-              <el-input
-                v-model="row.cardNum"
-                size="small"
-                style="width: 120px"
-              ></el-input>
+                <el-radio-group v-model="row.sex">
+                    <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
+                </el-radio-group>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="性别" width="100px;">
+          <el-table-column align="center" label="客人分类">
             <template slot-scope="{ row }">
-              <el-select v-model="row.sex" size="small" style="width: 90px">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+                <el-select v-model="row.customerType || '1'" style="width:100%">
+                    <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index" ></el-option>
+                </el-select>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="客人分类" width="180px;">
+          <el-table-column align="center" label="附餐-早餐" >
             <template slot-scope="{ row }">
-              <el-select
-                v-model="row.custormer"
-                size="small"
-                style="width: 170px"
-              >
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+                <el-select v-model="row.attachMealId" style="width:100%">
+                    <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
+                </el-select>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="附餐-早餐" width="180px;">
-            <template>
-              <el-select
-                v-model="form.region"
-                size="small"
-                style="width: 170px"
-              >
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="附餐-晚餐" width="180px;">
-            <template>
-              <el-select
-                v-model="form.region"
-                size="small"
-                style="width: 170px"
-              >
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+          <el-table-column align="center" label="附餐-晚餐" >
+            <template slot-scope="{ row }">
+                <el-select v-model="row.attachMealIdDinner" style="width:100%">
+                    <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
+                </el-select>
             </template>
           </el-table-column>
           <el-table-column>
-            <template slot-scope="{ row }">
-              <el-button type="text" size="mini">删除</el-button>
+            <template slot-scope="{ row, $index }">
+              <el-button type="text" size="mini" @click="deletePerson(roomInfo, row, $index)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-button type="primary" @click="addPeople" style="margin-top: 10px"
+        <el-button type="primary" @click="addPeople(roomInfo, topIndex)" style="margin-top: 10px"
           >+同来宾客</el-button
         >
       </div>
+
       <div class="bottomBottom">
         <el-button>取消</el-button>
         <el-button type="primary" @click="addPersonSubmit">确认</el-button>
@@ -301,12 +251,42 @@
 export default {
     mounted() {
         debugger
-        this.detailData = this.$route.params.detailData;
+        this.type = this.$route.params.type;
         this.currentRoom = this.$route.params.currentRoom || '';
+        this.inRoomList = [];
+        if (this.type == 3) {
+            this.detailData = {
+                checkIn: {
+                    id: this.currentRoom.checkinId || this.currentRoom.checkinReserveId
+                },
+                inRoomList: [this.currentRoom]
+            }
+        } else {
+            this.detailData = this.$F.deepClone(this.$route.params.detailData);
+        }
+        if (this.detailData.inRoomList && this.detailData.inRoomList.length > 0) {
+            this.detailData.inRoomList.forEach((room) => {
+                let object = {
+                    headerObj: {},
+                    room: room
+                };
+                room.personList.forEach((person, index) => {
+                    if (person.personType == 2) {
+                        object.headerObj = this.$F.deepClone(person);
+                        object.headerObj.checkinRoomId = room.roomId
+                        room.personList.splice(index, 1);
+                    }
+                })
+                object.personList = room.personList;
+                this.inRoomList.push(object);
+            })
+        }
+
     },
   data() {
-
     return {
+        inRoomList:[],  //入住人主要信息 包括主入住人和同来宾客
+        type: 1,   //1： 入住人管理   2： 添加入住人 入住
         detailData: {},   //订单信息
         currentRoom: '',    //当前房间
       form: {
@@ -317,8 +297,8 @@ export default {
 
       },
         checkinInfo: {
-            checkinId: '',  //预订单或订单id
-            checkInRoomJson: [],  //入住人列表
+            // checkinId: '',  //预订单或订单id
+            personList: [],  //入住人列表
             headerObj: {  //  主入住人对象   json字符串
                 checkinRoomId: '', //房间id  int必填
                 name: '', //          姓名  String必填
@@ -346,7 +326,6 @@ export default {
                 enterAddressZip2: '', //      单位地址邮编2  String选填
                 enterAddress: '', //      单位地址  String选填
             },
-            personList: [],
             //
             //         checkinRoomId 房间id  int必填
             //         *                                           name          姓名  String必填
@@ -374,30 +353,61 @@ export default {
     },
 
   methods: {
+      addPeople(roomInfo) {
+          roomInfo.personList.push({
+              checkinRoomId: roomInfo.room.roomId,
+              housePrice: roomInfo.headerObj.housePrice,
+              sex: '1',
+              idcardType: '1'
+          });
+          debugger
+          console.log(this.inRoomList)
+          this.$forceUpdate();
+      },
+      deletePerson(roomInfo, row, index) {
+          roomInfo.personList.splice(index, 1);
+      },
         //提交添加入住人
       addPersonSubmit() {
           let params = {};
           this.$F.merge(params, {
               checkInReserveId: this.detailData.checkIn.id,
+              checkinId: this.detailData.checkIn.id,
           });
-          //预定房办理入住
-          this.$F.doRequest(this, '/pms/reserve/reserve_to_checkin', params, (res) => {
+          let checkInRoomJson = [];
+          this.inRoomList.forEach((room) => {
               debugger
-              //然后立即办理入住
-              let checkInRoomJson = [];
-              this.checkinInfo.headerObj.roomId = this.detailData.inRoomList[0].roomId;
-              this.checkinInfo.headerObj.roomTypeId = this.detailData.inRoomList[0].roomTypeId;
-              checkInRoomJson.push(this.checkinInfo);
-              params = {
-                  checkinId: res.checkinId,
-                  checkInRoomJson: JSON.stringify(checkInRoomJson)
+              let checkinInfo = {
+                  roomId: room.room.roomId,
+                  roomTypeId: room.room.roomTypeId,
+                  headerObj: room.headerObj,
+                  personList: room.personList
               }
-              debugger
+              checkInRoomJson.push(checkinInfo);
+          })
+          this.$F.merge(params, {
+              checkInRoomJson: JSON.stringify(checkInRoomJson)
+          });
+          debugger
+          if (this.type == 1) {
               this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
-                  debugger
+                  this.$router.go(-1);
                   // this.$emit('checkInCallback', res.checkinId);
               })
-          })
+          } else {
+              //预定房办理入住
+              this.$F.doRequest(this, '/pms/reserve/reserve_to_checkin', params, (res) => {
+                  //然后立即办理入住
+                  params = {
+                      checkinId: res.checkinId,
+                      checkInRoomJson: JSON.stringify(checkInRoomJson)
+                  }
+                  this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
+                      // this.$emit('checkInCallback', res.checkinId);
+                      this.$router.go(-1);
+                  })
+              })
+          }
       },
       fetchHotelattaChmealList() {
           this.$F.doRequest(this, '/pms/hotelattachmeal/list', {
@@ -418,11 +428,7 @@ export default {
       goBack(){
           this.$router.go(-1);
       },
-    addPeople() {
-      console.log(this.tableData);
-      let t = {};
-      this.tableData.push(t);
-    },
+
   },
 };
 </script>

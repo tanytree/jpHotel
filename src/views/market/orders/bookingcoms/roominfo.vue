@@ -20,8 +20,12 @@
             <el-col :span="12">
                 <div class="fr">
 <!--                    disabled="checkinInfo.state == 1 || checkinInfo.state == 2"-->
-                    <el-button plain size="mini" @click="batchCheckId" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" >{{ $t('manager.ps_inLive') }}</el-button>
-                    <el-button plain size="mini" @click="updateReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{$t('desk.home_modityReserved')}} </el-button>
+                    <el-button plain size="mini" @click="goCheckinDetail" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" >
+                        {{ $t('manager.ps_inLive') }}
+                    </el-button>
+                    <el-button plain size="mini" @click="updateReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">
+                        {{$t('desk.home_modityReserved')}}
+                    </el-button>
                     <!--这块暂时隐藏 不要留太多bug-->
                     <el-dropdown split-button type="primary" size="mini" v-show="false">
                         {{ $t('commons.moreOperating') }}
@@ -195,6 +199,15 @@ export default {
     },
 
     methods: {
+        goCheckinDetail(){
+            this.$router.push({
+                name:'checktheDetails',
+                params: {
+                    currentRoom: this.currentRoom,
+                    type: 3,  //单个房间入住维护
+                },
+            })
+        },
         //cancel room
         cancelRoom() {
             let params = {
