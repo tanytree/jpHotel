@@ -9,7 +9,7 @@
             <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{numFormate(info.consumePrice)}}</div>
 
             <div class="text-red text-size20 margin-t-20">
-                <el-button v-if="info.state == 1" type="primary" size="small" @click="addOrderInfo">{{$t('food.common.add_food')}}</el-button>
+                <el-button v-if="info.state == 1" type="primary" size="small" @click="addOrderInfo">{{$t('food.common.order_add_food')}}</el-button>
                 <el-button v-if="info.state == 1" type="primary" size="small" @click="action">{{$t('food.common.order_deal')}}</el-button>
 <!--                <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>-->
             </div>
@@ -21,7 +21,7 @@
                   header-row-class-name="default"
                   size="small"
                 >
-                  <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>
+                  <el-table-column prop="dishesName" :label="$t('food.common.order_add_title')" ></el-table-column>
                   <el-table-column :label="$t('food.common.price')">
                       <template slot-scope="scope">
                        ¥ {{numFormate(scope.row.unitPrice)}}
@@ -132,7 +132,7 @@
 
         <el-divider></el-divider>
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
-           <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
+           <el-button size="small" @click="closeDialog">{{$t('food.common.order_add_canel')}}</el-button>
            <el-button  v-if="add == 1" size="small" type="primary" @click="save(1)">{{$t('food.common.ok')}}</el-button>
         </div>
 

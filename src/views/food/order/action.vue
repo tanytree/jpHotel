@@ -91,10 +91,10 @@
                 <el-form-item  :label="$t('food.common.order_count')">
                     <el-input-number size="mini" v-model="form.docCount" :step="1" step-strictly></el-input-number>
                 </el-form-item>
-
+<!-- 
                 <el-form-item>
                     <el-checkbox v-model="isPrint">{{$t('food.common.order_print')}}</el-checkbox>
-                </el-form-item>
+                </el-form-item> -->
             </el-form>
         </div>
         <el-divider></el-divider>

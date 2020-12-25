@@ -17,7 +17,7 @@ module.exports = {
     placeChoose: '選択してください',
     confirm_delete: '削除確認いたしますか？',
     tip_desc: '注意',
-    request_success: '変換確認',
+    request_success: '受取確認',
     delete_success: '削除確認',
     delete_batch: '「一括削除」操作実行しますか？',
     delete_single: '「削除」操作実行しますか？',

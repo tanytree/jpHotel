@@ -66,9 +66,9 @@ module.exports = {
     },
     // 订单来源
     orderSource:{
-        1:'フロント注文',
-        2:'タブレットでの注文',
-        3:'携帯ディバイスでの注文'
+        1:'PC',
+        2:'タブレット',
+        3:'他のディバイス'
     },
     //计费类型
     billingType:{
@@ -100,7 +100,7 @@ module.exports = {
         no:'いいえ',
         success:'操作成功',
         //点餐
-        is_choose_food:'注文受け取り',
+        is_choose_food:'注文受取',
         food_title:'料理名',
         food_price:'単価',
         food_count:'数量',
@@ -115,7 +115,7 @@ module.exports = {
         remove:'削除',
         confirm_remove_tips:'确定移除吗?',
         is_solt:'品切れ',
-        cate:'カテゴリー設定',
+        cate:'カテゴリー',
         cate_name:'カテゴリ',
         has:'在庫',
         no_set:'未設定',
@@ -125,7 +125,7 @@ module.exports = {
         is_served:'品切れ数',
         cancel_all:'全部取消',
         solt_text:'品切れ',
-        tip:'提示',
+        tip:'ご確認',
         is_confirm_solt:'該当料理を品切れにしますか？',
         is_confirm_solt_cancel:'品切れを取り消しますか?',
         is_confirm_solt_cancel_all:'全部、取り消し確認しますか?',
@@ -156,15 +156,18 @@ module.exports = {
         batch_del:'一括削除',
         confirm_del_all:'全部削除しますか?',
         del:'削除',
-        confirm_del:'是否確認刪除?',
+        confirm_del:'削除に確認しますか?',
         add_food:'メニュー追加',
+        order_add_food:'注文追加',
+        order_add_title:'注文内容',
+        order_add_canel:'戻る',
         status:'状態',
         detail:'詳細',
-        material:'原料',
-        food_desc:'紹介',
+        material:'原材料',
+        food_desc:'内容紹介',
         food_pic:'写真',
         confirm_disable:'使用停止しますか?',
-        confirm_open:'起動確認しますか?',
+        confirm_open:'停止に確認しますか？',
         is_disable:'停止',
         is_active:'利用中',
         input_food_title:'料理名称を入力してください',
@@ -175,7 +178,7 @@ module.exports = {
 
         //菜品分类管理
         slide_all:'展開',
-        no_slide_all:'隠す',
+        no_slide_all:'折りたたみ',
         add_first_level:'第一層分類追加',
         add_second_level:'第二層分類追加',
         add_three_level:'第三層分類追加',
@@ -203,7 +206,7 @@ module.exports = {
         order_deal:'会計',
         deskNum:'テーブル番号',
         numberPlat:'部屋番号',
-        cancel_order:'予約キャンセル',
+        cancel_order:'注文キャンセル',
         cancel_confirm_order_tips:'注文をキャンセルしますか?',
         confirm_submit:'提出確認しますか?',
         print:'印刷',
@@ -216,7 +219,7 @@ module.exports = {
         payPrice:'精算合計',
         member_card:'会員カード',
         select_member_card:'会員カードを選択して下さい',
-        read_member_card:'读会员卡',
+        read_member_card:'会員カード読み取り',
         remark:'備考',
         order_count:'レシート部数',
         order_print:'レシート印刷',
@@ -226,8 +229,8 @@ module.exports = {
         account_name:'名前',
         card_type:'証明書の種類',
         card_no:'身分証明書',
-        select_room:'部屋情報入力',
-        select_rooms:'部屋情報入力を選択して下さい',
+        select_room:'部屋選択',
+        select_rooms:'部屋を選択してください',
 
         //库房管理
         storage_name:'倉庫名',
@@ -282,9 +285,14 @@ module.exports = {
         applyer_name:'申請者',
         viewer_name:'審査員 ',
         storage_detail:'明細',
-        taxStatus:'是否包含税',
-        seviceStatus:'是否包含服务费',
-        costPrice:'成本价格'
+        taxStatus:'消費税',
+        seviceStatus:'サービス料',
+        costPrice:'コスト',
+        costPrice_desc:'コストを入力してください',
+        is_tax:'税込',
+        no_tax:'税別',
+        is_service_fee:'サービス料込',
+        no_service_fee:'サービス料別',
     },
     shift:{
         tabs_1:'シフト交替',

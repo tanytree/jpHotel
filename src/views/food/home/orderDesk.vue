@@ -137,7 +137,7 @@
              <el-table-column prop="name" :label="$t('food.common.food_title')" ></el-table-column>
              <el-table-column :label="$t('food.common.food_price')">
                  <template slot-scope="scope">
-                  ¥ {{scope.row.price}}
+                  ¥ {{numFormate(scope.row.price)}}
                  </template>
              </el-table-column>
              <el-table-column :label="$t('food.common.food_count')" width="160">
@@ -147,11 +147,11 @@
              </el-table-column>
              <el-table-column :label="$t('desk.order_totalPrice')" width="160">
                  <template slot-scope="scope">
-                   {{scope.row.count * scope.row.price}}
+                   {{numFormate(scope.row.count * scope.row.price)}}
                  </template>
              </el-table-column>
         </el-table>
-        <div class="margin-t-20 margin-b-20">{{$t('food.common.product_total')}}, {{$t('food.common.food_count')}} : {{countToTal}}  {{$t('food.common.amount')}} : {{cartToTal}}</div>
+        <div class="margin-t-20 margin-b-20">{{$t('food.common.product_total')}}, {{$t('food.common.food_count')}} : {{countToTal}}  {{$t('food.common.amount')}} : {{numFormate(cartToTal)}}</div>
         <el-form :model="desk" :rules="rules" ref="deskform"  :inline="true" >
               <el-form-item :label="$t('food.common.deskNum')" prop="deskNum">
                 <el-input type="number" size="small" :placeholder="$t('food.common.deskNum')" v-model="desk.deskNum"></el-input>
@@ -393,7 +393,7 @@ export default {
             params.orderSource = 1
             params.userId = this.userId
             params.storesNum = this.storesNum
-            this.$confirm(this.$t('food.common.confirm_submit'), this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('food.common.confirm_submit'), this.$t('food.common.tip'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'

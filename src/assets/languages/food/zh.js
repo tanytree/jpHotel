@@ -66,9 +66,9 @@ module.exports = {
     },
     // 订单来源
     orderSource:{
-        1:'前台点餐',
-        2:'IPAD点餐',
-        3:'H5点餐'
+        1:'PC',
+        2:'IPAD',
+        3:'其他'
     },
     //计费类型
     billingType:{
@@ -158,6 +158,9 @@ module.exports = {
         del:'删除',
         confirm_del:'确认删除吗?',
         add_food:'新增菜品',
+        order_add_food:'新增菜品',
+        order_add_title:'菜品名称',
+        order_add_canel:'关闭',
         status:'状态',
         detail:'详情',
         material:'原料',
@@ -284,8 +287,14 @@ module.exports = {
         storage_detail:'明细',
         taxStatus:'是否包含税',
         seviceStatus:'是否包含服务费',
-        costPrice:'成本价格'
-        
+        costPrice:'成本价格',
+        costPrice_desc:'成本价格',
+        is_tax:'含税',
+        no_tax:'不含税',
+        is_service_fee:'含服务费',
+        no_service_fee:'サービス料別',
+
+
     },
     shift:{
         tabs_1:'前台交班',
