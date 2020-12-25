@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-24 16:54:56
  * @Author: 陶子
- * @LastEditTime: 2020-12-25 10:32:01
+ * @LastEditTime: 2020-12-25 18:57:51
  * @FilePath: \jiudian\src\components\cardTao.vue
 -->
 <template>
@@ -14,13 +14,29 @@
     append-to-body
   >
     <div class="innerBoxTop">
-      <span>房型：{{ currentRoom.roomTypeName }} </span>
-      <span>房间号：{{ currentRoom.houseNum }}</span
-      ><span
+      <span
+        >房型：{{
+          currentRoom.currentRoomData
+            ? currentRoom.currentRoomData.roomTypeName
+            : currentRoom.roomTypeName
+        }}
+      </span>
+      <span
+        >房间号：{{
+          currentRoom.currentRoomData
+            ? currentRoom.currentRoomData.houseNum
+            : currentRoom.houseNum
+        }}</span
+      >
+      <span
         >入住人：{{
-          currentRoom.personList &&
-          currentRoom.personList.length &&
-          currentRoom.personList[0].name
+          currentRoom.currentRoomData
+            ? currentRoom.currentRoomData.personList &&
+              currentRoom.currentRoomData.personList.length &&
+              currentRoom.currentRoomData.personList[0].name
+            : currentRoom.personList &&
+              currentRoom.personList.length &&
+              currentRoom.personList[0].name
         }}</span
       >
     </div>
@@ -132,15 +148,23 @@ export default {
     resetVisibel(checkInId) {
       this.paymentForm.checkInId = checkInId;
       this.paymentVisible = true;
+      console.log(this.currentRoom);
     },
     consume_oper(formName) {
-      if (this.currentRoom.id) {
-        this.paymentForm.roomId = this.currentRoom.id;
-        this.paymentForm.roomNum = this.currentRoom.houseNum;
+      if (this.currentRoom.currentRoomData) {
+        if (this.currentRoom.currentRoomData.id) {
+          this.paymentForm.roomId = this.currentRoom.currentRoomData.id;
+          this.paymentForm.roomNum = this.currentRoom.currentRoomData.houseNum;
+        }
       } else {
-        if (this.detailData.inRoomList.length > 0) {
-          this.paymentForm.roomId = this.detailData.inRoomList[0].id;
-          this.paymentForm.roomNum = this.detailData.inRoomList[0].houseNum;
+        if (this.currentRoom.id) {
+          this.paymentForm.roomId = this.currentRoom.id;
+          this.paymentForm.roomNum = this.currentRoom.houseNum;
+        } else {
+          if (this.detailData.inRoomList.length > 0) {
+            this.paymentForm.roomId = this.detailData.inRoomList[0].id;
+            this.paymentForm.roomNum = this.detailData.inRoomList[0].houseNum;
+          }
         }
       }
       this.$refs[formName].validate((valid) => {
@@ -163,6 +187,7 @@ export default {
                 roomNum: "",
               };
               this.paymentVisible = false;
+              this.$message.success("挂账成功");
               this.$emit("refreshFatherData");
             }
           );

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2020-12-24 17:04:55
+ * @LastEditTime: 2020-12-25 18:19:15
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -14,7 +14,7 @@
     "
     >
         <!-- 内层挂账dialog -->
-        <cardTao ref="cardTao"></cardTao>
+        <cardTao ref="cardTao" :currentRoom="currentRoom" ></cardTao>
         <!-- 内层结账退房dialog -->
         <el-dialog
             top="0"
@@ -232,6 +232,7 @@ export default {
             inputMessage: false,
             nowDateString: '',
             orderInfo: {}, //需要展示订单的信息
+            
         };
     },
     mounted() {
@@ -240,7 +241,7 @@ export default {
     methods: {
       //点击挂账按钮
       paymentVisible(){
-        this.$refs.cardTao.resetVisibel();
+        this.$refs.cardTao.resetVisibel(this.currentRoom.currentRoomData.checkinId);
       },
         lookRoomClick(data) {
             debugger
