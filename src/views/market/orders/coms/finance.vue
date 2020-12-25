@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-24 19:16:48
+ * @LastEditTime: 2020-12-25 10:38:36
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -125,58 +125,8 @@
             <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
         </div>
     </el-dialog>
-    <!-- 挂账组件 -->
-    <cardTao @updataInfo="updataInfo" ref="cardTao" :detailData = "detailData" :dataInfo = 'currentRoom'  :checkInId='checkInId' :currentRoomId='currentRoomId'></cardTao>
-    <!--挂账-->
-    <!-- <el-dialog top='0' :title="$t('desk.charge')" :visible.sync="onAccountShow" width="500px">
-        <el-form :model="consumeOperForm" ref="onAccount" :rules="rules" size="mini" label-width="100px">
-            <el-row v-if="currentRoom">
-                <el-col :span="8">
-                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                </el-col>
-                <el-col :span="8">
-                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
-                </el-col>
-                <el-col :span="8">
-                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList.length && currentRoom.personList[0].name}}
-                </el-col>
-            </el-row>
-            <el-row v-else>
-                <template v-if="detailData&&detailData.inRoomList">
-                    <el-col :span="8">
-                        {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
-                    </el-col>
-                    <el-col :span="8">
-                        {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
-                    </el-col>
-                    <el-col :span="8">
-                       {{$t('desk.customer_livePeople')+':'}}{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
-                        detailData.inRoomList[0].personList[0] &&
-                        detailData.inRoomList[0].personList[0].name}}
-                    </el-col>
-                </template>
-            </el-row>
-            <br />
-
-            <el-form-item :label="$t('desk.chargeMoney') + ':'" class="" prop="payPrice">
-                <el-input class="width200" type="number" v-model="consumeOperForm.payPrice"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('desk.customer_buyerUnit') + ':'" class="" prop="creditName">
-                <el-select v-model="consumeOperForm.enterId" filterable remote reserve-keyword :placeholder="$t('commons.pleaseEnter')"  :loading="loading" @change="enterNameChange">
-                    <el-option v-for="item in hotelenterList" :key="item.id" :label="item.enterName" :value="item.id">
-                        {{item.enterName}}
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item :label="$t('desk.home_note') + ':'">
-                <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="onAccountShow=false">{{ $t('commons.close') }}</el-button>
-            <el-button type="primary" @click="consume_oper(2,'onAccount')">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog> -->
+    <!-- 挂账 -->
+    <cardTao @refreshFatherData="updataInfo" ref="cardTao" :detailData = "detailData" :currentRoom="currentRoom" ></cardTao>
     <!--走结-->
     <el-dialog top='0' :title="$t('desk.order_goTie')" :visible.sync="knotShow" width="500px">
         <el-form :model="consumeOperForm" ref="knot" :rules="rules" size="mini" label-width="20px">
@@ -513,7 +463,8 @@ export default {
       },
       //点击挂账按钮
       onAccountShow(){
-        this.$refs.cardTao.resetVisibel();
+        //该id为checkinId
+        this.$refs.cardTao.resetVisibel(this.$route.query.id);
       },
         //撤销结账
         undoCheckoutA() {

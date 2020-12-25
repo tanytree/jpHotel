@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-24 16:54:56
  * @Author: 陶子
- * @LastEditTime: 2020-12-24 19:18:57
+ * @LastEditTime: 2020-12-25 10:32:01
  * @FilePath: \jiudian\src\components\cardTao.vue
 -->
 <template>
@@ -14,13 +14,13 @@
     append-to-body
   >
     <div class="innerBoxTop">
-      <span>房型：{{ dataInfo.roomTypeName }} </span>
-      <span>房间号：{{ dataInfo.houseNum }}</span
+      <span>房型：{{ currentRoom.roomTypeName }} </span>
+      <span>房间号：{{ currentRoom.houseNum }}</span
       ><span
         >入住人：{{
-          dataInfo.personList &&
-          dataInfo.personList.length &&
-          dataInfo.personList[0].name
+          currentRoom.personList &&
+          currentRoom.personList.length &&
+          currentRoom.personList[0].name
         }}</span
       >
     </div>
@@ -90,7 +90,7 @@
 </template>
 <script>
 export default {
-  props: ["dataInfo", "checkInId", "currentRoomId"],
+  props: ["detailData", "currentRoom"],
   data() {
     return {
       paymentVisible: false,
@@ -101,6 +101,12 @@ export default {
         putUp: "", //挂账方式
         enterId: "", //挂账单位
         priceType: 13, // 13代表挂账
+        payType: 0, //挂账无需支付方式
+        state: 1, //1未结；2已结
+        /////////////
+        checkInId: "",
+        roomId: "",
+        roomNum: "",
       },
     };
   },
@@ -123,44 +129,44 @@ export default {
     this.hotelenter_list();
   },
   methods: {
-    resetVisibel() {
+    resetVisibel(checkInId) {
+      this.paymentForm.checkInId = checkInId;
       this.paymentVisible = true;
     },
     consume_oper(formName) {
-      let params = this.paymentForm;
-      params.checkInId = this.checkInId;
-      if (this.currentRoomId) {
-        params.roomId = this.dataInfo.id;
-        params.roomNum = this.dataInfo.houseNum;
+      if (this.currentRoom.id) {
+        this.paymentForm.roomId = this.currentRoom.id;
+        this.paymentForm.roomNum = this.currentRoom.houseNum;
       } else {
         if (this.detailData.inRoomList.length > 0) {
-          params.roomId = this.detailData.inRoomList[0].id;
-          params.roomNum = this.detailData.inRoomList[0].houseNum;
+          this.paymentForm.roomId = this.detailData.inRoomList[0].id;
+          this.paymentForm.roomNum = this.detailData.inRoomList[0].houseNum;
         }
       }
-      params.priceType = 13;
-      params.payType = 0; //挂账无需支付方式
-      params.state = 1;
-      params.payPrice = this.paymentForm.payPrice;
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$F.doRequest(
             this,
             "/pms/consume/consume_oper",
-            params,
+            this.paymentForm,
             (res) => {
-              this.paymentVisible = false;
               this.paymentForm = {
                 payPrice: "", //挂账金额
                 putUp: "", //挂账方式
                 enterId: "", //挂账单位
                 priceType: 13, // 13代表挂账
+                payType: 0, //挂账无需支付方式
+                state: 1, //1未结；2已结
+                /////////////
+                checkInId: "",
+                roomId: "",
+                roomNum: "",
               };
-              this.$emit("updataInfo");
+              this.paymentVisible = false;
+              this.$emit("refreshFatherData");
             }
           );
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

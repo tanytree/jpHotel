@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2020-12-24 15:49:19
+ * @LastEditTime: 2020-12-25 13:52:48
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
@@ -91,6 +91,7 @@
               placeholder="选择日期"
             ></el-date-picker>
           </el-form-item>
+          <!-- 选择单个月份 -->
           <el-form-item label="选择月份:" v-if="reportType == '34'">
             <el-date-picker
               v-model="searchForm.startTime"
@@ -99,6 +100,7 @@
               placeholder="选择月份"
             ></el-date-picker>
           </el-form-item>
+          <!-- 选择多个月份 -->
           <el-form-item label="选择月份:" v-if="reportType == '36'">
             <el-date-picker
               v-model="searchForm.startTime"
@@ -108,7 +110,7 @@
             ></el-date-picker>
             <span style="margin: 0 5px">-</span>
             <el-date-picker
-              v-model="searchForm.startTime"
+              v-model="searchForm.endTime"
               type="month"
               value-format="yyyy-MM"
               placeholder="选择月份"
@@ -121,12 +123,12 @@
               reportType == '11' || reportType == '12' || reportType == '13'
             "
           >
-            <el-select v-model="searchForm.enterName" filterable clearable>
+            <el-select v-model="searchForm.enterId" filterable clearable>
               <el-option
                 v-for="(item, index) in unitList"
                 :key="index"
                 :label="item.enterName"
-                :value="item.enterName"
+                :value="item.id"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -141,7 +143,7 @@
             "
           >
             <el-autocomplete
-              v-model="searchForm.name"
+              v-model="searchForm.guestName"
               :fetch-suggestions="remoteMethod"
               placeholder="请输入内容"
               @select="changeName"
@@ -153,7 +155,7 @@
             v-if="reportType == '42'"
           >
             <el-autocomplete
-              v-model="searchForm.name"
+              v-model="searchForm.teamName"
               :fetch-suggestions="remoteMethod"
               placeholder="请输入内容"
               @select="changeName"
@@ -207,18 +209,30 @@ export default {
     };
   },
   mounted() {
-    this.getUnitList();
     this.searchForm = {
       languageType: getLanguage() == "ri" ? 2 : 1, //语言类型  1中文  2日文
       reportNum: "", //报表模板种类
+      reportType: "", //报表类型  reportNum 的子集
       startTime: "",
       endTime: "",
+      enterId: "", //单位id
+      guestName: "", //客户名称
+      teamName: "", //团队名称
     };
     this.content = "";
     this.sourcePage = this.$route.params.sourcePage; //判定是总办的页面还是前台部的页面
     this.searchForm.reportNum = this.$route.params.reportNum; //接收报表的reportNum
     this.reportType = this.$route.params.reportType || 1; //接收报表的reportType
+    if(this.reportType == '11' || this.reportType == '12' || this.reportType == '13'){
+    this.getUnitList();
+    }
     if (this.reportType == "41") {
+      let  date = new Date();
+      let nowDate = date.toLocaleDateString();
+      let array = nowDate.split('/');
+      let wantTime = array.join('-');
+      this.searchForm.startTime = wantTime;
+      this.searchForm.endTime = wantTime;
       this.queryReport();
     }
   },
@@ -267,26 +281,68 @@ export default {
     changeName(e) {
       console.log(e);
     },
-
+    monthStartTime(year, month) {
+      //一个月的开始时间
+      var firstDay = new Date(year, month - 1, 1); //这个月的第一天
+      var currentMonth = firstDay.getMonth(); //取得月份数
+      var lastDay = new Date(firstDay.getFullYear(), currentMonth + 1, 0); //是0而不是-1
+      firstDay = firstDay.Format("yyyy-MM-dd"); //格式化
+      lastDay = lastDay.Format("yyyy-MM-dd"); //格式化
+      return firstDay;
+    },
+    monthEndTime(year, month) {
+      //一个月的结束时间
+      var firstDay = new Date(year, month - 1, 1); //这个月的第一天
+      var currentMonth = firstDay.getMonth(); //取得月份数
+      var lastDay = new Date(firstDay.getFullYear(), currentMonth + 1, 0); //是0而不是-1
+      firstDay = firstDay.Format("yyyy-MM-dd"); //格式化
+      lastDay = lastDay.Format("yyyy-MM-dd"); //格式化
+      return lastDay;
+    },
     //请求 单位 列表
     getUnitList() {
       this.$F.doRequest(this, "/pms/hotelenter/list", {}, (res) => {
         this.unitList = res.list;
-        console.log(this.unitList);
       });
     },
     queryReport() {
       //组织报表入参 需要根据不同得reportType做判断
       this.content = "";
       this.searchForm.languageType = getLanguage() == "ri" ? 2 : 1; //语言类型  1中文  2日文
+      this.searchForm.reportType = this.reportType;
       if (
         this.searchForm.reportNum == 1001 ||
-        this.searchForm.reportNum == 1003
+        this.reportType == 13 ||
+        this.reportType == 14 ||
+        this.reportType == 35 ||
+        this.reportType == 39 ||
+        this.reportType == 40 ||
+        this.reportType == 42 ||
+        this.reportType == 25 ||
+        this.reportType == 26 ||
+        this.reportType == 27 ||
+        this.reportType == 29 ||
+        this.reportType == 28
       ) {
+        //日计表
         this.searchForm.endTime = this.searchForm.startTime;
-      } else if (this.searchForm.reportNum == 1004) {
-        //陶子加下
       }
+      if (this.searchForm.reportNum == 1003 || this.reportType == 34) {
+        //月度报表
+        let year = this.searchForm.startTime.substr(0, 4);
+        let month = this.searchForm.startTime.substr(-2, 2);
+        this.searchForm.startTime = this.monthStartTime(year, month);
+        this.searchForm.endTime = this.monthEndTime(year, month);
+      }
+      if (this.reportType == 36) {
+        let yearA = this.searchForm.startTime.substr(0, 4);
+        let monthA = this.searchForm.startTime.substr(-2, 2);
+        let yearB = this.searchForm.endTime.substr(0, 4);
+        let monthB = this.searchForm.endTime.substr(-2, 2);
+        this.searchForm.startTime = this.monthStartTime(yearA, monthA);
+        this.searchForm.endTime = this.monthEndTime(yearB, monthB);
+      }
+
       this.$F.doRequest(
         this,
         "/pms/report/select_report",
