@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2020-12-25 13:52:48
+ * @LastEditTime: 2020-12-25 16:15:26
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
@@ -11,9 +11,9 @@
         <el-breadcrumb-item
           style="cursor: pointer; font-weight: 600"
           @click.native="backLastStack"
-          >报表</el-breadcrumb-item
+          >{{$t('boss.report_reportTitle')}}</el-breadcrumb-item
         >
-        <el-breadcrumb-item style="font-weight: 700">详情</el-breadcrumb-item>
+        <el-breadcrumb-item style="font-weight: 700">{{$t('commons.detail')}}</el-breadcrumb-item>
       </el-breadcrumb>
     </el-card>
     <div style="margin-top: 10px" v-loading="loading">
@@ -21,31 +21,31 @@
         <el-form ref="searchForm" :model="searchForm" inline>
           <!-- 日计表-->
           <el-form-item
-            label="营业时间："
+           :label="$t('boss.report_businessHours')+':'"
             v-if="searchForm.reportNum == '1001'"
           >
             <el-date-picker
               v-model="searchForm.startTime"
               type="date"
               value-format="yyyy-MM-dd"
-              placeholder="营业时间"
+              :placeholder="$t('boss.report_businessHours')"
             ></el-date-picker>
           </el-form-item>
           <!-- 月报账表-->
           <el-form-item
-            label="营业时间："
+           :label="$t('boss.report_businessHours')+':'"
             v-if="searchForm.reportNum == '1003'"
           >
             <el-date-picker
               v-model="searchForm.startTime"
               type="month"
               value-format="yyyy-MM"
-              placeholder="营业时间"
+            :placeholder="$t('boss.report_businessHours')"
             ></el-date-picker>
           </el-form-item>
           <!-- 选择多个日期 -->
           <el-form-item
-            label="选择日期:"
+            :label="$t('commons.selectDate')+':'"
             v-if="
               reportType == '11' ||
               reportType == '12' ||
@@ -57,19 +57,19 @@
               v-model="searchForm.startTime"
               type="date"
               value-format="yyyy-MM-dd"
-              placeholder="开始时间"
+              :placeholder="$t('manager.hp_startTime')"
             ></el-date-picker>
             <span style="margin: 0 5px">-</span>
             <el-date-picker
               v-model="searchForm.endTime"
               type="date"
               value-format="yyyy-MM-dd"
-              placeholder="结束时间"
+              :placeholder="$t('manager.hp_endTime')"
             ></el-date-picker>
           </el-form-item>
           <!-- 选择单个日期 -->
           <el-form-item
-            label="选择日期:"
+           :label="$t('commons.selectDate')+':'"
             v-if="
               reportType == '13' ||
               reportType == '35' ||
@@ -88,36 +88,36 @@
               v-model="searchForm.startTime"
               type="date"
               value-format="yyyy-MM-dd"
-              placeholder="选择日期"
+              :placeholder="$t('commons.selectDate')"
             ></el-date-picker>
           </el-form-item>
           <!-- 选择单个月份 -->
-          <el-form-item label="选择月份:" v-if="reportType == '34'">
+          <el-form-item :label="$t('boss.report_selectMonth')+':'" v-if="reportType == '34'">
             <el-date-picker
               v-model="searchForm.startTime"
               type="month"
               value-format="yyyy-MM"
-              placeholder="选择月份"
+              :placeholder="$t('boss.report_selectMonth')"
             ></el-date-picker>
           </el-form-item>
           <!-- 选择多个月份 -->
-          <el-form-item label="选择月份:" v-if="reportType == '36'">
+          <el-form-item :label="$t('boss.report_selectMonth')+':'" v-if="reportType == '36'">
             <el-date-picker
               v-model="searchForm.startTime"
               type="month"
               value-format="yyyy-MM"
-              placeholder="选择月份"
+              :placeholder="$t('boss.report_selectMonth')"
             ></el-date-picker>
             <span style="margin: 0 5px">-</span>
             <el-date-picker
               v-model="searchForm.endTime"
               type="month"
               value-format="yyyy-MM"
-              placeholder="选择月份"
+              :placeholder="$t('boss.report_selectMonth')"
             ></el-date-picker>
           </el-form-item>
           <el-form-item
-            label="选择单位:"
+           :label="$t('desk.customer_chooseUnit')+':'"
             style="margin: 0 20px"
             v-if="
               reportType == '11' || reportType == '12' || reportType == '13'
@@ -133,7 +133,7 @@
             </el-select>
           </el-form-item>
           <el-form-item
-            label="客户名称:"
+           :label="$t('desk.home_customerName')+':'"
             style="margin: 0 20px"
             v-if="
               reportType == '13' ||
@@ -145,19 +145,19 @@
             <el-autocomplete
               v-model="searchForm.guestName"
               :fetch-suggestions="remoteMethod"
-              placeholder="请输入内容"
+              :placeholder="$t('commons.pleaseEnter')"
               @select="changeName"
             ></el-autocomplete>
           </el-form-item>
           <el-form-item
-            label="团队名:"
+            :label="$t('desk.order_teamName')+':'"
             style="margin: 0 20px"
             v-if="reportType == '42'"
           >
             <el-autocomplete
               v-model="searchForm.teamName"
               :fetch-suggestions="remoteMethod"
-              placeholder="请输入内容"
+             :placeholder="$t('commons.pleaseEnter')"
               @select="changeName"
             ></el-autocomplete>
           </el-form-item>
@@ -166,10 +166,10 @@
               type="primary"
               @click="queryReport"
               v-if="reportType != '41'"
-              >查询</el-button
+              >{{$t('commons.queryBtn')}}</el-button
             >
             <!--            <el-button type="primary">打印</el-button>-->
-            <el-button type="primary" @click="exportReport">导出</el-button>
+            <el-button type="primary" @click="exportReport">{{$t('commons.exportBtn')}}</el-button>
           </el-form-item>
         </el-form>
         <div class="task-list">
@@ -242,7 +242,7 @@ export default {
         location.href = this.currentReport.reportHttpUrl;
       } else {
         this.$message({
-          message: "前先查询要导出的报表",
+          message: this.$t('boss.report_firstQuery'),
           type: "warning",
         });
       }

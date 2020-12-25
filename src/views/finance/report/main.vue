@@ -1,7 +1,10 @@
 <template>
   <div class="boss-index">
-    <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'" >
-      <div class="diaryTable">估价单 请款单 消费明细 收据</div>
+    <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
+      <div class="diaryTable">
+        {{ $t("boss.report_valueBill") }}
+        {{ $t("boss.report_pleaseInvoice") }} {{ $t("boss.report_constDetail") }} {{ $t("boss.report_receipt") }}
+      </div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
@@ -18,8 +21,8 @@
         </div>
       </div>
     </div>
-    <div style="margin-bottom: 20px"  v-if="sourcePage == 'desk'">
-      <div class="diaryTable">预约相关表</div>
+    <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
+      <div class="diaryTable">{{$t('boss.report_reservation')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
@@ -36,8 +39,8 @@
         </div>
       </div>
     </div>
-    <div style="margin-bottom: 20px"  v-if="sourcePage == 'desk'">
-      <div class="diaryTable">前台报表</div>
+    <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
+      <div class="diaryTable">{{$t('boss.report_deskForm')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
@@ -55,7 +58,7 @@
       </div>
     </div>
     <div style="margin-bottom: 20px">
-      <div class="diaryTable">日计表</div>
+      <div class="diaryTable">{{$t('boss.report_dailyAccount')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
@@ -73,7 +76,7 @@
       </div>
     </div>
     <div style="margin-bottom: 20px">
-      <div class="diaryTable">月报账表</div>
+      <div class="diaryTable">{{$t('boss.report_monthReport')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
@@ -104,28 +107,28 @@ export default {
       return [
         [
           {
-            title: "估价单",
+            title: this.$t("boss.report_valueBill"),
             reportType: 11,
             reportNum: 1002,
           },
         ],
         [
           {
-            title: "单位请款单",
+            title: this.$t("boss.report_pleaseInvoice"),
             reportType: 12,
             reportNum: 1002,
           },
         ],
         [
           {
-            title: "消费明细",
+            title: this.$t("boss.report_constDetail"),
             reportType: 13,
             reportNum: 1002,
           },
         ],
         [
           {
-            title: "收据",
+            title: this.$t("boss.report_receipt"),
             reportType: 14,
             reportNum: 1002,
           },
@@ -137,53 +140,53 @@ export default {
       return [
         [
           {
-            title: "预约销售状况表",
+            title: this.$t('boss.report_bookSale'),
             reportType: 34,
             reportNum: 1007,
           },
           {
-            title: "日别状况表",
+            title: this.$t('boss.report_dayHappen'),
             reportType: 38,
             reportNum: 1007,
           },
           {
-            title: "团体排房表",
+            title: this.$t('boss.report_teamForm'),
             reportType: 42,
             reportNum: 1007,
           },
         ],
         [
           {
-            title: "预约日报",
+            title: this.$t('boss.report_bookDayPer'),
             reportType: 35,
             reportNum: 1007,
           },
           {
-            title: "预约确认书",
+            title:this.$t('boss.report_bookSureBook'),
             reportType: 39,
             reportNum: 1007,
           },
         ],
         [
           {
-            title: "3个月预约状况表",
+            title: this.$t('boss.report_threeMonth'),
             reportType: 36,
             reportNum: 1007,
           },
           {
-            title: "预约卡",
+            title:this.$t('boss.report_bookCard'),
             reportType: 40,
             reportNum: 1007,
           },
         ],
         [
           {
-            title: "个别状况表",
+            title: this.$t('boss.report_individual'),
             reportType: 37,
             reportNum: 1007,
           },
           {
-            title: "住宿登记卡",
+            title: this.$t('boss.report_liveCard'),
             reportType: 41,
             reportNum: 1007,
           },
@@ -195,33 +198,33 @@ export default {
       return [
         [
           {
-            title: "前台报表",
+            title: this.$t('boss.report_deskForm'),
             reportType: 25,
             reportNum: 1005,
           },
           {
-            title: "宴会场报表",
+            title: this.$t('boss.report_banquetReport'),
             reportType: 28,
             reportNum: 1005,
           },
         ],
         [
           {
-            title: "客房报表",
+            title: this.$t('boss.report_guestRoom'),
             reportType: 26,
             reportNum: 1005,
           },
         ],
         [
           {
-            title: "日归报表",
+            title:  this.$t('boss.report_dayBack'),
             reportType: 27,
             reportNum: 1005,
           },
         ],
         [
           {
-            title: "清扫指示书",
+            title:this.$t('boss.report_clearBook'),
             reportType: 29,
             reportNum: 1005,
           },
@@ -233,58 +236,58 @@ export default {
       return [
         [
           {
-            title: "日计表",
+            title:this.$t('boss.report_dailyAccount'),
             reportType: 1,
             reportNum: 1001,
           },
           {
-            title: "收据别销售一览",
+            title:this.$t('boss.report_saleLook'),
             reportType: 5,
             reportNum: 1001,
           },
           {
-            title: "消费明细确认表",
+            title:this.$t('boss.report_constDetailSure'),
             reportType: 7,
             reportNum: 1001,
           },
         ],
         [
           {
-            title: "分类别销售一览表 日报",
+            title: this.$t('boss.report_saleDaily'),
             reportType: 2,
             reportNum: 1001,
           },
           {
-            title: "应收未收款一览",
+            title: this.$t('boss.report_notGet'),
             reportType: 4,
             reportNum: 1001,
           },
           {
-            title: "Mini Bar消费明细",
-            reportType:10,
-            reportNum:1001
+            title: this.$t('boss.report_miniBar'),
+            reportType: 10,
+            reportNum: 1001,
           },
         ],
         [
           {
-            title: "菜品级别销售一览",
+            title: this.$t('boss.report_freshType'),
             reportType: 1,
             reportNum: 1001,
           },
           {
-            title: "挂账余额明细",
+            title: this.$t('boss.report_accountBalance'),
             reportType: 4,
             reportNum: 1001,
           },
         ],
         [
           {
-            title: "付款明细",
+            title: this.$t('boss.report_paymentDetail'),
             reportType: 4,
             reportNum: 1001,
           },
           {
-            title: "付款明细确认表",
+            title:this.$t('boss.report_confirmation'),
             reportType: 8,
             reportNum: 1001,
           },
@@ -292,66 +295,69 @@ export default {
       ];
     },
     //月度报表
-    monthList(){
-         return [
+    monthList() {
+      return [
         [
           {
-            title: "月报",
+            title:this.$t('boss.report_monthForm'),
             reportType: 15,
             reportNum: 1003,
-          },{
-            title: "菜品级别销售一览月次",
+          },
+          {
+            title: this.$t('boss.report_freshClass'),
             reportType: 19,
             reportNum: 1003,
-          },{
-            title: "房间别入住状况",
+          },
+          {
+            title: this.$t('boss.report_roomLive'),
             reportType: 23,
             reportNum: 1003,
           },
         ],
         [
           {
-            title: "星期别销售一览",
+            title: this.$t('boss.report_weekLook'),
             reportType: 16,
             reportNum: 1003,
-          },{
-            title: "消费税·入汤税·宿泊税",
+          },
+          {
+            title: this.$t('boss.report_everyShui'),
             reportType: 20,
             reportNum: 1003,
           },
         ],
         [
           {
-            title: "部门别·科目分类消费一览（月次）",
+            title: this.$t('boss.report_departmentClass'),
             reportType: 17,
-             reportNum: 1003,
-          },{
-            title: "印纸",
+            reportNum: 1003,
+          },
+          {
+            title:  this.$t('boss.report_printedPaper'),
             reportType: 21,
             reportNum: 1003,
           },
         ],
         [
           {
-            title: "月别部门·科目类消费一览（月次）",
+            title: this.$t('boss.report_monthDepartment'),
             reportType: 18,
             reportNum: 1003,
-          },{
-            title: "房型别入住状况",
+          },
+          {
+            title: this.$t('boss.report_roomType'),
             reportType: 22,
             reportNum: 1003,
           },
         ],
       ];
-    }
+    },
   },
 
   data() {
-    return {
-    };
+    return {};
   },
-  created() {
-  },
+  created() {},
   methods: {
     addReport(item) {
       console.log(item);
