@@ -26,6 +26,9 @@
                     <el-button plain size="mini" @click="updateReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">
                         {{$t('desk.home_modityReserved')}}
                     </el-button>
+                    <el-button plain size="mini" @click="channelReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">
+                        {{$t('commons.cancel')}}
+                    </el-button>
                     <!--这块暂时隐藏 不要留太多bug-->
                     <el-dropdown split-button type="primary" size="mini" v-show="false">
                         {{ $t('commons.moreOperating') }}
@@ -44,13 +47,11 @@
             <h4>{{ $t('desk.serve_basicInfo') }}</h4>
             <el-row>
                 <el-col :span="8">
-                    <p>{{ $t('desk.book_orderNum') }}：{{ checkinInfo.reserveOrderNum }}</p>
-                </el-col>
-                <el-col :span="8">
-                    <p>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</p>
-                </el-col>
-                <el-col :span="8">
-                    <p>{{$t('desk.order_checkinState')}}：{{ F_checkinState(checkinInfo.state) }}</p>
+                    <p>{{ $t('desk.book_orderNum') }}：
+                    <span class="ok" v-if="currentRoom.roomId && currentRoom.personList && currentRoom.personList.length > 0">{{ $t('commons.checkinState')['1'] }}</span>
+                    <span class="ok" v-if="currentRoom.roomId && (!currentRoom.personList || currentRoom.personList.length == 0)">{{ $t('desk.hadRowHouses') }}</span>
+                    <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
+                    </p>
                 </el-col>
             </el-row>
         </el-row>
@@ -60,12 +61,6 @@
                 <el-col :span="3">
                     <p>{{$t('desk.home_roomType')}}：{{ currentRoom.roomTypeName }}</p>
                 </el-col>
-                <el-col :span="3">
-                    <p>{{$t('desk.order_roomPriceTotal')}}：{{ currentRoom.realPrice }}{{$t('desk.serve_yen')}}</p>
-                </el-col>
-                <el-col :span="3">
-                    <p>{{$t('desk.order_makeCardInfo')}}：{{ currentRoom.markCard == 1 ? $t('commons.markCard')['1'] : $t('commons.markCard')['2'] }}</p>
-                </el-col>
                 <el-col :span="5">
                     <p>{{ $t('desk.arrivalTime') }}：{{ checkinInfo.checkinTime }}</p>
                 </el-col>
@@ -74,29 +69,6 @@
                 </el-col>
             </el-row>
         </el-row>
-
-        <el-row v-if="currentRoom.personList">
-            <h4>{{ $t('desk.customerInfoDesc') }}</h4>
-            <el-row>
-                <el-col :span="8">
-                    <p>{{ $t('desk.home_customerName') }}：{{ checkinInfo.name }}</p>
-                </el-col>
-                <el-col :span="8">
-                    <p>{{ $t('desk.order_customerType') }}：{{ checkMember(checkinInfo.guestType) ? $t('desk.book_member') : $t('desk.order_notMember') }}</p>
-                </el-col>
-                <el-col :span="8" v-if="checkinInfo.memberCard">
-                    <p>{{ $t('desk.order_memberType') }}：</p>
-                </el-col>
-            </el-row>
-        </el-row>
-<!--        <el-row>-->
-<!--            <h4>计费规则</h4>-->
-<!--            <el-row>-->
-<!--                <el-col :span="8">-->
-<!--                    <p>计费规则：{{ F_ruleHour(checkinInfo.ruleHourId) }}</p>-->
-<!--                </el-col>-->
-<!--            </el-row>-->
-<!--        </el-row>-->
         <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
             <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
 <!--            <span slot="footer" class="dialog-footer">-->
@@ -366,10 +338,7 @@ export default {
             let params = {
                 checkInRoomIds: arr,
             };
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/make_card_status",
-                params,
+            this.$F.doRequest(this, "/pms/checkin/make_card_status", params,
                 (res) => {
                     this.$message({
                         message: this.$t('commons.request_success'),
@@ -389,6 +358,21 @@ export default {
             this.$emit("baseInfoChange", "");
         },
 
+        //取消预留
+        channelReserved() {
+            console.log(this.currentRoom);
+            debugger
+            this.$F.doRequest(this, "/pms/checkin/checkin_remove_room", {
+                    checkinRoomType: 2,
+                    checkinReserveId: this.$route.query.id,
+                    roomId: this.currentRoom.roomId
+                },
+                (res) => {
+                    this.$emit('baseInfoChange', this.$route.query.id);
+                }
+            );
+        },
+        //修改预留
         updateReserved() {
             if (!this.$route.query.id) {
                 return;

@@ -361,13 +361,14 @@ export default {
   methods: {
     addReport(item) {
       console.log(item);
-      this.$router.push({
-        name: "browseReport",
-        params: {
+      let params = {
           sourcePage: this.sourcePage,
           reportNum: item.reportNum || 1001,
           reportType: item.reportType || 1,
-        },
+      }
+      this.$router.push({
+        name: "browseReport",
+        params: params,
       });
     },
   },

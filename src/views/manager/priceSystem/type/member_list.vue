@@ -85,7 +85,7 @@
 				</el-table-column>
 
 				<!-- 这是输入的住宿价,目的是为了会员享有一定的优惠,这里只展示一人住宿价 -->
-				<el-table-column prop="name" label="新住宿价格(一人住宿)">
+				<el-table-column prop="name" :label="$t('manager.hk_livePrice') + '(一人住宿)'">
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>

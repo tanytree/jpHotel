@@ -81,26 +81,18 @@
     <el-dialog top="0" :title="$t('desk.updateOrder')" :visible.sync="baseInfoChangeShow" width="900px" center>
         <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top:-10px" size="mini" label-width="100px">
             <el-row>
+<!--                订单来源-->
                 <el-col :span="8">
-                    <el-form-item :label="$t('desk.arrivalTime')" class="">
-                        {{baseInfoChangeForm.checkinTime}}
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item :label="$t('desk.checkInDays')" class="">
-                        {{baseInfoChangeForm.checkinDays}}
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item :label="$t('desk.order_departureTime')" class="">
-                        {{baseInfoChangeForm.checkoutTime}}
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item :label="$t('desk.order_salesman') + '：'">
-                        <el-select v-model="baseInfoChangeForm.salesId" class="width150">
-                            <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
+                    <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
+                        <el-select v-model="baseInfoChangeForm.orderSource" :placeholder="$t('commons.placeChoose')">
+                            <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
                         </el-select>
+                    </el-form-item>
+                </el-col>
+<!--                地区-->
+                <el-col :span="8">
+                    <el-form-item :label="$t('desk.customer_region')" prop="orderSource">
+                        <el-input type="text" v-model="baseInfoChangeForm.name" style="width:150px"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -114,6 +106,16 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
+                    <el-form-item label="住家电话" prop="prop">
+                        <el-input v-model="baseInfoChangeForm.homeMobile" style="width:150px"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="单位电话" prop="prop">
+                        <el-input v-model="baseInfoChangeForm.enterMobile" style="width:150px"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
                     <el-form-item :label="$t('desk.order_outOrder') + '：'">
                         <el-input v-model="baseInfoChangeForm.thirdOrdernum" class="width150"></el-input>
                     </el-form-item>
@@ -121,6 +123,19 @@
                 <el-col :span="24">
                     <el-form-item :label="$t('desk.home_note') + ':'" class="">
                         <el-input type="textarea" v-model="baseInfoChangeForm.remark" style="width:450px"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item :label="$t('desk.book_bookProject') + ':'" required>
+                        <template>
+                            <div v-for="(value, index) in baseInfoChangeForm.reserveProjects" :key="index">
+                                <el-input :placeholder="$t('desk.book_projectName')+(index+1)" size="small" v-model="value.projectName" style="width: 300px"></el-input>
+                                <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model="value.projectCount" style="width: 100px; margin-left: 10px"></el-input>
+                                <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px"></el-input>
+    <!--                            <img src="~@/assets/images/close.png" @click="deleteProject(index)" v-if="baseInfoChangeForm.reserveProjects.length>1" class="closePng">-->
+                            </div>
+                        </template>
+                        <el-button type="text"  @click="addProject()">{{$t('desk.book_addProject')}}</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -363,6 +378,33 @@ export default {
     },
 
     methods: {
+        //新需求 添加项目
+        addProject() {
+            if (this.baseInfoChangeForm.reserveProjects && this.baseInfoChangeForm.reserveProjects.length > 0) {
+                let lastObject = this.baseInfoChangeForm.reserveProjects[
+                this.baseInfoChangeForm.reserveProjects.length - 1
+                    ];
+                if (
+                    lastObject.projectName &&
+                    lastObject.price &&
+                    lastObject.projectName
+                ) {
+                    this.baseInfoChangeForm.reserveProjects.push({});
+                }else{
+                    this.$message({
+                        message: this.$t('desk.book_canAdd'),
+                        type: 'warning'
+                    });
+                }
+            } else {
+                this.baseInfoChangeForm.reserveProjects = []
+                this.baseInfoChangeForm.reserveProjects.push({});
+            }
+        },
+        //预定项目，点击删除
+        deleteProject(index){
+            this.baseInfoChangeForm.reserveProjects.splice(index,1);
+        },
         //添加房间
         addRoom() {
             let arr = [];
@@ -464,12 +506,14 @@ export default {
 
         hotel_check_inChange() {
             this.$refs.baseInfoChange.validate((valid) => {
-                this.baseInfoChangeForm.checkInReserveId = this.$route.query.id
+                this.baseInfoChangeForm.checkInReserveId = this.$route.query.id;
+                let params = this.$F.deepClone(this.baseInfoChangeForm)
+                params.reserveProjects = JSON.stringify(params.reserveProjects);
                 if (valid) {
-                    this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.baseInfoChangeForm, (data) => {
+                    this.$F.doRequest(this, '/pms/reserve/reserve_check_in', params, (data) => {
                         this.baseInfoChangeShow = false
                         this.gustTypeChangeShow = false
-                        this.$emit('baseInfoChange', '');
+                        this.$emit('baseInfoChange', this.$route.query.id);
                     })
                 } else {
                     console.log('error submit!!');
@@ -478,7 +522,10 @@ export default {
             });
         },
         baseInfoChangeHandle(type) {
-            this.baseInfoChangeForm = this.checkinInfo
+            this.baseInfoChangeForm = {reserveProjects: []};
+            debugger
+            this.$F.merge(this.baseInfoChangeForm, this.checkinInfo);
+            this.baseInfoChangeForm.reserveProjects = this.checkinInfo.reserveProjects || this.checkinInfo.reserveProjectList || [];
             this[type] = true
             this.baseInfoChangeForm.checkinType = this.baseInfoChangeForm.checkinType.toString()
             this.baseInfoChangeForm.orderSource = this.baseInfoChangeForm.orderSource.toString()

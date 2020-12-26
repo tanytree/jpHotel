@@ -8,7 +8,7 @@
   <div v-if="">
     <el-card>
       <!-- 头部导航 -->
-      <div slot="header">
+      <div slot="header" v-if="type != 'checkin'">
         <div class="headerBox">
           <span class="point" @click="goBack">预订单信息</span>
           <span style="margin: 0 5px">></span>
@@ -20,8 +20,8 @@
         <el-form ref="form" :model="form" label-width="75px" label-position="right" inline>
           <el-row>
             <el-col :span="6">
-                <el-form-item label="住宿价:">
-                    <el-input placeholder="请填写纯住宿价格" v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 180px"></el-input>
+                <el-form-item :label="$t('manager.hk_livePrice') + ':'">
+                    <el-input v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 180px"></el-input>
                 </el-form-item >
             </el-col>
             <el-col :span="6">
@@ -43,7 +43,7 @@
             </el-col>
             <el-col :span="6">
                 <el-form-item label="客人分类:">
-                    <el-select v-model="roomInfo.headerObj.customerType + ''" style="width:100%">
+                    <el-select v-model="roomInfo.headerObj.customerType" style="width:100%">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index" ></el-option>
                     </el-select>
                 </el-form-item>
@@ -52,7 +52,7 @@
           <el-row>
             <el-col :span="6">
                 <el-form-item label="证件类型:">
-                    <el-select v-model="roomInfo.headerObj.idcardType + ''" :placeholder="$t('commons.selectIdCardType')" class="width200">
+                    <el-select v-model="roomInfo.headerObj.idcardType" :placeholder="$t('commons.selectIdCardType')" class="width200">
                         <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                     </el-select>
                 </el-form-item>
@@ -240,7 +240,7 @@
       </div>
 
       <div class="bottomBottom">
-        <el-button>取消</el-button>
+        <el-button @click="goBack">取消</el-button>
         <el-button type="primary" @click="addPersonSubmit">确认</el-button>
       </div>
     </el-card>
@@ -249,27 +249,54 @@
 
 <script>
 export default {
+    props: ['checkinType', 'checkInDetail'],
     mounted() {
-        debugger
-        this.type = this.$route.params.type;
-        this.currentRoom = this.$route.params.currentRoom || '';
-        this.inRoomList = [];
-        if (this.type == 3) {
+        // type: checkin: 前台入住  1：入住人管理  2：批量入住  3：单个房间入住
+        if (this.checkinType) {  //当是从前台办理过来的请求
+            this.type = 'checkin';
+            let checkInDetail = this.$F.deepClone(this.checkInDetail);
+            checkInDetail.forEach((item) => {
+                if (item.headerObj) {
+                    item.headerObj.personType = 2; //主入住人
+                    item.personList.unshift(item.headerObj)
+                }
+            })
             this.detailData = {
                 checkIn: {
-                    id: this.currentRoom.checkinId || this.currentRoom.checkinReserveId
+                    id: ''
                 },
-                inRoomList: [this.currentRoom]
+                inRoomList: checkInDetail
             }
         } else {
-            this.detailData = this.$F.deepClone(this.$route.params.detailData);
+            this.type = this.$route.params.type;
+            this.currentRoom = this.$route.params.currentRoom || '';
+            if (this.type == 3) {
+                this.detailData = {
+                    checkIn: {
+                        id: this.currentRoom.checkinId || this.currentRoom.checkinReserveId
+                    },
+                    inRoomList: [this.currentRoom]
+                }
+            } else {
+                this.detailData = this.$F.deepClone(this.$route.params.detailData);
+            }
         }
+
+        this.inRoomList = [];
         if (this.detailData.inRoomList && this.detailData.inRoomList.length > 0) {
             this.detailData.inRoomList.forEach((room) => {
                 let object = {
-                    headerObj: {},
+                    headerObj: {
+                        checkinRoomId: room.roomId,
+                    },
                     room: room
                 };
+
+                room.personList.forEach((person, index) => {
+                    person.customerType = person.customerType ? (person.customerType + '') : '1';
+                    person.idcardType = person.idcardType ? (person.idcardType + '') : '1';
+                    person.sex = person.sex ? (person.sex + '') : '1';
+                })
                 room.personList.forEach((person, index) => {
                     if (person.personType == 2) {
                         object.headerObj = this.$F.deepClone(person);
@@ -277,11 +304,10 @@ export default {
                         room.personList.splice(index, 1);
                     }
                 })
-                object.personList = room.personList;
+                object.personList = room.personList || [];
                 this.inRoomList.push(object);
             })
         }
-
     },
   data() {
     return {
@@ -360,7 +386,6 @@ export default {
               sex: '1',
               idcardType: '1'
           });
-          debugger
           console.log(this.inRoomList)
           this.$forceUpdate();
       },
@@ -376,36 +401,32 @@ export default {
           });
           let checkInRoomJson = [];
           this.inRoomList.forEach((room) => {
-              debugger
               let checkinInfo = {
                   roomId: room.room.roomId,
+                  houseNum: room.room.houseNum,
+                  roomTypeName: room.room.roomTypeName,
+                  reservePrice: room.room.reservePrice,
+                  realPrice: room.room.realPrice,
                   roomTypeId: room.room.roomTypeId,
                   headerObj: room.headerObj,
                   personList: room.personList
               }
               checkInRoomJson.push(checkinInfo);
           })
-          this.$F.merge(params, {
-              checkInRoomJson: JSON.stringify(checkInRoomJson)
-          });
-          debugger
-          if (this.type == 1) {
-              this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
-                  this.$router.go(-1);
-                  // this.$emit('checkInCallback', res.checkinId);
-              })
+          if (this.type == 'checkin') {
+              this.$emit('personCallback', checkInRoomJson);
           } else {
-              //预定房办理入住
-              this.$F.doRequest(this, '/pms/reserve/reserve_to_checkin', params, (res) => {
-                  //然后立即办理入住
-                  params = {
-                      checkinId: res.checkinId,
-                      checkInRoomJson: JSON.stringify(checkInRoomJson)
-                  }
-                  this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
-                      // this.$emit('checkInCallback', res.checkinId);
+              this.$F.merge(params, {
+                  checkInRoomJson: JSON.stringify(checkInRoomJson)
+              });
+              this.$F.doRequest(this, '/pms/checkin/live_in_person_batch', params, (data) => {
+                  if (this.type == 1) {
                       this.$router.go(-1);
-                  })
+                  } else {
+                      this.$F.doRequest(this, '/pms/reserve/reserve_to_checkin', params, (res) => {
+                          this.$router.push(`/orderdetail?id=${res.checkinId}`)
+                      })
+                  }
               })
           }
       },
@@ -426,7 +447,11 @@ export default {
           })
       },
       goBack(){
-          this.$router.go(-1);
+          if (this.type != 'checkin') {
+              this.$router.go(-1);
+          } else {
+              this.$emit('personCallback', []);
+          }
       },
 
   },

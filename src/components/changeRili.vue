@@ -29,7 +29,10 @@
 					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '150': ''">
 						<template slot-scope="scope">
 							<span v-if="index == 0">{{scope.row.name || scope.row.houseName}}</span>
-							<span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">{{scope.row.discount || item.onePrice}}</span>
+<!--							<span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">{{scope.row.discount || item.onePrice}}</span>-->
+							<span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">
+                                {{item.roomTypePrises[scope.$index]}}
+                            </span>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -445,6 +448,7 @@
 						"/pms/hotel/hotel_price_guest_chamber_list",
 						params,
 						(res) => {
+						    debugger
 							this.dateList = res.dateList
 							this.dateList.unshift({
 								dateStr: '类型',
@@ -459,40 +463,38 @@
 							}, {
 								name: '住宿+早+晚'
 							}]
-							// let dd = []
-							// let obj = {}
-							let ss = ''
-							let x = ''
-							let y = ''
+                            let x = '';
+                            let y = '';
 							this.roomType.forEach((value, index) => {
 								value.roomType = res.roomType
 								// debugger
 								if (value.roomType.roomType == 1) {
-									if (value.roomType.personPrice !== '' && value.roomType.personPrice !== undefined && value.roomType.personPrice !==
-										null) {
+									if (value.roomType.personPrice) {
 										let arr = value.roomType.personPrice.split(',')
-										let arry = arr.filter(function(el) {
+										let arry = arr.filter(function(el) { //多人价格
 											return el !== '';
 										});
-										
+
 										if (res.dayPriceList.length == 0) {
+										    let roomTypePrises = [];
 											arry.forEach((c, d) => {
-												// debugger
-												if(index == 0) {
+												if(index == 0) { //纯住宿
 													x += `${d+1}人价` + Number(arr[d])
-													this.dateList.forEach((a, b) => {
-														a.onePrice = x
-													}) 
-												}
-												else if(index== 1) {
+												} else if(index== 1) {  //住宿+早
 													y += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
-													this.dateList.forEach((a, b) => {
-														a.onePrice = y
-													})
-												}
-												
+												} else if (index== 2) {  //住宿+晚餐
+                                                    // z = ...
+                                                } else if (index== 3) { //住宿+晚餐+早餐
+
+                                                }
 											})
-											
+                                            roomTypePrises.push(x);
+                                            roomTypePrises.push(y);
+                                            // roomTypePrises.push(z);
+                                            // roomTypePrises.push(ab);
+                                            this.dateList.forEach((a, b) => {
+                                                a.roomTypePrises = roomTypePrises;
+                                            })
 										} else {
 											// debugger
 											this.dateList.forEach((a, b) => {
@@ -508,7 +510,7 @@
 
 										}
 									}
-									
+
 									// this.dateList.forEach((a, b) => {
 									// 	if(index == 0) {
 									// 		a.onePrice = x
@@ -539,7 +541,7 @@
 								}
 
 							})
-							
+
 							console.log('this.roomType=====', this.roomType)
 							console.log('this.dateList========', this.dateList)
 							debugger

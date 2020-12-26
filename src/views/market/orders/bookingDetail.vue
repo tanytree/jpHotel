@@ -22,9 +22,16 @@
                     </li>
                     <li v-for="(item, index) of detailData.inRoomList" :key="index" :class="currentRoom.id == item.id ? 'active' : ''" @click="showRoomInfo(item)">
                         <p>{{ item.houseNum }} {{ $t('desk.home_roomType') }}：{{ item.roomTypeName }}</p>
-                        <span class="ok" v-if="detailData.checkIn.state <= 2">{{ $t('desk.hadRowHouses') }}</span>
-                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>
-                        <span class="no" v-if="!item.roomId">{{ $t('desk.noRowHouses') }}</span>
+                        <!--
+                        有房间 有personList则为已入住
+                        有房间无personList 已排房
+                        无房间就是未排房
+                        -->
+                        <span class="ok" v-if="item.state == 1 && item.roomId && item.personList && item.personList.length > 0">{{ $t('commons.checkinState')['1'] }}</span>
+                        <span class="ok" v-if="item.state == 1 && item.roomId && (!item.personList || item.personList.length == 0)">{{ $t('desk.hadRowHouses') }}</span>
+<!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
+                        <span class="no" v-if="item.state == 1 && !item.roomId">{{ $t('desk.noRowHouses') }}</span>
+                        <span class="no" v-if="item.state == 2 && item.roomId">{{ $t('food.order_status')[3] }}</span>
                     </li>
                 </ul>
             </div>
@@ -38,12 +45,12 @@
                                        @baseInfoChange="baseInfoChange"> </sbase>
                             </div>
                         </el-tab-pane>
-                        <!--- 客人信息-->
-                        <!--            <el-tab-pane :label="$t('desk.order_guestInfo')" name="second">-->
-                        <!--              <div class="tabWrap">-->
-                        <!--                <customer type="detail" :detailData="detailData"></customer>-->
-                        <!--              </div>-->
-                        <!--            </el-tab-pane>-->
+<!--                        - 客人信息-->
+                        <el-tab-pane :label="$t('desk.order_guestInfo')" name="second">
+                          <div class="tabWrap">
+                            <customer type="detail" :detailData="detailData"></customer>
+                          </div>
+                        </el-tab-pane>
 
                         <el-tab-pane :label="$t('desk.financialDetails')" name="third">
                             <div class="tabWrap">

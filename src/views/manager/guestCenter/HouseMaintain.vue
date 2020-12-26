@@ -150,13 +150,13 @@
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedType')+':'" prop="bedType">
 							<el-input v-model="ruleForm.bedType" class="input"></el-input>
 						</el-form-item>
-						
+
 						<!-- 是否含消费税 -->
 						<el-form-item v-if="active_tag == 'one'" label="是否含消费税:" prop="taxStatus">
 							<el-radio v-model="ruleForm.taxStatus" :label="1">不含税</el-radio>
 							 <el-radio v-model="ruleForm.taxStatus" :label="2">含税</el-radio>
 						</el-form-item>
-						
+
 						<!-- 是否包含服务费 -->
 						<el-form-item v-if="active_tag == 'one'" label="是否包含服务费:" prop="seviceStatus">
 							<el-radio v-model="ruleForm.seviceStatus" :label="1">不含服务费</el-radio>
@@ -454,7 +454,7 @@
 							obj.sid = i + 1
 							this.ruleForm_sit.push(obj)
 						})
-						
+
 						//debugger
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
@@ -505,7 +505,7 @@
 						// 		});
 						// 		arr.forEach((item, i) => {
 						// 			debugger
-									
+
 						// 			obj.name = c.houseName1;
 						// 			if(c.houseName1 == '纯住宿') {
 						// 				allP = Number(item)
@@ -519,14 +519,14 @@
 						// 				c.id = a.roomTypeId;
 						// 				allP = Number(item)+Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
 						// 			}
-															
+
 						// 			c.pName = `${i+1} 人价`
 						// 			c.allPrice = c.allP
 						// 		})
 						// 	}
-							
+
 						// })
-						
+
 						break
 				}
 			},
@@ -703,7 +703,7 @@
 									}
 									// allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
 
-									obj.pName = `${i+1} 人住宿价+付餐价`
+									obj.pName = `${i+1} 人${this.$t('manager.hk_livePrice')}+付餐价`
 									obj.allPrice = allP
 									arr.push(obj)
 								})

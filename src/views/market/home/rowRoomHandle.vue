@@ -59,7 +59,6 @@
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
-
                                                             <el-input placeholder="" size="mini" style="width:60px" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
                                                             <em>{{v.todayPrice}}</em>
                                                         </div>
@@ -174,7 +173,7 @@ export default {
             },
             leaveTime: {
                 disabledDate: time => {
-                    if (this.checkInForm.checkinTime != "" && this.checkInForm.checkinTime) {
+                    if (this.checkInForm.checkinTime) {
                         let timeStr = new Date(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
                         if (this.operCheckinType == 'b2') { //时租预订
                             return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
@@ -189,17 +188,15 @@ export default {
             },
             satrtTime: {
                 disabledDate: time => {
-                    if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
-                        let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
-                        if (this.operCheckinType == 'b2') { //时租预订
-                            return new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr;
-                        }
-                        return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
-                    } else if (this.checkInForm.checkoutTime == "") {
-                        return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
-                    } else {
-                        return "";
-                    }
+                    // if (this.checkInForm.checkoutTime) {
+                    //     let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
+                    //     return new Date(time.Format("yyyy-MM-dd")).getTime() + 0 > timeStr;
+                    // } else if (this.checkInForm.checkoutTime == "") {
+                    //
+                    // } else {
+                    //     return "";
+                    // }
+                    return new Date(time.Format("yyyy-MM-dd")).getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
                 }
             },
             rowRoomHandleShow: false,
@@ -638,9 +635,11 @@ export default {
             })
 
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
+            console.log(JSON.parse(JSON.stringify(this.checkInForm)))
+            debugger
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
-                    debugger
+
                     if (this.handleType == 1) {
                         this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
                             checkinRoomType:  this.orderType,
@@ -652,6 +651,8 @@ export default {
                             this.$emit('baseInfoChange', '');
                         })
                     } else {
+                        console.log(JSON.parse(JSON.stringify(this.checkInForm)))
+                        debugger
                         this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');
