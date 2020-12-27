@@ -366,6 +366,7 @@ export default {
       axios
         .get(url, { responseType: "arraybuffer" })
         .then((res) => {
+            debugger
           var data = new Uint8Array(res.data);
           var wb = XLSX.read(data, { type: "array" });
           var sheets = wb.Sheets;
@@ -403,6 +404,7 @@ export default {
           }
         }
       }
+      debugger
       content.unshift([]);
       for (let key in sheets) {
           content[0].push(key);

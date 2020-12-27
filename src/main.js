@@ -58,14 +58,6 @@ import '@/assets/style/index.less'
 //         next()
 //     }
 // })
-// const i18n = new VueI18n({
-//     locale: localStorage.getItem('locale') || 'zh', // 定义默认语言为中文 
-//     messages: {
-//         'zh': require('@/assets/languages/zh.js'),
-//         'ri': require('@/assets/languages/ri.js')
-//     },
-// 	locale.i18n((key, value) => i18n.t(key, value)) //为了实现element插件的多语言切换
-// });
 Date.prototype.Format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1,                 //月份
