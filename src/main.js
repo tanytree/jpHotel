@@ -22,12 +22,18 @@ import filters from '@/utils/filter.js'
 import enLocale from 'element-ui/lib/locale/lang/zh-CN'
 import jaLocale from 'element-ui/lib/locale/lang/ja'
 
+import lang from 'element-ui/lib/locale/lang/ja'
+import locale from 'element-ui/lib/locale'
+
+// 设置语言
+locale.use(lang)
+
 import 'video.js/dist/video-js.css'
 
 Vue.use(filters)
 
 Vue.use(VueI18n)
-Vue.use(ElementUI, {jaLocale});
+Vue.use(ElementUI);
 //业务组件
 Vue.component('v-distpicker', Distpicker)
 Vue.prototype.$F = utils;

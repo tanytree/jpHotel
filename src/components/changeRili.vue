@@ -474,7 +474,6 @@
 										let arry = arr.filter(function(el) { //多人价格
 											return el !== '';
 										});
-
 										if (res.dayPriceList.length == 0) {
 										    let roomTypePrises = [];
 											arry.forEach((c, d) => {

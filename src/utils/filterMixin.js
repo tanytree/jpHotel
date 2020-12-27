@@ -68,6 +68,10 @@ let mixin = {
             let enums = this.$t('commons.F_sex')
             return value && enums[value] ? enums[value] : ''
         },
+        F_customerTypes(value) {
+            let enums = this.$t('commons.customerTypes')
+            return value && enums[value] ? enums[value] : ''
+        },
         F_state(value) {
             let enums = this.$t('commons.F_state')
             return value && enums[value] ? enums[value] : ''

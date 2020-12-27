@@ -46,13 +46,15 @@
                             </div>
                         </el-tab-pane>
 <!--                        - 客人信息-->
-                        <el-tab-pane :label="$t('desk.order_guestInfo')" name="second">
+                        <el-tab-pane :label="$t('desk.order_guestInfo')" name="customer">
+<!--                          <div class="tabWrap">-->
+<!--                            <customer type="detail" :detailData="detailData"></customer>-->
+<!--                          </div>-->
                           <div class="tabWrap">
-                            <customer type="detail" :detailData="detailData"></customer>
+                            <checkInInfo type="detail" :orderInfo="detailData" ref="checkInInfo"></checkInInfo>
                           </div>
                         </el-tab-pane>
-
-                        <el-tab-pane :label="$t('desk.financialDetails')" name="third">
+                        <el-tab-pane :label="$t('desk.financialDetails')" name="finance">
                             <div class="tabWrap">
                                 <!-- 财务明细--->
                                 <finance v-if="detailData.checkIn.id" :detailData="detailData"></finance>
@@ -72,12 +74,14 @@
 import roominfo from "./bookingcoms/roominfo";
 import sbase from "./bookingcoms/base";
 import customer from "@/components/front/customer";
+import checkInInfo from "@/components/front/checkInInfo";   //客人信息
 import finance from "./bookingcoms/finance";
 import myMixin from "@/utils/filterMixin";
 
 export default {
     mixins: [myMixin],
     components: {
+        checkInInfo,
         roominfo,
         sbase,
         customer,
@@ -113,6 +117,9 @@ export default {
             this.getDetail(this.id);
         },
         handleClick() {
+            if (this.activeName == 'customer') {
+                this.$refs.checkInInfo.init('detail', this.detailData);
+            }
         },
         showRoomInfo(item) {
             this.isOrder = false;

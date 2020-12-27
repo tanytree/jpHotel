@@ -134,12 +134,7 @@
         </el-dialog>
         <el-tabs type="border-card" v-model="activeName">
             <!-- 基本信息 -->
-            <el-tab-pane
-                :label="$t('desk.serve_basicInfo')"
-                v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2"
-                :key="0"
-                name="first"
-            >
+            <el-tab-pane :label="$t('desk.serve_basicInfo')" v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2" :key="0" name="first">
                 <div class="buttonBox">
                     <el-button type="primary" size="small" plain>置脏</el-button>
                     <el-button type="primary" size="small" plain>账务</el-button>
@@ -232,17 +227,17 @@ export default {
             inputMessage: false,
             nowDateString: '',
             orderInfo: {}, //需要展示订单的信息
-            
+
         };
     },
     mounted() {
         this.nowDateString= this.$F.formatDate('yyyy-MM-dd');
     },
     methods: {
-      //点击挂账按钮
-      paymentVisible(){
-        this.$refs.cardTao.resetVisibel(this.currentRoom.currentRoomData.checkinId);
-      },
+        //点击挂账按钮
+        paymentVisible(){
+            this.$refs.cardTao.resetVisibel(this.currentRoom.currentRoomData.checkinId);
+        },
         lookRoomClick(data) {
             debugger
             this.lookBookVisible = true;
@@ -346,7 +341,9 @@ export default {
             );
         },
         changeVisible(currentRoom) {
-          console.log(currentRoom);
+            console.log(currentRoom);
+            this.orderInfo = {};
+            debugger
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 21);
             this.currentRoom = currentRoom;
@@ -355,33 +352,35 @@ export default {
             if (this.currentRoom.checkInRoomType == 1) {   //订单详情
                 if (this.currentRoom.checkInObj) {
                     let id = this.currentRoom.checkInObj.id;
-                    this.orderInfo = this.currentRoom.checkInObj;
+                    this.$F.merge(this.orderInfo, this.currentRoom.checkInObj);
                     this.getOrderDetail(id, res => {
-                        if ( res.inRoomList &&  res.inRoomList.length > 0) {
-                            res.inRoomList.forEach((value) => {
-                                if (value.roomId == this.currentRoom.id)
-                                    this.currentRoom.currentRoomData = value;
-                            })
-                        }
+                        this.$F.merge(this.orderInfo, res);
+                        console.log(JSON.parse(JSON.stringify(this.orderInfo)))
+                        debugger
+                        this.$F.merge(this.orderInfo, {checkInRoomType: this.currentRoom.checkInRoomType});
+                        this.hosteldis = true;
                     })
-                } else
-                    this.currentRoom.checkInRoomType = ''
+                } else {
+                    this.orderInfo.checkInRoomType = '';
+                    this.hosteldis = true;
+                }
             } else if (this.currentRoom.checkInRoomType == 2) {
                 if (this.currentRoom.reseverCheckInObj) {
                     let id = this.currentRoom.reseverCheckInObj.id;
                     this.orderInfo = this.currentRoom.reseverCheckInObj;
                     this.getReserveDetail(id, res => {
-                        if ( res.inRoomList &&  res.inRoomList.length > 0) {
-                            res.inRoomList.forEach((value) => {
-                                if (value.roomId == room.id)
-                                    this.currentRoom.currentRoomData = value;
-                            })
-                        }
+                        this.$F.merge(this.orderInfo, res);
+                        this.$F.merge(this.orderInfo, {checkInRoomType: this.currentRoom.checkInRoomType});
+                        this.hosteldis = true;
                     })
-                } else
-                    this.currentRoom.checkInRoomType = ''
+                } else {
+                    this.orderInfo.checkInRoomType = '';
+                    this.hosteldis = true;
+                }
+            } else {
+                this.hosteldis = true;
             }
-            this.hosteldis = true;
+
         },
         checkTitleEnd() {
             if (this.currentRoom.checkIn && this.currentRoom.checkIn.operCheckinType) {
@@ -610,25 +609,25 @@ export default {
     flex-wrap: wrap;
     .itemRi {
         .riTop {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 100px;
-          height: 80px;
-          background-color: rgba(234, 234, 234, 1);
-          border: 1px solid rgba(218, 218, 218, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 80px;
+            background-color: rgba(234, 234, 234, 1);
+            border: 1px solid rgba(218, 218, 218, 1);
         }
         .riBottom {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 100px;
-          height: 100px;
-          background-color: rgba(255, 255, 255, 1);
-          border: 1px solid rgba(218, 218, 218, 1);
-          
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 1);
+            border: 1px solid rgba(218, 218, 218, 1);
+
         }
     }
 }

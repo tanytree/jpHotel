@@ -58,10 +58,7 @@
                                                         <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>
                                                     </el-col>
                                                     <el-col :span="10">
-                                                        <div style="text-align: right">
-                                                            <el-input placeholder="" size="mini" style="width:60px" v-model="v.price" v-if="getRoomsForm.changeType==1"></el-input>
-                                                            <em>{{v.todayPrice}}</em>
-                                                        </div>
+                                                        <span>一人价（纯住宿） {{ v.onePersonPrice }}</span>
                                                     </el-col>
                                                 </el-row>
                                             </div>

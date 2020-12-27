@@ -352,29 +352,17 @@
           </el-form>
           <div class="roomBtm">
             <div class="roomBox" v-for="v in roomList" :key="v.roomTypeId">
-              <div
-                class="rooms"
-                :class="activeRoomCheck(v.roomTypeId) ? 'active' : ''"
-              >
+              <div class="rooms" :class="activeRoomCheck(v.roomTypeId) ? 'active' : ''">
                 <div class="row">
                   <span>{{ v.roomTypeName }}</span>
-                  <el-input-number
-                    @change="handleNumChange($event, v)"
-                    :min="0"
-                    :max="v.reserveTotal"
-                    :label="$t('desk.home_describeText')"
-                    size="mini"
-                    style="width: 100px"
-                    v-model.number="v.num"
-                  ></el-input-number>
+                  <el-input-number @change="handleNumChange($event, v)" :min="0" :max="v.reserveTotal"
+                                   :label="$t('desk.home_describeText')" size="mini" style="width: 100px" v-model.number="v.num"></el-input-number>
                 </div>
                 <div class="row">
-                  <span class="allow"
-                    >{{ $t("desk.home_canOrderText")
-                    }}{{ v.reserveTotal }}</span
-                  >
-                  <div>
-                    <span>一人总价（含餐） {{ v.withMealPrice }}</span>
+                  <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>
+                <div>
+<!--                    <span>一人总价（含餐） {{ v.withMealPrice }}</span>-->
+                    <span>一人价（纯住宿） {{ v.onePersonPrice }}</span>
                   </div>
                 </div>
               </div>
