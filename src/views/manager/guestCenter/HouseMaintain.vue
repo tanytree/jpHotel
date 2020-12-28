@@ -154,13 +154,13 @@
 						<!-- 是否含消费税 -->
 						<el-form-item v-if="active_tag == 'one'" label="是否含消费税:" prop="taxStatus">
 							<el-radio v-model="ruleForm.taxStatus" :label="1">不含税</el-radio>
-							 <el-radio v-model="ruleForm.taxStatus" :label="2">含税</el-radio>
+							<el-radio v-model="ruleForm.taxStatus" :label="2">含税</el-radio>
 						</el-form-item>
 
 						<!-- 是否包含服务费 -->
 						<el-form-item v-if="active_tag == 'one'" label="是否包含服务费:" prop="seviceStatus">
 							<el-radio v-model="ruleForm.seviceStatus" :label="1">不含服务费</el-radio>
-							 <el-radio v-model="ruleForm.seviceStatus" :label="2">含服务费</el-radio>
+							<el-radio v-model="ruleForm.seviceStatus" :label="2">含服务费</el-radio>
 						</el-form-item>
 
 						<!-- 早餐 -->
@@ -201,18 +201,18 @@
 
 					<!-- <div class="intitle">OTA价格</div> -->
 					<!-- <el-form :model="ruleForm" size="small" inline :rules="rules" ref="ruleForm" class="basicForm" label-width="120px"> -->
-						<!-- 飞猪价 -->
-						<!-- <el-form-item label="飞猪价" prop="houseName">
+					<!-- 飞猪价 -->
+					<!-- <el-form-item label="飞猪价" prop="houseName">
 							<el-input v-model="ruleForm.otaFeizhuPrice" class="input"></el-input>
 						</el-form-item> -->
 
-						<!-- 携程价 -->
-						<!-- <el-form-item label="携程价" prop="houseName">
+					<!-- 携程价 -->
+					<!-- <el-form-item label="携程价" prop="houseName">
 							<el-input v-model="ruleForm.otaXiechengPrice" class="input"></el-input>
 						</el-form-item> -->
 
-						<!-- 美团价 -->
-						<!-- <el-form-item label="美团价" prop="houseName">
+					<!-- 美团价 -->
+					<!-- <el-form-item label="美团价" prop="houseName">
 							<el-input v-model="ruleForm.otaMeituan" class="input"></el-input>
 						</el-form-item> -->
 
@@ -281,7 +281,7 @@
 				<el-page-header @back="backTop"></el-page-header>
 			</div>
 			<el-row>
-				<changeRili :ruleForm ="ruleForm"></changeRili>
+				<changeRili :ruleForm="ruleForm"></changeRili>
 			</el-row>
 		</el-row>
 	</el-row>
@@ -345,14 +345,14 @@
 				jiageSit_show: false,
 				// checkinNumList: [],
 				ruleForm_sit: [],
-                ifmeeting:false,   //是否选择  会议厅房型
+				ifmeeting: false, //是否选择  会议厅房型
 				rili_show: true, // 是否显示价格日历
 			};
 		},
 		computed: {
-            rules(){
-                return{
-	                houseName: [{
+			rules() {
+				return {
+					houseName: [{
 						required: true,
 						message: this.$t('commons.mustInput'),
 						trigger: "blur",
@@ -398,8 +398,8 @@
 						message: '请选择',
 						trigger: "blur",
 					}],
-                }
-            }
+				}
+			}
 		},
 		watch: {
 			active_tag() {
@@ -429,16 +429,16 @@
 						this.tab_show = false;
 						this.files = [];
 						this.get_zaocang_list()
-                        this.get_wancang_list()
-                        this.ifmeeting=false
-                        break;
-                    case "houseB":
+						this.get_wancang_list()
+						this.ifmeeting = false
+						break;
+					case "houseB":
 						this.ruleForm = {};
 						this.tab_show = false;
 						this.files = [];
 						this.get_zaocang_list()
-                        this.get_wancang_list()
-                        this.ifmeeting=true
+						this.get_wancang_list()
+						this.ifmeeting = true
 						break;
 					case "change":
 						this.ruleForm_sit = [];
@@ -689,13 +689,14 @@
 								arry.forEach((item, i) => {
 									obj = {}
 									if (value.mealBreakfastObject) {
-										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1)
+										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) * (i + 1)
 									}
 									if (value.mealDinnerObject) {
-										allP = Number(item) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+										allP = Number(item) + Number(value.mealDinnerObject.mealPrice) * (i + 1)
 									}
 									if (value.mealDinnerObject && value.mealBreakfastObject) {
-										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice)*(i+1) + Number(value.mealDinnerObject.mealPrice)*(i+1)
+										allP = Number(item) + Number(value.mealBreakfastObject.mealPrice) * (i + 1) + Number(value.mealDinnerObject
+											.mealPrice) * (i + 1)
 									}
 
 									if (!value.mealDinnerObject && !value.mealBreakfastObject) {

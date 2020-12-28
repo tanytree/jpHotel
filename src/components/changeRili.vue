@@ -26,7 +26,7 @@
 							</div>
 							<div v-if="index > 0" >
 								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-if="scope.row.roomType.roomType == 1">
-								    {{item.roomTypePrises[scope.$index]}}
+								    {{  getDate(item, scope.$index)}}
 								</span>
 								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-else>
 								    {{item.onePrice}}
@@ -206,6 +206,9 @@ export default {
 		props: ['ruleForm'],
 		data() {
 			return {
+                mealBreakfastObject: {},
+                mealDinnerObject: {},
+                dayPriceList: [],
 				tab1_show: true,
 				search_d: {
 					strategyTime: new Date().Format("yyyy-MM-dd"),
@@ -325,10 +328,38 @@ export default {
 			// },
 		},
 		methods: {
+		    getDate(item, topIndex) {
+                if (this.dayPriceList && this.dayPriceList.length > 0) {
+                    let newArray = this.dayPriceList.filter(dayPrice => {
+                        return dayPrice.dayTime == item.dateStr;
+                    }); //匹配日期
+                    if (newArray && newArray.length > 0) {
+                        let priseList = [];
+                        newArray.forEach(temp => {
+                            priseList.push(temp.newCustomPrice);
+                        })
+                        let result = '';//[100,200]
+                        priseList.forEach((c, d) => {
+                            if(topIndex == 0) { //纯住宿
+                                result += `${d+1}人价` + Number(priseList[d])
+                            } else if(topIndex== 1) {  //住宿+早
+                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0))
+                            } else if (topIndex== 2) {  //住宿+晚餐
+                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealDinnerObject.mealPrice || 0))
+                            } else if (topIndex== 3) { //住宿+晚餐+早餐
+                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0) + Number(this.mealDinnerObject.mealPrice || 0))
+                            }
+                        })
+                        return result;
+                    }
+                }
+                return item.roomTypePrises[topIndex]
+            },
+
 			//保存批量修改房价
 			onSave() {
 				console.log(this.ruleForm);
-				
+
 				let week = ''
 				this.ruleForm_Pie.weeks.forEach((value, index) => {
 					week = week + ',' + value
@@ -430,7 +461,7 @@ export default {
 					}
 				);
 			},
-			
+
 			// 客房-会议厅修改价格日历列表
 			get_hotel_price_room_type_list() {
 				// @param userId       登录者id String必填
@@ -448,6 +479,7 @@ export default {
 						params,
 						(res) => {
 						    // debugger
+                            this.dayPriceList = res.dayPriceList;
 							this.dateList = res.dateList
 							this.dateList.unshift({
 								dateStr: '类型',
@@ -468,70 +500,28 @@ export default {
 								let stayY = ''; // 住宿+晚
 								let stayXY = ''; // 住宿+早+晚
 								this.roomType.forEach((value, index) => {
-									value.roomType = res.roomType
-									// debugger
+                                    value.roomType = res.roomType
+                                    this.mealBreakfastObject = value.roomType.mealBreakfastObject
+                                    this.mealDinnerObject = value.roomType.mealDinnerObject
+                                    // debugger
 									let roomTypePrises = [];
-									
 									if (value.roomType.roomType == 1) {
 										if (value.roomType.personPrice) {
 											let arr = value.roomType.personPrice.split(',')
 											let arry = arr.filter(function(el) { //多人价格
 												return el !== '';
 											});
-											// debugger
-											if (res.dayPriceList.length == 0) {
-											    
-												arry.forEach((c, d) => {
-													if(index == 0) { //纯住宿
-														stay += `${d+1}人价` + Number(arr[d])
-													} else if(index== 1) {  //住宿+早
-														stayX += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
-													} else if (index== 2) {  //住宿+晚餐
-								                        stayY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
-								                    } else if (index== 3) { //住宿+晚餐+早餐
-														stayXY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
-								                    }
-												})
-											} else {
-												// debugger
-												this.dateList.forEach((a, b) => {
-													res.dayPriceList.forEach((c, d) => {
-														if (a.dateStr == c.dayTime) {
-															// debugger
-															arry.forEach((e, f) => {
-																if(c.dayTime) {
-																	if(index == 0) { //纯住宿
-																	// debugger
-																		stay += `${f+1}人价` + c.newCustomPrice
-																	} 
-																	else if(index== 1) {  //住宿+早
-																		stayX += `${f+1}人价` + Number(Number(c.newCustomPrice) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
-																	} else if (index== 2) {  //住宿+晚餐
-																	    stayY += `${f+1}人价` + Number(Number(c.newCustomPrice) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
-																	} else if (index== 3) { //住宿+晚餐+早餐
-																		stayXY += `${f+1}人价` + Number(Number(c.newCustomPrice) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
-																	}
-																} else {
-																	if(index == 0) { //纯住宿
-																	// debugger
-																		stay += `${f+1}人价` + Number(arr[f])
-																	} 
-																	else if(index== 1) {  //住宿+早
-																		stayX += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
-																	} else if (index== 2) {  //住宿+晚餐
-																	    stayY += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
-																	} else if (index== 3) { //住宿+晚餐+早餐
-																		stayXY += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
-																	}
-																}
-																
-															})
-														} 
-							
-													})
-												})
-								
-											}
+                                            arry.forEach((c, d) => {
+                                                if(index == 0) { //纯住宿
+                                                    stay += `${d+1}人价` + Number(arr[d])
+                                                } else if(index== 1) {  //住宿+早
+                                                    stayX += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
+                                                } else if (index== 2) {  //住宿+晚餐
+                                                    stayY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+                                                } else if (index== 3) { //住宿+晚餐+早餐
+                                                    stayXY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+                                                }
+                                            })
 											roomTypePrises.push(stay);
 											roomTypePrises.push(stayX);
 											roomTypePrises.push(stayY);
@@ -552,7 +542,7 @@ export default {
 										this.dateList.forEach((a, b) => {
 											a.onePrice = value.marketPrice
 										})
-																	
+
 									} else {
 										this.dateList.forEach((a, b) => {
 											a.onePrice = 0;
@@ -566,7 +556,7 @@ export default {
 									}
 								})
 							}
-							
+
 
 							console.log('this.roomType=====', this.roomType)
 							console.log('this.dateList========', this.dateList)
@@ -582,7 +572,7 @@ export default {
 				this.roomStrategyJson_p = []
 				this.ruleForm_Pie.roomStrategyJson = [] // 批量
 				this.editPriceForm.roomStrategyJson = [] // 单日
-				
+
 				// this.roomType.forEach((x, indexX) =>{
 				// 	this.ruleForm_Pie.roomStrategyJson.push(x.roomType)
 				// 	this.editPriceForm.roomStrategyJson.push(x.roomType)
