@@ -185,7 +185,7 @@
 
 
 		mounted() {
-			// debugger
+			// 
 			this.search_d.priceCalend = 2;
 			this.search_d.strategyId = this.selectInfo.id
 
@@ -273,16 +273,16 @@
 				//  * @param timeType     时间前推后推类别 1前推15天 2后推15天 int必填
 				//  * @param roomTypeId   客房或会议厅房型id  string必填
 				let params = this.search_d;
-				// debugger
+				// 
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_price_room_type_list",
 					params,
 					(res) => {
-						// debugger
+						// 
 						this.roomType = res.roomTypeList
 						this.roomType.forEach((value, index) => {
-							// debugger
+							// 
 							if (value.roomType == 1) {
 								if (value.personPrice !== '' && value.personPrice !== undefined && value.personPrice !== null) {
 									let arr = value.personPrice.split(',')
@@ -292,18 +292,18 @@
 
 									if (res.dayPriceList.length == 0) {
 										res.dateList.forEach((a, b) => {
-											// debugger
+											// 
 											// a.onePrice = 0;
 											a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
 										})
 
 									} else {
-										// debugger
+										// 
 										res.dateList.forEach((a, b) => {
 											// a.onePrice = 0;
 											res.dayPriceList.forEach((c, d) => {
 												if (a.dateStr == c.dayTime) {
-													// debugger
+													// 
 													a.onePrice = c.newCustomPrice + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
 												}
 											})
@@ -347,7 +347,7 @@
 				);
 			},
 			popup(type, row, item, index) {
-				// debugger
+				// 
 				this.roomStrategyJson_p = []
 				this.ruleForm_Pie.roomStrategyJson = [] // 批量
 				this.editPriceForm.roomStrategyJson = [] // 单日
@@ -366,7 +366,7 @@
 						});
 
 						arry.forEach((a, b) => {
-							// debugger
+							// 
 							obj = {}
 							obj.houseName = item.houseName;
 							obj.roomType = item.roomType;
@@ -385,7 +385,7 @@
 						obj.newCustomPrice = '';
 						this.roomStrategyJson_p.push(obj)
 					}
-					// debugger
+					// 
 					console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
 				})
 				switch (type) {

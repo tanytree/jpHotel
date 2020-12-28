@@ -613,7 +613,7 @@ export default {
         },
         hotel_check_inChange() {
             let checkInRoomJson = []
-            debugger
+            
             if (this.waitingRoom.length == 0) {
                 this.rowRoomHandleShow = false;
                 return;
@@ -633,7 +633,7 @@ export default {
 
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
             console.log(JSON.parse(JSON.stringify(this.checkInForm)))
-            debugger
+            
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
 
@@ -649,7 +649,7 @@ export default {
                         })
                     } else {
                         console.log(JSON.parse(JSON.stringify(this.checkInForm)))
-                        debugger
+                        
                         this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');

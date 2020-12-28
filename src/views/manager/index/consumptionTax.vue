@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-04 09:50:32
  * @Author: 陶子
- * @LastEditTime: 2020-12-21 16:58:13
+ * @LastEditTime: 2020-12-28 15:29:18
  * @FilePath: \jiudian\src\views\manager\index\consumptionTax.vue
 -->
 <template>
@@ -13,7 +13,7 @@
       label-width="100px"
       inline
     >
-      <el-form-item :label="$t('manager.add_taxIn')+':'" prop="consumeTax">
+      <el-form-item :label="$t('manager.add_taxIn') + ':'" prop="consumeTax">
         <el-input
           style="width: 200px"
           size="small"
@@ -22,7 +22,10 @@
         ></el-input
         ><span style="margin-left: 4px">%</span>
       </el-form-item>
-       <el-form-item :label="$t('manager.add_taxOut')+':'" prop="outConsumeTax">
+      <el-form-item
+        :label="$t('manager.add_taxOut') + ':'"
+        prop="outConsumeTax"
+      >
         <el-input
           style="width: 200px"
           size="small"
@@ -31,8 +34,11 @@
         ></el-input
         ><span style="margin-left: 4px">%</span>
       </el-form-item>
-      <br/>
-      <el-form-item :label="$t('manager.add_serverPrice')+':'" prop="servicePrice">
+      <br />
+      <el-form-item
+        :label="$t('manager.add_serverPrice') + ':'"
+        prop="servicePrice"
+      >
         <el-input
           style="width: 200px"
           size="small"
@@ -44,7 +50,9 @@
     </el-form>
     <el-divider></el-divider>
     <div>
-      <el-button type="primary" @click="saveInput('taxForm')">{{$t('commons.save')}}</el-button>
+      <el-button type="primary" @click="saveInput('taxForm')">{{
+        $t("commons.save")
+      }}</el-button>
     </div>
   </div>
 </template>
@@ -54,7 +62,7 @@ export default {
     return {
       taxForm: {
         consumeTax: "", //in消费税
-        outConsumeTax:"",  //out消费税
+        outConsumeTax: "", //out消费税
         servicePrice: "", //服务费
       },
     };
@@ -65,68 +73,88 @@ export default {
         consumeTax: [
           {
             required: true,
-            message: this.$t('commons.mustInput'),
+            message: this.$t("commons.mustInput"),
             trigger: "blur",
           },
           {
             type: "number",
-            message: this.$t('manager.add_inputNum'),
+            message: this.$t("manager.add_inputNum"),
           },
         ],
-         outConsumeTax: [
+        outConsumeTax: [
           {
             required: true,
-            message: this.$t('commons.mustInput'),
+            message: this.$t("commons.mustInput"),
             trigger: "blur",
           },
           {
             type: "number",
-            message: this.$t('manager.add_inputNum'),
+            message: this.$t("manager.add_inputNum"),
           },
         ],
         servicePrice: [
           {
             required: true,
-            message: this.$t('commons.mustInput'),
+            message: this.$t("commons.mustInput"),
             trigger: "blur",
           },
           {
             type: "number",
-            message: this.$t('manager.add_inputNum'),
+            message: this.$t("manager.add_inputNum"),
           },
         ],
       };
     },
   },
+  mounted() {
+    this.getPageData();
+  },
   methods: {
+    getPageData() {
+      this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", {}, (res) => {
+        let content = JSON.parse(res.content);
+        this.taxForm.consumeTax = content.consumeTax;
+        this.taxForm.outConsumeTax = content.outConsumeTax;
+        this.taxForm.servicePrice = content.servicePrice;
+      });
+    },
     saveInput(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-        if(this.taxForm.consumeTax>=0&&this.taxForm.servicePrice>=0&&this.taxForm.outConsumeTax>=0){
-           if(this.taxForm.consumeTax<=100&&this.taxForm.servicePrice<=100&&this.taxForm.outConsumeTax<=100){
-            this.$F.doRequest(
-            this,
-            "/pms/hotelparam/manage_consume_tax",
-            this.taxForm,
-            (res) => {
-             this.$message({
-             message:this.$t('manager.add_editorSuccess'),
-             type:'success'
-           })
+          if (
+            this.taxForm.consumeTax >= 0 &&
+            this.taxForm.servicePrice >= 0 &&
+            this.taxForm.outConsumeTax >= 0
+          ) {
+            if (
+              this.taxForm.consumeTax <= 100 &&
+              this.taxForm.servicePrice <= 100 &&
+              this.taxForm.outConsumeTax <= 100
+            ) {
+              this.$F.doRequest(
+                this,
+                "/pms/hotelparam/manage_consume_tax",
+                this.taxForm,
+                (res) => {
+                  this.$message({
+                    message: this.$t("manager.add_editorSuccess"),
+                    type: "success",
+                  });
+                  this.getPageData();
+                }
+              );
+            } else {
+              this.$message({
+                message: this.$t("manager.add_moreThanNot"),
+                type: "warning",
+              });
             }
-          );
-         }else{
-           this.$message({
-             message:this.$t('manager.add_moreThanNot'),
-             type:'warning'
-           })
-         }
-        }else{
-          this.$message({
-             message:this.$t('manager.add_inputNumShould'),
-             type:'warning'
-           })
-        }
+          } else {
+            this.$message({
+              message: this.$t("manager.add_inputNumShould"),
+              type: "warning",
+            });
+          }
         } else {
           return false;
         }

@@ -163,12 +163,12 @@
 			},
 			methods: {
 				popup(type, value) {
-					// debugger
+					// 
 					switch (type) {
 						case "sit":
 							this.dialogsit = true;
 							this.ruleForm = value;
-							// debugger
+							// 
 							// this.ruleForm.alldayRuleId = this.ruleForm.hotelRuleMemberPrice.alldayRuleId;
 							// this.ruleForm.alldayRuleName = this.ruleForm.hotelRuleMemberPrice.alldayRuleName;
 							this.ruleList = [];
@@ -184,7 +184,7 @@
 				// changeRule(e) {
 				// 	this.ruleForm.alldayRuleId = ""
 				// 	this.ruleForm.alldayRuleId = '';
-				// 	debugger
+				// 	
 				// },
 				saveInfo() {
 					let params = {

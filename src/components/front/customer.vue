@@ -154,7 +154,7 @@ export default {
         },
     },
     mounted() {
-        //debugger
+        //
         if (this.type != 'checkin') {
             let id = this.$route.query.id;
             this.searchForm.checkinId = id
@@ -207,7 +207,7 @@ export default {
                 pageSize: 999
             };
             this.$F.doRequest(this, '/pms/checkin/live_in_person_list', params, (res) => {
-                //debugger
+                //
                 let data = res.checkInRoomList;
                 this.handleData(data);
                 this.liveInPersonData = data;

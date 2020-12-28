@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2020-12-25 18:19:15
+ * @LastEditTime: 2020-12-28 11:02:27
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -16,7 +16,8 @@
         <!-- 内层挂账dialog -->
         <cardTao ref="cardTao" :currentRoom="currentRoom" ></cardTao>
         <!-- 内层结账退房dialog -->
-        <el-dialog
+        <CheckoutTao ref="CheckoutTao"></CheckoutTao>
+        <!-- <el-dialog
             top="0"
             width="60%"
             title="结账退房"
@@ -114,7 +115,7 @@
                 >结账并退房</el-button
                 >
             </div>
-        </el-dialog>
+        </el-dialog> -->
         <!-- 查看预订信息dialog -->
         <el-dialog
             top="0"
@@ -139,7 +140,7 @@
                     <el-button type="primary" size="small" plain>置脏</el-button>
                     <el-button type="primary" size="small" plain>账务</el-button>
                     <el-button type="primary" @click="paymentVisible" size="small" plain>挂账</el-button>
-                    <el-button type="primary" @click="checkoutVisible = true" size="small" plain>结账退房</el-button>
+                    <el-button type="primary" @click="checkoutRoom" size="small" plain>结账退房</el-button>
                 </div>
                 <div class="infoBox">
                     <!--            入住人信息展示-->
@@ -178,10 +179,12 @@
 import myMixin from "@/utils/filterMixin";
 import checkInInfo from "@/components/front/checkInInfo";
 import cardTao from "@/components/cardTao";
+import CheckoutTao from '../../../components/checkoutTao.vue';
 export default {
     components: {
         checkInInfo,
-        cardTao
+        cardTao,
+        CheckoutTao
     },
     computed: {
         activeName: {
@@ -238,8 +241,12 @@ export default {
         paymentVisible(){
             this.$refs.cardTao.resetVisibel(this.currentRoom.currentRoomData.checkinId);
         },
+          //点击结账退房按钮
+        checkoutRoom(){
+            this.$refs.CheckoutTao.resetVisibel();
+        },
         lookRoomClick(data) {
-            debugger
+            
             this.lookBookVisible = true;
             this.orderInfo = data.reserveObj;
         },
@@ -343,7 +350,7 @@ export default {
         changeVisible(currentRoom) {
             console.log(currentRoom);
             this.orderInfo = {};
-            debugger
+            
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 21);
             this.currentRoom = currentRoom;
@@ -356,7 +363,7 @@ export default {
                     this.getOrderDetail(id, res => {
                         this.$F.merge(this.orderInfo, res);
                         console.log(JSON.parse(JSON.stringify(this.orderInfo)))
-                        debugger
+                        
                         this.$F.merge(this.orderInfo, {checkInRoomType: this.currentRoom.checkInRoomType});
                         this.hosteldis = true;
                     })

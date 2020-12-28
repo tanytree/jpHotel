@@ -266,7 +266,7 @@
 					}
 				})
 				params.roomStrategyJson = JSON.stringify(this.roomStrategyJson);
-				debugger
+				
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_save', params, (res) => {
 					return this.$message({
 						message: this.$t('commons.request_success'),
@@ -330,7 +330,7 @@
 						break
 					case 'changerili':
 						this.selectInfo = value;
-						debugger
+						
 						this.tab1_show = true
 						this.rili_show = true
 						break
@@ -355,7 +355,7 @@
 						})
 					})
 					console.log(this.roomStrategyJson)
-					debugger
+					
 					this.$forceUpdate();
 				})
 			},
@@ -380,7 +380,7 @@
 							value.adjustPrice = value.newLivePrice
 						})
 						this.roomStrategyJson = res.hotelPriceRoomTypeList
-						debugger
+						
 						console.log('this.ruleForm---', this.ruleForm)
 
 					}

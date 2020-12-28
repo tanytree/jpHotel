@@ -361,7 +361,7 @@ export default {
         //取消预留
         channelReserved() {
             console.log(this.currentRoom);
-            debugger
+            
             this.$F.doRequest(this, "/pms/checkin/checkin_remove_room", {
                     checkinRoomType: 2,
                     checkinReserveId: this.$route.query.id,

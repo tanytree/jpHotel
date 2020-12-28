@@ -268,7 +268,7 @@
 			};
 		},
 		mounted() {
-			// debugger
+			// 
 			this.search_d.priceCalend = this.ruleForm.roomType == 1 ? '3' : '4';
 			this.search_d.roomTypeId = this.ruleForm.id
 
@@ -336,7 +336,7 @@
 					weeks: week,
 					strategyJson: JSON.stringify(this.roomStrategyJson_p)
 				}
-				// debugger
+				// 
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_price_roomtype_strategy_save",
@@ -366,7 +366,7 @@
 			},
 			//选择日期change事件
 			handleWeekDayChange(value) {
-				// debugger
+				// 
 				this.ruleForm_Pie.weeks = value;
 				if (value.length == 0)
 					this.ruleForm_Pie.weeks = [];
@@ -446,7 +446,11 @@
 						"/pms/hotel/hotel_price_guest_chamber_list",
 						params,
 						(res) => {
+<<<<<<< Updated upstream
 						    // debugger
+=======
+						    
+>>>>>>> Stashed changes
 							this.dateList = res.dateList
 							this.dateList.unshift({
 								dateStr: '类型',
@@ -467,9 +471,13 @@
 							let stayXY = ''; // 住宿+早+晚
 							this.roomType.forEach((value, index) => {
 								value.roomType = res.roomType
+<<<<<<< Updated upstream
 								// debugger
 								let roomTypePrises = [];
 								
+=======
+								// 
+>>>>>>> Stashed changes
 								if (value.roomType.roomType == 1) {
 									if (value.roomType.personPrice) {
 										let arr = value.roomType.personPrice.split(',')
@@ -498,11 +506,12 @@
                                             //     a.roomTypePrises = roomTypePrises;
                                             // })
 										} else {
-											// debugger
+											// 
 											this.dateList.forEach((a, b) => {
 												// a.onePrice = 0;
 												res.dayPriceList.forEach((c, d) => {
 													if (a.dateStr == c.dayTime) {
+<<<<<<< Updated upstream
 														// debugger
 														arry.forEach((e, f) => {
 															if(c.dayTime) {
@@ -549,6 +558,12 @@
 													// 	})
 														
 													// }
+=======
+														// 
+														a.onePrice = c.newCustomPrice + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(
+															value.roomType.mealDinnerObject.mealPrice || 0)
+													}
+>>>>>>> Stashed changes
 												})
 											})
 
@@ -586,14 +601,18 @@
 
 							console.log('this.roomType=====', this.roomType)
 							console.log('this.dateList========', this.dateList)
+<<<<<<< Updated upstream
 							// debugger
+=======
+							
+>>>>>>> Stashed changes
 
 							this.$forceUpdate();
 						}
 					);
 			},
 			popup(type, row, item, index) {
-				// debugger
+				// 
 				this.roomStrategyJson_p = []
 				this.ruleForm_Pie.roomStrategyJson = [] // 批量
 				this.editPriceForm.roomStrategyJson = [] // 单日
@@ -618,8 +637,13 @@
 							return el !== '';
 						});
 
+<<<<<<< Updated upstream
 						arry.forEach((valueA, indexA) => {
 							// debugger
+=======
+						arry.forEach((a, b) => {
+							// 
+>>>>>>> Stashed changes
 							obj = {}
 							obj.houseName = value.houseName;
 							obj.roomType = value.roomType;
@@ -638,7 +662,7 @@
 						obj.newCustomPrice = '';
 						this.roomStrategyJson_p.push(obj)
 					}
-					// debugger
+					// 
 					console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
 				})
 				console.log('this.ruleForm_Pie.roomStrategyJson====', this.ruleForm_Pie.roomStrategyJson)

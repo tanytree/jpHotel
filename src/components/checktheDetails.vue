@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 18:20:25
+ * @LastEditTime: 2020-12-28 15:12:55
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
@@ -17,11 +17,11 @@
       </div>
       <div class="infoBlock" v-for="(roomInfo, topIndex) of inRoomList" :key="topIndex">
         <div class="roomItem">{{ roomInfo.room.houseNum }}/{{ roomInfo.room.roomTypeName }}</div>
-        <el-form ref="form" :model="form" label-width="75px" label-position="right" inline>
+        <el-form ref="form" :model="form" label-width="75px" inline>
           <el-row>
             <el-col :span="6">
                 <el-form-item :label="$t('manager.hk_livePrice') + ':'">
-                    <el-input v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 180px"></el-input>
+                    <el-input v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 200px"></el-input>
                 </el-form-item >
             </el-col>
             <el-col :span="6">
@@ -35,7 +35,7 @@
                 ></el-input> </el-form-item
             ></el-col>
             <el-col :span="6">
-              <el-form-item label="性别:">
+              <el-form-item label="性别:" >
                   <el-radio-group v-model="roomInfo.headerObj.sex">
                       <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
                   </el-radio-group>
@@ -43,7 +43,7 @@
             </el-col>
             <el-col :span="6">
                 <el-form-item label="客人分类:">
-                    <el-select v-model="roomInfo.headerObj.customerType" style="width:100%">
+                    <el-select v-model="roomInfo.headerObj.customerType"  size="small" style="width:200px">
                         <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index" ></el-option>
                     </el-select>
                 </el-form-item>
@@ -52,28 +52,29 @@
           <el-row>
             <el-col :span="6">
                 <el-form-item label="证件类型:">
-                    <el-select v-model="roomInfo.headerObj.idcardType" :placeholder="$t('commons.selectIdCardType')" class="width200">
+                    <el-select v-model="roomInfo.headerObj.idcardType"  size="small" :placeholder="$t('commons.selectIdCardType')" style="width: 200px">
                         <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
             <el-col :span="6"
               ><el-form-item label="证件号:">
-                <el-input placeholder="请输入证件号" v-model="roomInfo.headerObj.idcard" size="small" style="width: 180px"></el-input>
+                <el-input placeholder="请输入证件号" v-model="roomInfo.headerObj.idcard" size="small" style="width: 200px"></el-input>
             </el-form-item
             ></el-col>
             <el-col :span="6"
-              ><el-form-item label="E-mail:">
+              ><el-form-item label="E-mail:" >
                 <el-input placeholder="请输入" v-model="roomInfo.headerObj.email" size="small" style="width: 180px"></el-input>
             </el-form-item
             ></el-col>
             <el-col :span="6"
-              ><el-form-item label="地区:">
+              ><el-form-item label="地区:" >
                 <el-input
+                style="width:200px"
                   placeholder="请填写"
                   v-model="roomInfo.headerObj.region"
                   size="small"
-                  style="width: 180px"
+                
                 ></el-input>
             </el-form-item
             ></el-col>
@@ -88,7 +89,7 @@
                   placeholder="可输入前面的邮编检索出地址"
                   v-model="roomInfo.headerObj.homeAddress"
                   size="small"
-                  style="width: 280px; margin-left: 10px"
+                  style="width: 300px; margin-left: 10px"
                 ></el-input> </el-form-item
             ></el-col>
             <el-col :span="6"
@@ -104,10 +105,10 @@
             <el-col :span="6"
               ><el-form-item label="手机号:">
                 <el-input
+                 style="width:200px"
                   placeholder="请填写"
                   v-model="roomInfo.headerObj.phone"
                   size="small"
-                  style="width: 180px"
                 ></el-input> </el-form-item
             ></el-col>
           </el-row>
@@ -133,7 +134,7 @@
                   placeholder="请输入"
                   v-model="roomInfo.headerObj.enterMobile"
                   size="small"
-                  style="width: 180px"
+                  style="width: 200px"
                 ></el-input> </el-form-item
             ></el-col>
             <el-col :span="12"
@@ -153,21 +154,21 @@
                   placeholder="可输入前面的邮编检索出地址"
                   v-model="roomInfo.headerObj.enterAddress"
                   size="small"
-                  style="width: 280px; margin-left: 10px"
+                  style="width: 300px; margin-left: 10px"
                 ></el-input> </el-form-item
             ></el-col>
           </el-row>
           <el-row>
             <el-col :span="6">
                 <el-form-item label="附餐-早:">
-                    <el-select v-model="roomInfo.headerObj.attachMealId" style="width:100%">
+                    <el-select v-model="roomInfo.headerObj.attachMealId" size="small" style="width: 200px">
                         <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
             <el-col :span="6"
               ><el-form-item label="附餐-晚:">
-                <el-select v-model="roomInfo.headerObj.attachMealIdDinner" style="width:100%">
+                <el-select v-model="roomInfo.headerObj.attachMealIdDinner" size="small" style="width: 200px">
                     <el-option
                         v-for="item in dinnerList"
                         :key="item.id"
@@ -182,25 +183,25 @@
         <div class="overLine"></div>
         <!--表格数据 -->
         <el-table ref="multipleTable" :data="roomInfo.personList" max-height="500px;" header-row-class-name="default" size="small">
-          <el-table-column label="姓名" align="center" width="260px">
+          <el-table-column label="姓名" align="center" width="230px">
             <template slot-scope="{ row }">
-              <el-input v-model="row.name" size="small"  style="width: 150px"></el-input>
+              <el-input v-model="row.name" size="small"  style="width: 100px"></el-input>
               <el-input placeholder="发音" v-model="row.pronunciation" size="small" style="width: 100px; margin-left: 5px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="证件类型">
+          <el-table-column align="center" label="证件类型" width="130px">
               <template slot-scope="{ row }">
-                  <el-select v-model="row.idcardType" :placeholder="$t('commons.selectIdCardType')" class="width200">
+                  <el-select v-model="row.idcardType" :placeholder="$t('commons.selectIdCardType')" size="small" style="width:120px;">
                       <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                   </el-select>
               </template>
           </el-table-column>
-          <el-table-column align="center" label="证件号码">
+          <el-table-column align="center" label="证件号码" width="130px">
             <template slot-scope="{ row }">
               <el-input v-model="row.idcard" size="small" style="width: 120px"></el-input>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="性别" width="300px">
+          <el-table-column align="center" label="性别" width="220px">
             <template slot-scope="{ row }">
                 <el-radio-group v-model="row.sex">
                     <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
@@ -209,26 +210,26 @@
           </el-table-column>
           <el-table-column align="center" label="客人分类">
             <template slot-scope="{ row }">
-                <el-select v-model="row.customerType || '1'" style="width:100%">
+                <el-select v-model="row.customerType || '1'" size="small" style="width:100%">
                     <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index" ></el-option>
                 </el-select>
             </template>
           </el-table-column>
           <el-table-column align="center" label="附餐-早餐" >
             <template slot-scope="{ row }">
-                <el-select v-model="row.attachMealId" style="width:100%">
+                <el-select v-model="row.attachMealId" style="width:100%" size="small">
                     <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                 </el-select>
             </template>
           </el-table-column>
           <el-table-column align="center" label="附餐-晚餐" >
             <template slot-scope="{ row }">
-                <el-select v-model="row.attachMealIdDinner" style="width:100%">
+                <el-select v-model="row.attachMealIdDinner" style="width:100%" size="small">
                     <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                 </el-select>
             </template>
           </el-table-column>
-          <el-table-column>
+          <el-table-column width="60px">
             <template slot-scope="{ row, $index }">
               <el-button type="text" size="mini" @click="deletePerson(roomInfo, row, $index)">删除</el-button>
             </template>

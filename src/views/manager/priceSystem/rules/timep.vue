@@ -302,7 +302,7 @@
 				let roomStrategyJson = [];
 				let obj = {};
 				this.ruleForm_h.roomStrategyJson.forEach((item) => {
-					// debugger;
+					// ;
 					obj = {};
 					if(this.type == "change") {
 						obj.id = item.id;
@@ -332,7 +332,7 @@
 				} else {
 					params.state = 2;
 				}
-				// debugger;
+				// ;
 				params.roomStrategyJson = JSON.stringify(params.roomStrategyJson);
 				this.$F.doRequest(
 					this,
@@ -367,7 +367,7 @@
 				);
 			},
 			stop_h(item) {
-				// debugger;
+				// ;
 				let params = {
 					id: item.id,
 				};
@@ -413,7 +413,7 @@
 			},
 			// 获取 计费规则时租房计费列表
 			get_hotel_rule_hour_list() {
-				// debugger
+				// 
 				let params = Object.assign({}, this.ruleForm);
 				params.status = 1;
 				let arr_list = [];
@@ -423,7 +423,7 @@
 					"/pms/hotel/hotel_rule_hour_list",
 					params,
 					(res) => {
-						// debugger;
+						// ;
 						if (res.list.length != 0) {
 							res.list.forEach((item) => {
 								if (item.status != 2) {

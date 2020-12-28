@@ -837,7 +837,7 @@ export default {
     //点击 继续请款 按钮
     settlement(row) {
       this.itemInfo = this.$F.deepClone(row);
-      //debugger
+      //
       this.settlementDialog = true;
     },
 

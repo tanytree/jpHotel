@@ -348,9 +348,9 @@
 				handler(newValue, oldValue) {
 
 					this.allRoomTypeList.forEach((a, b) => {
-						// debugger
+						// 
 						if (a.roomType == 1) {
-							// debugger
+							// 
 							a.adjustPrice = Number(a.newLivePrice) + Number(a.mealBreakfastObject.mealPrice || 0) + Number(a.mealDinnerObject
 								.mealPrice || 0)
 						} else {
@@ -379,7 +379,7 @@
 					obj.id = value.id
 					arr[index] = obj
 				})
-				// debugger
+				// 
 				resolve(arr)
 			},
 			//保存批量修改房价
@@ -420,7 +420,7 @@
 					arr[b] = obj
 				})
 				params.roomStrategyJson = JSON.stringify(arr);
-				// debugger
+				// 
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_price_member_strategy_save",
@@ -552,7 +552,7 @@
 
 						this.memberTypeList = res.memberTypeList
 						this.memberTypeList.forEach((item, i) => {
-							// debugger
+							// 
 							this.selectedRoomtype.push({
 								name: item.name,
 								id: item.id,
@@ -573,18 +573,18 @@
 											let arr = value.personPrice.split(',')
 											res.dateList.forEach((a, b) => {
 												a.onePrice = 0;
-												// debugger
+												// 
 												a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject
 													.mealPrice || 0)
 											})
 										}
 									} else {
-										// debugger
+										// 
 										res.dateList.forEach((a, b) => {
 											a.onePrice = 0;
 											res.dayPriceList.forEach((c, d) => {
 												if (a.dateStr == c.dayTime) {
-													// debugger
+													// 
 													a.onePrice = c.newCustomPrice + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject
 														.mealPrice || 0)
 												}
@@ -624,7 +624,7 @@
 							obj.houseName = value.houseName
 
 							if (value.roomType == 1) {
-								// debugger
+								// 
 								obj.marketPrice = ''
 								obj.newLivePrice = ''
 								obj.mealBreakfastObject = value.mealBreakfastObject
@@ -676,7 +676,7 @@
 			},
 			// 修改单日价格日历
 			changePopup(row, item, index) {
-				// debugger
+				// 
 				this.editPriceForm.dayTime = item.dateStr;
 				this.editPriceForm.priceCalend = 1;
 				this.editPriceForm.roomTypeId = row.id;
@@ -693,7 +693,7 @@
 				// 		});
 
 				// 		arry.forEach((a, b) => {
-				// 			// debugger
+				// 			// 
 				// 			obj = {}
 				// 			obj.houseName = item.houseName;
 				// 			obj.roomType = item.roomType;
@@ -712,7 +712,7 @@
 				// 		obj.newCustomPrice = '';
 				// 		this.roomStrategyJson_p.push(obj)
 				// 	}
-				// 	// debugger
+				// 	// 
 				// 	console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
 				// })
 			},
