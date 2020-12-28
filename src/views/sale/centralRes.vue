@@ -668,7 +668,7 @@ export default {
     getInfoList() {
       this.infoArray = [];
       let params = {
-        changeType: 1,
+        changeType: 2,
         roomType: 1,
       };
       this.$F.merge(params, this.centerForm);

@@ -758,6 +758,7 @@ module.exports = {
   customer_arageDate: '结算范围日期',
   customer_paragraphNum: '请款编号',
   customer_areadyPrice: '已请款金额',
+  customer_areadyBook: '已入账',
   customer_areadyBookPrice: '已入账金额',
   customer_waiteBookPrice: '待入账金额',
   customer_lookBuyDetail: '查看挂账明细',

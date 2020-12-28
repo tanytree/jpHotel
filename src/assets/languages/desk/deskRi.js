@@ -723,6 +723,7 @@ module.exports = {
   customer_arage: '精算期間',
   customer_paragraphNum: '請求書番号',
   customer_areadyPrice: '請求済み金額',
+  customer_areadyBook: '請求済み',
   customer_areadyBookPrice: '入金済み金額',
   customer_waiteBookPrice: '未入金金額',
   customer_lookBuyDetail: '売掛明細確認',

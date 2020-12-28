@@ -99,30 +99,15 @@
     </div>
 
     <!--表格数据 -->
-    <el-table
-      :data="checkinInfo.inRoomList"
-      header-row-class-name="default"
-      border
-      style="width: 100%"
-    >
+    <el-table :data="checkinInfo.inRoomList" header-row-class-name="default" border style="width: 100%">
       <el-table-column prop="name" label="入住人/单位名称/团队名" width="120px">
         <template slot-scope="{ row, $index }">
           <!--                    显示入住人  入主入住人没有 则显示订单外的订单信息-->
-          <span v-if="row.headerObj"
-            >{{ row.headerObj.name }}【{{ row.headerObj.pronunciation }}】</span
-          >
-          <span v-else
-            >{{ checkinInfo.checkIn.name }}【{{
-              checkinInfo.checkIn.pronunciation
-            }}】</span
-          >
+          <span v-if="row.headerObj">{{ row.headerObj.name }}【{{ row.headerObj.pronunciation }}】</span>
+          <span v-else>{{ checkinInfo.checkIn.name }}【{{ checkinInfo.checkIn.pronunciation }}】</span>
           <!--                    显示单位信息-->
-          <br
-            v-if="checkinInfo.checkIn.guestType == 3 && row.headerObj.enterName"
-          />
-          <span
-            v-if="checkinInfo.checkIn.guestType == 3 && row.headerObj.enterName"
-          >
+          <br v-if="checkinInfo.checkIn.guestType == 3 && row.headerObj.enterName"/>
+            <span v-if="checkinInfo.checkIn.guestType == 3 && row.headerObj.enterName">
             {{ row.headerObj.enterName }}【{{ row.headerObj.enterPinyin }}】
           </span>
           <!--                    显示团体信息-->
@@ -153,20 +138,9 @@
       <el-table-column label="联系方式" align="center" width="90px">
         <template slot-scope="{ row, $index }">
           <div v-if="row.headerObj">
-            <p v-if="row.headerObj.homeMobile">
-              (家) {{ row.headerObj.homeMobile }}
-            </p>
-            <p v-if="row.headerObj.enterMobile">
-              (单位) {{ row.headerObj.enterMobile }}
-            </p>
-            <p
-              v-if="
-                checkinInfo.checkIn.guestType == 4 &&
-                checkinInfo.checkIn.contactPhone
-              "
-            >
-              (团体) {{ checkinInfo.checkIn.contactPhone }}
-            </p>
+            <p v-if="row.headerObj.homeMobile">(家) {{ row.headerObj.homeMobile }}</p>
+            <p v-if="row.headerObj.enterMobile">(单位) {{ row.headerObj.enterMobile }}</p>
+            <p v-if=" checkinInfo.checkIn.guestType == 4 && checkinInfo.checkIn.contactPhone">(团体) {{ checkinInfo.checkIn.contactPhone }}</p>
             <p v-if="row.headerObj.mobile">(手机) {{ row.headerObj.mobile }}</p>
           </div>
         </template>
@@ -187,140 +161,95 @@
       </el-table-column>
       <el-table-column align="center" label="会员号码/单位号码" width="120px">
         <template slot-scope="{ row, $index }">
-          <span
-            v-if="
-              row.headerObj &&
-              row.headerObj.guestType == 2 &&
-              row.headerObj.memberCard
-            "
-          >
+          <span v-if=" row.headerObj && row.headerObj.guestType == 2 && row.headerObj.memberCard">
             {{ row.headerObj.memberCard }}
           </span>
-          <span
-            v-if="
-              row.headerObj &&
-              row.headerObj.guestType == 3 &&
-              row.headerObj.enterId
-            "
-          >
+          <span v-if=" row.headerObj && row.headerObj.guestType == 3 && row.headerObj.enterId">
             {{ row.headerObj.enterId }}
           </span>
         </template>
       </el-table-column>
       <el-table-column prop="amount2" label="同来宾客" align="center">
         <template slot-scope="{ row, $index }">
-          <p
-            v-for="(person, index) in row.personList"
-            :key-="index"
-            v-if="row.personList"
-          >
+          <p v-for="(person, index) in row.personList" :key-="index" v-if="row.personList">
             {{ person.name }}【{{ person.pronunciation }}】
             {{ F_sex(person.sex) }} {{ F_customerTypes(person.customerType) }}
           </p>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="80px">
-        <template>
-          <el-button @click="customerDetailVisible = true" type="text"
-            >详情</el-button
-          >
+        <template slot-scope="{ row, $index }">
+          <el-button @click="customerDetail(row)" type="text">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog
-      top="0"
-      width="80%"
-      title="客户详情"
-      :visible.sync="customerDetailVisible"
-      append-to-body
-    >
-      <el-form
-        ref="paymentForm"
-        :model="customerForm"
-        label-width="110px"
-        inline
-      >
-       <el-row>
-          <el-col :span="6">
-          <el-form-item label="入住人：">
-            张三【zhangsan】
-          </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="（证件）号码：">
-            （护照）4839674896
-          </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="性别："> 男 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="客人分类："> 大人 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="邮箱："> 20 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="地区："> 安徽省合肥市 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="住家地址："> 详细地址1 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="住家号码："> 18366865582 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="手机号："> 18366865582 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="单位名：">
-            话语科技【huayu】
-          </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="单位电话："> 2874754994 </el-form-item></el-col
-        >
-        <el-col :span="6">
-          <el-form-item label="单位地址："> 详细地址2 </el-form-item></el-col
-        >
-       </el-row>
-      </el-form>
+      <el-dialog top="0" width="80%" title="客户详情" :visible.sync="currentCustomerVisible" append-to-body>
+          <el-form ref="currentCustomerForm" :model="currentCustomer" label-width="110px" inline>
+              <el-row><el-col :span="6"><el-form-item label="入住人：">{{ currentCustomer.headerObj.name }}【{{currentCustomer.headerObj.pronunciation}}】</el-form-item></el-col>
+                  <el-col :span="6">
+                      <el-form-item label="（证件）号码：">
+                          ({{
+                              $t("commons.idCardType")[currentCustomer.headerObj.idcardType ? currentCustomer.headerObj.idcardType + "" : "1"]
+                          }}) {{ currentCustomer.headerObj.idcard }}
+                      </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                      <el-form-item label="性别：">  {{ F_sex(currentCustomer.headerObj.sex) }} </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="客人分类："> {{ F_customerTypes(currentCustomer.headerObj.customerType) }} </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="邮箱："> {{ currentCustomer.headerObj.email }} </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="地区："> {{ currentCustomer.headerObj.region }} </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="住家地址："> {{ currentCustomer.headerObj.homeAddress }}  </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="住家号码："> {{ currentCustomer.headerObj.homeMobile }} </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="手机号："> {{ currentCustomer.headerObj.phone }} </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="单位名：">
+                          {{ currentCustomer.headerObj.enterName }}【{{currentCustomer.headerObj.enterPinyin}}】
+                      </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="单位电话：">  {{ currentCustomer.headerObj.enterMobile }} </el-form-item></el-col
+                  >
+                  <el-col :span="6">
+                      <el-form-item label="单位地址：">  {{ currentCustomer.headerObj.enterAddress }} </el-form-item></el-col
+                  >
+              </el-row>
+          </el-form>
 
-      <div>
-        <div class="sameTo">同来宾客</div>
-        <el-table
-          ref="multipleTable"
-          :data="customerList"
-          border
-          height="100%"
-          header-row-class-name="default"
-          size="small"
-        >
-          <el-table-column
-            prop="name"
-            label="姓名"
-            show-overflow-tooltip
-          ></el-table-column>
-        
-          <el-table-column label="（证件）号码" prop="idNum" width="300">
-           
-          </el-table-column>
-            <el-table-column
-            prop="sex"
-            label="性别"
-            show-overflow-tooltip
-          ></el-table-column>
-            <el-table-column
-            prop="type"
-            label="类型"
-            show-overflow-tooltip
-          ></el-table-column>
-        </el-table>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="customerDetailVisible = false">关闭</el-button>
+          <div>
+              <div class="sameTo">同来宾客</div>
+              <el-table ref="multipleTable" :data="currentCustomer.headerObj.personList" border height="100%" header-row-class-name="default" size="small">
+                  <el-table-column prop="姓名" label="name" show-overflow-tooltip></el-table-column>
+                  <el-table-column label="证件号码" prop="idcard" width="300">
+                  </el-table-column>
+                  <el-table-column prop="sex" label="性别" show-overflow-tooltip>
+                      <template slot-scope="{ row, $index }">
+                          {{ F_sex(row.sex) }}
+                      </template>
+                  </el-table-column>
+                  <el-table-column prop="type" label="类型" show-overflow-tooltip>
+                      <template slot-scope="{ row, $index }">
+                          {{ F_customerTypes(row.customerType) }}
+                      </template>
+                  </el-table-column>
+              </el-table>
+          </div>
+          <span slot="footer" class="dialog-footer">
+        <el-button @click="currentCustomerVisible = false">关闭</el-button>
       </span>
-    </el-dialog>
+      </el-dialog>
   </div>
 </template>
 
@@ -332,7 +261,11 @@ export default {
   props: ["currentRoom", "showOrderInfo", "orderInfo"],
   data() {
     return {
-      customerDetailVisible: false, // 客户详情弹框
+        currentCustomer: {
+            headerObj: {},
+            personList: [],
+        },
+        currentCustomerVisible: false, // 客户详情弹框
       customerList:[{
         name:'张三',
         idNum:'123456',
@@ -367,6 +300,18 @@ export default {
     console.log(this.checkinInfo.inRoomList);
   },
   methods: {
+      customerDetail(row) {
+          this.currentCustomer = {
+              headerObj: {},
+              personList: [],
+          }
+          debugger
+          if (row.headerObj) {
+              this.$F.merge(this.currentCustomer, row);
+              this.currentCustomerVisible = true;
+          }
+      },
+
     handleData(orderInfo) {
       this.checkinInfo = this.$F.deepClone(orderInfo);
       console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
@@ -385,7 +330,6 @@ export default {
             }
           });
         } else {
-          item.noPerson = true;
           item.personList = [];
         }
       });

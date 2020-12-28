@@ -102,11 +102,11 @@ export default {
                 rowHousesTotal: 999,
                 roomTypeId: this.roomTypeId
             });
-            this.carder();
+            this.calendar();
 
         },
 
-        carder() {
+        calendar() {
             this.$F.doRequest(
                 this,"/pms/reserve/reserve_room_list", {
                     startTime: this.startTime,
@@ -114,7 +114,8 @@ export default {
                     searchType: 2,
                     roomTypeId: this.roomTypeId,
                 }, (res) => {
-                    
+                    console.log(res)
+                    debugger
                 }
             );
         },

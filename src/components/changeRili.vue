@@ -328,16 +328,17 @@ export default {
 		},
 		methods: {
 		    getDate(item, topIndex) {
+		        // item 是dateList里面时间
                 if (this.dayPriceList && this.dayPriceList.length > 0) {
                     let newArray = this.dayPriceList.filter(dayPrice => {
                         return dayPrice.dayTime == item.dateStr;
                     }); //匹配日期
                     if (newArray && newArray.length > 0) {
-                        let priseList = [];
+                        let priseList = []; //[100,200]
                         newArray.forEach(temp => {
                             priseList.push(temp.newCustomPrice);
                         })
-                        let result = '';//[100,200]
+                        let result = '';
                         priseList.forEach((c, d) => {
                             if(topIndex == 0) { //纯住宿
                                 result += `${d+1}人价` + Number(priseList[d])+ '<br/>'
