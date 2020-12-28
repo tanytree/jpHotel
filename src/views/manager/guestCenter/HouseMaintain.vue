@@ -130,12 +130,12 @@
 						</el-form-item>
 
 						<!-- 优惠价 -->
-						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_preferentialPrice')+':'">
+						<!-- <el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_preferentialPrice')+':'">
 							<el-row style="display: flex;align-items: center;">
 								<el-input v-model="ruleForm.discountPrice" class="input" type="number"></el-input>
 								<el-col style="color: #999999;margin-left: 10px;">{{$t('manager.hk_preferentialUse')}}(H5)</el-col>
 							</el-row>
-						</el-form-item>
+						</el-form-item> -->
 
 						<!-- 房屋面积 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_roomArea')+'(㎡):'">
@@ -199,24 +199,24 @@
 
 					</el-form>
 
-					<div class="intitle">OTA价格</div>
-					<el-form :model="ruleForm" size="small" inline :rules="rules" ref="ruleForm" class="basicForm" label-width="120px">
+					<!-- <div class="intitle">OTA价格</div> -->
+					<!-- <el-form :model="ruleForm" size="small" inline :rules="rules" ref="ruleForm" class="basicForm" label-width="120px"> -->
 						<!-- 飞猪价 -->
-						<el-form-item label="飞猪价" prop="houseName">
+						<!-- <el-form-item label="飞猪价" prop="houseName">
 							<el-input v-model="ruleForm.otaFeizhuPrice" class="input"></el-input>
-						</el-form-item>
+						</el-form-item> -->
 
 						<!-- 携程价 -->
-						<el-form-item label="携程价" prop="houseName">
+						<!-- <el-form-item label="携程价" prop="houseName">
 							<el-input v-model="ruleForm.otaXiechengPrice" class="input"></el-input>
-						</el-form-item>
+						</el-form-item> -->
 
 						<!-- 美团价 -->
-						<el-form-item label="美团价" prop="houseName">
+						<!-- <el-form-item label="美团价" prop="houseName">
 							<el-input v-model="ruleForm.otaMeituan" class="input"></el-input>
-						</el-form-item>
+						</el-form-item> -->
 
-					</el-form>
+					<!-- </el-form> -->
 
 					<div class="intitle">{{$t('manager.hk_otherInfomation')}}</div>
 					<el-form size="small" label-width="120px">
@@ -643,7 +643,7 @@
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
-							debugger
+							// debugger
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",

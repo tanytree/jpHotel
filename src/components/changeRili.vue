@@ -18,19 +18,10 @@
 			<div class="components-edit member-price">
 				<el-table :data="roomType" style="width: 100%;margin-bottom: 20px;" row-key="id2" default-expand-all
 				 header-row-class-name="default">
-					<!-- <el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '130': ''">
-						<template slot-scope="{row, $index}" @click="changePrice(item, index, row)">
-							<span v-if="index == 0">纯住宿</span>
-							<span v-if="index > 0" @click="popup('single',row, item, index)">
-								<el-col>{{item.onePrice}}</el-col>
-							</span>
-						</template>
-					</el-table-column> -->
 					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '150': ''">
 						<template slot-scope="scope">
 							<span v-if="index == 0">{{scope.row.name || scope.row.houseName}}</span>
-<!--							<span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">{{scope.row.discount || item.onePrice}}</span>-->
-							<span v-if="index > 0" style=" cursor: pointer !important;" @click="changePopup(scope.row, item, index)">
+							<span v-if="index > 0" style=" cursor: pointer !important;" @click="popup('single', scope.row, item)">
                                 {{item.roomTypePrises[scope.$index]}}
                             </span>
 						</template>
@@ -276,9 +267,6 @@
 				}
 			};
 		},
-
-
-
 		mounted() {
 			// debugger
 			this.search_d.priceCalend = this.ruleForm.roomType == 1 ? '3' : '4';
@@ -357,6 +345,8 @@
 						this.PieDialog = false;
 						this.dateList = [];
 						this.roomType = [];
+						// this.search_d.roomTypeId = this.roomType.id;
+						// debugger
 						this.get_hotel_price_room_type_list()
 						this.$message.success("Save success");
 					}
@@ -432,7 +422,15 @@
 					}
 				);
 			},
-
+			
+			//修改单日价格
+			// changePopup(value, time) {
+			// 	console.log(this.ruleForm)
+			// 	debugger
+			// 	this.editPriceForm.dayTime = time;
+			// 	this.editPriceDialog = true;
+			// 	this.ruleForm_Pie.roomStrategyJson = this.roomType
+			// },
 			// 客房-会议厅修改价格日历列表
 			get_hotel_price_room_type_list() {
 				// @param userId       登录者id String必填
@@ -448,7 +446,7 @@
 						"/pms/hotel/hotel_price_guest_chamber_list",
 						params,
 						(res) => {
-						    debugger
+						    // debugger
 							this.dateList = res.dateList
 							this.dateList.unshift({
 								dateStr: '类型',
@@ -463,37 +461,42 @@
 							}, {
 								name: '住宿+早+晚'
 							}]
-                            let x = '';
-                            let y = '';
+                            let stay = ''; // 纯住宿
+                            let stayX = ''; // 住宿+早
+							let stayY = ''; // 住宿+晚
+							let stayXY = ''; // 住宿+早+晚
 							this.roomType.forEach((value, index) => {
 								value.roomType = res.roomType
 								// debugger
+								let roomTypePrises = [];
+								
 								if (value.roomType.roomType == 1) {
 									if (value.roomType.personPrice) {
 										let arr = value.roomType.personPrice.split(',')
 										let arry = arr.filter(function(el) { //多人价格
 											return el !== '';
 										});
+										// debugger
 										if (res.dayPriceList.length == 0) {
-										    let roomTypePrises = [];
+										    
 											arry.forEach((c, d) => {
 												if(index == 0) { //纯住宿
-													x += `${d+1}人价` + Number(arr[d])
+													stay += `${d+1}人价` + Number(arr[d])
 												} else if(index== 1) {  //住宿+早
-													y += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
+													stayX += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
 												} else if (index== 2) {  //住宿+晚餐
-                                                    // z = ...
+                                                    stayY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
                                                 } else if (index== 3) { //住宿+晚餐+早餐
-
+													stayXY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
                                                 }
 											})
-                                            roomTypePrises.push(x);
-                                            roomTypePrises.push(y);
-                                            // roomTypePrises.push(z);
-                                            // roomTypePrises.push(ab);
-                                            this.dateList.forEach((a, b) => {
-                                                a.roomTypePrises = roomTypePrises;
-                                            })
+                                            // roomTypePrises.push(stay);
+                                            // roomTypePrises.push(stayX);
+                                            // roomTypePrises.push(stayY);
+                                            // roomTypePrises.push(stayXY);
+                                            // this.dateList.forEach((a, b) => {
+                                            //     a.roomTypePrises = roomTypePrises;
+                                            // })
 										} else {
 											// debugger
 											this.dateList.forEach((a, b) => {
@@ -501,23 +504,63 @@
 												res.dayPriceList.forEach((c, d) => {
 													if (a.dateStr == c.dayTime) {
 														// debugger
-														a.onePrice = c.newCustomPrice + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(
-															value.roomType.mealDinnerObject.mealPrice || 0)
-													}
+														arry.forEach((e, f) => {
+															if(c.dayTime) {
+																if(index == 0) { //纯住宿
+																// debugger
+																	stay += `${f+1}人价` + c.newCustomPrice
+																} 
+																else if(index== 1) {  //住宿+早
+																	stayX += `${f+1}人价` + Number(Number(c.newCustomPrice) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
+																} else if (index== 2) {  //住宿+晚餐
+																    stayY += `${f+1}人价` + Number(Number(c.newCustomPrice) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+																} else if (index== 3) { //住宿+晚餐+早餐
+																	stayXY += `${f+1}人价` + Number(Number(c.newCustomPrice) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+																}
+															} else {
+																if(index == 0) { //纯住宿
+																// debugger
+																	stay += `${f+1}人价` + Number(arr[f])
+																} 
+																else if(index== 1) {  //住宿+早
+																	stayX += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
+																} else if (index== 2) {  //住宿+晚餐
+																    stayY += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+																} else if (index== 3) { //住宿+晚餐+早餐
+																	stayXY += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+																}
+															}
+															
+														})
+													} 
+													// else {
+													// 	arry.forEach((e, f) => {
+													// 		if(index == 0) { //纯住宿
+													// 		// debugger
+													// 			stay += `${f+1}人价` + Number(arr[f])
+													// 		} 
+													// 		else if(index== 1) {  //住宿+早
+													// 			stayX += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
+													// 		} else if (index== 2) {  //住宿+晚餐
+													// 		    stayY += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+													// 		} else if (index== 3) { //住宿+晚餐+早餐
+													// 			stayXY += `${f+1}人价` + Number(Number(arr[f]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+													// 		}
+													// 	})
+														
+													// }
 												})
 											})
 
 										}
+										roomTypePrises.push(stay);
+										roomTypePrises.push(stayX);
+										roomTypePrises.push(stayY);
+										roomTypePrises.push(stayXY);
+										this.dateList.forEach((a, b) => {
+										    a.roomTypePrises = roomTypePrises;
+										})
 									}
-
-									// this.dateList.forEach((a, b) => {
-									// 	if(index == 0) {
-									// 		a.onePrice = x
-									// 	}
-									// 	else if(index== 1) {
-									// 		a.onePrice = y
-									// 	}
-									// })
 								}
 								else {
 									if (res.dayPriceList.length == 0) {
@@ -543,7 +586,7 @@
 
 							console.log('this.roomType=====', this.roomType)
 							console.log('this.dateList========', this.dateList)
-							debugger
+							// debugger
 
 							this.$forceUpdate();
 						}
@@ -554,36 +597,43 @@
 				this.roomStrategyJson_p = []
 				this.ruleForm_Pie.roomStrategyJson = [] // 批量
 				this.editPriceForm.roomStrategyJson = [] // 单日
+				
+				// this.roomType.forEach((x, indexX) =>{
+				// 	this.ruleForm_Pie.roomStrategyJson.push(x.roomType)
+				// 	this.editPriceForm.roomStrategyJson.push(x.roomType)
+				// })
+				this.ruleForm_Pie.roomStrategyJson.push(this.roomType[0].roomType)
+				this.editPriceForm.roomStrategyJson.push(this.roomType[0].roomType)
+				// debugger
 
-				this.ruleForm_Pie.roomStrategyJson = this.roomType
-				this.editPriceForm.roomStrategyJson = this.roomType
-
-				this.ruleForm_Pie.roomStrategyJson.forEach((item, j) => {
-
+				this.ruleForm_Pie.roomStrategyJson.forEach((value, j) => {
+					debugger
 					let obj = {}
 					let arr = []
-					if (item.roomType == 1) {
-						let personList = item.personPrice.split(',')
+					// debugger
+					if (value.roomType == 1) {
+						// debugger
+						let personList = value.personPrice.split(',')
 						let arry = personList.filter(function(el) {
 							return el !== '';
 						});
 
-						arry.forEach((a, b) => {
+						arry.forEach((valueA, indexA) => {
 							// debugger
 							obj = {}
-							obj.houseName = item.houseName;
-							obj.roomType = item.roomType;
-							obj.personNum = b + 1;
-							obj.customPrice = a;
+							obj.houseName = value.houseName;
+							obj.roomType = value.roomType;
+							obj.personNum = indexA + 1;
+							obj.customPrice = valueA;
 							obj.newCustomPrice = '';
 							this.roomStrategyJson_p.push(obj)
 						})
 					} else {
 						obj = {};
-						obj.houseName = item.houseName;
-						obj.roomType = item.roomType;
+						obj.houseName = value.houseName;
+						obj.roomType = value.roomType;
 						obj.personNum = 0;
-						obj.marketPrice = item.marketPrice;
+						obj.marketPrice = value.marketPrice;
 						obj.customPrice = ''
 						obj.newCustomPrice = '';
 						this.roomStrategyJson_p.push(obj)
@@ -591,6 +641,8 @@
 					// debugger
 					console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
 				})
+				console.log('this.ruleForm_Pie.roomStrategyJson====', this.ruleForm_Pie.roomStrategyJson)
+				debugger
 				switch (type) {
 					case "adjust":
 						// 批量调价
