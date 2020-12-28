@@ -9,59 +9,20 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button
-          plain
-          :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"
-          @click="addRoom"
-          >添加房间</el-button
-        >
-        <el-button
-          plain
-          :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"
-          @click="goCheckinDetail(1)"
-          >入住人管理</el-button
-        >
-        <el-button
-          plain
-          @click="goCheckinDetail(2)"
-          :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"
-          >{{ $t("desk.batchCheckin") }}</el-button
-        >
-        <el-button
-          plain
-          @click="baseInfoChangeHandle('baseInfoChangeShow')"
-          :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"
-          >{{ $t("desk.updateOrder") }}</el-button
-        >&nbsp;&nbsp;&nbsp;&nbsp;
+        <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">添加房间</el-button>
+        <el-button plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)">入住人管理</el-button>
+        <el-button plain @click="goCheckinDetail(2)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.batchCheckin") }}</el-button>
+        <el-button plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown split-button type="primary">
           {{ $t("commons.moreOperating") }}
           <el-dropdown-menu slot="dropdown">
             <!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
-            <el-dropdown-item
-              @click.native="baseInfoChangeHandle('gustTypeChangeShow')"
-              >更改客源</el-dropdown-item
-            >
+            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
             <!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
-            <el-dropdown-item
-              @click.native="handleCancel(8)"
-              :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"
-              >{{ $t("desk.order_cancelOrder") }}</el-dropdown-item
-            >
-            <el-dropdown-item
-              @click.native="handleNoshow(4)"
-              :disabled="checkinInfo.state == 4"
-              >NOSHOW</el-dropdown-item
-            >
-            <el-dropdown-item
-              @click.native="handleNoshow(1)"
-              v-if="checkinInfo.state == 4"
-              >{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item
-            >
-            <el-dropdown-item
-              @click.native="rowRoomHandle"
-              v-if="!inRoomList || inRoomList.length == 0"
-              >{{ $t("desk.rowHouse") }}</el-dropdown-item
-            >
+            <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
+            <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
+            <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item>
+            <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{ $t("desk.rowHouse") }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>

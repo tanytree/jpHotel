@@ -476,7 +476,7 @@
 							obj.sid = i;
 							this.ruleForm_sit.push(obj);
 						}
-						// 
+						//
 						this.jiageSit_show = true;
 						this.$forceUpdate();
 						break;
@@ -492,10 +492,10 @@
 						// },{
 						// 	houseName1: '住宿+早+晚',
 						// }]
-						// 
+						//
 						// let a = value;
 						// arry.forEach((c,d) =>{
-						// 	
+						//
 						// 	let obj = {}
 						// 	let allP = 0
 						// 	if(a.personPrice !== '' && a.personPrice !== undefined && a.personPrice !== null) {
@@ -504,7 +504,7 @@
 						// 			return el !== '';
 						// 		});
 						// 		arr.forEach((item, i) => {
-						// 			
+						//
 
 						// 			obj.name = c.houseName1;
 						// 			if(c.houseName1 == '纯住宿') {
@@ -643,11 +643,6 @@
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
-<<<<<<< Updated upstream
-							// debugger
-=======
-							
->>>>>>> Stashed changes
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",
@@ -678,7 +673,7 @@
 					(res) => {
 
 						res.list.forEach((value, index) => {
-							// 
+							//
 							value.priceList = []
 
 							let obj = {}
@@ -718,7 +713,7 @@
 							}
 							value.priceList = arr
 						})
-						// 
+						//
 						this.tableData = res.list;
 						this.form.totalSize = res.totalSize;
 					}
