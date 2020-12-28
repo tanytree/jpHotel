@@ -117,6 +117,11 @@
 <script>
 import { getLanguage, setLanguage } from "@/utils/auth";
 import { mapState, mapActions } from "vuex";
+import lang_ri from 'element-ui/lib/locale/lang/ja'
+import lang_zh from 'element-ui/lib/locale/lang/zh-CN'
+import locale from 'element-ui/lib/locale'
+
+
 
 export default {
     computed: {
@@ -192,6 +197,7 @@ export default {
 
     mounted() {
         this.language = getLanguage();
+        this.onLanguageChange();
         this.$i18n.locale = this.language;
         // this.$refs.loginForm.clearValidate();
         this.$F.doRequest(
@@ -214,6 +220,10 @@ export default {
         }),
 
         onLanguageChange() {
+            if (this.language == 'zh')
+                locale.use(lang_zh)
+            else
+                locale.use(lang_ri)
             setLanguage(this.language);
             this.$i18n.locale = this.language;
             sessionStorage.locale = this.language;

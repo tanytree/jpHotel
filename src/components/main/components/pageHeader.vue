@@ -28,7 +28,7 @@
             <span class="itemTxt logoout">
 				<el-dropdown>
 					<span class="userInfo">
-						<img :src="user.headimgurl" alt/>
+						<img v-if="user.headimgurl" :src="user.headimgurl || '../../../assets/images/nav01.png'" alt/>
 						{{user.userName}}
 						<i class="el-icon-arrow-down el-icon--right"></i>
 					</span>
@@ -48,7 +48,9 @@
     mapActions
   } from 'vuex'
   import { getLanguage, setLanguage } from '@/utils/auth'
-
+  import lang_zh from 'element-ui/lib/locale/lang/zh-CN'
+  import locale from 'element-ui/lib/locale'
+  import lang_ri from "element-ui/lib/locale/lang/ja";
   export default {
     // props:['language'],
     computed: {
@@ -73,6 +75,11 @@
     methods: {
       ...mapActions({}),
       toggleLang (lang) {
+          if (lang == 'zh') {
+              // 设置语言
+              locale.use(lang_zh)
+          } else
+              locale.use(lang_ri)
         setLanguage(lang)
         this.$i18n.locale = lang
         sessionStorage.locale = lang

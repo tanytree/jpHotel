@@ -464,7 +464,7 @@ export default {
         },
 
 // startTime: 开始时间；dayLength：每隔几天，0-代表获取每天，1-代表日期间隔一天
-        getTargetDate(date,dayLength) {
+        getTargetDate(date, dayLength) {
             dayLength = dayLength + 1;
             var tempDate = new Date(date);
             tempDate.setDate(tempDate.getDate() + dayLength);
@@ -599,6 +599,7 @@ export default {
         margin: 0 10px;
     }
 }
+
 .riliBox {
     margin: 10px auto;
     margin-bottom: 20px;
