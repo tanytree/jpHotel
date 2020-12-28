@@ -39,7 +39,7 @@
 									<el-button type="text" size="small" @click="addHouse('rili', scope.row, '3')">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
 									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="houseConfirm_delete">
-										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
+										<el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}
 										</el-button>
 									</el-popconfirm>
 								</template>
@@ -566,6 +566,7 @@
 			},
 			// 房屋/会议 删除
 			houseConfirm_delete(value) {
+				debugger
 				let params = {
 					roomTypeId: this.selectedInfo.id,
 				};
@@ -756,6 +757,7 @@
 			},
 			deleteRow(value) {
 				this.selectedInfo = value;
+				this.houseConfirm_delete()
 			},
 			//切换到房屋/会议
 			back() {
