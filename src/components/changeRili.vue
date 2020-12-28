@@ -25,8 +25,7 @@
 								<span v-else>{{scope.row.houseName}}</span>
 							</div>
 							<div v-if="index > 0" >
-								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-if="scope.row.roomType.roomType == 1">
-								    {{  getDate(item, scope.$index)}}
+								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-if="scope.row.roomType.roomType == 1" v-html="getDate(item, scope.$index)">
 								</span>
 								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-else>
 								    {{item.onePrice}}
@@ -341,13 +340,13 @@ export default {
                         let result = '';//[100,200]
                         priseList.forEach((c, d) => {
                             if(topIndex == 0) { //纯住宿
-                                result += `${d+1}人价` + Number(priseList[d])
+                                result += `${d+1}人价` + Number(priseList[d])+ '<br/>'
                             } else if(topIndex== 1) {  //住宿+早
-                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0))
+                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0)) + '<br/>'
                             } else if (topIndex== 2) {  //住宿+晚餐
-                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealDinnerObject.mealPrice || 0))
+                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealDinnerObject.mealPrice || 0))  + '<br/>'
                             } else if (topIndex== 3) { //住宿+晚餐+早餐
-                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0) + Number(this.mealDinnerObject.mealPrice || 0))
+                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0) + Number(this.mealDinnerObject.mealPrice || 0))  + '<br/>'
                             }
                         })
                         return result;
@@ -513,13 +512,13 @@ export default {
 											});
                                             arry.forEach((c, d) => {
                                                 if(index == 0) { //纯住宿
-                                                    stay += `${d+1}人价` + Number(arr[d])
+                                                    stay += `${d+1}人价` + Number(arr[d]) + '<br/>'
                                                 } else if(index== 1) {  //住宿+早
-                                                    stayX += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))
+                                                    stayX += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))  + '<br/>'
                                                 } else if (index== 2) {  //住宿+晚餐
-                                                    stayY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+                                                    stayY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
                                                 } else if (index== 3) { //住宿+晚餐+早餐
-                                                    stayXY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))
+                                                    stayXY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
                                                 }
                                             })
 											roomTypePrises.push(stay);

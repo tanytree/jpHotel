@@ -114,7 +114,7 @@
 		 width="80%" class="editPriceDialog">
 			<el-row :gutter="20" style="margin-bottom: 20px;">
 				<el-col :span="3">当前时间: </el-col>
-				<el-col :span="16">{{editPriceForm.dateStr}}</el-col>
+				<el-col :span="16">{{editPriceForm.dayTime}}</el-col>
 			</el-row>
 			<el-table ref="multipleTable" :data="ruleForm_Pie" tooltip-effect="dark" default-expand-all
 			 header-row-class-name="default">
@@ -498,15 +498,17 @@
 				//   * @param customPrice       新会员价  Double必填
 				//   * @param dayTime         当前时间  yyyy-MM-dd格式 String必填
 				//   * @param strategyId       单位策略规则id  priceCalend=1必填  String必填
+				console.log(this.editPriceForm)
+				debugger
 				var params = {
 					priceCalend: 1,
-					roomTypeId: this.editPriceForm.room.id,
-					memberTypeId: this.editPriceForm.member.id,
+					roomTypeId: this.editPriceForm.id,
+					memberTypeId: this.ruleForm.memberTypeObject.id,
 					customPrice: this.editPriceForm.customPrice,
-					dayTime: this.editPriceForm.dateStr,
+					dayTime: this.editPriceForm.dayTime,
 					strategyId: 1,
 				};
-				// ;
+				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_room_day_price_save",
@@ -660,10 +662,10 @@
 			},
 			// 修改单日价格日历
 			changePopup(row, item, index) {
-				
+				debugger
 				console.log(this.ruleForm)
 				this.ruleForm = row
-				debugger
+				// debugger
 				
 				this.ruleForm_Pie = [];
 				this.roomStrategyJson_p = [];
@@ -678,7 +680,7 @@
 				console.log(this.ruleForm_Pie)
 				// debugger
 				this.ruleForm_Pie.forEach((item, j) => {
-					debugger
+					// debugger
 					let obj = {}
 					let arr = []
 					if (item.roomType == 1) {
