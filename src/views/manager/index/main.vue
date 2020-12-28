@@ -7,7 +7,7 @@
                          :key="item.path"
                          v-if="$F.filterThirdMenu('finance', item.path, true)">
                 <!-- 房间动态-->
-                <roomStatus v-if="item.path == 'roomStatus'"/>
+<!--                <roomStatus v-if="item.path == 'roomStatus'"/>-->
                 <!-- 夜审设置-->
                 <nightSite v-if="item.path == 'nightSite'" ref="nightSite" :findOne="findOne" :initData="getFindOneData"/>
                 <!-- 损物赔偿-->
@@ -49,12 +49,13 @@
         },
         data () {
             return {
+                menuList: [],
 				pageForm: {
 					pageIndex: 1,
 					pageSize: 10,
 					paging: true
 				},
-                activeName: 'damageCompensate',
+                activeName: 'nightSite',
 				findOne: {arriveStatus: 1, leaveStatus: 2, leaveOrder: 1, isOd: 1, trialType: 1, state: 1, trialStartTime: "", trialEndTime: "", trialAutoTime: ""},
 				damageData: [],
                 hotelData: { imgPath: '', name: '', address: '', phone: '', startTime: '', endTime: '', remark: ''},
@@ -63,7 +64,7 @@
         },
           created() {
             this.$F.handleThirdMenu(this);
-            this.activeName = 'damageCompensate';
+            this.activeName = 'nightSite';
             console.log(this.menuList);
           },
         activated () {
