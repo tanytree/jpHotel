@@ -1058,7 +1058,7 @@ export default {
     methods: {
         // 排房组件回调
         rowHouseCallback(data) {
-            debugger
+            
         },
 
         //新需求 添加项目
@@ -1525,7 +1525,7 @@ export default {
                 "/pms/checkin/empty_row_houses",
                 params,
                 (res) => {
-                    debugger
+                    
                     let data = res;
                     for (let k in data) {
                         let ids = [];

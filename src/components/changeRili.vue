@@ -197,12 +197,12 @@
 				<el-button @click="editPriceDialog = false">{{$t('commons.cancel')}}</el-button>
 				<el-button type="primary" @click="editPriceSubmit" v-loading="loading">{{$t('commons.determine')}}</el-button>
 			</span>
-		</el-dialog>
-	</div>
+        </el-dialog>
+    </div>
 </template>
 
 <script>
-	export default {
+export default {
 		props: ['ruleForm'],
 		data() {
 			return {
@@ -661,61 +661,61 @@
 </script>
 
 <style lang="less" scoped>
-	.editPriceDialog .tip {
-		font-size: 12px;
-		color: #b1b1b1;
-	}
+.editPriceDialog .tip {
+    font-size: 12px;
+    color: #b1b1b1;
+}
 
-	.row-width {
-		width: 120px;
-	}
+.row-width {
+    width: 120px;
+}
 
-	.padding-item {
-		padding-bottom: 5px;
-	}
+.padding-item {
+    padding-bottom: 5px;
+}
 
-	.btn-click {
-		height: 200px;
-		width: 300px;
-		background: #e5e5e5;
-		// background-color: linear-gradient(toright, #e5e5e5, #e5e5e5);
-		display: flex;
-		justify-content: center;
-		align-items: center;
+.btn-click {
+    height: 200px;
+    width: 300px;
+    background: #e5e5e5;
+    // background-color: linear-gradient(toright, #e5e5e5, #e5e5e5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-		i {
-			font-size: 30px;
-		}
+    i {
+        font-size: 30px;
+    }
 
-		span {
-			font-size: 20px;
-			color: #666666;
-			margin-left: 10px;
-		}
-	}
+    span {
+        font-size: 20px;
+        color: #666666;
+        margin-left: 10px;
+    }
+}
 
-	.btn-click:hover {
-		height: 200px;
-		width: 300px;
-		background: #4db8ff;
-		// background: linear-gradient(toright, #4db8ff, #1aa3ff);
-		display: flex;
-		justify-content: center;
-		align-items: center;
+.btn-click:hover {
+    height: 200px;
+    width: 300px;
+    background: #4db8ff;
+    // background: linear-gradient(toright, #4db8ff, #1aa3ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-		i {
-			font-size: 30px;
-			color: #fff;
-		}
+    i {
+        font-size: 30px;
+        color: #fff;
+    }
 
-		span {
-			font-size: 20px;
-			color: #fff;
-			margin-left: 10px;
-		}
-	}
+    span {
+        font-size: 20px;
+        color: #fff;
+        margin-left: 10px;
+    }
+}
 
-	.member-price .el-table .cell {
-		cursor: pointer !important;
-	}
+.member-price .el-table .cell {
+    cursor: pointer !important;
+}
 </style>

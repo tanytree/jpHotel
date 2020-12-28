@@ -447,7 +447,7 @@
 						this.files = [];
 						let arr = value.personPrice.split(',')
 						let obj = {}
-						//debugger
+						//
 						arr.forEach((item, i) => {
 							obj = {}
 							obj.price = item
@@ -455,7 +455,7 @@
 							this.ruleForm_sit.push(obj)
 						})
 
-						//debugger
+						//
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
 							arr.map((i) => {
@@ -476,7 +476,7 @@
 							obj.sid = i;
 							this.ruleForm_sit.push(obj);
 						}
-						// debugger
+						//
 						this.jiageSit_show = true;
 						this.$forceUpdate();
 						break;
@@ -492,10 +492,10 @@
 						// },{
 						// 	houseName1: '住宿+早+晚',
 						// }]
-						// debugger
+						//
 						// let a = value;
 						// arry.forEach((c,d) =>{
-						// 	debugger
+						//
 						// 	let obj = {}
 						// 	let allP = 0
 						// 	if(a.personPrice !== '' && a.personPrice !== undefined && a.personPrice !== null) {
@@ -504,7 +504,7 @@
 						// 			return el !== '';
 						// 		});
 						// 		arr.forEach((item, i) => {
-						// 			debugger
+						//
 
 						// 			obj.name = c.houseName1;
 						// 			if(c.houseName1 == '纯住宿') {
@@ -644,7 +644,6 @@
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
-							// debugger
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",
@@ -675,7 +674,7 @@
 					(res) => {
 
 						res.list.forEach((value, index) => {
-							// debugger
+							//
 							value.priceList = []
 
 							let obj = {}
@@ -715,7 +714,7 @@
 							}
 							value.priceList = arr
 						})
-						// debugger
+						//
 						this.tableData = res.list;
 						this.form.totalSize = res.totalSize;
 					}

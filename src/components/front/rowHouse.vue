@@ -114,7 +114,7 @@ export default {
                     searchType: 2,
                     roomTypeId: this.roomTypeId,
                 }, (res) => {
-                    debugger
+                    
                 }
             );
         },

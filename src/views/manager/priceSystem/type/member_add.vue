@@ -397,7 +397,7 @@
 						// 		roomType.id2 = index;
 						// 	});
 						// })
-						// debugger
+						// 
 						
 						
 						// 获取会员类型列表
@@ -410,7 +410,7 @@
 							mer.checked = false
 							arr[i] = mer
 						})
-						// debugger
+						// 
 						this.memberTypeY = arr
 						
 						// this.memberTableData = res;

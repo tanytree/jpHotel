@@ -48,7 +48,7 @@ export default {
     created() {
         this.$F.handleThirdMenu(this);
         console.log(this.menuList);
-        // debugger
+        // 
         // for (let i = 0; i < this.menuList.length; i++) {
         //     if (this.menuList[i].path == 'staff-rights') {
         //         this.menuList.splice(i, 1)

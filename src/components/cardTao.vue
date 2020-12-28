@@ -1,11 +1,11 @@
 <!--
  * @Date: 2020-12-24 16:54:56
  * @Author: 陶子
- * @LastEditTime: 2020-12-25 18:57:51
+ * @LastEditTime: 2020-12-28 10:33:18
  * @FilePath: \jiudian\src\components\cardTao.vue
 -->
 <template>
-  <!-- 挂账dialog -->
+  <!-- 挂账dialog组件-->
   <el-dialog
     top="0"
     width="40%"

@@ -165,7 +165,7 @@ export default {
 
     created() {
         this.liveInPersonData = this.$F.deepClone(this.liveData);
-        //debugger
+        //
         this.fetchHotelattaChmealList();
         this.$forceUpdate();
     },

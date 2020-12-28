@@ -48,7 +48,7 @@
         <el-form-item :label="$t('manager.hp_hotelAddress')+':'" prop="address">
           <el-input v-model="hotelData.address"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('manager.hp_deskPhone')+':'" prop="phone">
+        <el-form-item :label="$t('manager.hp_deskPhone')+':'" prop="phone" label-width="120px">
           <el-input v-model="hotelData.phone"></el-input>
         </el-form-item>
         <el-form-item :label="$t('manager.hp_checkInTime')+':'" prop="startTime">

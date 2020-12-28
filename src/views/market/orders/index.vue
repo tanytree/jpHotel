@@ -39,7 +39,7 @@ export default {
     };
   },
   created() {
-      // debugger
+      // 
       // let menuList = JSON.parse(sessionStorage.subMenul) || [];
       // this.$refs.mainView.resetMenu(menuList);
       this.$F.handleThirdMenu(this);
@@ -50,7 +50,7 @@ export default {
   },
   mounted() {
       // let type = this.$route.query.type;
-      // debugger
+      // 
       // this.activeName = type || 'booking';
   },
   methods: {
