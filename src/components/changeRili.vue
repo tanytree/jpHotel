@@ -26,8 +26,7 @@
 							</div>
 							<div v-if="index > 0" >
 								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-if="scope.row.roomType.roomType == 1">
-<!--								    {{  getDate(item.roomTypePrises[scope.$index])}}-->
-								    {{  getDate(item, scope.$index, scope.row, scope.$index)}}
+								    {{  getDate(item, scope.$index)}}
 								</span>
 								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-else>
 								    {{item.onePrice}}
@@ -329,17 +328,17 @@ export default {
 			// },
 		},
 		methods: {
-		    getDate(item, topIndex, row) {
-                if (this.dayPriceList && this.dayPriceList.length != 0) {
+		    getDate(item, topIndex) {
+                if (this.dayPriceList && this.dayPriceList.length > 0) {
                     let newArray = this.dayPriceList.filter(dayPrice => {
                         return dayPrice.dayTime == item.dateStr;
-                    });
+                    }); //匹配日期
                     if (newArray && newArray.length > 0) {
                         let priseList = [];
                         newArray.forEach(temp => {
                             priseList.push(temp.newCustomPrice);
                         })
-                        let result = ''; // 住宿+早+晚
+                        let result = '';//[100,200]
                         priseList.forEach((c, d) => {
                             if(topIndex == 0) { //纯住宿
                                 result += `${d+1}人价` + Number(priseList[d])
@@ -506,14 +505,12 @@ export default {
                                     this.mealDinnerObject = value.roomType.mealDinnerObject
                                     // debugger
 									let roomTypePrises = [];
-
 									if (value.roomType.roomType == 1) {
 										if (value.roomType.personPrice) {
 											let arr = value.roomType.personPrice.split(',')
 											let arry = arr.filter(function(el) { //多人价格
 												return el !== '';
 											});
-											// debugger
                                             arry.forEach((c, d) => {
                                                 if(index == 0) { //纯住宿
                                                     stay += `${d+1}人价` + Number(arr[d])
