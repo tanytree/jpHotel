@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-25 10:38:36
+ * @LastEditTime: 2020-12-29 15:09:59
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -167,8 +167,9 @@
     </el-dialog>
     <!--开发票-->
 
-    <!--结账退款-->
-    <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
+    <!--退房结账-->
+    <checkoutTao ref="checkoutTao" :detailData = "detailData" :currentRoom="currentRoom" ></checkoutTao>
+    <!-- <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
         <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -193,32 +194,20 @@
                 </div>
             </div>
             <br />
-           <!-- <el-form-item label="" label-width="0">
-                <el-checkbox v-model="consumeOperForm.isPoints">可用200积分抵扣20日元</el-checkbox>
-            </el-form-item> -->
-            <!-- <el-form-item :label="$t('desk.customer_paymentMethod') + ':'" prop="payType" v-if="detailData.totalPrice>0">
-                <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio :label="1" :value="1">现金</el-radio>
-                    <el-radio :label="2" :value="2">银行卡</el-radio>
-                    <el-radio :label="3" :value="3">支付宝</el-radio>
-                    <el-radio :label="4" :value="4">微信</el-radio>
-                </el-radio-group>
-            </el-form-item> -->
+        
             <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
                 <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
-<!--            <el-form-item label="打印单据：">-->
-<!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
-<!--            </el-form-item>-->
+
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="checkOutShow=false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
-    </el-dialog>
+    </el-dialog> -->
     <!--冲调-->
     <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
@@ -302,6 +291,7 @@ import someAccounts from './someAccounts'
 import invoicing from './invoicing'
 import sideOrder from './sideOrder'
 import cardTao from "@/components/cardTao";
+import checkoutTao from "@/components/checkoutTao";
 
 export default {
     mixins: [myMixin],
@@ -311,7 +301,8 @@ export default {
         someAccounts,
         invoicing,
         sideOrder,
-        cardTao
+        cardTao,
+        checkoutTao
     },
     computed: {
         ...mapState({
@@ -695,9 +686,11 @@ export default {
             }
             this.openInvoiceShow = true
         },
+          //点击退房结账按钮
         checkOutHandle() {
-            this.checkOutShow = true;
-            this.consumeOperForm.consumePrice = this.detailData.totalPrice
+            this.$refs.checkoutTao.resetVisibel()
+            // this.checkOutShow = true;
+            // this.consumeOperForm.consumePrice = this.detailData.totalPrice
         },
         // //开发票提交
         // openInvoiceSubmit(formName) {
