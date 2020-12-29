@@ -6,11 +6,11 @@
  -->
 <template>
     <div>
-        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="80%">
+        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="1400px">
             <!-- 房间选择块 -->
             <div class="topBigbox">
                 <div class="eackBlock" v-for="(item, key) in floorList" :key="key">
-                    <div>{{item.building.name}}  {{item.name}}  {{item.roomList.length}} 间</div>
+                    <div class="eackTitle">{{item.building.name}}  {{item.name}}  {{item.roomList.length}} 间</div>
                     <div style="margin-top: 10px">
                         <el-checkbox-group v-model="selectList" size="small" :max="maxSelect">
                             <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in item.roomList" :label="room.houseNum" :key="index"
@@ -22,20 +22,19 @@
             </div>
             <!-- 时间选择块 -->
             <div class="timeBox">
-                <el-button type="primary" :disabled="startTime <= nowDateString" size="small" plain @click="dateBefore14">&lt;&lt;往前14天</el-button>
-                <div class="middleTime">{{ startTime }}——{{ endTime }}</div>
-                <el-button type="primary" size="small" plain @click="dateLater14">往后14天&gt;&gt;</el-button>
+                <el-link :disabled="startTime <= nowDateString" size="small" @click="dateBefore14"><i class="el-icon-d-arrow-left" style="margin-right: 5px"></i>往前14天</el-link>
+                <div class="middleTime">{{ startTime}} - {{endTime }}</div>
+                <el-link type="primary" size="small" @click="dateLater14">往后14天<i class="el-icon-d-arrow-right" style="margin-left: 5px"></i></el-link>
             </div>
             <!-- 日历表格块 -->
             <div class="riliBox" v-loading="loading">
                 <div v-for="date in dates" :key="date.date" class="itemRi">
-                    <div class="riTop">
+                    <div class="riTop riHeader">
                         <span>{{date.date}}</span>
-                        <br>
                         <span>{{date.week}}</span>
                     </div>
                 </div>
-                <div v-for="(date, topIndex) in dates" :key="topIndex" class="itemRi">
+                <div v-for="(date, topIndex) in dates" :key="topIndex" class="itemRi border-body" :class="topIndex == (dates.length-1) ? 'last' : ''">
                     <div v-for="(item, index) in roomList" :key="index">
                         <div class="riTop" v-if="topIndex === 0">
                             <span>{{item.houseNum}}</span>
@@ -219,7 +218,7 @@ export default {
         },
 
         initRoomPlan() {
-            this.dates = [];
+            this.dates = [''];
             let tempArray = this.getDateStr(this.startTime, this.endTime, 0);
             tempArray.forEach((value, index) => {
                 let array = value.split('-').splice(1)
@@ -265,13 +264,13 @@ export default {
     align-items: center;
     margin: 10px 0;
     .middleTime {
-        color: rgba(51, 51, 51, 100);
-        font-size: 16px;
+        color: #999;
+        font-size: 14px;
         margin: 0 10px;
     }
 }
 
-.riliBox {
+    .riliBox {
     margin: 10px auto;
     margin-bottom: 20px;
     display: flex;
@@ -279,15 +278,30 @@ export default {
     align-items: center;
     flex-wrap: wrap;
     .itemRi {
+        &.border-body {
+            border-bottom: 1px solid #D5D5D5;
+        }
+        &.last {
+            border-right: 1px solid #D5D5D5;
+        }
         .riTop {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 80px;
-            height: 60px;
-            background-color: rgba(234, 234, 234, 1);
-            border: 1px solid rgba(218, 218, 218, 1);
+            width: 90px;
+            height: 40px;
+            border-top: 1px solid #D5D5D5;
+            border-left: 1px solid #D5D5D5;
+
+            &.riHeader {
+                background: #D9DDE2;
+                margin-bottom: 10px;
+                border: 0;
+                color: #000;
+                font-size: 15px;
+                height: 55px;
+            }
         }
         .riBottom {
             display: flex;
@@ -302,4 +316,11 @@ export default {
         }
     }
 }
+    .rowRoomDia {
+        .eackTitle {
+            font-size: 16px;
+            color: #1e1e1e;
+            padding: 0 5px;
+        }
+    }
 </style>
