@@ -67,7 +67,7 @@
             <div><span style="color: #1a3bf1">{{ $t("desk.serve_tie") }}</span>{{ row.endTime }}</div>
           </template>
         </el-table-column>
-          <el-table-column prop="putupPrice" :label="$t('desk.customer_placeMoney')" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="requestPrice" :label="$t('desk.customer_placeMoney')" show-overflow-tooltip></el-table-column>
           <el-table-column prop="requestNum" :label="$t('desk.customer_paragraphNum')" show-overflow-tooltip></el-table-column>
           <el-table-column prop="createTime" :label="$t('desk.customer_creativeTime')" show-overflow-tooltip></el-table-column>
 <!--        <el-table-column prop="requestPrice" :label="$t('desk.customer_areadyPrice')" show-overflow-tooltip></el-table-column>-->
@@ -78,18 +78,19 @@
 <!--        </el-table-column>-->
 
         <el-table-column :label="$t('desk.customer_pleaseState')" show-overflow-tooltip>
-          <template slot-scope="{ row }">
-            <div v-if="row.putupPrice != row.requestPrice">
-              {{ $t("desk.customer_notRequest") }}
-            </div>
-<!--            <div v-if="row.requestStatus == 2">-->
-<!--              {{ $t("desk.customer_partRequest") }}-->
-<!--            </div>-->
-            <div v-if="row.requestStatus == 3">
-              {{ $t("desk.customer_areadyRequest") }}
-            </div>
-          </template>
+            <template slot-scope="{ row }">
+                <div v-if="!row.intoPrice || row.intoPrice == 0">
+                    {{ $t("desk.customer_outStand") }}
+                </div>
+                <div v-if="row.requestPrice - row.intoPrice > 0">
+                    {{ $t("desk.order_partBill") }}
+                </div>
+                <div v-if="row.requestPrice - row.intoPrice == 0">
+                    {{ $t("desk.customer_closeAccount") }}
+                </div>
+            </template>
         </el-table-column>
+          <el-table-column prop="intoPrice" :label="$t('desk.customer_areadyBookPrice')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
 <!--            <el-button type="text" v-if="row.requestStatus != 3" @click="addAeditor('editor', row)" size="mini">{{ $t("desk.customer_editorText") }}</el-button>-->

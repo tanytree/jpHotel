@@ -246,7 +246,7 @@ export default {
             this.$refs.CheckoutTao.resetVisibel();
         },
         lookRoomClick(data) {
-            
+
             this.lookBookVisible = true;
             this.orderInfo = data.reserveObj;
         },
@@ -275,7 +275,9 @@ export default {
                     roomId: this.currentRoom.id,
                     startTime: this.startTime,
                     endTime: this.endTime,
-                    searchType: this.currentRoom.checkInRoomType || 1
+                    searchType: this.currentRoom.checkInRoomType || 2,
+                    checkinTime: this.startTime,
+                    checkoutTime: this.checkoutTime,
                 }, (res) => {
                     if (res && res.length > 0) {
                         res.forEach( (value, index) => {
@@ -350,7 +352,7 @@ export default {
         changeVisible(currentRoom) {
             console.log(currentRoom);
             this.orderInfo = {};
-            
+
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 21);
             this.currentRoom = currentRoom;
@@ -363,7 +365,7 @@ export default {
                     this.getOrderDetail(id, res => {
                         this.$F.merge(this.orderInfo, res);
                         console.log(JSON.parse(JSON.stringify(this.orderInfo)))
-                        
+
                         this.$F.merge(this.orderInfo, {checkInRoomType: this.currentRoom.checkInRoomType});
                         this.hosteldis = true;
                     })

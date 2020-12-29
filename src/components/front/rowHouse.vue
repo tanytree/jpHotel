@@ -113,6 +113,8 @@ export default {
                     endTime: this.endTime,
                     searchType: 2,
                     roomTypeId: this.roomTypeId,
+                    checkinTime: this.startTime,
+                    checkoutTime: this.checkoutTime,
                 }, (res) => {
                     console.log(res)
                     debugger
