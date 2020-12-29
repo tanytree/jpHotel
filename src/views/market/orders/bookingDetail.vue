@@ -5,16 +5,16 @@
  * @FilePath: \jiudian\src\views\market\orders\bookingDetail.vue
  -->
 <template>
-    <div class="boss-index ov-y">
+    <div class="boss-index ov-y flex_column">
         <div class="el-card" style="height: auto">
-            <div class="el-card__header">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
+            <div class="el-card__header" style="padding: 10px 20px">
+                <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 0">
                     <el-breadcrumb-item @click.native="goBack">{{ $t('desk.order_bookOrder') }}</el-breadcrumb-item>
                     <el-breadcrumb-item>{{ $t('commons.detail') }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
         </div>
-        <div class="bodyInfo margin-t-10" v-loading="loading">
+        <div class="bodyInfo margin-t-10 flex_row" v-loading="loading">
             <div class="aside">
                 <ul>
                     <li @click="isOrder = true; currentRoom = {};" :class="isOrder ? 'active' : ''">
@@ -36,13 +36,12 @@
                 </ul>
             </div>
             <div class="rightContent">
-                <el-row v-if="isOrder">
-                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                <el-row class="boss-index" v-if="isOrder">
+                    <el-tabs class="tabCenter" v-model="activeName" @tab-click="handleClick">
                         <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
                             <div class="tabWrap">
                                 <!-- 基本信息--->
-                                <sbase v-if="detailData.checkIn.id" :detailData="detailData" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList"
-                                       @baseInfoChange="baseInfoChange"> </sbase>
+                                <sbase v-if="detailData.checkIn.id" :detailData="detailData" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList" @baseInfoChange="baseInfoChange"> </sbase>
                             </div>
                         </el-tab-pane>
 <!--                        - 客人信息-->
@@ -134,7 +133,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .detailTab {
     border: 0;
 }
@@ -143,23 +142,22 @@ export default {
     margin: 0;
 }
 </style>
-<style lang="less" scoped>
+<style lang="less">
 .bodyInfo {
-    height: 80%;
+    flex: 1;
+    height: 0;
     overflow: hidden;
 
     .tabWrap {
+        height: 100%;
         padding: 0 20px;
     }
 
     .aside {
         background: #fff;
-        min-height: 800px;
-        float: left;
-        margin-bottom: -5000px;
-        padding-bottom: 5000px;
+        height: 100%;
         width: 280px;
-        margin-right: 10px;
+        margin-right: 20px;
 
         li {
             width: 100%;
@@ -208,11 +206,35 @@ export default {
     }
 
     .rightContent {
+        flex: 1;
+        width: 0;
         padding: 0 10px;
         background: #fff;
         overflow: hidden;
-        margin-bottom: -5000px;
-        padding-bottom: 5000px;
+
+        .tabCenter {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .el-tabs__nav-scroll {
+                justify-content: flex-start;
+                padding: 0 0 0 50px;
+            }
+            .el-tabs__item {
+                font-size: 14px;
+            }
+
+            .el-tabs__content {
+                flex: 1;
+                height: 100%;
+
+                .el-tab-pane {
+                    height: 100%;
+                }
+            }
+        }
+
     }
 }
 
