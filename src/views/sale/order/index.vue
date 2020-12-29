@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-10 13:58:24
- * @LastEditors:魏轩
- * @LastEditTime:
- * @FilePath:
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-29 16:47:30
+ * @FilePath: \jiudian\src\views\sale\order\index.vue
  -->
 <template>
     <div class="boss-index" id="page1">

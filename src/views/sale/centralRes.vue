@@ -69,7 +69,7 @@
             <template>
               <el-row>可订数：{{ each.reserveTotal }}</el-row>
               <el-row v-if="each.personPrice"
-                >1人总价：{{ each.personPrice.split(",")[0] }}</el-row
+                >1人住宿价：{{ each.personPrice.split(",")[0] }}</el-row
               >
               <el-row
                 v-if="

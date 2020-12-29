@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-21 11:38:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-13 16:29:21
- * @FilePath: /jiudian/src/views/organization/components/employees.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-29 16:36:51
+ * @FilePath: \jiudian\src\views\organization\components\employees.vue
 -->
 <template>
     <div class="DepartmentCollapse">
@@ -40,9 +40,9 @@
                                             <el-dropdown-item @click.native="getDetailEdit(item)">
                                                 编辑员工
                                             </el-dropdown-item>
-                                            <el-dropdown-item @click.native="getDetails(item)">
+                                            <!-- <el-dropdown-item @click.native="getDetails(item)">
                                                 查看资料
-                                            </el-dropdown-item>
+                                            </el-dropdown-item> -->
                                             <el-dropdown-item @click.native="deleteItem(item)" style="color: red">
                                                 删除员工
                                             </el-dropdown-item>

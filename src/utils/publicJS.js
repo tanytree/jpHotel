@@ -1,6 +1,6 @@
 import store from '@/store'
 import axios from 'axios'
-import {request} from '@/utils/request'
+import { request } from '@/utils/request'
 import merge from 'lodash/merge'
 import httpRequest from "@/utils/httpRequest";
 
@@ -178,7 +178,7 @@ const $F = {
             return
         }
         let url = '/pms/system/public_dict'
-        this.doRequest($instance, url, {type: type}, (data) => {
+        this.doRequest($instance, url, { type: type }, (data) => {
             if (data && data.length > 0) {
                 data.forEach((dict) => {
                     dict.name = sessionStorage.locale == 'ri' ? dict.japanese : dict.name
@@ -240,13 +240,13 @@ const $F = {
         let arys1 = date.split('-');
         var ssdate = new Date(arys1[0], parseInt(arys1[1] - 1), arys1[2]);
         let weeks = node.$t('commons.weeks');
-        return String(ssdate.getDay()).replace("0",weeks[6])
-            .replace("1",weeks[0])
-            .replace("2",weeks[1])
-            .replace("3",weeks[2])
-            .replace("4",weeks[3])
-            .replace("5",weeks[4])
-            .replace("6",weeks[5])//就是你要的星期几
+        return String(ssdate.getDay()).replace("0", weeks[6])
+            .replace("1", weeks[0])
+            .replace("2", weeks[1])
+            .replace("3", weeks[2])
+            .replace("4", weeks[3])
+            .replace("5", weeks[4])
+            .replace("6", weeks[5])//就是你要的星期几
     },
 
     //
@@ -327,7 +327,26 @@ const $F = {
             }
             merge(params, requestParams)
             $F.doRequest(null, '/pms/membertype/list', params, (data) => {
-                callback(data)
+                let memberList = data.list;
+                console.log(memberList);
+                let memberArray = {
+                    list:[]
+                };
+                if (memberList.length > 0) {
+                    for (let item of memberList) {
+                        if (item.memberTypeList.length > 0) {
+                            for (let each of item.memberTypeList) {
+                                if (each.memberTypeList.length > 0) {
+                                    for (let i of each.memberTypeList) {
+                                       memberArray.list.push(i)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                console.log(memberArray);
+                callback(memberArray)
             })
         },
         //获取国籍list
@@ -349,9 +368,9 @@ const $F = {
                 },
                 responseType: 'blob', //二进制流
             }).then(function (res) {
-                
+
                 if (!res) return
-                let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
+                let blob = new Blob([res.data], { type: 'application/vnd.ms-excel;charset=utf-8' })
                 let url = window.URL.createObjectURL(blob);
                 let aLink = document.createElement("a");
                 aLink.style.display = "none";

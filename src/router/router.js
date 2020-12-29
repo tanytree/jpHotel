@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-29 15:21:11
+ * @LastEditTime: 2020-12-29 15:53:22
  * @FilePath: \jiudian\src\router\router.js
  */
 import Vue from 'vue'
@@ -34,7 +34,9 @@ export default new Router({
             component: Main,
             children: [
                 {
-                    path: '/organization', name: 'organization', meta: { title: 'company' },
+                    path: '/organization',
+                    name: 'organization',
+                    meta: { title: 'company' },
                     component: () => import('@/views/organization/index')
                 },
 
@@ -57,7 +59,7 @@ export default new Router({
                     path: '/browseReport',
                     name: 'browseReport',
                     component: () =>
-                        import ('@/views/finance/report/table')
+                        import('@/views/finance/report/table')
                 },
                 {
                     path: '/pay-mg',
@@ -149,12 +151,12 @@ export default new Router({
                         import('@/views/market/orders/bookingDetail')
                 },
                 {
-                  path: '/checktheDetails',
-                  name: 'checktheDetails',
-                  meta: { title: '入住管理', pid: "13" },
-                  component: () =>
-                      import('@/components/checktheDetails')
-              },
+                    path: '/checktheDetails',
+                    name: 'checktheDetails',
+                    meta: { title: '入住管理', pid: "13" },
+                    component: () =>
+                        import('@/components/checktheDetails')
+                },
                 {
                     path: '/reception',
                     name: 'reception',
@@ -253,12 +255,12 @@ export default new Router({
                         import('@/views/market/customer/children/memberEditorTao'),
                 },
                 {
-                  path: '/newDetail',
-                  name: 'newDetail',
-                  meta: { title: '新增会员类型' },
-                  component: () =>
-                      import('@/views/sale/order/member/graces/new'),
-              },
+                    path: '/newDetail',
+                    name: 'newDetail',
+                    meta: { title: '新增会员类型' },
+                    component: () =>
+                        import('@/views/sale/order/member/graces/new'),
+                },
                 {
                     path: '/customeradd',
                     name: 'customeradd',
@@ -272,14 +274,14 @@ export default new Router({
                     meta: { title: '客史详情' },
                     component: () =>
                         import('@/views/market/customer/children/historydetail'),
-              },
-              {
-                path: '/hsitorydetailTao',
-                name: 'hsitorydetailTao',
-                meta: { title: '客史修改' },
-                component: () =>
-                    import('@/views/market/customer/children/hsitorydetailTao'),
-            },
+                },
+                {
+                    path: '/hsitorydetailTao',
+                    name: 'hsitorydetailTao',
+                    meta: { title: '客史修改' },
+                    component: () =>
+                        import('@/views/market/customer/children/hsitorydetailTao'),
+                },
                 {
                     path: '/customerhistory',
                     name: 'customerhistory',
@@ -307,14 +309,14 @@ export default new Router({
                     meta: { title: '单位详情' },
                     component: () =>
                         import('@/views/market/customer/children/companydetail'),
-              },
-              {
-                  path: '/comTaodetail',
-                  name: 'comTaodetail',
-                  meta: { title: '门店单位详情' },
-                  component: () =>
-                      import('@/views/market/customer/children/comTaodetail'),
-              },
+                },
+                {
+                    path: '/comTaodetail',
+                    name: 'comTaodetail',
+                    meta: { title: '门店单位详情' },
+                    component: () =>
+                        import('@/views/market/customer/children/comTaodetail'),
+                },
 
                 /**财务部 */
                 {
@@ -426,14 +428,14 @@ export default new Router({
                     name: 'salemain',
                     meta: { title: '企划部首页', pid: "22" },
                     component: () =>
-                        import ('@/views/sale/main')
+                        import('@/views/sale/main')
                 },
                 {
                     path: '/saleOrder',
                     name: 'saleOrder',
                     meta: { title: '会员管理', pid: "21" },
                     component: () =>
-                        import ('@/views/sale/order')
+                        import('@/views/sale/order')
                 }
 
             ]
