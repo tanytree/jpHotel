@@ -12,7 +12,7 @@ module.exports = {
     goods:'实物',
     serve:'服务',
     categoryType2:'商品类别',
-    rule:'计费规则+商品单价(元)',
+    rule:'单价(元)',
     isChoose:'已选商品',
     count:'数量',
     remove:'移除',
@@ -26,7 +26,9 @@ module.exports = {
     close:'关闭',
     payType:'结账类型',
     yhPrice:'优惠金额',
-    pay_order_deal:'立即结账'
+    pay_order_deal:'立即结账',
+    singlePrice:'单价'
+
 
 
 

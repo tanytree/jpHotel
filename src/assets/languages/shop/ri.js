@@ -26,6 +26,7 @@ module.exports = {
     close:'閉じる',
     payType:'会計種別',
     yhPrice:'割引金額',
-    pay_order_deal:'精算'
+    pay_order_deal:'精算',
+	singlePrice:'单价'
 
 }
