@@ -114,9 +114,9 @@
 		 width="80%" class="editPriceDialog">
 			<el-row :gutter="20" style="margin-bottom: 20px;">
 				<el-col :span="3">当前时间: </el-col>
-				<el-col :span="16">{{editPriceForm.dateStr}}</el-col>
+				<el-col :span="16">{{editPriceForm.dayTime}}</el-col>
 			</el-row>
-			<el-table ref="multipleTable" :data="editPriceForm.roomStrategyJson" tooltip-effect="dark" default-expand-all
+			<el-table ref="multipleTable" :data="ruleForm_Pie" tooltip-effect="dark" default-expand-all
 			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
 				<el-table-column prop="personNum" label="人数/座位数" v-if="ruleForm.roomType == 1">
@@ -198,6 +198,8 @@
 				roomTypeList: [], //全部房型
 				selectedRoomtype: [], // 批量调价中的会员类型
 				allRoomTypeList: [], //全部房型(包括会议厅类型)
+				ruleForm_Pie: [],  // 单独修改价格的tabble
+				roomStrategyJson_p: [],
 				all: [],
 
 				tab1_show: true,
@@ -326,21 +328,7 @@
 					return this.$t("manager.hk_deleteSuccess");
 				},
 				set() {},
-			},
-			// all: function(){
-			//         let that = this;
-			// 		let all = []
-			//         that.allRoomTypeList.forEach( e => {
-
-			//             if(e.roomType == 1){
-			//                 e.adjustPrice = Number(e.newLivePrice) + Number(e.mealBreakfastObject.mealPrice || 0) + Number(e.mealDinnerObject.mealPrice || 0)
-			//             }
-			// 			all.push(e)
-
-			//         })
-			// 		console.log('all=======', all)
-			//         return all;
-			//     },
+			}
 		},
 		watch: {
 			//监听 newLivePrice 变化时 adjustPrice 的改变
@@ -510,15 +498,17 @@
 				//   * @param customPrice       新会员价  Double必填
 				//   * @param dayTime         当前时间  yyyy-MM-dd格式 String必填
 				//   * @param strategyId       单位策略规则id  priceCalend=1必填  String必填
+				console.log(this.editPriceForm)
+				debugger
 				var params = {
 					priceCalend: 1,
-					roomTypeId: this.editPriceForm.room.id,
-					memberTypeId: this.editPriceForm.member.id,
+					roomTypeId: this.editPriceForm.id,
+					memberTypeId: this.ruleForm.memberTypeObject.id,
 					customPrice: this.editPriceForm.customPrice,
-					dayTime: this.editPriceForm.dateStr,
+					dayTime: this.editPriceForm.dayTime,
 					strategyId: 1,
 				};
-				// ;
+				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_room_day_price_save",
@@ -552,17 +542,16 @@
 
 						this.memberTypeList = res.memberTypeList
 						this.memberTypeList.forEach((item, i) => {
-							// 
 							this.selectedRoomtype.push({
 								name: item.name,
 								id: item.id,
 								updateName: item.updateName
 							});
 
-							if (item.roomTypeList.length !== 0) {
-								item.hasChildren = true
-								item.id2 = i
-							}
+							// if (item.roomTypeList.length !== 0) {
+							// 	item.hasChildren = true
+							// 	item.id2 = i
+							// }
 							item.roomTypeList.forEach((value, j) => {
 								value.id2 = j;
                                 value.memberTypeObject = item;
@@ -573,18 +562,15 @@
 											let arr = value.personPrice.split(',')
 											res.dateList.forEach((a, b) => {
 												a.onePrice = 0;
-												// 
 												a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject
 													.mealPrice || 0)
 											})
 										}
 									} else {
-										// 
 										res.dateList.forEach((a, b) => {
 											a.onePrice = 0;
 											res.dayPriceList.forEach((c, d) => {
 												if (a.dateStr == c.dayTime) {
-													// 
 													a.onePrice = c.newCustomPrice + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject
 														.mealPrice || 0)
 												}
@@ -598,7 +584,7 @@
 						})
                         this.$forceUpdate();
                         console.log('this.memberTypeList-----', this.memberTypeList)
-                        console.log('this.memberTypeList-----', this.dateList)
+                        console.log('this.dateList-----', this.dateList)
 					}
 				);
 			},
@@ -676,45 +662,54 @@
 			},
 			// 修改单日价格日历
 			changePopup(row, item, index) {
-				// 
+				debugger
+				console.log(this.ruleForm)
+				this.ruleForm = row
+				// debugger
+				
+				this.ruleForm_Pie = [];
+				this.roomStrategyJson_p = [];
+				
 				this.editPriceForm.dayTime = item.dateStr;
 				this.editPriceForm.priceCalend = 1;
 				this.editPriceForm.roomTypeId = row.id;
 				this.editPriceForm.onePrice = item.onePrice;
 				this.editPriceDialog = true;
-				// this.ruleForm_Pie.roomStrategyJson.forEach((item, j) => {
+				
+				this.ruleForm_Pie.push(row)
+				console.log(this.ruleForm_Pie)
+				// debugger
+				this.ruleForm_Pie.forEach((item, j) => {
+					// debugger
+					let obj = {}
+					let arr = []
+					if (item.roomType == 1) {
+						let personList = item.personPrice.split(',')
+						let arry = personList.filter(function(el) {
+							return el !== '';
+						});
 
-				// 	let obj = {}
-				// 	let arr = []
-				// 	if (item.roomType == 1) {
-				// 		let personList = item.personPrice.split(',')
-				// 		let arry = personList.filter(function(el) {
-				// 			return el !== '';
-				// 		});
-
-				// 		arry.forEach((a, b) => {
-				// 			// 
-				// 			obj = {}
-				// 			obj.houseName = item.houseName;
-				// 			obj.roomType = item.roomType;
-				// 			obj.personNum = b + 1;
-				// 			obj.customPrice = a;
-				// 			obj.newCustomPrice = '';
-				// 			this.roomStrategyJson_p.push(obj)
-				// 		})
-				// 	} else {
-				// 		obj = {};
-				// 		obj.houseName = item.houseName;
-				// 		obj.roomType = item.roomType;
-				// 		obj.personNum = 0;
-				// 		obj.marketPrice = item.marketPrice;
-				// 		obj.customPrice = ''
-				// 		obj.newCustomPrice = '';
-				// 		this.roomStrategyJson_p.push(obj)
-				// 	}
-				// 	// 
-				// 	console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
-				// })
+						arry.forEach((a, b) => {
+							obj = {}
+							obj.houseName = item.houseName;
+							obj.roomType = item.roomType;
+							obj.personNum = b + 1;
+							obj.customPrice = a;
+							obj.newCustomPrice = '';
+							this.roomStrategyJson_p.push(obj)
+						})
+					} else {
+						obj = {};
+						obj.houseName = item.houseName;
+						obj.roomType = item.roomType;
+						obj.personNum = 0;
+						obj.marketPrice = item.marketPrice;
+						obj.customPrice = ''
+						obj.newCustomPrice = '';
+						this.roomStrategyJson_p.push(obj)
+					}
+					console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
+				})
 			},
 			// 单位列表-删除
 			get_price_enter_strategy_delete(value) {

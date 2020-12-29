@@ -1058,7 +1058,7 @@ export default {
     methods: {
         // 排房组件回调
         rowHouseCallback(data) {
-            
+
         },
 
         //新需求 添加项目
@@ -1155,6 +1155,7 @@ export default {
             let params = this.$F.deepClone(this.getRoomsForm);
             params.checkinTime = this.checkInForm.checkinTime.split(' ')[0];
             params.checkoutTime = this.checkInForm.checkoutTime;
+            params.changeType = 2
             this.$F.doRequest(
                 this,
                 "/pms/checkin/hotel_checkin_roominfo",
@@ -1525,7 +1526,7 @@ export default {
                 "/pms/checkin/empty_row_houses",
                 params,
                 (res) => {
-                    
+
                     let data = res;
                     for (let k in data) {
                         let ids = [];

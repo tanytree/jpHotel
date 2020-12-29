@@ -59,74 +59,32 @@
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="tableData"
-        height="100%"
-        header-row-class-name="default"
-        size="small"
-      >
-        <el-table-column
-          prop="enterName"
-          :label="$t('desk.customer_unitName')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_arage')"
-          show-overflow-tooltip
-          width="120px"
-        >
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+        <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.customer_arage')" show-overflow-tooltip width="120px">
           <template slot-scope="{ row }">
-            <div>
-              <span style="color: #f11717">{{ $t("desk.serve_open") }}</span
-              >{{ row.startTime }}
-            </div>
-            <div>
-              <span style="color: #1a3bf1">{{ $t("desk.serve_tie") }}</span
-              >{{ row.endTime }}
-            </div>
+            <div><span style="color: #f11717">{{ $t("desk.serve_open") }}</span>{{ row.startTime }}</div>
+            <div><span style="color: #1a3bf1">{{ $t("desk.serve_tie") }}</span>{{ row.endTime }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="requestNum"
-          :label="$t('desk.customer_paragraphNum')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="putupPrice"
-          :label="$t('desk.customer_amountPrice')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="requestPrice"
-          :label="$t('desk.customer_areadyPrice')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_waiteRequestPri')"
-          width="100"
-        >
+          <el-table-column prop="putupPrice" :label="$t('desk.customer_placeMoney')" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="requestNum" :label="$t('desk.customer_paragraphNum')" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="createTime" :label="$t('desk.customer_creativeTime')" show-overflow-tooltip></el-table-column>
+<!--        <el-table-column prop="requestPrice" :label="$t('desk.customer_areadyPrice')" show-overflow-tooltip></el-table-column>-->
+<!--        <el-table-column :label="$t('desk.customer_waiteRequestPri')" width="100">-->
+<!--          <template slot-scope="{ row }">-->
+<!--            <div>{{ row.putupPrice - row.requestPrice }}</div>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+
+        <el-table-column :label="$t('desk.customer_pleaseState')" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            <div>{{ row.putupPrice - row.requestPrice }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="createTime"
-          :label="$t('desk.customer_creativeTime')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_pleaseState')"
-          show-overflow-tooltip
-        >
-          <template slot-scope="{ row }">
-            <div v-if="row.requestStatus == 1">
+            <div v-if="row.putupPrice != row.requestPrice">
               {{ $t("desk.customer_notRequest") }}
             </div>
-            <div v-if="row.requestStatus == 2">
-              {{ $t("desk.customer_partRequest") }}
-            </div>
+<!--            <div v-if="row.requestStatus == 2">-->
+<!--              {{ $t("desk.customer_partRequest") }}-->
+<!--            </div>-->
             <div v-if="row.requestStatus == 3">
               {{ $t("desk.customer_areadyRequest") }}
             </div>
@@ -134,29 +92,11 @@
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
-            <el-button
-              type="text"
-              v-if="row.requestStatus != 3"
-              @click="addAeditor('editor', row)"
-              size="mini"
-              >{{ $t("desk.customer_editorText") }}</el-button
-            >
-            <el-button type="text" @click="advancePayments(row)" size="mini">{{
-              $t("desk.customer_lookBuyDetail")
-            }}</el-button>
-            <el-button
-              v-if="row.requestStatus != 3"
-              type="text"
-              @click="settlement(row)"
-              size="mini"
-              >{{ $t("desk.customer_continueRequest") }}</el-button
-            >
-            <el-button type="text" @click="bookRecord(row)" size="mini">{{
-              $t("desk.customer_requestRecord")
-            }}</el-button>
-            <el-button type="text" @click="dialogNew_remove(row)" size="mini">{{
-              $t("commons.delete")
-            }}</el-button>
+<!--            <el-button type="text" v-if="row.requestStatus != 3" @click="addAeditor('editor', row)" size="mini">{{ $t("desk.customer_editorText") }}</el-button>-->
+              <!--            <el-button v-if="row.requestStatus != 3" type="text" @click="settlement(row)" size="mini">{{ $t("desk.customer_continueRequest") }}</el-button>-->
+            <el-button type="text" @click="advancePayments(row)" size="mini">{{ $t("desk.customer_lookBuyDetail") }}</el-button>
+            <el-button type="text" @click="bookRecord(row)" size="mini">{{ $t("desk.customer_requestRecord") }}</el-button>
+            <el-button type="text" @click="dialogNew_remove(row)" size="mini">{{ $t("commons.delete") }}</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -82,24 +82,20 @@
         <el-table-column
           prop="requestNum"
           :label="$t('desk.customer_paragraphNum')"
-          width="150"
         >
         </el-table-column>
         <el-table-column
           :label="$t('desk.customer_areadyPrice')"
           prop="requestPrice"
-          width="100"
         >
         </el-table-column>
         <el-table-column
           prop="intoPrice"
           :label="$t('desk.customer_areadyBookPrice')"
-          width="100"
         >
         </el-table-column>
         <el-table-column
           :label="$t('desk.customer_waiteBookPrice')"
-          width="100"
         >
           <template slot-scope="{ row }">
             <div>{{ row.requestPrice - row.intoPrice }}</div>
@@ -108,7 +104,6 @@
         <el-table-column
           prop="createTime"
           :label="$t('desk.customer_creativeTime')"
-          width="160"
         >
         </el-table-column>
         <el-table-column :label="$t('desk.customer_billState')" width="80">
@@ -156,69 +151,30 @@
         ></el-pagination>
       </div>
     </div>
-    <!-- 查看挂账明细dialog -->
-    <el-dialog
-      :title="$t('desk.customer_lookBuyDetail')"
-      v-if="advanceDialog"
-      :visible.sync="advanceDialog"
-      width="1160px"
-      top="0"
-    >
+    <!-- 查看入账明细dialog -->
+    <el-dialog :title="$t('desk.customer_lookBuyDetail')" v-if="advanceDialog" :visible.sync="advanceDialog" width="1160px" top="0">
       <div class="flexBox">
         <div>
-          <span
-            >{{ $t("desk.customer_totalCreditAmount") + ":"
-            }}{{ totalConsumerPrice }}</span
-          >
-          <span style="margin-left: 10px"
-            >{{ $t("desk.customer_cardRecords") + ":" }}{{ buyTable.length
-            }}{{ $t("desk.customer_article") }}</span
-          >
+          <span>{{ $t("desk.customer_totalCreditAmount") + ":" }}{{ totalConsumerPrice }}</span>
+          <span style="margin-left: 10px">{{ $t("desk.customer_cardRecords") + ":" }}{{ buyTable.length }}{{ $t("desk.customer_article") }}</span>
         </div>
         <!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="buyTable"
-        height="100%"
-        header-row-class-name="default"
-        size="small"
-      >
-        <el-table-column
-          prop="createTime"
-          :label="$t('desk.customer_spendTime')"
-          show-overflow-tooltip
-          width="180px"
-        ></el-table-column>
-        <el-table-column
-          prop="onAccountTotal"
-          :label="$t('desk.customer_amountPrice')"
-          width="100"
-        >
+      <el-table ref="multipleTable" v-loading="loading" :data="buyTable" height="100%" header-row-class-name="default" size="small">
+        <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip width="180px"></el-table-column>
+        <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPrice')">
           <template slot-scope="{ row }">
             {{ row.payPrice || 0 }}
           </template>
         </el-table-column>
-        <el-table-column
-          :label="$t('desk.home_name')"
-          prop="checkIn.name"
-          width="120"
-        >
+        <el-table-column :label="$t('desk.home_name')" prop="checkIn.name">
           <template slot-scope="{ row }">
             {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="checkIn.id"
-          :label="$t('desk.customer_originOrderNum')"
-          width="300"
-        >
+        <el-table-column prop="checkIn.id" :label="$t('desk.customer_originOrderNum')">
         </el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_roomKind')"
-          show-overflow-tooltip
-        >
+        <el-table-column :label="$t('desk.customer_roomKind')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             <div>
               {{ row.checkIn.hotelCheckInRoom.roomTypeName || "" }}
@@ -227,17 +183,9 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="checkIn.checkinTime"
-          :label="$t('desk.order_checkinDateA')"
-          width="160"
-        >
+        <el-table-column prop="checkIn.checkinTime" :label="$t('desk.order_checkinDateA')">
         </el-table-column>
-        <el-table-column
-          prop="checkIn.checkoutTime"
-          :label="$t('desk.customer_checkoutTime')"
-          width="160"
-        >
+        <el-table-column prop="checkIn.checkoutTime" :label="$t('desk.customer_checkoutTime')">
         </el-table-column>
       </el-table>
 
@@ -353,7 +301,7 @@ export default {
         ],
       };
     },
-    
+
   },
   data() {
     return {
