@@ -372,15 +372,8 @@
                 <div class="right">
                     <el-form inline size="small">
                         <el-form-item>
-                            <el-button @click="empty_row_houses">{{
-                                    $t("desk.autoRowHouse")
-                                }}</el-button>
-                            <el-button
-                                @click="live_in_person_list"
-                                v-if="
-                  !operCheckinType.startsWith('b') && waitingRoom.length > 0
-                "
-                            >
+                            <el-button @click="empty_row_houses">{{ $t("desk.autoRowHouse") }}</el-button>
+                            <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
                                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}
                             </el-button>
                             <!--                            <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">-->
@@ -397,35 +390,17 @@
                                 <div>
                                     <!--<el-button type="primary" class="white" size="mini" @click="">附餐</el-button>-->
                                     <!-- 排房-->
-                                    <el-button
-                                        type="primary"
-                                        class="submit"
-                                        size="mini"
-                                        @click="rowRoomByItem(v, index)"
-                                    >{{ $t("desk.rowHouse") }}</el-button
-                                    >
+                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)">{{ $t("desk.rowHouse") }}</el-button>
                                 </div>
                                 <div>
-                                    <span>{{ v.roomTypeName }}</span>
-                                    <span class="text-red"
-                                    >{{ v.num }}{{ $t("manager.hk_space") }}</span
-                                    >
+                                    <span>{{ v.roomTypeName }}</span><span class="text-red" style="margin-left: 10px">{{ v.num }}{{ $t("manager.hk_space") }}</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="tags margin-t-5">
-                                    <el-button
-                                        class="roomNumTag"
-                                        size="mini"
-                                        v-for="(item, i) of v.roomsArr"
-                                        :key="i"
-                                    >
+                                    <el-button class="roomNumTag" size="mini" v-for="(item, i) of v.roomsArr" :key="i">
                                         {{ item.houseNum }}
-                                        <span
-                                            class="del"
-                                            @click="delete_db_row_houses(v, item.id, i)"
-                                        >✕ {{ $t("desk.customer_remove") }}</span
-                                        >
+                                        <span class="del" @click="delete_db_row_houses(v, item.id, i)">✕ {{ $t("desk.customer_remove") }}</span>
                                     </el-button>
                                 </div>
                             </div>
@@ -662,7 +637,7 @@
         ></guestChoose>
 
         <!--        排房组件 -->
-        <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse"></rowHouse>
+        <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
     </div>
 </template>
 
@@ -956,7 +931,6 @@ export default {
     },
     mounted() {
         this.handleOperCheckinType();
-        this.hotel_rule_hour_list();
         this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
             this.salesList = data.hotelUserList;
         });
@@ -1383,6 +1357,16 @@ export default {
         },
 
         rowRoomByItem(item, index) {
+            debugger
+            let currRommTypeData = this.waitingRoom.filter(waitRoom => {
+                return waitRoom.roomTypeId == item.roomTypeId;
+            })[0];
+            let hadReadyCheckArray = [];
+            if (currRommTypeData.roomsArr) {
+                currRommTypeData.roomsArr.forEach(item => {
+                    hadReadyCheckArray.push(item.houseNum);
+                })
+            }
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item));
             this.rowRoomCurrentIndex = index;
             this.hotelRoomListParams.roomTypeId = item.roomTypeId;
@@ -1391,37 +1375,9 @@ export default {
                 rowHousesTotal: (item.reserveTotal || 0) + 10,
                 roomTypeId: item.roomTypeId,
             };
-            this.$refs.rowHouse.init(item.roomTypeId, item.num);
+            this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray);
         },
 
-        //计费规则时租房计费列表
-        hotel_rule_hour_list() {
-            let params = {
-                ruleName: "",
-                priceModel: "", //收费模式 1固定时间退房模式  2 24小时退房模式
-                state: "",
-                status: 2,
-                pageIndex: 1,
-                pageSize: 999,
-                totalSize: 0,
-            };
-            this.$F.doRequest(
-                this,
-                "/pms/hotel/hotel_rule_hour_list",
-                params,
-                (res) => {
-                    if (res.list.length != 0) {
-                        res.list.forEach((item) => {
-                            if (item.status != 2) {
-                                this.ruleHourList.push(item);
-                            }
-                        });
-                        // this.tableData = res.list
-                        // this.ruleForm.totalSize = res.totalSize
-                    }
-                }
-            );
-        },
         //获取可排房的房间
         // hotel_room_list(roomTypeId) {
         //
@@ -1451,6 +1407,7 @@ export default {
         // },
         //手动排房确定
         db_row_houses() {
+            debugger
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t("desk.home_morethenNum"));
                 return;
@@ -1467,7 +1424,24 @@ export default {
             });
             this.rowRoomCurrentItem.roomsArr = array;
             this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
-            this.rowRoomShow = false;
+            this.$forceUpdate();
+        },
+
+        //手动排房添加
+        rowRoomCurrentListItemAdd(item) {
+            this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
+            let exist = false;
+            debugger
+            for (let k in this.rowRoomCurrentItem.roomsArr) {
+                if (item.id == this.rowRoomCurrentItem.roomsArr[k].id || item.id == this.rowRoomCurrentItem.roomsArr[k].roomId) {
+                    this.rowRoomCurrentItem.roomsArr.splice(k, 1);
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist) this.rowRoomCurrentItem.roomsArr.push(item);
+            this.$forceUpdate();
+            console.log(this.rowRoomCurrentItem);
         },
 
         //自动排房
@@ -1547,20 +1521,7 @@ export default {
             item.roomsArr.splice(i, 1);
             this.$forceUpdate();
         },
-        rowRoomCurrentListItemAdd(item) {
-            this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
-            let exist = false;
-            for (let k in this.rowRoomCurrentItem.roomsArr) {
-                if (item.id == this.rowRoomCurrentItem.roomsArr[k].id) {
-                    this.rowRoomCurrentItem.roomsArr.splice(k, 1);
-                    exist = true;
-                    break;
-                }
-            }
-            if (!exist) this.rowRoomCurrentItem.roomsArr.push(item);
-            this.$forceUpdate();
-            console.log(this.rowRoomCurrentItem);
-        },
+
         checkIsSelect(item) {
             if (
                 this.rowRoomCurrentItem.roomsArr &&

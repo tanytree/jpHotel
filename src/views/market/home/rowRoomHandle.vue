@@ -82,12 +82,13 @@
                                                 <div class="wrap">
                                                     <el-row class="row">
                                                         <el-col :span="14">
-                                                            <span>{{v.roomTypeName}}</span><span class="text-red">{{v.num}}{{$t('manager.hk_space')}}</span>
+                                                            <span>{{v.roomTypeName}}</span>
+                                                            <span class="text-red" style="margin-left: 10px">{{v.num}}{{$t('manager.hk_space')}}</span>
                                                         </el-col>
+
                                                         <el-col :span="10">
                                                             <div style="text-align: right">
-                                                                <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">
-                                                                    {{ $t('desk.rowHouse') }}</el-button>
+                                                                <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">{{ $t('desk.rowHouse') }}</el-button>
                                                             </div>
                                                         </el-col>
                                                     </el-row>

@@ -9,11 +9,12 @@
         <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="80%">
             <!-- 房间选择块 -->
             <div class="topBigbox">
-                <div class="eackBlock">
-                    <div>大仓集团第一酒店 3层 4间</div>
+                <div class="eackBlock" v-for="(item, key) in floorList" :key="key">
+                    <div>{{item.building.name}}  {{item.name}}  {{item.roomList.length}} 间</div>
                     <div style="margin-top: 10px">
                         <el-checkbox-group v-model="selectList" size="small" :max="maxSelect">
-                            <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in rowRoomCurrentList" :label="room.houseNum" :key="index">
+                            <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in item.roomList" :label="room.houseNum" :key="index"
+                                                @change="rowRoomCurrentListItemAdd(room)">
                                 {{ room.houseNum }}</el-checkbox-button>
                         </el-checkbox-group>
                     </div>
@@ -34,11 +35,21 @@
                         <span>{{date.week}}</span>
                     </div>
                 </div>
-<!--                <el-table :data="roominfoList" style="width: 100%; margin-bottom: 20px" border lazy header-row-class-name="default">-->
+                <div v-for="(date, topIndex) in dates" :key="topIndex" class="itemRi">
+                    <div v-for="(item, index) in roomList" :key="index">
+                        <div class="riTop" v-if="topIndex === 0">
+                            <span>{{item.houseNum}}</span>
+                        </div>
+                        <div class="riTop" v-else>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+<!--                <el-table :data="floorList" style="width: 100%; margin-bottom: 20px" border lazy header-row-class-name="default">-->
 <!--                    <el-table-column type="index"  width="80px">-->
 <!--                    </el-table-column>-->
 <!--                    <el-table-column-->
-<!--                        v-for="(item, index) in dateList"-->
+<!--                        v-for="(item, index) in dates"-->
 <!--                        :key="index"-->
 <!--                        :label="item.dateStr + '' + item.weekDay"-->
 <!--                        :width="index == 0 ? '150' : ''"-->
@@ -51,7 +62,7 @@
             </div>
             <div slot="footer" class="dialog-footer" style="text-align: right">
                 <el-button size="small" @click="rowRoomShow = false">{{ $t("commons.cancel") }}</el-button>
-                <el-button size="small" type="primary" @click="submit">{{ $t("commons.confirm") }}</el-button>
+                <el-button size="small" type="primary" @click="db_row_houses">{{ $t("commons.confirm") }}</el-button>
             </div>
         </el-dialog>
     </div>
@@ -64,6 +75,8 @@ export default {
     props: ["roomId"],
     data() {
         return {
+            roomList: [],   //该房型下有多少房间
+            floorList: [],   //楼层
             selectList: [], //选中的房间list
             roomTypeId: '', //房型ID
             maxSelect: 0,   //最多能选择多少个房间
@@ -74,15 +87,22 @@ export default {
             endTime: '',
             nowDateString: '',
             dates: [],
+            hadReadyCheckArray: [], //已经被选的房间集合
         };
     },
 
     methods: {
-        //排房确定
-        submit() {
-            this.$emit('rowHouseCallback', this.selectList)
+
+        disableSelect(houseNum) {
+            return this.hadReadyCheckArray.indexOf(houseNum) != -1;
         },
-        init(roomTypeId, num) {
+        submit() {
+            // this.$emit('rowHouseCallback', this.selectList)
+        },
+        init(roomTypeId, num, hadReadyCheckArray) {
+            this.roomList = [];
+            this.selectList = hadReadyCheckArray;
+            this.hadReadyCheckArray = hadReadyCheckArray;
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 14);
             let tempArray = this.getDateStr(this.startTime, this.endTime, 0);
@@ -94,7 +114,6 @@ export default {
                     week: this.$F.getWeekNumber(this, value)
                 });
             })
-
             this.nowDateString= this.startTime;
             this.roomTypeId = roomTypeId;
             this.maxSelect = num;
@@ -107,6 +126,7 @@ export default {
         },
 
         calendar() {
+            this.roomList = [];
             this.$F.doRequest(
                 this,"/pms/reserve/reserve_room_list", {
                     startTime: this.startTime,
@@ -116,25 +136,26 @@ export default {
                     checkinTime: this.startTime,
                     checkoutTime: this.checkoutTime,
                 }, (res) => {
-                    console.log(res)
-                    debugger
+
+                    this.floorList = res.floorList || [];
+                    this.floorList.forEach( floor=> {
+                        this.roomList = this.roomList.concat(floor.roomList)
+                    })
+                    console.log(this.roomList)
+                    this.rowRoomShow = true;
+
+                    this.$forceUpdate()
                 }
             );
         },
-        rowRoomCurrentListItemAdd(item) {
-            this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
-            let exist = false;
-            for (let k in this.rowRoomCurrentItem.roomsArr) {
-                if (item.id == this.rowRoomCurrentItem.roomsArr[k].id) {
-                    this.rowRoomCurrentItem.roomsArr.splice(k, 1);
-                    exist = true;
-                    break;
-                }
-            }
-            if (!exist)
-                this.rowRoomCurrentItem.roomsArr.push(item);
-            this.$forceUpdate();
-            console.log(this.rowRoomCurrentItem);
+        //当房间被添加
+        rowRoomCurrentListItemAdd(room) {
+            this.$emit('rowRoomCurrentListItemAdd', room)
+        },
+        //排房确定
+        db_row_houses() {
+            this.$emit('db_row_houses')
+            this.rowRoomShow = false;
         },
 
         checkIsSelect(item) {
@@ -157,19 +178,19 @@ export default {
             // params.noiseFlag !== "" && (params.noiseFlag = params.noiseFlag ? 1 : "");
             // params.temperatureFlag !== "" &&
             //   (params.temperatureFlag = params.temperatureFlag ? 1 : "");
-            this.$F.doRequest(
-                this,"/pms/checkin/empty_row_houses", params, (res) => {
-                    this.rowRoomCurrentList = [];
-                    if (res) {
-                        for (let id in res) {
-                            this.rowRoomCurrentList = this.rowRoomCurrentList.concat(res[id]);
-                        }
-                    }
-                    console.log(this.rowRoomCurrentList);
-                    this.rowRoomShow = true;
-                    this.$forceUpdate()
-                }
-            );
+            // this.$F.doRequest(
+            //     this,"/pms/checkin/empty_row_houses", params, (res) => {
+            //         this.rowRoomCurrentList = [];
+            //         if (res) {
+            //             for (let id in res) {
+            //                 this.rowRoomCurrentList = this.rowRoomCurrentList.concat(res[id]);
+            //             }
+            //         }
+            //         console.log(this.rowRoomCurrentList);
+            //         this.rowRoomShow = true;
+            //         this.$forceUpdate()
+            //     }
+            // );
         },
 
         getDateStr(startTime, endTime, dayLength) {

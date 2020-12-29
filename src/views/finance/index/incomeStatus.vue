@@ -198,11 +198,11 @@ export default {
           },
         ],
       };
-      this.chartLine = echarts.init(document.getElementById("J_chartLineBox"));
-      this.chartLine.setOption(option);
-      window.addEventListener("resize", () => {
-        this.chartLine.resize();
-      });
+      // this.chartLine = echarts.init(document.getElementById("J_chartLineBox"));
+      // this.chartLine.setOption(option);
+      // window.addEventListener("resize", () => {
+      //   this.chartLine.resize();
+      // });
     },
 
     onSubmit() {
