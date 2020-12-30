@@ -27,6 +27,7 @@ module.exports = {
     payType:'会計種別',
     yhPrice:'割引金額',
     pay_order_deal:'精算',
-	singlePrice:'单价'
+	singlePrice:'单价',
+    outFlag:'是否外带'
 
 }

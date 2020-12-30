@@ -6,9 +6,6 @@
             <div v-if="!!orderTax" class=" text-size14 text-gray margin-t-10">
             其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
             </div>
-
-
-
         <!-- {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}} -->
           <!--span class="text-gray text-size14 margin-l-15">已付金额: {{numFormate(info.hasPayPrice)}}</span> {{info.consumePrice}} --></div>
         <!-- <div class="money">已付金额: {{info.hasPayPrice}}</div> -->
@@ -24,8 +21,10 @@
                 <el-form-item :label="$t('shop.yhPrice')">
                    <el-input  size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;" ></el-input>
                 </el-form-item>
+                <el-form-item :label="$t('shop.outFlag')">
+                   <el-checkbox v-model="outFlag">外带</el-checkbox>
+                </el-form-item>
                 <el-form-item :label="$t('food.common.payPrice')">
-                    <!-- {{getPayPrice}} -->
                     {{numFormate(getFee)}}
                 </el-form-item>
 
@@ -147,6 +146,7 @@
                    scoresPrice:'',//积分抵扣额度  Double选填
                    preferentialPrice:'',//优惠金额
                 },
+                outFlag:false,
                 endTime:'',
                 isUseScore:false,
                 isPrint:false,
@@ -268,6 +268,7 @@
                     scoresDiscount:'',//积分抵扣分值  Integer选填
                     scoresPrice:'',//积分抵扣额度  Double选填
                 }
+                outFlag:false,
 
                 this.score = {
                     shop_discount_ratio:'',
@@ -314,7 +315,7 @@
                     orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
                 }
                 console.log(orderGoodsList)
-                this.orderTax = this.getTaxInfo(this.taxInfo,orderGoodsList)
+                this.orderTax = this.getTaxInfo(this.taxInfo,orderGoodsList,this.outFlag)
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
                 // this.form.scoresPrice = data.scoresPrice
@@ -513,6 +514,7 @@
                 params.consumePrice = this.info.consumePrice
                 params.hasPayPrice = this.info.hasPayPrice
                 params.state = 2
+
                 let goodsIds = this.info.orderSubList.map((ele,index)=>{
                     return  ele.goodsId
                 })
@@ -522,6 +524,11 @@
                 params.orderId = this.info.id
                 params.userId = this.userId
                 params.storesNum = this.storesNum
+                if(this.outFlag){
+                    params.outFlag = 1
+                }else{
+                    params.outFlag = 2
+                }
 
                 this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
                     this.loading = false

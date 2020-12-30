@@ -27,7 +27,8 @@ module.exports = {
     payType:'结账类型',
     yhPrice:'优惠金额',
     pay_order_deal:'立即结账',
-    singlePrice:'单价'
+    singlePrice:'单价',
+    outFlag:'是否外带'
 
 
 

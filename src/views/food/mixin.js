@@ -55,37 +55,39 @@ const mixin= {
             // return intPartFormat
         },
         //计算税
-        getTaxInfo(tax,list,type){
+        getTaxInfo(tax,list,outFlag){
+            //outFlag 默认false 表示是否外带
             if(list && list.length > 0 && tax){
-                let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0
+                let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
+                let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
                 let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
                 let total = 0 //税前税后总的税钱
                 let service = 0 //服务费
-                let taxBefore = 0
-                let taxAfter = 0
+                let taxFee = 0 //消费税
+                let sum = 0 //合计
                 for(let i in list){
-                    total += list[i].totalPrice * consumeTax
+                    total += list[i].totalPrice
                     if(list[i].taxStatus == 1){
-                        taxBefore += list[i].totalPrice * consumeTax
+                        taxFee += outFlag ? list[i].totalPrice * outConsumeTax :  list[i].totalPrice * consumeTax
+                    }
+                    if(list[i].seviceStatus == 1){
                         service += list[i].totalPrice * servicePrice
                     }
-                    if(list[i].taxStatus == 2){
-                        taxAfter += list[i].totalPrice * consumeTax
-                    }
-
-                    console.log(list[i].taxStatus)
-                    console.log(list[i])
                 }
-                // console.log(total)
-                // console.log(service)
-                // console.log(taxBefore)
-                // console.log(taxAfter)
                 let parms = {
                     total: total ? parseFloat(total).toFixed(0) : 0,
                     service: service ? parseFloat(service).toFixed(0) :0,
-                    taxBefore:taxBefore ? parseFloat(taxBefore).toFixed(0) : 0,
-                    taxAfter:taxAfter ? parseFloat(taxAfter).toFixed(0) : 0
+                    taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
                 }
+                for(let s in parms){
+                    sum +=  parseFloat(parms[s])
+                }
+                parms.sum = sum
+                parms.servicePrice = tax.servicePrice+'%'
+                parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
+                parms.type = outFlag ? 'out' : 'in'
+
+                console.log(parms)
                 return parms
             }
         },
