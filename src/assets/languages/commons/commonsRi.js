@@ -139,13 +139,18 @@ module.exports = {
         type: "info",
         name: '故障部屋',
         value: '5'
+    }, {
+        type: "info",
+        name: 'みとう',
+        value: '6'
     }],
     F_roomStatus: {
         '1': '空室',
         '2': '清掃',
         '3': 'OUT室',
         '4': 'エコ清掃',
-        '5': '故障部屋'
+        '5': '故障部屋',
+        '6': 'みとう'
     },
     //朝向
     // toward: {

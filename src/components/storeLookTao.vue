@@ -288,10 +288,6 @@ export default {
           console.log(res);
           this.loading = false;
           this.itemInfo = res;
-          this.$message({
-            message: this.$t("boss.add_requestSuccess"),
-            type: "success",
-          });
         }
       );
     },
@@ -364,7 +360,7 @@ export default {
   }
 }
 .el-row {
-  margin-bottom: 0px; 
+  margin-bottom: 0px;
   &:last-child {
     margin-bottom: 0;
   }

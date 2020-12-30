@@ -60,10 +60,7 @@
                     <el-input v-model="checkInForm.idcard"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'a1' || operCheckinType == 'a2'">
-                    <el-form-item
-                        :label="$t('frontOffice.nightAudit.checkInTime')"
-                        prop="checkinTime"
-                    >
+                    <el-form-item :label="$t('frontOffice.nightAudit.checkInTime')" prop="checkinTime">
                         <el-date-picker
                             v-model="checkInForm.checkinTime"
                             disabled
@@ -120,21 +117,9 @@
                     <el-input type="textarea" v-model="checkInForm.remark"></el-input>
                 </el-form-item>
             </el-form>
-            <el-form
-                ref="checkInForm"
-                class="inForm"
-                inline
-                size="small"
-                :model="checkInForm"
-                :rules="rules"
-                label-width="120px"
-                v-if="
-          operCheckinType == 'b1' ||
-          operCheckinType == 'b2' ||
-          operCheckinType == 'b3'
-        "
-            >
-                <el-form-item :label="$t('desk.customer_livePeople')" :required="true">
+            <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules" label-width="120px"
+                     v-if=" operCheckinType == 'b1' || operCheckinType == 'b2' || operCheckinType == 'b3'">
+                <el-form-item :label="$t('desk.customer_reservePerson')" :required="true">
                     <el-row>
                         <el-col :span="12">
                             <el-form-item prop="name">
@@ -153,11 +138,7 @@
                         </el-col>
                         <el-col :span="12">
                             <el-form-item prop="pronunciation">
-                                <el-input
-                                    style="width: 110px"
-                                    v-model="checkInForm.pronunciation"
-                                    :placeholder="$t('desk.home_nameA')"
-                                ></el-input>
+                                <el-input style="width: 110px" v-model="checkInForm.pronunciation" :placeholder="$t('desk.home_nameA')"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -191,21 +172,11 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <!--                <el-form-item :label="$t('commons.checkInTypeDesc')" prop="checkinType" v-if="operCheckinType!='b3'">-->
-                <!--                    <el-select v-model="checkInForm.checkinType">-->
-                <!--                        <el-option :value="key" v-for="(item,key,index) of $t('commons.checkinType')" :label="item" :key="index"></el-option>-->
-                <!--                    </el-select>-->
-                <!--                </el-form-item>-->
-                <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType == 'b3'">
-                    <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">
-                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
-                <!--                <el-form-item label="计费规则：" prop="ruleHourId" v-if="operCheckinType=='b2'">-->
-                <!--                    <el-select v-model="checkInForm.ruleHourId">-->
-                <!--                        <el-option v-for="item in ruleHourList" :key="item.id" :label="item.ruleName" :value="item.id"></el-option>-->
-                <!--                    </el-select>-->
-                <!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType == 'b3'">-->
+<!--                    <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">-->
+<!--                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
                 <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
                     <el-date-picker
                         v-model="checkInForm.checkinTime"
@@ -217,26 +188,24 @@
                         @change="startTimeChange"
                     ></el-date-picker>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('desk.checkInDays')"
-                    prop="checkinDays"
-                    v-if="operCheckinType == 'b1'"
-                >
-                    <el-input-number
-                        v-model="checkInForm.checkinDays"
-                        :step="1"
-                        :min="1"
-                        @change="checkinDaysChange"
-                    ></el-input-number>
+                <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays" v-if="operCheckinType == 'b1'">
+                    <el-input-number v-model="checkInForm.checkinDays" :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('desk.order_departureTime')"
-                    prop="checkoutTime"
-                >
+                <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime" v-if="operCheckinType == 'b1'">
                     <el-date-picker
                         v-model="checkInForm.checkoutTime"
                         type="datetime"
                         format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        :picker-options="leaveTime"
+                        @change="endTimeChange"
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime" v-if="operCheckinType == 'b2'">
+                    <el-date-picker
+                        v-model="checkInForm.checkoutTime"
+                        type="datetime"
+                        format="yyyy-MM-dd HH"
                         value-format="yyyy-MM-dd HH:mm:ss"
                         :picker-options="leaveTime"
                         @change="endTimeChange"
@@ -273,39 +242,14 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item
-                    :label="$t('desk.order_salesman') + '：'"
-                    v-if="operCheckinType != 'b3'"
-                >
-                    <el-select
-                        :placeholder="$t('commons.placeChoose')"
-                        v-model="checkInForm.salesId"
-                    >
-                        <el-option
-                            v-for="item in salesList"
-                            :key="item.id"
-                            :label="item.userName"
-                            :value="item.id"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                    :label="$t('desk.order_outOrder')"
-                    v-if="operCheckinType != 'b3'"
-                >
+                <el-form-item :label="$t('desk.order_outOrder')" v-if="operCheckinType != 'b3'">
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'b3'">
-                    <el-form-item
-                        :label="$t('desk.book_meetName') + '：'"
-                        prop="meetingName"
-                    >
+                    <el-form-item :label="$t('desk.book_meetName') + '：'" prop="meetingName">
                         <el-input v-model="checkInForm.meetingName"></el-input>
                     </el-form-item>
-                    <el-form-item
-                        :label="$t('frontOffice.enterpriseName') + ':'"
-                        prop="enterName"
-                    >
+                    <el-form-item :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">
                         <el-input v-model="checkInForm.enterName"></el-input>
                     </el-form-item>
                 </template>
@@ -372,7 +316,7 @@
                 <div class="right">
                     <el-form inline size="small">
                         <el-form-item>
-                            <el-button @click="empty_row_houses">{{ $t("desk.autoRowHouse") }}</el-button>
+                            <el-button @click="empty_row_houses" v-if="!storesNum">{{ $t("desk.autoRowHouse") }}</el-button>
                             <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
                                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}
                             </el-button>
@@ -388,9 +332,8 @@
                         >
                             <div class="row rowReverse">
                                 <div>
-                                    <!--<el-button type="primary" class="white" size="mini" @click="">附餐</el-button>-->
-                                    <!-- 排房-->
-                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)">{{ $t("desk.rowHouse") }}</el-button>
+                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)" v-if="!storesNum">
+                                        {{ $t("desk.rowHouse") }}</el-button>
                                 </div>
                                 <div>
                                     <span>{{ v.roomTypeName }}</span><span class="text-red" style="margin-left: 10px">{{ v.num }}{{ $t("manager.hk_space") }}</span>
@@ -412,15 +355,10 @@
         <!-- 编辑or详情弹窗 -->
         <div class="fixedFoot">
             <div class="wrap">
-                <el-button type="primary" class="submit" @click="hotel_check_in(2)">{{
-                        $t("commons.save")
-                    }}</el-button>
-                <!-- <el-button class="white" @click="hotel_check_in(3)"
-                            >{{ $t("frontOffice.saveGoon") }}{{ typeText }}</el-button
-                        > -->
-                <el-button class="white" @click="hotel_check_in(3)">{{
-                        $t("frontOffice.saveGoon")
-                    }}</el-button>
+                <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">取消</el-button>
+                <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">预定</el-button>
+                <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum">{{ $t("commons.save") }}</el-button>
+                <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>
             </div>
         </div>
         <!-- 排房dialog -->
@@ -680,7 +618,7 @@ import customer from "@/components/front/customer2";
 import guestChoose from "@/views/market/reception/checkin/guestChoose";
 import rowHouse from "@/components/front/rowHouse";
 export default {
-    props: ["operCheckinType"], //b1：普通预定 b2:当日回 b3:会场预定     a1: 入住办理
+    props: ["operCheckinType", "selectStoresNum"], //b1：普通预定 b2:当日回 b3:会场预定     a1: 入住办理
     components: {
         rowHouse,
         checkTheDetails,
@@ -807,6 +745,7 @@ export default {
     },
     data() {
         return {
+            storesNum: '',
             checkInDetail: {},//添加入住人 传到入住人组件值
             inRoomList: [], //添加入住人 传到入住人组件值
             addLivePersonShow: false, //是否显示添加入住人组件
@@ -824,10 +763,7 @@ export default {
                                 .replace(/-/g, "/")
                         );
                         if (this.operCheckinType == "b2" || this.operCheckinType == "a2") {
-                            //时租预订
-                            return (
-                                new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr
-                            );
+                            return timeStr.getTime() > timeStr - 8.64e6
                         }
                         return (
                             new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr
@@ -891,7 +827,6 @@ export default {
             waitingRoom: [],
             rowRoomCurrentItem: "",
             rowRoomCurrentList: [],
-
             hotelRoomListParams: {
                 buildingId: "",
                 buildingFloorId: "",
@@ -909,33 +844,11 @@ export default {
             },
             liveInPersonData: [],
             liveCardData: "",
-            // typeText: "入住",
-            ///////////*************/ */
-            cities: ["A002", "A003", "A004", "A005"],
-            checkboxGroup3: ["A004"],
-            roominfoList: [
-                { name: "A002", checked1: "未选", checked2: "已选" },
-                { name: "A004", checked1: "已选", checked2: "未选" },
-            ], //房间列表数据
-            dateList: [
-                { dateStr: "10/26", weekDay: "周一" },
-                { dateStr: "10/27", weekDay: "周二" },
-            ], //时间列表数据
         };
     },
-    created(){
-        this.$F.doRequest(this,'/pms/oat/oat_list',{},res=>{
-            console.log(res);
-            this.otaList = res.oatList;
-        })
-    },
+
     mounted() {
-        this.handleOperCheckinType();
-        this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
-            this.salesList = data.hotelUserList;
-        });
-        this.getDataList();
-        this.initForm();
+        this.initModule();
     },
 
     watch: {
@@ -1030,6 +943,48 @@ export default {
         },
     },
     methods: {
+        //中央预定取消和预定操作
+        handleCenter(type) {
+            if (type == 'centerReserve') {
+                this.hotel_check_in(type, ()=> {
+                    this.$emit("cancel");
+                })
+            } else {
+                this.$emit("cancel");
+            }
+        },
+        initModule(storesNum) {
+            if (storesNum) {
+                this.storesNum = storesNum;
+            } else {
+                if (this.selectStoresNum) {
+                    this.storesNum = this.selectStoresNum;
+                }
+            }
+            let params = {};
+            this.makeStoresNum(params);
+            this.$F.doRequest(this,'/pms/oat/oat_list',params,res=>{
+                console.log(res);
+                this.otaList = res.oatList;
+            })
+            this.handleOperCheckinType();
+            params = { salesFlag: 1 }
+            this.makeStoresNum(params);
+            this.$F.commons.fetchSalesList(params, (data) => {
+                this.salesList = data.hotelUserList;
+            });
+            this.getDataList();
+            this.initForm();
+        },
+
+        makeStoresNum(params) {
+            if (this.storesNum) {
+                this.$F.merge(params, {
+                    storesNum: this.storesNum
+                })
+            }
+        },
+
         // 排房组件回调
         rowHouseCallback(data) {
 
@@ -1041,11 +996,7 @@ export default {
                 let lastObject = this.checkInForm.reserveProjects[
                 this.checkInForm.reserveProjects.length - 1
                     ];
-                if (
-                    lastObject.projectName &&
-                    lastObject.price &&
-                    lastObject.projectName
-                ) {
+                if (lastObject.projectName && lastObject.price && lastObject.projectName) {
                     this.checkInForm.reserveProjects.push({});
                 }else{
                     this.$message({
@@ -1068,9 +1019,7 @@ export default {
             console.log(newCheck);
             return row[newCheck];
         },
-        indexMethod(index) {
-            return this.roominfoList[index].name;
-        },
+
         initForm() {
             this.getRoomsForm = {
                 changeType: 1,
@@ -1083,6 +1032,8 @@ export default {
                 b2: "2",
                 b3: "3",
             };
+            this.inRoomList = [];
+            this.waitingRoom = [];
             this.checkInForm = {
                 operCheckinType: operTypeEM[this.operCheckinType] || "", //预定办理类型  1普通预定 2时租房预定 3会场预定 Integer必填
                 name: "", //入住人姓名  String必填
@@ -1129,7 +1080,10 @@ export default {
             let params = this.$F.deepClone(this.getRoomsForm);
             params.checkinTime = this.checkInForm.checkinTime.split(' ')[0];
             params.checkoutTime = this.checkInForm.checkoutTime;
-            params.changeType = 2
+            params.changeType = 2;
+
+            this.makeStoresNum(params);
+            params.roomType = this.operCheckinType == 'b3' ? 2 : 1;
             this.$F.doRequest(
                 this,
                 "/pms/checkin/hotel_checkin_roominfo",
@@ -1196,7 +1150,7 @@ export default {
         //  2: 保存；
         //  3: 保存后继续办理入住预定
         // }
-        hotel_check_in(type) {
+        hotel_check_in(type, centerReserveCallback) {
             let params = this.$F.deepClone(this.checkInForm);
             this.isSubmitErr = false;
             let url = "";
@@ -1218,12 +1172,14 @@ export default {
             }
             let ajax = () => {
                 params.checkInRoomJson = JSON.stringify(this.checkInForm.checkInRoomJson || params.checkInRoomJson);
+                this.makeStoresNum(params);
                 this.$F.doRequest(this, url, params, (data) => {
+                    this.$message({
+                        message: "Success",
+                        type: "success",
+                    });
+
                     if (type == 2) {
-                        this.$message({
-                            message: "Success",
-                            type: "success",
-                        });
                         window.setTimeout(() => {
                             if (operCheckinType == "a1" || operCheckinType == "a2") {
                                 this.$router.push(
@@ -1236,13 +1192,11 @@ export default {
                             }
                         }, 200);
                     } else if (type == 3) {
-                        this.$message({
-                            message: this.$t("commons.request_success"),
-                            type: "success",
-                        });
                         this.initForm();
                         this.waitingRoom = [];
                         this.liveInPersonData = [];
+                    } else if (type == 'centerReserve') {
+                        centerReserveCallback();
                     }
                 });
             };
@@ -1269,18 +1223,6 @@ export default {
                                 return false;
                             }
                         }
-                        // if (this.liveCardData == '') {
-                        //     this.isSubmitErr = true
-                        //     this.$message.error('请制卡')
-                        //     // this.liveCard_in_person_list()
-                        //     return false
-                        // }
-                        // if (this.liveCardData.unfinished > 0) {
-                        //     this.isSubmitErr = true
-                        //     this.$message.error('请制卡')
-                        //     // this.liveCard_in_person_list()
-                        //     return false
-                        // }
                     } else {
                         this.waitingRoom.forEach((item) => {
                             let temp = {
@@ -1357,7 +1299,6 @@ export default {
         },
 
         rowRoomByItem(item, index) {
-            debugger
             let currRommTypeData = this.waitingRoom.filter(waitRoom => {
                 return waitRoom.roomTypeId == item.roomTypeId;
             })[0];
@@ -1407,7 +1348,7 @@ export default {
         // },
         //手动排房确定
         db_row_houses() {
-            debugger
+            ugger
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t("desk.home_morethenNum"));
                 return;
@@ -1431,7 +1372,7 @@ export default {
         rowRoomCurrentListItemAdd(item) {
             this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
             let exist = false;
-            debugger
+            ugger
             for (let k in this.rowRoomCurrentItem.roomsArr) {
                 if (item.id == this.rowRoomCurrentItem.roomsArr[k].id || item.id == this.rowRoomCurrentItem.roomsArr[k].roomId) {
                     this.rowRoomCurrentItem.roomsArr.splice(k, 1);
@@ -1495,6 +1436,7 @@ export default {
                     }
                 }
             };
+            this.makeStoresNum(params);
             this.$F.doRequest(
                 this,
                 "/pms/checkin/empty_row_houses",
@@ -1571,6 +1513,7 @@ export default {
             let params = {
                 checkInRoomIds: arr,
             };
+            this.makeStoresNum(params);
             this.$F.doRequest(
                 this,
                 "/pms/checkin/make_card_status",
@@ -1601,6 +1544,7 @@ export default {
                 paging: false,
             };
             this.nameLoading = true;
+            this.makeStoresNum(params);
             this.$F.doRequest(
                 this,
                 "/pms/checkin/checkin_order_list",
@@ -1718,16 +1662,22 @@ export default {
             }
         },
         startTimeChange(e) {
-            let day = 0;
-            if (this.operCheckinType == "b2") {
-            }
-            if (this.checkInForm.checkoutTime) {
-                day = getDaysBetween(
+            if (this.operCheckinType == 'b1') {
+                if (e > this.checkInForm.checkoutTime) {
+                    let date = new Date(e);
+                    date.setDate(date.getDate() + 1);
+                    this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
+                }
+                this.checkInForm.checkinDays = getDaysBetween(
                     new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
                     new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")
                 );
-                this.checkInForm.checkinDays = day;
+            } else if (this.operCheckinType == 'b2') {
+                this.checkInForm.checkoutTime = new Date(e).Format("yyyy-MM-dd") + " 22:00:00";
             }
+            let date = new Date(e);
+            date.setDate(date.getHours() + 2);  //预抵时间修改 保留时间跟着修改
+            this.checkInForm.keepTime = date.Format("yyyy-MM-dd HH:mm:ss");
         },
         endTimeChange(e) {
             let day = 0;

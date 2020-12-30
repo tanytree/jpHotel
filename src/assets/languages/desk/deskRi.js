@@ -369,6 +369,7 @@ module.exports = {
   customer_guestRoom: '客室',
   customer_leaveStoreDate: '出発日',
   customer_livePeople: '宿泊者',
+    customer_reservePerson: '预订人',
   customer_liveToleave: '到着−出発日',
   customer_arrived: 'C/I',
   customer_leave: 'C/O',

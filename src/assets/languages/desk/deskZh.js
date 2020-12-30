@@ -590,6 +590,8 @@ module.exports = {
   customer_guestRoom: '客房',
   customer_leaveStoreDate: '离店日期',
   customer_livePeople: '入住人',
+    customer_reservePerson: '予定人',
+
   customer_liveToleave: '入住-离店日期',
   customer_arrived: '抵',
   customer_leave: '离',

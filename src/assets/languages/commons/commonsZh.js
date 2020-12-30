@@ -137,13 +137,18 @@ module.exports = {
         type: 'info',
         name: '维修',
         value: '5'
+    }, {
+        type: 'info',
+        name: '未到',
+        value: '6'
     }],
     F_roomStatus: {
         '1': '空净',
         '2': '空脏',
         '3': '住净',
         '4': '住脏',
-        '5': '维修'
+        '5': '维修',
+        '6': '未到',
     },
     //朝向
     toward: {

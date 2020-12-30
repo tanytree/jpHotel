@@ -375,7 +375,6 @@ export default {
 					weeks: week,
 					strategyJson: JSON.stringify(this.roomStrategyJson_p)
 				}
-				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_price_roomtype_strategy_save",
@@ -609,7 +608,6 @@ export default {
 							this.roomStrategyJson_p.push(obj)
 						})
 					} else {
-						debugger
 						obj = {};
 						obj.houseName = value.houseName;
 						obj.roomType = value.roomType;
@@ -623,7 +621,6 @@ export default {
 					console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
 				})
 				console.log('this.ruleForm_Pie.roomStrategyJson====', this.ruleForm_Pie.roomStrategyJson)
-				debugger
 				switch (type) {
 					case "adjust":
 						// 批量调价

@@ -305,7 +305,6 @@ export default {
               headerObj: {},
               personList: [],
           }
-          debugger
           if (row.headerObj) {
               this.$F.merge(this.currentCustomer, row);
               this.currentCustomerVisible = true;
@@ -321,18 +320,20 @@ export default {
         //     return item.roomId == this.currentRoom.roomId
         // }) || []) || {};
       }
-      this.checkinInfo.inRoomList.forEach((item) => {
-        if (item.personList && item.personList.length > 0) {
-          item.personList.forEach((person, index) => {
-            if (person.personType == 2) {
-              item.headerObj = person; //主入住人
-              item.personList.splice(index, 1);
-            }
+      if (this.checkinInfo.inRoomList && this.checkinInfo.inRoomList.length > 0) {
+          this.checkinInfo.inRoomList.forEach((item) => {
+              if (item.personList && item.personList.length > 0) {
+                  item.personList.forEach((person, index) => {
+                      if (person.personType == 2) {
+                          item.headerObj = person; //主入住人
+                          item.personList.splice(index, 1);
+                      }
+                  });
+              } else {
+                  item.personList = [];
+              }
           });
-        } else {
-          item.personList = [];
-        }
-      });
+      }
     },
     init(type, checkinInfo) {
       this.handleData(checkinInfo);

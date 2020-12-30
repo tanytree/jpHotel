@@ -67,20 +67,20 @@
                 </el-form>
 
                 <!-- 渠道 -->
-                <div class="room">
-                    <div class="tag-top">
-                        <span class="fang">{{ $t("desk.home_channel") }}</span>
-                        <span class="reset" @click="clearnSelectAttr('channel')">{{ $t("commons.resetBtn") }}</span>
-                    </div>
-                    <div class="tag-btm">
-                        <el-checkbox-group v-model="searchForm.channel" @change="handleChange">
-                            <el-checkbox class="roomType" v-for="item of channel" :key="item.channel" :label="item.channel">
-                                {{ item.name ? item.name : $t("desk.home_unknown") }}
-                                <span class="total">{{ item.total }}</span>
-                            </el-checkbox>
-                        </el-checkbox-group>
-                    </div>
-                </div>
+<!--                <div class="room">-->
+<!--                    <div class="tag-top">-->
+<!--                        <span class="fang">{{ $t("desk.home_channel") }}</span>-->
+<!--                        <span class="reset" @click="clearnSelectAttr('channel')">{{ $t("commons.resetBtn") }}</span>-->
+<!--                    </div>-->
+<!--                    <div class="tag-btm">-->
+<!--                        <el-checkbox-group v-model="searchForm.channel" @change="handleChange">-->
+<!--                            <el-checkbox class="roomType" v-for="item of channel" :key="item.channel" :label="item.channel">-->
+<!--                                {{ item.name ? item.name : $t("desk.home_unknown") }}-->
+<!--                                <span class="total">{{ item.total }}</span>-->
+<!--                            </el-checkbox>-->
+<!--                        </el-checkbox-group>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
 
             <el-container class="right" v-loading="roomloading">
@@ -134,187 +134,187 @@
                     <!--          <el-button type="primary"  class="submit" size="small" @click="print = true"  icon="el-icon-message-solid">-->
                     <!--              {{ $t("desk.home_pushAnd") }}</el-button>-->
                     <!-- 催押 -->
-                    <el-dialog top="0" :title="$t('desk.home_nowCall')" width="1160px" :visible.sync="print">
-                        <el-form :model="form">
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item :label="$t('desk.home_roomNum') + ':'">
-                                        <el-input v-model="form.roomname" style="width: 160px" autocomplete="off"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item :label="$t('desk.home_phoneNum') + ':'" :label-width="formLabelWidth">
-                                        <el-input v-model="form.phonenum" style="width: 160px" autocomplete="off"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item :label="$t('desk.home_name') + ':'" :label-width="formLabelWidth">
-                                        <el-input v-model="form.peoplename" style="width: 160px" autocomplete="off"></el-input>
-                                    </el-form-item>
-                                </el-col>
+<!--                    <el-dialog top="0" :title="$t('desk.home_nowCall')" width="1160px" :visible.sync="print">-->
+<!--                        <el-form :model="form">-->
+<!--                            <el-row>-->
+<!--                                <el-col :span="6">-->
+<!--                                    <el-form-item :label="$t('desk.home_roomNum') + ':'">-->
+<!--                                        <el-input v-model="form.roomname" style="width: 160px" autocomplete="off"></el-input>-->
+<!--                                    </el-form-item>-->
+<!--                                </el-col>-->
+<!--                                <el-col :span="6">-->
+<!--                                    <el-form-item :label="$t('desk.home_phoneNum') + ':'" :label-width="formLabelWidth">-->
+<!--                                        <el-input v-model="form.phonenum" style="width: 160px" autocomplete="off"></el-input>-->
+<!--                                    </el-form-item>-->
+<!--                                </el-col>-->
+<!--                                <el-col :span="6">-->
+<!--                                    <el-form-item :label="$t('desk.home_name') + ':'" :label-width="formLabelWidth">-->
+<!--                                        <el-input v-model="form.peoplename" style="width: 160px" autocomplete="off"></el-input>-->
+<!--                                    </el-form-item>-->
+<!--                                </el-col>-->
 
-                                <el-col :span="6">
-                                    <el-form-item>
-                                        <el-button style="width: 80px; margin-left: 20px" type="primary" @click="submitForm('form')">{{ $t("commons.queryBtn") }} </el-button>
-                                        <el-button style="width: 80px" @click="resetForms('form')">{{ $t("commons.resetBtn") }}</el-button>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="2">
-                                    <el-checkbox v-model="checked">{{ $t("desk.home_all") }} 120</el-checkbox>
-                                </el-col>
-                                <el-col :span="2">
-                                    <el-checkbox v-model="checked">{{ $t("desk.home_pushAnd") }} 20</el-checkbox>
-                                </el-col>
-                                <el-col :span="2">
-                                    <el-checkbox v-model="checked">{{ $t("desk.home_owe") }} 120</el-checkbox>
-                                </el-col>
-                            </el-row>
+<!--                                <el-col :span="6">-->
+<!--                                    <el-form-item>-->
+<!--                                        <el-button style="width: 80px; margin-left: 20px" type="primary" @click="submitForm('form')">{{ $t("commons.queryBtn") }} </el-button>-->
+<!--                                        <el-button style="width: 80px" @click="resetForms('form')">{{ $t("commons.resetBtn") }}</el-button>-->
+<!--                                    </el-form-item>-->
+<!--                                </el-col>-->
+<!--                            </el-row>-->
+<!--                            <el-row>-->
+<!--                                <el-col :span="2">-->
+<!--                                    <el-checkbox v-model="checked">{{ $t("desk.home_all") }} 120</el-checkbox>-->
+<!--                                </el-col>-->
+<!--                                <el-col :span="2">-->
+<!--                                    <el-checkbox v-model="checked">{{ $t("desk.home_pushAnd") }} 20</el-checkbox>-->
+<!--                                </el-col>-->
+<!--                                <el-col :span="2">-->
+<!--                                    <el-checkbox v-model="checked">{{ $t("desk.home_owe") }} 120</el-checkbox>-->
+<!--                                </el-col>-->
+<!--                            </el-row>-->
 
-                            <el-row>
-                                <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-                                                            <div style="margin: 15px 0;"></div>
-                                                            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                                                              <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
-                                </el-checkbox-group>-->
-                            </el-row>
-                        </el-form>
+<!--                            <el-row>-->
+<!--                                &lt;!&ndash; <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>-->
+<!--                                                            <div style="margin: 15px 0;"></div>-->
+<!--                                                            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">-->
+<!--                                                              <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>-->
+<!--                                </el-checkbox-group>&ndash;&gt;-->
+<!--                            </el-row>-->
+<!--                        </el-form>-->
 
-                        <el-row>
-                            <el-table :data="tableData" style="width: 100%">
-                                <el-table-column :label="$t('desk.home_roomNum')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :label="$t('desk.customer_livePeople')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :label="$t('desk.customer_totalConsum')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :label="$t('desk.order_theDeposit')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :label="$t('desk.home_balanceOf')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :label="$t('food.common.status')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :label="$t('desk.home_name')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column :label="$t('desk.home_phoneNum')" width="120">
-                                    <template slot-scope="scope">
-                                        <div slot="reference" class="name-wrapper">
-                                            {{ scope.row.name }}
-                                        </div>
-                                    </template>
-                                </el-table-column>
+<!--                        <el-row>-->
+<!--                            <el-table :data="tableData" style="width: 100%">-->
+<!--                                <el-table-column :label="$t('desk.home_roomNum')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column :label="$t('desk.customer_livePeople')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column :label="$t('desk.customer_totalConsum')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column :label="$t('desk.order_theDeposit')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column :label="$t('desk.home_balanceOf')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column :label="$t('food.common.status')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column :label="$t('desk.home_name')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column :label="$t('desk.home_phoneNum')" width="120">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <div slot="reference" class="name-wrapper">-->
+<!--                                            {{ scope.row.name }}-->
+<!--                                        </div>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
 
-                                <el-table-column :label="$t('commons.operating')">
-                                    <template slot-scope="scope">
-                                        <!-- <el-button
-                                                                        size="mini"
-                                        @click="Edit(scope.$index, scope.row)">账单详情</el-button>-->
-                                        <el-button
-                                            type="text"
-                                            @click="Edit(scope.$index, scope.row)"
-                                            size="mini"
-                                        >{{$t('desk.home_accountDetail')}}
-                                        </el-button
-                                        >
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </el-row>
-                        <div slot="footer" class="dialog-footer" style="text-align: center">
-                            <el-button type="primary" @click="print = false">{{$t('commons.close')}}</el-button>
-                        </div>
-                    </el-dialog>
+<!--                                <el-table-column :label="$t('commons.operating')">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        &lt;!&ndash; <el-button-->
+<!--                                                                        size="mini"-->
+<!--                                        @click="Edit(scope.$index, scope.row)">账单详情</el-button>&ndash;&gt;-->
+<!--                                        <el-button-->
+<!--                                            type="text"-->
+<!--                                            @click="Edit(scope.$index, scope.row)"-->
+<!--                                            size="mini"-->
+<!--                                        >{{$t('desk.home_accountDetail')}}-->
+<!--                                        </el-button-->
+<!--                                        >-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                            </el-table>-->
+<!--                        </el-row>-->
+<!--                        <div slot="footer" class="dialog-footer" style="text-align: center">-->
+<!--                            <el-button type="primary" @click="print = false">{{$t('commons.close')}}</el-button>-->
+<!--                        </div>-->
+<!--                    </el-dialog>-->
 
                     <!-- <el-button type="primary"><i class="el-icon-message-solid"></i>催押</el-button> -->
                     <!-- 图标 -->
-                    <el-popover placement="top-start" width="840" trigger="hover">
-                        <!-- <p>hdfkhajkghgh</p> -->
-                        <div class="icondesc">
-                            <h3>{{$t('desk.home_iconShows')}}</h3>
+<!--                    <el-popover placement="top-start" width="840" trigger="hover">-->
+<!--                        &lt;!&ndash; <p>hdfkhajkghgh</p> &ndash;&gt;-->
+<!--                        <div class="icondesc">-->
+<!--                            <h3>{{$t('desk.home_iconShows')}}</h3>-->
+<!--&lt;!&ndash;                            <el-col :span="4" class="item">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span class="inco">钟</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span>钟点房</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </el-col>&ndash;&gt;-->
 <!--                            <el-col :span="4" class="item">-->
-<!--                                <span class="inco">钟</span>-->
-<!--                                <span>钟点房</span>-->
+<!--                                <span class="inco">{{$t('desk.home_drawUp')}}</span>-->
+<!--                                <span>{{$t('desk.home_bookRoom')}}</span>-->
 <!--                            </el-col>-->
-                            <el-col :span="4" class="item">
-                                <span class="inco">{{$t('desk.home_drawUp')}}</span>
-                                <span>{{$t('desk.home_bookRoom')}}</span>
-                            </el-col>
-                            <el-col :span="4" class="item">
-                                <span class="inco">{{$t('desk.home_form')}}</span>
-                                <span>{{$t('desk.home_todayDeparture')}}</span>
-                            </el-col>
 <!--                            <el-col :span="4" class="item">-->
-<!--                                <span class="inco">长</span>-->
-<!--                                <span>长租房</span>-->
+<!--                                <span class="inco">{{$t('desk.home_form')}}</span>-->
+<!--                                <span>{{$t('desk.home_todayDeparture')}}</span>-->
 <!--                            </el-col>-->
-                            <el-col :span="4" class="item">
-                <span class="inco i_img">
-                  <img
-                      :src="require('@/assets/images/frontdesk/minClearn.png')"
-                  />
-                </span>
-                                <span>{{$t('desk.home_dirtyRoom')}}</span>
-                            </el-col>
-                            <el-col :span="4" class="item">
-                <span class="inco i_img">
-                  <img :src="require('@/assets/images/frontdesk/minFix.png')"/>
-                </span>
-                                <span>{{$t('desk.home_maintenanceRoom')}}</span>
-                            </el-col>
-                            <el-col :span="4" class="item">
-                <span class="inco i_img">
-                  <img :src="require('@/assets/images/frontdesk/lian.png')"/>
-                </span>
-                                <!--                <span>联房</span>-->
-                            </el-col>
-                        </div>
+<!--&lt;!&ndash;                            <el-col :span="4" class="item">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span class="inco">长</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span>长租房</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </el-col>&ndash;&gt;-->
+<!--                            <el-col :span="4" class="item">-->
+<!--                <span class="inco i_img">-->
+<!--                  <img-->
+<!--                      :src="require('@/assets/images/frontdesk/minClearn.png')"-->
+<!--                  />-->
+<!--                </span>-->
+<!--                                <span>{{$t('desk.home_dirtyRoom')}}</span>-->
+<!--                            </el-col>-->
+<!--                            <el-col :span="4" class="item">-->
+<!--                <span class="inco i_img">-->
+<!--                  <img :src="require('@/assets/images/frontdesk/minFix.png')"/>-->
+<!--                </span>-->
+<!--                                <span>{{$t('desk.home_maintenanceRoom')}}</span>-->
+<!--                            </el-col>-->
+<!--                            <el-col :span="4" class="item">-->
+<!--                <span class="inco i_img">-->
+<!--                  <img :src="require('@/assets/images/frontdesk/lian.png')"/>-->
+<!--                </span>-->
+<!--                                &lt;!&ndash;                <span>联房</span>&ndash;&gt;-->
+<!--                            </el-col>-->
+<!--                        </div>-->
 
-                        <el-button
-                            type="text"
-                            class="icon"
-                            size="small"
-                            slot="reference"
-                            icon="el-icon-question"
-                        >{{$t('desk.home_iconImg')}}
-                        </el-button
-                        >
-                    </el-popover>
+<!--                        <el-button-->
+<!--                            type="text"-->
+<!--                            class="icon"-->
+<!--                            size="small"-->
+<!--                            slot="reference"-->
+<!--                            icon="el-icon-question"-->
+<!--                        >{{$t('desk.home_iconImg')}}-->
+<!--                        </el-button-->
+<!--                        >-->
+<!--                    </el-popover>-->
                     <!--                    <div style="float:right">80</div>-->
                 </el-footer>
             </el-container>
