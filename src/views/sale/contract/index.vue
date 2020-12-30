@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 13:58:24
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-17 16:49:32
+ * @LastEditTime: 2020-12-30 15:07:38
  * @FilePath: \jiudian\src\views\sale\contract\index.vue
  -->
 <template>
@@ -13,10 +13,10 @@
                          v-if="$F.filterThirdMenu('sale1', item.path, true)">
                 <!-- 单位查询-->
                 <Unitquery v-if="item.path == 'Unitquery'" isHeader="1"/>
-
+                <!-- 财务查询 -->
                 <service v-if="item.path == 'accountingQuery'"></service>
                 <!-- 请款管理 -->
-                <bill v-if="item.path == 'accountingManagement'"></bill>
+                <bill v-if="item.path == 'accountingManagement'" souracePage='header'></bill>
                 <!-- 入账管理 -->
                 <accounts v-if="item.path == 'inAccountingManagement'"></accounts>
             </el-tab-pane>

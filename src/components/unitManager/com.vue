@@ -83,14 +83,12 @@
           prop="contactPhone"
           :label="$t('desk.home_phoneNumA')"
           show-overflow-tooltip
-        ></el-table-column>
-
-        <!--        <el-table-column :label="$t('desk.customer_pricingStrategy')" show-overflow-tooltip>-->
-        <!--            <template slot-scope="{row}">-->
-        <!--              {{checkEnterStrategyId(row)}}-->
-        <!--            </template>-->
-        <!--        </el-table-column>-->
-
+        >
+        <template slot-scope="{row}">
+                <div v-if="row.contactPhone">(手){{row.contactPhone}}</div>
+                <div v-if="row.mobile">(单){{row.mobile}}</div>
+        </template>
+        </el-table-column>
         <el-table-column
           :label="$t('desk.home_state')"
           width="80px"

@@ -156,7 +156,7 @@ export default {
   },
 
   created() {
-    this.getDataList();
+    this.resetForm();
     this.getStoreList();
     this.getUnitList();
   },

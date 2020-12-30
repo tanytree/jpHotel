@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-15 17:36:45
+ * @LastEditTime: 2020-12-30 16:37:15
  * @FilePath: \jiudian\src\main.js
  */
 import Vue from 'vue'
@@ -75,7 +75,8 @@ Date.prototype.Format = function (fmt) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
-Vue.prototype.$set = Vue.set,
+Vue.prototype.$set = Vue.set;
+Vue.prototype.$delete = Vue.delete;
 new Vue({
     el: '#app',
     router,

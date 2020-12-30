@@ -19,7 +19,7 @@
       </el-tab-pane> -->
       <!-- 请款管理 -->
       <el-tab-pane :label="$t('desk.customer_zhangSet')" name="third">
-        <bill></bill>
+        <bill souracePage='footer'></bill>
       </el-tab-pane>
       <!-- 入账管理 -->
       <el-tab-pane :label="$t('desk.customer_accounting')" name="four">

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-29 18:08:28
+ * @LastEditTime: 2020-12-30 14:20:11
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -45,9 +45,15 @@
                                 <!-- 点击 修改按钮 进来后显示的一排按钮 -->
                                 <el-row v-if="type == 'edit'">
                                     <el-form-item label>
+                                        <!-- 换卡 -->
                                         <el-button type="primary" size="mini" @click="setCardFormBtnClick(1)">{{ $t("desk.customer_changeCard") }}</el-button>
+                                        <!-- 修改类型 -->
                                         <el-button type="primary" size="mini" @click="setCardFormBtnClick(2)">{{ $t("desk.customer_resetType") }}</el-button>
-                                        <el-button type="primary" size="mini" @click="setCardFormBtnClick(3)">{{ $t("desk.customer_stopUse") }}</el-button>
+                                        <!-- 停用 -->
+                                        <el-button type="primary" v-if="detailForm.state==1" size="mini" @click="setCardFormBtnClick(3)">{{ $t("desk.customer_stopUse") }}</el-button>
+                                        <!-- 启用 -->
+                                        <el-button type="primary" size="mini" v-if="detailForm.state==3" @click="useMember">启用</el-button>
+                                        <!-- 挂失补卡 -->
                                         <el-button type="primary" size="mini" @click="setCardFormBtnClick(4)">{{ $t("desk.customer_reportLossCard") }}</el-button>
                                     </el-form-item>
                                 </el-row>
@@ -428,14 +434,15 @@
         <el-dialog top="0" :title="cardForm.titleName" :visible.sync="setCardFormVisible" class="setCardForm">
             <el-form :model="cardForm" ref="cardForm" :rules="rules" :label-width="formLabelWidth">
                 <el-form-item label class="require" label-width="80px">
-                    <span style="margin-right:10px">{{ $t("desk.customer_originNum") + ":" }}{{ detailForm.memberCard}}</span>
+                    <span style="margin-right:10px" v-if="cardForm.type != 3">{{ $t("desk.customer_originNum") + ":" }}{{ detailForm.memberCard}}</span>
+                    <span style="margin-right:10px" v-if="cardForm.type == 3">卡号：{{ detailForm.memberCard}}</span>
                     <span style="margin-right:10px"> {{ $t("desk.home_name") + ":" }}{{ detailForm.name }}</span>
                     <span>{{ $t("desk.customer_memType") + ":"}}{{ F_memberTypeId(detailForm.memberTypeId)}}</span>
                 </el-form-item>
                 <template v-if="cardForm.type == 1">
                     <el-form-item :label="$t('desk.customer_newCardNum')" class prop="memberCard">
-                        <el-input style="width: 300px;margin-right:20px;" :disabled='cardForm.state' v-model="cardForm.memberCard" placeholder></el-input>
-                        <el-checkbox v-model="cardForm.state">系统生成</el-checkbox>
+                        <el-input style="width: 300px;margin-right:20px;" :disabled='cardForm.systemGen' v-model="cardForm.memberCard" placeholder></el-input>
+                        <el-checkbox v-model="cardForm.systemGen">系统生成</el-checkbox>
                     </el-form-item>
                 </template>
                 <template v-if="cardForm.type == 2">
@@ -479,23 +486,18 @@
                         <el-form-item :label="$t('desk.customer_newCardNum')" class>
                             <el-input style="width: 300px" v-model="cardForm.memberCard" placeholder></el-input>
                         </el-form-item>
-                        <el-form-item :label="$t('desk.customer_payType')" class prop="payWay">
-                            <el-select v-model="cardForm.payWay" style="width: 300px">
-                                <el-option :label="$t('desk.serve_cash')" :value="1"></el-option>
-                                <el-option :label="$t('desk.serve_wechat')" :value="2"></el-option>
-                                <el-option :label="$t('desk.serve_alipay')" :value="3"></el-option>
-                                <el-option :label="$t('desk.customer_unionpay')" :value="4"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.customer_payPrice')" class prop="payPrices">
-                            <el-input style="width: 300px" v-model="cardForm.payPrices" placeholder></el-input>
-                        </el-form-item>
                     </template>
-                    <el-form-item :label="$t('desk.home_note')" class prop="remark">
+                    <el-form-item :label="$t('desk.home_note')" class>
                         <el-input style="width: 300px" type="textarea" v-model="cardForm.remark" placeholder></el-input>
                     </el-form-item>
                     <el-form-item :label="$t('desk.customer_creditCard')" class prop="state" v-if="cardForm.operType == 1">
                         <el-checkbox v-model="detailForm.state"></el-checkbox>
+                    </el-form-item>
+                </template>
+                <!-- type为5是会员启用 -->
+                <template v-if="cardForm.type == 5">
+                    <el-form-item :label="$t('desk.home_note')" class prop="remark">
+                        <el-input style="width: 300px" type="textarea" v-model="cardForm.remark" placeholder></el-input>
                     </el-form-item>
                 </template>
             </el-form>
@@ -557,6 +559,7 @@ export default {
                 titleName: "",
                 type: "",
                 name: "",
+                operType: 2,
             },
             detailForm: {
                 memberTypeId: "",
@@ -764,6 +767,7 @@ export default {
             resetMemberTab: "resetMemberTab",
             resetActive: "resetActive",
         }),
+
         checkNextcode(code1) {
             if (!code1 || code1.length !== 3) {
                 this.$message({
@@ -904,6 +908,12 @@ export default {
                 }
             );
         },
+        // 点击 启用 按钮
+        useMember() {
+            this.cardForm.titleName = "会员启用";
+            this.cardForm.type = 5;
+            this.setCardFormVisible = true;
+        },
         setCardFormBtnClick(v) {
             let enums = {
                 1: this.$t("desk.customer_changeCardOperate"),
@@ -914,17 +924,22 @@ export default {
             this.cardForm.type = v;
             this.cardForm.titleName =
                 v && enums[v] ? enums[v] : this.$t("desk.serve_other");
-            this.setCardFormVisible = true;
+            if (this.cardForm.type == 4 && this.detailForm.state == 2) {
+                this.$message.warning("该会员卡在挂失中");
+            } else {
+                this.setCardFormVisible = true;
+            }
         },
         setCardFrormChange(formName) {
-            if (this.cardForm.type == 1 && this.cardForm.state) {
+            if (this.cardForm.type == 1 && this.cardForm.systemGen) {
                 let params = {},
                     url = "/pms/hotelmember/changecard";
                 params = {
                     id: this.detailForm.id,
-                    remark: this.cardForm.remark,
+                    remark: "无",
                     memberCard: this.cardForm.memberCard,
-                    state: this.cardForm.state ? 1 : 3,
+                    state: 1,
+                    systemGen: this.cardForm.systemGen ? "1" : "2",
                 };
                 this.$F.doRequest(this, url, params, (data) => {
                     if (this.cardForm.type != 3 && this.cardForm.type != 4) {
@@ -943,9 +958,10 @@ export default {
                             url = "/pms/hotelmember/changecard";
                             params = {
                                 id: this.detailForm.id,
-                                remark: this.cardForm.remark,
+                                remark: "无",
                                 memberCard: this.cardForm.memberCard,
-                                state: this.cardForm.state ? 1 : 3,
+                                state: 1,
+                                systemGen: this.cardForm.systemGen ? "1" : "2",
                             };
                         }
                         if (this.cardForm.type == 2) {
@@ -970,8 +986,22 @@ export default {
                                 state: 3,
                             };
                         }
+                        if (this.cardForm.type == 5) {
+                            url = "/pms/hotelmember/enable_disable";
+                            params = {
+                                id: this.detailForm.id,
+                                remark: this.cardForm.remark,
+                                state: 1,
+                            };
+                        }
                         if (this.cardForm.type == 4) {
+                            if (!this.cardForm.remark) {
+                                this.cardForm.remark = "无";
+                            }
                             if (this.cardForm.operType == 2) {
+                                if (!this.cardForm.memberCard) {
+                                    this.cardForm.memberCard = this.detailForm.memberCard;
+                                }
                                 params = {
                                     memberId: this.detailForm.id,
                                     remark: this.cardForm.remark,
@@ -980,8 +1010,8 @@ export default {
                                     operType: 2,
                                     oldCardNum: this.detailForm.memberCard,
                                     cardNum: this.cardForm.memberCard,
-                                    payWay: this.cardForm.payWay,
-                                    payPrices: this.cardForm.payPrices,
+                                    payWay: 0,
+                                    payPrices: 0,
                                 };
                                 url = "/pms/hotelmember/change_type";
                             } else {
@@ -996,6 +1026,7 @@ export default {
                         this.$F.doRequest(this, url, params, (data) => {
                             if (
                                 this.cardForm.type != 3 &&
+                                this.cardForm.type != 5 &&
                                 this.cardForm.type != 4
                             ) {
                                 this.setCardFormVisible = false;
