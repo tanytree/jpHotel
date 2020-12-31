@@ -74,7 +74,7 @@
                   placeholder="请填写"
                   v-model="roomInfo.headerObj.region"
                   size="small"
-                
+
                 ></el-input>
             </el-form-item
             ></el-col>
@@ -289,6 +289,7 @@ export default {
                 let object = {
                     headerObj: {
                         checkinRoomId: room.roomId,
+                        housePrice: room.realPrice || room.reservePrice
                     },
                     room: room
                 };
@@ -300,8 +301,8 @@ export default {
                 })
                 room.personList.forEach((person, index) => {
                     if (person.personType == 2) {
-                        object.headerObj = this.$F.deepClone(person);
-                        object.headerObj.checkinRoomId = room.roomId
+                        this.$F.merge(object.headerObj, this.$F.deepClone(person));
+                        object.headerObj.checkinRoomId = room.roomId;
                         room.personList.splice(index, 1);
                     }
                 })
@@ -309,6 +310,8 @@ export default {
                 this.inRoomList.push(object);
             })
         }
+        console.log(this.inRoomList);
+        debugger
     },
   data() {
     return {

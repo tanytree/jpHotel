@@ -314,7 +314,6 @@ export default {
     handleData(orderInfo) {
       this.checkinInfo = this.$F.deepClone(orderInfo);
       console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
-      ;
       if (this.currentRoom) {
         // this.checkinInfo.inRoomList = (this.checkinInfo.inRoomList.forEach((item) => {
         //     return item.roomId == this.currentRoom.roomId

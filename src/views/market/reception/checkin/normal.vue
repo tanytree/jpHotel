@@ -1348,7 +1348,6 @@ export default {
         // },
         //手动排房确定
         db_row_houses() {
-            ugger
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t("desk.home_morethenNum"));
                 return;
@@ -1372,7 +1371,6 @@ export default {
         rowRoomCurrentListItemAdd(item) {
             this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
             let exist = false;
-            ugger
             for (let k in this.rowRoomCurrentItem.roomsArr) {
                 if (item.id == this.rowRoomCurrentItem.roomsArr[k].id || item.id == this.rowRoomCurrentItem.roomsArr[k].roomId) {
                     this.rowRoomCurrentItem.roomsArr.splice(k, 1);
