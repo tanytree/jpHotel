@@ -117,7 +117,7 @@
                                 </div>
                             </div>
                             <div v-else>
-                                <el-button v-if="scope.row.soldOut == 1" size="small" @click="changeCartCount(scope.$index,2)">{{$t('food.common.isadd')}}</el-button>
+                                <el-button :disabled="scope.row.state == 2" v-if="scope.row.soldOut == 1" size="small" @click="changeCartCount(scope.$index,2)">{{$t('food.common.isadd')}}</el-button>
                                 <span v-else>-</span>
                             </div>
 
@@ -246,6 +246,7 @@
             getAllTableList(){
                 this.list_loading = true
                 let params = this.searchForm
+                params.state = 1
                 params.userId = this.userId
                 params.storesNum = this.storesNum
                 this.$F.doRequest(this, "/pms/dishes/dishes_manage_list", params, (res) => {
@@ -282,11 +283,10 @@
 
             //购物车的加减 type = 1 是减少  2 是添加
             changeCartCount(v,type){
-
                 let info  = this.allTableData[v]
                 let good = this.cart.find(v=>v.dishesId == info.id)
 
-                // console.log(info)
+                console.log(info)
 
                 if(type == 1){
                     // console.log('减少')
@@ -333,9 +333,6 @@
                         }
                     }
                 }else{
-
-
-
                     if(info.remainingCount == 0){
                         this.$alert(this.$t('food.common.soldOut') , this.$t('food.common.tip'), {
                           confirmButtonText: this.$t('food.common.ok'),
@@ -491,7 +488,7 @@
                 params.orderSource = 1
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-                // console.log(params)
+                console.log(v)
 
                 if(v == 1){
                     this.$confirm( this.$t('food.common.confirm_submit'), this.$t('food.common.tip'), {

@@ -3,11 +3,11 @@
               <el-form-item  size="small"  :label="$t('food.common.food_title')" prop="name" style="margin-top: -15px;">
                 <el-input size="small" v-model="info.name" :placeholder="$t('food.common.food_title')"></el-input>
               </el-form-item>
-              <el-form-item  size="small" :label="$t('food.common.taxStatus')" prop="taxStatus">
+              <el-form-item  size="small" :label="$t('food.common.taxStatus')" required>
                    <el-radio v-model="info.taxStatus" :label="1">不含税</el-radio>
                    <el-radio v-model="info.taxStatus" :label="2">含税</el-radio>
               </el-form-item>
-              <el-form-item  size="small"  :label="$t('food.common.seviceStatus')" prop="seviceStatus">
+              <el-form-item  size="small"  :label="$t('food.common.seviceStatus')" required>
                    <el-radio v-model="info.seviceStatus" :label="1">不含服务费</el-radio>
                    <el-radio v-model="info.seviceStatus" :label="2">含服务费</el-radio>
               </el-form-item>
@@ -27,10 +27,8 @@
               <el-form-item  size="small"  :label="$t('food.common.costPrice')" prop="costPrice">
                 <el-input  size="small" :placeholder="$t('food.common.costPrice')" v-model="info.costPrice" type="number" name="costPrice"></el-input>
               </el-form-item>
-
-              <el-form-item  size="small" :label="$t('food.common.food_pic')" prop="files">
-                <div>
-                     <el-upload
+              <el-form-item  size="small" :label="$t('food.common.food_pic')" required>
+                    <el-upload
                        action="#"
                        ref="upload"
                        list-type="picture-card"
@@ -50,15 +48,15 @@
                              </span>
                            </span>
                          </div>
-                     </el-upload>
-                </div>
+                    </el-upload>
+                    <div class="picdesc text-gray text-size12">只能上传一张图片</div>
               </el-form-item>
 
-              <el-form-item :label="$t('food.common.material')" prop="desc" :style="files.length == 0 ? '' : 'margin-top: -25px;'">
+              <el-form-item :label="$t('food.common.material')" prop="marterial">
                 <el-input  size="small" :placeholder="$t('food.common.material')"  v-model="info.marterial"></el-input>
               </el-form-item>
 
-             <el-form-item :label="$t('food.common.food_desc')" prop="desc">
+             <el-form-item :label="$t('food.common.food_desc')" prop="remark">
                <el-input  size="small" :placeholder="$t('food.common.food_desc')" type="textarea" v-model="info.remark"></el-input>
              </el-form-item>
 
@@ -69,7 +67,7 @@
             <el-divider style="margin:-15px;"></el-divider>
             <div class="text-right"  style="padding: 0 20px;margin:-10px -20px -15px;">
               <el-button @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
-               <el-button type="primary" @click="submitForm('form')">{{$t('food.common.ok')}}</el-button>
+              <el-button type="primary" @click="submitForm('form')">{{$t('food.common.ok')}}</el-button>
             </div>
         </el-form>
 </template>
@@ -107,24 +105,15 @@
                  categoryId: [
                    { required: true, message: this.$t('food.common.input_food_cate'), trigger: 'change' }
                  ],
-                 // categoryName: [
-                 //   {  required: true, message: this.$t('food.common.input_food_cate_name'), trigger: 'change' }
-                 // ],
                  price: [
                    { required: true, message: this.$t('food.common.input_food_price'), trigger: 'change' }
                  ],
-                 seviceStatus:[
-                     { required: true, message: '请选择是否包含服务费', trigger: 'change' }
+                 remark:[
+                     { required: true, message:'请输入菜品介绍', trigger: 'change' }
                  ],
-                 taxStatus:[
-                     { required: true, message:'请选择是否包含税', trigger: 'change' }
-                 ],
-
-
-
-                 // files: [
-                 //   { required: true, message: this.$t('food.common.input_food_pic'), trigger: 'blur' }
-                 // ],
+                 marterial:[
+                     { required: true, message:'请输入原料', trigger: 'change' }
+                 ]
                },
                options:[],
             }
@@ -156,8 +145,8 @@
                      state:data.state,
                      dishesId:data.id,
                      state:data.state,
-                     taxStatus:data.taxStatus,
-                     seviceStatus:data.seviceStatus,
+                     taxStatus:data.taxStatus ? data.taxStatus : 1 ,
+                     seviceStatus:data.seviceStatus ? data.seviceStatus : 1,
                      costPrice:data.costPrice
                 }
                 if(data.images){
@@ -165,8 +154,6 @@
                        url:data.images
                     })
                 }
-
-
             },
 
             intData(){
@@ -183,9 +170,6 @@
                 }
                 this.files = []
             },
-
-
-
             //接收所有的分类列表
             getCateList(list){
                 // console.log(list)
@@ -199,7 +183,6 @@
                 })
 
             },
-
             getName(id,list){
                 if(list.length > 0 ){
                     let arr = []
@@ -210,21 +193,12 @@
                             children:this.getNewCateList(list[i].childList)
                         })
                     }
-                     console.log(arr)
-                     // return arr
                  }
             },
-
-            // 选择图片--放大
-            // handlePictureCardPreview(file) {
-            //   this.dialogImageUrl = file.url;
-            //   this.dialogVisible = true;
-            // },
             handleRemove(file) {
               this.files = this.files.filter(
                 (item) => item.url != file.url
               );
-              this.$refs.upload.uploadFiles = this.$F.deepClone(this.hotelData.files);
             },
             submitForm(form) {
                 // console.log(this.info)

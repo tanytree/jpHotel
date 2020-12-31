@@ -161,9 +161,14 @@
                 <span>{{$t('food.common.create_time')}}：{{detail.createTime}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('shop.orderTotal')}}：¥ {{numFormate(detail.consumePrice)}}</div>
-
-            <div v-if="!!orderTax" class="margin-t-10 text-gray">消费税：¥{{orderTax.total}}</div>
-            <div v-if="!!orderTax" class="margin-t-10 text-gray">服务费：¥{{orderTax.service}}</div>
+            <!-- <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥{{orderTax.sum}} </div> -->
+            <div class="taxBox text-size14 text-gray">
+                <div class="item margin-t-10">服务费 ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
+                <div class="item margin-t-10">消费税 ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
+                <div class="item margin-t-10" v-if="detail.billingType&&detail.billingType == 1">{{$t('shop.yhPrice')}} ¥{{detail.preferentialPrice}}</div>
+            </div>
+            <!-- <div v-if="!!orderTax" class="margin-t-10 text-gray">消费税：¥{{orderTax.total}}</div>
+            <div v-if="!!orderTax" class="margin-t-10 text-gray">服务费：¥{{orderTax.service}}</div> -->
            <!-- <div v-if="!!orderTax" class=" text-size14 text-gray margin-t-10">
                 其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
             </div> -->
@@ -371,7 +376,8 @@ export default {
                    orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
                }
                console.log(orderGoodsList)
-               this.orderTax = this.getTaxInfo(this.tax,orderGoodsList)
+               let outFlag = data.outFlag == 1 ? true : false
+               this.orderTax = this.getTaxInfo(this.tax,orderGoodsList,outFlag)
                return false
             }else{
                 let info = {

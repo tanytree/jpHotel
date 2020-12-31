@@ -107,7 +107,7 @@
     >
             <edit @closeDialog="closeDialog" ref="editRef" v-if="dialogType == 1 || dialogType == 2" />
             <emptyHandlePanel @closeDialog="closeDialog"  v-if="dialogType == 3" />
-            <autoEmptyHandlePanel @closeDialog="closeDialog"  v-if="dialogType == 4" />
+            <autoEmptyHandlePanel @closeDialog="closeDialog" ref="autoEmptyHandlePanel"  v-if="dialogType == 4" />
             <batchHandlePanel @closeDialog="closeDialog" ref="batchRef"  v-if="dialogType == 5" />
     </el-dialog>
 </div>
@@ -205,6 +205,9 @@ export default {
         autoEmptyHandle(){
             this.dialogShow = true
             this.dialogType = 4
+            this.$nextTick(()=>{
+                this.$refs.autoEmptyHandlePanel.get_auto_content()
+            })
         },
         //批量设置
         batchHandle(){

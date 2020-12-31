@@ -50,8 +50,17 @@
             })
         },
         mounted() {
+
+
         },
+
         methods: {
+            get_auto_content(){
+                let content = window.localStorage.getItem('set_auto_content');
+                if(content){
+                    this.info.content = content
+                }
+            },
             submitForm() {
                 if( this.info.content ){
                     let params =this.info
@@ -63,7 +72,7 @@
                     params.userId = this.userId
                     params.storesNum = this.storesNum
                     this.$F.doRequest(this, "/pms/dishes/dishes_manage_set_auto", params, (res) => {
-                        console.log(res)
+                        localStorage.setItem('set_auto_content',this.info.content)
                         this.alert(200,this.$t('food.common.success'));
                         this.closeDialog();
                     });
@@ -75,7 +84,7 @@
                     flag:true,
                     content:'',
                 }
-                checked:false
+                this.checked = false
             }
         }
     }

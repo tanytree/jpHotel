@@ -157,14 +157,18 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
-
         <div class="detailPanel">
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
             </div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥ {{numFormate(detail.realPayPrice)}}</div>
-            <div v-if="!!orderTax" class=" text-size14 text-gray">
-            【其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};】
+            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥{{orderTax.sum}} </div>
+            <div class="taxBox text-size14 text-gray">
+                <div class="item margin-t-10">服务费： ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
+                <div class="item margin-t-10">消费税： ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
+                <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('shop.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
+                <div class="item margin-t-10">
+                    实付款： {{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+                 </div>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
             <el-table
@@ -335,7 +339,8 @@ export default {
             if(data.state == 2){
                this.dialogShows = true
                this.detail = data
-               this.orderTax = this.getTaxInfo(this.tax,data.orderSubList)
+               let outFlag = data.outFlag == 1 ? true : false
+               this.orderTax = this.getTaxInfo(this.tax,data.orderSubList,outFlag)
                return false
             }else{
                 let info = {

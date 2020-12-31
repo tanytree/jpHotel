@@ -1,14 +1,20 @@
 <template>
     <div class="action" v-loading="loading">
         <div class="money">
-
-            <div class=" text-red text-size20">{{$t('food.common.consumePrice')}} : {{numFormate(getFee)}} </div>
-            <div v-if="!!orderTax" class=" text-size14 text-gray margin-t-10">
-            其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
+            <div class=" text-red text-size20">
+                <!-- {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}} -->
+                {{$t('food.common.consumePrice')}} : {{numFormate(getPayPrice )}}
+                <span class="rel showTax">
+                    <el-button size="mini" type="primary" icon="el-icon-more" circle></el-button>
+                    <div class="taxBox text-size14">
+                        <div class="item"><span class="w70">小计</span> <span class="text-right">￥{{orderTax.total}}</span> </div>
+                        <div class="item"><span class="w70">服务费 <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service}}</span> </div>
+                        <div class="item"><span class="w70">消费税 <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span> </span> <span class="text-right">￥{{orderTax.taxFee}}</span> </div>
+                        <div class="item"><span class="w70">合计</span> <span class="text-right">￥{{orderTax.sum}}</span> </div>
+                    </div>
+                </span>
             </div>
-        <!-- {{$t('food.common.consumePrice')}} : {{numFormate(getFee)}} -->
-          <!--span class="text-gray text-size14 margin-l-15">已付金额: {{numFormate(info.hasPayPrice)}}</span> {{info.consumePrice}} --></div>
-        <!-- <div class="money">已付金额: {{info.hasPayPrice}}</div> -->
+        </div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item :label="$t('shop.payType')" prop="billingType">
@@ -25,9 +31,14 @@
                    <el-checkbox v-model="outFlag">外带</el-checkbox>
                 </el-form-item>
                 <el-form-item :label="$t('food.common.payPrice')">
-                    {{numFormate(getFee)}}
-                </el-form-item>
 
+                        {{numFormate(getPayPrice - num(form.preferentialPrice))}}
+
+
+
+
+
+                </el-form-item>
                 <div v-if="form.billingType == 1">
                     <el-form-item :label="$t('food.common.payType')">
                         <el-select size="small" v-model="form.payType">
@@ -170,9 +181,16 @@
                 rules: {
 
                 },
-                orderTax:{}
+                orderTax:{},
+                orderSubList:[]
 
             }
+        },
+        created() {
+            //监听是否外带
+            this.$watch('outFlag',(val,oldVal) =>{
+                this.getOrderTax();
+            })
         },
         computed: {
             ...mapState({
@@ -186,7 +204,6 @@
             getPayPrice(){
                 if(this.form.billingType == 1){
                     // let consumePrice = this.info.consumePrice
-
                     let consumePrice = this.getFee
                     let scoresPrice = this.jfInfo.discount
                     let realPayPrice = 0
@@ -195,11 +212,11 @@
                     }else{
                         realPayPrice = parseFloat(consumePrice)
                     }
-                    this.form.realPayPrice = parseFloat(realPayPrice).toFixed(2)
-                    let p = parseFloat(realPayPrice).toFixed(2)
+                    this.form.realPayPrice = parseFloat(realPayPrice)
+                    let p = parseFloat(realPayPrice)
                     return p
                 }else{
-                    return 0
+                    return this.getFee
                 }
             },
             //计算价格
@@ -218,31 +235,12 @@
                             sum += parseFloat(element.totalPrice)
                         }
                     });
+                    let total = sum + parseFloat(this.orderTax.taxFee) + parseFloat(this.orderTax.service)
+                    // return parseFloat(this.form.preferentialPrice) ? total - parseFloat(this.form.preferentialPrice) : total
+                    return parseFloat(total)
 
-                    let total = sum + parseFloat(this.orderTax.taxAfter) + parseFloat(this.orderTax.service)
-                    console.log(this.orderTax.taxAfter)
-                    console.log(this.orderTax.service)
-                    return parseFloat(this.form.preferentialPrice) ? total - parseFloat(this.form.preferentialPrice) : total
-
-                    // for(let i in list){
-                    //     if(list[i].goods.categoryType == 2){
-                    //         console.log(list[i].createTime)
-                    //         let data = list[i].goods
-
-                    //         if(data.priceModel == 2){
-                    //             let fee = this.getFinalFee(data,this.endTime,list[i].createTime)
-                    //             sum += fee
-                    //         }else{
-                    //             sum += list[i].totalPrice
-                    //         }
-                    //     }
-                    // }
-
-                    // return  parseFloat(this.form.preferentialPrice) ? sum - parseFloat(this.form.preferentialPrice) : sum
                 }
-
             }
-
         },
         mounted() {
 
@@ -268,6 +266,7 @@
                     scoresDiscount:'',//积分抵扣分值  Integer选填
                     scoresPrice:'',//积分抵扣额度  Double选填
                 }
+
                 outFlag:false,
 
                 this.score = {
@@ -281,14 +280,16 @@
                 }
                 this.isUseScore = false
                 this.isPrint = false
+                this.orderSubList = []
             },
+
             //获取传过来的值
             getInfo(data){
                 this.intForm();
                 this.get_systime(data.createTime)
                 console.log(data)
                 // console.log(data.billingType)
-                this.form.billingType = data.billingType
+                this.form.billingType = 1
                 if(data.memberCard){
                     this.form.memberCard = data.memberCard
                 }
@@ -314,8 +315,9 @@
                     orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
                     orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
                 }
-                console.log(orderGoodsList)
-                this.orderTax = this.getTaxInfo(this.taxInfo,orderGoodsList,this.outFlag)
+                // console.log(orderGoodsList)
+                this.orderSubList = orderGoodsList
+                this.getOrderTax();
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
                 // this.form.scoresPrice = data.scoresPrice
@@ -324,6 +326,10 @@
                 this.getSignList();
                 this.getSignRoomList();
 
+            },
+            //订单各种税后价格
+            getOrderTax(){
+                this.orderTax = this.getTaxInfo(this.taxInfo,this.orderSubList,this.outFlag)
             },
 
             //获取积分换算查询
@@ -514,13 +520,15 @@
                 params.consumePrice = this.info.consumePrice
                 params.hasPayPrice = this.info.hasPayPrice
                 params.state = 2
-
                 let goodsIds = this.info.orderSubList.map((ele,index)=>{
                     return  ele.goodsId
                 })
                 params.goodsSubIds = goodsIds.join(',')
-                params.realPayPrice = this.getFee + parseFloat(this.orderTax.taxAfter) + parseFloat(this.orderTax.service)
-                // params.realPayPrice = this.info.hasPayPrice + this.getFee
+                // params.realPayPrice = this.getFee + parseFloat(this.orderTax.sum) -  - this.form.preferentialPrice
+                if(params.billingType == 3){
+                    this.form.preferentialPrice = ''
+                }
+                params.realPayPrice = this.getPayPrice - this.form.preferentialPrice
                 params.orderId = this.info.id
                 params.userId = this.userId
                 params.storesNum = this.storesNum
@@ -529,14 +537,19 @@
                 }else{
                     params.outFlag = 2
                 }
-
                 this.$F.doRequest(this, "/pms/shop/shop_place_order_pay", params, (res) => {
                     this.loading = false
                     this.alert(200,this.$t('food.common.success'));
                     this.closeDialog();
                 });
             },
-
+            num(v){
+                if(v&&v != ''){
+                    return parseFloat(v);
+                }else{
+                    return 0
+                }
+            },
             closeDialog(){
                 this.info = {}
                 this.intForm()
@@ -583,6 +596,36 @@
             display: inline-block;
             width: 100px;
         }
+    }
+    .rel{position: relative;}
+    .taxBox{
+        background: rgba(0,0,0,.8);
+        border-radius: 3px;
+        padding:15px;
+        color: #fff;
+        width:250px;
+        position: absolute;
+        left:0;
+        top:50px;
+        z-index: 999;
+        display: none;
+        div{
+            padding-bottom:5px;
+            display: flex;
+            span{
+                display: inline-block;
+            }
+            .w70{
+                width: 70%;
+            }
+            .w30{
+                width: 30%;
+            }
+        }
+    }
+
+    .showTax:hover .taxBox{
+        display:block;
     }
 
 

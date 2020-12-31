@@ -193,9 +193,9 @@ export default {
             params.userId = this.userId
             let text = ''
             if(data.state == 1){
-                text = this.$t('food.common.confirm_open')
-            }else{
                 text = this.$t('food.common.confirm_disable')
+            }else{
+                text = this.$t('food.common.confirm_open')
             }
             console.log(params)
             console.log(data.state)

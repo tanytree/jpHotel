@@ -1,16 +1,18 @@
 <template>
     <div class="action" v-loading="loading">
         <div class="money">
-            <div class=" text-red text-size20"> {{$t('food.common.consumePrice')}} : {{orderTax.sum}}</div>
-            <div class="taxBox">
-                <div class="item"><span class="w70">小计</span> <span class="text-right">￥{{orderTax.total}}</span> </div>
-                <div class="item"><span class="w70">服务费 <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service}}</span> </div>
-                <div class="item"><span class="w70">消费税 <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span> </span> <span class="text-right">￥{{orderTax.taxFee}}</span> </div>
-                <div class="item"><span class="w70">合计</span> <span class="text-right">￥{{orderTax.sum}}</span> </div>
+            <div class=" text-red text-size20">
+                {{$t('food.common.consumePrice')}} : {{numFormate(orderTax.sum)}}
+                <span class="rel showTax">
+                    <el-button size="mini" type="primary" icon="el-icon-more" circle></el-button>
+                    <div class="taxBox text-size14">
+                        <div class="item"><span class="w70">小计</span> <span class="text-right">￥{{orderTax.total}}</span> </div>
+                        <div class="item"><span class="w70">服务费 <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service}}</span> </div>
+                        <div class="item"><span class="w70">消费税 <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span> </span> <span class="text-right">￥{{orderTax.taxFee}}</span> </div>
+                        <div class="item"><span class="w70">合计</span> <span class="text-right">￥{{orderTax.sum}}</span> </div>
+                    </div>
+                </span>
             </div>
-           <!-- <div v-if="!!orderTax" class=" text-size14 text-gray">
-            其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
-            </div> -->
         </div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -21,7 +23,10 @@
                         <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('shop.outFlag')">
+                <el-form-item :label="$t('shop.yhPrice')" v-if="form.billingType == 1">
+                   <el-input  size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;" ></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('shop.outFlag')" >
                    <el-checkbox v-model="outFlag">外带</el-checkbox>
                 </el-form-item>
                 <div v-if="form.billingType == 1">
@@ -36,7 +41,7 @@
                     </el-form-item>
 
                     <el-form-item :label="$t('food.common.payPrice')">
-                        {{numFormate(orderTax.sum)}}
+                        {{numFormate(orderTax.sum - form.preferentialPrice)}}
                     </el-form-item>
 
                     <el-form-item :label="$t('food.common.member_card')">
@@ -140,6 +145,7 @@
                    signIdcard:'',//签单证件号码   billingType=2必填 String选填
                    scoresDiscount:'',//积分抵扣分值  Integer选填
                    scoresPrice:'',//积分抵扣额度  Double选填
+                   preferentialPrice:'',//优惠额度
                 },
                 outFlag:false,
                 isUseScore:false,
@@ -221,6 +227,7 @@
                     signIdcard:'',//签单证件号码   billingType=2必填 String选填
                     scoresDiscount:'',//积分抵扣分值  Integer选填
                     scoresPrice:'',//积分抵扣额度  Double选填
+                    preferentialPrice:''
                 }
                 outFlag:false,
                 this.score = {
@@ -414,15 +421,19 @@
             //提交结账
             submit(){
                 let params = this.form
-                console.log(params)
-                // if(params.billingType == 1 && !this.form.memberCard ){
-                //     this.alert(-1,this.$t('food.common.select_member_card'));
-                //     return false
-                // }
+                if(params.billingType == 3){
+                    this.form.preferentialPrice = ''
+                }
+                params.realPayPrice = this.orderTax.sum - this.form.preferentialPrice
                 if(params.billingType == 3  &&  !this.form.signRoomId){
                     // this.alert(-1,'请选择房间');
                     this.alert(-1,this.$t('food.common.select_rooms'));
                     return false
+                }
+                if(this.outFlag){
+                    params.outFlag = 1
+                }else{
+                    params.outFlag = 2
                 }
                 params.userId = this.userId
                 params.storesNum = this.storesNum
@@ -458,12 +469,18 @@
             width: 100px;
         }
     }
+    .rel{position: relative;}
     .taxBox{
-        background: rgba(0,0,0,.5);
+        background: rgba(0,0,0,.8);
         border-radius: 3px;
         padding:15px;
         color: #fff;
         width:250px;
+        position: absolute;
+        left:0;
+        top:50px;
+        z-index: 999;
+        display: none;
         div{
             padding-bottom:5px;
             display: flex;
@@ -476,11 +493,12 @@
             .w30{
                 width: 30%;
             }
-
-
         }
     }
 
+    .showTax:hover .taxBox{
+        display:block;
+    }
 
 
 
