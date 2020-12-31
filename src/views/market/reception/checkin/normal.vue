@@ -1490,13 +1490,19 @@ export default {
                 this.inRoomList = this.checkInForm.checkInRoomJson;
             } else {
                 waitingRoom2.forEach((roomTypeObject) => {
-                    roomTypeObject.roomsArr.forEach((room, index) => {
-                        room.roomTypeName = roomTypeObject.roomTypeName;
-                        room.houseNum = room.houseNum;
-                        room.personList = room.personList || [this.checkInForm];
-                        this.inRoomList.push(room);
-                    });
+                    if (roomTypeObject.roomsArr) {
+                        roomTypeObject.roomsArr.forEach((room, index) => {
+                            room.roomTypeName = roomTypeObject.roomTypeName;
+                            room.houseNum = room.houseNum;
+                            room.personList = room.personList || [this.checkInForm];
+                            this.inRoomList.push(room);
+                        });
+                    }
                 });
+                if (this.inRoomList.length == 0) {
+                    this.$message.error('请先排房');
+                    return;
+                }
             }
             this.addLivePersonShow = true;
         },
