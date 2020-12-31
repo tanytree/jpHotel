@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-31 13:23:49
+ * @LastEditTime: 2020-12-31 18:29:12
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -1348,10 +1348,7 @@ export default {
         // },
         //手动排房确定
         db_row_houses() {
-<<<<<<< Updated upstream
-=======
           
->>>>>>> Stashed changes
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t("desk.home_morethenNum"));
                 return;
@@ -1375,10 +1372,7 @@ export default {
         rowRoomCurrentListItemAdd(item) {
             this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
             let exist = false;
-<<<<<<< Updated upstream
-=======
            
->>>>>>> Stashed changes
             for (let k in this.rowRoomCurrentItem.roomsArr) {
                 if (item.id == this.rowRoomCurrentItem.roomsArr[k].id || item.id == this.rowRoomCurrentItem.roomsArr[k].roomId) {
                     this.rowRoomCurrentItem.roomsArr.splice(k, 1);
