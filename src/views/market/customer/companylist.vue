@@ -12,7 +12,7 @@
         <company footer='footer'></company>
       </el-tab-pane>
        <el-tab-pane :label="$t('desk.customer_accountQuery')" name="five">
-        <service></service>
+        <service souracePage='footer'></service>
       </el-tab-pane>
       <!-- <el-tab-pane :label="$t('desk.customer_receivingQuery')" name="second">
         <collection></collection>

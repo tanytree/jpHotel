@@ -14,7 +14,7 @@
                 <!-- 单位查询-->
                 <Unitquery v-if="item.path == 'Unitquery'" isHeader="1"/>
                 <!-- 财务查询 -->
-                <service v-if="item.path == 'accountingQuery'"></service>
+                <service v-if="item.path == 'accountingQuery'" souracePage='header'></service>
                 <!-- 请款管理 -->
                 <bill v-if="item.path == 'accountingManagement'" souracePage='header'></bill>
                 <!-- 入账管理 -->

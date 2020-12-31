@@ -131,7 +131,7 @@
                     <el-input :value="calculate" style="width: 170px" disabled></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.customer_placeMoney') + ':'">
-                    <el-input v-model="addPlaceFrom.requestPrice" style="width: 170px"></el-input>
+                    <el-input v-model="addPlaceFrom.requestPrice" disabled style="width: 170px"></el-input>
                 </el-form-item>
             </el-form>
 
@@ -297,6 +297,7 @@ export default {
                     params,
                     (res) => {
                         this.addPlaceFrom.putupPrice = res.putupPrice;
+                        this.addPlaceFrom.requestPrice = res.putupPrice;
                     }
                 );
             }

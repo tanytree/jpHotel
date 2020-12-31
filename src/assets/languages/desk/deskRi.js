@@ -377,6 +377,7 @@ module.exports = {
   customer_totalRoomPrice: '宿泊料金',
   customer_totalConsum: '利用合計',
   customer_toTheGuest: '同伴者',
+  customer_toTheGuestA: '同伴者',
   customer_guestsDetail: '外国人顧客情報',
   customer_unitManage: '法人master',
   customer_receivingQuery: '入金確認',
@@ -824,6 +825,14 @@ module.exports = {
   book_addProject: '未翻译词条',
   book_canAdd: '未翻译词条',
   book_perfectProjectInfo: '未翻译词条',
+  customer_systemPro: '未翻译词条',
+  customer_memberAble: '未翻译词条',
+  customer_memberCardLoss: '未翻译词条',
+  order_livePeopleManegerment: "未翻译词条",
+  order_guestKind: "未翻译词条",
+  order_liveAddress: "未翻译词条",
+  order_homePhone: "未翻译词条",
+
 
 
 

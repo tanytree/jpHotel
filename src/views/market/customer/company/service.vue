@@ -5,7 +5,12 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
-
+         <el-form-item label="门店名称:" v-if="souracePage=='header'">
+                    <el-select v-model="searchForm.storesNum" filterable :placeholder="$t('commons.placeChoose')" class="width150">
+                        <el-option :label='$t("desk.home_all")' value=''></el-option>
+                        <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
+                    </el-select>
+                </el-form-item>
         <el-form-item :label="$t('desk.customer_buyerUnit')+':'">
           <el-select v-model="searchForm.enterId" class="width150" :placeholder="$t('commons.placeChoose')">
             <el-option :label="$t('commons.all')" value=""></el-option>
@@ -53,6 +58,11 @@
           :label="$t('desk.customer_buyerUnit')"
           show-overflow-tooltip
         ></el-table-column>
+         <el-table-column label="门店名称" show-overflow-tooltip v-if="souracePage=='header'">
+                    <template slot-scope="{row}">
+                        <div v-if="row">{{checkStores(row.storesNum)}}</div>
+                    </template>
+                </el-table-column>
         <el-table-column
           :label="$t('desk.customer_amountPrice')"
           show-overflow-tooltip
@@ -61,6 +71,7 @@
             {{row.onAccountTotal || row.consumePrice || 0}}
           </template>
         </el-table-column>
+        
         <el-table-column
           prop="checkInPerson.checkIn.name"
           :label="$t('desk.home_consumerNames')"
@@ -123,6 +134,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
+     props: ["souracePage"],
   computed: {
     ...mapState({
       token: (state) => state.user.token,
@@ -156,11 +168,20 @@ export default {
   },
 
   created() {
+      console.log(this.souracePage);
     this.resetForm();
     this.getStoreList();
     this.getUnitList();
   },
   methods: {
+        checkStores(storesNum) {
+            let newArray = this.storeList.filter((item) => {
+                return item.storesNum == storesNum;
+            });
+            if (newArray.length > 0) {
+                return newArray[0].storesName;
+            }
+        },
     //请求 单位 列表
     getUnitList() {
       this.$F.doRequest(this, "/pms/hotelenter/list", {}, (res) => {

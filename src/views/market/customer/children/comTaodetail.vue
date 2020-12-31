@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-14 16:26:15
+ * @LastEditTime: 2020-12-31 17:57:27
  * @FilePath: \jiudian\src\views\market\customer\children\comTaodetail.vue
  -->
 <template>
@@ -20,7 +20,7 @@
         <div class="mianInfo">
           <div class="thisOrderInfo">
             <div class="wrap">
-              <el-form inline size="small" label-width="80px">
+              <el-form inline size="small" label-width="90px">
                 <el-row class="row">
                   <el-col :span="8" class="col">
                     <el-form-item :label="$t('desk.customer_unitName') + ':'">

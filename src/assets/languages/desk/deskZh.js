@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-12-22 11:56:38
+ * @LastEditTime: 2020-12-31 15:13:26
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -438,6 +438,19 @@ module.exports = {
   order_clickPai: "点击排房",
   order_inputName: "请填写姓名",
   order_inputCardNum: "请填写证件号",
+  order_livePeopleManegerment: "入住人管理",
+  order_guestKind: "客人分类",
+  order_liveAddress: "住家地址",
+  order_homePhone: "住家号码",
+  order_: "",
+  order_: "",
+  order_: "",
+  order_: "",
+  order_: "",
+  order_: "",
+  order_: "",
+  order_: "",
+  order_: "",
   order_: "",
   order_: "",
   order_: "",
@@ -590,7 +603,7 @@ module.exports = {
   customer_guestRoom: '客房',
   customer_leaveStoreDate: '离店日期',
   customer_livePeople: '入住人',
-    customer_reservePerson: '予定人',
+  customer_reservePerson: '予定人',
 
   customer_liveToleave: '入住-离店日期',
   customer_arrived: '抵',
@@ -599,6 +612,7 @@ module.exports = {
   customer_totalRoomPrice: '总房价',
   customer_totalConsum: '总消费',
   customer_toTheGuest: '同来宾客',
+  customer_toTheGuestA: '+同来宾客',
   customer_guestsDetail: '外宾详情',
   customer_unitManage: '单位管理',
   customer_receivingQuery: '收款查询',
@@ -825,6 +839,22 @@ module.exports = {
   customer_pleaseSelectYear: '请选择年份',
   customer_chooseFeeTime: '请选择缴费时间',
   customer_inputPayFee: '请填写支付费用',
+  customer_systemPro: '系统生成',
+  customer_memberAble: '会员启用',
+  customer_memberCardLoss: '该会员卡在挂失中',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
+  customer_: '',
   customer_: '',
   customer_: '',
   //夜审（night）

@@ -16,16 +16,15 @@
               v-if="item.userRole && role.value == item.userRole.userStatus && item.userRole.userStatus == 2"
             >{{role.label}}</el-tag>
           </div>
-          <el-dropdown trigger="click" @command="(e) => handleCommand(e, item)">
+          <el-dropdown trigger="click" @command="(e) => handleCommand(e, item)"  v-if="item.userRole && item.userRole.userStatus != 2 && item.account != user.account">
             <span class="el-dropdown-link">
               {{$t('commons.operating')}}
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="see">{{$t('boss.report_checkingData')}}</el-dropdown-item>
+              <!-- <el-dropdown-item command="see">{{$t('boss.report_checkingData')}}</el-dropdown-item> -->
               <el-dropdown-item
                 command="set"
-                v-if="item.userRole && item.userRole.userStatus != 2 && item.account != user.account"
               >{{$t('boss.report_permissionSettings')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>

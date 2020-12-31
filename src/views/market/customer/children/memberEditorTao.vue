@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-30 14:20:11
+ * @LastEditTime: 2020-12-31 17:50:36
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -41,7 +41,7 @@
                 <div class="mianInfo">
                     <div class="thisOrderInfo">
                         <div class="wrap">
-                            <el-form inline size="small" :label-width="type == 'detail' ? '80px' : '90px'" :model="detailForm" ref="detailForm" :rules="type != 'detail' ? rules : {}">
+                            <el-form inline size="small" :label-width="type == 'detail' ? '90px' : '90px'" :model="detailForm" ref="detailForm" :rules="type != 'detail' ? rules : {}">
                                 <!-- 点击 修改按钮 进来后显示的一排按钮 -->
                                 <el-row v-if="type == 'edit'">
                                     <el-form-item label>
@@ -52,7 +52,7 @@
                                         <!-- 停用 -->
                                         <el-button type="primary" v-if="detailForm.state==1" size="mini" @click="setCardFormBtnClick(3)">{{ $t("desk.customer_stopUse") }}</el-button>
                                         <!-- 启用 -->
-                                        <el-button type="primary" size="mini" v-if="detailForm.state==3" @click="useMember">启用</el-button>
+                                        <el-button type="primary" size="mini" v-if="detailForm.state==3" @click="useMember">{{$t('desk.customer_enable')}}</el-button>
                                         <!-- 挂失补卡 -->
                                         <el-button type="primary" size="mini" @click="setCardFormBtnClick(4)">{{ $t("desk.customer_reportLossCard") }}</el-button>
                                     </el-form-item>
@@ -212,7 +212,7 @@
                                 <el-row class="row">
                                     <el-row class="cell">
                                         <el-col :span="type != 'detail' ? 6 : 8" class="col">
-                                            <el-form-item :label="$t('desk.customer_sex') + ':'" prop="sex" label-width="60px">
+                                            <el-form-item :label="$t('desk.customer_sex') + ':'" prop="sex" :label-width="type == 'detail'?'90px':'60px'">
                                                 <el-radio-group v-model="detailForm.sex" v-show="type != 'detail'">
                                                     <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
                                                 </el-radio-group>
@@ -435,14 +435,14 @@
             <el-form :model="cardForm" ref="cardForm" :rules="rules" :label-width="formLabelWidth">
                 <el-form-item label class="require" label-width="80px">
                     <span style="margin-right:10px" v-if="cardForm.type != 3">{{ $t("desk.customer_originNum") + ":" }}{{ detailForm.memberCard}}</span>
-                    <span style="margin-right:10px" v-if="cardForm.type == 3">卡号：{{ detailForm.memberCard}}</span>
+                    <span style="margin-right:10px" v-if="cardForm.type == 3">{{$t('desk.customer_cardNum')}}：{{ detailForm.memberCard}}</span>
                     <span style="margin-right:10px"> {{ $t("desk.home_name") + ":" }}{{ detailForm.name }}</span>
                     <span>{{ $t("desk.customer_memType") + ":"}}{{ F_memberTypeId(detailForm.memberTypeId)}}</span>
                 </el-form-item>
                 <template v-if="cardForm.type == 1">
                     <el-form-item :label="$t('desk.customer_newCardNum')" class prop="memberCard">
                         <el-input style="width: 300px;margin-right:20px;" :disabled='cardForm.systemGen' v-model="cardForm.memberCard" placeholder></el-input>
-                        <el-checkbox v-model="cardForm.systemGen">系统生成</el-checkbox>
+                        <el-checkbox v-model="cardForm.systemGen">{{$t('desk.customer_systemPro')}}</el-checkbox>
                     </el-form-item>
                 </template>
                 <template v-if="cardForm.type == 2">
@@ -453,19 +453,6 @@
                             </template>
                         </el-select>
                     </el-form-item>
-                    <template v-if="cardForm.payPrices">
-                        <el-form-item :label="$t('desk.customer_payType')" class prop="payWay">
-                            <el-select v-model="cardForm.payWay" style="width: 300px">
-                                <el-option :label="$t('desk.serve_cash')" :value="1"></el-option>
-                                <el-option :label="$t('desk.serve_wechat')" :value="2"></el-option>
-                                <el-option :label="$t('desk.serve_alipay')" :value="3"></el-option>
-                                <el-option :label="$t('desk.customer_unionpay')" :value="4"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.customer_payPrice')" class prop="payPrices">
-                            <el-input style="width: 300px" v-model="cardForm.payPrices" disabled placeholder></el-input>
-                        </el-form-item>
-                    </template>
                     <el-form-item :label="$t('desk.customer_resetReason')" class prop="remark">
                         <el-input style="width: 300px" type="textarea" v-model="cardForm.remark" placeholder></el-input>
                     </el-form-item>
@@ -910,7 +897,7 @@ export default {
         },
         // 点击 启用 按钮
         useMember() {
-            this.cardForm.titleName = "会员启用";
+            this.cardForm.titleName = this.$t('desk.customer_memberAble');
             this.cardForm.type = 5;
             this.setCardFormVisible = true;
         },
@@ -925,7 +912,7 @@ export default {
             this.cardForm.titleName =
                 v && enums[v] ? enums[v] : this.$t("desk.serve_other");
             if (this.cardForm.type == 4 && this.detailForm.state == 2) {
-                this.$message.warning("该会员卡在挂失中");
+                this.$message.warning(this.$t('desk.customer_memberCardLoss'));
             } else {
                 this.setCardFormVisible = true;
             }
@@ -936,7 +923,7 @@ export default {
                     url = "/pms/hotelmember/changecard";
                 params = {
                     id: this.detailForm.id,
-                    remark: "无",
+                    remark:this.$t('desk.order_noText'),
                     memberCard: this.cardForm.memberCard,
                     state: 1,
                     systemGen: this.cardForm.systemGen ? "1" : "2",
@@ -958,7 +945,7 @@ export default {
                             url = "/pms/hotelmember/changecard";
                             params = {
                                 id: this.detailForm.id,
-                                remark: "无",
+                                remark:this.$t('desk.order_noText'),
                                 memberCard: this.cardForm.memberCard,
                                 state: 1,
                                 systemGen: this.cardForm.systemGen ? "1" : "2",
@@ -974,8 +961,8 @@ export default {
                                 operType: 1,
                                 oldCardNum: this.detailForm.memberCard,
                                 cardNum: this.detailForm.memberCard,
-                                payWay: this.cardForm.payWay,
-                                payPrices: this.cardForm.payPrices,
+                                payWay: 0,
+                                payPrices: 0,
                             };
                         }
                         if (this.cardForm.type == 3) {
@@ -996,7 +983,7 @@ export default {
                         }
                         if (this.cardForm.type == 4) {
                             if (!this.cardForm.remark) {
-                                this.cardForm.remark = "无";
+                                this.cardForm.remark =this.$t('desk.order_noText');
                             }
                             if (this.cardForm.operType == 2) {
                                 if (!this.cardForm.memberCard) {
