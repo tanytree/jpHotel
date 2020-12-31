@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-22 13:16:34
+ * @LastEditTime: 2020-12-31 11:22:48
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -46,7 +46,7 @@
                         >
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('commons.idCardTypeDesc')" prop="idcardType">
+                <el-form-item :label="$t('commons.idCardTypeDesc')" >
                     <el-select v-model="checkInForm.idcardType">
                         <el-option
                             :value="key"
@@ -56,7 +56,7 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('desk.customer_idNo') + ':'" prop="idcard">
+                <el-form-item :label="$t('desk.customer_idNo') + ':'" >
                     <el-input v-model="checkInForm.idcard"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'a1' || operCheckinType == 'a2'">
