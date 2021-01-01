@@ -134,6 +134,7 @@
         <div class="dialog-footer text-center" style="padding: 0 20px;margin:-10px -20px -15px;">
            <el-button size="small" @click="closeDialog">{{$t('food.common.order_add_canel')}}</el-button>
            <el-button  v-if="add == 1" size="small" type="primary" @click="save(1)">{{$t('food.common.ok')}}</el-button>
+           <el-button  v-if="add == 1"  @click="add = 0" size="small" type="primary">返回</el-button>
         </div>
 
     </div>
@@ -148,6 +149,7 @@
             return {
                load:true,
                info:{},
+               copySubList:[],
                cart:[],
                cartDishIds:[],
                cateList:[],
@@ -209,7 +211,6 @@
 
             //获取详情
             getOrderDetail(params){
-
                 this.load = true
                 this.$F.doRequest(this, "/pms/dishes/dishes_order_detail", params, (res) => {
                    // console.log(res.order)
@@ -220,6 +221,8 @@
                        this.cartDishIds.push(list[i].dishesId)
                    }
                    this.cart = list
+                   this.copySubList = JSON.parse(JSON.stringify(list))
+
 
                 });
             },
@@ -266,9 +269,6 @@
             handleChange(value){
                 this.searchForm.categoryId = value[value.length - 1].toString()
             },
-
-
-
             //查询某个商品的个数
             getOrderCount(v){
                 let list = this.cart
@@ -279,53 +279,74 @@
                     }
                 }
                 return count
-
             },
 
             //购物车的加减 type = 1 是减少  2 是添加
             changeCartCount(v,type){
                 let info  = this.allTableData[v]
                 let good = this.cart.find(v=>v.dishesId == info.id)
-
-                console.log(info)
-
                 if(type == 1){
                     // console.log('减少')
                     if(info.count == 1){
-                        
                         if(this.cart.length == 1){
                             this.alert(0,this.$t('food.common.order_need_tips'));
                             return false
                         }
-                        this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
-                            confirmButtonText: this.$t('food.common.ok'),
-                            cancelButtonText: this.$t('food.common.cancel'),
-                            type: 'warning'
-                        }).then(() => {
-                            //移除需要调用菜品删除接口
-                            let params = {
-                                dishesCount:good.dishesCount,
-                                consumePrice:this.info.consumePrice,
-                                orderId :good.orderId,
-                                dishesSubId:good.id,
-                            }
-                            // console.log(params)
-                            this.$F.doRequest(this, "/pms/dishes/dishes_place_order_delete", params, (res) => {
-                                info.count-= 1
-                                if(info.remainingCount){
+                        if(info.count == 1){
+                            //深拷贝一个订单菜品数组
+                            let goods = this.copySubList.find(v=>v.dishesId == good.dishesId)
+                            //如果是一个不存在原始订单中的产品不需要删除，只需要在cart 中 删除splice该菜品 反之请求接收删除
+                            if(!goods){
+                                info.count -= 1
+                                if(info.remainingCount != null || info.remainingCount != ''){
                                     info.remainingCount += 1
                                 }
                                 if(good){
                                    good.dishesCount -= 1
-                                   if(good.dishesCount == 0){
-                                       let index = this.cart.indexOf(good)
-                                       this.cart.splice(index,1)
-                                   }
                                 }
-                                this.save(2)
+                                let index = this.cart.indexOf(good)
+                                this.cart.splice(index,1)
+                                return false
+                            }
+                            this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
+                                confirmButtonText: this.$t('food.common.ok'),
+                                cancelButtonText: this.$t('food.common.cancel'),
+                                type: 'warning'
+                            }).then(() => {
+                                // 移除需要调用菜品删除接口
+                                let params = {
+                                    dishesCount:good.dishesCount,
+                                    consumePrice:good.totalPrice,
+                                    orderId :good.orderId,
+                                    dishesSubId:good.id,
+                                }
+                                // console.log(params)
+                                this.$F.doRequest(this, "/pms/dishes/dishes_place_order_delete", params, (res) => {
+                                    info.count -= 1
+                                    if(info.remainingCount != null || info.remainingCount != ''){
+                                        info.remainingCount += 1
+                                    }
+                                    if(good){
+                                       good.dishesCount -= 1
+                                    }
+                                    let index = this.cart.indexOf(good)
+                                    this.cart.splice(index,1)
+                                    this.alert(200,this.$t('food.common.success'))
+                                })
+                             }).catch(() => {
                             });
+                        }else{
+                            info.count -= 1
+                            if(info.remainingCount != null || info.remainingCount != ''){
+                                info.remainingCount += 1
+                            }
+                            if(good){
+                               good.dishesCount -= 1
+                            }
+                        }
 
-                        });
+
+
                     }else{
                         info.count-= 1
                         // info.remainingCount += 1
@@ -377,9 +398,9 @@
             },
 
             changOrderSub(index,type){
-              console.log(type)
+              // console.log(type)
               let list = this.cart
-              console.log(list.length);
+              // console.log(list.length);
               let info = list[index]
               let good = this.allTableData.find(v=>v.id == info.dishesId)
               // console.log(info)
@@ -388,7 +409,7 @@
               // console.log(list)
 
               if(type == 1){
-                console.log('减少')
+                // console.log('减少')
                 // console.log(info)
                 if(info.dishesCount == 1){
                     if(list.length == 1){
@@ -407,21 +428,14 @@
                             dishesSubId:info.id,
                         }
                         this.$F.doRequest(this, "/pms/dishes/dishes_place_order_delete", params, (res) => {
-                            console.log(res)
+                            // console.log(res)
                             if(good){
                                 good.remainingCount += 1
                                 good.count -= 1
                             }
                             list.splice(index,1)
                             this.save(2)
-
-                            // let obj = {
-                            //     dishesOrderId:this.info.id,
-                            // }
-                            // obj.userId = this.userId
-                            // obj.storesNum = this.storesNum
-                            // this.getOrderDetail(obj);
-
+                        }).catch(() => {
                         });
                     })
                 }else{
@@ -432,10 +446,8 @@
                     }).then(() => {
                         info.dishesCount -= 1
                         this.save(2)
-                    })
-
-
-
+                    }).catch(() => {
+                    });
                 }
               }else{
 
@@ -451,12 +463,10 @@
                         good.count += 1
                     }
                     this.save(2);
-                })
-
-
+                }).catch(() => {
+                });
               }
             },
-
             //移除菜品
             handleDelete(index){
                 if(this.cart.length == 1){
@@ -482,7 +492,8 @@
                         this.cart.splice(index,1);
                         this.save(2);
                     });
-                })
+                }).catch(() => {
+                });
             },
 
             cartToTal(){
@@ -498,7 +509,6 @@
             },
 
             save(v){
-                this.load = true
                 // console.log('移除菜品')
                 let list = this.cart
                 let params = {
@@ -526,16 +536,14 @@
                 params.orderSource = 1
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-
-                console.log(params)
-
-
+                // console.log(params)
                 if(v == 1){
                     this.$confirm( this.$t('food.common.confirm_submit'), this.$t('food.common.tip'), {
                         confirmButtonText: this.$t('food.common.ok'),
                         cancelButtonText: this.$t('food.common.cancel'),
                         type: 'warning'
                     }).then(() => {
+                        this.load = true
                         this.$F.doRequest(this, "/pms/dishes/dishes_place_order_add", params, (res) => {
                             // console.log(res)
                             this.load = false
@@ -545,6 +553,7 @@
                         });
                     })
                 }else{
+                    this.load = true
                     this.$F.doRequest(this, "/pms/dishes/dishes_place_order_add", params, (res) => {
                         // console.log(res)
                         this.load = false
