@@ -166,7 +166,7 @@
                 <div class="item margin-t-10">服务费： ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
                 <div class="item margin-t-10">消费税： ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
                 <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('shop.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
-                <div class="item margin-t-10">
+                <div class="item margin-t-10" v-if="detail.billingType">
                     实付款： {{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
                  </div>
             </div>

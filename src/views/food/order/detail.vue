@@ -204,6 +204,7 @@
                 this.cateList = cateList
                let params = data
                this.getOrderDetail(data)
+               this.initForm();
             },
 
             //获取详情
@@ -291,6 +292,11 @@
                 if(type == 1){
                     // console.log('减少')
                     if(info.count == 1){
+                        
+                        if(this.cart.length == 1){
+                            this.alert(0,this.$t('food.common.order_need_tips'));
+                            return false
+                        }
                         this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
                             confirmButtonText: this.$t('food.common.ok'),
                             cancelButtonText: this.$t('food.common.cancel'),
@@ -318,8 +324,6 @@
                                 }
                                 this.save(2)
                             });
-
-                        }).catch(() => {
 
                         });
                     }else{
@@ -373,58 +377,93 @@
             },
 
             changOrderSub(index,type){
-              // console.log(index)
+              console.log(type)
               let list = this.cart
+              console.log(list.length);
               let info = list[index]
               let good = this.allTableData.find(v=>v.id == info.dishesId)
               // console.log(info)
               // console.log(good)
+              // console.log(this.allTableData)
+              // console.log(list)
 
               if(type == 1){
-                // console.log('减少')
+                console.log('减少')
                 // console.log(info)
                 if(info.dishesCount == 1){
-                   this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
+                    if(list.length == 1){
+                        this.alert(0,this.$t('food.common.order_need_tips'));
+                        return false
+                    }
+                    this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
                        confirmButtonText: this.$t('food.common.ok'),
                        cancelButtonText: this.$t('food.common.cancel'),
                        type: 'warning'
-                   }).then(() => {
+                    }).then(() => {
                         let params = {
                             dishesCount:info.dishesCount,
                             consumePrice:this.info.consumePrice,
                             orderId :info.orderId,
                             dishesSubId:info.id,
                         }
-
-                        // console.log(params)
                         this.$F.doRequest(this, "/pms/dishes/dishes_place_order_delete", params, (res) => {
-                            // console.log(res)
-                            list.splice(index,1)
+                            console.log(res)
                             if(good){
                                 good.remainingCount += 1
                                 good.count -= 1
                             }
+                            list.splice(index,1)
                             this.save(2)
 
+                            // let obj = {
+                            //     dishesOrderId:this.info.id,
+                            // }
+                            // obj.userId = this.userId
+                            // obj.storesNum = this.storesNum
+                            // this.getOrderDetail(obj);
+
                         });
-                    }).catch(() => {
-                    });
+                    })
                 }else{
-                    info.dishesCount -= 1
+                    this.$confirm( this.$t('food.common.confirm_reduce_tips'), this.$t('food.common.tip'), {
+                       confirmButtonText: this.$t('food.common.ok'),
+                       cancelButtonText: this.$t('food.common.cancel'),
+                       type: 'warning'
+                    }).then(() => {
+                        info.dishesCount -= 1
+                        this.save(2)
+                    })
+
+
+
                 }
               }else{
-                  // console.log('增加')
-                info.dishesCount += 1
-                if(good){
-                    good.remainingCount -= 1
-                    good.count += 1
-                }
+
+                this.$confirm( this.$t('food.common.confirm_add_tips'), this.$t('food.common.tip'), {
+                   confirmButtonText: this.$t('food.common.ok'),
+                   cancelButtonText: this.$t('food.common.cancel'),
+                   type: 'warning'
+                }).then(() => {
+                    // console.log('增加')
+                    info.dishesCount += 1
+                    if(good){
+                        good.remainingCount -= 1
+                        good.count += 1
+                    }
+                    this.save(2);
+                })
+
+
               }
             },
 
             //移除菜品
             handleDelete(index){
-                let info  = this.cart[index]
+                if(this.cart.length == 1){
+                    this.alert(0,this.$t('food.common.order_need_tips'));
+                    return false
+                }
+               let info  = this.cart[index]
                this.$confirm( this.$t('food.common.confirm_remove_tips'), this.$t('food.common.tip'), {
                    confirmButtonText: this.$t('food.common.ok'),
                    cancelButtonText: this.$t('food.common.cancel'),
@@ -443,9 +482,7 @@
                         this.cart.splice(index,1);
                         this.save(2);
                     });
-                }).catch(() => {
-
-                });
+                })
             },
 
             cartToTal(){
@@ -461,6 +498,7 @@
             },
 
             save(v){
+                this.load = true
                 // console.log('移除菜品')
                 let list = this.cart
                 let params = {
@@ -488,7 +526,9 @@
                 params.orderSource = 1
                 params.userId = this.userId
                 params.storesNum = this.storesNum
-                console.log(v)
+
+                console.log(params)
+
 
                 if(v == 1){
                     this.$confirm( this.$t('food.common.confirm_submit'), this.$t('food.common.tip'), {
@@ -498,17 +538,16 @@
                     }).then(() => {
                         this.$F.doRequest(this, "/pms/dishes/dishes_place_order_add", params, (res) => {
                             // console.log(res)
+                            this.load = false
                             if(res.orderId){
                                 this.closeDialog();
                             }
                         });
-                    }).catch(() => {
-
-                    });
+                    })
                 }else{
-
                     this.$F.doRequest(this, "/pms/dishes/dishes_place_order_add", params, (res) => {
                         // console.log(res)
+                        this.load = false
                         if(res.orderId){
                             let obj = {
                                 dishesOrderId:this.info.id,
