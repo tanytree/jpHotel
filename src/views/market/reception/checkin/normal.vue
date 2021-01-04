@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-31 18:29:12
+ * @LastEditTime: 2021-01-04 17:46:37
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -217,7 +217,7 @@
                         type="datetime"
                         format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
-                        :picker-options="leaveTime"
+                        :picker-options="keepTime"
                         @change="endTimeChange"
                     ></el-date-picker>
                 </el-form-item>
@@ -778,6 +778,32 @@ export default {
                     }
                 },
             },
+            keepTime: {
+                disabledDate: (time) => {
+                    if (this.checkInForm.checkinTime) {
+                        let timeStr = new Date(
+                            new Date(this.checkInForm.checkinTime)
+                                .Format("yyyy-MM-dd")
+                                .replace(/-/g, "/")
+                        );
+                        if (this.operCheckinType == "b2" || this.operCheckinType == "a2") {
+                            return timeStr.getTime() > timeStr - 8.64e6
+                        }
+                        let date = new Date(time.Format("yyyy-MM-dd"));
+                        date.setDate(date.getDate() + 1);
+                        return (
+                            date - 8.64e7 < timeStr
+                        );
+                    } else if (this.checkInForm.checkinTime == "") {
+                        return (
+                            new Date(time.Format("yyyy-MM-dd")).getTime() <
+                            Date.now() - 8.64e7
+                        ); //如果没有后面的-8.64e7就是不可以选择今天
+                    } else {
+                        return "";
+                    }
+                },
+            },
             startTime: {
                 disabledDate: (time) => {
                     // if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
@@ -847,7 +873,7 @@ export default {
         };
     },
 
-    mounted() {
+    created() {
         this.initModule();
     },
 
@@ -1348,7 +1374,7 @@ export default {
         // },
         //手动排房确定
         db_row_houses() {
-          
+
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t("desk.home_morethenNum"));
                 return;
@@ -1372,7 +1398,7 @@ export default {
         rowRoomCurrentListItemAdd(item) {
             this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
             let exist = false;
-           
+
             for (let k in this.rowRoomCurrentItem.roomsArr) {
                 if (item.id == this.rowRoomCurrentItem.roomsArr[k].id || item.id == this.rowRoomCurrentItem.roomsArr[k].roomId) {
                     this.rowRoomCurrentItem.roomsArr.splice(k, 1);
@@ -1575,24 +1601,23 @@ export default {
         changeName(e) {
             console.log(e);
             if (e.name) {
+                debugger
                 this.baseInfo = e;
                 this.checkInForm.name = e.name;
                 this.checkInForm.pronunciation = e.pronunciation;
-                this.checkInForm.guestType = e.guestType;
+                this.checkInForm.guestType = e.guestType ? e.guestType.toString() : '';
                 this.checkInForm.idcard = e.idcard;
                 // this.checkInForm.idcardType = e.idcardType.toString();
-                this.checkInForm.idcardType = e.idcardType;
+                this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '1';
                 this.checkInForm.mobile = e.mobile;
                 // this.checkInForm.orderSource = e.orderSource.toString();
-                this.checkInForm.orderSource = e.orderSource;
+                this.checkInForm.orderSource = e.orderSource ? e.orderSource.toString() : '';
                 // this.checkInForm.orderType = e.orderType.toString();
                 this.checkInForm.orderType = e.orderType;
                 // this.checkInForm.sex = e.sex.toString();
-                this.checkInForm.sex = e.sex;
+                this.checkInForm.sex = e.sex ? e.sex.toString() : '';
                 this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : "";
-                this.checkInForm.checkinType = e.checkinType
-                    ? e.checkinType.toString()
-                    : "";
+                this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : "";
             } else {
                 this.checkInForm.name = e;
             }
@@ -1669,8 +1694,8 @@ export default {
         },
         startTimeChange(e) {
             if (this.operCheckinType == 'b1') {
-                if (e > this.checkInForm.checkoutTime) {
-                    let date = new Date(e);
+                let date = new Date(e);
+                if (e > this.checkInForm.checkoutTime || date.Format("yyyy-MM-dd") == new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")) {
                     date.setDate(date.getDate() + 1);
                     this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
                 }
@@ -1682,7 +1707,7 @@ export default {
                 this.checkInForm.checkoutTime = new Date(e).Format("yyyy-MM-dd") + " 22:00:00";
             }
             let date = new Date(e);
-            date.setDate(date.getHours() + 2);  //预抵时间修改 保留时间跟着修改
+            date.setHours(date.getHours() + 2);  //预抵时间修改 保留时间跟着修改
             this.checkInForm.keepTime = date.Format("yyyy-MM-dd HH:mm:ss");
         },
         endTimeChange(e) {

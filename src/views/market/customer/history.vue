@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-17 18:04:33
+ * @LastEditTime: 2021-01-04 18:20:21
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -31,26 +31,8 @@
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="tableData"
-        height="100%"
-        header-row-class-name="default"
-        size="small"
-      >
-        <el-table-column
-          prop="guestNum"
-          align="center"
-          :label="$t('desk.customer_guestNum')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="name"
-          align="center"
-          :label="$t('desk.editor_nameAenter')"
-          width="200"
-        >
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+        <el-table-column prop="name" align="left" :label="$t('desk.editor_nameAenter')">
           <template slot-scope="{ row }">
             <div>
               {{ row.name }}
@@ -62,54 +44,31 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="sex"
-          align="center"
-          :label="$t('desk.customer_sex')"
-          width="100"
-        >
+        <el-table-column prop="guestNum" align="center" :label="$t('desk.customer_guestNum')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="sex" align="center" :label="$t('desk.customer_sex')" >
           <template slot-scope="{ row }">{{ row.sex | F_sex }}</template>
         </el-table-column>
-        <el-table-column
-          :label="$t('desk.home_telNum')"
-          show-overflow-tooltip
-          width="200px"
-        >
+        <el-table-column :label="$t('desk.home_telNum')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             <div v-if="row.mobile">({{$t('desk.editor_hand')}}){{ row.mobile }}</div>
             <div v-if="row.mobile2">({{$t('desk.editor_home')}}){{ row.mobile2 }}</div>
             <div v-if="row.enterMobile1">({{$t('desk.editor_only')}}){{ row.enterMobile1 }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="age"
-          align="center"
-          :label="$t('desk.editor_age')"
-          width="120"
-        ></el-table-column>
-        <el-table-column
-          align="center"
-          :label="$t('desk.customer_cumulative')"
-          width="100"
-        >
+        <el-table-column prop="age" align="center" :label="$t('desk.editor_age')"></el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_cumulative')">
           <template slot-scope="{ row }">{{
             row.consumTotal ? row.consumTotal : "0"
           }}</template>
         </el-table-column>
-        <el-table-column prop :label="$t('commons.operating')" width="200">
+        <el-table-column prop :label="$t('commons.operating')">
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="handleHistory(row)">
-              {{ $t("desk.customer_guestHistory") }}</el-button
-            >
+              {{ $t("desk.customer_guestHistory") }}</el-button>
             <el-button type="text" size="mini" @click="handleDetail(row)">{{
               $t("commons.detail")
             }}</el-button>
-            <el-button
-              type="text"
-              size="mini"
-              @click.native="handleEdit(row)"
-              >{{ $t("commons.modify") }}</el-button
-            >
+            <el-button type="text" size="mini" @click.native="handleEdit(row)">{{ $t("commons.modify") }}</el-button>
             <!-- <el-dropdown v-if="1 == 2">
                             <span class="el-dropdown-link">
                                 {{ $t("desk.customer_more") }}
@@ -146,64 +105,29 @@
       <div style="margin-top: 10px"></div>
       <!--分页 -->
       <div class="block">
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="searchForm.page"
-          :page-size="searchForm.page_num"
-          :total="listTotal"
-          layout="total, prev, pager, next, jumper"
-        ></el-pagination>
+        <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" :page-size="searchForm.page_num" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
       </div>
     </div>
     <!-- 详情弹窗 -->
-    <el-dialog
-      top="0"
-      :title="$t('commons.detail')"
-      :visible.sync="setMemberFormVisible"
-      class="setMemberForm"
-      width="60%"
-    >
-      <el-form
-        :model="detailForm"
-        ref="setMemberForm"
-        label-width="80px"
-        size="mini"
-      >
+    <el-dialog top="0" :title="$t('commons.detail')" :visible.sync="setMemberFormVisible" class="setMemberForm" width="60%">
+      <el-form :model="detailForm" ref="setMemberForm" label-width="80px" size="mini">
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item
-                :label="$t('desk.home_name') + ':'"
-                class
-                prop="name"
-              >
-                <template
-                  >{{ detailForm.name
-                  }}<span v-if="detailForm.pronunciation"
-                    >【{{ detailForm.pronunciation }}】</span
-                  ></template
-                >
+              <el-form-item :label="$t('desk.home_name') + ':'" class prop="name">
+                <template>{{ detailForm.name
+                  }}<span v-if="detailForm.pronunciation">【{{ detailForm.pronunciation }}】</span></template>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item
-                :label="$t('desk.home_idCardNum') + ':'"
-                class
-                prop="idcard"
-              >
-                <template
-                  >({{ detailForm.idcardType | F_idcardType }}){{
+              <el-form-item :label="$t('desk.home_idCardNum') + ':'" class prop="idcard">
+                <template>({{ detailForm.idcardType | F_idcardType }}){{
                     detailForm.idcard
-                  }}</template
-                >
+                  }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="6" class="col">
-              <el-form-item
-                :label="$t('desk.home_telNum1') + ':'"
-                class
-                prop="mobile"
-              >
+              <el-form-item :label="$t('desk.home_telNum1') + ':'" class prop="mobile">
                 <template>{{ detailForm.mobile }}</template>
               </el-form-item>
             </el-col>
@@ -215,11 +139,7 @@
           </el-row>
           <el-row class="cell">
             <el-col :span="6" class="col">
-              <el-form-item
-                :label="$t('desk.customer_guestNum') + ':'"
-                class
-                prop="guestNum"
-              >
+              <el-form-item :label="$t('desk.customer_guestNum') + ':'" class prop="guestNum">
                 <template>{{ detailForm.guestNum }}</template>
               </el-form-item>
             </el-col>
@@ -271,43 +191,43 @@
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item :label="$t('desk.customer_unitNameA')+':'">
-                <template >{{ detailForm.enterName }} <span v-if="detailForm.enterPinyin">【{{detailForm.enterPinyin}}】</span></template>
+                <template>{{ detailForm.enterName }} <span v-if="detailForm.enterPinyin">【{{detailForm.enterPinyin}}】</span></template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item :label="$t('desk.customer_unitPhoneNum')+'1:'">
-                <template >{{ detailForm.enterMobile1 }}</template>
+                <template>{{ detailForm.enterMobile1 }}</template>
               </el-form-item>
             </el-col>
-              <el-col :span="8" class="col">
+            <el-col :span="8" class="col">
               <el-form-item :label="$t('desk.customer_unitPhoneNum')+'2:'">
-                <template >{{ detailForm.enterMobile2 }}</template>
+                <template>{{ detailForm.enterMobile2 }}</template>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item :label="$t('desk.customer_unitAddress')+'1:'">
-                <template >{{ detailForm.enterAddress1 }}</template>
+                <template>{{ detailForm.enterAddress1 }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
               <el-form-item :label="$t('desk.customer_unitAddress')+'2:'">
-                <template >{{ detailForm.enterAddress2 }}</template>
+                <template>{{ detailForm.enterAddress2 }}</template>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item label="memo1:">
-                <template >{{ detailForm.memo1 }}</template>
+                <template>{{ detailForm.memo1 }}</template>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
             <el-col :span="8" class="col">
               <el-form-item label="memo2:">
-                <template >{{ detailForm.memo2 }}</template>
+                <template>{{ detailForm.memo2 }}</template>
               </el-form-item>
             </el-col>
           </el-row>
@@ -322,22 +242,10 @@
         }}</el-button>
       </div>
     </el-dialog>
-    <el-dialog
-      :title="$t('desk.customer_newCusBlackName')"
-      :visible.sync="setBlackShow"
-      top="0"
-    >
+    <el-dialog :title="$t('desk.customer_newCusBlackName')" :visible.sync="setBlackShow" top="0">
       <el-form :model="setBlackForm" ref="setBlackForm">
-        <el-form-item
-          :label="$t('desk.customer_pullBlackRemark') + ':'"
-          required="true"
-        >
-          <el-input
-            type="textarea"
-            v-model="setBlackForm.remark"
-            autocomplete="off"
-            style="width: 80%"
-          ></el-input>
+        <el-form-item :label="$t('desk.customer_pullBlackRemark') + ':'" required="true">
+          <el-input type="textarea" v-model="setBlackForm.remark" autocomplete="off" style="width: 80%"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

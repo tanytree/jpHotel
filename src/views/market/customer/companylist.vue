@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-17 17:04:11
+ * @LastEditTime: 2021-01-04 10:33:56
  * @FilePath: \jiudian\src\views\market\customer\companylist.vue
  -->
 
@@ -23,7 +23,7 @@
       </el-tab-pane>
       <!-- 入账管理 -->
       <el-tab-pane :label="$t('desk.customer_accounting')" name="four">
-        <accounts></accounts>
+        <accounts souracePage='footer'></accounts>
       </el-tab-pane>
     </el-tabs>
   </div>
