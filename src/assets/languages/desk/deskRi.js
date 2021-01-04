@@ -835,6 +835,14 @@ module.exports = {
   customer_lookBuyDetailA: '未翻译词条',
   customer_partBill: '未翻译词条',
   customer_notInbill: '未翻译词条',
+  customer_payMenttiem: '未翻译词条 ',
+  customer_accommodationFees: '未翻译词条',
+  customer_foodPrice: '未翻译词条',
+  customer_checkAlive: '未翻译词条',
+  customer_xiaoJi: '未翻译词条',
+  customer_remittanceTime: '未翻译词条',
+  customer_remittanceBank: '未翻译词条',
+  customer_remittanceAccount: '未翻译词条',
 
 
 

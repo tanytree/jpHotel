@@ -5,7 +5,7 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
-         <el-form-item label="门店名称:" v-if="souracePage=='header'">
+         <el-form-item :label="$t('boss.store_storeName') + ':'" v-if="souracePage=='header'">
                     <el-select v-model="searchForm.storesNum" filterable :placeholder="$t('commons.placeChoose')" class="width150">
                         <el-option :label='$t("desk.home_all")' value=''></el-option>
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
@@ -58,7 +58,7 @@
           :label="$t('desk.customer_buyerUnit')"
           show-overflow-tooltip
         ></el-table-column>
-         <el-table-column label="门店名称" show-overflow-tooltip v-if="souracePage=='header'">
+         <el-table-column :label="$t('boss.store_storeName')" show-overflow-tooltip v-if="souracePage=='header'">
                     <template slot-scope="{row}">
                         <div v-if="row&&row.storesNum">{{checkStores(row.storesNum)}}</div>
                     </template>

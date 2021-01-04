@@ -40,7 +40,7 @@
                             <el-row v-if="each.personPrice && each.personPrice.split(',').length > 0">
                                 <el-col v-for="(price, secondIndex) in each.personPrice.split(',')" :key="secondIndex">
                                   <div v-if="secondIndex==0"> 1人住宿价：{{ price }}</div>
-                                  <div v-else> {{ secondIndex + 1 }}人总价：{{ price }}</div>
+                                  <div v-else> {{ secondIndex + 1 }}人住宿价：{{ price }}</div>
                                 </el-col>
                             </el-row>
                             <el-row v-else>1人住宿价：{{ each.onePersonPrice || each.personPrice}}</el-row>
@@ -151,9 +151,11 @@ export default {
             console.log(value);
         },
         handleReserve(item) {
+           this.reserveShow = true;
             this.selectStoresNum = item.number;
-            this.reserveShow = true;
-            this.$refs.normal.initModule(item.number, item.number);
+           if(this.$refs.normal){
+              this.$refs.normal.initModule(item.number, item.number);
+           }
         },
     },
 };

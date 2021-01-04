@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2020-12-31 15:13:26
+ * @LastEditTime: 2021-01-04 18:01:55
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -779,7 +779,7 @@ module.exports = {
   customer_waiteBookPrice: '待入账金额',
   customer_lookBuyDetail: '查看挂账明细',
   customer_lookBuyDetailA: '查看请款明细',
-  customer_bookRecord: '入账记录',
+  customer_bookRecord: '汇款记录',
   customer_placeMoney: '请款金额',
   customer_operateTime: '操作时间',
   customer_pleaseState: '请款状态',
@@ -845,14 +845,14 @@ module.exports = {
   customer_memberCardLoss: '该会员卡在挂失中',
   customer_partBill: '部分入账',
   customer_notInbill: '未入账',
-  customer_: '',
-  customer_: '',
-  customer_: '',
-  customer_: '',
-  customer_: '',
-  customer_: '',
-  customer_: '',
-  customer_: '',
+  customer_payMenttiem: '挂账时间',
+  customer_accommodationFees: '住宿费用',
+  customer_foodPrice: '餐饮商品费用',
+  customer_checkAlive: '入住-离店时间',
+  customer_xiaoJi: '小计',
+  customer_remittanceTime: '汇款时间',
+  customer_remittanceBank: '汇款银行',
+  customer_remittanceAccount: '汇款账号',
   customer_: '',
   customer_: '',
   customer_: '',

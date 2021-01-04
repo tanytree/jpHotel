@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-31 18:29:12
+ * @LastEditTime: 2021-01-04 17:46:37
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -847,7 +847,7 @@ export default {
         };
     },
 
-    mounted() {
+    created() {
         this.initModule();
     },
 

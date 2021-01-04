@@ -5,7 +5,7 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term demo-form-inline" inline size="small" v-model="searchForm" label-width="80px">
-        <el-form-item label="门店名称:" v-if="souracePage=='header'">
+        <el-form-item :label="$t('boss.store_storeName') + ':'" v-if="souracePage=='header'">
           <el-select v-model="searchForm.storesNum" filterable :placeholder="$t('commons.placeChoose')" class="width150">
             <el-option :label='$t("desk.home_all")' value=''></el-option>
             <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
@@ -33,7 +33,7 @@
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip width="100px"></el-table-column>
-        <el-table-column label="门店名称" show-overflow-tooltip v-if="souracePage=='header'">
+        <el-table-column :label="$t('boss.store_storeName')" show-overflow-tooltip v-if="souracePage=='header'">
           <template slot-scope="{row}">
             <div v-if="row&&row.storesNum">{{checkStores(row.storesNum)}}</div>
           </template>
@@ -116,7 +116,7 @@
             {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
           </template>
         </el-table-column>
-        <el-table-column label="挂账时间" show-overflow-tooltip width="180px"></el-table-column>
+        <el-table-column :label="$t('desk.customer_payMenttiem')" show-overflow-tooltip width="180px"></el-table-column>
         <el-table-column prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="150">
         </el-table-column>
         <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPrice')">
@@ -133,16 +133,16 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="住宿费用" width="160"></el-table-column>
-        <el-table-column label="餐饮商品费用" width="160"></el-table-column>
-        <el-table-column prop="checkIn.checkinTime" label="入住-离店时间" width="160">
+        <el-table-column :label="$t('desk.customer_accommodationFees')" width="160"></el-table-column>
+        <el-table-column :label="$t('desk.customer_foodPrice')" width="160"></el-table-column>
+        <el-table-column :label="$t('desk.customer_checkAlive')" width="160">
           <template slot-scope="{row}">
             <div>{{row.checkIn.checkinTime}}</div>
             <div>{{row.checkIn.checkoutTime}}</div>
           </template>
         </el-table-column>
-        <el-table-column label="消费时间" width="160"></el-table-column>
-        <el-table-column label="小计"></el-table-column>
+        <el-table-column :label="$t('desk.customer_spendTime')" width="160"></el-table-column>
+        <el-table-column :label="$t('desk.customer_xiaoJi')"></el-table-column>
       </el-table>
       <!--分页 -->
       <div class="block">
@@ -157,12 +157,20 @@
       </div>
     </el-dialog>
     <!-- 入账记录dialog -->
-    <el-dialog :title="$t('desk.customer_bookRecord')" v-if="bookDialog" :visible.sync="bookDialog" top="0">
+    <el-dialog :title="$t('desk.customer_bookRecord')" v-if="bookDialog" :visible.sync="bookDialog" top="0" width="80%">
       <el-table ref="multipleTable" v-loading="loading" :data="recordList" height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="createTime" :label="$t('desk.customer_operateTime')">
         </el-table-column>
         <el-table-column :label="$t('desk.enterAccountMoney')" prop="operPrice">
+        </el-table-column>
+        <el-table-column label="汇款时间" prop="remittanceTime">
+        </el-table-column>
+        <el-table-column label="汇款银行" prop="remittanceBank">
+        </el-table-column>
+        <el-table-column label="汇款账号" prop="remittanceAccount">
+        </el-table-column>
+        <el-table-column label="备注" prop="remark">
         </el-table-column>
       </el-table>
       <div slot="footer">
@@ -184,27 +192,25 @@
       </div>
       <el-form size="small" :model="enterForm" ref="enterForm" style="margin-top: 15px" label-width="90px" :rules="enterRules">
         <el-form-item :label="$t('desk.enterAccountMoney') + ':'" prop="intoPrice">
-          <el-input type='number' v-model="enterForm.intoPrice" @keyup.native="intoPriceChange"></el-input>
+          <el-input type='number' style="width:320px;" v-model="enterForm.intoPrice" @keyup.native="intoPriceChange"></el-input>
         </el-form-item>
-        <el-form-item label="汇款时间">
-          <el-date-picker v-model="enterForm.remittanceTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+        <el-form-item :label="$t('desk.customer_remittanceTime') + ':'" prop="remittanceTime">
+          <el-date-picker style="width:320px;" v-model="enterForm.remittanceTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
         </el-form-item>
-        <el-form-item label="汇款银行">
-          <el-input type='number' v-model="enterForm.remittanceBank"></el-input>
+        <el-form-item :label="$t('desk.customer_remittanceBank') + ':'" prop="remittanceBank">
+          <el-input style="width:320px;" v-model="enterForm.remittanceBank"></el-input>
         </el-form-item>
-        <el-form-item label="汇款账号">
-          <el-input type='number' v-model="enterForm.remittanceAccount"></el-input>
+        <el-form-item :label="$t('desk.customer_remittanceAccount') + ':'" prop="remittanceAccount">
+          <el-input type='number' style="width:320px;" v-model="enterForm.remittanceAccount"></el-input>
         </el-form-item>
-        <!--          <el-form-item label="备注" prop="intoPrice">-->
-        <!--              <el-input type='number' v-model="enterForm." type="textarea"></el-input>-->
-        <!--          </el-form-item>-->
+        <el-form-item label="备注">
+          <el-input style="width:320px;" v-model="enterForm.remark" type="textarea"></el-input>
+        </el-form-item>
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
         <span>
           <el-button @click="settlementDialog_cancel">{{ $t("commons.cancel") }}</el-button>
-          <el-button type="primary" @click="settlementDialog_save('enterForm')">{{
-                  $t("desk.order_invoicing")
-              }}</el-button>
+          <el-button type="primary" @click="settlementDialog_save('enterForm')">入账</el-button>
         </span>
       </div>
     </el-dialog>
@@ -229,6 +235,27 @@ export default {
           {
             required: true,
             message: this.$t("desk.customer_bookPriceNotEmpty"),
+            trigger: "blur",
+          },
+        ],
+        remittanceTime: [
+          {
+            required: true,
+            message: this.$t("commons.placeChoose"),
+            trigger: "change",
+          },
+        ],
+        remittanceBank: [
+          {
+            required: true,
+            message: this.$t("commons.pleaseEnter"),
+            trigger: "blur",
+          },
+        ],
+        remittanceAccount: [
+          {
+            required: true,
+            message: this.$t("commons.pleaseEnter"),
             trigger: "blur",
           },
         ],
@@ -263,7 +290,7 @@ export default {
       buyTable: [], //挂账明细dialog表格数据
       recordList: [], // 入账记录dialog表格数据
       enterForm: {
-        intoPrice: 0,
+        intoPrice: "",
         remittanceTime: "",
         remittanceBank: "",
         remittanceAccount: "",

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-28 16:57:16
+ * @LastEditTime: 2021-01-04 16:44:13
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -14,7 +14,7 @@
         "
       >
         <div class="itemDetail">
-          <div class="infoTitle">入住信息：</div>
+          <div class="infoTitle">{{$t('frontOffice.checkInfoDesc')}}：</div>
           <el-row>
             <!--                        订单号-->
             <el-col :span="6">{{

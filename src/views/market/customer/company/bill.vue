@@ -5,7 +5,7 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term demo-form-inline" v-model="searchForm" inline size="small" label-width="80px">
-        <el-form-item label="门店名称:" v-if="souracePage=='header'">
+        <el-form-item :label="$t('boss.store_storeName') + ':'" v-if="souracePage=='header'" label-width="90px">
           <el-select v-model="searchForm.storesNum" filterable :placeholder="$t('commons.placeChoose')" class="width150">
             <el-option :label='$t("desk.home_all")' value=''></el-option>
             <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
@@ -39,7 +39,7 @@
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip></el-table-column>
-        <el-table-column label="门店名称" show-overflow-tooltip v-if="souracePage=='header'">
+        <el-table-column :label="$t('boss.store_storeName')" show-overflow-tooltip v-if="souracePage=='header'">
           <template slot-scope="{row}">
             <div v-if="row&&row.storesNum">{{checkStores(row.storesNum)}}</div>
           </template>
@@ -164,7 +164,7 @@
             {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
           </template>
         </el-table-column>
-        <el-table-column label="挂账时间" show-overflow-tooltip width="180px"></el-table-column>
+        <el-table-column :label="$t('desk.customer_payMenttiem')" show-overflow-tooltip width="180px"></el-table-column>
         <el-table-column prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="150">
         </el-table-column>
         <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPrice')">
@@ -181,16 +181,16 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="住宿费用" width="160"></el-table-column>
-        <el-table-column label="餐饮商品费用" width="160"></el-table-column>
-        <el-table-column prop="checkIn.checkinTime" label="入住-离店时间" width="160">
+        <el-table-column :label="$t('desk.customer_accommodationFees')" width="160"></el-table-column>
+        <el-table-column :label="$t('desk.customer_foodPrice')" width="160"></el-table-column>
+        <el-table-column :label="$t('desk.customer_checkAlive')" width="160">
           <template slot-scope="{row}">
             <div>{{row.checkIn.checkinTime}}</div>
             <div>{{row.checkIn.checkoutTime}}</div>
           </template>
         </el-table-column>
-        <el-table-column label="消费时间" width="160"></el-table-column>
-        <el-table-column label="小计"></el-table-column>
+        <el-table-column :label="$t('desk.customer_spendTime')" width="160"></el-table-column>
+        <el-table-column :label="$t('desk.customer_xiaoJi')"></el-table-column>
       </el-table>
       <!--分页 -->
       <div class="block">
@@ -326,8 +326,8 @@ export default {
       loading: false,
       pageIndex: 1, //当前页
       pageSize: 10, //页数
-      innerPageIndex:1,
-      innerPageSize:10,
+      innerPageIndex: 1,
+      innerPageSize: 10,
       date_serial: null,
       addPlaceFrom: {
         enterId: "",
