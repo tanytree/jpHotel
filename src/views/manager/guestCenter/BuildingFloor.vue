@@ -35,12 +35,12 @@
             <el-col :span="6">
                 <el-button type="text" @click="popup('changeDong')">{{$t('commons.modify')}}</el-button>
                 <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-                <el-popconfirm :title="$t('manager.hk_sureDelete')+'？'" @onConfirm="houseFloor_delete">
+                <el-popconfirm :title="$t('manager.hk_sureDelete')+'？'" @confirm="houseFloor_delete">
                     <el-button
                             slot="reference"
                             type="text"
                             size="small"
-                            @click="deleteRow(selectRedio)"
+                            
                     >{{$t('commons.delete')}}</el-button>
                 </el-popconfirm>
 <!--                <span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>-->
@@ -64,13 +64,12 @@
                                 <el-button type="text" @click="popup('changeCeng',value)">{{$t('commons.modify')}}</el-button>
                                 <el-popconfirm
                                         :title="$t('manager.hk_sureDelete')+'？'"
-                                        @onConfirm="houseRoom_delete(value)"
+                                        @confirm="houseRoom_delete(value)"
                                 >
                                     <el-button
                                             slot="reference"
                                             type="text"
                                             size="small"
-                                            @click="deleteRow(value)"
                                     >{{$t('commons.delete')}}</el-button>
                                 </el-popconfirm>
                             </el-col>
@@ -388,7 +387,9 @@
                     }
                 );
             },
-            // 删除--楼栋
+   //          deleteRow(value) {
+			// },
+			// 删除--楼栋
             houseFloor_delete() {
                 let params = {
                     hotelBuildingId: this.selectRedio,

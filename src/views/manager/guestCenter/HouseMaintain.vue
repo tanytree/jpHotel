@@ -75,7 +75,7 @@
 									</el-button>
 									<el-button type="text" size="small" @click="addHouse('rili', scope.row, '4')">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
-									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="houseConfirm_delete(scope.row)">
+									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @confirm="houseConfirm_delete(scope.row)">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
 										</el-button>
 									</el-popconfirm>
@@ -310,7 +310,7 @@
 					roomType: 1, //房屋类型  1客房类型  2会议室房型
 					houseName: "",
 					marketPrice: "",
-					discountPrice: "",
+					discountPrice: 0,
 					checkinNum: "", // 入住人数
 					bedNum: "",
 					bedSizeW: "",
@@ -643,6 +643,8 @@
 						this.$F.doUploadBatch(this, imgList, (data) => {
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
+							params.discountPrice = 0
+							debugger
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",

@@ -247,7 +247,7 @@
                                 >
                                 <el-popconfirm
                                     :title="$t('manager.hp_bulletTitle')"
-                                    @onConfirm="houseConfirm_delete(scope.row)"
+                                    @confirm="houseConfirm_delete(scope.row)"
                                 >
                                     <el-button
                                         slot="reference"

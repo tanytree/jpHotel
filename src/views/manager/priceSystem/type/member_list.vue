@@ -201,6 +201,7 @@
 				ruleForm_Pie: [],  // 单独修改价格的tabble
 				roomStrategyJson_p: [],
 				all: [],
+				isIndeterminate: true,
 
 				tab1_show: true,
 				value: "",
@@ -312,6 +313,8 @@
 					value: (i + 1)
 				});
 			})
+			// console.log(this.weekDays)
+			// debugger
 			this.get_hotel_price_room_type_list();
 			// this.get_hotel_room_type_list()
 		},
@@ -458,6 +461,9 @@
 						this.batchEditPriceForm.memberTypeId.splice($index, 1);
 					}
 				}
+				
+				// this.checkedCities = val ? cityOptions : [];
+				//         this.isIndeterminate = false;
 			},
 			//选择周几ichange事件
 			handleWeekDayChange(value) {
@@ -535,10 +541,10 @@
 							weekDay: "",
 						});
 
-						this.selectedRoomtype.push({
-							name: '全部',
-							id: "0",
-						});
+						// this.selectedRoomtype.push({
+						// 	name: '全部',
+						// 	id: "0",
+						// });
 
 						this.memberTypeList = res.memberTypeList
 						this.memberTypeList.forEach((item, i) => {
@@ -556,23 +562,23 @@
 								value.id2 = j;
                                 value.memberTypeObject = item;
 								if (value.roomType == 1) {
-
+									// debugger 
 									if (res.dayPriceList.length == 0) {
 										if (value.personPrice != '' && value.personPrice != null && value.personPrice != undefined) {
 											let arr = value.personPrice.split(',')
 											res.dateList.forEach((a, b) => {
 												a.onePrice = 0;
-												a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject
-													.mealPrice || 0)
+												a.onePrice = Number(arr[0]) + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject.mealPrice || 0)
 											})
 										}
 									} else {
 										res.dateList.forEach((a, b) => {
 											a.onePrice = 0;
 											res.dayPriceList.forEach((c, d) => {
+												// debugger
 												if (a.dateStr == c.dayTime) {
-													a.onePrice = c.newCustomPrice + Number(value.mealBreakfastObject.mealPrice || 0) + Number(value.mealDinnerObject
-														.mealPrice || 0)
+													debugger
+													a.onePrice = Number(c.newCustomPrice) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
 												}
 											})
 										})
