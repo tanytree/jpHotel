@@ -81,7 +81,6 @@
                                 <el-option v-for="item in detailData.inRoomList" :key="item.id" :label="item.houseNum" :value="item.roomId">
                                 </el-option>
                             </el-select>
-
                         </el-form-item>
                         <el-form-item :label="$t('desk.enterAccountMoney') + ':'">
                             {{totalIn}}
@@ -300,7 +299,7 @@ export default {
                            children:this.getNewCateList(list[i].child)
                        })
                    }
-                  
+
                }
                return arr
             }
@@ -467,7 +466,8 @@ export default {
                 this.cart = []
               this.visible = false
               this.$emit('get_consume_order_list','');
-            })
+              this.$emit('getOrderDetail');
+            });
         },
 
         /**多选 */
