@@ -645,6 +645,7 @@ export default {
             });
         },
         houseConfirm_delete(value) {
+			// debugger
             let params = {
                 roomId: value.id,
             };
@@ -653,8 +654,9 @@ export default {
                 "/pms/hotel/hotel_room_delete",
                 params,
                 (res) => {
+					// debugger
                     this.$message({
-                        message: this.deleteSuccess,
+                        message: res,
                         type: "success",
                     });
                     this.get_room_list();
