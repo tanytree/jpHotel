@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 13:58:24
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-30 15:07:38
+ * @LastEditTime: 2021-01-04 10:33:31
  * @FilePath: \jiudian\src\views\sale\contract\index.vue
  -->
 <template>
@@ -18,7 +18,7 @@
                 <!-- 请款管理 -->
                 <bill v-if="item.path == 'accountingManagement'" souracePage='header'></bill>
                 <!-- 入账管理 -->
-                <accounts v-if="item.path == 'inAccountingManagement'"></accounts>
+                <accounts v-if="item.path == 'inAccountingManagement'" souracePage='header'></accounts>
             </el-tab-pane>
         </el-tabs>
     </div>

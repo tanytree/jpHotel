@@ -60,7 +60,7 @@
         ></el-table-column>
          <el-table-column label="门店名称" show-overflow-tooltip v-if="souracePage=='header'">
                     <template slot-scope="{row}">
-                        <div v-if="row">{{checkStores(row.storesNum)}}</div>
+                        <div v-if="row&&row.storesNum">{{checkStores(row.storesNum)}}</div>
                     </template>
                 </el-table-column>
         <el-table-column
@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       unitList: null,
-      storeList: null,
+      storeList: [],
       pageIndex: 1, //当前页
       pageSize: 10, //页数
       loading: false,
@@ -175,12 +175,16 @@ export default {
   },
   methods: {
         checkStores(storesNum) {
-            let newArray = this.storeList.filter((item) => {
+          if(this.storeList.length>0){
+              let newArray = this.storeList.filter((item) => {
                 return item.storesNum == storesNum;
             });
             if (newArray.length > 0) {
                 return newArray[0].storesName;
             }
+          }else{
+            console.log('门店还未请求结束');
+          }
         },
     //请求 单位 列表
     getUnitList() {

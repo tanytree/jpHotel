@@ -832,6 +832,9 @@ module.exports = {
   order_guestKind: "未翻译词条",
   order_liveAddress: "未翻译词条",
   order_homePhone: "未翻译词条",
+  customer_lookBuyDetailA: '未翻译词条',
+  customer_partBill: '未翻译词条',
+  customer_notInbill: '未翻译词条',
 
 
 
