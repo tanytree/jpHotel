@@ -7,12 +7,7 @@
 <template>
   <div>
     <div class="item-info" v-if="showOrderInfo">
-      <div
-        class="public"
-        v-if="
-          checkinInfo.checkInRoomType == 1 || checkinInfo.checkInRoomType == 2
-        "
-      >
+      <div class="public" v-if=" checkinInfo.checkInRoomType == 1 || checkinInfo.checkInRoomType == 2">
         <div class="itemDetail">
           <div class="infoTitle">{{$t('frontOffice.checkInfoDesc')}}：</div>
           <el-row>
@@ -336,35 +331,6 @@ export default {
     },
     init(type, checkinInfo) {
       this.handleData(checkinInfo);
-    },
-
-    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex === 0) {
-        if (columnIndex <= 4) {
-          return {
-            rowspan: 3,
-            colspan: 1,
-          };
-        } else {
-          return {
-            rowspan: 1,
-            colspan: 1,
-          };
-        }
-      }
-      if (rowIndex > 2) {
-        if (columnIndex > 0) {
-          return {
-            rowspan: 1,
-            colspan: 7,
-          };
-        } else {
-          return {
-            rowspan: 1,
-            colspan: 1,
-          };
-        }
-      }
     },
   },
 };

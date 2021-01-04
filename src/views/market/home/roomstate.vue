@@ -130,6 +130,12 @@
                 </el-main>
                 <el-footer>
                     <el-button class="white" size="small" @click="batchRoomHaldel">{{ $t("desk.home_batchSet") }}</el-button>
+                    <div>
+                        <span>当前入住率：{{menuBottomInfo.checkInRate}}</span>
+                        <span style="margin-left: 15px">ADR：{{menuBottomInfo.ADR}}</span>
+                        <span style="margin-left: 15px">DOR：{{menuBottomInfo.DOR}}</span>
+                        <span style="margin-left: 15px">RevPAR：{{menuBottomInfo.RevPAR}}</span>
+                    </div>
                     <!--          <el-button class="white" size="small">{{ $t("desk.home_printRoomState")  }}</el-button>-->
                     <!--          <el-button type="primary"  class="submit" size="small" @click="print = true"  icon="el-icon-message-solid">-->
                     <!--              {{ $t("desk.home_pushAnd") }}</el-button>-->
@@ -459,6 +465,7 @@ export default {
     mixins: [myMixin],
     data() {
         return {
+            menuBottomInfo: {},
             remark: false,
             num: 1,
             currentPage4: 4, //分页当前所在页数的位置
@@ -621,11 +628,18 @@ export default {
         },
         realtime_room_statistics() {
             let that = this;
+
             this.$F.doRequest(
                 this,
                 "/pms/realtime/realtime_room_statistics",
                 this.searchForm,
                 (res) => {
+                    this.menuBottomInfo = {
+                        checkInRate: res.checkInRate,
+                        DOR: res.DOR,
+                        RevPAR: res.RevPAR,
+                        ADR: res.ADR,
+                    }
                     let menu = {
                         0: "orders_today_out", //今日预离
                         1: "orders_individual", //散客
