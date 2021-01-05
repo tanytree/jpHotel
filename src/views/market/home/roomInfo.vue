@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2020-12-28 11:02:27
+ * @LastEditTime: 2021-01-05 13:56:21
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -239,7 +239,8 @@ export default {
     methods: {
         //点击挂账按钮
         paymentVisible(){
-            this.$refs.cardTao.resetVisibel(this.currentRoom.currentRoomData.checkinId);
+          console.log(this.currentRoom);
+            this.$refs.cardTao.resetVisibel(this.currentRoom.checkInObj.id);
         },
           //点击结账退房按钮
         checkoutRoom(){

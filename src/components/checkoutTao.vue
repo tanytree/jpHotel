@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2020-12-29 14:41:48
+ * @LastEditTime: 2021-01-05 13:27:53
  * @FilePath: \jiudian\src\components\checkoutTao.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -130,6 +130,7 @@ export default {
     created() {},
     methods: {
         resetVisibel() {
+             console.log(this.currentRoom);
             this.checkoutVisible = true;
             if (this.detailData.totalPrice > 0) {
                 this.checkoutForm.consumePrice = this.detailData.totalPrice;
