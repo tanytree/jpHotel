@@ -146,7 +146,7 @@
         </span>
       </div>
     </el-dialog>
-    <!-- 查看请款明细dialog -->
+     <!-- 查看请款明细dialog -->
     <el-dialog :title="$t('desk.customer_lookBuyDetailA')" v-if="advanceDialog" :visible.sync="advanceDialog" width="90%" top="0">
       <div class="flexBox">
         <div class="weight">{{itemInfo.enterName}}</div>
@@ -159,18 +159,15 @@
         <!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
       <el-table ref="multipleTable" v-loading="loading" :data="buyTable" height="100%" header-row-class-name="default" size="small">
-        <el-table-column :label="$t('desk.home_name')" prop="checkIn.name" width="150">
+        <el-table-column :label="$t('desk.home_name')" prop="checkIn.name" width="140">
           <template slot-scope="{ row }">
             {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_payMenttiem')" show-overflow-tooltip width="180px"></el-table-column>
+        <el-table-column :label="$t('desk.customer_payMenttiem')" prop="createTime" show-overflow-tooltip width="160px"></el-table-column>
         <el-table-column prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="150">
         </el-table-column>
         <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPrice')">
-          <template slot-scope="{ row }">
-            {{ row.payPrice || 0 }}
-          </template>
         </el-table-column>
         <el-table-column :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="130px">
           <template slot-scope="{ row }">
@@ -181,20 +178,24 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_accommodationFees')" width="160"></el-table-column>
-        <el-table-column :label="$t('desk.customer_foodPrice')" width="160"></el-table-column>
+        <el-table-column :label="$t('desk.customer_accommodationFees')" width="100" prop="roomPrice"></el-table-column>
+        <el-table-column :label="$t('desk.customer_foodPrice')" width="100">
+          <template slot-scope="{row}">
+            {{row.dishesPrice+row.shopPrice}}
+          </template>
+        </el-table-column>
         <el-table-column :label="$t('desk.customer_checkAlive')" width="160">
           <template slot-scope="{row}">
             <div>{{row.checkIn.checkinTime}}</div>
             <div>{{row.checkIn.checkoutTime}}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_spendTime')" width="160"></el-table-column>
-        <el-table-column :label="$t('desk.customer_xiaoJi')"></el-table-column>
+        <el-table-column :label="$t('desk.customer_spendTime')" width="160" prop="checkIn.checkinTime"></el-table-column>
+        <el-table-column :label="$t('desk.customer_xiaoJi')" prop="onAccountTotal"></el-table-column>
       </el-table>
       <!--分页 -->
       <div class="block">
-        <el-pagination @current-change="handlePageIndex" :current-page="innerPageIndex" :page-size="innerPageSize" :total="buyTable.length" layout="total, prev, pager, next, jumper"></el-pagination>
+        <el-pagination @current-change="handlePageIndex" :current-page="innerPageIndex" :page-size="innerPageSize" :total="innnerListTotal" layout="total, prev, pager, next, jumper"></el-pagination>
       </div>
       <div slot="footer">
         <div class="dialog-footer">
@@ -356,6 +357,7 @@ export default {
         //继续请款form表单
       },
       listTotal: 0, //总条数
+        innnerListTotal:0,
       tableData: [], //表格数据
       buyTable: [], //挂账明细dialog表格数据
       //////////////////**** ++++++++++++++++++*/
@@ -410,8 +412,11 @@ export default {
     dialogClose() {
       this.dialogNew_cancle();
     },
+  
     //点击 挂账明细 按钮
     advancePayments(row) {
+      this.innerPageSize = 10;
+      this.innerPageIndex = 1;
       console.log(row);
       this.itemInfo = row;
       if (this.itemInfo) {
@@ -429,7 +434,10 @@ export default {
           params,
           (res) => {
             console.log(res);
+            let {count} =res.page;
+            this.innnerListTotal = count;
             this.buyTable = res.consumeOrderList;
+            // this.detailListTotal = res.page.count;
             this.totalConsumerPrice = 0;
             res.consumeOrderList.forEach((item) => {
               if (item.priceType == 13) {

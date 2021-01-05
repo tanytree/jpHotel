@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-28 18:08:18
+ * @LastEditTime: 2021-01-05 15:40:19
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -9,15 +9,15 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">添加房间</el-button>
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)">入住人管理</el-button>
+        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">{{$t('desk.order_addRoom')}}</el-button>
+        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)">{{$t('desk.order_livePeopleManegerment')}}</el-button>
         <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.batchCheckin") }}</el-button>
         <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown size="small" split-button type="primary">
           {{ $t("commons.moreOperating") }}
           <el-dropdown-menu slot="dropdown">
             <!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
-            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
+            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">{{ $t("desk.order_changeSource") }}</el-dropdown-item>
             <!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
             <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
@@ -71,7 +71,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div>保留时间：该字段没有找到</div>
+          <div>保留时间：{{checkinInfo.keepTime}}</div>
         </el-col>
       </el-row>
       <el-row>

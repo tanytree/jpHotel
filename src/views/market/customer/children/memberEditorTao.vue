@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-04 17:52:56
+ * @LastEditTime: 2021-01-05 17:45:09
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -77,7 +77,7 @@
                     <el-col :span="16" class="col">
                       <el-form-item :label="$t('desk.customer_memeberCardNum')" prop="memberCard">
                         <el-input v-model="detailForm.memberCard" :disabled='detailForm.isGen' v-if="type != 'detail'" style="width:215px;margin-right:20px;"></el-input>
-                         <el-checkbox v-model="detailForm.isGen" @change="handleChangeOther">{{$t('desk.customer_systemPro')}}</el-checkbox>
+                         <el-checkbox v-model="detailForm.isGen"  @change="handleChangeOther">{{$t('desk.customer_systemPro')}}</el-checkbox>
                       </el-form-item>
                     </el-col>
                   </template>
@@ -551,8 +551,9 @@ export default {
         operType: 2,
       },
       detailForm: {
+        isGen:true,
         memberTypeId: "",
-        memberCard: "",
+        memberCard: "系统生成",
         idcardType: "",
         idcard: "",
         name: "",
@@ -1029,8 +1030,8 @@ export default {
             this.$F.doRequest(this, url, params, (data) => {
               if (
                 this.cardForm.type != 3 &&
-                this.cardForm.type != 5 &&
-                this.cardForm.type != 4
+                this.cardForm.type != 5 
+               
               ) {
                 this.setCardFormVisible = false;
                 this.findone(this.detailForm.id);

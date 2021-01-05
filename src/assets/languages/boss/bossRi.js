@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-25 15:30:31
+ * @LastEditTime: 2021-01-05 15:32:49
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -183,7 +183,7 @@ module.exports = {
     add_resetPeople:'変更担当者',
     add_creator:'開始担当者',
     add_memtypeManage:'会員類別管理',
-    add_addMemType:'未翻译词条',
+    add_addMemType:'第3段会員カテゴリー',
     add_basicInfo:'基本情報',
     add_memType:'会員類別',
     add_levelA:'類別ランク',
@@ -236,7 +236,7 @@ module.exports = {
     report_pleaseInvoice: 'ご請求書',
     report_constDetail: 'ご利用明細書',
     report_receipt: '領収書',
-    report_reservation: '未翻译词条',
+    report_reservation: '予約関係帳票',
     report_bookSale: '予約・売上状況表',
     report_dayHappen: '申込先別日別状況表',
     report_bookDayPer: '予約日報',
@@ -261,26 +261,26 @@ module.exports = {
     report_confirmation: '入金登録チェックリスト（日次）',
     report_constDetailSure: '利用明細登録チェックリスト（日次）',
     report_miniBar: 'Mini Bar利用一覧（日次）',
-    report_monthReport: '未翻译词条',
+    report_monthReport: '月次帳票',
     report_monthForm: '売上集計表',
-    report_weekLook: '未翻译词条',
-    report_departmentClass: '未翻译词条',
+    report_weekLook: '週別売上一覧',
+    report_departmentClass: '部門別・科目分類売上一覧（月次）',
     report_monthDepartment: '月别部門・科目分類売上実績',
     report_freshClass: '料理ランク別売上一覧（月次）',
     report_everyShui: '消費税・入湯税・宿泊税明細一覧（月报）',
     report_printedPaper: '印紙税明細一覧',
     report_roomType: '部屋タイプ別稼働実績',
     report_roomLive: '部屋別稼働実績',
-    report_reportTitle: '未翻译词条',
+    report_reportTitle: '帳票',
     report_businessHours: "営業日",
-    report_selectMonth: '未翻译词条',
-    report_firstQuery: '未翻译词条',
-    add_roomDetail: '未翻译词条',
-    add_canBookNum: '未翻译词条',
-    add_onePeople: '未翻译词条',
-    add_peopleLivePrice: '未翻译词条',
-    add_normalBook: '未翻译词条',
-    add_noHaveInfo: '未翻译词条',
+    report_selectMonth: '月を指定ください',
+    report_firstQuery: '出力帳票を検索してください',
+    add_roomDetail: '部屋情報',
+    add_canBookNum: '予約可能数',
+    add_onePeople: '一人宿泊料金',
+    add_peopleLivePrice: '人宿泊料金',
+    add_normalBook: '一般予約',
+    add_noHaveInfo: '該当ホテル利用可能部屋はございません',
 
 
 

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-04 18:01:55
+ * @LastEditTime: 2021-01-05 15:25:55
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -455,7 +455,7 @@ module.exports = {
   order_guestKind: "客人分类",
   order_liveAddress: "住家地址",
   order_homePhone: "住家号码",
-  order_: "",
+  order_addRoom: "添加房间",
   order_: "",
   order_: "",
   order_: "",
