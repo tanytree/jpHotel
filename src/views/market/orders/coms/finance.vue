@@ -71,7 +71,7 @@
     <!--入账 -->
     <el-dialog top='0' :title="$t('desk.enterAccount')" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
-            <!-- <p>快速入账项目</p> -->
+            <p>快速入账项目</p>
             <el-form-item :label="$t('desk.order_payProject')+':'">
                 <el-radio-group v-model="consumeOperForm.priceType">
                     <el-radio-button :label="3" :value="3">{{$t('desk.customer_collection')}}</el-radio-button>
@@ -90,6 +90,8 @@
                     <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
                     <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
                     <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
+                    <el-radio-button :label="15" :value="15">温泉税</el-radio-button>
+                    <el-radio-button :label="16" :value="16">住宿税</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
@@ -109,12 +111,23 @@
                     <el-input-number @change="getDamagePrice" :disabled="!consumeOperForm.damageId"  v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
                 </el-form-item>
             </template>
+
+            <template v-if="consumeOperForm.priceType == 15 || consumeOperForm.priceType == 16">
+                <el-form-item :label="$t('desk.order_unitPrice')+':'">
+                    <el-input @change="getDamagePrice" :placeholder="$t('desk.order_unitPrice')" type="number" style="width: 100px;" v-model="unitPrice" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('desk.order_number')+':'">
+                    <el-input-number style="width: 100px;" @change="getDamagePrice" @focus="getDamagePrice" :disabled="!taxCount"  v-model="taxCount" :min="1" label=""></el-input-number>
+                </el-form-item>
+            </template>
+
             <el-form-item :label="$t('desk.customer_sum')+':'">
-                <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off"></el-input>
-                <el-input class="2222" v-else v-model="consumeOperForm.consumePrice" autocomplete="off"></el-input>
+                <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
+                <el-input type="number" style="width: 100px;" v-else v-model="consumeOperForm.consumePrice" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
             </el-form-item>
+
             <el-form-item :label="$t('desk.home_note') + ':'">
-                <el-input class="" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-input class="" :placeholder="$t('desk.home_note')" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
 <!--            <el-form-item label="打印单据：">-->
 <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
@@ -194,7 +207,7 @@
                 </div>
             </div>
             <br />
-        
+
             <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
                 <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
@@ -272,7 +285,7 @@
     <!--部分结账-->
     <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
     <!--迷你吧-->
-    <consumeGoods ref="consumeGoods" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
+    <consumeGoods ref="consumeGoods" :detailData = "detailData" @getOrderDetail="getOrderDetail"  @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
     <!--开发票-->
     <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
     <!-- 附餐 -->
@@ -396,6 +409,7 @@ export default {
                 priceType: '',
                 payType: '',
                 name: '',
+                damageCount:''
             },
             openInvoiceForm: {
                 roomNum: '',
@@ -412,7 +426,8 @@ export default {
                 invoiceId: '',
                 isPoints:false
             },
-
+            unitPrice:'',
+            taxCount:'',//税--数量
             listTotal: 0, //总条数
             multipleSelection: [], //多选
             tableData: [{}], //表格数据
@@ -436,7 +451,14 @@ export default {
             })[0];
         }
 
-        console.log(this.currentRoom)
+        //监听单价和数量
+        this.$watch('unitPrice', (value) => {
+            this.getDamagePrice();
+        });
+        this.$watch('taxCount', (value) => {
+          this.getDamagePrice();
+        });
+
     },
 
     mounted() {
@@ -506,6 +528,12 @@ export default {
              * **/
 
             let params = this.consumeOperForm
+            if(this.unitPrice){
+                params.unitPrice = this.unitPrice
+            }
+            if(this.taxCount){
+                params.taxCount = this.taxCount
+            }
             // params.orderId = this.$route.query.id
 
             params.checkInId = this.checkInId
@@ -742,6 +770,7 @@ export default {
             console.log(e)
             console.log(this.currentRoom)
             if (e == 5) {
+                this.taxCount = ''
                 if (this.currentRoom) {
                     this.consumeOperForm.consumePrice = this.currentRoom.realPrice
                 } else {
@@ -754,6 +783,7 @@ export default {
                     }
                 }
             } else if (e == 6) {
+                this.taxCount = ''
                 console.log(this.currentRoom)
                 if (this.currentRoom) {
                     this.consumeOperForm.consumePrice = (this.currentRoom.realPrice * 0.5).toFixed(2)
@@ -768,6 +798,7 @@ export default {
                     }
                 }
             } else if (e == 7) {
+                this.taxCount = ''
                 this.consumeOperForm.damageCount = 1
                 this.consumeOperForm.consumePrice = ''
                 this.getDdamageInfo();
@@ -783,19 +814,29 @@ export default {
         },
         //获取房间的物品价格
         getDdamageInfo(){
-            console.log(this.consumeOperForm.damageId)
-            console.log(this.hoteldamageList)
-            let list = this.hoteldamageList
-            if(list.length > 0 && this.consumeOperForm.damageTypeId && this.consumeOperForm.damageId ){
-               for(let i in list){
-                   if(this.consumeOperForm.damageId == list[i].id){
-                       console.log(list[i])
-                       let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
-                       this.consumeOperForm.consumePrice = p.toFixed(2)
-                       this.consumeOperForm.damageName = list[i].name
+
+            if(this.consumeOperForm.priceType == 15 || this.consumeOperForm.priceType == 16){
+                let count = this.taxCount ? this.taxCount : 0
+                let unitPrice = this.unitPrice ? this.unitPrice : 0
+                let p = count * unitPrice
+                this.consumeOperForm.consumePrice = p
+                console.log( this.consumeOperForm.consumePrice)
+            }else{
+                this.taxCount = ''
+                console.log(this.consumeOperForm.damageId)
+                console.log(this.hoteldamageList)
+                let list = this.hoteldamageList
+                if(list.length > 0 && this.consumeOperForm.damageTypeId && this.consumeOperForm.damageId ){
+                   for(let i in list){
+                       if(this.consumeOperForm.damageId == list[i].id){
+                           console.log(list[i])
+                           let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
+                           this.consumeOperForm.consumePrice = p.toFixed(0)
+                           this.consumeOperForm.damageName = list[i].name
+                       }
                    }
-               }
-            }
+                }
+             }
         },
 
 
@@ -942,12 +983,14 @@ export default {
             this.consume_order_list();
         },
         getOrderDetail(){
-            // console.log(111)
+            console.log(111)
             this.$emit('getOrderDetail')
         }
     },
     watch:{
         'consumeOperForm.priceType':function(val,oldval){
+            this.taxCount = ''
+            this.unitPrice = ''
                 if(val == 9){
                     this.consumeOperForm.consumePrice = this.destructionList[0].consumePrice ? this.destructionList[0].consumePrice : this.destructionList[0].payPrice
                 }else if(val == 10){

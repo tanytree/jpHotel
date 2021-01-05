@@ -261,8 +261,8 @@ export default {
             this.searchForm.page = val;
             this.getDataList();
         },
-        getOrderDetail(){
-            console.log('c1')
+        getOrderDetail(v){
+            console.log(v)
             this.$emit('getOrderDetail')
         }
 
