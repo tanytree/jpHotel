@@ -130,11 +130,11 @@
                 </el-main>
                 <el-footer>
                     <el-button class="white" size="small" @click="batchRoomHaldel">{{ $t("desk.home_batchSet") }}</el-button>
-                    <div>
-                        <span>当前入住率：{{menuBottomInfo.checkInRate}}</span>
-                        <span style="margin-left: 15px">ADR：{{menuBottomInfo.ADR}}</span>
-                        <span style="margin-left: 15px">DOR：{{menuBottomInfo.DOR}}</span>
-                        <span style="margin-left: 15px">RevPAR：{{menuBottomInfo.RevPAR}}</span>
+                    <div class='rateClass'>
+                        <span>{{$t('desk.home_nowLiveRate')}}：{{(menuBottomInfo.checkInRate)*100}}%</span>
+                        <span style="margin-left: 15px">ADR：{{(menuBottomInfo.ADR)*100}}%</span>
+                        <span style="margin-left: 15px">DOR：{{(menuBottomInfo.DOR)*100}}%</span>
+                        <span style="margin-left: 15px">RevPAR：{{(menuBottomInfo.RevPAR)*100}}%</span>
                     </div>
                     <!--          <el-button class="white" size="small">{{ $t("desk.home_printRoomState")  }}</el-button>-->
                     <!--          <el-button type="primary"  class="submit" size="small" @click="print = true"  icon="el-icon-message-solid">-->
@@ -634,6 +634,7 @@ export default {
                 "/pms/realtime/realtime_room_statistics",
                 this.searchForm,
                 (res) => {
+                  console.log(res);
                     this.menuBottomInfo = {
                         checkInRate: res.checkInRate,
                         DOR: res.DOR,
@@ -1255,5 +1256,14 @@ export default {
             }
         }
     }
+}
+.rateClass{
+  text-align: right;
+  width:100%;
+  color: rgba(102, 102, 102, 100);
+  font-size: 16px;
+  span{
+    margin-right: 10px;
+  }
 }
 </style>

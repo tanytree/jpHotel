@@ -843,6 +843,7 @@ module.exports = {
   customer_remittanceTime: '未翻译词条',
   customer_remittanceBank: '未翻译词条',
   customer_remittanceAccount: '未翻译词条',
+  home_nowLiveRate: '現在の稼働率',
 
 
 
