@@ -1572,6 +1572,7 @@ export default {
                 name: query,
                 searchType: 1,
                 pageIndex: 1,
+                filter: true,
                 pageSize: 999,
                 paging: false,
             };

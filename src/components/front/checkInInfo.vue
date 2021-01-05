@@ -12,60 +12,26 @@
           <div class="infoTitle">{{$t('frontOffice.checkInfoDesc')}}：</div>
           <el-row>
             <!--                        订单号-->
-            <el-col :span="6">{{
-              $t("desk.book_orderNum") +
-              ": " +
-              (checkinInfo.checkIn.reserveOrderNum ||
-                checkinInfo.checkIn.orderNum)
-            }}</el-col>
+            <el-col :span="6">{{ $t("desk.book_orderNum") + ": " + (checkinInfo.checkIn.reserveOrderNum || checkinInfo.checkIn.orderNum) }}</el-col>
             <el-col :span="6">
               <!--                            来源-->
-              <span>{{
-                $t("desk.book_orderSoutce") +
-                ": " +
-                F_orderSource(checkinInfo.checkIn.orderSource)
-              }}</span>
+              <span>{{ $t("desk.book_orderSoutce") + ": " + F_orderSource(checkinInfo.checkIn.orderSource) }}</span>
             </el-col>
             <!--                        外部订单号-->
-            <el-col :span="6">{{
-              $t("desk.order_outOrder") +
-              ": " +
-              (checkinInfo.checkIn.thirdOrdernum || "")
-            }}</el-col>
+            <el-col :span="6">{{ $t("desk.order_outOrder") + ": " + (checkinInfo.checkIn.thirdOrdernum || "") }}</el-col>
           </el-row>
           <el-row>
             <!--                        地区-->
-            <el-col :span="6">{{
-              $t("desk.customer_region") +
-              ": " +
-              (checkinInfo.checkIn.region || "")
-            }}</el-col>
+            <el-col :span="6">{{ $t("desk.customer_region") + ": " + (checkinInfo.checkIn.region || "") }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">{{
-              $t("desk.order_checkinDate") +
-              ": " +
-              checkinInfo.checkIn.checkinTime
-            }}</el-col>
-            <el-col :span="6">{{
-              $t("desk.order_departureTime") +
-              ": " +
-              checkinInfo.checkIn.checkoutTime
-            }}</el-col>
-            <el-col :span="6">{{
-              $t("desk.checkInDays") +
-              ": " +
-              (checkinInfo.checkIn.checkinDays || "")
-            }}</el-col>
+            <el-col :span="6">{{ $t("desk.order_checkinDate") + ": " + checkinInfo.checkIn.checkinTime }}</el-col>
+            <el-col :span="6">{{ $t("desk.order_departureTime") + ": " + checkinInfo.checkIn.checkoutTime }}</el-col>
+            <el-col :span="6">{{ $t("desk.checkInDays") + ": " + (checkinInfo.checkIn.checkinDays || "") }}</el-col>
           </el-row>
         </div>
       </div>
-      <div
-        class="public otherStyle"
-        v-if="
-          checkinInfo.checkInRoomType == 1 || checkinInfo.checkInRoomType == 2
-        "
-      >
+      <div class="public otherStyle" v-if=" checkinInfo.checkInRoomType == 1 || checkinInfo.checkInRoomType == 2">
         <div class="infoTitle">预约内容/住宿plan：</div>
         <div class="itemDetail">
           <el-row>
@@ -95,7 +61,7 @@
 
     <!--表格数据 -->
     <el-table :data="checkinInfo.inRoomList" header-row-class-name="default" border style="width: 100%">
-      <el-table-column prop="name" label="入住人/单位名称/团队名" width="120px">
+      <el-table-column prop="name" label="入住人/单位名称/团队名">
         <template slot-scope="{ row, $index }">
           <!--                    显示入住人  入主入住人没有 则显示订单外的订单信息-->
           <span v-if="row.headerObj">{{ row.headerObj.name }}【{{ row.headerObj.pronunciation }}】</span>
@@ -114,12 +80,12 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="房间号/房型" align="center" width="80px">
+      <el-table-column label="房间号/房型" align="center" >
         <template slot-scope="{ row, $index }">
           <span>{{ row.houseNum }} / {{ row.roomTypeName }} </span>
         </template>
       </el-table-column>
-      <el-table-column label="证件号码" align="center" width="100px">
+      <el-table-column label="证件号码" align="center">
         <template slot-scope="{ row, $index }">
           <span v-if="row.headerObj">
             ({{
@@ -130,7 +96,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="联系方式" align="center" width="90px">
+      <el-table-column label="联系方式" align="center" >
         <template slot-scope="{ row, $index }">
           <div v-if="row.headerObj">
             <p v-if="row.headerObj.homeMobile">(家) {{ row.headerObj.homeMobile }}</p>
@@ -147,14 +113,14 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="客源类型" align="center" width="80px">
+      <el-table-column label="客源类型" align="center" >
         <template slot-scope="{ row, $index }">
           <span>
             {{ F_guestType(checkinInfo.checkIn.guestType) }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="会员号码/单位号码" width="120px">
+      <el-table-column align="center" label="会员号码/单位号码" >
         <template slot-scope="{ row, $index }">
           <span v-if=" row.headerObj && row.headerObj.guestType == 2 && row.headerObj.memberCard">
             {{ row.headerObj.memberCard }}
@@ -172,7 +138,7 @@
           </p>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="80px">
+      <el-table-column label="操作" align="center" v-if="type == 'detail'">
         <template slot-scope="{ row, $index }">
           <el-button @click="customerDetail(row)" type="text">详情</el-button>
         </template>
@@ -226,17 +192,21 @@
           <div>
               <div class="sameTo">同来宾客</div>
               <el-table ref="multipleTable" :data="currentCustomer.headerObj.personList" border height="100%" header-row-class-name="default" size="small">
-                  <el-table-column prop="姓名" label="name" show-overflow-tooltip></el-table-column>
-                  <el-table-column label="证件号码" prop="idcard" width="300">
+                  <el-table-column prop="name" label="姓名" show-overflow-tooltip>
+                      <template slot-scope="{ row, $index }">
+                          {{row.name +'【' + row.pronunciation + '】'}}
+                      </template>
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" show-overflow-tooltip>
+                  <el-table-column label="证件号码" prop="idcard" show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column prop="sex" label="性别" >
                       <template slot-scope="{ row, $index }">
                           {{ F_sex(row.sex) }}
                       </template>
                   </el-table-column>
                   <el-table-column prop="type" label="类型" show-overflow-tooltip>
                       <template slot-scope="{ row, $index }">
-                          {{ F_customerTypes(row.customerType) }}
+                          {{ F_customerTypes(row.customerType || '1') }}
                       </template>
                   </el-table-column>
               </el-table>
@@ -253,9 +223,10 @@ import myMixin from "@/utils/filterMixin";
 
 export default {
   mixins: [myMixin],
-  props: ["currentRoom", "showOrderInfo", "orderInfo"],
+    props: ['showOrderInfo'],
   data() {
     return {
+        type: '',
         currentCustomer: {
             headerObj: {},
             personList: [],
@@ -291,28 +262,33 @@ export default {
   },
 
   mounted() {
-    this.handleData(this.orderInfo);
-    console.log(this.checkinInfo.inRoomList);
+    // console.log(this.checkinInfo.inRoomList);
   },
   methods: {
       customerDetail(row) {
           this.currentCustomer = {
-              headerObj: {},
-              personList: [],
+              headerObj: {
+                  personList: []
+              },
           }
           if (row.headerObj) {
               this.$F.merge(this.currentCustomer, row);
+              this.currentCustomer.personList = row.personList || [];
+              this.currentCustomer.headerObj.personList = row.personList || [];
               this.currentCustomerVisible = true;
+              console.log(JSON.parse(JSON.stringify(this.currentCustomer)))
+              this.$forceUpdate()
           }
       },
 
     handleData(orderInfo) {
       this.checkinInfo = this.$F.deepClone(orderInfo);
       console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
-      if (this.currentRoom) {
-        // this.checkinInfo.inRoomList = (this.checkinInfo.inRoomList.forEach((item) => {
-        //     return item.roomId == this.currentRoom.roomId
-        // }) || []) || {};
+      //首页当前房间会传过来
+      if (this.currentRoom && this.checkinInfo.inRoomList && this.checkinInfo.inRoomList.length > 0) {
+        this.checkinInfo.inRoomList = (this.checkinInfo.inRoomList.filter((item) => {
+            return item.roomId == (this.currentRoom.id || this.currentRoom.roomId)
+        }) || []);
       }
       if (this.checkinInfo.inRoomList && this.checkinInfo.inRoomList.length > 0) {
           this.checkinInfo.inRoomList.forEach((item) => {
@@ -328,9 +304,13 @@ export default {
               }
           });
       }
+      this.$forceUpdate();
     },
-    init(type, checkinInfo) {
-      this.handleData(checkinInfo);
+
+    init(type, checkinInfo, currentRoom) {
+          this.type = type;
+        this.currentRoom = currentRoom;
+        this.handleData(checkinInfo);
     },
   },
 };

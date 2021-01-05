@@ -345,9 +345,9 @@
 				handler(newValue, oldValue) {
 
 					this.allRoomTypeList.forEach((a, b) => {
-						// 
+						//
 						if (a.roomType == 1) {
-							// 
+							//
 							a.adjustPrice = Number(a.newLivePrice) + Number(a.mealBreakfastObject.mealPrice || 0) + Number(a.mealDinnerObject
 								.mealPrice || 0)
 						} else {
@@ -419,7 +419,7 @@
 					obj.id = value.id
 					arr[index] = obj
 				})
-				// 
+				//
 				resolve(arr)
 			},
 			//保存批量修改房价
@@ -460,7 +460,7 @@
 					arr[b] = obj
 				})
 				params.roomStrategyJson = JSON.stringify(arr);
-				// 
+				//
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_price_member_strategy_save",
@@ -510,7 +510,7 @@
 						this.batchEditPriceForm.memberTypeId.splice($index, 1);
 					}
 				}
-				
+
 				// this.checkedCities = val ? cityOptions : [];
 				//         this.isIndeterminate = false;
 			},
@@ -554,7 +554,6 @@
 				//   * @param dayTime         当前时间  yyyy-MM-dd格式 String必填
 				//   * @param strategyId       单位策略规则id  priceCalend=1必填  String必填
 				console.log(this.editPriceForm)
-				debugger
 				var params = {
 					priceCalend: 1,
 					roomTypeId: this.editPriceForm.id,
@@ -563,7 +562,6 @@
 					dayTime: this.editPriceForm.dayTime,
 					strategyId: 1,
 				};
-				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_room_day_price_save",
@@ -611,7 +609,7 @@
 								value.id2 = j;
                                 value.memberTypeObject = item;
 								if (value.roomType == 1) {
-									// debugger 
+									// debugger
 									if (res.dayPriceList.length == 0) {
 										if (value.personPrice != '' && value.personPrice != null && value.personPrice != undefined) {
 											let arr = value.personPrice.split(',')
@@ -665,7 +663,7 @@
 							obj.houseName = value.houseName
 
 							if (value.roomType == 1) {
-								// 
+								//
 								obj.marketPrice = ''
 								obj.newLivePrice = ''
 								obj.mealBreakfastObject = value.mealBreakfastObject
@@ -721,16 +719,16 @@
 				console.log(this.ruleForm)
 				this.ruleForm = row
 				// debugger
-				
+
 				this.ruleForm_Pie = [];
 				this.roomStrategyJson_p = [];
-				
+
 				this.editPriceForm.dayTime = item.dateStr;
 				this.editPriceForm.priceCalend = 1;
 				this.editPriceForm.roomTypeId = row.id;
 				this.editPriceForm.onePrice = item.onePrice;
 				this.editPriceDialog = true;
-				
+
 				this.ruleForm_Pie.push(row)
 				console.log(this.ruleForm_Pie)
 				// debugger

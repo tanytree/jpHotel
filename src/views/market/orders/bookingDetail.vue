@@ -117,6 +117,7 @@ export default {
         },
         handleClick() {
             if (this.activeName == 'customer') {
+                console.log(this.$refs);
                 this.$refs.checkInInfo.init('detail', this.detailData);
             }
         },

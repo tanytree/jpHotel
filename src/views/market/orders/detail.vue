@@ -9,10 +9,8 @@
     <div class="el-card" style="height: auto">
       <div class="el-card__header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item  @click.native="clickGo">{{
-            $t("desk.order_orderManage")
-          }}</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
+            <el-breadcrumb-item  @click.native="clickGo">{{ $t("desk.order_orderManage") }}</el-breadcrumb-item>
+            <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
@@ -41,15 +39,6 @@
                       <el-col :span="12" class="cell">
                         {{ $t("desk.order_sourceType") + ":" }}{{ F_guestType(detailData.checkIn.guestType) }}
                       </el-col>
-<!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
-<!--                        会员类型：白金卡-->
-<!--                      </el-col>-->
-<!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
-<!--                        余额：2-->
-<!--                        <el-button size="mini" type="text">充值</el-button>-->
-<!--                      </el-col>-->
-<!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">积分：-->
-<!--                      </el-col>-->
                     </el-row>
                   </div>
                 </div>
@@ -58,7 +47,6 @@
                 <ul>
                   <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
                     <div class="wrap"><span>{{$t('desk.order_lookOrderInfo')}}></span></div>
-<!--                      （联房）-->
                   </li>
                   <li @click="checkTypeHandle('customer', item)" v-for="(item, index) of detailData.inRoomList" :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id ? 'active' : ''">
                     <div class="wrap">
@@ -143,7 +131,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
 import c1 from "./coms/c1";
 import c2 from "./coms/c2";
 import customer from "@/components/front/customer";
@@ -157,14 +144,6 @@ export default {
     c2,
     customer,
     unitedRoomHandle,
-  },
-  computed: {
-    ...mapState({
-      token: (state) => state.user.token,
-      userId: (state) => state.user.userId,
-      msgKey: (state) => state.config.msgKey,
-      plat_source: (state) => state.config.plat_source,
-    }),
   },
   data() {
     return {
@@ -289,16 +268,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.detailTab {
-  border: 0;
-}
-
-.detailTab >>> .el-tabs__header {
-  margin: 0;
-}
-</style>
 <style lang="less" scoped>
+.detailTab {
+    border: 0;
+}
 .active {
   background: #e3eeff;
   color: #126eff;
@@ -306,6 +279,7 @@ export default {
 }
 
 .bodyInfo {
+    height: 100%;
   .customerInfo {
     background: #fff;
 

@@ -644,7 +644,6 @@
 							this.ruleForm.houseIcon = data;
 							let params = Object.assign({}, this.ruleForm);
 							params.discountPrice = 0
-							debugger
 							this.$F.doRequest(
 								this,
 								"/pms/hotel/hotel_room_type_save",
