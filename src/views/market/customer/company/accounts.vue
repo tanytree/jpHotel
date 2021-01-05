@@ -164,13 +164,13 @@
         </el-table-column>
         <el-table-column :label="$t('desk.enterAccountMoney')" prop="operPrice">
         </el-table-column>
-        <el-table-column label="汇款时间" prop="remittanceTime">
+        <el-table-column :label="$t('desk.customer_remittanceTime')" prop="remittanceTime">
         </el-table-column>
-        <el-table-column label="汇款银行" prop="remittanceBank">
+        <el-table-column :label="$t('desk.customer_remittanceBank')" prop="remittanceBank">
         </el-table-column>
-        <el-table-column label="汇款账号" prop="remittanceAccount">
+        <el-table-column :label="$t('desk.customer_remittanceAccount')" prop="remittanceAccount">
         </el-table-column>
-        <el-table-column label="备注" prop="remark">
+        <el-table-column :label="$t('desk.home_note')" prop="remark">
         </el-table-column>
       </el-table>
       <div slot="footer">
@@ -203,14 +203,14 @@
         <el-form-item :label="$t('desk.customer_remittanceAccount') + ':'" prop="remittanceAccount">
           <el-input type='number' style="width:320px;" v-model="enterForm.remittanceAccount"></el-input>
         </el-form-item>
-        <el-form-item label="备注">
+        <el-form-item :label="$t('desk.home_note') + ':'">
           <el-input style="width:320px;" v-model="enterForm.remark" type="textarea"></el-input>
         </el-form-item>
       </el-form>
       <div style="text-align: right" slot="footer" class="dialog-footer">
         <span>
           <el-button @click="settlementDialog_cancel">{{ $t("commons.cancel") }}</el-button>
-          <el-button type="primary" @click="settlementDialog_save('enterForm')">入账</el-button>
+          <el-button type="primary" @click="settlementDialog_save('enterForm')">{{$t('desk.enterAccount')}}</el-button>
         </span>
       </div>
     </el-dialog>

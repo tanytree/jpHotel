@@ -275,6 +275,12 @@ module.exports = {
     report_businessHours: "営業日",
     report_selectMonth: '未翻译词条',
     report_firstQuery: '未翻译词条',
+    add_roomDetail: '未翻译词条',
+    add_canBookNum: '未翻译词条',
+    add_onePeople: '未翻译词条',
+    add_peopleLivePrice: '未翻译词条',
+    add_normalBook: '未翻译词条',
+    add_noHaveInfo: '未翻译词条',
 
 
 
