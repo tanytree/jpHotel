@@ -127,38 +127,38 @@
 				expireTimeOption: {
 					disabledDate(date) {
 						//disabledDate 文档上：设置禁用状态，参数为当前日期，要求返回 Boolean
-						return date.getTime() < Date.now() - 24 * 60 * 60 * 1000;
+						// return date.getTime() < Date.now() - 24 * 60 * 60 * 1000;
 					},
 				},
 				pickerOptions: {
 					disabledDate(time) {
 						return time.getTime() > Date.now();
 					},
-					shortcuts: [{
-							text: "今天",
-							onClick(picker) {
-								picker.$emit("pick", new Date());
-							},
-						},
-						{
-							text: "前十五天",
-							onClick(picker) {
-								const date = new Date();
-								date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
-								picker.$emit("pick", date);
-								this.get_hotel_price_room_type_list();
-							},
-						},
-						{
-							text: "后十五天",
-							onClick(picker) {
-								const date = new Date();
-								date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
-								picker.$emit("pick", date);
-								this.get_hotel_price_room_type_list();
-							},
-						},
-					],
+					// shortcuts: [{
+					// 		text: "今天",
+					// 		onClick(picker) {
+					// 			picker.$emit("pick", new Date());
+					// 		},
+					// 	},
+					// 	{
+					// 		text: "前十五天",
+					// 		onClick(picker) {
+					// 			const date = new Date();
+					// 			date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
+					// 			picker.$emit("pick", date);
+					// 			this.get_hotel_price_room_type_list();
+					// 		},
+					// 	},
+					// 	{
+					// 		text: "后十五天",
+					// 		onClick(picker) {
+					// 			const date = new Date();
+					// 			date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
+					// 			picker.$emit("pick", date);
+					// 			this.get_hotel_price_room_type_list();
+					// 		},
+					// 	},
+					// ],
 				},
 				rules: {
 					name: [{
@@ -213,6 +213,49 @@
 			},
 		},
 		methods: { 
+			// 前15天
+			beforeTap() {
+				console.log(this.ruleForm.date)
+				let time = this.getBeforeDate(15, this.ruleForm.date)
+				this.ruleForm.date = time;
+				this.get_hotel_price_room_type_list()
+			},
+			// 后15天
+			afterTap() {
+				console.log(this.ruleForm.date)
+				let time = this.getBeforeDate(-15, this.ruleForm.date)
+				this.ruleForm.date = time;
+				this.get_hotel_price_room_type_list()
+			},
+			// 获取当前日期前后多少天的日期，之前多少天传正数，后面多少天传负数，今天传0，
+			//  num为传入的数字， time为传入的指定日期，如果time不传，则默认为当前时间
+			getBeforeDate(num, time) {
+				// debugger
+				let n = num;
+				let d = '';
+				if (time) {
+					d = new Date(time);
+				} else {
+					d = new Date();
+				}
+				let year = d.getFullYear();
+				let mon = d.getMonth() + 1;
+				let day = d.getDate();
+				if (day <= n) {
+					if (mon > 1) {
+						mon = mon - 1;
+					} else {
+						year = year - 1;
+						mon = 12;
+					}
+				}
+				d.setDate(d.getDate() - n);
+				year = d.getFullYear();
+				mon = d.getMonth() + 1;
+				day = d.getDate();
+				let s = year + "-" + (mon < 10 ? ('0' + mon) : mon) + "-" + (day < 10 ? ('0' + day) : day);
+				return s;
+			},
 			// 会员类型全选/反选
 			memberCheckedChange(e) {
 				this.$emit('memberCheckedChange', e)

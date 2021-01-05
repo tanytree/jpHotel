@@ -8,6 +8,12 @@
 						<el-date-picker v-model="ruleForm.date" value-format="yyyy-MM-dd" align="right" type="date" :placeholder="$t('commons.selectDate')"
 						 :picker-options="pickerOptions" @blur="get_hotel_price_room_type_list"></el-date-picker>
 					</el-form-item>
+					<el-form-item>
+						<el-col > <el-button type="text"  @click="beforeTap" style="border-bottom: 2rpx solid #409EFF; margin-left: 20rpx;"><< 前15天</el-button></el-col>
+					</el-form-item>
+					<el-form-item>
+						<el-col> <el-button type="text"  @click="afterTap">后15天 >></el-button></el-col>
+					</el-form-item>
 					<el-form-item class="form-inline-flex">
 						<el-row style="margin-right: -10px;">
 							<el-button type="primary" @click="popup('adjust')" style="width: 100px;" size="mini">{{$t('manager.ps_bulkPrice')}}</el-button>
@@ -360,6 +366,49 @@
 			},
 		},
 		methods: {
+			// 前15天
+			beforeTap() {
+				console.log(this.ruleForm.date)
+				let time = this.getBeforeDate(15, this.ruleForm.date)
+				this.ruleForm.date = time;
+				this.get_hotel_price_room_type_list()
+			},
+			// 后15天
+			afterTap() {
+				console.log(this.ruleForm.date)
+				let time = this.getBeforeDate(-15, this.ruleForm.date)
+				this.ruleForm.date = time;
+				this.get_hotel_price_room_type_list()
+			},
+			// 获取当前日期前后多少天的日期，之前多少天传正数，后面多少天传负数，今天传0，
+			//  num为传入的数字， time为传入的指定日期，如果time不传，则默认为当前时间
+			getBeforeDate(num, time) {
+				// debugger
+				let n = num;
+				let d = '';
+				if (time) {
+					d = new Date(time);
+				} else {
+					d = new Date();
+				}
+				let year = d.getFullYear();
+				let mon = d.getMonth() + 1;
+				let day = d.getDate();
+				if (day <= n) {
+					if (mon > 1) {
+						mon = mon - 1;
+					} else {
+						year = year - 1;
+						mon = 12;
+					}
+				}
+				d.setDate(d.getDate() - n);
+				year = d.getFullYear();
+				mon = d.getMonth() + 1;
+				day = d.getDate();
+				let s = year + "-" + (mon < 10 ? ('0' + mon) : mon) + "-" + (day < 10 ? ('0' + day) : day);
+				return s;
+			},
 			loadRoomType(tree, treeNode, resolve) {
 				let obj = {}
 				let arr = []
@@ -577,7 +626,7 @@
 											res.dayPriceList.forEach((c, d) => {
 												// debugger
 												if (a.dateStr == c.dayTime) {
-													debugger
+													// debugger
 													a.onePrice = Number(c.newCustomPrice) + Number(value.mealBreakfastObject.mealPrice) + Number(value.mealDinnerObject.mealPrice)
 												}
 											})

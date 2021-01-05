@@ -4,9 +4,16 @@
 			<el-row style="padding: 10px 15px;">
 				<el-form class="demo-form-inline" inline size="small">
 					<!-- 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 -->
-					<el-form-item :label="$t('manager.grsl_selectTime')+':'">
+					<el-form-item :label="$t('manager.grsl_selectTime')+':'" style="display: flex;">
 						<el-date-picker v-model="search_d.strategyTime" value-format="yyyy-MM-dd" align="right" type="date" :placeholder="$t('commons.selectDate')"
 						 :picker-options="pickerOptions"></el-date-picker>
+						 
+					</el-form-item>
+					<el-form-item>
+						<el-col > <el-button type="text"  @click="beforeTap" style="border-bottom: 2rpx solid #409EFF; margin-left: 20rpx;"><< 前15天</el-button></el-col>
+					</el-form-item>
+					<el-form-item>
+						<el-col> <el-button type="text"  @click="afterTap">后15天 >></el-button></el-col>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
 						<el-row>
@@ -25,10 +32,10 @@
 								<span v-else>{{scope.row.houseName}}</span>
 							</div>
 							<div v-if="index > 0" >
-								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-if="scope.row.roomType.roomType == 1" v-html="getDate(item, scope.$index)">
+								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-if="scope.row.roomType.roomType == 1" v-html="getDateP(item, scope.$index)">
 								</span>
-								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-else>
-								    {{item.onePrice}}
+								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)"  v-html="getDateT(item, scope.$index)" v-else>
+								    <!-- {{item.onePrice}} -->
 								</span>
 							</div>
 						</template>
@@ -240,33 +247,34 @@ export default {
 
 				pickerOptions: {
 					disabledDate(time) {
-						return time.getTime() > Date.now();
+						// return time.getTime() > Date.now();
 					},
-					shortcuts: [{
-							text: "今天",
-							onClick(picker) {
-								picker.$emit("pick", new Date());
-							},
-						},
-						{
-							text: "前十五天",
-							onClick(picker) {
-								const date = new Date();
-								date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
-								picker.$emit("pick", date);
-								this.get_hotel_price_room_type_list();
-							},
-						},
-						{
-							text: "后十五天",
-							onClick(picker) {
-								const date = new Date();
-								date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
-								picker.$emit("pick", date);
-								this.get_hotel_price_room_type_list();
-							},
-						},
-					],
+					// shortcuts: [{
+					// 		text: "今天",
+					// 		onClick(picker) {
+					// 			picker.$emit("pick", new Date());
+					// 		},
+					// 	},
+					// 	{
+					// 		text: "前十五天",
+					// 		onClick(picker) {
+					// 			// this.getBeforeDate(-15, '2021-01-05')
+					// 			const date = new Date();
+					// 			let num = 0;
+					// 			num++;
+					// 			date.setTime(date.getTime() - 3600 * 1000 * 24 * 15 * num);
+					// 			picker.$emit("pick", date);
+					// 		},
+					// 	},
+					// 	{
+					// 		text: "后十五天",
+					// 		onClick(picker) {
+					// 			const date = new Date();
+					// 			date.setTime(date.getTime() + 3600 * 1000 * 24 * 15 * num);
+					// 			picker.$emit("pick", date);
+					// 		},
+					// 	},
+					// ],
 				},
 				rules: {
 					rules: [{
@@ -327,7 +335,51 @@ export default {
 			// },
 		},
 		methods: {
-		    getDate(item, topIndex) {
+			// 前15天
+			beforeTap() {
+				console.log(this.search_d.strategyTime)
+				let time = this.getBeforeDate(15, this.search_d.strategyTime)
+				this.search_d.strategyTime = time;
+				this.get_hotel_price_room_type_list()
+			},
+			// 后15天
+			afterTap() {
+				console.log(this.search_d.strategyTime)
+				let time = this.getBeforeDate(-15, this.search_d.strategyTime)
+				this.search_d.strategyTime = time;
+				this.get_hotel_price_room_type_list()
+			},
+			// 获取当前日期前后多少天的日期，之前多少天传正数，后面多少天传负数，今天传0，
+			//  num为传入的数字， time为传入的指定日期，如果time不传，则默认为当前时间
+			getBeforeDate(num, time) {
+				// debugger
+				let n = num;
+				let d = '';
+				if (time) {
+					d = new Date(time);
+				} else {
+					d = new Date();
+				}
+				let year = d.getFullYear();
+				let mon = d.getMonth() + 1;
+				let day = d.getDate();
+				if (day <= n) {
+					if (mon > 1) {
+						mon = mon - 1;
+					} else {
+						year = year - 1;
+						mon = 12;
+					}
+				}
+				d.setDate(d.getDate() - n);
+				year = d.getFullYear();
+				mon = d.getMonth() + 1;
+				day = d.getDate();
+				let s = year + "-" + (mon < 10 ? ('0' + mon) : mon) + "-" + (day < 10 ? ('0' + day) : day);
+				return s;
+			},
+			// 客房部操作数据
+		    getDateP(item, topIndex) {
 		        // item 是dateList里面时间
                 if (this.dayPriceList && this.dayPriceList.length > 0) {
                     let newArray = this.dayPriceList.filter(dayPrice => {
@@ -355,6 +407,24 @@ export default {
                 }
                 return item.roomTypePrises[topIndex]
             },
+			// 会议厅操作数据
+			getDateT(item, topIndex) {
+				// debugger
+			    //item 是dateList里面时间
+			    if (this.dayPriceList && this.dayPriceList.length > 0) {
+					let result = ''
+			        let newArray = this.dayPriceList.filter(dayPrice => {
+						if(dayPrice.dayTime == item.dateStr) {
+							result = dayPrice.newCustomPrice
+						}
+			            return dayPrice.dayTime == item.dateStr;
+			        }); //匹配日期
+			        if (newArray && newArray.length > 0) {
+			            return result;
+			        }
+			    }
+			    return item.roomTypePrises[0].marketPrice
+			},
 
 			//保存批量修改房价
 			onSave() {
@@ -531,34 +601,18 @@ export default {
 										}
 									}
 								})
-							} else {
+							} 
+							else {
 								this.roomType.push(res.roomType)
 								console.log('this.roomType=====', this.roomType)
-								// debugger
-								this.roomType.forEach((value, index) => {
-									// debugger
-									if (res.dayPriceList.length == 0) {
-										this.dateList.forEach((a, b) => {
-											a.onePrice = value.marketPrice
-										})
-
-									} else {
-										this.dateList.forEach((a, b) => {
-											a.onePrice = 0;
-											res.dayPriceList.forEach((c, d) => {
-												if (a.dateStr == c.dayTime) {
-													a.onePrice = Number(c.newCustomPrice)
-												}
-											})
-										})
-										console.log(res.dateList)
-									}
+								this.dateList.forEach((a, b) => {
+									a.roomTypePrises = this.roomType
 								})
 							}
 
 
-							console.log('this.roomType=====', this.roomType)
-							console.log('this.dateList========', this.dateList)
+							// console.log('this.roomType=====', this.roomType)
+							// console.log('this.dateList========', this.dateList)
 							// debugger
 
 							this.$forceUpdate();

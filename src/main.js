@@ -19,6 +19,7 @@ import utils from '@/utils/publicJS';
 import Video from 'video.js'
 import Distpicker from 'v-distpicker'
 import filters from '@/utils/filter.js'
+import index from '@/utils/index.js' // h
 import enLocale from 'element-ui/lib/locale/lang/zh-CN'
 import jaLocale from 'element-ui/lib/locale/lang/ja'
 
@@ -37,6 +38,7 @@ Vue.use(ElementUI);
 //业务组件
 Vue.component('v-distpicker', Distpicker)
 Vue.prototype.$F = utils;
+Vue.prototype.$index = index;
 Vue.prototype.$http = httpRequest
 Vue.prototype.hasRole = hasRole
 Vue.prototype.isAuth = isAuth //权限验证
