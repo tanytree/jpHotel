@@ -10,7 +10,7 @@
 					</el-form-item>
 					<el-form-item>
 						<el-col>
-							<el-button type="text" @click="beforeTap" style="border-bottom: 2rpx solid #409EFF; margin-left: 20rpx;">
+							<el-button type="text" @click="beforeTap" style="border-bottom: 2px solid #409EFF; margin-left: 20px;">
 								<< 前15天</el-button> </el-col> </el-form-item> <el-form-item>
 									<el-col>
 										<el-button type="text" @click="afterTap">后15天 >></el-button>
@@ -24,7 +24,7 @@
 				</el-form>
 			</el-row>
 			<div class="components-edit member-price" v-loading="loading">
-				<el-table :data="memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id" :default-expand-all="false"
+				<el-table :data="memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id2" :default-expand-all="false"
 				 header-row-class-name="default" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" border>
 					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '150': ''">
 						<template slot-scope="scope">
@@ -33,7 +33,7 @@
 							</div>
 							<div v-if="index > 0">
 								<span @click="popup('single', scope.row, item)">
-									{{item.dateStr}}
+									{{getDateP(scope.row, scope.$index, item, index)}}
 								</span>
 							</div>
 						</template>
@@ -201,6 +201,7 @@
 	export default {
 		data() {
 			return {
+                memberTypeLength: 0,
 				rowStyle: {
 					display: 'flex',
 					// flex:'1'
@@ -212,7 +213,6 @@
 				checkAll: false,
 				checkedMembers: [], //会员类型列表
 				memberTypeY: [],
-				isIndeterminate: true,
 				roomTypeList: [], //全部房型
 				selectedRoomtype: [], // 批量调价中的会员类型
 				allRoomTypeList: [], //全部房型(包括会议厅类型)
@@ -233,11 +233,6 @@
 					roomStrategyJson: [],
 				},
 				bathEditRules: {
-					memberTypeId: [{
-						required: true,
-						message: '请选择会员类型',
-						trigger: "blur",
-					}],
 					channel: [{
 						required: true,
 						message: '请选择渠道',
@@ -357,9 +352,9 @@
 				handler(newValue, oldValue) {
 
 					this.allRoomTypeList.forEach((a, b) => {
-						// 
+						//
 						if (a.roomType == 1) {
-							// 
+							//
 							a.adjustPrice = Number(a.newLivePrice) + Number(a.mealBreakfastObject.mealPrice || 0) + Number(a.mealDinnerObject
 								.mealPrice || 0)
 						} else {
@@ -378,6 +373,10 @@
 			},
 		},
 		methods: {
+		    getRowKey(row) {
+		        debugger
+		      return row.id + row.parentId;
+            },
 			// 前15天
 			beforeTap() {
 				console.log(this.ruleForm.date)
@@ -422,31 +421,20 @@
 				return s;
 			},
 			// 客房部操作数据
-			getDateP(item, topIndex, index) {
-				debugger
-				// return '999999'
-				let price = '000'
-				// item.roomTypePrises.forEach((roomType, roomTypeIndex) => {
-				// 	// debugger
+			getDateP(row, topIndex, item, index) {
+                let tempPrice = 0;
+                let price = 0;
+                let finalIndex = topIndex % this.memberTypeLength;
+                if (finalIndex == 0)
+                    return '';
 
-				// 	roomType.children.forEach((child, childIndex) =>{
-				// 		// debugger
-				// 		if(child.roomType == 1) {
-				// 			let arr = child.personPrice.split(',')
-				// 			let arry = arr.filter(function(el) { //多人价格
-				// 				return el !== '';
-				// 			});
-							
-				// 			price = Number(arry[0])  //Number( Number(arry[0]) + Number(child.mealBreakfastObject.mealPrice || 0) + Number(child.mealDinnerObject.mealPrice || 0))
-				// 			// debugger
-				// 		}
-						
-				// 	})
-					
-				// })
-				// // debugger
-				// console.log('price----', price)
-				// debugger
+                finalIndex -= 1;
+			    if (item.roomTypePrises[finalIndex]) {
+                    if (item.roomTypePrises[finalIndex].personPrice) {
+                        tempPrice = parseInt(item.roomTypePrises[finalIndex].personPrice.split(',')[0])
+                    }
+                    price = tempPrice + item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice + item.roomTypePrises[finalIndex].mealDinnerObject.mealPrice
+                }
 				return price
 			},
 
@@ -488,7 +476,7 @@
 					arr[b] = obj
 				})
 				params.roomStrategyJson = JSON.stringify(arr);
-				// 
+				//
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_price_member_strategy_save",
@@ -584,7 +572,7 @@
 			// 		obj.id = value.id
 			// 		arr[index] = obj
 			// 	})
-			// 	// 
+			// 	//
 			// 	resolve(arr)
 			// },
 			editPriceSubmit() {
@@ -625,23 +613,27 @@
 				};
 				this.$F.doRequest(this, "/pms/hotel/hotel_price_room_type_list", params,
 					(res) => {
+                        this.memberTypeList = [];
 						this.dayPriceList = res.dayPriceList;
 						this.dateList = res.dateList
 						this.dateList.unshift({
 							dateStr: '房型/房价',
 							weekDay: "",
 						});
-
+						let i = 0;
 						// this.memberTypeList = res.memberTypeList;
 						res.memberTypeList.forEach((member1, member1Index) => {
-
+                            member1.roomTypeList.forEach((m4, m4Index) => {
+                                i += m4Index;
+                                m4.id2 = m4.id + i;
+                            })
 							member1.memberTypeList.forEach((member2, member2Index) => {
 								member2.memberTypeList.forEach((member3, member2Index) => {
+                                    i += member2Index;
+                                    member3.id2 = member3.id + i;
 									this.memberTypeList.push(member3);
-									let i = 0
 									this.memberTypeList.forEach((member4, member4Index) => {
-										// debugger
-										member4.id2 = i++;
+									    this.memberTypeLength = member1.roomTypeList.length + 1;
 										member4.children = member1.roomTypeList
 										this.dateList.forEach((dat, datIndex) => {
 											dat.roomTypePrises = member1.roomTypeList;
@@ -651,8 +643,6 @@
 							})
 
 						})
-						
-						// debugger
 						console.log('this.dateList----', this.dateList)
 						console.log('this.memberTypeList----', this.memberTypeList)
 						this.$forceUpdate();
@@ -681,7 +671,7 @@
 							obj.houseName = value.houseName
 
 							if (value.roomType == 1) {
-								// 
+								//
 								obj.marketPrice = ''
 								obj.newLivePrice = ''
 								obj.mealBreakfastObject = value.mealBreakfastObject
@@ -814,7 +804,7 @@
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
 			},
-		},
+    },
 	};
 </script>
 
