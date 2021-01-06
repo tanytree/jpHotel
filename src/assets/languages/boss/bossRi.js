@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-05 15:32:49
+ * @LastEditTime: 2021-01-06 10:42:01
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -251,7 +251,7 @@ module.exports = {
     report_dayBack: '客室台帳（日帰り）',
     report_banquetReport: '会場台帳',
     report_clearBook: '清掃指示書',
-    report_dailyAccount: '日計表',
+    report_dailyAccount: '日次帳票',
     report_saleDaily: '部門別・科目分類別売上一覧（日次）',
     report_freshType: '料理ランク別売上一覧（日次）',
     report_paymentDetail: '入金一覧（日次）',
@@ -263,11 +263,11 @@ module.exports = {
     report_miniBar: 'Mini Bar利用一覧（日次）',
     report_monthReport: '月次帳票',
     report_monthForm: '売上集計表',
-    report_weekLook: '週別売上一覧',
-    report_departmentClass: '部門別・科目分類売上一覧（月次）',
+    report_weekLook: '曜日別売上実績',
+    report_departmentClass: '部門別・科目分類别売上一覧（月次）',
     report_monthDepartment: '月别部門・科目分類売上実績',
     report_freshClass: '料理ランク別売上一覧（月次）',
-    report_everyShui: '消費税・入湯税・宿泊税明細一覧（月报）',
+    report_everyShui: '消費税・入湯税・宿泊税明細一覧（月次）',
     report_printedPaper: '印紙税明細一覧',
     report_roomType: '部屋タイプ別稼働実績',
     report_roomLive: '部屋別稼働実績',
@@ -281,6 +281,7 @@ module.exports = {
     add_peopleLivePrice: '人宿泊料金',
     add_normalBook: '一般予約',
     add_noHaveInfo: '該当ホテル利用可能部屋はございません',
+    report_goodsKinds: '付帯・商品別売上一覧（月次）',
 
 
 

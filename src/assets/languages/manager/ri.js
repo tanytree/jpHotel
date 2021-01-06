@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-05 15:33:14
+ * @LastEditTime: 2021-01-06 10:02:18
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -506,7 +506,7 @@ module.exports = {
   hk_addGetContent: '説明：60分未満の場合に、30分以内は0.5；30分以上は１計算単位として請求します。',
   add_taxIn: '消費税率',
   add_taxOut: '消費税軽減税率',
-  hk_oatName: 'OTA名称',
+  hk_oatName: '経路名称',
   hk_inputOat: 'OTA名称を入力してください',
   hk_resetSuccess: '変更確認',
   grsl_newMemberType: '会員カテゴリー追加',

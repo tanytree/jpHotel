@@ -71,7 +71,7 @@ module.exports = {
   report_businessHours: "营业时间",
   report_selectMonth: '选择月份',
   report_firstQuery: '请先查询要导出的报表',
-  report_: '',
+  report_goodsKinds: '商品部商品别销售一览（月次）',
   report_: '',
   report_: '',
   report_: '',

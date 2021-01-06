@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-05 14:51:18
+ * @LastEditTime: 2021-01-06 11:43:09
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -845,6 +845,10 @@ module.exports = {
   customer_remittanceAccount: '振り込み口座',
   home_nowLiveRate: '現在の稼働率',
   order_addRoom: "未翻译词条",
+  book_bookPeople: '未翻译词条',
+  book_bookPeoPhone: '未翻译词条',
+  book_guideText: '未翻译词条',
+  book_leaderText: '未翻译词条',
 
 
 

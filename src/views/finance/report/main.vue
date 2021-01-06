@@ -325,6 +325,12 @@ export default {
             reportType: 20,
             reportNum: 1003,
           },
+            {
+            title: this.$t('boss.report_goodsKinds'),
+            reportType: 19,
+            reportNum: 1003,
+          },
+          
         ],
         [
           {
@@ -363,8 +369,8 @@ export default {
       console.log(item);
       let params = {
           sourcePage: this.sourcePage,
-          reportNum: item.reportNum || 1001,
-          reportType: item.reportType || 1,
+          reportNum: item.reportNum ,
+          reportType: item.reportType ,
       }
       this.$router.push({
         name: "browseReport",

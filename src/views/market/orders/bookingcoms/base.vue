@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-05 15:40:19
+ * @LastEditTime: 2021-01-06 11:57:49
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -34,58 +34,58 @@
       <el-row>
         <el-col :span="6">
           <div style="margin-bottom:10px;">
-            预订人：{{ checkinInfo.name }}【{{ checkinInfo.pronunciation }}】
+           {{$t('desk.book_bookPeople')}}：{{ checkinInfo.name }}【{{ checkinInfo.pronunciation }}】
           </div>
         </el-col>
         <el-col :span="6">
           <div class="concatBox">
-            <div>预约人电话：</div>
+            <div>{{$t('desk.book_bookPeoPhone')}}：</div>
             <div>
               <div v-if="checkinInfo.mobile">
-                （手）{{ checkinInfo.mobile }}
+                ({{$t('desk.editor_hand')}}){{ checkinInfo.mobile }}
               </div>
               <div v-if="checkinInfo.homeMobile">
-                （家）{{ checkinInfo.homeMobile }}
+                ({{$t('desk.editor_home')}}){{ checkinInfo.homeMobile }}
               </div>
               <div v-if="checkinInfo.enterMobile">
-                （单）{{ checkinInfo.enterMobile }}
+                ({{$t('desk.editor_only')}}){{ checkinInfo.enterMobile }}
               </div>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
-          <div>预订时间：{{ checkinInfo.createTime }}</div>
+          <div>{{$t('desk.order_bookTime')}}：{{ checkinInfo.createTime }}</div>
         </el-col>
         <el-col :span="6">
-          <div>订单号：{{ checkinInfo.reserveOrderNum }}</div>
+          <div>{{$t('desk.book_orderNum')}}：{{ checkinInfo.reserveOrderNum }}</div>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <div>订单来源：{{ F_orderSource(checkinInfo.orderSource) }}</div>
+          <div>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</div>
         </el-col>
         <el-col :span="12">
           <div>
-            抵离时间：{{ checkinInfo.checkinTime }} -
+            {{$t('desk.nightAudit.arriveTime')}}：{{ checkinInfo.checkinTime }} -
             {{ checkinInfo.checkoutTime }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div>保留时间：{{checkinInfo.keepTime}}</div>
+          <div>{{$t('desk.keepTime')}}：{{checkinInfo.keepTime}}</div>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <div>客源类型：{{ checkGuestType(checkinInfo.guestType) }}</div>
+          <div>{{$t('desk.order_sourceType')}}：{{ checkGuestType(checkinInfo.guestType) }}</div>
         </el-col>
         <el-col :span="6">
-         <div>团体名：{{ checkinInfo.teamName }}【{{checkinInfo.teamPronunciation}}】</div>
+         <div>{{$t('desk.book_teamName')}}：{{ checkinInfo.teamName }}【{{checkinInfo.teamPronunciation}}】</div>
         </el-col>
         <el-col :span="6">
-         <div>导游：{{ checkinInfo.guideName }}【{{checkinInfo.guidePronunciation}}】</div>
+         <div>{{$t('desk.book_guideText')}}：{{ checkinInfo.guideName }}【{{checkinInfo.guidePronunciation}}】</div>
         </el-col>
           <el-col :span="6">
-         <div>领队：{{ checkinInfo.leaderName }}【{{checkinInfo.leaderPronunciation}}】</div>
+         <div>{{$t('desk.book_leaderText')}}：{{ checkinInfo.leaderName }}【{{checkinInfo.leaderPronunciation}}】</div>
         </el-col>
       </el-row>
       <el-row>
