@@ -43,7 +43,7 @@ const mixin= {
             return newArr;
         },
         numFormate(num){
-            // console.log(value);
+            // console.log(num);
             if (num){
                 return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
                     return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
@@ -89,7 +89,18 @@ const mixin= {
 
                 console.log(parms)
                 return parms
+            }else{
+                let parms = {}
+                parms.service = 0
+                parms.servicePrice  =  0
+                parms.sum =  0
+                parms.tax  = 0
+                parms.taxFee = 0
+                parms.total  = 0
+                parms.type  =  'in'
+                return parms
             }
+
         },
         alert(v,msg){
              if(v == 200){

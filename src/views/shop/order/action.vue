@@ -24,20 +24,14 @@
                         <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('shop.yhPrice')">
+                <el-form-item  v-if="form.billingType == 1" :label="$t('shop.yhPrice')">
                    <el-input  size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;" ></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('shop.outFlag')">
                    <el-checkbox v-model="outFlag">外带</el-checkbox>
                 </el-form-item>
                 <el-form-item :label="$t('food.common.payPrice')">
-
                         {{numFormate(getPayPrice - num(form.preferentialPrice))}}
-
-
-
-
-
                 </el-form-item>
                 <div v-if="form.billingType == 1">
                     <el-form-item :label="$t('food.common.payType')">
@@ -253,7 +247,7 @@
                     payType:1,//结算方式 1现金 2银行卡  3支付宝 4支票  5会员卡  Integer选填
                     remark:'',//备注  String选填
                     memberCard:'',//会员卡卡号  String选填
-                    docCoun:1,//单据份数  Integer选填
+                    docCount:1,//单据份数  Integer选填
                     billingType:1,// 计费类型 1直接结账 2签单到单位 3签单到房间  Integer必填
                     signCheckInId:'',// 入住信息id  billingType=3必填  String选填
                     signRoomId:'',//房间id
@@ -265,6 +259,7 @@
                     signIdcard:'',//签单证件号码   billingType=2必填 String选填
                     scoresDiscount:'',//积分抵扣分值  Integer选填
                     scoresPrice:'',//积分抵扣额度  Double选填
+                    preferentialPrice:'',
                 }
 
                 outFlag:false,
@@ -360,6 +355,7 @@
 
             changeBillingType(value){
                 // console.log(value)
+                this.form.preferentialPrice = ''
                 this.isUseScore = false
                 this.isPrint = false
             },
@@ -515,7 +511,7 @@
 
             //提交结账
             submit(){
-                this.loading = true
+                // this.loading = true
                 let params = this.form
                 params.consumePrice = this.info.consumePrice
                 params.hasPayPrice = this.info.hasPayPrice
@@ -524,11 +520,14 @@
                     return  ele.goodsId
                 })
                 params.goodsSubIds = goodsIds.join(',')
-                // params.realPayPrice = this.getFee + parseFloat(this.orderTax.sum) -  - this.form.preferentialPrice
                 if(params.billingType == 3){
                     this.form.preferentialPrice = ''
+                    params.preferentialPrice = 0
+                }else{
+                    this.form.preferentialPrice ?  params.preferentialPrice : 0
                 }
-                params.realPayPrice = this.getPayPrice - this.form.preferentialPrice
+                params.preferentialPrice = params.preferentialPrice ? params.preferentialPrice : ''
+                params.realPayPrice = parseFloat(this.getPayPrice) - this.num(params.preferentialPrice)
                 params.orderId = this.info.id
                 params.userId = this.userId
                 params.storesNum = this.storesNum
@@ -544,7 +543,7 @@
                 });
             },
             num(v){
-                if(v&&v != ''){
+                if(v&&v != ''&&this.form.billingType == 1 ){
                     return parseFloat(v);
                 }else{
                     return 0
