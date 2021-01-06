@@ -271,7 +271,6 @@ export default {
             });
         }
         console.log(this.inRoomList);
-        debugger;
     },
     data() {
         return {

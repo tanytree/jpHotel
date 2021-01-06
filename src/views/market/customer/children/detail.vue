@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-04 17:53:45
+ * @LastEditTime: 2021-01-05 18:14:18
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -991,8 +991,7 @@ export default {
             this.$F.doRequest(this, url, params, (data) => {
               if (
                 this.cardForm.type != 3 &&
-                this.cardForm.type != 5 &&
-                this.cardForm.type != 4
+                this.cardForm.type != 5 
               ) {
                 this.setCardFormVisible = false;
                 this.findone(this.detailForm.id);

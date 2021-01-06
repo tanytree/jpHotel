@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-28 18:08:18
+ * @LastEditTime: 2021-01-06 17:54:03
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -9,15 +9,15 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">添加房间</el-button>
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)">入住人管理</el-button>
+        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">{{$t('desk.order_addRoom')}}</el-button>
+        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)">{{$t('desk.order_livePeopleManegerment')}}</el-button>
         <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.batchCheckin") }}</el-button>
         <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown size="small" split-button type="primary">
           {{ $t("commons.moreOperating") }}
           <el-dropdown-menu slot="dropdown">
             <!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
-            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">更改客源</el-dropdown-item>
+            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">{{ $t("desk.order_changeSource") }}</el-dropdown-item>
             <!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
             <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
@@ -34,111 +34,105 @@
       <el-row>
         <el-col :span="6">
           <div style="margin-bottom:10px;">
-            预订人：{{ checkinInfo.name }}【{{ checkinInfo.pronunciation }}】
+            {{$t('desk.book_bookPeople')}}：{{ checkinInfo.name }}【{{ checkinInfo.pronunciation }}】
           </div>
         </el-col>
         <el-col :span="6">
           <div class="concatBox">
-            <div>预约人电话：</div>
+            <div>{{$t('desk.book_bookPeoPhone')}}：</div>
             <div>
               <div v-if="checkinInfo.mobile">
-                （手）{{ checkinInfo.mobile }}
+                ({{$t('desk.editor_hand')}}){{ checkinInfo.mobile }}
               </div>
               <div v-if="checkinInfo.homeMobile">
-                （家）{{ checkinInfo.homeMobile }}
+                ({{$t('desk.editor_home')}}){{ checkinInfo.homeMobile }}
               </div>
               <div v-if="checkinInfo.enterMobile">
-                （单）{{ checkinInfo.enterMobile }}
+                ({{$t('desk.editor_only')}}){{ checkinInfo.enterMobile }}
               </div>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
-          <div>预订时间：{{ checkinInfo.createTime }}</div>
+          <div>{{$t('desk.order_bookTime')}}：{{ checkinInfo.createTime }}</div>
         </el-col>
         <el-col :span="6">
-          <div>订单号：{{ checkinInfo.reserveOrderNum }}</div>
+          <div>{{$t('desk.book_orderNum')}}：{{ checkinInfo.reserveOrderNum }}</div>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <div>订单来源：{{ F_orderSource(checkinInfo.orderSource) }}</div>
+          <div>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</div>
         </el-col>
         <el-col :span="12">
           <div>
-            抵离时间：{{ checkinInfo.checkinTime }} -
+            {{$t('desk.nightAudit.arriveTime')}}：{{ checkinInfo.checkinTime }} -
             {{ checkinInfo.checkoutTime }}
           </div>
         </el-col>
         <el-col :span="6">
-          <div>保留时间：该字段没有找到</div>
+          <div>{{$t('desk.keepTime')}}：{{checkinInfo.keepTime}}</div>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <div>客源类型：{{ checkGuestType(checkinInfo.guestType) }}</div>
+          <div>{{$t('desk.order_sourceType')}}：{{ checkGuestType(checkinInfo.guestType) }}</div>
         </el-col>
         <el-col :span="6">
-         <div>团体名：{{ checkinInfo.teamName }}【{{checkinInfo.teamPronunciation}}】</div>
+          <div>{{$t('desk.book_teamName')}}：{{ checkinInfo.teamName }}【{{checkinInfo.teamPronunciation}}】</div>
         </el-col>
         <el-col :span="6">
-         <div>导游：{{ checkinInfo.guideName }}【{{checkinInfo.guidePronunciation}}】</div>
+          <div>{{$t('desk.book_guideText')}}：{{ checkinInfo.guideName }}【{{checkinInfo.guidePronunciation}}】</div>
         </el-col>
-          <el-col :span="6">
-         <div>领队：{{ checkinInfo.leaderName }}【{{checkinInfo.leaderPronunciation}}】</div>
+        <el-col :span="6">
+          <div>{{$t('desk.book_leaderText')}}：{{ checkinInfo.leaderName }}【{{checkinInfo.leaderPronunciation}}】</div>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <div>团体电话{{ checkinInfo.teamMobile }}</div>
+          <div>{{$t('desk.book_teamMoible')}}：{{ checkinInfo.teamMobile }}</div>
         </el-col>
         <el-col :span="6">
-         <div>团体地址：{{ checkinInfo.teamAdd3 }}</div>
+          <div>{{$t('desk.book_teamAddress')}}：{{ checkinInfo.teamAdd3 }}</div>
         </el-col>
         <el-col :span="6">
-         <div>联络人姓名：{{ checkinInfo.contactName }}【{{checkinInfo.contactPinyin}}】</div>
+          <div>{{$t('desk.book_contactName')}}：{{ checkinInfo.contactName }}【{{checkinInfo.contactPinyin}}】</div>
         </el-col>
-          <el-col :span="6">
-         <div>联络人手机号：{{ checkinInfo.contactPhone }}</div>
+        <el-col :span="6">
+          <div>{{$t('desk.book_contactPhone')}}：{{ checkinInfo.contactPhone }}</div>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <div>联络人邮箱：{{ checkinInfo.contactEmail }}</div>
+          <div>{{$t('desk.book_contactEmail')}}：{{ checkinInfo.contactEmail }}</div>
         </el-col>
         <el-col :span="6">
-         <div>旅行社名称：{{ checkinInfo.travelTeam }}【{{checkinInfo.travelPronunciation}}】</div>
+          <div>{{$t('desk.book_travelName')}}：{{ checkinInfo.travelTeam }}【{{checkinInfo.travelPronunciation}}】</div>
         </el-col>
         <el-col :span="6">
-         <div>旅行社地址：{{ checkinInfo.travelAdd3 }}</div>
+          <div>{{$t('desk.book_travelAddress')}}：{{ checkinInfo.travelAdd3 }}</div>
         </el-col>
-          <el-col :span="6">
-         <div>联络人姓名：{{ checkinInfo.travelContactName }}【{{checkinInfo.travelContactPinyin}}】</div>
+        <el-col :span="6">
+          <div>{{$t('desk.book_contactName')}}：{{ checkinInfo.travelContactName }}【{{checkinInfo.travelContactPinyin}}】</div>
         </el-col>
       </el-row>
-       <el-row>
-          <el-col :span="6">
-         <div>联络人手机号：{{ checkinInfo.travelContactPhone }}</div>
+      <el-row>
+        <el-col :span="6">
+          <div>{{$t('desk.book_contactPhone')}}：{{ checkinInfo.travelContactPhone }}</div>
         </el-col>
         <el-col :span="6">
-          <div>联络人邮箱：{{ checkinInfo.tarvelContactEmail }}</div>
+          <div>{{$t('desk.book_contactEmail')}}：{{ checkinInfo.tarvelContactEmail }}</div>
         </el-col>
       </el-row>
     </el-row>
     <el-row>
       <h4>{{ $t("desk.order_bookRoomType") }}</h4>
       <el-row>
-        <el-col
-          :span="24"
-          v-for="(item, key, index) of roomTypeList"
-          :key="index"
-        >
+        <el-col :span="24" v-for="(item, key, index) of roomTypeList" :key="index">
           <p>
             {{ checkKey(key) }}（{{ item.length
             }}{{ $t("manager.hk_space") }}）； {{ $t("desk.home_roomType") }}：
-            <el-button type="primary" size="mini" plain
-              >{{ item[0].roomTypeName }}({{ item.length }})</el-button
-            >
+            <el-button type="primary" size="mini" plain>{{ item[0].roomTypeName }}({{ item.length }})</el-button>
           </p>
         </el-col>
         <!-- <el-col :span="24">
@@ -177,147 +171,63 @@
       </el-row>
     </el-row>
     <!-- 上面是基本信息 -->
-    <el-dialog
-      top="0"
-      :visible.sync="liveInPersonShow"
-      class="liveInPersonDia"
-      :title="$t('desk.order_rowHouses')"
-      width="90%"
-    >
-      <customer2
-        :liveData="liveData"
-        :checkinInfo="checkinInfo"
-        type="reserve"
-        @checkInCallback="checkInCallback"
-      ></customer2>
+    <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="90%">
+      <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
     </el-dialog>
-    <el-dialog
-      top="0"
-      :title="$t('desk.updateOrder')"
-      :visible.sync="baseInfoChangeShow"
-      width="900px"
-      center
-    >
-      <el-form
-        :model="baseInfoChangeForm"
-        ref="baseInfoChange"
-        :rules="rules"
-        style="margin-top: -10px"
-        size="mini"
-        label-width="100px"
-      >
+    <el-dialog top="0" :title="$t('desk.updateOrder')" :visible.sync="baseInfoChangeShow" width="900px" center>
+      <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top: -10px" size="mini" label-width="100px">
         <el-row>
           <!--                订单来源-->
           <el-col :span="8">
-            <el-form-item
-              :label="$t('desk.book_orderSoutce')"
-              prop="orderSource"
-            >
-              <el-select
-                v-model="baseInfoChangeForm.orderSource"
-                :placeholder="$t('commons.placeChoose')"
-              >
-                <el-option
-                  :value="key"
-                  v-for="(item, key, index) of $t('commons.orderSource')"
-                  :label="item"
-                  :key="index"
-                ></el-option>
+            <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
+              <el-select v-model="baseInfoChangeForm.orderSource" :placeholder="$t('commons.placeChoose')">
+                <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <!--                地区-->
           <el-col :span="8">
-            <el-form-item
-              :label="$t('desk.customer_region')"
-              prop="orderSource"
-            >
-              <el-input
-                type="text"
-                v-model="baseInfoChangeForm.name"
-                style="width: 150px"
-              ></el-input>
+            <el-form-item :label="$t('desk.customer_region')" prop="orderSource">
+              <el-input type="text" v-model="baseInfoChangeForm.name" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item
-              :label="$t('desk.home_bookPeople')"
-              class=""
-              prop="name"
-            >
-              <el-input
-                type="text"
-                v-model="baseInfoChangeForm.name"
-                style="width: 150px"
-              ></el-input>
+            <el-form-item :label="$t('desk.home_bookPeople')" class="" prop="name">
+              <el-input type="text" v-model="baseInfoChangeForm.name" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item :label="$t('desk.order_moblePhone')" prop="mobile">
-              <el-input
-                v-model="baseInfoChangeForm.mobile"
-                class="width150"
-              ></el-input>
+              <el-input v-model="baseInfoChangeForm.mobile" class="width150"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="住家电话" prop="prop">
-              <el-input
-                v-model="baseInfoChangeForm.homeMobile"
-                style="width: 150px"
-              ></el-input>
+            <el-form-item :label="$t('desk.home_liveMobile')" prop="prop">
+              <el-input v-model="baseInfoChangeForm.homeMobile" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="单位电话" prop="prop">
-              <el-input
-                v-model="baseInfoChangeForm.enterMobile"
-                style="width: 150px"
-              ></el-input>
+            <el-form-item :label="$t('desk.home_unitMobile')" prop="prop">
+              <el-input v-model="baseInfoChangeForm.enterMobile" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item :label="$t('desk.order_outOrder') + '：'">
-              <el-input
-                v-model="baseInfoChangeForm.thirdOrdernum"
-                class="width150"
-              ></el-input>
+              <el-input v-model="baseInfoChangeForm.thirdOrdernum" class="width150"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item :label="$t('desk.home_note') + ':'" class="">
-              <el-input
-                type="textarea"
-                v-model="baseInfoChangeForm.remark"
-                style="width: 450px"
-              ></el-input>
+              <el-input type="textarea" v-model="baseInfoChangeForm.remark" style="width: 450px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item :label="$t('desk.book_bookProject') + ':'" required>
               <template>
-                <div
-                  v-for="(value, index) in baseInfoChangeForm.reserveProjects"
-                  :key="index"
-                >
-                  <el-input
-                    :placeholder="$t('desk.book_projectName') + (index + 1)"
-                    size="small"
-                    v-model="value.projectName"
-                    style="width: 300px"
-                  ></el-input>
-                  <el-input
-                    :placeholder="$t('desk.book_projectCount')"
-                    size="small"
-                    v-model="value.projectCount"
-                    style="width: 100px; margin-left: 10px"
-                  ></el-input>
-                  <el-input
-                    :placeholder="$t('desk.book_price')"
-                    size="small"
-                    v-model="value.price"
-                    style="width: 100px; margin-left: 10px"
-                  ></el-input>
+                <div v-for="(value, index) in baseInfoChangeForm.reserveProjects" :key="index">
+                  <el-input :placeholder="$t('desk.book_projectName') + (index + 1)" size="small" v-model="value.projectName" style="width: 300px"></el-input>
+                  <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model="value.projectCount" style="width: 100px; margin-left: 10px"></el-input>
+                  <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px"></el-input>
                   <!--                            <img src="~@/assets/images/close.png" @click="deleteProject(index)" v-if="baseInfoChangeForm.reserveProjects.length>1" class="closePng">-->
                 </div>
               </template>
@@ -337,74 +247,30 @@
         }}</el-button>
       </span>
     </el-dialog>
-    <el-dialog
-      top="0"
-      :title="$t('desk.order_changeSource')"
-      :visible.sync="gustTypeChangeShow"
-      width="500px"
-      center
-    >
-      <el-form
-        :model="baseInfoChangeForm"
-        ref="baseInfoChange"
-        :rules="rules"
-        style="margin-top: -10px"
-        size="mini"
-        label-width="100px"
-      >
-        <el-row>
-          <el-row>
-            <el-form-item
-              :label="$t('desk.customer_guestType') + ':'"
-              class=""
-              style="margin-bottom: 0"
-              prop="guestType"
-            >
-              <el-radio-group v-model="baseInfoChangeForm.guestType">
-                <el-radio
-                  v-for="(item, key, index) of $t('commons.guestType')"
-                  :label="key"
-                  :key="index"
-                  >{{ item }}</el-radio
-                >
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item
-              label-width="100px"
-              label=""
-              class=""
-              style="margin-bottom: 0"
-              v-if="
+    <!-- 更改客源dialog -->
+    <el-dialog top="0" :title="$t('desk.order_changeSource')" :visible.sync="gustTypeChangeShow" width="39%" center>
+      <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top: -10px" size="mini" label-width="100px">
+        <el-form-item :label="$t('desk.customer_guestType') + ':'" style="margin-bottom: 0" prop="guestType">
+          <el-radio-group v-model="baseInfoChangeForm.guestType">
+            <el-radio v-for="(item, key, index) of $t('commons.guestType')" :label="key" :key="index">{{ item }}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label-width="100px" label="" class="" style="margin-bottom: 0" v-if="
                 baseInfoChangeForm.guestType == 2 ||
                 baseInfoChangeForm.guestType == 3
-              "
-            >
-              <el-input type="text" class="width200"></el-input>
-            </el-form-item>
-          </el-row>
-          <br />
-          <el-row>
-            <el-form-item
-              :label="$t('desk.book_orderSoutce')"
-              prop="orderSource"
-            >
-              <el-select
-                v-model="baseInfoChangeForm.orderSource"
-                class="width200"
-              >
-                <el-option
-                  :value="key"
-                  v-for="(item, key, index) of $t('commons.orderSource')"
-                  :label="item"
-                  :key="index"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-row>
-        </el-row>
+              ">
+          <el-input type="text" class="width200"></el-input>
+        </el-form-item>
+        <br />
+        <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
+          <el-select v-model="baseInfoChangeForm.orderSource" class="width200">
+            <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+          </el-select>
+        </el-form-item>
+
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="baseInfoChangeShow = false">{{
+        <el-button @click="gustTypeChangeShow = false">{{
           $t("commons.cancel")
         }}</el-button>
         <el-button type="primary" @click="hotel_check_inChange">{{
@@ -413,20 +279,11 @@
       </span>
     </el-dialog>
 
-    <el-dialog
-      top="0"
-      title="NOSHOW"
-      :visible.sync="noShowDiaShow"
-      width="600px"
-      center
-    >
+    <el-dialog top="0" title="NOSHOW" :visible.sync="noShowDiaShow" width="600px" center>
       <el-form :model="currentItem" style="margin-top: -20px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item
-              :label="$t('desk.order_bookOrderNum') + '：'"
-              class=""
-            >
+            <el-form-item :label="$t('desk.order_bookOrderNum') + '：'" class="">
               {{ currentItem.orderNum }}
             </el-form-item>
           </el-col>
@@ -436,30 +293,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              :label="$t('desk.order_accountingService') + '：'"
-              class=""
-            >
+            <el-form-item :label="$t('desk.order_accountingService') + '：'" class="">
               NOSHOW{{ $t("desk.serve_roomPrice") }}
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="$t('desk.customer_sum') + '：'" class="">
-              <el-input
-                type="text"
-                disabled
-                v-model="currentItem.deposit"
-                style="width: 150px"
-              ></el-input>
+              <el-input type="text" disabled v-model="currentItem.deposit" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item :label="$t('desk.home_note') + ':'" class="">
-              <el-input
-                type="textarea"
-                v-model="currentItem.remark"
-                style="width: 450px"
-              ></el-input>
+              <el-input type="textarea" v-model="currentItem.remark" style="width: 450px"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -685,16 +530,16 @@ export default {
     checkGuestType(itemType) {
       switch (itemType) {
         case 1:
-          return "散客";
+          return this.$t('desk.book_traveler');
         case 2:
-          return "会员";
+          return this.$t('desk.book_member');
         case 3:
-          return "单位";
+          return this.$t('desk.book_unit');
         case 1:
-          return "团队";
+          return this.$t('desk.order_teamText');
 
         default:
-          return '';
+          return "";
       }
     },
     //新需求 添加项目
@@ -857,9 +702,9 @@ export default {
       });
     },
     baseInfoChangeHandle(type) {
-      this.baseInfoChangeForm = { reserveProjects: [] };
-
-      this.$F.merge(this.baseInfoChangeForm, this.checkinInfo);
+      // this.baseInfoChangeForm = { reserveProjects: [] };
+      // this.$F.merge(this.baseInfoChangeForm, this.checkinInfo);
+      this.baseInfoChangeForm = this.$F.deepClone(this.checkinInfo);
       this.baseInfoChangeForm.reserveProjects =
         this.checkinInfo.reserveProjects ||
         this.checkinInfo.reserveProjectList ||

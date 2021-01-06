@@ -1,16 +1,16 @@
 <!--
  * @Date: 2020-12-04 09:50:32
  * @Author: 陶子
- * @LastEditTime: 2021-01-05 10:27:48
+ * @LastEditTime: 2021-01-06 11:18:34
  * @FilePath: \jiudian\src\views\manager\index\consumptionTax.vue
 -->
 <template>
   <div>
-    <el-form ref="taxForm" :model="taxForm" :rules="taxRules" label-width="100px" inline>
+    <el-form ref="taxForm" :model="taxForm" :rules="taxRules" label-width="140px" inline>
       <el-form-item :label="$t('manager.add_taxIn') + ':'" prop="consumeTax">
         <el-input style="width: 200px" size="small" v-model.number="taxForm.consumeTax" :placeholder="$t('manager.add_maxNum')"></el-input><span style="margin-left: 4px">%</span>
       </el-form-item>
-      <el-form-item :label="$t('manager.add_taxOut') + ':'" prop="outConsumeTax" label-width="130px">
+      <el-form-item :label="$t('manager.add_taxOut') + ':'" prop="outConsumeTax" >
         <el-input style="width: 200px" size="small" v-model.number="taxForm.outConsumeTax" :placeholder="$t('manager.add_maxNum')"></el-input><span style="margin-left: 4px">%</span>
       </el-form-item>
       <br />

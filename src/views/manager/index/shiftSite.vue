@@ -41,51 +41,51 @@
                     </div>
                 </div>
             </el-tab-pane>
-            <el-tab-pane :label="$t('manager.hp_flightManagement')" name="handManage">
-                <div class="content">
-                    <div class="demo-form-inline">
-                        <el-radio-group v-model="handType.id" size="small" @change="radioChange">
-                            <el-radio-button v-for="(item, index) in handData" :key="index" :label="item.id">{{item.handoverType == 1 ? $t('manager.hp_deskDepartment') : item.handoverType == 2 ? $t('manager.hp_foodDepartment') : $t('manager.hp_storeDepartment')}}{{$t('manager.hp_shift')}}
-                            </el-radio-button>
-                        </el-radio-group>
-                        <el-button type="primary" class="submit" size="small" @click="popup_thing">{{$t('commons.newAdd')}}</el-button>
-                    </div>
-                    <el-table ref="multipleTable" :data="manageData" border height="100%" header-row-class-name="default" size="small" v-loading="loading">
-                        <el-table-column prop="name" :label="$t('manager.hp_shiftName')"></el-table-column>
-                        <el-table-column prop="startTime" :label="$t('manager.hp_startTime')"></el-table-column>
-                        <el-table-column prop="endTime" :label="$t('manager.hp_endTime')"></el-table-column>
-                        <el-table-column :label="$t('commons.operating')" width="150">
-                            <template slot-scope="scope">
-                                <el-button type="text" size="small" @click="popup_thing(scope.row)">{{$t("manager.hp_editor")}}
-                                </el-button>
-                                <el-popconfirm :title="$t('commons.confirm_delete')" @onConfirm="onConfirm(scope.row)">
-                                    <el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
-                                </el-popconfirm>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <div class="block">
-                        <el-pagination @current-change="currentChange" :current-page="pageForm.pageIndex" :page-size="pageForm.pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>
-                    </div>
-                </div>
-                <el-dialog top="0" :title="addTypeTitle" :visible.sync="addTypeVisible" :close-on-click-modal="false">
-                    <el-form :model="typeData" label-width="100px" class="demo-ruleForm">
-                        <el-form-item :label="$t('manager.hp_shiftName')" prop="name">
-                            <el-input v-model="typeData.name"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('manager.hp_startTime')" prop="startTime">
-                            <el-time-select v-model="typeData.startTime" format="HH:mm" value-format="HH:mm" :picker-options="startPicker"></el-time-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('manager.hp_endTime')" prop="endTime">
-                            <el-time-select v-model="typeData.endTime" format="HH:mm" value-format="HH:mm" :picker-options="endPicker"></el-time-select>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button class="white" @click="addTypeVisible = false">{{$t('commons.cancel')}}</el-button>
-                        <el-button class="submit" type="primary" @click="saveInfo">{{$t('commons.determine')}}</el-button>
-                    </div>
-                </el-dialog>
-            </el-tab-pane>
+<!--            <el-tab-pane :label="$t('manager.hp_flightManagement')" name="handManage">-->
+<!--                <div class="content">-->
+<!--                    <div class="demo-form-inline">-->
+<!--                        <el-radio-group v-model="handType.id" size="small" @change="radioChange">-->
+<!--                            <el-radio-button v-for="(item, index) in handData" :key="index" :label="item.id">{{item.handoverType == 1 ? $t('manager.hp_deskDepartment') : item.handoverType == 2 ? $t('manager.hp_foodDepartment') : $t('manager.hp_storeDepartment')}}{{$t('manager.hp_shift')}}-->
+<!--                            </el-radio-button>-->
+<!--                        </el-radio-group>-->
+<!--                        <el-button type="primary" class="submit" size="small" @click="popup_thing">{{$t('commons.newAdd')}}</el-button>-->
+<!--                    </div>-->
+<!--                    <el-table ref="multipleTable" :data="manageData" border height="100%" header-row-class-name="default" size="small" v-loading="loading">-->
+<!--                        <el-table-column prop="name" :label="$t('manager.hp_shiftName')"></el-table-column>-->
+<!--                        <el-table-column prop="startTime" :label="$t('manager.hp_startTime')"></el-table-column>-->
+<!--                        <el-table-column prop="endTime" :label="$t('manager.hp_endTime')"></el-table-column>-->
+<!--                        <el-table-column :label="$t('commons.operating')" width="150">-->
+<!--                            <template slot-scope="scope">-->
+<!--                                <el-button type="text" size="small" @click="popup_thing(scope.row)">{{$t("manager.hp_editor")}}-->
+<!--                                </el-button>-->
+<!--                                <el-popconfirm :title="$t('commons.confirm_delete')" @onConfirm="onConfirm(scope.row)">-->
+<!--                                    <el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>-->
+<!--                                </el-popconfirm>-->
+<!--                            </template>-->
+<!--                        </el-table-column>-->
+<!--                    </el-table>-->
+<!--                    <div class="block">-->
+<!--                        <el-pagination @current-change="currentChange" :current-page="pageForm.pageIndex" :page-size="pageForm.pageSize" :total="total" layout="total, prev, pager, next, jumper"></el-pagination>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <el-dialog top="0" :title="addTypeTitle" :visible.sync="addTypeVisible" :close-on-click-modal="false">-->
+<!--                    <el-form :model="typeData" label-width="100px" class="demo-ruleForm">-->
+<!--                        <el-form-item :label="$t('manager.hp_shiftName')" prop="name">-->
+<!--                            <el-input v-model="typeData.name"></el-input>-->
+<!--                        </el-form-item>-->
+<!--                        <el-form-item :label="$t('manager.hp_startTime')" prop="startTime">-->
+<!--                            <el-time-select v-model="typeData.startTime" format="HH:mm" value-format="HH:mm" :picker-options="startPicker"></el-time-select>-->
+<!--                        </el-form-item>-->
+<!--                        <el-form-item :label="$t('manager.hp_endTime')" prop="endTime">-->
+<!--                            <el-time-select v-model="typeData.endTime" format="HH:mm" value-format="HH:mm" :picker-options="endPicker"></el-time-select>-->
+<!--                        </el-form-item>-->
+<!--                    </el-form>-->
+<!--                    <div slot="footer" class="dialog-footer">-->
+<!--                        <el-button class="white" @click="addTypeVisible = false">{{$t('commons.cancel')}}</el-button>-->
+<!--                        <el-button class="submit" type="primary" @click="saveInfo">{{$t('commons.determine')}}</el-button>-->
+<!--                    </div>-->
+<!--                </el-dialog>-->
+<!--            </el-tab-pane>-->
 
         </el-tabs>
     </div>

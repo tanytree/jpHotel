@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2020-12-28 11:02:27
+ * @LastEditTime: 2021-01-05 13:56:21
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -13,120 +13,11 @@
       checkTitleEnd()
     "
     >
-        <!-- 内层挂账dialog -->
-        <cardTao ref="cardTao" :currentRoom="currentRoom" ></cardTao>
-        <!-- 内层结账退房dialog -->
-        <CheckoutTao ref="CheckoutTao"></CheckoutTao>
-        <!-- <el-dialog
-            top="0"
-            width="60%"
-            title="结账退房"
-            :visible.sync="checkoutVisible"
-            append-to-body
-        >
-            <div class="innerBoxTop">
-                <span>房型：标准间 </span>
-                <span>房间号：A001</span>
-                <span>入住人：张三</span>
-            </div>
-            <div class="priceBox">
-                <div class="leftPrice">应收：800</div>
-                <div class="centerLine"></div>
-                <div class="rightPrcie">
-                    <div class="rightTop">
-                        消费合计：<span class="rightTopNum">800.00</span>
-                    </div>
-                    <div class="rightBottom">
-                        付款合计：<span class="RightBottomNum">0.00</span>
-                    </div>
-                </div>
-                <div class="lastRight">
-                    <img src="~@/assets/images/moreThan.png" class="rightTopImg" />
-                    <div class="hoverBox">
-                        <div><span>小计</span><span>¥200；</span></div>
-                        <div><span>服务费（15%）</span><span>¥100；</span></div>
-                        <div><span>消费税（12%）</span><span>¥100；</span></div>
-                        <div><span>温泉税</span><span>¥100；</span></div>
-                        <div><span>住宿税</span><span>¥100；</span></div>
-                        <div><span>合计</span><span>¥400；</span></div>
-                    </div>
-                </div>
-            </div>
-            <el-form
-                ref="checkoutForm"
-                :rules="paymentRules"
-                :model="checkoutForm"
-                label-width="110px"
-            >
-                <el-form-item label="支付方式" prop="resource">
-                    <el-radio-group v-model="checkoutForm.resource">
-                        <el-radio label="现金"></el-radio>
-                        <el-radio label="信用卡"></el-radio>
-                        <el-radio label="挂账"></el-radio>
-                        <el-radio label="其他"></el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item
-                    label="挂账方式"
-                    v-if="checkoutForm.resource == '挂账'"
-                    prop="region"
-                >
-                    <el-select
-                        v-model="checkoutForm.region"
-                        placeholder="请选择活动区域"
-                        style="width: 260px"
-                    >
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                    label="挂账单位"
-                    v-if="checkoutForm.resource == '挂账'"
-                    prop="date1"
-                >
-                    <el-select
-                        v-model="checkoutForm.date1"
-                        placeholder="请选择活动区域"
-                        style="width: 260px"
-                    >
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="优惠金额">
-                    <el-input
-                        v-model="checkoutForm.name"
-                        style="width: 260px"
-                    ></el-input> </el-form-item
-                ><el-form-item label="金额" prop="name">
-                <el-input v-model="checkoutForm.name" style="width: 260px"></el-input>
-            </el-form-item>
-                <el-form-item label="备注">
-                    <el-input type="textarea" v-model="checkoutForm.desc"></el-input>
-                </el-form-item>
-                <el-form-item label-width="40px">
-                    <el-checkbox v-model="checkoutForm.checked">备选项</el-checkbox>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer" style="text-align: right">
-                <el-button @click="checkoutVisible = false">取消</el-button>
-                <el-button type="primary" @click="checkoutVisible = false"
-                >结账并退房</el-button
-                >
-            </div>
-        </el-dialog> -->
         <!-- 查看预订信息dialog -->
-        <el-dialog
-            top="0"
-            width="70%"
-            title="查看预订信息"
-            :visible.sync="lookBookVisible"
-            append-to-body
-        >
+        <el-dialog top="0" width="70%" title="查看订单信息" :visible.sync="lookBookVisible" append-to-body>
             <div class="infoBox">
                 <!--            房间信息展示  包含订单信息 入住人同来宾客-->
-                <checkInInfo :checkInPersonList="checkInPersonList" :currentRoom="currentRoom" :orderInfo="orderInfo" showOrderInfo="true"></checkInInfo>
+                <checkInInfo ref="checkInInfo" :orderInfo="orderInfo" showOrderInfo="true"></checkInInfo>
             </div>
 
             <div slot="footer" class="dialog-footer" style="text-align: center">
@@ -135,20 +26,20 @@
         </el-dialog>
         <el-tabs type="border-card" v-model="activeName">
             <!-- 基本信息 -->
-            <el-tab-pane :label="$t('desk.serve_basicInfo')" v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2" :key="0" name="first">
+            <el-tab-pane :label="$t('desk.serve_basicInfo')" v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2" name="first">
                 <div class="buttonBox">
-                    <el-button type="primary" size="small" plain>置脏</el-button>
-                    <el-button type="primary" size="small" plain>账务</el-button>
-                    <el-button type="primary" @click="paymentVisible" size="small" plain>挂账</el-button>
-                    <el-button type="primary" @click="checkoutRoom" size="small" plain>结账退房</el-button>
+                    <el-button type="primary" size="small" plain @click="goRoomStatus">{{ this.currentRoom.roomStatus == 3 ? '置脏' : '置净' }}</el-button>
+                    <el-button type="primary" size="small" plain @click="goFinance">账务</el-button>
+                    <el-button type="primary" @click="paymentVisible" size="small" plain v-if="this.currentRoom.checkInRoomType == 1">挂账</el-button>
+                    <el-button type="primary" @click="checkoutRoom" size="small" plain v-if="this.currentRoom.checkInRoomType == 1">结账退房</el-button>
                 </div>
                 <div class="infoBox">
                     <!--            入住人信息展示-->
-                    <checkInInfo :checkInPersonList="checkInPersonList" :currentRoom="currentRoom" :orderInfo="orderInfo" showOrderInfo="true"></checkInInfo>
+                    <checkInInfo type="home" :orderInfo="orderInfo" ref="checkInInfo" showOrderInfo="true"></checkInInfo>
                 </div>
             </el-tab-pane>
             <!-- 房间信息 -->
-            <el-tab-pane :label="$t('desk.roomInfoDesc')" :key="1" name="second">
+            <el-tab-pane :label="$t('desk.roomInfoDesc')" name="second">
                 <div class="timeBox">
                     <el-button type="primary" :disabled="startTime <= nowDateString" size="small" plain @click="dateBefore21">&lt;&lt;往前21天</el-button>
                     <div class="middleTime">{{ startTime }}——{{ endTime }}</div>
@@ -172,7 +63,12 @@
                 </div>
             </el-tab-pane>
         </el-tabs>
+        <!-- 内层挂账dialog -->
+        <cardTao ref="cardTao" :currentRoom="currentRoom" ></cardTao>
+        <!-- 内层结账退房dialog -->
+        <CheckoutTao ref="checkoutTao" :detailData = "orderInfo" :currentRoom="currentRoom"></CheckoutTao>
     </el-dialog>
+
 </template>
 
 <script>
@@ -186,35 +82,10 @@ export default {
         cardTao,
         CheckoutTao
     },
-    computed: {
-        activeName: {
-            get() {
-                if (this.currentRoom.checkInRoomType == 1 || this.currentRoom.checkInRoomType == 2) {
-                    return "first";
-                } else {
-                    return "second";
-                }
-            },
-            set() {},
-        },
-        paymentRules() {
-            return {
-                name: [{ required: true, message: "请输入活动名称", trigger: "blur" }],
-                region: [
-                    { required: true, message: "请选择活动区域", trigger: "change" },
-                ],
-                date1: [
-                    { required: true, message: "请选择活动区域", trigger: "change" },
-                ],
-                resource: [
-                    { required: true, message: "请选择活动区域", trigger: "change" },
-                ],
-            };
-        },
-    },
     mixins: [myMixin],
     data() {
         return {
+            detailData: {},
             currentRoom: {},
             dates: [],
             startTime: '',
@@ -230,6 +101,7 @@ export default {
             inputMessage: false,
             nowDateString: '',
             orderInfo: {}, //需要展示订单的信息
+            activeName: '',
 
         };
     },
@@ -239,14 +111,14 @@ export default {
     methods: {
         //点击挂账按钮
         paymentVisible(){
-            this.$refs.cardTao.resetVisibel(this.currentRoom.currentRoomData.checkinId);
+          console.log(this.currentRoom);
+            this.$refs.cardTao.resetVisibel(this.currentRoom.checkInObj.id);
         },
           //点击结账退房按钮
         checkoutRoom(){
             this.$refs.CheckoutTao.resetVisibel();
         },
         lookRoomClick(data) {
-
             this.lookBookVisible = true;
             this.orderInfo = data.reserveObj;
         },
@@ -279,8 +151,8 @@ export default {
                     checkinTime: this.startTime,
                     checkoutTime: this.checkoutTime,
                 }, (res) => {
-                    if (res && res.length > 0) {
-                        res.forEach( (value, index) => {
+                    if (res && res.roomCheckInCalendarList.length > 0) {
+                        res.roomCheckInCalendarList.forEach( (value, index) => {
                             if (value.reserveObj) {
                                 let tempArray = this.getDateStr(value.reserveObj.checkinTime, value.reserveObj.checkoutTime, 0);
                                 if (tempArray.length > 0) {
@@ -306,34 +178,7 @@ export default {
                 this.inputMessage = true;
             }
         },
-        arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-            if (rowIndex === 0) {
-                if (columnIndex <= 4) {
-                    return {
-                        rowspan: 3,
-                        colspan: 1,
-                    };
-                } else {
-                    return {
-                        rowspan: 1,
-                        colspan: 1,
-                    };
-                }
-            }
-            if (rowIndex > 2) {
-                if (columnIndex > 0) {
-                    return {
-                        rowspan: 1,
-                        colspan: 7,
-                    };
-                } else {
-                    return {
-                        rowspan: 1,
-                        colspan: 1,
-                    };
-                }
-            }
-        },
+
         //获取订单详情
         getOrderDetail(id, callback) {
             this.$F.doRequest(this,"/pms/checkin/check_in_detail", {checkInId: id,}, (res) => {
@@ -352,10 +197,10 @@ export default {
         changeVisible(currentRoom) {
             console.log(currentRoom);
             this.orderInfo = {};
-
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 21);
             this.currentRoom = currentRoom;
+            this.activeName = (this.currentRoom.checkInRoomType == 1 || this.currentRoom.checkInRoomType == 2) ? 'first' : 'second';
             this.initRoomPlan();
             this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
             if (this.currentRoom.checkInRoomType == 1) {   //订单详情
@@ -363,33 +208,65 @@ export default {
                     let id = this.currentRoom.checkInObj.id;
                     this.$F.merge(this.orderInfo, this.currentRoom.checkInObj);
                     this.getOrderDetail(id, res => {
+                        this.detailData = res;
                         this.$F.merge(this.orderInfo, res);
-                        console.log(JSON.parse(JSON.stringify(this.orderInfo)))
-
                         this.$F.merge(this.orderInfo, {checkInRoomType: this.currentRoom.checkInRoomType});
-                        this.hosteldis = true;
+                        this.showCheckinInfo();
                     })
                 } else {
                     this.orderInfo.checkInRoomType = '';
-                    this.hosteldis = true;
+                    this.showCheckinInfo();
                 }
             } else if (this.currentRoom.checkInRoomType == 2) {
                 if (this.currentRoom.reseverCheckInObj) {
                     let id = this.currentRoom.reseverCheckInObj.id;
                     this.orderInfo = this.currentRoom.reseverCheckInObj;
                     this.getReserveDetail(id, res => {
+                        this.detailData = res;
                         this.$F.merge(this.orderInfo, res);
                         this.$F.merge(this.orderInfo, {checkInRoomType: this.currentRoom.checkInRoomType});
                         this.hosteldis = true;
+                        this.showCheckinInfo();
                     })
                 } else {
                     this.orderInfo.checkInRoomType = '';
-                    this.hosteldis = true;
+                    this.showCheckinInfo();
                 }
             } else {
-                this.hosteldis = true;
+                this.showCheckinInfo();
             }
 
+        },
+
+        //改变房间状态 置脏置净
+        goRoomStatus() {
+            let roomStatus;
+            if (this.currentRoom.checkInRoomType == 1) {
+
+            }
+            roomStatus = this.currentRoom.roomStatus == 3 ? 2 : 1;
+            this.$F.doRequest(this, '/pms/hotel/oper_room_status', {
+                roomIds: this.currentRoom.id,
+                roomStatus: roomStatus
+            }, (res) => {
+                this.currentRoom.roomStatus = this.currentRoom.roomStatus == 3 ? 4: 3;
+            });
+        },
+
+        //点击财务跳转到订单
+        goFinance() {
+            if (this.currentRoom.checkInRoomType == 1) {
+                this.$router.push("/orderdetail?id=" + (this.detailData.checkIn.id));
+            } else {
+                this.$router.push("/bookingDetail?id=" + this.detailData.checkIn.id);
+            }
+        },
+
+        showCheckinInfo() {
+            this.hosteldis = true;
+            setTimeout(()=> {
+                this.$refs.checkInInfo.init('home', this.orderInfo, this.currentRoom);
+            }, 100)
         },
         checkTitleEnd() {
             if (this.currentRoom.checkIn && this.currentRoom.checkIn.operCheckinType) {
@@ -438,8 +315,7 @@ export default {
                     cancelButtonText: this.$t("commons.cancel"),
                     type: "warning",
                 }
-            )
-                .then(() => {
+            ).then(() => {
                     this.$F.doRequest(
                         this,
                         "/pms/hotel/oper_room_status",

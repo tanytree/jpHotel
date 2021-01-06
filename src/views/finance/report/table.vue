@@ -1,18 +1,14 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2020-12-25 16:15:26
+ * @LastEditTime: 2021-01-06 11:14:11
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
   <div>
     <el-card class="box-card" :body-style="{ padding: '10px  20px 0px' }">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item
-          style="cursor: pointer; font-weight: 600"
-          @click.native="backLastStack"
-          >{{$t('boss.report_reportTitle')}}</el-breadcrumb-item
-        >
+        <el-breadcrumb-item style="cursor: pointer; font-weight: 600" @click.native="backLastStack">{{$t('boss.report_reportTitle')}}</el-breadcrumb-item>
         <el-breadcrumb-item style="font-weight: 700">{{$t('commons.detail')}}</el-breadcrumb-item>
       </el-breadcrumb>
     </el-card>
@@ -20,57 +16,26 @@
       <el-card class="box-card2" :body-style="{ height: 'min: 600px' }">
         <el-form ref="searchForm" :model="searchForm" inline>
           <!-- 日计表-->
-          <el-form-item
-           :label="$t('boss.report_businessHours')+':'"
-            v-if="searchForm.reportNum == '1001'"
-          >
-            <el-date-picker
-              v-model="searchForm.startTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              :placeholder="$t('boss.report_businessHours')"
-            ></el-date-picker>
+          <el-form-item :label="$t('boss.report_businessHours')+':'" v-if="searchForm.reportNum == '1001'">
+            <el-date-picker v-model="searchForm.startTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('boss.report_businessHours')"></el-date-picker>
           </el-form-item>
           <!-- 月报账表-->
-          <el-form-item
-           :label="$t('boss.report_businessHours')+':'"
-            v-if="searchForm.reportNum == '1003'"
-          >
-            <el-date-picker
-              v-model="searchForm.startTime"
-              type="month"
-              value-format="yyyy-MM"
-            :placeholder="$t('boss.report_businessHours')"
-            ></el-date-picker>
+          <el-form-item :label="$t('boss.report_businessHours')+':'" v-if="searchForm.reportNum == '1003'">
+            <el-date-picker v-model="searchForm.startTime" type="month" value-format="yyyy-MM" :placeholder="$t('boss.report_businessHours')"></el-date-picker>
           </el-form-item>
           <!-- 选择多个日期 -->
-          <el-form-item
-            :label="$t('commons.selectDate')+':'"
-            v-if="
+          <el-form-item :label="$t('commons.selectDate')+':'" v-if="
               reportType == '11' ||
               reportType == '12' ||
               reportType == '37' ||
               reportType == '38'
-            "
-          >
-            <el-date-picker
-              v-model="searchForm.startTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              :placeholder="$t('manager.hp_startTime')"
-            ></el-date-picker>
+            ">
+            <el-date-picker v-model="searchForm.startTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('manager.hp_startTime')"></el-date-picker>
             <span style="margin: 0 5px">-</span>
-            <el-date-picker
-              v-model="searchForm.endTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              :placeholder="$t('manager.hp_endTime')"
-            ></el-date-picker>
+            <el-date-picker v-model="searchForm.endTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('manager.hp_endTime')"></el-date-picker>
           </el-form-item>
           <!-- 选择单个日期 -->
-          <el-form-item
-           :label="$t('commons.selectDate')+':'"
-            v-if="
+          <el-form-item :label="$t('commons.selectDate')+':'" v-if="
               reportType == '13' ||
               reportType == '35' ||
               reportType == '14' ||
@@ -82,101 +47,48 @@
               reportType == '26' ||
               reportType == '27' ||
               reportType == '29'
-            "
-          >
-            <el-date-picker
-              v-model="searchForm.startTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              :placeholder="$t('commons.selectDate')"
-            ></el-date-picker>
+            ">
+            <el-date-picker v-model="searchForm.startTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('commons.selectDate')"></el-date-picker>
           </el-form-item>
           <!-- 选择单个月份 -->
           <el-form-item :label="$t('boss.report_selectMonth')+':'" v-if="reportType == '34'">
-            <el-date-picker
-              v-model="searchForm.startTime"
-              type="month"
-              value-format="yyyy-MM"
-              :placeholder="$t('boss.report_selectMonth')"
-            ></el-date-picker>
+            <el-date-picker v-model="searchForm.startTime" type="month" value-format="yyyy-MM" :placeholder="$t('boss.report_selectMonth')"></el-date-picker>
           </el-form-item>
           <!-- 选择多个月份 -->
           <el-form-item :label="$t('boss.report_selectMonth')+':'" v-if="reportType == '36'">
-            <el-date-picker
-              v-model="searchForm.startTime"
-              type="month"
-              value-format="yyyy-MM"
-              :placeholder="$t('boss.report_selectMonth')"
-            ></el-date-picker>
+            <el-date-picker v-model="searchForm.startTime" type="month" value-format="yyyy-MM" :placeholder="$t('boss.report_selectMonth')"></el-date-picker>
             <span style="margin: 0 5px">-</span>
-            <el-date-picker
-              v-model="searchForm.endTime"
-              type="month"
-              value-format="yyyy-MM"
-              :placeholder="$t('boss.report_selectMonth')"
-            ></el-date-picker>
+            <el-date-picker v-model="searchForm.endTime" type="month" value-format="yyyy-MM" :placeholder="$t('boss.report_selectMonth')"></el-date-picker>
           </el-form-item>
-          <el-form-item
-           :label="$t('desk.customer_chooseUnit')+':'"
-            style="margin: 0 20px"
-            v-if="
+          <el-form-item :label="$t('desk.customer_chooseUnit')+':'" style="margin: 0 20px" v-if="
               reportType == '11' || reportType == '12' || reportType == '13'
-            "
-          >
+            ">
             <el-select v-model="searchForm.enterId" filterable clearable>
-              <el-option
-                v-for="(item, index) in unitList"
-                :key="index"
-                :label="item.enterName"
-                :value="item.id"
-              ></el-option>
+              <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item
-           :label="$t('desk.home_customerName')+':'"
-            style="margin: 0 20px"
-            v-if="
+          <el-form-item :label="$t('desk.home_customerName')+':'" style="margin: 0 20px" v-if="
               reportType == '13' ||
               reportType == '14' ||
               reportType == '39' ||
               reportType == '40'
-            "
-          >
-            <el-autocomplete
-              v-model="searchForm.guestName"
-              :fetch-suggestions="remoteMethod"
-              :placeholder="$t('commons.pleaseEnter')"
-              @select="changeName"
-            ></el-autocomplete>
+            ">
+            <el-autocomplete v-model="searchForm.guestName" :fetch-suggestions="remoteMethod" :placeholder="$t('commons.pleaseEnter')" @select="changeName"></el-autocomplete>
           </el-form-item>
-          <el-form-item
-            :label="$t('desk.order_teamName')+':'"
-            style="margin: 0 20px"
-            v-if="reportType == '42'"
-          >
-            <el-autocomplete
-              v-model="searchForm.teamName"
-              :fetch-suggestions="remoteMethod"
-             :placeholder="$t('commons.pleaseEnter')"
-              @select="changeName"
-            ></el-autocomplete>
+          <el-form-item :label="$t('desk.order_teamName')+':'" style="margin: 0 20px" v-if="reportType == '42'">
+            <el-autocomplete v-model="searchForm.teamName" :fetch-suggestions="remoteMethod" :placeholder="$t('commons.pleaseEnter')" @select="changeName"></el-autocomplete>
           </el-form-item>
           <el-form-item>
-            <el-button
-              type="primary"
-              @click="queryReport"
-              v-if="reportType != '41'"
-              >{{$t('commons.queryBtn')}}</el-button
-            >
+            <el-button type="primary" @click="queryReport" v-if="reportType != '41'">{{$t('commons.queryBtn')}}</el-button>
             <!--            <el-button type="primary">打印</el-button>-->
             <el-button type="primary" @click="exportReport">{{$t('commons.exportBtn')}}</el-button>
           </el-form-item>
         </el-form>
         <div class="task-list">
-          <table style="border: 1px solid black" v-if="content !== ''">
+          <table border="1px solid black"  v-if="content !== ''">
             <!-- 设置居中,如果没获取到内容则不显示 -->
             <tr>
-              <th v-for="h in content[0]" :key="h.id">{{ h }}</th>
+              <th style="background:#938965;" v-for="h in content[0]" :key="h.id" :colspan="content.slice(1).length">{{ h }}</th>
             </tr>
             <!-- 循环读取数据并显示 -->
             <tr v-for="row in content.slice(1)" :key="row.id">
@@ -223,14 +135,18 @@ export default {
     this.sourcePage = this.$route.params.sourcePage; //判定是总办的页面还是前台部的页面
     this.searchForm.reportNum = this.$route.params.reportNum; //接收报表的reportNum
     this.reportType = this.$route.params.reportType || 1; //接收报表的reportType
-    if(this.reportType == '11' || this.reportType == '12' || this.reportType == '13'){
-    this.getUnitList();
+    if (
+      this.reportType == "11" ||
+      this.reportType == "12" ||
+      this.reportType == "13"
+    ) {
+      this.getUnitList();
     }
     if (this.reportType == "41") {
-      let  date = new Date();
+      let date = new Date();
       let nowDate = date.toLocaleDateString();
-      let array = nowDate.split('/');
-      let wantTime = array.join('-');
+      let array = nowDate.split("/");
+      let wantTime = array.join("-");
       this.searchForm.startTime = wantTime;
       this.searchForm.endTime = wantTime;
       this.queryReport();
@@ -242,7 +158,7 @@ export default {
         location.href = this.currentReport.reportHttpUrl;
       } else {
         this.$message({
-          message: this.$t('boss.report_firstQuery'),
+          message: this.$t("boss.report_firstQuery"),
           type: "warning",
         });
       }
@@ -366,12 +282,10 @@ export default {
       axios
         .get(url, { responseType: "arraybuffer" })
         .then((res) => {
-            
           var data = new Uint8Array(res.data);
           var wb = XLSX.read(data, { type: "array" });
           var sheets = wb.Sheets;
           this.content = this.transformSheets(sheets);
-          
         })
         .catch((err) => {
           this.err = err;
@@ -385,10 +299,10 @@ export default {
       var tmplist = [];
       let index = 1;
       for (let key in sheets) {
-      //读出来的workbook数据很难读,转换为json格式,参考https://github.com/SheetJS/js-xlsx#utility-functions
-          tmplist.push(XLSX.utils.sheet_to_json(sheets[key]).length);
-          content1.push(XLSX.utils.sheet_to_json(sheets[key]));
-          break;
+        //读出来的workbook数据很难读,转换为json格式,参考https://github.com/SheetJS/js-xlsx#utility-functions
+        tmplist.push(XLSX.utils.sheet_to_json(sheets[key]).length);
+        content1.push(XLSX.utils.sheet_to_json(sheets[key]));
+        break;
       }
       var maxLength = Math.max.apply(Math, tmplist);
       //进行行列转换
@@ -404,10 +318,10 @@ export default {
           }
         }
       }
-      
+
       content.unshift([]);
       for (let key in sheets) {
-          content[0].push(key);
+        content[0].push(key);
       }
       return content;
     },
@@ -433,4 +347,31 @@ export default {
   border: 1px solid rgba(225, 225, 225, 1);
   margin-bottom: 20px;
 }
+/*** */
+table {
+  // border-collapse: collapse;
+  // margin: 0 auto;
+  border-spacing: 0;
+  text-align: center;
+}
+table td,
+table th {
+  border: 1px solid #cad9ea;
+  color: #666;
+  height: 30px;
+}
+table th{
+  background-color: red;
+}
+table thead th {
+  background-color: #cce8eb;
+  width: 100px;
+}
+table tr:nth-child(odd) {
+  background: #fff;
+}
+table tr:nth-child(even) {
+  background: #f5fafa;
+}
+
 </style>

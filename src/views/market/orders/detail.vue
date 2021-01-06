@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-02 11:53:55
+ * @LastEditTime: 2021-01-06 16:34:36
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -9,9 +9,7 @@
     <div class="el-card" style="height: auto">
       <div class="el-card__header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item  @click.native="clickGo">{{
-            $t("desk.order_orderManage")
-          }}</el-breadcrumb-item>
+          <el-breadcrumb-item @click.native="clickGo">{{ $t("desk.order_orderManage") }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -41,15 +39,6 @@
                       <el-col :span="12" class="cell">
                         {{ $t("desk.order_sourceType") + ":" }}{{ F_guestType(detailData.checkIn.guestType) }}
                       </el-col>
-<!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
-<!--                        会员类型：白金卡-->
-<!--                      </el-col>-->
-<!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">-->
-<!--                        余额：2-->
-<!--                        <el-button size="mini" type="text">充值</el-button>-->
-<!--                      </el-col>-->
-<!--                      <el-col :span="12" class="cell" v-if="detailData.checkIn.memberObject">积分：-->
-<!--                      </el-col>-->
                     </el-row>
                   </div>
                 </div>
@@ -58,7 +47,6 @@
                 <ul>
                   <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
                     <div class="wrap"><span>{{$t('desk.order_lookOrderInfo')}}></span></div>
-<!--                      （联房）-->
                   </li>
                   <li @click="checkTypeHandle('customer', item)" v-for="(item, index) of detailData.inRoomList" :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id ? 'active' : ''">
                     <div class="wrap">
@@ -94,7 +82,19 @@
                             <el-row class="row">
                               <h3>
                                 {{ $t("desk.serve_basicInfo") }}
-<!--                                <el-button--><!--                                  style="--><!--                                    vertical-align: middle;--><!--                                    margin-left: 10px;--><!--                                    display: inline-block;--><!--                                  "--><!--                                  size="mini"--><!--                                  class="vm"--><!--                                  @click="yokeplateHandle"--><!--                                  v-if="detailData.inRoomList.length"--><!--                                >--><!--                                  {{ $t("desk.order_alRoom") }}--><!--                                </el-button>-->
+                                <!--                                <el-button-->
+                                <!--                                  style="-->
+                                <!--                                    vertical-align: middle;-->
+                                <!--                                    margin-left: 10px;-->
+                                <!--                                    display: inline-block;-->
+                                <!--                                  "-->
+                                <!--                                  size="mini"-->
+                                <!--                                  class="vm"-->
+                                <!--                                  @click="yokeplateHandle"-->
+                                <!--                                  v-if="detailData.inRoomList.length"-->
+                                <!--                                >-->
+                                <!--                                  {{ $t("desk.order_alRoom") }}-->
+                                <!--                                </el-button>-->
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">
@@ -143,7 +143,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
 import c1 from "./coms/c1";
 import c2 from "./coms/c2";
 import customer from "@/components/front/customer";
@@ -158,16 +157,9 @@ export default {
     customer,
     unitedRoomHandle,
   },
-  computed: {
-    ...mapState({
-      token: (state) => state.user.token,
-      userId: (state) => state.user.userId,
-      msgKey: (state) => state.config.msgKey,
-      plat_source: (state) => state.config.plat_source,
-    }),
-  },
   data() {
     return {
+      itemGuestInfo: null,
       isOrder: true,
       loading: false,
       activeName: "first",
@@ -206,24 +198,30 @@ export default {
     });
   },
   methods: {
-      //点击顶部订单管理
-    clickGo(){
+    //点击顶部订单管理
+    clickGo() {
       console.log(this.$route.query.member);
-       if(this.$route.query.member){
-           this.$router.go(-1)
-       }else{
-            // :to="{ path: '/orders?type=order' }"
-            this.$router.replace({
-                path:'/orders',
-                query:{
-                   type:this.order,
-                }
-            })
-       }
+      if (this.$route.query.member) {
+        this.$router.replace({
+          name: "customerhistory",
+          query: {
+            item: this.itemGuestInfo,
+          },
+        });
+      } else {
+        // :to="{ path: '/orders?type=order' }"
+        this.$router.replace({
+          path: "/orders",
+          query: {
+            type: this.order,
+          },
+        });
+      }
     },
     getDetail() {
       console.log(111);
-      let id = this.$route.query.id;   //该id为checkinId
+      let id = this.$route.query.id; //该id为checkinId
+      this.itemGuestInfo = this.$route.query.item;
       this.$F.doRequest(
         this,
         "/pms/checkin/check_in_detail",
@@ -289,16 +287,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .detailTab {
   border: 0;
 }
-
-.detailTab >>> .el-tabs__header {
-  margin: 0;
-}
-</style>
-<style lang="less" scoped>
 .active {
   background: #e3eeff;
   color: #126eff;
@@ -306,6 +298,7 @@ export default {
 }
 
 .bodyInfo {
+  height: 100%;
   .customerInfo {
     background: #fff;
 

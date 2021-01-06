@@ -4,16 +4,16 @@
             <el-col :span="20">
                 <el-form ref="centerForm" inline size="small" :model="centerForm" label-width="100px">
                     <el-col :span="8">
-                        <el-form-item label="酒店名称:">
+                        <el-form-item :label="$t('manager.hp_hotelName')+':'">
                             <el-select v-model="centerForm.storesNum" :placeholder="$t('login.sTip')">
-                                <el-option label="全部" value=""></el-option>
+                                <el-option :label="$t('desk.home_all')" value=""></el-option>
                                 <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item>
-                            <el-button type="primary" style="margin-left: 25px" @click="onSubmit">查询</el-button>
+                            <el-button type="primary" style="margin-left: 25px" @click="onSubmit">{{$t('commons.queryBtn')}}</el-button>
                         </el-form-item>
                     </el-col>
                 </el-form>
@@ -22,7 +22,7 @@
 
         <!-- 酒店信息表格 -->
         <el-row>
-            <h4>酒店信息:</h4>
+            <h4>{{$t('manager.hp_hotelInformation')}}:</h4>
             <el-row v-for="(item, index) in infoArray" :key="index" style="margin-top: 30px" v-loading="loading">
                 <div>
                     <span>{{ item.name }}</span>
@@ -31,24 +31,24 @@
                           :header-cell-style="{ background: '#D9DDE2', color: '#606266' }">
                     <el-table-column :label="$t('desk.home_roomType')" width="130" fixed>
                         <template>
-                            <el-row>房间详情</el-row>
+                            <el-row>{{$t('boss.add_roomDetail')}}</el-row>
                         </template>
                     </el-table-column>
                     <el-table-column v-for="(each, index) in item.array" :key="index" :label="each.roomTypeName" width="160">
                         <template>
-                            <el-row>可订数：{{ each.reserveTotal }}</el-row>
+                            <el-row>{{$t('boss.add_canBookNum')}}：{{ each.reserveTotal }}</el-row>
                             <el-row v-if="each.personPrice && each.personPrice.split(',').length > 0">
                                 <el-col v-for="(price, secondIndex) in each.personPrice.split(',')" :key="secondIndex">
-                                  <div v-if="secondIndex==0"> 1人住宿价：{{ price }}</div>
-                                  <div v-else> {{ secondIndex + 1 }}人住宿价：{{ price }}</div>
+                                  <div v-if="secondIndex==0"> {{$t('boss.add_onePeople')}}：{{ price }}</div>
+                                  <div v-else> {{ secondIndex + 1 }}{{$t('boss.add_peopleLivePrice')}}：{{ price }}</div>
                                 </el-col>
                             </el-row>
-                            <el-row v-else>1人住宿价：{{ each.onePersonPrice || each.personPrice}}</el-row>
+                            <el-row v-else>1{{$t('boss.add_peopleLivePrice')}}：{{ each.onePersonPrice || each.personPrice}}</el-row>
                         </template>
                     </el-table-column>
                     <el-table-column :label="$t('commons.operating')" fixed="right">
                         <template>
-                            <el-button :disabled="item.array.length > 0 ? false : true" size="mini" type="text" @click="handleReserve(item)">普通预订</el-button>
+                            <el-button :disabled="item.array.length > 0 ? false : true" size="mini" type="text" @click="handleReserve(item)">{{$t('boss.add_normalBook')}}</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -121,7 +121,7 @@ export default {
                             }
                             this.infoArray.push(object);
                         } else {
-                            this.$message("该酒店暂无房间信息");
+                            this.$message(this.$t('boss.add_noHaveInfo'));
                         }
                     } else {
                         for (let i in this.storeList) {
