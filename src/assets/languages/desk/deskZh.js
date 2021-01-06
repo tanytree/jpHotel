@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-05 15:25:55
+ * @LastEditTime: 2021-01-06 17:04:44
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -177,8 +177,8 @@ module.exports = {
   home_nowAl: '现有联房',
   home_sureAl: '请确认联房',
   home_nowLiveRate: '当前入住率',
-  home_: '',
-  home_: '',
+  home_liveMobile: '住家电话',
+  home_unitMobile: '单位电话',
   home_: '',
   home_: '',
   home_: '',
@@ -300,7 +300,7 @@ module.exports = {
   book_teamAddress: '团体地址',
   book_contactName: '联络人姓名',
   book_contactPhone: '联络人手机号',
-  book_contactEmail: '联络人信箱',
+  book_contactEmail: '联络人邮箱',
   book_travelName: '旅行社名称',
   book_travelAddress: '旅行社地址',
   book_inputTeamName: '请输入团体名',
@@ -503,7 +503,7 @@ module.exports = {
   order_liveAddress: "住家地址",
   order_homePhone: "住家号码",
   order_addRoom: "添加房间",
-  order_: "",
+  order_teamText: "团队",
   order_: "",
   order_: "",
   order_: "",

@@ -849,6 +849,9 @@ module.exports = {
   book_bookPeoPhone: '未翻译词条',
   book_guideText: '未翻译词条',
   book_leaderText: '未翻译词条',
+  home_liveMobile: '未翻译词条',
+  home_unitMobile: '未翻译词条',
+  order_teamText: "未翻译词条",
 
 
 
