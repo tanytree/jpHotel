@@ -135,7 +135,7 @@
     <el-dialog
         top="0"
         :title="$t('food.orderTitle.'+ dialogType)"
-        width="60%"
+        width="800px"
         :visible.sync="dialogShow"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
@@ -148,7 +148,7 @@
     <el-dialog
         top="0"
         :title="$t('food.orderTitle.1')"
-        width="60%"
+        width="800px"
         :visible.sync="dialogShows"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
@@ -165,7 +165,7 @@
             <div class="taxBox text-size14 text-gray">
                 <div class="item margin-t-10">服务费 ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
                 <div class="item margin-t-10">消费税 ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
-                <div class="item margin-t-10" v-if="detail.billingType&&detail.billingType == 1">{{$t('shop.yhPrice')}} ¥{{detail.preferentialPrice}}</div>
+                <div class="item margin-t-10" v-if="detail.billingType&&detail.billingType == 1">{{$t('shop.yhPrice')}} ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
             </div>
             <!-- <div v-if="!!orderTax" class="margin-t-10 text-gray">消费税：¥{{orderTax.total}}</div>
             <div v-if="!!orderTax" class="margin-t-10 text-gray">服务费：¥{{orderTax.service}}</div> -->
@@ -175,7 +175,7 @@
             <!-- <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div> -->
             <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">{{$t('shop.vipPrice')}}：¥{{numFormate(detail.scoresPrice)}}</div>
             <div class="margin-t-10 text-gray">{{$t('shop.realPrice')}}：¥{{numFormate(detail.realPayPrice)}}</div>
-            <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：¥{{detail.updateTime}}</div>
+            <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：{{detail.updateTime}}</div>
             <el-table
               class="margin-t-10 "
               :data="detail.orderSubList"
@@ -184,20 +184,21 @@
               size="small"
             >
               <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')" ></el-table-column>
-              <el-table-column :label="$t('food.common.price')">
+             <!-- <el-table-column :label="$t('food.common.price')">
                 <template slot-scope="scope">
                     {{numFormate(scope.row.unitPrice)}}
                 </template>
-              </el-table-column>
+              </el-table-column> -->
               <el-table-column :label="$t('shop.rule')">
                 <template slot-scope="scope">
                    <div v-if="scope.row.goods">
                        <div v-if="scope.row.goods.categoryType == 1">
-                          价格*数量
+                          <!-- 价格*数量 -->
+						  {{numFormate(scope.row.unitPrice)}}
                        </div>
                        <div v-else>
                             <span v-if="scope.row.goods.priceModel == 1">
-                                按次计费
+                               {{numFormate(scope.row.unitPrice)}}
                             </span>
                             <span v-else>
                               {{scope.row.goods.priceStartMinute}}分钟后收起步价，
@@ -347,19 +348,20 @@ export default {
         //获取点餐来演类型
         getOrderSource(v){
             let list = this.options
-            for(let i in list){
-                if(v == list[i].value){
-                    return list[i].label
+            list.forEach(element => {
+                if(v == element.value){
+                    return element.label
                 }
-            }
+            });
+
         },
         //计算总价
         getTotalPrice(list){
             if(list.length > 0){
                 let sum = 0
-                for (let i in list){
-                   sum += parseFloat(list[i].unitPrice) * parseFloat(list[i].dishesCount)
-                }
+                list.forEach(element => {
+                   sum += parseFloat(element.unitPrice) * parseFloat(element.dishesCount)
+                });
                 return sum.toFixed(2)
             }
         },
@@ -371,10 +373,17 @@ export default {
                this.dialogShows = true
                this.detail = data
                let orderGoodsList = data.orderSubList
-               for(let i in orderGoodsList){
-                   orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
-                   orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
-               }
+
+               orderGoodsList.forEach(element => {
+                   element.taxStatus = element.goods.taxStatus
+                   element.seviceStatus = element.goods.seviceStatus
+               });
+
+
+               // for(let i in orderGoodsList){
+               //     orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
+               //     orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
+               // }
                console.log(orderGoodsList)
                let outFlag = data.outFlag == 1 ? true : false
                this.orderTax = this.getTaxInfo(this.tax,orderGoodsList,outFlag)

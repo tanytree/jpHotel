@@ -38,6 +38,8 @@
         </div>
         <div class="block flex " >
             <div class=" text-size14 text-left"  style="justify-content: flex-start">
+
+
                 {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20"> {{numFormate(cartToTal)}}</span>
              </div>
             <div style="max-width: 100px;">
@@ -128,6 +130,7 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
+
        <el-table
              :data="cart"
              border
@@ -219,10 +222,11 @@ export default {
 
     cartToTal(){
         let sum = 0
-        if(this.cart.length > 0){
-            for(let k in this.cart){
-               sum +=  parseFloat(this.cart[k].price) *  parseFloat(this.cart[k].count)
-            }
+        let list = this.cart
+        if(list.length > 0){
+            list.forEach(element => {
+                sum +=  parseFloat(element.price) *  parseFloat(element.count)
+            });
             return sum.toFixed(0);
         }else{
             return sum.toFixed(0);
@@ -230,10 +234,11 @@ export default {
     },
     countToTal(){
         let sum = 0
-        if(this.cart.length > 0){
-            for(let k in this.cart){
-                sum +=  parseFloat(this.cart[k].count)
-            }
+        let list = this.cart
+        if(list.length > 0){
+            list.forEach(element => {
+                sum +=  parseFloat(element.count)
+            });
             return sum
         }else{
           return sum

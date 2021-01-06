@@ -26,7 +26,7 @@
                           </div>
                       </template>
                     </el-table-column> -->
-                    <el-table-column label="单价">
+                    <el-table-column :label="$t('shop.rule')">
                       <template slot-scope="scope">
 
                          <div v-if="scope.row.goods">
@@ -47,8 +47,8 @@
                          </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="goodsCount" label="数量" width="50"></el-table-column>
-                    <el-table-column label="消费金额" width="200">
+                    <el-table-column prop="goodsCount" :label="$t('shop.count')" width="50"></el-table-column>
+                    <el-table-column :label="$t('shop.customePrice')"  width="200">
                       <template slot-scope="scope">
                         <div v-if="scope.row.goods.categoryType == 1">
                             <!-- {{scope.row.totalPrice}} -->

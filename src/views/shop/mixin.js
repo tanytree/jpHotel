@@ -250,7 +250,6 @@ const mixin= {
         getTaxInfo(tax,list,outFlag){
             console.log(outFlag)
             console.log(tax)
-
             //outFlag 默认false 表示是否外带
             if(list && list.length > 0 && tax){
                 let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
@@ -281,10 +280,20 @@ const mixin= {
                 parms.servicePrice = tax.servicePrice+'%'
                 parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
                 parms.type = outFlag ? 'out' : 'in'
-
                 console.log(parms)
                 return parms
+            }else{
+                let parms = {}
+                parms.service = 0
+                parms.servicePrice  =  0
+                parms.sum =  0
+                parms.tax  = 0
+                parms.taxFee = 0
+                parms.total  = 0
+                parms.type  =  'in'
+                return parms
             }
+
         },
 
         alert(v,msg){
