@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 14:52:49
+ * @LastEditTime: 2021-01-06 16:23:34
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -293,6 +293,7 @@ export default {
   },
   data() {
     return {
+      itemGuestInfo:null,
       loading: false,
       searchForm: {
         storesNum: "",
@@ -386,6 +387,7 @@ export default {
         paging: true,
       };
       console.log(this.$route.query);
+      this.itemGuestInfo = this.$route.query.item;
       this.searchForm.idcard = this.$route.query.item.idcard || "";
       this.searchForm.name = this.$route.query.item.name;
       this.searchForm.pronunciation = this.$route.query.item.pronunciation;
@@ -426,32 +428,18 @@ export default {
         this.initForm();
       });
     },
+    //点击详情
     handelDetail(item) {
       //   this.$router.push("/orderdetail?id=" + item.hotelCheckInRoom.checkinId);
       this.$router.push({
         path: "orderdetail",
         query: {
           id: item.hotelCheckInRoom.checkinId,
+          item:this.itemGuestInfo,
           member: "member",
         },
       });
     },
-    handleDetail(item) {
-      this.$router.push({
-        name: "historydetail",
-      });
-    },
-    handleHistory(item) {
-      this.$router.push({
-        name: "customerhistory",
-      });
-    },
-    handleEdit(item) {
-      this.$router.push({
-        name: "customeredit",
-      });
-    },
-
     F_storeName(v) {
       let that = this;
       for (let k in that.storeList) {

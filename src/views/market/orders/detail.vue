@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-02 11:53:55
+ * @LastEditTime: 2021-01-06 16:34:36
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -9,8 +9,8 @@
     <div class="el-card" style="height: auto">
       <div class="el-card__header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item  @click.native="clickGo">{{ $t("desk.order_orderManage") }}</el-breadcrumb-item>
-            <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
+          <el-breadcrumb-item @click.native="clickGo">{{ $t("desk.order_orderManage") }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
@@ -82,7 +82,19 @@
                             <el-row class="row">
                               <h3>
                                 {{ $t("desk.serve_basicInfo") }}
-<!--                                <el-button--><!--                                  style="--><!--                                    vertical-align: middle;--><!--                                    margin-left: 10px;--><!--                                    display: inline-block;--><!--                                  "--><!--                                  size="mini"--><!--                                  class="vm"--><!--                                  @click="yokeplateHandle"--><!--                                  v-if="detailData.inRoomList.length"--><!--                                >--><!--                                  {{ $t("desk.order_alRoom") }}--><!--                                </el-button>-->
+                                <!--                                <el-button-->
+                                <!--                                  style="-->
+                                <!--                                    vertical-align: middle;-->
+                                <!--                                    margin-left: 10px;-->
+                                <!--                                    display: inline-block;-->
+                                <!--                                  "-->
+                                <!--                                  size="mini"-->
+                                <!--                                  class="vm"-->
+                                <!--                                  @click="yokeplateHandle"-->
+                                <!--                                  v-if="detailData.inRoomList.length"-->
+                                <!--                                >-->
+                                <!--                                  {{ $t("desk.order_alRoom") }}-->
+                                <!--                                </el-button>-->
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">
@@ -147,6 +159,7 @@ export default {
   },
   data() {
     return {
+      itemGuestInfo: null,
       isOrder: true,
       loading: false,
       activeName: "first",
@@ -185,24 +198,30 @@ export default {
     });
   },
   methods: {
-      //点击顶部订单管理
-    clickGo(){
+    //点击顶部订单管理
+    clickGo() {
       console.log(this.$route.query.member);
-       if(this.$route.query.member){
-           this.$router.go(-1)
-       }else{
-            // :to="{ path: '/orders?type=order' }"
-            this.$router.replace({
-                path:'/orders',
-                query:{
-                   type:this.order,
-                }
-            })
-       }
+      if (this.$route.query.member) {
+        this.$router.replace({
+          name: "customerhistory",
+          query: {
+            item: this.itemGuestInfo,
+          },
+        });
+      } else {
+        // :to="{ path: '/orders?type=order' }"
+        this.$router.replace({
+          path: "/orders",
+          query: {
+            type: this.order,
+          },
+        });
+      }
     },
     getDetail() {
       console.log(111);
-      let id = this.$route.query.id;   //该id为checkinId
+      let id = this.$route.query.id; //该id为checkinId
+      this.itemGuestInfo = this.$route.query.item;
       this.$F.doRequest(
         this,
         "/pms/checkin/check_in_detail",
@@ -270,7 +289,7 @@ export default {
 
 <style lang="less" scoped>
 .detailTab {
-    border: 0;
+  border: 0;
 }
 .active {
   background: #e3eeff;
@@ -279,7 +298,7 @@ export default {
 }
 
 .bodyInfo {
-    height: 100%;
+  height: 100%;
   .customerInfo {
     background: #fff;
 

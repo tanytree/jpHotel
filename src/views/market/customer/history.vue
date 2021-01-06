@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-04 18:20:21
+ * @LastEditTime: 2021-01-06 16:05:52
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -109,8 +109,8 @@
       </div>
     </div>
     <!-- 详情弹窗 -->
-    <el-dialog top="0" :title="$t('commons.detail')" :visible.sync="setMemberFormVisible" class="setMemberForm" width="60%">
-      <el-form :model="detailForm" ref="setMemberForm" label-width="80px" size="mini">
+    <el-dialog top="0" :title="$t('commons.detail')" :visible.sync="setMemberFormVisible" class="setMemberForm" width="70%">
+      <el-form :model="detailForm" ref="setMemberForm" label-width="90px" size="mini">
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="6" class="col">
@@ -119,19 +119,19 @@
                   }}<span v-if="detailForm.pronunciation">【{{ detailForm.pronunciation }}】</span></template>
               </el-form-item>
             </el-col>
-            <el-col :span="6" class="col">
+            <el-col :span="8" class="col">
               <el-form-item :label="$t('desk.home_idCardNum') + ':'" class prop="idcard">
                 <template>({{ detailForm.idcardType | F_idcardType }}){{
                     detailForm.idcard
                   }}</template>
               </el-form-item>
             </el-col>
-            <el-col :span="6" class="col">
+            <el-col :span="5" class="col">
               <el-form-item :label="$t('desk.home_telNum1') + ':'" class prop="mobile">
                 <template>{{ detailForm.mobile }}</template>
               </el-form-item>
             </el-col>
-            <el-col :span="6" class="col">
+            <el-col :span="5" class="col">
               <el-form-item :label="$t('desk.home_telNum2') + ':'">
                 <template>{{ detailForm.mobile2 }}</template>
               </el-form-item>
@@ -218,14 +218,14 @@
             </el-col>
           </el-row>
           <el-row class="cell">
-            <el-col :span="8" class="col">
+            <el-col :span="24" class="col">
               <el-form-item label="memo1:">
                 <template>{{ detailForm.memo1 }}</template>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="cell">
-            <el-col :span="8" class="col">
+            <el-col :span="24" class="col">
               <el-form-item label="memo2:">
                 <template>{{ detailForm.memo2 }}</template>
               </el-form-item>
@@ -544,7 +544,6 @@ export default {
     },
     handleHistory(item) {
       console.log(item.idcard);
-
       this.$router.push({
         name: "customerhistory",
         query: {
