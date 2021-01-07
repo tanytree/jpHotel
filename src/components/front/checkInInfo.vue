@@ -1,11 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
-<<<<<<< Updated upstream
- * @LastEditTime: 2021-01-06 15:29:19
-=======
- * @LastEditTime: 2021-01-07 13:51:13
->>>>>>> Stashed changes
+ * @LastEditTime: 2021-01-07 14:19:05
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -29,13 +25,8 @@
             <el-col :span="6">{{ $t("desk.customer_region") + ": " + (checkinInfo.checkIn.region || "") }}</el-col>
           </el-row>
           <el-row>
-<<<<<<< Updated upstream
-            <el-col :span="6">{{ $t("desk.order_checkinDate") + ": " + (checkinInfo.checkIn.checkinTime  || '') }}</el-col>
-            <el-col :span="6">{{ $t("desk.order_departureTime") + ": " + ( checkinInfo.checkIn.checkoutTime || '') }}</el-col>
-=======
             <el-col :span="6">{{ $t("desk.order_checkinDateA") + ": " + checkinInfo.checkIn.checkinTime }}</el-col>
             <el-col :span="6">{{ $t("desk.order_departureTime") + ": " + checkinInfo.checkIn.checkoutTime }}</el-col>
->>>>>>> Stashed changes
             <el-col :span="6">{{ $t("desk.checkInDays") + ": " + (checkinInfo.checkIn.checkinDays || "") }}</el-col>
           </el-row>
         </div>
@@ -44,17 +35,12 @@
         <div class="infoTitle">{{$t('desk.home_bookContent')}}：</div>
         <div class="itemDetail">
           <el-row>
-<<<<<<< Updated upstream
-            <el-col :span="6">{{$t('desk.consumerTotal')}}：{{ checkinInfo.totalPrice  || '0'}}</el-col>
-            <el-col :span="6">{{$t('desk.payTotal')}}：{{ checkinInfo.payPrice  || '0' }}</el-col>
-=======
             <el-col :span="6">{{$t('desk.consumerTotal')}}：{{ checkinInfo.totalPrice }}</el-col>
             <el-col :span="6">{{$t('desk.payTotal')}}：{{ checkinInfo.payPrice }}</el-col>
           </el-row>
           <el-row>
             <el-col :span="18">{{$t('desk.customer_payType')}}：{{$t('desk.serve_cashA')}}（2000）；{{$t('commons.payType.2')}}（4000）；{{$t('desk.serve_thisCard')}}（1000）；{{$t('desk.book_other')}}（2000）
             </el-col>
->>>>>>> Stashed changes
           </el-row>
 <!--          <el-row>-->
 <!--            <el-col :span="18">{{$t('desk.customer_payType')}}：{{$t('desk.serve_cash')}}（2000）；{{$t('commons.payType.2')}}（4000）；{{$t('desk.serve_thisCard')}}（1000）；{{$t('desk.book_other')}}（2000）-->
@@ -101,8 +87,6 @@
 
         </template>
       </el-table-column>
-<<<<<<< Updated upstream
-=======
       <!-- <el-table-column :label="$t('desk.home_roomNum')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
@@ -110,7 +94,6 @@
           </div>
         </template>
       </el-table-column> -->
->>>>>>> Stashed changes
       <el-table-column :label="$t('desk.home_idCardNum')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">

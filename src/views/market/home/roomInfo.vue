@@ -1,11 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
-<<<<<<< Updated upstream
- * @LastEditTime: 2021-01-05 13:56:21
-=======
- * @LastEditTime: 2021-01-07 14:13:41
->>>>>>> Stashed changes
+ * @LastEditTime: 2021-01-07 14:16:49
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
