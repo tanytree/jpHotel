@@ -199,12 +199,15 @@ export default {
     mounted() {
         this.initForm();
         this.stores_list();
-        this.$F.commons.fetchMemberTypeList({ state: 1 }, (res) => {
+       this.getMemberTypeList();
+    },
+    methods: {
+      getMemberTypeList(){
+         this.$F.commons.fetchMemberTypeList({ state: 1 }, (res) => {
             this.smembertypeList = res.list;
             this.$forceUpdate();
         });
-    },
-    methods: {
+      },
         //点击客史
         handleHistory(item) {
             console.log(item);
@@ -279,6 +282,7 @@ export default {
                 pageSize: 10, //页数
                 storesNum: "",
             };
+            this.getMemberTypeList();
             this.getDataList();
         },
         /**获取表格数据 */

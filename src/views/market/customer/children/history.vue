@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-06 16:23:34
+ * @LastEditTime: 2021-01-07 16:48:11
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -165,7 +165,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="operCheckinType"
           :label="$t('desk.order_checkinWay')"
           show-overflow-tooltip
@@ -173,7 +173,7 @@
           <template slot-scope="{ row }">
             {{ F_operCheckinType(row.operCheckinType) }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop=""
           :label="$t('desk.home_roomNum')"

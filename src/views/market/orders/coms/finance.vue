@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-29 15:09:59
+ * @LastEditTime: 2021-01-07 17:14:27
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -181,8 +181,8 @@
     <!--开发票-->
 
     <!--退房结账-->
-    <checkoutTao ref="checkoutTao" :detailData = "detailData" :currentRoom="currentRoom" ></checkoutTao>
-    <!-- <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
+    <!-- <checkoutTao ref="checkoutTao" :detailData = "detailData" :currentRoom="currentRoom" ></checkoutTao> -->
+    <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
         <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -220,7 +220,7 @@
             <el-button @click="checkOutShow=false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
-    </el-dialog> -->
+    </el-dialog>
     <!--冲调-->
     <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
@@ -716,9 +716,9 @@ export default {
         },
           //点击退房结账按钮
         checkOutHandle() {
-            this.$refs.checkoutTao.resetVisibel()
-            // this.checkOutShow = true;
-            // this.consumeOperForm.consumePrice = this.detailData.totalPrice
+            // this.$refs.checkoutTao.resetVisibel()
+            this.checkOutShow = true;
+            this.consumeOperForm.consumePrice = this.detailData.totalPrice
         },
         // //开发票提交
         // openInvoiceSubmit(formName) {

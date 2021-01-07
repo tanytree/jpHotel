@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 15:14:12
+ * @LastEditTime: 2021-01-07 16:47:19
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -164,7 +164,7 @@
           <div v-if="row.operCheckinType==3">{{$t('desk.customer_venue')}}</div>
           </template>
           </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="operCheckinType"
           :label="$t('desk.order_checkinWay')"
           show-overflow-tooltip
@@ -174,7 +174,7 @@
            <div v-if="row.operCheckinType==2">{{$t('desk.order_clockLive')}}</div>
            <div v-if="row.operCheckinType==3">{{$t('desk.order_meetingLive')}}</div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop=""
           :label="$t('desk.home_roomNum')"

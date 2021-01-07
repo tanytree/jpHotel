@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-05 17:45:09
+ * @LastEditTime: 2021-01-07 15:43:04
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -553,7 +553,7 @@ export default {
       detailForm: {
         isGen:true,
         memberTypeId: "",
-        memberCard: "系统生成",
+        memberCard: "システム給与",
         idcardType: "",
         idcard: "",
         name: "",
@@ -777,7 +777,7 @@ export default {
     },
     handleChangeOther(value){
       if(value){
-        this.detailForm.memberCard = "系统生成";
+        this.detailForm.memberCard = this.$t('desk.customer_systemPro');
       }else{
          this.detailForm.memberCard = "";
       }

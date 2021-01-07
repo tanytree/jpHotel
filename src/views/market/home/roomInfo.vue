@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 14:16:49
+ * @LastEditTime: 2021-01-07 16:13:08
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -265,13 +265,13 @@ export default {
             if (this.currentRoom.checkIn && this.currentRoom.checkIn.operCheckinType) {
                 switch (this.currentRoom.checkIn.operCheckinType) {
                     case 1:
-                        return "普通入住";
+                        return this.$t('desk.order_ordinaryLive');
                         break;
                     case 2:
-                        return "时租房入住";
+                        return this.$t('desk.order_clockLive');
                         break;
                     case 3:
-                        return "会场";
+                        return this.$t('desk.order_meetingLive');
                         break;
                 }
             } else {
