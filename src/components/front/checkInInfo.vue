@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 11:55:23
+ * @LastEditTime: 2021-01-07 13:28:42
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -83,7 +83,7 @@
 
         </template>
       </el-table-column>
-      <el-table-column :label="$t('desk.home_roomNumAtype')" align="center">
+      <el-table-column :label="$t('desk.home_roomNum')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <span>{{ row.houseNum }} / {{ row.roomTypeName }} </span>

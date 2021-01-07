@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-06 11:43:09
+ * @LastEditTime: 2021-01-07 13:38:19
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -24,6 +24,8 @@ module.exports = {
   clickCheckin: 'チェックインをクリック',
   financialDetails: '会計明細',
   charge: '売掛',
+  chargeA: '部屋付',
+  order_checkoutA: "会計精算",
   chargeMoney: '売掛金額',
   chargeTotal: '挂账合計',
   enterAccountTime: '入金時間',
@@ -500,6 +502,7 @@ module.exports = {
   customer_constPrice: '合計金額 ',
   customer_editorAccount: '法人締め請求パッケージ編集',
   customer_accountingText: '会計内容',
+  customer_accountingTextA: '利用明細',
   customer_zhangName: '法人締め請求パッケージ名称',
   customer_dealWay: '会計処理（法人締め請求パッケージ別）',
   customer_richReason: '差引勘定理由',
@@ -610,6 +613,7 @@ module.exports = {
   home_window: '窓',
   home_roomRemark: '備考',
   home_putDirty: '清掃',
+  home_putDirtyA: '清掃指示',
   home_service: '故障',
   home_buyNet: '清掃済',
   home_stayOver: '連泊',
@@ -867,6 +871,7 @@ module.exports = {
   home_custormerDetail: '未翻译词条',
   home_cardAnumber: '未翻译词条',
   home_typeText: '未翻译词条',
+  home_liveInfo: '宿泊情報',
 
 
 

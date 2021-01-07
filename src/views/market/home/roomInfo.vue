@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 10:50:48
+ * @LastEditTime: 2021-01-07 13:31:36
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -28,9 +28,9 @@
             <!-- 基本信息 -->
             <el-tab-pane :label="$t('desk.serve_basicInfo')" v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2" name="first">
                 <div class="buttonBox">
-                    <el-button type="primary" size="small" plain @click="goRoomStatus">{{ this.currentRoom.roomStatus == 3 ? $t('desk.home_putDirty') : $t('desk.home_buyNet') }}</el-button>
-                    <el-button type="primary" size="small" plain @click="goFinance">{{$t('desk.customer_accountingText')}}</el-button>
-                    <el-button type="primary" @click="paymentVisible" size="small" plain v-if="this.currentRoom.checkInRoomType == 1">{{$t('desk.charge')}}</el-button>
+                    <el-button type="primary" size="small" plain @click="goRoomStatus">{{ this.currentRoom.roomStatus == 3 ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}</el-button>
+                    <el-button type="primary" size="small" plain @click="goFinance">{{$t('desk.customer_accountingTextA')}}</el-button>
+                    <el-button type="primary" @click="paymentVisible" size="small" plain v-if="this.currentRoom.checkInRoomType == 1">{{$t('desk.chargeA')}}</el-button>
                     <el-button type="primary" @click="checkoutRoom" size="small" plain v-if="this.currentRoom.checkInRoomType == 1">{{$t('desk.order_checkout')}}</el-button>
                 </div>
                 <div class="infoBox">
