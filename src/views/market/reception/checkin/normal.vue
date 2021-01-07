@@ -305,8 +305,7 @@
                                 <div class="row">
                                     <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>
                                     <div>
-                                        <!--                    <span>一人总价（含餐） {{ v.withMealPrice }}</span>-->
-                                        <span>一人价（纯住宿） {{ v.onePersonPrice }}</span>
+                                        <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                     </div>
                                 </div>
                             </div>

@@ -237,6 +237,8 @@
         >
           <template slot-scope="{ row }">
             {{ F_orderSource(row.orderSource) }}
+              <span v-if="row.orderSource == 5">-</span>
+              <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -463,6 +465,7 @@ export default {
   mixins: [myMixin],
   data() {
     return {
+        platformList: [],
       loading: false,
       noShowDiaShow: false,
       showDetail: false,
@@ -488,6 +491,14 @@ export default {
     this.initForm();
   },
   methods: {
+      checkPlatform(otaChannelId) {
+          console.log(this.platformList)
+          let array =  this.platformList.filter(item => {
+              return item.id == otaChannelId
+          }) || [{}]
+          return array[0].otaName;
+      },
+
     initForm() {
       this.searchForm = {
         operCheckinType: "",
@@ -509,7 +520,13 @@ export default {
         timeType:'',
       };
       this.realtime_room_statistics();
-      this.getDataList();
+
+      //加载渠道
+        this.$F.doRequest(this, "/pms/oat/oat_list", {}, (res) => {
+            this.platformList = res.oatList;
+            //加载数据
+            this.getDataList();
+        });
     },
     /**获取表格数据 */
     getDataList() {
@@ -542,6 +559,7 @@ export default {
                 })
                 this.tableData = res.resreveList;
                 this.listTotal = res.page.count;
+                this.$forceUpdate()
             }
         }
       );

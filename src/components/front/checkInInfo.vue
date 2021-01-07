@@ -39,7 +39,7 @@
             <el-col :span="6">{{$t('desk.payTotal')}}：{{ checkinInfo.payPrice  || '0' }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="18">{{$t('desk.customer_payType')}}：{{$t('desk.serve_cashA')}}（2000）；{{$t('commons.payType.2')}}（4000）；{{$t('desk.serve_thisCard')}}（1000）；{{$t('desk.book_other')}}（2000）
+            <el-col :span="18">{{$t('desk.customer_payType')}}：{{ F_payType(checkinInfo.checkIn.payType || '')}}
             </el-col>
           </el-row>
           <el-row>

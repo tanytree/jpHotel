@@ -70,74 +70,75 @@
             {{ checkinInfo.checkoutTime }}
           </div>
         </el-col>
-        <el-col :span="6">
-          <div>{{$t('desk.keepTime')}}：{{checkinInfo.keepTime}}</div>
-        </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
           <div>{{$t('desk.order_sourceType')}}：{{ checkGuestType(checkinInfo.guestType) }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_teamName')}}：{{ checkinInfo.teamName }}【{{checkinInfo.teamPronunciation}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_guideText')}}：{{ checkinInfo.guideName }}【{{checkinInfo.guidePronunciation}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_leaderText')}}：{{ checkinInfo.leaderName }}【{{checkinInfo.leaderPronunciation}}】</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_teamMoible')}}：{{ checkinInfo.teamMobile }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_teamAddress')}}：{{ checkinInfo.teamAdd3 }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactName')}}：{{ checkinInfo.contactName }}【{{checkinInfo.contactPinyin}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactPhone')}}：{{ checkinInfo.contactPhone }}</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactEmail')}}：{{ checkinInfo.contactEmail }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_travelName')}}：{{ checkinInfo.travelTeam }}【{{checkinInfo.travelPronunciation}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_travelAddress')}}：{{ checkinInfo.travelAdd3 }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactName')}}：{{ checkinInfo.travelContactName }}【{{checkinInfo.travelContactPinyin}}】</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactPhone')}}：{{ checkinInfo.travelContactPhone }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactEmail')}}：{{ checkinInfo.tarvelContactEmail }}</div>
         </el-col>
       </el-row>
     </el-row>
     <el-row>
-      <h4>{{ $t("desk.order_bookRoomType") }}</h4>
+      <h4>{{ $t('desk.reserveInfoDesc') }}</h4>
       <el-row>
-        <el-col :span="24" v-for="(item, key, index) of roomTypeList" :key="index">
-          <p>
-            {{ checkKey(key) }}（{{ item.length
-            }}{{ $t("manager.hk_space") }}）； {{ $t("desk.home_roomType") }}：
-            <el-button type="primary" size="mini" plain>{{ item[0].roomTypeName }}({{ item.length }})</el-button>
-          </p>
-        </el-col>
-        <!-- <el-col :span="24">
-                <p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button> </p>
-            </el-col> -->
+          <el-col :span="6">
+              <div>
+                  <span>{{$t('desk.book_bookProject')}}：</span>
+                  <span v-for="(item, key, index) of checkinInfo.reserveProjectList" :key="index">
+                      {{`${item.projectName} (${item.projectCount}) * ${item.price}  `}}
+                  </span>
+              </div>
+          </el-col>
+<!--        <el-col :span="24" v-for="(item, key) of inRoomList" :key="index">-->
+<!--          <p>-->
+<!--            {{ checkKey(key) }}（{{ item.length }}{{ $t("manager.hk_space") }}）； {{ $t("desk.home_roomType") }}：-->
+<!--            <el-button type="primary" size="mini" plain>{{ item[0].roomTypeName }}({{ item.length }})</el-button>-->
+<!--          </p>-->
+<!--        </el-col>-->
       </el-row>
     </el-row>
     <el-row>
@@ -146,30 +147,28 @@
         <el-col :span="8">
           <p>
             {{ $t("desk.order_outOrder") }}：{{
-              checkinInfo.thirdOrdernum
-                ? checkinInfo.thirdOrdernum
-                : $t("desk.order_noText")
+              checkinInfo.thirdOrdernum ? checkinInfo.thirdOrdernum : $t("desk.order_noText")
             }}
           </p>
         </el-col>
-        <el-col :span="8">
-          <p>
-            {{ $t("desk.order_salesman") }}：{{
-              currentSale.userName || $t("desk.order_noText")
-            }}
-          </p>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <p>
-            {{ $t("desk.orderMarkInfo") }}：{{
-              checkinInfo.remark || $t("desk.order_noText")
-            }}
-          </p>
-        </el-col>
+          <el-col :span="8">
+              <p>
+                  {{ $t("desk.customer_region") }}：{{
+                      checkinInfo.region
+                  }}
+              </p>
+          </el-col>
+          <el-col :span="8">
+              <p>
+                  {{ $t("desk.customer_payType") }}：{{ F_payType(checkinInfo.payType) }}
+              </p>
+          </el-col>
       </el-row>
     </el-row>
+      <el-row>
+          <h4>{{ $t("desk.orderMarkInfo") }}</h4>
+          <span>{{checkinInfo.remark}}</span>
+      </el-row>
     <!-- 上面是基本信息 -->
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="90%">
       <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
@@ -318,7 +317,7 @@
         }}</el-button>
       </span>
     </el-dialog>
-    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" />
+    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" :title="$t('desk.order_addRoom')"/>
     <!--    <checkTheDetails ref="checkTheDetails" @baseInfoChange="baseInfoChange" :checkinInfo="checkinInfo" :inRoomList="inRoomList" />-->
   </div>
 </template>
@@ -761,10 +760,10 @@ export default {
   }
 
   h4 {
-    margin: 0;
-    line-height: 40px;
+    margin: 10px 0;
+    line-height: 30px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
   }
   .el-row {
     line-height: 30px;

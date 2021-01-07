@@ -6,14 +6,16 @@
  -->
 <template>
 <div>
-    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="$t('desk.home_modityReserved')" width="80%">
+    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="title ? title : $t('desk.home_modityReserved')" width="80%">
 
         <el-row style="margin-bottom:60px" v-loading="loading">
             <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"
+                                            :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss"
+                                            value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -49,15 +51,17 @@
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
-                                                            <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" :label="$t('desk.home_describeText')" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
+                                                            <el-input-number @change="handleNumChange($event,v)" :min="0"
+                                                                             :max="v.reserveTotal" :label="$t('desk.home_describeText')"
+                                                                             size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
                                                         </div>
                                                     </el-col>
                                                 </el-row>
                                                 <el-row class="row">
-                                                    <el-col :span="14">
+                                                    <el-col :span="8">
                                                         <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>
                                                     </el-col>
-                                                    <el-col :span="10">
+                                                    <el-col :span="15">
                                                         <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                                     </el-col>
                                                 </el-row>
@@ -162,6 +166,7 @@ import myMixin from './rowRoomMixin';
 
 export default {
     mixins: [myMixin],
+    props: ['title'],
     data() {
         return {
             afterToday: {
@@ -184,7 +189,7 @@ export default {
                     }
                 }
             },
-            satrtTime: {
+            startTime: {
                 disabledDate: time => {
                     // if (this.checkInForm.checkoutTime) {
                     //     let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
@@ -381,9 +386,11 @@ export default {
             this.checkInForm.checkInId = checkInId
             this.checkInForm.checkInReserveId = checkInId
             this.getRoomsForm = {
-                changeType: 1,
+                changeType: 2,
                 bedCount: '',
-                roomType: this.operCheckinType == 'b3' ? 2 : 1
+                roomType: this.operCheckinType == 'b3' ? 2 : 1,
+                checkinTime: this.checkInForm.checkinTime,
+                checkoutTime: this.checkInForm.checkoutTime,
             };
             this.getDataList();
         },
@@ -587,12 +594,17 @@ export default {
             }
             return false
         },
-        satrtTimeChange(e) {
-            let day = 0
-            if (this.checkInForm.checkoutTime != '') {
-                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
-                this.checkInForm.checkinDays = day
+        startTimeChange(e) {
+            let date = new Date(e);
+            if (e > this.checkInForm.checkoutTime || date.Format("yyyy-MM-dd") == new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")) {
+                date.setDate(date.getDate() + 1);
+                this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
             }
+            this.checkInForm.checkinDays = getDaysBetween(
+                new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
+                new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")
+            );
+            console.log(this.checkInForm.checkinDays)
         },
         endTimeChange(e) {
             let day = 0

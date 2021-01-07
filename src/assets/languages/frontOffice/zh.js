@@ -5,7 +5,7 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
-
+    reserveContent: '预定内容',
   enterpriseName: '单位名称',
   enterpriseMobile: '单位号码',
   enterpriseAddress: '单位地址',
@@ -57,7 +57,7 @@ module.exports = {
     "13": '挂账',
     "14": '餐吧消费',
     "15":'温泉税',
-    "16":'住宿税',    
+    "16":'住宿税',
     "100": '其他'
   },
   //订单类型

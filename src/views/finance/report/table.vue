@@ -276,8 +276,8 @@ export default {
       );
     },
     showReport(url) {
-      // var url = "http://39.104.116.153:8887/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
-      //               http://39.104.116.153:8887/report/fs/1001/20201203/%E6%97%A5%E8%A8%88%E8%A1%A8201203.xlsx
+      // var url = "https://pms-api-dev.sgi-smacha.tokyo/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
+      //               https://pms-api-dev.sgi-smacha.tokyo/report/fs/1001/20201203/%E6%97%A5%E8%A8%88%E8%A1%A8201203.xlsx
       //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
       axios
         .get(url, { responseType: "arraybuffer" })

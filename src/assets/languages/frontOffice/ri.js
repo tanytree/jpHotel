@@ -5,6 +5,7 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
+    reserveContent: '预定内容',
   englishM:'フリーメモ',
     enterpriseName: '会社名',
     enterpriseMobile: '会社電話番号',
@@ -57,7 +58,7 @@ module.exports = {
         "13": '売掛',
         "14": '餐吧消费',
         "15":'温泉税',
-        "16":'住宿税', 
+        "16":'住宿税',
         "100": 'その他'
     },
     //订单类型

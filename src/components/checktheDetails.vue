@@ -17,7 +17,7 @@
             </div>
             <div class="infoBlock" v-for="(roomInfo, topIndex) of inRoomList" :key="topIndex">
                 <div class="roomItem">{{ roomInfo.room.houseNum }}/{{ roomInfo.room.roomTypeName }}</div>
-                <el-form ref="form" :model="form" label-width="75px" inline>
+                <el-form ref="form" :model="form" label-width="100px" inline>
                     <el-row>
                         <el-col :span="6">
                             <el-form-item :label="$t('manager.hk_livePrice') + ':'">
@@ -114,6 +114,7 @@
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.editor_asideBreakfast')+ ':'">
                                 <el-select v-model="roomInfo.headerObj.attachMealId" size="small" style="width: 200px">
+                                    <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -121,6 +122,7 @@
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.editor_asideDinner')+ ':'">
                                 <el-select v-model="roomInfo.headerObj.attachMealIdDinner" size="small" style="width: 200px">
+                                    <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -165,6 +167,7 @@
                     <el-table-column align="center" :label="$t('desk.editor_asideBreakfast')">
                         <template slot-scope="{ row }">
                             <el-select v-model="row.attachMealId" style="width:100%" size="small">
+                                <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                 <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                             </el-select>
                         </template>
@@ -172,6 +175,7 @@
                     <el-table-column align="center" :label="$t('desk.editor_asideDinner')">
                         <template slot-scope="{ row }">
                             <el-select v-model="row.attachMealIdDinner" style="width:100%" size="small">
+                                <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                 <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                             </el-select>
                         </template>
