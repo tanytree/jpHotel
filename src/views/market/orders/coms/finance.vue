@@ -57,7 +57,11 @@
         </el-table-column>
 <!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
+            <template slot-scope="{row}">
+                <span :style="row.priceType == 10 ? 'color:#3a8ee6' : '' ">{{row.remark}}</span>
+            </template>
+        </el-table-column>
         <el-table-column :label="$t('commons.operating')">
             <template slot-scope="{row}">
                 <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
@@ -81,7 +85,7 @@
 
             <el-form-item :label="$t('desk.order_selectPayWay')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
                 <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
+                    <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio>
                 </el-radio-group>
             </el-form-item>
 
