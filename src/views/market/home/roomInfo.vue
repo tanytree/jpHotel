@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 13:31:36
+ * @LastEditTime: 2021-01-05 13:56:21
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -10,28 +10,25 @@
         :visible.sync="hosteldis"
         width="80%"
         :title=" `${currentRoom.houseNum}` + '  ' + `${ currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : '' }` + `${currentRoom.checkIn ? '-' : ''}` +
-      checkTitleEnd()
-    "
-    >
+      checkTitleEnd()">
         <!-- 查看预订信息dialog -->
         <el-dialog top="0" width="70%" :title="$t('desk.order_lookOrderInfo')" :visible.sync="lookBookVisible" append-to-body>
             <div class="infoBox">
                 <!--            房间信息展示  包含订单信息 入住人同来宾客-->
                 <checkInInfo ref="checkInInfo" :orderInfo="orderInfo" showOrderInfo="true"></checkInInfo>
             </div>
-
             <div slot="footer" class="dialog-footer" style="text-align: center">
                 <el-button type="primary" @click="lookBookVisible = false">{{$t('commons.close')}}</el-button>
             </div>
         </el-dialog>
         <el-tabs type="border-card" v-model="activeName">
             <!-- 基本信息 -->
-            <el-tab-pane :label="$t('desk.serve_basicInfo')" v-if=" currentRoom.checkInRoomType == 1 || currentRoom.checkInRoomType == 2" name="first">
+            <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
                 <div class="buttonBox">
                     <el-button type="primary" size="small" plain @click="goRoomStatus">{{ this.currentRoom.roomStatus == 3 ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}</el-button>
-                    <el-button type="primary" size="small" plain @click="goFinance">{{$t('desk.customer_accountingTextA')}}</el-button>
-                    <el-button type="primary" @click="paymentVisible" size="small" plain v-if="this.currentRoom.checkInRoomType == 1">{{$t('desk.chargeA')}}</el-button>
-                    <el-button type="primary" @click="checkoutRoom" size="small" plain v-if="this.currentRoom.checkInRoomType == 1">{{$t('desk.order_checkout')}}</el-button>
+                    <el-button type="primary" size="small" plain @click="goFinance" :disabled="this.currentRoom.checkInRoomType != 1 && this.currentRoom.checkInRoomType != 2">{{$t('desk.customer_accountingTextA')}}</el-button>
+                    <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.chargeA')}}</el-button>
+                    <el-button type="primary" @click="checkoutRoom" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.order_checkout')}}</el-button>
                 </div>
                 <div class="infoBox">
                     <!--            入住人信息展示-->
@@ -98,7 +95,7 @@ export default {
             inputMessage: false,
             nowDateString: '',
             orderInfo: {}, //需要展示订单的信息
-            activeName: '',
+            activeName: 'first',
 
         };
     },
@@ -197,7 +194,6 @@ export default {
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 21);
             this.currentRoom = currentRoom;
-            this.activeName = (this.currentRoom.checkInRoomType == 1 || this.currentRoom.checkInRoomType == 2) ? 'first' : 'second';
             this.initRoomPlan();
             this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
             if (this.currentRoom.checkInRoomType == 1) {   //订单详情
@@ -269,13 +265,13 @@ export default {
             if (this.currentRoom.checkIn && this.currentRoom.checkIn.operCheckinType) {
                 switch (this.currentRoom.checkIn.operCheckinType) {
                     case 1:
-                        return this.$t('desk.order_ordinaryLive');
+                        return "普通入住";
                         break;
                     case 2:
-                        return this.$t('desk.order_clockLive');
+                        return "时租房入住";
                         break;
                     case 3:
-                        return this.$t('desk.order_meetingLive');
+                        return "会场";
                         break;
                 }
             } else {

@@ -25,7 +25,10 @@
                     <div class="tag-btm">
                         <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
                             <el-checkbox v-for="(item, index) in $t('commons.roomStatus')" :key="index" :label="item.value">
-                                <el-tag :type="item.type" effect="plain" size="mini">
+                                <el-tag v-if="item.value == 6" style="color: #00B1F2" effect="plain" size="mini">
+                                    <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
+                                </el-tag>
+                                <el-tag v-else :type="item.type" effect="plain" size="mini">
                                     <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
                                 </el-tag>
                             </el-checkbox>
@@ -48,7 +51,7 @@
                         <el-checkbox-group v-model="searchForm.roomTypeId" @change="handleChange">
                             <el-checkbox class="roomType" v-for="item of roomTypeList" :key="item.roomTypeId" :label="item.roomTypeId">
                                 {{ item.houseName ? item.houseName : $t("desk.home_unknown") }}
-                                <span class="total">{{ item.reserveCount }}/{{ item.total }}</span>
+                                <span class="total">{{ item.total - item.reserveCount }}/{{ item.total }}</span>
                             </el-checkbox>
                         </el-checkbox-group>
                     </div>

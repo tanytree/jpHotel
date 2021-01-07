@@ -1,18 +1,18 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 13:28:42
+ * @LastEditTime: 2021-01-06 15:29:19
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
   <div>
     <div class="item-info" v-if="showOrderInfo">
-      <div class="public" v-if=" checkinInfo.checkInRoomType == 1 || checkinInfo.checkInRoomType == 2">
+      <div class="public">
         <div class="itemDetail">
           <div class="infoTitle">{{$t('frontOffice.checkInfoDesc')}}：</div>
           <el-row>
             <!--                        订单号-->
-            <el-col :span="6">{{ $t("desk.book_orderNum") + ": " + (checkinInfo.checkIn.reserveOrderNum || checkinInfo.checkIn.orderNum) }}</el-col>
+            <el-col :span="6">{{ $t("desk.book_orderNum") + ": " + (checkinInfo.checkIn.reserveOrderNum || checkinInfo.checkIn.orderNum || '') }}</el-col>
             <el-col :span="6">
               <!--                            来源-->
               <span>{{ $t("desk.book_orderSoutce") + ": " + F_orderSource(checkinInfo.checkIn.orderSource) }}</span>
@@ -25,27 +25,27 @@
             <el-col :span="6">{{ $t("desk.customer_region") + ": " + (checkinInfo.checkIn.region || "") }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">{{ $t("desk.order_checkinDate") + ": " + checkinInfo.checkIn.checkinTime }}</el-col>
-            <el-col :span="6">{{ $t("desk.order_departureTime") + ": " + checkinInfo.checkIn.checkoutTime }}</el-col>
+            <el-col :span="6">{{ $t("desk.order_checkinDate") + ": " + (checkinInfo.checkIn.checkinTime  || '') }}</el-col>
+            <el-col :span="6">{{ $t("desk.order_departureTime") + ": " + ( checkinInfo.checkIn.checkoutTime || '') }}</el-col>
             <el-col :span="6">{{ $t("desk.checkInDays") + ": " + (checkinInfo.checkIn.checkinDays || "") }}</el-col>
           </el-row>
         </div>
       </div>
-      <div class="public otherStyle" v-if=" checkinInfo.checkInRoomType == 1 || checkinInfo.checkInRoomType == 2">
+      <div class="public otherStyle">
         <div class="infoTitle">{{$t('desk.home_bookContent')}}：</div>
         <div class="itemDetail">
           <el-row>
-            <el-col :span="6">{{$t('desk.consumerTotal')}}：{{ checkinInfo.totalPrice }}</el-col>
-            <el-col :span="6">{{$t('desk.payTotal')}}：{{ checkinInfo.payPrice }}</el-col>
+            <el-col :span="6">{{$t('desk.consumerTotal')}}：{{ checkinInfo.totalPrice  || '0'}}</el-col>
+            <el-col :span="6">{{$t('desk.payTotal')}}：{{ checkinInfo.payPrice  || '0' }}</el-col>
           </el-row>
-          <el-row>
-            <el-col :span="18">{{$t('desk.customer_payType')}}：{{$t('desk.serve_cash')}}（2000）；{{$t('commons.payType.2')}}（4000）；{{$t('desk.serve_thisCard')}}（1000）；{{$t('desk.book_other')}}（2000）
-            </el-col>
-          </el-row>
+<!--          <el-row>-->
+<!--            <el-col :span="18">{{$t('desk.customer_payType')}}：{{$t('desk.serve_cash')}}（2000）；{{$t('commons.payType.2')}}（4000）；{{$t('desk.serve_thisCard')}}（1000）；{{$t('desk.book_other')}}（2000）-->
+<!--            </el-col>-->
+<!--          </el-row>-->
           <el-row>
             <el-col :span="6">{{
-              `${$t("desk.reservePersonDesc")}: ${checkinInfo.checkIn.name}【${
-                checkinInfo.checkIn.pronunciation
+              `${$t("desk.reservePersonDesc")}: ${checkinInfo.checkIn.name  || ''}【${
+                checkinInfo.checkIn.pronunciation  || ''
               }】`
             }}</el-col>
             <el-col :span="8">{{$t('desk.book_bookPeoPhone')}}：({{$t('desk.editor_hand')}}){{
@@ -78,22 +78,9 @@
             </span>
           </div>
           <!-- <div v-if="$index < 3">{{ row.name }}</div> -->
-          <div v-if="$index ==checkinInfo.inRoomList.length-1">{{$t('desk.home_note')}}</div>
+          <div v-if="$index ==checkinInfo.inRoomList.length-1">备注</div>
           <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1">留言</div> -->
 
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('desk.home_roomNum')" align="center">
-        <template slot-scope="{ row, $index }">
-          <div v-if="$index<checkinInfo.inRoomList.length-1">
-            <span>{{ row.houseNum }} / {{ row.roomTypeName }} </span>
-          </div>
-          <div v-if="$index ==checkinInfo.inRoomList.length-1" style="text-align: left;">{{ checkinInfo.remark }}</div>
-          <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1" class="messageBox">
-            <div v-if="!inputMessage">{{ checkinInfo.remark }}</div>
-            <el-input v-model="checkinInfo.remark" v-if="inputMessage" placeholder="请输入内容">{{ row.remark }}</el-input>
-            <el-button type="text" class="saveAedit" @click="inputMessage=!inputMessage">{{ inputMessage ? "保存" : "修改" }}</el-button>
-          </div> -->
         </template>
       </el-table-column>
       <el-table-column :label="$t('desk.home_idCardNum')" align="center">
@@ -268,89 +255,88 @@ export default {
     };
   },
 
-  mounted() {
-    // console.log(this.checkinInfo.inRoomList);
-  },
-  methods: {
-    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex == this.checkinInfo.inRoomList.length - 1) {
-        if (columnIndex > 0) {
-          return {
-            rowspan: 1,
-            colspan: 7,
-          };
-        } else {
-          return {
-            rowspan: 1,
-            colspan: 1,
-          };
-        }
-      }
-      
+    mounted() {
+        // console.log(this.checkinInfo.inRoomList);
     },
+    methods: {
+        arraySpanMethod({row, column, rowIndex, columnIndex}) {
+            if (rowIndex == this.checkinInfo.inRoomList.length - 1) {
+                if (columnIndex > 0) {
+                    return {
+                        rowspan: 1,
+                        colspan: 7,
+                    };
+                } else {
+                    return {
+                        rowspan: 1,
+                        colspan: 1,
+                    };
+                }
+            }
 
-    customerDetail(row) {
-      this.currentCustomer = {
-        headerObj: {
-          personList: [],
         },
-      };
-      if (row.headerObj) {
-        this.$F.merge(this.currentCustomer, row);
-        this.currentCustomer.personList = row.personList || [];
-        this.currentCustomer.headerObj.personList = row.personList || [];
-        this.currentCustomerVisible = true;
-        console.log(JSON.parse(JSON.stringify(this.currentCustomer)));
-        this.$forceUpdate();
-      }
-    },
 
-    handleData(orderInfo) {
-      this.checkinInfo = this.$F.deepClone(orderInfo);
-      console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
-      //首页当前房间会传过来
-      if (
-        this.currentRoom &&
-        this.checkinInfo.inRoomList &&
-        this.checkinInfo.inRoomList.length > 0
-      ) {
-        this.checkinInfo.inRoomList =
-          this.checkinInfo.inRoomList.filter((item) => {
-            return (
-              item.roomId == (this.currentRoom.id || this.currentRoom.roomId)
-            );
-          }) || [];
-      }
-      if (
-        this.checkinInfo.inRoomList &&
-        this.checkinInfo.inRoomList.length > 0
-      ) {
-        this.checkinInfo.inRoomList.forEach((item) => {
-          if (item.personList && item.personList.length > 0) {
-            item.personList.forEach((person, index) => {
-              if (person.personType == 2) {
-                item.headerObj = person; //主入住人
-                item.personList.splice(index, 1);
-              }
-            });
-          } else {
-            item.personList = [];
-          }
-        });
-      }
-      if (this.checkinInfo.inRoomList.length > 0) {
-        let blankObj = {};
-        this.checkinInfo.inRoomList.push(blankObj);
-      }
-      this.$forceUpdate();
-    },
+        customerDetail(row) {
+            this.currentCustomer = {
+                headerObj: {
+                    personList: [],
+                },
+            };
+            if (row.headerObj) {
+                this.$F.merge(this.currentCustomer, row);
+                this.currentCustomer.personList = row.personList || [];
+                this.currentCustomer.headerObj.personList = row.personList || [];
+                this.currentCustomerVisible = true;
+                console.log(JSON.parse(JSON.stringify(this.currentCustomer)));
+                this.$forceUpdate();
+            }
+        },
 
-    init(type, checkinInfo, currentRoom) {
-      this.type = type;
-      this.currentRoom = currentRoom;
-      this.handleData(checkinInfo);
+        handleData() {
+
+            //首页当前房间会传过来
+            if (this.currentRoom && this.checkinInfo.inRoomList && this.checkinInfo.inRoomList.length > 0) {
+                this.checkinInfo.inRoomList =
+                    this.checkinInfo.inRoomList.filter((item) => {
+                        return (
+                            item.roomId == (this.currentRoom.id || this.currentRoom.roomId)
+                        );
+                    }) || [];
+            }
+            if (this.checkinInfo.inRoomList && this.checkinInfo.inRoomList.length > 0) {
+                this.checkinInfo.inRoomList.forEach((item) => {
+                    if (item.personList && item.personList.length > 0) {
+                        item.personList.forEach((person, index) => {
+                            if (person.personType == 2) {
+                                item.headerObj = person; //主入住人
+                                item.personList.splice(index, 1);
+                            }
+                        });
+                    } else {
+                        item.personList = [];
+                    }
+                });
+            }
+            if (this.checkinInfo.inRoomList.length > 0) {
+                let blankObj = {};
+                this.checkinInfo.inRoomList.push(blankObj);
+            }
+            this.$forceUpdate();
+        },
+
+        init(type, checkinInfo, currentRoom) {
+            this.type = type;
+            this.currentRoom = currentRoom;
+            this.$F.merge(checkinInfo, {
+                checkIn: {},
+                inRoomList: [],
+            })
+            this.checkinInfo = this.$F.deepClone(checkinInfo);
+            this.checkinInfo.inRoomList = this.checkinInfo.inRoomList || [];
+            console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
+            this.handleData();
+        },
     },
-  },
 };
 </script>
 

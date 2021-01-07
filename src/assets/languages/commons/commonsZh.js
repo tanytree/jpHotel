@@ -138,7 +138,7 @@ module.exports = {
         name: '维修',
         value: '5'
     }, {
-        type: 'info',
+        type: '',
         name: '未到',
         value: '6'
     }],
