@@ -85,8 +85,8 @@
           show-overflow-tooltip
         >
         <template slot-scope="{row}">
-                <div v-if="row.contactPhone">(手){{row.contactPhone}}</div>
-                <div v-if="row.mobile">(单){{row.mobile}}</div>
+                <div v-if="row.contactPhone">({{$t('desk.editor_hand')}}){{row.contactPhone}}</div>
+                <div v-if="row.mobile">({{$t('desk.editor_only')}}){{row.mobile}}</div>
         </template>
         </el-table-column>
         <el-table-column

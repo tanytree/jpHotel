@@ -295,11 +295,11 @@ export default {
   methods: {
     handleShowWeeks(value) {
       if (value) {
-        if (value.length == 7) return "每天";
+        if (value.length == 7) return this.$t('desk.add_everyDay');
         if (value == [1, 2, 3, 4, 5]);
-        return "工作日";
+        return this.$t('desk.add_workDay');
         if (value == [6, 7]);
-        return "休息日";
+        return this.$t('desk.add_restDay');
         let descs = this.$t("commons.weeks");
         var array = [];
         for (let i = 0; i < value.length; i++) {
@@ -433,16 +433,16 @@ export default {
         (res) => {
           switch (res.discounts) {
             case "1":
-              res.discounts_name = "向上取整";
+              res.discounts_name = this.$t('manager.ps_upword');
               break;
             case "2":
-              res.discounts_name = "向下取整";
+              res.discounts_name = this.$t('manager.ps_down');
               break;
             case "3":
-              res.discounts_name = "四舍五入(取整)";
+              res.discounts_name = this.$t('manager.ps_fourAndFive');
               break;
             case "4":
-              res.discounts_name = "保持不变";
+              res.discounts_name =  this.$t('manager.ps_keep');
               break;
           }
 

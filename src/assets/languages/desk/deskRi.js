@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 13:43:14
+ * @LastEditTime: 2021-01-07 14:34:23
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -876,6 +876,10 @@ module.exports = {
   book_accountWay: '未翻译词条',
   book_chooseAway: '未翻译词条',
   book_accountSuccess: '未翻译词条',
+  home_allLiveWay: '宿泊者/会社名称/団体名称',
+  add_everyDay: '未翻译词条',
+  add_workDay: '未翻译词条',
+  add_restDay: '未翻译词条',
 
 
 

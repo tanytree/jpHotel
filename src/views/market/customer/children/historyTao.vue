@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-14 17:04:15
+ * @LastEditTime: 2021-01-07 15:14:12
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -160,8 +160,8 @@
           show-overflow-tooltip
         >
         <template slot-scope="{row}">
-          <div v-if="row.operCheckinType==1||2">客房</div>
-          <div v-if="row.operCheckinType==3">会场</div>
+          <div v-if="row.operCheckinType==1||2">{{$t('desk.customer_guestRoom')}}</div>
+          <div v-if="row.operCheckinType==3">{{$t('desk.customer_venue')}}</div>
           </template>
           </el-table-column>
         <el-table-column
@@ -170,9 +170,9 @@
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
-           <div v-if="row.operCheckinType==1">普通入住</div>
-           <div v-if="row.operCheckinType==2">时租房入住</div>
-           <div v-if="row.operCheckinType==3">会场</div>
+           <div v-if="row.operCheckinType==1">{{$t('desk.order_ordinaryLive')}}</div>
+           <div v-if="row.operCheckinType==2">{{$t('desk.order_clockLive')}}</div>
+           <div v-if="row.operCheckinType==3">{{$t('desk.order_meetingLive')}}</div>
           </template>
         </el-table-column>
         <el-table-column
