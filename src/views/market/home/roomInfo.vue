@@ -50,7 +50,7 @@
                             <span>{{date.week}}</span>
                         </div>
 
-                        <div class="riBottom" @click="lookRoomClick(date)" v-if="date.reserveObj">
+                        <div class="riBottom" @click="lookRoomClick(date)" v-if="date.reserveObj" style="background: #A3E5FD">
                             <span>{{date.reserveObj.name}}</span>
                             <span v-if="date.reserveObj.pronunciation">【{{date.reserveObj.pronunciation}}】</span>
                             <span>{{$t('commons.guestType')[date.reserveObj.guestType + '']}}</span>

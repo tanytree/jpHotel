@@ -211,16 +211,16 @@
                         @change="endTimeChange"
                     ></el-date-picker>
                 </el-form-item>
-                <el-form-item :label="$t('desk.keepTime')" prop="keepTime">
-                    <el-date-picker
-                        v-model="checkInForm.keepTime"
-                        type="datetime"
-                        format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        :picker-options="keepTime"
-                        @change="endTimeChange"
-                    ></el-date-picker>
-                </el-form-item>
+<!--                <el-form-item :label="$t('desk.keepTime')" prop="keepTime">-->
+<!--                    <el-date-picker-->
+<!--                        v-model="checkInForm.keepTime"-->
+<!--                        type="datetime"-->
+<!--                        format="yyyy-MM-dd HH:mm:ss"-->
+<!--                        value-format="yyyy-MM-dd HH:mm:ss"-->
+<!--                        :picker-options="keepTime"-->
+<!--                        @change="endTimeChange"-->
+<!--                    ></el-date-picker>-->
+<!--                </el-form-item>-->
 
                 <el-form-item :label="$t('desk.order_sourceType')" prop="guestType" label-width="140px">
                     <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
@@ -778,32 +778,32 @@ export default {
                     }
                 },
             },
-            keepTime: {
-                disabledDate: (time) => {
-                    if (this.checkInForm.checkinTime) {
-                        let timeStr = new Date(
-                            new Date(this.checkInForm.checkinTime)
-                                .Format("yyyy-MM-dd")
-                                .replace(/-/g, "/")
-                        );
-                        if (this.operCheckinType == "b2" || this.operCheckinType == "a2") {
-                            return timeStr.getTime() > timeStr - 8.64e6
-                        }
-                        let date = new Date(time.Format("yyyy-MM-dd"));
-                        date.setDate(date.getDate() + 1);
-                        return (
-                            date - 8.64e7 < timeStr
-                        );
-                    } else if (this.checkInForm.checkinTime == "") {
-                        return (
-                            new Date(time.Format("yyyy-MM-dd")).getTime() <
-                            Date.now() - 8.64e7
-                        ); //如果没有后面的-8.64e7就是不可以选择今天
-                    } else {
-                        return "";
-                    }
-                },
-            },
+            // keepTime: {
+            //     disabledDate: (time) => {
+            //         if (this.checkInForm.checkinTime) {
+            //             let timeStr = new Date(
+            //                 new Date(this.checkInForm.checkinTime)
+            //                     .Format("yyyy-MM-dd")
+            //                     .replace(/-/g, "/")
+            //             );
+            //             if (this.operCheckinType == "b2" || this.operCheckinType == "a2") {
+            //                 return timeStr.getTime() > timeStr - 8.64e6
+            //             }
+            //             let date = new Date(time.Format("yyyy-MM-dd"));
+            //             date.setDate(date.getDate() + 1);
+            //             return (
+            //                 date - 8.64e7 < timeStr
+            //             );
+            //         } else if (this.checkInForm.checkinTime == "") {
+            //             return (
+            //                 new Date(time.Format("yyyy-MM-dd")).getTime() <
+            //                 Date.now() - 8.64e7
+            //             ); //如果没有后面的-8.64e7就是不可以选择今天
+            //         } else {
+            //             return "";
+            //         }
+            //     },
+            // },
             startTime: {
                 disabledDate: (time) => {
                     // if (this.checkInForm.checkoutTime != "" && this.checkInForm.checkoutTime) {
@@ -1072,7 +1072,7 @@ export default {
                 memberCard: "", // 会员卡号  String选填
                 checkinTime: "", // 预抵时间/到店时间 yyyy-MM-dd hh:mm:ss格式  String必填
                 checkoutTime: "", //预离时间 yyyy-MM-dd hh:mm:ss格式  String必填
-                keepTime: "", //保留时间 yyyy-MM-dd hh:mm:ss格式  String必填
+                //keepTime: "", //保留时间 yyyy-MM-dd hh:mm:ss格式  String必填
                 checkinDays: 1, //入住天数  int必填
                 salesId: "", //销售员id  String选填
                 thirdOrdernum: "", //外部订单号  String选填
@@ -1660,8 +1660,8 @@ export default {
                     //     }
                     // }
                 }
-                this.checkInForm.keepTime =
-                    new Date().Format("yyyy-MM-dd") + " 23:59:00";
+                // this.checkInForm.keepTime =
+                //     new Date().Format("yyyy-MM-dd") + " 23:59:00";
             }
             if (this.operCheckinType == "a1" || this.operCheckinType == "a2") {
                 this.checkInForm.checkinTime = new Date().Format("yyyy-MM-dd HH:mm:ss");
@@ -1707,9 +1707,9 @@ export default {
             } else if (this.operCheckinType == 'b2') {
                 this.checkInForm.checkoutTime = new Date(e).Format("yyyy-MM-dd") + " 22:00:00";
             }
-            let date = new Date(e);
-            date.setHours(date.getHours() + 2);  //预抵时间修改 保留时间跟着修改
-            this.checkInForm.keepTime = date.Format("yyyy-MM-dd HH:mm:ss");
+            // let date = new Date(e);
+            // date.setHours(date.getHours() + 2);  //预抵时间修改 保留时间跟着修改
+            // this.checkInForm.keepTime = date.Format("yyyy-MM-dd HH:mm:ss");
         },
         endTimeChange(e) {
             let day = 0;
