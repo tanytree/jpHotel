@@ -13,13 +13,13 @@
                                     <el-input v-model="searchform.name" :placeholder="$t('manager.grsl_goodsName')"></el-input>
                                 </el-form-item>
                                  <el-form-item :label="$t('shop.categoryType')">
-                                     <el-select  v-model="searchform.categoryType" placeholder="请选择" @change="geProductType">
+                                     <el-select  v-model="searchform.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
                                          <el-option :label="$t('shop.goods')" value="1"></el-option>
                                          <el-option :label="$t('shop.serve')" value="2"></el-option>
                                       </el-select>
                                  </el-form-item>
                                  <el-form-item :label="$t('manager.grsl_goodsType')+':'">
-                                     <el-select  v-model="searchform.categoryId" placeholder="请选择">
+                                     <el-select  v-model="searchform.categoryId" :placeholder="$t('commons.placeChoose')">
                                         <el-option  v-for="item in category" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                      </el-select>
                                  </el-form-item>
@@ -294,7 +294,7 @@ export default {
 
     //
     geProductType(){
-        // this.searchform.categoryType = ''
+        this.searchform.categoryId = ''
         // console.log(v)
         let params = {
             categoryType:this.searchform.categoryType,
