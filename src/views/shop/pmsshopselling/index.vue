@@ -178,7 +178,7 @@ export default {
             categoryId:'',
             pageIndex:1,
             pageSize:20,
-            categoryType:1,
+            categoryType:'',
             sellId:''
         },
         category:[],
@@ -264,10 +264,10 @@ export default {
   methods: {
     intForm(){
         this.searchform.name = ''
-        this.searchform.categoryType = '1'
+        this.searchform.categoryType = ''
         this.searchform.categoryId = ''
         this.getDataList();
-        this.geProductType('1');
+        // this.geProductType();
     },
     //获取售卖点列表
     getDataList(){
@@ -293,11 +293,11 @@ export default {
     },
 
     //
-    geProductType(v){
-        this.searchform.categoryType = v
-        console.log(v)
+    geProductType(){
+        // this.searchform.categoryType = ''
+        // console.log(v)
         let params = {
-            categoryType:v,
+            categoryType:this.searchform.categoryType,
             categoryId:this.searchform.categoryId
         }
         params.userId = this.userId
