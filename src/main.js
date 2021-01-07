@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-30 16:37:15
+ * @LastEditTime: 2021-01-07 09:56:35
  * @FilePath: \jiudian\src\main.js
  */
 import Vue from 'vue'
@@ -19,7 +19,7 @@ import utils from '@/utils/publicJS';
 import Video from 'video.js'
 import Distpicker from 'v-distpicker'
 import filters from '@/utils/filter.js'
-import index from '@/utils/index.js' // h
+import * as index from '@/utils/index.js' // h
 import enLocale from 'element-ui/lib/locale/lang/zh-CN'
 import jaLocale from 'element-ui/lib/locale/lang/ja'
 

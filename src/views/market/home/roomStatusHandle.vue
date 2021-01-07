@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 14:46:47
+ * @LastEditTime: 2021-01-07 10:19:49
  * @FilePath: \jiudian\src\views\market\home\roomStatusHandle.vue
  -->
 <template>
@@ -50,7 +50,7 @@
                             <el-form-item :key="index" v-if="item.roomList&&item.roomList.length">
                                 <el-row style="background:#D9DDE2;padding:0 10px">
                                     <el-form-item>
-                                        <el-checkbox :indeterminate="item.isIndeterminate" v-model="item.checkAll" @change="handleCheckAllChange($event,item)">{{item.building?item.building.name:''}} <span>{{item.floor}}</span>层</el-checkbox>
+                                        <el-checkbox :indeterminate="item.isIndeterminate" v-model="item.checkAll" @change="handleCheckAllChange($event,item)">{{item.building?item.building.name:''}} <span>{{item.floor}}</span>{{$t('desk.home_layer')}}</el-checkbox>
                                     </el-form-item>
                                 </el-row>
                                 <el-row style="padding-left:15px">

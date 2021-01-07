@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-06 15:29:19
+ * @LastEditTime: 2021-01-07 11:55:23
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -32,14 +32,14 @@
         </div>
       </div>
       <div class="public otherStyle" v-if=" checkinInfo.checkInRoomType == 1 || checkinInfo.checkInRoomType == 2">
-        <div class="infoTitle">预约内容/住宿plan：</div>
+        <div class="infoTitle">{{$t('desk.home_bookContent')}}：</div>
         <div class="itemDetail">
           <el-row>
-            <el-col :span="6">消费合计：{{ checkinInfo.totalPrice }}</el-col>
-            <el-col :span="6">付款合计：{{ checkinInfo.payPrice }}</el-col>
+            <el-col :span="6">{{$t('desk.consumerTotal')}}：{{ checkinInfo.totalPrice }}</el-col>
+            <el-col :span="6">{{$t('desk.payTotal')}}：{{ checkinInfo.payPrice }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="18">付款方式：现金（2000）；信用卡（4000）；挂账（1000）；其他（2000）
+            <el-col :span="18">{{$t('desk.customer_payType')}}：{{$t('desk.serve_cash')}}（2000）；{{$t('commons.payType.2')}}（4000）；{{$t('desk.serve_thisCard')}}（1000）；{{$t('desk.book_other')}}（2000）
             </el-col>
           </el-row>
           <el-row>
@@ -48,7 +48,7 @@
                 checkinInfo.checkIn.pronunciation
               }】`
             }}</el-col>
-            <el-col :span="8">预约人电话：（手）{{
+            <el-col :span="8">{{$t('desk.book_bookPeoPhone')}}：({{$t('desk.editor_hand')}}){{
                 checkinInfo.checkIn.mobile || checkinInfo.checkIn.homeMobile
               }}</el-col>
           </el-row>
@@ -78,12 +78,12 @@
             </span>
           </div>
           <!-- <div v-if="$index < 3">{{ row.name }}</div> -->
-          <div v-if="$index ==checkinInfo.inRoomList.length-1">备注</div>
+          <div v-if="$index ==checkinInfo.inRoomList.length-1">{{$t('desk.home_note')}}</div>
           <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1">留言</div> -->
 
         </template>
       </el-table-column>
-      <el-table-column label="房间号/房型" align="center">
+      <el-table-column :label="$t('desk.home_roomNumAtype')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <span>{{ row.houseNum }} / {{ row.roomTypeName }} </span>
@@ -96,7 +96,7 @@
           </div> -->
         </template>
       </el-table-column>
-      <el-table-column label="证件号码" align="center">
+      <el-table-column :label="$t('desk.home_idCardNum')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <span v-if="row.headerObj">
@@ -109,20 +109,20 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="联系方式" align="center">
+      <el-table-column :label="$t('desk.home_contactWay')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <div v-if="row.headerObj">
-              <p v-if="row.headerObj.homeMobile">(家) {{ row.headerObj.homeMobile }}</p>
-              <p v-if="row.headerObj.enterMobile">(单位) {{ row.headerObj.enterMobile }}</p>
-              <p v-if=" checkinInfo.checkIn.guestType == 4 && checkinInfo.checkIn.contactPhone">(团体) {{ checkinInfo.checkIn.contactPhone }}</p>
-              <p v-if="row.headerObj.mobile">(手机) {{ row.headerObj.mobile }}</p>
+              <p v-if="row.headerObj.homeMobile">({{$t('desk.editor_home')}}) {{ row.headerObj.homeMobile }}</p>
+              <p v-if="row.headerObj.enterMobile">({{$t('desk.editor_only')}}) {{ row.headerObj.enterMobile }}</p>
+              <p v-if=" checkinInfo.checkIn.guestType == 4 && checkinInfo.checkIn.contactPhone">({{$t('desk.editor_team')}}){{ checkinInfo.checkIn.contactPhone }}</p>
+              <p v-if="row.headerObj.mobile">({{$t('desk.editor_hand')}}) {{ row.headerObj.mobile }}</p>
             </div>
           </div>
 
         </template>
       </el-table-column>
-      <el-table-column label="性别" align="center" width="50">
+      <el-table-column :label="$t('desk.customer_sex')" align="center" width="50">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <span v-if="row.headerObj && row.headerObj.sex">
@@ -131,7 +131,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="客源类型" align="center">
+      <el-table-column :label="$t('desk.order_sourceType')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <span>
@@ -140,7 +140,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="会员号码/单位号码">
+      <el-table-column align="center" :label="$t('desk.home_memAunitCard')">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <span v-if=" row.headerObj && row.headerObj.guestType == 2 && row.headerObj.memberCard">
@@ -152,7 +152,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="amount2" label="同来宾客" align="center">
+      <el-table-column prop="amount2" :label="$t('desk.customer_toTheGuest')" align="center">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <p v-for="(person, index) in row.personList" :key-="index" v-if="row.personList">
@@ -162,76 +162,76 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" v-if="type == 'detail'">
+      <el-table-column :label="$t('commons.operating')" align="center" v-if="type == 'detail'">
         <template slot-scope="{ row, $index }">
-            <el-button @click="customerDetail(row)" type="text">详情</el-button>
+            <el-button @click="customerDetail(row)" type="text">{{$t('commons.detail')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog top="0" width="80%" title="客户详情" :visible.sync="currentCustomerVisible" append-to-body>
+    <el-dialog top="0" width="80%" :title="$t('desk.home_custormerDetail')" :visible.sync="currentCustomerVisible" append-to-body>
       <el-form ref="currentCustomerForm" :model="currentCustomer" label-width="110px" inline>
         <el-row>
           <el-col :span="6">
-            <el-form-item label="入住人：">{{ currentCustomer.headerObj.name }}【{{currentCustomer.headerObj.pronunciation}}】</el-form-item>
+            <el-form-item :label="$t('desk.customer_livePeople')+':'">{{ currentCustomer.headerObj.name }}【{{currentCustomer.headerObj.pronunciation}}】</el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="（证件）号码：">
+            <el-form-item :label="$t('desk.home_cardAnumber')+':'">
               ({{
                               $t("commons.idCardType")[currentCustomer.headerObj.idcardType ? currentCustomer.headerObj.idcardType + "" : "1"]
                           }}) {{ currentCustomer.headerObj.idcard }}
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="性别："> {{ F_sex(currentCustomer.headerObj.sex) }} </el-form-item>
+            <el-form-item :label="$t('desk.customer_sex')+':'"> {{ F_sex(currentCustomer.headerObj.sex) }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="客人分类："> {{ F_customerTypes(currentCustomer.headerObj.customerType) }} </el-form-item>
+            <el-form-item :label="$t('desk.order_guestKind')+':'"> {{ F_customerTypes(currentCustomer.headerObj.customerType) }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="邮箱："> {{ currentCustomer.headerObj.email }} </el-form-item>
+            <el-form-item :label="$t('desk.customer_email')+':'"> {{ currentCustomer.headerObj.email }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="地区："> {{ currentCustomer.headerObj.region }} </el-form-item>
+            <el-form-item :label="$t('desk.customer_region')+':'"> {{ currentCustomer.headerObj.region }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="住家地址："> {{ currentCustomer.headerObj.homeAddress }} </el-form-item>
+            <el-form-item :label="$t('desk.order_liveAddress')+':'"> {{ currentCustomer.headerObj.homeAddress }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="住家号码："> {{ currentCustomer.headerObj.homeMobile }} </el-form-item>
+            <el-form-item :label="$t('desk.order_homePhone')+':'"> {{ currentCustomer.headerObj.homeMobile }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="手机号："> {{ currentCustomer.headerObj.phone }} </el-form-item>
+            <el-form-item :label="$t('desk.home_phoneNum')+':'"> {{ currentCustomer.headerObj.phone }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="单位名：">
+            <el-form-item :label="$t('desk.customer_unitNameA')+':'">
               {{ currentCustomer.headerObj.enterName }}【{{currentCustomer.headerObj.enterPinyin}}】
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="单位电话："> {{ currentCustomer.headerObj.enterMobile }} </el-form-item>
+            <el-form-item :label="$t('desk.home_unitMobile')+':'"> {{ currentCustomer.headerObj.enterMobile }} </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="单位地址："> {{ currentCustomer.headerObj.enterAddress }} </el-form-item>
+            <el-form-item :label="$t('desk.customer_unitAddress')+':'"> {{ currentCustomer.headerObj.enterAddress }} </el-form-item>
           </el-col>
         </el-row>
       </el-form>
 
       <div>
-        <div class="sameTo">同来宾客</div>
+        <div class="sameTo">{{$t('desk.customer_toTheGuest')}}</div>
         <el-table ref="multipleTable" :data="currentCustomer.headerObj.personList" border height="100%" header-row-class-name="default" size="small">
-          <el-table-column prop="name" label="姓名" show-overflow-tooltip>
+          <el-table-column prop="name" :label="$t('desk.home_name')" show-overflow-tooltip>
             <template slot-scope="{ row, $index }">
               {{row.name +'【' + row.pronunciation + '】'}}
             </template>
           </el-table-column>
-          <el-table-column label="证件号码" prop="idcard" show-overflow-tooltip>
+          <el-table-column :label="$t('desk.home_idCardNum')" prop="idcard" show-overflow-tooltip>
           </el-table-column>
-          <el-table-column prop="sex" label="性别">
+          <el-table-column prop="sex" :label="$t('desk.customer_sex')">
             <template slot-scope="{ row, $index }">
               {{ F_sex(row.sex) }}
             </template>
           </el-table-column>
-          <el-table-column prop="type" label="类型" show-overflow-tooltip>
+          <el-table-column prop="type" :label="$t('desk.home_typeText')" show-overflow-tooltip>
             <template slot-scope="{ row, $index }">
               {{ F_customerTypes(row.customerType || '1') }}
             </template>
@@ -239,7 +239,7 @@
         </el-table>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="currentCustomerVisible = false">关闭</el-button>
+        <el-button @click="currentCustomerVisible = false">{{$t('commons.close')}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -260,32 +260,6 @@ export default {
         personList: [],
       },
       currentCustomerVisible: false, // 客户详情弹框
-      customerList: [
-        {
-          name: "张三",
-          idNum: "123456",
-          sex: "男",
-          type: "儿童A",
-        },
-        {
-          name: "张三",
-          idNum: "123456",
-          sex: "男",
-          type: "儿童A",
-        },
-        {
-          name: "张三",
-          idNum: "123456",
-          sex: "男",
-          type: "儿童A",
-        },
-        {
-          name: "张三",
-          idNum: "123456",
-          sex: "男",
-          type: "儿童A",
-        },
-      ],
       customerForm: {},
       checkinInfo: {
         checkIn: {},

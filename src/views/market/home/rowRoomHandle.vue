@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 15:26:53
+ * @LastEditTime: 2021-01-07 10:27:28
  * @FilePath: \jiudian\src\views\market\home\rowRoomHandle.vue
  -->
 <template>
@@ -58,7 +58,7 @@
                                                         <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>
                                                     </el-col>
                                                     <el-col :span="10">
-                                                        <span>一人价（纯住宿） {{ v.onePersonPrice }}</span>
+                                                        <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                                     </el-col>
                                                 </el-row>
                                             </div>

@@ -852,7 +852,21 @@ module.exports = {
   home_liveMobile: '未翻译词条',
   home_unitMobile: '未翻译词条',
   order_teamText: "未翻译词条",
-
+  home_onePeopleLive: '未翻译词条',
+  order_go21: "未翻译词条",
+  order_back21: "未翻译词条",
+  order_blankText: "未翻译词条",
+  order_ordinaryLive: "未翻译词条",
+  order_clockLive: "未翻译词条",
+  order_meetingLive: "未翻译词条",
+  home_bookContent: '未翻译词条',
+  home_roomNumAtype: '未翻译词条',
+  home_contactWay: '未翻译词条',
+  editor_team:'未翻译词条',
+  home_memAunitCard: '未翻译词条',
+  home_custormerDetail: '未翻译词条',
+  home_cardAnumber: '未翻译词条',
+  home_typeText: '未翻译词条',
 
 
 

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-06 17:04:44
+ * @LastEditTime: 2021-01-07 11:55:52
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -179,14 +179,14 @@ module.exports = {
   home_nowLiveRate: '当前入住率',
   home_liveMobile: '住家电话',
   home_unitMobile: '单位电话',
-  home_: '',
-  home_: '',
-  home_: '',
-  home_: '',
-  home_: '',
-  home_: '',
-  home_: '',
-  home_: '',
+  home_onePeopleLive: '一人价（纯住宿）',
+  home_bookContent: '预约内容/住宿plan',
+  home_roomNumAtype: '房间号/房型',
+  home_contactWay: '联系方式',
+  home_memAunitCard: '会员号码/单位号码',
+  home_custormerDetail: '客户详情',
+  home_cardAnumber: '（证件）号码',
+  home_typeText: '类型',
   home_: '',
   home_: '',
   home_: '',
@@ -504,12 +504,12 @@ module.exports = {
   order_homePhone: "住家号码",
   order_addRoom: "添加房间",
   order_teamText: "团队",
-  order_: "",
-  order_: "",
-  order_: "",
-  order_: "",
-  order_: "",
-  order_: "",
+  order_go21: "往前21天",
+  order_back21: "往后21天",
+  order_blankText: "空",
+  order_ordinaryLive: "普通入住",
+  order_clockLive: "时租房入住",
+  order_meetingLive: "会场",
   order_: "",
   order_: "",
   order_: "",
@@ -664,7 +664,6 @@ module.exports = {
   customer_leaveStoreDate: '离店日期',
   customer_livePeople: '入住人',
   customer_reservePerson: '预订人',
-
   customer_liveToleave: '入住-离店日期',
   customer_arrived: '抵',
   customer_leave: '离',
@@ -934,6 +933,7 @@ module.exports = {
   editor_hand: '手',
   editor_home: '家',
   editor_only: '单',
+  editor_team:'团',
   editor_nameAenter: '姓名/单位名称',
   editor_: '',
   editor_: '',
