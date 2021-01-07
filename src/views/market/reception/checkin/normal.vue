@@ -1072,7 +1072,7 @@ export default {
                 memberCard: "", // 会员卡号  String选填
                 checkinTime: "", // 预抵时间/到店时间 yyyy-MM-dd hh:mm:ss格式  String必填
                 checkoutTime: "", //预离时间 yyyy-MM-dd hh:mm:ss格式  String必填
-                //keepTime: "", //保留时间 yyyy-MM-dd hh:mm:ss格式  String必填
+                keepTime: "2099-12-12 12:12:12", //保留时间 yyyy-MM-dd hh:mm:ss格式  String必填
                 checkinDays: 1, //入住天数  int必填
                 salesId: "", //销售员id  String选填
                 thirdOrdernum: "", //外部订单号  String选填
