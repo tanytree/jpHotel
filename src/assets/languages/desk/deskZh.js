@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 11:55:52
+ * @LastEditTime: 2021-01-07 14:12:41
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -207,6 +207,7 @@ module.exports = {
   serve_tie: '结',
   serve_flightDuty: '本班全责汇总',
   serve_cash: '现金',
+  serve_cashA: '现金',
   serve_thisCard: '挂账',
   serve_wechat: '微信',
   serve_alipay: '支付宝',
@@ -317,9 +318,9 @@ module.exports = {
   book_bookPeoPhone: '预约人电话',
   book_guideText: '导游',
   book_leaderText: '领队',
-  book_: '',
-  book_: '',
-  book_: '',
+  book_accountWay: '挂账方式',
+  book_chooseAway: '请选择挂账方式',
+  book_accountSuccess: '挂账成功',
   book_: '',
   book_: '',
   book_: '',

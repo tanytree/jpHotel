@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 13:38:19
+ * @LastEditTime: 2021-01-07 13:43:14
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -13,7 +13,7 @@ module.exports = {
   rowHouse: 'アサイン',
   roomInfoDesc: '部屋情報',
   customerInfoDesc: '顧客情報',
-  payTotal: '支払い合計',
+  payTotal: '支払済合計金額',
   consumerTotal: '利用合計金額',
   balanceTotal: '差引勘定',
   orderMarkInfo: '備考',
@@ -125,6 +125,7 @@ module.exports = {
   serve_flightDuty: '担当別レポート',
   serve_cash: 'キャッシュ',
   serve_thisCard: '売掛',
+  serve_cashA: '現金',
   serve_wechat: 'ウェチャットペイ',
   serve_alipay: 'アリペイ',
   serve_other: 'その他',
@@ -857,21 +858,24 @@ module.exports = {
   home_unitMobile: '未翻译词条',
   order_teamText: "未翻译词条",
   home_onePeopleLive: '未翻译词条',
-  order_go21: "未翻译词条",
-  order_back21: "未翻译词条",
+  order_go21: "前の21日へ",
+  order_back21: "後ろの21日へ",
   order_blankText: "未翻译词条",
   order_ordinaryLive: "未翻译词条",
   order_clockLive: "未翻译词条",
   order_meetingLive: "未翻译词条",
-  home_bookContent: '未翻译词条',
+  home_bookContent: '预约内容/宿泊プラン',
   home_roomNumAtype: '未翻译词条',
   home_contactWay: '未翻译词条',
   editor_team:'未翻译词条',
   home_memAunitCard: '未翻译词条',
   home_custormerDetail: '未翻译词条',
-  home_cardAnumber: '未翻译词条',
-  home_typeText: '未翻译词条',
+  home_cardAnumber: '（身分証明証）NO.',
+  home_typeText: '（身分証明証）NO.',
   home_liveInfo: '宿泊情報',
+  book_accountWay: '未翻译词条',
+  book_chooseAway: '未翻译词条',
+  book_accountSuccess: '未翻译词条',
 
 
 

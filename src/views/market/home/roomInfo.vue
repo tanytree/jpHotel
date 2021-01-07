@@ -1,7 +1,11 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
+<<<<<<< Updated upstream
  * @LastEditTime: 2021-01-05 13:56:21
+=======
+ * @LastEditTime: 2021-01-07 14:13:41
+>>>>>>> Stashed changes
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -72,7 +76,7 @@
 import myMixin from "@/utils/filterMixin";
 import checkInInfo from "@/components/front/checkInInfo";
 import cardTao from "@/components/cardTao";
-import CheckoutTao from '../../../components/checkoutTao.vue';
+import CheckoutTao from '@/components/checkoutTao.vue';
 export default {
     components: {
         checkInInfo,
