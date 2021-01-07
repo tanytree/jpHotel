@@ -25,7 +25,7 @@
           <div class="item">班次号：{{info.handoveNum}}</div>
         </el-col>
         <el-col :span="12">
-          <div class="item">交班操作员：张三</div>
+          <div class="item">交班操作员：{{account}}</div>
         </el-col>
         <el-col :span="12">
             <div class="item">
@@ -42,12 +42,21 @@
       <h3>本班账务汇总信息</h3>
       <div class="total">收入总计：{{info.income}}日元</div>
       <el-row class="padding-tb-10">
+
+          <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
+
+
         <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList">
           <div class="item">{{$t('manager.priceType.'+item.priceType)}}：<span class="red">{{item.total}}</span>日元</div>
         </el-col>
+
+
       </el-row>
       <div class="total">结算总计：{{info.settlement}}日元</div>
       <el-row class="padding-tb-10">
+
+        <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
+
         <el-col :span="4" v-for="(item,index) in info.orderPayTypeList">
           <div class="item">{{$t('manager.payType.'+item.payType)}}：<span class="blue">{{item.total}}</span>日元</div>
         </el-col>
@@ -126,30 +135,40 @@
          </el-form>
      </el-row>
 
-
      <el-dialog title="交班详情" :visible.sync="show"  width="700px"  top="0">
         <div class="margin-b-20">
             <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
             <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
             <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
         </div>
-
-        <div class="margin-b-10">备用金额度=(100)</div>
-        <div class="margin-b-10">上班留存备用金+本班现金收款=(0) + (53801.02)=(53801.02)＞(100)</div>
-        <div class="margin-b-10">本班下放备用金=备用金额度=(100)</div>
-        <div class="margin-b-10">本班现金上交=上班留存备用金+本班现金收款-本班下放备用金=(0)+(53801.02)-(100)=(53701.02)</div>
+        <div class="margin-b-10">备用金额度=({{info.pettyCash}})</div>
+        <div class="margin-b-10">
+            上班留存备用金+本班现金收款=
+            ({{info.upMoneyRetained}}) + ({{info.nowMoneyRetained}})= ({{getTotal(info.upMoneyRetained,info.nowMoneyRetained)}})
+            {{getPriceState(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) ? '>' :'<'}}
+            ({{info.pettyCash}})
+        </div>
+        <!-- 展示大于小于等于备用金额度/纯展示 -->
+        <div class="margin-b-10">
+        本班下放备用金
+        {{getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash)}}
+        备用金额度
+        =
+        ({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
+        </div>
+        <!-- 判断  本班下放备用金 < = > 备用金额度-->
+        <!-- 判断  上班留存备用金+本班现金收款的总和和备用金额作比较  > 100或者==100 直接显示100 小于则显示 总和-->
+        <div class="margin-b-10">
+            本班现金上交=上班留存备用金+本班现金收款-本班下放备用金=
+            ({{info.upMoneyRetained}})+({{info.nowMoneyRetained}})-({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
+            =({{getUpPrice()}})
+        </div>
         <!-- <div>本班微信上交=本班微信收款=(0)</div> -->
-        <div class="margin-b-10">本班信用卡上交=本班信用卡收款</div>
+        <div class="margin-b-10">本班信用卡上交=本班信用卡收款=({{info.nowCreditCardHandin}}})</div>
+        <div class="margin-b-10"  v-if="info.handoverStatus == 1" >本班挂账上交=本班挂账金额</div>
         <div class="margin-b-10"></div>
-
-
-
      </el-dialog>
-
-
   </div>
-
-
 </template>
 
 <script>
@@ -162,7 +181,7 @@ export default {
       userId: (state) => state.user.userId,
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
-    }),
+    })
   },
   data() {
     return {
@@ -174,16 +193,32 @@ export default {
           handoveEmployeedId:'',
           password:''
       },
-      show:false
+      show:false,
+      account:''
     };
   },
 
   mounted() {
     this.initForm();
+    this.account = sessionStorage.getItem('account')
   },
   methods: {
-    initForm() {
 
+    getUpPrice(){
+        let a = this.info.upMoneyRetained  //上班留存备用金
+        let b = this.info.nowMoneyRetained //本班现金收款
+        let c = this.info.pettyCash //备用金额度
+        let d = 0
+        if(this.getPriceState(a,b,c) == false){
+            d = this.getTotal(a,b)
+        }else{
+            d = this.getTotal(a,b,c,1)
+        }
+        return d
+    },
+
+
+    initForm() {
       this.changeTabs(1);
     },
     changeTabs(v){
@@ -198,6 +233,47 @@ export default {
            this.getShopInfo();
        }
     },
+    //计算价格大小
+    getPriceState(num1,num2,num3){
+        let a = num1 || 0
+        let b = num2 || 0
+        let c = num3 || 0
+        if(parseFloat(a) + parseFloat(b) > parseFloat(c) || parseFloat(a) + parseFloat(b) == parseFloat(c) ){
+            return true
+        }else{
+            return false
+        }
+    },
+    //获取几个值得符号关系
+    getPriceStateFlow(num1,num2,num3){
+        let a = num1 || 0
+        let b = num2 || 0
+        let c = num3 || 0
+        if(parseFloat(a) + parseFloat(b) > parseFloat(c)){
+            return '>'
+        }else if(parseFloat(a) + parseFloat(b) == parseFloat(c)){
+            return '=='
+        }else{
+            return '<'
+        }
+    },
+    //计算差额
+    getTotal(num1,num2,num3,type){
+        let a = num1 || 0
+        let b = num2 || 0
+        let c = num3 || 0
+        let sum = 0
+        if(type&&type == 1){
+            sum = parseFloat(a) + parseFloat(b) -  parseFloat(c)
+            // console.log(1111)
+        }else{
+            sum = parseFloat(a) + parseFloat(b)
+            // console.log(2222)
+        }
+        return sum
+    },
+
+
 
     //前台部交班信息
     getManagerInfo() {
