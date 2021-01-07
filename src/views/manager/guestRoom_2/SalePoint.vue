@@ -18,7 +18,7 @@
                         <el-option label="服务" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('manager.grsl_goodsType')+':'">
+                <el-form-item v-if="form.categoryType" :label="$t('manager.grsl_goodsType')+':'">
                     <el-cascader v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item>
@@ -33,11 +33,11 @@
                 <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
                     <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="retailPrice" :label="$t('manager.grsl_defaultTetailPrice')"></el-table-column>
-                    <el-table-column prop="employeePrice" :label="$t('manager.grsl_employeePriceJapen')"></el-table-column>
+<!--                    <el-table-column prop="employeePrice" :label="$t('manager.grsl_employeePriceJapen')"></el-table-column>-->
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costPrice')"></el-table-column>
-                    <el-table-column prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')"></el-table-column>
-                    <el-table-column prop="inventoryCount" :label="$t('manager.grsl_inventory')"></el-table-column>
-                    <el-table-column :label="$t('commons.operating')" align="center" width="100">
+<!--                    <el-table-column prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')"></el-table-column>-->
+<!--                    <el-table-column prop="inventoryCount" :label="$t('manager.grsl_inventory')"></el-table-column>-->
+                    <el-table-column :label="$t('commons.operating')" align="center" width="200">
                         <template slot-scope="scope">
 <!--                            <el-button type="text" size="small" @click="popup('sale', scope.row)">{{$t('commons.modify')}}</el-button>-->
                             <el-button type="text" size="small" @click="offShelf(scope.row)">{{$t('manager.grsl_shelves')}}</el-button>
@@ -93,7 +93,7 @@
                     <el-form-item :label="$t('manager.grsl_salePointName')+':'" prop="name">
                         <el-input v-model="point.name"></el-input>
                     </el-form-item>
-                    <el-form-item :label="$t('manager.grsl_allowedCheckUnit')+':'">
+                    <!--<el-form-item :label="$t('manager.grsl_allowedCheckUnit')+':'">
                         <el-radio-group v-model="point.allowEnter">
                             <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
@@ -104,14 +104,14 @@
                             <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
                         </el-radio-group>
-                    </el-form-item>
+                    </el-form-item>-->
                     <el-form-item v-if="pointType" :label="$t('manager.grsl_allowDelete')+':'">
                         <el-radio-group v-model="point.delFlag">
                             <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item :label="$t('boss.loginDetail_state')+':'">
+                    <el-form-item :label="$t('commons.disable')+':'">
                         <el-radio-group v-model="point.state">
                             <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>

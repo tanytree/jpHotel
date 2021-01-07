@@ -12,7 +12,7 @@
                         <el-option :label="$t('manager.grsl_service')" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('manager.grsl_goodsTypeA')+':'">
+                <el-form-item v-if="form.categoryType" :label="$t('manager.grsl_goodsTypeA')+':'">
                     <el-cascader :placeholder="$t('manager.hk_pleaseSelect')" v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsState')+':'">
@@ -23,14 +23,14 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" class="submit" @click="search">{{$t('commons.queryBtn')}}</el-button>
-                    <el-button class="grey" style="margin-left:0" @click="reset">{{$t('commons.resetBtn')}}</el-button>
+                    <el-button class="grey" @click="reset">{{$t('commons.resetBtn')}}</el-button>
                 </el-form-item>
                 <el-form-item class="form-inline-flex">
                     <el-row class="form-inline-flex">
-                        <el-button class="white" @click="downModel('dynamicValidateForm')">{{$t('commons.downloadTemplate')}}</el-button>
+                        <!--<el-button class="white" @click="downModel('dynamicValidateForm')">{{$t('commons.downloadTemplate')}}</el-button>
                         <el-upload class="button_upload" ref="upload" action="123" :limit="1" :http-request='importModel'>
                             <el-button class="white">{{$t('manager.grsl_import')}}</el-button>
-                        </el-upload>
+                        </el-upload>-->
                         <el-button @click="popup('add')" class="submit">{{$t('manager.grsl_addGoods')}}</el-button>
                     </el-row>
                 </el-form-item>
@@ -85,7 +85,7 @@
                 </el-row>
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
+                        <el-form-item label-width="120px" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
                             <el-radio-group v-model="rowData.taxStatus">
                                 <el-radio :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>
                                 <el-radio :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>
@@ -93,7 +93,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
+                        <el-form-item label-width="120px" :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
                             <el-radio-group v-model="rowData.seviceStatus">
                                 <el-radio :label="1">{{$t('manager.grsl_goodsServiceN')}}</el-radio>
                                 <el-radio :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio>
@@ -160,9 +160,9 @@
             </div>
 
             <div class="footer">
-                <el-button type="primary" v-if="edit" size="small" class="submit" @click="submit">{{$t('commons.modify')}}
+                <el-button type="primary" size="small" class="submit" @click="submit">{{$t('commons.save')}}
                 </el-button>
-                <el-button type="primary" v-if="!edit" size="small" class="submit" @click="submit">{{$t('manager.grsl_saveAndAdd')}}
+                <el-button type="primary" size="small" class="submit" @click="submit">{{$t('manager.grsl_saveAndAdd')}}
                 </el-button>
                 <el-button size="small" class="cancel" @click="back">{{$t('commons.back')}}</el-button>
             </div>
@@ -351,6 +351,7 @@
                 this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
             },
             submit() {
+                const a = this;
                 const param = {
                     name: this.rowData.name,
                     categoryId: this.rowData.categoryId,
@@ -376,12 +377,13 @@
                     param.id = this.rowData.id;
                 }
                 this.$F.doRequest(this, "/pms/hotelgoods/edit", param, (res) => {
-                    this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
-                    if (this.edit) {
-                        this.tab_show = true;
+                    a.$message.success(this.$t("commons.saveSuccess"))
+                    a.initData(a.pageForm, a.form.name, a.form.category, a.form.status, a.form.categoryType);
+                    if (a.edit) {
+                        a.tab_show = true;
                     } else {
-                        this.tab_show = false;
-                        this.rowData = {
+                        a.tab_show = false;
+                        a.rowData = {
                             name: "",
                             categoryId: "",
                             remark: "",
@@ -398,6 +400,8 @@
                             minutePrice: '',
                             capsPrice: '',
                             depositPrice: '',
+                            taxStatus: 1,
+                            seviceStatus: 1
                         };
                     }
                 });
@@ -438,7 +442,7 @@
                         state: "",
                     },
                     (res) => {
-                        this.$message.success("success");
+                        this.$message.success(this.$t('commons.delete_success'));
                         this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
                     }
                 );
