@@ -59,7 +59,7 @@
 							<template slot-scope="scope">
 								<el-button type="text" size="small" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
 								<el-button type="text" size="small" @click="stop_d(scope.row)">{{scope.row.state==1? $t('commons.disable'):$t('commons.enable')}}</el-button>
-								<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="deleteRow_d(scope.row)">
+								<el-popconfirm :title="$t('manager.hp_bulletTitle')" @confirm="deleteRow_d(scope.row)">
 									<el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
 								</el-popconfirm>
 							</template>

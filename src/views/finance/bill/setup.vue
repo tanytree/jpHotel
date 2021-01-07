@@ -74,7 +74,7 @@
                     :title="$t('manager.grsl_sureDelete')+'？'"
                     icon="el-icon-warning-outline"
                     iconColor="#FF8C00"
-                    @onConfirm="handleDelete('sub', scope.row)"
+                    @confirm="handleDelete('sub', scope.row)"
                   >
                     <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
                   </el-popconfirm>
@@ -117,7 +117,7 @@
                     :title="$t('manager.grsl_sureDelete')+'？'"
                     icon="el-icon-warning-outline"
                     iconColor="#FF8C00"
-                    @onConfirm="handleDelete('cate', scope.row)"
+                    @confirm="handleDelete('cate', scope.row)"
                   >
                     <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
                   </el-popconfirm>
@@ -155,7 +155,7 @@
                     :title="$t('manager.grsl_sureDelete')+'？'"
                     icon="el-icon-warning-outline"
                     iconColor="#FF8C00"
-                    @onConfirm="handleDelete('account', scope.row)"
+                    @confirm="handleDelete('account', scope.row)"
                   >
                     <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
                   </el-popconfirm>

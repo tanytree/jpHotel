@@ -38,7 +38,7 @@
                                 >
                                 <el-popconfirm
                                     :title="$t('manager.hp_bulletTitle')"
-                                    @onConfirm="onConfirm(scope.row)"
+                                    @confirm="onConfirm(scope.row)"
                                 >
                                     <el-button
                                         slot="reference"
@@ -150,7 +150,7 @@
                                 </el-button>
                                 <el-popconfirm
                                     :title="$t('manager.hp_bulletTitle')"
-                                    @onConfirm="onDeleteData(scope.row)"
+                                    @confirm="onDeleteData(scope.row)"
                                 >
                                     <el-button
                                         slot="reference"

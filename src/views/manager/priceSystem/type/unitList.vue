@@ -36,7 +36,7 @@
 						<template slot-scope="scope">
 							<el-button type="text" size="small" @click="popup('see', scope.row)">{{$t("boss.compensation_toView")}}</el-button>
 							<el-button type="text" size="small" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
-							<el-popconfirm :title="$t('manager.hp_bulletTitle')" @onConfirm="get_price_enter_strategy_delete(scope.row)">
+							<el-popconfirm :title="$t('manager.hp_bulletTitle')" @confirm="get_price_enter_strategy_delete(scope.row)">
 								<el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
 							</el-popconfirm>
 							<el-button type="text" size="small" @click="popup('changerili', scope.row)">{{$t('manager.ps_modifyCalendar')}}</el-button>
@@ -266,7 +266,7 @@
 					}
 				})
 				params.roomStrategyJson = JSON.stringify(this.roomStrategyJson);
-				
+
 				this.$F.doRequest(this, '/pms/hotel/hotel_price_enter_strategy_save', params, (res) => {
 					return this.$message({
 						message: this.$t('commons.request_success'),
@@ -330,7 +330,7 @@
 						break
 					case 'changerili':
 						this.selectInfo = value;
-						
+
 						this.tab1_show = true
 						this.rili_show = true
 						break
@@ -355,7 +355,7 @@
 						})
 					})
 					console.log(this.roomStrategyJson)
-					
+
 					this.$forceUpdate();
 				})
 			},
@@ -380,7 +380,7 @@
 							value.adjustPrice = value.newLivePrice
 						})
 						this.roomStrategyJson = res.hotelPriceRoomTypeList
-						
+
 						console.log('this.ruleForm---', this.ruleForm)
 
 					}

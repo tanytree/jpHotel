@@ -48,7 +48,7 @@
                                 <el-button type="text" size="small" @click="popup('detail', scope.row)">{{$t('manager.grsl_theDetail')}}</el-button>
                                 <el-button type="text" v-if="scope.row.authStatus == 1" size="small" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
                                 <el-button type="text" v-if="scope.row.authStatus == 1" size="small" @click="popup('exam', scope.row)">{{$t('manager.grsl_audit')}}</el-button>
-                                <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="handleDelete(scope.row)">
+                                <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="handleDelete(scope.row)">
                                     <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
                                 </el-popconfirm>
                             </template>
@@ -138,7 +138,7 @@
                     </el-table-column>
                     <el-table-column :label="$t('commons.operating')" width="100">
                         <template slot-scope="scope">
-                            <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="Delete(scope.row)">
+                            <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="Delete(scope.row)">
                                 <el-button slot="reference" size="small" type="text">{{$t('manager.grsl_move')}}</el-button>
                             </el-popconfirm>
                         </template>

@@ -95,7 +95,7 @@
               :title="$t('manager.grsl_sureDelete')+'？'"
               icon="el-icon-warning-outline"
               iconColor="#FF8C00"
-              onConfirm="handleDelete(scope.row)"
+              @confirm="handleDelete(scope.row)"
             >
               <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
             </el-popconfirm>

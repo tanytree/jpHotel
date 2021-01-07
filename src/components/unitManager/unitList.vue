@@ -64,7 +64,7 @@
               >{{$t('commons.modify')}}</el-button>
               <el-popconfirm
                 :title="$t('manager.hp_bulletTitle')"
-                @onConfirm="get_price_enter_strategy_delete(row)"
+                @confirm="get_price_enter_strategy_delete(row)"
               >
                 <el-button
                   slot="reference"

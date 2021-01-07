@@ -87,7 +87,7 @@
                     </el-table-column>
                     <el-table-column :label="$t('commons.operating')" width="100">
                         <template slot-scope="scope">
-                            <el-popconfirm :title="$t('manager.grsl_sureToMove')" @onConfirm="goodsDelete(scope.row)">
+                            <el-popconfirm :title="$t('manager.grsl_sureToMove')" @confirm="goodsDelete(scope.row)">
                                 <el-button slot="reference" type="text" size="small">{{$t('manager.grsl_move')}}</el-button>
                             </el-popconfirm>
                         </template>

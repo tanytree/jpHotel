@@ -82,7 +82,7 @@
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="popup('state', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
                         <el-button type="text" size="small" @click="popup('edit', scope.row)">{{$t('commons.modify')}}</el-button>
-                        <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @onConfirm="pointDelete(scope.row)">
+                        <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="pointDelete(scope.row)">
                             <el-button slot="reference" size="small" type="text">{{$t('commons.delete')}}</el-button>
                         </el-popconfirm>
                     </template>
