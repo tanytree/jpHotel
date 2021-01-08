@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" v-if="shopNo!=number">
       <div class="diaryTable">{{$t('boss.report_dailyAccount')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -75,12 +75,30 @@
         </div>
       </div>
     </div>
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" v-if="shopNo!=number">
       <div class="diaryTable">{{$t('boss.report_monthReport')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
           <ul v-for="(item, index) in monthList" :key="index">
+            <li
+              v-for="(each, i) in item"
+              :key="index + '_' + i"
+              @click="addReport(each)"
+            >
+              <img src="../../../assets/images/star.png" alt width="20" />
+              <span>{{ each.title }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+      <div style="margin-bottom: 20px" v-if="shopNo==number">
+      <div class="diaryTable">总部报表</div>
+      <el-divider></el-divider>
+      <div class="reportHome">
+        <div class="listBox">
+          <ul v-for="(item, index) in headquartersList" :key="index">
             <li
               v-for="(each, i) in item"
               :key="index + '_' + i"
@@ -100,7 +118,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  props: ["sourcePage"],
+  props: ["sourcePage","shopNo"],
   computed: {
     //估价单 请款单 消费明细 收据
     valueBill() {
@@ -358,12 +376,28 @@ export default {
         ],
       ];
     },
+    //总部报表
+    headquartersList(){
+      return [
+          [
+          {
+            title:'总部销售日报',
+            reportType: 24,
+            reportNum: 1004,
+          },
+        ],
+      ]
+    }
   },
 
   data() {
-    return {};
+    return {
+      number:'0000000000'
+    };
   },
-  created() {},
+  created() {
+    console.log(this.shopNo);
+  },
   methods: {
     addReport(item) {
       console.log(item);

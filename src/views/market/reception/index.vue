@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-09 15:30:08
+ * @LastEditTime: 2021-01-08 16:20:48
  * @FilePath: \jiudian\src\views\market\reception\index.vue
  -->
 
@@ -20,7 +20,7 @@
 <!--                <checkin v-if="item.path == 'checkin'"/>-->
                 <!-- 前台报表-->
 <!--                <reportform v-if="item.path == 'reportform'"/>&lt;!&ndash; 报表&ndash;&gt;-->
-                <Report v-if="item.path == 'reportform'"  sourcePage='desk'/>
+                <Report v-if="item.path == 'reportform'"  sourcePage='desk' :shopNo='shopNo'/>
                 <!-- 前台交班-->
 <!--                <shiftover v-if="item.path == 'shiftover'"/>-->
             </el-tab-pane>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import checkin from "./checkin";
 import reportform from "./reportform";
 import shiftover from "./shiftover";
@@ -41,6 +42,11 @@ export default {
         return {
             activeName: ""
         };
+    },
+      computed:{
+      ...mapState({
+        shopNo:(state)=>state.user.storesInfo.storesNum
+      })
     },
     created() {
         this.$F.handleThirdMenu(this);

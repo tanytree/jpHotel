@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 11:19:42
+ * @LastEditTime: 2021-01-08 17:40:26
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -49,7 +49,7 @@ module.exports = {
     loginDetail_note: "備考",
     loginDetail_no: "ジャスミン",
     loginDetail_alertContent: "当メンバーは情報ありません。（従業員管理で情報登録し、アカウント権限を設定してください。）",
-    loginDetail_alertTitle: "注意",
+    loginDetail_alertTitle: "ご注意",
     loginDetail_unknownStores: "未知屋",
     loginDetail_outTime: "離職時間",
     loginDetail_outReason: "離職原因",
@@ -282,6 +282,7 @@ module.exports = {
     add_normalBook: '一般予約',
     add_noHaveInfo: '該当ホテル利用可能部屋はございません',
     report_goodsKinds: '付帯・商品別売上一覧（月次）',
+    add_queryText: '未翻译词条',
 
 
 

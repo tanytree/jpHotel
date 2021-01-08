@@ -291,7 +291,7 @@ module.exports = {
   add_peopleLivePrice: '人',
   add_normalBook: '普通预订',
   add_noHaveInfo: '该酒店暂无房间信息',
-  add_: '',
+  add_queryText: '查询字段',
   add_: '',
   add_: '',
   add_: '',
