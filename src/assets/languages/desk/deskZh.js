@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 14:12:41
+ * @LastEditTime: 2021-01-08 14:52:51
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -94,6 +94,7 @@ module.exports = {
   home_nameAroom: '姓名/房号',
   home_idCard: '身份证',
   home_idCardNum: '证件号码',
+  home_idCardNumA: '证件号码',
   home_roomCard: '房卡',
   home_toRoom: '房态',
   home_roomType: '房型',
@@ -321,8 +322,8 @@ module.exports = {
   book_accountWay: '挂账方式',
   book_chooseAway: '请选择挂账方式',
   book_accountSuccess: '挂账成功',
-  book_: '',
-  book_: '',
+  book_bookText: '预订',
+  book_placeRowHouse: '请先排房',
   book_: '',
   book_: '',
   book_: '',
@@ -570,6 +571,7 @@ module.exports = {
   customer_memeberCardNum: '会员卡号',
   customer_guestNum: '用户编号',
   customer_documentType: '证件类型',
+  customer_documentTypeA: '证件类型',
   customer_documentNum: '证件号',
   customer_sex: '性别',
   customer_brithday: '生日',
@@ -815,6 +817,7 @@ module.exports = {
   customer_payCardSucc: '补收卡费成功',
   customer_payShould: '支付费用必须大于0',
   customer_namePY: '姓名发音',
+  customer_namePYA: '发音',
   customer_resetguestInfo: '修改客户资料',
   customer_unitNum: '单位编号',
   customer_unitAddress: '单位地址',

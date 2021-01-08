@@ -176,10 +176,12 @@
               prop="enterName"
             >
               <el-input
+              :placeholder="$t('desk.book_name')"
                 v-model="addCompanyForm.enterName"
                 style="width: 128px"
               ></el-input>
               <el-input
+              :placeholder="$t('desk.customer_namePYA')"
                 v-model="addCompanyForm.enterPinyin"
                 style="width: 128px; margin-left: 10px"
               ></el-input>

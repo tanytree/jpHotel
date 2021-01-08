@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 17:32:06
+ * @LastEditTime: 2021-01-08 15:04:33
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -83,8 +83,8 @@ module.exports = {
   home_deskPhone: 'フロント電話番号',
   home_hotelAddress: 'ホテル住所',
   home_telNum: '自宅電話番号',
-  home_telNum1: '自宅電話番号1',
-  home_telNum2: '自宅電話番号2',
+  home_telNum1: '自宅電話1',
+  home_telNum2: '自宅電話2',
   home_getState: '受け渡す状態',
   home_saveAndPri: '保存及び印刷',
   home_inputGoodsName: '預かり内容を入力してください',
@@ -267,8 +267,8 @@ module.exports = {
   customer_inputRemark: '備考を入力してください',
   customer_unknowStore: '該当ホテルを指定してください',
   customer_memManagement: '会員管理',
-  customer_changeCard: '会員カード交換',
-  customer_resetType: '変更種別',
+  customer_changeCard: 'カード交換',
+  customer_resetType: '種別変更',
   customer_cancellation: 'ログアウト',
   customer_reportLossCard: 'カード紛失再発行',
   customer_readMemNum: 'カードを読み取り',
@@ -276,6 +276,7 @@ module.exports = {
   customer_pointsFor: 'ポイント交換',
   customer_memeberCardNum: '会員番号',
   customer_documentType: '本人確認書類',
+  customer_documentTypeA: '身分証明書',
   customer_documentNum: '本人確認書No.',
   customer_sex: '性別',
   customer_brithday: '生年月日',
@@ -327,7 +328,7 @@ module.exports = {
   customer_yesterday: '前日',
   customer_thisWeek: '本週',
   customer_thisMonth: '今月',
-  customer_occurrenceStore: '发生门店',
+  customer_occurrenceStore: '利用ホテル',
   customer_increase: '追加',
   customer_deduct: '控除',
   customer_inTheDate: '利用日',
@@ -367,12 +368,12 @@ module.exports = {
   customer_selectNationality: '国籍',
   customer_guestHistoryRecord: '顧客資料',
   customer_historyGuest: '顧客履歴記録',
-  customer_roomType: '部屋類別',
+  customer_roomType: '利用種別',
   customer_venue: '会場',
   customer_guestRoom: '客室',
   customer_leaveStoreDate: '出発日',
   customer_livePeople: '宿泊者',
-    customer_reservePerson: '预订人',
+    customer_reservePerson: '予約者',
   customer_liveToleave: '到着−出発日',
   customer_arrived: 'C/I',
   customer_leave: 'C/O',
@@ -707,6 +708,7 @@ module.exports = {
   order_inputName: "名前を入力してください",
   order_inputCardNum: "身分証明書番号を入力してください",
   customer_namePY: 'カナ',
+  customer_namePYA: 'カナ',
   customer_resetguestInfo: '会員/法人情報編集',
   customer_contactA: '担当者',
   home_phoneNumA: '電話',
@@ -879,6 +881,9 @@ module.exports = {
   add_everyDay: '毎日',
   add_workDay: '平日',
   add_restDay: '休日',
+  home_idCardNumA: '身分証明書番号',
+  book_bookText: '未翻译词条',
+  book_placeRowHouse: '未翻译词条',
 
 
 

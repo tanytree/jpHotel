@@ -1,14 +1,14 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-17 16:32:50
+ * @LastEditTime: 2021-01-08 13:50:00
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
     reserveContent: '预定内容',
   englishM:'フリーメモ',
     enterpriseName: '会社名',
-    enterpriseMobile: '会社電話番号',
+    enterpriseMobile: '会社電話',
     enterpriseAddress: '会社住所',
     cancelRoomKeep: '仮押さえ取り消し',
     checkInfoDesc: '入居情報',

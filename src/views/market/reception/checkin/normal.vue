@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-04 17:46:37
+ * @LastEditTime: 2021-01-08 15:07:27
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -146,10 +146,10 @@
                 <el-form-item :label="$t('desk.order_moblePhone')" prop="prop">
                     <el-input v-model="checkInForm.mobile"></el-input>
                 </el-form-item>
-                <el-form-item label="住家电话" prop="prop">
+                <el-form-item :label="$t('desk.home_liveMobile')" prop="prop">
                     <el-input v-model="checkInForm.homeMobile"></el-input>
                 </el-form-item>
-                <el-form-item label="单位电话" prop="prop">
+                <el-form-item :label="$t('desk.home_unitMobile')" prop="prop">
                     <el-input v-model="checkInForm.enterMobile"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
@@ -354,8 +354,8 @@
         <!-- 编辑or详情弹窗 -->
         <div class="fixedFoot">
             <div class="wrap">
-                <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">取消</el-button>
-                <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">预定</el-button>
+                <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">{{$t('commons.cancel')}}</el-button>
+                <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">{{$t('desk.book_bookText')}}</el-button>
                 <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum">{{ $t("commons.save") }}</el-button>
                 <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>
             </div>
@@ -1525,7 +1525,7 @@ export default {
                     }
                 });
                 if (this.inRoomList.length == 0) {
-                    this.$message.error('请先排房');
+                    this.$message.error(this.$t('desk.book_placeRowHouse'));
                     return;
                 }
             }

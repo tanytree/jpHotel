@@ -4,10 +4,10 @@
     <div class="boss-index">
         <div class="booking" v-if="showPageType == 'main'">
             <!-- 查询部分 -->
-            <el-form class="term" inline size="small" label-width="80px">
+            <el-form class="term" inline size="small" label-width="100px">
                 <el-form-item :label="$t('desk.customer_memType')">
-                    <el-select v-model="searchForm.memberTypeId" class="width150">
-                        <el-option :label="$t('desk.home_all')" value></el-option>
+                    <el-select v-model="searchForm.memberTypeId" :placeholder="$t('commons.placeChoose')" class="width150">
+                        <!-- <el-option :label="$t('desk.home_all')" value></el-option> -->
                         <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>

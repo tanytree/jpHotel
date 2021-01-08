@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-15 19:43:31
- * @FilePath: \jiudian\src\views\market\reception\shiftover\c1.vue
+ * @LastEditTime: 2021-01-08 15:11:36
+ * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
 <template>
@@ -46,7 +46,7 @@
           <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
 
 
-        <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList">
+        <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
           <div class="item">{{$t('manager.priceType.'+item.priceType)}}：<span class="red">{{item.total}}</span>日元</div>
         </el-col>
 
@@ -57,7 +57,7 @@
 
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
 
-        <el-col :span="4" v-for="(item,index) in info.orderPayTypeList">
+        <el-col :span="4" v-for="(item,index) in info.orderPayTypeList" :key="index">
           <div class="item">{{$t('manager.payType.'+item.payType)}}：<span class="blue">{{item.total}}</span>日元</div>
         </el-col>
       </el-row>

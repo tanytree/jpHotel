@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-06 10:02:18
+ * @LastEditTime: 2021-01-08 11:48:25
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -269,8 +269,8 @@ module.exports = {
   grsl_resetSalePoint: '販売場所変更',
   grsl_addNewPoint: '販売場所追加',
   grsl_foldAll: '折りたたみ',
-  grsl_addFirstGroup: '第一層分類追加',
-  grsl_addSecondGroup: '第二層分類追加',
+  grsl_addFirstGroup: '大分類を追加',
+  grsl_addSecondGroup: '中分類追加',
   grsl_addThridGroup: '第三層分類追加',
   grsl_firstGroupName: '第一層分類名前',
   grsl_secondGroupName: '第二層分類名前',
@@ -509,7 +509,7 @@ module.exports = {
   hk_oatName: '経路名称',
   hk_inputOat: 'OTA名称を入力してください',
   hk_resetSuccess: '変更確認',
-  grsl_newMemberType: '会員カテゴリー追加',
+  grsl_newMemberType: '会員種別追加',
   grsl_editorOneClass: '第１段カテゴリー編集',
   grsl_editorTwoClass: '第2段カテゴリー編集',
   grsl_sureEnable: '起用確認しますか',
