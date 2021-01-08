@@ -164,7 +164,7 @@
             =({{getUpPrice()}})
         </div>
         <!-- <div>本班微信上交=本班微信收款=(0)</div> -->
-        <div class="margin-b-10">本班信用卡上交=本班信用卡收款=({{info.nowCreditCardHandin}}})</div>
+        <div class="margin-b-10">本班信用卡上交=本班信用卡收款=({{info.nowCreditCardHandin}})</div>
         <div class="margin-b-10"  v-if="info.handoverStatus == 1" >本班挂账上交=本班挂账金额</div>
         <div class="margin-b-10"></div>
      </el-dialog>
