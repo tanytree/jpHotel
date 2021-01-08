@@ -113,16 +113,15 @@ const mixin= {
             if(systime){
                 end =  Date.parse(new Date(systime))
             }
-
-            // console.log('date-------'+date)
-            // console.log('systime----'+systime)
-
+            // console.log(systime)
+            console.log('date-------'+date)
+            console.log('systime----'+systime)
+            console.log(start)
+            console.log(end)
 
             var days = (end - start)/1000
-            // console.log(systime)
-            // console.log(start)
-            // console.log(end)
-            // console.log(days)
+
+            console.log(days)
             return this.getMinutes(days);
         },
         getMinutes(v){
@@ -130,16 +129,15 @@ const mixin= {
            return minutes
         },
         getFinalFee(data,systime,createTime){
-            console.log(data)
+                console.log(data)
                 //data.priceModel == 2 按时间 data.priceModel == 1 按次
                 if(data.priceModel == 2){
                     let startPrice = data.startPrice
-                    // console.log(startPrice)
+                    console.log(startPrice)
                     console.log('项目开始时间'+createTime)
                     let allMinutes = this.getDiffMinutes(createTime,systime)
-                    // console.log('项目当前时间'+systime)
-                    // let allMinutes =
-                    // console.log(allMinutes)
+                    console.log('项目当前时间'+systime)
+                    console.log('项目总时间'+allMinutes)
                     // console.log(res.poorSeconds/60)
 
                     // console.log('起步价'+startPrice)//起步价
@@ -149,7 +147,8 @@ const mixin= {
                     console.log(allMinutes)
                     console.log(data.priceStartMinute)
                     if( allMinutes && allMinutes > data.priceStartMinute){
-                        // 设置价格为起步价
+                        // 设置价格为起步价 data.priceStartMinute
+                        console.log('起步价开始时间：'+ data.priceStartMinute)
                         let a = parseFloat(allMinutes - data.priceStartMinute)//获取减去起步时间的分钟数
                         // console.log('获取减去起步时间的分钟数'+a)
                         // console.log('从多少分钟开始收费'+data.priceTime)
