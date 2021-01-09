@@ -55,7 +55,7 @@
                 top="0"
                 :title="$t('manager.grsl_managementSalePoint')"
                 :visible.sync="salePointVisible"
-                width="1000px"
+                width="600px"
                 :close-on-click-modal="false"
         >
             <div slot="title" class="dialog-header">
@@ -64,18 +64,18 @@
             </div>
             <el-table ref="multipleTable" :data="salePoint" height="100%" style="min-height: 250px" header-row-class-name="default" size="small">
                 <el-table-column prop="name" :label="$t('manager.grsl_salePointName')"></el-table-column>
-                <el-table-column :label="$t('manager.grsl_allowedToRoom')">
+                <!--<el-table-column :label="$t('manager.grsl_allowedToRoom')">
                     <template slot-scope="scope">{{scope.row.allowRoom == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('manager.grsl_allowerToUnit')">
                     <template slot-scope="scope">{{scope.row.allowEnter == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
                     </template>
-                </el-table-column>
+                </el-table-column>-->
                 <el-table-column :label="$t('boss.loginDetail_state')">
                     <template
                             slot-scope="scope"
-                    >{{scope.row.state == 1 ? $t('manager.grsl_toEnble') : $t('commons.disable')}}
+                    >{{scope.row.state == 1 ? $t('manager.grsl_toEnble') : $t("desk.customer_disableIng")}}
                     </template>
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="200">
@@ -111,7 +111,7 @@
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item :label="$t('commons.disable')+':'">
+                    <el-form-item :label="$t('commons.enable')+':'">
                         <el-radio-group v-model="point.state">
                             <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
