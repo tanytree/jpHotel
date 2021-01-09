@@ -113,15 +113,22 @@
                         <el-input v-model="checkInForm.tarvelContactEmail" :placeholder="$t('desk.book_contactEmail')"
                                   style="width:330px" size="small"></el-input>
                     </el-form-item>
+                    <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource" v-if="checkInForm.changeGuest">
+                        <el-select v-model="checkInForm.orderSource" style="width:330px">
+                            <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="OTA" prop="orderSource" v-if="checkInForm.orderSource == 5" >
+                        <el-select  v-model="checkInForm.otaChannelId"  style="width:330px">
+                            <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
                 </div>
             </el-form>
+
             <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="guestTypeShow = false">{{
-                $t("commons.cancel")
-            }}</el-button>
-        <el-button size="small" type="primary" @click="submit('checkInForm')">{{
-                $t("commons.confirm")
-            }}</el-button>
+        <el-button size="small" @click="guestTypeShow = false">{{ $t("commons.cancel") }}</el-button>
+        <el-button size="small" type="primary" @click="submit('checkInForm')">{{ $t("commons.confirm") }}</el-button>
       </span>
         </el-dialog>
     </div>
@@ -132,6 +139,7 @@ export default {
     // props: ['checkInForm'],
     data() {
         return {
+            otaList: [],
             oldName: '',
             checkInForm: {},
             guestTypeShow: false,
@@ -150,6 +158,10 @@ export default {
         }
     },
     mounted() {
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.otaList = list;
+            this.$forceUpdate();
+        })
     },
     methods: {
         checkNextcode(code1) {

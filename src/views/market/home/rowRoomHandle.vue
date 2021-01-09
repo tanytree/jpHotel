@@ -169,6 +169,7 @@ export default {
     props: ['title'],
     data() {
         return {
+            reservedRoom: [],
             afterToday: {
                 disabledDate(time) {
                     return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
@@ -354,6 +355,7 @@ export default {
         // handleType： 操作类型  默认为空 修改预留   1： 添加房间
          // orderType ： 订单类型 1： 预订单  2：订单
         initForm(checkInId, checkinInfo, reservedRoom, handleType, orderType = 2) {
+            this.reservedRoom = reservedRoom;
             this.handleType = handleType;
             this.orderType = orderType;
             let that = this
@@ -650,7 +652,6 @@ export default {
 
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
-
                     if (this.handleType == 1) {
                         this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
                             checkinRoomType:  this.orderType,
@@ -662,14 +663,14 @@ export default {
                             this.$emit('baseInfoChange', '');
                         })
                     } else {
+                        this.checkInForm.checkInRoomIds = this.reservedRoom[0].id;
                         console.log(JSON.parse(JSON.stringify(this.checkInForm)))
-
+                        debugger
                         this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');
                         })
                     }
-
                 } else {
                     console.log('error submit!!');
                     return false;

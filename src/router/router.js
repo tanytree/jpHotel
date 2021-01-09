@@ -14,7 +14,7 @@ Router.prototype.push = function push(location) {
 }
 // 不需要要权限的页面默认挂载
 export default new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         // { path: '', redirect: 'main', meta: { title: '主页' } },
 

@@ -26,8 +26,24 @@
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_livePeople')+ ':'">
-                                <el-input :placeholder="$t('desk.customer_inputName')" v-model="roomInfo.headerObj.name" size="small" style="width: 95px"></el-input>
-                                <el-input :placeholder="$t('desk.book_inputFayin')" v-model="roomInfo.headerObj.pronunciation" size="small" style="width: 95px; margin-left: 5px"></el-input>
+<!--                                <el-input :placeholder="$t('desk.customer_inputName')" v-model="roomInfo.headerObj.name" size="small" style="width: 95px"></el-input>-->
+<!--                                <el-input :placeholder="$t('desk.book_inputFayin')" v-model="roomInfo.headerObj.pronunciation" size="small" style="width: 95px; margin-left: 5px"></el-input>-->
+                                <el-autocomplete
+                                    style="width: 100px"
+                                    v-model="roomInfo.headerObj.name"
+                                    name="name"
+                                    :fetch-suggestions="remoteMethod"
+                                    :highlight-first-item="true"
+                                    popper-class="popper-class"
+                                    :trigger-on-focus="false"
+                                    :placeholder="$t('desk.book_inputContent')"
+                                    @select="changeName($event)"
+                                ></el-autocomplete>
+                                <el-input
+                                    style="width: 110px; margin-left: 10px"
+                                    v-model="roomInfo.headerObj.pronunciation"
+                                    :placeholder="$t('desk.home_nameA')"
+                                ></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
@@ -345,6 +361,58 @@ export default {
     },
 
     methods: {
+        changeName(e) {
+            console.log(e);
+            if (e.name) {
+                this.baseInfo = e;
+                this.checkInForm.name = e.name;
+                this.checkInForm.pronunciation = e.pronunciation;
+                this.checkInForm.guestType = e.guestType ? e.guestType.toString() : '';
+                this.checkInForm.idcard = e.idcard;
+                // this.checkInForm.idcardType = e.idcardType.toString();
+                this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '1';
+                this.checkInForm.mobile = e.mobile;
+                // this.checkInForm.orderSource = e.orderSource.toString();
+                this.checkInForm.orderSource = e.orderSource ? e.orderSource.toString() : '';
+                // this.checkInForm.orderType = e.orderType.toString();
+                this.checkInForm.orderType = e.orderType;
+                // this.checkInForm.sex = e.sex.toString();
+                this.checkInForm.sex = e.sex ? e.sex.toString() : '';
+                this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : "";
+                this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : "";
+            } else {
+                this.checkInForm.name = e;
+            }
+        },
+
+        remoteMethod(query, cb) {
+            let params = {
+                name: query,
+                searchType: 1,
+                pageIndex: 1,
+                filter: true,
+                pageSize: 999,
+                paging: false,
+            };
+            this.$F.doRequest(
+                this,
+                "/pms/checkin/hotel_checkin_person_list",
+                params,
+                (res) => {
+                    debugger
+                    this.options.forEach((element) => {
+                        element.value =
+                            element.name +
+                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                            (element.mobile || "") +
+                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                            (element.idcard ? element.idcard.slice(-4) : "");
+                    });
+                    cb(this.options);
+                    this.$forceUpdate();
+                }
+            );
+        },
         checkNextcode(code1) {
             if (!code1 || code1.length !== 3) {
                 this.$message({
@@ -435,30 +503,33 @@ export default {
                 };
                 checkInRoomJson.push(checkinInfo);
             });
+            console.log(this.inRoomList);
+            let checkInRoomIds = [];
+            this.inRoomList.forEach((room) => {
+                checkInRoomIds.push(room.room.id);
+            })
+            debugger
             if (this.type == "checkin") {
                 this.$emit("personCallback", checkInRoomJson);
             } else {
                 this.$F.merge(params, {
                     checkInRoomJson: JSON.stringify(checkInRoomJson),
                 });
-                this.$F.doRequest(
-                    this,
-                    "/pms/checkin/live_in_person_batch",
-                    params,
-                    (data) => {
+                this.$F.doRequest(this, "/pms/checkin/live_in_person_batch", params, (data) => {
                         if (this.type == 1) {
                             this.$router.go(-1);
                         } else {
-                            this.$F.doRequest(
-                                this,
-                                "/pms/reserve/reserve_to_checkin",
-                                params,
-                                (res) => {
-                                    this.$router.push(
-                                        `/orderdetail?id=${res.checkinId}`
-                                    );
-                                }
-                            );
+                            this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
+                                this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
+                                        checkInRoomIds: checkInRoomIds.join(','),
+                                        state: 1
+                                    }, (res) => {
+                                        this.$router.push(
+                                            `/orderdetail?id=${response.checkinId}`
+                                        );
+                                    }
+                                );
+                            });
                         }
                     }
                 );

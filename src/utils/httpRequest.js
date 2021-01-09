@@ -7,6 +7,7 @@ import store from '@/store';
 import { MessageBox, Message } from 'element-ui'
 
 const http = axios.create({
+    // baseURL: 'https://pms-api-dev.sgi-smacha.tokyo', // url = base url + request url
     timeout: 1000 * 30,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'

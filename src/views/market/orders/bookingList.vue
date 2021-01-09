@@ -14,16 +14,8 @@
         <el-row>
           <el-form-item :label="$t('desk.order_orderStatus') + ':'">
             <div class="tagList">
-              <template
-                v-for="(item, key, index) of $t('commons.reserveState')"
-              >
-                <el-tag
-                  class="tag"
-                  :type="searchForm.state == key ? '' : 'info'"
-                  :key="index"
-                  @click="stateClick(key)"
-                  >{{ item }}
-                </el-tag>
+              <template v-for="(item, key, index) of $t('commons.reserveState')">
+                <el-tag class="tag" :type="searchForm.state == key ? '' : 'info'" :key="index" @click="stateClick(key)">{{ item }}</el-tag>
               </template>
             </div>
           </el-form-item>
@@ -50,13 +42,7 @@
             }}</el-tag>
           </el-form-item>
           <el-form-item label="" v-if="searchForm.timeType==10">
-            <el-date-picker
-              v-model="searchForm.checkinTime"
-              value-format="yyyy-MM-dd"
-              type="date"
-              style="width: 140px"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" placeholder="选择日期"></el-date-picker>
           </el-form-item>
         </el-row>
         <el-row>
@@ -86,21 +72,20 @@
               value-format="yyyy-MM-dd"
               type="date"
               style="width: 140px"
-              placeholder="选择日期"
             ></el-date-picker>
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="$t('desk.book_orderSoutce')">
             <el-select v-model="searchForm.orderSource" class="width150">
-              <el-option
-                :value="key"
-                v-for="(item, key, index) of $t('commons.orderSource')"
-                :label="item"
-                :key="index"
-              ></el-option>
+              <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
             </el-select>
           </el-form-item>
+            <el-form-item label="OTA" v-if="searchForm.orderSource == 5" >
+                <el-select  v-model="searchForm.otaChannelId"  style="width:330px">
+                    <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                </el-select>
+            </el-form-item>
           <el-form-item :label="$t('desk.order_teamName') + ':'">
             <el-input
               v-model="searchForm.enterName"
@@ -206,7 +191,7 @@
         </el-table-column>
         <el-table-column :label="$t('desk.customer_roomKind')" width="140">
           <template slot-scope="{ row }">
-              <span v-for="i in row.roomInfo.split(',')" :key="i">{{i}}</span><br>
+              <div v-html="getRoomInfo(row)"></div>
           </template>
         </el-table-column>
         <el-table-column
@@ -241,12 +226,7 @@
               <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop=""
-          :label="$t('food.common.status')"
-          width="100"
-          align="center"
-        >
+        <el-table-column prop="" :label="$t('food.common.status')" align="center">
           <template slot-scope="{ row }">
             {{ F_reserveState(row.state) }}
           </template>
@@ -257,49 +237,13 @@
               $t("commons.detail")
             }}</el-button>
             <template v-if="row.state != 7">
-              <el-button
-                type="text"
-                size="mini"
-                v-if="!row.deposit"
-                @click="handleDeposit(row)"
-                >{{ $t("desk.order_deposit") }}</el-button
-              >
-              <el-button
-                type="text"
-                size="mini"
-                v-if="row.state == 5"
-                @click="handleNoshow(row)"
-                >NOSHOW</el-button
-              >
-              <el-button
-                type="text"
-                size="mini"
-                v-if="row.state == 1"
-                @click="handleCancel(row)"
-                >{{ $t("commons.cancel") }}</el-button
-              >
+<!--              <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>-->
+              <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>
+              <el-button type="text" size="mini" v-if="row.state == 1" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
               <!--                        只有当渠道订单才会有接收和拒单-->
-              <el-button
-                type="text"
-                size="mini"
-                v-if="row.state == 1 && row.orderSource == 3"
-                @click="handleAccept(row)"
-                >{{ $t("desk.order_accept") }}</el-button
-              >
-              <el-button
-                type="text"
-                size="mini"
-                v-if="row.state == 1 && row.orderSource == 3"
-                @click="handleRefuse(row)"
-                >{{ $t("desk.book_reject") }}</el-button
-              >
-              <el-button
-                type="text"
-                size="mini"
-                v-if="row.state == 8"
-                @click="handleReset(row)"
-                >{{ $t("desk.order_restore") }}</el-button
-              >
+              <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleAccept(row)">{{ $t("desk.order_accept") }}</el-button>
+              <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleRefuse(row)">{{ $t("desk.book_reject") }}</el-button>
+              <el-button type="text" size="mini" v-if="row.state == 8" @click="handleReset(row)">{{ $t("desk.order_restore") }}</el-button>
               <!--                        <el-button type="text" size="mini" v-if="row.state==4" @click="handleReset(row)">撤销</el-button>-->
             </template>
           </template>
@@ -480,6 +424,7 @@ export default {
       tableData: [], //表格数据
       roomTypeList: [],
       currentItem: {},
+        otaList: [],
       consumeOperForm: {
         priceType: "1",
         payType: "",
@@ -489,14 +434,22 @@ export default {
   },
   mounted() {
     this.initForm();
+      this.$F.commons.fetchOtaList({}, (list)=> {
+          this.otaList = list;
+          this.$forceUpdate();
+      })
   },
   methods: {
+      getRoomInfo(row) {
+          let value = row.roomInfo.split(',').join("<br>");
+          return value;
+      },
       checkPlatform(otaChannelId) {
           console.log(this.platformList)
           let array =  this.platformList.filter(item => {
               return item.id == otaChannelId
           }) || [{}]
-          return array[0].otaName;
+          return array.length > 0 ? array[0].otaName : '';
       },
 
     initForm() {
@@ -519,14 +472,14 @@ export default {
         // filterType: 1,  //数据类型过滤  1过滤已办理入住数据     int选填
         timeType:'',
       };
-      this.realtime_room_statistics();
-
-      //加载渠道
-        this.$F.doRequest(this, "/pms/oat/oat_list", {}, (res) => {
-            this.platformList = res.oatList;
-            //加载数据
+        this.realtime_room_statistics();
+        //加载数据
+        //加载渠道
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.platformList = list;
             this.getDataList();
-        });
+        })
+
     },
     /**获取表格数据 */
     getDataList() {

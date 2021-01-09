@@ -23,14 +23,15 @@
                     <li v-for="(item, index) of detailData.inRoomList" :key="index" :class="currentRoom.id == item.id ? 'active' : ''" @click="showRoomInfo(item)">
                         <p>{{ item.houseNum }} {{ $t('desk.home_roomType') }}：{{ item.roomTypeName }}</p>
                         <!--
-                        有房间 有personList则为已入住
-                        有房间无personList 已排房
-                        无房间就是未排房
+                        roomId为空 未排房 无房间就是未排房
+                        roomId有值 但state不为1 已排房（未入住）
+                        state:1 已入住
+                        state：2 离店
                         -->
-                        <span class="ok" v-if="item.state == 1 && item.roomId && item.personList && item.personList.length > 0">{{ $t('commons.checkinState')['1'] }}</span>
-                        <span class="ok" v-if="item.state == 1 && item.roomId && (!item.personList || item.personList.length == 0)">{{ $t('desk.hadRowHouses') }}</span>
+                        <span class="ok" v-if="item.state == 1">{{ $t('commons.checkinState')['1'] }}</span>
+                        <span class="ok" v-if="item.state == 3 && item.roomId">{{ $t('desk.hadRowHouses') }}</span>
 <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
-                        <span class="no" v-if="item.state == 1 && !item.roomId">{{ $t('desk.noRowHouses') }}</span>
+                        <span class="no" v-if="!item.roomId">{{ $t('desk.noRowHouses') }}</span>
                         <span class="no" v-if="item.state == 2 && item.roomId">{{ $t('food.order_status')[3] }}</span>
                     </li>
                 </ul>

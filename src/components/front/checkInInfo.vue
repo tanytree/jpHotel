@@ -142,12 +142,12 @@
       </el-table-column>
       <el-table-column align="center" :label="$t('desk.home_memAunitCard')">
         <template slot-scope="{ row, $index }">
-          <div v-if="$index<checkinInfo.inRoomList.length-1">
-            <span v-if=" row.headerObj && row.headerObj.guestType == 2 && row.headerObj.memberCard">
-              {{ row.headerObj.memberCard }}
+          <div v-if="$index < checkinInfo.inRoomList.length-1">
+            <span v-if="row.headerObj && checkinInfo.checkIn.guestType == 2">
+              {{ checkinInfo.checkIn.memberCard || '' }}
             </span>
-            <span v-if=" row.headerObj && row.headerObj.guestType == 3 && row.headerObj.enterId">
-              {{ row.headerObj.enterId }}
+            <span v-if=" row.headerObj && checkinInfo.checkIn.guestType == 3">
+              {{ checkinInfo.checkIn.enterId || ''}}
             </span>
           </div>
         </template>

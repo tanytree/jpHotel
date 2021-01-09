@@ -7,6 +7,7 @@ import httpRequest from "@/utils/httpRequest";
 // eslint-disable-next-line no-unused-vars
 var publicDict = {}
 const uploadUrl = 'http://39.104.116.153:8887'
+// const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
 const platSource = '1005'
 // eslint-disable-next-line no-unused-vars
 var tabsName = {}
@@ -277,6 +278,13 @@ const $F = {
 
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
+        //获取ota列表
+        fetchOtaList(params = {}, callback) {
+            $F.doRequest(this,'/pms/oat/oat_list',params,res=>{
+                callback(res.oatList || [])
+            })
+        },
+
         //获取销售员
         fetchSalesList(params = {}, callback) {
             $F.merge(params, {

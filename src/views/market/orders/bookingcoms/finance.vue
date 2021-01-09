@@ -128,7 +128,7 @@
         </el-form-item>
           <el-form-item :label="$t('desk.order_selectPayWay') + ':'">
               <el-radio-group v-model="consumeOperForm.payType">
-                  <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
+                  <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio>
               </el-radio-group>
           </el-form-item>
         <el-form-item :label="$t('desk.customer_sum')+':'">

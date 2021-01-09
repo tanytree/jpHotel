@@ -278,19 +278,10 @@
             <h3>{{ $t("desk.roomInfoDesc") }}</h3>
             <div class="roomMsg">
                 <div class="left">
-                    <el-form inline size="small">
+                    <el-form inline size="small" v-if="operCheckinType != 'b3'">
                         <el-form-item>
-                            <el-select
-                                v-model="getRoomsForm.bedCount"
-                                @change="getDataList"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    :value="key"
-                                    v-for="(item, key, index) of $t('commons.bedCount')"
-                                    :label="item"
-                                    :key="index"
-                                ></el-option>
+                            <el-select v-model="getRoomsForm.bedCount" @change="getDataList" :placeholder="$t('commons.placeChoose')">
+                                <el-option :value="key" v-for="(item, key, index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-form>
@@ -567,11 +558,7 @@
             ></checkTheDetails>
         </el-dialog>
         <!--        客源类型-->
-        <guestChoose
-            @guestChooseCallback="guestChooseCallback"
-            ref="guestChoose"
-            :checkInForm="checkInForm"
-        ></guestChoose>
+        <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="checkInForm"></guestChoose>
 
         <!--        排房组件 -->
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
@@ -988,9 +975,9 @@ export default {
             }
             let params = {};
             this.makeStoresNum(params);
-            this.$F.doRequest(this,'/pms/oat/oat_list',params,res=>{
-                console.log(res);
-                this.otaList = res.oatList;
+            this.$F.commons.fetchOtaList(params, (list)=> {
+                this.otaList = list;
+                this.$forceUpdate();
             })
             this.handleOperCheckinType();
             params = { salesFlag: 1 }
@@ -1149,9 +1136,7 @@ export default {
             //客源类型选择
             if (type == "guestTypeShow") {
                 // this.guestTypeShow = true;
-                this.checkInForm.guestType = this.checkInForm.guestType
-                    ? this.checkInForm.guestType.toString()
-                    : "1";
+                this.checkInForm.guestType = this.checkInForm.guestType ? this.checkInForm.guestType.toString() : "1";
                 this.$refs.guestChoose.dialogOpen(this.checkInForm);
             } else if (type == "bin") {
                 this.$F.doRequest(
@@ -1577,24 +1562,34 @@ export default {
             };
             this.nameLoading = true;
             this.makeStoresNum(params);
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/checkin_order_list",
-                params,
+            this.$F.doRequest(this, "/pms/checkin/checkin_order_list", params,
                 (res) => {
                     this.nameLoading = false;
                     this.options = res.roomPersonList || [];
-                    this.options.forEach((element) => {
-                        element.value =
-                            element.name +
-                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
-                            (element.mobile || "") +
-                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
-                            (element.idcard ? element.idcard.slice(-4) : "");
-                    });
+                    this.getReverveList(params, ()=> {
+                        this.options.forEach((element) => {
+                            element.value =
+                                element.name +
+                                "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                                (element.mobile || "") +
+                                "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                                (element.idcard ? element.idcard.slice(-4) : "");
+                        });
+                        cb(this.options);
+                        this.$forceUpdate();
+                    })
+                }
+            );
+        },
 
-                    cb(this.options);
-                    this.$forceUpdate();
+        getReverveList(params, callback) {
+            this.$F.doRequest(
+                this,
+                "/pms/reserve/reserve_order_list",
+                params,
+                (res) => {
+                    this.options = this.options.concat(res.resreveList || []);
+                    callback()
                 }
             );
         },

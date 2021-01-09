@@ -33,29 +33,19 @@
   window.SITE_CONFIG['storeState'] = {};                  // vuex本地储存初始化状态（用于不刷新页面的情况下，也能重置初始化项目中所有状态）
 
 </script>
-<!-- 生产环境 -->
+<!-- 测试环境 -->
 <% if (process.env.NODE_ENV == 'development') { %>
 <script>
-
-  window.SITE_CONFIG['apiURL'] = './api';
   window.SITE_CONFIG['sysURL'] = './system';
-  window.SITE_CONFIG['newApi'] = './newApi';
-
-
 </script>
 <% } %>
 <!-- 生产环境 -->
 <% if (process.env.NODE_ENV == 'production') { %>
 <script>
 
-  window.SITE_CONFIG['apiURL'] = 'https://www.iif2f.com/public/index.php/';
-
-  window.SITE_CONFIG['newApi'] = 'https://www.iif2f.com/public/index.php/';
-
-
   // window.SITE_CONFIG['sysURL'] = '';
+  // window.SITE_CONFIG['sysURL'] = 'https://pms-api-dev.sgi-smacha.tokyo';
   window.SITE_CONFIG['sysURL'] = 'pms-server';
-
 </script>
 <% } %>
 

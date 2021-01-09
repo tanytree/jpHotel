@@ -7,14 +7,15 @@
 
 <template>
   <div class="boss-index">
-    <el-tabs class="tabCenter" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane :label="$t('desk.book_venueBook')" name="b3">
-        <normal :operCheckinType="activeName"></normal>
-      </el-tab-pane>
-      <!-- <el-tab-pane :label="$t('desk.book_meetVerification')" name="second">
-        <c2></c2>
-      </el-tab-pane> -->
-    </el-tabs>
+      <normal :operCheckinType="activeName"></normal>
+<!--    <el-tabs class="tabCenter" v-model="activeName" @tab-click="handleClick">-->
+<!--      <el-tab-pane :label="$t('desk.book_venueBook')" name="b3">-->
+<!--        -->
+<!--      </el-tab-pane>-->
+<!--      &lt;!&ndash; <el-tab-pane :label="$t('desk.book_meetVerification')" name="second">-->
+<!--        <c2></c2>-->
+<!--      </el-tab-pane> &ndash;&gt;-->
+<!--    </el-tabs>-->
   </div>
 </template>
 <script>
