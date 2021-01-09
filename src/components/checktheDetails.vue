@@ -26,8 +26,6 @@
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_livePeople')+ ':'">
-<!--                                <el-input :placeholder="$t('desk.customer_inputName')" v-model="roomInfo.headerObj.name" size="small" style="width: 95px"></el-input>-->
-<!--                                <el-input :placeholder="$t('desk.book_inputFayin')" v-model="roomInfo.headerObj.pronunciation" size="small" style="width: 95px; margin-left: 5px"></el-input>-->
                                 <el-autocomplete
                                     style="width: 100px"
                                     v-model="roomInfo.headerObj.name"
@@ -37,7 +35,7 @@
                                     popper-class="popper-class"
                                     :trigger-on-focus="false"
                                     :placeholder="$t('desk.book_inputContent')"
-                                    @select="changeName($event)"
+                                    @select="changeName($event, roomInfo.headerObj)"
                                 ></el-autocomplete>
                                 <el-input
                                     style="width: 110px; margin-left: 10px"
@@ -239,25 +237,27 @@ export default {
             this.currentRoom = this.$route.params.currentRoom || "";
             if (this.type == 3) {
                 this.detailData = {
-                    checkIn: {
-                        id:
-                            this.currentRoom.checkinId ||
-                            this.currentRoom.checkinReserveId,
-                    },
+                    checkIn: {id: this.currentRoom.checkinId || this.currentRoom.checkinReserveId,},
                     inRoomList: [this.currentRoom],
                 };
             } else {
                 this.detailData = this.$F.deepClone(
                     this.$route.params.detailData
                 );
+                if (this.detailData.inRoomList && this.detailData.inRoomList.length > 0) {
+                    let inRoomListTemp = [];
+                    this.detailData.inRoomList.forEach((room) => {
+                        if (room.state != 1) {
+                            inRoomListTemp.push(room);
+                        }
+                    })
+                    this.detailData.inRoomList = inRoomListTemp;
+                }
             }
         }
 
         this.inRoomList = [];
-        if (
-            this.detailData.inRoomList &&
-            this.detailData.inRoomList.length > 0
-        ) {
+        if (this.detailData.inRoomList && this.detailData.inRoomList.length > 0) {
             this.detailData.inRoomList.forEach((room) => {
                 let object = {
                     headerObj: {
@@ -361,25 +361,20 @@ export default {
     },
 
     methods: {
-        changeName(e) {
+        changeName(e, personInfo) {
             console.log(e);
+            debugger
             if (e.name) {
-                this.baseInfo = e;
-                this.checkInForm.name = e.name;
-                this.checkInForm.pronunciation = e.pronunciation;
-                this.checkInForm.guestType = e.guestType ? e.guestType.toString() : '';
-                this.checkInForm.idcard = e.idcard;
-                // this.checkInForm.idcardType = e.idcardType.toString();
-                this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '1';
-                this.checkInForm.mobile = e.mobile;
-                // this.checkInForm.orderSource = e.orderSource.toString();
-                this.checkInForm.orderSource = e.orderSource ? e.orderSource.toString() : '';
-                // this.checkInForm.orderType = e.orderType.toString();
-                this.checkInForm.orderType = e.orderType;
-                // this.checkInForm.sex = e.sex.toString();
-                this.checkInForm.sex = e.sex ? e.sex.toString() : '';
-                this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : "";
-                this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : "";
+                delete e['checkIn'];
+                delete e['checkinId'];
+                delete e['checkinRoomId'];
+                delete e['createTime'];
+                e.sex = e.sex ? e.sex.toString() : '1';
+                this.$F.removeNullKey(e, true);
+                console.log(JSON.parse(JSON.stringify(personInfo)))
+                console.log(JSON.parse(JSON.stringify(e)))
+                debugger
+                this.$F.merge(personInfo, e);
             } else {
                 this.checkInForm.name = e;
             }
@@ -399,7 +394,7 @@ export default {
                 "/pms/checkin/hotel_checkin_person_list",
                 params,
                 (res) => {
-                    debugger
+                    this.options = res.personList || [];
                     this.options.forEach((element) => {
                         element.value =
                             element.name +

@@ -1552,6 +1552,7 @@ export default {
             console.log(val);
         },
         remoteMethod(query, cb) {
+            this.options = [];
             let params = {
                 name: query,
                 searchType: 1,
@@ -1562,11 +1563,11 @@ export default {
             };
             this.nameLoading = true;
             this.makeStoresNum(params);
-            this.$F.doRequest(this, "/pms/checkin/checkin_order_list", params,
-                (res) => {
-                    this.nameLoading = false;
-                    this.options = res.roomPersonList || [];
-                    this.getReverveList(params, ()=> {
+            if (this.operCheckinType.startsWith('a')) {
+                this.$F.doRequest(this, "/pms/checkin/checkin_order_list", params,
+                    (res) => {
+                        this.nameLoading = false;
+                        this.options = res.roomPersonList || [];
                         this.options.forEach((element) => {
                             element.value =
                                 element.name +
@@ -1577,9 +1578,22 @@ export default {
                         });
                         cb(this.options);
                         this.$forceUpdate();
-                    })
-                }
-            );
+                    }
+                );
+            } else {
+                this.getReverveList(params, ()=> {
+                    this.options.forEach((element) => {
+                        element.value =
+                            element.name +
+                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                            (element.mobile || "") +
+                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                            (element.idcard ? element.idcard.slice(-4) : "");
+                    });
+                    cb(this.options);
+                    this.$forceUpdate();
+                })
+            }
         },
 
         getReverveList(params, callback) {

@@ -9,14 +9,14 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">{{$t('desk.order_addRoom')}}</el-button>
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)">{{$t('desk.order_livePeopleManegerment')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.batchCheckin") }}</el-button>
+        <el-button size="small" plain @click="addRoom">{{$t('desk.order_addRoom')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(1)">{{$t('desk.order_livePeopleManegerment')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(2)">{{ $t("desk.batchCheckin") }}</el-button>
         <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown size="small" split-button type="primary">
           {{ $t("commons.moreOperating") }}
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">{{ $t("desk.order_changeSource") }}</el-dropdown-item>
+            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_changeSource") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item>

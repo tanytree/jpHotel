@@ -9,27 +9,28 @@
     <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="title ? title : $t('desk.home_modityReserved')" width="80%">
 
         <el-row style="margin-bottom:60px" v-loading="loading">
-            <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"
-                                            :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss"
-                                            value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays">
-                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-            </el-form>
+            <!--这里暂时不要做的那么细  接口暂时不支持修改单个房间预抵预离-->
+<!--            <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">-->
+<!--                <el-row>-->
+<!--                    <el-col :span="6">-->
+<!--                        <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">-->
+<!--                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"-->
+<!--                                            :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss"-->
+<!--                                            value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>-->
+<!--                        </el-form-item>-->
+<!--                    </el-col>-->
+<!--                    <el-col :span="6">-->
+<!--                        <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays">-->
+<!--                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>-->
+<!--                        </el-form-item>-->
+<!--                    </el-col>-->
+<!--                    <el-col :span="6">-->
+<!--                        <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">-->
+<!--                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>-->
+<!--                        </el-form-item>-->
+<!--                    </el-col>-->
+<!--                </el-row>-->
+<!--            </el-form>-->
             <el-form inline size="mini">
                 <el-row>
                     <el-col :span="17">

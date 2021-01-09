@@ -119,19 +119,27 @@ const $F = {
         })
     },
 
+    removeNullKey(params, toString) {
+        for (let key in params) {
+            let value = params[key];
+            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
+                || ((value instanceof Array) && value.length == 0)) {
+                delete params[key];
+            } else {
+                if (toString) {
+                    params[key] = params[key].toString();
+                }
+            }
+        }
+    },
+
     doRequest($instance, url, params = {}, callback, errorCallback) {
         if ($instance) {
             $instance.dataListLoading = true
             $instance.loading = true
         }
         params = this.deepClone(params);
-        for (let key in params) {
-            let value = params[key];
-            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
-                || ((value instanceof Array) && value.length == 0)) {
-                delete params[key];
-            }
-        }
+        this.removeNullKey(params)
         request(url, params).then((res) => {
             if ($instance) {
                 $instance.dataListLoading = false

@@ -63,10 +63,12 @@
                     </el-tabs>
                 </el-row>
                 <el-row v-else>
-                    <roominfo v-if="detailData.checkIn.id && currentRoom.id" :currentRoom="currentRoom" :checkinInfo="detailData.checkIn" @baseInfoChange="baseInfoChange"></roominfo>
+                    <roominfo @baseInfoChange="baseInfoChange" ref="roominfo"></roominfo>
                 </el-row>
             </div>
+
         </div>
+
     </div>
 </template>
 
@@ -127,6 +129,10 @@ export default {
             console.log(item);
             console.log(this.detailData);
             this.currentRoom = item;
+            setTimeout(() => {
+                this.$refs.roominfo.dialogOpen(this.currentRoom, this.detailData.checkIn)
+            }, 100)
+
         },
         goBack(){
           this.$router.go(-1);
