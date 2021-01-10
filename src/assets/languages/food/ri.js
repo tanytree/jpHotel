@@ -303,6 +303,7 @@ module.exports = {
 
         tabs_title_1:'交替前の基本情報',
         tabs_time_1:'シフト時間',
+        to:'-',
         tabs_num:'シフト',
         acter:'担当者',
 

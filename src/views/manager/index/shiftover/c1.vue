@@ -14,18 +14,18 @@
         </el-button>
     </el-row>
     <el-row style="padding-top: 20px;">
-      <h3>预交班基本信息</h3>
+      <h3>{{$t('food.shift.tabs_title_1')}}</h3>
       <el-row>
         <el-col :span="12">
           <div class="item">
-            班次时间：{{info.workStarTime}} 至 {{info.workEndTime}}
+            {{$t('food.shift.tabs_time_1')}}：{{info.workStarTime}} {{$t('food.shift.to')}} {{info.workEndTime}}
           </div>
         </el-col>
         <el-col :span="12">
-          <div class="item">班次号：{{info.handoveNum}}</div>
+          <div class="item">{{$t('food.shift.tabs_num')}}：{{info.handoveNum}}</div>
         </el-col>
         <el-col :span="12">
-          <div class="item">交班操作员：{{account}}</div>
+          <div class="item">{{$t('food.shift.acter')}}：{{account}}</div>
         </el-col>
         <el-col :span="12">
             <div class="item">
@@ -39,24 +39,17 @@
     </el-row>
     <el-divider></el-divider>
     <el-row>
-      <h3>本班账务汇总信息</h3>
-      <div class="total">收入总计：{{info.income}}日元</div>
+      <h3>{{$t('food.shift.tabs_title_2')}}</h3>
+      <div class="total">{{$t('food.shift.total')}}：{{info.income}}日元</div>
       <el-row class="padding-tb-10">
-
           <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
-
-
         <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
           <div class="item">{{$t('manager.priceType.'+item.priceType)}}：<span class="red">{{item.total}}</span>日元</div>
         </el-col>
-
-
       </el-row>
-      <div class="total">结算总计：{{info.settlement}}日元</div>
+      <div class="total">{{$t('food.shift.totalFee')}}：{{info.settlement}}日元</div>
       <el-row class="padding-tb-10">
-
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
-
         <el-col :span="4" v-for="(item,index) in info.orderPayTypeList" :key="index">
           <div class="item">{{$t('manager.payType.'+item.payType)}}：<span class="blue">{{item.total}}</span>日元</div>
         </el-col>
@@ -64,7 +57,7 @@
     </el-row>
     <el-row>
       <h3>
-        本班现金上交&nbsp;&nbsp;
+       {{$t('food.shift.tabs_title_3')}} &nbsp;&nbsp;
         <el-tag size="mini">当前交班模式：
             <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
             <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
@@ -143,7 +136,7 @@
         </div>
         <div class="margin-b-10">备用金额度=({{info.pettyCash}})</div>
         <div class="margin-b-10">
-            上班留存备用金+本班现金收款=
+            {{$t('food.shift.onHas')}} +本班现金收款=
             ({{info.upMoneyRetained}}) + ({{info.nowMoneyRetained}})= ({{getTotal(info.upMoneyRetained,info.nowMoneyRetained)}})
             {{getPriceState(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) ? '>' :'<'}}
             ({{info.pettyCash}})
@@ -165,7 +158,7 @@
         </div>
         <!-- <div>本班微信上交=本班微信收款=(0)</div> -->
         <div class="margin-b-10">本班信用卡上交=本班信用卡收款=({{info.nowCreditCardHandin}})</div>
-        <div class="margin-b-10"  v-if="info.handoverStatus == 1" >本班挂账上交=本班挂账金额</div>
+        <div class="margin-b-10"  v-if="tabCurr == 1" >本班挂账上交=本班挂账金额</div>
         <div class="margin-b-10"></div>
      </el-dialog>
   </div>
