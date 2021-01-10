@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 11:48:25
+ * @LastEditTime: 2021-01-10 20:12:18
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -516,6 +516,18 @@ module.exports = {
   grsl_sureDisable: '使用禁止確認しますか？',
   grsl_ifSureDelete: '削除確認しますか？',
   grsl_superior: '上一段',
+  add_lsat15: '未翻译词条',
+  add_next15: '未翻译词条',
+  add_peoAsit: '未翻译词条',
+  add_resetPrice: '未翻译词条',
+  add_newDoorPri: '未翻译词条',
+  add_nowTime: '未翻译词条',
+  add_chooseTime: '未翻译词条',
+  add_peoplePrice: '未翻译词条',
+  add_onlyLive: '未翻译词条',
+  add_liveAzao: '未翻译词条',
+  add_liveAwan: '未翻译词条',
+  add_zaoAwan: '未翻译词条',
 
 
 

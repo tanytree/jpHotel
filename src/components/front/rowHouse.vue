@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-24 16:43:14
- * @FilePath: \jiudian\src\components\front\checkInInfo.vue
+ * @LastEditTime: 2021-01-10 19:19:27
+ * @FilePath: \jiudian\src\components\front\rowHouse.vue
  -->
 <template>
     <div>
@@ -10,7 +10,7 @@
             <!-- 房间选择块 -->
             <div class="topBigbox">
                 <div class="eackBlock" v-for="(item, key) in floorList" :key="key">
-                    <div class="eackTitle">{{item.building.name}}  {{item.name}}  {{item.roomList.length}} 间</div>
+                    <div class="eackTitle">{{item.building.name}}  {{item.name}}  {{item.roomList.length}} {{$t('manager.hk_space')}}</div>
                     <div style="margin-top: 10px">
                         <el-checkbox-group v-model="selectList" size="small" :max="maxSelect">
                             <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in item.roomList" :label="room.houseNum" :key="index"
@@ -22,9 +22,9 @@
             </div>
             <!-- 时间选择块 -->
             <div class="timeBox">
-                <el-link :disabled="startTime <= nowDateString" size="small" @click="dateBefore14"><i class="el-icon-d-arrow-left" style="margin-right: 5px"></i>往前14天</el-link>
+                <el-link :disabled="startTime <= nowDateString" size="small" @click="dateBefore14"><i class="el-icon-d-arrow-left" style="margin-right: 5px"></i>{{$t('desk.add_go14')}}</el-link>
                 <div class="middleTime">{{ startTime}} - {{endTime }}</div>
-                <el-link type="primary" size="small" @click="dateLater14">往后14天<i class="el-icon-d-arrow-right" style="margin-left: 5px"></i></el-link>
+                <el-link type="primary" size="small" @click="dateLater14">{{$t('desk.add_back14')}}<i class="el-icon-d-arrow-right" style="margin-left: 5px"></i></el-link>
             </div>
             <!-- 日历表格块 -->
             <div class="riliBox" v-loading="loading">

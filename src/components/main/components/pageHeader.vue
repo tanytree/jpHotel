@@ -15,9 +15,9 @@
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item @click.native="toggleLang('zh')"
-                                          :disabled="$i18n.locale == 'zh'">中文</el-dropdown-item>
+                                          :disabled="$i18n.locale == 'zh'">{{$t('login.chinese')}}</el-dropdown-item>
 						<el-dropdown-item @click.native="toggleLang('ri')"
-                                          :disabled="$i18n.locale == 'ri'">日本語</el-dropdown-item>
+                                          :disabled="$i18n.locale == 'ri'">{{$t('login.japanese')}}</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 			</span>
@@ -34,7 +34,7 @@
 					</span>
 					<el-dropdown-menu slot="dropdown">
 						<!--             <el-dropdown-item @click.stop="modelShowfuc">我的资料</el-dropdown-item>-->
-						<el-dropdown-item @click.native="modelShowfuc">退出系统</el-dropdown-item>
+						<el-dropdown-item @click.native="modelShowfuc">{{$t('login.backLogin')}}</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 			</span>

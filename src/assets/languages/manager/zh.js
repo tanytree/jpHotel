@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 11:46:53
+ * @LastEditTime: 2021-01-10 20:06:13
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -535,18 +535,18 @@ module.exports = {
   add_moreThanNot: '最大输入数值不超过100',
   add_inputNumShould: '输入数值不小于0',
   add_editorSuccess: '编辑成功',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
+  add_lsat15: '前15天',
+  add_next15: '后15天',
+  add_peoAsit: '人数/座位数',
+  add_resetPrice: '调改价',
+  add_newDoorPri: '新门市价',
+  add_nowTime: '当前时间',
+  add_chooseTime: '请选择时间',
+  add_peoplePrice: '人价',
+  add_onlyLive: '纯住宿',
+  add_liveAzao: '住宿+早',
+  add_liveAwan: '住宿+晚',
+  add_zaoAwan: '住宿+早+晚',
   add_: '',
   add_: '',
   add_: '',

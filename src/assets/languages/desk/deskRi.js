@@ -884,6 +884,8 @@ module.exports = {
   home_idCardNumA: '身分証明書番号',
   book_bookText: '未翻译词条',
   book_placeRowHouse: '未翻译词条',
+  add_go14: '未翻译词条',
+  add_back14: '往后未翻译词条14天',
 
 
 

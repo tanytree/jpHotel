@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 14:19:05
+ * @LastEditTime: 2021-01-10 19:08:28
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -58,7 +58,7 @@
 
     <!--表格数据 -->
     <el-table :data="checkinInfo.inRoomList" header-row-class-name="default" border style="width: 100%" :span-method="arraySpanMethod">
-      <el-table-column prop="name" label="入住人/单位名称/团队名">
+      <el-table-column prop="name" :label="$t('desk.home_allLiveWay')">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <!--                    显示入住人  入主入住人没有 则显示订单外的订单信息-->
@@ -78,7 +78,7 @@
             </span>
           </div>
           <!-- <div v-if="$index < 3">{{ row.name }}</div> -->
-          <div v-if="$index ==checkinInfo.inRoomList.length-1">备注</div>
+          <div v-if="$index ==checkinInfo.inRoomList.length-1">{{$t('desk.home_note')}}</div>
           <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1">留言</div> -->
 
         </template>

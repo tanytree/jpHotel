@@ -175,7 +175,7 @@
 				rules: {
 					rules: [{
 						required: true,
-						message: '请选择时间',
+						message:this.$t('manager.add_chooseTime'),
 						trigger: "blur",
 					}, ],
 				}
