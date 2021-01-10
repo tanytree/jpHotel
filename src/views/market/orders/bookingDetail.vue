@@ -29,10 +29,10 @@
                         state：2 离店
                         -->
                         <span class="ok" v-if="item.state == 1">{{ $t('commons.checkinState')['1'] }}</span>
-                        <span class="ok" v-if="item.state == 3 && item.roomId">{{ $t('desk.hadRowHouses') }}</span>
+                        <span class="ok" v-if="(item.state == 3 && item.roomId) || (item.state == 2 && item.roomId)">{{ $t('desk.hadRowHouses') }}</span>
 <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
                         <span class="no" v-if="!item.roomId">{{ $t('desk.noRowHouses') }}</span>
-                        <span class="no" v-if="item.state == 2 && item.roomId">{{ $t('food.order_status')[3] }}</span>
+<!--                        <span class="no" v-if="">{{ $t('food.order_status')[3] }}</span>-->
                     </li>
                 </ul>
             </div>
