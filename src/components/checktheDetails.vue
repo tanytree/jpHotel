@@ -37,11 +37,7 @@
                                     :placeholder="$t('desk.book_inputContent')"
                                     @select="changeName($event, roomInfo.headerObj)"
                                 ></el-autocomplete>
-                                <el-input
-                                    style="width: 110px; margin-left: 10px"
-                                    v-model="roomInfo.headerObj.pronunciation"
-                                    :placeholder="$t('desk.home_nameA')"
-                                ></el-input>
+                                <el-input style="width: 110px; margin-left: 10px" v-model="roomInfo.headerObj.pronunciation" :placeholder="$t('desk.home_nameA')"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
@@ -312,7 +308,7 @@ export default {
                     checkinRoomId: "", //房间id  int必填
                     name: "", //          姓名  String必填
                     pronunciation: "", // 姓名发音String必填
-                    idcardType: "1", //    证件类型 1身份证  2护照  Integer必填
+                    idcardType: "2", //    证件类型 1身份证  2护照  Integer必填
                     idcard: "", //       证件号码  String必填
                     sex: "1", //           性别 1男  2女 3保密  Integer必填
                     mobile: "", //        手机号  String必填
@@ -335,19 +331,6 @@ export default {
                     enterAddressZip2: "", //      单位地址邮编2  String选填
                     enterAddress: "", //      单位地址  String选填
                 },
-                //
-                //         checkinRoomId 房间id  int必填
-                //         *                                           name          姓名  String必填
-                //             *                                           pronunciation 姓名发音String必填
-                //         *                                           idcardType    证件类型 1身份证  2护照  Integer必填
-                //             *                                           idcard        证件号码  String必填
-                //             *                                           sex           性别 1男  2女 3保密  Integer必填
-                //             *                                           mobile        手机号  String必填
-                //             *                                           id            入住人表id  传改值可以编辑入住人信息  String选填
-                //         *                                           housePrice    住宿价格   double必填
-                //             *                                           customerType  客人分类  1大人 2儿童A（小学5年级以上）  3儿童B（3岁至小学5年级） 4儿童C（0至3岁不占床）   int必填
-                // *                                           attachMealId  附餐id-早餐 （附餐列表中获取） string选填
-                // *                                           attachMealIdDinner  附餐id-晚餐 （附餐列表中获取）
             },
             tableData: [],
             //附餐列表
@@ -371,9 +354,28 @@ export default {
                 delete e['createTime'];
                 e.sex = e.sex ? e.sex.toString() : '1';
                 this.$F.removeNullKey(e, true);
-                console.log(JSON.parse(JSON.stringify(personInfo)))
-                console.log(JSON.parse(JSON.stringify(e)))
-                debugger
+                personInfo.name = '';
+                personInfo.pronunciation = '';
+                personInfo.idcardType  = '2';
+                personInfo.idcard = '';
+                personInfo.sex = '1';
+                personInfo.mobile = '';
+                personInfo.customerType = '1';
+                personInfo.attachMealId = '';
+                personInfo.attachMealIdDinner = '';
+                personInfo.email = '';
+                personInfo.region = '';
+                personInfo.homeAddressZip1 = '';
+                personInfo.homeAddressZip2 = '';
+                personInfo.homeAddress = '';
+                personInfo.homeMobile = '';
+                personInfo.phone = '';
+                personInfo.enterName = '';
+                personInfo.enterPinyin = '';
+                personInfo.enterMobile = '';
+                personInfo.enterAddressZip1 = '';
+                personInfo.enterAddressZip2 = '';
+                personInfo.enterAddress = '';
                 this.$F.merge(personInfo, e);
             } else {
                 this.checkInForm.name = e;
@@ -469,7 +471,7 @@ export default {
                 checkinRoomId: roomInfo.room.roomId,
                 housePrice: roomInfo.headerObj.housePrice,
                 sex: "1",
-                idcardType: "1",
+                idcardType: "2",
             });
             console.log(this.inRoomList);
             this.$forceUpdate();
@@ -503,7 +505,6 @@ export default {
             this.inRoomList.forEach((room) => {
                 checkInRoomIds.push(room.room.id);
             })
-            debugger
             if (this.type == "checkin") {
                 this.$emit("personCallback", checkInRoomJson);
             } else {

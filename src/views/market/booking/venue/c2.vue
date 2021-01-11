@@ -361,11 +361,11 @@ export default {
       addCompanyForm: {
         name: "",
         sex: "1",
-        idcardType: "1",
+        idcardType: "2",
         idcard: "",
         mobile: "",
       },
-     
+
       itemInfo: null,
     };
   },
@@ -393,7 +393,7 @@ export default {
                   this.dialogMeet_cancle();
                 }
               );
-      
+
         } else {
           return false;
         }
@@ -405,7 +405,7 @@ export default {
       this.addCompanyForm = {
         name: "",
         sex: "1",
-        idcardType: "1",
+        idcardType: "2",
         idcard: "",
         mobile: "",
       };

@@ -28,7 +28,7 @@
                         >
                             <el-input
                                 class="width150"
-                                type="text"
+                                type="number"
                                 v-model="openInvoiceForm.consumePrice"
                                 autocomplete="off"
                             ></el-input>
@@ -40,22 +40,15 @@
                         >
                             <el-input
                                 class="width150"
-                                type="text"
+                                type="number"
                                 v-model="openInvoiceForm.invoicePrice"
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item
-                            :label="$t('desk.home_phoneNum') + ':'"
-                        >
-                            <el-input
-                                class="width150"
-                                type="text"
-                                v-model="openInvoiceForm.mobile"
-                                autocomplete="off"
-                            ></el-input>
+                        <el-form-item :label="$t('desk.home_phoneNum') + ':'">
+                            <el-input class="width150" type="text" v-model="openInvoiceForm.mobile" autocomplete="off" ></el-input>
                         </el-form-item>
                     </el-col>
 
@@ -133,6 +126,7 @@ export default {
         return {
             openInvoiceShow: false,
             openInvoiceForm: {
+                mobile: '',
                 checkInId: "",
                 consumePrice: 0,
                 invoicePrice: 0,
@@ -189,7 +183,7 @@ export default {
     methods: {
         //开发票按钮点击
         init(item, openInvoiceForm) {
-            // 
+            //
             this.$F.merge(this.openInvoiceForm, openInvoiceForm || {});
             if (item.id) {
                 this.openInvoiceForm.checkInId = item.id;

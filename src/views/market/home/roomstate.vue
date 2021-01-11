@@ -101,15 +101,20 @@
                                             <span>{{ room.houseNum }}</span>
                                             <span>{{ room.hotelRoomType.houseName }}</span>
                                         </div>
-                                        <div class="line" v-if=" room.livingPersonList && room.livingPersonList.length > 0 && (room.checkInRoomType == 1 || room.checkInRoomType == 2)">
-                                            <span>{{ room.livingPersonList[0].name }}</span>
-                                            <span>{{ F_sex(room.livingPersonList[0].sex) }}</span>
-
+                                        <div class="line" v-if=" room.livingPersonList && room.livingPersonList.length > 0 &&  room.checkInObj && (room.checkInRoomType == 1 || room.checkInRoomType == 2)">
+                                            <span v-if="room.checkInRoomType == 1"> {{ $t('desk.home_bookPeople') + '：' + room.livingPersonList[0].name }}</span>
+                                            <span v-if="room.checkInRoomType == 2"> {{ $t('desk.customer_livePeople') + '：' + room.livingPersonList[0].name }}</span>
+                                            <span>{{  '  '  }}</span>
+                                            <span>{{  F_guestType( room.checkInObj.guestType || '1') }}</span>
                                         </div>
-                                        <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && room.checkInObj">
-                                            <span>{{$t('manager.finance_source')}}：{{ F_orderSource(room.checkInObj.orderSource) }}</span>
+                                        <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && room.checkInObj" style="margin-top: 40px">
+                                            <span>{{$t('manager.finance_source')}}：{{
+                                                    F_orderSource(room.checkInObj.orderSource)
+                                                        }}
+                                                    <span v-if="room.checkInObj.orderSource == 5 && room.checkInObj.otaChannelId">-</span>
+                                                    <span v-if="room.checkInObj.orderSource == 5">{{getOtaName(room.checkInObj.otaChannelId)}}</span>
+                                                </span>
                                         </div>
-
                                         <!-- 清扫图标后期加 -->
                                         <div class="placeIcon text-center">
                                             <img v-if="room.roomStatus == 5" :src="require('@/assets/images/frontdesk/fix.png')"/>
@@ -359,6 +364,10 @@ export default {
     },
 
     async mounted() {
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.otaList = list;
+            this.$forceUpdate();
+        })
         await this.getChannel();
         await this.getPersonRoom();
         // await this.getRoomStatus()
@@ -368,6 +377,14 @@ export default {
         this.initForm();
     },
     methods: {
+        getOtaName(otaChannelId) {
+            let array = this.otaList.filter((ota) => {
+                return ota.id == otaChannelId
+            })
+            if (array && array.length > 0) {
+                return array[0].otaName
+            }
+        },
 
         initForm() {
             this.searchForm = {

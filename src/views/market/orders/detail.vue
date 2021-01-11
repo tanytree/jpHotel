@@ -72,7 +72,7 @@
               <div class="detailTabWrap">
                 <div class="el-card detailTab">
                   <div class="el-card__header" style="padding: 0 20px">
-                    <el-tabs v-model="activeName">
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
                       <el-tab-pane :label="$t('desk.order_billingDetails')" name="first">
                         <c2 v-if="isReset" :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail"></c2>
                       </el-tab-pane>
@@ -82,19 +82,6 @@
                             <el-row class="row">
                               <h3>
                                 {{ $t("desk.serve_basicInfo") }}
-                                <!--                                <el-button-->
-                                <!--                                  style="-->
-                                <!--                                    vertical-align: middle;-->
-                                <!--                                    margin-left: 10px;-->
-                                <!--                                    display: inline-block;-->
-                                <!--                                  "-->
-                                <!--                                  size="mini"-->
-                                <!--                                  class="vm"-->
-                                <!--                                  @click="yokeplateHandle"-->
-                                <!--                                  v-if="detailData.inRoomList.length"-->
-                                <!--                                >-->
-                                <!--                                  {{ $t("desk.order_alRoom") }}-->
-                                <!--                                </el-button>-->
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">
@@ -115,19 +102,19 @@
                                 <el-col :span="6" v-for="(item, index) of detailData.inRoomList" :key="index">{{ $t("desk.book_checkin") + ":" }}{{ item.roomTypeName }}（{{ item.houseNum }}）</el-col>
                               </el-row>
                             </el-row>
-                            <el-divider></el-divider>
-                            <el-row class="row">
-                              <h3>{{ $t("desk.order_saleInfo") }}</h3>
-                              <el-row class="cell">
-                                <el-col :span="6">{{ $t("desk.order_salesman") + ":" }}{{ F_salesId(detailData.checkIn.salesId) }}</el-col>
-                              </el-row>
-                            </el-row>
+<!--                            <el-divider></el-divider>-->
+<!--                            <el-row class="row">-->
+<!--                              <h3>{{ $t("desk.order_saleInfo") }}</h3>-->
+<!--                              <el-row class="cell">-->
+<!--                                <el-col :span="6">{{ $t("desk.order_salesman") + ":" }}{{ F_salesId(detailData.checkIn.salesId) }}</el-col>-->
+<!--                              </el-row>-->
+<!--                            </el-row>-->
                           </div>
                         </div>
                       </el-tab-pane>
-                      <el-tab-pane :label="$t('desk.order_guestInfo')" name="third">
-                        <customer />
-                      </el-tab-pane>
+                        <el-tab-pane :label="$t('desk.order_guestInfo')" name="customer">
+                            <checkInInfo type="detail" :orderInfo="detailData" ref="checkInInfo"></checkInInfo>
+                        </el-tab-pane>
                     </el-tabs>
                   </div>
                 </div>
@@ -148,10 +135,12 @@ import c2 from "./coms/c2";
 import customer from "@/components/front/customer";
 import myMixin from "@/utils/filterMixin";
 import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
+import checkInInfo from "@/components/front/checkInInfo";   //客人信息
 
 export default {
   mixins: [myMixin],
   components: {
+      checkInInfo,
     c1,
     c2,
     customer,
@@ -198,6 +187,14 @@ export default {
     });
   },
   methods: {
+      handleClick() {
+          debugger
+          if (this.activeName == 'customer') {
+              console.log(this.detailData);
+              debugger
+              this.$refs.checkInInfo.init('detail', this.detailData);
+          }
+      },
     //点击顶部订单管理
     clickGo() {
       console.log(this.$route.query.member);
@@ -213,7 +210,7 @@ export default {
         this.$router.replace({
           path: "/orders",
           query: {
-            type: this.order,
+            type: 'order',
           },
         });
       }

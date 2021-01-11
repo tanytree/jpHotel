@@ -96,7 +96,7 @@
             <span v-if="row.headerObj">
               ({{
               $t("commons.idCardType")[
-                row.headerObj.idcardType ? row.headerObj.idcardType + "" : "1"
+                row.headerObj.idcardType ? row.headerObj.idcardType + "" : "2"
               ]
             }}) {{ row.headerObj.idcard }}
             </span>
@@ -177,7 +177,7 @@
           <el-col :span="6">
             <el-form-item :label="$t('desk.home_cardAnumber')+':'">
               ({{
-                              $t("commons.idCardType")[currentCustomer.headerObj.idcardType ? currentCustomer.headerObj.idcardType + "" : "1"]
+                              $t("commons.idCardType")[currentCustomer.headerObj.idcardType ? currentCustomer.headerObj.idcardType + "" : "2"]
                           }}) {{ currentCustomer.headerObj.idcard }}
             </el-form-item>
           </el-col>

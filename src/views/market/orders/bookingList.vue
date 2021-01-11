@@ -445,8 +445,7 @@ export default {
           return value;
       },
       checkPlatform(otaChannelId) {
-          console.log(this.platformList)
-          let array =  this.platformList.filter(item => {
+          let array =  this.otaList.filter(item => {
               return item.id == otaChannelId
           }) || [{}]
           return array.length > 0 ? array[0].otaName : '';
@@ -475,10 +474,7 @@ export default {
         this.realtime_room_statistics();
         //加载数据
         //加载渠道
-        this.$F.commons.fetchOtaList({}, (list)=> {
-            this.platformList = list;
-            this.getDataList();
-        })
+        this.getDataList();
 
     },
     /**获取表格数据 */

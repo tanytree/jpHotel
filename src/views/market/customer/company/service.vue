@@ -71,7 +71,7 @@
             {{row.onAccountTotal || row.consumePrice || 0}}
           </template>
         </el-table-column>
-        
+
         <el-table-column
           prop="checkInPerson.checkIn.name"
           :label="$t('desk.home_consumerNamesA')"
@@ -208,7 +208,7 @@ export default {
     // 重置
     resetForm() {
       this.searchForm = {
-        storesNum: "",
+        // storesNum: "",
         enterId: "",
         state: "",
         startTime: "", //考试时件

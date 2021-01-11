@@ -101,8 +101,10 @@ export default {
     },
     mounted() {
         this.nowDateString= this.$F.formatDate('yyyy-MM-dd');
+
     },
     methods: {
+
         //点击挂账按钮
         paymentVisible(){
           console.log(this.currentRoom);

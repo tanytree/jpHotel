@@ -230,7 +230,7 @@ export default {
             let object = {
                 checkinRoomId: this.checkinInfo.id,
                 name: this.checkinInfo.name,
-                idcardType: this.checkinInfo.idcardType || '1',
+                idcardType: this.checkinInfo.idcardType || '2',
                 idcard: this.checkinInfo.idcard,
                 sex: this.checkinInfo.sex || '1',
                 mobile: this.checkinInfo.mobile,

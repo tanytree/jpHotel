@@ -94,11 +94,7 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="OTA" prop="orderSource" v-if="checkInForm.orderSource==5" >
-                    <el-select  v-model="checkInForm.otaChannelId" >
-                        <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
-                    </el-select>
-                </el-form-item>
+
                 <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
                     <el-select
                         v-model="checkInForm.orderSource"
@@ -111,7 +107,11 @@
                             :key="index"
                         ></el-option>
                     </el-select>
-
+                </el-form-item>
+                <el-form-item label="OTA" prop="orderSource" v-if="checkInForm.orderSource==5" >
+                    <el-select  v-model="checkInForm.otaChannelId" >
+                        <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
                     <el-input type="textarea" v-model="checkInForm.remark"></el-input>
@@ -351,205 +351,9 @@
                 <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>
             </div>
         </div>
-        <!-- 排房dialog -->
-        <el-dialog
-            top="0"
-            :visible.sync="liveInPersonShow"
-            class="liveInPersonDia"
-            :title="$t('desk.order_rowHouses')"
-            width="80%"
-        >
-            <el-table
-                v-loading="loading"
-                :data="liveInPersonData"
-                style="width: 100%; margin-bottom: 20px"
-                row-key="id"
-                border
-                :default-expand-all="true"
-                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-            >
-                <el-table-column :label="$t('desk.customer_roomKind')" width="100">
-                    <template slot-scope="scope">
-                        {{ scope.row.isChild ? "" : scope.row.houseNum }}
-                        {{ scope.row.isChild ? "" : scope.row.roomTypeName }}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="realPrice"
-                    :label="$t('desk.book_roomPriceText')"
-                    width="100"
-                >
-                </el-table-column>
-                <!-- <el-table-column prop="" label="排房" width="150">
-                        </el-table-column> -->
-                <el-table-column :label="$t('desk.home_name')" width="150">
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-input
-                                v-model="row.name"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('commons.idCardTypeDesc')"
-                    width="150"
-                >
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-select
-                                v-model="row.idcardType"
-                                style="width: 100%"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    :value="key"
-                                    v-for="(item, key, index) of $t('commons.idCardType')"
-                                    :label="item"
-                                    :key="index"
-                                ></el-option>
-                            </el-select>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('desk.customer_documentNum')"
-                >
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-input
-                                v-model="row.idcard"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column :label="$t('desk.customer_sex')" width="120">
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-select
-                                v-model="row.sex"
-                                style="width: 100%"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    v-for="(item, key, index) of $t('commons.F_sex')"
-                                    :label="item"
-                                    :value="key"
-                                    :key="index"
-                                ></el-option>
-                            </el-select>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('desk.order_moblePhone')"
-                    width="150"
-                >
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-input
-                                v-model="row.mobile"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column :label="$t('commons.operating')" width="180">
-                    <template slot-scope="scope">
-                        <el-button
-                            type="text"
-                            size="mini"
-                            v-if="scope.row.isChild && !scope.row.isIndex0"
-                        >
-                            {{ $t("commons.delete") }}
-                        </el-button>
-                        <el-button
-                            type="text"
-                            v-if="!scope.row.isChild"
-                            size="mini"
-                            @click="addGuest(scope.row, scope.$index)"
-                        >
-                            <!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
-                            <template>+{{ $t("desk.customer_toTheGuest") }}</template>
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="liveInPersonCancel">{{
-                $t("commons.cancel")
-            }}</el-button>
-        <el-button
-            size="small"
-            type="primary"
-            @click="liveInPersonShow = false"
-        >{{ $t("commons.confirm") }}</el-button
-        >
-      </span>
-        </el-dialog>
-        <el-dialog
-            top="0"
-            :show-close="false"
-            :title="$t('desk.home_roomCardOpreat')"
-            :visible.sync="mackcade"
-            width="60%"
-        >
-            <el-row>
-        <span
-        >{{ $t("desk.home_haveOne") }}&nbsp;&nbsp;{{
-                $t("desk.home_haveCardNum")
-            }}：{{ liveCardData.done }}</span
-        >
-                <el-col :span="8" style="float: right">
-                    <el-button @click="make_card_status">{{
-                            $t("desk.home_makeCard")
-                        }}</el-button>
-                    <el-button>{{ $t("desk.home_clearCard") }}</el-button>
-                    <el-button>{{ $t("desk.home_readCard") }}</el-button>
-                </el-col>
-            </el-row>
-            <el-table
-                ref="multipleTable"
-                :data="liveCardData.checkInRoomList"
-                @selection-change="handleSelectionChange"
-                tooltip-effect="dark"
-                style="width: 100%"
-            >
-                <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column
-                    prop="name"
-                    :label="$t('desk.home_roomNum')"
-                    width="200"
-                >
-                    <template slot-scope="{ row }">
-                        {{ row.room ? row.room.houseNum : "" }}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="name" :label="$t('desk.home_nowMakeState')">
-                    <template slot-scope="{ row }">
-                        {{ F_markCard(row.markCard) }}
-                    </template>
-                </el-table-column>
-            </el-table>
-            <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="mackcadeCancel">{{
-                $t("commons.cancel")
-            }}</el-button>
-      </span>
-        </el-dialog>
+
         <!-- 添加入住人 -->
-        <el-dialog
-            top="0"
-            :show-close="false"
-            :title="$t('desk.order_rowHouses')"
-            :visible.sync="addLivePersonShow"
-            width="90%"
-        >
+        <el-dialog top="0" :show-close="false" :title="$t('desk.order_rowHouses')" :visible.sync="addLivePersonShow" width="90%">
             <checkTheDetails
                 v-if="addLivePersonShow"
                 checkinType="checkin"
@@ -651,14 +455,6 @@ export default {
                         // message: '请输入手机号',
                         message: this.$t("commons.mustInput"),
                         trigger: "blur",
-                    },
-                ],
-                idcardType: [
-                    {
-                        required: true,
-                        message: this.$t("commons.placeChoose"),
-                        // message: '请选择护照类型',
-                        trigger: "change",
                     },
                 ],
                 idcard: [
@@ -815,7 +611,6 @@ export default {
             rowRoomShow: false,
             showDetail: false,
             guestTypeShow: false,
-            liveInPersonShow: false,
             mackcade: false,
             nameLoading: false,
             options: [],
@@ -1053,7 +848,7 @@ export default {
                 mobile: "", //电话  String选填
                 orderSource: "1", //订单来源  1前台 2销售推荐 3渠道订单 10其他  Integer必填
                 sex: "1", //    入住人性别 1男 2女 3保密  Integer必填
-                idcardType: "1", // 证件类型  1身份证 2护照  Integer必填
+                idcardType: "2", //  2护照  Integer必填
                 idcard: "", //证件号码  String必填
                 memberCard: "", // 会员卡号  String选填
                 checkinTime: "", // 预抵时间/到店时间 yyyy-MM-dd hh:mm:ss格式  String必填
@@ -1504,6 +1299,11 @@ export default {
                         roomTypeObject.roomsArr.forEach((room, index) => {
                             room.roomTypeName = roomTypeObject.roomTypeName;
                             room.houseNum = room.houseNum;
+                            room.sex = this.checkInForm.sex;
+                            room.idcard = this.checkInForm.idcard;
+                            room.idcardType = this.checkInForm.idcardType;
+                            room.name = this.checkInForm.name;
+                            room.pronunciation = this.checkInForm.pronunciation;
                             room.personList = room.personList || [this.checkInForm];
                             this.inRoomList.push(room);
                         });
@@ -1530,11 +1330,7 @@ export default {
                 checkInRoomIds: arr,
             };
             this.makeStoresNum(params);
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/make_card_status",
-                params,
-                (res) => {
+            this.$F.doRequest(this, "/pms/checkin/make_card_status", params, (res) => {
                     this.$message({
                         message: this.$t("commons.request_success"),
                         type: "success",
@@ -1617,14 +1413,14 @@ export default {
                 this.checkInForm.guestType = e.guestType ? e.guestType.toString() : '';
                 this.checkInForm.idcard = e.idcard;
                 // this.checkInForm.idcardType = e.idcardType.toString();
-                this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '1';
+                this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '2';
                 this.checkInForm.mobile = e.mobile;
                 // this.checkInForm.orderSource = e.orderSource.toString();
-                this.checkInForm.orderSource = e.orderSource ? e.orderSource.toString() : '';
+                this.checkInForm.orderSource = e.orderSource ? e.orderSource.toString() : '1';
                 // this.checkInForm.orderType = e.orderType.toString();
                 this.checkInForm.orderType = e.orderType;
                 // this.checkInForm.sex = e.sex.toString();
-                this.checkInForm.sex = e.sex ? e.sex.toString() : '';
+                this.checkInForm.sex = e.sex ? e.sex.toString() : '1';
                 this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : "";
                 this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : "";
             } else {
@@ -1685,14 +1481,7 @@ export default {
             console.log(e);
             this.checkInForm.name = e.target.value;
         },
-        liveInPersonCancel() {
-            if (this.isSubmitErr) {
-                this.isSubmitErr = false;
-                this.$router.replace("/orderdetail?id=" + this.checkInForm.checkInId);
-            } else {
-                this.liveInPersonShow = false;
-            }
-        },
+
         mackcadeCancel() {
             if (this.isSubmitErr) {
                 this.isSubmitErr = false;
@@ -1751,10 +1540,10 @@ export default {
                 id: "3213213",
                 name: "",
                 isChild: true,
-                idcardType: "",
+                idcardType: "2",
                 idcard: "",
                 edit: true,
-                sex: "",
+                sex: "1",
                 mobile: "",
                 checkInPersonId: "",
                 // hasChildren: false

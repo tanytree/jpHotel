@@ -280,7 +280,7 @@ export default {
                 name: '',
                 checkinRoomId: newRow.roomId,
                 isChild: true,
-                idcardType: '1',
+                idcardType: '2',
                 idcard: '',
                 sysIndex: this.liveInPersonData[index].personList.length,
                 sex: '1',

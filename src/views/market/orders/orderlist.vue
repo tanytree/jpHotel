@@ -78,6 +78,11 @@
                         <el-option :value="key" v-for="(value, key, index) of $t( 'commons.orderSource' )" :label="value" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="OTA" v-if="searchForm.orderSource == 5" >
+                    <el-select  v-model="searchForm.otaChannelId"  class="width150">
+                        <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
 
                 <el-form-item :label="$t('desk.home_customersCategory')">
                     <el-select v-model="searchForm.guestType" class="width150" :placeholder="$t('commons.placeChoose')">
@@ -156,7 +161,10 @@
                 <el-table-column prop :label="$t('desk.book_orderSoutce')" width="120px">
                     <template slot-scope="{ row }">{{
                         F_orderSource(row.orderSource)
-                    }}</template>
+                    }}
+                        <span v-if="row.orderSource == 5">-</span>
+                        <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column prop :label="$t('desk.order_liveStateA')" width="120px">
                     <template slot-scope="{ row }" style="color: red">
@@ -236,6 +244,7 @@ export default {
     },
     data() {
         return {
+            otaList: [],
             consumeOperForm: {
                 payType: "1",
                 consumePrice: "",
@@ -257,9 +266,19 @@ export default {
     },
     mounted() {
         this.initForm();
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.otaList = list;
+            this.$forceUpdate();
+        })
     },
 
     methods: {
+        checkPlatform(otaChannelId) {
+            let array =  this.otaList.filter(item => {
+                return item.id == otaChannelId
+            }) || [{}]
+            return array.length > 0 ? array[0].otaName : '';
+        },
         orderTypeClick(key) {
             this.searchForm.orderType = key;
             this.getDataList();

@@ -123,7 +123,7 @@
     <el-row>
       <h4>{{ $t('desk.reserveInfoDesc') }}</h4>
       <el-row>
-          <el-col :span="6">
+          <el-col>
               <div>
                   <span>{{$t('desk.book_bookProject')}}：</span>
                   <span v-for="(item, key, index) of checkinInfo.reserveProjectList" :key="index" style="margin-left: 15px">
@@ -571,7 +571,7 @@ export default {
           checkinRoomId: this.checkinInfo.id,
           name: this.checkinInfo.name,
           pronunciation: this.checkinInfo.pronunciation,
-          idcardType: this.checkinInfo.idcardType || "1",
+          idcardType: this.checkinInfo.idcardType || "2",
           idcard: this.checkinInfo.idcard,
           sex: this.checkinInfo.sex || "1",
           mobile: this.checkinInfo.mobile,
