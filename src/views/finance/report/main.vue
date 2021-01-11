@@ -94,7 +94,7 @@
       </div>
     </div>
       <div style="margin-bottom: 20px" v-if="shopNo==number">
-      <div class="diaryTable">总部报表</div>
+      <div class="diaryTable">{{$t('desk.book_HQtable')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
@@ -381,7 +381,7 @@ export default {
       return [
           [
           {
-            title:'总部销售日报',
+            title:this.$t('desk.book_HQsale'),
             reportType: 24,
             reportNum: 1004,
           },

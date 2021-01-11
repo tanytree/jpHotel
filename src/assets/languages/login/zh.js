@@ -15,7 +15,8 @@ module.exports = {
     backLogin: '退出登录',
     chinese: '中文',
     japanese: '日本语',
-    remember:'记忆HOTEL ID，USER ID',
+  remember: '记忆HOTEL ID，USER ID',
+    inputId:'请输入ID'
 
 }
 

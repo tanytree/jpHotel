@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 17:09:45
+ * @LastEditTime: 2021-01-11 10:21:34
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -101,13 +101,13 @@ module.exports = {
   },
   //证件类型 1身份证 2护照 3驾照 4个人号码卡（My No. Card) 5在留卡（旧：外国人登录证） 6健康保险证  7其他
   idCardType: {
-    '1': '身份证',
+    // '1': '身份证',
     '2': '护照',
-    // '3': '驾照'
-    // '4': '个人号码卡（My No. Card)'
-    // '5': '在留卡（旧：外国人登录证）'
-    // '6': '健康保险证'
-    // '7': '其他'
+    '3': '驾照',
+    '4': '个人号码卡（My No. Card)',
+     '5': '在留卡（旧：外国人登录证）',
+    '6': '健康保险证',
+    '7': '其他'
   },
   //1大人 2儿童A（小学5年级以上）  3儿童B（3岁至小学5年级） 4儿童C（0至3岁不占床）   int必填
   customerTypes: {

@@ -185,6 +185,7 @@ module.exports = {
   //总办 > 门店管理
   store_createStore: '创建门店',
   store_storeName: '门店名称',
+  store_storeNameA: '门店名称',
   store_storeManagers: '门店经理',
   store_address: '门店地址',
   store_addStore: '创建门店',
@@ -247,6 +248,7 @@ module.exports = {
   add_japan: '菜单日文',
   add_chooseDate: '选择日期',
   add_chooseStore: '选择门店',
+  add_chooseStoreA: '选择门店',
   add_roomData: '门店客房数据概览',
   add_requestSuccess: '请求成功',
   add_integralConversion: '积分换算',

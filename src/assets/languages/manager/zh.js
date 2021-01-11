@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-10 20:06:13
+ * @LastEditTime: 2021-01-11 15:36:50
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -260,7 +260,7 @@ module.exports = {
   grsl_goodsTax: '是否含消费税',
   grsl_goodsTaxN: '不含税',
   grsl_goodsTaxY: '含税',
-  grsl_goodsService: '是否含服务费',
+  grsl_goodsService: '是否包含服务费',
   grsl_goodsServiceN: '不含服务费',
   grsl_goodsServiceY: '含服务费',
   grsl_billingMode: '计费模式',
@@ -370,9 +370,9 @@ module.exports = {
   grsl_sureDisable: '是否确认禁用',
   grsl_ifSureDelete: '是否确认删除',
   grsl_superior: '上级',
-  grsl_: '',
-  grsl_: '',
-  grsl_: '',
+  grsl_selectZao: '请选择早餐',
+  grsl_inputbedNum: '请输入床位数/座位',
+  grsl_inputMorethanOne: '请输入大于1的数',
   grsl_: '',
   grsl_: '',
   grsl_: '',

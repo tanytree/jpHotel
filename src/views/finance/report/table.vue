@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2021-01-08 17:22:57
+ * @LastEditTime: 2021-01-11 10:33:54
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
@@ -81,7 +81,7 @@
           </el-form-item>
           <!-- 总部门店 -->
           <el-form-item :label="$t('boss.add_chooseStore')+':'" style="margin: 0 20px" v-if="reportType == '24'">
-            <el-select v-model="searchForm.storesNum" multiple>
+            <el-select v-model="searchForm.selectStoresNums " multiple>
             <el-option
               v-for="item in storeList"
               :key="item.storesNum"
@@ -92,7 +92,7 @@
           </el-select>
           </el-form-item>
           <el-form-item :label="$t('boss.add_queryText')+':'"  v-if="reportType == '24'">
-            <el-select v-model="searchForm.query" multiple>
+            <el-select v-model="searchForm.idCardTypes" multiple>
             <el-option
               v-for="(value,key) in $t('commons.queryText')"
               :key="key"
@@ -291,6 +291,12 @@ export default {
         let monthB = this.searchForm.endTime.substr(-2, 2);
         this.searchForm.startTime = this.monthStartTime(yearA, monthA);
         this.searchForm.endTime = this.monthEndTime(yearB, monthB);
+      }
+  //总部门店
+      if(this.reportType == 24){
+         
+       this.searchForm.selectStoresNums = this.searchForm.selectStoresNums.join(',')
+         console.log(this.searchForm.selectStoresNums );
       }
 
       this.$F.doRequest(

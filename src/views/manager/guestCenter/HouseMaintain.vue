@@ -152,28 +152,28 @@
 						</el-form-item>
 
 						<!-- 是否含消费税 -->
-						<el-form-item v-if="active_tag == 'one'" label="是否含消费税:" prop="taxStatus">
-							<el-radio v-model="ruleForm.taxStatus" :label="1">不含税</el-radio>
-							<el-radio v-model="ruleForm.taxStatus" :label="2">含税</el-radio>
+						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
+							<el-radio v-model="ruleForm.taxStatus" :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>
+							<el-radio v-model="ruleForm.taxStatus" :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>
 						</el-form-item>
 
 						<!-- 是否包含服务费 -->
-						<el-form-item v-if="active_tag == 'one'" label="是否包含服务费:" prop="seviceStatus">
-							<el-radio v-model="ruleForm.seviceStatus" :label="1">不含服务费</el-radio>
-							<el-radio v-model="ruleForm.seviceStatus" :label="2">含服务费</el-radio>
+						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
+							<el-radio v-model="ruleForm.seviceStatus" :label="1">{{$t('manager.grsl_goodsServiceN')}}</el-radio>
+							<el-radio v-model="ruleForm.seviceStatus" :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio>
 						</el-form-item>
 
 						<!-- 早餐 -->
-						<el-form-item label="早餐" v-if="active_tag == 'one'" prop="mealBreakfast">
-							<el-select v-model="ruleForm.mealBreakfast" placeholder="请选择">
+						<el-form-item :label="$t('manager.hk_breakfast')+':'"  v-if="active_tag == 'one'" prop="mealBreakfast">
+							<el-select v-model="ruleForm.mealBreakfast" :placeholder="$t('commons.placeChoose')">
 								<el-option v-for="item in zaocangList" :key="item.id" :label="item.mealName" :value="item.id">
 								</el-option>
 							</el-select>
 						</el-form-item>
 
 						<!-- 晚餐 -->
-						<el-form-item label="晚餐" v-if="active_tag == 'one'" prop="mealDinner">
-							<el-select v-model="ruleForm.mealDinner" placeholder="请选择">
+						<el-form-item :label="$t('manager.hk_dinner')+':'" v-if="active_tag == 'one'" prop="mealDinner">
+							<el-select v-model="ruleForm.mealDinner" :placeholder="$t('commons.placeChoose')">
 								<el-option v-for="item in wancangList" :key="item.id" :label="item.mealName" :value="item.id">
 								</el-option>
 							</el-select>
@@ -192,7 +192,7 @@
 						</el-form-item>
 
 						<!-- 床位数/座位2 -->
-						<el-form-item v-if="active_tag == 'two'" label="座位数" prop="bedNum">
+						<el-form-item v-if="active_tag == 'two'" :label="$t('manager.hk_seating')+':'" prop="bedNum">
 							<el-input v-model="ruleForm.bedNum" type="number" class="input"></el-input>
 						</el-form-item>
 
@@ -374,28 +374,28 @@
 					}, ],
 					bedNum: [{
 						required: true,
-						message: "请输入床位数/座位",
+						message: this.$t('manager.grsl_inputbedNum'),
 						trigger: "blur",
 					}, ],
 
 					mealBreakfast: [{
 						required: true,
-						message: '请选择早餐',
+						message: this.$t('manager.grsl_selectZao'),
 						trigger: "blur",
 					}],
 					mealDinner: [{
 						required: true,
-						message: '请选择',
+						message: this.$t('commons.placeChoose'),
 						trigger: "blur",
 					}],
 					taxStatus: [{
 						required: true,
-						message: '请选择',
+						message: this.$t('commons.placeChoose'),
 						trigger: "blur",
 					}],
 					seviceStatus: [{
 						required: true,
-						message: '请选择',
+						message: this.$t('commons.placeChoose'),
 						trigger: "blur",
 					}],
 				}
@@ -634,7 +634,7 @@
 
 				if (this.ruleForm.bedNum < 1) {
 					return this.$message({
-						message: '请输入大于1的数',
+						message: this.$t('manager.grsl_inputMorethanOne'),
 						type: "warn",
 					});
 				}
@@ -704,7 +704,7 @@
 									}
 									// allP = Number(item) + Number(value.mealBreakfastObject.mealPrice*arry.length || 0) + Number(value.mealDinnerObject.mealPrice *arry.length || 0)
 
-									obj.pName = `${i+1} 人${this.$t('manager.hk_livePrice')}+付餐价`
+									obj.pName = `${i+1} ${this.$t('boss.add_peopleLivePrice')}${this.$t('manager.hk_livePrice')}+${this.$t('desk.side_sidePri')}`
 									obj.allPrice = allP
 									arr.push(obj)
 								})

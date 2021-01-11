@@ -139,20 +139,13 @@ export default {
                 },
                 account: {
                     required: true,
-                    message: this.$F.translate(
-                        "请输入 ID",
-                        "入力してください ID"
-                    ),
+                    message: this.$t('login.inputId'),
                     trigger: "change",
                 },
                 password: [
                     {
                         required: true,
-                        message: this.$F.translate(
-                            "请输入密码",
-                            "入力してくださいパスワード"
-                        ),
-                        // message: 'Please enter the' + ' password',
+                        message: this.$t('login.passwordEnterTip'),
                         trigger: "change",
                     },
                 ],
@@ -161,23 +154,6 @@ export default {
     },
 
     data() {
-        var validatePass = (rule, value, callback) => {
-            if (!value) {
-                callback(
-                    new Error(
-                        this.parent.$t("commons.pleaseEnter") +
-                            this.parent.$t("commons.passwordDesc")
-                    )
-                );
-            } else if (
-                value.toString().length < 6 ||
-                value.toString().length > 18
-            ) {
-                callback(new Error("密码长度为6 - 18个字符"));
-            } else {
-                callback();
-            }
-        };
         return {
             language: "ri", //语言类型  zh中文  ri日文
             loading: false,

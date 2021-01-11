@@ -528,6 +528,9 @@ module.exports = {
   add_liveAzao: '未翻译词条',
   add_liveAwan: '未翻译词条',
   add_zaoAwan: '未翻译词条',
+  grsl_selectZao: '未翻译词条',
+  grsl_inputbedNum: '未翻译词条',
+  grsl_inputMorethanOne: '未翻译词条',
 
 
 
