@@ -199,19 +199,18 @@
                    {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
-            <br />
+            <br/>
             <div class="cost margin-t-10" v-if="detailData">
                 <div class="wrap" style="background:#efefef">
-                    <span class="fee" v-if="detailData.totalPrice>0">{{$t('desk.order_receivable')+':'}}{{detailData.totalPrice}}</span>
-                    <span class="fee" v-if="detailData.totalPrice<0">{{$t('desk.order_shouldBack')+':'}}{{detailData.totalPrice}}</span>
+                    <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
+                    <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
                     <div class="costNum">
                         <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
                         <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
                     </div>
                 </div>
             </div>
-            <br />
-
+            <br/>
             <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
                 <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>

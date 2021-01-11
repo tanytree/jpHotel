@@ -40,9 +40,9 @@
         </div>
     </div>
     <div class="cost margin-t-10">
-        <div class="wrap">
-            <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_receivable') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
-            <span class="fee" v-else>{{ $t('desk.order_shouldBack') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
+        <div class="wrap">            
+            <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
+            <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
             <div class="costNum">
                 <el-row>{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
                 <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
