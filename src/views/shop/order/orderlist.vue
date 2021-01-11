@@ -176,9 +176,15 @@
             <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">：{{$t('shop.vipPrice')}}：¥{{numFormate(detail.scoresPrice)}}</div>
             <!-- <div class="margin-t-10 text-gray">{{$t('shop.realPrice')}}：¥{{numFormate(detail.realPayPrice)}}</div> -->
 
+            <div class="item margin-t-10 text-gray" v-if="detail.billingType == 1">
+                {{$t('shop.realPrice')}}：  ¥{{numFormate(detail.realPayPrice)}}
+            </div>
+
             <div class="item margin-t-10 text-gray" v-if="detail.billingType">
-                {{$t('shop.realPrice')}}：{{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
-             </div>
+                结账信息：{{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+            </div>
+
+
 
 
             <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：{{detail.updateTime}}</div>
@@ -374,10 +380,10 @@ export default {
 
         //获取订单信息
         getInfo(data){
-            // console.log(data)
-            if(data.state == 2){
+            console.log(data.state)
+            if(data.state == 2 || data.state == 3){
                this.dialogShows = true
-               this.detail = data              
+               this.detail = data
                // getTaxInfo(tax,list,outFlag,endTime,info)
                let outFlag = data.outFlag == 1 ? true : false
                this.orderTax = this.getOrderHasPayTaxInfo(this.tax,data,outFlag)
