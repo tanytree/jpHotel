@@ -141,7 +141,7 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
-            <detail @closeDialog="closeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
+            <detail :taxInfo="tax" @closeDialog="closeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
             <action :taxInfo="tax" @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
 
@@ -374,25 +374,13 @@ export default {
 
         //获取订单信息
         getInfo(data){
-            console.log(data)
+            // console.log(data)
             if(data.state == 2){
                this.dialogShows = true
-               this.detail = data
-               let orderGoodsList = data.orderSubList
-
-               orderGoodsList.forEach(element => {
-                   element.taxStatus = element.goods.taxStatus
-                   element.seviceStatus = element.goods.seviceStatus
-               });
-
-
-               // for(let i in orderGoodsList){
-               //     orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
-               //     orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
-               // }
-               console.log(orderGoodsList)
+               this.detail = data              
+               // getTaxInfo(tax,list,outFlag,endTime,info)
                let outFlag = data.outFlag == 1 ? true : false
-               this.orderTax = this.getTaxInfo(this.tax,orderGoodsList,outFlag)
+               this.orderTax = this.getOrderHasPayTaxInfo(this.tax,data,outFlag)
                return false
             }else{
                 let info = {
@@ -416,7 +404,7 @@ export default {
 
         //结账
         action(data){
-            // console.log(data)
+            console.log(data)
             // this.is_add = true
             this.dialogShow = true
             this.dialogType = 2
