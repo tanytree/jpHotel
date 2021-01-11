@@ -24,9 +24,9 @@
                 </el-col>
             </el-row>
             <el-row class="row">
-                <el-col :span="4">
+               <!-- <el-col :span="4">
                     {{ $t('desk.book_houseTotalPrice') }}：{{detailData.checkIn.realPrice}}
-                </el-col>
+                </el-col> -->
 <!--                <el-col :span="4">-->
 <!--                    {{$t('commons.checkInTypeDesc')}}：{{F_checkinType(detailData.checkIn.checkinType)}}-->
 <!--                </el-col>-->

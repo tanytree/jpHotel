@@ -45,14 +45,14 @@
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" prop="payPrice"></el-table-column>
-        <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
-            <template slot-scope="{row}">
-                {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
-            </template>
-        </el-table-column>
         <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
             <template slot-scope="{row}" style="color: red">
                 {{row.consumePrice}}
+            </template>
+        </el-table-column>
+        <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
+            <template slot-scope="{row}">
+                {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
             </template>
         </el-table-column>
 <!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
@@ -592,6 +592,7 @@ export default {
             if (type == 3) {
                 params.state = this.destructionList[0].state
                 params.payType = 0 //挂账无需支付方式
+
                 // params.orderId = this.destructionList[0].id
                 if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
@@ -993,10 +994,12 @@ export default {
     },
     watch:{
         'consumeOperForm.priceType':function(val,oldval){
+            console.log(val)
             this.taxCount = ''
             this.unitPrice = ''
                 if(val == 9){
-                    this.consumeOperForm.consumePrice = this.destructionList[0].consumePrice ? this.destructionList[0].consumePrice : this.destructionList[0].payPrice
+                    this.consumeOperForm.consumePrice =  this.destructionList[0].payPrice
+                    console.log(this.destructionList[0].payPrice)
                 }else if(val == 10){
                    this.consumeOperForm.consumePrice = ''
                 }else{
