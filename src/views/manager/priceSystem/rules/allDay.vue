@@ -18,7 +18,7 @@
 							</el-select>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="" style="width: 100px;" size="mini" @click="clear">重置</el-button>
+							<el-button type="" style="width: 100px;" size="mini" @click="clear">{{$t('commons.resetBtn')}}</el-button>
 						</el-form-item>
 						<el-form-item>
 							<el-button type="primary" style="width: 100px;" size="mini" @click="searchBtn">{{$t('commons.queryBtn')}}</el-button>
@@ -232,25 +232,8 @@
 						trigger: "blur"
 					}, ],
 				},
-				dialogsit: false,
-				priceModelList: [{
-						name: "固定时间退房模式",
-						key: "1",
-					},
-					{
-						name: "24小时退房模式",
-						key: "2",
-					},
-				],
-				statelList: [{
-						name: "启动",
-						key: "1",
-					},
-					{
-						name: "禁用",
-						key: "2",
-					},
-				],
+        dialogsit: false,
+        
 			};
 		},
 		computed: {
@@ -265,7 +248,29 @@
 					return this.$t("manager.hk_success");
 				},
 				set() {},
-			},
+      },
+      priceModelList(){
+        return [{
+						name: this.$t('manager.ps_fixedTime'),
+						key: "1",
+					},
+					{
+						name: this.$t('manager.ps_everyTime'),
+						key: "2",
+					}]
+      },
+      statelList(){
+        return [{
+						name: this.$t('manager.add_start'),
+						key: "1",
+					},
+					{
+						name: this.$t('manager.hk_disable'),
+						key: "2",
+					},
+				]
+      }
+
 		},
 		watch: {
 			deleteSuccess(newValue, oldValue) {

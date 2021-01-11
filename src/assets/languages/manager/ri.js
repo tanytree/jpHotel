@@ -531,6 +531,27 @@ module.exports = {
   grsl_selectZao: '未翻译词条',
   grsl_inputbedNum: '未翻译词条',
   grsl_inputMorethanOne: '未翻译词条',
+  add_packageName: '未翻译词条',
+  add_inputPackageName: '未翻译词条',
+  add_packageType: '未翻译词条',
+  add_inputPackageType: '未翻译词条',
+  add_packagePri: '未翻译词条',
+  add_unitPrice: '未翻译词条',
+  add_inputPackagePrice: '未翻译词条',
+  add_nowStyle: '未翻译词条',
+  add_cashHold: '未翻译词条',
+  add_creditCardUp: '未翻译词条',
+  add_changeDetail: '未翻译词条',
+  add_pettyCash: '未翻译词条',
+  add_nowCashGet: '未翻译词条',
+  add_nowPettyDown: '未翻译词条',
+  add_lastHold: '未翻译词条',
+  add_nowCardGet: '未翻译词条',
+  add_nowBillUp: '未翻译词条',
+  add_nowBillPrice: '未翻译词条',
+  add_allDepartment: '未翻译词条',
+  add_start: '未翻译词条',
+
 
 
 

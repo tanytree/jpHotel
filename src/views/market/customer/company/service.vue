@@ -109,10 +109,9 @@
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
-            <div v-if="row.state == 1">{{ $t("desk.customer_outStand") }}</div>
-            <div v-if="row.state == 2">
-              {{ $t("desk.customer_closeAccount") }}
-            </div>
+            <div v-if="row.state == 1">{{$t('desk.customer_notRequest')}}</div>
+            <div v-if="row.state == 2">{{$t('desk.customer_areadyInto')}}</div>
+            <div v-if="row.state == 3">{{$t('desk.customer_noInto')}}</div>
           </template>
         </el-table-column>
       </el-table>

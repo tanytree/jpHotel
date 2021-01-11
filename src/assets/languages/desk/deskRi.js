@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-11 15:50:13
+ * @LastEditTime: 2021-01-11 18:21:45
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -752,6 +752,9 @@ module.exports = {
   customer_unitNameA: '会社名',
   customer_pleaseState: '状態',
   customer_notRequest: '未請求',
+  customer_areadyInto: '請求済入金済',
+  customer_noInto: '請求済未入金',
+
   customer_areadyRequest: '請求済み',
   customer_partRequest: '一部請求',
   customer_newRequest: '請求追加',

@@ -12,10 +12,10 @@
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="商品类别型:">
-                    <el-select  v-model="form.categoryType" placeholder="请选择" @change="geProductType">
-                        <el-option label="实物" :value="1"></el-option>
-                        <el-option label="服务" :value="2"></el-option>
+                <el-form-item :label="$t('manager.hk_goodsType')+':'">
+                    <el-select  v-model="form.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
+                        <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
+                        <el-option :label="$t('manager.grsl_service')" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item v-if="form.categoryType" :label="$t('manager.grsl_goodsType')+':'">
@@ -157,10 +157,10 @@
                 <el-form-item :label="$t('manager.grsl_goodsName')+':'">
                     <el-input v-model="upshelf.name"></el-input>
                 </el-form-item>
-                <el-form-item label="商品类别型:">
-                    <el-select  v-model="upshelf.categoryType" placeholder="请选择" @change="geProductType">
-                        <el-option label="实物" :value="1"></el-option>
-                        <el-option label="服务" :value="2"></el-option>
+                <el-form-item :label="$t('manager.hk_goodsType')+':'">
+                    <el-select  v-model="upshelf.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
+                        <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
+                        <el-option :label="$t('manager.grsl_service')" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('manager.grsl_goodsType')+':'">
@@ -182,7 +182,7 @@
                     </template>
                 </el-table-column>-->
                 <el-table-column :label="$t('manager.grsl_retailPrice')" width="150">
-                    <template slot-scope="scope">{{scope.row.retailPrice}}元
+                    <template slot-scope="scope">{{scope.row.retailPrice}}{{$t('manager.ps_japanYen')}}
 <!--                        <el-input v-model="" :disabled="scope.row.his" size="small"></el-input>-->
                     </template>
                 </el-table-column>

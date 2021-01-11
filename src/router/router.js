@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-29 15:53:22
+ * @LastEditTime: 2021-01-11 17:01:24
  * @FilePath: \jiudian\src\router\router.js
  */
 import Vue from 'vue'

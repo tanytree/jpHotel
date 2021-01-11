@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-10-15 18:06:51
- * @FilePath: \jiudian\src\views\market\reception\shiftover\c2.vue
+ * @LastEditTime: 2021-01-11 17:46:38
+ * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
 <template>
@@ -12,7 +12,7 @@
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
         <el-row style="margin-bottom:10px;">
-            <el-button type="text" style="color: #333;font-size: 14px;">所有部门</el-button>
+            <el-button type="text" style="color: #333;font-size: 14px;">{{$t('manager.add_allDepartment')}}</el-button>
             <el-button v-for="(item,index) in tabs" :key="index"  :type="tabCurr == item.handoverType ? 'primary' : ''" @click="changeTabs(item.handoverType)">
             {{$t('manager.typeNameList.'+item.handoverType)}}
             </el-button>

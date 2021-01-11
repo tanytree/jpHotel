@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 15:11:36
+ * @LastEditTime: 2021-01-11 17:43:33
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -40,25 +40,25 @@
     <el-divider></el-divider>
     <el-row>
       <h3>{{$t('food.shift.tabs_title_2')}}</h3>
-      <div class="total">{{$t('food.shift.total')}}：{{info.income}}日元</div>
+      <div class="total">{{$t('food.shift.total')}}：{{info.income}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
           <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
-          <div class="item">{{$t('manager.priceType.'+item.priceType)}}：<span class="red">{{item.total}}</span>日元</div>
+          <div class="item">{{$t('manager.priceType.'+item.priceType)}}：<span class="red">{{item.total}}</span>{{$t('manager.ps_japanYen')}}</div>
         </el-col>
       </el-row>
-      <div class="total">{{$t('food.shift.totalFee')}}：{{info.settlement}}日元</div>
+      <div class="total">{{$t('food.shift.totalFee')}}：{{info.settlement}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPayTypeList" :key="index">
-          <div class="item">{{$t('manager.payType.'+item.payType)}}：<span class="blue">{{item.total}}</span>日元</div>
+          <div class="item">{{$t('manager.payType.'+item.payType)}}：<span class="blue">{{item.total}}</span>{{$t('manager.ps_japanYen')}}</div>
         </el-col>
       </el-row>
     </el-row>
     <el-row>
       <h3>
        {{$t('food.shift.tabs_title_3')}} &nbsp;&nbsp;
-        <el-tag size="mini">当前交班模式：
+        <el-tag size="mini">{{$t('manager.add_nowStyle')}}：
             <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
             <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
             <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
@@ -69,8 +69,8 @@
         <el-row class="padding-tb-10">
           <el-col :span="12" class="li">
             <!-- <div class="item">上班现金留存：{{info.upMoneyRetained}}</div> -->
-            <div class="item">本班现金上交：{{info.nowMoneyHandin}}</div>
-            <div class="item">本班现金留存：{{info.nowMoneyRetained}}</div>
+            <div class="item">{{$t('desk.serve_flightCashUp')}}：{{info.nowMoneyHandin}}</div>
+            <div class="item">{{$t('manager.add_cashHold')}}：{{info.nowMoneyRetained}}</div>
           </el-col>
           <!-- <el-col :span="4" class="li">
             <div class="item">上班微信留存：{{info.upWeixinRetained}}</div>
@@ -83,7 +83,7 @@
             <div class="item">本班支付宝留存：{{info.upAliRetained}}</div>
           </el-col> -->
           <el-col :span="12" class="li">
-            <div class="item">本班信用卡上交：{{info.nowCreditCardHandin}}</div>
+            <div class="item">{{$t('manager.add_creditCardUp')}}：{{info.nowCreditCardHandin}}</div>
             <!-- <div class="item">本班信用卡留存：{{info.nowCreditCardRetained}}</div> -->
           </el-col>
         </el-row>
@@ -128,37 +128,37 @@
          </el-form>
      </el-row>
 
-     <el-dialog title="交班详情" :visible.sync="show"  width="700px"  top="0">
+     <el-dialog :title="$t('manager.add_changeDetail')" :visible.sync="show"  width="700px"  top="0">
         <div class="margin-b-20">
             <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
             <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
             <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
         </div>
-        <div class="margin-b-10">备用金额度=({{info.pettyCash}})</div>
+        <div class="margin-b-10">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
         <div class="margin-b-10">
-            {{$t('food.shift.onHas')}} +本班现金收款=
+            {{$t('food.shift.onHas')}} +{{$t('manager.add_nowCashGet')}}=
             ({{info.upMoneyRetained}}) + ({{info.nowMoneyRetained}})= ({{getTotal(info.upMoneyRetained,info.nowMoneyRetained)}})
             {{getPriceState(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) ? '>' :'<'}}
             ({{info.pettyCash}})
         </div>
         <!-- 展示大于小于等于备用金额度/纯展示 -->
         <div class="margin-b-10">
-        本班下放备用金
+        {{$t('manager.add_nowPettyDown')}}
         {{getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash)}}
-        备用金额度
+        {{$t('manager.add_pettyCash')}}
         =
         ({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
         </div>
         <!-- 判断  本班下放备用金 < = > 备用金额度-->
         <!-- 判断  上班留存备用金+本班现金收款的总和和备用金额作比较  > 100或者==100 直接显示100 小于则显示 总和-->
         <div class="margin-b-10">
-            本班现金上交=上班留存备用金+本班现金收款-本班下放备用金=
+           {{$t('desk.serve_flightCashUp')}}={{$t('manager.add_lastHold')}}+{{$t('manager.add_nowCashGet')}}-{{$t('manager.add_nowPettyDown')}}=
             ({{info.upMoneyRetained}})+({{info.nowMoneyRetained}})-({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
             =({{getUpPrice()}})
         </div>
         <!-- <div>本班微信上交=本班微信收款=(0)</div> -->
-        <div class="margin-b-10">本班信用卡上交=本班信用卡收款=({{info.nowCreditCardHandin}})</div>
-        <div class="margin-b-10"  v-if="tabCurr == 1" >本班挂账上交=本班挂账金额</div>
+        <div class="margin-b-10">{{$t('manager.add_creditCardUp')}}={{$t('manager.add_nowCardGet')}}=({{info.nowCreditCardHandin}})</div>
+        <div class="margin-b-10"  v-if="tabCurr == 1" >{{$t('manager.add_nowBillUp')}}={{$t('manager.add_nowBillPrice')}}</div>
         <div class="margin-b-10"></div>
      </el-dialog>
   </div>

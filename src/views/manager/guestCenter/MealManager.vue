@@ -2,22 +2,22 @@
     <div class="boss-index sec1">
         <div class="form">
             <el-radio-group v-model="mealTime" class="mealTime" size="medium" @change="mealChange">
-                <el-radio-button :label="0" >不限</el-radio-button>
-                <el-radio-button :label="1">早餐</el-radio-button>
-                <el-radio-button :label="2">晚餐</el-radio-button>
+                <el-radio-button :label="0" >{{$t('desk.home_noLimit')}}</el-radio-button>
+                <el-radio-button :label="1">{{$t('manager.hk_breakfast')}}</el-radio-button>
+                <el-radio-button :label="2">{{$t('manager.hk_dinner')}}</el-radio-button>
             </el-radio-group>
-            <el-button size="medium" type="primary" class="submit" icon="el-icon-plus" @click="addMeal">新增</el-button>
+            <el-button size="medium" type="primary" class="submit" icon="el-icon-plus" @click="addMeal">{{$t('desk.customer_newAdd')}}</el-button>
         </div>
         <div class="components-edit">
             <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
-                <el-table-column prop="mealName" label="套餐名称"></el-table-column>
-                <el-table-column prop="mealTime" label="套餐类型" align="center" width="150">
+                <el-table-column prop="mealName" :label="$t('manager.add_packageName')"></el-table-column>
+                <el-table-column prop="mealTime" :label="$t('manager.add_packageType')" align="center" width="150">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.mealTime == 1">早餐</span>
-                        <span v-if="scope.row.mealTime == 2">晚餐</span>
+                        <span v-if="scope.row.mealTime == 1">{{$t('manager.hk_breakfast')}}</span>
+                        <span v-if="scope.row.mealTime == 2">{{$t('manager.hk_dinner')}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mealPrice" label="套餐价格/顿" align="center" width="150"></el-table-column>
+                <el-table-column prop="mealPrice" :label="$t('manager.add_packagePri')" align="center" width="150"></el-table-column>
                 <el-table-column :label="$t('boss.loginDetail_state')" align="center" width="120">
                     <template slot-scope="scope">
                         <span>{{scope.row.state == 2 ? $t('commons.disable') : $t('commons.enable')}}</span>
@@ -42,16 +42,16 @@
 
         <el-dialog :title="mealTitle" :visible.sync="mealVisible" top="0" width="600px" :close-on-click-modal="false">
             <el-form label-position="right" label-width="120px" size="medium" :rules="rules" :model="meal">
-                <el-form-item label="套餐名称：" prop="mealName">
+                <el-form-item :label="$t('manager.add_packageName')+':'" prop="mealName">
                     <el-input v-model="meal.mealName"></el-input>
                 </el-form-item>
-                <el-form-item label="套餐单价：" prop="mealPrice">
+                <el-form-item :label="$t('manager.add_unitPrice')+':'" prop="mealPrice">
                     <el-input v-model="meal.mealPrice"></el-input>
                 </el-form-item>
-                <el-form-item label="套餐类型：" prop="mealTime">
+                <el-form-item :label="$t('manager.add_packageType')+':'" prop="mealTime">
                     <el-radio-group v-model="meal.mealTime">
-                        <el-radio :label="1">早餐</el-radio>
-                        <el-radio :label="2">晚餐</el-radio>
+                        <el-radio :label="1">{{$t('manager.hk_breakfast')}}</el-radio>
+                        <el-radio :label="2">{{$t('manager.hk_dinner')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item :label="$t('boss.loginDetail_state')+ '：'">
@@ -83,12 +83,12 @@
                     paging: true
                 },
                 mealTime: 0, list: [], total: 0,
-                mealTitle: '新增', mealVisible: false,
+                mealTitle: this.$t('desk.customer_newAdd'), mealVisible: false,
                 meal: {mealName: '', mealPrice: '', mealTime: 1, state: 1, remark: ''},
                 rules: {
-                    mealName: [{ required: true, message: '请输入套餐名称', trigger: 'blur' }],
-                    mealPrice: [{ required: true, message: '请输入套餐价格', trigger: 'blur' }],
-                    mealTime: [{ required: true, message: '请选择套餐类型', trigger: 'change' }]
+                    mealName: [{ required: true, message: this.$t('manager.add_inputPackageName'), trigger: 'blur' }],
+                    mealPrice: [{ required: true, message: this.$t('manager.add_inputPackagePrice'), trigger: 'blur' }],
+                    mealTime: [{ required: true, message: this.$t('manager.add_inputPackageType'), trigger: 'change' }]
                 }
             }
         },
