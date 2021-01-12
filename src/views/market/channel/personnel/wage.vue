@@ -170,7 +170,7 @@
               </el-table-column>
             </el-table-column>
             <el-table-column :label="$t('commons.operating')" width="220">
-                <template slot-scope="{row}">
+                <template >
                     <el-button type="text" size="mini">员工详情</el-button>
                 </template>
             </el-table-column>

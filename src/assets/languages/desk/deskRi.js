@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-12 16:46:42
+ * @LastEditTime: 2021-01-12 17:30:36
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -447,6 +447,7 @@ module.exports = {
   customer_lastWeek: '先週',
   customer_lastMonth: '前月',
   customer_collection: '入金',
+  customer_collectionA: '支払い',
   customer_refund: '返金',
   customer_sum: '金額',
   customer_refundWay: 'デポ戻し方法',
@@ -913,7 +914,7 @@ module.exports = {
   book_HQtable: '本部帳票',
   book_HQsale: '本部売上日報',
   side_sidePri: '食事付き金額',
-  book_firstInto: '未翻译词条',
+  book_firstInto: '入金項目',
 
 
 

@@ -50,12 +50,14 @@
                             </el-form-item>
                             <el-form-item prop="account">
                                 <el-input
+                                   v-focus
                                     prefix-icon="el-icon-s-custom"
                                     :placeholder="
                                         $t('commons.pleaseEnter') + ' ID'
                                     "
                                     v-model="loginForm.account"
                                     maxlength="18"
+                                    @keyup.enter.native="clickLoginBtn()"
                                 ></el-input>
                             </el-form-item>
                             <el-form-item prop="password">
@@ -152,7 +154,17 @@ export default {
             };
         },
     },
-
+    //input框自动聚焦功能
+    directives: {
+      // 注册一个局部的自定义指令 v-focus
+      focus: {
+        // 指令的定义
+        inserted: function (el) {
+          // 聚焦元素
+          el.querySelector('input').focus()
+        }
+      }
+    },
     data() {
         return {
             language: "ri", //语言类型  zh中文  ri日文

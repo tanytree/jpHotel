@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-10 20:12:18
+ * @LastEditTime: 2021-01-12 17:28:54
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -551,15 +551,15 @@ module.exports = {
   add_nowBillPrice: '売掛入金',
   add_allDepartment: 'ALLセクション',
   add_start: '起用',
-  grsl_doorPri: '未翻译词条',
-  grsl_newLivePri: '未翻译词条',
-  grsl_newPrice: '未翻译词条',
-  grsl_oneLive: '未翻译词条',
-  hk_chooseChannel: '未翻译词条',
-  grsl_inputNewPri: '未翻译词条',
-  add_last15A:'未翻译词条',
-  add_next15A: '未翻译词条',
-  add_tyepApri: '未翻译词条',
+  grsl_doorPri: '通常料金（１泊2食）',
+  grsl_newLivePri: '調整後料金（素泊まり）',
+  grsl_newPrice: '調整後料金（１泊2食）',
+  grsl_oneLive: '1人素泊まり',
+  hk_chooseChannel: '予約経路を選択してください',
+  grsl_inputNewPri: '調整後料金を入力してください',
+  add_last15A:'15日前',
+  add_next15A: '15日後',
+  add_tyepApri: '部屋ﾀｲﾌﾟ/料金',
 
 
 

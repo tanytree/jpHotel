@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-10 14:09:08
- * @LastEditors: 魏轩
- * @LastEditTime:
- * @FilePath:
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-12 17:34:34
+ * @FilePath: \jiudian\src\views\market\personnelManager\daili\compensationman.vue
  -->
  <template>
   <div class="sec1">
@@ -180,7 +180,7 @@
               </el-table-column>
             </el-table-column>
             <el-table-column :label="$t('commons.operating')" width="220">
-                <template slot-scope="{row}">
+                <template >
                     <el-button type="text" size="mini">员工详情</el-button>
                 </template>
             </el-table-column>

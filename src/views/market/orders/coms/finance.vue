@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 14:53:52
+ * @LastEditTime: 2021-01-12 17:42:58
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -78,7 +78,7 @@
             <p>{{$t('desk.book_firstInto')}}</p>
             <el-form-item :label="$t('desk.order_payProject')+':'">
                 <el-radio-group v-model="consumeOperForm.priceType">
-                    <el-radio-button :label="3" :value="3">{{$t('desk.customer_collection')}}</el-radio-button>
+                    <el-radio-button :label="3" :value="3">{{$t('desk.customer_collectionA')}}</el-radio-button>
                     <el-radio-button :label="2" :value="2">{{$t('desk.order_theDeposit')}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
