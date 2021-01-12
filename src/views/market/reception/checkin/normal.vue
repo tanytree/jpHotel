@@ -295,7 +295,7 @@
                                 </div>
                                 <div class="row">
                                     <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>
-                                    <div>
+                                    <div style="float: right">
                                         <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                     </div>
                                 </div>
@@ -306,7 +306,7 @@
                 <div class="right">
                     <el-form inline size="small">
                         <el-form-item>
-                            <el-button @click="empty_row_houses" v-if="!storesNum">{{ $t("desk.autoRowHouse") }}</el-button>
+<!--                            <el-button @click="empty_row_houses" v-if="!storesNum">{{ $t("desk.autoRowHouse") }}</el-button>-->
                             <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
                                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}
                             </el-button>
@@ -315,11 +315,7 @@
                         </el-form-item>
                     </el-form>
                     <div class="roomBtm checked">
-                        <div
-                            class="checkRoom"
-                            v-for="(v, index) in waitingRoom"
-                            :key="index"
-                        >
+                        <div class="checkRoom" v-for="(v, index) in waitingRoom" :key="index">
                             <div class="row rowReverse">
                                 <div>
                                     <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)" v-if="!storesNum">

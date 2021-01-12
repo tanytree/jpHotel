@@ -75,9 +75,9 @@
                     </el-col>
                     <el-col :span="7">
                         <div class="grid-content">
-                            <el-row>
-                                <el-button @click="page_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;
-                            </el-row>
+<!--                            <el-row>-->
+<!--                                <el-button @click="page_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;-->
+<!--                            </el-row>-->
                             <br />
                             <el-row class="roomSelect">
                                 <ul>

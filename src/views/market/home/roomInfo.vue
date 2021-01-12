@@ -147,6 +147,7 @@ export default {
                     checkinTime: this.startTime,
                     checkoutTime: this.checkoutTime,
                 }, (res) => {
+                    debugger
                     if (res && res.roomCheckInCalendarList.length > 0) {
                         res.roomCheckInCalendarList.forEach( (value, index) => {
                             if (value.reserveObj) {
@@ -162,8 +163,8 @@ export default {
                                 console.log(this.dates);
                             }
                         })
-                        this.$forceUpdate()
                     }
+                    this.$forceUpdate()
                 }
             );
         },

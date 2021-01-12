@@ -150,7 +150,7 @@
                 <el-col :span="7">
                     <div class="grid-content">
                         <el-row>
-                            <el-button>{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;
+<!--                            <el-button>{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;-->
                             <el-button>{{ $t('desk.home_makeCard') }}</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />

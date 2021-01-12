@@ -245,9 +245,14 @@ const $F = {
         }
     },
 
-    getWeekNumber(node, date) {
-        let arys1 = date.split('-');
-        var ssdate = new Date(arys1[0], parseInt(arys1[1] - 1), arys1[2]);
+    getWeekNumber(node, date, splitKey) {
+        let arys1 = date.split(splitKey || '-');
+        var ssdate;
+        if (arys1.length == 2) {
+            ssdate = new Date(new Date().getFullYear(), parseInt(arys1[0] - 1), arys1[1]);
+        } else {
+            ssdate = new Date(arys1[0], parseInt(arys1[1] - 1), arys1[2]);
+        }
         let weeks = node.$t('commons.weeks');
         return String(ssdate.getDay()).replace("0", weeks[6])
             .replace("1", weeks[0])

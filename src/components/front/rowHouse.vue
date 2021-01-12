@@ -40,24 +40,11 @@
                             <span>{{item.houseNum}}</span>
                         </div>
                         <div class="riTop" v-else>
-                            <span></span>
+                            <span v-if="date.reserveObj && item.houseNum == date.reserveObj.houseNum" style="background-color: #8EABDD;height: 100%; width: 100%;"></span>
                         </div>
                     </div>
                 </div>
-<!--                <el-table :data="floorList" style="width: 100%; margin-bottom: 20px" border lazy header-row-class-name="default">-->
-<!--                    <el-table-column type="index"  width="80px">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        v-for="(item, index) in dates"-->
-<!--                        :key="index"-->
-<!--                        :label="item.dateStr + '' + item.weekDay"-->
-<!--                        :width="index == 0 ? '150' : ''"-->
-<!--                    >-->
-<!--                        <template slot-scope="{ row }">-->
-<!--                            <span>{{ checkRoomInfo(row, index) }}</span>-->
-<!--                        </template>-->
-<!--                    </el-table-column>-->
-<!--                </el-table>-->
+
             </div>
             <div slot="footer" class="dialog-footer" style="text-align: right">
                 <el-button size="small" @click="rowRoomShow = false">{{ $t("commons.cancel") }}</el-button>
@@ -91,13 +78,6 @@ export default {
     },
 
     methods: {
-
-        disableSelect(houseNum) {
-            return this.hadReadyCheckArray.indexOf(houseNum) != -1;
-        },
-        submit() {
-            // this.$emit('rowHouseCallback', this.selectList)
-        },
         init(roomTypeId, num, hadReadyCheckArray) {
             this.roomList = [];
             this.selectList = hadReadyCheckArray;
@@ -106,22 +86,18 @@ export default {
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 14);
             let tempArray = this.getDateStr(this.startTime, this.endTime, 0);
             this.dates = [''];
+
             tempArray.forEach( (value, index) => {
-                let array = value.split('-').splice(1)
                 this.dates.push({
-                    date: array.join('/'),
-                    week: this.$F.getWeekNumber(this, value)
+                    date: value,
+                    week: this.$F.getWeekNumber(this, value, '/')
                 });
             })
+            console.log(this.dates);
             this.nowDateString= this.startTime;
             this.roomTypeId = roomTypeId;
             this.maxSelect = num;
-            this.hotel_room_list({
-                rowHousesTotal: 999,
-                roomTypeId: this.roomTypeId
-            });
             this.calendar();
-
         },
 
         calendar() {
@@ -141,9 +117,26 @@ export default {
                         this.roomList = this.roomList.concat(floor.roomList)
                     })
                     console.log(this.roomList)
-                    this.rowRoomShow = true;
+                    if (res && res.roomCheckInCalendarList.length > 0) {
+                        res.roomCheckInCalendarList.forEach( (value, index) => {
+                            debugger
+                            if (value.reserveObj) {
+                                let tempArray = this.getDateStr(value.reserveObj.checkinTime, value.reserveObj.checkoutTime, 0);
+                                if (tempArray.length > 0) {
+                                    this.dates.forEach( (temp, index) => {
+                                        if (tempArray.includes(temp.date)) {
+                                            value.reserveObj.checkInRoomType = 2; //预定
+                                            temp.reserveObj = value;
+                                        }
+                                    })
+                                }
 
+                            }
+                        })
+                    }
+                    this.rowRoomShow = true;
                     this.$forceUpdate()
+                    console.log(this.dates);
                 }
             );
         },
@@ -168,32 +161,18 @@ export default {
             }
             return false;
         },
-        //获取可排房的房间
-        hotel_room_list(params) {
-            // params.roadFlag !== "" && (params.roadFlag = params.roadFlag ? 1 : "");
-            // params.windowFlag !== "" &&
-            //   (params.windowFlag = params.windowFlag ? 1 : "");
-            // params.smokeFlag !== "" && (params.smokeFlag = params.smokeFlag ? 1 : "");
-            // params.noiseFlag !== "" && (params.noiseFlag = params.noiseFlag ? 1 : "");
-            // params.temperatureFlag !== "" &&
-            //   (params.temperatureFlag = params.temperatureFlag ? 1 : "");
-            // this.$F.doRequest(
-            //     this,"/pms/checkin/empty_row_houses", params, (res) => {
-            //         this.rowRoomCurrentList = [];
-            //         if (res) {
-            //             for (let id in res) {
-            //                 this.rowRoomCurrentList = this.rowRoomCurrentList.concat(res[id]);
-            //             }
-            //         }
-            //         console.log(this.rowRoomCurrentList);
-            //         this.rowRoomShow = true;
-            //         this.$forceUpdate()
-            //     }
-            // );
-        },
+
 
         getDateStr(startTime, endTime, dayLength) {
-            var str = startTime, tempArray = [startTime];
+            let startTimeDate = new Date(startTime);
+            let endTimeDate = new Date(endTime);
+            var month = startTimeDate.getMonth() + 1 < 10 ? "0" + (startTimeDate.getMonth() + 1) : startTimeDate.getMonth() + 1;
+            var day = startTimeDate.getDate() < 10 ? "0" + startTimeDate.getDate() : startTimeDate.getDate();
+            startTime = month + '/' + day;
+            month = endTimeDate.getMonth() + 1 < 10 ? "0" + (endTimeDate.getMonth() + 1) : endTimeDate.getMonth() + 1;
+            day = endTimeDate.getDate() < 10 ? "0" + endTimeDate.getDate() : endTimeDate.getDate();
+            endTime = month + '/' + day;
+            var tempArray = [startTime];
             for (var i = 0 ;; i++) {
                 var getDate = this.getTargetDate(startTime, dayLength);
                 startTime = getDate;
@@ -214,7 +193,7 @@ export default {
             var year = tempDate.getFullYear();
             var month = tempDate.getMonth() + 1 < 10 ? "0" + (tempDate.getMonth() + 1) : tempDate.getMonth() + 1;
             var day = tempDate.getDate() < 10 ? "0" + tempDate.getDate() : tempDate.getDate();
-            return year + "-" + month + "-" + day;
+            return month + "/" + day;
         },
 
         initRoomPlan() {
