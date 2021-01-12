@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 17:42:58
+ * @LastEditTime: 2021-01-12 18:09:57
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -85,7 +85,8 @@
 
             <el-form-item :label="$t('desk.order_selectPayWay')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
                 <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio>
+                    <!-- <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio> -->
+                    <el-radio v-for="(value, key) in payTypeList()" :label="key" :key="key">{{value}}</el-radio>
                 </el-radio-group>
             </el-form-item>
 
@@ -473,6 +474,17 @@ export default {
     },
 
     methods: {
+      payTypeList(){
+        let obj = this. $t('commons.payType');
+        let newArry={};
+         for(let i in obj){
+           if(i!=3){
+             newArry[i] = obj[i];
+           }
+         }
+         return newArry;
+       
+      },
       updataInfo(){
           this.consume_order_list()
           this.getOrderDetail()
