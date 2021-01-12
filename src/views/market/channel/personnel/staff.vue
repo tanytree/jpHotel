@@ -42,7 +42,7 @@
      <!--表格数据 -->
      <div>
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="所属门店" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" :label="$t('desk.customer_belongStore')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="员工姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="入职时间" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="职位 " show-overflow-tooltip></el-table-column>

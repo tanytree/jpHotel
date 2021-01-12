@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-06 16:05:52
+ * @LastEditTime: 2021-01-12 14:23:13
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -149,17 +149,17 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="地区:">
+              <el-form-item :label="$t('desk.customer_region') + ':'">
                 <template>{{ detailForm.addressCountries }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="地址1:">
+              <el-form-item :label="$t('desk.customer_address') + '1:'">
                 <template>{{ detailForm.address }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="地址2:">
+              <el-form-item :label="$t('desk.customer_address') + '2:'">
                 <template>{{ detailForm.address2 }}</template>
               </el-form-item>
             </el-col>

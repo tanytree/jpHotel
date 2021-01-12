@@ -1,15 +1,15 @@
 <!--
  * @Date: 2020-03-10 14:09:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-21 10:36:38
- * @FilePath: /jiudian/src/views/market/personnelManager/personnel/wage.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-12 15:35:37
+ * @FilePath: \jiudian\src\views\market\personnelManager\personnel\wage.vue
  -->
  <template>
 <div class="sec1">
     <el-form :model="searchForm" :inline="true" class="top-body" size="small" label-width="80px">
         <el-row>
             <el-col :span="6">
-                <el-form-item label="所属门店">
+                <el-form-item :label="$t('desk.customer_belongStore')">
                     <el-select v-model="searchForm.storesNum" class="width200">
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
                         </el-option>
@@ -17,18 +17,18 @@
                 </el-form-item>
             </el-col>
             <el-col :span="6">
-                <el-form-item label="员工名称">
+                <el-form-item :label="$t('boss.staff_name')">
                     <el-input class="width200" v-model="searchForm.content"></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="6">
-                <el-form-item label="工资月份">
-                    <el-date-picker v-model="searchForm.payTime" type="month" value-format="yyyy-MM" placeholder="选择月" style="width:200px">
+                <el-form-item :label="$t('boss.compensation_payMonth')">
+                    <el-date-picker v-model="searchForm.payTime" type="month" value-format="yyyy-MM" :placeholder="$t('boss.compensation_selectMonth')" style="width:200px">
                     </el-date-picker>
                 </el-form-item>
             </el-col>
             <el-form-item>
-                <el-button @click="getDataList" type="primary">查询</el-button>
+                <el-button @click="getDataList" type="primary">{{$t('commons.queryBtn')}}</el-button>
 
             </el-form-item>
         </el-row>
@@ -37,23 +37,23 @@
 
     <!--表格数据 -->
     <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="所属门店">
+        <el-table-column :label="$t('desk.customer_belongStore')">
             <template slot-scope="scope" >
                 {{scope.row.employee.storesNum}}
             </template>
         </el-table-column>
-        <el-table-column prop="employee.department.name" label="部门">
+        <el-table-column prop="employee.department.name" :label="$t('boss.personnel_department')">
             <template slot-scope="scope">
                 {{scope.row.employee.department.name}}
             </template>
         </el-table-column>
-        <el-table-column label="职位">
+        <el-table-column :label="$t('boss.add_workFor')">
             <template slot-scope="scope">
                 {{scope.row.employee.position}}
             </template>
 
         </el-table-column>
-        <el-table-column label="姓名">
+        <el-table-column :label="$t('boss.loginDetail_name')">
             <template slot-scope="scope">
                 {{scope.row.employee.userName}}
             </template>
@@ -63,66 +63,66 @@
                 {{scope.row.employee.userStatus | F_userStatus}}
             </template>
         </el-table-column>
-        <el-table-column prop="payTime" label="工资月份">
+        <el-table-column prop="payTime" :label="$t('boss.compensation_payMonth')">
         </el-table-column>
-        <el-table-column label="基本工资">
-            <el-table-column label="基础工资">
+        <el-table-column :label="$t('boss.compensation_basicSalary')">
+            <el-table-column :label="$t('boss.compensation_baseSalary')">
                 <template slot-scope="scope">
                     {{scope.row.wage.baseWage}}
                 </template>
             </el-table-column>
-            <el-table-column label="社保补助">
+            <el-table-column :label="$t('boss.compensation_benefits')">
                 <template slot-scope="scope">
                     {{scope.row.wage.socialBenefits}}
                 </template>
             </el-table-column>
-            <el-table-column prop="otherWage" label="其他">
+            <el-table-column prop="otherWage" :label="$t('desk.book_other')">
                 <template slot-scope="scope">
                     {{scope.row.wage.otherWage}}
                 </template>
             </el-table-column>
-            <el-table-column prop="secretWage" label="保密工资">
+            <el-table-column prop="secretWage" :label="$t('boss.compensation_confidentialSalary')">
                 <template slot-scope="scope">
                     {{scope.row.wage.secretWage}}
                 </template>
             </el-table-column>
         </el-table-column>
-        <el-table-column prop="jobsWage" label="岗位工资">
+        <el-table-column prop="jobsWage" :label="$t('boss.compensation_postSalary')">
             <template slot-scope="scope">
                 {{scope.row.wage.jobsWage}}
             </template>
         </el-table-column>
-        <el-table-column label="绩效工资">
+        <el-table-column :label="$t('boss.compensation_meritPay')">
             <template slot-scope="scope">
                 {{scope.row.wage.performance}}
             </template>
         </el-table-column>
-        <el-table-column label="奖金">
+        <el-table-column :label="$t('boss.compensation_bonus')">
             <template slot-scope="scope">
                 {{scope.row.wage.bonus}}
             </template>
         </el-table-column>
-        <el-table-column label="补贴">
-            <el-table-column label="餐补">
+        <el-table-column :label="$t('boss.compensation_subsides')">
+            <el-table-column :label="$t('boss.compensation_subsidizedMeals')">
                 <template slot-scope="scope">
                     {{scope.row.wage.mealSubsidies}}
                 </template>
             </el-table-column>
-            <el-table-column label="房补">
+            <el-table-column :label="$t('boss.compensation_housingAllowances')">
                 <template slot-scope="scope">
                     {{scope.row.wage.houseSubsidies}}
                 </template>
             </el-table-column>
         </el-table-column>
-        <el-table-column label="出勤天数">
-            <el-table-column prop="demandJobDay" label="应出勤天数">
+        <el-table-column :label="$t('boss.compensation_attendanceDays')">
+            <el-table-column prop="demandJobDay" :label="$t('boss.compensation_attendanceShoudDay')">
             </el-table-column>
-            <el-table-column prop="realJobDay" label="实出勤天数">
+            <el-table-column prop="realJobDay" :label="$t('boss.compensation_attendanceActualDay')">
             </el-table-column>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="100" fixed="right">
             <template slot-scope="{row}">
-                <el-button type="text" size="mini" @click="detailsHandle(row)">员工详情</el-button>
+                <el-button type="text" size="mini" @click="detailsHandle(row)">{{$t('boss.compensation_employeeDetails')}}</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -130,10 +130,10 @@
     <!--分页 :current-page="searchForm.page"   :page-size="searchForm.page_num"  :total="listTotal"-->
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     <!-- 查看资料 -->
-    <el-dialog top="0" title="查看资料" :visible.sync="details" width="500px">
+    <el-dialog top="0" :title="$t('boss.report_checkingData')" :visible.sync="details" width="500px">
         <el-form :model="detailsData">
             <el-row style="margin:10px 0">
-                <el-col :span="8">姓名:</el-col>
+                <el-col :span="8">{{ $t('boss.loginDetail_name') }}:</el-col>
                 <el-col :span="14">{{detailsData.userName}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
@@ -141,43 +141,43 @@
                 <el-col :span="14">{{detailsData.userStatus | F_userStatus}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">联系电话:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_phone')}}:</el-col>
                 <el-col :span="14">{{detailsData.userPhone}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">所属门店:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_stores')}}:</el-col>
                 <el-col :span="14">{{F_storeName(detailsData.storesNum)}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">所属部门:</el-col>
+                <el-col :span="8">{{$t('boss.staff_department')}}:</el-col>
                 <el-col :span="14">{{detailsData.department?detailsData.department.name:''}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">职位:</el-col>
+                <el-col :span="8">{{$t('boss.add_workFor')}}:</el-col>
                 <el-col :span="14">{{detailsData.position}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">银行账户:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_bankAccount')}}:</el-col>
                 <el-col :span="14">{{detailsData.bankcard}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">企业邮箱:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_email')}}:</el-col>
                 <el-col :span="14">{{detailsData.email}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">后台账号:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_backgroundAccount')}}:</el-col>
                 <el-col :span="14">{{detailsData.associatedAccount}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">工号:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_workNumber')}}:</el-col>
                 <el-col :span="14">{{detailsData.worknum}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">分机号:</el-col>
+                <el-col :span="8">{{$t('boss.add_subPhone')}}:</el-col>
                 <el-col :span="14">{{detailsData.extension}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">入职时间:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_workTime')}}:</el-col>
                 <el-col :span="14">{{detailsData.inTime}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
@@ -185,11 +185,11 @@
                 <el-col :span="14">{{detailsData.idcardType | F_idcardType}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">证件号:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_documentNumber')}}:</el-col>
                 <el-col :span="14">{{detailsData.idcard}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
-                <el-col :span="8">转正日期:</el-col>
+                <el-col :span="8">{{$t('boss.loginDetail_positiveTime')}}:</el-col>
                 <el-col :span="14">{{detailsData.positiveTime}}</el-col>
             </el-row>
             <el-row style="margin:10px 0">
@@ -199,7 +199,7 @@
         </el-form>
 
         <div slot="footer" class="dialog-footer">
-            <el-button @click="details = false">关闭</el-button>
+            <el-button @click="details = false">{{$t('commons.close')}}</el-button>
         </div>
     </el-dialog>
 </div>
@@ -290,7 +290,7 @@ export default {
                     return that.storeList[k].storesName
                 }
             }
-            return '未知门店'
+            return this.$t('boss.loginDetail_unknownStores');
         },
         getDetails(item) {
             let params = {

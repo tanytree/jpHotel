@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 11:58:05
+ * @LastEditTime: 2021-01-12 14:56:59
  * @FilePath: \jiudian\src\views\market\orders\coms\someAccounts.vue
  -->
 <template>
@@ -133,11 +133,15 @@ export default {
                 remark:''
             },
 
-            title:'收款',
+            // title:'收款',
             type:1
         };
     },
-    computed: {},
+    computed: {
+      title(){
+        return this.$t('desk.customer_collection');
+      }
+    },
     methods: {
         async init(id) {
             this.id = id

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 15:39:53
+ * @LastEditTime: 2021-01-12 15:01:24
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -42,7 +42,7 @@
             }}</el-tag>
           </el-form-item>
           <el-form-item label="" v-if="searchForm.timeType==10">
-            <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" placeholder="选择日期"></el-date-picker>
+            <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
           </el-form-item>
         </el-row>
         <el-row>
@@ -492,18 +492,18 @@ export default {
                     if (order.checkInRoomList)  {
                         if (order.checkInRoomList.length == 1) {
                             order.roomInfo = (order.checkInRoomList[0].roomTypeName || '') + '/';
-                            order.roomInfo += order.checkInRoomList[0].houseNum ? order.checkInRoomList[0].houseNum : '(未排房)'
+                            order.roomInfo += order.checkInRoomList[0].houseNum ? order.checkInRoomList[0].houseNum : `(${this.$t('desk.noRowHouses')})`
                         } else {
                             order.roomInfo = '';
                             order.checkInRoomList.forEach(room => {
                                 order.roomInfo += (room.roomTypeName || '') + '/';
-                                order.roomInfo += room.houseNum ? room.houseNum : '(未排房)'
+                                order.roomInfo += room.houseNum ? room.houseNum : `(${this.$t('desk.noRowHouses')})`
                                 order.roomInfo += ',';
                             })
                             order.roomInfo = order.roomInfo.substring(0, order.roomInfo.length -1);
                         }
                     } else {
-                        order.roomInfo = '未排房';
+                        order.roomInfo = this.$t('desk.noRowHouses');
                     }
                 })
                 this.tableData = res.resreveList;

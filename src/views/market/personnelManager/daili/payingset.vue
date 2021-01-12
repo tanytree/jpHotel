@@ -11,13 +11,13 @@
 
 
         <el-col :span="5">
-          <el-form-item label="员工名称">
+          <el-form-item :label="$t('boss.staff_name')">
             <el-input style="width:120px" v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
 
         <el-col :span="5">
-          <el-form-item label="所属门店">
+          <el-form-item :label="$t('desk.customer_belongStore')">
             <el-select v-model="form.orderType" style="width:100px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
@@ -40,7 +40,7 @@
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
             <el-table-column prop="enterName" label="员工姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" :label="$t('food.common.status')" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="enterType" label="职位" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterType" :label="$t('boss.add_workFor')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="工号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="所在部门" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('commons.operating')" width="220">

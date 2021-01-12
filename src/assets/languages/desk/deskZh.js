@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-11 11:52:32
+ * @LastEditTime: 2021-01-12 14:57:11
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -339,7 +339,7 @@ module.exports = {
   book_billAback: '结账并退房',
   book_HQtable: '总部报表',
   book_HQsale: '总部销售日报',
-  book_: '',
+  book_firstInto: '快速入账项目',
   book_: '',
   book_: '',
   book_: '',

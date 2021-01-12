@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 17:14:27
+ * @LastEditTime: 2021-01-12 14:53:52
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -20,7 +20,7 @@
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
 <!--                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>-->
                 <!-- <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button> -->
-                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">附餐</el-button>
+                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMeal')}}</el-button>
             </el-form-item>
         </el-row>
         <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -75,7 +75,7 @@
     <!--入账 -->
     <el-dialog top='0' :title="$t('desk.enterAccount')" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
-            <p>快速入账项目</p>
+            <p>{{$t('desk.book_firstInto')}}</p>
             <el-form-item :label="$t('desk.order_payProject')+':'">
                 <el-radio-group v-model="consumeOperForm.priceType">
                     <el-radio-button :label="3" :value="3">{{$t('desk.customer_collection')}}</el-radio-button>
@@ -94,8 +94,8 @@
                     <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
                     <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
                     <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
-                    <el-radio-button :label="15" :value="15">温泉税</el-radio-button>
-                    <el-radio-button :label="16" :value="16">住宿税</el-radio-button>
+                    <el-radio-button :label="15" :value="15">{{$t('desk.book_wenquan')}}</el-radio-button>
+                    <el-radio-button :label="16" :value="16">{{$t('desk.book_liveFee')}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 

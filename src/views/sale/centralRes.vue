@@ -36,7 +36,7 @@
           </el-table-column>
           <el-table-column v-for="(each, index) in item.array" :key="index" :label="each.roomTypeName" width="160">
             <template>
-              <el-row>{{$t('boss.add_canBookNum')}}：{{ each.reserveTotal }}</el-row>
+              <el-row>{{ each.reserveTotal }}</el-row>
               <el-row v-if="each.personPrice && each.personPrice.split(',').length > 0">
                 <el-col v-for="(price, secondIndex) in each.personPrice.split(',')" :key="secondIndex">
                   <div v-if="secondIndex==0"> {{$t('boss.add_onePeople')}}：{{ price|numFormate }}</div>

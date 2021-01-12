@@ -188,7 +188,7 @@ export default {
                 blackRemark: [
                     {
                         required: true,
-                        message: "not emply",
+                        message: "not empty",
                         trigger: "change",
                     },
                 ],

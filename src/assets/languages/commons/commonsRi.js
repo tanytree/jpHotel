@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-11 10:22:23
+ * @LastEditTime: 2021-01-12 16:19:35
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -62,7 +62,7 @@ module.exports = {
   F_sex: {
     '1': '男',
     '2': '女',
-    '3': '秘密',
+    '3': 'その他',
   },
 
   F_state: {

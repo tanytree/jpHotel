@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-25 15:48:37
+ * @LastEditTime: 2021-01-12 16:09:41
  * @FilePath: \jiudian\src\assets\languages\boss\bossZh.js
  */
 
@@ -288,7 +288,6 @@ module.exports = {
   add_teamAllPerpson: '团体总人数',
   add_teamAllGet: '团体总收入',
   add_roomDetail: '房间详情',
-  add_canBookNum: '空房数',
   add_onePeople: '1人',
   add_peopleLivePrice: '人',
   add_normalBook: '普通预订',

@@ -278,13 +278,12 @@ module.exports = {
   report_selectMonth: '月を指定ください',
   report_firstQuery: '出力帳票を検索してください',
   add_roomDetail: '部屋情報',
-  add_canBookNum: '未翻译词条',
-  add_onePeople: '未翻译词条',
-  add_peopleLivePrice: '未翻译词条',
+  add_onePeople: '１人',
+  add_peopleLivePrice: '人',
   add_normalBook: '一般予約',
   add_noHaveInfo: '該当ホテル利用可能部屋はございません',
   report_goodsKinds: '付帯・商品別売上一覧（月次）',
-  add_queryText: '未翻译词条',
+  add_queryText: '検索キーワード',
 
 
 

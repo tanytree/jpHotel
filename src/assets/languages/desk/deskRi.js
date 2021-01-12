@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-11 18:26:36
+ * @LastEditTime: 2021-01-12 16:46:42
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -898,21 +898,22 @@ module.exports = {
   add_workDay: '平日',
   add_restDay: '休日',
   home_idCardNumA: '身分証明書番号',
-  book_bookText: '未翻译词条',
-  book_placeRowHouse: '未翻译词条',
-  add_go14: '未翻译词条',
-  add_back14: '未翻译词条',
-  order_todayBack: "未翻译词条",
-  book_serveFee: '未翻译词条',
-  book_costFee: '未翻译词条',
-  book_wenquan: '未翻译词条',
-  book_liveFee: '未翻译词条',
-  book_discountAmount: '未翻译词条',
+  book_bookText: '予約',
+  book_placeRowHouse: 'アサインをしてください',
+  add_go14: '前14日へ',
+  add_back14: '後ろ１４日へ',
+  order_todayBack: "日帰り",
+  book_serveFee: 'サービス料',
+  book_costFee: '消費税',
+  book_wenquan: '入湯税',
+  book_liveFee: '宿泊税',
+  book_discountAmount: '割引金額',
   book_printDocuments: '帳票印刷',
-  book_billAback: '未翻译词条',
-  book_HQtable: '未翻译词条',
-  book_HQsale: '未翻译词条',
-  side_sidePri: '未翻译词条',
+  book_billAback: '精算及びC/O',
+  book_HQtable: '本部帳票',
+  book_HQsale: '本部売上日報',
+  side_sidePri: '食事付き金額',
+  book_firstInto: '未翻译词条',
 
 
 
