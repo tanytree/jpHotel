@@ -282,7 +282,7 @@ export default {
         mobile: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
-        guestType: 1,
+        // guestType: 1,
         paging: true,
       },
       listTotal: 0, //总条数
@@ -411,7 +411,7 @@ export default {
         guestNum: "",
         name: "",
         mobile: "",
-        guestType: 1,
+        // guestType: 1,
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
@@ -420,13 +420,11 @@ export default {
     },
     /**获取表格数据 */
     getDataList() {
-      this.loading = true;
       this.$F.doRequest(
         this,
         "/pms/guestarchives/guest_archives_list",
         this.searchForm,
         (res) => {
-          this.loading = false;
           this.tableData = res.guestList;
           console.log(this.tableData);
           this.listTotal = res.page.count;

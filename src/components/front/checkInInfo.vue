@@ -101,12 +101,7 @@
             }}) {{ row.headerObj.idcard }}
             </span>
           </div>
-            <div v-if="$index ==checkinInfo.inRoomList.length-1" style="text-align: left;">{{ checkinInfo.remark }}</div>
-               <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1" class="messageBox">
-            <div v-if="!inputMessage">{{ checkinInfo.remark }}</div>
-            <el-input v-model="checkinInfo.remark" v-if="inputMessage" placeholder="请输入内容">{{ row.remark }}</el-input>
-            <el-button type="text" class="saveAedit" @click="inputMessage=!inputMessage">{{ inputMessage ? "保存" : "修改" }}</el-button>
-          </div> -->
+          <div v-if="$index ==checkinInfo.inRoomList.length - 1" style="text-align: left;">{{ checkinInfo.remark }}</div>
         </template>
       </el-table-column>
       <el-table-column :label="$t('desk.home_contactWay')" align="center">
@@ -164,7 +159,7 @@
       </el-table-column>
       <el-table-column :label="$t('commons.operating')" align="center" v-if="type == 'detail'">
         <template slot-scope="{ row, $index }">
-            <el-button @click="customerDetail(row)" type="text">{{$t('commons.detail')}}</el-button>
+            <el-button @click="customerDetail(row)" type="text" v-if="row.headerObj">{{$t('commons.detail')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -295,6 +290,7 @@ export default {
                     personList: [],
                 },
             };
+            debugger
             if (row.headerObj) {
                 this.$F.merge(this.currentCustomer, row);
                 this.currentCustomer.personList = row.personList || [];
@@ -338,6 +334,7 @@ export default {
         },
 
         init(type, checkinInfo, currentRoom) {
+            debugger
             this.type = type;
             this.currentRoom = currentRoom;
             this.$F.merge(checkinInfo, {
