@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-11 15:36:50
+ * @LastEditTime: 2021-01-12 11:49:37
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -238,7 +238,7 @@ module.exports = {
   hk_oatName: 'OAT名称',
   hk_inputOat: '请输入OTA名称',
   hk_resetSuccess: '修改成功',
-  hk_: '',
+  hk_chooseChannel: '请选择渠道',
   hk_: '',
   hk_: '',
   hk_: '',
@@ -373,11 +373,11 @@ module.exports = {
   grsl_selectZao: '请选择早餐',
   grsl_inputbedNum: '请输入床位数/座位',
   grsl_inputMorethanOne: '请输入大于1的数',
-  grsl_: '',
-  grsl_: '',
-  grsl_: '',
-  grsl_: '',
-  grsl_: '',
+  grsl_doorPri: '门市价(一人住宿+附餐费)',
+  grsl_newLivePri: '新住宿价格(一人住宿)',
+  grsl_newPrice: '新价格(一人住宿+附餐费)',
+  grsl_oneLive: '(一人住宿)',
+  grsl_inputNewPri: '请输入新价格',
   grsl_: '',
   grsl_: '',
   grsl_: '',
@@ -536,7 +536,9 @@ module.exports = {
   add_inputNumShould: '输入数值不小于0',
   add_editorSuccess: '编辑成功',
   add_lsat15: '前15天',
+  add_last15A:'前十五天',
   add_next15: '后15天',
+  add_next15A: '后十五天',
   add_peoAsit: '人数/座位数',
   add_resetPrice: '调改价',
   add_newDoorPri: '新门市价',
@@ -567,7 +569,7 @@ module.exports = {
   add_nowBillPrice: '本班挂账金额',
   add_allDepartment: '所有部门',
   add_start: '启动',
-  add_: '',
+  add_tyepApri: '房型/房价',
   add_: '',
   add_: '',
   add_: '',

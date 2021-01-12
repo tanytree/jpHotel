@@ -551,6 +551,15 @@ module.exports = {
   add_nowBillPrice: '未翻译词条',
   add_allDepartment: '未翻译词条',
   add_start: '未翻译词条',
+  grsl_doorPri: '未翻译词条',
+  grsl_newLivePri: '未翻译词条',
+  grsl_newPrice: '未翻译词条',
+  grsl_oneLive: '未翻译词条',
+  hk_chooseChannel: '未翻译词条',
+  grsl_inputNewPri: '未翻译词条',
+  add_last15A:'未翻译词条',
+  add_next15A: '未翻译词条',
+  add_tyepApri: '未翻译词条',
 
 
 

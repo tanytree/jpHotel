@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-04 17:03:27
+ * @LastEditTime: 2021-01-12 11:51:03
  * @FilePath: \jiudian\src\views\market\booking\venue\c1.vue
  -->
 
@@ -151,7 +151,7 @@
                     <div class="grid-content">
                         <el-row>
                             <el-button>{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;
-                            <el-button>制卡</el-button>&nbsp;&nbsp;
+                            <el-button>{{ $t('desk.home_makeCard') }}</el-button>&nbsp;&nbsp;
                         </el-row>
                         <br />
                         <el-row class="roomSelect">

@@ -36,13 +36,13 @@
 		<el-dialog top="0" :title="$t('manager.ps_resetRoomPrice')" :visible.sync="editPriceDialog" :close-on-click-modal="false"
 		 width="80%" class="editPriceDialog">
 			<el-row :gutter="20" style="margin-bottom: 20px;">
-				<el-col :span="3">当前时间: </el-col>
+				<el-col :span="3">{{$t('manager.add_nowTime')}}: </el-col>
 				<el-col :span="16">{{editPriceForm.dayTime}}</el-col>
 			</el-row>
 			<el-table ref="multipleTable" :data="editPriceForm.roomStrategyJson" tooltip-effect="dark" default-expand-all
 			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数"  v-if="selectInfo.roomType == 1">
+				<el-table-column prop="personNum" :label="$t('manager.add_peoAsit')"  v-if="selectInfo.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -59,7 +59,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="门市价" v-else>
+				<el-table-column prop="customPrice" :label="$t('manager.hk_doorPriceA')" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">{{value.marketPrice}}</div>
@@ -67,7 +67,7 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="newCustomPrice" label="调改价" width="250" v-if="selectInfo.roomType == 1">
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_resetPrice')" width="250" v-if="selectInfo.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -76,7 +76,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="newCustomPrice" label="新门市价" width="250" v-else>
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_newDoorPri')" width="250" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -90,10 +90,10 @@
 					<template slot-scope="scope">
 						<el-row v-if="selectInfo.roomType==1">
 							<el-row class="demo-form-inline">
-								<el-col>早餐 [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_breakfast')}} [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
 							</el-row>
 							<el-row class="demo-form-inline">
-								<el-col>晚餐 [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_dinner')}} [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
 							</el-row>
 						</el-row>
 					</template>
@@ -141,37 +141,6 @@
 					dayTime: '',
 					newLivePrice: "",
 				},
-
-				pickerOptions: {
-					disabledDate(time) {
-						return time.getTime() > Date.now();
-					},
-					shortcuts: [{
-							text: "今天",
-							onClick(picker) {
-								picker.$emit("pick", new Date());
-							},
-						},
-						{
-							text: "前十五天",
-							onClick(picker) {
-								const date = new Date();
-								date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
-								picker.$emit("pick", date);
-								this.get_hotel_price_room_type_list();
-							},
-						},
-						{
-							text: "后十五天",
-							onClick(picker) {
-								const date = new Date();
-								date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
-								picker.$emit("pick", date);
-								this.get_hotel_price_room_type_list();
-							},
-						},
-					],
-				},
 				rules: {
 					rules: [{
 						required: true,
@@ -181,7 +150,46 @@
 				}
 			};
 		},
-
+	computed: {
+			strategyTime: {
+				get() {
+					return this.search_d.strategyTime
+				},
+				set() {},
+      },
+      pickerOptions(){
+        return {
+					disabledDate(time) {
+						return time.getTime() > Date.now();
+					},
+					shortcuts: [{
+							text:this.$t('manager.hp_today'),
+							onClick(picker) {
+								picker.$emit("pick", new Date());
+							},
+						},
+						{
+							text: this.$t('manager.add_last15A'),
+							onClick(picker) {
+								const date = new Date();
+								date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
+								picker.$emit("pick", date);
+								this.get_hotel_price_room_type_list();
+							},
+						},
+						{
+							text: this.$t('manager.add_next15A'),
+							onClick(picker) {
+								const date = new Date();
+								date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
+								picker.$emit("pick", date);
+								this.get_hotel_price_room_type_list();
+							},
+						},
+					],
+				}
+      }
+		},
 
 
 		mounted() {
@@ -201,27 +209,7 @@
 			})
 			this.get_hotel_price_room_type_list();
 		},
-		computed: {
-			roomPrice: {
-				get() {
-					return this.$t("manager.ps_roomPrice");
-				},
-				set() {},
-			},
-
-			deleteSuccess: {
-				get() {
-					return this.$t("manager.hk_deleteSuccess");
-				},
-				set() {},
-			},
-			strategyTime: {
-				get() {
-					return this.search_d.strategyTime
-				},
-				set() {},
-			}
-		},
+	
 		watch: {
 			strategyTime() {
 				this.dateList = []
@@ -229,9 +217,6 @@
 				this.get_hotel_price_room_type_list()
 			},
 
-			// deleteSuccess(newValue, oldValue) {
-			// 	this.deleteSuccess = newValue;
-			// },
 		},
 		methods: {
 			//修改单日房价
@@ -337,7 +322,7 @@
 						})
 						this.dateList = res.dateList
 						this.dateList.unshift({
-							dateStr: '房型/房价',
+							dateStr: this.$t('manager.add_tyepApri'),
 							weekDay: "",
 						});
 						console.log('this.dateList-----', this.dateList)
