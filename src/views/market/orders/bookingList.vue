@@ -14,7 +14,7 @@
         <el-row>
           <el-form-item :label="$t('desk.order_orderStatus') + ':'">
             <div class="tagList">
-              <template v-for="(item, key, index) of $t('commons.reserveState')">
+              <template v-for="(item, key, index) of $t('commons.reserveState')" v-if="key == 1 || key == 2 || key == 3 || key == 4 || key == 8 || key == ''">
                 <el-tag class="tag" :type="searchForm.state == key ? '' : 'info'" :key="index" @click="stateClick(key)">{{ item }}</el-tag>
               </template>
             </div>
@@ -22,57 +22,54 @@
         </el-row>
         <el-row>
           <el-form-item :label="$t('desk.order_dateList') + ':'">
-            <el-tag  :type="searchForm.timeType == '' ? '' : 'info'" @click="timeTypeClick('')">{{
+            <el-tag  :type="searchForm.checkInTimeType == '' ? '' : 'info'" @click="timeTypeClick('')">{{
               $t("desk.home_noLimit")
             }}</el-tag>
-            <el-tag :type="searchForm.timeType == '1' ? '' : 'info'" @click="timeTypeClick('1')">{{
+            <el-tag :type="searchForm.checkInTimeType == '1' ? '' : 'info'" @click="timeTypeClick('1')">{{
               $t("desk.customer_lastWeek")
             }}</el-tag>
-            <el-tag :type="searchForm.timeType == '7' ? '' : 'info'" @click="timeTypeClick('7')">{{
+            <el-tag :type="searchForm.checkInTimeType == '2' ? '' : 'info'" @click="timeTypeClick('2')">{{
               $t("desk.customer_today")
             }}</el-tag>
-            <el-tag :type="searchForm.timeType == '8' ? '' : 'info'" @click="timeTypeClick('8')">{{
+            <el-tag :type="searchForm.checkInTimeType == '3' ? '' : 'info'" @click="timeTypeClick('3')">{{
               $t("desk.customer_thisWeek")
             }}</el-tag>
-            <el-tag :type="searchForm.timeType == '9' ? '' : 'info'" @click="timeTypeClick('9')">{{
+            <el-tag :type="searchForm.checkInTimeType == '4' ? '' : 'info'" @click="timeTypeClick('4')">{{
               $t("desk.order_nextWeek")
             }}</el-tag>
-            <el-tag :type="searchForm.timeType == '10' ? '' : 'info'" @click="timeTypeClick('10')">{{
+            <el-tag :type="searchForm.checkInTimeType == '10' ? '' : 'info'" @click="timeTypeClick('10')">{{
               $t("desk.book_theCustom")
             }}</el-tag>
           </el-form-item>
-          <el-form-item label="" v-if="searchForm.timeType==10">
-            <el-date-picker v-model="searchForm.checkinTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
+          <el-form-item label="" v-if="searchForm.checkInTimeType==10">
+            <el-date-picker v-model="searchForm.cstartTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+            <el-date-picker v-model="searchForm.cendTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="$t('desk.order_bookDate') + ':'">
-            <el-tag :type="searchForm.createTime == '' ? '' : 'info'" @click="dateNum('')">{{
+            <el-tag :type="searchForm.createTimeType == '' ? '' : 'info'" @click="dateNum('')">{{
               $t("desk.home_noLimit")
             }}</el-tag>
-            <el-tag :type="searchForm.createTime == '1' ? '' : 'info'" @click="dateNum('1')">{{
+            <el-tag :type="searchForm.createTimeType == '1' ? '' : 'info'" @click="dateNum('1')">{{
               $t("desk.customer_lastWeek")
             }}</el-tag>
-            <el-tag :type="searchForm.createTime == '2' ? '' : 'info'" @click="dateNum('2')">{{
+            <el-tag :type="searchForm.createTimeType == '2' ? '' : 'info'" @click="dateNum('2')">{{
               $t("desk.customer_today")
             }}</el-tag>
-            <el-tag :type="searchForm.createTime == '3' ? '' : 'info'" @click="dateNum('3')">{{
+            <el-tag :type="searchForm.createTimeType == '3' ? '' : 'info'" @click="dateNum('3')">{{
               $t("desk.customer_thisWeek")
             }}</el-tag>
-            <el-tag :type="searchForm.createTime == '4' ? '' : 'info'" @click="dateNum('4')">{{
+            <el-tag :type="searchForm.createTimeType == '4' ? '' : 'info'" @click="dateNum('4')">{{
               $t("desk.order_nextWeek")
             }}</el-tag>
-            <el-tag :type="searchForm.createTime == '5' ? '' : 'info'" @click="dateNum('5')">{{
+            <el-tag :type="searchForm.createTimeType == '5' ? '' : 'info'" @click="dateNum('5')">{{
               $t("desk.book_theCustom")
             }}</el-tag>
           </el-form-item>
-          <el-form-item label="" v-if="searchForm.createTime==5">
-              <el-date-picker
-              v-model="searchForm.createTime"
-              value-format="yyyy-MM-dd"
-              type="date"
-              style="width: 140px"
-            ></el-date-picker>
+          <el-form-item label="" v-if="searchForm.createTimeType == 5">
+              <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+              <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
           </el-form-item>
         </el-row>
         <el-row>
@@ -416,6 +413,7 @@ export default {
       depositShow: false,
       payTypeShow: false,
       searchForm: {
+
         pageIndex: 1,
         pageSize: 10,
       },
@@ -453,6 +451,8 @@ export default {
 
     initForm() {
       this.searchForm = {
+          createTimeType: '',
+          checkInTimeType: '',
         operCheckinType: "",
         enterName: "",
         houseNum: "",
@@ -530,12 +530,13 @@ export default {
     },
 
     timeTypeClick(key) {
-      console.log(key);
-      this.searchForm.timeType = key;
-      console.log(this.searchForm.timeType);
+        this.searchForm.checkInTimeType = key;
+        this.getDataList();
     },
     dateNum(key) {
-      this.searchForm.createTime = key;
+        this.searchForm.createTimeType = key;
+        this.getDataList();
+
     },
     handleNoshow(item) {
       this.currentItem = item;

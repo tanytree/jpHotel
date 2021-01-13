@@ -346,7 +346,6 @@ export default {
     methods: {
         changeName(e, personInfo) {
             console.log(e);
-            debugger
             if (e.name) {
                 delete e['checkIn'];
                 delete e['checkinId'];
