@@ -394,26 +394,25 @@
 			// 客房部操作数据
 			getDateP(row, topIndex, item, index) {
                 let roomTypeObject = this.memberTypeList[topIndex];
+				debugger
                 console.log(roomTypeObject)
 				let tempPrice = 0;
 				let price = 0;
 				let finalIndex = topIndex % this.memberTypeLength;
 				if (finalIndex == 0)
 					return '';
-				// console.log('row1--', row)
 				finalIndex -= 1;
 				// debugger
 				if (this.dayPriceList && this.dayPriceList.length > 0) {
 					let newArray = this.dayPriceList.filter(dayPrice => {
 						return dayPrice.dayTime == item.dateStr;
 					}); //匹配日期
-
-					let newMemberTypeId = newArray.filter(dayPrice => {
-						console.log('row2--', row)
-						// debugger
-						return dayPrice.memberTypeId == row.id;
-					}); //匹配第三级会员id
 					// debugger
+					let newMemberTypeId = newArray.filter(dayPrice => {
+						// debugger
+						return dayPrice.memberTypeId == roomTypeObject.id;
+					}); //匹配第三级会员id
+					debugger
 					// let newRoomTypeId = newMemberTypeId.filter(dayPrice => {
 					//     return dayPrice.roomTypeId == row.children[finalIndex].id;
 					// }); //匹配房型id
