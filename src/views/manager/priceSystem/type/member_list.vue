@@ -393,15 +393,15 @@
 			},
 			// 客房部操作数据
 			getDateP(row, topIndex, item, index) {
-                let roomTypeObject = this.memberTypeList[topIndex];
-				debugger
-                console.log(roomTypeObject)
 				let tempPrice = 0;
 				let price = 0;
 				let finalIndex = topIndex % this.memberTypeLength;
-				if (finalIndex == 0)
+				if (finalIndex == 0) {
 					return '';
+				}
 				finalIndex -= 1;
+				let roomTypeObject = this.memberTypeList[finalIndex];
+				console.log('finalIndex：' + finalIndex)
 				// debugger
 				if (this.dayPriceList && this.dayPriceList.length > 0) {
 					let newArray = this.dayPriceList.filter(dayPrice => {
@@ -412,16 +412,17 @@
 						// debugger
 						return dayPrice.memberTypeId == roomTypeObject.id;
 					}); //匹配第三级会员id
-					debugger
-					// let newRoomTypeId = newMemberTypeId.filter(dayPrice => {
-					//     return dayPrice.roomTypeId == row.children[finalIndex].id;
-					// }); //匹配房型id
+					// debugger
+					let newRoomTypeId = newMemberTypeId.filter(dayPrice => {
+						debugger
+					    return dayPrice.roomTypeId == row.id;
+					}); //匹配房型id
 					// debugger
 
-					if (newArray && newArray.length > 0) {
+					if (newMemberTypeId && newMemberTypeId.length > 0) {
 						// debugger
 						let result = '';
-						newArray.forEach(temp => {
+						newMemberTypeId.forEach(temp => {
 							result = temp.newCustomPrice;
 						})
 						return result;
