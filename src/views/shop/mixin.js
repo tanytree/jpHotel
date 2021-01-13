@@ -74,7 +74,7 @@ const mixin= {
         //秒转化为分秒时
         formatDuring(value) {
             var secondTime = parseInt(value/1000);// 秒
-            console.log(secondTime)
+            // console.log(secondTime)
             var minuteTime = 0;// 分
             var hourTime = 0;// 小时
             var s = 0
@@ -113,15 +113,14 @@ const mixin= {
             if(systime){
                 end =  Date.parse(new Date(systime))
             }
-
+            // console.log(systime)
             // console.log('date-------'+date)
             // console.log('systime----'+systime)
-
-
-            var days = (end - start)/1000
-            // console.log(systime)
             // console.log(start)
             // console.log(end)
+
+            var days = (end - start)/1000
+
             // console.log(days)
             return this.getMinutes(days);
         },
@@ -129,57 +128,65 @@ const mixin= {
            var minutes = parseInt(v/ 60);
            return minutes
         },
-        getFinalFee(data,systime,createTime){
-            console.log(data)
-                //data.priceModel == 2 按时间 data.priceModel == 1 按次
-                if(data.priceModel == 2){
-                    let startPrice = data.startPrice
-                    // console.log(startPrice)
-                    console.log('项目开始时间'+createTime)
-                    let allMinutes = this.getDiffMinutes(createTime,systime)
-                    // console.log('项目当前时间'+systime)
-                    // let allMinutes =
-                    // console.log(allMinutes)
-                    // console.log(res.poorSeconds/60)
 
-                    // console.log('起步价'+startPrice)//起步价
-                    // console.log('服务项目所在的全部分钟数'+allMinutes)//服务项目所在的全部分钟数
-                    // console.log('服务的使用时间是否大于起步价开始计算时间'+ allMinutes > data.priceStartMinute)//服务的使用时间是否大于起步价开始计算时间
-                    //全部分钟数》起步价设置的分钟数
-                    console.log(allMinutes)
-                    console.log(data.priceStartMinute)
-                    if( allMinutes && allMinutes > data.priceStartMinute){
-                        // 设置价格为起步价
-                        let a = parseFloat(allMinutes - data.priceStartMinute)//获取减去起步时间的分钟数
-                        // console.log('获取减去起步时间的分钟数'+a)
-                        // console.log('从多少分钟开始收费'+data.priceTime)
-                        let b = parseFloat(a/data.priceTime)
-                        let c = parseFloat((b+'').split('.')[0])+1//除去起步时间后的次数
-                        // console.log("除去起步时间后的次数"+c)
-                        let d = parseFloat(c * data.minutePrice )//  除去起步时间后的总费用
-                        // console.log("除去起步时间后的总费用"+d)
-                        let ap = 0    //判断是否设置封顶费的总费用
-                        if(data.capsPriceFlag == 2){
-                            // 2 表示设置了封顶费
-                            if(d > data.capsPrice){
-                                //费用大于封顶费 则为最终费用
-                                ap = data.capsPrice
-                            }else{
-                                ap = d
-                            }
-                        }else{
-                             ap = d
-                        }
-                        // console.log(ap)
-                        let fee = parseFloat(startPrice) + parseFloat(ap)
-                        return fee
-                    }else{
-                        console.log(startPrice)
-                        return startPrice
-                    }
 
+
+        getFinalFee(data,systime,createTime,tax,outFlag){
+            // console.log('=========================')
+            // console.log(data)
+            // console.log(createTime)
+            // console.log(systime)
+            // console.log(tax)
+            // console.log(outFlag)
+            // console.log('=========================')
+
+
+            if(!systime || !createTime){
+                return  0
+            }
+
+            //data.priceModel == 2 按时间 data.priceModel == 1 按次
+            if(data.priceModel == 2){
+                let startPrice = data.startPrice //起步价
+                let allMinutes = this.getDiffMinutes(createTime,systime) //项目总时间
+                console.log('项目开始时间'+createTime)
+                console.log('项目当前时间'+systime)
+                console.log('项目总时间'+allMinutes)
+                console.log('起步价开始时间：'+ data.priceStartMinute)
+                let  halfTime = data.priceTime / 2
+                // console.log('获取半次收费规则的时间'+halfTime)
+                let halfPice = data.minutePrice / 2
+                // console.log('获取半次收费规则的金额'+halfPice)
+                let sum = 0
+                let totSum = 0
+                if(allMinutes < data.priceStartMinute ){
+                    sum = 0
+                }else if( allMinutes >  data.priceStartMinute &&  allMinutes < halfTime){
+                    sum = startPrice
+                }else{
+                    let count = allMinutes / halfTime
+                    let c = parseFloat((count+'').split('.')[0])+1
+                    // console.log(parseFloat((count+'').split('.')[0])+1)
+                    // console.log(c)
+                    sum =  c *  halfPice
                 }
+                if(data.capsPriceFlag == 2){
+                    // 2 表示设置了封顶费
+                    if(sum > data.capsPrice){
+                        //费用大于封顶费 则为最终费用
+                        totSum =  data.capsPrice
+                    }else{
+                        totSum =  sum
+                    }
+                }else{
+                     totSum =  sum
+                }
+                // console.log(totSum)
+                return totSum
+
+            }
         },
+
 
 
         // 1:'前台点餐',
@@ -203,6 +210,8 @@ const mixin= {
                         return $1 + ",";
                     });
                 });
+            }else{
+                return num
             }
             // // console.log(a);
             //   if (!a){
@@ -211,45 +220,69 @@ const mixin= {
             //   var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
             //   return intPartFormat
         },
-        //计算税
-        // getTaxInfo(tax,list,type){
-        //     if(list && list.length > 0 && tax){
-        //         let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0
-        //         let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
-        //         let total = 0 //税前税后总的税钱
-        //         let service = 0 //服务费
-        //         let taxBefore = 0
-        //         let taxAfter = 0
-        //         for(let i in list){
-        //             total += list[i].totalPrice * consumeTax
-        //             if(list[i].taxStatus == 1){
-        //                 taxBefore += list[i].totalPrice * consumeTax
-        //                 service += list[i].totalPrice * servicePrice
-        //             }
-        //             if(list[i].taxStatus == 2){
-        //                 taxAfter += list[i].totalPrice * consumeTax
-        //             }
+        //已结账
+        getOrderHasPayTaxInfo(tax,info,outFlag){
+            let list = info.orderSubList
+            list.forEach(element => {
+                element.taxStatus = element.goods.taxStatus
+                element.seviceStatus = element.goods.seviceStatus
+            });
+            console.log(list)
+            if(list && list.length > 0 && tax){
+               let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
+               let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
+               let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
+               let total = 0 //税前税后总的税钱
+               let service = 0 //服务费
+               let taxFee = 0 //消费税
+               let sum = 0 //合计
+               for(let i in list){
+                   if(list[i].goods.categoryType == 2 && list[i].goods.priceModel == 2){
+                       let data = list[i]
+                       let createTime = info.createTime
+                       let TP = this.getFinalFee(data.goods,data.updateTime,data.createTime,tax,outFlag)
+                       data.totalPrice = TP
+                       // console.log(list[i].totalPrice)
+                   }
+                   // console.log(list[i].goods.priceModel)
+                   total += list[i].totalPrice
+                   if(list[i].taxStatus == 1){
+                       taxFee += outFlag ? list[i].totalPrice * outConsumeTax :  list[i].totalPrice * consumeTax
+                   }
+                   if(list[i].seviceStatus == 1){
+                       service += list[i].totalPrice * servicePrice
+                   }
+               }
+               let parms = {
+                   total: total ? parseFloat(total).toFixed(0) : 0,
+                   service: service ? parseFloat(service).toFixed(0) :0,
+                   taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
+               }
+               for(let s in parms){
+                   sum +=  parseFloat(parms[s])
+               }
+               parms.sum = sum
+               parms.servicePrice = tax.servicePrice+'%'
+               parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
+               parms.type = outFlag ? 'out' : 'in'
+               console.log(parms)
+               return parms
+            }else{
+                let parms = {}
+                parms.service = 0
+                parms.servicePrice  =  0
+                parms.sum =  0
+                parms.tax  = 0
+                parms.taxFee = 0
+                parms.total  = 0
+                parms.type  = outFlag ? 'out' : 'in'
+                return parms
+            }
 
-        //             // console.log(list[i].taxStatus)
-        //             // console.log(list[i])
-        //         }
-        //         // console.log(total)
-        //         // console.log(service)
-        //         // console.log(taxBefore)
-        //         // console.log(taxAfter)
-        //         let parms = {
-        //             total: parseFloat(total).toFixed(0),
-        //             service:parseFloat(service).toFixed(0),
-        //             taxBefore:parseFloat(taxBefore).toFixed(0),
-        //             taxAfter:parseFloat(taxAfter).toFixed(0)
-        //         }
-        //         return parms
-        //     }
-        // },
 
-        getTaxInfo(tax,list,outFlag){
-            console.log(outFlag)
-            console.log(tax)
+        },
+        //未结账
+        getTaxInfo(tax,list,outFlag,endTime,info){
             //outFlag 默认false 表示是否外带
             if(list && list.length > 0 && tax){
                 let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
@@ -260,6 +293,26 @@ const mixin= {
                 let taxFee = 0 //消费税
                 let sum = 0 //合计
                 for(let i in list){
+                    if(list[i].goods.categoryType == 2 && list[i].goods.priceModel == 2){
+                            let data = list[i]
+                            let createTime = info.createTime
+                            // console.log('按时间计费')
+                            // console.log('------------------------------------------')
+
+                            // console.log(data)
+                            // console.log(createTime)
+                            // console.log(endTime)
+                            // console.log(tax)
+                            // console.log(outFlag)
+                            let TP = this.getFinalFee(data.goods,endTime,createTime,tax,outFlag)
+                            data.totalPrice = TP
+                            console.log(list[i].totalPrice)
+                            // console.log(TP)
+                            // console.log('------------------------------------------')
+                            // console.log('按时间计费')
+                    }
+                    // console.log(list[i].goods.categoryType)
+                    console.log(list[i].goods.priceModel)
                     total += list[i].totalPrice
                     if(list[i].taxStatus == 1){
                         taxFee += outFlag ? list[i].totalPrice * outConsumeTax :  list[i].totalPrice * consumeTax
@@ -290,11 +343,12 @@ const mixin= {
                 parms.tax  = 0
                 parms.taxFee = 0
                 parms.total  = 0
-                parms.type  =  'in'
+                parms.type  = outFlag ? 'out' : 'in'
                 return parms
             }
 
         },
+
 
         alert(v,msg){
              if(v == 200){

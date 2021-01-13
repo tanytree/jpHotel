@@ -5,7 +5,7 @@
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\roominfo.vue
  -->
 <template>
-    <div class="base">
+    <div class="base"  v-if="show">
         <el-row class="clearfix" style="margin-bottom: -15px; padding-top: 15px">
             <el-col :span="12">
                 <el-row>
@@ -13,28 +13,30 @@
                         <p>{{ $t('desk.order_bookOrderNum') }}：{{ checkinInfo.reserveOrderNum }}</p>
                     </el-col>
                     <el-col :span="8">
-                        <p>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</p>
+                        <p>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}
+                            <span v-if="checkinInfo.orderSource == 5">-</span>
+                            <span v-if="checkinInfo.orderSource == 5">{{getOtaName()}}</span>
+                        </p>
                     </el-col>
                 </el-row>
             </el-col>
             <el-col :span="12">
                 <div class="fr">
 <!--                    disabled="checkinInfo.state == 1 || checkinInfo.state == 2"-->
-                    <el-button plain size="mini" @click="goCheckinDetail" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" >
+                    <el-button plain size="mini" @click="goCheckinDetail" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
                         {{ $t('manager.ps_inLive') }}
                     </el-button>
-                    <el-button plain size="mini" @click="updateReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">
+                    <el-button plain size="mini" @click="updateReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
                         {{$t('desk.home_modityReserved')}}
                     </el-button>
-                    <el-button plain size="mini" @click="channelReserved" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">
+                    <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
                         {{$t('commons.cancel')}}
                     </el-button>
                     <!--这块暂时隐藏 不要留太多bug-->
                     <el-dropdown split-button type="primary" size="mini" v-show="false">
                         {{ $t('commons.moreOperating') }}
                         <el-dropdown-menu slot="dropdown">
-                            <!--                        <el-dropdown-item>改价</el-dropdown-item>-->
-                            <el-dropdown-item @click="cancelRoom"  v-if="checkinInfo.state == 1 || checkinInfo.state == 2">
+                            <el-dropdown-item @click="cancelRoom"  v-if="checkinInfo.state == 1">
                                 {{ $t('frontOffice.cancelRoomKeep') }}</el-dropdown-item>
                             <!--                        <el-dropdown-item @click.native="liveCard_in_person_list">操作房卡</el-dropdown-item>-->
                         </el-dropdown-menu>
@@ -47,7 +49,7 @@
             <h4>{{ $t('desk.serve_basicInfo') }}</h4>
             <el-row>
                 <el-col :span="8">
-                    <p>{{ $t('desk.book_orderNum') }}：
+                    <p>{{ $t('desk.order_checkinState') }}：
                     <span class="ok" v-if="currentRoom.roomId && currentRoom.personList && currentRoom.personList.length > 0">{{ $t('commons.checkinState')['1'] }}</span>
                     <span class="ok" v-if="currentRoom.roomId && (!currentRoom.personList || currentRoom.personList.length == 0)">{{ $t('desk.hadRowHouses') }}</span>
                     <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
@@ -71,10 +73,6 @@
         </el-row>
         <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="80%">
             <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
-<!--            <span slot="footer" class="dialog-footer">-->
-<!--        <el-button size="small" @click="liveInPersonShow = false" >{{ $t('commons.cancel') }}</el-button>-->
-<!--                &lt;!&ndash; <el-button size="small" type="primary" @click="liveInPersonShow = false">{{ $t('commons.confirm') }}</el-button> &ndash;&gt;-->
-<!--      </span>-->
         </el-dialog>
         <el-dialog
             top="0"
@@ -130,12 +128,16 @@ export default {
         rowRoomHandle,
     },
     mixins: [myMixin],
-    props: ["checkinInfo", "currentRoom"],
+    // props: ["checkinInfo", "currentRoom"],
     computed: {
         ...mapState({}),
     },
     data() {
         return {
+            otaList: [],
+            show: false,
+            checkinInfo: {},
+            currentRoom: {},
             loading: false,
             liveInPersonShow: false,
             mackcade: false,
@@ -166,11 +168,26 @@ export default {
     created() {
         console.log(this.currentRoom);
         console.log(this.checkinInfo);
-        let id = this.$route.query.id;
-        this.hotel_rule_hour_list();
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.otaList = list;
+            this.$forceUpdate();
+        })
     },
 
     methods: {
+        getOtaName() {
+            let array = this.otaList.filter((ota) => {
+                return ota.id == this.checkinInfo.otaChannelId
+            })
+            if (array && array.length > 0) {
+                return array[0].otaName
+            }
+        },
+        dialogOpen(currentRoom, checkinInfo) {
+            this.currentRoom = currentRoom;
+            this.checkinInfo = checkinInfo;
+            this.show = true;
+        },
         goCheckinDetail(){
             this.$router.push({
                 name:'checktheDetails',
@@ -213,7 +230,7 @@ export default {
             let object = {
                 checkinRoomId: this.checkinInfo.id,
                 name: this.checkinInfo.name,
-                idcardType: this.checkinInfo.idcardType || '1',
+                idcardType: this.checkinInfo.idcardType || '2',
                 idcard: this.checkinInfo.idcard,
                 sex: this.checkinInfo.sex || '1',
                 mobile: this.checkinInfo.mobile,
@@ -266,24 +283,7 @@ export default {
             }
             this.liveInPersonShow = true;
         },
-        //计费规则时租房计费列表
-        hotel_rule_hour_list() {
-            let params = {
-                ruleName: "",
-                priceModel: 2,
-                state: 1,
-                pageIndex: 1,
-                pageSize: 999,
-            };
-            this.$F.doRequest(
-                this,
-                "/pms/hotel/hotel_rule_hour_list",
-                params,
-                (res) => {
-                    this.ruleHourList = res.list;
-                }
-            );
-        },
+
         F_ruleHour(id) {
             for (let k in this.ruleHourList) {
                 if (id == this.ruleHourList[k].id) {
@@ -361,7 +361,7 @@ export default {
         //取消预留
         channelReserved() {
             console.log(this.currentRoom);
-            
+
             this.$F.doRequest(this, "/pms/checkin/checkin_remove_room", {
                     checkinRoomType: 2,
                     checkinReserveId: this.$route.query.id,
@@ -379,6 +379,8 @@ export default {
             }
             let arr = [];
             arr.push(this.currentRoom);
+            // arr.push(this.checkinInfo);
+            debugger
             this.$refs.rowRoomHandle.initForm(
                 this.$route.query.id,
                 this.checkinInfo,

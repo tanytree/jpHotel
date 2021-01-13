@@ -6,14 +6,17 @@
  -->
 <template>
 <div>
-    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="$t('desk.home_modityReserved')" width="80%">
+    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="title ? title : $t('desk.home_modityReserved')" width="80%">
 
         <el-row style="margin-bottom:60px" v-loading="loading">
+            <!--这里暂时不要做的那么细  接口暂时不支持修改单个房间预抵预离-->
             <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')" :picker-options="satrtTime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" @change="satrtTimeChange"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"
+                                            :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss"
+                                            value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -49,15 +52,17 @@
                                                     </el-col>
                                                     <el-col :span="10">
                                                         <div style="text-align: right">
-                                                            <el-input-number @change="handleNumChange($event,v)" :min="0" :max="v.reserveTotal" :label="$t('desk.home_describeText')" size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
+                                                            <el-input-number @change="handleNumChange($event,v)" :min="0"
+                                                                             :max="v.reserveTotal" :label="$t('desk.home_describeText')"
+                                                                             size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
                                                         </div>
                                                     </el-col>
                                                 </el-row>
                                                 <el-row class="row">
-                                                    <el-col :span="14">
+                                                    <el-col :span="8">
                                                         <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>
                                                     </el-col>
-                                                    <el-col :span="10">
+                                                    <el-col :span="15">
                                                         <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                                     </el-col>
                                                 </el-row>
@@ -70,9 +75,9 @@
                     </el-col>
                     <el-col :span="7">
                         <div class="grid-content">
-                            <el-row>
-                                <el-button @click="page_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;
-                            </el-row>
+<!--                            <el-row>-->
+<!--                                <el-button @click="page_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;-->
+<!--                            </el-row>-->
                             <br />
                             <el-row class="roomSelect">
                                 <ul>
@@ -162,8 +167,10 @@ import myMixin from './rowRoomMixin';
 
 export default {
     mixins: [myMixin],
+    props: ['title'],
     data() {
         return {
+            reservedRoom: [],
             afterToday: {
                 disabledDate(time) {
                     return time.getTime() < Date.now() - 8.64e7; //如果没有后面的-8.64e7就是不可以选择今天
@@ -184,7 +191,7 @@ export default {
                     }
                 }
             },
-            satrtTime: {
+            startTime: {
                 disabledDate: time => {
                     // if (this.checkInForm.checkoutTime) {
                     //     let timeStr = new Date(new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd").replace(/-/g, "/"));
@@ -349,6 +356,7 @@ export default {
         // handleType： 操作类型  默认为空 修改预留   1： 添加房间
          // orderType ： 订单类型 1： 预订单  2：订单
         initForm(checkInId, checkinInfo, reservedRoom, handleType, orderType = 2) {
+            this.reservedRoom = reservedRoom;
             this.handleType = handleType;
             this.orderType = orderType;
             let that = this
@@ -381,9 +389,11 @@ export default {
             this.checkInForm.checkInId = checkInId
             this.checkInForm.checkInReserveId = checkInId
             this.getRoomsForm = {
-                changeType: 1,
+                changeType: 2,
                 bedCount: '',
-                roomType: this.operCheckinType == 'b3' ? 2 : 1
+                roomType: this.operCheckinType == 'b3' ? 2 : 1,
+                checkinTime: this.checkInForm.checkinTime,
+                checkoutTime: this.checkInForm.checkoutTime,
             };
             this.getDataList();
         },
@@ -587,12 +597,17 @@ export default {
             }
             return false
         },
-        satrtTimeChange(e) {
-            let day = 0
-            if (this.checkInForm.checkoutTime != '') {
-                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
-                this.checkInForm.checkinDays = day
+        startTimeChange(e) {
+            let date = new Date(e);
+            if (e > this.checkInForm.checkoutTime || date.Format("yyyy-MM-dd") == new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")) {
+                date.setDate(date.getDate() + 1);
+                this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
             }
+            this.checkInForm.checkinDays = getDaysBetween(
+                new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
+                new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")
+            );
+            console.log(this.checkInForm.checkinDays)
         },
         endTimeChange(e) {
             let day = 0
@@ -622,9 +637,11 @@ export default {
             }
             this.waitingRoom.forEach(item => {
                 let array = [];
-                item.roomsArr.forEach(room=> {
-                    array.push(room.id);
-                })
+                if (item.roomsArr) {
+                    item.roomsArr.forEach(room=> {
+                        array.push(room.id);
+                    })
+                }
                 checkInRoomJson.push({
                     roomTypeId: item.roomTypeId,
                     roomId: array.join(','),
@@ -638,7 +655,6 @@ export default {
 
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
-
                     if (this.handleType == 1) {
                         this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
                             checkinRoomType:  this.orderType,
@@ -650,14 +666,14 @@ export default {
                             this.$emit('baseInfoChange', '');
                         })
                     } else {
+                        this.checkInForm.checkInRoomIds = this.reservedRoom[0].id;
                         console.log(JSON.parse(JSON.stringify(this.checkInForm)))
-
+                        debugger
                         this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');
                         })
                     }
-
                 } else {
                     console.log('error submit!!');
                     return false;

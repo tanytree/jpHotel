@@ -221,7 +221,7 @@
                     list.forEach(element => {
                         if(element.goods.categoryType == 2){
                             if(element.goods.priceModel == 2){
-                                sum += this.getFinalFee(element.goods,this.endTime,this.info.createTime)
+                                sum += this.getFinalFee(element.goods,this.endTime,this.info.createTime,this.taxInfo,this.outFlag)
                             }else{
                                 sum += element.totalPrice
                             }
@@ -280,9 +280,9 @@
 
             //获取传过来的值
             getInfo(data){
+                console.log(data)
                 this.intForm();
                 this.get_systime(data.createTime)
-                console.log(data)
                 // console.log(data.billingType)
                 this.form.billingType = 1
                 if(data.memberCard){
@@ -312,7 +312,6 @@
                 }
                 // console.log(orderGoodsList)
                 this.orderSubList = orderGoodsList
-                this.getOrderTax();
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
                 // this.form.scoresPrice = data.scoresPrice
@@ -324,7 +323,8 @@
             },
             //订单各种税后价格
             getOrderTax(){
-                this.orderTax = this.getTaxInfo(this.taxInfo,this.orderSubList,this.outFlag)
+                console.log(this.orderSubList)
+                this.orderTax = this.getTaxInfo(this.taxInfo,this.orderSubList,this.outFlag,this.endTime,this.info)
             },
 
             //获取积分换算查询
@@ -503,8 +503,9 @@
                    startTime:time
                 }
                 this.$F.doRequest(this, "/pms/system/system_time", info, (res) => {
-                    // console.log(res)
+                    console.log(res)
                     this.endTime = res.dateStr
+                    this.getOrderTax();
                 });
             },
 

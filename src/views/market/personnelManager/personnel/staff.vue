@@ -1,15 +1,15 @@
 <!--
  * @Date: 2020-03-10 14:09:08
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-21 10:36:30
- * @FilePath: /jiudian/src/views/market/personnelManager/personnel/staff.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-12 15:12:45
+ * @FilePath: \jiudian\src\views\market\personnelManager\personnel\staff.vue
  -->
  <template>
 <div class="sec1">
     <el-form :model="searchForm" :inline="true" class="top-body" size="small" label-width="100px">
         <el-row>
             <el-col :span="5">
-                <el-form-item label="所属门店">
+                <el-form-item :label="$t('desk.customer_belongStore')">
                     <el-select v-model="searchForm.storesNum">
                         <el-option :label="$t('commons.all')" value=""></el-option>
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
@@ -18,18 +18,18 @@
                 </el-form-item>
             </el-col>
             <el-col :span="5">
-                <el-form-item label="员工名称">
+                <el-form-item :label="$t('boss.staff_name')">
                     <el-input v-model="searchForm.content"></el-input>
                 </el-form-item>
             </el-col>
-            <el-form-item label="入职日期">
-                <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+            <el-form-item :label="$t('boss.staff_workTime')">
+                <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width:140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
                 <span style="margin:0 5px">-</span>
-                <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" placeholder="选择日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width:140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
             </el-form-item>
 
             <el-form-item>
-                <el-button @click="getDataList(searchForm)" type="primary">查询</el-button>
+                <el-button @click="getDataList(searchForm)" type="primary">{{$t('commons.queryBtn')}}</el-button>
 
             </el-form-item>
         </el-row>
@@ -39,16 +39,16 @@
     <!--表格数据 -->
     <div>
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="medium">
-            <el-table-column prop="storesNum" label="所属门店" show-overflow-tooltip>
+            <el-table-column prop="storesNum" :label="$t('desk.customer_belongStore')" show-overflow-tooltip>
                 <template slot-scope="scope" v-if="scope.row.storesNum">
                     {{F_storeName(scope.row.storesNum)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="inTime" label="入职时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="position" label="职位 " show-overflow-tooltip></el-table-column>
-            <el-table-column prop="worknum" label="工号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="department.name" label="所在部门" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="userName" :label="$t('boss.staff_theName')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="inTime" :label="$t('boss.loginDetail_workTime')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="position" :label="$t('boss.add_workFor')"  show-overflow-tooltip></el-table-column>
+            <el-table-column prop="worknum" :label="$t('boss.loginDetail_workNumber')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="department.name" :label="$t('boss.add_belong')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('commons.operating')" width="220">
                 <template slot-scope="{row}">
                     <el-button type="text" size="mini" @click="detailsHandle(row)">{{$t('commons.detail')}}</el-button>
@@ -141,7 +141,7 @@ export default {
                     return that.storeList[k].storesName
                 }
             }
-            return '未知门店'
+            return this.$t('boss.loginDetail_unknownStores');
         },
 
         getDetails(item) {

@@ -14,8 +14,13 @@ let mixin = {
 
     },
     methods: {
+
         F_checkinState(value) {
             let enums = this.$t('commons.checkinState')
+            return value && enums[value] ? enums[value] : ''
+        },
+        F_payType(value) {
+            let enums = this.$t('commons.payType')
             return value && enums[value] ? enums[value] : ''
         },
         F_reserveState(value){

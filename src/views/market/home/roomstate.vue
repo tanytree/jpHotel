@@ -28,6 +28,9 @@
                                 <el-tag v-if="item.value == 6" style="color: #00B1F2" effect="plain" size="mini">
                                     <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
                                 </el-tag>
+                                <el-tag v-else-if="item.value == 3"  style="color: #276BBA" :type="item.type" effect="plain" size="mini">
+                                    <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
+                                </el-tag>
                                 <el-tag v-else :type="item.type" effect="plain" size="mini">
                                     <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
                                 </el-tag>
@@ -40,7 +43,6 @@
                     <div class="tag-top">
                         <div>
                             <span class="fang">{{ $t("desk.home_roomType") }}</span>
-                            <span class="all">{{ $t("desk.home_roomType") }}</span>
                         </div>
                         <span class="reset" @click="clearnSelectAttr('roomTypeId')">
                             {{ $t("commons.resetBtn") }}
@@ -68,22 +70,6 @@
                         </el-select>
                     </el-form-item>
                 </el-form>
-
-                <!-- 渠道 -->
-<!--                <div class="room">-->
-<!--                    <div class="tag-top">-->
-<!--                        <span class="fang">{{ $t("desk.home_channel") }}</span>-->
-<!--                        <span class="reset" @click="clearnSelectAttr('channel')">{{ $t("commons.resetBtn") }}</span>-->
-<!--                    </div>-->
-<!--                    <div class="tag-btm">-->
-<!--                        <el-checkbox-group v-model="searchForm.channel" @change="handleChange">-->
-<!--                            <el-checkbox class="roomType" v-for="item of channel" :key="item.channel" :label="item.channel">-->
-<!--                                {{ item.name ? item.name : $t("desk.home_unknown") }}-->
-<!--                                <span class="total">{{ item.total }}</span>-->
-<!--                            </el-checkbox>-->
-<!--                        </el-checkbox-group>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
 
             <el-container class="right" v-loading="roomloading">
@@ -115,10 +101,19 @@
                                             <span>{{ room.houseNum }}</span>
                                             <span>{{ room.hotelRoomType.houseName }}</span>
                                         </div>
-                                        <!--                                    && (room.roomStatus==3 || room.roomStatus==4)-->
-                                        <div class="line" v-if=" room.livingPersonList && room.livingPersonList.length > 0 && (room.checkInRoomType == 1 || room.checkInRoomType == 2)">
-                                            <span>{{ room.livingPersonList[0].name }}</span>
-                                            <span>{{ F_sex(room.livingPersonList[0].sex) }}</span>
+                                        <div class="line" v-if=" room.livingPersonList && room.livingPersonList.length > 0 &&  room.checkInObj && (room.checkInRoomType == 1 || room.checkInRoomType == 2)">
+                                            <span v-if="room.checkInRoomType == 1"> {{ $t('desk.home_bookPeople') + '：' + room.livingPersonList[0].name }}</span>
+                                            <span v-if="room.checkInRoomType == 2"> {{ $t('desk.customer_livePeople') + '：' + room.livingPersonList[0].name }}</span>
+                                            <span>{{  '  '  }}</span>
+                                            <span>{{  F_guestType( room.checkInObj.guestType || '1') }}</span>
+                                        </div>
+                                        <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && room.checkInObj" style="margin-top: 40px">
+                                            <span>{{$t('manager.finance_source')}}：{{
+                                                    F_orderSource(room.checkInObj.orderSource)
+                                                        }}
+                                                    <span v-if="room.checkInObj.orderSource == 5 && room.checkInObj.otaChannelId">-</span>
+                                                    <span v-if="room.checkInObj.orderSource == 5">{{getOtaName(room.checkInObj.otaChannelId)}}</span>
+                                                </span>
                                         </div>
                                         <!-- 清扫图标后期加 -->
                                         <div class="placeIcon text-center">
@@ -369,6 +364,10 @@ export default {
     },
 
     async mounted() {
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.otaList = list;
+            this.$forceUpdate();
+        })
         await this.getChannel();
         await this.getPersonRoom();
         // await this.getRoomStatus()
@@ -378,6 +377,14 @@ export default {
         this.initForm();
     },
     methods: {
+        getOtaName(otaChannelId) {
+            let array = this.otaList.filter((ota) => {
+                return ota.id == otaChannelId
+            })
+            if (array && array.length > 0) {
+                return array[0].otaName
+            }
+        },
 
         initForm() {
             this.searchForm = {
@@ -562,6 +569,7 @@ export default {
                 3: "#276BBA",
                 4: "#C0512B",
                 5: "#27AE76",
+                6: "#00B1F2",
             };
             return enums[value] ? enums[value] : "#276BBA";
         },

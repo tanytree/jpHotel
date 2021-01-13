@@ -1,18 +1,18 @@
 <!--
  * @Date: 2020-05-08 08:01:35
- * @LastEditors: 董林
- * @LastEditTime: 2020-08-12 22:43:50
- * @FilePath: /jiudian/src/views/market/reception/checkin.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-11 14:00:42
+ * @FilePath: \jiudian\src\views\market\reception\checkin.vue
  -->
 
 <template>
     <div class="boss-index inRoom">
 <!--        <normal :operCheckinType="activeName"></normal>-->
         <el-tabs v-model="activeName" class="tabCenter" @tab-click="handleClick">
-            <el-tab-pane label="普通入住" name="a1">
+            <el-tab-pane :label="$t('desk.order_ordinaryLive')" name="a1">
                 <normal :operCheckinType="activeName"></normal>
             </el-tab-pane>
-            <el-tab-pane label="当日回入住" name="a2">
+            <el-tab-pane :label="$t('desk.order_todayBack')" name="a2">
                 <normal :operCheckinType="activeName"></normal>
             </el-tab-pane>
         </el-tabs>

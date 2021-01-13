@@ -5,15 +5,15 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term demo-form-inline" inline size="small" v-model="searchForm" label-width="80px">
-        <el-form-item :label="$t('boss.store_storeName') + ':'" v-if="souracePage=='header'">
+        <el-form-item :label="$t('boss.store_storeNameB') + ':'" v-if="souracePage=='header'">
           <el-select v-model="searchForm.storesNum" filterable :placeholder="$t('commons.placeChoose')" class="width150">
-            <el-option :label='$t("desk.home_all")' value=''></el-option>
+            <el-option :label='$t("desk.home_allA")' value=''></el-option>
             <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_unitName') + ':'">
           <el-select v-model="searchForm.enterName" class="width150">
-            <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option :label="$t('commons.allA')" value=""></el-option>
             <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.enterName"></el-option>
           </el-select>
         </el-form-item>
@@ -33,7 +33,7 @@
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip width="100px"></el-table-column>
-        <el-table-column :label="$t('boss.store_storeName')" show-overflow-tooltip v-if="souracePage=='header'">
+        <el-table-column :label="$t('boss.store_storeNameA')" show-overflow-tooltip v-if="souracePage=='header'">
           <template slot-scope="{row}">
             <div v-if="row&&row.storesNum">{{checkStores(row.storesNum)}}</div>
           </template>
@@ -41,17 +41,17 @@
         <el-table-column :label="$t('desk.customer_arage')" show-overflow-tooltip width="120px">
           <template slot-scope="{ row }">
             <div>
-              <span style="color: #f11717">{{ $t("desk.serve_open") }}</span>{{ row.startTime }}
+              <span style="color: #f11717">{{ $t("desk.serve_openA") }}</span>{{ row.startTime }}
             </div>
             <div>
-              <span style="color: #1a3bf1">{{ $t("desk.serve_tie") }}</span>
+              <span style="color: #1a3bf1">{{ $t("desk.serve_tieA") }}</span>
               {{ row.endTime }}
             </div>
           </template>
         </el-table-column>
         <el-table-column prop="requestNum" :label="$t('desk.customer_paragraphNum')">
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_areadyPrice')" prop="requestPrice">
+        <el-table-column :label="$t('desk.customer_areadyPriceA')" prop="requestPrice">
         </el-table-column>
         <el-table-column prop="intoPrice" :label="$t('desk.customer_areadyBookPrice')">
         </el-table-column>
@@ -60,7 +60,7 @@
             <div>{{ row.requestPrice - row.intoPrice }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('desk.customer_creativeTime')">
+        <el-table-column prop="createTime" :label="$t('desk.customer_creativeTimeA')">
         </el-table-column>
         <el-table-column :label="$t('desk.customer_billState')" width="80">
           <template slot-scope="{ row }">
@@ -71,7 +71,7 @@
               {{$t('desk.customer_partBill')}}
             </div>
             <div v-if="row.intoStatus==3">
-              {{$t('desk.customer_areadyBook')}}
+              {{$t('desk.customer_areadyBookA')}}
             </div>
           </template>
         </el-table-column>
@@ -184,15 +184,15 @@
       </div>
     </el-dialog>
     <!-- 入账 dialog -->
-    <el-dialog :title="$t('desk.enterAccount')" v-if="settlementDialog" :visible.sync="settlementDialog" width="600px" top="0">
-      <div style="margin-left: 30px">
+    <el-dialog :title="$t('desk.enterAccount')" v-if="settlementDialog" :visible.sync="settlementDialog" width="40%" top="0">
+      <div style="margin-left:150px;">
         <span>{{ $t("desk.customer_placeMoney") + ":" }}{{ itemInfo.requestPrice }}；</span>
         <span style="margin-left: 6px">{{ $t("desk.customer_areadyBookPrice") + ":" }}{{
                         itemInfo.intoPrice
                     }}</span>
       </div>
-      <el-form size="small" :model="enterForm" ref="enterForm" style="margin-top: 15px" label-width="90px" :rules="enterRules">
-        <el-form-item :label="$t('desk.enterAccountMoney') + ':'" prop="intoPrice">
+      <el-form size="small" :model="enterForm" ref="enterForm" style="margin-top: 15px" label-width="100px" :rules="enterRules">
+        <el-form-item :label="$t('desk.enterAccountMoneyA') + ':'" prop="intoPrice">
           <el-input type='number' style="width:320px;" v-model="enterForm.intoPrice" @keyup.native="intoPriceChange"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_remittanceTime') + ':'" prop="remittanceTime">

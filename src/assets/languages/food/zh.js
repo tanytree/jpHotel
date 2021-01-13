@@ -305,6 +305,7 @@ module.exports = {
 
         tabs_title_1:'预交班基本信息',
         tabs_time_1:'班次时间',
+		to:'至',
         tabs_num:'班次号',
         acter:'交班操作员',
 

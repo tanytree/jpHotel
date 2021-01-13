@@ -39,9 +39,6 @@ export default {
     };
   },
   created() {
-      // 
-      // let menuList = JSON.parse(sessionStorage.subMenul) || [];
-      // this.$refs.mainView.resetMenu(menuList);
       this.$F.handleThirdMenu(this);
       let type = this.$route.query.type;
       if (type) {
@@ -50,7 +47,7 @@ export default {
   },
   mounted() {
       // let type = this.$route.query.type;
-      // 
+      //
       // this.activeName = type || 'booking';
   },
   methods: {

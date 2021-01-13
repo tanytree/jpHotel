@@ -10,7 +10,7 @@
       <el-row>
 
         <el-col :span="6">
-          <el-form-item label="所属门店">
+          <el-form-item :label="$t('desk.customer_belongStore')">
             <el-select v-model="form.orderType" style="width:160px">
               <el-option label="当前课程" value="1"></el-option>
               <el-option label="演出" value="3"></el-option>
@@ -20,7 +20,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="员工名称">
+          <el-form-item :label="$t('boss.staff_name')">
             <el-input style="width:160px" v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
@@ -40,7 +40,7 @@
       <div>
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="所属门店" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" :label="$t('desk.customer_belongStore')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="员工姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="入职时间" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="职位 " show-overflow-tooltip></el-table-column>

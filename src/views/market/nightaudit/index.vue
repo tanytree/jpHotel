@@ -19,7 +19,7 @@
                 <!-- 应离未离订单-->
                 <notleaving  :data="notLivingData" v-if="item.path == 'notleaving'" />
                 <!-- 走结订单-->
-                <leave :data="leaveData"  v-if="item.path == 'leave'" />
+<!--                <leave :data="leaveData"  v-if="item.path == 'leave'" />-->
                 <!-- 房价预审订单-->
                 <verify :data="verifyData"  v-if="item.path == 'verify' && verifyDataShow" />
             </el-tab-pane>

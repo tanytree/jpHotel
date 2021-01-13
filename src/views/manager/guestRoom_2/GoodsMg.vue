@@ -160,7 +160,7 @@
             </div>
 
             <div class="footer">
-                <el-button type="primary" size="small" class="submit" @click="submit">{{$t('commons.save')}}
+                <el-button type="primary" size="small" class="submit" @click="submit(1)">{{$t('commons.save')}}
                 </el-button>
                 <el-button type="primary" size="small" class="submit" @click="submit">{{$t('manager.grsl_saveAndAdd')}}
                 </el-button>
@@ -350,7 +350,7 @@
                 this.tab_show = true;
                 this.initData(this.pageForm, this.form.name, this.form.category, this.form.status, this.form.categoryType);
             },
-            submit() {
+            submit(type) {
                 const a = this;
                 const param = {
                     name: this.rowData.name,
@@ -379,31 +379,31 @@
                 this.$F.doRequest(this, "/pms/hotelgoods/edit", param, (res) => {
                     a.$message.success(this.$t("commons.saveSuccess"))
                     a.initData(a.pageForm, a.form.name, a.form.category, a.form.status, a.form.categoryType);
-                    if (a.edit) {
+                    if (a.edit || type) {
                         a.tab_show = true;
                     } else {
                         a.tab_show = false;
-                        a.rowData = {
-                            name: "",
-                            categoryId: "",
-                            remark: "",
-                            retailPrice: "",
-                            costPrice: "",
-                            buyCount: "0",
-                            inventoryWarning: "1000",
-                            categoryType: 1,
-                            priceModel: 1,
-                            priceStartMinute: '',
-                            priceTime: '',
-                            capsPriceFlag: false,
-                            startPrice: '',
-                            minutePrice: '',
-                            capsPrice: '',
-                            depositPrice: '',
-                            taxStatus: 1,
-                            seviceStatus: 1
-                        };
                     }
+                    a.rowData = {
+                        name: "",
+                        categoryId: "",
+                        remark: "",
+                        retailPrice: "",
+                        costPrice: "",
+                        buyCount: "0",
+                        inventoryWarning: "1000",
+                        categoryType: 1,
+                        priceModel: 1,
+                        priceStartMinute: '',
+                        priceTime: '',
+                        capsPriceFlag: false,
+                        startPrice: '',
+                        minutePrice: '',
+                        capsPrice: '',
+                        depositPrice: '',
+                        taxStatus: 1,
+                        seviceStatus: 1
+                    };
                 });
             },
             currentChange(val) {

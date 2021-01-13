@@ -10,10 +10,10 @@
 						 
 					</el-form-item>
 					<el-form-item>
-						<el-col > <el-button type="text"  @click="beforeTap" style="border-bottom: 2rpx solid #409EFF; margin-left: 20rpx;">&lt;&lt; 前15天</el-button></el-col>
+						<el-col > <el-button type="text"  @click="beforeTap" style="border-bottom: 2rpx solid #409EFF; margin-left: 20rpx;">&lt;&lt; {{$t('manager.add_lsat15')}}</el-button></el-col>
 					</el-form-item>
 					<el-form-item>
-						<el-col> <el-button type="text"  @click="afterTap">后15天 &gt;&gt;</el-button></el-col>
+						<el-col> <el-button type="text"  @click="afterTap">{{$t('manager.add_next15')}} &gt;&gt;</el-button></el-col>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
 						<el-row>
@@ -45,7 +45,7 @@
 		</el-row>
 
 		<!-- ===================批量调价==================================== -->
-		<el-dialog top="0" title="批量调价" :visible.sync="PieDialog" :close-on-click-modal="false" width="80%" class="editPriceDialog">
+		<el-dialog top="0" :title="$t('manager.ps_bulkPrice')" :visible.sync="PieDialog" :close-on-click-modal="false" width="80%" class="editPriceDialog">
 
 			<el-row :gutter="20">
 				<el-form :model="ruleForm_Pie" :rules="rules" ref="ruleForm_Pie" label-width="100px">
@@ -68,7 +68,7 @@
 			<el-table ref="multipleTable" :data="ruleForm_Pie.roomStrategyJson" tooltip-effect="dark" default-expand-all
 			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="personNum" :label="$t('manager.add_peoAsit')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -85,7 +85,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="门市价" v-else>
+				<el-table-column prop="customPrice" :label="$t('manager.hk_doorPriceA')" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">{{value.marketPrice}}</div>
@@ -93,7 +93,7 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="newCustomPrice" label="调改价" width="250" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_resetPrice')" width="250" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -102,7 +102,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="newCustomPrice" label="新门市价" width="250" v-else>
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_newDoorPri')" width="250" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -116,10 +116,10 @@
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
-								<el-col>早餐 [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_breakfast')}} [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
 							</el-row>
 							<el-row class="demo-form-inline">
-								<el-col>晚餐 [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_dinner')}} [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
 							</el-row>
 						</el-row>
 					</template>
@@ -136,13 +136,13 @@
 		<el-dialog top="0" :title="$t('manager.ps_resetRoomPrice')" :visible.sync="editPriceDialog" :close-on-click-modal="false"
 		 width="80%" class="editPriceDialog">
 			<el-row :gutter="20" style="margin-bottom: 20px;">
-				<el-col :span="3">当前时间: </el-col>
+				<el-col :span="3">{{$t('manager.add_nowTime')}}: </el-col>
 				<el-col :span="16">{{editPriceForm.dayTime}}</el-col>
 			</el-row>
 			<el-table ref="multipleTable" :data="editPriceForm.roomStrategyJson" tooltip-effect="dark" default-expand-all
 			 header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="personNum" :label="$t('manager.add_peoAsit')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -159,7 +159,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="门市价" v-else>
+				<el-table-column prop="customPrice" :label="$t('manager.hk_doorPriceA')" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">{{value.marketPrice}}</div>
@@ -167,7 +167,7 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="newCustomPrice" label="调改价" width="250" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_resetPrice')" width="250" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -176,7 +176,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="newCustomPrice" label="新门市价" width="250" v-else>
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_newDoorPri')" width="250" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -190,10 +190,10 @@
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
-								<el-col>早餐 [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_breakfast')}} [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
 							</el-row>
 							<el-row class="demo-form-inline">
-								<el-col>晚餐 [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_dinner')}} [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
 							</el-row>
 						</el-row>
 					</template>
@@ -279,7 +279,7 @@ export default {
 				rules: {
 					rules: [{
 						required: true,
-						message: '请选择时间',
+						message: this.$t('manager.add_chooseTime'),
 						trigger: "blur",
 					}, ],
 				}
@@ -393,13 +393,13 @@ export default {
                         let result = '';
                         priseList.forEach((c, d) => {
                             if(topIndex == 0) { //纯住宿
-                                result += `${d+1}人价` + Number(priseList[d])+ '<br/>'
+                                result += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(priseList[d])+ '<br/>'
                             } else if(topIndex== 1) {  //住宿+早
-                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0)) + '<br/>'
+                                result += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0)) + '<br/>'
                             } else if (topIndex== 2) {  //住宿+晚餐
-                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                result += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(priseList[d]) + Number(this.mealDinnerObject.mealPrice || 0))  + '<br/>'
                             } else if (topIndex== 3) { //住宿+晚餐+早餐
-                                result += `${d+1}人价` + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0) + Number(this.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                result += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(priseList[d]) + Number(this.mealBreakfastObject.mealPrice || 0) + Number(this.mealDinnerObject.mealPrice || 0))  + '<br/>'
                             }
                         })
                         return result;
@@ -551,18 +551,18 @@ export default {
                             this.dayPriceList = res.dayPriceList;
 							this.dateList = res.dateList
 							this.dateList.unshift({
-								dateStr: '类型',
+								dateStr: this.$t('desk.home_typeText'),
 								weekDay: "",
 							});
 							if(res.roomType.roomType == 1) {
 								this.roomType = [{
-									name: '纯住宿'
+									name: this.$t('manager.add_onlyLive')
 								}, {
-									name: '住宿+早'
+									name: this.$t('manager.add_liveAzao')
 								}, {
-									name: '住宿+晚'
+									name: this.$t('manager.add_liveAwan')
 								}, {
-									name: '住宿+早+晚'
+									name: this.$t('manager.add_zaoAwan')
 								}]
 								let stay = ''; // 纯住宿
 								let stayX = ''; // 住宿+早
@@ -582,13 +582,13 @@ export default {
 											});
                                             arry.forEach((c, d) => {
                                                 if(index == 0) { //纯住宿
-                                                    stay += `${d+1}人价` + Number(arr[d]) + '<br/>'
+                                                    stay += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(arr[d]) + '<br/>'
                                                 } else if(index== 1) {  //住宿+早
-                                                    stayX += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))  + '<br/>'
+                                                    stayX += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))  + '<br/>'
                                                 } else if (index== 2) {  //住宿+晚餐
-                                                    stayY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                                    stayY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
                                                 } else if (index== 3) { //住宿+晚餐+早餐
-                                                    stayXY += `${d+1}人价` + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                                    stayXY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
                                                 }
                                             })
 											roomTypePrises.push(stay);

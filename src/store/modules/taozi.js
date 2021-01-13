@@ -1,10 +1,16 @@
+/*
+ * @Date: 2020-08-27 13:25:04
+ * @Author: 陶子
+ * @LastEditTime: 2021-01-13 15:16:06
+ * @FilePath: \jiudian\src\store\modules\taozi.js
+ */
 
 
 const state = {
   "activeName": 'member',
   'bookingName': 'normal',
   'bookingSubName': 'b3',
-    'memberName': 'MemberTypeManager',
+  'memberName': 'MemberTypeManager',
 };
 
 
@@ -12,7 +18,8 @@ const mutations = {
   resetActive(state, data) {
     state.activeName = data;
   },
-    resetMemberTab(state, data) {
+  //设置总办会员管理的启动项
+  resetMemberTab(state, data) {
     state.memberName = data;
   },
   resetBookingName(state, data) {

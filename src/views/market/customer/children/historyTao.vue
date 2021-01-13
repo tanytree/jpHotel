@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 16:47:19
+ * @LastEditTime: 2021-01-08 14:26:04
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -60,7 +60,7 @@
             ></el-option>
           </el-select>
         </el-form-item> -->
-        <el-form-item :label="$t('manager.hp_room') + ':'">
+        <el-form-item :label="$t('manager.hp_room') + ':'" label-width="120px">
           <el-cascader
             v-model="searchForm.roomTypeId"
             :options="roomType"

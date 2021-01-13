@@ -69,8 +69,8 @@
 					</el-row>
 					<el-col :span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')+':'" prop="time">
-							<el-date-picker v-model="ruleForm.time" type="datetimerange" range-separator="至" start-placeholder="开始日期"
-							 end-placeholder="结束日期" @change="changeTime" :picker-options="expireTimeOption" value-format="yyyy-MM-dd">
+							<el-date-picker v-model="ruleForm.time" type="datetimerange" :range-separator="$t('desk.serve_to')" :start-placeholder="$t('manager.ps_startDate')"
+							 :end-placeholder="$t('manager.ps_endDate')" @change="changeTime" :picker-options="expireTimeOption" value-format="yyyy-MM-dd">
 							</el-date-picker>
 						</el-form-item>
 					</el-col>
@@ -85,19 +85,19 @@
 			</el-row>
 			<el-table ref="multipleTable" :data="roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="marketPrice" label="门市价(一人住宿价+附餐价)">
+				<el-table-column prop="marketPrice" :label="$t('manager.grsl_doorPri')">
 					<template slot-scope="scope">
 						<div>
 							<div style="padding: 10px 0px;">{{scope.row.marketPrice}}</div>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="新价格(一人住宿价+附餐价)" width="400">
+				<el-table-column :label="$t('manager.grsl_newPrice')" width="400">
 					<template slot-scope="scope">
 						<div>
 							<div style="padding: 10px 0px;display: flex;align-items: center;">
-								<el-input v-model="scope.row.adjustPrice" placeholder="请输入新价格" style="width: 200px;"></el-input>
-								<span style="padding-left: 20px;">日元</span>
+								<el-input v-model="scope.row.adjustPrice" :placeholder="$t('manager.grsl_inputNewPri')" style="width: 200px;"></el-input>
+								<span style="padding-left: 20px;">{{$t('manager.ps_japanYen')}}</span>
 							</div>
 						</div>
 					</template>
@@ -109,43 +109,43 @@
 			</el-row>
 		</el-row>
 		<!-- 查看 -->
-		<el-dialog top="0" title="查看" :visible.sync="dialogDetail" :close-on-click-modal="false">
+		<el-dialog top="0" :title="$t('boss.compensation_toView')" :visible.sync="dialogDetail" :close-on-click-modal="false">
 			<el-row style="line-height: 30px;">
 				<el-row>
-					<el-col :span="4" style="color: #898B8E;">规则名称:</el-col>
+					<el-col :span="4" style="color: #898B8E;">{{$t('manager.ps_ruleName')}}:</el-col>
 					<el-col :span="14">{{detail_info.ruleName}}</el-col>
 				</el-row>
 				<el-row>
 					<el-col :span="4" style="color: #898B8E;">{{ $t('boss.loginDetail_state') }}:</el-col>
-					<el-col :span="14">{{detail_info.state==1? '启用':'禁用'}}</el-col>
+					<el-col :span="14">{{detail_info.state==1? $t('manager.hk_enable'):$t('manager.hk_disable')}}</el-col>
 				</el-row>
 				<el-row>
-					<el-col :span="4" style="color: #898B8E;">时间:</el-col>
-					<el-col :span="14">{{detail_info.startTime}}至{{detail_info.endTime}}</el-col>
+					<el-col :span="4" style="color: #898B8E;">{{$t('commons.time')}}:</el-col>
+					<el-col :span="14">{{detail_info.startTime}}{{$t('desk.serve_to')}}{{detail_info.endTime}}</el-col>
 				</el-row>
 				<el-row>
-					<el-col :span="4" style="color: #898B8E;">星期:</el-col>
+					<el-col :span="4" style="color: #898B8E;">{{$t('commons.week')}}:</el-col>
 					<el-col :span="14">
 						<span v-for="(value,index) in detail_info.weeks">{{value}},</span>
 					</el-col>
 				</el-row>
 				<el-row>
-					<el-col :span="4" style="color: #898B8E;">折扣率:</el-col>
+					<el-col :span="4" style="color: #898B8E;">{{$t('manager.ps_discount')}}:</el-col>
 					<el-col :span="14">{{detail_info.discounts_name}}</el-col>
 				</el-row>
 			</el-row>
 			<el-table ref="multipleTable" :data="detail_info.hotelPriceRoomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="houseName" :label="$t('desk.home_roomType')"></el-table-column>
 				<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPrice')"></el-table-column>
-				<el-table-column prop="job_status" label="调价方式">
+				<el-table-column prop="job_status" :label="$t('manager.ps_changPriceWay')">
 					<template slot-scope="{row}">
-						<span>{{row.adjustType==1 ? '折扣率':'一口价'}}</span>
+						<span>{{row.adjustType==1 ? $t('manager.ps_discount') : $t('manager.ps_fixedPrice')}}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="adjustPrice" label="调价后"></el-table-column>
+				<el-table-column prop="adjustPrice" :label="$t('manager.ps_dueTo')"></el-table-column>
 			</el-table>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogDetail = false">关 闭</el-button>
+				<el-button @click="dialogDetail = false">{{$t('commons.close')}}</el-button>
 			</span>
 		</el-dialog>
 
@@ -198,7 +198,7 @@
 					}],
 					time: [{
 						required: true,
-						message: '请选择时间',
+						message: this.$t('manager.add_chooseTime'),
 						trigger: 'blur'
 					}]
 				},

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 17:14:27
+ * @LastEditTime: 2021-01-12 18:09:57
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -20,7 +20,7 @@
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
 <!--                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>-->
                 <!-- <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button> -->
-                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">附餐</el-button>
+                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMeal')}}</el-button>
             </el-form-item>
         </el-row>
         <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -45,19 +45,23 @@
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" prop="payPrice"></el-table-column>
-        <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
-            <template slot-scope="{row}">
-                {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
-            </template>
-        </el-table-column>
         <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
             <template slot-scope="{row}" style="color: red">
                 {{row.consumePrice}}
             </template>
         </el-table-column>
+        <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
+            <template slot-scope="{row}">
+                {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
+            </template>
+        </el-table-column>
 <!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
+            <template slot-scope="{row}">
+                <span :style="row.priceType == 10 ? 'color:#3a8ee6' : '' ">{{row.remark}}</span>
+            </template>
+        </el-table-column>
         <el-table-column :label="$t('commons.operating')">
             <template slot-scope="{row}">
                 <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
@@ -71,17 +75,18 @@
     <!--入账 -->
     <el-dialog top='0' :title="$t('desk.enterAccount')" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
-            <p>快速入账项目</p>
+            <p>{{$t('desk.book_firstInto')}}</p>
             <el-form-item :label="$t('desk.order_payProject')+':'">
                 <el-radio-group v-model="consumeOperForm.priceType">
-                    <el-radio-button :label="3" :value="3">{{$t('desk.customer_collection')}}</el-radio-button>
+                    <el-radio-button :label="3" :value="3">{{$t('desk.customer_collectionA')}}</el-radio-button>
                     <el-radio-button :label="2" :value="2">{{$t('desk.order_theDeposit')}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
             <el-form-item :label="$t('desk.order_selectPayWay')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
                 <el-radio-group v-model="consumeOperForm.payType">
-                    <el-radio  v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{value}}</el-radio>
+                    <!-- <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio> -->
+                    <el-radio v-for="(value, key) in payTypeList()" :label="key" :key="key">{{value}}</el-radio>
                 </el-radio-group>
             </el-form-item>
 
@@ -90,8 +95,8 @@
                     <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
                     <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
                     <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
-                    <el-radio-button :label="15" :value="15">温泉税</el-radio-button>
-                    <el-radio-button :label="16" :value="16">住宿税</el-radio-button>
+                    <el-radio-button :label="15" :value="15">{{$t('desk.book_wenquan')}}</el-radio-button>
+                    <el-radio-button :label="16" :value="16">{{$t('desk.book_liveFee')}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
@@ -195,19 +200,18 @@
                    {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
-            <br />
+            <br/>
             <div class="cost margin-t-10" v-if="detailData">
                 <div class="wrap" style="background:#efefef">
-                    <span class="fee" v-if="detailData.totalPrice>0">{{$t('desk.order_receivable')+':'}}{{detailData.totalPrice}}</span>
-                    <span class="fee" v-if="detailData.totalPrice<0">{{$t('desk.order_shouldBack')+':'}}{{detailData.totalPrice}}</span>
+                    <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
+                    <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
                     <div class="costNum">
                         <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
                         <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
                     </div>
                 </div>
             </div>
-            <br />
-
+            <br/>
             <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
                 <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
@@ -470,6 +474,17 @@ export default {
     },
 
     methods: {
+      payTypeList(){
+        let obj = this. $t('commons.payType');
+        let newArry={};
+         for(let i in obj){
+           if(i!=3){
+             newArry[i] = obj[i];
+           }
+         }
+         return newArry;
+       
+      },
       updataInfo(){
           this.consume_order_list()
           this.getOrderDetail()
@@ -588,6 +603,7 @@ export default {
             if (type == 3) {
                 params.state = this.destructionList[0].state
                 params.payType = 0 //挂账无需支付方式
+
                 // params.orderId = this.destructionList[0].id
                 if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
@@ -989,10 +1005,12 @@ export default {
     },
     watch:{
         'consumeOperForm.priceType':function(val,oldval){
+            console.log(val)
             this.taxCount = ''
             this.unitPrice = ''
                 if(val == 9){
-                    this.consumeOperForm.consumePrice = this.destructionList[0].consumePrice ? this.destructionList[0].consumePrice : this.destructionList[0].payPrice
+                    this.consumeOperForm.consumePrice =  this.destructionList[0].payPrice
+                    console.log(this.destructionList[0].payPrice)
                 }else if(val == 10){
                    this.consumeOperForm.consumePrice = ''
                 }else{

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 17:37:38
+ * @LastEditTime: 2021-01-10 19:12:04
  * @FilePath: \jiudian\src\components\front\customer.vue
  -->
 <template>
@@ -294,7 +294,7 @@ export default {
             console.log(item)
             return
             if (!item.name) {
-                this.$message.error('请填写姓名');
+                this.$message.error(this.$t('desk.order_inputName'));
                 return
             }
             if (!item.idcardType) {
@@ -302,15 +302,15 @@ export default {
                 return
             }
             if (!item.idcard) {
-                this.$message.error('请填写证件号');
+                this.$message.error(this.$t('desk.order_inputCardNum'));
                 return
             }
             if (!item.sex) {
-                this.$message.error('请选择性别');
+                this.$message.error(this.$t('desk.customer_chooseSex'));
                 return
             }
             if (!item.mobile) {
-                this.$message.error('请输入手机号');
+                this.$message.error(this.$t('desk.customer_inputPhone'));
                 return
             }
             let params = {

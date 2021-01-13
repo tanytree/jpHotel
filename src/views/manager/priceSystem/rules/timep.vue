@@ -224,15 +224,15 @@
 					pageIndex: 1,
 					pageSize: 10,
 				},
-				statelList: [{
-						name: "启动",
-						key: "1",
-					},
-					{
-						name: "禁用",
-						key: "2",
-					},
-				],
+				// statelList: [{
+				// 		name: "启动",
+				// 		key: "1",
+				// 	},
+				// 	{
+				// 		name: "禁用",
+				// 		key: "2",
+				// 	},
+				// ],
 			};
 		},
 		created() {
@@ -240,6 +240,17 @@
 			this.get_hotel_rule_hour_list();
 		},
 		computed: {
+       statelList(){
+        return [{
+						name: this.$t('manager.add_start'),
+						key: "1",
+					},
+					{
+						name: this.$t('manager.hk_disable'),
+						key: "2",
+					},
+				]
+      },
 			deleteSuccess: {
 				get() {
 					return this.$t("manager.hk_deleteSuccess");

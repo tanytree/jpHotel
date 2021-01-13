@@ -82,9 +82,10 @@ export default {
   },
   methods: {
     getDataList() {
-      this.$F.doRequest(this, "/pms/oat/oat_list", {}, (res) => {
-        this.platformList = res.oatList;
-      });
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.platformList = list;
+            this.$forceUpdate();
+        })
     },
     //点击删除按钮
     deletePlat(row) {

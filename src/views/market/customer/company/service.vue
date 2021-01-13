@@ -5,13 +5,13 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px" v-model="searchForm">
-         <el-form-item :label="$t('boss.store_storeName') + ':'" v-if="souracePage=='header'">
+         <el-form-item :label="$t('boss.store_storeNameA') + ':'" v-if="souracePage=='header'">
                     <el-select v-model="searchForm.storesNum" filterable :placeholder="$t('commons.placeChoose')" class="width150">
-                        <el-option :label='$t("desk.home_all")' value=''></el-option>
+                        <el-option :label='$t("desk.home_allA")' value=''></el-option>
                         <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
                     </el-select>
                 </el-form-item>
-        <el-form-item :label="$t('desk.customer_buyerUnit')+':'">
+        <el-form-item :label="$t('desk.customer_buyerUnitA')+':'">
           <el-select v-model="searchForm.enterId" class="width150" :placeholder="$t('commons.placeChoose')">
             <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.id"></el-option>
@@ -20,8 +20,9 @@
         <el-form-item :label="$t('desk.customer_settlementStatus')+':'">
           <el-select v-model="searchForm.state" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option :label="$t('desk.customer_closeAccount')" value="2"></el-option>
-            <el-option :label="$t('desk.customer_outStand')" value="1"></el-option>
+            <el-option :label="$t('desk.customer_notRequest')" value="1"></el-option>
+            <el-option :label="$t('desk.customer_noInto')" value="3"></el-option>
+            <el-option :label="$t('desk.customer_areadyInto')" value="2"></el-option>
           </el-select>
         </el-form-item>
         <br />
@@ -55,10 +56,10 @@
         <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
         <el-table-column
           prop="creditName"
-          :label="$t('desk.customer_buyerUnit')"
+          :label="$t('desk.customer_buyerUnitA')"
           show-overflow-tooltip
         ></el-table-column>
-         <el-table-column :label="$t('boss.store_storeName')" show-overflow-tooltip v-if="souracePage=='header'">
+         <el-table-column :label="$t('boss.store_storeNameA')" show-overflow-tooltip v-if="souracePage=='header'">
                     <template slot-scope="{row}">
                         <div v-if="row&&row.storesNum">{{checkStores(row.storesNum)}}</div>
                     </template>
@@ -71,21 +72,22 @@
             {{row.onAccountTotal || row.consumePrice || 0}}
           </template>
         </el-table-column>
-        
+
         <el-table-column
           prop="checkInPerson.checkIn.name"
-          :label="$t('desk.home_consumerNames')"
+          :label="$t('desk.home_consumerNamesA')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="checkinId"
+          prop="checkInPerson.checkIn.orderNum"
           :label="$t('desk.customer_originOrderNum')"
           show-overflow-tooltip
-          width="300"
+         
         ></el-table-column>
         <el-table-column
           :label="$t('desk.customer_roomKind')"
           show-overflow-tooltip
+          width="160px"
         >
           <template slot-scope="{ row }">
             <div v-if="row.checkInPerson">
@@ -95,7 +97,7 @@
         </el-table-column>
         <el-table-column
           prop="checkInPerson.checkIn.checkinTime"
-          :label="$t('desk.order_checkinDate')"
+          :label="$t('desk.order_checkinDateA')"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -108,10 +110,9 @@
           show-overflow-tooltip
         >
           <template slot-scope="{ row }">
-            <div v-if="row.state == 1">{{ $t("desk.customer_outStand") }}</div>
-            <div v-if="row.state == 2">
-              {{ $t("desk.customer_closeAccount") }}
-            </div>
+            <div v-if="row.state == 1">{{$t('desk.customer_notRequest')}}</div>
+            <div v-if="row.state == 2">{{$t('desk.customer_areadyInto')}}</div>
+            <div v-if="row.state == 3">{{$t('desk.customer_noInto')}}</div>
           </template>
         </el-table-column>
       </el-table>
@@ -153,7 +154,7 @@ export default {
       showEdit: false,
       showDetail: false,
       searchForm: {
-        // storesNum: "",
+        storesNum: "",
         enterId: "",
         state: "",
         startTime: "", //考试时件

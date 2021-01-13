@@ -6,9 +6,9 @@
 		<el-row :gutter="20">
 			<el-form :model="batchEditPriceForm" :rules="bathEditRules" ref="ruleForm" label-width="100px">
 				<el-col :span="20">
-					<el-form-item label="会员类型" prop="memberTypeId">
+					<el-form-item :label="$t('desk.customer_memType')" prop="memberTypeId">
 						<el-row style="display: flex;align-items: center;">
-							<el-checkbox :checked='memberChecked' style="margin-bottom: 10px;margin-right: 30px;" @change="memberCheckedChange">全选</el-checkbox>
+							<el-checkbox :checked='memberChecked' style="margin-bottom: 10px;margin-right: 30px;" @change="memberCheckedChange">{{$t('desk.home_allSelected')}}</el-checkbox>
 							<el-checkbox-group v-model="batchEditPriceForm.memberTypeId">
 								<el-checkbox v-for="(item, index) in memberTypeY" :label="item.id" :checked='item.checked'  :key="index">{{item.name}}</el-checkbox>
 							</el-checkbox-group>
@@ -16,21 +16,21 @@
 					</el-form-item>
 				</el-col>
 				<el-col :span="20">
-					<el-form-item label="渠道" prop="channel">
+					<el-form-item :label="$t('desk.home_channel')" prop="channel">
 						<el-button plain size="mini">{{batchEditPriceForm.channel}}</el-button>
 					</el-form-item>
 				</el-col>
 				<el-col :span="20">
-					<el-form-item label="选择时间" prop="time">
+					<el-form-item :label="$t('manager.grsl_selectTime')" prop="time">
 						<el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" value-format="yyyy-MM-dd"
 						 :picker-options="expireTimeOption" unlink-panels :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')"
 						 :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
 					</el-form-item>
 				</el-col>
 				<el-col :span="20">
-					<el-form-item label="选择星期">
+					<el-form-item :label="$t('manager.ps_selectWeek')">
 						<el-row style="display: flex;align-items: center;">
-							<el-checkbox style="margin-bottom: 10px;margin-right: 30px;">全选</el-checkbox>
+							<el-checkbox style="margin-bottom: 10px;margin-right: 30px;">{{$t('desk.home_allSelected')}}</el-checkbox>
 							<el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
 								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
 							</el-checkbox-group>
@@ -40,18 +40,18 @@
 			</el-form>
 		</el-row>
 		<el-table ref="multipleTable" :data="batchEditPriceForm.roomStrategyJson" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-			<el-table-column prop="houseName" label="房型"></el-table-column>
-			<el-table-column prop="marketPrice" label="门市价(一人住宿+附餐费)"></el-table-column>
-			<el-table-column prop="name" label="新住宿价格(一人住宿)">
+			<el-table-column prop="houseName" :label="$t('desk.home_roomType')" ></el-table-column>
+			<el-table-column prop="marketPrice" :label="$t('manager.grsl_doorPri')"></el-table-column>
+			<el-table-column prop="name" :label="$t('manager.grsl_newLivePri')">
 				<template slot-scope="{row, $index}">
 					<el-row class="demo-form-inline">
 						<span>
-							<el-input v-model.number="row.adjustPrice" style="width: 140px;margin: 0px 15px;"></el-input> 日元
+							<el-input v-model.number="row.adjustPrice" style="width: 140px;margin: 0px 15px;"></el-input> {{$t('manager.ps_japanYen')}}
 						</span>
 					</el-row>
 				</template>
 			</el-table-column>
-			<el-table-column prop="newLivePrice" label="新价格(一人住宿+附餐费)"></el-table-column>
+			<el-table-column prop="newLivePrice" :label="$t('manager.grsl_newPrice')"></el-table-column>
 		</el-table>
 		<el-row style="padding: 20px 0px;">
 			<el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
@@ -70,34 +70,34 @@
 				
 				tab1_show: true,
 				value: "",
-				batchEditPriceForm: {
-					time: "", //开始日期跟结束日期在一起
-					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
-					channel: "线下",
-					startTime: "",
-					endTime: "",
-					weeks: [],
-					roomStrategyJson: [{
-						roomTypeId: '',
-						marketPrice: '',
-						adjustPrice: '',
-						newLivePrice: ''
-					}],
-				},
+				// batchEditPriceForm: {
+				// 	time: "", //开始日期跟结束日期在一起
+				// 	memberTypeId: [], //会员类型id  String必填 多个用半角","分割
+				// 	channel: "线下",
+				// 	startTime: "",
+				// 	endTime: "",
+				// 	weeks: [],
+				// 	roomStrategyJson: [{
+				// 		roomTypeId: '',
+				// 		marketPrice: '',
+				// 		adjustPrice: '',
+				// 		newLivePrice: ''
+				// 	}],
+				// },
 				bathEditRules: {
 					memberTypeId: [{
 						required: true,
-						message: '请选择会员类型',
+						message: this.$t('desk.customer_chooseMemType'),
 						trigger: "blur",
 					}],
 					memberTypeId: [{
 						required: true,
-						message: '请选择会员类型',
+						message: this.$t('desk.customer_chooseMemType'),
 						trigger: "blur",
 					}],
 					time: [{
 						required: true,
-						message: '请选择时间',
+						message: this.$t('manager.add_chooseTime'),
 						trigger: "blur",
 					}],
 				},
@@ -134,39 +134,7 @@
 					disabledDate(time) {
 						return time.getTime() > Date.now();
 					},
-					// shortcuts: [{
-					// 		text: "今天",
-					// 		onClick(picker) {
-					// 			picker.$emit("pick", new Date());
-					// 		},
-					// 	},
-					// 	{
-					// 		text: "前十五天",
-					// 		onClick(picker) {
-					// 			const date = new Date();
-					// 			date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
-					// 			picker.$emit("pick", date);
-					// 			this.get_hotel_price_room_type_list();
-					// 		},
-					// 	},
-					// 	{
-					// 		text: "后十五天",
-					// 		onClick(picker) {
-					// 			const date = new Date();
-					// 			date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
-					// 			picker.$emit("pick", date);
-					// 			this.get_hotel_price_room_type_list();
-					// 		},
-					// 	},
-					// ],
-				},
-				rules: {
-					name: [{
-						required: true,
-						// message: "请输入姓名",
-						message: this.$t('commons.mustInput'),
-						trigger: "blur",
-					}, ],
+				
 				},
 				dialogChangeA: false,
 				dialogInfo_show: false, //商品入库弹框
@@ -174,7 +142,36 @@
 				weekDays: [],
 			};
 		},
+		computed: {
+	    rules(){
+        return {
+					name: [{
+						required: true,
+						// message: "请输入姓名",
+						message: this.$t('commons.mustInput'),
+						trigger: "blur",
+					}, ],
+				}
+      },
+      batchEditPriceForm(){
+        return  {
+					time: "", //开始日期跟结束日期在一起
+					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
+					channel:this.$t('desk.customer_offline'),
+					startTime: "",
+					endTime: "",
+					weeks: [],
+					roomStrategyJson: [{
+						roomTypeId: '',
+						marketPrice: '',
+						adjustPrice: '',
+						newLivePrice: ''
+					}],
+				}
+      }
 	
+		
+		},
 		mounted() {
 			this.weekDays.push({
 				label: this.$t('commons.all'),
@@ -187,30 +184,6 @@
 				});
 			})
 			this.get_hotel_price_room_type_list();
-		},
-		computed: {
-			roomPrice: {
-				get() {
-					return this.$t("manager.ps_roomPrice");
-				},
-				set() {},
-			},
-	
-			deleteSuccess: {
-				get() {
-					return this.$t("manager.hk_deleteSuccess");
-				},
-				set() {},
-			},
-		},
-		watch: {
-			roomPrice(newValue, oldValue) {
-				this.roomPrice = newValue;
-			},
-	
-			deleteSuccess(newValue, oldValue) {
-				this.deleteSuccess = newValue;
-			},
 		},
 		methods: { 
 			// 前15天
@@ -455,16 +428,7 @@
 						})
 						// 
 						this.memberTypeY = arr
-						
-						// this.memberTableData = res;
-						
-						
-						// this.memberTableHeads = res.dateList; // 日历列表
-						// this.memberTableHeads.unshift({
-						// 	dateStr: this.roomPrice,
-						// 	weekDay: "",
-						// });
-						// this.$forceUpdate();
+			
 					}
 				);
 			},
@@ -496,7 +460,7 @@
 					(res) => {
 						this.get_price_enter_strategy_list();
 						this.$message({
-							message: this.deleteSuccess,
+							message: this.$t("manager.hk_deleteSuccess"),
 							type: "success",
 						});
 					}

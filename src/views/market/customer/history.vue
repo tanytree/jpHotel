@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-06 16:05:52
+ * @LastEditTime: 2021-01-13 15:22:48
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -149,17 +149,17 @@
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="8" class="col">
-              <el-form-item label="地区:">
+              <el-form-item :label="$t('desk.customer_region') + ':'">
                 <template>{{ detailForm.addressCountries }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="地址1:">
+              <el-form-item :label="$t('desk.customer_address') + '1:'">
                 <template>{{ detailForm.address }}</template>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="col">
-              <el-form-item label="地址2:">
+              <el-form-item :label="$t('desk.customer_address') + '2:'">
                 <template>{{ detailForm.address2 }}</template>
               </el-form-item>
             </el-col>
@@ -282,7 +282,7 @@ export default {
         mobile: "",
         pageIndex: 1, //当前页
         pageSize: 10, //页数
-        guestType: 1,
+        // guestType: 1,
         paging: true,
       },
       listTotal: 0, //总条数
@@ -411,7 +411,7 @@ export default {
         guestNum: "",
         name: "",
         mobile: "",
-        guestType: 1,
+        // guestType: 1,
         pageIndex: 1, //当前页
         pageSize: 10, //页数
         paging: true,
@@ -420,13 +420,11 @@ export default {
     },
     /**获取表格数据 */
     getDataList() {
-      this.loading = true;
       this.$F.doRequest(
         this,
         "/pms/guestarchives/guest_archives_list",
         this.searchForm,
         (res) => {
-          this.loading = false;
           this.tableData = res.guestList;
           console.log(this.tableData);
           this.listTotal = res.page.count;
@@ -542,6 +540,7 @@ export default {
       this.detailForm.type = "detail";
       this.setMemberFormVisible = true;
     },
+    //点击客史
     handleHistory(item) {
       console.log(item.idcard);
       this.$router.push({

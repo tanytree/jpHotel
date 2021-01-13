@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-04 17:46:37
+ * @LastEditTime: 2021-01-08 15:07:27
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -94,11 +94,7 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="OTA" prop="orderSource" v-if="checkInForm.orderSource==5" >
-                    <el-select  v-model="checkInForm.otaChannelId" >
-                        <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
-                    </el-select>
-                </el-form-item>
+
                 <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
                     <el-select
                         v-model="checkInForm.orderSource"
@@ -111,7 +107,11 @@
                             :key="index"
                         ></el-option>
                     </el-select>
-
+                </el-form-item>
+                <el-form-item label="OTA" prop="orderSource" v-if="checkInForm.orderSource==5" >
+                    <el-select  v-model="checkInForm.otaChannelId" >
+                        <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('desk.orderMarkInfo') + '：'">
                     <el-input type="textarea" v-model="checkInForm.remark"></el-input>
@@ -146,10 +146,10 @@
                 <el-form-item :label="$t('desk.order_moblePhone')" prop="prop">
                     <el-input v-model="checkInForm.mobile"></el-input>
                 </el-form-item>
-                <el-form-item label="住家电话" prop="prop">
+                <el-form-item :label="$t('desk.home_liveMobile')" prop="prop">
                     <el-input v-model="checkInForm.homeMobile"></el-input>
                 </el-form-item>
-                <el-form-item label="单位电话" prop="prop">
+                <el-form-item :label="$t('desk.home_unitMobile')" prop="prop">
                     <el-input v-model="checkInForm.enterMobile"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
@@ -278,19 +278,10 @@
             <h3>{{ $t("desk.roomInfoDesc") }}</h3>
             <div class="roomMsg">
                 <div class="left">
-                    <el-form inline size="small">
+                    <el-form inline size="small" v-if="operCheckinType != 'b3'">
                         <el-form-item>
-                            <el-select
-                                v-model="getRoomsForm.bedCount"
-                                @change="getDataList"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    :value="key"
-                                    v-for="(item, key, index) of $t('commons.bedCount')"
-                                    :label="item"
-                                    :key="index"
-                                ></el-option>
+                            <el-select v-model="getRoomsForm.bedCount" @change="getDataList" :placeholder="$t('commons.placeChoose')">
+                                <el-option :value="key" v-for="(item, key, index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-form>
@@ -304,9 +295,8 @@
                                 </div>
                                 <div class="row">
                                     <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>
-                                    <div>
-                                        <!--                    <span>一人总价（含餐） {{ v.withMealPrice }}</span>-->
-                                        <span>一人价（纯住宿） {{ v.onePersonPrice }}</span>
+                                    <div style="float: right">
+                                        <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -316,7 +306,7 @@
                 <div class="right">
                     <el-form inline size="small">
                         <el-form-item>
-                            <el-button @click="empty_row_houses" v-if="!storesNum">{{ $t("desk.autoRowHouse") }}</el-button>
+<!--                            <el-button @click="empty_row_houses" v-if="!storesNum">{{ $t("desk.autoRowHouse") }}</el-button>-->
                             <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
                                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}
                             </el-button>
@@ -325,11 +315,7 @@
                         </el-form-item>
                     </el-form>
                     <div class="roomBtm checked">
-                        <div
-                            class="checkRoom"
-                            v-for="(v, index) in waitingRoom"
-                            :key="index"
-                        >
+                        <div class="checkRoom" v-for="(v, index) in waitingRoom" :key="index">
                             <div class="row rowReverse">
                                 <div>
                                     <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)" v-if="!storesNum">
@@ -355,211 +341,15 @@
         <!-- 编辑or详情弹窗 -->
         <div class="fixedFoot">
             <div class="wrap">
-                <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">取消</el-button>
-                <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">预定</el-button>
+                <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">{{$t('commons.cancel')}}</el-button>
+                <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">{{$t('desk.book_bookText')}}</el-button>
                 <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum">{{ $t("commons.save") }}</el-button>
                 <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>
             </div>
         </div>
-        <!-- 排房dialog -->
-        <el-dialog
-            top="0"
-            :visible.sync="liveInPersonShow"
-            class="liveInPersonDia"
-            :title="$t('desk.order_rowHouses')"
-            width="80%"
-        >
-            <el-table
-                v-loading="loading"
-                :data="liveInPersonData"
-                style="width: 100%; margin-bottom: 20px"
-                row-key="id"
-                border
-                :default-expand-all="true"
-                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-            >
-                <el-table-column :label="$t('desk.customer_roomKind')" width="100">
-                    <template slot-scope="scope">
-                        {{ scope.row.isChild ? "" : scope.row.houseNum }}
-                        {{ scope.row.isChild ? "" : scope.row.roomTypeName }}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="realPrice"
-                    :label="$t('desk.book_roomPriceText')"
-                    width="100"
-                >
-                </el-table-column>
-                <!-- <el-table-column prop="" label="排房" width="150">
-                        </el-table-column> -->
-                <el-table-column :label="$t('desk.home_name')" width="150">
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-input
-                                v-model="row.name"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('commons.idCardTypeDesc')"
-                    width="150"
-                >
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-select
-                                v-model="row.idcardType"
-                                style="width: 100%"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    :value="key"
-                                    v-for="(item, key, index) of $t('commons.idCardType')"
-                                    :label="item"
-                                    :key="index"
-                                ></el-option>
-                            </el-select>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('desk.customer_documentNum')"
-                >
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-input
-                                v-model="row.idcard"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column :label="$t('desk.customer_sex')" width="120">
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-select
-                                v-model="row.sex"
-                                style="width: 100%"
-                                :placeholder="$t('commons.placeChoose')"
-                            >
-                                <el-option
-                                    v-for="(item, key, index) of $t('commons.F_sex')"
-                                    :label="item"
-                                    :value="key"
-                                    :key="index"
-                                ></el-option>
-                            </el-select>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="groupName"
-                    :label="$t('desk.order_moblePhone')"
-                    width="150"
-                >
-                    <template slot-scope="{ row }">
-                        <el-row>
-                            <el-input
-                                v-model="row.mobile"
-                                :placeholder="$t('commons.pleaseEnter')"
-                            ></el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column :label="$t('commons.operating')" width="180">
-                    <template slot-scope="scope">
-                        <el-button
-                            type="text"
-                            size="mini"
-                            v-if="scope.row.isChild && !scope.row.isIndex0"
-                        >
-                            {{ $t("commons.delete") }}
-                        </el-button>
-                        <el-button
-                            type="text"
-                            v-if="!scope.row.isChild"
-                            size="mini"
-                            @click="addGuest(scope.row, scope.$index)"
-                        >
-                            <!--@click="addItem_live_in_person(scope.$index,scope.row)"-->
-                            <template>+{{ $t("desk.customer_toTheGuest") }}</template>
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="liveInPersonCancel">{{
-                $t("commons.cancel")
-            }}</el-button>
-        <el-button
-            size="small"
-            type="primary"
-            @click="liveInPersonShow = false"
-        >{{ $t("commons.confirm") }}</el-button
-        >
-      </span>
-        </el-dialog>
-        <el-dialog
-            top="0"
-            :show-close="false"
-            :title="$t('desk.home_roomCardOpreat')"
-            :visible.sync="mackcade"
-            width="60%"
-        >
-            <el-row>
-        <span
-        >{{ $t("desk.home_haveOne") }}&nbsp;&nbsp;{{
-                $t("desk.home_haveCardNum")
-            }}：{{ liveCardData.done }}</span
-        >
-                <el-col :span="8" style="float: right">
-                    <el-button @click="make_card_status">{{
-                            $t("desk.home_makeCard")
-                        }}</el-button>
-                    <el-button>{{ $t("desk.home_clearCard") }}</el-button>
-                    <el-button>{{ $t("desk.home_readCard") }}</el-button>
-                </el-col>
-            </el-row>
-            <el-table
-                ref="multipleTable"
-                :data="liveCardData.checkInRoomList"
-                @selection-change="handleSelectionChange"
-                tooltip-effect="dark"
-                style="width: 100%"
-            >
-                <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column
-                    prop="name"
-                    :label="$t('desk.home_roomNum')"
-                    width="200"
-                >
-                    <template slot-scope="{ row }">
-                        {{ row.room ? row.room.houseNum : "" }}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="name" :label="$t('desk.home_nowMakeState')">
-                    <template slot-scope="{ row }">
-                        {{ F_markCard(row.markCard) }}
-                    </template>
-                </el-table-column>
-            </el-table>
-            <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="mackcadeCancel">{{
-                $t("commons.cancel")
-            }}</el-button>
-      </span>
-        </el-dialog>
+
         <!-- 添加入住人 -->
-        <el-dialog
-            top="0"
-            :show-close="false"
-            :title="$t('desk.order_rowHouses')"
-            :visible.sync="addLivePersonShow"
-            width="90%"
-        >
+        <el-dialog top="0" :show-close="false" :title="$t('desk.order_rowHouses')" :visible.sync="addLivePersonShow" width="90%">
             <checkTheDetails
                 v-if="addLivePersonShow"
                 checkinType="checkin"
@@ -568,11 +358,7 @@
             ></checkTheDetails>
         </el-dialog>
         <!--        客源类型-->
-        <guestChoose
-            @guestChooseCallback="guestChooseCallback"
-            ref="guestChoose"
-            :checkInForm="checkInForm"
-        ></guestChoose>
+        <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="checkInForm"></guestChoose>
 
         <!--        排房组件 -->
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
@@ -665,14 +451,6 @@ export default {
                         // message: '请输入手机号',
                         message: this.$t("commons.mustInput"),
                         trigger: "blur",
-                    },
-                ],
-                idcardType: [
-                    {
-                        required: true,
-                        message: this.$t("commons.placeChoose"),
-                        // message: '请选择护照类型',
-                        trigger: "change",
                     },
                 ],
                 idcard: [
@@ -829,7 +607,6 @@ export default {
             rowRoomShow: false,
             showDetail: false,
             guestTypeShow: false,
-            liveInPersonShow: false,
             mackcade: false,
             nameLoading: false,
             options: [],
@@ -989,9 +766,9 @@ export default {
             }
             let params = {};
             this.makeStoresNum(params);
-            this.$F.doRequest(this,'/pms/oat/oat_list',params,res=>{
-                console.log(res);
-                this.otaList = res.oatList;
+            this.$F.commons.fetchOtaList(params, (list)=> {
+                this.otaList = list;
+                this.$forceUpdate();
             })
             this.handleOperCheckinType();
             params = { salesFlag: 1 }
@@ -1067,7 +844,7 @@ export default {
                 mobile: "", //电话  String选填
                 orderSource: "1", //订单来源  1前台 2销售推荐 3渠道订单 10其他  Integer必填
                 sex: "1", //    入住人性别 1男 2女 3保密  Integer必填
-                idcardType: "1", // 证件类型  1身份证 2护照  Integer必填
+                idcardType: "2", //  2护照  Integer必填
                 idcard: "", //证件号码  String必填
                 memberCard: "", // 会员卡号  String选填
                 checkinTime: "", // 预抵时间/到店时间 yyyy-MM-dd hh:mm:ss格式  String必填
@@ -1150,9 +927,7 @@ export default {
             //客源类型选择
             if (type == "guestTypeShow") {
                 // this.guestTypeShow = true;
-                this.checkInForm.guestType = this.checkInForm.guestType
-                    ? this.checkInForm.guestType.toString()
-                    : "1";
+                this.checkInForm.guestType = this.checkInForm.guestType ? this.checkInForm.guestType.toString() : "1";
                 this.$refs.guestChoose.dialogOpen(this.checkInForm);
             } else if (type == "bin") {
                 this.$F.doRequest(
@@ -1520,13 +1295,18 @@ export default {
                         roomTypeObject.roomsArr.forEach((room, index) => {
                             room.roomTypeName = roomTypeObject.roomTypeName;
                             room.houseNum = room.houseNum;
+                            room.sex = this.checkInForm.sex;
+                            room.idcard = this.checkInForm.idcard;
+                            room.idcardType = this.checkInForm.idcardType;
+                            room.name = this.checkInForm.name;
+                            room.pronunciation = this.checkInForm.pronunciation;
                             room.personList = room.personList || [this.checkInForm];
                             this.inRoomList.push(room);
                         });
                     }
                 });
                 if (this.inRoomList.length == 0) {
-                    this.$message.error('请先排房');
+                    this.$message.error(this.$t('desk.book_placeRowHouse'));
                     return;
                 }
             }
@@ -1546,11 +1326,7 @@ export default {
                 checkInRoomIds: arr,
             };
             this.makeStoresNum(params);
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/make_card_status",
-                params,
-                (res) => {
+            this.$F.doRequest(this, "/pms/checkin/make_card_status", params, (res) => {
                     this.$message({
                         message: this.$t("commons.request_success"),
                         type: "success",
@@ -1568,6 +1344,7 @@ export default {
             console.log(val);
         },
         remoteMethod(query, cb) {
+            this.options = [];
             let params = {
                 name: query,
                 searchType: 1,
@@ -1578,13 +1355,25 @@ export default {
             };
             this.nameLoading = true;
             this.makeStoresNum(params);
-            this.$F.doRequest(
-                this,
-                "/pms/checkin/checkin_order_list",
-                params,
-                (res) => {
-                    this.nameLoading = false;
-                    this.options = res.roomPersonList || [];
+            if (this.operCheckinType.startsWith('a')) {
+                this.$F.doRequest(this, "/pms/checkin/checkin_order_list", params,
+                    (res) => {
+                        this.nameLoading = false;
+                        this.options = res.roomPersonList || [];
+                        this.options.forEach((element) => {
+                            element.value =
+                                element.name +
+                                "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                                (element.mobile || "") +
+                                "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                                (element.idcard ? element.idcard.slice(-4) : "");
+                        });
+                        cb(this.options);
+                        this.$forceUpdate();
+                    }
+                );
+            } else {
+                this.getReverveList(params, ()=> {
                     this.options.forEach((element) => {
                         element.value =
                             element.name +
@@ -1593,9 +1382,20 @@ export default {
                             "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
                             (element.idcard ? element.idcard.slice(-4) : "");
                     });
-
                     cb(this.options);
                     this.$forceUpdate();
+                })
+            }
+        },
+
+        getReverveList(params, callback) {
+            this.$F.doRequest(
+                this,
+                "/pms/reserve/reserve_order_list",
+                params,
+                (res) => {
+                    this.options = this.options.concat(res.resreveList || []);
+                    callback()
                 }
             );
         },
@@ -1609,14 +1409,14 @@ export default {
                 this.checkInForm.guestType = e.guestType ? e.guestType.toString() : '';
                 this.checkInForm.idcard = e.idcard;
                 // this.checkInForm.idcardType = e.idcardType.toString();
-                this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '1';
+                this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '2';
                 this.checkInForm.mobile = e.mobile;
                 // this.checkInForm.orderSource = e.orderSource.toString();
-                this.checkInForm.orderSource = e.orderSource ? e.orderSource.toString() : '';
+                this.checkInForm.orderSource = e.orderSource ? e.orderSource.toString() : '1';
                 // this.checkInForm.orderType = e.orderType.toString();
                 this.checkInForm.orderType = e.orderType;
                 // this.checkInForm.sex = e.sex.toString();
-                this.checkInForm.sex = e.sex ? e.sex.toString() : '';
+                this.checkInForm.sex = e.sex ? e.sex.toString() : '1';
                 this.checkInForm.ruleHourId = e.ruleHourId ? e.ruleHourId : "";
                 this.checkInForm.checkinType = e.checkinType ? e.checkinType.toString() : "";
             } else {
@@ -1677,14 +1477,7 @@ export default {
             console.log(e);
             this.checkInForm.name = e.target.value;
         },
-        liveInPersonCancel() {
-            if (this.isSubmitErr) {
-                this.isSubmitErr = false;
-                this.$router.replace("/orderdetail?id=" + this.checkInForm.checkInId);
-            } else {
-                this.liveInPersonShow = false;
-            }
-        },
+
         mackcadeCancel() {
             if (this.isSubmitErr) {
                 this.isSubmitErr = false;
@@ -1743,10 +1536,10 @@ export default {
                 id: "3213213",
                 name: "",
                 isChild: true,
-                idcardType: "",
+                idcardType: "2",
                 idcard: "",
                 edit: true,
-                sex: "",
+                sex: "1",
                 mobile: "",
                 checkInPersonId: "",
                 // hasChildren: false

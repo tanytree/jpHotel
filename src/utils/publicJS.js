@@ -7,6 +7,7 @@ import httpRequest from "@/utils/httpRequest";
 // eslint-disable-next-line no-unused-vars
 var publicDict = {}
 const uploadUrl = 'http://39.104.116.153:8887'
+// const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
 const platSource = '1005'
 // eslint-disable-next-line no-unused-vars
 var tabsName = {}
@@ -118,19 +119,27 @@ const $F = {
         })
     },
 
+    removeNullKey(params, toString) {
+        for (let key in params) {
+            let value = params[key];
+            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
+                || ((value instanceof Array) && value.length == 0)) {
+                delete params[key];
+            } else {
+                if (toString) {
+                    params[key] = params[key].toString();
+                }
+            }
+        }
+    },
+
     doRequest($instance, url, params = {}, callback, errorCallback) {
         if ($instance) {
             $instance.dataListLoading = true
             $instance.loading = true
         }
         params = this.deepClone(params);
-        for (let key in params) {
-            let value = params[key];
-            if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
-                || ((value instanceof Array) && value.length == 0)) {
-                delete params[key];
-            }
-        }
+        this.removeNullKey(params)
         request(url, params).then((res) => {
             if ($instance) {
                 $instance.dataListLoading = false
@@ -236,9 +245,14 @@ const $F = {
         }
     },
 
-    getWeekNumber(node, date) {
-        let arys1 = date.split('-');
-        var ssdate = new Date(arys1[0], parseInt(arys1[1] - 1), arys1[2]);
+    getWeekNumber(node, date, splitKey) {
+        let arys1 = date.split(splitKey || '-');
+        var ssdate;
+        if (arys1.length == 2) {
+            ssdate = new Date(new Date().getFullYear(), parseInt(arys1[0] - 1), arys1[1]);
+        } else {
+            ssdate = new Date(arys1[0], parseInt(arys1[1] - 1), arys1[2]);
+        }
         let weeks = node.$t('commons.weeks');
         return String(ssdate.getDay()).replace("0", weeks[6])
             .replace("1", weeks[0])
@@ -277,6 +291,13 @@ const $F = {
 
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
+        //获取ota列表
+        fetchOtaList(params = {}, callback) {
+            $F.doRequest(this,'/pms/oat/oat_list',params,res=>{
+                callback(res.oatList || [])
+            })
+        },
+
         //获取销售员
         fetchSalesList(params = {}, callback) {
             $F.merge(params, {

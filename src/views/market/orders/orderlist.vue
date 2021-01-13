@@ -78,6 +78,11 @@
                         <el-option :value="key" v-for="(value, key, index) of $t( 'commons.orderSource' )" :label="value" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="OTA" v-if="searchForm.orderSource == 5" >
+                    <el-select  v-model="searchForm.otaChannelId"  class="width150">
+                        <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
 
                 <el-form-item :label="$t('desk.home_customersCategory')">
                     <el-select v-model="searchForm.guestType" class="width150" :placeholder="$t('commons.placeChoose')">
@@ -129,13 +134,13 @@
             </el-form>
             <!--表格数据 -->
             <el-table ref="multipleTable" v-loading="loading" :data="tableData" header-row-class-name="default" height="100%" size="small">
-                <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')">
+                <el-table-column prop="name" :label="$t('boss.loginDetail_name')">
                     <template slot-scope="{ row }">
-                        <span>{{$t('desk.home_bookPeople') + ": "}}   {{`${row.name} 【${row.pronunciation}】` }}</span>
-                        <span v-if="row.teamName">
-                            <br>
-                            {{$t('desk.order_teamName') + ": "}}   {{`${row.teamName} 【${row.teamPronunciation}】` }}
-                        </span>
+                        <span>{{`${row.name} 【${row.pronunciation}】` }}  </span>
+<!--                        <span v-if="row.teamName">-->
+<!--                            <br>-->
+<!--                            {{$t('desk.order_teamName') + ": "}}   {{`${row.teamName} 【${row.teamPronunciation}】` }}-->
+<!--                        </span>-->
                     </template>
                 </el-table-column>
                 <el-table-column prop="mobile" width="140px" :label="$t('desk.order_moblePhoneA')"></el-table-column>
@@ -156,35 +161,20 @@
                 <el-table-column prop :label="$t('desk.book_orderSoutce')" width="120px">
                     <template slot-scope="{ row }">{{
                         F_orderSource(row.orderSource)
-                    }}</template>
+                    }}
+                        <span v-if="row.orderSource == 5">-</span>
+                        <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column prop :label="$t('desk.order_liveStateA')" width="120px">
                     <template slot-scope="{ row }" style="color: red">
-                        <!-- <span
-                            v-if="
-                                row.state == 3 ||
-                                row.state == 4 ||
-                                row.state == 5
-                            "
-                            style="color: red"
-                        >
-                            {{ F_checkinState(row.state) }}
-                        </span>
-                        <span v-if="row.state == 1 || row.state == 2">
-                            {{ F_checkinState(row.state) }}
-                        </span> -->
                         <span v-if="!row.billType">{{$t('desk.order_keepLive')}}</span>
                         <span v-if=" row.billType == 2 || row.billType == 3 || row.billType == 4">{{$t('desk.book_leaveStore')}}</span>
                         <span v-if="row.billType == 1 || row.billType == 5">{{$t('desk.order_alreadyCheckout')}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop
-                    :label="$t('desk.order_checkStatusA')"
-                    width="100px"
-                >
+                <el-table-column prop :label="$t('desk.order_checkStatusA')" width="100px">
                     <template slot-scope="{ row }">
-                        <!-- {{ F_billType(row.billType || "0") }} -->
                         <span v-if=" !row.billType || row.billType == 2 || row.billType == 3 || row.billType == 4">{{ F_billType("0") }}</span>
                         <span v-if="row.billType == 1 || row.billType == 5">{{ F_billType("1") }}</span>
                     </template>
@@ -254,6 +244,7 @@ export default {
     },
     data() {
         return {
+            otaList: [],
             consumeOperForm: {
                 payType: "1",
                 consumePrice: "",
@@ -275,9 +266,19 @@ export default {
     },
     mounted() {
         this.initForm();
+        this.$F.commons.fetchOtaList({}, (list)=> {
+            this.otaList = list;
+            this.$forceUpdate();
+        })
     },
 
     methods: {
+        checkPlatform(otaChannelId) {
+            let array =  this.otaList.filter(item => {
+                return item.id == otaChannelId
+            }) || [{}]
+            return array.length > 0 ? array[0].otaName : '';
+        },
         orderTypeClick(key) {
             this.searchForm.orderType = key;
             this.getDataList();

@@ -50,7 +50,7 @@
 
      <!--表格数据 -->
         <!-- <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-            <el-table-column prop="enterName" label="所属门店" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="enterName" :label="$t('desk.customer_belongStore')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="createTime" label="员工姓名" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="入职时间" show-overflow-tooltip></el-table-column>
             <el-table-column prop="enterType" label="职位 " show-overflow-tooltip></el-table-column>
@@ -67,22 +67,22 @@
           style="width: 100%">
           <el-table-column
             prop="date"
-            label="所属门店"
+            :label="$t('desk.customer_belongStore')"
             width="150">
           </el-table-column>
           <el-table-column
             prop="date"
-            label="部门"
+            :label="$t('boss.personnel_department')"
             width="150">
           </el-table-column>
           <el-table-column
             prop="date"
-            label="职位"
+            :label="$t('boss.add_workFor')"
             width="150">
           </el-table-column>
           <el-table-column
             prop="date"
-            label="姓名"
+            :label="$t('boss.loginDetail_name')"
             width="150">
           </el-table-column>
           <el-table-column
@@ -92,85 +92,85 @@
           </el-table-column>
           <el-table-column
             prop="date"
-            label="所属门店"
+            :label="$t('desk.customer_belongStore')"
             width="150">
           </el-table-column>
           <el-table-column
             prop="date"
-            label="工资月份"
+            :label="$t('boss.compensation_payMonth')"
             width="150">
           </el-table-column>
           <!-- <el-table-column label="配送信息"> -->
             <!-- <el-table-column
               prop="name"
-              label="姓名"
+              :label="$t('boss.loginDetail_name')"
               width="120">
             </el-table-column> -->
-            <el-table-column label="基本工资">
+            <el-table-column :label="$t('boss.compensation_basicSalary')">
               <el-table-column
                 prop="province"
-                label="基础工资"
+                :label="$t('boss.compensation_baseSalary')"
                 width="120">
               </el-table-column>
               <el-table-column
                 prop="city"
-                label="社保补助"
+                :label="$t('boss.compensation_benefits')"
                 width="120">
               </el-table-column>
               <el-table-column
                 prop="address"
-                label="其他"
+                :label="$t('desk.book_other')"
                 width="300">
               </el-table-column>
               <el-table-column
                 prop="zip"
-                label="保密工资"
+                :label="$t('boss.compensation_confidentialSalary')"
                 width="120">
               </el-table-column>
             </el-table-column>
             <el-table-column
             prop="date"
-            label="岗位工资"
+            :label="$t('boss.compensation_postSalary')"
             width="150">
           </el-table-column>
           <el-table-column
             prop="date"
-            label="绩效工资"
+            :label="$t('boss.compensation_meritPay')"
             width="150">
           </el-table-column>
           <el-table-column
             prop="date"
-            label="奖金"
+            :label="$t('boss.compensation_bonus')"
             width="150">
           </el-table-column>
 
-           <el-table-column label="补贴">
+           <el-table-column :label="$t('boss.compensation_subsides')">
               <el-table-column
                 prop="province"
-                label="餐补"
+                :label="$t('boss.compensation_subsidizedMeals')"
                 width="120">
               </el-table-column>
               <el-table-column
                 prop="city"
-                label="房补"
+                :label="$t('boss.compensation_housingAllowances')"
                 width="120">
               </el-table-column>
             </el-table-column>
 
-             <el-table-column label="出勤天数">
+             <el-table-column :label="$t('boss.compensation_attendanceDays')">
               <el-table-column
                 prop="province"
-                label="应出勤天数"
+                :label="$t('boss.compensation_attendanceShoudDay')"
                 width="120">
               </el-table-column>
               <el-table-column
                 prop="city"
-                label="实出勤天数"
+                :label="$t('boss.compensation_attendanceActualDay')"
                 width="120">
               </el-table-column>
             </el-table-column>
             <el-table-column :label="$t('commons.operating')" width="220">
-                <template slot-scope="{row}">
+                <template >
                     <el-button type="text" size="mini">员工详情</el-button>
                 </template>
             </el-table-column>

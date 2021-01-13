@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 14:19:05
+ * @LastEditTime: 2021-01-10 19:08:28
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -39,7 +39,7 @@
             <el-col :span="6">{{$t('desk.payTotal')}}：{{ checkinInfo.payPrice  || '0' }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="18">{{$t('desk.customer_payType')}}：{{$t('desk.serve_cashA')}}（2000）；{{$t('commons.payType.2')}}（4000）；{{$t('desk.serve_thisCard')}}（1000）；{{$t('desk.book_other')}}（2000）
+            <el-col :span="18">{{$t('desk.customer_payType')}}：{{ F_payType(checkinInfo.checkIn.payType || '')}}
             </el-col>
           </el-row>
           <el-row>
@@ -58,7 +58,7 @@
 
     <!--表格数据 -->
     <el-table :data="checkinInfo.inRoomList" header-row-class-name="default" border style="width: 100%" :span-method="arraySpanMethod">
-      <el-table-column prop="name" label="入住人/单位名称/团队名">
+      <el-table-column prop="name" :label="$t('desk.home_allLiveWay')">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <!--                    显示入住人  入主入住人没有 则显示订单外的订单信息-->
@@ -78,7 +78,7 @@
             </span>
           </div>
           <!-- <div v-if="$index < 3">{{ row.name }}</div> -->
-          <div v-if="$index ==checkinInfo.inRoomList.length-1">备注</div>
+          <div v-if="$index ==checkinInfo.inRoomList.length-1">{{$t('desk.home_note')}}</div>
           <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1">留言</div> -->
 
         </template>
@@ -96,17 +96,12 @@
             <span v-if="row.headerObj">
               ({{
               $t("commons.idCardType")[
-                row.headerObj.idcardType ? row.headerObj.idcardType + "" : "1"
+                row.headerObj.idcardType ? row.headerObj.idcardType + "" : "2"
               ]
             }}) {{ row.headerObj.idcard }}
             </span>
           </div>
-            <div v-if="$index ==checkinInfo.inRoomList.length-1" style="text-align: left;">{{ checkinInfo.remark }}</div>
-               <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1" class="messageBox">
-            <div v-if="!inputMessage">{{ checkinInfo.remark }}</div>
-            <el-input v-model="checkinInfo.remark" v-if="inputMessage" placeholder="请输入内容">{{ row.remark }}</el-input>
-            <el-button type="text" class="saveAedit" @click="inputMessage=!inputMessage">{{ inputMessage ? "保存" : "修改" }}</el-button>
-          </div> -->
+          <div v-if="$index ==checkinInfo.inRoomList.length - 1" style="text-align: left;">{{ checkinInfo.remark }}</div>
         </template>
       </el-table-column>
       <el-table-column :label="$t('desk.home_contactWay')" align="center">
@@ -142,12 +137,12 @@
       </el-table-column>
       <el-table-column align="center" :label="$t('desk.home_memAunitCard')">
         <template slot-scope="{ row, $index }">
-          <div v-if="$index<checkinInfo.inRoomList.length-1">
-            <span v-if=" row.headerObj && row.headerObj.guestType == 2 && row.headerObj.memberCard">
-              {{ row.headerObj.memberCard }}
+          <div v-if="$index < checkinInfo.inRoomList.length-1">
+            <span v-if="row.headerObj && checkinInfo.checkIn.guestType == 2">
+              {{ checkinInfo.checkIn.memberCard || '' }}
             </span>
-            <span v-if=" row.headerObj && row.headerObj.guestType == 3 && row.headerObj.enterId">
-              {{ row.headerObj.enterId }}
+            <span v-if=" row.headerObj && checkinInfo.checkIn.guestType == 3">
+              {{ checkinInfo.checkIn.enterId || ''}}
             </span>
           </div>
         </template>
@@ -164,7 +159,7 @@
       </el-table-column>
       <el-table-column :label="$t('commons.operating')" align="center" v-if="type == 'detail'">
         <template slot-scope="{ row, $index }">
-            <el-button @click="customerDetail(row)" type="text">{{$t('commons.detail')}}</el-button>
+            <el-button @click="customerDetail(row)" type="text" v-if="row.headerObj">{{$t('commons.detail')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -177,7 +172,7 @@
           <el-col :span="6">
             <el-form-item :label="$t('desk.home_cardAnumber')+':'">
               ({{
-                              $t("commons.idCardType")[currentCustomer.headerObj.idcardType ? currentCustomer.headerObj.idcardType + "" : "1"]
+                              $t("commons.idCardType")[currentCustomer.headerObj.idcardType ? currentCustomer.headerObj.idcardType + "" : "2"]
                           }}) {{ currentCustomer.headerObj.idcard }}
             </el-form-item>
           </el-col>
@@ -295,6 +290,7 @@ export default {
                     personList: [],
                 },
             };
+            debugger
             if (row.headerObj) {
                 this.$F.merge(this.currentCustomer, row);
                 this.currentCustomer.personList = row.personList || [];
@@ -338,6 +334,7 @@ export default {
         },
 
         init(type, checkinInfo, currentRoom) {
+            debugger
             this.type = type;
             this.currentRoom = currentRoom;
             this.$F.merge(checkinInfo, {

@@ -17,7 +17,7 @@
                 <!-- 门店慨然-->
                 <storeLookTao v-if="item.path == 'stores-overview'"/>
                 <!-- 报表-->
-                <Report v-if="item.path == 'boss-report'" sourcePage='boss'/>
+                <Report v-if="item.path == 'boss-report'" sourcePage='boss' :shopNo='shopNo'/>
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import storeLookTao from "@/components/storeLookTao";
 import EmployeeRights from "@/components/employeeRights";
 import Report from "@/views/finance/report/main";
@@ -44,6 +45,11 @@ export default {
             detailInfo: {}, // 点击选中项的详情
             tabs: {},
         };
+    },
+    computed:{
+      ...mapState({
+        shopNo:(state)=>state.user.storesInfo.storesNum
+      })
     },
     created() {
         this.$F.handleThirdMenu(this);

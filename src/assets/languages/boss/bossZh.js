@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-25 15:48:37
+ * @LastEditTime: 2021-01-12 16:09:41
  * @FilePath: \jiudian\src\assets\languages\boss\bossZh.js
  */
 
@@ -185,6 +185,8 @@ module.exports = {
   //总办 > 门店管理
   store_createStore: '创建门店',
   store_storeName: '门店名称',
+  store_storeNameA: '门店名称',
+  store_storeNameB: '门店名称',
   store_storeManagers: '门店经理',
   store_address: '门店地址',
   store_addStore: '创建门店',
@@ -247,6 +249,7 @@ module.exports = {
   add_japan: '菜单日文',
   add_chooseDate: '选择日期',
   add_chooseStore: '选择门店',
+  add_chooseStoreA: '选择门店',
   add_roomData: '门店客房数据概览',
   add_requestSuccess: '请求成功',
   add_integralConversion: '积分换算',
@@ -286,12 +289,11 @@ module.exports = {
   add_teamAllPerpson: '团体总人数',
   add_teamAllGet: '团体总收入',
   add_roomDetail: '房间详情',
-  add_canBookNum: '可订数',
-  add_onePeople: '1人住宿价',
-  add_peopleLivePrice: '人住宿价',
+  add_onePeople: '1人',
+  add_peopleLivePrice: '人',
   add_normalBook: '普通预订',
   add_noHaveInfo: '该酒店暂无房间信息',
-  add_: '',
+  add_queryText: '查询字段',
   add_: '',
   add_: '',
   add_: '',

@@ -24,11 +24,11 @@
                     <el-button size="small" icon="el-icon-document" @click="setCurrentItem('notleaving')">{{$t('desk.nightAudit.notleaving')}}</el-button>
                 </el-badge>
             </div>
-            <div class="grid-content">
-                <el-badge :value="totalObject.pretrialCount" class="item">
-                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('leave')">{{$t('desk.nightAudit.leave')}}</el-button>
-                </el-badge>
-            </div>
+<!--            <div class="grid-content">-->
+<!--                <el-badge :value="totalObject.pretrialCount" class="item">-->
+<!--                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('leave')">{{$t('desk.nightAudit.leave')}}</el-button>-->
+<!--                </el-badge>-->
+<!--            </div>-->
 <!--            <div class="grid-content">-->
 <!--                <el-badge :value="totalObject.nocheckoutCount" class="item">-->
 <!--                    <el-button size="small" icon="el-icon-document" @click="setCurrentItem('verify')">{{$t('desk.nightAudit.verify')}}</el-button>-->

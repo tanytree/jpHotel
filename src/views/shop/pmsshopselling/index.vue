@@ -13,13 +13,13 @@
                                     <el-input v-model="searchform.name" :placeholder="$t('manager.grsl_goodsName')"></el-input>
                                 </el-form-item>
                                  <el-form-item :label="$t('shop.categoryType')">
-                                     <el-select  v-model="searchform.categoryType" placeholder="请选择" @change="geProductType">
+                                     <el-select  v-model="searchform.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
                                          <el-option :label="$t('shop.goods')" value="1"></el-option>
                                          <el-option :label="$t('shop.serve')" value="2"></el-option>
                                       </el-select>
                                  </el-form-item>
                                  <el-form-item :label="$t('manager.grsl_goodsType')+':'">
-                                     <el-select  v-model="searchform.categoryId" placeholder="请选择">
+                                     <el-select  v-model="searchform.categoryId" :placeholder="$t('commons.placeChoose')">
                                         <el-option  v-for="item in category" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                      </el-select>
                                  </el-form-item>
@@ -178,7 +178,7 @@ export default {
             categoryId:'',
             pageIndex:1,
             pageSize:20,
-            categoryType:1,
+            categoryType:'',
             sellId:''
         },
         category:[],
@@ -264,10 +264,10 @@ export default {
   methods: {
     intForm(){
         this.searchform.name = ''
-        this.searchform.categoryType = '1'
+        this.searchform.categoryType = ''
         this.searchform.categoryId = ''
         this.getDataList();
-        this.geProductType('1');
+        // this.geProductType();
     },
     //获取售卖点列表
     getDataList(){
@@ -293,11 +293,11 @@ export default {
     },
 
     //
-    geProductType(v){
-        this.searchform.categoryType = v
-        console.log(v)
+    geProductType(){
+        this.searchform.categoryId = ''
+        // console.log(v)
         let params = {
-            categoryType:v,
+            categoryType:this.searchform.categoryType,
             categoryId:this.searchform.categoryId
         }
         params.userId = this.userId

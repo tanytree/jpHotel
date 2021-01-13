@@ -17,7 +17,7 @@
             </div>
             <div class="infoBlock" v-for="(roomInfo, topIndex) of inRoomList" :key="topIndex">
                 <div class="roomItem">{{ roomInfo.room.houseNum }}/{{ roomInfo.room.roomTypeName }}</div>
-                <el-form ref="form" :model="form" label-width="75px" inline>
+                <el-form ref="form" :model="form" label-width="100px" inline>
                     <el-row>
                         <el-col :span="6">
                             <el-form-item :label="$t('manager.hk_livePrice') + ':'">
@@ -26,8 +26,18 @@
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_livePeople')+ ':'">
-                                <el-input :placeholder="$t('desk.customer_inputName')" v-model="roomInfo.headerObj.name" size="small" style="width: 95px"></el-input>
-                                <el-input :placeholder="$t('desk.book_inputFayin')" v-model="roomInfo.headerObj.pronunciation" size="small" style="width: 95px; margin-left: 5px"></el-input>
+                                <el-autocomplete
+                                    style="width: 100px"
+                                    v-model="roomInfo.headerObj.name"
+                                    name="name"
+                                    :fetch-suggestions="remoteMethod"
+                                    :highlight-first-item="true"
+                                    popper-class="popper-class"
+                                    :trigger-on-focus="false"
+                                    :placeholder="$t('desk.book_inputContent')"
+                                    @select="changeName($event, roomInfo.headerObj)"
+                                ></el-autocomplete>
+                                <el-input style="width: 110px; margin-left: 10px" v-model="roomInfo.headerObj.pronunciation" :placeholder="$t('desk.home_nameA')"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
@@ -114,6 +124,7 @@
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.editor_asideBreakfast')+ ':'">
                                 <el-select v-model="roomInfo.headerObj.attachMealId" size="small" style="width: 200px">
+                                    <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -121,6 +132,7 @@
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.editor_asideDinner')+ ':'">
                                 <el-select v-model="roomInfo.headerObj.attachMealIdDinner" size="small" style="width: 200px">
+                                    <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -165,6 +177,7 @@
                     <el-table-column align="center" :label="$t('desk.editor_asideBreakfast')">
                         <template slot-scope="{ row }">
                             <el-select v-model="row.attachMealId" style="width:100%" size="small">
+                                <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                 <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                             </el-select>
                         </template>
@@ -172,6 +185,7 @@
                     <el-table-column align="center" :label="$t('desk.editor_asideDinner')">
                         <template slot-scope="{ row }">
                             <el-select v-model="row.attachMealIdDinner" style="width:100%" size="small">
+                                <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                 <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
                             </el-select>
                         </template>
@@ -219,25 +233,27 @@ export default {
             this.currentRoom = this.$route.params.currentRoom || "";
             if (this.type == 3) {
                 this.detailData = {
-                    checkIn: {
-                        id:
-                            this.currentRoom.checkinId ||
-                            this.currentRoom.checkinReserveId,
-                    },
+                    checkIn: {id: this.currentRoom.checkinId || this.currentRoom.checkinReserveId,},
                     inRoomList: [this.currentRoom],
                 };
             } else {
                 this.detailData = this.$F.deepClone(
                     this.$route.params.detailData
                 );
+                if (this.detailData.inRoomList && this.detailData.inRoomList.length > 0) {
+                    let inRoomListTemp = [];
+                    this.detailData.inRoomList.forEach((room) => {
+                        if (room.state != 1) {
+                            inRoomListTemp.push(room);
+                        }
+                    })
+                    this.detailData.inRoomList = inRoomListTemp;
+                }
             }
         }
 
         this.inRoomList = [];
-        if (
-            this.detailData.inRoomList &&
-            this.detailData.inRoomList.length > 0
-        ) {
+        if (this.detailData.inRoomList && this.detailData.inRoomList.length > 0) {
             this.detailData.inRoomList.forEach((room) => {
                 let object = {
                     headerObj: {
@@ -292,7 +308,7 @@ export default {
                     checkinRoomId: "", //房间id  int必填
                     name: "", //          姓名  String必填
                     pronunciation: "", // 姓名发音String必填
-                    idcardType: "1", //    证件类型 1身份证  2护照  Integer必填
+                    idcardType: "2", //    证件类型 1身份证  2护照  Integer必填
                     idcard: "", //       证件号码  String必填
                     sex: "1", //           性别 1男  2女 3保密  Integer必填
                     mobile: "", //        手机号  String必填
@@ -315,19 +331,6 @@ export default {
                     enterAddressZip2: "", //      单位地址邮编2  String选填
                     enterAddress: "", //      单位地址  String选填
                 },
-                //
-                //         checkinRoomId 房间id  int必填
-                //         *                                           name          姓名  String必填
-                //             *                                           pronunciation 姓名发音String必填
-                //         *                                           idcardType    证件类型 1身份证  2护照  Integer必填
-                //             *                                           idcard        证件号码  String必填
-                //             *                                           sex           性别 1男  2女 3保密  Integer必填
-                //             *                                           mobile        手机号  String必填
-                //             *                                           id            入住人表id  传改值可以编辑入住人信息  String选填
-                //         *                                           housePrice    住宿价格   double必填
-                //             *                                           customerType  客人分类  1大人 2儿童A（小学5年级以上）  3儿童B（3岁至小学5年级） 4儿童C（0至3岁不占床）   int必填
-                // *                                           attachMealId  附餐id-早餐 （附餐列表中获取） string选填
-                // *                                           attachMealIdDinner  附餐id-晚餐 （附餐列表中获取）
             },
             tableData: [],
             //附餐列表
@@ -341,6 +344,72 @@ export default {
     },
 
     methods: {
+        changeName(e, personInfo) {
+            console.log(e);
+            debugger
+            if (e.name) {
+                delete e['checkIn'];
+                delete e['checkinId'];
+                delete e['checkinRoomId'];
+                delete e['createTime'];
+                e.sex = e.sex ? e.sex.toString() : '1';
+                this.$F.removeNullKey(e, true);
+                personInfo.name = '';
+                personInfo.pronunciation = '';
+                personInfo.idcardType  = '2';
+                personInfo.idcard = '';
+                personInfo.sex = '1';
+                personInfo.mobile = '';
+                personInfo.customerType = '1';
+                personInfo.attachMealId = '';
+                personInfo.attachMealIdDinner = '';
+                personInfo.email = '';
+                personInfo.region = '';
+                personInfo.homeAddressZip1 = '';
+                personInfo.homeAddressZip2 = '';
+                personInfo.homeAddress = '';
+                personInfo.homeMobile = '';
+                personInfo.phone = '';
+                personInfo.enterName = '';
+                personInfo.enterPinyin = '';
+                personInfo.enterMobile = '';
+                personInfo.enterAddressZip1 = '';
+                personInfo.enterAddressZip2 = '';
+                personInfo.enterAddress = '';
+                this.$F.merge(personInfo, e);
+            } else {
+                this.checkInForm.name = e;
+            }
+        },
+
+        remoteMethod(query, cb) {
+            let params = {
+                name: query,
+                searchType: 1,
+                pageIndex: 1,
+                // filter: true,
+                pageSize: 999,
+                paging: false,
+            };
+            this.$F.doRequest(
+                this,
+                "/pms/checkin/hotel_checkin_person_list",
+                params,
+                (res) => {
+                    this.options = res.personList || [];
+                    this.options.forEach((element) => {
+                        element.value =
+                            element.name +
+                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                            (element.mobile || "") +
+                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
+                            (element.idcard ? element.idcard.slice(-4) : "");
+                    });
+                    cb(this.options);
+                    this.$forceUpdate();
+                }
+            );
+        },
         checkNextcode(code1) {
             if (!code1 || code1.length !== 3) {
                 this.$message({
@@ -402,7 +471,7 @@ export default {
                 checkinRoomId: roomInfo.room.roomId,
                 housePrice: roomInfo.headerObj.housePrice,
                 sex: "1",
-                idcardType: "1",
+                idcardType: "2",
             });
             console.log(this.inRoomList);
             this.$forceUpdate();
@@ -431,30 +500,32 @@ export default {
                 };
                 checkInRoomJson.push(checkinInfo);
             });
+            console.log(this.inRoomList);
+            let checkInRoomIds = [];
+            this.inRoomList.forEach((room) => {
+                checkInRoomIds.push(room.room.id);
+            })
             if (this.type == "checkin") {
                 this.$emit("personCallback", checkInRoomJson);
             } else {
                 this.$F.merge(params, {
                     checkInRoomJson: JSON.stringify(checkInRoomJson),
                 });
-                this.$F.doRequest(
-                    this,
-                    "/pms/checkin/live_in_person_batch",
-                    params,
-                    (data) => {
+                this.$F.doRequest(this, "/pms/checkin/live_in_person_batch", params, (data) => {
                         if (this.type == 1) {
                             this.$router.go(-1);
                         } else {
-                            this.$F.doRequest(
-                                this,
-                                "/pms/reserve/reserve_to_checkin",
-                                params,
-                                (res) => {
-                                    this.$router.push(
-                                        `/orderdetail?id=${res.checkinId}`
-                                    );
-                                }
-                            );
+                            this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
+                                this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
+                                        checkInRoomIds: checkInRoomIds.join(','),
+                                        state: 1
+                                    }, (res) => {
+                                        this.$router.push(
+                                            `/orderdetail?id=${response.checkinId}`
+                                        );
+                                    }
+                                );
+                            });
                         }
                     }
                 );

@@ -50,12 +50,14 @@
                             </el-form-item>
                             <el-form-item prop="account">
                                 <el-input
+                                   v-focus
                                     prefix-icon="el-icon-s-custom"
                                     :placeholder="
                                         $t('commons.pleaseEnter') + ' ID'
                                     "
                                     v-model="loginForm.account"
                                     maxlength="18"
+                                    @keyup.enter.native="clickLoginBtn()"
                                 ></el-input>
                             </el-form-item>
                             <el-form-item prop="password">
@@ -139,45 +141,31 @@ export default {
                 },
                 account: {
                     required: true,
-                    message: this.$F.translate(
-                        "请输入 ID",
-                        "入力してください ID"
-                    ),
+                    message: this.$t('login.inputId'),
                     trigger: "change",
                 },
                 password: [
                     {
                         required: true,
-                        message: this.$F.translate(
-                            "请输入密码",
-                            "入力してくださいパスワード"
-                        ),
-                        // message: 'Please enter the' + ' password',
+                        message: this.$t('login.passwordEnterTip'),
                         trigger: "change",
                     },
                 ],
             };
         },
     },
-
+    //input框自动聚焦功能
+    directives: {
+      // 注册一个局部的自定义指令 v-focus
+      focus: {
+        // 指令的定义
+        inserted: function (el) {
+          // 聚焦元素
+          el.querySelector('input').focus()
+        }
+      }
+    },
     data() {
-        var validatePass = (rule, value, callback) => {
-            if (!value) {
-                callback(
-                    new Error(
-                        this.parent.$t("commons.pleaseEnter") +
-                            this.parent.$t("commons.passwordDesc")
-                    )
-                );
-            } else if (
-                value.toString().length < 6 ||
-                value.toString().length > 18
-            ) {
-                callback(new Error("密码长度为6 - 18个字符"));
-            } else {
-                callback();
-            }
-        };
         return {
             language: "ri", //语言类型  zh中文  ri日文
             loading: false,

@@ -9,16 +9,14 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="addRoom">{{$t('desk.order_addRoom')}}</el-button>
-        <el-button size="small" plain :disabled="checkinInfo.state != 1 && checkinInfo.state != 2" @click="goCheckinDetail(1)">{{$t('desk.order_livePeopleManegerment')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.batchCheckin") }}</el-button>
+        <el-button size="small" plain @click="addRoom">{{$t('desk.order_addRoom')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(1)">{{$t('desk.order_livePeopleManegerment')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(2)">{{ $t("desk.batchCheckin") }}</el-button>
         <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown size="small" split-button type="primary">
           {{ $t("commons.moreOperating") }}
           <el-dropdown-menu slot="dropdown">
-            <!--                    <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{$t('desk.rowHouse')}}</el-dropdown-item>-->
-            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')">{{ $t("desk.order_changeSource") }}</el-dropdown-item>
-            <!--                    v-if="checkinInfo.state == 1 || checkinInfo.state == 2"-->
+            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_changeSource") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item>
@@ -70,74 +68,75 @@
             {{ checkinInfo.checkoutTime }}
           </div>
         </el-col>
-        <el-col :span="6">
-          <div>{{$t('desk.keepTime')}}：{{checkinInfo.keepTime}}</div>
-        </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <div>{{$t('desk.order_sourceType')}}：{{ checkGuestType(checkinInfo.guestType) }}</div>
+          <div>{{$t('desk.order_sourceType')}}：{{ F_guestType(checkinInfo.guestType) }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_teamName')}}：{{ checkinInfo.teamName }}【{{checkinInfo.teamPronunciation}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_guideText')}}：{{ checkinInfo.guideName }}【{{checkinInfo.guidePronunciation}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_leaderText')}}：{{ checkinInfo.leaderName }}【{{checkinInfo.leaderPronunciation}}】</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_teamMoible')}}：{{ checkinInfo.teamMobile }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_teamAddress')}}：{{ checkinInfo.teamAdd3 }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactName')}}：{{ checkinInfo.contactName }}【{{checkinInfo.contactPinyin}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactPhone')}}：{{ checkinInfo.contactPhone }}</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactEmail')}}：{{ checkinInfo.contactEmail }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_travelName')}}：{{ checkinInfo.travelTeam }}【{{checkinInfo.travelPronunciation}}】</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_travelAddress')}}：{{ checkinInfo.travelAdd3 }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactName')}}：{{ checkinInfo.travelContactName }}【{{checkinInfo.travelContactPinyin}}】</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactPhone')}}：{{ checkinInfo.travelContactPhone }}</div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_contactEmail')}}：{{ checkinInfo.tarvelContactEmail }}</div>
         </el-col>
       </el-row>
     </el-row>
     <el-row>
-      <h4>{{ $t("desk.order_bookRoomType") }}</h4>
+      <h4>{{ $t('desk.reserveInfoDesc') }}</h4>
       <el-row>
-        <el-col :span="24" v-for="(item, key, index) of roomTypeList" :key="index">
-          <p>
-            {{ checkKey(key) }}（{{ item.length
-            }}{{ $t("manager.hk_space") }}）； {{ $t("desk.home_roomType") }}：
-            <el-button type="primary" size="mini" plain>{{ item[0].roomTypeName }}({{ item.length }})</el-button>
-          </p>
-        </el-col>
-        <!-- <el-col :span="24">
-                <p>未排房（1间）；房型：<el-button type="primary" size="mini" plain>标准间(1)</el-button> </p>
-            </el-col> -->
+          <el-col>
+              <div>
+                  <span>{{$t('desk.book_bookProject')}}：</span>
+                  <span v-for="(item, key, index) of checkinInfo.reserveProjectList" :key="index" style="margin-left: 15px">
+                      {{`${item.projectName} (${item.projectCount}) * ${item.price}  `}}
+                  </span>
+              </div>
+          </el-col>
+<!--        <el-col :span="24" v-for="(item, key) of inRoomList" :key="index">-->
+<!--          <p>-->
+<!--            {{ checkKey(key) }}（{{ item.length }}{{ $t("manager.hk_space") }}）； {{ $t("desk.home_roomType") }}：-->
+<!--            <el-button type="primary" size="mini" plain>{{ item[0].roomTypeName }}({{ item.length }})</el-button>-->
+<!--          </p>-->
+<!--        </el-col>-->
       </el-row>
     </el-row>
     <el-row>
@@ -146,30 +145,28 @@
         <el-col :span="8">
           <p>
             {{ $t("desk.order_outOrder") }}：{{
-              checkinInfo.thirdOrdernum
-                ? checkinInfo.thirdOrdernum
-                : $t("desk.order_noText")
+              checkinInfo.thirdOrdernum ? checkinInfo.thirdOrdernum : $t("desk.order_noText")
             }}
           </p>
         </el-col>
-        <el-col :span="8">
-          <p>
-            {{ $t("desk.order_salesman") }}：{{
-              currentSale.userName || $t("desk.order_noText")
-            }}
-          </p>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <p>
-            {{ $t("desk.orderMarkInfo") }}：{{
-              checkinInfo.remark || $t("desk.order_noText")
-            }}
-          </p>
-        </el-col>
+          <el-col :span="8">
+              <p>
+                  {{ $t("desk.customer_region") }}：{{
+                      checkinInfo.region
+                  }}
+              </p>
+          </el-col>
+          <el-col :span="8">
+              <p>
+                  {{ $t("desk.customer_payType") }}：{{ F_payType(checkinInfo.payType) }}
+              </p>
+          </el-col>
       </el-row>
     </el-row>
+      <el-row>
+          <h4>{{ $t("desk.orderMarkInfo") }}</h4>
+          <span>{{checkinInfo.remark}}</span>
+      </el-row>
     <!-- 上面是基本信息 -->
     <el-dialog top="0" :visible.sync="liveInPersonShow" class="liveInPersonDia" :title="$t('desk.order_rowHouses')" width="90%">
       <customer2 :liveData="liveData" :checkinInfo="checkinInfo" type="reserve" @checkInCallback="checkInCallback"></customer2>
@@ -222,12 +219,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item :label="$t('desk.book_bookProject') + ':'" required>
+            <el-form-item :label="$t('desk.book_bookProject') + ':'">
               <template>
                 <div v-for="(value, index) in baseInfoChangeForm.reserveProjects" :key="index">
-                  <el-input :placeholder="$t('desk.book_projectName') + (index + 1)" size="small" v-model="value.projectName" style="width: 300px"></el-input>
-                  <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model="value.projectCount" style="width: 100px; margin-left: 10px"></el-input>
-                  <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px"></el-input>
+                  <el-input :placeholder="$t('desk.book_projectName') + (index + 1)" size="small" v-model="value.projectName" style="width: 300px"
+                            @keyup.native="reserveProjectsChange('projectName', value.projectName, index)"></el-input>
+                  <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model.number="value.projectCount" style="width: 100px; margin: 10px"
+                            @keyup.native="reserveProjectsChange('projectCount', value.projectCount, index)"></el-input>
+                  <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px"
+                            @keyup.native="reserveProjectsChange('price', value.price, index)"></el-input>
                   <!--                            <img src="~@/assets/images/close.png" @click="deleteProject(index)" v-if="baseInfoChangeForm.reserveProjects.length>1" class="closePng">-->
                 </div>
               </template>
@@ -240,37 +240,6 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="baseInfoChangeShow = false">{{
-          $t("commons.cancel")
-        }}</el-button>
-        <el-button type="primary" @click="hotel_check_inChange">{{
-          $t("commons.determine")
-        }}</el-button>
-      </span>
-    </el-dialog>
-    <!-- 更改客源dialog -->
-    <el-dialog top="0" :title="$t('desk.order_changeSource')" :visible.sync="gustTypeChangeShow" width="39%" center>
-      <el-form :model="baseInfoChangeForm" ref="baseInfoChange" :rules="rules" style="margin-top: -10px" size="mini" label-width="100px">
-        <el-form-item :label="$t('desk.customer_guestType') + ':'" style="margin-bottom: 0" prop="guestType">
-          <el-radio-group v-model="baseInfoChangeForm.guestType">
-            <el-radio v-for="(item, key, index) of $t('commons.guestType')" :label="key" :key="index">{{ item }}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label-width="100px" label="" class="" style="margin-bottom: 0" v-if="
-                baseInfoChangeForm.guestType == 2 ||
-                baseInfoChangeForm.guestType == 3
-              ">
-          <el-input type="text" class="width200"></el-input>
-        </el-form-item>
-        <br />
-        <el-form-item :label="$t('desk.book_orderSoutce')" prop="orderSource">
-          <el-select v-model="baseInfoChangeForm.orderSource" class="width200">
-            <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="gustTypeChangeShow = false">{{
           $t("commons.cancel")
         }}</el-button>
         <el-button type="primary" @click="hotel_check_inChange">{{
@@ -318,22 +287,27 @@
         }}</el-button>
       </span>
     </el-dialog>
-    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" />
+      <!--      更改客源dialog  客源类型-->
+      <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="baseInfoChangeForm"></guestChoose>
+    <!--      排房组件-->
+    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" :title="$t('desk.order_addRoom')"/>
     <!--    <checkTheDetails ref="checkTheDetails" @baseInfoChange="baseInfoChange" :checkinInfo="checkinInfo" :inRoomList="inRoomList" />-->
   </div>
 </template>
 
 <script>
+
 import myMixin from "@/utils/filterMixin";
 import customer2 from "@/components/front/customer2";
 //入住人
 import checkTheDetails from "@/components/checktheDetails";
 import rowRoomHandle from "@/views/market/home/rowRoomHandle";
-
+import guestChoose from "@/views/market/reception/checkin/guestChoose";
 export default {
   components: {
     customer2,
     rowRoomHandle,
+      guestChoose,
     checkTheDetails, //入住人管理
   },
   mixins: [myMixin],
@@ -455,7 +429,6 @@ export default {
             this.roomTypeList[element.roomTypeId + "notYet"].push(element);
           }
         });
-        console.log(222222222222);
         console.log(this.roomTypeList);
       },
       //   immediate: true,
@@ -527,35 +500,26 @@ export default {
   },
 
   methods: {
-    checkGuestType(itemType) {
-      switch (itemType) {
-        case 1:
-          return this.$t('desk.book_traveler');
-        case 2:
-          return this.$t('desk.book_member');
-        case 3:
-          return this.$t('desk.book_unit');
-        case 1:
-          return this.$t('desk.order_teamText');
+      //选择客源类型组件的确认回调
+      guestChooseCallback(data) {
+          this.baseInfoChangeForm = data;
+          console.log(data);
+          this.hotel_check_inChange();
+      },
 
-        default:
-          return "";
-      }
-    },
+      //预定项目输入change事件
+      reserveProjectsChange(key, value, index) {
+          this.baseInfoChangeForm.reserveProjects[index][key] = value;
+          this.$forceUpdate()
+      },
     //新需求 添加项目
     addProject() {
-      if (
-        this.baseInfoChangeForm.reserveProjects &&
-        this.baseInfoChangeForm.reserveProjects.length > 0
-      ) {
+      if (this.baseInfoChangeForm.reserveProjects && this.baseInfoChangeForm.reserveProjects.length > 0) {
         let lastObject = this.baseInfoChangeForm.reserveProjects[
           this.baseInfoChangeForm.reserveProjects.length - 1
         ];
-        if (
-          lastObject.projectName &&
-          lastObject.price &&
-          lastObject.projectName
-        ) {
+
+        if (lastObject.projectName && lastObject.price && lastObject.projectName) {
           this.baseInfoChangeForm.reserveProjects.push({});
         } else {
           this.$message({
@@ -563,9 +527,15 @@ export default {
             type: "warning",
           });
         }
+          this.$forceUpdate()
       } else {
         this.baseInfoChangeForm.reserveProjects = [];
-        this.baseInfoChangeForm.reserveProjects.push({});
+        this.baseInfoChangeForm.reserveProjects.push({
+            projectName: '',
+            projectCount: '',
+            price: '',
+        });
+        this.$forceUpdate()
       }
     },
     //预定项目，点击删除
@@ -576,13 +546,7 @@ export default {
     addRoom() {
       let arr = [];
       if (this.currentRoom) arr.push(this.currentRoom);
-      this.$refs.rowRoomHandle.initForm(
-        this.reserveId,
-        this.checkinInfo,
-        arr,
-        1,
-        2
-      );
+      this.$refs.rowRoomHandle.initForm(this.reserveId, this.checkinInfo, arr, 1, 2);
     },
     //跳转到入住详情
     goCheckinDetail(type) {
@@ -607,7 +571,7 @@ export default {
           checkinRoomId: this.checkinInfo.id,
           name: this.checkinInfo.name,
           pronunciation: this.checkinInfo.pronunciation,
-          idcardType: this.checkinInfo.idcardType || "1",
+          idcardType: this.checkinInfo.idcardType || "2",
           idcard: this.checkinInfo.idcard,
           sex: this.checkinInfo.sex || "1",
           mobile: this.checkinInfo.mobile,
@@ -680,39 +644,34 @@ export default {
     },
 
     hotel_check_inChange() {
-      this.$refs.baseInfoChange.validate((valid) => {
         this.baseInfoChangeForm.checkInReserveId = this.$route.query.id;
         let params = this.$F.deepClone(this.baseInfoChangeForm);
         params.reserveProjects = JSON.stringify(params.reserveProjects);
-        if (valid) {
-          this.$F.doRequest(
-            this,
-            "/pms/reserve/reserve_check_in",
-            params,
+        this.$F.doRequest(this, "/pms/reserve/reserve_check_in", params,
             (data) => {
-              this.baseInfoChangeShow = false;
-              this.gustTypeChangeShow = false;
-              this.$emit("baseInfoChange", this.$route.query.id);
+                this.baseInfoChangeShow = false;
+                this.gustTypeChangeShow = false;
+                this.$emit("baseInfoChange", this.$route.query.id);
             }
-          );
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+        );
     },
     baseInfoChangeHandle(type) {
-      // this.baseInfoChangeForm = { reserveProjects: [] };
-      // this.$F.merge(this.baseInfoChangeForm, this.checkinInfo);
-      this.baseInfoChangeForm = this.$F.deepClone(this.checkinInfo);
-      this.baseInfoChangeForm.reserveProjects =
-        this.checkinInfo.reserveProjects ||
-        this.checkinInfo.reserveProjectList ||
-        [];
-      this[type] = true;
-      this.baseInfoChangeForm.checkinType = this.baseInfoChangeForm.checkinType.toString();
-      this.baseInfoChangeForm.orderSource = this.baseInfoChangeForm.orderSource.toString();
-      this.baseInfoChangeForm.guestType = this.baseInfoChangeForm.guestType.toString();
+        this.baseInfoChangeForm = this.$F.deepClone(this.checkinInfo);
+        this.baseInfoChangeForm.checkinType = this.baseInfoChangeForm.checkinType.toString();
+        this.baseInfoChangeForm.orderSource = this.baseInfoChangeForm.orderSource.toString();
+        this.baseInfoChangeForm.guestType = this.baseInfoChangeForm.guestType.toString();
+        this.baseInfoChangeForm.reserveProjects =
+            this.baseInfoChangeForm.reserveProjects ||
+            this.baseInfoChangeForm.reserveProjectList ||
+            [];
+        if (type == "gustTypeChangeShow") {
+            // this.guestTypeShow = true;
+            this.baseInfoChangeForm.changeGuest = true;
+            console.log(this.baseInfoChangeForm);
+            this.$refs.guestChoose.dialogOpen(this.baseInfoChangeForm);
+        } else {
+            this[type] = true;
+        }
     },
     baseInfoChange() {
       this.$emit("baseInfoChange", "");
@@ -761,10 +720,10 @@ export default {
   }
 
   h4 {
-    margin: 0;
-    line-height: 40px;
+    margin: 10px 0;
+    line-height: 30px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
   }
   .el-row {
     line-height: 30px;

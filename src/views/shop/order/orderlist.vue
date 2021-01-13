@@ -141,7 +141,7 @@
         :close-on-press-escape="false"
         @close="closeDialog"
         >
-            <detail @closeDialog="closeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
+            <detail :taxInfo="tax" @closeDialog="closeDialog" ref="detailRef" @action="action" v-if="dialogType == 1" />
             <action :taxInfo="tax" @closeDialog="closeDialog" ref="actionRef" v-if="dialogType == 2" />
     </el-dialog>
 
@@ -163,9 +163,9 @@
             <div class="margin-t-10 text-gray">{{$t('shop.orderTotal')}}：¥ {{numFormate(detail.consumePrice)}}</div>
             <!-- <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥{{orderTax.sum}} </div> -->
             <div class="taxBox text-size14 text-gray">
-                <div class="item margin-t-10">服务费 ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
-                <div class="item margin-t-10">消费税 ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
-                <div class="item margin-t-10" v-if="detail.billingType&&detail.billingType == 1">{{$t('shop.yhPrice')}} ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
+                <div class="item margin-t-10">服务费： ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
+                <div class="item margin-t-10">消费税： ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
+                <div class="item margin-t-10" v-if="detail.billingType&&detail.billingType == 1">{{$t('shop.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
             </div>
             <!-- <div v-if="!!orderTax" class="margin-t-10 text-gray">消费税：¥{{orderTax.total}}</div>
             <div v-if="!!orderTax" class="margin-t-10 text-gray">服务费：¥{{orderTax.service}}</div> -->
@@ -173,8 +173,20 @@
                 其中消费税税前¥{{orderTax.taxBefore}}（总消费税 ¥{{orderTax.total}} ，消费税税后¥{{orderTax.taxAfter}}）；服务费¥{{orderTax.service}};
             </div> -->
             <!-- <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：¥{{detail.createTime}}</div> -->
-            <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">{{$t('shop.vipPrice')}}：¥{{numFormate(detail.scoresPrice)}}</div>
-            <div class="margin-t-10 text-gray">{{$t('shop.realPrice')}}：¥{{numFormate(detail.realPayPrice)}}</div>
+            <div v-if="detail.scoresPrice" class="margin-t-10 text-gray">：{{$t('shop.vipPrice')}}：¥{{numFormate(detail.scoresPrice)}}</div>
+            <!-- <div class="margin-t-10 text-gray">{{$t('shop.realPrice')}}：¥{{numFormate(detail.realPayPrice)}}</div> -->
+
+            <div class="item margin-t-10 text-gray" v-if="detail.billingType == 1">
+                {{$t('shop.realPrice')}}：  ¥{{numFormate(detail.realPayPrice)}}
+            </div>
+
+            <div class="item margin-t-10 text-gray" v-if="detail.billingType">
+                结账信息：{{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+            </div>
+
+
+
+
             <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：{{detail.updateTime}}</div>
             <el-table
               class="margin-t-10 "
@@ -368,25 +380,13 @@ export default {
 
         //获取订单信息
         getInfo(data){
-            console.log(data)
-            if(data.state == 2){
+            console.log(data.state)
+            if(data.state == 2 || data.state == 3){
                this.dialogShows = true
                this.detail = data
-               let orderGoodsList = data.orderSubList
-
-               orderGoodsList.forEach(element => {
-                   element.taxStatus = element.goods.taxStatus
-                   element.seviceStatus = element.goods.seviceStatus
-               });
-
-
-               // for(let i in orderGoodsList){
-               //     orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
-               //     orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
-               // }
-               console.log(orderGoodsList)
+               // getTaxInfo(tax,list,outFlag,endTime,info)
                let outFlag = data.outFlag == 1 ? true : false
-               this.orderTax = this.getTaxInfo(this.tax,orderGoodsList,outFlag)
+               this.orderTax = this.getOrderHasPayTaxInfo(this.tax,data,outFlag)
                return false
             }else{
                 let info = {
@@ -410,7 +410,7 @@ export default {
 
         //结账
         action(data){
-            // console.log(data)
+            console.log(data)
             // this.is_add = true
             this.dialogShow = true
             this.dialogType = 2

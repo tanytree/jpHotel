@@ -11,9 +11,9 @@
 					<el-form-item>
 						<el-col>
 							<el-button type="text" @click="beforeTap" style="border-bottom: 2px solid #409EFF; margin-left: 20px;">
-								<< 前15天</el-button> </el-col> </el-form-item> <el-form-item>
+								&lt;&lt; {{$t('manager.add_lsat15')}}</el-button> </el-col> </el-form-item> <el-form-item>
 									<el-col>
-										<el-button type="text" @click="afterTap">后15天 >></el-button>
+										<el-button type="text" @click="afterTap">{{$t('manager.add_next15')}} &gt;&gt;</el-button>
 									</el-col>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
@@ -49,7 +49,7 @@
 			<el-row :gutter="20">
 				<el-form :model="batchEditPriceForm" :rules="bathEditRules" ref="ruleForm" label-width="100px">
 					<el-col :span="20">
-						<el-form-item label="会员类型" prop="memberTypeId">
+						<el-form-item :label="$t('desk.customer_memType')" prop="memberTypeId">
 							<el-row style="display: flex;align-items: center;">
 								<el-checkbox-group v-model="batchEditPriceForm.memberTypeId" @change="handleMemberChange">
 									<el-checkbox v-for="(item, index) in selectedRoomtype" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
@@ -59,19 +59,19 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
-						<el-form-item label="渠道" prop="channel">
+						<el-form-item :label="$t('desk.home_channel')" prop="channel">
 							<el-button type="primary" plain size="mini">{{batchEditPriceForm.channel}}</el-button>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
-						<el-form-item label="选择时间" prop="time">
+						<el-form-item :label="$t('manager.grsl_selectTime')" prop="time">
 							<el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" value-format="yyyy-MM-dd"
 							 :picker-options="expireTimeOption" unlink-panels :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')"
 							 :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
 						</el-form-item>
 					</el-col>
 					<el-col :span="20">
-						<el-form-item label="选择星期">
+						<el-form-item :label="$t('manager.ps_selectWeek')">
 							<el-row style="display: flex;align-items: center;">
 								<el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
 									<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
@@ -82,8 +82,8 @@
 				</el-form>
 			</el-row>
 			<el-table ref="multipleTable" :data="allRoomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
-				<el-table-column prop="houseName" label="房型"></el-table-column>
-				<el-table-column label="门市价(一人住宿+附餐费)">
+				<el-table-column prop="houseName" :label="$t('desk.home_roomType')"></el-table-column>
+				<el-table-column :label="$t('manager.grsl_doorPri')">
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
@@ -99,22 +99,22 @@
 				</el-table-column>
 
 				<!-- 这是输入的住宿价,目的是为了会员享有一定的优惠,这里只展示一人住宿价 -->
-				<el-table-column prop="name" :label="$t('manager.hk_livePrice') + '(一人住宿)'">
+				<el-table-column prop="name" :label="$t('manager.hk_livePrice') + $t('manager.grsl_oneLive')">
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
-								<el-input v-model.number="row.newLivePrice" style="width: 140px;margin: 0px 15px;"></el-input> 日元
+								<el-input v-model.number="row.newLivePrice" style="width: 140px;margin: 0px 15px;"></el-input> {{$t('manager.ps_japanYen')}}
 							</span>
 						</el-row>
 						<el-row class="demo-form-inline" v-else>
 							<span>
-								<el-input v-model.number="row.newMarketPrice" style="width: 140px;margin: 0px 15px;"></el-input> 日元
+								<el-input v-model.number="row.newMarketPrice" style="width: 140px;margin: 0px 15px;"></el-input> {{$t('manager.ps_japanYen')}}
 							</span>
 						</el-row>
 					</template>
 				</el-table-column>
 				<!-- 这里是前面输入的一人住宿价+早餐+晚餐的总价,如果前面没有输入的话,先展示早餐+晚餐的价格(附餐价) -->
-				<el-table-column prop="adjustPrice" label="新价格(一人住宿+附餐费)"></el-table-column>
+				<el-table-column prop="adjustPrice" :label="$t('manager.grsl_newPrice')"></el-table-column>
 			</el-table>
 			<el-row style="padding: 20px 0px;">
 				<el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
@@ -127,12 +127,12 @@
 		<el-dialog top="0" :title="$t('manager.ps_resetRoomPrice')" :visible.sync="editPriceDialog" :close-on-click-modal="false"
 		 width="80%" class="editPriceDialog">
 			<el-row :gutter="20" style="margin-bottom: 20px;">
-				<el-col :span="3">当前时间: </el-col>
+				<el-col :span="3">{{$t('manager.add_nowTime')}}: </el-col>
 				<el-col :span="16">{{editPriceForm.dayTime}}</el-col>
 			</el-row>
 			<el-table ref="multipleTable" :data="ruleForm_Pie" tooltip-effect="dark" default-expand-all header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="人数/座位数" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="personNum" :label="$t('manager.add_peoAsit')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -149,7 +149,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="customPrice" label="门市价" v-else>
+				<el-table-column prop="customPrice" :label="$t('manager.hk_doorPriceA')" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">{{value.marketPrice}}</div>
@@ -157,7 +157,7 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="newCustomPrice" label="调改价" width="250" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_resetPrice')" width="250" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -166,7 +166,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="newCustomPrice" label="新门市价" width="250" v-else>
+				<el-table-column prop="newCustomPrice" :label="$t('manager.add_newDoorPri')" width="250" v-else>
 					<template slot-scope="scope">
 						<div v-for="(value, index) in roomStrategyJson_p">
 							<div style="padding: 10px 0px;">
@@ -180,10 +180,10 @@
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
-								<el-col>早餐 [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_breakfast')}} [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
 							</el-row>
 							<el-row class="demo-form-inline">
-								<el-col>晚餐 [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_dinner')}} [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
 							</el-row>
 						</el-row>
 					</template>
@@ -223,32 +223,6 @@
 
 				tab1_show: true,
 				value: "",
-				batchEditPriceForm: {
-					time: "", //开始日期跟结束日期在一起
-					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
-					channel: "线下",
-					startTime: "",
-					endTime: "",
-					weeks: [],
-					roomStrategyJson: [],
-				},
-				bathEditRules: {
-					channel: [{
-						required: true,
-						message: '请选择渠道',
-						trigger: "blur",
-					}],
-					memberTypeId: [{
-						required: true,
-						message: '请选择会员类型',
-						trigger: "blur",
-					}],
-					time: [{
-						required: true,
-						message: '请选择时间',
-						trigger: "blur",
-					}],
-				},
 				ruleForm: {
 					date: new Date().Format("yyyy-MM-dd"),
 					region: "",
@@ -276,20 +250,60 @@
 				pickerOptions: {
 					disabledDate(time) {
 						return time.getTime() > Date.now();
+<<<<<<< HEAD
 					}
+=======
+					},
+				
+>>>>>>> ae30638d02b10ca27aa5f1b13fe44b94fcd4b41e
 				},
-				rules: {
+				weekDays: [],
+			};
+		},
+	computed: {
+		bathEditRules(){
+      return {
+					channel: [{
+						required: true,
+						message:  this.$t('manager.hk_chooseChannel'),
+						trigger: "blur",
+					}],
+					memberTypeId: [{
+						required: true,
+						message: this.$t('desk.customer_chooseMemType'),
+						trigger: "blur",
+					}],
+					time: [{
+						required: true,
+						message: this.$t('manager.add_chooseTime'),
+						trigger: "blur",
+					}],
+				}
+    },
+      batchEditPriceForm(){
+        return  {
+					time: "", //开始日期跟结束日期在一起
+					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
+					channel:this.$t('desk.customer_offline'),
+					startTime: "",
+					endTime: "",
+					weeks: [],
+					roomStrategyJson: [],
+				}
+      },
+      rules(){
+        return  {
 					name: [{
 						required: true,
 						// message: "请输入姓名",
 						message: this.$t('commons.mustInput'),
 						trigger: "blur",
 					}, ],
-				},
-				weekDays: [],
-			};
-		},
+				}
+      }
 
+		
+		},
 		mounted() {
 			// this.weekDays.push({
 			// 	label: this.$t('commons.all'),
@@ -306,21 +320,7 @@
 			this.get_hotel_price_room_type_list();
 			// this.get_hotel_room_type_list()
 		},
-		computed: {
-			roomPrice: {
-				get() {
-					return this.$t("manager.ps_roomPrice");
-				},
-				set() {},
-			},
-
-			deleteSuccess: {
-				get() {
-					return this.$t("manager.hk_deleteSuccess");
-				},
-				set() {},
-			}
-		},
+	
 		watch: {
 			//监听 newLivePrice 变化时 adjustPrice 的改变
 			allRoomTypeList: {
@@ -339,13 +339,7 @@
 				},
 				deep: true,
 			},
-			roomPrice(newValue, oldValue) {
-				this.roomPrice = newValue;
-			},
-
-			deleteSuccess(newValue, oldValue) {
-				this.deleteSuccess = newValue;
-			},
+	
 		},
 		methods: {
 		    getRowKey(row) {
@@ -578,14 +572,14 @@
 				 // *                         newCustomPrice 调价后价格  double必填
 				 // * strategyJson组装参数：通过获取房型详情可以获得人数和住宿价格、早晚餐三个对象，然后根据住宿价格进行拆分分组（通过“,”切分，就变成了多行数据展示）
 				console.log(this.editPriceForm)
-				debugger
+				
 				var params = {
 					priceCalend: 1,
 					roomTypeId: this.editPriceForm.id,
 					dayTime: this.editPriceForm.dayTime,
 					memberTypeId: this.ruleForm.memberTypeObject.id
 				};
-				debugger
+			
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_room_day_price_save",
@@ -610,7 +604,7 @@
 						this.dayPriceList = res.dayPriceList;
 						this.dateList = res.dateList
 						this.dateList.unshift({
-							dateStr: '房型/房价',
+							dateStr: this.$t('manager.add_tyepApri'),
 							weekDay: "",
 						});
 						let i = 0;
@@ -778,7 +772,7 @@
 					(res) => {
 						this.get_price_enter_strategy_list();
 						this.$message({
-							message: this.deleteSuccess,
+							message: this.$t("manager.hk_deleteSuccess"),
 							type: "success",
 						});
 					}

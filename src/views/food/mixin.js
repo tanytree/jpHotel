@@ -56,14 +56,20 @@ const mixin= {
         },
         //计算税
         getTaxInfo(tax,list,outFlag){
+            //taxStatus1不含税 taxStatus2含税
+            //seviceStatus 1不含税 seviceStatus含税
+            console.log(tax)
             //outFlag 默认false 表示是否外带
             if(list && list.length > 0 && tax){
                 let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
                 let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
                 let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
-                let total = 0 //税前税后总的税钱
+                let total = 0 //所有商品的价格
                 let service = 0 //服务费
                 let taxFee = 0 //消费税
+
+
+
                 let sum = 0 //合计
                 for(let i in list){
                     total += list[i].totalPrice
@@ -86,7 +92,6 @@ const mixin= {
                 parms.servicePrice = tax.servicePrice+'%'
                 parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
                 parms.type = outFlag ? 'out' : 'in'
-
                 console.log(parms)
                 return parms
             }else{

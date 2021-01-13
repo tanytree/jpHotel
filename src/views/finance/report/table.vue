@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2021-01-06 11:14:11
+ * @LastEditTime: 2021-01-11 10:33:54
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
@@ -28,7 +28,8 @@
               reportType == '11' ||
               reportType == '12' ||
               reportType == '37' ||
-              reportType == '38'
+              reportType == '38'||
+              reportType == '24'
             ">
             <el-date-picker v-model="searchForm.startTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('manager.hp_startTime')"></el-date-picker>
             <span style="margin: 0 5px">-</span>
@@ -78,6 +79,29 @@
           <el-form-item :label="$t('desk.order_teamName')+':'" style="margin: 0 20px" v-if="reportType == '42'">
             <el-autocomplete v-model="searchForm.teamName" :fetch-suggestions="remoteMethod" :placeholder="$t('commons.pleaseEnter')" @select="changeName"></el-autocomplete>
           </el-form-item>
+          <!-- 总部门店 -->
+          <el-form-item :label="$t('boss.add_chooseStore')+':'" style="margin: 0 20px" v-if="reportType == '24'">
+            <el-select v-model="searchForm.selectStoresNums " multiple>
+            <el-option
+              v-for="item in storeList"
+              :key="item.storesNum"
+              :label="item.storesName"
+              :value="item.storesNum"
+            >
+            </el-option>
+          </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('boss.add_queryText')+':'"  v-if="reportType == '24'">
+            <el-select v-model="searchForm.idCardTypes" multiple>
+            <el-option
+              v-for="(value,key) in $t('commons.queryText')"
+              :key="key"
+              :label="value"
+              :value="key"
+            >
+            </el-option>
+          </el-select>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="queryReport" v-if="reportType != '41'">{{$t('commons.queryBtn')}}</el-button>
             <!--            <el-button type="primary">打印</el-button>-->
@@ -118,6 +142,7 @@ export default {
       sourcePage: null,
       unitList: null,
       options: [],
+      storeList: [],
     };
   },
   mounted() {
@@ -151,8 +176,17 @@ export default {
       this.searchForm.endTime = wantTime;
       this.queryReport();
     }
+    if(this.reportType == "24"){
+       this.stores_list();
+    }
   },
   methods: {
+      stores_list() {
+      this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {
+        this.storeList = data;
+        console.log(this.storeList);
+      });
+    },
     exportReport() {
       if (this.currentReport.reportHttpUrl) {
         location.href = this.currentReport.reportHttpUrl;
@@ -258,6 +292,12 @@ export default {
         this.searchForm.startTime = this.monthStartTime(yearA, monthA);
         this.searchForm.endTime = this.monthEndTime(yearB, monthB);
       }
+  //总部门店
+      if(this.reportType == 24){
+         
+       this.searchForm.selectStoresNums = this.searchForm.selectStoresNums.join(',')
+         console.log(this.searchForm.selectStoresNums );
+      }
 
       this.$F.doRequest(
         this,
@@ -276,8 +316,8 @@ export default {
       );
     },
     showReport(url) {
-      // var url = "http://39.104.116.153:8887/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
-      //               http://39.104.116.153:8887/report/fs/1001/20201203/%E6%97%A5%E8%A8%88%E8%A1%A8201203.xlsx
+      // var url = "https://pms-api-dev.sgi-smacha.tokyo/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
+      //               https://pms-api-dev.sgi-smacha.tokyo/report/fs/1001/20201203/%E6%97%A5%E8%A8%88%E8%A1%A8201203.xlsx
       //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
       axios
         .get(url, { responseType: "arraybuffer" })

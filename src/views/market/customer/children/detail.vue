@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-05 18:14:18
+ * @LastEditTime: 2021-01-13 10:36:40
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -11,11 +11,7 @@
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item @click.native="goMemberManag()" style="font-weight: 700; cursor: pointer">{{ $t("desk.customer_memManagement") }}</el-breadcrumb-item>
-          <el-breadcrumb-item v-if="type != 'add'"><span v-if="type == 'edit'">{{ $t("desk.customer_resetmemInfo") }}-</span>{{ detailForm.memberCard }}【{{
-              $t("desk.customer_membermun")
-            }}】-{{ detailForm.name }}-{{
-              F_memberTypeId(detailForm.memberTypeId)
-            }}{{ $t("desk.customer_ka") }}</el-breadcrumb-item>
+          <el-breadcrumb-item v-if="type != 'add'"><span v-if="type == 'edit'">{{ $t("desk.customer_resetmemInfo") }}-</span>{{ detailForm.memberCard }}-{{ detailForm.name }}</el-breadcrumb-item>
           <el-breadcrumb-item v-else>{{
             $t("desk.customer_addMem")
           }}</el-breadcrumb-item>
@@ -41,7 +37,7 @@
         <div class="mianInfo">
           <div class="thisOrderInfo">
             <div class="wrap">
-              <el-form inline size="small" :label-width="type == 'detail' ? '90px' : '90px'" :model="detailForm" ref="detailForm" :rules="type != 'detail' ? rules : {}">
+              <el-form inline size="small" :label-width="type == 'detail' ? '110px' : '90px'" :model="detailForm" ref="detailForm" :rules="type != 'detail' ? rules : {}">
                 <!-- 点击 修改按钮 进来后显示的一排按钮 -->
                 <el-row v-if="type == 'edit'">
                   <el-form-item label>
@@ -92,17 +88,16 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="type != 'detail' ? 8 : 6" class="col" v-if="type != 'detail'">
-                    <el-form-item :label="$t('desk.customer_documentType') + ':'">
+                    <el-form-item :label="$t('desk.customer_documentTypeA') + ':'">
                       <el-select v-model="detailForm.idcardType">
                         <el-option v-for="(label, value) in $t('commons.idCardType')" :label="label" :value="value" :key="value"></el-option>
                       </el-select>
                     </el-form-item>
                   </el-col>
                   <el-col :span="type != 'detail' ? 8 : 6" class="col">
-                    <el-form-item :label="$t('desk.home_idCardNum') + ':'">
+                    <el-form-item :label="$t('desk.home_idCardNumA') + ':'" label-width="120px">
                       <template v-if="type == 'detail'">
-                        <span v-if="detailForm.idcardType == 1">({{ $t("desk.home_idCard") }})</span>
-                        <span v-if="detailForm.idcardType == 2">({{ $t("desk.customer_passport") }})</span>
+                       <span v-if="detailForm.idcardType">({{ checkIdCardType(detailForm.idcardType) }})</span>
                         <span>{{ detailForm.idcard }}</span>
                       </template>
                       <template v-if="type != 'detail'">
@@ -212,7 +207,7 @@
                 <el-row class="row">
                   <el-row class="cell">
                     <el-col :span="type != 'detail' ? 6 : 8" class="col">
-                      <el-form-item :label="$t('desk.customer_sex') + ':'" prop="sex" :label-width="type == 'detail'?'90px':'60px'">
+                      <el-form-item :label="$t('desk.customer_sex') + ':'" prop="sex" :label-width="type == 'detail'?'110px':'60px'">
                         <el-radio-group v-model="detailForm.sex" v-show="type != 'detail'">
                           <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
                         </el-radio-group>
@@ -234,10 +229,12 @@
                         <el-input style="width: 180px" :placeholder="$t('desk.customer_inputEmail')" v-model="detailForm.email"></el-input>
                       </el-form-item>
                     </el-col>
-                    <el-col :span="6" class="col" v-if="type != 'detail'">
+                  </el-row>
+                  <el-row>
+                     <el-col :span="24" class="col" v-if="type != 'detail'">
                       <el-form-item :label="$t('desk.customer_unitNameA') + ':'">
-                        <el-input style="width: 85px" v-model="detailForm.enterName"></el-input>
-                        <el-input style="width: 85px; margin-left: 10px" v-model="detailForm.enterPinyin" :placeholder="$t('desk.customer_faying')"></el-input>
+                        <el-input style="width: 185px" v-model="detailForm.enterName"></el-input>
+                        <el-input style="width: 185px; margin-left: 10px" v-model="detailForm.enterPinyin" :placeholder="$t('desk.customer_faying')"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -325,8 +322,8 @@
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="24" class="col">
-                      <el-form-item :label="$t('frontOffice.englishM') + '1' + ':'">
-                        <el-input class="width300" type="textarea" v-model="detailForm.memo1" v-if="type != 'detail'"></el-input>
+                      <el-form-item :label="$t('frontOffice.englishM') + '1' + ':'" label-width="110px">
+                        <el-input style="width:600px;" type="textarea" v-model="detailForm.memo1" v-if="type != 'detail'"></el-input>
                         <template v-if="type == 'detail'">{{
                           detailForm.memo1
                         }}</template>
@@ -335,8 +332,8 @@
                   </el-row>
                   <el-row class="cell">
                     <el-col :span="24" class="col">
-                      <el-form-item :label="$t('frontOffice.englishM') + '2' + ':'">
-                        <el-input class="width300" type="textarea" v-model="detailForm.memo2" v-if="type != 'detail'"></el-input>
+                      <el-form-item :label="$t('frontOffice.englishM') + '2' + ':'" label-width="110px">
+                        <el-input style="width:600px;" type="textarea" v-model="detailForm.memo2" v-if="type != 'detail'"></el-input>
                         <template v-if="type == 'detail'">{{
                           detailForm.memo2
                         }}</template>
@@ -725,6 +722,14 @@ export default {
       resetMemberTab: "resetMemberTab",
       resetActive: "resetActive",
     }),
+       checkIdCardType(idCardType) {
+      let obj = this.$t('commons.idCardType');
+     for(let i in obj){
+       if(idCardType == i){
+         return obj[i];
+       }
+     }
+    },
     handleChange(value) {
       if (value) {
         this.cardForm.memberCard = "";

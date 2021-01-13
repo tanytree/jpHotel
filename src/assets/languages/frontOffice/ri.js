@@ -1,13 +1,14 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-17 16:32:50
+ * @LastEditTime: 2021-01-08 13:50:00
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
+    reserveContent: '预定内容',
   englishM:'フリーメモ',
     enterpriseName: '会社名',
-    enterpriseMobile: '会社電話番号',
+    enterpriseMobile: '会社電話',
     enterpriseAddress: '会社住所',
     cancelRoomKeep: '仮押さえ取り消し',
     checkInfoDesc: '入居情報',
@@ -57,7 +58,7 @@ module.exports = {
         "13": '売掛',
         "14": '餐吧消费',
         "15":'温泉税',
-        "16":'住宿税', 
+        "16":'住宿税',
         "100": 'その他'
     },
     //订单类型
@@ -66,8 +67,8 @@ module.exports = {
         "1": '滞在',
         "2": '出発予定',
         "3": '以前/履歴',
-        "4": '売掛',
-        "5": 'チェックアウト後精算'
+        // "4": '売掛',
+        // "5": 'チェックアウト後精算'
     },
 
     //入住方式

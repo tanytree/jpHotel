@@ -8,8 +8,8 @@
   <div class="roomDetails">
     <div class="cost margin-t-10">
       <div class="wrap">
-        <span class="fee" v-if="detailData.totalPrice > 0">{{$t('desk.order_receivable')+':'}}{{ detailData.totalPrice }}</span>
-        <span class="fee" v-if="detailData.totalPrice < 0">{{$t('desk.order_shouldBack')+':'}}{{ detailData.totalPrice }}</span>
+        <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
+        <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
         <div class="costNum">
           <el-row>{{ $t('desk.consumerTotal') }}：
               <span class="text-red">{{ detailData.consumePrice }}</span>
@@ -126,4 +126,28 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    .cost {
+
+        background: #fff;
+
+        .wrap {
+            padding: 20px 15px;
+
+            span.fee {
+                font-size: 26px;
+                color: #DC3E3E;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 50px;
+            }
+
+            .costNum {
+                display: inline-block;
+                font-size: 16px;
+                vertical-align: middle;
+                border-left: 1px solid #eee;
+                padding-left: 50px;
+            }
+        }
+    }
 </style>

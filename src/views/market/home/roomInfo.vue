@@ -101,8 +101,10 @@ export default {
     },
     mounted() {
         this.nowDateString= this.$F.formatDate('yyyy-MM-dd');
+
     },
     methods: {
+
         //点击挂账按钮
         paymentVisible(){
           console.log(this.currentRoom);
@@ -145,6 +147,7 @@ export default {
                     checkinTime: this.startTime,
                     checkoutTime: this.checkoutTime,
                 }, (res) => {
+                    debugger
                     if (res && res.roomCheckInCalendarList.length > 0) {
                         res.roomCheckInCalendarList.forEach( (value, index) => {
                             if (value.reserveObj) {
@@ -160,8 +163,8 @@ export default {
                                 console.log(this.dates);
                             }
                         })
-                        this.$forceUpdate()
                     }
+                    this.$forceUpdate()
                 }
             );
         },

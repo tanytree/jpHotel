@@ -100,7 +100,7 @@
         size="mini"
       >
         <el-table-column prop="memberCard" label="卡号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="name" label="姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="name" :label="$t('boss.loginDetail_name')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="memberTypeName" label="会员类型" show-overflow-tooltip></el-table-column>
         <el-table-column prop="mobile" :label="$t('desk.order_moblePhone')" show-overflow-tooltip></el-table-column>
         <el-table-column label="增加" show-overflow-tooltip width="80px">

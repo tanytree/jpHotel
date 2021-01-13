@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-11-25 16:27:58
  * @Author: 陶子
- * @LastEditTime: 2020-12-01 14:55:48
+ * @LastEditTime: 2021-01-08 10:41:53
  * @FilePath: \jiudian\src\components\storeLookTao.vue
 -->
  <!-- 总后台 > 总办 > 首页 > 门店概览 -->
@@ -32,7 +32,7 @@
             :placeholder="$t('commons.selectDate')"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('boss.add_chooseStore') + ':'">
+        <el-form-item :label="$t('boss.add_chooseStore') + ':'" label-width="100px">
           <el-select
             v-model="storeForm.storesNum"
             :placeholder="$t('login.sTip')"
@@ -58,7 +58,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_allRoomNum')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.hotel_room_num}}</div>
+                  <div class="botRight_bottom">{{itemInfo.hotel_room_num|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -70,7 +70,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_canSaleRoom')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.hotel_reserve_room_num}}</div>
+                  <div class="botRight_bottom">{{itemInfo.hotel_reserve_room_num|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -82,7 +82,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_allSaleRoom')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.sale_room_num}}</div>
+                  <div class="botRight_bottom">{{itemInfo.sale_room_num|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -94,7 +94,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_allSaleCustormer')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.sale_person_num}}</div>
+                  <div class="botRight_bottom">{{itemInfo.sale_person_num|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -121,7 +121,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_averageRoomprice')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.room_avg_prices}}</div>
+                  <div class="botRight_bottom">{{itemInfo.room_avg_prices|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -133,7 +133,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_averageCoustormerprice')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.guest_avg_prices}}</div>
+                  <div class="botRight_bottom">{{itemInfo.guest_avg_prices|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -145,7 +145,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">RevPAR</div>
-                  <div class="botRight_bottom">{{itemInfo.guest_revpar}}</div>
+                  <div class="botRight_bottom">{{itemInfo.guest_revpar|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -160,7 +160,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_roomSaleNum')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.guest_total_prices}}</div>
+                  <div class="botRight_bottom">{{itemInfo.guest_total_prices|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -172,7 +172,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_foodAstore')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.dishshop_total_prices}}</div>
+                  <div class="botRight_bottom">{{itemInfo.dishshop_total_prices|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -184,7 +184,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_saleTotal')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.sales_total_prices}}</div>
+                  <div class="botRight_bottom">{{itemInfo.sales_total_prices|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -198,7 +198,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_teamNum')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.group_total}}</div>
+                  <div class="botRight_bottom">{{itemInfo.group_total|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -210,7 +210,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_teamAllPerpson')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.group_person_total}}</div>
+                  <div class="botRight_bottom">{{itemInfo.group_person_total|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -222,7 +222,7 @@
                 />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_teamAllGet')}}</div>
-                  <div class="botRight_bottom">{{itemInfo.group_person_price}}</div>
+                  <div class="botRight_bottom">{{itemInfo.group_person_price|numFormate}}</div>
                 </div>
               </div></el-col
             >
@@ -254,6 +254,20 @@ export default {
     this.getStoreList();
     this.getNowTime();
   },
+  filters:{
+  //对数据进行处理
+    numFormate(num){
+            // console.log(num);
+            if (num){
+                return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+                    return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
+                        return $1 + ",";
+                    });
+                });
+            }
+          
+        },
+  },
   watch: {
     storeForm: {
       handler: function () {
@@ -263,6 +277,7 @@ export default {
     },
   },
   methods: {
+  
     getStoreList() {
       this.$F.doRequest(
         this,
