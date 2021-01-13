@@ -32,7 +32,7 @@
 								<span>{{scope.row.name || scope.row.houseName}}</span>
 							</div>
 							<div v-if="index > 0">
-								<span @click="popup('single', scope.row, item)">
+								<span @click="changePopup(scope.row, item, index)">
 									{{getDateP(scope.row, scope.$index, item, index)}}
 								</span>
 							</div>
@@ -276,32 +276,7 @@
 				pickerOptions: {
 					disabledDate(time) {
 						return time.getTime() > Date.now();
-					},
-					// shortcuts: [{
-					// 		text: "今天",
-					// 		onClick(picker) {
-					// 			picker.$emit("pick", new Date());
-					// 		},
-					// 	},
-					// 	{
-					// 		text: "前十五天",
-					// 		onClick(picker) {
-					// 			const date = new Date();
-					// 			date.setTime(date.getTime() - 3600 * 1000 * 24 * 15);
-					// 			picker.$emit("pick", date);
-					// 			this.get_hotel_price_room_type_list();
-					// 		},
-					// 	},
-					// 	{
-					// 		text: "后十五天",
-					// 		onClick(picker) {
-					// 			const date = new Date();
-					// 			date.setTime(date.getTime() + 3600 * 1000 * 24 * 15);
-					// 			picker.$emit("pick", date);
-					// 			this.get_hotel_price_room_type_list();
-					// 		},
-					// 	},
-					// ],
+					}
 				},
 				rules: {
 					name: [{
@@ -422,19 +397,47 @@
 			},
 			// 客房部操作数据
 			getDateP(row, topIndex, item, index) {
+				// debugger
+				console.log('row0--', row)
                 let tempPrice = 0;
                 let price = 0;
                 let finalIndex = topIndex % this.memberTypeLength;
                 if (finalIndex == 0)
                     return '';
-
+				// console.log('row1--', row)
                 finalIndex -= 1;
-			    if (item.roomTypePrises[finalIndex]) {
-                    if (item.roomTypePrises[finalIndex].personPrice) {
-                        tempPrice = parseInt(item.roomTypePrises[finalIndex].personPrice.split(',')[0])
-                    }
-                    price = tempPrice + item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice + item.roomTypePrises[finalIndex].mealDinnerObject.mealPrice
-                }
+				// debugger
+				if (this.dayPriceList && this.dayPriceList.length > 0) {
+					let newArray = this.dayPriceList.filter(dayPrice => {
+					    return dayPrice.dayTime == item.dateStr;
+					}); //匹配日期
+					
+					let newMemberTypeId = newArray.filter(dayPrice => {
+						console.log('row2--', row)
+						// debugger
+					    return dayPrice.memberTypeId == row.id;
+					}); //匹配第三级会员id
+					// debugger
+					// let newRoomTypeId = newMemberTypeId.filter(dayPrice => {
+					//     return dayPrice.roomTypeId == row.children[finalIndex].id;
+					// }); //匹配房型id
+					// debugger
+					
+					if (newArray && newArray.length > 0) {
+						// debugger
+					    let result = '';
+					    newArray.forEach(temp => {
+					        result = temp.newCustomPrice;
+					    })
+					    return result;
+					}
+				}
+				if (item.roomTypePrises[finalIndex]) {
+				    if (item.roomTypePrises[finalIndex].personPrice) {
+				        tempPrice = parseInt(item.roomTypePrises[finalIndex].personPrice.split(',')[0])
+				    }
+				    price = tempPrice + item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice + item.roomTypePrises[finalIndex].mealDinnerObject.mealPrice
+				}
 				return price
 			},
 
@@ -561,36 +564,26 @@
 					}
 				}
 			},
-			// loadRoomType(tree, treeNode, resolve) {
-			// 	debugger
-			// 	let obj = {}
-			// 	let arr = []
-			// 	tree.roomTypeList.forEach((value, index) => {
-			// 		obj = {}
-			// 		obj.name = value.houseName;
-			// 		obj.onePrice = ''
-			// 		obj.id = value.id
-			// 		arr[index] = obj
-			// 	})
-			// 	//
-			// 	resolve(arr)
-			// },
+			//确认修改单价
 			editPriceSubmit() {
-				// * @param priceCalend       修改定价位置  1会员日历单日定价  2单位日历单日定价  String必填
-				//   * @param roomTypeId       房屋类型表id  String必填
-				//   * @param memberTypeId     会员类型id  priceCalend=1必填 String选填
-				//   * @param customPrice       新会员价  Double必填
-				//   * @param dayTime         当前时间  yyyy-MM-dd格式 String必填
-				//   * @param strategyId       单位策略规则id  priceCalend=1必填  String必填
+				 // * @param priceCalend  修改定价位置 1会员日历单日定价 2单位日历单日定价 int必填
+				 // * @param roomTypeId   房屋类型表id String必填
+				 // * @param memberTypeId 会员类型id priceCalend=1必填 String选填
+				 // * @param dayTime      当前时间 yyyy-MM-dd格式 String必填
+				 // * @param strategyId   单位策略规则id priceCalend=1必填 String必填
+				 // * @param strategyJson 房型调价策略    注意：为body参数 String 必填
+				 // *                         eg:[{"personNum":"1","customPrice":200,"newCustomPrice":1}]
+				 // *                         personNum  人数  int必填
+				 // *                         customPrice  住宿价格  double必填
+				 // *                         newCustomPrice 调价后价格  double必填
+				 // * strategyJson组装参数：通过获取房型详情可以获得人数和住宿价格、早晚餐三个对象，然后根据住宿价格进行拆分分组（通过“,”切分，就变成了多行数据展示）
 				console.log(this.editPriceForm)
 				debugger
 				var params = {
 					priceCalend: 1,
 					roomTypeId: this.editPriceForm.id,
-					memberTypeId: this.ruleForm.memberTypeObject.id,
-					customPrice: this.editPriceForm.customPrice,
 					dayTime: this.editPriceForm.dayTime,
-					strategyId: 1,
+					memberTypeId: this.ruleForm.memberTypeObject.id
 				};
 				debugger
 				this.$F.doRequest(
@@ -609,7 +602,7 @@
 				let params = {
 					strategyTime: this.ruleForm.date,
 					priceCalend: 1, // 检索类型 1会员价格日历 2单位价格日历
-					timeType: 1, // 检索类型 1会员价格日历 2单位价格日历
+					timeType: 2, // 检索类型 1会员价格日历 2单位价格日历
 				};
 				this.$F.doRequest(this, "/pms/hotel/hotel_price_room_type_list", params,
 					(res) => {
@@ -631,12 +624,14 @@
 								member2.memberTypeList.forEach((member3, member2Index) => {
                                     i += member2Index;
                                     member3.id2 = member3.id + i;
+									
 									this.memberTypeList.push(member3);
 									this.memberTypeList.forEach((member4, member4Index) => {
 									    this.memberTypeLength = member1.roomTypeList.length + 1;
 										member4.children = member1.roomTypeList
 										this.dateList.forEach((dat, datIndex) => {
 											dat.roomTypePrises = member1.roomTypeList;
+											// dat.memberTypeId =  member3.id2
 										})
 									})
 								})
@@ -710,16 +705,13 @@
 				switch (type) {
 					case "adjust":
 						this.tab1_show = false;
+						// console.log('this.memberTypeList----', this.memberTypeList)
+						// debugger
+						this.selectedRoomtype = this.memberTypeList;
 						this.get_hotel_room_type_list()
 						break;
-					case "detail":
+					case "single":
 						this.dialogDetail = true;
-						break;
-					case "changerili":
-						this.tab2_show = false;
-						break;
-					case "add":
-						this.tab1_show = false;
 						break;
 				}
 			},
