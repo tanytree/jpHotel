@@ -11,10 +11,13 @@
 					<el-form-item>
 						<el-col>
 							<el-button type="text" @click="beforeTap" style="border-bottom: 2px solid #409EFF; margin-left: 20px;">
-								&lt;&lt; {{$t('manager.add_lsat15')}}</el-button> </el-col> </el-form-item> <el-form-item>
-									<el-col>
-										<el-button type="text" @click="afterTap">{{$t('manager.add_next15')}} &gt;&gt;</el-button>
-									</el-col>
+								&lt;&lt; {{$t('manager.add_lsat15')}}</el-button>
+						</el-col>
+					</el-form-item>
+					<el-form-item>
+						<el-col>
+							<el-button type="text" @click="afterTap">{{$t('manager.add_next15')}} &gt;&gt;</el-button>
+						</el-col>
 					</el-form-item>
 					<el-form-item class="form-inline-flex">
 						<el-row style="margin-right: -10px;">
@@ -103,12 +106,14 @@
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
-								<el-input v-model.number="row.newLivePrice" style="width: 140px;margin: 0px 15px;"></el-input> {{$t('manager.ps_japanYen')}}
+								<el-input v-model.number="row.newLivePrice" style="width: 140px;margin: 0px 15px;"></el-input>
+								{{$t('manager.ps_japanYen')}}
 							</span>
 						</el-row>
 						<el-row class="demo-form-inline" v-else>
 							<span>
-								<el-input v-model.number="row.newMarketPrice" style="width: 140px;margin: 0px 15px;"></el-input> {{$t('manager.ps_japanYen')}}
+								<el-input v-model.number="row.newMarketPrice" style="width: 140px;margin: 0px 15px;"></el-input>
+								{{$t('manager.ps_japanYen')}}
 							</span>
 						</el-row>
 					</template>
@@ -180,10 +185,12 @@
 					<template slot-scope="scope">
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
-								<el-col>{{$t('manager.hk_breakfast')}} [{{scope.row.mealBreakfastObject.mealName}} : {{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_breakfast')}} [{{scope.row.mealBreakfastObject.mealName}} :
+									{{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
 							</el-row>
 							<el-row class="demo-form-inline">
-								<el-col>{{$t('manager.hk_dinner')}} [{{scope.row.mealDinnerObject.mealName}} : {{scope.row.mealDinnerObject.mealPrice}}]</el-col>
+								<el-col>{{$t('manager.hk_dinner')}} [{{scope.row.mealDinnerObject.mealName}} :
+									{{scope.row.mealDinnerObject.mealPrice}}]</el-col>
 							</el-row>
 						</el-row>
 					</template>
@@ -201,7 +208,7 @@
 	export default {
 		data() {
 			return {
-                memberTypeLength: 0,
+				memberTypeLength: 0,
 				rowStyle: {
 					display: 'flex',
 					// flex:'1'
@@ -250,22 +257,17 @@
 				pickerOptions: {
 					disabledDate(time) {
 						return time.getTime() > Date.now();
-<<<<<<< HEAD
 					}
-=======
-					},
-				
->>>>>>> ae30638d02b10ca27aa5f1b13fe44b94fcd4b41e
 				},
 				weekDays: [],
 			};
 		},
-	computed: {
-		bathEditRules(){
-      return {
+		computed: {
+			bathEditRules() {
+				return {
 					channel: [{
 						required: true,
-						message:  this.$t('manager.hk_chooseChannel'),
+						message: this.$t('manager.hk_chooseChannel'),
 						trigger: "blur",
 					}],
 					memberTypeId: [{
@@ -279,20 +281,20 @@
 						trigger: "blur",
 					}],
 				}
-    },
-      batchEditPriceForm(){
-        return  {
+			},
+			batchEditPriceForm() {
+				return {
 					time: "", //开始日期跟结束日期在一起
 					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
-					channel:this.$t('desk.customer_offline'),
+					channel: this.$t('desk.customer_offline'),
 					startTime: "",
 					endTime: "",
 					weeks: [],
 					roomStrategyJson: [],
 				}
-      },
-      rules(){
-        return  {
+			},
+			rules() {
+				return {
 					name: [{
 						required: true,
 						// message: "请输入姓名",
@@ -300,9 +302,9 @@
 						trigger: "blur",
 					}, ],
 				}
-      }
+			}
 
-		
+
 		},
 		mounted() {
 			// this.weekDays.push({
@@ -320,7 +322,7 @@
 			this.get_hotel_price_room_type_list();
 			// this.get_hotel_room_type_list()
 		},
-	
+
 		watch: {
 			//监听 newLivePrice 变化时 adjustPrice 的改变
 			allRoomTypeList: {
@@ -339,13 +341,13 @@
 				},
 				deep: true,
 			},
-	
+
 		},
 		methods: {
-		    getRowKey(row) {
-		        debugger
-		      return row.id + row.parentId;
-            },
+			getRowKey(row) {
+				debugger
+				return row.id + row.parentId;
+			},
 			// 前15天
 			beforeTap() {
 				console.log(this.ruleForm.date)
@@ -393,44 +395,45 @@
 			getDateP(row, topIndex, item, index) {
 				// debugger
 				console.log('row0--', row)
-                let tempPrice = 0;
-                let price = 0;
-                let finalIndex = topIndex % this.memberTypeLength;
-                if (finalIndex == 0)
-                    return '';
+				let tempPrice = 0;
+				let price = 0;
+				let finalIndex = topIndex % this.memberTypeLength;
+				if (finalIndex == 0)
+					return '';
 				// console.log('row1--', row)
-                finalIndex -= 1;
+				finalIndex -= 1;
 				// debugger
 				if (this.dayPriceList && this.dayPriceList.length > 0) {
 					let newArray = this.dayPriceList.filter(dayPrice => {
-					    return dayPrice.dayTime == item.dateStr;
+						return dayPrice.dayTime == item.dateStr;
 					}); //匹配日期
-					
+
 					let newMemberTypeId = newArray.filter(dayPrice => {
 						console.log('row2--', row)
 						// debugger
-					    return dayPrice.memberTypeId == row.id;
+						return dayPrice.memberTypeId == row.id;
 					}); //匹配第三级会员id
 					// debugger
 					// let newRoomTypeId = newMemberTypeId.filter(dayPrice => {
 					//     return dayPrice.roomTypeId == row.children[finalIndex].id;
 					// }); //匹配房型id
 					// debugger
-					
+
 					if (newArray && newArray.length > 0) {
 						// debugger
-					    let result = '';
-					    newArray.forEach(temp => {
-					        result = temp.newCustomPrice;
-					    })
-					    return result;
+						let result = '';
+						newArray.forEach(temp => {
+							result = temp.newCustomPrice;
+						})
+						return result;
 					}
 				}
 				if (item.roomTypePrises[finalIndex]) {
-				    if (item.roomTypePrises[finalIndex].personPrice) {
-				        tempPrice = parseInt(item.roomTypePrises[finalIndex].personPrice.split(',')[0])
-				    }
-				    price = tempPrice + item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice + item.roomTypePrises[finalIndex].mealDinnerObject.mealPrice
+					if (item.roomTypePrises[finalIndex].personPrice) {
+						tempPrice = parseInt(item.roomTypePrises[finalIndex].personPrice.split(',')[0])
+					}
+					price = tempPrice + item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice + item.roomTypePrises[finalIndex]
+						.mealDinnerObject.mealPrice
 				}
 				return price
 			},
@@ -560,26 +563,26 @@
 			},
 			//确认修改单价
 			editPriceSubmit() {
-				 // * @param priceCalend  修改定价位置 1会员日历单日定价 2单位日历单日定价 int必填
-				 // * @param roomTypeId   房屋类型表id String必填
-				 // * @param memberTypeId 会员类型id priceCalend=1必填 String选填
-				 // * @param dayTime      当前时间 yyyy-MM-dd格式 String必填
-				 // * @param strategyId   单位策略规则id priceCalend=1必填 String必填
-				 // * @param strategyJson 房型调价策略    注意：为body参数 String 必填
-				 // *                         eg:[{"personNum":"1","customPrice":200,"newCustomPrice":1}]
-				 // *                         personNum  人数  int必填
-				 // *                         customPrice  住宿价格  double必填
-				 // *                         newCustomPrice 调价后价格  double必填
-				 // * strategyJson组装参数：通过获取房型详情可以获得人数和住宿价格、早晚餐三个对象，然后根据住宿价格进行拆分分组（通过“,”切分，就变成了多行数据展示）
+				// * @param priceCalend  修改定价位置 1会员日历单日定价 2单位日历单日定价 int必填
+				// * @param roomTypeId   房屋类型表id String必填
+				// * @param memberTypeId 会员类型id priceCalend=1必填 String选填
+				// * @param dayTime      当前时间 yyyy-MM-dd格式 String必填
+				// * @param strategyId   单位策略规则id priceCalend=1必填 String必填
+				// * @param strategyJson 房型调价策略    注意：为body参数 String 必填
+				// *                         eg:[{"personNum":"1","customPrice":200,"newCustomPrice":1}]
+				// *                         personNum  人数  int必填
+				// *                         customPrice  住宿价格  double必填
+				// *                         newCustomPrice 调价后价格  double必填
+				// * strategyJson组装参数：通过获取房型详情可以获得人数和住宿价格、早晚餐三个对象，然后根据住宿价格进行拆分分组（通过“,”切分，就变成了多行数据展示）
 				console.log(this.editPriceForm)
-				
+
 				var params = {
 					priceCalend: 1,
 					roomTypeId: this.editPriceForm.id,
 					dayTime: this.editPriceForm.dayTime,
 					memberTypeId: this.ruleForm.memberTypeObject.id
 				};
-			
+
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_room_day_price_save",
@@ -600,7 +603,7 @@
 				};
 				this.$F.doRequest(this, "/pms/hotel/hotel_price_room_type_list", params,
 					(res) => {
-                        this.memberTypeList = [];
+						this.memberTypeList = [];
 						this.dayPriceList = res.dayPriceList;
 						this.dateList = res.dateList
 						this.dateList.unshift({
@@ -610,18 +613,18 @@
 						let i = 0;
 						// this.memberTypeList = res.memberTypeList;
 						res.memberTypeList.forEach((member1, member1Index) => {
-                            member1.roomTypeList.forEach((m4, m4Index) => {
-                                i += m4Index;
-                                m4.id2 = m4.id + i;
-                            })
+							member1.roomTypeList.forEach((m4, m4Index) => {
+								i += m4Index;
+								m4.id2 = m4.id + i;
+							})
 							member1.memberTypeList.forEach((member2, member2Index) => {
 								member2.memberTypeList.forEach((member3, member2Index) => {
-                                    i += member2Index;
-                                    member3.id2 = member3.id + i;
-									
+									i += member2Index;
+									member3.id2 = member3.id + i;
+
 									this.memberTypeList.push(member3);
 									this.memberTypeList.forEach((member4, member4Index) => {
-									    this.memberTypeLength = member1.roomTypeList.length + 1;
+										this.memberTypeLength = member1.roomTypeList.length + 1;
 										member4.children = member1.roomTypeList
 										this.dateList.forEach((dat, datIndex) => {
 											dat.roomTypePrises = member1.roomTypeList;
@@ -790,7 +793,7 @@
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
 			},
-    },
+		},
 	};
 </script>
 
