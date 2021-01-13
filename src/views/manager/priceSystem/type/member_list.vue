@@ -393,8 +393,8 @@
 			},
 			// 客房部操作数据
 			getDateP(row, topIndex, item, index) {
-				// debugger
-				console.log('row0--', row)
+                let roomTypeObject = this.memberTypeList[topIndex];
+                console.log(roomTypeObject)
 				let tempPrice = 0;
 				let price = 0;
 				let finalIndex = topIndex % this.memberTypeLength;
