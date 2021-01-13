@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 14:23:13
+ * @LastEditTime: 2021-01-13 15:22:48
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -540,6 +540,7 @@ export default {
       this.detailForm.type = "detail";
       this.setMemberFormVisible = true;
     },
+    //点击客史
     handleHistory(item) {
       console.log(item.idcard);
       this.$router.push({

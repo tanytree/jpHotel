@@ -20,8 +20,9 @@
         <el-form-item :label="$t('desk.customer_settlementStatus')+':'">
           <el-select v-model="searchForm.state" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option :label="$t('desk.customer_closeAccount')" value="2"></el-option>
-            <el-option :label="$t('desk.customer_outStand')" value="1"></el-option>
+            <el-option :label="$t('desk.customer_notRequest')" value="1"></el-option>
+            <el-option :label="$t('desk.customer_noInto')" value="3"></el-option>
+            <el-option :label="$t('desk.customer_areadyInto')" value="2"></el-option>
           </el-select>
         </el-form-item>
         <br />

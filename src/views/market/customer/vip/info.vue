@@ -217,7 +217,7 @@ export default {
                     name: "customerhistory",
                     query: {
                         item: item,
-                        form: "member",
+                        // form: "member",
                     },
                 });
             } else if (this.type == "header") {

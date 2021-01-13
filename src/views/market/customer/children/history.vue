@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 14:25:32
+ * @LastEditTime: 2021-01-13 15:29:59
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -396,13 +396,16 @@ export default {
     },
     //点击 客史档案
     goBack() {
-      if (this.$route.query.form == "member") {
-        this.resetActive("member");
-        this.$router.replace("/customer");
-      } else {
-        this.resetActive("history");
-        this.$router.replace("/customer");
-      }
+      // console.log(this.$route.query.form);
+      // return
+      // if (this.$route.query.form == "member") {
+      //   this.resetActive("member");
+      //   this.$router.replace("/customer");
+      // } else {
+      //   this.resetActive("history");
+      //   this.$router.replace("/customer");
+      // }
+      this.$router.go(-1)
     },
 
     /**获取表格数据 */
