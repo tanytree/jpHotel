@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 17:55:24
+ * @LastEditTime: 2021-01-13 10:37:07
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -73,7 +73,7 @@
                     <el-col :span="16" class="col">
                       <el-form-item :label="$t('desk.customer_memeberCardNum')" prop="memberCard">
                         <el-input v-model="detailForm.memberCard" :disabled='detailForm.isGen' v-if="type != 'detail'" style="width:215px;margin-right:20px;"></el-input>
-                         <el-checkbox v-model="detailForm.isGen"  @change="handleChangeOther">{{$t('desk.customer_systemPro')}}</el-checkbox>
+                        <el-checkbox v-model="detailForm.isGen" @change="handleChangeOther">{{$t('desk.customer_systemPro')}}</el-checkbox>
                       </el-form-item>
                     </el-col>
                   </template>
@@ -98,8 +98,7 @@
                   <el-col :span="type != 'detail' ? 8 : 6" class="col">
                     <el-form-item :label="$t('desk.home_idCardNumA') + ':'" label-width="120px">
                       <template v-if="type == 'detail'">
-                        <span v-if="detailForm.idcardType == 1">({{ $t("desk.home_idCard") }})</span>
-                        <span v-if="detailForm.idcardType == 2">({{ $t("desk.customer_passport") }})</span>
+                        <span v-if="detailForm.idcardType">({{ checkIdCardType(detailForm.idcardType) }})</span>
                         <span>{{ detailForm.idcard }}</span>
                       </template>
                       <template v-if="type != 'detail'">
@@ -233,7 +232,7 @@
                     </el-col>
                   </el-row>
                   <el-row>
-                      <el-col :span="24" class="col" v-if="type != 'detail'">
+                    <el-col :span="24" class="col" v-if="type != 'detail'">
                       <el-form-item :label="$t('desk.customer_unitNameA') + ':'">
                         <el-input style="width: 185px" v-model="detailForm.enterName"></el-input>
                         <el-input style="width: 185px; margin-left: 10px" v-model="detailForm.enterPinyin" :placeholder="$t('desk.customer_faying')"></el-input>
@@ -549,7 +548,7 @@ export default {
         operType: 2,
       },
       detailForm: {
-        isGen:true,
+        isGen: true,
         memberTypeId: "",
         memberCard: "システム給与",
         idcardType: "",
@@ -755,7 +754,14 @@ export default {
       resetMemberTab: "resetMemberTab",
       resetActive: "resetActive",
     }),
-
+    checkIdCardType(idCardType) {
+      let obj = this.$t('commons.idCardType');
+     for(let i in obj){
+       if(idCardType == i){
+         return obj[i];
+       }
+     }
+    },
     checkNextcode(code1) {
       if (!code1 || code1.length !== 3) {
         this.$message({
@@ -773,11 +779,11 @@ export default {
         this.cardForm.memberCard = "";
       }
     },
-    handleChangeOther(value){
-      if(value){
-        this.detailForm.memberCard = this.$t('desk.customer_systemPro');
-      }else{
-         this.detailForm.memberCard = "";
+    handleChangeOther(value) {
+      if (value) {
+        this.detailForm.memberCard = this.$t("desk.customer_systemPro");
+      } else {
+        this.detailForm.memberCard = "";
       }
     },
     // 年费明细dialog，点击重置按钮
@@ -976,7 +982,7 @@ export default {
                 cardNum: this.detailForm.memberCard,
                 payWay: 0,
                 payPrices: 0,
-                isGen:2,
+                isGen: 2,
               };
             }
             if (this.cardForm.type == 3) {
@@ -1026,11 +1032,7 @@ export default {
               }
             }
             this.$F.doRequest(this, url, params, (data) => {
-              if (
-                this.cardForm.type != 3 &&
-                this.cardForm.type != 5 
-               
-              ) {
+              if (this.cardForm.type != 3 && this.cardForm.type != 5) {
                 this.setCardFormVisible = false;
                 this.findone(this.detailForm.id);
               } else {
@@ -1086,27 +1088,22 @@ export default {
     addItem(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-        let params = this.$F.deepClone(this.detailForm);
-          let {isGen} = this.detailForm;
-          if(isGen){
+          let params = this.$F.deepClone(this.detailForm);
+          let { isGen } = this.detailForm;
+          if (isGen) {
             params.isGen = 1;
-          }else{
+          } else {
             params.isGen = 2;
           }
-          this.$F.doRequest(
-            this,
-            "/pms/hotelmember/edit",
-            params,
-            (res) => {
-              this.$message({
-                message: "success",
-                type: "success",
-              });
-              setTimeout(() => {
-                this.$router.replace("/saleOrder");
-              }, 1200);
-            }
-          );
+          this.$F.doRequest(this, "/pms/hotelmember/edit", params, (res) => {
+            this.$message({
+              message: "success",
+              type: "success",
+            });
+            setTimeout(() => {
+              this.$router.replace("/saleOrder");
+            }, 1200);
+          });
         } else {
           console.log("error submit!!");
           return false;

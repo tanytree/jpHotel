@@ -78,15 +78,15 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="checkinId"
+          prop="checkInPerson.checkIn.orderNum"
           :label="$t('desk.customer_originOrderNum')"
           show-overflow-tooltip
-          width="300"
+         
         ></el-table-column>
         <el-table-column
           :label="$t('desk.customer_roomKind')"
           show-overflow-tooltip
-          width="110px"
+          width="160px"
         >
           <template slot-scope="{ row }">
             <div v-if="row.checkInPerson">
@@ -153,7 +153,7 @@ export default {
       showEdit: false,
       showDetail: false,
       searchForm: {
-        // storesNum: "",
+        storesNum: "",
         enterId: "",
         state: "",
         startTime: "", //考试时件
@@ -208,7 +208,7 @@ export default {
     // 重置
     resetForm() {
       this.searchForm = {
-        // storesNum: "",
+        storesNum: "",
         enterId: "",
         state: "",
         startTime: "", //考试时件

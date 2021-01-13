@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-11 10:36:00
+ * @LastEditTime: 2021-01-13 11:22:32
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -134,7 +134,8 @@ module.exports = {
   //总办 > 门店管理
   store_createStore: '登録ホテル',
   store_storeName: 'ホテル名称',
-  store_storeNameA: 'ホテル',
+  store_storeNameA: '利用ホテル',
+  store_storeNameB: 'ホテル',
   store_storeManagers: '支配人',
   store_address: 'ホテル住所',
   store_addStore: 'ホテル追加',
@@ -195,7 +196,7 @@ module.exports = {
   add_japan: 'メニュー日本語',
   add_chooseDate: '期間設定',
   add_chooseStore: 'ホテル選択',
-  add_chooseStoreA: 'ホテル',
+  add_chooseStoreA: '利用ホテル',
   add_roomData: '各客室ダッシュボード',
   add_requestSuccess: '変換確認',
   add_integralConversion: 'ポイント換算',

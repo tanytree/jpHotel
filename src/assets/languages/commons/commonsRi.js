@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 16:19:35
+ * @LastEditTime: 2021-01-13 11:52:19
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
   checkAll: '全部',
   placeChoose: '選択してください',
   placeChooseA: '種別一覧',
+  placeChooseB: '法人一覧',
   confirm_delete: '削除確認いたしますか？',
   tip_desc: 'ご注意',
   request_success: '受取確認',
@@ -46,6 +47,7 @@ module.exports = {
   downloadTemplate: 'テンプレートダウンロード',
   selectDate: ' 期間設定',
   all: "all",
+  allA: '法人一覧',
   determine: '確認',
   close: "閉じる",
   lookDetail: "詳細確認",

@@ -13,7 +13,7 @@
         </el-form-item>
         <el-form-item :label="$t('desk.customer_unitName') + ':'">
           <el-select v-model="searchForm.enterName" filterable :placeholder="$t('commons.placeChoose')" class="width150">
-            <el-option :label='$t("desk.home_all")' value=''></el-option>
+            <el-option :label='$t("desk.home_allB")' value=''></el-option>
             <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.enterName"></el-option>
           </el-select>
         </el-form-item>
@@ -102,7 +102,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_chooseUnitA') + ':'" prop="enterId">
-          <el-select v-model="addPlaceFrom.enterId" filterable :placeholder="$t('commons.placeChoose')">
+          <el-select v-model="addPlaceFrom.enterId" filterable :placeholder="$t('commons.placeChooseB')">
             <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -147,7 +147,7 @@
       </div>
     </el-dialog>
      <!-- 查看请款明细dialog -->
-    <el-dialog :title="$t('desk.customer_lookBuyDetailB')" v-if="advanceDialog" :visible.sync="advanceDialog" width="90%" top="0">
+    <el-dialog :title="$t('desk.customer_lookBuyDetailB')" v-if="advanceDialog" :visible.sync="advanceDialog" width="95%" top="0">
       <div class="flexBox">
         <div class="weight">{{itemInfo.enterName}}</div>
         <div class="weigth">
@@ -165,9 +165,9 @@
           </template>
         </el-table-column>
         <el-table-column :label="$t('desk.customer_payMenttiemA')" prop="createTime" show-overflow-tooltip width="160px"></el-table-column>
-        <el-table-column prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="150">
+        <el-table-column prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="120">
         </el-table-column>
-        <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPriceA')">
+        <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPriceA')" width="100">
         </el-table-column>
         <el-table-column :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="110px">
           <template slot-scope="{ row }">
@@ -178,8 +178,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_accommodationFees')" width="100" prop="roomPrice"></el-table-column>
-        <el-table-column :label="$t('desk.customer_foodPrice')" width="100">
+        <el-table-column :label="$t('desk.customer_accommodationFees')" width="120" prop="roomPrice"></el-table-column>
+        <el-table-column :label="$t('desk.customer_foodPrice')" width="90">
           <template slot-scope="{row}">
             {{row.dishesPrice+row.shopPrice}}
           </template>

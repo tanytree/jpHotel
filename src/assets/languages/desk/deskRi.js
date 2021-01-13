@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-12 17:30:36
+ * @LastEditTime: 2021-01-13 11:58:40
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -30,7 +30,7 @@ module.exports = {
   chargeTotal: '挂账合計',
   enterAccountTime: '入金時間',
   enterAccountMoney: '入金金額',
-  enterAccountMoneyA: '入金済金額',
+  enterAccountMoneyA: '入金金額',
   enterAccount: '入金',
   checkInDays: '滞在日数',
   arrivalTime: 'C/I時間',
@@ -112,6 +112,7 @@ module.exports = {
   home_nameB: '利用者',
   home_all: 'ぜんぶ',
   home_allA: 'ホテル一覧',
+  home_allB: '法人一覧',
   //serve(前台服务)
   serve_flightTime: 'シフト時間（フロント会計）',
   serve_chooseDate: '期間設定',
@@ -732,7 +733,7 @@ module.exports = {
   customer_branchAddress: '支店住所',
   customer_branchPhone: '支店電話',
   customer_accountNum: '口座番号',
-  customer_accName: '講座名義人',
+  customer_accName: '口座名義人',
   customer_unitHeader: '会社代表者',
   customer_amountCapital: '資本金',
   customer_employeeNum: '社員数',
@@ -814,7 +815,7 @@ module.exports = {
   customer_ka: 'カード',
   customer_totalCharge: '累積利用金額',
   customer_yearPriceDetail: '年会費明細',
-  customer_getYearPrice: '年会費',
+  customer_getYearPrice: '年会費入金登録',
   customer_haveCard: '正常',
   customer_haveLoss: '紛失届済み',
   customer_feeYear: '支払年度',

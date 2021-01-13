@@ -117,6 +117,7 @@ module.exports = {
   home_nameA: '姓名【拼音】',
   home_all: '全部',
   home_allA: '全部',
+  home_allB: '全部',
   home_customersCategory: '客源类别',
   home_bookPeople: '预订人',
   home_bookPeopleA: '预订人',

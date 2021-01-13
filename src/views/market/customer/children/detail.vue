@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 17:56:18
+ * @LastEditTime: 2021-01-13 10:36:40
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -97,8 +97,7 @@
                   <el-col :span="type != 'detail' ? 8 : 6" class="col">
                     <el-form-item :label="$t('desk.home_idCardNumA') + ':'" label-width="120px">
                       <template v-if="type == 'detail'">
-                        <span v-if="detailForm.idcardType == 1">({{ $t("desk.home_idCard") }})</span>
-                        <span v-if="detailForm.idcardType == 2">({{ $t("desk.customer_passport") }})</span>
+                       <span v-if="detailForm.idcardType">({{ checkIdCardType(detailForm.idcardType) }})</span>
                         <span>{{ detailForm.idcard }}</span>
                       </template>
                       <template v-if="type != 'detail'">
@@ -723,6 +722,14 @@ export default {
       resetMemberTab: "resetMemberTab",
       resetActive: "resetActive",
     }),
+       checkIdCardType(idCardType) {
+      let obj = this.$t('commons.idCardType');
+     for(let i in obj){
+       if(idCardType == i){
+         return obj[i];
+       }
+     }
+    },
     handleChange(value) {
       if (value) {
         this.cardForm.memberCard = "";

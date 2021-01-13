@@ -186,6 +186,7 @@ module.exports = {
   store_createStore: '创建门店',
   store_storeName: '门店名称',
   store_storeNameA: '门店名称',
+  store_storeNameB: '门店名称',
   store_storeManagers: '门店经理',
   store_address: '门店地址',
   store_addStore: '创建门店',

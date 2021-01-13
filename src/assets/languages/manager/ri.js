@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 17:28:54
+ * @LastEditTime: 2021-01-13 10:52:59
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -272,9 +272,9 @@ module.exports = {
   grsl_addFirstGroup: '大分類を追加',
   grsl_addSecondGroup: '中分類追加',
   grsl_addThridGroup: '第三層分類追加',
-  grsl_firstGroupName: '第一層分類名前',
-  grsl_secondGroupName: '第二層分類名前',
-  grsl_thridGroupName: '第三層分類名前',
+  grsl_firstGroupName: '大分類名称',
+  grsl_secondGroupName: '中分類名称',
+  grsl_thridGroupName: '小分類名称',
   grsl_resetType: '類別編集',
   grsl_confirm: '確認',
   grsl_cancle: '取り消し',

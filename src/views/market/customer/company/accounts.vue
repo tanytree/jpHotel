@@ -5,7 +5,7 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term demo-form-inline" inline size="small" v-model="searchForm" label-width="80px">
-        <el-form-item :label="$t('boss.store_storeNameA') + ':'" v-if="souracePage=='header'">
+        <el-form-item :label="$t('boss.store_storeNameB') + ':'" v-if="souracePage=='header'">
           <el-select v-model="searchForm.storesNum" filterable :placeholder="$t('commons.placeChoose')" class="width150">
             <el-option :label='$t("desk.home_allA")' value=''></el-option>
             <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
@@ -13,7 +13,7 @@
         </el-form-item>
         <el-form-item :label="$t('desk.customer_unitName') + ':'">
           <el-select v-model="searchForm.enterName" class="width150">
-            <el-option :label="$t('commons.all')" value=""></el-option>
+            <el-option :label="$t('commons.allA')" value=""></el-option>
             <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.enterName"></el-option>
           </el-select>
         </el-form-item>

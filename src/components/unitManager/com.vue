@@ -160,6 +160,7 @@
           : $t('desk.customer_editorUnit')
       "
       :visible.sync="setCompanyFormVisible"
+      width="70%"
       class="setCompanyForm"
     >
       <el-form
