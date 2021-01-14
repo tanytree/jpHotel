@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-13 15:22:48
+ * @LastEditTime: 2021-01-14 14:32:42
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -11,7 +11,7 @@
     <div class="booking">
       <!-- 查询部分 -->
       <el-form class="term" inline size="small" label-width="80px">
-        <el-form-item :label="$t('desk.customer_guestNum') + ':'">
+        <el-form-item :label="$t('desk.customer_guestNum') + ':'" label-width="110px">
           <el-input v-model="searchForm.guestNum" class="width150"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.home_name') + ':'" label-width="50px">

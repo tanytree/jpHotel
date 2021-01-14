@@ -226,8 +226,6 @@ export default {
       );
     },
     handleCommand(command, item) {
-      console.log(item);
-      console.log(conma);
       if (command == "set") {
         this.listVisible = false;
         this.cur = item;
