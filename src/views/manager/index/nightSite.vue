@@ -10,26 +10,26 @@
       <span class="label">
         <el-checkbox v-model="findOne.leaveStatus">{{$t('manager.hp_dealNotLeave')}}</el-checkbox>
       </span>
-      <span class="tips">{{$t('manager.hp_selectExplain')}}</span>
+      <span class="tips">{{$t('manager.add_dealNight')}}</span>
     </div>
-    <div class="tag-top">
+    <!-- <div class="tag-top">
       <span class="label">
         <el-checkbox v-model="findOne.leaveOrder">{{$t('manager.hp_dealGoOrder')}}</el-checkbox>
       </span>
       <span class="tips">{{$t('manager.hp_selectExplain')}}</span>
-    </div>
+    </div> -->
     <div class="tag-top">
       <span class="label">
         <el-checkbox v-model="findOne.isOd">{{$t('manager.hp_roomState')}}</el-checkbox>
       </span>
-      <span class="tips">{{$t('manager.hp_selectExplain')}}</span>
+      <span class="tips">{{$t('manager.add_setDutity')}}</span>
     </div>
-    <div class="tag-top">
+    <!-- <div class="tag-top">
       <span class="label">
         <el-checkbox v-model="findOne.trialType">{{$t('manager.hp_autoSuccession')}}</el-checkbox>
       </span>
       <span class="tips">{{$t('manager.hp_selectExplain')}}</span>
-    </div>
+    </div> -->
     <div class="tag-top">
       <span class="label">{{$t('manager.hp_auditWay')+':'}}</span>
       <span class="tips">

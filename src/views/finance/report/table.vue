@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2021-01-11 10:33:54
+ * @LastEditTime: 2021-01-14 16:51:42
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
@@ -82,25 +82,15 @@
           <!-- 总部门店 -->
           <el-form-item :label="$t('boss.add_chooseStore')+':'" style="margin: 0 20px" v-if="reportType == '24'">
             <el-select v-model="searchForm.selectStoresNums " multiple>
-            <el-option
-              v-for="item in storeList"
-              :key="item.storesNum"
-              :label="item.storesName"
-              :value="item.storesNum"
-            >
-            </el-option>
-          </el-select>
+              <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum">
+              </el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item :label="$t('boss.add_queryText')+':'"  v-if="reportType == '24'">
+          <el-form-item :label="$t('boss.add_queryText')+':'" v-if="reportType == '24'">
             <el-select v-model="searchForm.idCardTypes" multiple>
-            <el-option
-              v-for="(value,key) in $t('commons.queryText')"
-              :key="key"
-              :label="value"
-              :value="key"
-            >
-            </el-option>
-          </el-select>
+              <el-option v-for="(value,key) in $t('commons.queryText')" :key="key" :label="value" :value="key">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="queryReport" v-if="reportType != '41'">{{$t('commons.queryBtn')}}</el-button>
@@ -109,18 +99,20 @@
           </el-form-item>
         </el-form>
         <div class="task-list">
-          <table border="1px solid black"  v-if="content !== ''">
+          <table border="1px solid black" v-if="content !== ''">
             <!-- 设置居中,如果没获取到内容则不显示 -->
             <tr>
-              <th style="background:#938965;" v-for="h in content[0]" :key="h.id" :colspan="content.slice(1).length">{{ h }}</th>
+              <!-- <th style="background:#938965;" v-for="h in content[0]" :key="h.id" :colspan="content.slice(1).length">{{ h }}</th> -->
+              <th style="background:#938965;fontSize:24px;" v-for="h in content[0]" :key="h.id" :colspan="content.slice(1)[content.slice(1).length-2].length">{{ h }}</th>
             </tr>
             <!-- 循环读取数据并显示 -->
             <tr v-for="row in content.slice(1)" :key="row.id">
-              <td v-for="item in row" :key="item.id">{{ item }}</td>
+              <td v-for="item in row" :key="item.id">{{ item|numFormate }}</td>
             </tr>
           </table>
         </div>
       </el-card>
+
     </div>
   </div>
 </template>
@@ -144,6 +136,23 @@ export default {
       options: [],
       storeList: [],
     };
+  },
+  
+  filters: {
+    //对数据进行处理
+    numFormate(num) {
+      if (num > 1000) {
+        return num.toString().replace(/\d+/, function (n) {
+          // 先提取整数部分
+          return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
+            // 对整数部分添加分隔符
+            return $1 + ",";
+          });
+        });
+      }else{
+        return num;
+      }
+    },
   },
   mounted() {
     this.searchForm = {
@@ -176,12 +185,12 @@ export default {
       this.searchForm.endTime = wantTime;
       this.queryReport();
     }
-    if(this.reportType == "24"){
-       this.stores_list();
+    if (this.reportType == "24") {
+      this.stores_list();
     }
   },
   methods: {
-      stores_list() {
+    stores_list() {
       this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {
         this.storeList = data;
         console.log(this.storeList);
@@ -292,11 +301,12 @@ export default {
         this.searchForm.startTime = this.monthStartTime(yearA, monthA);
         this.searchForm.endTime = this.monthEndTime(yearB, monthB);
       }
-  //总部门店
-      if(this.reportType == 24){
-         
-       this.searchForm.selectStoresNums = this.searchForm.selectStoresNums.join(',')
-         console.log(this.searchForm.selectStoresNums );
+      //总部门店
+      if (this.reportType == 24) {
+        this.searchForm.selectStoresNums = this.searchForm.selectStoresNums.join(
+          ","
+        );
+        console.log(this.searchForm.selectStoresNums);
       }
 
       this.$F.doRequest(
@@ -372,6 +382,7 @@ export default {
 <style lang='less' scoped>
 .box-card {
   width: 100%;
+  
 }
 
 .el-card .el-card__body {
@@ -396,11 +407,12 @@ table {
 }
 table td,
 table th {
+  width: 100px;
   border: 1px solid #cad9ea;
   color: #666;
   height: 30px;
 }
-table th{
+table th {
   background-color: red;
 }
 table thead th {
@@ -413,5 +425,4 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
   background: #f5fafa;
 }
-
 </style>

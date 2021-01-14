@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-13 10:52:59
+ * @LastEditTime: 2021-01-14 17:37:46
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -560,6 +560,8 @@ module.exports = {
   add_last15A:'15日前',
   add_next15A: '15日後',
   add_tyepApri: '部屋ﾀｲﾌﾟ/料金',
+  add_dealNight: 'チェック入れると出発予定客に対する処理しなければ、「日時更新」をできなくなります。',
+  add_setDutity: 'チェック入れると部屋状態を「要清掃」を設定する',
 
 
 
