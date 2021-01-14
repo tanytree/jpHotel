@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-12 14:57:11
+ * @LastEditTime: 2021-01-14 11:20:34
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -118,6 +118,7 @@ module.exports = {
   home_all: '全部',
   home_allA: '全部',
   home_allB: '全部',
+  home_allC: '全部',
   home_customersCategory: '客源类别',
   home_bookPeople: '预订人',
   home_bookPeopleA: '预订人',

@@ -28,10 +28,11 @@
         <div>
           <span>{{ item.name }}</span>
         </div>
-        <el-table :data="tableData" style="width: 100%; margin-top: 10px" :header-cell-style="{ background: '#D9DDE2', color: '#606266' }" border>
+        <el-table :data="tableData" style="width: 100%; margin-top: 10px" :cell-style="{ verticalAlign:'top'}" :header-cell-style="{ background: '#D9DDE2', color: '#606266' }" border>
           <el-table-column :label="$t('desk.home_roomType')" width="130" fixed>
             <template>
-              <el-row>{{$t('boss.add_roomDetail')}}</el-row>
+              <div>{{$t('boss.add_roomDetail')}}</div>
+              <div>{{$t('boss.add_onlyLivePri')}}</div>
             </template>
           </el-table-column>
           <el-table-column v-for="(each, index) in item.array" :key="index" :label="each.roomTypeName" width="160">
@@ -80,7 +81,7 @@ export default {
       infoArray: [],
     };
   },
-  
+
   filters: {
     //对数据进行处理
     numFormate(num) {
@@ -111,7 +112,7 @@ export default {
   },
 
   methods: {
-     checkedPrice(num) {
+    checkedPrice(num) {
       if (num) {
         return num.toString().replace(/\d+/, function (n) {
           // 先提取整数部分
@@ -199,6 +200,7 @@ export default {
 .rooms {
   margin-right: 10px;
   margin-bottom: 10px;
+  
 }
 
 .rooms .grid-cell {

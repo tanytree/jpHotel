@@ -113,6 +113,7 @@ module.exports = {
   home_all: 'ぜんぶ',
   home_allA: 'ホテル一覧',
   home_allB: '法人一覧',
+  home_allC: '全部',
   //serve(前台服务)
   serve_flightTime: 'シフト時間（フロント会計）',
   serve_chooseDate: '期間設定',

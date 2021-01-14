@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 13:50:00
+ * @LastEditTime: 2021-01-14 11:19:11
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
 
     // state 卡状态 1正常(已发卡) 2已挂失 3.待启用
     state: {
-        "1": '正常',
+        "1": '通常',
         "2": '紛失届済み',
         "3": "起用待ち"
     },

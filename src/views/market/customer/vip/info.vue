@@ -22,7 +22,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('desk.home_state')">
                     <el-select v-model="searchForm.state" class="width150">
-                        <el-option :label="$t('desk.home_all')" value></el-option>
+                        <el-option :label="$t('desk.home_allC')" value></el-option>
                         <el-option v-for="(label, value) in $t('frontOffice.state')" :label="label" :value="value" :key="value"></el-option>
                     </el-select>
                 </el-form-item>

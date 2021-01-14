@@ -153,23 +153,23 @@
         <div class="weigth">
           <span>{{ $t("desk.customer_totalCreditAmount") + ":"
             }}{{ totalConsumerPrice }}</span>
-          <span style="margin-left: 10px">{{ $t("desk.customer_cardRecordsA") + ":" }}{{ buyTable.length
+          <span style="margin-left: 26px">{{ $t("desk.customer_cardRecordsA") + ":" }}{{ buyTable.length
             }}{{ $t("desk.customer_article") }}</span>
         </div>
         <!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
-      <el-table ref="multipleTable" v-loading="loading" :data="buyTable" height="100%" header-row-class-name="default" size="small">
-        <el-table-column :label="$t('desk.home_nameB')" prop="checkIn.name" width="140">
+      <el-table ref="multipleTable" v-loading="loading" :data="buyTable" height="100%" border header-row-class-name="default" size="small">
+        <el-table-column :label="$t('desk.home_nameB')" align="center" prop="checkIn.name" width="140">
           <template slot-scope="{ row }">
             {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_payMenttiemA')" prop="createTime" show-overflow-tooltip width="160px"></el-table-column>
-        <el-table-column prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="120">
+        <el-table-column align="center" :label="$t('desk.customer_payMenttiemA')" prop="createTime" show-overflow-tooltip width="160px"></el-table-column>
+        <el-table-column align="center" prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="120">
         </el-table-column>
-        <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPriceA')" width="100">
+        <el-table-column align="center" prop="onAccountTotal" :label="$t('desk.customer_amountPriceA')" width="100">
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="110px">
+        <el-table-column align="center" :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="110px">
           <template slot-scope="{ row }">
             <div>
               {{ row.checkIn.hotelCheckInRoom.roomTypeName || "" }}
@@ -178,20 +178,20 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_accommodationFees')" width="120" prop="roomPrice"></el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_accommodationFees')" width="120" prop="roomPrice"></el-table-column>
         <el-table-column :label="$t('desk.customer_foodPrice')" width="90">
           <template slot-scope="{row}">
             {{row.dishesPrice+row.shopPrice}}
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_checkAlive')" width="160">
+        <el-table-column align="center" :label="$t('desk.customer_checkAlive')" width="160">
           <template slot-scope="{row}">
             <div>{{row.checkIn.checkinTime}}</div>
             <div>{{row.checkIn.checkoutTime}}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_spendTime')" width="160" prop="checkIn.checkinTime"></el-table-column>
-        <el-table-column :label="$t('desk.customer_xiaoJi')" prop="onAccountTotal"></el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_spendTime')" width="160" prop="checkIn.checkinTime"></el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_xiaoJi')" prop="onAccountTotal"></el-table-column>
       </el-table>
       <!--分页 -->
       <div class="block">

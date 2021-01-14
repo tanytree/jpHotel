@@ -31,14 +31,14 @@
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
-        <el-table-column prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip width="100px"></el-table-column>
-        <el-table-column :label="$t('boss.store_storeNameA')" show-overflow-tooltip v-if="souracePage=='header'">
+      <el-table ref="multipleTable" border v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+        <el-table-column align="center" prop="enterName" :label="$t('desk.customer_unitName')" show-overflow-tooltip width="100px"></el-table-column>
+        <el-table-column align="center" :label="$t('boss.store_storeNameA')" show-overflow-tooltip v-if="souracePage=='header'">
           <template slot-scope="{row}">
             <div v-if="row&&row.storesNum">{{checkStores(row.storesNum)}}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_arage')" show-overflow-tooltip width="120px">
+        <el-table-column align="center" :label="$t('desk.customer_arage')" show-overflow-tooltip width="120px">
           <template slot-scope="{ row }">
             <div>
               <span style="color: #f11717">{{ $t("desk.serve_openA") }}</span>{{ row.startTime }}
@@ -49,20 +49,20 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="requestNum" :label="$t('desk.customer_paragraphNum')">
+        <el-table-column align="center" prop="requestNum" :label="$t('desk.customer_paragraphNum')">
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_areadyPriceA')" prop="requestPrice">
+        <el-table-column align="center" :label="$t('desk.customer_areadyPriceA')" prop="requestPrice">
         </el-table-column>
-        <el-table-column prop="intoPrice" :label="$t('desk.customer_areadyBookPrice')">
+        <el-table-column align="center" prop="intoPrice" :label="$t('desk.customer_areadyBookPrice')">
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_waiteBookPrice')">
+        <el-table-column align="center" :label="$t('desk.customer_waiteBookPrice')">
           <template slot-scope="{ row }">
             <div>{{ row.requestPrice - row.intoPrice }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('desk.customer_creativeTimeA')">
+        <el-table-column align="center" prop="createTime" :label="$t('desk.customer_creativeTimeA')">
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_billState')" width="80">
+        <el-table-column align="center" :label="$t('desk.customer_billState')" width="80">
           <template slot-scope="{ row }">
             <div v-if="row.intoStatus==1">
               {{$t('desk.customer_notInbill')}}
@@ -75,7 +75,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="220">
+        <el-table-column align="center" :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
             <!-- 查看挂账明细 -->
             <el-button type="text" @click="advancePayments(row)" size="mini">{{
@@ -105,23 +105,23 @@
         <div class="weigth">
           <span>{{ $t("desk.customer_totalCreditAmount") + ":"
             }}{{ totalConsumerPrice }}</span>
-          <span style="margin-left: 10px">{{ $t("desk.customer_cardRecords") + ":" }}{{ buyTable.length
+          <span style="margin-left:  26px">{{ $t("desk.customer_cardRecords") + ":" }}{{ buyTable.length
             }}{{ $t("desk.customer_article") }}</span>
         </div>
         <!--        <el-button type="primary">导出EXCEL</el-button>-->
       </div>
-      <el-table ref="multipleTable" v-loading="loading" :data="buyTable" height="100%" header-row-class-name="default" size="small">
-        <el-table-column :label="$t('desk.home_name')" prop="checkIn.name" width="140">
+      <el-table ref="multipleTable" v-loading="loading" :data="buyTable" height="100%" border header-row-class-name="default" size="small">
+        <el-table-column align="center" :label="$t('desk.home_name')" prop="checkIn.name" width="140">
           <template slot-scope="{ row }">
             {{ row.checkIn.name + `【${row.checkIn.pronunciation || ""}】` }}
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_payMenttiem')" prop="createTime" show-overflow-tooltip width="160px"></el-table-column>
-        <el-table-column prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="150">
+        <el-table-column align="center" :label="$t('desk.customer_payMenttiem')" prop="createTime" show-overflow-tooltip width="160px"></el-table-column>
+        <el-table-column align="center" prop="checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" width="150">
         </el-table-column>
-        <el-table-column prop="onAccountTotal" :label="$t('desk.customer_amountPrice')">
+        <el-table-column align="center" prop="onAccountTotal" :label="$t('desk.customer_amountPrice')">
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="130px">
+        <el-table-column align="center" :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="110px">
           <template slot-scope="{ row }">
             <div>
               {{ row.checkIn.hotelCheckInRoom.roomTypeName || "" }}
@@ -130,20 +130,20 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_accommodationFees')" width="100" prop="roomPrice"></el-table-column>
-        <el-table-column :label="$t('desk.customer_foodPrice')" width="100">
+        <el-table-column align="center" :label="$t('desk.customer_accommodationFees')" width="120" prop="roomPrice"></el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_foodPrice')" width="90">
           <template slot-scope="{row}">
             {{row.dishesPrice+row.shopPrice}}
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_checkAlive')" width="160">
+        <el-table-column align="center" :label="$t('desk.customer_checkAlive')" width="160">
           <template slot-scope="{row}">
             <div>{{row.checkIn.checkinTime}}</div>
             <div>{{row.checkIn.checkoutTime}}</div>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.customer_spendTime')" width="160" prop="checkIn.checkinTime"></el-table-column>
-        <el-table-column :label="$t('desk.customer_xiaoJi')" prop="onAccountTotal"></el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_spendTime')" width="160" prop="checkIn.checkinTime"></el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_xiaoJi')" prop="onAccountTotal"></el-table-column>
       </el-table>
       <!--分页 -->
       <div class="block">

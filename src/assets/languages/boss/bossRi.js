@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-13 11:22:32
+ * @LastEditTime: 2021-01-14 11:04:33
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -278,13 +278,14 @@ module.exports = {
   report_businessHours: "営業日",
   report_selectMonth: '月を指定ください',
   report_firstQuery: '出力帳票を検索してください',
-  add_roomDetail: '部屋情報',
+  add_roomDetail: '予約可能部屋数',
   add_onePeople: '１人',
   add_peopleLivePrice: '人',
   add_normalBook: '一般予約',
   add_noHaveInfo: '該当ホテル利用可能部屋はございません',
   report_goodsKinds: '付帯・商品別売上一覧（月次）',
   add_queryText: '検索キーワード',
+  add_onlyLivePri: '素泊まり料金',
 
 
 
