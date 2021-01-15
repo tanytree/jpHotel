@@ -139,12 +139,12 @@
                         <el-form-item prop="minutePrice" :label="$t('manager.hk_getPriceRule')">
                             <el-input v-model="rowData.minutePrice" class="row-width"></el-input>
                         </el-form-item>
-                        <el-form-item prop="capsPrice" :label="$t('manager.ps_skyPrice')">
+                        <el-form-item prop="capsPrice" v-if="rowData.capsPriceFlag"  :label="$t('manager.ps_skyPrice')">
                             <el-input v-model="rowData.capsPrice" class="row-width"></el-input>
                         </el-form-item>
-                        <el-form-item prop="depositPrice" :label="$t('manager.hk_deposit')">
+                        <!-- <el-form-item prop="depositPrice" :label="$t('manager.hk_deposit')">
                             <el-input v-model="rowData.depositPrice" class="row-width"></el-input>
-                        </el-form-item>
+                        </el-form-item> -->
                     </div>
 
                     <!--<el-form-item prop="employeePrice" :label="$t('manager.grsl_defaultEmployeePrice')">
@@ -320,6 +320,7 @@
             },
             popup(type, row) {
                 if (type == "add") {
+                  //添加商品
                     this.edit = false;
                     this.tab_show = false;
                     this.rowData.categoryType = 1;
