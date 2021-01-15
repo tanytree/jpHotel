@@ -165,16 +165,13 @@
         color: #fff;
         padding-right: 20px;
         cursor: pointer;
-        width: 140px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
     .enterName {
-        width: 100px;
         text-overflow: ellipsis;
         display: inline-block;
-        overflow: hidden;
         height: 30px;
         line-height: 30px;
     }
