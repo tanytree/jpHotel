@@ -340,14 +340,16 @@ export default {
 				console.log(this.search_d.strategyTime)
 				let time = this.getBeforeDate(15, this.search_d.strategyTime)
 				this.search_d.strategyTime = time;
-				this.get_hotel_price_room_type_list()
+				this.dateList = [];
+				this.roomType = [];
 			},
 			// 后15天
 			afterTap() {
 				console.log(this.search_d.strategyTime)
 				let time = this.getBeforeDate(-15, this.search_d.strategyTime)
 				this.search_d.strategyTime = time;
-				this.get_hotel_price_room_type_list()
+				this.dateList = [];
+				this.roomType = [];
 			},
 			// 获取当前日期前后多少天的日期，之前多少天传正数，后面多少天传负数，今天传0，
 			//  num为传入的数字， time为传入的指定日期，如果time不传，则默认为当前时间

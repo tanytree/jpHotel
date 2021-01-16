@@ -136,7 +136,8 @@
           <el-checkbox label="g">{{$t('manager.hk_cardNum')}}</el-checkbox>
           <el-checkbox label="h">{{$t('manager.hk_theOpen')}}</el-checkbox>
           <el-checkbox label="i">{{$t('manager.hk_lockType')}}</el-checkbox>
-          <el-checkbox label="j">{{$t('manager.hk_roomWhterNum')}}</el-checkbox>
+		  <!-- 房间流水号 -->
+          <!-- <el-checkbox label="j">{{$t('manager.hk_roomWhterNum')}}</el-checkbox> -->
           <el-checkbox label="k">{{$t('manager.hk_roomSerialNum')}}</el-checkbox>
           <el-checkbox label="l">{{$t('manager.hk_params')}}1</el-checkbox>
 
@@ -182,9 +183,10 @@
                 <el-row class="demo-flex" v-if="value =='i'">
                   <el-col :span="8" class="title-co">{{$t('manager.hk_lockType')}}</el-col>
                 </el-row>
-                <el-row class="demo-flex" v-if="value =='j'">
+				<!-- 房间流水号 -->
+                <!-- <el-row class="demo-flex" v-if="value =='j'">
                   <el-col :span="8" class="title-co">{{$t('manager.hk_roomWhterNum')}}</el-col>
-                </el-row>
+                </el-row> -->
                 <el-row class="demo-flex" v-if="value =='k'">
                   <el-col :span="8" class="title-co">{{$t('manager.hk_roomSerialNum')}}</el-col>
                 </el-row>
@@ -329,9 +331,9 @@
                 >{{value.name}}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item :label="$t('manager.hk_roomWhterNum')">
+            <!-- <el-form-item :label="$t('manager.hk_roomWhterNum')">
               <el-input v-model="ruleForm.hotelRoomLock.roomSerial" :disabled="detail_show"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item :label="$t('manager.hk_doorParams')+1">
               <el-input v-model="ruleForm.hotelRoomLock.lockP1" :disabled="detail_show"></el-input>
             </el-form-item>
