@@ -40,7 +40,7 @@
             <!--                        <el-button plain>{{ $t("desk.customer_readMemCard") }}</el-button>-->
             <el-button v-if="type == 'header'" type="primary" class="submit" @click="handleAdd">{{ $t("desk.customer_addMem") }}</el-button>
             <el-button v-if="type == 'header'" type="primary" class="submit" @click="importMember">导入会员</el-button>
-            <el-button v-if="type == 'header'" type="primary" class="submit">下载模板</el-button>
+            <el-button v-if="type == 'header'" type="primary" class="submit" @click="downloadTemplate">下载模板</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -101,21 +101,24 @@
     </div>
     <!-- 导入会员dialog -->
     <el-dialog title="导入会员" :visible.sync="importMemDialog" top="0" width="42%">
-      <div style="margin:-10px 0 10px 0;">请选择导入会员类型</div>
-      <el-form :model="setBlackForm" ref="setBlackForm">
-        <el-form-item :label="$t('desk.customer_memType')+':'">
-          <el-select v-model="searchForm.memberTypeId" placeholder="请选择会员类型" size="small"  style="width:200px;">
+      <div style="margin:-10px 0 10px 20px;">请选择导入会员类型</div>
+      <el-form :model="memImportForm" ref="memImportForm" :rules="importRules">
+        <el-form-item :label="$t('desk.customer_memType')+':'" prop="memberTypeId" label-width="90px">
+          <el-select v-model="memImportForm.memberTypeId" placeholder="请选择会员类型" size="small"  style="width:200px;">
             <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="会员资料:">
+        <el-form-item label="会员资料:" label-width="90px" required>
           <!-- <el-input v-model="searchForm.name" size="small"  style="width:200px;"></el-input> -->
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            ref="upload"
+            action="aa"
             :on-remove="handleRemove"
             :before-remove="beforeRemove"
+            :auto-upload='false'
+            :on-change='changeFile'
             :limit="1"
+            :multiple="false"
             accept=".xls,.xlsx"
             :on-exceed="handleExceed"
              :file-list="fileList"
@@ -126,10 +129,10 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="textAlign:right" >
-        <el-button @click="importMemDialog = false">{{
+        <el-button @click="cancelImport">{{
           $t("commons.cancel")
         }}</el-button>
-        <el-button type="primary" @click="importMemDialog = false">{{
+        <el-button type="primary" @click="confirmImport('memImportForm')">{{
           $t("commons.confirm")
         }}</el-button>
       </div>
@@ -189,11 +192,18 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import httpRequest from "@/utils/httpRequest";
+import axios from "axios";
+
 export default {
   props: ["type"],
   data() {
     return {
-      fileList:[],
+      memImportForm:{
+        memberTypeId:'',
+      },
+      fileList:[],  //上传的文件列表
+      changeFileList:[],  //添加文件的列表
       importMemDialog: false, //导入会员弹框
       setCardVisible: false,
       cardForm: {
@@ -234,13 +244,69 @@ export default {
       },
     };
   },
-
+  computed:{
+      ...mapState({
+            token: (state) => state.user.token,
+            userId: (state) => state.user.id,
+            storesNum: (state) => state.user.storesInfo.storesNum,
+        }),
+  importRules(){
+    return {
+        memberTypeId: [
+            { required: true, message: '请选择', trigger: 'change' },
+          
+          ],
+    }
+  }
+  },
   mounted() {
     this.initForm();
     this.stores_list();
     this.getMemberTypeList();
   },
   methods: {
+    //确定导入会员
+    confirmImport(formName){
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+              let file = this.changeFileList[0].raw;
+              console.log(file);
+              let memberTypeId = this.memImportForm.memberTypeId;
+              let accessToken = this.token;
+              let userId = this.userId;
+              let storesNum = this.storesNum;
+
+             let formData = new FormData();
+              formData.append('filename', file);
+              formData.append('platSource', 1005);
+              formData.append('memberTypeId', memberTypeId);
+              formData.append('userId', userId);
+              formData.append('storesNum',storesNum);
+              axios.post(this.$F.getUploadUrl() + ('/pms/hotelmember/upload'), formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'accessToken':accessToken,
+                    }
+                }
+            ).then(res => {
+              console.log(res);
+            })
+
+          } else {
+            return false;
+          }
+        });
+    },
+      //下载模板
+    downloadTemplate() {
+        this.$F.commons.downloadTemplate("/pms/hotelmember/download");
+    },
+    cancelImport(){
+      this.memImportForm.memberTypeId = '';
+      this.fileList = [];
+      this.importMemDialog = false
+    },
     importMember(){
       this.importMemDialog=true;
     },
@@ -501,17 +567,20 @@ export default {
       this.searchForm.pageIndex = 1;
     },
 //upload的几个方法
+// 文件移除调用
        handleRemove(file, fileList) {
-        console.log(file, fileList);
+         this.changeFileList = fileList;
       },
-      handlePreview(file) {
-        console.log(file);
-      },
+// 上传文件超出limit调用
       handleExceed(files, fileList) {
-        this.$message.warning(`只能上传一个文件，请删除当前文件后再重新上传`);
+        this.$message.warning(`只能上传一个文件，请删除当前文件后再重新选择`);
       },
+  // 移除之前调用
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      changeFile(file, fileList){
+        this.changeFileList = fileList;
       }
   },
 };
