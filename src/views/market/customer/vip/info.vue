@@ -269,13 +269,13 @@ export default {
     confirmImport(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            if(this.changeFileList.length>0){
               let file = this.changeFileList[0].raw;
               console.log(file);
               let memberTypeId = this.memImportForm.memberTypeId;
               let accessToken = this.token;
               let userId = this.userId;
               let storesNum = this.storesNum;
-
              let formData = new FormData();
               formData.append('filename', file);
               formData.append('platSource', 1005);
@@ -286,13 +286,19 @@ export default {
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'accessToken':accessToken,
+                        // 'accessToken':accessToken,
                     }
                 }
             ).then(res => {
               console.log(res);
+               this.$message({
+                message: '导入成功',
+                type: 'success'
+              });
             })
-
+            }else{
+                this.$message('请选择文件');
+            }
           } else {
             return false;
           }
