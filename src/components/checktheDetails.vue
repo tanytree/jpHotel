@@ -258,18 +258,14 @@ export default {
                 let object = {
                     headerObj: {
                         checkinRoomId: room.roomId,
-                        housePrice: room.realPrice || room.reservePrice,
+                        housePrice: room.realPrice || room.reservePrice || room.roomMarkPrice,
                     },
                     room: room,
                 };
 
                 room.personList.forEach((person, index) => {
-                    person.customerType = person.customerType
-                        ? person.customerType + ""
-                        : "1";
-                    person.idcardType = person.idcardType
-                        ? person.idcardType + ""
-                        : "1";
+                    person.customerType = person.customerType ? person.customerType + "" : "1";
+                    person.idcardType = person.idcardType ? person.idcardType + "" : "1";
                     person.sex = person.sex ? person.sex + "" : "1";
                 });
                 room.personList.forEach((person, index) => {
@@ -492,7 +488,7 @@ export default {
                     houseNum: room.room.houseNum,
                     roomTypeName: room.room.roomTypeName,
                     reservePrice: room.room.reservePrice,
-                    realPrice: room.room.realPrice,
+                    realPrice: room.room.realPrice || room.room.roomMarkPrice,
                     roomTypeId: room.room.roomTypeId,
                     headerObj: room.headerObj,
                     personList: room.personList,

@@ -556,20 +556,20 @@
 				let memberTypeObject = this.memberTypeList[row.topIndex];
 				this.sel_memberTypeId = memberTypeObject.id;
 				this.sel_roomTypeId = row.id;
-				
+
 				console.log(this.ruleForm)
 				this.ruleForm = row
 				// debugger
-			
+
 				this.ruleForm_Pie = [];
 				this.roomStrategyJson_p = [];
-			
+
 				this.editPriceForm.dayTime = item.dateStr;
 				this.editPriceForm.priceCalend = 1;
 				this.editPriceForm.roomTypeId = row.id;
 				this.editPriceForm.onePrice = item.onePrice;
 				this.editPriceDialog = true;
-			
+
 				this.ruleForm_Pie.push(row)
 				console.log(this.ruleForm_Pie)
 				// debugger
@@ -582,7 +582,7 @@
 						let arry = personList.filter(function(el) {
 							return el !== '';
 						});
-			
+
 						arry.forEach((a, b) => {
 							obj = {}
 							obj.houseName = item.houseName;
@@ -631,9 +631,7 @@
 				};
 				let strategyJson_arr = [];
 				strategyJson_arr.push(this.roomStrategyJson_p[0]);
-				
 				params.strategyJson = JSON.stringify(strategyJson_arr)
-				debugger
 				this.$F.doRequest(
 					this,
 					"/pms/hotel/hotel_room_day_price_save",
@@ -778,7 +776,7 @@
 						break;
 				}
 			},
-			
+
 			// 单位列表-删除
 			get_price_enter_strategy_delete(value) {
 				let params = {

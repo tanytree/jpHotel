@@ -9,133 +9,138 @@
   <!-- 统一的列表格式 -->
   <div class="boss-index">
     <div class="booking">
-      <!-- 查询部分 -->
-      <el-form class="term" inline size="small" label-width="100px">
-        <el-row>
-          <el-form-item :label="$t('desk.order_orderStatus') + ':'">
-            <div class="tagList">
-              <template v-for="(item, key, index) of $t('commons.reserveState')" v-if="key == 1 || key == 2 || key == 3 || key == 4 || key == 8 || key == ''">
-                <el-tag class="tag" :type="searchForm.state == key ? '' : 'info'" :key="index" @click="stateClick(key)">{{ item }}</el-tag>
-              </template>
-            </div>
-          </el-form-item>
-        </el-row>
-        <el-row>
-          <el-form-item :label="$t('desk.order_dateList') + ':'">
-            <el-tag  :type="searchForm.checkInTimeType == '' ? '' : 'info'" @click="timeTypeClick('')">{{
-              $t("desk.home_noLimit")
-            }}</el-tag>
-            <el-tag :type="searchForm.checkInTimeType == '1' ? '' : 'info'" @click="timeTypeClick('1')">{{
-              $t("desk.customer_lastWeek")
-            }}</el-tag>
-            <el-tag :type="searchForm.checkInTimeType == '2' ? '' : 'info'" @click="timeTypeClick('2')">{{
-              $t("desk.customer_today")
-            }}</el-tag>
-            <el-tag :type="searchForm.checkInTimeType == '3' ? '' : 'info'" @click="timeTypeClick('3')">{{
-              $t("desk.customer_thisWeek")
-            }}</el-tag>
-            <el-tag :type="searchForm.checkInTimeType == '4' ? '' : 'info'" @click="timeTypeClick('4')">{{
-              $t("desk.order_nextWeek")
-            }}</el-tag>
-            <el-tag :type="searchForm.checkInTimeType == '10' ? '' : 'info'" @click="timeTypeClick('10')">{{
-              $t("desk.book_theCustom")
-            }}</el-tag>
-          </el-form-item>
-          <el-form-item label="" v-if="searchForm.checkInTimeType==10">
-            <el-date-picker v-model="searchForm.cstartTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-            <el-date-picker v-model="searchForm.cendTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-          </el-form-item>
-        </el-row>
-        <el-row>
-          <el-form-item :label="$t('desk.order_bookDate') + ':'">
-            <el-tag :type="searchForm.createTimeType == '' ? '' : 'info'" @click="dateNum('')">{{
-              $t("desk.home_noLimit")
-            }}</el-tag>
-            <el-tag :type="searchForm.createTimeType == '1' ? '' : 'info'" @click="dateNum('1')">{{
-              $t("desk.customer_lastWeek")
-            }}</el-tag>
-            <el-tag :type="searchForm.createTimeType == '2' ? '' : 'info'" @click="dateNum('2')">{{
-              $t("desk.customer_today")
-            }}</el-tag>
-            <el-tag :type="searchForm.createTimeType == '3' ? '' : 'info'" @click="dateNum('3')">{{
-              $t("desk.customer_thisWeek")
-            }}</el-tag>
-            <el-tag :type="searchForm.createTimeType == '4' ? '' : 'info'" @click="dateNum('4')">{{
-              $t("desk.order_nextWeek")
-            }}</el-tag>
-            <el-tag :type="searchForm.createTimeType == '5' ? '' : 'info'" @click="dateNum('5')">{{
-              $t("desk.book_theCustom")
-            }}</el-tag>
-          </el-form-item>
-          <el-form-item label="" v-if="searchForm.createTimeType == 5">
-              <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-              <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-          </el-form-item>
-        </el-row>
-        <el-row>
-          <el-form-item :label="$t('desk.book_orderSoutce')">
-            <el-select v-model="searchForm.orderSource" class="width150">
-              <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
-            </el-select>
-          </el-form-item>
-            <el-form-item label="OTA" v-if="searchForm.orderSource == 5" >
-                <el-select  v-model="searchForm.otaChannelId"  style="width:330px">
-                    <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
-                </el-select>
-            </el-form-item>
-          <el-form-item :label="$t('desk.order_teamName') + ':'">
-            <el-input
-              v-model="searchForm.enterName"
-              class="width150"
-            ></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('desk.order_bookOrderNum') + ':'">
-            <el-input v-model="searchForm.orderNum" class="width150"></el-input>
-          </el-form-item>
-        </el-row>
-        <el-row>
-          <el-form-item :label="$t('desk.home_bookPeople')">
-            <el-input v-model="searchForm.name" class="width150"></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('desk.home_phoneNum') + ':'">
-            <el-input v-model="searchForm.mobile" class="width150"></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('desk.home_roomType')">
-            <el-select v-model="searchForm.enterStatus" class="width150">
-              <el-option
-                :label="
+        <el-collapse v-model="queryFormIndex">
+            <el-collapse-item :title="$t('commons.moreOperating')" name="query">
+                <!-- 查询部分 -->
+                <el-form class="term" inline size="small" label-width="100px">
+                    <el-row>
+                        <el-form-item :label="$t('desk.order_orderStatus') + ':'">
+                            <div class="tagList">
+                                <template v-for="(item, key, index) of reserveStatusObject">
+                                    <el-tag class="tag" :type="searchForm.state == key ? '' : 'info'" :key="index" @click="stateClick(key)">{{ item }}</el-tag>
+                                </template>
+                            </div>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-form-item :label="$t('desk.order_dateList') + ':'">
+                            <el-tag  :type="searchForm.checkInTimeType == '' ? '' : 'info'" @click="timeTypeClick('')">{{
+                                    $t("desk.home_noLimit")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.checkInTimeType == '1' ? '' : 'info'" @click="timeTypeClick('1')">{{
+                                    $t("desk.customer_lastWeek")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.checkInTimeType == '2' ? '' : 'info'" @click="timeTypeClick('2')">{{
+                                    $t("desk.customer_today")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.checkInTimeType == '3' ? '' : 'info'" @click="timeTypeClick('3')">{{
+                                    $t("desk.customer_thisWeek")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.checkInTimeType == '4' ? '' : 'info'" @click="timeTypeClick('4')">{{
+                                    $t("desk.order_nextWeek")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.checkInTimeType == '10' ? '' : 'info'" @click="timeTypeClick('10')">{{
+                                    $t("desk.book_theCustom")
+                                }}</el-tag>
+                        </el-form-item>
+                        <el-form-item label="" v-if="searchForm.checkInTimeType==10">
+                            <el-date-picker v-model="searchForm.cstartTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+                            <el-date-picker v-model="searchForm.cendTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-form-item :label="$t('desk.order_bookDate') + ':'">
+                            <el-tag :type="searchForm.createTimeType == '' ? '' : 'info'" @click="dateNum('')">{{
+                                    $t("desk.home_noLimit")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.createTimeType == '1' ? '' : 'info'" @click="dateNum('1')">{{
+                                    $t("desk.customer_lastWeek")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.createTimeType == '2' ? '' : 'info'" @click="dateNum('2')">{{
+                                    $t("desk.customer_today")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.createTimeType == '3' ? '' : 'info'" @click="dateNum('3')">{{
+                                    $t("desk.customer_thisWeek")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.createTimeType == '4' ? '' : 'info'" @click="dateNum('4')">{{
+                                    $t("desk.order_nextWeek")
+                                }}</el-tag>
+                            <el-tag :type="searchForm.createTimeType == '5' ? '' : 'info'" @click="dateNum('5')">{{
+                                    $t("desk.book_theCustom")
+                                }}</el-tag>
+                        </el-form-item>
+                        <el-form-item label="" v-if="searchForm.createTimeType == 5">
+                            <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+                            <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-form-item :label="$t('desk.book_orderSoutce')">
+                            <el-select v-model="searchForm.orderSource" class="width150">
+                                <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="OTA" v-if="searchForm.orderSource == 5" >
+                            <el-select  v-model="searchForm.otaChannelId"  style="width:330px">
+                                <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item :label="$t('desk.order_teamName') + ':'">
+                            <el-input
+                                v-model="searchForm.enterName"
+                                class="width150"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('desk.order_bookOrderNum') + ':'">
+                            <el-input v-model="searchForm.orderNum" class="width150"></el-input>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-form-item :label="$t('desk.home_bookPeople')">
+                            <el-input v-model="searchForm.name" class="width150"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('desk.home_phoneNum') + ':'">
+                            <el-input v-model="searchForm.mobile" class="width150"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('desk.home_roomType')">
+                            <el-select v-model="searchForm.enterStatus" class="width150">
+                                <el-option
+                                    :label="
                   item.houseName ? item.houseName : $t('desk.home_unknown')
                 "
-                :value="item.roomTypeId"
-                v-for="(item, index) of roomTypeList"
-                :key="index"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('desk.home_roomNum')">
-            <el-input v-model="searchForm.houseNum" class="width150"></el-input>
-          </el-form-item>
-        </el-row>
-        <el-row>
-          <el-form-item :label="$t('desk.order_outOrderNum') + ':'">
-            <el-input
-              v-model="searchForm.thirdOrdernum"
-              class="width150"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="getDataList">{{
-              $t("commons.queryBtn")
-            }}</el-button>
-            <el-button type="primary" @click="initForm">{{
-              $t("commons.resetBtn")
-            }}</el-button>
-            <!--                        <el-button type="primary">{{-->
-            <!--                            $t("commons.exportBtn")-->
-            <!--                        }}</el-button>-->
-          </el-form-item>
-        </el-row>
-      </el-form>
+                                    :value="item.roomTypeId"
+                                    v-for="(item, index) of roomTypeList"
+                                    :key="index"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item :label="$t('desk.home_roomNum')">
+                            <el-input v-model="searchForm.houseNum" class="width150"></el-input>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-form-item :label="$t('desk.order_outOrderNum') + ':'">
+                            <el-input
+                                v-model="searchForm.thirdOrdernum"
+                                class="width150"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="getDataList">{{
+                                    $t("commons.queryBtn")
+                                }}</el-button>
+                            <el-button type="primary" @click="initForm">{{
+                                    $t("commons.resetBtn")
+                                }}</el-button>
+                            <!--                        <el-button type="primary">{{-->
+                            <!--                            $t("commons.exportBtn")-->
+                            <!--                        }}</el-button>-->
+                        </el-form-item>
+                    </el-row>
+                </el-form>
+            </el-collapse-item>
+        </el-collapse>
+
       <!--表格数据 -->
       <el-table
         ref="multipleTable"
@@ -225,7 +230,7 @@
         </el-table-column>
         <el-table-column prop="" :label="$t('food.common.status')" align="center">
           <template slot-scope="{ row }">
-            {{ F_reserveState(row.state) }}
+            {{ F_reserveState((row.state == 1 || row.state == 2 || row.state == 9) ? 5 : row.state ) }}
           </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
@@ -236,7 +241,7 @@
             <template v-if="row.state != 7">
 <!--              <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>-->
               <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>
-              <el-button type="text" size="mini" v-if="row.state == 1" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
+              <el-button type="text" size="mini" v-if="row.state == 1 || row.state == 2 || row.state == 5" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
               <!--                        只有当渠道订单才会有接收和拒单-->
               <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleAccept(row)">{{ $t("desk.order_accept") }}</el-button>
               <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleRefuse(row)">{{ $t("desk.book_reject") }}</el-button>
@@ -406,6 +411,7 @@ export default {
   mixins: [myMixin],
   data() {
     return {
+        queryFormIndex: '',
         platformList: [],
       loading: false,
       noShowDiaShow: false,
@@ -428,9 +434,23 @@ export default {
         payType: "",
         name: "",
       },
+        reserveStatusObject: {},
     };
   },
   mounted() {
+      let reserveStatus = this.$t('commons.reserveState');
+        console.log(reserveStatus)
+
+      let reserveStatusObject = {};
+      for (let i in reserveStatus) {
+          if (i == 1 || i == 2 || i == 9 || i == 5) {
+              reserveStatusObject['5'] = reserveStatus['5']
+          } else {
+              reserveStatusObject[i] = reserveStatus[i]
+          }
+      }
+      this.reserveStatusObject = reserveStatusObject;
+
     this.initForm();
       this.$F.commons.fetchOtaList({}, (list)=> {
           this.otaList = list;
@@ -796,8 +816,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .el-table .cell{
     white-space:pre-line;
+}
+.el-collapse-item .el-collapse-item__header {
+    float: right !important;
 }
 </style>

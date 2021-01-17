@@ -1402,7 +1402,6 @@ export default {
         changeName(e) {
             console.log(e);
             if (e.name) {
-                debugger
                 this.baseInfo = e;
                 this.checkInForm.name = e.name;
                 this.checkInForm.pronunciation = e.pronunciation;

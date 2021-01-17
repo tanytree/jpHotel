@@ -9,18 +9,21 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button size="small" plain @click="addRoom">{{$t('desk.order_addRoom')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(1)">{{$t('desk.order_livePeopleManegerment')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(2)">{{ $t("desk.batchCheckin") }}</el-button>
-        <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <el-button size="small" plain @click="addRoom" :disabled="roomLeaves">{{$t('desk.order_addRoom')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(1)" :disabled="roomLeaves">{{$t('desk.order_livePeopleManegerment')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="roomLeaves">{{ $t("desk.batchCheckin") }}</el-button>
+        <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')"
+                   :disabled="roomLeaves && checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown size="small" split-button type="primary">
           {{ $t("commons.moreOperating") }}
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_changeSource") }}</el-dropdown-item>
-            <el-dropdown-item @click.native="handleCancel(8)" :disabled="checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
-            <el-dropdown-item @click.native="handleNoshow(4)" :disabled="checkinInfo.state == 4">NOSHOW</el-dropdown-item>
+            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')" :disabled="roomLeaves">
+                {{ $t("desk.order_changeSource") }}</el-dropdown-item>
+            <el-dropdown-item @click.native="handleCancel(8)" :disabled="roomLeaves || hasCheckinFlag || (checkinInfo.state != 1 && checkinInfo.state != 2)">
+                {{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
+            <el-dropdown-item @click.native="handleNoshow(4)" v-if="!roomLeaves && !hasCheckinFlag && (checkinInfo.state == 1 || checkinInfo.state == 2 || checkinInfo.state == 5)">NOSHOW</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item>
-            <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{ $t("desk.rowHouse") }}</el-dropdown-item>
+<!--            <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{ $t("desk.rowHouse") }}</el-dropdown-item>-->
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -282,7 +285,7 @@
         <el-button @click="noShowDiaShow = false">{{
           $t("commons.cancel")
         }}</el-button>
-        <el-button type="primary" @click="confirmNoshow">{{
+        <el-button type="primary" @click="confirmNoShow">{{
           $t("commons.determine")
         }}</el-button>
       </span>
@@ -312,129 +315,6 @@ export default {
   },
   mixins: [myMixin],
   props: ["checkinInfo", "inRoomList", "detailData"],
-  computed: {
-    rules() {
-      return {
-        name: [
-          {
-            required: true,
-            // message: '请输入姓名',
-            message: this.$t("commons.mustInput"),
-            trigger: "blur",
-          },
-        ],
-        sex: [
-          {
-            required: true,
-            message: this.$t("commons.placeChoose"),
-            // message: '请选择性别',请选择性别
-            trigger: "blur",
-          },
-        ],
-        mobile: [
-          {
-            required: true,
-            // message: '请输入手机号',
-            message: this.$t("commons.mustInput"),
-            trigger: "blur",
-          },
-        ],
-        idcardType: [
-          {
-            required: true,
-            message: this.$t("commons.placeChoose"),
-            // message: '请选择护照类型',
-            trigger: "blur",
-          },
-        ],
-        idcard: [
-          {
-            required: true,
-            // message: '请输入证件号',
-            message: this.$t("commons.mustInput"),
-            trigger: "blur",
-          },
-        ],
-        checkinTime: [
-          {
-            required: true,
-            message: this.$t("commons.placeChoose"),
-            // message: '请选择入住时间',
-            trigger: "change",
-          },
-        ],
-        checkoutTime: [
-          {
-            required: true,
-            message: this.$t("commons.placeChoose"),
-            // message: '请选择预离时间',
-            trigger: "change",
-          },
-        ],
-        checkinDays: [
-          {
-            required: true,
-            // message: '请输入入住天数',
-            message: this.$t("commons.mustInput"),
-            trigger: "change",
-          },
-        ],
-        guestType: [
-          {
-            required: true,
-            message: this.$t("commons.placeChoose"),
-            // message: '请选择客源类型',
-            trigger: "blur",
-          },
-        ],
-        orderSource: [
-          {
-            required: true,
-            message: this.$t("desk.book_orderSoutce"),
-            trigger: "change",
-          },
-        ],
-        checkinType: [
-          {
-            required: true,
-            message: this.$t("commons.placeChoose"),
-            // message: '请选择入住类型',
-            trigger: "change",
-          },
-        ],
-        ruleHourId: [
-          {
-            required: true,
-            message: this.$t("commons.placeChoose"),
-            // message: '请选择计费规则',
-            trigger: "change",
-          },
-        ],
-      };
-    },
-  },
-  watch: {
-    roomInfo: {
-      handler(n, o) {
-        n.forEach((element) => {
-          if (element.personList.length) {
-            if (!this.roomTypeList[element.roomTypeId + "checkIn"]) {
-              this.roomTypeList[element.roomTypeId + "checkIn"] = [];
-            }
-            this.roomTypeList[element.roomTypeId + "checkIn"].push(element);
-          } else {
-            if (!this.roomTypeList[element.roomTypeId + "notYet"]) {
-              this.roomTypeList[element.roomTypeId + "notYet"] = [];
-            }
-            this.roomTypeList[element.roomTypeId + "notYet"].push(element);
-          }
-        });
-        console.log(this.roomTypeList);
-      },
-      //   immediate: true,
-      deep: true,
-    },
-  },
   data() {
     return {
       checkTheDetailsShow: false,
@@ -447,48 +327,131 @@ export default {
       gustTypeChangeShow: false,
       activeName: "first",
       salesList: [],
-      roomTypeList: {},
       currentItem: {},
       liveData: [],
       baseInfoChangeForm: {},
-      leaveTime: {
-        disabledDate: (time) => {
-          if (
-            this.baseInfoChangeForm.checkinTime != "" &&
-            this.baseInfoChangeForm.checkinTime
-          ) {
-            let timeStr = new Date(
-              new Date(this.baseInfoChangeForm.checkinTime)
-                .Format("yyyy-MM-dd")
-                .replace(/-/g, "/")
-            );
-            if (this.operCheckinType == "b2") {
-              //时租预订
-              return (
-                new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 > timeStr
-              );
-            }
-            return (
-              new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr
-            );
-          } else if (this.baseInfoChangeForm.checkinTime == "") {
-            return (
-              new Date(time.Format("yyyy-MM-dd")).getTime() <
-              Date.now() - 8.64e7
-            ); //如果没有后面的-8.64e7就是不可以选择今天
-          } else {
-            return "";
-          }
-        },
-      },
+        roomLeaves: false,   //是否都离店
+        hasCheckinFlag: false,  //是否有入住房间
+        noCheckinFlag: false,  //是否还有未入住房间
     };
   },
 
   created() {
     console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
   },
+    computed: {
+        rules() {
+            return {
+                name: [
+                    {
+                        required: true,
+                        // message: '请输入姓名',
+                        message: this.$t("commons.mustInput"),
+                        trigger: "blur",
+                    },
+                ],
+                sex: [
+                    {
+                        required: true,
+                        message: this.$t("commons.placeChoose"),
+                        // message: '请选择性别',请选择性别
+                        trigger: "blur",
+                    },
+                ],
+                mobile: [
+                    {
+                        required: true,
+                        // message: '请输入手机号',
+                        message: this.$t("commons.mustInput"),
+                        trigger: "blur",
+                    },
+                ],
+                idcardType: [
+                    {
+                        required: true,
+                        message: this.$t("commons.placeChoose"),
+                        // message: '请选择护照类型',
+                        trigger: "blur",
+                    },
+                ],
+                idcard: [
+                    {
+                        required: true,
+                        // message: '请输入证件号',
+                        message: this.$t("commons.mustInput"),
+                        trigger: "blur",
+                    },
+                ],
+                checkinTime: [
+                    {
+                        required: true,
+                        message: this.$t("commons.placeChoose"),
+                        // message: '请选择入住时间',
+                        trigger: "change",
+                    },
+                ],
+                checkoutTime: [
+                    {
+                        required: true,
+                        message: this.$t("commons.placeChoose"),
+                        // message: '请选择预离时间',
+                        trigger: "change",
+                    },
+                ],
+                checkinDays: [
+                    {
+                        required: true,
+                        // message: '请输入入住天数',
+                        message: this.$t("commons.mustInput"),
+                        trigger: "change",
+                    },
+                ],
+                guestType: [
+                    {
+                        required: true,
+                        message: this.$t("commons.placeChoose"),
+                        // message: '请选择客源类型',
+                        trigger: "blur",
+                    },
+                ],
+                orderSource: [
+                    {
+                        required: true,
+                        message: this.$t("desk.book_orderSoutce"),
+                        trigger: "change",
+                    },
+                ],
+                checkinType: [
+                    {
+                        required: true,
+                        message: this.$t("commons.placeChoose"),
+                        // message: '请选择入住类型',
+                        trigger: "change",
+                    },
+                ],
+                ruleHourId: [
+                    {
+                        required: true,
+                        message: this.$t("commons.placeChoose"),
+                        // message: '请选择计费规则',
+                        trigger: "change",
+                    },
+                ],
+            };
+        },
+    },
 
   mounted() {
+      //查询出是否所有的房间都已经离店
+      let length = 0;
+      if (this.detailData.inRoomList && this.detailData.inRoomList.length > 0) {
+          this.detailData.inRoomList.forEach((room => {
+              if (room.state == 2) {length ++;}
+              if (room.state == 3) {this.noCheckinFlag = true;}
+              if (room.state == 1) {this.hasCheckinFlag = true;}
+          }))
+          this.roomLeaves = length == this.detailData.inRoomList.length;
+      }
     this.reserveId = this.$route.query.id;
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
       this.salesList = data.hotelUserList;
@@ -550,14 +513,18 @@ export default {
     },
     //跳转到入住详情
     goCheckinDetail(type) {
-      this.$router.push({
-        name: "checktheDetails",
-        params: {
-          detailData: this.detailData,
-          currentRoom: this.currentRoom,
-          type: type,
-        },
-      });
+        if (this.noCheckinFlag) {
+            this.$router.push({
+                name: "checktheDetails",
+                params: {
+                    detailData: this.detailData,
+                    currentRoom: this.currentRoom,
+                    type: type,
+                },
+            });
+        } else {
+            this.$message(this.$t('desk.book_checkin'));
+        }
     },
     checkInCallback(id) {
       this.liveInPersonShow = false;
@@ -628,7 +595,7 @@ export default {
         })
         .catch(() => {});
     },
-    confirmNoshow() {
+    confirmNoShow() {
       let params = {
         checkInReserveId: this.currentItem.id,
         state: 4,
@@ -703,16 +670,6 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.detailTab {
-  border: 0;
-}
-
-.detailTab >>> .el-tabs__header {
-  margin: 0;
-}
-</style>
 <style lang="less" scoped>
 .base {
   & > div {

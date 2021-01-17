@@ -380,7 +380,6 @@ export default {
             let arr = [];
             arr.push(this.currentRoom);
             // arr.push(this.checkinInfo);
-            debugger
             this.$refs.rowRoomHandle.initForm(
                 this.$route.query.id,
                 this.checkinInfo,

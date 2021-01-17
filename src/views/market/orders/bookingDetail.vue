@@ -109,7 +109,8 @@ export default {
     methods: {
         //获取预定单详情信息
         getDetail(id) {
-            this.$F.doRequest(this, "/pms/checkin/reserve_check_in_detail", { reserveId: id}, (res) => {
+            this.$F.doRequest(this, "/pms/checkin/reserve_check_in_detail", { reserveId: id},
+                (res) => {
                     this.detailData = res;
                     this.$forceUpdate();
                 }

@@ -289,6 +289,10 @@ const $F = {
         return fmt;
     },
 
+    importExcel(url, file) {
+
+    },
+
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
         //获取ota列表

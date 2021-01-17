@@ -188,10 +188,8 @@ export default {
   },
   methods: {
       handleClick() {
-          debugger
           if (this.activeName == 'customer') {
               console.log(this.detailData);
-              debugger
               this.$refs.checkInInfo.init('detail', this.detailData);
           }
       },

@@ -40,7 +40,7 @@
                             <span>{{item.houseNum}}</span>
                         </div>
                         <div class="riTop" v-else>
-                            <span v-if="date.reserveObj && item.houseNum == date.reserveObj.houseNum" style="background-color: #8EABDD;height: 100%; width: 100%;"></span>
+                            <span v-if="date[item.houseNum]" style="background-color: #8EABDD;height: 100%; width: 100%;"></span>
                         </div>
                     </div>
                 </div>
@@ -119,14 +119,14 @@ export default {
                     console.log(this.roomList)
                     if (res && res.roomCheckInCalendarList.length > 0) {
                         res.roomCheckInCalendarList.forEach( (value, index) => {
-                            debugger
                             if (value.reserveObj) {
                                 let tempArray = this.getDateStr(value.reserveObj.checkinTime, value.reserveObj.checkoutTime, 0);
                                 if (tempArray.length > 0) {
                                     this.dates.forEach( (temp, index) => {
                                         if (tempArray.includes(temp.date)) {
                                             value.reserveObj.checkInRoomType = 2; //预定
-                                            temp.reserveObj = value;
+                                            // temp.reserveObj = value;
+                                            temp[value.houseNum] = value;
                                         }
                                     })
                                 }

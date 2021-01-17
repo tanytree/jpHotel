@@ -139,6 +139,7 @@ export default {
                 });
             })
             console.log(this.dates);
+            console.log(this.startTime);
             this.$F.doRequest(this, "/pms/reserve/reserve_room_list", {
                     roomId: this.currentRoom.id,
                     startTime: this.startTime,
@@ -147,11 +148,13 @@ export default {
                     checkinTime: this.startTime,
                     checkoutTime: this.checkoutTime,
                 }, (res) => {
-                    debugger
                     if (res && res.roomCheckInCalendarList.length > 0) {
                         res.roomCheckInCalendarList.forEach( (value, index) => {
                             if (value.reserveObj) {
-                                let tempArray = this.getDateStr(value.reserveObj.checkinTime, value.reserveObj.checkoutTime, 0);
+                                let checkinTime = this.$F.formatDate('yyyy-MM-dd', 0, value.reserveObj.checkinTime);
+                                let checkoutTime = this.$F.formatDate('yyyy-MM-dd', 0, value.reserveObj.checkoutTime);
+                                let tempArray = this.getDateStr(checkinTime, checkoutTime, 0);
+                                console.log(tempArray)
                                 if (tempArray.length > 0) {
                                     this.dates.forEach( (temp, index) => {
                                         if (tempArray.includes(temp.date)) {

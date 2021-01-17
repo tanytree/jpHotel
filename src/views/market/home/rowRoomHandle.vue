@@ -668,7 +668,6 @@ export default {
                     } else {
                         this.checkInForm.checkInRoomIds = this.reservedRoom[0].id;
                         console.log(JSON.parse(JSON.stringify(this.checkInForm)))
-                        debugger
                         this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');

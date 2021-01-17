@@ -290,7 +290,6 @@ export default {
                     personList: [],
                 },
             };
-            debugger
             if (row.headerObj) {
                 this.$F.merge(this.currentCustomer, row);
                 this.currentCustomer.personList = row.personList || [];
@@ -334,7 +333,6 @@ export default {
         },
 
         init(type, checkinInfo, currentRoom) {
-            debugger
             this.type = type;
             this.currentRoom = currentRoom;
             this.$F.merge(checkinInfo, {

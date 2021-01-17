@@ -860,15 +860,16 @@ export default {
                     }
 
                     .line {
+                        font-size: 12px;
                         margin-bottom: 10px;
 
                         span + span {
                             margin-left: 20px;
                         }
-                    }
+                        }
 
                     .placeIcon {
-                        margin-top: 15px;
+                        margin-top: 12px;
                     }
                 }
             }
