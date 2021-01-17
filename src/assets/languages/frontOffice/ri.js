@@ -61,6 +61,7 @@ module.exports = {
         "16":'住宿税',
         "100": 'その他'
     },
+    priceTypeDesc:{},
     //订单类型
     orderType: {
         "": '全部',

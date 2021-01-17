@@ -131,7 +131,7 @@
                             </el-table-column>
                         </el-table>
                         <el-row class="padding-tb-10">
-                             {{$t('food.common.food_total',{count:countToTal})}}{{numFormate(cartToTal)}}<!-- / 已结算金额：{{hasPayPrice}} -->
+                             {{$t('shop.food_total',{count:countToTal})}}{{numFormate(cartToTal)}}<!-- / 已结算金额：{{hasPayPrice}} -->
                         </el-row>
                         <div class="action rel" v-loading="isloading">
                             <div class="margin-t-10">

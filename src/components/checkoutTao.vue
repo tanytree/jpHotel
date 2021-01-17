@@ -15,7 +15,7 @@
     </div>
     <div class="priceBox">
       <div class="leftPrice" v-if="detailData.totalPrice>0"><span>{{$t('desk.order_receivable')}}</span>：{{detailData.totalPrice}}</div>
-      <div class="leftPrice" v-if="detailData.totalPrice<0"><span>{{$t('desk.order_shouldBack')}}</span>：{{-detailData.totalPrice}}</div>
+      <div class="leftPrice" v-if="detailData.totalPrice<0"><span>{{$t('desk.order_shouldBack')}}</span>：{{getPriceStr(detailData.totalPrice)}}</div>
       <div class="centerLine"></div>
       <div class="rightPrcie">
         <div class="rightTop">
@@ -73,7 +73,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer" style="text-align: right">
       <el-button @click="checkoutVisible = false">{{$t('commons.cancel')}}</el-button>
-      <el-button type="primary" @click="checkoutVisible = false">{{$t('desk.book_billAback')}}</el-button>
+      <el-button type="primary" @click="saveOrder">{{$t('desk.book_billAback')}}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -87,6 +87,9 @@ export default {
       checkoutForm: {
         consumePrice: null,
         resource: "",
+        
+        
+        
       }, //退房结账弹框的表单
     };
   },
@@ -129,22 +132,32 @@ export default {
   },
   methods: {
     resetVisibel() {
-      console.log(this.currentRoom);
       this.checkoutVisible = true;
-      if (this.detailData.totalPrice > 0) {
-        this.checkoutForm.consumePrice = this.detailData.totalPrice;
-      } else {
-        this.checkoutForm.consumePrice = -this.detailData.totalPrice;
-      }
+      // if (this.detailData.totalPrice > 0) {
+      //   this.checkoutForm.consumePrice = this.detailData.totalPrice;
+      // } else {
+      //   this.checkoutForm.consumePrice = -this.detailData.totalPrice;
+      // }
       console.log(this.detailData);
       console.log(this.currentRoom);
     },
+
+
+
     //请求 单位 列表
     getUnitList() {
       this.$F.doRequest(this, "/pms/hotelenter/list", {}, (res) => {
         this.unitList = res.list;
         console.log(this.unitList);
       });
+    },
+    getPriceStr(v){
+        if(v){
+            return Math.abs(v);
+        }
+    },
+    saveOrder(){
+
     },
   },
 };

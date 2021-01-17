@@ -63,7 +63,7 @@
                 <el-table-column
                   :label="$t('food.common.solt_text')">
                   <template slot-scope="scope">
-                  {{ scope.row.soldOut == 1 ? $t('food.common.yes') : $t('food.common.no')}}</template>
+                  {{ scope.row.soldOut == 2 ? $t('food.common.yes') : $t('food.common.no')}}</template>
                 </el-table-column>
 
                 <el-table-column

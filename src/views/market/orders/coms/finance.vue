@@ -42,14 +42,93 @@
         <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{F_priceType(row.priceType)}}
+                <!-- /    {{row.priceType}} -->
             </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.order_payment')" prop="payPrice"></el-table-column>
+        <el-table-column :label="$t('desk.order_payment')" >
+            <template slot-scope="{row}">
+                {{getPriceStr(row.payPrice)}}
+            </template>
+        </el-table-column>
         <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
             <template slot-scope="{row}" style="color: red">
-                {{row.consumePrice}}
+                {{getPriceStr(row.consumePrice)}}
             </template>
         </el-table-column>
+		<el-table-column prop="state" label="业务说明" show-overflow-tooltip>
+		    <template slot-scope="{row}">
+
+
+               <!-- "1": '订金',
+                "2": '押金',
+                "3": '收款',
+                "4": '退款',
+                "5": '加收全天房费',
+                "6": '加收半天房费',
+                "7": '损物赔偿',
+                "8": '迷你吧',
+                "9": '完全冲调',
+                "10": '部分冲调',
+                "11": '免单',
+                "12": '房费',
+                "13": '挂账',
+                "14": '餐吧消费',
+                "15":'温泉税',
+                "16":'住宿税',
+                "100": '其他' -->
+
+		       <span v-if="row.priceType == 1">
+                    <span v-if="row.payType == 1">现金定金</span>
+                    <span v-if="row.payType == 2">信用卡订金 </span>
+                    <span v-if="row.payType == 4">其他定金 </span>
+                </span>
+                <span v-if="row.priceType == 2">
+                    <span v-if="row.payType == 1">现金押金</span>
+                    <span v-if="row.payType == 2">信用卡押金 </span>
+                    <span v-if="row.payType == 4">其他押金</span>
+                </span>
+                <span v-if="row.priceType == 3">
+                    <span v-if="row.payType == 1">现金收款</span>
+                    <span v-if="row.payType == 2">信用卡收款 </span>
+                    <span v-if="row.payType == 4">其他押金</span>
+                </span>
+                <span v-if="row.priceType == 5">房费</span>
+                <span v-if="row.priceType == 6">房费</span>
+                <span v-if="row.priceType == 7">
+                    {{row.damageName}}(￥{{row.unitPrice}}) * {{row.damageCount}}
+                </span>
+                <span v-if="row.priceType == 8">
+                       <!-- 接口数据中没有具体的消费商品 -->
+                </span>
+                <span v-if="row.priceType == 9">
+                </span>
+
+                <span v-if="row.priceType == 10">
+                </span>
+
+                <span v-if="row.priceType == 12">房费</span>
+
+                <span v-if="row.priceType == 13">
+                       {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
+                </span>
+
+                <span v-if="row.priceType == 14">
+                       <!-- 接口数据中没有餐吧消费的具体餐品 -->
+                </span>
+
+
+                <span v-if="row.priceType == 15">
+                    温泉税(￥{{row.unitPrice}}) * {{row.taxCount}}
+                </span>
+                <span v-if="row.priceType == 16">
+                    住宿税(￥{{row.unitPrice}}) * {{row.taxCount}}
+                </span>
+
+
+
+
+		    </template>
+		</el-table-column>
         <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
@@ -186,8 +265,8 @@
     <!--开发票-->
 
     <!--退房结账-->
-    <!-- <checkoutTao ref="checkoutTao" :detailData = "detailData" :currentRoom="currentRoom" ></checkoutTao> -->
-    <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
+    <checkoutTao ref="checkoutTao" :detailData = "detailData" :currentRoom="currentRoom" @getOrderDetail="getOrderDetail" ></checkoutTao>
+   <!-- <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
         <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
             <el-row v-if="currentRoom">
                 <el-col :span="8">
@@ -224,7 +303,7 @@
             <el-button @click="checkOutShow=false">{{ $t('commons.close') }}</el-button>
             <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
         </div>
-    </el-dialog>
+    </el-dialog> -->
     <!--冲调-->
     <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
         <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
@@ -269,6 +348,7 @@
             </el-table>
             <el-form-item style="margin-top: 10px;" :label="$t('desk.order_mixingWay')+':'" prop="priceType">
                 <el-radio-group v-model="consumeOperForm.priceType">
+
                     <el-radio :label="9" :value="9">{{$t('desk.order_completelyAgainst')}}</el-radio>
                     <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio>
                 </el-radio-group>
@@ -483,7 +563,7 @@ export default {
            }
          }
          return newArry;
-       
+
       },
       updataInfo(){
           this.consume_order_list()
@@ -599,18 +679,34 @@ export default {
                 params.payPrice =  this.consumeOperForm.payPrice
                 console.log(params)
             }
+
             //冲调
             if (type == 3) {
-                params.state = this.destructionList[0].state
-                params.payType = 0 //挂账无需支付方式
-
-                // params.orderId = this.destructionList[0].id
                 if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
                    return;
                 }
-                params.consumePrice = '-' + this.consumeOperForm.consumePrice
+
+                let priceType  =  this.destructionList[0].priceType
+                let priceTypeList = [5,6,7,8,14,15,16,17,18]
+                if(priceTypeList.indexOf(priceType) > -1){
+                    console.log('消费类')
+                    params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrice)
+                }else{
+                    console.log('付款类')
+                    params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.payPrice)
+
+
+                }
+
+
+                params.priceType = this.consumeOperForm.priceType
+                params.state = this.destructionList[0].state
+                params.payType = 0 //挂账无需支付方式
+
             }
+            console.log(params)
+            // return
 
             //退房结账
             // if (type == 4) {
@@ -647,6 +743,7 @@ export default {
                 }
             });
         },
+
 
         //走结
         out_check_in() {
@@ -732,9 +829,9 @@ export default {
         },
           //点击退房结账按钮
         checkOutHandle() {
-            // this.$refs.checkoutTao.resetVisibel()
-            this.checkOutShow = true;
-            this.consumeOperForm.consumePrice = this.detailData.totalPrice
+            this.$refs.checkoutTao.resetVisibel()
+            // this.checkOutShow = true;
+            // this.consumeOperForm.consumePrice = this.detailData.totalPrice
         },
         // //开发票提交
         // openInvoiceSubmit(formName) {
@@ -836,6 +933,9 @@ export default {
                 let unitPrice = this.unitPrice ? this.unitPrice : 0
                 let p = count * unitPrice
                 this.consumeOperForm.consumePrice = p
+
+                console.log(p)
+
                 console.log( this.consumeOperForm.consumePrice)
             }else{
                 this.taxCount = ''
@@ -1006,16 +1106,44 @@ export default {
     watch:{
         'consumeOperForm.priceType':function(val,oldval){
             console.log(val)
+            console.log(oldval)
             this.taxCount = ''
             this.unitPrice = ''
-                if(val == 9){
-                    this.consumeOperForm.consumePrice =  this.destructionList[0].payPrice
-                    console.log(this.destructionList[0].payPrice)
-                }else if(val == 10){
-                   this.consumeOperForm.consumePrice = ''
+            this.consumeOperForm.priceType = val
+            if(val == 9 || val == 10){
+                // this.consumeOperForm.consumePrice =  this.destructionList[0].consumePrice
+                // console.log(this.destructionList[0].consumePrice)
+                console.log(this.destructionList[0])
+                let priceType  =  this.destructionList[0].priceType //当前冲调记录类型
+                let priceTypeList = [5,6,7,8,14,15,16,17,18] //消费类
+                if(priceTypeList.indexOf(priceType) > -1){
+                    console.log('消费类')
+                    this.consumeOperForm.payPrice = ''
+                    if(val == 9){
+                       this.consumeOperForm.consumePrice =  this.destructionList[0].consumePrice
+                    }
+                    if(val == 100){
+                        this.consumeOperForm.consumePrice =  ''
+                    }
                 }else{
-                    this.consumeOperForm.consumePrice = ''
+                    console.log('入账类')
+                     this.consumeOperForm.consumePrice = ''
+                    if(val == 9){
+                       this.consumeOperForm.payPrice =  this.destructionList[0].payPrice
+                    }
+                    if(val == 100){
+                        this.consumeOperForm.payPrice =  ''
+                    }
                 }
+
+            }else{
+                this.consumeOperForm.consumePrice = ''
+            }
+
+            console.log(this.consumeOperForm)
+
+
+
                 // console.log(val)
                // if(val !== 3){
                //    this.consumeOperForm.payType = ''

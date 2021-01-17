@@ -5,6 +5,7 @@
  * @FilePath: /jiudian/src/assets/languages/zh.js
  */
 module.exports = {
+    food_total:'共 {count} 件商品，合计:',
     shopDoor:'快捷入口',
     productTitle:'商品名',
     categoryType:'商品类别型',

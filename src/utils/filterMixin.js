@@ -104,8 +104,12 @@ let mixin = {
         F_toward(value) {
             let enums = this.$t('commons.towards')
             return value && enums[value] ? enums[value] : ''
-        }
-
+        },
+        getPriceStr(v){
+            if(v){
+                return Math.abs(v);
+            }
+        },
 
 
     }
