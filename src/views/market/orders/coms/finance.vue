@@ -695,18 +695,16 @@ export default {
                 }else{
                     console.log('付款类')
                     params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.payPrice)
-
-
                 }
-
-
+                console.log(this.destructionList[0])
+                params.richIds = this.destructionList[0].id
                 params.priceType = this.consumeOperForm.priceType
                 params.state = this.destructionList[0].state
                 params.payType = 0 //挂账无需支付方式
 
             }
             console.log(params)
-            // return
+            return
 
             //退房结账
             // if (type == 4) {

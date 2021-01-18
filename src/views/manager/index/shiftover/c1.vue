@@ -44,14 +44,24 @@
       <el-row class="padding-tb-10">
           <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
-          <div class="item">{{$t('manager.priceType.'+item.priceType)}}：<span class="red">{{item.total}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div class="item">
+            <span v-if="tabCurr == 1">
+                {{$t('manager.priceType.'+item.priceType)}}：
+            </span>
+            <span v-if="tabCurr == 2">餐饮费：</span>
+            <span v-if="tabCurr == 3">商品费：</span>
+			<span class="red">{{item.total}}</span>{{$t('manager.ps_japanYen')}}
+		  </div>
         </el-col>
       </el-row>
       <div class="total">{{$t('food.shift.totalFee')}}：{{info.settlement}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPayTypeList" :key="index">
-          <div class="item">{{$t('manager.payType.'+item.payType)}}：<span class="blue">{{item.total}}</span>{{$t('manager.ps_japanYen')}}</div>
+			<div class="item">
+            {{$t('manager.payType.'+item.payType)}}：
+				<span class="blue">{{item.total}}</span>{{$t('manager.ps_japanYen')}}
+			</div>
         </el-col>
       </el-row>
     </el-row>
