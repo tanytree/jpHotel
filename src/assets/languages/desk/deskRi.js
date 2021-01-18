@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-13 11:58:40
+ * @LastEditTime: 2021-01-18 10:59:13
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -84,6 +84,7 @@ module.exports = {
   home_deskPhone: 'フロント電話番号',
   home_hotelAddress: 'ホテル住所',
   home_telNum: '自宅電話番号',
+  home_telNumA: '電話',
   home_telNum1: '自宅電話1',
   home_telNum2: '自宅電話2',
   home_getState: '受け渡す状態',
@@ -714,7 +715,7 @@ module.exports = {
   night_auditDay: '日時更新日',
   night_auditResults: '日時更新結果',
   customer_sureEnable: '該当法人を起用確認します',
-  customer_guestNum: '会員/法人番号',
+  customer_guestNum: '顧客番号',
   order_clickPai: "アサインをクリックしてください",
   order_inputName: "名前を入力してください",
   order_inputCardNum: "身分証明書番号を入力してください",
@@ -917,6 +918,21 @@ module.exports = {
   book_HQsale: '本部売上日報',
   side_sidePri: '食事付き金額',
   book_firstInto: '入金項目',
+  add_importMem: '未翻译词条',
+  add_chooseImportType: '未翻译词条',
+  add_selectFile: '未翻译词条',
+  add_onlySupport: '未翻译词条',
+  add_importFail: '未翻译词条',
+  add_chooseImportFile: '未翻译词条',
+  add_onlyOneImport: '未翻译词条',
+  add_sureDelete: '未翻译词条',
+  add_importSuccess: '未翻译词条',
+  add_memberDate: '未翻译词条',
+  add_theCover: '未翻译词条',
+  add_tiao: '未翻译词条',
+  add_have: '未翻译词条',
+  add_memberImportFail: '未翻译词条',
+
 
 
 

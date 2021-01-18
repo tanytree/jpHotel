@@ -48,7 +48,7 @@
         <el-table-column prop="sex" align="center" :label="$t('desk.customer_sex')" >
           <template slot-scope="{ row }">{{ row.sex | F_sex }}</template>
         </el-table-column>
-        <el-table-column :label="$t('desk.home_telNum')" show-overflow-tooltip>
+        <el-table-column :label="$t('desk.home_telNumA')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             <div v-if="row.mobile">({{$t('desk.editor_hand')}}){{ row.mobile }}</div>
             <div v-if="row.mobile2">({{$t('desk.editor_home')}}){{ row.mobile2 }}</div>

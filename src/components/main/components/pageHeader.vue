@@ -96,7 +96,7 @@
       },
 
       modelShowfuc () {
-        this.$confirm('是否确认退出系统？', this.$t('commons.tip_desc'), {
+        this.$confirm(this.$t('login.sureExit'), this.$t('commons.tip_desc'), {
           confirmButtonText: this.$t('commons.confirm'),
           cancelButtonText: this.$t('commons.cancel'),
           type: 'warning'
