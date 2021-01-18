@@ -30,6 +30,7 @@
                 </el-form-item>
             </el-form>
             <div class="components-edit">
+              <!-- 表格数据 -->
                 <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
                     <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
                     <el-table-column prop="retailPrice" :label="$t('manager.grsl_defaultTetailPrice')"></el-table-column>

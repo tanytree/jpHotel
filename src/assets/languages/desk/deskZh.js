@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-14 14:01:33
+ * @LastEditTime: 2021-01-18 13:38:25
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -942,7 +942,7 @@ module.exports = {
   add_importMem: '导入会员',
   add_chooseImportType: '请选择导入会员类型',
   add_selectFile: '选择文件',
-  add_onlySupport: '仅支持xlsx、xls文件',
+  add_onlySupport: '一次只能导入一个文件，仅支持xlsx、xls文件',
   add_importFail: '导入的模板有误，请重新导入',
   add_chooseImportFile: '请选择要导入的文件',
   add_onlyOneImport: '只能导入一个文件，请删除当前文件后再重新选择',

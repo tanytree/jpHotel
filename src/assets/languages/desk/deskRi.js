@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-18 10:59:13
+ * @LastEditTime: 2021-01-18 14:35:57
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -721,7 +721,7 @@ module.exports = {
   order_inputCardNum: "身分証明書番号を入力してください",
   customer_namePY: 'カナ',
   customer_namePYA: 'カナ',
-  customer_resetguestInfo: '会員/法人情報編集',
+  customer_resetguestInfo: '顧客情報変更',
   customer_contactA: '担当者',
   home_phoneNumA: '電話',
   customer_unitNum: '法人番号',
@@ -918,20 +918,20 @@ module.exports = {
   book_HQsale: '本部売上日報',
   side_sidePri: '食事付き金額',
   book_firstInto: '入金項目',
-  add_importMem: '未翻译词条',
-  add_chooseImportType: '未翻译词条',
-  add_selectFile: '未翻译词条',
-  add_onlySupport: '未翻译词条',
-  add_importFail: '未翻译词条',
-  add_chooseImportFile: '未翻译词条',
-  add_onlyOneImport: '未翻译词条',
-  add_sureDelete: '未翻译词条',
-  add_importSuccess: '未翻译词条',
-  add_memberDate: '未翻译词条',
-  add_theCover: '未翻译词条',
-  add_tiao: '未翻译词条',
-  add_have: '未翻译词条',
-  add_memberImportFail: '未翻译词条',
+  add_importMem: '会員データ移行',
+  add_chooseImportType: '会員種別から選択してください',
+  add_selectFile: 'インポートファイル',
+  add_onlySupport: '一回のインポートは１ファイルしかできません、xlsx、xls形式のみできます。',
+  add_importFail: 'ファイルフォーマットのエラーが発生のため、再度インポート行ってください。',
+  add_chooseImportFile: 'インポートするファイルを選択してください',
+  add_onlyOneImport: '一つのファイルしか処理できませんので、現在のファイルを取消してから該当ファイルを選択してください。',
+  add_sureDelete: 'ファイル取消確認',
+  add_importSuccess: 'インポート成功',
+  add_memberDate: '件データ',
+  add_theCover: 'その内、オーバーレイデータ',
+  add_tiao: '件',
+  add_have: 'ある',
+  add_memberImportFail: '件データをインポート失敗',
 
 
 

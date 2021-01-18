@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 15:01:24
+ * @LastEditTime: 2021-01-18 11:59:42
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -9,8 +9,8 @@
   <!-- 统一的列表格式 -->
   <div class="boss-index">
     <div class="booking">
-        <el-collapse v-model="queryFormIndex">
-            <el-collapse-item :title="$t('commons.moreOperating')" name="query">
+        <el-collapse v-model="queryFormIndex" >
+            <el-collapse-item :title="$t('commons.moreOperating')" class="term" name="query">
                 <!-- 查询部分 -->
                 <el-form class="term" inline size="small" label-width="100px">
                     <el-row>

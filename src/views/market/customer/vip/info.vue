@@ -104,15 +104,14 @@
       <div style="margin:-10px 0 10px 20px;">{{$t('desk.add_chooseImportType')}}</div>
       <el-form :model="memImportForm" ref="memImportForm" :rules="importRules">
         <el-form-item :label="$t('desk.customer_memType')+':'" prop="memberTypeId" label-width="90px">
-          <el-select v-model="memImportForm.memberTypeId" :placeholder="$t('desk.customer_chooseMemType')" size="small" style="width:200px;">
+          <el-select v-model="memImportForm.memberTypeId" :placeholder="$t('desk.customer_chooseMemType')" size="small" style="width:320px;">
             <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="会员资料:" label-width="90px" required>
-          <!-- <el-input v-model="searchForm.name" size="small"  style="width:200px;"></el-input> -->
           <el-upload ref="upload" action="aa" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload='false' :on-change='changeFile' :limit="1" :multiple="false" accept=".xls,.xlsx" :on-exceed="handleExceed" :file-list="fileList">
-            <el-button size="middle" slot="trigger" type="text">{{$t('desk.add_selectFile')}}<span style="color:black">({{$t('desk.add_onlySupport')}})</span></el-button>
-
+            <el-button size="middle" slot="trigger" style="width:120px;" type="text">{{$t('desk.add_selectFile')}}</el-button>
+            <div slot="tip" style="marginTop:-15px;"><span>{{$t('commons.tip_desc')}}：</span> {{$t('desk.add_onlySupport')}}</div>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -241,7 +240,11 @@ export default {
     importRules() {
       return {
         memberTypeId: [
-          { required: true, message: this.$t('commons.placeChoose'), trigger: "change" },
+          {
+            required: true,
+            message: this.$t("commons.placeChoose"),
+            trigger: "change",
+          },
         ],
       };
     },
@@ -284,23 +287,31 @@ export default {
                 console.log(res);
                 let code = res.data.code;
                 if (code == 200) {
-                  let temText = `${this.$t('desk.add_importSuccess')}${res.data.data.insert}${this.$t('desk.add_memberDate')}，${this.$t('desk.add_theCover')}${res.data.data.update}${this.$t('desk.add_tiao')}，${this.$t('desk.add_have')}${res.data.data.false}${this.$t('desk.add_memberImportFail')}`;
-                  this.$alert(temText, this.$t('commons.tip_desc'), {
-                    confirmButtonText: this.$t('commons.confirm'),
+                  let temText = `${this.$t("desk.add_importSuccess")}${
+                    res.data.data.insert
+                  }${this.$t("desk.add_memberDate")}，${this.$t(
+                    "desk.add_theCover"
+                  )}${res.data.data.update}${this.$t(
+                    "desk.add_tiao"
+                  )}，${this.$t("desk.add_have")}${
+                    res.data.data.false
+                  }${this.$t("desk.add_memberImportFail")}`;
+                  this.$alert(temText, this.$t("commons.tip_desc"), {
+                    confirmButtonText: this.$t("commons.confirm"),
                     callback: (action) => {
                       this.cancelImport();
                     },
                   });
                 } else {
                   this.$message({
-                    message: this.$t('desk.add_importFail'),
+                    message: this.$t("desk.add_importFail"),
                     type: "error",
                   });
                   this.fileList = [];
                 }
               });
           } else {
-            this.$message(this.$t('desk.add_chooseImportFile'));
+            this.$message(this.$t("desk.add_chooseImportFile"));
           }
         } else {
           return false;
@@ -582,11 +593,11 @@ export default {
     },
     // 上传文件超出limit调用
     handleExceed(files, fileList) {
-      this.$message.warning(this.$t('desk.add_onlyOneImport'));
+      this.$message.warning(this.$t("desk.add_onlyOneImport"));
     },
     // 移除之前调用
     beforeRemove(file, fileList) {
-      return this.$confirm(`${this.$t('desk.add_sureDelete')} ${file.name}？`);
+      return this.$confirm(`${this.$t("desk.add_sureDelete")} ${file.name}？`);
     },
     changeFile(file, fileList) {
       this.changeFileList = fileList;
