@@ -170,10 +170,15 @@ export default {
             let cart = this.cart
             if(this.consumeOperForm.employeePrice){
                 cart.forEach(element => {
+                    console.log(element.employeePrice)
+                    console.log(element.count)
                     sum +=  parseFloat(element.employeePrice) *  parseFloat(element.count)
+
                 });
             }else{
                 cart.forEach(element => {
+                    console.log(element.retailPrice)
+                    console.log(element.count)
                     sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
                 });
             }
@@ -442,7 +447,7 @@ export default {
                         goodsName:element.goodsName,
                         price:element.employeePrice,
                         goodsCount:element.count,
-                        totalPrice: this.totalIn
+                        totalPrice: parseFloat(element.employeePrice) *  parseFloat(element.count)
                     })
                 });
                 params.consumePrice = this.totalIn
@@ -453,7 +458,7 @@ export default {
                         goodsName:element.goodsName,
                         price:element.retailPrice,
                         goodsCount:element.count,
-                        totalPrice: this.cartToTal
+                        totalPrice: parseFloat(element.retailPrice) *  parseFloat(element.count)
                     })
                 });
                 params.consumePrice = this.cartToTal

@@ -57,8 +57,6 @@
         </el-table-column>
 		<el-table-column prop="state" label="业务说明" show-overflow-tooltip>
 		    <template slot-scope="{row}">
-
-
                <!-- "1": '订金',
                 "2": '押金',
                 "3": '收款',
@@ -76,7 +74,6 @@
                 "15":'温泉税',
                 "16":'住宿税',
                 "100": '其他' -->
-
 		       <span v-if="row.priceType == 1">
                     <span v-if="row.payType == 1">现金定金</span>
                     <span v-if="row.payType == 2">信用卡订金 </span>
@@ -98,35 +95,31 @@
                     {{row.damageName}}(￥{{row.unitPrice}}) * {{row.damageCount}}
                 </span>
                 <span v-if="row.priceType == 8">
-                       <!-- 接口数据中没有具体的消费商品 -->
+                   <span v-if="row.goodsList&&row.goodsList.length > 0" v-for="item in row.goodsList">
+                       {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
+                   </span>
                 </span>
                 <span v-if="row.priceType == 9">
                 </span>
 
                 <span v-if="row.priceType == 10">
                 </span>
-
                 <span v-if="row.priceType == 12">房费</span>
-
                 <span v-if="row.priceType == 13">
-                       {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
+                     {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
                 </span>
-
                 <span v-if="row.priceType == 14">
-                       <!-- 接口数据中没有餐吧消费的具体餐品 -->
+                   <!-- 具体餐品 -->
+                   <span v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="item in row.disherOrderSubList">
+                       {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
+                   </span>
                 </span>
-
-
                 <span v-if="row.priceType == 15">
                     温泉税(￥{{row.unitPrice}}) * {{row.taxCount}}
                 </span>
                 <span v-if="row.priceType == 16">
                     住宿税(￥{{row.unitPrice}}) * {{row.taxCount}}
                 </span>
-
-
-
-
 		    </template>
 		</el-table-column>
         <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
@@ -704,7 +697,7 @@ export default {
 
             }
             console.log(params)
-            return
+            // return
 
             //退房结账
             // if (type == 4) {
