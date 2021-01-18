@@ -6,6 +6,7 @@
  */
 //前台部 日文
 module.exports = {
+    roomOccupation: '部屋がとられる',
   reserveInfoDesc: '予定情報',
   attachedMeal: '食付',
   keepTime: 'ほりゅうじかん',

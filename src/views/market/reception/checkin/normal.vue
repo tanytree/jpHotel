@@ -972,14 +972,18 @@ export default {
                 params.reserveProjects = JSON.stringify(params.reserveProjects);
             }
             let ajax = () => {
-                params.checkInRoomJson = JSON.stringify(this.checkInForm.checkInRoomJson || params.checkInRoomJson);
+                let tempArray = this.checkInForm.checkInRoomJson || params.checkInRoomJson;
+                console.log(tempArray);
+                let roomIdArray = [];
+                tempArray.forEach(temp => {
+                    roomIdArray.push(temp.roomId);
+                })
+                params.checkInRoomJson = JSON.stringify(tempArray);
+                params.roomIds = roomIdArray.join(",");
                 this.makeStoresNum(params);
                 this.$F.doRequest(this, url, params, (data) => {
-                    this.$message({
-                        message: "Success",
-                        type: "success",
-                    });
-
+                    debugger
+                    this.$message({message: "Success", type: "success",});
                     if (type == 2) {
                         window.setTimeout(() => {
                             if (operCheckinType == "a1" || operCheckinType == "a2") {
@@ -999,6 +1003,8 @@ export default {
                     } else if (type == 'centerReserve') {
                         centerReserveCallback();
                     }
+                }, (errorMsg) => {
+                    this.$message({message: this.$t('desk.roomOccupation'), type: "error",});
                 });
             };
             this.$refs.checkInForm.validate((valid) => {
@@ -1007,6 +1013,7 @@ export default {
                         this.$message.error(this.$t("frontOffice.chooseRoomType"));
                         return false;
                     }
+                    this.checkInForm.checkInRoomJson = [];
                     if (operCheckinType == "a1" || operCheckinType == "a2") {
                         if (!this.checkInForm.checkInRoomJson || this.checkInForm.checkInRoomJson.length == 0) {
                             this.$message.error(this.$t("desk.home_noPeopleLive"));

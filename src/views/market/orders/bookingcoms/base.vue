@@ -19,10 +19,10 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')" :disabled="roomLeaves">
                 {{ $t("desk.order_changeSource") }}</el-dropdown-item>
-            <el-dropdown-item @click.native="handleCancel(8)" :disabled="roomLeaves || hasCheckinFlag || (checkinInfo.state != 1 && checkinInfo.state != 2)">
+            <el-dropdown-item @click.native="handleCancel(8)" :disabled="roomLeaves || hasCheckinFlag || (checkinInfo.state != 1 && checkinInfo.state != 2 && checkinInfo.state != 5)">
                 {{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(4)" v-if="!roomLeaves && !hasCheckinFlag && (checkinInfo.state == 1 || checkinInfo.state == 2 || checkinInfo.state == 5)">NOSHOW</el-dropdown-item>
-            <el-dropdown-item @click.native="handleNoshow(1)" v-if="checkinInfo.state == 4">{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item>
+            <el-dropdown-item @click.native="handleNoshow(5)" v-if="checkinInfo.state == 4">{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item>
 <!--            <el-dropdown-item @click.native="rowRoomHandle" v-if="!inRoomList || inRoomList.length == 0">{{ $t("desk.rowHouse") }}</el-dropdown-item>-->
           </el-dropdown-menu>
         </el-dropdown>

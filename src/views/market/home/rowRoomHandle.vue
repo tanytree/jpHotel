@@ -635,11 +635,13 @@ export default {
                 this.rowRoomHandleShow = false;
                 return;
             }
+            let roomIdArray = [];
             this.waitingRoom.forEach(item => {
                 let array = [];
                 if (item.roomsArr) {
                     item.roomsArr.forEach(room=> {
                         array.push(room.id);
+                        roomIdArray.push(room.id);
                     })
                 }
                 checkInRoomJson.push({
@@ -649,10 +651,8 @@ export default {
                     realPrice: item.realPrice
                 })
             })
-
+            // this.checkInForm.roomIds = roomIdArray.join(",");
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
-            console.log(JSON.parse(JSON.stringify(this.checkInForm)))
-
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
                     if (this.handleType == 1) {
@@ -666,6 +666,7 @@ export default {
                             this.$emit('baseInfoChange', '');
                         })
                     } else {
+
                         this.checkInForm.checkInRoomIds = this.reservedRoom[0].id;
                         console.log(JSON.parse(JSON.stringify(this.checkInForm)))
                         this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
