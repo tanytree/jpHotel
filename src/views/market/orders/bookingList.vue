@@ -240,7 +240,7 @@
             }}</el-button>
             <template v-if="row.state != 7">
 <!--              <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>-->
-              <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>
+<!--              <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>-->
               <el-button type="text" size="mini" v-if="row.state == 1 || row.state == 2 || row.state == 5" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
               <!--                        只有当渠道订单才会有接收和拒单-->
               <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleAccept(row)">{{ $t("desk.order_accept") }}</el-button>

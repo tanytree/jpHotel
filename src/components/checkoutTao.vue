@@ -38,22 +38,27 @@
       </div>
     </div>
     <el-form ref="checkoutForm" :rules="paymentRules" :model="checkoutForm" label-width="110px">
-      <el-form-item :label="$t('desk.customer_payType')" prop="payType" v-if="detailData.totalPrice>0">
-        <el-radio-group v-model="checkoutForm.payType">
+      <el-form-item :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWay') : $t('desk.customer_payType')" prop="payType">
+        <el-radio-group v-model="checkoutForm.payType" v-if="detailData.totalPrice > 0">
           <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>
         </el-radio-group>
+
+        <el-radio-group v-model="checkoutForm.payType" v-if="detailData.totalPrice < 0">
+          <el-radio v-if="key == 1" v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>
+        </el-radio-group>
       </el-form-item>
-      <el-form-item :label="$t('desk.customer_refundWay')" prop="resource" v-if="detailData.totalPrice<0">
+     <!-- <el-form-item :label="$t('desk.customer_refundWay')" prop="resource" v-if="detailData.totalPrice<0">
         <el-radio-group v-model="checkoutForm.resource">
           <el-radio label="">{{$t('desk.serve_cashA')}}</el-radio>
         </el-radio-group>
-      </el-form-item>
-      <el-form-item :label="$t('desk.book_accountWay')" v-if="checkoutForm.resource == '3'" prop="region">
+      </el-form-item> -->
+
+      <el-form-item :label="$t('desk.book_accountWay')" v-if="checkoutForm.payType == '3'" prop="region">
         <el-select v-model="checkoutForm.region" :placeholder="$t('desk.book_chooseAway')" style="width: 260px">
           <el-option v-for="(item, index) in $t('commons.paymentWay')" :key="index" :value="index" :label="item"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('desk.customer_buyerUnitA')" v-if="checkoutForm.resource == '3'" prop="enterName">
+      <el-form-item :label="$t('desk.customer_buyerUnitA')" v-if="checkoutForm.payType == '3'" prop="enterName">
         <el-select v-model="checkoutForm.enterName" :placeholder="$t('desk.customer_inputUnitName')" style="width: 260px">
           <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.enterName"></el-option>
         </el-select>
@@ -86,23 +91,19 @@ export default {
       checkoutVisible: false, //内层结账退房dialog
       checkoutForm: {
         consumePrice: null,
-        resource: "",
-        
-        
-        
+        payType: "1",
+        preferentialPrice:'',
+        region:'',
+        enterName:''
+
+
+
       }, //退房结账弹框的表单
     };
   },
   computed: {
     paymentRules() {
       return {
-        payType: [
-          {
-            required: true,
-            message: this.$t("desk.customer_choosePayType"),
-            trigger: "change",
-          },
-        ],
         region: [
           {
             required: true,
@@ -117,7 +118,7 @@ export default {
             trigger: "change",
           },
         ],
-        resource: [
+        payType: [
           {
             required: true,
             message: this.$t("commons.placeChoose"),

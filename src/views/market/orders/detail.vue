@@ -54,7 +54,9 @@
                         {{ F_checkinState(item.state) }}
                       </el-button>
                       <span>
-                        <i class="el-icon-s-custom vm"></i>{{ item.personList.length ? item.personList[0].name : "" }}（{{ item.houseNum }}）
+                        <!-- <i class="el-icon-s-custom vm"></i> -->
+                        <span class="icon-main" v-if="index == 0">主</span>
+                        {{ item.personList.length ? item.personList[0].name : "" }}（{{ item.houseNum }}）
                       </span>
                     </div>
                   </li>
@@ -296,7 +298,14 @@ export default {
   height: 100%;
   .customerInfo {
     background: #fff;
-
+    .icon-main{
+        border:1px  solid #f00;
+        border-radius: 50%;
+        font-size: 12px;
+        background-color: #fff;
+        width: 20px;height: 20px;display: inline-block;text-align: center;line-height: 16px;color: #f00 !important;
+        vertical-align: middle;margin-right: 5px;
+    }
     .wrap {
       padding: 0 10px;
 

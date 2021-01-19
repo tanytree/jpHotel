@@ -7,6 +7,7 @@
 //  前台部 中文
 module.exports = {
   reserveInfoDesc: '预定信息',
+  roomOccupation: '房间被占用',
   attachedMeal: '附餐',
   keepTime: '保留时间',
   autoRowHouse: '自动排房',
