@@ -5,6 +5,7 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
+    refundAmount: '払い戻し額',
     reserveContent: '预定内容',
   englishM:'フリーメモ',
     enterpriseName: '会社名',
@@ -59,6 +60,7 @@ module.exports = {
         "14": '餐吧消费',
         "15":'温泉税',
         "16":'住宿税',
+        "99":'手付け金を払い下げる',
         "100": 'その他'
     },
     priceTypeDesc:{},

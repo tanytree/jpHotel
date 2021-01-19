@@ -6,6 +6,7 @@
  */
 module.exports = {
     reserveContent: '预定内容',
+    refundAmount: '退款金额',
   enterpriseName: '单位名称',
   enterpriseMobile: '单位号码',
   enterpriseAddress: '单位地址',
@@ -58,7 +59,8 @@ module.exports = {
     "14": '餐吧消费',
     "15":'温泉税',
     "16":'住宿税',
-    "100": '其他'
+    "99":'退定金',
+    "100": '其他',
   },
   priceTypeDesc:{
     "1": '订金',

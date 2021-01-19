@@ -27,7 +27,7 @@
                         {{ $t('manager.ps_inLive') }}
                     </el-button>
                     <el-button plain size="mini" @click="updateReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
-                        {{$t('desk.home_modityReserved')}}
+                        {{$t('desk.rowHouse')}}
                     </el-button>
                     <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
                         {{$t('commons.cancel')}}

@@ -6,7 +6,7 @@
  -->
 <template>
 <div>
-    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="title ? title : $t('desk.home_modityReserved')" width="80%">
+    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="title ? title : $t('desk.rowHouse')" width="80%">
 
         <el-row style="margin-bottom:60px" v-loading="loading">
             <!--这里暂时不要做的那么细  接口暂时不支持修改单个房间预抵预离-->
@@ -97,9 +97,11 @@
                                                             </div>
                                                         </el-col>
                                                     </el-row>
-                                                    <el-row class="row" v-if="v.roomsArr&&v.roomsArr.length">
-                                                        <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">{{item.houseNum}}
-                                                            <span class="del" @click="delete_db_row_houses(v,item.id,i)">✕ {{$t('desk.customer_remove')}}</span></el-button>
+                                                    <el-row class="row" v-if="v.roomsArr && v.roomsArr.length && v.roomsArr[0].houseNum">
+                                                        <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">
+                                                            <span v-if="item.houseNum"> {{item.houseNum}}</span>
+                                                            <span v-if="item.houseNum" class="del" @click="delete_db_row_houses(v,item.id,i)">✕ {{$t('desk.customer_remove')}}</span>
+                                                        </el-button>
                                                     </el-row>
                                                 </div>
                                             </div>

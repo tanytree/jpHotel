@@ -54,9 +54,10 @@
                         {{ F_checkinState(item.state) }}
                       </el-button>
                       <span>
-                        <!-- <i class="el-icon-s-custom vm"></i> -->
                         <span class="icon-main" v-if="index == 0">主</span>
-                        {{ item.personList.length ? item.personList[0].name : "" }}（{{ item.houseNum }}）
+                          <span>
+                              {{ item.personList.length ? getMainCheckPerson(item.personList).name : "" }}（{{ item.houseNum }}）
+                          </span>
                       </span>
                     </div>
                   </li>
@@ -194,6 +195,17 @@ export default {
               console.log(this.detailData);
               this.$refs.checkInInfo.init('detail', this.detailData);
           }
+      },
+
+      //获取主入住人信息
+      getMainCheckPerson(personList) {
+          let personInfo = {};
+          personList.forEach( person => {
+              if (person.personType == 2) {
+                  personInfo = person;
+              }
+          })
+          return personInfo;
       },
     //点击顶部订单管理
     clickGo() {
