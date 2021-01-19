@@ -971,15 +971,10 @@ export default {
                 }
                 params.reserveProjects = JSON.stringify(params.reserveProjects);
             }
+
             let ajax = () => {
                 let tempArray = this.checkInForm.checkInRoomJson || params.checkInRoomJson;
-                console.log(tempArray);
-                let roomIdArray = [];
-                tempArray.forEach(temp => {
-                    roomIdArray.push(temp.roomId);
-                })
                 params.checkInRoomJson = JSON.stringify(tempArray);
-                params.roomIds = roomIdArray.join(",");
                 this.makeStoresNum(params);
                 this.$F.doRequest(this, url, params, (data) => {
                     debugger
@@ -1014,7 +1009,31 @@ export default {
                         return false;
                     }
                     this.checkInForm.checkInRoomJson = [];
+                    this.waitingRoom.forEach((item) => {
+                        let temp = {
+                            roomTypeId: item.roomTypeId,
+                            reservePrice: item.onePersonPrice || item.reservePrice,
+                            realPrice: item.realPrice || item.onePersonPrice,
+                        };
+                        if (item.roomsArr && item.roomsArr.length > 0) {
+                            let array = [];
+                            item.roomsArr.forEach((room) => {
+                                array.push(room.roomId);
+                            });
+                            temp.roomId = array.join(",");
+                        }
+                        this.checkInForm.checkInRoomJson.push(temp);
+                    });
+                    let tempArray = this.checkInForm.checkInRoomJson || params.checkInRoomJson;
+                    console.log(tempArray);
+                    let roomIdArray = [];
+                    tempArray.forEach(temp => {
+                        roomIdArray.push(temp.roomId);
+                    })
+                    params.roomIds = roomIdArray.join(",");
+                    debugger
                     if (operCheckinType == "a1" || operCheckinType == "a2") {
+                        console.log(this.checkInForm.checkInRoomJson);
                         if (!this.checkInForm.checkInRoomJson || this.checkInForm.checkInRoomJson.length == 0) {
                             this.$message.error(this.$t("desk.home_noPeopleLive"));
                             return false;
@@ -1031,22 +1050,6 @@ export default {
                                 return false;
                             }
                         }
-                    } else {
-                        this.waitingRoom.forEach((item) => {
-                            let temp = {
-                                roomTypeId: item.roomTypeId,
-                                reservePrice: item.onePersonPrice || item.reservePrice,
-                                realPrice: item.realPrice || item.onePersonPrice,
-                            };
-                            if (item.roomsArr && item.roomsArr.length > 0) {
-                                let array = [];
-                                item.roomsArr.forEach((room) => {
-                                    array.push(room.roomId);
-                                });
-                                temp.roomId = array.join(",");
-                            }
-                            this.checkInForm.checkInRoomJson.push(temp);
-                        });
                     }
                     ajax();
                 } else {
