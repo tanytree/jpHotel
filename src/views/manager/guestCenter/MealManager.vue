@@ -48,18 +48,21 @@
                 <el-form-item :label="$t('manager.add_unitPrice')+':'" prop="mealPrice">
                     <el-input v-model="meal.mealPrice"></el-input>
                 </el-form-item>
+                <el-form-item :label="$t('manager.grsl_costNoPrice')+':'" prop="costPrice">
+                    <el-input v-model="meal.costPrice"></el-input>
+                </el-form-item>
                 <el-form-item :label="$t('manager.add_packageType')+':'" prop="mealTime">
                     <el-radio-group v-model="meal.mealTime">
                         <el-radio :label="1">{{$t('manager.hk_breakfast')}}</el-radio>
                         <el-radio :label="2">{{$t('manager.hk_dinner')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('boss.loginDetail_state')+ '：'">
-                    <el-radio-group v-model="meal.state">
+                <!--<el-form-item :label="$t('boss.loginDetail_state')+ '：'">
+                    <el-radio-group v-model="meal.ctype">
                         <el-radio :label="1">{{$t('commons.enable')}}</el-radio>
                         <el-radio :label="2">{{$t('commons.disable')}}</el-radio>
                     </el-radio-group>
-                </el-form-item>
+                </el-form-item>-->
                 <el-form-item :label="$t('desk.home_note') + '：'">
                     <el-input type="textarea" :rows="4" resize="none" v-model="meal.remark"></el-input>
                 </el-form-item>
@@ -84,7 +87,7 @@
                 },
                 mealTime: 0, list: [], total: 0,
                 mealTitle: this.$t('desk.customer_newAdd'), mealVisible: false,
-                meal: {mealName: '', mealPrice: '', mealTime: 1, state: 1, remark: ''},
+                meal: {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, remark: ''},
                 rules: {
                     mealName: [{ required: true, message: this.$t('manager.add_inputPackageName'), trigger: 'blur' }],
                     mealPrice: [{ required: true, message: this.$t('manager.add_inputPackagePrice'), trigger: 'blur' }],
@@ -121,7 +124,7 @@
                 this.getMealList(this.pageForm, this.mealTime);
             },
             addMeal() {
-                this.meal = {mealName: '', mealPrice: '', mealTime: 1, state: 1, remark: ''};
+                this.meal = {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, remark: ''};
                 this.mealVisible = true;
             },
             popup(type, row) {
@@ -133,7 +136,7 @@
                         this.getMealList(this.pageForm, this.mealTime);
                     });
                 } else if(type == 'change') {
-                    this.meal = {id: row.id, mealName: row.mealName, mealPrice: row.mealPrice, mealTime: row.mealTime, state: row.state, remark: row.remark};
+                    this.meal = {id: row.id, mealName: row.mealName, mealPrice: row.mealPrice, costPrice: row.costPrice, mealTime: row.mealTime, remark: row.remark};
                     this.mealVisible = true;
                 }
             },
@@ -150,8 +153,8 @@
                     id: this.meal.id,
                     mealName: this.meal.mealName,
                     mealPrice: this.meal.mealPrice,
+                    costPrice: this.meal.costPrice,
                     mealTime: this.meal.mealTime,
-                    state: this.meal.state,
                     remark: this.meal.remark
                 }
                 this.$F.doRequest(this, "/pms/hotelattachmeal/edit", params, (res) => {
