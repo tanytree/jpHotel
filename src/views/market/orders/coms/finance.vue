@@ -42,7 +42,7 @@
         <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
             <template slot-scope="{row}">
                 {{F_priceType(row.priceType)}}
-                <!-- /    {{row.priceType}} -->
+                /    {{row.priceType}}
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" >
@@ -55,7 +55,7 @@
                 {{getPriceStr(row.consumePrice)}}
             </template>
         </el-table-column>
-		<el-table-column prop="state" label="业务说明" show-overflow-tooltip>
+		<el-table-column prop="state" label="业务说明" width="200" show-overflow-tooltip>
 		    <template slot-scope="{row}">
                <!-- "1": '订金',
                 "2": '押金',
@@ -95,11 +95,25 @@
                     {{row.damageName}}(￥{{row.unitPrice}}) * {{row.damageCount}}
                 </span>
                 <span v-if="row.priceType == 8">
-                   <span v-if="row.goodsList&&row.goodsList.length > 0" v-for="item in row.goodsList">
-                       {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
+                   <span v-if="row.goodsList&&row.goodsList.length > 0" >
+                       <span v-for="item in row.goodsList">
+                           {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
+                       </span>
                    </span>
                 </span>
+                <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
                 <span v-if="row.priceType == 9">
+                    全部冲调 -- {{row.richList[0].priceType}}
+                    <span v-if="row.richList[0].priceType == 8">
+                        <span v-for="item in row.richGoodsList">
+                             {{item.goodsName}}(￥{{item.price}}) * {{item.goodsCount}}
+                        </span>
+                    </span>
+                    <span v-if="row.richList[0].priceType == 13">
+                       {{row.richList[0].creditName}}({{$t('commons.paymentWay.'+row.richList[0].putUp)}})
+                    </span>
+                    
+
                 </span>
 
                 <span v-if="row.priceType == 10">
@@ -131,7 +145,7 @@
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
             <template slot-scope="{row}">
-                <span :style="row.priceType == 10 ? 'color:#3a8ee6' : '' ">{{row.remark}}</span>
+                <span :style="row.priceType == 9 || row.priceType == 10 ? 'color:#3a8ee6' : '' ">{{row.remark}}</span>
             </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')">
@@ -693,7 +707,7 @@ export default {
                 params.richIds = this.destructionList[0].id
                 params.priceType = this.consumeOperForm.priceType
                 params.state = this.destructionList[0].state
-                params.payType = 0 //挂账无需支付方式
+                params.payType = 0
 
             }
             console.log(params)
@@ -781,6 +795,8 @@ export default {
                }else{
                    params.billType = 4
                }
+                console.log(params)
+                // return
                this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
                    this.checkOutShow = false
                    this.getOrderDetail();
@@ -790,9 +806,9 @@ export default {
         },
         //判断数组中的值是否相同
         isArrSame(array,state) {
-                return !array.some(function(value, index) {
-                    return value !== state
-                });
+            return !array.some(function(value, index) {
+                return value !== state
+            });
         },
 
         //开发票按钮点击

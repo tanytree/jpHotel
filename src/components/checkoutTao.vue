@@ -78,11 +78,11 @@
     </el-form>
     <div slot="footer" class="dialog-footer" style="text-align: right">
       <el-button @click="checkoutVisible = false">{{$t('commons.cancel')}}</el-button>
-      <el-button type="primary" @click="saveOrder">{{$t('desk.book_billAback')}}</el-button>
+      <el-button type="primary" @click="set_out_check_in">{{$t('desk.book_billAback')}}</el-button>
     </div>
   </el-dialog>
 </template>
-  <script>
+ <script>
 export default {
   props: ["detailData", "currentRoom"],
   data() {
@@ -95,10 +95,8 @@ export default {
         preferentialPrice:'',
         region:'',
         enterName:''
-
-
-
       }, //退房结账弹框的表单
+      consumeOrderList:[]
     };
   },
   computed: {
@@ -134,6 +132,7 @@ export default {
   methods: {
     resetVisibel() {
       this.checkoutVisible = true;
+      this.getConsumeOrderList();
       // if (this.detailData.totalPrice > 0) {
       //   this.checkoutForm.consumePrice = this.detailData.totalPrice;
       // } else {
@@ -141,10 +140,9 @@ export default {
       // }
       console.log(this.detailData);
       console.log(this.currentRoom);
+      console.log(this.currentRoom.checkinId);
+
     },
-
-
-
     //请求 单位 列表
     getUnitList() {
       this.$F.doRequest(this, "/pms/hotelenter/list", {}, (res) => {
@@ -157,8 +155,57 @@ export default {
             return Math.abs(v);
         }
     },
-    saveOrder(){
+    getConsumeOrderList(){
+        let info = {
+            checkInId: this.currentRoom.checkinId,
+            state:'',
+            pageIndex: 1,
+            pageSize: 1000
+        }
+        this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
+            console.log(res.consumeOrderList)
+            this.consumeOrderList = res.consumeOrderList
+        });
+    },
+    //退房结账
+    set_out_check_in() {
 
+           // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
+           // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
+           //  // 未结状态 1
+           //  //已结状态 2
+           //  //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
+           //  let array = [1,1,1,1]
+           //  let array = [2,2,2,2]
+           //  let array = [1,2,1,2]
+           //  let array = this..consumeOrderList.map(v=>{
+           //     return v.state
+           //  });
+           //  console.log(array);
+           //  let params = {}
+           //  params.checkInId = this.checkInId
+
+           //  console.log(this.isArrSame(array,1))
+           //  console.log(this.isArrSame(array,2))
+           //  if(this.isArrSame(array,1) == true){
+           //     params.billType = 1
+           //  }else if(this.isArrSame(array,2) == true){
+           //     params.billType = 3
+           //  }else{
+           //     params.billType = 4
+           //  }
+           //  console.log(params)
+           //  return
+
+           //  this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
+
+           // })
+    },
+    //判断数组中的值是否相同
+    isArrSame(array,state) {
+        return !array.some(function(value, index) {
+            return value !== state
+        });
     },
   },
 };
