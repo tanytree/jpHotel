@@ -111,7 +111,7 @@
 								<el-col :span="6">
 									<el-button type="primary" plain @click="addHouse('sit')">{{$t('manager.hk_set')}}</el-button>
 								</el-col>
-								<el-col :span="18" v-for="(value, index) in ruleForm_sit" :key="index">{{index+1}}{{$t('manager.hk_peopleLive')}}【{{value.price}}】</el-col>
+								<el-col :span="18" v-for="(value, index) in ruleForm_sit" :key="index">{{index+1}}{{$t('manager.hk_peopleLive')}}【￥ {{value.price}}】</el-col>
 							</el-row>
 						</el-form-item>
 
@@ -454,8 +454,7 @@
 							obj.sid = i + 1
 							this.ruleForm_sit.push(obj)
 						})
-
-						//
+						debugger
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
 							arr.map((i) => {

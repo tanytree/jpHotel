@@ -449,6 +449,7 @@ export default {
             this.multipleSelection = val;
         },
         addRoom(type, value) {
+			// debugger
             switch (type) {
                 case "add":
                     this.selectFrom = {
@@ -471,6 +472,7 @@ export default {
                         temperatureFlag: 1,
                         remark: this.note, //为什么备注是必选
                     };
+					this.get_room_type_list()
                     this.add_show = true;
                     break;
                 case "change":
@@ -627,6 +629,7 @@ export default {
         },
         // 选择--获取房型
         get_room_type_list() {
+			// debugger
             // this.roomType = []
             this.$F.doRequest(this, "/pms/hotel/room_type_list", {}, (res) => {
                 res.roomtype.forEach((item, index) => {

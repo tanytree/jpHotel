@@ -102,7 +102,7 @@
 				</el-table-column>
 
 				<!-- 这是输入的住宿价,目的是为了会员享有一定的优惠,这里只展示一人住宿价 -->
-				<el-table-column prop="name" :label="$t('manager.hk_livePrice') + $t('manager.grsl_oneLive')">
+				<el-table-column prop="name" label="新住宿价格">
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
@@ -119,7 +119,7 @@
 					</template>
 				</el-table-column>
 				<!-- 这里是前面输入的一人住宿价+早餐+晚餐的总价,如果前面没有输入的话,先展示早餐+晚餐的价格(附餐价) -->
-				<el-table-column prop="adjustPrice" :label="$t('manager.grsl_newPrice')"></el-table-column>
+				<el-table-column prop="adjustPrice" label="调整后的价格（一人住宿价+附餐费）"></el-table-column>
 			</el-table>
 			<el-row style="padding: 20px 0px;">
 				<el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
@@ -209,6 +209,7 @@
 
 				tab1_show: true,
 				value: "",
+				checkbox_value_pie: '', // 会员类型多选
 				batchEditPriceForm: {
 					time: "", //开始日期跟结束日期在一起
 					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
@@ -433,7 +434,7 @@
 				params.channel = this.batchEditPriceForm.channel
 				params.startTime = this.batchEditPriceForm.time[0];
 				params.endTime = this.batchEditPriceForm.time[1];
-				params.memberTypeId = this.batchEditPriceForm.memberTypeId.join(",");
+				params.memberTypeId = this.checkbox_value_pie;
 				this.batchEditPriceForm.weeks.forEach((item, index) => {
 					if (!item) {
 						this.batchEditPriceForm.weeks.splice(index, 1);
@@ -471,6 +472,11 @@
 					params,
 					(res) => {
 						this.$message.success("Save success");
+						setTimeout(e =>{
+							this.tab1_show = true;
+							this.selectedRoomtype = []
+							this.get_hotel_price_room_type_list()
+						})
 					}
 				);
 			},
@@ -488,32 +494,32 @@
 			},
 			//选择会员类型复选框事件
 			handleMemberChange(value) {
+				this.checkbox_value_pie = value.join(',');
+				// this.batchEditPriceForm.memberTypeId = value;
+				// if (value.length == 0)
+				// 	this.batchEditPriceForm.memberTypeId = [];
 
-				this.batchEditPriceForm.memberTypeId = value;
-				if (value.length == 0)
-					this.batchEditPriceForm.memberTypeId = [];
+				// if (value.length == this.selectedRoomtype.length || value == "") {
 
-				if (value.length == this.selectedRoomtype.length || value == "") {
-
-					if (value.length == this.selectedRoomtype.length) {
-						this.batchEditPriceForm.memberTypeId = [];
-					} else {
-						this.batchEditPriceForm.memberTypeId = value;
-						this.selectedRoomtype.forEach(week => {
-							this.batchEditPriceForm.memberTypeId.push(week.id);
-						})
-					}
-				} else {
-					let $index = 999;
-					this.batchEditPriceForm.memberTypeId.forEach((week, index) => {
-						if (week === '') {
-							$index = index;
-						}
-					})
-					if ($index != 999) {
-						this.batchEditPriceForm.memberTypeId.splice($index, 1);
-					}
-				}
+				// 	if (value.length == this.selectedRoomtype.length) {
+				// 		this.batchEditPriceForm.memberTypeId = [];
+				// 	} else {
+				// 		this.batchEditPriceForm.memberTypeId = value;
+				// 		this.selectedRoomtype.forEach(week => {
+				// 			this.batchEditPriceForm.memberTypeId.push(week.id);
+				// 		})
+				// 	}
+				// } else {
+				// 	let $index = 999;
+				// 	this.batchEditPriceForm.memberTypeId.forEach((week, index) => {
+				// 		if (week === '') {
+				// 			$index = index;
+				// 		}
+				// 	})
+				// 	if ($index != 999) {
+				// 		this.batchEditPriceForm.memberTypeId.splice($index, 1);
+				// 	}
+				// }
 
 				// this.checkedCities = val ? cityOptions : [];
 				//         this.isIndeterminate = false;
