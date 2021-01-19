@@ -334,6 +334,9 @@
 				this.deleteSuccess = newValue;
 			},
 		},
+		created() {
+			this.star_time = this.ruleForm.date;
+		},
 		methods: {
 			getRowKey(row) {
 				// debugger
@@ -659,6 +662,7 @@
 					priceCalend: 1, // 检索类型 1会员价格日历 2单位价格日历
 					timeType: 2, // 检索类型 1会员价格日历 2单位价格日历
 				};
+				debugger
 				this.$F.doRequest(this, "/pms/hotel/hotel_price_room_type_list", params,
 					(res) => {
 						this.memberTypeList = [];
