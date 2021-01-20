@@ -973,7 +973,13 @@ export default {
             }
 
             let ajax = () => {
-                let tempArray = this.checkInForm.checkInRoomJson || params.checkInRoomJson;
+                debugger
+                let tempArray = params.checkInRoomJson;
+                let roomIdArray = [];
+                tempArray.forEach(temp => {
+                    roomIdArray.push(temp.roomId);
+                })
+                params.roomIds = roomIdArray.join(",");
                 params.checkInRoomJson = JSON.stringify(tempArray);
                 this.makeStoresNum(params);
                 this.$F.doRequest(this, url, params, (data) => {
@@ -1008,32 +1014,9 @@ export default {
                         this.$message.error(this.$t("frontOffice.chooseRoomType"));
                         return false;
                     }
-                    this.checkInForm.checkInRoomJson = [];
-                    this.waitingRoom.forEach((item) => {
-                        let temp = {
-                            roomTypeId: item.roomTypeId,
-                            reservePrice: item.onePersonPrice || item.reservePrice,
-                            realPrice: item.realPrice || item.onePersonPrice,
-                        };
-                        if (item.roomsArr && item.roomsArr.length > 0) {
-                            let array = [];
-                            item.roomsArr.forEach((room) => {
-                                array.push(room.roomId);
-                            });
-                            temp.roomId = array.join(",");
-                        }
-                        this.checkInForm.checkInRoomJson.push(temp);
-                    });
-                    let tempArray = this.checkInForm.checkInRoomJson || params.checkInRoomJson;
-                    console.log(tempArray);
-                    let roomIdArray = [];
-                    tempArray.forEach(temp => {
-                        roomIdArray.push(temp.roomId);
-                    })
-                    params.roomIds = roomIdArray.join(",");
-                    debugger
                     if (operCheckinType == "a1" || operCheckinType == "a2") {
                         console.log(this.checkInForm.checkInRoomJson);
+
                         if (!this.checkInForm.checkInRoomJson || this.checkInForm.checkInRoomJson.length == 0) {
                             this.$message.error(this.$t("desk.home_noPeopleLive"));
                             return false;
@@ -1043,13 +1026,36 @@ export default {
                                 this.$message.error(this.$t("desk.serve_placeChooseRoom"));
                                 return false;
                             }
-                            if (
-                                this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num
-                            ) {
+                            if (this.waitingRoom[k].roomsArr.length < this.waitingRoom[k].num) {
                                 this.$message.error(this.$t("desk.serve_placeChooseRoom"));
                                 return false;
                             }
                         }
+
+                        let array = params.checkInRoomJson.filter(item =>{
+                            return !item.headerObj
+                        }) || []
+                        if (array.length > 0) {
+                            this.$message.error(this.$t("desk.home_noPeopleLive"));
+                            return;
+                        }
+                    } else {
+                        params.checkInRoomJson = [];
+                        this.waitingRoom.forEach((item) => {
+                            let temp = {
+                                roomTypeId: item.roomTypeId,
+                                reservePrice: item.onePersonPrice || item.reservePrice,
+                                realPrice: item.realPrice || item.onePersonPrice,
+                            };
+                            if (item.roomsArr && item.roomsArr.length > 0) {
+                                let array = [];
+                                item.roomsArr.forEach((room) => {
+                                    array.push(room.roomId);
+                                });
+                                temp.roomId = array.join(",");
+                            }
+                            params.checkInRoomJson.push(temp);
+                        });
                     }
                     ajax();
                 } else {

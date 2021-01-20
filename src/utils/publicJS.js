@@ -119,7 +119,7 @@ const $F = {
         })
     },
 
-    removeNullKey(params, toString) {
+    removeNullKey(params, toString, toJSONStringify) {
         for (let key in params) {
             let value = params[key];
             if ((value === '' || value === null || value === undefined || value == 'undefined' || value == 'null') && key != 'storesNum'
@@ -128,6 +128,11 @@ const $F = {
             } else {
                 if (toString) {
                     params[key] = params[key].toString();
+                }
+                if (toJSONStringify) {
+                    if (typeof params[key] == 'object') {
+                        params[key] = JSON.stringify(params[key]);
+                    }
                 }
             }
         }
@@ -139,7 +144,7 @@ const $F = {
             $instance.loading = true
         }
         params = this.deepClone(params);
-        this.removeNullKey(params)
+        this.removeNullKey(params, false, true);
         request(url, params).then((res) => {
             if ($instance) {
                 $instance.dataListLoading = false

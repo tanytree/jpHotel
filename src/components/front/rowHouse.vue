@@ -13,7 +13,7 @@
                     <div class="eackTitle">{{item.building.name}}  {{item.name}}  {{item.roomList.length}} {{$t('manager.hk_space')}}</div>
                     <div style="margin-top: 10px">
                         <el-checkbox-group v-model="selectList" size="small" :max="maxSelect">
-                            <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in item.roomList" :label="room.houseNum" :key="index"
+                            <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in item.roomList" :label="room.houseNum" :key="index" :disabled="room.checkInRoomType == 2"
                                                 @change="rowRoomCurrentListItemAdd(room)">
                                 {{ room.houseNum }}</el-checkbox-button>
                         </el-checkbox-group>
