@@ -55,7 +55,7 @@
 						<el-form-item :label="$t('desk.customer_memType')" prop="memberTypeId">
 							<el-row style="display: flex;align-items: center;">
 								<el-checkbox-group v-model="batchEditPriceForm.memberTypeId" @change="handleMemberChange">
-									<el-checkbox v-for="(item, index) in selectedRoomtype" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
+									<el-checkbox v-for="(item) in selectedRoomtype" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
 								</el-checkbox-group>
 							</el-row>
 						</el-form-item>
@@ -86,7 +86,7 @@
 			<el-table ref="multipleTable" :data="allRoomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
 				<el-table-column prop="houseName" :label="$t('desk.home_roomType')"></el-table-column>
 				<el-table-column :label="$t('manager.grsl_doorPri')">
-					<template slot-scope="{row, $index}">
+					<template slot-scope="{row}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
 								<el-col>{{row.oldOnePrice}}</el-col>
@@ -102,7 +102,7 @@
 
 				<!-- 这是输入的住宿价,目的是为了会员享有一定的优惠,这里只展示一人住宿价 -->
 				<el-table-column prop="name" :label="$t('manager.grsl_newLivePriA')">
-					<template slot-scope="{row, $index}">
+					<template slot-scope="{row}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
 								<el-input v-model.number="row.newLivePrice" style="width: 140px;margin: 0px 15px;"></el-input>
@@ -137,7 +137,7 @@
 			<el-table ref="multipleTable" :data="ruleForm_Pie" tooltip-effect="dark" default-expand-all header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
 				<el-table-column prop="personNum" :label="$t('manager.add_onePrice')" v-if="ruleForm.roomType == 1">
-					<template slot-scope="scope">
+					<template >
 						<div>
 							<div style="padding: 10px 0px;">
 								<span>{{roomStrategyJson_p[0].customPrice}}</span>
@@ -147,7 +147,7 @@
 				</el-table-column>
 
 				<el-table-column prop="newCustomPrice" :label="$t('manager.grsl_newLivePriA')" width="250" v-if="ruleForm.roomType == 1">
-					<template slot-scope="scope">
+					<template>
 						<div>
 							<div style="padding: 10px 0px;">
 								<el-input v-model="roomStrategyJson_p[0].newCustomPrice"></el-input>
