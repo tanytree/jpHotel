@@ -47,6 +47,9 @@
           <el-radio v-if="key == 1" v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>
         </el-radio-group>
       </el-form-item>
+      
+      
+      
      <!-- <el-form-item :label="$t('desk.customer_refundWay')" prop="resource" v-if="detailData.totalPrice<0">
         <el-radio-group v-model="checkoutForm.resource">
           <el-radio label="">{{$t('desk.serve_cashA')}}</el-radio>
@@ -90,7 +93,7 @@ export default {
       unitList: [],
       checkoutVisible: false, //内层结账退房dialog
       checkoutForm: {
-        consumePrice: null,
+        consumePrice: '',
         payType: "1",
         preferentialPrice:'',
         region:'',
