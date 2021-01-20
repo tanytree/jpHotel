@@ -33,7 +33,7 @@
                       <i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="getDeaprtmentEdit(item)">
+                      <el-dropdown-item @click.native="getDeaprtmentEdit(item)" v-if="item.userType != 3">
                         {{$t('boss.add_editorDepart')}}
                       </el-dropdown-item>
                       <el-dropdown-item @click.native="getDetailEdit(item)">
@@ -42,7 +42,7 @@
                       <!-- <el-dropdown-item @click.native="getDetails(item)">
                                                 查看资料
                                             </el-dropdown-item> -->
-                      <el-dropdown-item @click.native="deleteItem(item)" style="color: red">
+                      <el-dropdown-item @click.native="deleteItem(item)" style="color: red"  v-if="item.userType != 3">
                         {{$t('boss.add_deleteEmploy')}}
                       </el-dropdown-item>
                     </el-dropdown-menu>
@@ -68,7 +68,13 @@ export default {
       showIndent: false,
     };
   },
-  computed: {
+
+    created() {
+      console.log(this.employee)
+        debugger
+    },
+
+    computed: {
     ...mapState({
       companyInfo: (state) => state.company,
     }),

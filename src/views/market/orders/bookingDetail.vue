@@ -42,7 +42,8 @@
                         <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
                             <div class="tabWrap">
                                 <!-- 基本信息--->
-                                <sbase v-if="detailData.checkIn.id" :detailData="detailData" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList" @baseInfoChange="baseInfoChange"> </sbase>
+                                <sbase v-if="detailData.checkIn.id" :detailData="detailData" :checkinInfo="detailData.checkIn" :inRoomList="detailData.inRoomList"
+                                       @baseInfoChange="baseInfoChange"> </sbase>
                             </div>
                         </el-tab-pane>
 <!--                        - 客人信息-->
@@ -57,7 +58,7 @@
                         <el-tab-pane :label="$t('desk.financialDetails')" name="finance">
                             <div class="tabWrap">
                                 <!-- 财务明细--->
-                                <finance v-if="detailData.checkIn.id" :detailData="detailData"></finance>
+                                <finance v-if="detailData.checkIn.id" :detailData="detailData" @baseInfoChange="baseInfoChange"></finance>
                             </div>
                         </el-tab-pane>
                     </el-tabs>

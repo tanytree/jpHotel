@@ -152,7 +152,7 @@
             <el-button size="small" type="primary" @click="db_row_houses">{{ $t('commons.confirm') }}</el-button>
         </span>
     </el-dialog>
-
+    <rowHouse ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
 </div>
 </template>
 
@@ -166,10 +166,14 @@ function getDaysBetween(dateString1, dateString2) {
     return days;
 }
 import myMixin from './rowRoomMixin';
-
+import rowHouse from "@/components/front/rowHouse";
 export default {
     mixins: [myMixin],
     props: ['title'],
+    components: {
+        rowHouse
+    },
+
     data() {
         return {
             reservedRoom: [],
@@ -280,6 +284,7 @@ export default {
             orderType: '',
         };
     },
+
     computed: {
         rules(){
             return{
@@ -457,15 +462,28 @@ export default {
             return false
         },
         rowRoomByItem(item, index) {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error(this.$t('desk.home_perfectLiveInfo'));
-                return
+            // if (!this.checkInForm.checkInId) {
+            //     this.$message.error(this.$t('desk.home_perfectLiveInfo'));
+            //     return
+            // }
+            // this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item))
+            // this.rowRoomCurrentIndex = index
+            // this.hotelRoomListParams.roomTypeId = item.roomTypeId
+            // this.rowRoomShow = true
+            // this.hotel_room_list()
+            let currRommTypeData = this.waitingRoom.filter(waitRoom => {
+                return waitRoom.roomTypeId == item.roomTypeId;
+            })[0];
+            let hadReadyCheckArray = [];
+            if (currRommTypeData.roomsArr) {
+                currRommTypeData.roomsArr.forEach(item => {
+                    hadReadyCheckArray.push(item.houseNum);
+                })
             }
-            this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item))
-            this.rowRoomCurrentIndex = index
-            this.hotelRoomListParams.roomTypeId = item.roomTypeId
-            this.rowRoomShow = true
-            this.hotel_room_list()
+            this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item));
+            this.rowRoomCurrentIndex = index;
+            this.hotelRoomListParams.roomTypeId = item.roomTypeId;
+            this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray);
         },
         //获取可排房的房间
         hotel_room_list() {
@@ -481,6 +499,7 @@ export default {
         },
         //手动排房确定
         db_row_houses() {
+            debugger
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t('desk.home_morethenNum'));
                 return
@@ -582,7 +601,7 @@ export default {
                 this.rowRoomCurrentItem.roomsArr.push({
                     houseNum: item.houseNum,
                     id: item.id,
-                    checkinNum: item.hotelRoomType.checkinNum
+                    // checkinNum: item.hotelRoomType.checkinNum
                 })
             }
             this.$forceUpdate()

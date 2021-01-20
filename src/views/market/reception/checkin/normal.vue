@@ -318,8 +318,7 @@
                         <div class="checkRoom" v-for="(v, index) in waitingRoom" :key="index">
                             <div class="row rowReverse">
                                 <div>
-                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)" v-if="!storesNum">
-                                        {{ $t("desk.rowHouse") }}</el-button>
+                                    <el-button type="primary" class="submit" size="mini" @click="rowRoomByItem(v, index)">{{ $t("desk.rowHouse") }}</el-button>
                                 </div>
                                 <div>
                                     <span>{{ v.roomTypeName }}</span><span class="text-red" style="margin-left: 10px">{{ v.num }}{{ $t("manager.hk_space") }}</span>
@@ -604,7 +603,6 @@ export default {
             loading: false,
             liveLoading: false,
             liveCardLoading: false,
-            rowRoomShow: false,
             showDetail: false,
             guestTypeShow: false,
             mackcade: false,
@@ -973,15 +971,15 @@ export default {
             }
 
             let ajax = () => {
-                debugger
                 let tempArray = params.checkInRoomJson;
                 let roomIdArray = [];
                 tempArray.forEach(temp => {
                     roomIdArray.push(temp.roomId);
                 })
                 params.roomIds = roomIdArray.join(",");
-                params.checkInRoomJson = JSON.stringify(tempArray);
                 this.makeStoresNum(params);
+                console.log(params);
+                debugger
                 this.$F.doRequest(this, url, params, (data) => {
                     debugger
                     this.$message({message: "Success", type: "success",});
@@ -1128,11 +1126,6 @@ export default {
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item));
             this.rowRoomCurrentIndex = index;
             this.hotelRoomListParams.roomTypeId = item.roomTypeId;
-            this.rowRoomShow = true;
-            let params = {
-                rowHousesTotal: (item.reserveTotal || 0) + 10,
-                roomTypeId: item.roomTypeId,
-            };
             this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray);
         },
 
@@ -1165,7 +1158,6 @@ export default {
         // },
         //手动排房确定
         db_row_houses() {
-
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t("desk.home_morethenNum"));
                 return;
@@ -1234,7 +1226,6 @@ export default {
             // }
             let setRooms = (key, item) => {
                 this.waitingRoom[this.rowRoomCurrentIndex] = this.rowRoomCurrentItem;
-                this.rowRoomShow = false;
                 for (let k in this.waitingRoom) {
                     if (this.waitingRoom[k].roomTypeId == key) {
                         if (!this.waitingRoom[k].roomsArr) {
@@ -1504,7 +1495,7 @@ export default {
         startTimeChange(e) {
             if (this.operCheckinType == 'b1') {
                 let date = new Date(e);
-                if (e > this.checkInForm.checkoutTime || date.Format("yyyy-MM-dd") == new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")) {
+                if (e > this.checkInForm.checkoutTime || (date.Format("yyyy-MM-dd") == new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))) {
                     date.setDate(date.getDate() + 1);
                     this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
                 }

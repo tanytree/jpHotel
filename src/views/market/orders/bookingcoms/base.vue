@@ -330,7 +330,7 @@ export default {
       currentItem: {},
       liveData: [],
       baseInfoChangeForm: {},
-        roomLeaves: false,   //是否都离店
+        roomLeaves: false,   //【是否都离店】  是否有离店的房间
         hasCheckinFlag: false,  //是否有入住房间
         noCheckinFlag: false,  //是否还有未入住房间
     };
@@ -450,7 +450,8 @@ export default {
               if (room.state == 3) {this.noCheckinFlag = true;}
               if (room.state == 1) {this.hasCheckinFlag = true;}
           }))
-          this.roomLeaves = length == this.detailData.inRoomList.length;
+          // this.roomLeaves = length == this.detailData.inRoomList.length;
+          this.roomLeaves = length > 0;
       }
     this.reserveId = this.$route.query.id;
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {

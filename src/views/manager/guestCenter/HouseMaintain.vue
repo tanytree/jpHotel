@@ -7,7 +7,7 @@
 					<el-container direction="vertical" class="boss-index">
 						<el-row :gutter="20">
 							<el-col style="display: flex;justify-content: flex-end;margin: -10px 0 10px;">
-								<el-button type="primary" style="width: 100px;" class="submit" size="small" @click="addHouse('houseA','')">{{$t('commons.newAdd')}}
+								<el-button v-if="type != 'strategy'" type="primary" style="width: 100px;" class="submit" size="small" @click="addHouse('houseA','')">{{$t('commons.newAdd')}}
 								</el-button>
 							</el-col>
 						</el-row>
@@ -32,13 +32,13 @@
 							<el-table-column prop="remark" :label="$t('boss.loginDetail_note')"></el-table-column>
 							<el-table-column :label="$t('commons.operating')" width="250">
 								<template slot-scope="scope">
-									<el-button type="text" size="small" @click="stop('kefang', scope.row)">{{scope.row.state==1? $t('commons.disable'): $t('commons.enable')}}
+									<el-button type="text" size="small" @click="stop('kefang', scope.row)" v-if="type != 'strategy'">{{scope.row.state==1? $t('commons.disable'): $t('commons.enable')}}
 									</el-button>
-									<el-button type="text" size="small" @click="addHouse('change', scope.row)">{{$t('commons.modify')}}
+									<el-button type="text" size="small" @click="addHouse('change', scope.row)" v-if="type != 'strategy'">{{$t('commons.modify')}}
 									</el-button>
-									<el-button type="text" size="small" @click="addHouse('rili', scope.row, '3')">{{$t('manager.hk_priceCalendar')}}
+									<el-button type="text" size="small" @click="addHouse('rili', scope.row, '3')" v-if="type == 'strategy'">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
-									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @confirm="houseConfirm_delete(scope.row)">
+									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @confirm="houseConfirm_delete(scope.row)" v-if="type != 'strategy'">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
 										</el-button>
 									</el-popconfirm>
@@ -49,7 +49,7 @@
 						 :page-size="form.pageSize" :total="form.totalSize" layout="total, prev, pager, next, jumper"></el-pagination>
 					</el-container>
 				</el-tab-pane>
-				<el-tab-pane :label="$t('manager.hk_drawingRoomType')" name="two">
+				<el-tab-pane :label="$t('manager.hk_drawingRoomType')" name="two" v-if="type != 'strategy'" >
 					<el-container direction="vertical" class="boss-index">
 						<el-row :gutter="20">
 							<el-col style="display: flex;justify-content: flex-end;margin: 10px 0px;">
@@ -290,6 +290,7 @@
 <script>
 	import changeRili from "@/components/changeRili.vue"
 	export default {
+	    props: ['type'],
 		components: {
 			changeRili
 		},

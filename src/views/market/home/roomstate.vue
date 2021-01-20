@@ -25,13 +25,7 @@
                     <div class="tag-btm">
                         <el-checkbox-group v-model="searchForm.roomStatus" @change="handleChange">
                             <el-checkbox v-for="(item, index) in $t('commons.roomStatus')" :key="index" :label="item.value">
-                                <el-tag v-if="item.value == 6" style="color: #00B1F2" effect="plain" size="mini">
-                                    <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
-                                </el-tag>
-                                <el-tag v-else-if="item.value == 3"  style="color: #276BBA" :type="item.type" effect="plain" size="mini">
-                                    <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
-                                </el-tag>
-                                <el-tag v-else :type="item.type" effect="plain" size="mini">
+                                <el-tag :style="'color: ' + F_roomStatusColor(item.value)" effect="plain" size="mini">
                                     <span>{{ item.name + " " + F_roomStatus(item.value) }}</span>
                                 </el-tag>
                             </el-checkbox>
@@ -118,7 +112,7 @@
                                         <!-- 清扫图标后期加 -->
                                         <div class="placeIcon text-center">
                                             <img v-if="room.roomStatus == 5" :src="require('@/assets/images/frontdesk/fix.png')"/>
-                                            <img v-if="room.roomStatus == 2 || room.roomStatus == 4" :src="require('@/assets/images/frontdesk/clearn.png')"/>
+                                            <img v-if="room.roomStatus == 2" :src="require('@/assets/images/frontdesk/clearn.png')"/>
                                         </div>
                                     </div>
                                 </div>
@@ -254,7 +248,7 @@
                 >
             </div>
         </el-dialog>
-        <roomStatusHandle ref="roomStatusHandle" @initForm="initForm"/>
+        <roomStatusHandle ref="roomStatusHandle" @init="init"/>
         <unitedRoomHandle ref="unitedRoomHandle"/>
         <rowRoomHandle ref="rowRoomHandle"/>
     </div>
@@ -363,20 +357,24 @@ export default {
         };
     },
 
-    async mounted() {
-        this.$F.commons.fetchOtaList({}, (list)=> {
-            this.otaList = list;
-            this.$forceUpdate();
-        })
-        await this.getChannel();
-        await this.getPersonRoom();
-        // await this.getRoomStatus()
-        await this.getIconDes();
-        this.realtime_room_statistics();
-        this.get_hotel_building_list();
-        this.initForm();
+    mounted() {
+        this.init();
     },
     methods: {
+        async init() {
+            this.$F.commons.fetchOtaList({}, (list)=> {
+                this.otaList = list;
+                this.$forceUpdate();
+            })
+            await this.getChannel();
+            await this.getPersonRoom();
+            // await this.getRoomStatus()
+            await this.getIconDes();
+            this.realtime_room_statistics();
+            this.get_hotel_building_list();
+            this.initForm();
+        },
+
         getOtaName(otaChannelId) {
             let array = this.otaList.filter((ota) => {
                 return ota.id == otaChannelId
@@ -567,8 +565,8 @@ export default {
                 1: "#27AE76",
                 2: "#C0512B",
                 3: "#276BBA",
-                4: "#C0512B",
-                5: "#27AE76",
+                4: "#B07B2E",
+                5: "#5B5555",
                 6: "#00B1F2",
             };
             return enums[value] ? enums[value] : "#276BBA";
@@ -582,7 +580,6 @@ export default {
             return array.length > 0 ? array[0].total : 0;
         },
 
-
         handleChange(e) {
             this.getDataList();
         },
@@ -592,11 +589,6 @@ export default {
           // room为房间信息，parent为楼层信息
             this.$refs.roomInfo.changeVisible(room || {});
         },
-
-        yokeplateHandle(item) {
-            this.$refs.unitedRoomHandle.init(item.id);
-        },
-
 
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
@@ -611,18 +603,7 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-        // 催交重置
-        resetForms(formNames) {
-            this.$refs[formNames].resetFields();
-        },
-        // 批量置脏/置净
-        resetbatch(formbatch) {
-            this.$refs[formbatch].resetFields();
-        },
-        // 批量置脏/置净
-        batchForm() {
-            console.log("批量置脏/置净");
-        },
+
         batchRoomHaldel() {
             this.$refs.roomStatusHandle.init();
         },

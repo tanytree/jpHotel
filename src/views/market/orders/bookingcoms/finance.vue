@@ -376,6 +376,10 @@ export default {
     },
 
     methods: {
+        baseInfoChange() {
+            debugger
+            this.$emit("baseInfoChange", "");
+        },
         consumeOperFormInit() {
             this.consumeOperForm = {
                 segmentAmount: 0,
@@ -438,11 +442,11 @@ export default {
                 this.$message.error(this.$t('desk.order_rowHouses'));
                 return;
             }
-
+            params.state = 1;
             //订金，退订金
             if (type == 1 || type == 2) {
                 //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
-                params.state = 2;
+
                 if (!params.priceType) {
                     this.$message.error(this.$t('desk.order_selectPayProject'));
                     return;
@@ -468,7 +472,6 @@ export default {
             }
             //冲调
             if (type == 3) {
-                params.state = 2;
                 params.payType = 0;  //冲调没有支付类型
             }
             this.$refs[formName].validate((valid) => {
@@ -479,6 +482,7 @@ export default {
                         this.destructionShow = false;
                         this.consume_order_list();
                         this.consumeOperFormInit()
+                        this.baseInfoChange();
                     });
                 } else {
                     console.log("error submit!!");

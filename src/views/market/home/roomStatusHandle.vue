@@ -66,8 +66,8 @@
         </el-form>
     </el-row>
     <div slot="footer" class="dialog-footer" style="text-align:center">
-        <el-button style="width:80px;" @click="dataFormSubmit(2)">{{$t('desk.home_bulkDirty')}}</el-button>
-        <el-button style="width:80px;" type="primary" @click="dataFormSubmit(1)">{{$t('desk.home_bulkClear')}}</el-button>
+        <el-button  @click="dataFormSubmit(2)">{{$t('desk.home_bulkDirty')}}</el-button>
+        <el-button type="primary" @click="dataFormSubmit(1)">{{$t('desk.home_bulkClear')}}</el-button>
 <!--        <el-button :class="type==2?'active':''" @click="dataFormSubmit(2)">批量置脏</el-button>-->
 <!--        <el-button :class="type==1?'active':''" @click="typeChange(1)">批量置净</el-button>-->
 <!--        <el-row style="text-align:center; margin-bottom: 10px;">-->
@@ -162,7 +162,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.$F.doRequest(this, '/pms/hotel/oper_room_status', params, (res) => {
-                  this.$emit("initForm",'');
+                  this.$emit("init",'');
                   this.visible = false
                   this.$message({
                     type: 'success',

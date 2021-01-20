@@ -5,20 +5,21 @@
 				<el-tab-pane :label="$t('manager.ps_member')" name="member">
 					<Member :tab1_show= 'tab1_show'></Member>
 				</el-tab-pane>
-<!--				<el-tab-pane label="单位" name="unit">-->
-<!--					<unitList @backMember="backMember"></unitList>-->
-<!--				</el-tab-pane>-->
+				<el-tab-pane :label="$t('desk.book_traveler')" name="houseMaintain">
+					<HouseMaintain type="strategy"></HouseMaintain>
+				</el-tab-pane>
 			</el-tabs>
 		</el-row>
 	</div>
 </template>
 
 <script>
+    import HouseMaintain from '../guestCenter/HouseMaintain'
 	import Member from './type/member_list';
 	import unitList from './type/unitList';
 	export default {
 		components: {
-			Member, unitList
+			Member, unitList, HouseMaintain
 		},
 		data() {
 			return {
