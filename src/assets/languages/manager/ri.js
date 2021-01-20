@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-14 17:37:46
+ * @LastEditTime: 2021-01-20 17:46:05
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -551,8 +551,9 @@ module.exports = {
   add_nowBillPrice: '売掛入金',
   add_allDepartment: 'ALLセクション',
   add_start: '起用',
-  grsl_doorPri: '通常料金（１泊2食）',
+  grsl_doorPri: '調整前1泊2食付1名料金',
   grsl_newLivePri: '調整後料金（素泊まり）',
+  grsl_newLivePriA: '調整後料金',
   grsl_newPrice: '調整後料金（１泊2食）',
   grsl_oneLive: '1人素泊まり',
   hk_chooseChannel: '予約経路を選択してください',
@@ -562,6 +563,8 @@ module.exports = {
   add_tyepApri: '部屋ﾀｲﾌﾟ/料金',
   add_dealNight: 'チェック入れると出発予定客に対する処理しなければ、「日時更新」をできなくなります。',
   add_setDutity: 'チェック入れると部屋状態を「要清掃」を設定する',
+  grsl_resetSoon: '調整後1泊2食付1名料金',
+  add_onePrice: '1人素泊まり',
 
 
 

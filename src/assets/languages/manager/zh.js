@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 11:49:37
+ * @LastEditTime: 2021-01-20 17:05:53
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -373,12 +373,13 @@ module.exports = {
   grsl_selectZao: '请选择早餐',
   grsl_inputbedNum: '请输入床位数/座位',
   grsl_inputMorethanOne: '请输入大于1的数',
-  grsl_doorPri: '门市价(一人住宿+附餐费)',
+  grsl_doorPri: '调整前一泊二食',
   grsl_newLivePri: '新住宿价格(一人住宿)',
+  grsl_newLivePriA: '新住宿价格',
   grsl_newPrice: '新价格(一人住宿+附餐费)',
   grsl_oneLive: '(一人住宿)',
   grsl_inputNewPri: '请输入新价格',
-  grsl_: '',
+  grsl_resetSoon: '调整后的价格（一泊二食）',
   grsl_: '',
   grsl_: '',
   grsl_: '',
@@ -572,8 +573,7 @@ module.exports = {
   add_tyepApri: '房型/房价',
   add_dealNight: '如果勾选，则不处理应离未离无法将进行夜审',
   add_setDutity: '是否把在住过夜房置为脏房',
-  add_: '',
-  add_: '',
+  add_onePrice: '一人住宿价',
   add_: '',
   add_: '',
   add_: '',

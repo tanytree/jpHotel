@@ -57,15 +57,14 @@
 								<el-checkbox-group v-model="batchEditPriceForm.memberTypeId" @change="handleMemberChange">
 									<el-checkbox v-for="(item, index) in selectedRoomtype" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
 								</el-checkbox-group>
-
 							</el-row>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20">
+					<!-- <el-col :span="20">
 						<el-form-item :label="$t('desk.home_channel')" prop="channel">
 							<el-button type="primary" plain size="mini">{{batchEditPriceForm.channel}}</el-button>
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 					<el-col :span="20">
 						<el-form-item :label="$t('manager.grsl_selectTime')" prop="time">
 							<el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" value-format="yyyy-MM-dd"
@@ -102,7 +101,7 @@
 				</el-table-column>
 
 				<!-- 这是输入的住宿价,目的是为了会员享有一定的优惠,这里只展示一人住宿价 -->
-				<el-table-column prop="name" label="新住宿价格">
+				<el-table-column prop="name" :label="$t('manager.grsl_newLivePriA')">
 					<template slot-scope="{row, $index}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
@@ -119,7 +118,7 @@
 					</template>
 				</el-table-column>
 				<!-- 这里是前面输入的一人住宿价+早餐+晚餐的总价,如果前面没有输入的话,先展示早餐+晚餐的价格(附餐价) -->
-				<el-table-column prop="adjustPrice" label="调整后的价格（一人住宿价+附餐费）"></el-table-column>
+				<el-table-column prop="adjustPrice" :label="$t('manager.grsl_resetSoon')"></el-table-column>
 			</el-table>
 			<el-row style="padding: 20px 0px;">
 				<el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
@@ -137,7 +136,7 @@
 			</el-row>
 			<el-table ref="multipleTable" :data="ruleForm_Pie" tooltip-effect="dark" default-expand-all header-row-class-name="default">
 				<el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
-				<el-table-column prop="personNum" label="一人住宿价" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="personNum" :label="$t('manager.add_onePrice')" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div>
 							<div style="padding: 10px 0px;">
@@ -147,7 +146,7 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="newCustomPrice" label="修改价" width="250" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="newCustomPrice" :label="$t('manager.grsl_newLivePriA')" width="250" v-if="ruleForm.roomType == 1">
 					<template slot-scope="scope">
 						<div>
 							<div style="padding: 10px 0px;">
@@ -213,26 +212,21 @@
 				batchEditPriceForm: {
 					time: "", //开始日期跟结束日期在一起
 					memberTypeId: [], //会员类型id  String必填 多个用半角","分割
-					channel: "线下",
+					// channel: "线下",
 					startTime: "",
 					endTime: "",
 					weeks: [],
 					roomStrategyJson: [],
 				},
 				bathEditRules: {
-					channel: [{
-						required: true,
-						message: '请选择渠道',
-						trigger: "blur",
-					}],
 					memberTypeId: [{
 						required: true,
-						message: '请选择会员类型',
+						message: this.$t('desk.customer_chooseMemType'),
 						trigger: "blur",
 					}],
 					time: [{
 						required: true,
-						message: '请选择时间',
+						message: this.$t('manager.add_chooseTime'),
 						trigger: "blur",
 					}],
 				},
@@ -669,7 +663,7 @@
 						this.dayPriceList = res.dayPriceList;
 						this.dateList = res.dateList
 						this.dateList.unshift({
-							dateStr: '房型/房价',
+							dateStr: this.$t('manager.add_tyepApri'),
 							weekDay: "",
 						});
 						let i = 0;
