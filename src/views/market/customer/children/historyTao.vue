@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-08 14:26:04
+ * @LastEditTime: 2021-01-20 11:15:35
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -72,7 +72,7 @@
                 <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item> -->
         <br />
-        <el-form-item :label="$t('desk.order_checkinTime') + ':'">
+        <el-form-item :label="$t('desk.order_checkinTimeA') + ':'">
           <el-date-picker
             v-model="searchForm.inStartTime"
             value-format="yyyy-MM-dd"

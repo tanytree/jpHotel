@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-13 11:52:19
+ * @LastEditTime: 2021-01-20 14:21:01
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
   placeChoose: '選択してください',
   placeChooseA: '種別一覧',
   placeChooseB: '法人一覧',
-  confirm_delete: '削除確認いたしますか？',
+  confirm_delete: 'アカウント削除に確認しますか？',
   tip_desc: 'ご注意',
   request_success: '受取確認',
   delete_success: '削除確認',
@@ -78,6 +78,12 @@ module.exports = {
     { label: 'セクション責任者', value: 2 },
     { label: '支配人', value: 3 },
   ],
+  //缴费方式
+  paymentMethod: {
+    '1':'オンライン入金',
+    '2':'振込',
+    '3':'口座引き落とし',
+  },
   //查询字段
   queryText: {
     '1': '総客室数',

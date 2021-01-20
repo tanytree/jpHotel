@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-11 10:21:34
+ * @LastEditTime: 2021-01-20 10:56:32
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -74,6 +74,12 @@ module.exports = {
     '1': '启用',
     '2': '禁用'
   },
+  //缴费方式
+  paymentMethod: {
+  '1':'线上',
+  '2':'汇款',
+  '3':'账户扣款',
+},
   //查询字段
   queryText: {
     '1': '总客房数',

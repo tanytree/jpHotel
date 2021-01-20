@@ -69,7 +69,7 @@
                 <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item> -->
         <br />
-        <el-form-item :label="$t('desk.order_checkinTime') + ':'">
+        <el-form-item :label="$t('desk.order_checkinTimeA') + ':'">
           <el-date-picker
             v-model="searchForm.inStartTime"
             value-format="yyyy-MM-dd"

@@ -232,11 +232,10 @@
             selectPeople(value) {
                 let params = this.$F.deepClone(value);
                 this.dialog_info.departmentId = params.id;
-                this.dialog_info.title = params.menuTitle;
+                this.dialog_info.title = this.$i18n.locale == 'ri'?params.japanese:params.menuTitle;
                 this.dialog_info.header = params.header;
                 this.dialog_info.header_name = params.header_name;
                 this.get_dialogList(value);
-
                 this.dialogTableVisible = true;
             },
         },

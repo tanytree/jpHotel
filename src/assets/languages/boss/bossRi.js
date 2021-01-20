@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-14 11:04:33
+ * @LastEditTime: 2021-01-20 14:15:59
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -132,7 +132,7 @@ module.exports = {
   compensation_wageSetting: '報酬設定',
   compensation_setSuccess: '設置に成功!!',
   //总办 > 门店管理
-  store_createStore: '登録ホテル',
+  store_createStore: 'ホテル追加',
   store_storeName: 'ホテル名称',
   store_storeNameA: '利用ホテル',
   store_storeNameB: 'ホテル',
@@ -140,8 +140,8 @@ module.exports = {
   store_address: 'ホテル住所',
   store_addStore: 'ホテル追加',
   store_resetStore: 'ホテル情報修正',
-  store_loginAccount: 'ログインアカウント',
-  store_loginPassword: 'ログインパスワード',
+  store_loginAccount: 'アカウント',
+  store_loginPassword: 'パスワード',
   //人事部 （personnel）
   personnel_department: '所属編集',
   personnel_addDepart: '部門を加える',
@@ -156,7 +156,7 @@ module.exports = {
   add_icon: 'アイコン',
   add_color: '色',
   add_position: '役職',
-  add_editorEmpe: '編集',
+  add_editorEmpe: 'アカウント編集',
   add_peopleName: '名前',
   add_peopleAccount: 'アカウント',
   add_loginPass: 'パスワード',
@@ -286,6 +286,9 @@ module.exports = {
   report_goodsKinds: '付帯・商品別売上一覧（月次）',
   add_queryText: '検索キーワード',
   add_onlyLivePri: '素泊まり料金',
+  add_editorDepart: 'セクション権限',
+  add_editorEmploy: 'アカウント編集',
+  add_deleteEmploy: 'アカウント削除',
 
 
 

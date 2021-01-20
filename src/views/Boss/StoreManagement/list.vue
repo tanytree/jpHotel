@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-15 14:35:31
+ * @LastEditTime: 2021-01-20 10:23:25
  * @FilePath: \jiudian\src\views\Boss\StoreManagement\list.vue
  -->
 
@@ -36,7 +36,7 @@
     </el-card>
     <!-- 编辑or详情弹窗 -->
     <el-dialog top="0" :title="addUserForm.type=='add'? $t('boss.store_addStore'):$t('boss.store_resetStore')" :visible.sync="setUserFormVisible" class="setUserForm" width="40%">
-      <el-form ref="editForm" :model="addUserForm" :rules="rules" label-width="100px" size="mini">
+      <el-form ref="editForm" :model="addUserForm" :rules="rules" label-width="110px" size="mini">
         <el-row class="row">
           <el-row class="cell">
             <el-col :span="18" class="col">

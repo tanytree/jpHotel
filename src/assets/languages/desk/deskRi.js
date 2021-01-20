@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-18 14:35:57
+ * @LastEditTime: 2021-01-20 11:19:59
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -208,6 +208,7 @@ module.exports = {
   order_departureDate: "出発予定",
   order_checkinWay: "宿泊種別",
   order_checkinTime: "宿泊日",
+  order_checkinTimeA: "C/I日",
   order_outOrder: '外部予約番号',
   order_moblePhone: "携帯番号",
   order_moblePhoneA: "電話",
@@ -269,8 +270,10 @@ module.exports = {
   customer_upgradeCard: 'ランクアップ',
   customer_cardCost: 'ランクアップ追加分を補う',
   customer_payType: '支払方法',
+  customer_payTypeA: '入金種別',
   customer_unionpay: 'クレジットカード',
   customer_payPrice: '支払金額',
+  customer_payPriceA: '入金金額',
   customer_inputReason: '復活理由を入力してください',
   customer_notBlink: '空白は処理できません',
   customer_inputRemark: '備考を入力してください',
@@ -380,10 +383,10 @@ module.exports = {
   customer_roomType: '利用種別',
   customer_venue: '会場',
   customer_guestRoom: '客室',
-  customer_leaveStoreDate: '出発日',
+  customer_leaveStoreDate: 'C/O日',
   customer_livePeople: '宿泊者',
     customer_reservePerson: '予約者',
-  customer_liveToleave: '到着−出発日',
+  customer_liveToleave: 'C/I−C/O日',
   customer_arrived: 'C/I',
   customer_leave: 'C/O',
   customer_dayNum: '日数',
@@ -818,16 +821,16 @@ module.exports = {
   customer_ka: 'カード',
   customer_totalCharge: '累積利用金額',
   customer_yearPriceDetail: '年会費明細',
-  customer_getYearPrice: '年会費入金登録',
+  customer_getYearPrice: '年会費入金記録',
   customer_haveCard: '正常',
   customer_haveLoss: '紛失届済み',
   customer_feeYear: '支払年度',
-  customer_selectYears: '年度を選択してください',
+  customer_selectYears: '年度',
   customer_feeStore: '入金先',
   customer_feeTime: '入金時間',
   customer_feePrice: '入金金額',
   customer_selectFeeStore: '入金先を選択してください',
-  customer_addFeeNote: '年会費記録を追加',
+  customer_addFeeNote: '年会費記録追加',
   customer_offlinePayment: 'オフライン入金',
   customer_onlinePayment: 'オンライン入金',
   customer_pleaseSelectYear: '年度を選択してください',

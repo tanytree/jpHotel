@@ -50,7 +50,7 @@
         <div class="inner">
           <div v-for="(item, index) in menuList" :key="index" class="checkItem">
             <div class="label">
-              <span>{{item.menuTitle}}</span>
+              <span>{{$i18n.locale == 'ri'?item.japanese:item.menuTitle}}</span>
               <el-checkbox
                 :indeterminate="item.isIndeterminate"
                 v-model="item.checkAll"
@@ -62,7 +62,7 @@
                 <div class="child">
                   <div class="left">
                     <i class="icon el-icon-more"></i>
-                    <span>{{child.menuTitle}}</span>
+                    <span>{{$i18n.locale == 'ri'?child.japanese:child.menuTitle}}</span>
                   </div>
                   <el-switch
                     v-model="child.choose"
@@ -178,6 +178,7 @@ export default {
             this.menuList[i].childList.choose = false;
           }
         }
+        console.log(this.menuList);
         this.getUser_role(this.cur.id);
         that.$forceUpdate();
       });

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-13 10:36:40
+ * @LastEditTime: 2021-01-20 11:46:50
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -389,6 +389,11 @@
         </el-table-column>
         <el-table-column :label="$t('desk.customer_feeYear')" prop="year" align="center" width="180px;">
         </el-table-column>
+          <el-table-column :label="$t('desk.customer_payTypeA')"  align="center" width="180px;">
+           <template slot-scope="{row}">
+              {{checktype(row.type)}}
+           </template>
+        </el-table-column>
         <el-table-column :label="$t('desk.home_note')" align="center" prop="remark">
         </el-table-column>
       </el-table>
@@ -404,16 +409,15 @@
         <el-form-item :label="$t('desk.customer_selectYears') + ':'" prop="year">
           <el-date-picker type="year" :placeholder="$t('desk.customer_selectYears')" v-model="addfeeFrom.year" format="yyyy" value-format="yyyy" style="width: 270px"></el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_payType') + ':'" prop="type">
+        <el-form-item :label="$t('desk.customer_payTypeA') + ':'" prop="type">
           <el-select v-model="addfeeFrom.type" :placeholder="$t('desk.customer_choosePayType')" style="width: 270px">
-            <el-option :label="$t('desk.customer_offlinePayment')" value="1"></el-option>
-            <el-option :label="$t('desk.customer_onlinePayment')" value="2"></el-option>
+              <el-option v-for="(value,index) in $t('commons.paymentMethod')" :label="value" :value="index" :key="index"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_feeTime') + ':'" prop="createDate">
           <el-date-picker type="date" :placeholder="$t('desk.serve_chooseDate')" value-format="yyyy-MM-dd" v-model="addfeeFrom.createDate" style="width: 270px"></el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_payPrice') + ':'" prop="fee">
+        <el-form-item :label="$t('desk.customer_payPriceA') + ':'" prop="fee">
           <el-input v-model="addfeeFrom.fee" style="width: 270px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.home_note') + ':'">
@@ -729,6 +733,13 @@ export default {
          return obj[i];
        }
      }
+    },
+     checktype(type){
+      for(let i in this.$t('commons.paymentMethod')){
+        if(type == i){
+          return this.$t('commons.paymentMethod')[i];
+        }
+      }
     },
     handleChange(value) {
       if (value) {

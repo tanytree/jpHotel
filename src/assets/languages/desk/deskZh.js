@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-18 13:38:25
+ * @LastEditTime: 2021-01-20 11:15:50
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -351,6 +351,7 @@ module.exports = {
   order_departureDate: "预离日期",
   order_checkinWay: "入住方式",
   order_checkinTime: "入住日期",
+  order_checkinTimeA: "入住日期",
   order_outOrder: '外部订单号',
   order_moblePhone: "手机号",
   order_moblePhoneA: "手机号",
@@ -530,8 +531,10 @@ module.exports = {
   customer_upgradeCard: '升级卡',
   customer_cardCost: '补卡费',
   customer_payType: '支付方式',
+  customer_payTypeA: '支付方式',
   customer_unionpay: '银联',
   customer_payPrice: '支付费用',
+  customer_payPriceA: '支付费用',
   customer_inputReason: '请输入恢复原因',
   customer_notBlink: '不能为空',
   customer_inputRemark: '请输入备注信息',
