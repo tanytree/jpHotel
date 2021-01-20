@@ -67,54 +67,40 @@
     </el-row>
     <el-row>
       <h3>
-       {{$t('food.shift.tabs_title_3')}} &nbsp;&nbsp;
-        <el-tag size="mini">{{$t('manager.add_nowStyle')}}：
-            <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
-            <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
-            <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
-        </el-tag>&nbsp;&nbsp;
+          本班收款
         <a @click="show = true" class="el-icon-question" style="color: #126EFF;"></a>
       </h3>
-      <div class="handInCash margin-tb-10">
+
+        <div class="handInCash margin-tb-10">
+          <el-row class="padding-tb-10">
+            <el-col :span="8" class="li">
+                <div class="item">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
+                <div class="item">{{$t('manager.add_lastHold')}}：{{info.upMoneyRetained}}</div>
+            </el-col>
+            <el-col :span="8" class="li">
+                <div class="item">本班现金收款：{{info.nowMoneyRetained}}</div>
+                <div class="item">本班信用卡收款：{{info.nowCreditCardHandin}}</div>
+                <div class="item"  v-if="tabCurr == 1" >本班挂账收款：0</div>
+            </el-col>
+            <el-col :span="8" class="li">
+                <div class="item">本班下方备用金：0</div>
+            </el-col>
+          </el-row>
+        </div>
+
+      <!-- <div class="handInCash margin-tb-10">
         <el-row class="padding-tb-10">
           <el-col :span="12" class="li">
-            <!-- <div class="item">上班现金留存：{{info.upMoneyRetained}}</div> -->
             <div class="item">{{$t('desk.serve_flightCashUp')}}：{{info.nowMoneyHandin}}</div>
             <div class="item">{{$t('manager.add_cashHold')}}：{{info.nowMoneyRetained}}</div>
           </el-col>
-          <!-- <el-col :span="4" class="li">
-            <div class="item">上班微信留存：{{info.upWeixinRetained}}</div>
-            <div class="item">本班微信上交：{{info.upWeixinRetained}}</div>
-            <div class="item">本班微信留存：{{info.upWeixinRetained}}</div>
-          </el-col>
-          <el-col :span="4" class="li">
-            <div class="item">上班支付宝留存：{{info.upAliRetained}}</div>
-            <div class="item">本班支付宝上交：{{info.upAliRetained}}</div>
-            <div class="item">本班支付宝留存：{{info.upAliRetained}}</div>
-          </el-col> -->
           <el-col :span="12" class="li">
             <div class="item">{{$t('manager.add_creditCardUp')}}：{{info.nowCreditCardHandin}}</div>
-            <!-- <div class="item">本班信用卡留存：{{info.nowCreditCardRetained}}</div> -->
           </el-col>
         </el-row>
-        <!-- <el-row class="ftRow">本班走结订单金额：{{info.goSettlement}}</el-row> -->
-      </div>
+      </div> -->
     </el-row>
-    <!-- <el-row>
-      <h3>本班报表</h3>
-      <el-row>
-        <el-col :span="4">
-          <div class="item">
-            交班报表(按班次)&nbsp; &nbsp;<el-button size="mini">预览</el-button>
-          </div>
-        </el-col>
-        <el-col :span="4">
-          <div class="item">
-            交班报表(按收银员)&nbsp; &nbsp;<el-button size="mini">预览</el-button>
-          </div>
-        </el-col>
-      </el-row>
-    </el-row> -->
+
     <el-row style="text-align: center;margin-top: 20px;">
         <el-divider></el-divider>
         <el-form inline label-width="150px" style="padding-top: 30px;">
@@ -166,11 +152,36 @@
             ({{info.upMoneyRetained}})+({{info.nowMoneyRetained}})-({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
             =({{getUpPrice()}})
         </div>
-        <!-- <div>本班微信上交=本班微信收款=(0)</div> -->
+        <!-- <div>本班微信上交=本班微信收款=(0)</div> -->1
         <div class="margin-b-10">{{$t('manager.add_creditCardUp')}}={{$t('manager.add_nowCardGet')}}=({{info.nowCreditCardHandin}})</div>
         <div class="margin-b-10"  v-if="tabCurr == 1" >{{$t('manager.add_nowBillUp')}}={{$t('manager.add_nowBillPrice')}}</div>
         <div class="margin-b-10"></div>
      </el-dialog>
+
+
+
+      <!-- <div class="handInCash margin-tb-10">
+        <el-row class="padding-tb-10">
+          <el-col :span="8" class="li">
+              <div class="item">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
+              <div class="item">上班留存备用金：{{info.upMoneyRetained}}</div>
+          </el-col>
+          <el-col :span="8" class="li">
+              <div class="item">本班现金收款：{{info.nowMoneyRetained}}</div>
+              <div class="item">本班信用卡收款：{{info.nowCreditCardHandin}}</div>
+              <div class="item"  v-if="tabCurr == 1" >本班挂账收款：2000.00</div>
+          </el-col>
+          <el-col :span="8" class="li">
+              <div class="item">本班下方备用金：100.00</div>
+          </el-col>
+        </el-row>
+      </div> -->
+
+
+
+
+
+
   </div>
 </template>
 

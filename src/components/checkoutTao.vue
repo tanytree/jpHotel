@@ -14,6 +14,7 @@
       <span>{{$t('desk.customer_livePeople')}}：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}</span>
     </div>
     <div class="priceBox">
+        {{detailData.totalPrice}}
       <div class="leftPrice" v-if="detailData.totalPrice>0"><span>{{$t('desk.order_receivable')}}</span>：{{detailData.totalPrice}}</div>
       <div class="leftPrice" v-if="detailData.totalPrice<0"><span>{{$t('desk.order_shouldBack')}}</span>：{{getPriceStr(detailData.totalPrice)}}</div>
       <div class="centerLine"></div>
@@ -47,16 +48,16 @@
           <el-radio v-if="key == 1" v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      
-      
-      
+
+
+
      <!-- <el-form-item :label="$t('desk.customer_refundWay')" prop="resource" v-if="detailData.totalPrice<0">
         <el-radio-group v-model="checkoutForm.resource">
           <el-radio label="">{{$t('desk.serve_cashA')}}</el-radio>
         </el-radio-group>
       </el-form-item> -->
 
-      <el-form-item :label="$t('desk.book_accountWay')" v-if="checkoutForm.payType == '3'" prop="region">
+      <el-form-item :label="$t('desk.book_accountWay')" prop="region">
         <el-select v-model="checkoutForm.region" :placeholder="$t('desk.book_chooseAway')" style="width: 260px">
           <el-option v-for="(item, index) in $t('commons.paymentWay')" :key="index" :value="index" :label="item"></el-option>
         </el-select>
@@ -67,10 +68,10 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('desk.book_discountAmount')">
-        <el-input v-model="checkoutForm.name" style="width: 260px"></el-input>
+        <el-input size="small" v-model="checkoutForm.preferentialPrice" style="width: 260px" @change="changPreferentialPrice"></el-input>
       </el-form-item>
       <el-form-item :label="$t('desk.customer_sum')" prop="name">
-        <el-input v-model="checkoutForm.consumePrice" :disabled="true" style="width: 260px"></el-input>
+        <el-input  size="small" v-model="checkoutForm.payPrice" :disabled="true" style="width: 260px"></el-input>
       </el-form-item>
       <el-form-item :label="$t('desk.home_note')">
         <el-input type="textarea" v-model="checkoutForm.remark"></el-input>
@@ -84,6 +85,11 @@
       <el-button type="primary" @click="set_out_check_in">{{$t('desk.book_billAback')}}</el-button>
     </div>
   </el-dialog>
+
+  <!--
+    1.商店部，餐饮部 2个类型价格不用计算税前税后
+   -->
+
 </template>
  <script>
 export default {
@@ -92,12 +98,16 @@ export default {
     return {
       unitList: [],
       checkoutVisible: false, //内层结账退房dialog
+      consumePrice:'',
       checkoutForm: {
-        consumePrice: '',
+        checkInId:'',
+        priceType:'',
+        payPrice: '',
         payType: "1",
         preferentialPrice:'',
         region:'',
         enterName:''
+
       }, //退房结账弹框的表单
       consumeOrderList:[]
     };
@@ -132,18 +142,19 @@ export default {
   created() {
     this.getUnitList();
   },
+
   methods: {
     resetVisibel() {
       this.checkoutVisible = true;
       this.getConsumeOrderList();
-      // if (this.detailData.totalPrice > 0) {
-      //   this.checkoutForm.consumePrice = this.detailData.totalPrice;
-      // } else {
-      //   this.checkoutForm.consumePrice = -this.detailData.totalPrice;
-      // }
-      console.log(this.detailData);
-      console.log(this.currentRoom);
-      console.log(this.currentRoom.checkinId);
+      if (this.detailData.totalPrice > 0) {
+        this.consumePrice = this.detailData.totalPrice;
+      } else {
+        this.checkoutForm.payPrice = this.detailData.consumePrice;
+      }
+
+    console.log(this.detailData)
+    console.log(this.detailData.totalPrice)
 
     },
     //请求 单位 列表
@@ -153,6 +164,17 @@ export default {
         console.log(this.unitList);
       });
     },
+
+
+    //修改优惠价格
+    changPreferentialPrice(){
+        let preferentialPrice = this.checkoutForm.preferentialPrice || 0
+        let price = this.checkoutForm.payPrice
+        this.checkoutForm.payPrice = price - preferentialPrice
+        // console.log()
+
+    },
+    //
     getPriceStr(v){
         if(v){
             return Math.abs(v);
@@ -166,12 +188,38 @@ export default {
             pageSize: 1000
         }
         this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
-            console.log(res.consumeOrderList)
-            this.consumeOrderList = res.consumeOrderList
+            // console.log(res.consumeOrderList)
+            let list = res.consumeOrderList
+            let priceTypeList = [5,6,7,8,12,14,15,16,17,18] //消费类集合
+            let arr = []
+            for(let i = 0;i < list.length;i++){
+                // console.log(list[i].priceType)
+                let priceType = list[i].priceType
+                if(priceTypeList.indexOf(priceType) > -1 &&   list[i].state == 1){
+                    arr.push(list[i])
+                }
+            }
+            console.log(arr)
+            this.consumeOrderList = arr
         });
     },
     //退房结账
+
+   consume_oper(){
+
+        let params = {
+
+        }
+        this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
+
+        })
+
+   },
+
+
     set_out_check_in() {
+
+
 
            // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
            // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
@@ -263,6 +311,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     .rightTopImg {
       position: relative;
       bottom: 15px;
@@ -275,8 +324,8 @@ export default {
     }
     .hoverBox {
       display: none;
-      position: relative;
-      top: 50px;
+      position: absolute;
+      top: 20px;
       left: 10px;
       box-sizing: border-box;
       padding: 20px;

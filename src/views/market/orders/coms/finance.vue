@@ -41,8 +41,7 @@
         <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
             <template slot-scope="{row}">
-                {{F_priceType(row.priceType)}}
-                /    {{row.priceType}}
+             {{row.priceType}}/   {{F_priceType(row.priceType)}}
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" >
@@ -87,7 +86,7 @@
                 <span v-if="row.priceType == 3">
                     <span v-if="row.payType == 1">现金收款</span>
                     <span v-if="row.payType == 2">信用卡收款 </span>
-                    <span v-if="row.payType == 4">其他押金</span>
+                    <span v-if="row.payType == 4">其他收款</span>
                 </span>
                 <span v-if="row.priceType == 5">房费</span>
                 <span v-if="row.priceType == 6">房费</span>
@@ -102,8 +101,29 @@
                    </span>
                 </span>
                 <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
-                <span v-if="row.priceType == 9">
-                    全部冲调 -- {{row.richList[0].priceType}}
+                <!-- 全部冲调 -->
+                <span v-if="row.priceType == 9 && row.richList.length > 0">
+                    {{row.richList[0].priceType}}/全部冲调 --
+                    <span v-if="row.richList[0].priceType == 1">
+                         <span v-if="row.richList[0].payType == 1">现金定金</span>
+                         <span v-if="row.richList[0].payType == 2">信用卡订金 </span>
+                         <span v-if="row.richList[0].payType == 4">其他定金 </span>
+                     </span>
+                    <span v-if="row.richList[0].priceType == 2">
+                        <span v-if="row.richList[0].payType == 1">现金押金</span>
+                        <span v-if="row.richList[0].payType == 2">信用卡押金 </span>
+                        <span v-if="row.richList[0].payType == 4">其他押金</span>
+                    </span>
+                    <span v-if="row.richList[0].priceType == 3">
+                        <span v-if="row.richList[0].payType == 1">现金收款</span>
+                        <span v-if="row.richList[0].payType == 2">信用卡收款 </span>
+                        <span v-if="row.richList[0].payType == 4">其他收款</span>
+                    </span>
+                    <span v-if="row.richList[0].priceType == 5"> {{F_priceType(row.richList[0].priceType)}} </span>
+                    <span v-if="row.richList[0].priceType == 6"> {{F_priceType(row.richList[0].priceType)}} </span>
+                    <span v-if="row.richList[0].priceType == 7">
+                        {{row.richList[0].damageName}}(￥{{row.richList[0].unitPrice}}) * {{row.richList[0].damageCount}}
+                    </span>
                     <span v-if="row.richList[0].priceType == 8">
                         <span v-for="item in row.richGoodsList">
                              {{item.goodsName}}(￥{{item.price}}) * {{item.goodsCount}}
@@ -112,8 +132,23 @@
                     <span v-if="row.richList[0].priceType == 13">
                        {{row.richList[0].creditName}}({{$t('commons.paymentWay.'+row.richList[0].putUp)}})
                     </span>
-                    
-
+                    <span v-if="row.richList[0].priceType == 14">
+                        <span v-if="row.richList[0].disherOrderSubList&&row.richList[0].disherOrderSubList.length > 0">
+                            <span v-for="item in row.richList[0].disherOrderSubList">
+                                {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
+                            </span>
+                        </span>
+                    </span>
+                    <span v-if="row.richList[0].priceType == 15">
+                        <span v-if="row.richList[0]">
+                           {{F_priceType(row.richList[0].priceType)}} ￥{{row.richList[0].unitPrice}}) * {{row.richList[0].taxCount}}
+                        </span>
+                    </span>
+                    <span v-if="row.richList[0].priceType == 16">
+                        <span v-if="row.richList[0]">
+                           {{F_priceType(row.richList[0].priceType)}} ￥{{row.richList[0].unitPrice}}) * {{row.richList[0].taxCount}}
+                        </span>
+                    </span>
                 </span>
 
                 <span v-if="row.priceType == 10">
@@ -892,10 +927,12 @@ export default {
             if (e == 5) {
                 this.taxCount = ''
                 if (this.currentRoom) {
-                    this.consumeOperForm.consumePrice = this.currentRoom.realPrice
+                    console.log(this.currentRoom.realPrice)
+                    this.consumeOperForm.consumePrice = this.currentRoom.realPrice || 0
                 } else {
                     if (this.detailData && this.detailData.inRoomList.length) {
-                        this.consumeOperForm.consumePrice = this.detailData.inRoomList[0].realPrice
+                        console.log(this.detailData.inRoomList[0].realPrice)
+                        this.consumeOperForm.consumePrice = this.detailData.inRoomList[0].realPrice || 0
                     } else {
                         this.consumeOperForm.consumePrice = ''
                         this.$message.error(this.$t('desk.order_noPeople'));
@@ -906,11 +943,13 @@ export default {
                 this.taxCount = ''
                 console.log(this.currentRoom)
                 if (this.currentRoom) {
-                    this.consumeOperForm.consumePrice = (this.currentRoom.realPrice * 0.5).toFixed(2)
+                    console.log(this.currentRoom.realPrice * 0.5)
+                    this.consumeOperForm.consumePrice = (this.currentRoom.realPrice * 0.5).toFixed(0) || 0
 
                 } else {
                     if (this.detailData && this.detailData.inRoomList.length) {
-                        this.consumeOperForm.consumePrice = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(2)
+                        console.log(this.detailData.inRoomList[0].realPrice)
+                        this.consumeOperForm.consumePrice = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(0) || 0
                     } else {
                         this.consumeOperForm.consumePrice = ''
                         this.$message.error(this.$t('desk.order_noPeople'));
