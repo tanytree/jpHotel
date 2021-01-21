@@ -379,7 +379,7 @@ export default {
         margin-bottom: 20px;
 
         & > span {
-          width: 100px;
+          width: 150px;
           display: inline-block;
           text-align: left;
         }

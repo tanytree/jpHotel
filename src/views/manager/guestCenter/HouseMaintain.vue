@@ -152,10 +152,10 @@
 						</el-form-item>
 
 						<!-- 是否含消费税 -->
-						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
-							<el-radio v-model="ruleForm.taxStatus" :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>
-							<el-radio v-model="ruleForm.taxStatus" :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>
-						</el-form-item>
+<!--						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">-->
+<!--							<el-radio v-model="ruleForm.taxStatus" :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>-->
+<!--							<el-radio v-model="ruleForm.taxStatus" :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>-->
+<!--						</el-form-item>-->
 
 						<!-- 是否包含服务费 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
@@ -329,7 +329,7 @@
 					otaFeizhuPrice: '',
 					otaXiechengPrice: '',
 					otaMeituan: '',
-					taxStatus: 1,
+					taxStatus: 0,
 					seviceStatus: 2
 				},
 				selectedInfo: {}, // 选中的某条

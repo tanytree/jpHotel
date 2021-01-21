@@ -35,7 +35,7 @@
                   <span>{{ $i18n.locale == 'ri' ? activeLeftDepartMent.japanese : (activeLeftDepartMent.menuAliasTitle || activeLeftDepartMent.menuTitle) }}
                   </span>
                   <span class="nums">
-                    <em class="text-red">{{employeesList.length}}</em>/{{storesUserCount}}
+                    <em class="text-red">{{employeesList.length}}</em>/{{storesUserCount - 1}}
                   </span>
                 </h3>
                 <div>

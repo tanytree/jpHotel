@@ -9,7 +9,7 @@
             <el-button size="medium" type="primary" class="submit" icon="el-icon-plus" @click="addMeal">{{$t('desk.customer_newAdd')}}</el-button>
         </div>
         <div class="components-edit">
-            <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
+            <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small" >
                 <el-table-column prop="mealName" :label="$t('manager.add_packageName')"></el-table-column>
                 <el-table-column prop="mealTime" :label="$t('manager.add_packageType')" align="center" width="150">
                     <template slot-scope="scope">
@@ -41,7 +41,7 @@
         </div>
 
         <el-dialog :title="mealTitle" :visible.sync="mealVisible" top="0" width="600px" :close-on-click-modal="false">
-            <el-form label-position="right" label-width="120px" size="medium" :rules="rules" :model="meal">
+            <el-form label-position="right" label-width="100px" size="medium" :rules="rules" :model="meal">
                 <el-form-item :label="$t('manager.add_packageName')+':'" prop="mealName">
                     <el-input v-model="meal.mealName"></el-input>
                 </el-form-item>

@@ -17,7 +17,7 @@ module.exports = {
   placeChoose: '選択してください',
   placeChooseA: '種別一覧',
   placeChooseB: '法人一覧',
-  confirm_delete: 'アカウント削除に確認しますか？',
+  confirm_delete: '予約経路リストから削除に確認しますか？',
   tip_desc: 'ご注意',
   request_success: '受取確認',
   delete_success: '削除確認',

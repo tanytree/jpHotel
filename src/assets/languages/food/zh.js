@@ -289,7 +289,7 @@ module.exports = {
         viewer_name:'审批人',
         storage_detail:'明细',
         taxStatus:'是否包含税',
-        seviceStatus:'是否包含服务费',
+        seviceStatus:'消費税',
         costPrice:'成本价格',
         costPrice_desc:'成本价格',
         is_tax:'含税',
