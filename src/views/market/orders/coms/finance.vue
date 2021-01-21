@@ -39,9 +39,9 @@
         </el-table-column>
         <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
-        <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
+        <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
             <template slot-scope="{row}">
-             {{row.priceType}}/   {{F_priceType(row.priceType)}}
+             <span :class="row.priceType == 9 || row.priceType == 10 ? 'text-red' : ''">{{row.priceType}}/   {{F_priceType(row.priceType)}}</span>
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" >
@@ -159,7 +159,7 @@
                 </span>
                 <span v-if="row.priceType == 14">
                    <!-- 具体餐品 -->
-                   <span v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="item in row.disherOrderSubList">
+                   <span  class="toDot" v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="item in row.disherOrderSubList">
                        {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
                    </span>
                 </span>
@@ -168,6 +168,12 @@
                 </span>
                 <span v-if="row.priceType == 16">
                     住宿税(￥{{row.unitPrice}}) * {{row.taxCount}}
+                </span>
+                <span v-if="row.priceType == 22">
+                    <!-- 商品费 -->
+                    <span class="toDot" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
+                        {{item.goodsName}}({{item.unitPrice}})*{{item.goodsCount}}
+                    </span>
                 </span>
 		    </template>
 		</el-table-column>
@@ -180,7 +186,7 @@
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
             <template slot-scope="{row}">
-                <span :style="row.priceType == 9 || row.priceType == 10 ? 'color:#3a8ee6' : '' ">{{row.remark}}</span>
+                <span :class="row.priceType == 9 || row.priceType == 10 ? 'text-red' : ''">{{row.remark}}</span>
             </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')">
@@ -728,9 +734,12 @@ export default {
                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
                    return;
                 }
-
-                let priceType  =  this.destructionList[0].priceType
-                let priceTypeList = [5,6,7,8,14,15,16,17,18]
+                // let priceType  =  this.destructionList[0].priceType
+                // if(priceType == 9){
+                //     this.$message.error('已冲调记录不能被冲调!')
+                //     return false
+                // }
+                let priceTypeList = [5,6,7,8,14,15,16,17,18,22]
                 if(priceTypeList.indexOf(priceType) > -1){
                     console.log('消费类')
                     params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrice)
@@ -738,7 +747,6 @@ export default {
                     console.log('付款类')
                     params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.payPrice)
                 }
-                console.log(this.destructionList[0])
                 params.richIds = this.destructionList[0].id
                 params.priceType = this.consumeOperForm.priceType
                 params.state = this.destructionList[0].state
@@ -1075,18 +1083,24 @@ export default {
         destructionHandle() {
             if (this.multipleSelection.length < 1) {
                 this.$message.error(this.$t('desk.order_selectOperateAccount'));
-                return
+                return false
             }
             if (this.multipleSelection.length > 1) {
                 this.$message.error(this.$t('desk.order_onlyOneAccount'));
-                return
+                return false
             }
+
             for (let k in this.multipleSelection) {
                 if (this.multipleSelection[k].billingType == 1) {
                     this.$message.error(this.$t('desk.order_autoTiePrice'));
-                    return
+                    return false
                 }
-
+                  //判断是否是冲调记录
+                let priceType  =  this.multipleSelection[k].priceType
+                if(priceType == 9 || priceType == 10){
+                    this.$message.error('已冲调记录不能被冲调!')
+                    return false
+                }
             }
             this.destructionList = this.multipleSelection
             this.destructionShow = true
@@ -1161,7 +1175,7 @@ export default {
                 // console.log(this.destructionList[0].consumePrice)
                 console.log(this.destructionList[0])
                 let priceType  =  this.destructionList[0].priceType //当前冲调记录类型
-                let priceTypeList = [5,6,7,8,14,15,16,17,18] //消费类
+                let priceTypeList = [5,6,7,8,14,15,16,17,18,22] //消费类
                 if(priceTypeList.indexOf(priceType) > -1){
                     console.log('消费类')
                     this.consumeOperForm.payPrice = ''
@@ -1220,6 +1234,20 @@ export default {
 }
 </style>
 <style lang="less" scoped>
+.toDot{
+    padding-right:5px;
+    display: inline-block;
+    position: relative;
+    &&::after{
+        content: '-';
+    }
+    &&:last-child:after{
+        content: '';
+    }
+}
+
+
+
 .base p {
     font-size: 12px
 }
@@ -1245,6 +1273,10 @@ export default {
             border-left: 1px solid #eee;
             padding-left: 50px;
         }
+
+
+
     }
+
 }
 </style>
