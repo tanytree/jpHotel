@@ -99,10 +99,10 @@
                                         :key="index"
                                         >{{ value.name }}</el-radio
                                     > -->
-									<el-radio :label="1">面山</el-radio>
-									<el-radio :label="2">面海</el-radio>
-									<el-radio :label="3">面湖</el-radio>
-									<el-radio :label="4">无</el-radio>
+									<el-radio :label="1">{{$t("manager.hk_toward_shan")}}</el-radio>
+									<el-radio :label="2">{{$t("manager.hk_toward_hai")}}</el-radio>
+									<el-radio :label="3">{{$t("manager.hk_toward_hu")}}</el-radio>
+									<el-radio :label="4">{{$t("manager.hk_toward_malu")}}</el-radio>
 								</el-radio-group>
 							</el-col>
 						</el-row>
@@ -135,10 +135,10 @@
 							<el-col :span="20">
 								<el-radio-group v-model="selectFrom.smokeFlag">
 									<el-radio :label="1">{{
-                                        $t("manager.hk_yes")
+                                        $t("manager.hk_shi")
                                     }}</el-radio>
 									<el-radio :label="2">{{
-                                        $t("manager.hk_no")
+                                        $t("manager.hk_fou")
                                     }}</el-radio>
 								</el-radio-group>
 							</el-col>
@@ -311,22 +311,22 @@
 			// 选择--获取房型
 			get_room_type_list() {
 				// debugger
-			    // this.roomType = []
-			    this.$F.doRequest(this, "/pms/hotel/room_type_list", {}, (res) => {
-			        res.roomtype.forEach((item, index) => {
-			            item.label = item.houseName;
-			            item.value = item.id;
-			            this.roomType[0].children.push(item);
-			        });
-			        this.roomType[0].label = this.guestRooms;
-			        res.meetingtype.forEach((item, index) => {
-			            item.label = item.houseName;
-			            item.value = item.id;
-			            this.roomType[1].children.push(item);
-			        });
-			        this.roomType[1].label = this.chamber;
-			        console.log(this.roomType);
-			    });
+				// this.roomType = []
+				this.$F.doRequest(this, "/pms/hotel/room_type_list", {}, (res) => {
+					res.roomtype.forEach((item, index) => {
+						item.label = item.houseName;
+						item.value = item.id;
+						this.roomType[0].children.push(item);
+					});
+					this.roomType[0].label = this.guestRooms;
+					res.meetingtype.forEach((item, index) => {
+						item.label = item.houseName;
+						item.value = item.id;
+						this.roomType[1].children.push(item);
+					});
+					this.roomType[1].label = this.chamber;
+					console.log(this.roomType);
+				});
 			},
 			// 保存
 			saveInfo(ruleForm) {

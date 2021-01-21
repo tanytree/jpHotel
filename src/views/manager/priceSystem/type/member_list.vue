@@ -432,6 +432,7 @@
 				params.startTime = this.batchEditPriceForm.time[0];
 				params.endTime = this.batchEditPriceForm.time[1];
 				params.memberTypeId = this.checkbox_value_pie;
+				params.channel = '线下';
 				this.batchEditPriceForm.weeks.forEach((item, index) => {
 					if (!item) {
 						this.batchEditPriceForm.weeks.splice(index, 1);
