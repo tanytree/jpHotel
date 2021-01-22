@@ -343,7 +343,7 @@
                     this.tab_show = false;
                     row.capsPriceFlag = row.capsPriceFlag == 2 ? true : false;
                     this.rowData = row;
-                    console.log(row)
+                    this.changeType(row.categoryType)
                 }
             },
             //切换到商品管理

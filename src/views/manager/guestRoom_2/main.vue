@@ -68,6 +68,9 @@
                 if(this.activeName == 'GoodsMg' || this.activeName == 'StockMg') {
                     this.getHotelGoodsData(this.pageForm);
                 } else if (this.activeName == 'SalePoint') {
+                    this.getManageData((item) => {
+                        this.getSellingData(this.pageForm, '', '', item.id)
+                    })
                     // this.getSellingData(this.pageForm);
                 } else if (this.activeName == 'IntoKuAudit') {
                     this.getAuditData(this.pageForm, 1);
@@ -151,6 +154,18 @@
                     this.salesTotal = res.page.count;
                     callback && callback(res.page)
                 })
+            },
+            getManageData(callback) {
+                var a = this;
+                this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", {}, (res) => {
+                    a.salePoint = res.list.reverse();
+                    a.salePoint.some(item => {
+                        if (item.state != 2) {
+                            callback && callback(item)
+                            return true;
+                        }
+                    })
+                });
             },
             getAuditData(obj, authStatus, soteageType, creatorName, startDate, endDate, content) {
                 const params = {

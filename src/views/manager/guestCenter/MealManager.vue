@@ -57,6 +57,18 @@
                         <el-radio :label="2">{{$t('manager.hk_dinner')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
+                <el-form-item :label="$t('food.common.taxStatus')" prop="taxStatus">
+                    <el-radio-group v-model="meal.taxStatus">
+                        <el-radio :label="1">{{$t('food.common.no_tax')}}</el-radio>
+                        <el-radio :label="2">{{$t('food.common.is_tax')}}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item :label="$t('food.common.seviceStatus')" prop="seviceStatus">
+                    <el-radio-group v-model="meal.seviceStatus">
+                        <el-radio :label="1">{{$t('manager.grsl_goodsServiceN')}}</el-radio>
+                        <el-radio :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
                 <!--<el-form-item :label="$t('boss.loginDetail_state')+ '：'">
                     <el-radio-group v-model="meal.ctype">
                         <el-radio :label="1">{{$t('commons.enable')}}</el-radio>
@@ -87,11 +99,13 @@
                 },
                 mealTime: 0, list: [], total: 0,
                 mealTitle: this.$t('desk.customer_newAdd'), mealVisible: false,
-                meal: {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, remark: ''},
+                meal: {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, taxStatus: 1, seviceStatus: 1, remark: ''},
                 rules: {
                     mealName: [{ required: true, message: this.$t('manager.add_inputPackageName'), trigger: 'blur' }],
                     mealPrice: [{ required: true, message: this.$t('manager.add_inputPackagePrice'), trigger: 'blur' }],
-                    mealTime: [{ required: true, message: this.$t('manager.add_inputPackageType'), trigger: 'change' }]
+                    mealTime: [{ required: true, message: this.$t('manager.add_inputPackageType'), trigger: 'change' }],
+                    taxStatus: [{ required: true, message: this.$t('commons.placeChoose'), trigger: 'change' }],
+                    seviceStatus: [{ required: true, message: this.$t('commons.placeChoose'), trigger: 'change' }]
                 }
             }
         },
@@ -124,7 +138,8 @@
                 this.getMealList(this.pageForm, this.mealTime);
             },
             addMeal() {
-                this.meal = {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, remark: ''};
+                this.meal = {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, taxStatus: 1, seviceStatus: 1, remark: ''};
+                this.mealTitle = this.$t('desk.customer_newAdd');
                 this.mealVisible = true;
             },
             popup(type, row) {
@@ -136,7 +151,8 @@
                         this.getMealList(this.pageForm, this.mealTime);
                     });
                 } else if(type == 'change') {
-                    this.meal = {id: row.id, mealName: row.mealName, mealPrice: row.mealPrice, costPrice: row.costPrice, mealTime: row.mealTime, remark: row.remark};
+                    this.meal = {id: row.id, mealName: row.mealName, mealPrice: row.mealPrice, costPrice: row.costPrice, mealTime: row.mealTime, taxStatus: row.taxStatus, seviceStatus: row.seviceStatus, remark: row.remark};
+                    this.mealTitle = this.$t('commons.modify')
                     this.mealVisible = true;
                 }
             },
@@ -155,6 +171,8 @@
                     mealPrice: this.meal.mealPrice,
                     costPrice: this.meal.costPrice,
                     mealTime: this.meal.mealTime,
+                    taxStatus: this.meal.taxStatus,
+                    seviceStatus: this.meal.seviceStatus,
                     remark: this.meal.remark
                 }
                 this.$F.doRequest(this, "/pms/hotelattachmeal/edit", params, (res) => {

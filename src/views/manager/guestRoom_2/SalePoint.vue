@@ -15,10 +15,10 @@
                 <el-form-item :label="$t('manager.hk_goodsType')+':'">
                     <el-select  v-model="form.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
                         <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
-                        <el-option :label="$t('manager.grsl_service')" :value="2"></el-option>
+                        <el-option v-if="serviceVisible" :label="$t('manager.grsl_service')" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item v-if="form.categoryType" :label="$t('manager.grsl_goodsType')+':'">
+                <el-form-item v-if="form.categoryType == 2" :label="$t('manager.grsl_goodsType')+':'">
                     <el-cascader v-model="form.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item>
@@ -82,8 +82,8 @@
                 <el-table-column :label="$t('commons.operating')" width="200">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="popup('state', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
-                        <el-button type="text" size="small" @click="popup('edit', scope.row)">{{$t('commons.modify')}}</el-button>
-                        <el-popconfirm :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="pointDelete(scope.row)">
+                        <el-button v-if="scope.row.delFlag != 2" type="text" size="small" @click="popup('edit', scope.row)">{{$t('commons.modify')}}</el-button>
+                        <el-popconfirm v-if="scope.row.delFlag != 2" :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="pointDelete(scope.row)">
                             <el-button slot="reference" size="small" type="text">{{$t('commons.delete')}}</el-button>
                         </el-popconfirm>
                     </template>
@@ -161,10 +161,10 @@
                 <el-form-item :label="$t('manager.hk_goodsType')+':'">
                     <el-select  v-model="upshelf.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
                         <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
-                        <el-option :label="$t('manager.grsl_service')" :value="2"></el-option>
+                        <el-option v-if="serviceVisible" :label="$t('manager.grsl_service')" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('manager.grsl_goodsType')+':'">
+                <el-form-item v-if="upshelf.categoryType == 2" :label="$t('manager.grsl_goodsType')+':'">
                     <el-cascader v-model="upshelf.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item>
@@ -233,6 +233,9 @@
                     name: [{required: true, message: this.$t('commons.mustInput'), trigger: "blur"}],
                 },
                 selection: [], upshelf: {name: "", categoryType: '', category: ""}, shelfTotal: 0, category: [],
+
+                //是否可以上架服务类商品
+                serviceVisible: true
             };
         },
         props: {
@@ -306,6 +309,11 @@
                 this.sellId = val;
                 this.salePoint.map(item => {
                     if(item.id == val) {
+                        if(item.ename && item.ename == 'littleShop') {
+                            this.serviceVisible = false;
+                        } else {
+                            this.serviceVisible = true;
+                        }
                         this.sellName = item.name;
                     }
                 })
