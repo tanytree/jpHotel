@@ -187,7 +187,7 @@ export default {
 
         list.forEach(element => {
             let priceType = element.priceType
-            total += parseFloat(element.consumePrice)
+            total += parseFloat(element.consumePrice ? element.consumePrice : 0)
             if(priceType == 5 || priceType == 6 || priceType == 12){
                 if(element.taxStatus == 1){
                     taxFee +=  parseFloat(element.realPrice)  * consumeTax
@@ -205,9 +205,9 @@ export default {
                 priceType16 = parseFloat(element.consumePrice)
             }
 
-            // console.log(priceType +':' +this.F_priceType(priceType))
-            // console.log(element.consumePrice)
-            // console.log(element)
+            console.log(priceType +':' +this.F_priceType(priceType))
+            console.log(element.consumePrice)
+            console.log(element)
         });
 
         sum = total + taxFee + service
@@ -223,7 +223,7 @@ export default {
         let obj = {
             total:total,
             sum:sum,
-            taxFee:taxFee,
+            taxFee:taxFee+service,
             consumeTax:tax.consumeTax+'%',
             service:service,
             servicePrice:tax.servicePrice+'%',
@@ -334,16 +334,20 @@ export default {
 
 
     consume_oper(){
+        console.log(this.detailData)
+        console.log(this.currentRoom)
         let checkoutForm = this.checkoutForm
         console.log(checkoutForm)
         let params = {
             checkInId:checkoutForm.checkInId,
             priceType:checkoutForm.priceType,
             payPrice:this.getFee(),
-
             payType: checkoutForm.payType,
             preferentialPrice:checkoutForm.preferentialPrice,
-            remark:checkoutForm.remark
+            roomId:this.currentRoom.roomId,
+            roomNum:this.currentRoom.houseNum,
+            remark:checkoutForm.remark,
+            state:2
         }
 
 
@@ -355,14 +359,12 @@ export default {
             params.creditName = checkoutForm.creditName
         }
         console.log(params)
-        return
+        // return
 
         this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
 
             console.log(res)
-
-
-
+            this.set_out_check_in();
         })
 
    },
@@ -402,6 +404,12 @@ export default {
 
             this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
             console.log(res)
+            this.$router.replace({
+              path: "/orders",
+              query: {
+                type: 'order',
+              },
+            });
            })
     },
     //判断数组中的值是否相同
@@ -419,6 +427,7 @@ export default {
             if(res && res.content){
                 this.taxInfo = JSON.parse(res.content)
                 console.log(this.taxInfo)
+
             }
         });
     },
