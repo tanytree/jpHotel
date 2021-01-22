@@ -100,8 +100,7 @@
                   :label="$t('food.common.total_pay')"
                 >
                     <template slot-scope="scope">
-                    {{numFormate(scope.row.realPayPrice)}}
-
+                        {{scope.row.realPayPrice ?  numFormate(scope.row.realPayPrice) : '-'}}
                     </template>
                 </el-table-column>
                 <el-table-column
