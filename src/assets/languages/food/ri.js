@@ -289,7 +289,7 @@ module.exports = {
         viewer_name:'審査員 ',
         storage_detail:'明細',
         taxStatus:'消費税',
-        seviceStatus:'サービス料',
+        seviceStatus:'サービス料',   
         costPrice:'コスト',
         costPrice_desc:'コストを入力してください',
         is_tax:'税込',

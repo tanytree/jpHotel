@@ -304,7 +304,7 @@
                 this.form.docCount = data.docCount
                 this.form.remark = data.remark
                 this.info = data
-                // console.log(data.orderSubList)
+                console.log(data.orderSubList)
                 let orderGoodsList = data.orderSubList
                 for(let i in orderGoodsList){
                     orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus

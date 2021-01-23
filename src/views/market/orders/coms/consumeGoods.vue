@@ -144,7 +144,8 @@ export default {
                 remark:'',
                 roorId:''
             },
-            categoryList:[]
+            categoryList:[],
+            taxInfo:{}
 
         };
     },
@@ -200,7 +201,6 @@ export default {
             this.id = id
             this.initForm()
             this.visible = true;
-
         },
         initForm() {
             this.searchForm = {
@@ -215,6 +215,7 @@ export default {
             }
             this.getDataList();
             this.getCategoryData();
+            this.get_consume_tax();
         },
 
         changeCategoryId(value){
@@ -235,7 +236,6 @@ export default {
                        break;
                    }
                }
-
             });
         },
 
@@ -490,6 +490,19 @@ export default {
             this.searchForm.pageIndex = val;
             this.getDataList();
         }
+        get_consume_tax(){
+            let params = {
+                userId:this.userId,
+                storesNum:this.storesNum,
+            }
+            this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
+                if(res && res.content){
+                    this.taxInfo = JSON.parse(res.content)
+                    console.log(this.taxInfo)
+
+                }
+            });
+        },
 
     }
 };

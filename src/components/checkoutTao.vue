@@ -360,9 +360,7 @@ export default {
         }
         console.log(params)
         // return
-
         this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
-
             console.log(res)
             this.set_out_check_in();
         })
@@ -503,6 +501,7 @@ export default {
       box-sizing: border-box;
       padding: 20px;
       width: 240px;
+      z-index: 600;
       border-radius: 4px;
       background-color: rgba(0, 0, 0, 0.7);
       color: rgba(255, 255, 255, 100);
