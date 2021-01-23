@@ -255,7 +255,7 @@
                 this.intForm();
                 this.info = data
                 this.orderSubList = data.orderSubList
-                // console.log(data)
+                console.log(data.orderSubList)
                 this.getOrderTax();
                 // console.log(data)
                 // this.form.consumePrice =  parseFloat(consumePrice) + parseFloat(this.orderTax.taxBefore)

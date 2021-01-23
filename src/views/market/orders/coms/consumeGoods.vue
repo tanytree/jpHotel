@@ -489,7 +489,7 @@ export default {
         handleCurrentChange(val) {
             this.searchForm.pageIndex = val;
             this.getDataList();
-        }
+        },
         get_consume_tax(){
             let params = {
                 userId:this.userId,
