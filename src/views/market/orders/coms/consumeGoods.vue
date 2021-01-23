@@ -55,8 +55,6 @@
                                   </div>
                               </div>
                             </template>
-
-
                         </el-table-column>
                         <el-table-column :label="$t('desk.serve_heji')" show-overflow-tooltip>
                             <template slot-scope="scope">
@@ -70,21 +68,31 @@
                         </el-table-column>
                     </el-table>
                     <el-row class="padding-tb-10">
-                        <em>{{$t('desk.customer_all')}} {{countToTal}} {{$t('desk.customer_each')}}</em>，{{$t('desk.serve_heji')}}：{{cartToTal}}{{$t('desk.serve_yen')}}
+                        <em>{{$t('desk.customer_all')}} {{countToTal}} {{$t('desk.customer_each')}}</em>
+                        <!-- ，{{$t('desk.serve_heji')}}：{{cartToTal}}{{$t('desk.serve_yen')}} -->
                     </el-row>
-                    <el-form size="mini">
-                        <el-form-item :label="$t('desk.order_atEmpoyee')+':'">
+                    <!-- <el-row class="padding-tb-10"> <em>小计 : {{taxInfo.total}} </em></el-row> -->
+
+                    <el-row class="">
+                       <div class="item mb10"><span class="w70">小计</span> <span class="text-right">￥{{taxInfo.total}}</span> </div>
+                       <div class="item mb10"><span class="w70">服务费 <span class="text-size12">({{taxInfo.servicePrice}})</span></span> <span class="text-right">￥{{taxInfo.service}}</span> </div>
+                       <div class="item mb10"><span class="w70">消费税 <span class="text-size12">({{taxInfo.type}}  {{taxInfo.tax}})</span> </span> <span class="text-right">￥{{taxInfo.taxFee}}</span> </div>
+                       <div class="item padding-tb-10"><span class="w70 text-size20">合计</span> <span class="text-right text-size20">￥{{taxInfo.sum}}</span> </div>
+                    </el-row>
+
+                    <el-form>
+                       <!-- <el-form-item :label="$t('desk.order_atEmpoyee')+':'">
                             <el-checkbox v-model="consumeOperForm.employeePrice"></el-checkbox>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.home_chooseRoom')+':'">
+                        </el-form-item> -->
+                       <!-- <el-form-item :label="$t('desk.home_chooseRoom')+':'">
                            <el-select v-model="consumeOperForm.roorId">
                                 <el-option v-for="item in detailData.inRoomList" :key="item.id" :label="item.houseNum" :value="item.roomId">
                                 </el-option>
                             </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.enterAccountMoney') + ':'">
+                        </el-form-item> -->
+                        <!-- <el-form-item :label="$t('desk.enterAccountMoney') + ':'">
                             {{totalIn}}
-                        </el-form-item>
+                        </el-form-item> -->
                         <el-form-item :label="$t('desk.home_note') + ':'">
                             <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off" :placeholder="$t('desk.home_note')"></el-input>
                         </el-form-item>
@@ -93,6 +101,7 @@
             </el-col>
         </el-row>
 
+        {{taxInfo}}
         <div slot="footer" class="dialog-footer">
             <el-button @click="visible = false">{{ $t('commons.cancel') }}</el-button>
             <el-button type="primary"  @click="consume_oper">{{ $t('commons.confirm') }}</el-button>
@@ -145,7 +154,8 @@ export default {
                 roorId:''
             },
             categoryList:[],
-            taxInfo:{}
+            tax:{},
+            taxInfo:{},
 
         };
     },
@@ -157,29 +167,30 @@ export default {
             plat_source: state => state.config.plat_source
         }),
         //商品总金额
-        cartToTal(){
-            let sum = 0
-            let cart = this.cart
-            cart.forEach(element => {
-                sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
-            });
-            return sum.toFixed(0);
-        },
+        // cartToTal(){
+        //     let sum = 0
+        //     let cart = this.cart
+        //     cart.forEach(element => {
+        //         sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
+        //     });
+        //     return sum.toFixed(0);
+        // },
         //入账金额
         totalIn(){
             let sum = 0
             let cart = this.cart
+            this.miniOrderTax();
             if(this.consumeOperForm.employeePrice){
                 cart.forEach(element => {
-                    console.log(element.employeePrice)
-                    console.log(element.count)
+                    // console.log(element.employeePrice)
+                    // console.log(element.count)
                     sum +=  parseFloat(element.employeePrice) *  parseFloat(element.count)
 
                 });
             }else{
                 cart.forEach(element => {
-                    console.log(element.retailPrice)
-                    console.log(element.count)
+                    // console.log(element.retailPrice)
+                    // console.log(element.count)
                     sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
                 });
             }
@@ -193,8 +204,13 @@ export default {
                 sum +=  parseFloat(element.count)
             });
             return sum
-        },
-
+        }
+    },
+    created() {
+        //监听是否外带
+        this.$watch('cart',(val,oldVal) =>{
+            this.miniOrderTax();
+        })
     },
     methods: {
         async init(id) {
@@ -203,6 +219,7 @@ export default {
             this.visible = true;
         },
         initForm() {
+            this.cart = []
             this.searchForm = {
                 sellId:'',
                 paging:false,
@@ -249,15 +266,21 @@ export default {
                 categoryId:this.category.categoryId,
                 categoryType:1
             }
-            console.log(info)
+            // console.log(info)
             this.$F.doRequest(this, '/pms/sellinglog/list', info, (res) => {
-                 let Goodlist = res.list;
-                 for(let j in Goodlist){
+                let Goodlist = res.list;
+                for(let j in Goodlist){
                     if(Goodlist[j].sellId == this.sellId){
+                        Goodlist[j].taxStatus =   Goodlist[j].hotelGoods.taxStatus
+                        Goodlist[j].seviceStatus = Goodlist[j].hotelGoods.seviceStatus
                         this.tableData.push(Goodlist[j])
                     }
-                 }
+                }
+                this.miniOrderTax();
+
+                console.log(this.tableData)
              })
+
         },
 
         //获取商品实物分类
@@ -269,9 +292,9 @@ export default {
                 // this.category = res.list;
                 let categoryList = this.getTreeItem(res.list);
                 this.categoryList = this.getNewCateList(categoryList)
-                console.log('商品分类')
-                console.log( this.categoryList)
-                console.log('商品分类')
+                // console.log('商品分类')
+                // console.log( this.categoryList)
+                // console.log('商品分类')
 
             })
         },
@@ -337,8 +360,10 @@ export default {
                 let good = this.cart[index]
                 if(good){
                   good.count += 1
+                  this.miniOrderTax();
                 }else{
                   this.cart.push({...item,count:1})
+                  this.miniOrderTax();
                 }
             // }else{
             //     this.$alert(this.$t('desk.order_nofood'), this.$t('commons.tip_desc'), {
@@ -347,6 +372,7 @@ export default {
             //       }
             //     });
             // }
+
         },
 
         //购物车的加减 type = 1 是减少  2 是添加
@@ -358,7 +384,10 @@ export default {
                 // good.inventoryCount += 1
                 if(info.count == 0){
                     this.cart.splice(v,1)
+                    this.miniOrderTax();
                     return false
+                }else{
+                    this.miniOrderTax();
                 }
             }else{
                 // if(good.inventoryCount == 0){
@@ -370,23 +399,51 @@ export default {
                 //     return false
                 // }else{
                     info.count+= 1
+                    this.miniOrderTax();
                 //     good.inventoryCount -= 1
                 // }
             }
+
 
         },
         handleDelete(item,index){
             // let good = this.tableData.find(v=>v.id==item.id)
             // good.inventoryCount = good.inventoryCount + item.count
             this.cart.splice(index,1)
+            this.miniOrderTax();
             if(this.cart.length == 0){
                 this.getDataList();
             }
         },
 
+        //计算迷你吧相关税
+        miniOrderTax(){
+            let cart = this.cart
+            if(this.consumeOperForm.employeePrice){
+                cart.forEach(element => {
+                    // console.log(element.employeePrice)
+                    // console.log(element.count)
+                    element.totalPrice =  parseFloat(element.employeePrice) *  parseFloat(element.count)
+
+                });
+            }else{
+                cart.forEach(element => {
+                    // console.log(element.retailPrice)
+                    // console.log(element.count)
+                    element.totalPrice =  parseFloat(element.retailPrice) *  parseFloat(element.count)
+                });
+            }
+            console.log(cart)
+            this.taxInfo = this.getTaxInfo(this.tax,cart,false)
+            console.log(this.taxInfo)
+        },
 
         consume_oper() {
+            console.log(this.currentRoom)
+            // console.log(this.detailData)
+            this.consumeOperForm.roorId = this.currentRoom.id
 
+            // console.log(this.consumeOperForm.roorId)
             if(this.cart.length == 0){
                 this.$message({
                   type: 'error',
@@ -394,6 +451,7 @@ export default {
                 });
                 return false
             }
+
 
 
             if(!this.consumeOperForm.roorId){
@@ -412,9 +470,6 @@ export default {
                 });
                 return false
             }
-
-
-
             let params = {}
             params.checkInId = this.$route.query.id
             params.priceType = 8
@@ -422,22 +477,24 @@ export default {
             params.state = 1
             params.remak = this.consumeOperForm.remark
             params.employeePrice = this.consumeOperForm.employeePrice ? 1 : 2
-            params.goodsTotal = this.cartToTal
+            params.goodsTotal = this.taxInfo.sum
 
 
 
 
             let roomList = this.detailData.inRoomList
-            let choose = {}
-            roomList.forEach(element => {
-               if(element.roomId == this.consumeOperForm.roorId){
-                   choose = element
-               }
-            });
-            params.roomId = this.consumeOperForm.roorId;
-            params.roomNum = choose.houseNum
-
-
+            console.log(roomList)
+            // let choose = {}
+            // roomList.forEach(element => {
+            //     console.log(element)
+            //    if(element.roomId == this.consumeOperForm.roorId){
+            //        choose = element
+            //    }
+            // });
+          //   params.roomId = this.consumeOperForm.roorId;
+          //   params.roomNum = choose.houseNum
+            params.roomId = this.consumeOperForm.roorId
+            params.roomNum = this.currentRoom.houseNum
             let Json = []
             let cart = this.cart
             if(this.consumeOperForm.employeePrice){
@@ -450,7 +507,7 @@ export default {
                         totalPrice: parseFloat(element.employeePrice) *  parseFloat(element.count)
                     })
                 });
-                params.consumePrice = this.totalIn
+                params.consumePrice = this.taxInfo.sum
             }else{
                 cart.forEach(element => {
                     Json.push({
@@ -461,17 +518,17 @@ export default {
                         totalPrice: parseFloat(element.retailPrice) *  parseFloat(element.count)
                     })
                 });
-                params.consumePrice = this.cartToTal
+                params.consumePrice = this.taxInfo.sum
             }
             params.goodsJson = JSON.stringify(Json)
             console.log(params)
             this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
                 this.consumeOperForm.remark = ''
                 this.consumeOperForm.roorId = ''
+                this.visible = false
                 this.cart = []
-              this.visible = false
-              this.$emit('get_consume_order_list','');
-              this.$emit('getOrderDetail');
+                this.$emit('get_consume_order_list','');
+                this.$emit('getOrderDetail');
             });
         },
 
@@ -497,9 +554,8 @@ export default {
             }
             this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
                 if(res && res.content){
-                    this.taxInfo = JSON.parse(res.content)
-                    console.log(this.taxInfo)
-
+                    this.tax = JSON.parse(res.content)
+                    console.log(this.tax)
                 }
             });
         },
@@ -535,4 +591,6 @@ export default {
     background: rgba(0, 0, 0, 0.66);
     color: #fff
 }
+.mb10{margin-bottom: 5px;}
+.w70{ width:200px; display: inline-block;}
 </style>

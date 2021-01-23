@@ -388,6 +388,7 @@
                         {{F_priceType(row.priceType)}}
                     </template>
                 </el-table-column>
+                <el-table-column prop="payPrice" :label="$t('desk.order_payment')" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
 <!--                <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
                 <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
@@ -403,7 +404,16 @@
             </el-form-item>
             <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrice"  v-if="consumeOperForm.priceType == 10">
                 <el-input class="width200" type="text" v-model="consumeOperForm.consumePrice"></el-input>
-                <em style="margin-left:10px;color:#888;font-size: 12px;">{{$t('desk.order_attention')}}</em>
+                <em style="margin-left:10px;color:#888;font-size: 12px;">
+                <!-- {{$t('desk.order_attention')}} -->
+                    最大可冲调金额
+                    <span v-if="priceTypeList.indexOf(destructionList[0].priceType) > -1">
+                        {{destructionList.length > 0&&destructionList[0].consumePrice}}
+                    </span>
+                    <span v-else>
+                        {{destructionList.length > 0&&destructionList[0].payPrice}}
+                    </span>
+                </em>
             </el-form-item>
             <el-form-item :label="$t('desk.order_completelyReason')+':'" prop="remark">
                 <el-input type="textarea" v-model="consumeOperForm.remark"></el-input>
@@ -571,6 +581,7 @@ export default {
                 personList: []
             },
             checkInId: '',
+            priceTypeList:[5,6,7,8,12,14,15,16,17,18,22]
         };
     },
 
@@ -739,7 +750,7 @@ export default {
                 //     this.$message.error('已冲调记录不能被冲调!')
                 //     return false
                 // }
-                let priceTypeList = [5,6,7,8,14,15,16,17,18,22]
+                let priceTypeList = this.priceTypeList
                 if(priceTypeList.indexOf(priceType) > -1){
                     console.log('消费类')
                     params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrice)
@@ -1175,7 +1186,7 @@ export default {
                 // console.log(this.destructionList[0].consumePrice)
                 console.log(this.destructionList[0])
                 let priceType  =  this.destructionList[0].priceType //当前冲调记录类型
-                let priceTypeList = [5,6,7,8,14,15,16,17,18,22] //消费类
+                let priceTypeList = this.priceTypeList//消费类
                 if(priceTypeList.indexOf(priceType) > -1){
                     console.log('消费类')
                     this.consumeOperForm.payPrice = ''
