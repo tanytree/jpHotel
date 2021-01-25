@@ -51,13 +51,16 @@
                                             </div>
                                             <div v-else>
                                                  <span v-if="scope.row.hotelGoods.priceModel == 1">
-                                                     一次性固定收费
+                                                     <!-- 一次性固定收费 -->
+                                                     {{numFormate(scope.row.retailPrice)}}
                                                  </span>
                                                  <span v-else>
-                                                    {{scope.row.hotelGoods.priceStartMinute}}分钟后收起步价，
+                                                    {{$t('shop.reset.orderPriceDesc',{priceStartMinute:scope.row.hotelGoods.priceStartMinute,startPrice:numFormate(scope.row.hotelGoods.startPrice),priceTime:scope.row.hotelGoods.priceTime,minutePrice:numFormate(scope.row.hotelGoods.minutePrice)})}}
+                                                    <span v-if="scope.row.hotelGoods.capsPriceFlag == 2"> {{$t('shop.reset.orderCapsPrice',{capsPrice:numFormate(scope.row.hotelGoods.capsPrice)})}}</span>
+                                                    <!-- {{scope.row.hotelGoods.priceStartMinute}}分钟后收起步价，
                                                     起步价{{scope.row.hotelGoods.startPrice}}日元，每
                                                     {{scope.row.hotelGoods.priceTime}}分钟收费{{scope.row.hotelGoods.minutePrice}}日元
-                                                    <span v-if="scope.row.hotelGoods.capsPriceFlag == 2">封顶消费{{scope.row.hotelGoods.capsPrice}}日元</span>
+                                                    <span v-if="scope.row.hotelGoods.capsPriceFlag == 2">封顶消费{{scope.row.hotelGoods.capsPrice}}日元</span> -->
                                                 </span>
                                             </div>
                                         </div>
@@ -98,13 +101,19 @@
                                      <div v-if="scope.row.hotelGoods.categoryType == 1"> {{numFormate(scope.row.retailPrice)}}</div>
                                      <div v-else>
                                          <span v-if="scope.row.hotelGoods.priceModel == 1">
-                                              一次性固定收费
+                                              <!-- 一次性固定收费 -->
+                                              {{numFormate(scope.row.retailPrice)}}
                                           </span>
                                           <span v-else>
-                                             {{scope.row.hotelGoods.priceStartMinute}}分钟后收起步价，
+                                            {{$t('shop.reset.orderPriceDesc',{priceStartMinute:scope.row.hotelGoods.priceStartMinute,startPrice:numFormate(scope.row.hotelGoods.startPrice),priceTime:scope.row.hotelGoods.priceTime,minutePrice:numFormate(scope.row.hotelGoods.minutePrice)})}}
+                                            <span v-if="scope.row.hotelGoods.capsPriceFlag == 2"> {{$t('shop.reset.orderCapsPrice',{capsPrice:numFormate(scope.row.hotelGoods.capsPrice)})}}</span>
+
+    <!-- <br> -->
+
+                                         <!--    {{scope.row.hotelGoods.priceStartMinute}}分钟后收起步价，
                                              起步价{{scope.row.hotelGoods.startPrice}}日元，每
                                              {{scope.row.hotelGoods.priceTime}}分钟收费{{scope.row.hotelGoods.minutePrice}}日元
-                                             <span v-if="scope.row.hotelGoods.capsPriceFlag == 2">封顶消费{{scope.row.hotelGoods.capsPrice}}日元</span>
+                                             <span v-if="scope.row.hotelGoods.capsPriceFlag == 2">封顶消费{{scope.row.hotelGoods.capsPrice}}日元</span> -->
                                          </span>
                                      </div>
                                 </template>
@@ -245,7 +254,9 @@ export default {
         let sum = 0
         let cart = this.cart
         cart.forEach(element => {
-           sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
+            if(element.hotelGoods.priceModel !== 2){
+                sum +=  parseFloat(element.retailPrice) *  parseFloat(element.count)
+            }
         });
         console.log(sum)
         return sum.toFixed(0);

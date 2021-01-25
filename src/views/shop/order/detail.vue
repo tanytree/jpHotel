@@ -35,13 +35,16 @@
                              </div>
                              <div v-else>
                                   <span v-if="scope.row.goods.priceModel == 1">
-                                      按次计费
+                                      <!-- 按次计费 -->
+                                      ¥ {{numFormate(scope.row.unitPrice)}}
                                   </span>
                                   <span v-else>
+                                    {{$t('shop.reset.orderPriceDesc',{priceStartMinute:scope.row.goods.priceStartMinute,startPrice:numFormate(scope.row.goods.startPrice),priceTime:scope.row.goods.priceTime,minutePrice:numFormate(scope.row.goods.minutePrice)})}}
+                                    <span v-if="scope.row.goods.capsPriceFlag == 2"> {{$t('shop.reset.orderCapsPrice',{capsPrice:numFormate(scope.row.goods.capsPrice)})}}</span><!--
                                     {{scope.row.goods.priceStartMinute}}分钟后收起步价，
                                     起步价{{scope.row.goods.startPrice}}日元，每
                                     {{scope.row.goods.priceTime}}分钟收费{{scope.row.goods.minutePrice}}日元
-                                    <span v-if="scope.row.goods.capsPriceFlag == 2">封顶消费{{scope.row.goods.capsPrice}}日元</span>
+                                    <span v-if="scope.row.goods.capsPriceFlag == 2">封顶消费{{scope.row.goods.capsPrice}}日元</span> -->
                                  </span>
                              </div>
                          </div>

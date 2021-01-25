@@ -2,7 +2,6 @@
     <el-form :model="info" ref="form"  :rules="rules"  label-width="150px" >
         <el-form-item :label="$t('food.common.up_level')" v-if="list.length > 0 && info.categoryId !== 0" >
           <el-select v-model="info.pCategoryId" :placeholder="$t('food.common.up_level')">
-
             <el-option key="0" label="--" value="0"></el-option>
             <el-option v-for="cate in list" :key="cate.id" :label="cate.name" :value="cate.id"></el-option>
           </el-select>

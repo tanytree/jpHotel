@@ -45,13 +45,13 @@
     </div>
 
     <el-dialog top="0" :title="$t('food.common.add')" width="40%" :visible.sync="dialogShow" :close-on-click-modal="false" @close="closeDialog">
-        <el-form :model="info" ref="form"  :rules="rules"  label-width="150px" >
-            <el-form-item :label="$t('food.reset.up_level')" v-if="list.length > 0 && info.pCategoryId && info.pCategoryId !== '0'" >
+        <el-form :model="info" ref="form" :rules="rules"  label-width="150px" >
+            <el-form-item :label="info.categoryLevel == 2 ?  $t('food.reset.first_level') : $t('food.reset.second_level') " v-if="list.length > 0 && info.pCategoryId && info.pCategoryId !== '0'" >
               <el-select v-model="info.pCategoryId" disabled :placeholder="$t('food.reset.up_level')">
                 <el-option v-for="cate in list" :key="cate.id" :label="cate.name" :value="cate.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="info.categoryLevel == 3 ?  $t('food.reset.three_level') : (info.categoryLevel == 2 ? $t('food.reset.second_level') : $t('food.reset.first_level')) " prop="name" >
+            <el-form-item :label="info.categoryLevel == 3 ?  $t('food.reset.three_level') : info.categoryLevel == 2 ? $t('food.reset.second_level') : $t('food.reset.first_level')" prop="name" >
                 <el-input v-model="info.name"></el-input>
             </el-form-item>
             <el-divider></el-divider>

@@ -38,11 +38,8 @@ module.exports = {
     customePrice: '利用金額',
     xiaoji:'小計',
     sureFlag:'テックアウト',
-
-
-
-
-
+    orderPriceDesc:'{priceStartMinute}分後から利用料発生,初期料金（≦30分）:￥{startPrice},計算単位（{priceTime} 分）毎に￥{minutePrice}（≦30分＝50％；≧30分＝100％）',
+    orderCapsPrice:',最多請求料金￥{capsPrice}'
   }
 
 }
