@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 11:18:33
+ * @LastEditTime: 2021-01-25 16:16:59
  * @FilePath: \jiudian\src\assets\languages\food\zh.js
  */
 module.exports = {
@@ -381,7 +381,14 @@ module.exports = {
     yhPrice:'优惠金额',
     paymoney:'实付金额',
     create_time:'创建时间',
-
+    add: '新增',
+    guests:'临时客人',
+    total_pay:'总消费',
+    consumePrice:'应收',
+    payPrice:'结算金额',
+    member_card:'会员卡',
+    select_member_card:'请选目标会员卡',
+    
 
     }
 

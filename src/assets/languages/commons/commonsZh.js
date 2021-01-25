@@ -33,6 +33,7 @@ module.exports = {
   week: '星期',
   saveSuccess: '保存成功',
   disable: '禁用',
+  disableA: '禁用',
   enable: '启用',
   newAdd: '新增',
   newAddA: '+新增',

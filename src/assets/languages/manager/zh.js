@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-20 17:05:53
+ * @LastEditTime: 2021-01-25 17:25:00
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -187,6 +187,7 @@ module.exports = {
   hk_byRoad: '是否靠马路',
   hk_yes: '启用',
   hk_no: '禁用',
+  hk_noA: '禁用',
   hk_have: '有',
   hk_donot: '无',
   hk_shi: '是',
@@ -220,6 +221,7 @@ module.exports = {
   hk_doorParams: '门锁参数',
   hk_roomInfo: '房间配置信息',
   hk_enable: '启用',
+  hk_enableA: '启用',
   hk_disable: '禁用',
   hk_addRoomType: '新增房型',
   hk_livePrice: '住宿价格',
@@ -239,6 +241,7 @@ module.exports = {
   hk_onlyLivePrice: '这里的价格是纯住宿价格，不包含付餐的价格',
   hk_peopleLive: '人',
   hk_goodsType: '商品类别型',
+  hk_goodsTypeA: '商品类别型',
   hk_an: '按',
   hk_startAt: '起步价',
   hk_getPriceRule: '每（）分钟收费',
@@ -259,10 +262,13 @@ module.exports = {
   hk_: '',
   //   管理部 > 客房二级库 (guestRoomSecondaryLibrary > grsl)
   grsl_goodsMode: '商品类型',
+  grsl_goodsModeA: '商品类型',
   grsl_matter: '实物',
   grsl_service: '服务',
   grsl_goodsName: '商品名称',
   grsl_goodsNameA: '商品名称',
+  grsl_goodsNameB: '商品名称',
+  grsl_goodsNameC: '商品名称',
   grsl_goodsState: '商品状态',
   grsl_goodsType: '商品分类',
   grsl_goodsTypeA: '商品分类',
@@ -282,11 +288,14 @@ module.exports = {
   grsl_import: '导入',
   grsl_addGoods: '添加商品',
   grsl_defaultTetailPrice: '默认零售价(日元)',
+  grsl_defaultTetailPriceA: '默认零售价(日元)',
   grsl_costPrice: '成本价(日元)',
   grsl_warningQuantity: '库存预警数量',
   grsl_hasFailure: '已失效',
   grsl_sureDelete: '确认删除',
   grsl_sureDeleteA: '确认删除？',
+  grsl_sureDeleteC: '确认删除？',
+  grsl_sureDeleteB: '确认删除？',
   grsl_goodsManagerment: '商品管理',
   grsl_resetGoods: '修改商品',
   grsl_belongType: '所属分类',
@@ -296,6 +305,7 @@ module.exports = {
   grsl_defaultEmployeePrice: '默认员工价',
   grsl_defaultBuyNum: '默认购买数量',
   grsl_saveAndAdd: '保存并继续添加',
+  grsl_saveAndAddA: '保存并继续添加',
   grsl_downloadSuccessful: '下载成功',
   grsl_importSuccess: '导入成功',
   grsl_managementSalePoint: '管理售卖点',
@@ -314,6 +324,7 @@ module.exports = {
   grsl_resetGoodsInfo: '修改商品上架信息',
   grsl_employeePrice: '员工价',
   grsl_retailPrice: '零售价',
+  grsl_retailPriceA: '零售价',
   grsl_resetSalePoint: '修改售卖点',
   grsl_addNewPoint: '新增售卖点',
   grsl_foldAll: '折叠全部',

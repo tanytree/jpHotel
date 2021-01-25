@@ -14,8 +14,8 @@
                    </el-radio-group>
                 </el-form-item>
             </el-row>
-            <el-form-item :label="$t('manager.grsl_goodsName')">
-                <el-input v-model="searchForm.goodsName" :placeholder="$t('manager.grsl_goodsName')" class="width200"></el-input>
+            <el-form-item :label="$t('manager.grsl_goodsNameB')">
+                <el-input v-model="searchForm.goodsName" :placeholder="$t('manager.grsl_goodsNameC')" class="width200"></el-input>
             </el-form-item>
             <el-form-item :label="$t('food.common.curstom_name')">
                 <el-input v-model="searchForm.name" :placeholder="$t('food.common.curstom_name')" class="width200"></el-input>
@@ -67,7 +67,7 @@
                   >
                 </el-table-column>
                 <el-table-column
-                  label="商品明细"
+                  :label="$t('shop.reset.goodDetail')"
                   >
                   <template slot-scope="scope" >
                     <div v-for="sumItem in scope.row.orderSubList" class="text-size12">
@@ -84,7 +84,7 @@
                       <span v-else-if="scope.row.signRoomId">
                           {{scope.row.roomObject.houseNum}} {{scope.row.roomObject.houseName ? '+' + scope.row.roomObject.houseName : ''}}
                       </span>
-                      <span v-else>{{$t('food.common.guests')}}</span>
+                      <span v-else>{{$t('food.reset.guests')}}</span>
                   </template>
                 </el-table-column>
                 <el-table-column :label="$t('food.common.order_from')">
@@ -93,11 +93,11 @@
                 </el-table-column>
                 <el-table-column
                    prop="sellingName"
-                   :label="$t('shop.salePoint')"
+                   :label="$t('shop.reset.salePoint')"
                 >
                 </el-table-column>
                 <el-table-column
-                  :label="$t('food.common.total_pay')"
+                  :label="$t('food.reset.total_pay')"
                 >
                     <template slot-scope="scope">
                         {{scope.row.realPayPrice ?  numFormate(scope.row.realPayPrice) : '-'}}
@@ -156,7 +156,7 @@
         <div class="detailPanel">
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{detail.shopNum}} </span>
-                <span style="padding:0 50px;">{{$t('shop.salePoint')}}：{{detail.sellingName}} </span>
+                <span style="padding:0 50px;">{{$t('shop.reset.salePoint')}}：{{detail.sellingName}} </span>
                 <span>{{$t('food.common.create_time')}}：{{detail.createTime}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('shop.orderTotal')}}：¥ {{numFormate(detail.consumePrice)}}</div>

@@ -9,10 +9,10 @@
             </div>
             <!--售卖点-->
             <el-form class="term line demo-form-inline" v-model="form" inline size="small">
-                <el-form-item :label="$t('manager.grsl_goodsName')+':'">
-                    <el-input v-model="form.name"></el-input>
+                <el-form-item :label="$t('manager.grsl_goodsNameB')+':'">
+                    <el-input v-model="form.name" :placeholder="$t('manager.grsl_goodsNameC')"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('manager.hk_goodsType')+':'">
+                <el-form-item :label="$t('manager.hk_goodsTypeA')+':'">
                     <el-select  v-model="form.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
                         <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
                         <el-option v-if="serviceVisible" :label="$t('manager.grsl_service')" :value="2"></el-option>
@@ -32,8 +32,8 @@
             <div class="components-edit">
               <!-- 表格数据 -->
                 <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
-                    <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                    <el-table-column prop="retailPrice" :label="$t('manager.grsl_defaultTetailPrice')"></el-table-column>
+                    <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsNameA')"></el-table-column>
+                    <el-table-column prop="retailPrice" :label="$t('manager.grsl_defaultTetailPriceA')"></el-table-column>
 <!--                    <el-table-column prop="employeePrice" :label="$t('manager.grsl_employeePriceJapen')"></el-table-column>-->
                     <el-table-column prop="costPrice" :label="$t('manager.grsl_costPrice')"></el-table-column>
 <!--                    <el-table-column prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')"></el-table-column>-->
@@ -81,9 +81,9 @@
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="200">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="popup('state', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
+                        <el-button type="text" size="small" @click="popup('state', scope.row)">{{scope.row.state == 1 ? $t('commons.disableA') : $t('commons.enable')}}</el-button>
                         <el-button v-if="scope.row.delFlag != 2" type="text" size="small" @click="popup('edit', scope.row)">{{$t('commons.modify')}}</el-button>
-                        <el-popconfirm v-if="scope.row.delFlag != 2" :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="pointDelete(scope.row)">
+                        <el-popconfirm v-if="scope.row.delFlag != 2" :title="$t('manager.grsl_sureDeleteC')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="pointDelete(scope.row)">
                             <el-button slot="reference" size="small" type="text">{{$t('commons.delete')}}</el-button>
                         </el-popconfirm>
                     </template>
@@ -112,10 +112,10 @@
                             <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item :label="$t('commons.enable')+':'">
+                    <el-form-item :label="$t('manager.hp_loginDetail_state')+':'">
                         <el-radio-group v-model="point.state">
                             <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
-                            <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
+                            <el-radio :label="2">{{$t('manager.hk_noA')}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-form>
@@ -155,16 +155,16 @@
         <!-- 上架商品 -->
         <el-dialog top="0" :title="$t('manager.grsl_goodsShelves')" :visible.sync="shelfVisible" width="1100px" :close-on-click-modal="false">
             <el-form class="demo-form-inline" v-model="upshelf" inline size="small">
-                <el-form-item :label="$t('manager.grsl_goodsName')+':'">
-                    <el-input v-model="upshelf.name"></el-input>
+                <el-form-item :label="$t('manager.grsl_goodsNameB')+':'">
+                    <el-input v-model="upshelf.name" :placeholder="$t('manager.grsl_goodsNameC')"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('manager.hk_goodsType')+':'">
+                <el-form-item :label="$t('manager.hk_goodsTypeA')+':'">
                     <el-select  v-model="upshelf.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
                         <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
                         <el-option v-if="serviceVisible" :label="$t('manager.grsl_service')" :value="2"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item v-if="upshelf.categoryType == 2" :label="$t('manager.grsl_goodsType')+':'">
+                <el-form-item v-if="upshelf.categoryType == 2" :label="$t('manager.grsl_goodsTypeA')+':'">
                     <el-cascader v-model="upshelf.category" :options="category" :props="categoryProps" @change="casChange"></el-cascader>
                 </el-form-item>
                 <el-form-item>
@@ -174,15 +174,15 @@
             </el-form>
             <el-table ref="multipleTable" :data="shelfData" height="100%" style="min-height: 250px" header-row-class-name="default" size="small" @selection-change="shelfSelect">
                 <el-table-column type="selection" width="70"></el-table-column>
-                <el-table-column prop="name" :label="$t('manager.grsl_goodsName')"></el-table-column>
-                <el-table-column prop="categoryName" :label="$t('manager.grsl_goodsMode')"></el-table-column>
+                <el-table-column prop="name" :label="$t('manager.grsl_goodsNameA')"></el-table-column>
+                <el-table-column prop="categoryName" :label="$t('manager.grsl_goodsModeA')"></el-table-column>
                 <!--<el-table-column prop="costPrice" :label="$t('manager.grsl_costNoPrice')" width="200"></el-table-column>
                 <el-table-column :label="$t('manager.grsl_employeePriceJapen')" width="150">
                     <template slot-scope="scope">
                         <el-input v-model="scope.row.employeePrice" :disabled="scope.row.his" size="small"></el-input>
                     </template>
                 </el-table-column>-->
-                <el-table-column :label="$t('manager.grsl_retailPrice')" width="150">
+                <el-table-column :label="$t('manager.grsl_retailPriceA')" width="150">
                     <template slot-scope="scope">{{scope.row.retailPrice}}{{$t('manager.ps_japanYen')}}
 <!--                        <el-input v-model="" :disabled="scope.row.his" size="small"></el-input>-->
                     </template>

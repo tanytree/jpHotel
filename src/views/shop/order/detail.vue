@@ -3,22 +3,22 @@
         <div class="detailPanel">
             <div class="top">
                 <span>{{$t('food.common.order_num')}}：{{info.shopNum}} </span>
-                <span>售卖点：{{info.sellingName}} </span>
+                <span>{{$t('shop.reset.salePoint')}}:{{info.sellingName}} </span>
                 <span>{{$t('food.common.create_time')}}：{{info.createTime}} </span>
             </div>
-            <div class="text-red text-size20 margin-t-20">{{$t('food.common.consumePrice')}}：{{numFormate(getFee)}}<!-- {{info.consumePrice}} --></div>
+            <div class="text-red text-size20 margin-t-20">{{$t('food.reset.consumePrice')}}：{{numFormate(getFee)}}<!-- {{info.consumePrice}} --></div>
             <div class="margin-t-20 clearfix">
                 <div class="fl clearfix">
                     <el-button type="primary" size="small" @click="action">{{$t('food.common.order_deal')}}</el-button>
-                    <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button>
+                    <!-- <el-button type="primary" size="small">{{$t('food.common.print')}}</el-button> -->
                 </div>
                 <div class="fr clearfix">
-                    总消费：{{numFormate(getFee + info.hasPayPrice)}};  已结:{{ info.hasPayPrice ? numFormate(info.hasPayPrice) : 0}}
+                    {{$t('food.common.total_pay')}}：{{numFormate(getFee + info.hasPayPrice)}};  {{$t('desk.customer_closeAccount')}}:{{ info.hasPayPrice ? numFormate(info.hasPayPrice) : 0}}
                 </div>
             </div>
             <div class="margin-t-20">
                 <el-table :data="cart" border header-row-class-name="default" size="small">
-                    <el-table-column prop="goodsName" label="商品名称"  ></el-table-column>
+                    <el-table-column prop="goodsName" :label="$t('food.common.product_name')"  ></el-table-column>
                     <!-- <el-table-column :label="$t('food.common.price')" width="80">
                       <template slot-scope="scope">
                           <div v-if="scope.row.unitPrice > 0">
@@ -48,7 +48,7 @@
                       </template>
                     </el-table-column>
                     <el-table-column prop="goodsCount" :label="$t('shop.count')" width="50"></el-table-column>
-                    <el-table-column :label="$t('shop.customePrice')"  width="200">
+                    <el-table-column :label="$t('shop.reset.customePrice')"  width="200">
                       <template slot-scope="scope">
                         <div v-if="scope.row.goods.categoryType == 1">
                             <!-- {{scope.row.totalPrice}} -->
@@ -67,7 +67,7 @@
                     </el-table-column>
                     <el-table-column :label="$t('food.common.status')" width="80">
                         <template slot-scope="scope">
-                            {{scope.row.state == 2 ? '已结' : '未结'}}
+                            {{scope.row.state == 2 ? $t('desk.customer_closeAccount') : $t('desk.customer_outStand')}}
                         </template>
                     </el-table-column>
                 </el-table>

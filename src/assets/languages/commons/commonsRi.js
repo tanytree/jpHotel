@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-20 14:21:01
+ * @LastEditTime: 2021-01-25 17:22:35
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -31,6 +31,7 @@ module.exports = {
   confirm: '確認',
   saveSuccess: '保存成功',
   disable: '停止',
+  disableA: '停止中',
   enable: '利用中',
   newAdd: '追加',
   newAddA: '追加',

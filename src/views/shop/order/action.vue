@@ -7,34 +7,35 @@
                 <span class="rel showTax">
                     <el-button size="mini" type="primary" icon="el-icon-more" circle></el-button>
                     <div class="taxBox text-size14">
-                        <div class="item"><span class="w70">小计</span> <span class="text-right">￥{{orderTax.total}}</span> </div>
-                        <div class="item"><span class="w70">服务费 <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service}}</span> </div>
-                        <div class="item"><span class="w70">消费税 <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span> </span> <span class="text-right">￥{{orderTax.taxFee}}</span> </div>
-                        <div class="item"><span class="w70">合计</span> <span class="text-right">￥{{orderTax.sum}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('shop.reset.xiaoji')}}</span> <span class="text-right">￥{{orderTax.total}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('food.reset.servePri')}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('food.reset.constPri')}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span> </span> <span class="text-right">￥{{orderTax.taxFee}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('food.common.product_total')}}</span> <span class="text-right">￥{{orderTax.sum}}</span> </div>
                     </div>
                 </span>
             </div>
         </div>
         <div class="margin-t-10">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-form-item :label="$t('shop.payType')" prop="billingType">
+                <el-form-item :label="$t('shop.payType')+':'" prop="billingType">
                     <el-radio-group v-model="form.billingType" @change="changeBillingType">
                         <el-radio :label="1">{{$t('food.billingType.1')}}</el-radio>
                         <!-- <el-radio :label="2">{{$t('food.billingType.2')}}</el-radio> -->
                         <el-radio :label="3">{{$t('food.billingType.3')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item  v-if="form.billingType == 1" :label="$t('shop.yhPrice')">
+                <el-form-item  v-if="form.billingType == 1" :label="$t('shop.yhPrice')+':'">
+                  <span>￥</span>
                    <el-input  size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;" ></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('shop.outFlag')">
-                   <el-checkbox v-model="outFlag">外带</el-checkbox>
+                <el-form-item :label="$t('shop.outFlag')+':'">
+                   <el-checkbox v-model="outFlag">{{$t('shop.reset.sureFlag')}}</el-checkbox>
                 </el-form-item>
-                <el-form-item :label="$t('food.common.payPrice')">
-                        {{numFormate(getPayPrice - num(form.preferentialPrice))}}
+                <el-form-item :label="$t('food.reset.payPrice')+':'">
+                        ￥{{numFormate(getPayPrice - num(form.preferentialPrice))}}
                 </el-form-item>
                 <div v-if="form.billingType == 1">
-                    <el-form-item :label="$t('food.common.payType')">
+                    <el-form-item :label="$t('food.common.payType')+':'">
                         <el-select size="small" v-model="form.payType">
                             <el-option :label="$t('food.payType.1')" :value="1"></el-option>
                             <el-option :label="$t('food.payType.2')" :value="2"></el-option>
@@ -48,8 +49,8 @@
                         {{getPayPrice}}
                     </el-form-item> -->
 
-                    <el-form-item :label="$t('food.common.member_card')">
-                        <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.common.select_member_card')" @change="getMerberInfo">
+                    <el-form-item :label="$t('food.reset.member_card')+':'">
+                        <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.reset.select_member_card')" @change="getMerberInfo">
                             <el-option
                               v-for="(item,index) in memberList"
                               :key="index"
@@ -65,7 +66,7 @@
                     </el-form-item> -->
                 </div>
                 <div v-if="form.billingType == 2">
-                    <el-form-item :label="$t('food.common.select_company')" prop="signEnterId">
+                    <el-form-item :label="$t('food.common.select_company')+':'" prop="signEnterId">
                         <el-select  size="small" v-model="form.signEnterId"  filterable :placeholder="$t('food.common.select_company')"  @change="getSignInfo" >
                             <el-option
                               v-for="(item,index) in signList"
@@ -76,7 +77,7 @@
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item :label="$t('food.common.acount_info')" prop="signUserName" class="signUserBox">
+                    <el-form-item :label="$t('food.common.acount_info')+':'" prop="signUserName" class="signUserBox">
                         <el-input  size="small" placeholder="姓名" v-model="form.signUserName" style="width: 180px;" ></el-input>
                         <el-select size="small" v-model="form.signIdcardType" :placeholder="$t('food.common.card_type')" style="width: 120px;" >
                             <el-option :label="$t('food.card_type.1')" :value="1"></el-option>
@@ -88,7 +89,7 @@
 
 
                 <div v-if="form.billingType == 3">
-                    <el-form-item :label="$t('food.common.select_room')" prop="signRoomId">
+                    <el-form-item :label="$t('food.common.select_room')+':'" prop="signRoomId">
                         <el-select  size="small" v-model="form.signRoomId"  filterable :placeholder="$t('food.common.select_room')" @change="getSignRoomInfo" >
                             <el-option
                               v-for="(item,index) in romeList"
@@ -100,11 +101,11 @@
                     </el-form-item>
                 </div>
 
-                <el-form-item  :label="$t('food.common.remark')">
+                <el-form-item  :label="$t('food.common.remark')+':'">
                     <el-input type="textarea" :placeholder="$t('food.common.remark')" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
                 </el-form-item>
 
-                <el-form-item  :label="$t('food.common.order_count')">
+                <el-form-item  :label="$t('food.common.order_count')+':'">
                     <el-input-number size="mini" v-model="form.docCount" :step="1" step-strictly></el-input-number>
                 </el-form-item>
 

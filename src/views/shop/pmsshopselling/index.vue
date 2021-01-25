@@ -9,16 +9,16 @@
                 <el-main  style="padding:0;">
                         <div class="padding-20">
                              <el-form class="term line demo-form-inline" v-model="searchform" inline size="small">
-                                <el-form-item :label="$t('manager.grsl_goodsName')+':'">
-                                    <el-input v-model="searchform.name" :placeholder="$t('manager.grsl_goodsName')"></el-input>
+                                <el-form-item :label="$t('manager.grsl_goodsNameB')+':'">
+                                    <el-input v-model="searchform.name" :placeholder="$t('manager.grsl_goodsNameC')"></el-input>
                                 </el-form-item>
-                                 <el-form-item :label="$t('shop.categoryType')">
+                                 <el-form-item :label="$t('shop.reset.categoryType')">
                                      <el-select  v-model="searchform.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
                                          <el-option :label="$t('shop.goods')" value="1"></el-option>
                                          <el-option :label="$t('shop.serve')" value="2"></el-option>
                                       </el-select>
                                  </el-form-item>
-                                 <el-form-item :label="$t('manager.grsl_goodsType')+':'">
+                                 <el-form-item :label="$t('manager.grsl_goodsTypeA')+':'">
                                      <el-select  v-model="searchform.categoryId" :placeholder="$t('commons.placeChoose')">
                                         <el-option  v-for="item in category" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                      </el-select>
@@ -38,7 +38,7 @@
                                         {{scope.row.hotelGoods.categoryType == 1 ? $t('shop.goods') : $t('shop.serve')}}
                                      </template>
                                  </el-table-column>
-                                 <el-table-column :label="$t('manager.grsl_goodsType')" >
+                                 <el-table-column :label="$t('manager.grsl_goodsTypeA')" >
                                      <template slot-scope="scope">
                                          {{scope.row.hotelGoods.categoryName}}
                                      </template>
@@ -77,7 +77,7 @@
                                  </el-table-column> -->
                                  <el-table-column  :label="$t('food.common.action')" width="100">
                                      <template slot-scope="scope">
-                                        <el-button  size="mini" @click="addCart(scope.row,scope.$index)">{{$t('food.common.add')}}</el-button>
+                                        <el-button  size="mini" @click="addCart(scope.row,scope.$index)">{{$t('food.reset.add')}}</el-button>
                                      </template>
                                  </el-table-column>
                              </el-table>
@@ -92,7 +92,7 @@
                    <div class="hasTitle">{{$t('shop.isChoose')}}</div>
                     <el-main class="main padding-20">
                         <el-table  :data="cart" header-row-class-name="default" size="small" >
-                            <el-table-column width="100"  show-overflow-tooltip prop="goodsName" :label="$t('manager.grsl_goodsName')"></el-table-column>
+                            <el-table-column width="100"  show-overflow-tooltip prop="goodsName" :label="$t('manager.grsl_goodsNameA')"></el-table-column>
                             <el-table-column :label="$t('shop.rule')">
                                 <template slot-scope="scope">
                                      <div v-if="scope.row.hotelGoods.categoryType == 1"> {{numFormate(scope.row.retailPrice)}}</div>
@@ -139,12 +139,12 @@
                                     <el-form-item :label="$t('food.common.order_from')" prop="orderSource">
                                         <el-radio-group v-model="searchform.orderSource">
                                             <el-radio :label="1">PC</el-radio>
-                                            <el-radio :label="2">IPAD</el-radio>
+                                            <el-radio :label="2">{{$t('shop.reset.ipad')}}</el-radio>
                                             <el-radio :label="3">{{$t('shop.other')}}</el-radio>
                                         </el-radio-group>
                                     </el-form-item>
                                     <el-form-item>
-                                        <el-button style="width: 50%;"  type="primary"  @click="submit">{{$t('food.common.submit')}}</el-button>
+                                        <el-button style="width: 50%;"  type="primary"  @click="submit">{{$t('food.reset.submit')}}</el-button>
                                     </el-form-item>
                                 </el-form>
                             </div>
