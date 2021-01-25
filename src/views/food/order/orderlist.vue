@@ -159,7 +159,9 @@
         >
         <div class="detailPanel">
             <div class="top">
-                <span>{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span><span v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
+                <span style="padding-right:50px;">{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span>
+                <span style="padding-right:50px;" v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>
+                <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥{{orderTax.sum}} </div>
             <div class="taxBox text-size14 text-gray">
