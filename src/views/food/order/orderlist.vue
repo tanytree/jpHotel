@@ -159,13 +159,7 @@
         >
         <div class="detailPanel">
             <div class="top">
-<<<<<<< Updated upstream
-                <span style="padding-right:50px;">{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span>
-                <span style="padding-right:50px;" v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>
-                <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
-=======
-                <span style="margin-right:15px">{{$t('food.common.order_num')}}：{{detail.dishesNum}}，</span><span style="margin-right:15px;" v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}}{{detail.numberPlat?'，':''}}</span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
->>>>>>> Stashed changes
+                <span style="margin-right:20px">{{$t('food.common.order_num')}}：{{detail.dishesNum}}，</span><span style="margin-right:20px;" v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}}{{detail.numberPlat?'，':''}}</span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.reset.order_price')}}：¥{{orderTax.sum}} </div>
             <div class="taxBox text-size14 text-gray">
