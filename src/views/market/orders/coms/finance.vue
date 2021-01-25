@@ -17,9 +17,9 @@
                 <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_rich')}}</el-button>
+                <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
 <!--                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>-->
-                <!-- <el-button type="primary" size="mini" @click="knotShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.order_goTie')}}</el-button> -->
                 <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMeal')}}</el-button>
             </el-form-item>
         </el-row>
@@ -277,44 +277,7 @@
     </el-dialog>
     <!-- 挂账 -->
     <cardTao @refreshFatherData="updataInfo" ref="cardTao" :detailData = "detailData" :currentRoom="currentRoom" ></cardTao>
-    <!--走结-->
-    <el-dialog top='0' :title="$t('desk.order_goTie')" :visible.sync="knotShow" width="500px">
-        <el-form :model="consumeOperForm" ref="knot" :rules="rules" size="mini" label-width="20px">
-            <el-row v-if="currentRoom">
-                <el-col :span="8">
-                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                </el-col>
-                <el-col :span="8">
-                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
-                </el-col>
-                <el-col :span="8">
-                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList[0] && currentRoom.personList[0].name}}
-                </el-col>
-            </el-row>
-            <el-row v-else>
-                <template v-if="detailData&&detailData.inRoomList">
-                    <el-col :span="8">
-                        {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
-                    </el-col>
-                    <el-col :span="8">
-                        {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
-                    </el-col>
-                    <el-col :span="8">
-                       {{$t('desk.customer_livePeople')+':'}}{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList
-                        && detailData.inRoomList[0].personList[0].name}}
-                    </el-col>
-                </template>
-            </el-row>
-            <br />
-            <el-form-item label="" class="">
-                <p>{{$t('desk.order_ifGoTie')}}</p>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="knotShow=false">{{ $t('commons.close') }}</el-button>
-            <el-button type="primary" @click="out_check_in">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog>
+
     <!--开发票-->
 
     <!--退房结账-->
@@ -367,7 +330,7 @@
                 <el-col :span="8">
                     {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="8" v-if="currentRoom.personList">
                    {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
                 </el-col>
             </el-row>
@@ -428,6 +391,40 @@
             <el-button type="primary" @click="consume_oper(3,'destruction')">{{ $t('commons.confirm') }}</el-button>
         </div>
     </el-dialog>
+
+    <!--    续住-->
+    <el-dialog top="0" :title="$t('desk.home_stayOver')" :visible.sync="stayoverVisible" width="60%">
+        <el-alert :title="$t('desk.home_needLeave')" type="error" :closable="false" show-icon></el-alert>
+        <el-table :data="overstayTabledata" style="width: 100%" border header-row-class-name="default" size="small">
+            <el-table-column :label="$t('desk.home_roomNum')" prop="houseNum">
+            </el-table-column>
+            <el-table-column :label="$t('desk.home_name')" prop="name">
+
+            </el-table-column>
+            <el-table-column :label="$t('desk.home_orignLeaveTime')" prop="checkoutTime">
+            </el-table-column>
+            <el-table-column :label="$t('desk.home_stayOverDay')" width="250">
+                <template slot-scope="{row}">
+                    <el-input-number v-model="row.number" :step="1" @change="checkinDaysChange(row.number, row)"></el-input-number>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('desk.home_newLeaveTime')" width="250">
+                <template class="block" slot-scope="{row}">
+                    <el-date-picker
+                        v-model="row.newLeaveTime"
+                        type="date"
+                        :placeholder="$t('desk.serve_chooseDate')"
+                        @change="endTimeChange(row)"
+                    ></el-date-picker>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div slot="footer" class="dialog-footer">
+            <el-button size="small" class="white" @click="stayoverVisible = false">{{$t('commons.cancel')}}</el-button>
+            <el-button size="small" type="primary" class="submit" @click="stayoverSubmit">{{$t('commons.determine')}}</el-button>
+        </div>
+    </el-dialog>
+
     <!--部分结账-->
     <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
     <!--迷你吧-->
@@ -440,6 +437,29 @@
 </template>
 
 <script>
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        S: this.getMilliseconds(), //毫秒
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(
+            RegExp.$1,
+            (this.getFullYear() + "").substr(4 - RegExp.$1.length)
+        );
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(
+                RegExp.$1,
+                RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+            );
+    return fmt;
+};
 import {
     mapState,
     mapActions
@@ -454,7 +474,7 @@ import checkoutTao from "@/components/checkoutTao";
 
 export default {
     mixins: [myMixin],
-   props: ["detailData", "currentRoomId"],
+   props: ["detailData", "currentRoom"],
     components: {
         consumeGoods,
         someAccounts,
@@ -528,6 +548,12 @@ export default {
     },
     data() {
         return {
+            stayoverVisible: false,
+            overstayTabledata: [],
+            overstayForm: {
+                number: 1,
+                newLeaveTime: ''
+            },
             loading: false,
             hotelenterLoading: false,
             entryShow: false, //入账
@@ -581,9 +607,6 @@ export default {
             hoteldamageList: [],
             hotelenterList: [], //挂账企业列表
             destructionList: [], //冲调的账务
-            currentRoom: {
-                personList: []
-            },
             checkInId: '',
             priceTypeList:[5,6,7,8,12,14,15,16,17,18,22]
         };
@@ -591,13 +614,6 @@ export default {
 
     created() {
         this.checkInId = this.$route.query.id;
-        console.log(this.currentRoomId)
-        if (this.currentRoomId) {
-            this.currentRoom = this.detailData.inRoomList.filter(item=>{
-                return item.id == this.currentRoomId
-            })[0];
-        }
-
         //监听单价和数量
         this.$watch('unitPrice', (value) => {
             this.getDamagePrice();
@@ -617,6 +633,18 @@ export default {
     },
 
     methods: {
+        checkinDaysChange(e, row) {
+            var date = new Date(row.checkoutTime);
+            date.setDate(date.getDate() + e);
+            row.newLeaveTime = date.Format("yyyy-MM-dd HH:mm:ss");
+        },
+        endTimeChange(row) {
+            debugger
+            row.number = this.$F.getDaysBetween(
+                new Date(row.checkoutTime).Format("yyyy-MM-dd"),
+                new Date(row.newLeaveTime).Format("yyyy-MM-dd")
+            );
+        },
       payTypeList(){
         let obj = this. $t('commons.payType');
         let newArry={};
@@ -820,61 +848,6 @@ export default {
             });
         },
 
-
-        //走结
-        out_check_in() {
-            let params = {
-                checkInId: this.checkInId,
-                billType: 4
-            }
-            this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
-                this.knotShow = false
-                this.$router.push("/orders?type=order");
-            })
-        },
-
-        //退房结账
-        set_out_check_in() {
-            let info = {
-                checkInId: this.checkInId,
-                state:'',
-                pageIndex: 1,
-                pageSize: 1000
-            }
-            this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
-               // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
-               // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
-               //未结状态 1
-               //已结状态 2
-               //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
-               // let array = [1,1,1,1]
-               // let array = [2,2,2,2]
-               // let array = [1,2,1,2]
-               let array = res.consumeOrderList.map(v=>{
-                   return v.state
-               });
-               console.log(array);
-               let params = {}
-               params.checkInId = this.checkInId
-
-                console.log(this.isArrSame(array,1))
-                console.log(this.isArrSame(array,2))
-               if(this.isArrSame(array,1) == true){
-                   params.billType = 1
-               }else if(this.isArrSame(array,2) == true){
-                   params.billType = 3
-               }else{
-                   params.billType = 4
-               }
-                console.log(params)
-                // return
-               this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
-                   this.checkOutShow = false
-                   this.getOrderDetail();
-                   this.consume_order_list();
-               })
-            })
-        },
         //判断数组中的值是否相同
         isArrSame(array,state) {
             return !array.some(function(value, index) {
@@ -1107,6 +1080,37 @@ export default {
 
         },
 
+
+        //续住提交
+        stayoverSubmit() {
+            let params = {
+                checkoutTime: this.overstayTabledata[0].newLeaveTime,
+                checkInId: this.detailData.checkIn.id,
+                roomIds: this.currentRoom.roomId
+            }
+            this.$F.doRequest(this, '/pms/checkin/hotel_check_in_continue', params, (res) => {
+                debugger
+                this.stayoverVisible = true;
+            })
+        },
+        //续住
+        stayoverHandle() {
+            let personInfo = this.currentRoom.personList.filter(item => {
+                return item.personType == 2
+            })[0];
+            let roomInfo = {
+                houseNum: this.currentRoom.houseNum,
+                name: personInfo.name,
+                checkoutTime: this.detailData.checkIn.checkoutTime,
+                newLeaveTime: '',
+                number: 1,
+            }
+            this.checkinDaysChange(1, roomInfo);
+            this.overstayTabledata = [];
+            this.overstayTabledata.push(roomInfo);
+            this.stayoverVisible = true;
+            this.$forceUpdate();
+        },
 
         destructionHandle() {
             if (this.multipleSelection.length < 1) {

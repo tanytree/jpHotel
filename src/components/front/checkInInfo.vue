@@ -6,6 +6,7 @@
  -->
 <template>
   <div>
+<!--      订单信息-->
     <div class="item-info" v-if="showOrderInfo">
       <div class="public">
         <div class="itemDetail">
@@ -55,6 +56,7 @@
         </div>
       </div>
     </div>
+
 
     <!--表格数据 -->
     <el-table :data="checkinInfo.inRoomList" header-row-class-name="default" border style="width: 100%" :span-method="arraySpanMethod">
@@ -245,7 +247,7 @@ import myMixin from "@/utils/filterMixin";
 
 export default {
   mixins: [myMixin],
-  props: ["showOrderInfo"],
+  props: ["showOrderInfo", "reserveOrderInfo"],
   data() {
     return {
       inputMessage: false,

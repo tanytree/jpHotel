@@ -15,7 +15,7 @@
         <el-dialog top="0" width="70%" :title="$t('desk.order_lookOrderInfo')" :visible.sync="lookBookVisible" append-to-body>
             <div class="infoBox">
                 <!--            房间信息展示  包含订单信息 入住人同来宾客-->
-                <checkInInfo ref="checkInInfo" :orderInfo="orderInfo" showOrderInfo="true"></checkInInfo>
+                <checkInInfo ref="checkInInfo" showOrderInfo="true"></checkInInfo>
             </div>
             <div slot="footer" class="dialog-footer" style="text-align: center">
                 <el-button type="primary" @click="lookBookVisible = false">{{$t('commons.close')}}</el-button>
@@ -115,8 +115,11 @@ export default {
             this.$refs.CheckoutTao.resetVisibel();
         },
         lookRoomClick(data) {
+            let a = this;
             this.lookBookVisible = true;
-            this.orderInfo = data.reserveObj;
+            setTimeout(()=> {
+                a.$refs.checkInInfo.init('home', {checkIn: data.reserveObj, personList: []}, this.currentRoom);
+            }, 100)
         },
         dateLater21() {
             this.startTime = this.endTime;

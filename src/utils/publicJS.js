@@ -131,6 +131,11 @@ const $F = {
                 }
                 if (toJSONStringify) {
                     if (typeof params[key] == 'object') {
+                        if (params[key] instanceof Array) {
+                            if (typeof params[key][0] != 'object') {
+                                continue
+                            }
+                        }
                         params[key] = JSON.stringify(params[key]);
                     }
                 }
@@ -296,6 +301,13 @@ const $F = {
 
     importExcel(url, file) {
 
+    },
+
+    getDaysBetween(dateString1, dateString2) {
+        var startDate = Date.parse(dateString1);
+        var endDate = Date.parse(dateString2);
+        var days = (endDate - startDate) / (1 * 24 * 60 * 60 * 1000);
+        return days;
     },
 
     // 一些多个页面都会用到的方法 统一写到commons里面

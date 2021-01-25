@@ -501,6 +501,8 @@ export default {
     getDataList() {
       let params = this.$F.deepClone(this.searchForm);
       if (params.state == "0") params.state = "";
+      if (params.checkInTimeType == "5" || params.checkInTimeType == "10") params.checkInTimeType = "";
+      if (params.createTimeType == "5" || params.checkInTimeType == "10") params.createTimeType = "";
       this.$F.doRequest(
         this,
         "/pms/reserve/reserve_order_list",

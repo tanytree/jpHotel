@@ -141,13 +141,7 @@
                 :closable="false"
                 show-icon
             ></el-alert>
-            <el-table
-                :data="tableData"
-                style="width: 100%"
-                border
-                header-row-class-name="default"
-                size="small"
-            >
+            <el-table :data="tableData" style="width: 100%" border header-row-class-name="default" size="small">
                 <el-table-column :label="$t('desk.home_roomNum')" width="100">
                     <template>A100</template>
                 </el-table-column>
@@ -402,10 +396,22 @@ export default {
         getDataList() {
             this.roomloading = true;
             this.roomList = [];
+            // checkInType: [],
+            //     state: 1,
+            //     roomStatus: [],
+            //     roomTypeId: [],
+            //     buildingId: "",
+            //     buildingFloorId: "",
+            //     channel: [],
+            //     personRoom: [],
+            let params = this.$F.deepClone(this.searchForm);
+            for (let key in params) {
+
+            }
             this.$F.doRequest(
                 null,
                 "/pms/realtime/realtime_hotel_room_list",
-                this.searchForm,
+                params,
                 (res) => {
                     this.roomloading = false;
                     this.roomList = res.floorList;

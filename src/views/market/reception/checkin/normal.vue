@@ -294,7 +294,7 @@
                                                      :label="$t('desk.home_describeText')" size="mini" style="width: 100px" v-model.number="v.num"></el-input-number>
                                 </div>
                                 <div class="row">
-                                    <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>
+<!--                                    <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>-->
                                     <div style="float: right">
                                         <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                     </div>
@@ -389,13 +389,7 @@ Date.prototype.Format = function (fmt) {
     return fmt;
 };
 
-function getDaysBetween(dateString1, dateString2) {
-    var startDate = Date.parse(dateString1);
-    var endDate = Date.parse(dateString2);
-    var days = (endDate - startDate) / (1 * 24 * 60 * 60 * 1000);
-    // alert(days);
-    return days;
-}
+
 import { mapState } from "vuex";
 const vm = window.vm;
 import checkTheDetails from '@/components/checktheDetails'
@@ -1499,7 +1493,7 @@ export default {
                     date.setDate(date.getDate() + 1);
                     this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
                 }
-                this.checkInForm.checkinDays = getDaysBetween(
+                this.checkInForm.checkinDays = this.$F.getDaysBetween(
                     new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
                     new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")
                 );
@@ -1513,7 +1507,7 @@ export default {
         endTimeChange(e) {
             let day = 0;
             if (this.checkInForm.checkinTime) {
-                day = getDaysBetween(
+                day = this.$F.getDaysBetween(
                     new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
                     new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")
                 );

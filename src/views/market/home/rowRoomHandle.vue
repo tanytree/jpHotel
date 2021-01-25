@@ -26,7 +26,9 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
+                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px"
+                                            :placeholder="$t('desk.serve_chooseDate')" format="yyyy-MM-dd HH:mm:ss"
+                                            value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -60,7 +62,7 @@
                                                 </el-row>
                                                 <el-row class="row">
                                                     <el-col :span="8">
-                                                        <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>
+<!--                                                        <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>-->
                                                     </el-col>
                                                     <el-col :span="15">
                                                         <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
@@ -157,14 +159,6 @@
 </template>
 
 <script>
-
-function getDaysBetween(dateString1, dateString2) {
-    var startDate = Date.parse(dateString1);
-    var endDate = Date.parse(dateString2);
-    var days = (endDate - startDate) / (1 * 24 * 60 * 60 * 1000);
-    // alert(days);
-    return days;
-}
 import myMixin from './rowRoomMixin';
 import rowHouse from "@/components/front/rowHouse";
 export default {
@@ -624,7 +618,7 @@ export default {
                 date.setDate(date.getDate() + 1);
                 this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
             }
-            this.checkInForm.checkinDays = getDaysBetween(
+            this.checkInForm.checkinDays = this.$F.getDaysBetween(
                 new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
                 new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd")
             );
@@ -633,7 +627,7 @@ export default {
         endTimeChange(e) {
             let day = 0
             if (this.checkInForm.checkinTime != '') {
-                day = getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
+                day = this.$F.getDaysBetween(new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"), new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))
                 this.checkInForm.checkinDays = day
             }
         },
@@ -687,8 +681,8 @@ export default {
                             this.$emit('baseInfoChange', '');
                         })
                     } else {
-
                         this.checkInForm.checkInRoomIds = this.reservedRoom[0].id;
+                        this.checkInForm.roomIds = this.reservedRoom[0].id;
                         console.log(JSON.parse(JSON.stringify(this.checkInForm)))
                         this.$F.doRequest(this, '/pms/reserve/reserve_check_in', this.checkInForm, (data) => {
                             this.rowRoomHandleShow = false

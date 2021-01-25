@@ -22,7 +22,7 @@
     </div>
     <div class="bd margin-t-10">
       <div class="wrap">
-        <finance :currentRoomId="currentRoomId" :detailData="detailData" @getOrderDetail="getOrderDetail"/>
+        <finance :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail"/>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@ export default {
     finance,
   },
   mixins: [myMixin],
-  props: ["detailData", "currentRoomId"],
+  props: ["detailData", "currentRoom"],
   computed: {
     ...mapState({
       token: (state) => state.user.token,
@@ -48,9 +48,6 @@ export default {
   },
   data() {
     return {
-      currentRoom: {
-        personList: [],
-      },
       loading: false,
       detail: {
         text: "",

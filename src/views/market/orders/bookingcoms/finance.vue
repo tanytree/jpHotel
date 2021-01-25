@@ -54,15 +54,9 @@
                     <span v-else>{{row.consumePrice}}</span>
                 </template>
             </el-table-column>
-            <!--      <el-table-column-->
-            <!--        prop=""-->
-            <!--        :label="$t('desk.order_businessThat')"-->
-            <!--        show-overflow-tooltip-->
-            <!--      ></el-table-column>-->
             <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')"
                              show-overflow-tooltip></el-table-column>
-            <!--      <el-table-column prop="" label="班次" show-overflow-tooltip></el-table-column>-->
         </el-table>
         <div style="margin-top: 10px"></div>
         <!-- 分页 -->
@@ -118,10 +112,8 @@
                         <el-radio :label="10" :value="10">{{ $t('desk.order_partCompletely') }}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="segmentAmount"
-                              v-if="consumeOperForm.priceType != 9">
-                    <el-input class="width200" type="number" v-model="consumeOperForm.segmentAmount"
-                              autocomplete="off"></el-input>
+                <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="segmentAmount" v-if="consumeOperForm.priceType != 9">
+                    <el-input class="width200" type="number" v-model="consumeOperForm.segmentAmount" @change="changeSegmentAmount" autocomplete="off"></el-input>
                     <em style="margin-left: 10px; color: #888">{{ $t('desk.order_attention') }}</em>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_completelyReason')+':'" prop="remark">
@@ -332,6 +324,7 @@ export default {
     },
     data() {
         return {
+            destuctionAbleAmount: 0,
             loading: false,
             destructionShow: false,
             depositShow: false,
@@ -376,6 +369,11 @@ export default {
     },
 
     methods: {
+        changeSegmentAmount() {
+            if (this.consumeOperForm.segmentAmount > this.destuctionAbleAmount) {
+                this.consumeOperForm.segmentAmount = this.destuctionAbleAmount;
+            }
+        },
         baseInfoChange() {
             debugger
             this.$emit("baseInfoChange", "");
@@ -445,6 +443,7 @@ export default {
             params.state = 1;
             //订金，退订金
             if (type == 1 || type == 2) {
+
                 //这个type没什么意义，只是按照开发顺序或者按钮顺序来做个简单处理
 
                 if (!params.priceType) {
@@ -461,7 +460,7 @@ export default {
                         return;
                     }
                 }
-
+                // params.priceType = type;
                 if (params.priceType == 4) {
                     // params.priceType == 1
                     // if (params.consumePrice > 0 || params.consumePrice == 0) {
@@ -509,6 +508,19 @@ export default {
                     return;
                 }
             }
+            this.destuctionAbleAmount = this.multipleSelection[0].payPrice || this.multipleSelection[0].consumePrice;
+            this.tableData.forEach(data => {
+                if ((data.priceType == 9 || data.priceType == 10)) {
+                    if (data.richList && data.richList.length > 0) {
+                        data.richList.forEach(rich => {
+                            if (rich.id == this.multipleSelection[0].id) {
+                                this.destuctionAbleAmount += (data.payPrice || data.consumePrice)
+                            }
+                        })
+                    }
+
+                }
+            })
             this.destructionList = this.multipleSelection;
             this.consumeOperForm.priceType = 9;
             this.destructionShow = true;

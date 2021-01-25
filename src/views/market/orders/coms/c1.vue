@@ -13,15 +13,9 @@
         </div>
         <div class="customerInfo">
             <el-row class="row">
-                <el-col :span="4">
-                    {{ $t('desk.order_checkinWay') }}：{{F_operCheckinType(detailData.checkIn.operCheckinType)}}
-                </el-col>
-                <el-col :span="4">
-                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                </el-col>
-                <el-col :span="12">
-                    {{ $t('desk.order_toLiveTime') }}：{{detailData.checkIn.checkinTime}} - {{detailData.checkIn.checkoutTime}}
-                </el-col>
+                <el-col :span="4">{{ $t('desk.order_checkinWay') }}：{{F_operCheckinType(detailData.checkIn.operCheckinType)}}</el-col>
+                <el-col :span="4">{{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}</el-col>
+                <el-col :span="12">{{ $t('desk.order_toLiveTime') }}：{{detailData.checkIn.checkinTime}} - {{detailData.checkIn.checkoutTime}}</el-col>
             </el-row>
             <el-row class="row">
                <!-- <el-col :span="4">
@@ -40,7 +34,7 @@
         </div>
     </div>
     <div class="cost margin-t-10">
-        <div class="wrap">            
+        <div class="wrap">
             <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
             <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
             <div class="costNum">
@@ -51,7 +45,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance ref="finance" :currentRoomId="currentRoomId" :detailData="detailData" @getOrderDetail="getOrderDetail" />
+            <finance ref="finance" :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" />
         </div>
     </div>
     <el-dialog top="0" :show-close='false'  :title="$t('desk.home_roomCardOpreat')" :visible.sync="mackcade" width="60%">
@@ -80,29 +74,20 @@
             <el-button size="small" @click="mackcade=false">{{ $t('commons.cancel') }}</el-button>
         </span>
     </el-dialog>
+
+
+
 </div>
 </template>
 
 <script>
-import {
-    mapState,
-    mapActions
-} from "vuex";
 import finance from './finance'
 import myMixin from '@/utils/filterMixin';
 export default {
     mixins: [myMixin],
-    props: ['detailData', 'currentRoomId'],
+    props: ['detailData', 'currentRoom'],
     components: {
         finance
-    },
-    computed: {
-        ...mapState({
-            token: state => state.user.token,
-            userId: state => state.user.userId,
-            msgKey: state => state.config.msgKey,
-            plat_source: state => state.config.plat_source
-        })
     },
     data() {
         return {
@@ -125,18 +110,12 @@ export default {
             multipleSelection: [], //多选
             tableData: [], //表格数据
             liveCardData: [],
-            currentRoom: {
-                personList: []
-            }
+
         };
     },
 
     created() {
-        if (this.currentRoomId) {
-            this.currentRoom = this.detailData.inRoomList.filter(item=>{
-                return item.id == this.currentRoomId
-            })[0];
-        }
+
     },
 
     mounted() {

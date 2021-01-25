@@ -69,7 +69,7 @@
         <el-col :span="18">
           <div class="grid-content">
             <template v-if="checkType == 'customer'">
-              <c1 v-if="isReset" :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail"></c1>
+              <c1 v-if="isReset" :detailData="detailData" :currentRoom="currentRoom" @getOrderDetail="getDetail"></c1>
             </template>
             <template v-if="checkType == 'order'">
               <div class="detailTabWrap">
@@ -77,7 +77,7 @@
                   <div class="el-card__header" style="padding: 0 20px">
                     <el-tabs v-model="activeName" @tab-click="handleClick">
                       <el-tab-pane :label="$t('desk.order_billingDetails')" name="first">
-                        <c2 v-if="isReset" :detailData="detailData" :currentRoomId="currentRoom.id" @getOrderDetail="getDetail"></c2>
+                        <c2 v-if="isReset" :detailData="detailData" :currentRoom="currentRoom" @getOrderDetail="getDetail"></c2>
                       </el-tab-pane>
                       <el-tab-pane :label="$t('desk.order_orderInfo')" name="second">
                         <div class="thisOrderInfo">
