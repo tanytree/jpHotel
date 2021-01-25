@@ -41,17 +41,19 @@
         <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
             <template slot-scope="{row}">
-             <span :class="row.priceType == 9 || row.priceType == 10 ? 'text-red' : ''">{{row.priceType}}/   {{F_priceType(row.priceType)}}</span>
+             <span :class="row.priceType == 9 || row.priceType == 10 ? 'text-red' : ''">
+             <!-- {{row.priceType}}/  -->
+             {{F_priceType(row.priceType)}}</span>
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" >
             <template slot-scope="{row}">
-                {{getPriceStr(row.payPrice)}}
+                {{numFormate(getPriceStr(row.payPrice))}}
             </template>
         </el-table-column>
         <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
             <template slot-scope="{row}" style="color: red">
-                {{getPriceStr(row.consumePrice)}}
+                {{numFormate(getPriceStr(row.consumePrice))}}
             </template>
         </el-table-column>
 		<el-table-column prop="state" label="业务说明" width="200" show-overflow-tooltip>
@@ -102,8 +104,11 @@
                 </span>
                 <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
                 <!-- 全部冲调 -->
-                <span v-if="row.priceType == 9 && row.richList.length > 0">
-                    {{row.richList[0].priceType}}/全部冲调 --
+                <span v-if="(row.priceType == 9 || row.priceType == 10) && row.richList.length > 0">
+                    <!-- {{row.richList[0].priceType}}/ -->
+                    <!-- 全部冲调 -- -->
+                    {{F_priceType(row.priceType)}} --
+
                     <span v-if="row.richList[0].priceType == 1">
                          <span v-if="row.richList[0].payType == 1">现金定金</span>
                          <span v-if="row.richList[0].payType == 2">信用卡订金 </span>
@@ -151,8 +156,8 @@
                     </span>
                 </span>
 
-                <span v-if="row.priceType == 10">
-                </span>
+               <!-- <span v-if="row.priceType == 10">
+                </span> -->
                 <span v-if="row.priceType == 12">房费</span>
                 <span v-if="row.priceType == 13">
                      {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
@@ -255,7 +260,7 @@
 
             <el-form-item :label="$t('desk.customer_sum')+':'">
                 <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
-                <el-input type="number" style="width: 100px;" v-else v-model="consumeOperForm.consumePrice" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
+                <el-input type="number" style="width: 100px;" v-else v-model="consumeOperForm.consumePrices" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
             </el-form-item>
 
             <el-form-item :label="$t('desk.home_note') + ':'">
@@ -340,7 +345,7 @@
             </div>
             <br/>
             <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
-                <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrice" autocomplete="off" :disabled="true"></el-input>
+                <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrices" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item :label="$t('desk.home_note') + ':'">
                 <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
@@ -397,13 +402,12 @@
             </el-table>
             <el-form-item style="margin-top: 10px;" :label="$t('desk.order_mixingWay')+':'" prop="priceType">
                 <el-radio-group v-model="consumeOperForm.priceType">
-
                     <el-radio :label="9" :value="9">{{$t('desk.order_completelyAgainst')}}</el-radio>
                     <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrice"  v-if="consumeOperForm.priceType == 10">
-                <el-input class="width200" type="text" v-model="consumeOperForm.consumePrice"></el-input>
+            <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrices"  v-if="consumeOperForm.priceType == 10">
+                <el-input class="width200" type="text" v-model="consumeOperForm.consumePrices"></el-input>
                 <em style="margin-left:10px;color:#888;font-size: 12px;">
                 <!-- {{$t('desk.order_attention')}} -->
                     最大可冲调金额
@@ -494,7 +498,7 @@ export default {
                     // message: '请选择开票日期',
                     trigger: 'blur'
                 }, ],
-                prices: [{
+                consumePrices: [{
                     required: true,
                     // message: '请输入金额',
                     message: this.$t('commons.mustInput'),
@@ -546,7 +550,7 @@ export default {
                 pageSize: 10
             },
             consumeOperForm: {
-                consumePrice: '',
+                consumePrices: '',
                 payPrice:'',
                 priceType: '',
                 payType: '',
@@ -682,6 +686,18 @@ export default {
              * **/
 
             let params = this.consumeOperForm
+            // let parms = {
+            //     consumePrice: '',
+            //     payPrice:'',
+            //     priceType: '',
+            //     payType: '',
+            //     name: '',
+            //     damageCount:''
+            // }
+
+
+
+
             if(this.unitPrice){
                 params.unitPrice = this.unitPrice
             }
@@ -741,11 +757,11 @@ export default {
 
             //冲调
             if (type == 3) {
-                if(parseFloat(this.consumeOperForm.consumePrice) > parseFloat(this.destructionList[0].payPrice)){
+                if(parseFloat(this.consumeOperForm.consumePrices) > parseFloat(this.destructionList[0].payPrice)){
                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
                    return;
                 }
-                // let priceType  =  this.destructionList[0].priceType
+                let priceType  =  this.destructionList[0].priceType
                 // if(priceType == 9){
                 //     this.$message.error('已冲调记录不能被冲调!')
                 //     return false
@@ -753,10 +769,12 @@ export default {
                 let priceTypeList = this.priceTypeList
                 if(priceTypeList.indexOf(priceType) > -1){
                     console.log('消费类')
-                    params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrice)
+                    params.payPrice = ''
+                    params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrices)
                 }else{
                     console.log('付款类')
-                    params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.payPrice)
+                    params.consumePrice = ''
+                    params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.consumePrices)
                 }
                 params.richIds = this.destructionList[0].id
                 params.priceType = this.consumeOperForm.priceType
@@ -765,7 +783,6 @@ export default {
 
             }
             console.log(params)
-            // return
 
             //退房结账
             // if (type == 4) {
@@ -892,7 +909,7 @@ export default {
         checkOutHandle() {
             this.$refs.checkoutTao.resetVisibel()
             // this.checkOutShow = true;
-            // this.consumeOperForm.consumePrice = this.detailData.totalPrice
+            // this.consumeOperForm.consumePrices = this.detailData.totalPrice
         },
         // //开发票提交
         // openInvoiceSubmit(formName) {
@@ -947,13 +964,13 @@ export default {
                 this.taxCount = ''
                 if (this.currentRoom) {
                     console.log(this.currentRoom.realPrice)
-                    this.consumeOperForm.consumePrice = this.currentRoom.realPrice || 0
+                    this.consumeOperForm.consumePrices = this.currentRoom.realPrice || 0
                 } else {
                     if (this.detailData && this.detailData.inRoomList.length) {
                         console.log(this.detailData.inRoomList[0].realPrice)
-                        this.consumeOperForm.consumePrice = this.detailData.inRoomList[0].realPrice || 0
+                        this.consumeOperForm.consumePrices = this.detailData.inRoomList[0].realPrice || 0
                     } else {
-                        this.consumeOperForm.consumePrice = ''
+                        this.consumeOperForm.consumePrices = ''
                         this.$message.error(this.$t('desk.order_noPeople'));
                         return
                     }
@@ -963,14 +980,14 @@ export default {
                 console.log(this.currentRoom)
                 if (this.currentRoom) {
                     console.log(this.currentRoom.realPrice * 0.5)
-                    this.consumeOperForm.consumePrice = (this.currentRoom.realPrice * 0.5).toFixed(0) || 0
+                    this.consumeOperForm.consumePrices = (this.currentRoom.realPrice * 0.5).toFixed(0) || 0
 
                 } else {
                     if (this.detailData && this.detailData.inRoomList.length) {
                         console.log(this.detailData.inRoomList[0].realPrice)
-                        this.consumeOperForm.consumePrice = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(0) || 0
+                        this.consumeOperForm.consumePrices = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(0) || 0
                     } else {
-                        this.consumeOperForm.consumePrice = ''
+                        this.consumeOperForm.consumePrices = ''
                         this.$message.error(this.$t('desk.order_noPeople'));
                         return
                     }
@@ -978,11 +995,11 @@ export default {
             } else if (e == 7) {
                 this.taxCount = ''
                 this.consumeOperForm.damageCount = 1
-                this.consumeOperForm.consumePrice = ''
+                this.consumeOperForm.consumePrices = ''
                 this.getDdamageInfo();
             }
 
-            // console.log( this.consumeOperForm.consumePrice)
+            // console.log( this.consumeOperForm.consumePrices)
 
 
             this.$forceUpdate()
@@ -997,11 +1014,11 @@ export default {
                 let count = this.taxCount ? this.taxCount : 0
                 let unitPrice = this.unitPrice ? this.unitPrice : 0
                 let p = count * unitPrice
-                this.consumeOperForm.consumePrice = p
+                this.consumeOperForm.consumePrices = p
 
                 console.log(p)
 
-                console.log( this.consumeOperForm.consumePrice)
+                console.log( this.consumeOperForm.consumePrices)
             }else{
                 this.taxCount = ''
                 console.log(this.consumeOperForm.damageId)
@@ -1012,7 +1029,7 @@ export default {
                        if(this.consumeOperForm.damageId == list[i].id){
                            console.log(list[i])
                            let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
-                           this.consumeOperForm.consumePrice = p.toFixed(0)
+                           this.consumeOperForm.consumePrices = p.toFixed(0)
                            this.consumeOperForm.damageName = list[i].name
                        }
                    }
@@ -1182,7 +1199,7 @@ export default {
             this.unitPrice = ''
             this.consumeOperForm.priceType = val
             if(val == 9 || val == 10){
-                // this.consumeOperForm.consumePrice =  this.destructionList[0].consumePrice
+                // this.consumeOperForm.consumePrices =  this.destructionList[0].consumePrice
                 // console.log(this.destructionList[0].consumePrice)
                 console.log(this.destructionList[0])
                 let priceType  =  this.destructionList[0].priceType //当前冲调记录类型
@@ -1191,14 +1208,14 @@ export default {
                     console.log('消费类')
                     this.consumeOperForm.payPrice = ''
                     if(val == 9){
-                       this.consumeOperForm.consumePrice =  this.destructionList[0].consumePrice
+                       this.consumeOperForm.consumePrices =  this.destructionList[0].consumePrice
                     }
                     if(val == 100){
-                        this.consumeOperForm.consumePrice =  ''
+                        this.consumeOperForm.consumePrices =  ''
                     }
                 }else{
                     console.log('入账类')
-                     this.consumeOperForm.consumePrice = ''
+                     this.consumeOperForm.consumePrices = ''
                     if(val == 9){
                        this.consumeOperForm.payPrice =  this.destructionList[0].payPrice
                     }
@@ -1208,7 +1225,7 @@ export default {
                 }
 
             }else{
-                this.consumeOperForm.consumePrice = ''
+                this.consumeOperForm.consumePrices = ''
             }
 
             console.log(this.consumeOperForm)
@@ -1220,12 +1237,12 @@ export default {
                //    this.consumeOperForm.payType = ''
                // }
                // if(val !== 7){
-               //     this.consumeOperForm.consumePrice = ''
+               //     this.consumeOperForm.consumePrices = ''
                // }
 
                 // if(val == 9){
 
-                //     this.consumeOperForm.consumePrice = ''
+                //     this.consumeOperForm.consumePrices = ''
                 // }
                 // console.log(this.consumeOperForm.payType)
         }

@@ -105,10 +105,28 @@ let mixin = {
             let enums = this.$t('commons.towards')
             return value && enums[value] ? enums[value] : ''
         },
-        getPriceStr(v){
-            if(v){
-                return Math.abs(v);
+        numFormate(num){
+            if (num){
+                return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+                    return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
+                        return $1 + ",";
+                    });
+                });
+            }else{
+                return num
             }
+        },
+        getPriceStr(v){
+            
+            if(v){
+                if(v<0){
+                    return Math.abs(v);
+                }else{
+                    return v
+                }
+            }
+            
+            
         },
         //迷你吧计算税
         getTaxInfo(tax,list,outFlag){
