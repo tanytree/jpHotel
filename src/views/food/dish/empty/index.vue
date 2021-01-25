@@ -8,7 +8,7 @@
                   {{$t('food.common.is_served')}}：{{soldOutList.length}}
                 </div>
                <div style="max-width: 100px;">
-                  <el-button type="primary"   :disabled="soldOutList.length == 0" @click="clearAll">{{$t('food.common.cancel_all')}}</el-button>
+                  <el-button type="primary"   :disabled="soldOutList.length == 0" @click="clearAll">{{$t('food.reset.cancel_all')}}</el-button>
                </div>
             </div>
         </el-header>
@@ -28,13 +28,13 @@
                   </el-table-column>
                   <el-table-column :label="$t('food.common.solt_text')">
                     <template slot-scope="scope">
-                        {{scope.row.soldOut == 2 ? $t('food.common.yes') : $t('food.common.no') }}
+                        {{scope.row.soldOut == 2 ? $t('food.reset.yes') : $t('food.reset.no') }}
                     </template>
 
                   </el-table-column>
                   <el-table-column :label="$t('food.common.action')" width="80">
                     <template slot-scope="scope">
-                      <el-button size="mini" @click="clear(scope.row,1)">{{$t('food.common.remove')}}</el-button>
+                      <el-button size="mini" @click="clear(scope.row,1)">{{$t('food.reset.remove')}}</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -82,7 +82,7 @@
                                   <div class="text-size12 margin-t-10 text-gray" style="height:16px;">
                                       <span v-if="item.remainingCount == null" class="text-gray text-size12">{{$t('food.common.no_set')}}</span>
                                       <div v-else>
-                                          <div v-if="item.soldOut  == 1"  :class="item.remainingCount <= item.warningCount ? 'text-red' : ''" >{{$t('food.common.food_surplus')}}：{{item.remainingCount}}</div>
+                                          <div v-if="item.soldOut  == 1"  :class="item.remainingCount <= item.warningCount ? 'text-red' : ''" >{{$t('food.reset.food_surplus')}}：{{item.remainingCount}}</div>
                                           <div v-else class="text-red">{{$t('food.common.is_solt')}}</div>
                                       </div>
 
@@ -212,7 +212,7 @@ export default {
     clear(item,status){
         let text = ''
         if(status == 1){
-            text = this.$t('food.common.is_confirm_solt_cancel')
+            text = this.$t('food.reset.is_confirm_solt_cancel')
         }else{
              text = this.$t('food.common.is_confirm_solt')
         }

@@ -38,12 +38,11 @@
         </div>
         <div class="block flex " >
             <div class=" text-size14 text-left"  style="justify-content: flex-start">
-
-
-                {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20"> {{numFormate(cartToTal)}}</span>
+                <!-- {{$t('food.common.food_total',{count:countToTal})}}  ¥  <span class="text-size20"> {{numFormate(cartToTal)}}</span> -->
+              {{$t('food.common.product_total')}}：{{countToTal}}{{$t('food.reset.each')}}；¥ <span class="text-size20"> {{numFormate(cartToTal)}}</span>
              </div>
             <div style="max-width: 100px;">
-               <el-button type="primary" :disabled="cartToTal == '0.00' || cartToTal == 0" style="width: 100%;" @click="openDialog">{{$t('food.common.submit')}}</el-button>
+               <el-button type="primary" :disabled="cartToTal == '0.00' || cartToTal == 0" style="width: 100%;" @click="openDialog">{{$t('food.reset.submit')}}</el-button>
             </div>
          </div>
       </div>
@@ -319,14 +318,14 @@ export default {
             }
 
         }else if(this.tableData[index].remainingCount  ==  0 && this.tableData[index].soldOut == 1){
-            this.$alert(this.$t('food.common.soldOut'), this.$t('commons.tip_desc'), {
+            this.$alert(this.$t('food.reset.soldOut'), this.$t('commons.tip_desc'), {
               confirmButtonText: this.$t('commons.confirm'),
               callback: action => {
 
               }
             });
         }else{
-            this.$alert('该菜品已经沽清啦，不能再售卖啦，您可以前往菜品管理>沽清管理取消该商品的沽清!', this.$t('commons.tip_desc'), {
+            this.$alert(this.$t('food.reset.outOfSomething'), this.$t('commons.tip_desc'), {
               confirmButtonText: this.$t('commons.confirm'),
               callback: action => {
               }

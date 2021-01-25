@@ -159,25 +159,29 @@
         >
         <div class="detailPanel">
             <div class="top">
+<<<<<<< Updated upstream
                 <span style="padding-right:50px;">{{$t('food.common.order_num')}}：{{detail.dishesNum}} </span>
                 <span style="padding-right:50px;" v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}} </span>
                 <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
+=======
+                <span style="margin-right:15px">{{$t('food.common.order_num')}}：{{detail.dishesNum}}，</span><span style="margin-right:15px;" v-if= "detail.deskNum">{{$t('food.common.deskNum')}}：{{detail.deskNum}}{{detail.numberPlat?'，':''}}</span>  <span v-if= "detail.numberPlat">{{$t('food.common.numberPlat')}}：{{detail.numberPlat}} </span>
+>>>>>>> Stashed changes
             </div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥{{orderTax.sum}} </div>
+            <div class="margin-t-10 text-gray">{{$t('food.reset.order_price')}}：¥{{orderTax.sum}} </div>
             <div class="taxBox text-size14 text-gray">
-                <div class="item margin-t-10">服务费： ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
-                <div class="item margin-t-10">消费税： ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
-                <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('shop.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
+                <div class="item margin-t-10">{{$t('food.reset.servePri')}}({{orderTax.servicePrice}})： ¥{{orderTax.service}}  </div>
+                <div class="item margin-t-10">{{$t('food.reset.constPri')}}<span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span>： ¥{{orderTax.taxFee}} </div>
+                <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('food.reset.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
                 <div class="item margin-t-10" v-if="detail.billingType">
-                    实付款： {{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+                    {{$t('food.reset.paymoney')}}: {{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
                  </div>
             </div>
-            <div class="margin-t-10 text-gray">{{$t('food.common.create_time')}}：{{detail.createTime}}</div>
+            <div class="margin-t-10 text-gray">{{$t('food.reset.create_time')}}：{{detail.createTime}}</div>
             <el-table
               class="margin-t-10 "
               :data="detail.orderSubList"
               border
-              header-row-class-name="default"
+              header-row-class-name="default" 
               size="small"
             >
               <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>

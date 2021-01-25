@@ -3,7 +3,7 @@
     <div class="content padding-10 round">
         <div class="padding-12 round basebg margin-b-20 margin-t-10">
             <el-button @click="slideAllList" :icon="!slideAll ? 'el-icon-caret-bottom' : 'el-icon-caret-right' "> {{!slideAll ? $t('food.common.slide_all'): $t('food.common.no_slide_all') }} </el-button>
-            <el-button @click="addCategray(1)">{{$t('food.common.add_first_level')}}</el-button>
+            <el-button @click="addCategray(1)">{{$t('food.reset.add_first_level')}}</el-button>
         </div>
 
           <div class="padding-12 round basebg margin-b-20" v-for="(item,index) in categoryList">
@@ -12,7 +12,7 @@
                    <i v-if="item.childList.length > 0" :class="item.is_slide ? 'el-icon-caret-bottom' : 'el-icon-caret-right'"></i> {{item.name}}
                 </span>
                 <div style="float:right;">
-                    <el-button type="text" @click="addCategray_2(2,item.id)">{{$t('food.common.add_second_level')}}</el-button>
+                    <el-button type="text" @click="addCategray_2(2,item.id)">{{$t('food.reset.add_second_level')}}</el-button>
                     <el-button type="text" @click="editCategray_1(1,item.id,item.name,item.pCategoryId)">{{$t('food.common.edit')}}</el-button>
                     <el-button type="text" @click="del(item.id)">{{$t('food.common.del')}}</el-button>
                 </div>
@@ -25,7 +25,7 @@
                              <i v-if="subItem.childList.length > 0" :class="subItem.is_slide ? 'el-icon-caret-bottom' : 'el-icon-caret-right'"></i> {{subItem.name}}
                         </span>
                         <div style="float:right;">
-                            <el-button type="text" @click="addCategray_3(3,subItem.id,index)">{{$t('food.common.add_three_level')}}</el-button>
+                            <el-button type="text" @click="addCategray_3(3,subItem.id,index)">{{$t('food.reset.add_three_level')}}</el-button>
                             <el-button type="text" @click="editCategray_2(2,subItem.id,index,subItem.name,subItem.pCategoryId)">{{$t('food.common.edit')}}</el-button>
                             <el-button type="text" @click="del(subItem.id)">{{$t('food.common.del')}}</el-button>
                         </div>
@@ -46,18 +46,18 @@
 
     <el-dialog top="0" :title="$t('food.common.add')" width="40%" :visible.sync="dialogShow" :close-on-click-modal="false" @close="closeDialog">
         <el-form :model="info" ref="form"  :rules="rules"  label-width="150px" >
-            <el-form-item :label="$t('food.common.up_level')" v-if="list.length > 0 && info.pCategoryId && info.pCategoryId !== '0'" >
-              <el-select v-model="info.pCategoryId" disabled :placeholder="$t('food.common.up_level')">
+            <el-form-item :label="$t('food.reset.up_level')" v-if="list.length > 0 && info.pCategoryId && info.pCategoryId !== '0'" >
+              <el-select v-model="info.pCategoryId" disabled :placeholder="$t('food.reset.up_level')">
                 <el-option v-for="cate in list" :key="cate.id" :label="cate.name" :value="cate.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="info.categoryLevel == 3 ?  $t('food.common.three_level') : (info.categoryLevel == 2 ? $t('food.common.second_level') : $t('food.common.first_level')) " prop="name" >
+            <el-form-item :label="info.categoryLevel == 3 ?  $t('food.reset.three_level') : (info.categoryLevel == 2 ? $t('food.reset.second_level') : $t('food.reset.first_level')) " prop="name" >
                 <el-input v-model="info.name"></el-input>
             </el-form-item>
             <el-divider></el-divider>
             <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
                <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
-               <el-button size="small" type="primary" :disabled="!info.name" @click="submitForm('form')">{{$t('food.common.submit')}}</el-button>
+               <el-button size="small" type="primary" :disabled="!info.name" @click="submitForm('form')">{{$t('food.reset.submit')}}</el-button>
             </div>
         </el-form>
     </el-dialog>

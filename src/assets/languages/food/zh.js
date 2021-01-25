@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: yxl
- * @LastEditTime: 2020-07-31 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-25 11:18:33
+ * @FilePath: \jiudian\src\assets\languages\food\zh.js
  */
 module.exports = {
     reportType:{
@@ -341,6 +341,46 @@ module.exports = {
 
 
 
+
+
+  },
+  reset: {
+    each: '件', 
+    submit: '提交',
+    outOfSomething: '该菜品已经沽清啦，不能再售卖啦，您可以前往菜品管理>沽清管理取消该商品的沽清!',
+    soldOut: ' 该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!',
+    cancel_all:'全部取消',
+    yes:'是',
+    no: '否',
+    remove: '移除',
+    is_confirm_solt_cancel: '确认取消沽清该菜品?',
+    food_surplus: '预估剩余',
+    batch_set:'批量设置',
+    is_active:'启用中',
+    is_disable:'禁用中',
+    noTax:'不含税',
+    haveTax: '含税',
+    noServe: '不含服务费',
+    haveServe: '含服务费',
+    costPrice: '成本价格',
+    onePhoto: '只能上传一张图片',
+    confirm_del_all: '确认全部删除吗?',
+    confirm_del: '确认删除吗?',
+    confirm_disable:'确认要禁用吗?',
+    open: '开启',
+    add_first_level:'新增一级分类',
+    add_second_level:'新增二级分类',
+    add_three_level: '新增三级分类',
+    first_level:'一级分类名称',
+    second_level:'二级分类名称',
+    three_level: '三级分类名称',
+    up_level: '上级分类',
+    order_price:'订单总价',
+    servePri:'服务费',
+    constPri:'消费税',
+    yhPrice:'优惠金额',
+    paymoney:'实付金额',
+    create_time:'创建时间',
 
 
     }

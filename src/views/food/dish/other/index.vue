@@ -24,7 +24,7 @@
             <el-form-item style="float:right">
                 <el-button type="primary" @click="emptyHandle">{{$t('food.common.hanlde_empty')}}</el-button>
                 <el-button type="primary" @click="autoEmptyHandle">{{$t('food.common.set_auto_emptying_time')}}</el-button>
-                <el-button type="primary" @click="batchHandle">{{$t('food.common.batch_set')}}</el-button>
+                <el-button type="primary" @click="batchHandle">{{$t('food.reset.batch_set')}}</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据 -->
@@ -63,7 +63,7 @@
                 <el-table-column
                   :label="$t('food.common.solt_text')">
                   <template slot-scope="scope">
-                  {{ scope.row.soldOut == 2 ? $t('food.common.yes') : $t('food.common.no')}}</template>
+                  {{ scope.row.soldOut == 2 ? $t('food.reset.yes') : $t('food.reset.no')}}</template>
                 </el-table-column>
 
                 <el-table-column

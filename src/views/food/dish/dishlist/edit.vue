@@ -4,12 +4,12 @@
                 <el-input size="small" v-model="info.name" :placeholder="$t('food.common.food_title')"></el-input>
               </el-form-item>
               <el-form-item  size="small" :label="$t('food.common.taxStatus')" required>
-                   <el-radio v-model="info.taxStatus" :label="1">不含税</el-radio>
-                   <el-radio v-model="info.taxStatus" :label="2">含税</el-radio>
+                   <el-radio v-model="info.taxStatus" :label="1">{{$t('food.reset.noTax')}}</el-radio>
+                   <el-radio v-model="info.taxStatus" :label="2">{{$t('food.reset.haveTax')}}</el-radio>
               </el-form-item>
               <el-form-item  size="small"  :label="$t('food.common.seviceStatus')" required>
-                   <el-radio v-model="info.seviceStatus" :label="1">不含服务费</el-radio>
-                   <el-radio v-model="info.seviceStatus" :label="2">含服务费</el-radio>
+                   <el-radio v-model="info.seviceStatus" :label="1">{{$t('food.reset.noServe')}}</el-radio>
+                   <el-radio v-model="info.seviceStatus" :label="2">{{$t('food.reset.haveServe')}}</el-radio>
               </el-form-item>
               <el-form-item  size="small"  :label="$t('food.common.cate')" prop="categoryId">
                 <el-cascader
@@ -24,8 +24,8 @@
               <el-form-item  size="small"  :label="$t('food.common.food_price')" prop="price">
                 <el-input  size="small" :placeholder="$t('food.common.food_price')" v-model="info.price" type="number" name="price"></el-input>
               </el-form-item>
-              <el-form-item  size="small"  :label="$t('food.common.costPrice')" prop="costPrice">
-                <el-input  size="small" :placeholder="$t('food.common.costPrice')" v-model="info.costPrice" type="number" name="costPrice"></el-input>
+              <el-form-item  size="small"  :label="$t('food.reset.costPrice')" prop="costPrice">
+                <el-input  size="small" :placeholder="$t('food.reset.costPrice')" v-model="info.costPrice" type="number" name="costPrice"></el-input>
               </el-form-item>
               <el-form-item  size="small" :label="$t('food.common.food_pic')" required>
                     <el-upload
@@ -49,7 +49,7 @@
                            </span>
                          </div>
                     </el-upload>
-                    <div class="picdesc text-gray text-size12">只能上传一张图片</div>
+                    <div class="picdesc text-gray text-size12">{{$t('food.reset.onePhoto')}}</div>
               </el-form-item>
 
               <el-form-item :label="$t('food.common.material')" prop="marterial">
@@ -61,8 +61,8 @@
              </el-form-item>
 
              <el-form-item  size="small" :label="$t('food.common.status')">
-                <el-radio v-model="info.state" :label="1">{{$t('food.common.active')}}</el-radio>
-                <el-radio v-model="info.state" :label="2">{{$t('food.common.disable')}}</el-radio>
+                <el-radio v-model="info.state" :label="1">{{$t('food.reset.is_active')}}</el-radio>
+                <el-radio v-model="info.state" :label="2">{{$t('food.reset.is_disable')}}</el-radio>
              </el-form-item>
             <el-divider style="margin:-15px;"></el-divider>
             <div class="text-right"  style="padding: 0 20px;margin:-10px -20px -15px;">

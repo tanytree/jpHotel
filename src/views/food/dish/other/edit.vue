@@ -1,3 +1,9 @@
+<!--
+ * @Date: 2020-09-14 09:29:00
+ * @Author: 陶子
+ * @LastEditTime: 2021-01-25 11:01:29
+ * @FilePath: \jiudian\src\views\food\dish\other\edit.vue
+-->
 <template>
     <el-form :model="form" ref="form" label-width="150px" >
 
@@ -16,7 +22,7 @@
       <el-divider></el-divider>
       <div class="dialog-footer text-right" style="padding: 0 20px;margin:-10px -20px -15px;">
            <el-button size="small" @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
-           <el-button size="small" type="primary" @click="submitForm('form')">{{$t('food.common.submit')}}</el-button>
+           <el-button size="small" type="primary" @click="submitForm('form')">{{$t('food.reset.submit')}}</el-button>
       </div>
     </el-form>
 </template>

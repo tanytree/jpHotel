@@ -1,5 +1,5 @@
 <!--
- * @LastEditors: 董林
+ * @LastEditors: Please set LastEditors
  *
  -->
 <template>
@@ -11,7 +11,7 @@
                 v-if="$F.filterThirdMenu('frontOffice', item.path, true) && ['orderDesk','bookOff'].indexOf(item.path) > -1"
                 :class="item.path !== 'orderDesk' ? 'bg' : ''"
             >
-            <!-- 餐饮收银-->
+            <!-- 前台点餐-->
             <orderDesk :categroyList = 'categoryList' ref="orderDesk" v-if="item.path == 'orderDesk'"/>
             <!-- 交班-->
             <bookOff :categroyList = 'categoryList' ref="bookOff" v-if="item.path == 'bookOff'"/>

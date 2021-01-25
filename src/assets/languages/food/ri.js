@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-07-07 16:34:17
- * @LastEditors: yxl
- * @LastEditTime: 2020-07-31 10:20:25
- * @FilePath: /jiudian/src/assets/languages/zh.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-25 13:32:15
+ * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
     reportType:{
@@ -341,6 +341,54 @@ module.exports = {
 
 
 
-    }
+    },
+    reset: {
+      each: '件', 
+    submit:'確認',
+    outOfSomething:'該当料理品が品切れになっています、メニュー管理>品切れ設定のページに調整してください。', 
+    soldOut:' 在庫がなくなりましたので、該当品の注文を受け取れません。',
+    cancel_all:'一括取消',
+    yes:'◎',
+    no:'✖️',
+    remove: '取消',
+    is_confirm_solt_cancel:'該当料理の品切れ状態を取消しますか？',
+    food_surplus:'在庫',
+    batch_set:'一括数量再設定',
+    is_active: '通常',
+    is_disable:'停止',
+    noTax:'税抜き',
+    haveTax:'税込',
+    noServe: '無し',
+    haveServe: '有る',
+    costPrice:'コスト価格',
+    onePhoto:'料理写真一枚のみ',
+    confirm_del_all:'選択された料理品をメニューから削除に確認しますか？',
+    confirm_del: '該当料理品をメニューから削除に確認しますか？',
+    confirm_disable: '状態を停止に確認しますか？',
+    open: '通常',
+    confirm_open:'状態を通常戻りに確認しますか？',
+    add_first_level:'大分類を追加',
+    add_second_level:'中分類追加',
+    add_three_level:'小分類追加',
+    first_level:'大分類名称',
+    second_level:'中分類名称',
+    three_level:'小分類名称',
+    up_level: '大分類',
+    order_price:'小計',
+    servePri:'サービス料',
+    constPri:'消費税',
+    yhPrice:'割引',
+    paymoney:'合計',
+    create_time:'注文時間',
+    
 
+
+
+
+
+
+
+
+    
+      }
 }

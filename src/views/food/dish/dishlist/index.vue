@@ -58,7 +58,7 @@
             <el-table-column
               :label="$t('food.common.status')"
              >
-             <template slot-scope="scope"> {{ scope.row.state == 1 ? $t('food.common.is_active') : $t('food.common.is_disable')}}</template>
+             <template slot-scope="scope"> {{ scope.row.state == 1 ? $t('food.reset.is_active') : $t('food.reset.is_disable')}}</template>
             </el-table-column>
 
             <el-table-column
@@ -68,7 +68,7 @@
               <template slot-scope="scope">
                   <el-button @click="getInfo(scope.row,4)" type="text">{{$t('food.common.detail')}}</el-button>
                   <el-button  @click="edit(scope.row,1)" type="text">{{$t('food.common.edit')}}</el-button>
-                  <el-button type="text" @click="changStatus( scope.row)"> {{ scope.row.state == 1 ? $t('food.common.disable') : $t('food.common.open')}}</el-button>
+                  <el-button type="text" @click="changStatus( scope.row)"> {{ scope.row.state == 1 ? $t('food.common.disable') : $t('food.reset.open')}}</el-button>
                   <el-button type="text" @click="deleteHandle(scope.row)">{{$t('food.common.del')}}</el-button>
               </template>
             </el-table-column>
@@ -193,9 +193,9 @@ export default {
             params.userId = this.userId
             let text = ''
             if(data.state == 1){
-                text = this.$t('food.common.confirm_disable')
+                text = this.$t('food.reset.confirm_disable')
             }else{
-                text = this.$t('food.common.confirm_open')
+                text = this.$t('food.reset.confirm_open')
             }
             console.log(params)
             console.log(data.state)
@@ -215,7 +215,7 @@ export default {
         },
         //批量删除
         deleteHandle(data){
-            this.$confirm( this.$t('food.common.confirm_del'),  this.$t('food.common.tip'), {
+            this.$confirm( this.$t('food.reset.confirm_del'),  this.$t('food.common.tip'), {
                 confirmButtonText:  this.$t('food.common.ok'),
                 cancelButtonText:  this.$t('food.common.cancel'),
                 type: 'warning'
@@ -245,7 +245,7 @@ export default {
             let params ={
                 dishesIds:this.getArr(this.multipleSelection)
             }
-           this.$confirm( this.$t('food.common.confirm_del_all'),  this.$t('food.common.tip'), {
+           this.$confirm( this.$t('food.reset.confirm_del_all'),  this.$t('food.common.tip'), {
                confirmButtonText:  this.$t('food.common.ok'),
                cancelButtonText:  this.$t('food.common.cancel'),
                type: 'warning'
