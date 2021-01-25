@@ -21,7 +21,7 @@
 			<el-col :span="6" v-if="dongList.length >0">
 				<el-button type="text" @click="popup('changeDong')">{{$t('commons.modify')}}</el-button>
 				<span style="border-left: 1px solid #CCCCCC;height: 15px;"></span>
-				<el-popconfirm :title="$t('manager.hk_sureDelete')+'？'" @confirm="houseFloor_delete">
+				<el-popconfirm :title="$t('manager.hk_sureDelete')" @confirm="houseFloor_delete">
 					<el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
 				</el-popconfirm>
 			</el-col>
@@ -39,7 +39,7 @@
 							<el-col :span="10">{{value.building.name}}{{value.name}}</el-col>
 							<el-col :span="14" style="display: flex;justify-content: flex-end;">
 								<el-button type="text" @click="popup('changeCeng',value)">{{$t('commons.modify')}}</el-button>
-								<el-popconfirm :title="$t('manager.hk_sureDelete')+'？'" @confirm="houseRoom_delete(value)">
+								<el-popconfirm :title="$t('manager.hk_sureDeleteA')" @confirm="houseRoom_delete(value)">
 									<el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
 								</el-popconfirm>
 							</el-col>

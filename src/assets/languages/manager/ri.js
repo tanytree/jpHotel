@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-20 17:46:05
+ * @LastEditTime: 2021-01-25 14:01:50
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -71,6 +71,8 @@ module.exports = {
   hp_compensationType: '資産種別',
   hp_addType: '種別追加',
   hp_bulletTitle: '予約経路リストから削除に確認しますか？',
+  hp_bulletTitleA: '該当物品をリストから削除に確認しますか？',
+  hp_bulletTitleB: '該当部屋タイプを削除に確認しますか？',
   hp_compensationGoods: '物品登録',
   hp_goodsName: 'カテゴリ名称',
   hp_goodsType: '資産種別',
@@ -152,7 +154,8 @@ module.exports = {
   hk_building: '建物',
   hk_totalRoom: '合計部屋数',
   hk_space: '室',
-  hk_sureDelete: '削除確認しますか？',
+  hk_sureDelete: '該当建物を削除に確認しますか？',
+  hk_sureDeleteA: '該当階を削除に確認しますか？',
   hk_forward: '前へ移動',
   hk_moveBack: '後へ移動',
   hk_newBuilding: '建物追加',
@@ -244,6 +247,7 @@ module.exports = {
   grsl_warningQuantity: '在庫切れの警告数量',
   grsl_hasFailure: '失効',
   grsl_sureDelete: '削除確認',
+  grsl_sureDeleteA: '該当プランを削除に確認しますか？',
   grsl_goodsManagerment: '商品管理',
   grsl_resetGoods: '商品変更',
   grsl_belongType: 'カテゴリー',

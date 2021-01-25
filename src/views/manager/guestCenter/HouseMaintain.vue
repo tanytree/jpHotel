@@ -38,7 +38,7 @@
 									</el-button>
 									<el-button type="text" size="small" @click="addHouse('rili', scope.row, '3')" v-if="type == 'strategy'">{{$t('manager.hk_priceCalendar')}}
 									</el-button>
-									<el-popconfirm :title="$t('manager.hp_bulletTitle')" @confirm="houseConfirm_delete(scope.row)" v-if="type != 'strategy'">
+									<el-popconfirm :title="$t('manager.hp_bulletTitleB')" @confirm="houseConfirm_delete(scope.row)" v-if="type != 'strategy'">
 										<el-button slot="reference" type="text" size="small" @click="deleteRow(scope.row)">{{$t('commons.delete')}}
 										</el-button>
 									</el-popconfirm>

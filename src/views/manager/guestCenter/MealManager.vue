@@ -28,7 +28,7 @@
                     <template slot-scope="scope">
                         <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? $t('commons.disable') : $t('commons.enable')}}</el-button>
                         <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
-                        <el-popconfirm v-if="scope.row.status == 1" :title="$t('manager.grsl_sureDelete')+'？'" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="handleDelete(scope.row)">
+                        <el-popconfirm v-if="scope.row.status == 1" :title="$t('manager.grsl_sureDeleteA')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="handleDelete(scope.row)">
                             <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
                         </el-popconfirm>
                         <el-button v-if="scope.row.status == 2" type="text" size="small" disabled>{{$t('manager.grsl_hasFailure')}}</el-button>
