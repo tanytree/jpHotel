@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 17:22:35
+ * @LastEditTime: 2021-01-26 18:02:49
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -129,10 +129,10 @@ module.exports = {
     // "3": 'OTA/旅行社',
     // "4": '直電',
     // "10": 'その他'
-    '1': '自行步入',
-    '2': '电话预定',
+    '1': 'ウォークイン',
+    '2': '直電',
     "3": '営業',
-    "4": '其他',
+    "4": 'その他',
     "5": 'OTA'
   },
   //正常免费
@@ -169,7 +169,7 @@ module.exports = {
     value: '5'
   }, {
     type: "info",
-    name: 'みとう',
+    name: '未着',
     value: '6'
   }],
   F_roomStatus: {

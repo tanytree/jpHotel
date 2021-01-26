@@ -52,7 +52,7 @@
                 ></el-table-column>
                 <el-table-column
                     prop="mobile"
-                    :label="$t('desk.home_telNum')"
+                    :label="$t('desk.home_telNumA')"
                     width="140"
                 ></el-table-column>
                 <el-table-column
@@ -67,7 +67,7 @@
                 ></el-table-column>
                 <el-table-column
                     prop="projectName"
-                    :label="$t('desk.order_project')"
+                    :label="$t('desk.order_projectA')"
                     width="180"
                 ></el-table-column>
                 <el-table-column
@@ -131,7 +131,7 @@
                     </el-col>
                     <el-col :span="12" style="margin-bottom: 10px">
                         <span style="color: #888888">{{
-                            $t("desk.home_telNum") + ":"
+                            $t("desk.home_telNumA") + ":"
                         }}</span>
                         {{ invoiceDetail.mobile }}
                     </el-col>
@@ -155,7 +155,7 @@
                     </el-col>
                     <el-col :span="12" style="margin-bottom: 10px">
                         <span style="color: #888888">{{
-                            $t("desk.order_project") + ":"
+                            $t("desk.order_projectA") + ":"
                         }}</span>
                         {{ invoiceDetail.projectName }}
                     </el-col>

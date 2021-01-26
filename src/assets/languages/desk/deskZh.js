@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-20 11:15:50
+ * @LastEditTime: 2021-01-26 17:37:31
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -78,13 +78,17 @@ module.exports = {
   home_invalid: '作废',
   home_cancelInvalid: '取消作废',
   home_checkToPlay: '寄存补打',
+  home_checkToPlayA: '寄存补打',
   home_note: '备注',
   home_goodsGetOrder: '物品寄存领取单',
   home_printTime: '打印时间',
+  home_printTimeA: '打印时间',
   home_checkTheTime: '寄存时间',
   home_explain: '请您务必保管好此票，凭此票 领取东西',
   home_deskPhone: '前台电话',
+  home_deskPhoneA: '前台电话',
   home_hotelAddress: '酒店地址',
+  home_hotelAddressA: '酒店地址',
   home_telNum: '电话号码',
   home_telNumA: '电话号码',
   home_telNum1: '电话号码1',
@@ -200,6 +204,22 @@ module.exports = {
   home_liveInfo: '入住信息',
   home_allLiveWay: '入住人/单位名称/团队名',
   home_sureGet: '是否确认领取？',
+  home_waitGet: '待领取',
+  home_alerdGet: '已领取',
+  home_discard: '作废',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
+  home_: '',
   home_: '',
   //serve(前台服务)
   serve_flightTime: '班次时间',
@@ -415,6 +435,7 @@ module.exports = {
   order_invoicedAmount: "已开票金额",
   order_payCompanyName: "付款公司名称",
   order_project: "项目",
+  order_projectA: "项目",
   order_dateTime: "日期",
   order_inputCompanyName: "请填写付款公司名称",
   order_inputProjectName: "请填写项目名称",

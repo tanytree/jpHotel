@@ -1,15 +1,15 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-18 16:26:36
+ * @LastEditTime: 2021-01-26 17:59:04
  * @FilePath: \jiudian\src\views\market\reception\checkin\guestChoose.vue
  -->
 
 <template>
     <div class="boss-index inRoom" v-if="guestTypeShow">
-        <el-dialog top="0" :visible.sync="guestTypeShow" class="guestTypeDia" :title="$t('desk.order_sourceType')" width="500px">
+        <el-dialog top="0" :visible.sync="guestTypeShow" class="guestTypeDia" :title="$t('desk.order_sourceType')" width="40%">
             <el-form :model="checkInForm" ref="checkInForm" style="margin-top: -20px" :rules="checkRules"
-                     label-width="100px">
+                     label-width="150px">
                 <el-form-item :label="$t('desk.customer_guestType') + ':'" class="" style="margin-bottom: 0">
                     <el-radio-group v-model="checkInForm.guestType" @change="guestTypeChange">
                         <el-radio v-for="(item, key, index) of $t('commons.guestType')" :label="key" :key="index">{{ item }}</el-radio>

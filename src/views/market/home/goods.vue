@@ -53,10 +53,10 @@
       <el-table :data="checkTables" border height="100%" header-row-class-name="default" size="small">
         <el-table-column :label="$t('desk.home_customerName')" prop="guestName"></el-table-column>
         <el-table-column :label="$t('desk.home_roomNum')" prop="roomNum"></el-table-column>
-        <el-table-column :label="$t('desk.home_phoneNum')" prop="mobile"></el-table-column>
+        <el-table-column :label="$t('desk.home_phoneNumA')" prop="mobile"></el-table-column>
         <el-table-column :label="$t('desk.home_goodsName')" prop="luggageName"></el-table-column>
         <el-table-column width="180" :label="$t('desk.home_depositingTime')" prop="createTime"></el-table-column>
-        <el-table-column :label="$t('desk.home_drawTime')" prop="receiveTime"></el-table-column>
+        <el-table-column width="100" :label="$t('desk.home_drawTime')" prop="receiveTime"></el-table-column>
         <el-table-column :label="$t('desk.home_getNum')" width="240" prop="luggageNum"></el-table-column>
         <el-table-column :label="$t('desk.home_state')">
           <template slot-scope="{ row }">
@@ -83,8 +83,8 @@
             }}</el-button>
             <el-button size="small" type="text" v-if="row.operStatus == 1" @click="invalidClick(row)">{{ $t("desk.home_invalid") }}</el-button>
             <el-button size="small" type="text" v-if="row.operStatus == 3" @click="cancelInvalidClick(row)">{{ $t("desk.home_cancelInvalid") }}</el-button>
-            <el-button size="small" type="text" v-if="row.operStatus == 2 || row.operStatus == 3" @click="deletClick(row)">{{ $t("commons.delete") }}</el-button>
-            <el-button size="small" type="text" v-if="row.operStatus == 1" @click="jicunClick(row)">{{ $t("desk.home_checkToPlay") }}</el-button>
+            <!-- <el-button size="small" type="text" v-if="row.operStatus == 2 || row.operStatus == 3" @click="deletClick(row)">{{ $t("commons.delete") }}</el-button> -->
+            <el-button size="small" type="text" v-if="row.operStatus == 1" @click="jicunClick(row)">{{ $t("desk.home_checkToPlayA") }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -107,16 +107,16 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item :label="$t('desk.home_phoneNum') + ':'">
+          <el-form-item :label="$t('desk.home_phoneNumA') + ':'">
             <el-input v-model="newCheckForm.mobile"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
-          <el-form-item :label="$t('desk.home_goodsName') + ':'" prop="luggageName">
+        <el-col :span="12">
+          <el-form-item :label="$t('desk.home_goodsName') + ':'" prop="luggageName" label-width="110px">
             <el-input v-model="newCheckForm.luggageName"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="14">
+        <el-col :span="12">
           <el-form-item :label="$t('desk.home_note') + ':'">
             <el-input v-model="newCheckForm.remark"></el-input>
           </el-form-item>
@@ -150,7 +150,7 @@
           {{ itemGoodsDetail.roomNum }}
         </el-col>
         <el-col :span="12">
-          <span style="color: #888888">{{ $t("desk.home_telNum") + ":" }}</span>
+          <span style="color: #888888">{{ $t("desk.home_telNumA") + ":" }}</span>
           {{ itemGoodsDetail.mobile }}
         </el-col>
         <el-col :span="12">
@@ -167,7 +167,7 @@
           <span style="color: #888888">{{
             $t("desk.home_getState") + ":"
           }}</span>
-          {{ itemGoodsDetail.operStatus }}
+          {{ checkGetState(itemGoodsDetail.operStatus)}}
         </el-col>
         <el-col :span="12">
           <span style="color: #888888">{{
@@ -194,7 +194,7 @@
       </div>
     </el-dialog>
     <!-- checkPatch  寄存补打-->
-    <el-dialog top="0" :title="$t('desk.home_checkToPlay')" style="text-align: left" width="650px" v-if="checkPatch" :visible.sync="checkPatch">
+    <el-dialog top="0" :title="$t('desk.home_checkToPlayA')" style="text-align: left" width="650px" v-if="checkPatch" :visible.sync="checkPatch">
       <el-row style="margin: 10px 20px">
         <h2 style="text-align: center">
           {{ itemJiCun.storesName }}{{ $t("desk.home_goodsGetOrder") }}
@@ -204,7 +204,7 @@
             padding-bottom: 10px;
             margin-bottom: 10px;
           ">
-          <label>{{ $t("desk.home_printTime") + ":" }}</label>
+          <label>{{ $t("desk.home_printTimeA") + ":" }}</label>
           {{ itemJiCun.printingTime }}
         </el-row>
 
@@ -228,9 +228,9 @@
           $t("desk.home_explain")
         }}</el-row>
         <el-row>
-          <span>{{ $t("desk.home_deskPhone") + ":"
+          <span>{{ $t("desk.home_deskPhoneA") + ":"
             }}{{ itemJiCun.receptionMobile }}</span>
-          <span>{{ $t("desk.home_hotelAddress") + ":"
+          <span style="margin-left:20px;">{{ $t("desk.home_hotelAddressA") + ":"
             }}{{ itemJiCun.storesAddress }}</span>
         </el-row>
       </el-row>
@@ -308,6 +308,17 @@ export default {
     },
   },
   methods: {
+    checkGetState(number) {
+      console.log(number);
+      switch (parseInt(number)) {
+        case 1:
+          return this.$t('desk.home_waitGet');
+        case 2:
+          return this.$t('desk.home_alerdGet');
+        case 3:
+          return this.$t('desk.home_discard');
+      }
+    },
     //点击 寄存补打 按钮
     jicunClick(row) {
       let params = {
@@ -402,7 +413,7 @@ export default {
     },
     //点击 领取 按钮
     getClick(row) {
-      this.$confirm(this.$t('desk.home_sureGet'), this.$t("commons.tip_desc"), {
+      this.$confirm(this.$t("desk.home_sureGet"), this.$t("commons.tip_desc"), {
         confirmButtonText: this.$t("commons.determine"),
         cancelButtonText: this.$t("commons.cancel"),
         type: "warning",
