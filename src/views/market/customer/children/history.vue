@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-13 15:29:59
+ * @LastEditTime: 2021-01-25 18:20:15
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -234,6 +234,7 @@
             >
           </template>
         </el-table-column>
+          <el-table-column :label="$t('desk.home_note')" width="80" prop="remark" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('commons.operating')" width="220">
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="handelDetail(row)">{{

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-20 11:15:35
+ * @LastEditTime: 2021-01-25 18:20:24
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -222,6 +222,7 @@
           :label="$t('desk.book_orderNum')"
           show-overflow-tooltip
         ></el-table-column>
+          <el-table-column :label="$t('desk.home_note')" width="80" prop="remark" show-overflow-tooltip></el-table-column>
         <el-table-column
           :label="$t('desk.customer_toTheGuest')"
           show-overflow-tooltip
