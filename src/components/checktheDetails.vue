@@ -498,7 +498,7 @@ export default {
             console.log(this.inRoomList);
             let checkInRoomIds = [];
             this.inRoomList.forEach((room) => {
-                checkInRoomIds.push(room.room.id);
+                checkInRoomIds.push(room.room.roomId);
             })
             if (this.type == "checkin") {
                 this.$emit("personCallback", checkInRoomJson);

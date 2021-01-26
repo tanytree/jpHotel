@@ -413,6 +413,8 @@
                     <el-date-picker
                         v-model="row.newLeaveTime"
                         type="date"
+                        format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss"
                         :placeholder="$t('desk.serve_chooseDate')"
                         @change="endTimeChange(row)"
                     ></el-date-picker>
@@ -639,7 +641,6 @@ export default {
             row.newLeaveTime = date.Format("yyyy-MM-dd HH:mm:ss");
         },
         endTimeChange(row) {
-            debugger
             row.number = this.$F.getDaysBetween(
                 new Date(row.checkoutTime).Format("yyyy-MM-dd"),
                 new Date(row.newLeaveTime).Format("yyyy-MM-dd")
@@ -1090,8 +1091,7 @@ export default {
                 roomIds: this.currentRoom.roomId
             }
             this.$F.doRequest(this, '/pms/checkin/hotel_check_in_continue', params, (res) => {
-                debugger
-                this.stayoverVisible = true;
+                this.stayoverVisible = false;
             })
         },
         //续住
