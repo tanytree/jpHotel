@@ -310,6 +310,17 @@ const $F = {
         return days;
     },
 
+    numFormate(num) {
+        // console.log(num);
+        if (num) {
+            return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+                return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
+                    return $1 + ",";
+                });
+            });
+        }
+    },
+
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
         //获取ota列表
@@ -426,8 +437,6 @@ const $F = {
                 console.log(error)
             });
         },
-
-
     }
 
 }

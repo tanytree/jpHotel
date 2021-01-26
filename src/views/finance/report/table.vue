@@ -107,7 +107,7 @@
             </tr>
             <!-- 循环读取数据并显示 -->
             <tr v-for="row in content.slice(1)" :key="row.id">
-              <td v-for="item in row" :key="item.id">{{ item|numFormate }}</td>
+              <td v-for="item in row" :key="item.id">{{ $F.numFormate(item) }}</td>
             </tr>
           </table>
         </div>
@@ -136,23 +136,6 @@ export default {
       options: [],
       storeList: [],
     };
-  },
-  
-  filters: {
-    //对数据进行处理
-    numFormate(num) {
-      if (num > 1000) {
-        return num.toString().replace(/\d+/, function (n) {
-          // 先提取整数部分
-          return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
-            // 对整数部分添加分隔符
-            return $1 + ",";
-          });
-        });
-      }else{
-        return num;
-      }
-    },
   },
   mounted() {
     this.searchForm = {
@@ -382,7 +365,7 @@ export default {
 <style lang='less' scoped>
 .box-card {
   width: 100%;
-  
+
 }
 
 .el-card .el-card__body {

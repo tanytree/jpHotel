@@ -38,12 +38,22 @@
       <div class="components-edit">
         <el-table ref="multipleTable" :data="list" border height="100%" header-row-class-name="default" size="small">
           <el-table-column prop="name" :label="$t('manager.grsl_goodsNameA')"></el-table-column>
-          <el-table-column prop="retailPrice" :label="$t('manager.grsl_defaultTetailPriceA')"></el-table-column>
-          <el-table-column prop="costPrice" :label="$t('manager.grsl_costPrice')"></el-table-column>
+          <el-table-column :label="$t('manager.grsl_defaultTetailPriceA')">
+            <template slot-scope="scope">
+              ¥ {{$F.numFormate(scope.row.retailPrice)}}
+            </template>
+          </el-table-column>
+          <el-table-column :label="$t('manager.grsl_costPrice')">
+            <template slot-scope="scope">
+              ¥ {{$F.numFormate(scope.row.costPrice)}}
+            </template>
+          </el-table-column>
           <!--                    <el-table-column prop="inventoryWarning" :label="$t('manager.grsl_warningQuantity')"></el-table-column>-->
           <el-table-column :label="$t('commons.operating')" width="350">
             <template slot-scope="scope">
-              <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('bin', scope.row)">{{scope.row.state == 1 ? $t('manager.hk_disable') :  $t('manager.hk_enableA')}}</el-button>
+              <el-popconfirm v-if="scope.row.status == 1" :title="$t('manager.grsl_sureHk')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="popup('bin', scope.row)">
+                <el-button slot="reference" type="text" :disabled="scope.row.status == 2">{{scope.row.state == 1 ? $t('manager.hk_disable') :  $t('manager.hk_enableA')}}</el-button>
+              </el-popconfirm>
               <el-button type="text" size="small" :disabled="scope.row.status == 2" @click="popup('change', scope.row)">{{$t('commons.modify')}}</el-button>
               <el-popconfirm v-if="scope.row.status == 1" :title="$t('manager.grsl_sureDeleteB')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="handleDelete(scope.row)">
                 <el-button slot="reference" type="text">{{$t('commons.delete')}}</el-button>
@@ -127,20 +137,30 @@
       <div class="flex_1">
         <el-form :model="rowData" size="small" inline :rules="threerules" ref="priceForm" label-position="top" class="price">
           <el-form-item v-if="rowData.priceModel != 2" class="cost" prop="retailPrice" :label="$t('manager.grsl_defaultNoPrice')">
-            <el-input v-model="rowData.retailPrice" class="row-width"></el-input>
+            <el-input v-model="rowData.retailPrice" class="row-width">
+              <svg slot="prefix" t="1611640798495" class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3317" width="128" height="128"><path d="M798.848 512C817.216 512 832.064 497.728 832 480 832.064 462.336 817.216 448 798.848 448L576 448 576 429.248l246.016-246.016c12.992-12.992 13.376-33.6 0.896-46.08-12.352-12.544-33.152-12.096-46.144 0.832L544 370.688 311.232 137.984c-12.928-12.928-33.664-13.376-46.08-0.832-12.48 12.416-12.16 33.088 0.896 46.08L512 429.248 512 448 289.152 448C270.848 448 255.936 462.336 256 480 256 497.6 270.784 512 289.216 512L512 512l0 128L289.152 640C270.848 640 255.936 654.4 256 672 256 689.6 270.784 704 289.216 704L512 704l0 158.848C512 881.152 526.272 896 544 896 561.6 896 576 881.152 576 862.848L576 704l222.848 0c18.304 0 33.216-14.272 33.152-32 0.064-17.6-14.784-32-33.152-32L576 640 576 512 798.848 512z" p-id="3318"></path></svg>
+            </el-input>
           </el-form-item>
           <el-form-item v-if="rowData.categoryType == 1" prop="costPrice" :label="$t('manager.grsl_costNoPrice')">
-            <el-input v-model="rowData.costPrice" class="row-width"></el-input>
+            <el-input v-model="rowData.costPrice" class="row-width">
+              <svg slot="prefix" t="1611640798495" class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3317" width="128" height="128"><path d="M798.848 512C817.216 512 832.064 497.728 832 480 832.064 462.336 817.216 448 798.848 448L576 448 576 429.248l246.016-246.016c12.992-12.992 13.376-33.6 0.896-46.08-12.352-12.544-33.152-12.096-46.144 0.832L544 370.688 311.232 137.984c-12.928-12.928-33.664-13.376-46.08-0.832-12.48 12.416-12.16 33.088 0.896 46.08L512 429.248 512 448 289.152 448C270.848 448 255.936 462.336 256 480 256 497.6 270.784 512 289.216 512L512 512l0 128L289.152 640C270.848 640 255.936 654.4 256 672 256 689.6 270.784 704 289.216 704L512 704l0 158.848C512 881.152 526.272 896 544 896 561.6 896 576 881.152 576 862.848L576 704l222.848 0c18.304 0 33.216-14.272 33.152-32 0.064-17.6-14.784-32-33.152-32L576 640 576 512 798.848 512z" p-id="3318"></path></svg>
+            </el-input>
           </el-form-item>
           <div v-if="rowData.categoryType == 2 && rowData.priceModel == 2">
             <el-form-item prop="startPrice" :label="$t('manager.hk_startAt')">
-              <el-input v-model="rowData.startPrice" class="row-width"></el-input>
+              <el-input v-model="rowData.startPrice" class="row-width">
+                <svg slot="prefix" t="1611640798495" class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3317" width="128" height="128"><path d="M798.848 512C817.216 512 832.064 497.728 832 480 832.064 462.336 817.216 448 798.848 448L576 448 576 429.248l246.016-246.016c12.992-12.992 13.376-33.6 0.896-46.08-12.352-12.544-33.152-12.096-46.144 0.832L544 370.688 311.232 137.984c-12.928-12.928-33.664-13.376-46.08-0.832-12.48 12.416-12.16 33.088 0.896 46.08L512 429.248 512 448 289.152 448C270.848 448 255.936 462.336 256 480 256 497.6 270.784 512 289.216 512L512 512l0 128L289.152 640C270.848 640 255.936 654.4 256 672 256 689.6 270.784 704 289.216 704L512 704l0 158.848C512 881.152 526.272 896 544 896 561.6 896 576 881.152 576 862.848L576 704l222.848 0c18.304 0 33.216-14.272 33.152-32 0.064-17.6-14.784-32-33.152-32L576 640 576 512 798.848 512z" p-id="3318"></path></svg>
+              </el-input>
             </el-form-item>
             <el-form-item prop="minutePrice" :label="$t('manager.hk_getPriceRule')">
-              <el-input v-model="rowData.minutePrice" class="row-width"></el-input>
+              <el-input v-model="rowData.minutePrice" class="row-width">
+                <svg slot="prefix" t="1611640798495" class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3317" width="128" height="128"><path d="M798.848 512C817.216 512 832.064 497.728 832 480 832.064 462.336 817.216 448 798.848 448L576 448 576 429.248l246.016-246.016c12.992-12.992 13.376-33.6 0.896-46.08-12.352-12.544-33.152-12.096-46.144 0.832L544 370.688 311.232 137.984c-12.928-12.928-33.664-13.376-46.08-0.832-12.48 12.416-12.16 33.088 0.896 46.08L512 429.248 512 448 289.152 448C270.848 448 255.936 462.336 256 480 256 497.6 270.784 512 289.216 512L512 512l0 128L289.152 640C270.848 640 255.936 654.4 256 672 256 689.6 270.784 704 289.216 704L512 704l0 158.848C512 881.152 526.272 896 544 896 561.6 896 576 881.152 576 862.848L576 704l222.848 0c18.304 0 33.216-14.272 33.152-32 0.064-17.6-14.784-32-33.152-32L576 640 576 512 798.848 512z" p-id="3318"></path></svg>
+              </el-input>
             </el-form-item>
             <el-form-item prop="capsPrice" v-if="rowData.capsPriceFlag" :label="$t('manager.ps_skyPrice')">
-              <el-input v-model="rowData.capsPrice" class="row-width"></el-input>
+              <el-input v-model="rowData.capsPrice" class="row-width">
+                <svg slot="prefix" t="1611640798495" class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3317" width="128" height="128"><path d="M798.848 512C817.216 512 832.064 497.728 832 480 832.064 462.336 817.216 448 798.848 448L576 448 576 429.248l246.016-246.016c12.992-12.992 13.376-33.6 0.896-46.08-12.352-12.544-33.152-12.096-46.144 0.832L544 370.688 311.232 137.984c-12.928-12.928-33.664-13.376-46.08-0.832-12.48 12.416-12.16 33.088 0.896 46.08L512 429.248 512 448 289.152 448C270.848 448 255.936 462.336 256 480 256 497.6 270.784 512 289.216 512L512 512l0 128L289.152 640C270.848 640 255.936 654.4 256 672 256 689.6 270.784 704 289.216 704L512 704l0 158.848C512 881.152 526.272 896 544 896 561.6 896 576 881.152 576 862.848L576 704l222.848 0c18.304 0 33.216-14.272 33.152-32 0.064-17.6-14.784-32-33.152-32L576 640 576 512 798.848 512z" p-id="3318"></path></svg>
+              </el-input>
             </el-form-item>
             <!-- <el-form-item prop="depositPrice" :label="$t('manager.hk_deposit')">
                             <el-input v-model="rowData.depositPrice" class="row-width"></el-input>
@@ -536,6 +556,7 @@ export default {
 </script>
 
 <style lang="less" >
+
 .row-width {
   width: 120px;
 }

@@ -33,15 +33,25 @@
               <!-- 表格数据 -->
                 <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
                     <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsNameA')"></el-table-column>
-                    <el-table-column prop="retailPrice" :label="$t('manager.grsl_defaultTetailPriceA')"></el-table-column>
+                    <el-table-column :label="$t('manager.grsl_defaultTetailPriceA')">
+                        <template slot-scope="scope">
+                            ¥ {{$F.numFormate(scope.row.retailPrice)}}
+                        </template>
+                    </el-table-column>
 <!--                    <el-table-column prop="employeePrice" :label="$t('manager.grsl_employeePriceJapen')"></el-table-column>-->
-                    <el-table-column prop="costPrice" :label="$t('manager.grsl_costPrice')"></el-table-column>
+                    <el-table-column :label="$t('manager.grsl_costPrice')">
+                        <template slot-scope="scope">
+                            ¥ {{$F.numFormate(scope.row.costPrice)}}
+                        </template>
+                    </el-table-column>
 <!--                    <el-table-column prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')"></el-table-column>-->
 <!--                    <el-table-column prop="inventoryCount" :label="$t('manager.grsl_inventory')"></el-table-column>-->
                     <el-table-column :label="$t('commons.operating')" align="center" width="200">
                         <template slot-scope="scope">
 <!--                            <el-button type="text" size="small" @click="popup('sale', scope.row)">{{$t('commons.modify')}}</el-button>-->
-                            <el-button type="text" size="small" @click="offShelf(scope.row)">{{$t('manager.grsl_shelves')}}</el-button>
+                            <el-popconfirm :title="$t('manager.grsl_sureShelves')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="offShelf(scope.row)">
+                                <el-button type="text" size="small">{{$t('manager.grsl_shelves')}}</el-button>
+                            </el-popconfirm>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -134,13 +144,17 @@
                         <span class="row-width">{{rowData.goodsName}}</span>
                     </el-form-item>
                     <el-form-item prop="costPrice" :label="$t('manager.grsl_costNoPrice')">
-                        <span class="row-width">{{rowData.costPrice}}</span>
+                        <span class="row-width">¥ {{$F.numFormate(rowData.costPrice)}}</span>
                     </el-form-item>
                     <el-form-item prop="employeePrice" :label="$t('manager.grsl_employeePrice')">
-                        <el-input v-model="rowData.employeePrice" class="row-width"></el-input>
+                        <el-input v-model="rowData.employeePrice" class="row-width">
+                            <svg slot="prefix" t="1611640798495" class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3317" width="128" height="128"><path d="M798.848 512C817.216 512 832.064 497.728 832 480 832.064 462.336 817.216 448 798.848 448L576 448 576 429.248l246.016-246.016c12.992-12.992 13.376-33.6 0.896-46.08-12.352-12.544-33.152-12.096-46.144 0.832L544 370.688 311.232 137.984c-12.928-12.928-33.664-13.376-46.08-0.832-12.48 12.416-12.16 33.088 0.896 46.08L512 429.248 512 448 289.152 448C270.848 448 255.936 462.336 256 480 256 497.6 270.784 512 289.216 512L512 512l0 128L289.152 640C270.848 640 255.936 654.4 256 672 256 689.6 270.784 704 289.216 704L512 704l0 158.848C512 881.152 526.272 896 544 896 561.6 896 576 881.152 576 862.848L576 704l222.848 0c18.304 0 33.216-14.272 33.152-32 0.064-17.6-14.784-32-33.152-32L576 640 576 512 798.848 512z" p-id="3318"></path></svg>
+                        </el-input>
                     </el-form-item>
                     <el-form-item prop="inventoryWarning" :label="$t('manager.grsl_retailPrice')">
-                        <el-input v-model="rowData.retailPrice" class="row-width"></el-input>
+                        <el-input v-model="rowData.retailPrice" class="row-width">
+                            <svg slot="prefix" t="1611640798495" class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3317" width="128" height="128"><path d="M798.848 512C817.216 512 832.064 497.728 832 480 832.064 462.336 817.216 448 798.848 448L576 448 576 429.248l246.016-246.016c12.992-12.992 13.376-33.6 0.896-46.08-12.352-12.544-33.152-12.096-46.144 0.832L544 370.688 311.232 137.984c-12.928-12.928-33.664-13.376-46.08-0.832-12.48 12.416-12.16 33.088 0.896 46.08L512 429.248 512 448 289.152 448C270.848 448 255.936 462.336 256 480 256 497.6 270.784 512 289.216 512L512 512l0 128L289.152 640C270.848 640 255.936 654.4 256 672 256 689.6 270.784 704 289.216 704L512 704l0 158.848C512 881.152 526.272 896 544 896 561.6 896 576 881.152 576 862.848L576 704l222.848 0c18.304 0 33.216-14.272 33.152-32 0.064-17.6-14.784-32-33.152-32L576 640 576 512 798.848 512z" p-id="3318"></path></svg>
+                        </el-input>
                     </el-form-item>
                     <el-form-item prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')">
                         <el-input v-model="rowData.buyCount" class="row-width"></el-input>
@@ -183,7 +197,7 @@
                     </template>
                 </el-table-column>-->
                 <el-table-column :label="$t('manager.grsl_retailPriceA')" width="150">
-                    <template slot-scope="scope">{{scope.row.retailPrice}}{{$t('manager.ps_japanYen')}}
+                    <template slot-scope="scope">¥ {{$F.numFormate(scope.row.retailPrice)}}{{$t('manager.ps_japanYen')}}
 <!--                        <el-input v-model="" :disabled="scope.row.his" size="small"></el-input>-->
                     </template>
                 </el-table-column>

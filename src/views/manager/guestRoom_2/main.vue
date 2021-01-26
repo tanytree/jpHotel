@@ -190,4 +190,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
+    .svg-icon {
+        height: 20px;
+        width: 20px;
+        margin-top: 7px;
+        fill: #a2a2a2;
+    }
 </style>
