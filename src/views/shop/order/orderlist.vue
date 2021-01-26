@@ -262,7 +262,7 @@ import action from './action'
 import mixin from '../mixin';
 export default {
     mixins: [mixin],
-    props:['saleData','tax'],
+    props:['saleData'],
     components:{action,detail},
     computed: {
         ...mapState({
@@ -296,11 +296,13 @@ export default {
             tableData: [], //表格数据
             is_add:true,
             detail:{},
-            orderTax:{}
+            orderTax:{},
+            tax:{}
 
         };
     },
     mounted() {
+        this.get_consume_tax();
         this.initForm();
     },
     methods: {
@@ -457,6 +459,20 @@ export default {
             this.searchForm.pageIndex = val;
             this.getDataList();
             console.log(2)
+        },
+
+        get_consume_tax(){
+            let params = {
+                userId:this.userId,
+                storesNum:this.storesNum,
+            }
+            this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
+                
+                if(res && res.content){
+                    this.tax = JSON.parse(res.content)
+                }
+                console.log(this.tax)
+            });
         },
         // changeDialog(){
         //     this.is_add = false

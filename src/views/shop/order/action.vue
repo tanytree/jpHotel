@@ -238,7 +238,6 @@
             }
         },
         mounted() {
-
         },
         methods: {
             intForm(){
@@ -307,11 +306,14 @@
                 this.info = data
                 console.log(data.orderSubList)
                 let orderGoodsList = data.orderSubList
-                for(let i in orderGoodsList){
-                    orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
-                    orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
+                if(orderGoodsList.length > 0){
+                    for(let i in orderGoodsList){
+                        orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus
+                        orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus
+                    }
                 }
-                // console.log(orderGoodsList)
+
+                console.log(orderGoodsList)
                 this.orderSubList = orderGoodsList
                 this.form.orderId = data.id
                 // this.form.scoresDiscount = data.scoresDiscount
@@ -555,7 +557,9 @@
                 this.info = {}
                 this.intForm()
                 this.$emit('closeDialog')
-            }
+            },
+
+
         },
         watch:{
             'form.signEnterId': {

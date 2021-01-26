@@ -154,18 +154,24 @@
              </el-table-column>
         </el-table>
         <div class="margin-t-20 margin-b-20">{{$t('food.common.product_total')}}, {{$t('food.common.food_count')}} : {{countToTal}}  {{$t('food.common.amount')}} : {{numFormate(cartToTal)}}</div>
-        <div class="margin-t-20 margin-b-20">
+       <!-- <div class="margin-t-20 margin-b-20">
             {{$t('food.common.order_from')}} ：{{this.$t('food.orderSource.1')}}
-        </div>
-
-
+        </div> -->
         <el-form :model="desk" :rules="rules" ref="deskform"  :inline="true" >
-              <el-form-item :label="$t('food.common.deskNum')" prop="deskNum">
+            <el-form-item :label="$t('food.common.order_from')" prop="orderSource">
+                <el-radio-group v-model="searchForm.orderSource">
+                    <el-radio :label="1">PC</el-radio>
+                    <el-radio :label="2">{{$t('shop.reset.ipad')}}</el-radio>
+                    <el-radio :label="3">{{$t('shop.other')}}</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <br>
+            <el-form-item :label="$t('food.common.deskNum')" prop="deskNum">
                 <el-input type="number" size="small" :placeholder="$t('food.common.deskNum')" v-model="desk.deskNum"></el-input>
-              </el-form-item>
-              <el-form-item :label="$t('food.common.numberPlat')" prop="numberPlat">
+            </el-form-item>
+            <el-form-item :label="$t('food.common.numberPlat')" prop="numberPlat">
                 <el-input  type="number" size="small" :placeholder="$t('food.common.numberPlat')" v-model="desk.numberPlat"></el-input>
-              </el-form-item>
+            </el-form-item>
         </el-form>
         <div class="text-center"  style="padding-top: 20px;border-top: 1px solid #ddd;">
            <el-button @click="closeDialog">{{$t('food.common.cancel')}}</el-button>
@@ -257,6 +263,7 @@ export default {
         this.searchForm = {
             name:'',
             categoryId: '',
+            orderSource:1,
             pageIndex: 1, //当前页
             pageSize: 20, //页数
         }
@@ -399,7 +406,7 @@ export default {
             params.dishesJson  = JSON.stringify(dishesJson);
             params.deskNum = this.desk.deskNum
             params.numberPlat = this.desk.numberPlat
-            params.orderSource = 1
+            params.orderSource = this.searchForm.orderSource
             params.userId = this.userId
             params.storesNum = this.storesNum
             this.$confirm(this.$t('food.common.confirm_submit'), this.$t('food.common.tip'), {

@@ -52,6 +52,7 @@ export default {
     getDataList(){
         this.loading = true
         let params = {}
+        params.isShop = 1 //新增字段 是否商店部
         params.userId = this.userId
         params.storesNum = this.storesNum
         this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", params, (res) => {
