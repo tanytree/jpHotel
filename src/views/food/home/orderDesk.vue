@@ -149,11 +149,16 @@
              </el-table-column>
              <el-table-column :label="$t('desk.order_totalPrice')" width="160">
                  <template slot-scope="scope">
-                   {{numFormate(scope.row.count * scope.row.price)}}
+                  ¥ {{numFormate(scope.row.count * scope.row.price)}}
                  </template>
              </el-table-column>
         </el-table>
         <div class="margin-t-20 margin-b-20">{{$t('food.common.product_total')}}, {{$t('food.common.food_count')}} : {{countToTal}}  {{$t('food.common.amount')}} : {{numFormate(cartToTal)}}</div>
+        <div class="margin-t-20 margin-b-20">
+            {{$t('food.common.order_from')}} ：{{this.$t('food.orderSource.1')}}
+        </div>
+
+
         <el-form :model="desk" :rules="rules" ref="deskform"  :inline="true" >
               <el-form-item :label="$t('food.common.deskNum')" prop="deskNum">
                 <el-input type="number" size="small" :placeholder="$t('food.common.deskNum')" v-model="desk.deskNum"></el-input>
