@@ -366,7 +366,7 @@
             <el-form-item style="margin-top: 10px;" :label="$t('desk.order_mixingWay')+':'" prop="priceType">
                 <el-radio-group v-model="consumeOperForm.priceType">
                     <el-radio :label="9" :value="9">{{$t('desk.order_completelyAgainst')}}</el-radio>
-                    <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio>
+                    <!-- <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio> -->
                 </el-radio-group>
             </el-form-item>
             <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrices"  v-if="consumeOperForm.priceType == 10">
@@ -1137,6 +1137,7 @@ export default {
             }
             this.destructionList = this.multipleSelection
             this.destructionShow = true
+            this.consumeOperForm.priceType = 9
             this.$forceUpdate()
         },
         //开发票
