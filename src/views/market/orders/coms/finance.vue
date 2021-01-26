@@ -748,6 +748,7 @@ export default {
             //入账 默认未接
             if (type == 1) {
                 params.state = 1;
+                params.consumePrice = this.consumeOperForm.consumePrices
                 if (!params.priceType) {
                     this.$message.error(this.$t('desk.order_selectEntryItem'));
                     return;
