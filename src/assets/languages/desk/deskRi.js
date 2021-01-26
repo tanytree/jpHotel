@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-20 11:19:59
+ * @LastEditTime: 2021-01-26 11:05:44
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -936,6 +936,7 @@ module.exports = {
   add_tiao: '件',
   add_have: 'ある',
   add_memberImportFail: '件データをインポート失敗',
+  home_sureGet: '受取に確認しますか',
 
 
 

@@ -199,7 +199,7 @@ module.exports = {
   home_typeText: '类型',
   home_liveInfo: '入住信息',
   home_allLiveWay: '入住人/单位名称/团队名',
-  home_: '',
+  home_sureGet: '是否确认领取？',
   home_: '',
   //serve(前台服务)
   serve_flightTime: '班次时间',
