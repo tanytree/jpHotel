@@ -41,9 +41,13 @@
         <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
             <template slot-scope="{row}">
-             <span :class="row.priceType == 9 || row.priceType == 10 ? 'text-red' : ''">
-             <!-- {{row.priceType}}/  -->
-             {{F_priceType(row.priceType)}}</span>
+                <!-- {{row.priceType}}/ -->
+             <span v-if="row.priceType == 9 || row.priceType == 10"  class="text-red">
+             {{F_priceType(row.richList[0].priceType)}}
+             </span>
+             <span v-else>
+             {{F_priceType(row.priceType)}}
+             </span>
             </template>
         </el-table-column>
         <el-table-column :label="$t('desk.order_payment')" >
@@ -93,7 +97,7 @@
                 <span v-if="row.priceType == 5">房费</span>
                 <span v-if="row.priceType == 6">房费</span>
                 <span v-if="row.priceType == 7">
-                    {{row.damageName}}(￥{{row.unitPrice}}) * {{row.damageCount}}
+                    {{row.damageTypeName}}(￥{{row.consumePrice}}) * {{row.damageCount}}
                 </span>
                 <span v-if="row.priceType == 8">
                    <span v-if="row.goodsList&&row.goodsList.length > 0" >
@@ -104,10 +108,10 @@
                 </span>
                 <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
                 <!-- 全部冲调 -->
-                <span v-if="(row.priceType == 9 || row.priceType == 10) && row.richList.length > 0">
+                <span class="text-blue" v-if="(row.priceType == 9 || row.priceType == 10) && row.richList.length > 0">
                     <!-- {{row.richList[0].priceType}}/ -->
                     <!-- 全部冲调 -- -->
-                    {{F_priceType(row.priceType)}} --
+                    {{F_priceType(row.richList[0].priceType)}} --
 
                     <span v-if="row.richList[0].priceType == 1">
                          <span v-if="row.richList[0].payType == 1">现金定金</span>
@@ -127,7 +131,7 @@
                     <span v-if="row.richList[0].priceType == 5"> {{F_priceType(row.richList[0].priceType)}} </span>
                     <span v-if="row.richList[0].priceType == 6"> {{F_priceType(row.richList[0].priceType)}} </span>
                     <span v-if="row.richList[0].priceType == 7">
-                        {{row.richList[0].damageName}}(￥{{row.richList[0].unitPrice}}) * {{row.richList[0].damageCount}}
+                        {{row.richList[0].damageTypeName}}(￥{{row.richList[0].consumePrice}}) * {{row.richList[0].damageCount}}
                     </span>
                     <span v-if="row.richList[0].priceType == 8">
                         <span v-for="item in row.richGoodsList">
@@ -476,7 +480,7 @@ import checkoutTao from "@/components/checkoutTao";
 
 export default {
     mixins: [myMixin],
-   props: ["detailData", "currentRoom"],
+    props: ["detailData", "currentRoom"],
     components: {
         consumeGoods,
         someAccounts,
@@ -810,6 +814,8 @@ export default {
                 params.priceType = this.consumeOperForm.priceType
                 params.state = this.destructionList[0].state
                 params.payType = 0
+                // params.richType = 1
+                // params.richRemark  = '完全冲调'
 
             }
             console.log(params)

@@ -54,9 +54,16 @@
       </el-table-column>
       <el-table-column prop="name" label="客人类型" width="120">
       </el-table-column>
-      <el-table-column prop="address" label="套餐类型" width="120">
+      <el-table-column  label="套餐类型" width="100">
+           <template slot-scope="scope">
+               {{scope.row.mealTime == 1 ? '早餐' : '晚餐'}}
+           </template>
       </el-table-column>
-      <el-table-column prop="address" label="套餐【价格】" width="150">
+      <el-table-column label="套餐【价格】" width="200">
+          <template slot-scope="scope">
+              {{ scope.row.mealName}}【￥{{ scope.row.mealPrice}}】
+          </template>
+
       </el-table-column>
       <el-table-column prop="address" label="入账状态" width="180">
       </el-table-column>
@@ -89,46 +96,7 @@ export default {
       innerForm: {
         breakfast: "",
       },
-      tableData: [
-        {
-          id: 1,
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          id: 2,
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          id: 3,
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          children: [
-            {
-              id: 31,
-              date: "2016-05-01",
-              name: "王小虎",
-              address: "上海市普陀区金沙江路 1519 弄",
-            },
-            {
-              id: 32,
-              date: "2016-05-01",
-              name: "王小虎",
-              address: "上海市普陀区金沙江路 1519 弄",
-            },
-          ],
-        },
-        {
-          id: 4,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      tableData: [],
     };
   },
   computed: {
@@ -149,12 +117,13 @@ export default {
       let params = {
         checkInId: this.checkInId,
       };
-      this.$F.doRequest(this, "/pms/hotelattachmeal/check_in_meal_order_list", params, (res) => {
+      this.$F.doRequest(this, "/pms/hotelattachmeal/list", params, (res) => {
+          this.tableData = res.list
         console.log(res);
         // 这个接口需要后端改一下，暂时无法继续了
       });
     },
-    
+
   },
 };
 </script>
