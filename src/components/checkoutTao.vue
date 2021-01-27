@@ -16,31 +16,31 @@
     <div class="priceBox">
       <div class="leftPrice" v-if="detailData.payPrice - getRealPayFee.sum < 0"><span>{{$t('desk.order_receivable')}}</span>：
       <!-- {{getFee()}} -->
-      {{getRealPayFee.sum - detailData.payPrice}}
+      {{numFormate(getRealPayFee.sum - detailData.payPrice)}}
 
       </div>
       <div class="leftPrice" v-else><span>{{$t('desk.order_shouldBack')}}</span>
       <!-- {{detailData.payPrice - getRealPayFee.payFee}} -->
-      {{getPriceStr(getFee())}}
+      {{numFormate(getFee())}}
       </div>
       <div class="centerLine"></div>
       <div class="rightPrcie">
         <div class="rightTop">
-          {{$t('desk.consumerTotal')}}：<span class="rightTopNum">{{getRealPayFee.sum}}</span>
+          {{$t('desk.consumerTotal')}}：<span class="rightTopNum">{{numFormate(getRealPayFee.sum)}}</span>
         </div>
         <div class="rightBottom">
-          {{$t('desk.payTotal')}}：<span class="RightBottomNum">{{detailData.payPrice}}</span>
+          {{$t('desk.payTotal')}}：<span class="RightBottomNum">{{numFormate(detailData.payPrice)}}</span>
         </div>
       </div>
       <div class="lastRight">
         <img src="~@/assets/images/moreThan.png" class="rightTopImg" />
         <div class="hoverBox">
-          <div><span>{{$t('desk.customer_xiaoJi')}}</span><span>¥ {{getRealPayFee.total}}；</span></div>
-          <div><span>{{$t('desk.book_serveFee')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{getRealPayFee.taxFee}}；</span></div>
-          <div><span>{{$t('desk.book_costFee')}}（{{getRealPayFee.servicePrice}}）</span><span>¥{{getRealPayFee.service}}；</span></div>
-          <div><span>{{$t('desk.book_wenquan')}}</span><span>¥{{getRealPayFee.priceType15}}；</span></div>
-          <div><span>{{$t('desk.book_liveFee')}}</span><span>¥{{getRealPayFee.priceType16}}；</span></div>
-          <div><span>{{$t('desk.serve_heji')}}</span><span>¥{{getRealPayFee.sum}}；</span></div>
+          <div><span>{{$t('desk.customer_xiaoJi')}}</span><span>¥ {{numFormate(getRealPayFee.total)}}；</span></div>
+          <div><span>{{$t('desk.book_serveFee')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{numFormate(getRealPayFee.taxFee)}}；</span></div>
+          <div><span>{{$t('desk.book_costFee')}}（{{getRealPayFee.servicePrice}}）</span><span>¥{{numFormate(getRealPayFee.service)}}；</span></div>
+          <div><span>{{$t('desk.book_wenquan')}}</span><span>¥{{numFormate(getRealPayFee.priceType15)}}；</span></div>
+          <div><span>{{$t('desk.book_liveFee')}}</span><span>¥{{numFormate(getRealPayFee.priceType16)}}；</span></div>
+          <div><span>{{$t('desk.serve_heji')}}</span><span>¥{{numFormate(getRealPayFee.sum)}}；</span></div>
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@
       </el-form-item>
       <el-form-item :label="$t('desk.customer_sum')" prop="name">
         <!-- <el-input  size="small" v-model="checkoutForm.payPrice" :disabled="true" style="width: 260px"></el-input> -->
-            {{getRealPayFee.sum - checkoutForm.preferentialPrice}}
+            {{numFormate(getRealPayFee.sum - checkoutForm.preferentialPrice)}}
 
       </el-form-item>
       <el-form-item :label="$t('desk.home_note')">

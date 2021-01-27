@@ -18,7 +18,7 @@
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
                 <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_richA')}}</el-button>
                 <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
-<!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
+               <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
 <!--                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>-->
                 <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMealA')}}</el-button>
             </el-form-item>
@@ -41,12 +41,12 @@
         <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
             <template slot-scope="{row}">
-                <!-- {{row.priceType}}/ -->
+                {{row.priceType}}/
              <span v-if="row.priceType == 9 || row.priceType == 10"  class="text-red">
              {{F_priceType(row.richList[0].priceType)}}
              </span>
-             <span v-else>
-             {{F_priceType(row.priceType)}}
+             <span :class="row.richType == 1 ? 'text-red' : ''" v-else>
+                {{F_priceType(row.priceType)}}
              </span>
             </template>
         </el-table-column>
@@ -79,6 +79,8 @@
                 "15":'温泉税',
                 "16":'住宿税',
                 "100": '其他' -->
+
+               <div :class="row.richType == 1 ? 'text-blue' : ''">
 		       <span v-if="row.priceType == 1">
                     <span v-if="row.payType == 1">现金定金</span>
                     <span v-if="row.payType == 2">信用卡订金 </span>
@@ -101,7 +103,7 @@
                 </span>
                 <span v-if="row.priceType == 8">
                    <span v-if="row.goodsList&&row.goodsList.length > 0" >
-                       <span v-for="item in row.goodsList">
+                       <span  v-for="item in row.goodsList">
                            {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
                        </span>
                    </span>
@@ -112,7 +114,6 @@
                     <!-- {{row.richList[0].priceType}}/ -->
                     <!-- 全部冲调 -- -->
                     {{F_priceType(row.richList[0].priceType)}} --
-
                     <span v-if="row.richList[0].priceType == 1">
                          <span v-if="row.richList[0].payType == 1">现金定金</span>
                          <span v-if="row.richList[0].payType == 2">信用卡订金 </span>
@@ -173,10 +174,10 @@
                    </span>
                 </span>
                 <span v-if="row.priceType == 15">
-                    温泉税(￥{{row.unitPrice}}) * {{row.taxCount}}
+                    {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
                 </span>
                 <span v-if="row.priceType == 16">
-                    住宿税(￥{{row.unitPrice}}) * {{row.taxCount}}
+                    {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
                 </span>
                 <span v-if="row.priceType == 22">
                     <!-- 商品费 -->
@@ -184,6 +185,7 @@
                         {{item.goodsName}}({{item.unitPrice}})*{{item.goodsCount}}
                     </span>
                 </span>
+                </div>
 		    </template>
 		</el-table-column>
         <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
@@ -195,7 +197,7 @@
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
             <template slot-scope="{row}">
-                <span :class="row.priceType == 9 || row.priceType == 10 ? 'text-red' : ''">{{row.remark}}</span>
+                <span :class="row.priceType == 9 || row.priceType == 10 || row.richType == 1 ? 'text-red' : ''">{{row.remark}}</span>
             </template>
         </el-table-column>
         <el-table-column :label="$t('commons.operating')">
@@ -650,15 +652,15 @@ export default {
                 new Date(row.newLeaveTime).Format("yyyy-MM-dd")
             );
         },
-      payTypeList(){
-        let obj = this. $t('commons.payType');
-        let newArry={};
-         for(let i in obj){
-           if(i!=3){
-             newArry[i] = obj[i];
-           }
-         }
-         return newArry;
+        payTypeList(){
+            let obj = this. $t('commons.payType');
+            let newArry={};
+             for(let i in obj){
+               if(i!=3){
+                 newArry[i] = obj[i];
+               }
+             }
+             return newArry;
 
       },
       updataInfo(){
@@ -823,8 +825,8 @@ export default {
                 params.priceType = this.consumeOperForm.priceType
                 params.state = this.destructionList[0].state
                 params.payType = 0
-                // params.richType = 1
-                // params.richRemark  = '完全冲调'
+                params.richType = 1
+                params.richRemark  = this.consumeOperForm.remark
 
             }
             console.log(params)
