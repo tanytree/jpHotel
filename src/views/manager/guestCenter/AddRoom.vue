@@ -99,7 +99,7 @@
                                         :key="index"
                                         >{{ value.name }}</el-radio
                                     > -->
-									<el-radio :label="1">{{$t("manager.hk_toward_shan")}}</el-radio>
+									<el-radio :label="1">{{$t("manager.hk_toward_shan")}}===</el-radio>
 									<el-radio :label="2">{{$t("manager.hk_toward_hai")}}</el-radio>
 									<el-radio :label="3">{{$t("manager.hk_toward_hu")}}</el-radio>
 									<el-radio :label="4">{{$t("manager.hk_toward_malu")}}</el-radio>
@@ -200,7 +200,7 @@
 			"selectRedio",
 			"currentDong",
 			"selectFrom",
-			// "roomType",
+			"roomType",
 			"dongList",
 		],
 		data() {
@@ -311,21 +311,28 @@
 			// 选择--获取房型
 			get_room_type_list() {
 				// debugger
-				// this.roomType = []
+				this.roomType.forEach(e =>{
+					e.children = []
+				})
 				this.$F.doRequest(this, "/pms/hotel/room_type_list", {}, (res) => {
+					// debugger
 					res.roomtype.forEach((item, index) => {
+						// debugger
 						item.label = item.houseName;
 						item.value = item.id;
-						this.roomType[0].children.push(item);
 					});
-					this.roomType[0].label = this.guestRooms;
+					// debugger
+					this.roomType[0].children = res.roomtype
+					this.roomType[0].label = '客房';
+					console.log('this.roomType+++++', this.roomType);
+					// debugger
 					res.meetingtype.forEach((item, index) => {
 						item.label = item.houseName;
 						item.value = item.id;
-						this.roomType[1].children.push(item);
 					});
-					this.roomType[1].label = this.chamber;
-					console.log(this.roomType);
+					this.roomType[1].children = res.meetingtype
+					this.roomType[1].label = '会议厅';
+					console.log('this.roomType---', this.roomType);
 				});
 			},
 			// 保存

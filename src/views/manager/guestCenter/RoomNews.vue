@@ -472,7 +472,7 @@ export default {
                         temperatureFlag: 1,
                         remark: this.note, //为什么备注是必选
                     };
-					this.get_room_type_list()
+					// this.get_room_type_list()
                     this.add_show = true;
                     break;
                 case "change":
@@ -644,7 +644,7 @@ export default {
                     this.roomType[1].children.push(item);
                 });
                 this.roomType[1].label = this.chamber;
-                console.log(this.roomType);
+                console.log('this.roomType====', this.roomType);
             });
         },
         houseConfirm_delete(value) {

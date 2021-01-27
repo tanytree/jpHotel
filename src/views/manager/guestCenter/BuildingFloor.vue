@@ -25,9 +25,9 @@
 					<el-button slot="reference" type="text" size="small">{{$t('commons.delete')}}</el-button>
 				</el-popconfirm>
 			</el-col>
-			<el-col :span="8" :offset="8" v-if="dongList.length >0">
+			<el-col :span="8" :offset="8">
 				<el-button type="primary" @click="popup('addDong')">{{$t('manager.hk_newBuilding')}}</el-button>
-				<el-button type="primary" @click="popup('addCeng')">{{$t('manager.hk_newFloor')}}</el-button>
+				<el-button type="primary"  v-if="dongList.length >0" @click="popup('addCeng')">{{$t('manager.hk_newFloor')}}</el-button>
 			</el-col>
 		</el-row>
 		<el-row style="margin-top: 20px;margin-left: 40px;">

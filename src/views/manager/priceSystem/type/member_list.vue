@@ -3,7 +3,6 @@
 		<el-row :gutter="20" v-if="tab1_show">
 			<el-row>
 				<el-form class="demo-form-inline" inline size="small">
-					<!-- 设计图有前15天和后15天的快捷日期方式,可以利用日期组件里的改成ui图一样的设计 -->
 					<el-form-item :label="$t('manager.grsl_selectTime')+':'">
 						<el-date-picker v-model="ruleForm.date" value-format="yyyy-MM-dd" align="right" type="date" :placeholder="$t('commons.selectDate')"
 						 :picker-options="pickerOptions" @blur="get_hotel_price_room_type_list"></el-date-picker>
@@ -146,12 +145,11 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column prop="newCustomPrice" :label="$t('manager.grsl_newLivePriA')" width="250" v-if="ruleForm.roomType == 1">
+				<el-table-column prop="newCustomPrice" :label="$t('manager.grsl_newLivePriA')" width="250">
 					<template>
-						<div>
-							<div style="padding: 10px 0px;">
-								<el-input v-model="roomStrategyJson_p[0].newCustomPrice"></el-input>
-							</div>
+						<div style="padding: 10px 0px;">
+							<el-input v-model="newCustomPrice" placeholder="请输入" @input="onInput()"></el-input>
+							<!-- <el-input v-model="star_time" placeholder="请输入"></el-input> -->
 						</div>
 					</template>
 				</el-table-column>
@@ -203,6 +201,7 @@
 				allRoomTypeList: [], //全部房型(包括会议厅类型)
 				ruleForm_Pie: [], // 单独修改价格的tabble
 				roomStrategyJson_p: [],
+				newCustomPrice: '',
 				all: [],
 				isIndeterminate: true,
 
@@ -332,6 +331,9 @@
 			this.star_time = this.ruleForm.date;
 		},
 		methods: {
+			onInput(){
+			     this.$forceUpdate();
+			},
 			getRowKey(row) {
 				// debugger
 				return row.id + row.parentId;
@@ -657,7 +659,7 @@
 					priceCalend: 1, // 检索类型 1会员价格日历 2单位价格日历
 					timeType: 2, // 检索类型 1会员价格日历 2单位价格日历
 				};
-				debugger
+				// debugger
 				this.$F.doRequest(this, "/pms/hotel/hotel_price_room_type_list", params,
 					(res) => {
 						this.memberTypeList = [];
