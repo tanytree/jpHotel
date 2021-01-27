@@ -99,7 +99,7 @@
                                         :key="index"
                                         >{{ value.name }}</el-radio
                                     > -->
-									<el-radio :label="1">{{$t("manager.hk_toward_shan")}}===</el-radio>
+									<el-radio :label="1">{{$t("manager.hk_toward_shan")}}</el-radio>
 									<el-radio :label="2">{{$t("manager.hk_toward_hai")}}</el-radio>
 									<el-radio :label="3">{{$t("manager.hk_toward_hu")}}</el-radio>
 									<el-radio :label="4">{{$t("manager.hk_toward_malu")}}</el-radio>
