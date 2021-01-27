@@ -91,7 +91,9 @@
                 </el-table-column>
                 <el-table-column :label="$t('commons.operating')" width="200">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="popup('state', scope.row)">{{scope.row.state == 1 ? $t('commons.disableA') : $t('commons.enable')}}</el-button>
+                        <el-popconfirm :title="$t('manager.surePoint')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="popup('state', scope.row)">
+                            <el-button type="text" size="small">{{scope.row.state == 1 ? $t('commons.disableA') : $t('commons.enable')}}</el-button>
+                        </el-popconfirm>
                         <el-button v-if="scope.row.delFlag != 2" type="text" size="small" @click="popup('edit', scope.row)">{{$t('commons.modify')}}</el-button>
                         <el-popconfirm v-if="scope.row.delFlag != 2" :title="$t('manager.grsl_sureDeleteC')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="pointDelete(scope.row)">
                             <el-button slot="reference" size="small" type="text">{{$t('commons.delete')}}</el-button>
@@ -341,7 +343,7 @@
                     goodsName: goodsName,
                     sellId: this.sellId,
                     state: 1,
-                    categoryType: type,
+                    categoryType: this.serviceVisible ? type : '1',
                 };
                 this.$F.merge(params, this.shelfForm);
                 this.$F.doRequest(this, "/pms/sellinglog/listusable", params, (res) => {
