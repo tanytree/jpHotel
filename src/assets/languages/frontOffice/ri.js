@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-14 11:19:11
+ * @LastEditTime: 2021-01-27 15:57:19
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -69,9 +69,9 @@ module.exports = {
     //订单类型
     orderType: {
         "": '全部',
-        "1": '滞在',
-        "2": '出発予定',
-        "3": '以前/履歴',
+        "1": '滞在中',
+        "2": 'C/O予定',
+        "3": '顧客履歴',
         // "4": '売掛',
         // "5": 'チェックアウト後精算'
     },
@@ -80,15 +80,15 @@ module.exports = {
     checkInRoomType: {
         "0": '全部',
         "1": '一般',
-        "2": '時間貸し部屋',
+        "2": '日帰り',
         // "3": '深夜部屋'
     },
     leaveDate: {
         "0": '全部',
-        "1": '今日',
+        "1": '本日',
         "2": '昨日',
         "3": '明日',
-        "4": '三日後',
+        "4": '明後日',
         // "5": '近三天',
         // "6": '近七天',
         // "7": '上月',

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 18:09:57
+ * @LastEditTime: 2021-01-27 17:07:13
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -10,17 +10,17 @@
     <el-form inline size="small">
         <el-row>
             <el-form-item label="">
-                <el-button type="primary" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccount')}}</el-button>
+                <el-button type="primary" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccountA')}}</el-button>
                 <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
                 <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
                 <el-button type="primary" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                 <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
 <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
-                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_rich')}}</el-button>
+                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_richA')}}</el-button>
                 <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
 <!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
 <!--                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>-->
-                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMeal')}}</el-button>
+                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMealA')}}</el-button>
             </el-form-item>
         </el-row>
         <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -50,17 +50,17 @@
              </span>
             </template>
         </el-table-column>
-        <el-table-column :label="$t('desk.order_payment')" >
+        <el-table-column :label="$t('desk.order_paymentB')" >
             <template slot-scope="{row}">
                 {{numFormate(getPriceStr(row.payPrice))}}
             </template>
         </el-table-column>
-        <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
+        <el-table-column prop="consumePrice" :label="$t('desk.order_expenseA')">
             <template slot-scope="{row}" style="color: red">
                 {{numFormate(getPriceStr(row.consumePrice))}}
             </template>
         </el-table-column>
-		<el-table-column prop="state" label="业务说明" width="200" show-overflow-tooltip>
+		<el-table-column prop="state" :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
 		    <template slot-scope="{row}">
                <!-- "1": '订金',
                 "2": '押金',
@@ -209,7 +209,7 @@
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
     <!--入账 -->
-    <el-dialog top='0' :title="$t('desk.enterAccount')" :visible.sync="entryShow">
+    <el-dialog top='0' :title="$t('desk.enterAccountB')" :visible.sync="entryShow">
         <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
             <p>{{$t('desk.book_firstInto')}}</p>
             <el-form-item :label="$t('desk.order_payProject')+':'">
@@ -219,7 +219,7 @@
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item :label="$t('desk.order_selectPayWay')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
+            <el-form-item :label="$t('desk.order_selectPayWayA')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
                 <el-radio-group v-model="consumeOperForm.payType">
                     <!-- <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio> -->
                     <el-radio v-for="(value, key) in payTypeList()" :label="key" :key="key">{{value}}</el-radio>
@@ -268,7 +268,7 @@
             </el-form-item>
 
             <el-form-item :label="$t('desk.home_note') + ':'">
-                <el-input class="" :placeholder="$t('desk.home_note')" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-input class="" :placeholder="$t('desk.home_noteA')" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
             </el-form-item>
 <!--            <el-form-item label="打印单据：">-->
 <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
@@ -711,6 +711,15 @@ export default {
             }).catch(() => {});
         },
         consume_oper(type, formName) {
+          if(type == 1){
+            if(!this.consumeOperForm.remark){
+              this.$message({
+                  message: '備考欄必ず理由・内容を記入してください',
+                  type: 'warning'
+              })
+              return false
+            }
+          }
             /**
              * 1.入账
              * 2.挂账
@@ -1107,7 +1116,7 @@ export default {
             })[0];
             let roomInfo = {
                 houseNum: this.currentRoom.houseNum,
-                name: personInfo.name,
+                name: personInfo&&personInfo.name?personInfo.name:'',
                 checkoutTime: this.detailData.checkIn.checkoutTime,
                 newLeaveTime: '',
                 number: 1,

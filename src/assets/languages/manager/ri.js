@@ -538,6 +538,7 @@ module.exports = {
   grsl_sureEnable: '起用確認しますか',
   grsl_sureDisable: '使用禁止確認しますか？',
   grsl_ifSureDelete: '削除確認しますか？',
+  grsl_ifSureDeleteA: '該当プラン・食事を削除に確認しますか？',
   grsl_superior: '上一段',
   add_lsat15: '15日前',
   add_next15: '15日後',

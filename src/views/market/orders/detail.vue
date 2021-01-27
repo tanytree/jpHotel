@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-06 16:34:36
+ * @LastEditTime: 2021-01-27 17:44:33
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -54,7 +54,7 @@
                         {{ F_checkinState(item.state) }}
                       </el-button>
                       <span>
-                        <span class="icon-main" v-if="index == 0">主</span>
+                        <span class="icon-main" v-if="index == 0">{{$t('desk.add_theMain')}}</span>
                           <span>
                               {{ item.personList.length ? getMainCheckPerson(item.personList).name : "" }}（{{ item.houseNum }}）
                           </span>
@@ -88,7 +88,7 @@
                               </h3>
                               <el-row class="cell">
                                 <el-col :span="6">
-                                  {{ $t("desk.order_checkinDate") + ":" }}{{ detailData.checkIn.checkinTime }}
+                                  {{ $t("desk.order_checkinDateA") + ":" }}{{ detailData.checkIn.checkinTime }}
                                 </el-col>
                                 <el-col :span="6">
                                   {{ $t("desk.order_departureTime") + ":" }}{{ detailData.checkIn.checkoutTime }}

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 13:33:03
+ * @LastEditTime: 2021-01-27 14:57:09
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
