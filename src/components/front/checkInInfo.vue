@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-10 19:08:28
+ * @LastEditTime: 2021-01-27 11:54:39
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -92,7 +92,7 @@
           </div>
         </template>
       </el-table-column> -->
-      <el-table-column :label="$t('desk.home_idCardNum')" align="center">
+      <el-table-column :label="$t('desk.home_idCardNumB')" align="center" width="110">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <span v-if="row.headerObj">

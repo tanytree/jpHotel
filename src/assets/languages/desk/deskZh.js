@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-26 17:37:31
+ * @LastEditTime: 2021-01-27 13:15:46
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -15,6 +15,7 @@ module.exports = {
   roomInfoDesc: '房间信息',
   customerInfoDesc: '客户信息',
   payTotal: '付款合计',
+  payTotalA: '付款合计',
   consumerTotal: '消费合计',
   balanceTotal: '平衡数',
   orderMarkInfo: '订单备注',
@@ -45,6 +46,7 @@ module.exports = {
     verify: '房价预审订单',
     schedulerTime: '预定时间',
     arriveTime: '抵离时间',
+    arriveTimeA: '抵离时间',
   },
   //  home(首页)
   home_messageType: '留言类型',
@@ -102,6 +104,7 @@ module.exports = {
   home_idCard: '身份证',
   home_idCardNum: '证件号码',
   home_idCardNumA: '证件号码',
+  home_idCardNumB: '证件号码',
   home_roomCard: '房卡',
   home_toRoom: '房态',
   home_roomType: '房型',
@@ -117,6 +120,7 @@ module.exports = {
   home_pushAnd: '催押',
   home_nowCall: '当前催交',
   home_name: '姓名',
+  home_nameD: '姓名',
   home_nameB: '姓名',
   home_consumerNames: '消费人名',
   home_consumerNamesA: '消费人名',
@@ -311,6 +315,7 @@ module.exports = {
   book_leaveStore: '离店',
   book_meetConference: '会议登记',
   book_inputContent: '请输入内容',
+  book_inputContentA: '请输入内容',
   book_venueBook: '会场预订',
   book_meetVerification: '会议核销',
   book_meetInfo: '会议信息',
@@ -420,7 +425,9 @@ module.exports = {
   order_restore: "恢复",
   order_accountingService: "账务服务",
   order_payDeposit: "交订金",
+  order_payDepositA: "交订金",
   order_payBack: "退订金",
+  order_payBackA: "退订金",
   order_payProject: "付款项目",
   order_memCard: "会员卡",
   order_selectPayWay: "选择结算方式",
@@ -456,6 +463,7 @@ module.exports = {
   order_allAccounts: "所有账务",
   order_accountsType: "账务类别",
   order_payment: "付款",
+  order_paymentA: "付款",
   order_expense: "消费",
   order_accountDeveloped: "正在冲调的账务",
   order_ifGoTie: "是否确认改为走结？",
@@ -783,6 +791,7 @@ module.exports = {
   customer_roomNumber: '房号',
   customer_settleBill: '结算账单',
   customer_rich: '冲调',
+  customer_richA: '冲调',
   customer_businessProject: '营业项目',
   customer_selectText: '选择',
   customer_businessDetail: '业务详情',
@@ -951,7 +960,7 @@ module.exports = {
   editor_only: '单',
   editor_team: '团',
   editor_nameAenter: '姓名/单位名称',
-  editor_: '',
+  editor_roomTypeAnum: '房型/房号',
   editor_: '',
   //附餐（side）
   side_sideBooked: '附餐入账',

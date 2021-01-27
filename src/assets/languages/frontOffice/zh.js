@@ -1,12 +1,13 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-04 16:43:57
+ * @LastEditTime: 2021-01-27 13:17:16
  * @FilePath: \jiudian\src\assets\languages\frontOffice\zh.js
  */
 module.exports = {
     reserveContent: '预定内容',
     refundAmount: '退款金额',
+    refundAmountA: '退款金额',
   enterpriseName: '单位名称',
   enterpriseMobile: '单位号码',
   enterpriseAddress: '单位地址',

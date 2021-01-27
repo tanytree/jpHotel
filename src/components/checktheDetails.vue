@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-31 16:57:07
+ * @LastEditTime: 2021-01-27 11:38:16
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
@@ -34,10 +34,10 @@
                                     :highlight-first-item="true"
                                     popper-class="popper-class"
                                     :trigger-on-focus="false"
-                                    :placeholder="$t('desk.book_inputContent')"
+                                    :placeholder="$t('desk.book_inputContentA')"
                                     @select="changeName($event, roomInfo.headerObj)"
                                 ></el-autocomplete>
-                                <el-input style="width: 110px; margin-left: 10px" v-model="roomInfo.headerObj.pronunciation" :placeholder="$t('desk.home_nameA')"></el-input>
+                                <el-input style="width: 110px; margin-left: 10px" v-model="roomInfo.headerObj.pronunciation" :placeholder="$t('desk.customer_namePYA')"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
@@ -57,14 +57,14 @@
                     </el-row>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.customer_documentType')+ ':'">
+                            <el-form-item :label="$t('desk.customer_documentType')+ ':'" label-width="120px">
                                 <el-select v-model="roomInfo.headerObj.idcardType" size="small" :placeholder="$t('commons.selectIdCardType')" style="width: 200px">
                                     <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.customer_documentNum')+ ':'">
+                            <el-form-item :label="$t('desk.customer_documentNum')+ ':'" label-width="130px">
                                 <el-input :placeholder="$t('desk.order_inputCardNum')" v-model="roomInfo.headerObj.idcard" size="small" style="width: 200px"></el-input>
                             </el-form-item>
                         </el-col>
@@ -102,7 +102,7 @@
                     <el-row>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_unitName')+ ':'">
-                                <el-input :placeholder="$t('commons.pleaseEnter')" v-model="roomInfo.headerObj.enterName" size="small" style="width: 95px"></el-input>
+                                <el-input :placeholder="$t('commons.pleaseEnterA')" v-model="roomInfo.headerObj.enterName" size="small" style="width: 95px"></el-input>
                                 <el-input :placeholder="$t('desk.customer_faying')" v-model="roomInfo.headerObj.enterPinyin" size="small" style="width: 95px; margin-left: 5px"></el-input>
                             </el-form-item>
                         </el-col>
@@ -122,7 +122,7 @@
                     </el-row>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.editor_asideBreakfast')+ ':'">
+                            <el-form-item :label="$t('desk.editor_asideBreakfast')+ ':'" label-width="130px">
                                 <el-select v-model="roomInfo.headerObj.attachMealId" size="small" style="width: 200px">
                                     <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
@@ -130,7 +130,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.editor_asideDinner')+ ':'">
+                            <el-form-item :label="$t('desk.editor_asideDinner')+ ':'" label-width="130px">
                                 <el-select v-model="roomInfo.headerObj.attachMealIdDinner" size="small" style="width: 200px">
                                     <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
@@ -142,20 +142,20 @@
                 <div class="overLine"></div>
                 <!--表格数据 -->
                 <el-table ref="multipleTable" :data="roomInfo.personList" max-height="500px;" header-row-class-name="default" size="small">
-                    <el-table-column :label="$t('desk.home_name')" align="center" width="230px">
+                    <el-table-column :label="$t('desk.home_nameD')" align="center" width="230px">
                         <template slot-scope="{ row }">
                             <el-input v-model="row.name" size="small" style="width: 100px"></el-input>
                             <el-input :placeholder="$t('desk.customer_faying')" v-model="row.pronunciation" size="small" style="width: 100px; margin-left: 5px"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" :label="$t('desk.customer_documentType')"  width="130px">
+                    <el-table-column align="center" :label="$t('desk.customer_documentTypeA')"  width="130px">
                         <template slot-scope="{ row }">
                             <el-select v-model="row.idcardType" :placeholder="$t('commons.selectIdCardType')" size="small" style="width:120px;">
                                 <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                             </el-select>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" :label="$t('desk.home_idCardNum')" width="130px">
+                    <el-table-column align="center" :label="$t('desk.home_idCardNumA')" width="130px">
                         <template slot-scope="{ row }">
                             <el-input v-model="row.idcard" size="small" style="width: 120px"></el-input>
                         </template>

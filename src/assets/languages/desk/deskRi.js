@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-26 17:45:22
+ * @LastEditTime: 2021-01-27 13:17:47
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -16,7 +16,7 @@ module.exports = {
   customerInfoDesc: '顧客情報',
   payTotal: '支払済合計金額',
   consumerTotal: '利用合計金額',
-  balanceTotal: '差引勘定',
+  balanceTotal: '差引',
   orderMarkInfo: '備考',
   hadRowHouses: 'アサイン済み',
   noRowHouses: '未アサイン',
@@ -46,6 +46,7 @@ module.exports = {
     verify: '料金検証',
     schedulerTime: '予約時間',
     arriveTime: 'チェックイン/アウト時間',
+    arriveTimeA: 'C/I・C/O予定時間',
   },
   home_messageType: '類別',
   home_noLimit: 'all',
@@ -502,6 +503,7 @@ module.exports = {
   customer_roomNumber: '部屋番号',
   customer_settleBill: '精算明細',
   customer_rich: '相殺調整',
+  customer_richA: '修正',
   customer_businessProject: '業務項目',
   customer_selectText: '選択',
   customer_businessDetail: '業務詳細',
@@ -548,7 +550,10 @@ module.exports = {
   order_restore: "予約復活",
   order_accountingService: "会計",
   order_payDeposit: "テポ入金",
+  order_payDepositA: "前受金入金",
   order_payBack: "払い戻し金",
+  order_payBackA: "前受金返金",
+
   order_payProject: "入金項目",
   order_memCard: "会員年費",
   order_selectPayWay: "会計方法を選択",
@@ -574,6 +579,7 @@ module.exports = {
   home_companyName: '会社名',
   home_timeInfo: '領収書情報を完成してください',
   book_inputContent: '会員番号/法人番号又は会社、団体名称を入力してください。',
+  book_inputContentA: '名前',
   order_checkout: "C/O精算",
   order_goTie: "未収",
   order_addDayPrice: "素泊り料金追加",
@@ -588,6 +594,7 @@ module.exports = {
   order_allAccounts: "請求内容",
   order_accountsType: "会計種別",
   order_payment: "支払い",
+  order_paymentA: "入金",
   order_expense: "利用金額",
   order_accountDeveloped: "相殺調整処理",
   order_ifGoTie: "「未収」確認",
@@ -799,8 +806,8 @@ module.exports = {
   customer_unitPhoneNum: '法人・会社番号',
   customer_inputPY: 'カナを入力してください',
   home_idCardNum: '証明番号',
-  editor_asideBreakfast: '食事付き−朝食',
-  editor_asideDinner: '食事付き−夕食',
+  editor_asideBreakfast: 'プラン・朝食',
+  editor_asideDinner: 'プラン・夕食',
   side_sideBooked: '食事付き計上',
   side_changePackage: 'コース変更',
   customer_intoPrcieShould: '入金金額は請求金額から入金済金額の差し引きより少なければなりません。',
@@ -896,7 +903,7 @@ module.exports = {
   order_clockLive: "日帰り",
   order_meetingLive: "会場",
   home_bookContent: '预约内容/宿泊プラン',
-  home_contactWay: '連絡先',
+  home_contactWay: '電話',
   editor_team:'団',
   home_memAunitCard: '会員番号/法人番号',
   home_custormerDetail: '宿泊者基本情報',
@@ -911,6 +918,7 @@ module.exports = {
   add_workDay: '平日',
   add_restDay: '休日',
   home_idCardNumA: '身分証明書番号',
+  home_idCardNumB: '身分証明書/番号',
   book_bookText: '予約',
   book_placeRowHouse: 'アサインをしてください',
   add_go14: '前14日へ',
@@ -945,6 +953,9 @@ module.exports = {
   home_waitGet: '受取待ち',
   home_alerdGet: '受取済み',
   home_discard: '廃棄',
+  editor_roomTypeAnum: '部屋タイプ/部屋番号',
+  home_nameD: '宿泊者',
+  payTotalA: '入金済み',
 
 
 

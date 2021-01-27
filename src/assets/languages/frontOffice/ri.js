@@ -5,7 +5,9 @@
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
-    refundAmount: '払い戻し額',
+  refundAmount: '払い戻し額',
+  refundAmountA: '返金',
+  
     reserveContent: '预定内容',
   englishM:'フリーメモ',
     enterpriseName: '会社名',

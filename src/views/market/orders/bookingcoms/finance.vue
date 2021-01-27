@@ -1,24 +1,24 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 10:05:25
+ * @LastEditTime: 2021-01-27 13:20:37
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
     <div class="finance">
         <el-row class="clearfix">
             <div class="">
-                <el-button type="primary" size="mini" @click="depositShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payDeposit') }}</el-button>
-                <el-button type="primary" size="mini" @click="refundShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payBack') }}</el-button>
-                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.customer_rich') }}</el-button>
+                <el-button type="primary" size="mini" @click="depositShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payDepositA') }}</el-button>
+                <el-button type="primary" size="mini" @click="refundShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payBackA') }}</el-button>
+                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.customer_richA') }}</el-button>
                 <!--        <el-button type="primary" size="mini">{{ $t("commons.print") }}</el-button>-->
             </div>
         </el-row>
         <el-row class="clearfix padding-tb-20">
-            <el-col :span="4"><span>{{ $t('desk.payTotal') }}：<em class="text-green">{{
+            <el-col :span="4"><span>{{ $t('desk.payTotalA') }}：<em class="text-green">{{
                     detailData.payPrice
                 }}</em></span></el-col>
-            <el-col :span="4"><span>{{ $t('frontOffice.refundAmount') }}：<em class="text-red">{{
+            <el-col :span="4"><span>{{ $t('frontOffice.refundAmountA') }}：<em class="text-red">{{
                     detailData.consumePrice
                 }}</em></span></el-col>
             <el-col :span="4"><span>{{ $t('desk.balanceTotal') }}：{{
@@ -42,13 +42,13 @@
                     </span>
                 </template>
             </el-table-column>
-            <el-table-column prop="payPrice" :label="$t('desk.order_payment')">
+            <el-table-column prop="payPrice" :label="$t('desk.order_paymentA')">
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.payPrice ? (0 - row.payPrice) : ''}}</span>
                     <span v-else>{{row.payPrice}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="consumePrice" :label="$t('frontOffice.refundAmount')">
+            <el-table-column prop="consumePrice" :label="$t('frontOffice.refundAmountA')">
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.consumePrice ? (0 - row.consumePrice) : ''}}</span>
                     <span v-else>{{row.consumePrice}}</span>

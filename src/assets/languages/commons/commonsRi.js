@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-26 18:02:49
+ * @LastEditTime: 2021-01-27 11:26:31
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -60,6 +60,7 @@ module.exports = {
   resetBtn: 'リセット',
   exportBtn: '出力',
   pleaseEnter: '入力してください',
+  pleaseEnterA: '会社名',
   passwordDesc: 'パスワード',
 
   F_sex: {
@@ -117,7 +118,7 @@ module.exports = {
   },
   //1大人 2儿童A（小学5年级以上）  3儿童B（3岁至小学5年级） 4儿童C（0至3岁不占床）   int必填
   customerTypes: {
-    '1': 'たいじん',
+    '1': '大人',
     '2': '子供A',
     '3': '子供B',
     '4': '子供C'
@@ -258,7 +259,7 @@ module.exports = {
 
   //会员卡片类型
   memberCardState: {
-    '1': '正常',
+    '1': '通常',
     '2': '紛失届済み',
     '3': '起用待ち'
   },

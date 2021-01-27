@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 18:20:15
+ * @LastEditTime: 2021-01-27 10:23:48
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -27,18 +27,10 @@
       <el-form inline size="small" label-width="100px">
         <el-form-item :label="$t('desk.customer_occurrenceStore') + ':'">
           <!-- <el-input v-model="searchForm.content" class="width150"></el-input> -->
-          <el-select
-            v-model="searchForm.storesNum"
-            :placeholder="$t('commons.placeChoose')"
-          >
+          <el-select v-model="searchForm.storesNum" :placeholder="$t('commons.placeChoose')">
             <el-option :label="$t('commons.all')" value="0000000000">
             </el-option>
-            <el-option
-              v-for="item in storeList"
-              :key="item.value"
-              :label="item.storesName"
-              :value="item.storesNum"
-            >
+            <el-option v-for="item in storeList" :key="item.value" :label="item.storesName" :value="item.storesNum">
             </el-option>
           </el-select>
         </el-form-item>
@@ -58,50 +50,21 @@
           </el-select>
         </el-form-item> -->
         <el-form-item :label="$t('manager.hp_room') + ':'" label-width="120px">
-          <el-cascader
-            v-model="searchForm.roomTypeId"
-            :options="roomType"
-            @change="handleChange"
-            style="width: 180px"
-          ></el-cascader>
+          <el-cascader v-model="searchForm.roomTypeId" :options="roomType" @change="handleChange" style="width: 180px"></el-cascader>
         </el-form-item>
         <!-- <el-form-item label="入住人：">
                 <el-input v-model="searchForm.content" class="width150"></el-input>
             </el-form-item> -->
         <br />
         <el-form-item :label="$t('desk.order_checkinTimeA') + ':'">
-          <el-date-picker
-            v-model="searchForm.inStartTime"
-            value-format="yyyy-MM-dd"
-            type="date"
-            style="width: 140px"
-            :placeholder="$t('desk.serve_chooseDate')"
-          ></el-date-picker>
+          <el-date-picker v-model="searchForm.inStartTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
           <span style="margin: 0 5px"> {{ $t("desk.serve_to") }} </span>
-          <el-date-picker
-            v-model="searchForm.inEndTime"
-            value-format="yyyy-MM-dd"
-            type="date"
-            style="width: 140px"
-            :placeholder="$t('desk.serve_chooseDate')"
-          ></el-date-picker>
+          <el-date-picker v-model="searchForm.inEndTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_leaveStoreDate') + ':'">
-          <el-date-picker
-            v-model="searchForm.outStartTime"
-            value-format="yyyy-MM-dd"
-            type="date"
-            style="width: 140px"
-            :placeholder="$t('desk.serve_chooseDate')"
-          ></el-date-picker>
+          <el-date-picker v-model="searchForm.outStartTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
           <span style="margin: 0 5px">{{ $t("desk.serve_to") }}</span>
-          <el-date-picker
-            v-model="searchForm.outEndTime"
-            value-format="yyyy-MM-dd"
-            type="date"
-            style="width: 140px"
-            :placeholder="$t('desk.serve_chooseDate')"
-          ></el-date-picker>
+          <el-date-picker v-model="searchForm.outEndTime" value-format="yyyy-MM-dd" type="date" style="width: 140px" :placeholder="$t('desk.serve_chooseDate')"></el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getDataList">{{
@@ -113,49 +76,26 @@
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="tableData"
-        :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
-        size="mini"
-      >
-        <el-table-column
-          prop="name"
-          :label="$t('desk.customer_livePeople')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop=""
-          :label="$t('desk.customer_liveToleave')"
-          width="200"
-        >
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }" size="mini">
+        <el-table-column prop="name" :label="$t('desk.customer_livePeople')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" :label="$t('desk.customer_liveToleave')" width="200">
           <template slot-scope="{ row }">
             <div class="box">
               <div class="item">
                 <div>
                   <span class="text-blue">{{
                     $t("desk.customer_arrived")
-                  }}</span
-                  >{{ row.checkinTime }}
+                  }}</span>{{ row.checkinTime }}
                 </div>
                 <div>
-                  <span class="text-red">{{ $t("desk.customer_leave") }}</span
-                  >{{ row.checkoutTime }}
+                  <span class="text-red">{{ $t("desk.customer_leave") }}</span>{{ row.checkoutTime }}
                 </div>
               </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="checkInDays"
-          :label="$t('desk.customer_dayNum')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_roomType')"
-          show-overflow-tooltip
-        >
+        <el-table-column prop="checkInDays" :label="$t('desk.customer_dayNum')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.customer_roomType')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             <div v-if="row.operCheckinType == 1 || 2">
               {{ $t("desk.customer_guestRoom") }}
@@ -165,49 +105,21 @@
             </div>
           </template>
         </el-table-column>
-        <!-- <el-table-column
-          prop="operCheckinType"
-          :label="$t('desk.order_checkinWay')"
-          show-overflow-tooltip
-        >
-          <template slot-scope="{ row }">
-            {{ F_operCheckinType(row.operCheckinType) }}
-          </template>
-        </el-table-column> -->
-        <el-table-column
-          prop=""
-          :label="$t('desk.home_roomNum')"
-          show-overflow-tooltip
-        >
-          <template slot-scope="{ row }">
-            {{ row.hotelCheckInRoom ? row.hotelCheckInRoom.houseNum : "" }}
+        <!-- 房型/房号 -->
+        <el-table-column :label="$t('desk.editor_roomTypeAnum')"  show-overflow-tooltip>
+          <template slot-scope="{row}">
+            <div>{{row.hotelCheckInRoom.roomTypeName}}</div>
+            <div>{{ row.hotelCheckInRoom ? row.hotelCheckInRoom.houseNum : "" }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          :label="$t('desk.home_roomType')"
-          prop="hotelCheckInRoom.roomTypeName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          prop=""
-          :label="$t('desk.customer_totalRoomPrice')"
-          show-overflow-tooltip
-        >
+        <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom ? row.hotelCheckInRoom.realPrice : "" }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="consumeTotalPrice"
-          :label="$t('desk.customer_totalConsum')"
-          show-overflow-tooltip
-        >
+        <el-table-column prop="consumeTotalPrice" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_occurrenceStore')"
-          show-overflow-tooltip
-        >
+        <el-table-column :label="$t('desk.customer_occurrenceStore')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{
               F_storeName(
@@ -216,26 +128,14 @@
             }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="orderNum"
-          :label="$t('desk.book_orderNum')"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          :label="$t('desk.customer_toTheGuest')"
-          show-overflow-tooltip
-        >
+        <el-table-column prop="orderNum" :label="$t('desk.book_orderNum')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('desk.customer_toTheGuest')" show-overflow-tooltip>
           <template slot-scope="{ row }">
-            <span
-              v-for="(item, index) in checkinPersonList(row)"
-              :key="index"
-              style="margin-right: 6px"
-              >{{ item.name }}</span
-            >
+            <span v-for="(item, index) in checkinPersonList(row)" :key="index" style="margin-right: 6px">{{ item.name }}</span>
           </template>
         </el-table-column>
-          <el-table-column :label="$t('desk.home_note')" width="80" prop="remark" show-overflow-tooltip></el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="220">
+        <el-table-column :label="$t('desk.home_note')" width="80" prop="remark" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="$t('commons.operating')" >
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="handelDetail(row)">{{
               $t("commons.detail")
@@ -245,15 +145,7 @@
       </el-table>
       <div style="margin-top: 10px"></div>
       <!--分页 -->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="searchForm.pageIndex"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="searchForm.pageSize"
-        layout=" sizes, prev, pager, next, jumper"
-        :total="listTotal"
-      ></el-pagination>
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
     </el-card>
     <!-- 编辑or详情弹窗 -->
   </div>
@@ -294,7 +186,7 @@ export default {
   },
   data() {
     return {
-      itemGuestInfo:null,
+      itemGuestInfo: null,
       loading: false,
       searchForm: {
         storesNum: "",
@@ -406,7 +298,7 @@ export default {
       //   this.resetActive("history");
       //   this.$router.replace("/customer");
       // }
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
 
     /**获取表格数据 */
@@ -439,7 +331,7 @@ export default {
         path: "orderdetail",
         query: {
           id: item.hotelCheckInRoom.checkinId,
-          item:this.itemGuestInfo,
+          item: this.itemGuestInfo,
           member: "member",
         },
       });

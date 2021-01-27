@@ -63,6 +63,7 @@ module.exports = {
   resetBtn: '重置',
   exportBtn: '导出',
   pleaseEnter: '请输入',
+  pleaseEnterA: '请输入',
   passwordDesc: '密码',
   F_sex: {
 

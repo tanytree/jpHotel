@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-06 17:54:03
+ * @LastEditTime: 2021-01-27 13:33:03
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -67,7 +67,7 @@
         </el-col>
         <el-col :span="12">
           <div>
-            {{$t('desk.nightAudit.arriveTime')}}：{{ checkinInfo.checkinTime }} -
+            {{$t('desk.nightAudit.arriveTimeA')}}：{{ checkinInfo.checkinTime }} -
             {{ checkinInfo.checkoutTime }}
           </div>
         </el-col>
@@ -187,8 +187,8 @@
           </el-col>
           <!--                地区-->
           <el-col :span="8">
-            <el-form-item :label="$t('desk.customer_region')" prop="orderSource">
-              <el-input type="text" v-model="baseInfoChangeForm.name" style="width: 150px"></el-input>
+            <el-form-item :label="$t('desk.customer_region')" prop="region">
+              <el-input type="text" v-model="baseInfoChangeForm.region" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -212,7 +212,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item :label="$t('desk.order_outOrder') + '：'">
+            <el-form-item :label="$t('desk.order_outOrder') + '：'" label-width="120px">
               <el-input v-model="baseInfoChangeForm.thirdOrdernum" class="width150"></el-input>
             </el-form-item>
           </el-col>
@@ -419,6 +419,13 @@ export default {
                         required: true,
                         message: this.$t("desk.book_orderSoutce"),
                         trigger: "change",
+                    },
+                ],
+                 region: [
+                    {
+                        required: true,
+                        message: this.$t("commons.mustInput"),
+                        trigger: "blur",
                     },
                 ],
                 checkinType: [
@@ -638,6 +645,7 @@ export default {
             console.log(this.baseInfoChangeForm);
             this.$refs.guestChoose.dialogOpen(this.baseInfoChangeForm);
         } else {
+            console.log(this.baseInfoChangeForm);
             this[type] = true;
         }
     },
