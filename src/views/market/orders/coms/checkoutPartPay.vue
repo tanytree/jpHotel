@@ -99,7 +99,7 @@
 import myMixin from '@/utils/filterMixin';
 export default {
   mixins: [myMixin],
-  props: ["detailData", "currentRoom"],
+  props: ["currentRoom"],
   data() {
     return {
       unitList: [],
@@ -117,6 +117,7 @@ export default {
         remark:''
       }, //退房结账弹框的表单
       consumeOrderList:[],
+      detailData:{},
       taxInfo:{},
       isPartPay:false
 
@@ -177,7 +178,8 @@ export default {
 
         list.forEach(element => {
             let priceType = element.priceType
-            total += parseFloat(element.consumePrice ? element.consumePrice : 0)
+            let consume = element.consumePrice ? element.consumePrice : 0
+            total += parseFloat(consume)
             if(priceType == 5 || priceType == 6 || priceType == 12){
                 if(element.taxStatus == 1){
                     taxFee +=  parseFloat(element.realPrice)  * consumeTax
@@ -188,15 +190,15 @@ export default {
             }
             if(priceType == 15){
                 console.log(priceType +':' +this.F_priceType(priceType))
-                priceType15 = parseFloat(element.consumePrice)
+                priceType15 = parseFloat(consume)
             }
             if(priceType == 16){
                 console.log(priceType +':' +this.F_priceType(priceType))
-                priceType16 = parseFloat(element.consumePrice)
+                priceType16 = parseFloat(consume)
             }
 
             console.log(priceType +':' +this.F_priceType(priceType))
-            console.log(element.consumePrice)
+            console.log(consume)
             console.log(element)
         });
 
@@ -226,23 +228,50 @@ export default {
     },
   },
   created() {
-
-  },
-  methods: {
-    resetVisibel() {
-        this.checkoutVisible = true;
-        this.getConsumeOrderList();
         this.getUnitList();
         this.get_consume_tax();
-        if (this.detailData.totalPrice > 0) {
-            this.consumePrice = this.detailData.totalPrice;
-        }else {
-            this.checkoutForm.payPrice = this.detailData.consumePrice;
+  },
+  methods: {
+    resetVisibel(orderList) {
+        this.checkoutVisible = true
+        let detailData = {}
+        let consumeSum = 0
+        let paySum = 0
+        for(let i in orderList){
+            let element = orderList[i]
+            let c = element.consumePrice ? element.consumePrice : 0
+            let p = element.payPrice ? element.payPrice : 0
+            consumeSum += c
+            paySum += p
         }
+        // console.log(consumeSum)
+        // console.log(paySum)
+        // console.log(orderList)
+        // console.log(this.currentRoom.checkinId)
+
+        this.detailData = {
+            consumePrice:consumeSum,
+            payPrice:paySum,
+            totalPrice:paySum - consumeSum
+        }
+
+
+
+
+        // if (this.detailData.totalPrice > 0) {
+        //     this.consumePrice = this.detailData.totalPrice;
+        // }else {
+        //     this.checkoutForm.payPrice = this.detailData.consumePrice;
+        // }
+
+
+
+        this.consumeOrderList = orderList
+
+
         this.checkoutForm.checkInId = this.currentRoom.checkinId
-        // console.log(this.currentRoom)
-        console.log(this.detailData)
-        // console.log(this.detailData.totalPrice)
+
+        console.log(this.currentRoom)
     },
     //请求 单位 列表
     getUnitList() {
@@ -276,31 +305,31 @@ export default {
             return Math.abs(v);
         }
     },
-    getConsumeOrderList(){
-        let info = {
-            checkInId: this.currentRoom.checkinId,
-            state:'',
-            pageIndex: 1,
-            pageSize: 1000
-        }
-        this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
-            // console.log(res.consumeOrderList)
-            let list = res.consumeOrderList
-            let priceTypeList = [5,6,7,8,9,10,12,14,15,16,17,18,22] //消费类集合
-            let arr = []
-            for(let i = 0;i < list.length;i++){
-                // console.log(list[i].priceType)
-                let priceType = list[i].priceType
-                if(priceTypeList.indexOf(priceType) > -1 &&   list[i].state == 1){
-                   //  console.log(list[i].priceType)
-                   // console.log(list[i].priceType +':' +this.F_priceType(list[i].priceType))
-                    arr.push(list[i])
-                }
-            }
-            console.log(arr)
-            this.consumeOrderList = arr
-        });
-    },
+    // getConsumeOrderList(){
+    //     let info = {
+    //         checkInId: this.currentRoom.checkinId,
+    //         state:'',
+    //         pageIndex: 1,
+    //         pageSize: 1000
+    //     }
+    //     this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
+    //         // console.log(res.consumeOrderList)
+    //         let list = res.consumeOrderList
+    //         let priceTypeList = [5,6,7,8,9,10,12,14,15,16,17,18,22] //消费类集合
+    //         let arr = []
+    //         for(let i = 0;i < list.length;i++){
+    //             // console.log(list[i].priceType)
+    //             let priceType = list[i].priceType
+    //             if(priceTypeList.indexOf(priceType) > -1 &&   list[i].state == 1){
+    //                //  console.log(list[i].priceType)
+    //                // console.log(list[i].priceType +':' +this.F_priceType(list[i].priceType))
+    //                 arr.push(list[i])
+    //             }
+    //         }
+    //         console.log(arr)
+    //         this.consumeOrderList = arr
+    //     });
+    // },
     //退房结账
 
     getFee(){
@@ -324,6 +353,7 @@ export default {
 
 
     consume_oper(){
+
         console.log(this.detailData)
         console.log(this.currentRoom)
         let checkoutForm = this.checkoutForm
@@ -349,7 +379,7 @@ export default {
             params.creditName = checkoutForm.creditName
         }
         console.log(params)
-        // return
+        return
         this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
             console.log(res)
             this.set_out_check_in();
@@ -359,34 +389,10 @@ export default {
 
 
     set_out_check_in() {
-
-           // console.log(this.isArrSame(res.consumeOrderList,1)) // 判断是否都为1
-           // console.log(this.isArrSame(res.consumeOrderList,2)) //判断是否都为2
-            // 未结状态 1
-            //已结状态 2
-            //判断 state状态全是1 billType =  1  ,state状态全是2 billType =  3, state状态全有1和2 billType =4
-            // let array = [1,1,1,1]
-            // let array = [2,2,2,2]
-            // let array = [1,2,1,2]
-            // let array = this..consumeOrderList.map(v=>{
-            //    return v.state
-            // });
-            // console.log(array);
             let params = {}
             params.checkInId = this.checkoutForm.checkInId
-            params.billType = 1
+            params.billType = 3
 
-
-
-            //console.log(this.isArrSame(array,1))
-            //console.log(this.isArrSame(array,2))
-            // if(this.isArrSame(array,1) == true){
-            //     params.billType = 1
-            // }else if(this.isArrSame(array,2) == true){
-            //    params.billType = 3
-            // }else{
-            //    params.billType = 4
-            // }
             console.log(params)
             // return
 
@@ -405,6 +411,10 @@ export default {
         return !array.some(function(value, index) {
             return value !== state
         });
+    },
+    getOrderDetail(){
+        console.log('part')
+        this.$emit('getOrderDetail')
     },
     get_consume_tax(){
         let params = {

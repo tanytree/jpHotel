@@ -60,7 +60,7 @@
                     {{numFormate(getPriceStr(row.consumePrice))}}
                 </template>
             </el-table-column>
-            <el-table-column prop="state" :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
+            <el-table-column  prop="state" :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <!-- "1": '订金',
                      "2": '押金',
@@ -81,110 +81,107 @@
                      "100": '其他' -->
 
                     <div :class="row.richType == 1 ? 'text-blue' : ''">
-		       <span v-if="row.priceType == 1">
-                    <span v-if="row.payType == 1">现金定金</span>
-                    <span v-if="row.payType == 2">信用卡订金 </span>
-                    <span v-if="row.payType == 4">其他定金 </span>
-                </span>
-                        <span v-if="row.priceType == 2">
-                    <span v-if="row.payType == 1">现金押金</span>
-                    <span v-if="row.payType == 2">信用卡押金 </span>
-                    <span v-if="row.payType == 4">其他押金</span>
-                </span>
-                        <span v-if="row.priceType == 3">
-                    <span v-if="row.payType == 1">现金收款</span>
-                    <span v-if="row.payType == 2">信用卡收款 </span>
-                    <span v-if="row.payType == 4">其他收款</span>
-                </span>
-                        <span v-if="row.priceType == 5">房费</span>
-                        <span v-if="row.priceType == 6">房费</span>
-                        <span v-if="row.priceType == 7">
-                    {{row.damageTypeName}}(￥{{row.consumePrice}}) * {{row.damageCount}}
-                </span>
-                        <span v-if="row.priceType == 8">
-                   <span v-if="row.goodsList&&row.goodsList.length > 0" >
-                       <span  v-for="item in row.goodsList">
-                           {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
-                       </span>
-                   </span>
-                </span>
+                       <span v-if="row.priceType == 1">
+                            <span v-if="row.payType == 1">现金定金</span>
+                            <span v-if="row.payType == 2">信用卡订金 </span>
+                            <span v-if="row.payType == 4">其他定金 </span>
+                        </span>
+                                <span v-if="row.priceType == 2">
+                            <span v-if="row.payType == 1">现金押金</span>
+                            <span v-if="row.payType == 2">信用卡押金 </span>
+                            <span v-if="row.payType == 4">其他押金</span>
+                        </span>
+                                <span v-if="row.priceType == 3">
+                            <span v-if="row.payType == 1">现金收款</span>
+                            <span v-if="row.payType == 2">信用卡收款 </span>
+                            <span v-if="row.payType == 4">其他收款</span>
+                        </span>
+                                <span v-if="row.priceType == 5">房费</span>
+                                <span v-if="row.priceType == 6">房费</span>
+                                <span v-if="row.priceType == 7">
+                            {{row.damageTypeName}}(￥{{row.consumePrice}}) * {{row.damageCount}}
+                        </span>
+                                <span v-if="row.priceType == 8">
+                           <span v-if="row.goodsList&&row.goodsList.length > 0" >
+                               <span  v-for="item in row.goodsList">
+                                   {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
+                               </span>
+                           </span>
+                        </span>
                         <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
                         <!-- 全部冲调 -->
                         <span class="text-blue" v-if="(row.priceType == 9 || row.priceType == 10) && row.richList.length > 0">
                     <!-- {{row.richList[0].priceType}}/ -->
                             <!-- 全部冲调 -- -->
-                    {{F_priceType(row.richList[0].priceType)}} --
-                    <span v-if="row.richList[0].priceType == 1">
-                         <span v-if="row.richList[0].payType == 1">现金定金</span>
-                         <span v-if="row.richList[0].payType == 2">信用卡订金 </span>
-                         <span v-if="row.richList[0].payType == 4">其他定金 </span>
-                     </span>
-                    <span v-if="row.richList[0].priceType == 2">
-                        <span v-if="row.richList[0].payType == 1">现金押金</span>
-                        <span v-if="row.richList[0].payType == 2">信用卡押金 </span>
-                        <span v-if="row.richList[0].payType == 4">其他押金</span>
-                    </span>
-                    <span v-if="row.richList[0].priceType == 3">
-                        <span v-if="row.richList[0].payType == 1">现金收款</span>
-                        <span v-if="row.richList[0].payType == 2">信用卡收款 </span>
-                        <span v-if="row.richList[0].payType == 4">其他收款</span>
-                    </span>
-                    <span v-if="row.richList[0].priceType == 5"> {{F_priceType(row.richList[0].priceType)}} </span>
-                    <span v-if="row.richList[0].priceType == 6"> {{F_priceType(row.richList[0].priceType)}} </span>
-                    <span v-if="row.richList[0].priceType == 7">
-                        {{row.richList[0].damageTypeName}}(￥{{row.richList[0].consumePrice}}) * {{row.richList[0].damageCount}}
-                    </span>
-                    <span v-if="row.richList[0].priceType == 8">
-                        <span v-for="item in row.richGoodsList">
-                             {{item.goodsName}}(￥{{item.price}}) * {{item.goodsCount}}
-                        </span>
-                    </span>
-                    <span v-if="row.richList[0].priceType == 13">
-                       {{row.richList[0].creditName}}({{$t('commons.paymentWay.'+row.richList[0].putUp)}})
-                    </span>
-                    <span v-if="row.richList[0].priceType == 14">
-                        <span v-if="row.richList[0].disherOrderSubList&&row.richList[0].disherOrderSubList.length > 0">
-                            <span v-for="item in row.richList[0].disherOrderSubList">
-                                {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
+                            {{F_priceType(row.priceType)}} --
+                            <span v-if="row.richList[0].priceType == 1">
+                                 <span v-if="row.richList[0].payType == 1">现金定金</span>
+                                 <span v-if="row.richList[0].payType == 2">信用卡订金 </span>
+                                 <span v-if="row.richList[0].payType == 4">其他定金 </span>
+                             </span>
+                            <span v-if="row.richList[0].priceType == 2">
+                                <span v-if="row.richList[0].payType == 1">现金押金</span>
+                                <span v-if="row.richList[0].payType == 2">信用卡押金 </span>
+                                <span v-if="row.richList[0].payType == 4">其他押金</span>
+                            </span>
+                            <span v-if="row.richList[0].priceType == 3">
+                                <span v-if="row.richList[0].payType == 1">现金收款</span>
+                                <span v-if="row.richList[0].payType == 2">信用卡收款 </span>
+                                <span v-if="row.richList[0].payType == 4">其他收款</span>
+                            </span>
+                            <span v-if="row.richList[0].priceType == 5"> {{F_priceType(row.richList[0].priceType)}} </span>
+                            <span v-if="row.richList[0].priceType == 6"> {{F_priceType(row.richList[0].priceType)}} </span>
+                            <span v-if="row.richList[0].priceType == 7">
+                                {{row.richList[0].damageTypeName}}(￥{{row.richList[0].consumePrice}}) * {{row.richList[0].damageCount}}
+                            </span>
+                            <span v-if="row.richList[0].priceType == 8">
+                                <span v-for="item in row.richGoodsList">
+                                     {{item.goodsName}}(￥{{item.price}}) * {{item.goodsCount}}
+                                </span>
+                            </span>
+                            <span v-if="row.richList[0].priceType == 13">
+                               {{row.richList[0].creditName}}({{$t('commons.paymentWay.'+row.richList[0].putUp)}})
+                            </span>
+                            <span v-if="row.richList[0].priceType == 14">
+                                <span v-if="row.richList[0].disherOrderSubList&&row.richList[0].disherOrderSubList.length > 0">
+                                    <span v-for="item in row.richList[0].disherOrderSubList">
+                                        {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
+                                    </span>
+                                </span>
+                            </span>
+                            <span v-if="row.richList[0].priceType == 15">
+                                <span v-if="row.richList[0]">
+                                   {{F_priceType(row.richList[0].priceType)}} ￥{{row.richList[0].unitPrice}}) * {{row.richList[0].taxCount}}
+                                </span>
+                            </span>
+                            <span v-if="row.richList[0].priceType == 16">
+                                <span v-if="row.richList[0]">
+                                   {{F_priceType(row.richList[0].priceType)}} ￥{{row.richList[0].unitPrice}}) * {{row.richList[0].taxCount}}
+                                </span>
                             </span>
                         </span>
-                    </span>
-                    <span v-if="row.richList[0].priceType == 15">
-                        <span v-if="row.richList[0]">
-                           {{F_priceType(row.richList[0].priceType)}} ￥{{row.richList[0].unitPrice}}) * {{row.richList[0].taxCount}}
-                        </span>
-                    </span>
-                    <span v-if="row.richList[0].priceType == 16">
-                        <span v-if="row.richList[0]">
-                           {{F_priceType(row.richList[0].priceType)}} ￥{{row.richList[0].unitPrice}}) * {{row.richList[0].taxCount}}
-                        </span>
-                    </span>
-                </span>
-
-                        <!-- <span v-if="row.priceType == 10">
-                         </span> -->
                         <span v-if="row.priceType == 12">房费</span>
                         <span v-if="row.priceType == 13">
-                     {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
-                </span>
+                             {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
+                        </span>
                         <span v-if="row.priceType == 14">
                    <!-- 具体餐品 -->
-                   <span  class="toDot" v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="item in row.disherOrderSubList">
-                       {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
-                   </span>
-                </span>
-                        <span v-if="row.priceType == 15">
-                    {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
-                </span>
-                        <span v-if="row.priceType == 16">
-                    {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
-                </span>
-                        <span v-if="row.priceType == 22">
-                    <!-- 商品费 -->
-                    <span class="toDot" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
-                        {{item.goodsName}}({{item.unitPrice}})*{{item.goodsCount}}
+                       <span  class="toDot" v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="item in row.disherOrderSubList">
+                           {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
+                       </span>
                     </span>
-                </span>
+                            <span v-if="row.priceType == 15">
+                        {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
+                    </span>
+                            <span v-if="row.priceType == 16">
+                        {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
+                    </span>
+                            <span v-if="row.priceType == 22">
+                        <!-- 商品费 -->
+                        <span class="toDot" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
+                            {{item.goodsName}}({{item.unitPrice}})*{{item.goodsCount}}
+                        </span>
+                    </span>
                     </div>
                 </template>
             </el-table-column>
@@ -197,7 +194,9 @@
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    <span :class="row.priceType == 9 || row.priceType == 10 || row.richType == 1 ? 'text-red' : ''">{{row.remark}}</span>
+                    <span :class="row.priceType == 9 || row.priceType == 10 || row.richType == 1 ? 'text-red' : ''">
+                        {{row.richRemark ? row.richRemark :  row.remark}}
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('commons.operating')">
@@ -434,7 +433,7 @@
         </el-dialog>
 
         <!--部分结账-->
-        <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
+        <someAccounts ref="someAccounts" :detailData = "detailData" :currentRoom="currentRoom" @getOrderDetail="getOrderDetail"  />
         <!--迷你吧-->
         <consumeGoods ref="consumeGoods" :detailData = "detailData" @getOrderDetail="getOrderDetail"  @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
         <!--开发票-->
@@ -474,7 +473,8 @@ import {
 } from "vuex";
 import myMixin from '@/utils/filterMixin';
 import consumeGoods from './consumeGoods'
-import someAccounts from './someAccounts'
+// import someAccounts from './someAccounts'
+import someAccounts from './partAccounts'
 import invoicing from './invoicing'
 import sideOrder from './sideOrder'
 import cardTao from "@/components/cardTao";
@@ -610,7 +610,7 @@ export default {
             taxCount:'',//税--数量
             listTotal: 0, //总条数
             multipleSelection: [], //多选
-            tableData: [{}], //表格数据
+            tableData: [], //表格数据
             hoteldamagetypeList: [],
             hoteldamageList: [],
             hotelenterList: [], //挂账企业列表
@@ -688,7 +688,17 @@ export default {
             this.searchForm.state = state || '';
             this.searchForm.checkInId = this.checkInId;
             this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
-                this.tableData = res.consumeOrderList
+                let list = res.consumeOrderList
+                let arr = []
+                for(let i =0;i<list.length;i++){
+                    let element = list[i]
+                    // console.log(element)
+                    // console.log(element.priceType)
+                    if(element.priceType !== 9&&element.priceType !== 10){
+                        arr.push(element)
+                    }
+                }
+                this.tableData = arr
                 this.listTotal = (res.page || {}).count || 0
                 this.$forceUpdate()
             })

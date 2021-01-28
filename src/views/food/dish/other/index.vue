@@ -23,7 +23,7 @@
             </el-form-item>
             <el-form-item style="float:right">
                 <el-button type="primary" @click="emptyHandle">{{$t('food.common.hanlde_empty')}}</el-button>
-                <el-button type="primary" @click="autoEmptyHandle">{{$t('food.common.set_auto_emptying_time')}}</el-button>
+                <!-- <el-button type="primary" @click="autoEmptyHandle">{{$t('food.common.set_auto_emptying_time')}}</el-button> -->
                 <el-button type="primary" @click="batchHandle">{{$t('food.reset.batch_set')}}</el-button>
             </el-form-item>
         </el-form>
