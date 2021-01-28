@@ -1120,7 +1120,9 @@ export default {
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item));
             this.rowRoomCurrentIndex = index;
             this.hotelRoomListParams.roomTypeId = item.roomTypeId;
-            this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray);
+            this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray,
+                new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
+                new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"));
         },
 
         //获取可排房的房间
@@ -1347,6 +1349,7 @@ export default {
         remoteMethod(query, cb) {
             this.options = [];
             let params = {
+                storesNum: '',
                 name: query,
                 searchType: 1,
                 pageIndex: 1,
@@ -1390,6 +1393,7 @@ export default {
         },
 
         getReverveList(params, callback) {
+            params.storesNum = '';
             this.$F.doRequest(
                 this,
                 "/pms/reserve/reserve_order_list",

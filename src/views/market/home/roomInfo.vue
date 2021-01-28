@@ -149,7 +149,7 @@ export default {
                     endTime: this.endTime,
                     searchType: this.currentRoom.checkInRoomType || 2,
                     checkinTime: this.startTime,
-                    checkoutTime: this.checkoutTime,
+                    checkoutTime: this.endTime,
                 }, (res) => {
                     if (res && res.roomCheckInCalendarList.length > 0) {
                         res.roomCheckInCalendarList.forEach( (value, index) => {
@@ -205,6 +205,7 @@ export default {
             this.currentRoom = currentRoom;
             this.initRoomPlan();
             this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
+            debugger
             if (this.currentRoom.checkInRoomType == 1) {   //订单详情
                 if (this.currentRoom.checkInObj) {
                     let id = this.currentRoom.checkInObj.id;
