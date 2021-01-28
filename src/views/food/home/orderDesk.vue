@@ -391,16 +391,31 @@ export default {
             let list = this.cart
             let dishesJson  = []
             let sum = 0
-            for(let i in list){
+            
+            
+            list.forEach(element => {
                 dishesJson.push({
-                    dishesId:list[i].id,
-                    dishesName:list[i].name,
-                    unitPrice:list[i].price,
-                    totalPrice:parseFloat(parseFloat(list[i].price) * parseFloat(list[i].count)).toFixed(0),
-                    dishesCount:list[i].count
+                    dishesId:element.id,
+                    dishesName:element.name,
+                    unitPrice:element.price,
+                    totalPrice:parseFloat(parseFloat(element.price) * parseFloat(element.count)).toFixed(0),
+                    dishesCount:element.count
                 });
-                sum += list[i].count
-            }
+                sum += element.count
+            });
+            
+            
+            
+            // for(let i in list){
+            //     dishesJson.push({
+            //         dishesId:list[i].id,
+            //         dishesName:list[i].name,
+            //         unitPrice:list[i].price,
+            //         totalPrice:parseFloat(parseFloat(list[i].price) * parseFloat(list[i].count)).toFixed(0),
+            //         dishesCount:list[i].count
+            //     });
+            //     sum += list[i].count
+            // }
             params.dishesCount = sum
             params.consumePrice = parseFloat(this.cartToTal).toFixed(2)
             params.dishesJson  = JSON.stringify(dishesJson);

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-02 15:42:51
+ * @LastEditTime: 2021-01-27 17:38:47
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -38,9 +38,9 @@
     </el-dialog>
     <div class="topBox">
       <div class="fontStyle">
-        注：建议不要随意重新入账，容易出现重复的，建议仔细核对后再重新入账
+      {{$t('desk.add_sureBil')}}
       </div>
-      <el-button type="primary">追加套餐</el-button>
+      <el-button type="primary"> {{$t('desk.add_addMeal')}}</el-button>
     </div>
     <el-table
       header-row-class-name="default"
@@ -50,31 +50,31 @@
       default-expand-all
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
-      <el-table-column prop="date" label="就餐时间" width="150">
+      <el-table-column prop="date" :label="$t('desk.add_eatTime')" width="150">
       </el-table-column>
-      <el-table-column prop="name" label="客人类型" width="120">
+      <el-table-column prop="name" :label="$t('desk.customer_guestTypeA')" width="120">
       </el-table-column>
-      <el-table-column  label="套餐类型" width="100">
+      <el-table-column  :label="$t('desk.add_mealType')" >
            <template slot-scope="scope">
-               {{scope.row.mealTime == 1 ? '早餐' : '晚餐'}}
+               {{scope.row.mealTime == 1 ? $t('manager.hk_breakfast') : $t('manager.hk_dinner')}}
            </template>
       </el-table-column>
-      <el-table-column label="套餐【价格】" width="200">
+      <el-table-column :label="$t('desk.add_mealPri')" width="200">
           <template slot-scope="scope">
               {{ scope.row.mealName}}【￥{{ scope.row.mealPrice}}】
           </template>
 
       </el-table-column>
-      <el-table-column prop="address" label="入账状态" width="180">
+      <el-table-column prop="address" :label="$t('desk.customer_billState')" width="180">
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column :label="$t('commons.operating')">
         <template>
-          <el-button type="text">重新入账</el-button>
+          <el-button type="text"> {{$t('desk.add_againBill')}}</el-button>
           <el-button type="text" @click="innerVisible = true"
-            >更换套餐</el-button
+            >{{$t('desk.side_changePackageA')}}</el-button
           >
-          <el-button type="text">入账</el-button>
-          <el-button type="text">删除</el-button>
+          <el-button type="text">{{$t('desk.add_ruzhang')}}</el-button>
+          <el-button type="text" @click="clickDelete">{{$t('commons.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -112,6 +112,17 @@ export default {
       this.checkInId = checkInId;
       this.getData();
       this.visible = true;
+    },
+    clickDelete(){
+        this.$confirm(this.$t('manager.grsl_ifSureDeleteA'),  this.$t("commons.tip_desc"), {
+          confirmButtonText:  this.$t("commons.confirm"),
+          cancelButtonText: this.$t("commons.cancel"),
+          type: 'warning'
+        }).then(() => {
+        
+        }).catch(() => {
+      
+        });
     },
     getData() {
       let params = {

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 13:20:37
+ * @LastEditTime: 2020-11-05 10:05:25
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
@@ -30,14 +30,13 @@
                   :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }"
                   @selection-change="handleSelectionChange" size="mini">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="createTime" :label="$t('commons.operatingTime')"
-                             show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" :label="$t('commons.operatingTime')"></el-table-column>
             <el-table-column prop="priceType" :label="$t('desk.order_accountingProgram')">
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">
                         {{F_priceType(row.priceType ? row.priceType : 99)}}
                     </span>
-                    <span v-else>
+                    <span v-else :class="row.richType == 1 ? 'red' : ''">
                         {{'【' + $t('commons.payType')[row.payType] + '】' + F_priceType(row.priceType ? row.priceType : 99)}}
                     </span>
                 </template>
@@ -52,6 +51,18 @@
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.consumePrice ? (0 - row.consumePrice) : ''}}</span>
                     <span v-else>{{row.consumePrice}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('desk.order_businessThat')">
+                <template slot-scope="{ row }">
+                    <span v-if="row.richType == 1" class="blue">
+                        {{F_priceType('9') + '【' + $t('commons.payType')[row.payType] + '】' + F_priceType(row.priceType ? row.priceType : 99)}}
+                    </span>
+                    <br v-if="row.richType == 1">
+                    <span v-if="row.richType == 1" class="blue">
+                       原因： {{row.richRemark}}
+                    </span>
+                    <span v-else>{{F_priceType(row.priceType == 1 ? 1 : 99)}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
@@ -71,12 +82,7 @@
         ></el-pagination>
 
         <!--冲调-->
-        <el-dialog
-            top="0"
-            :title="$t('desk.customer_rich')"
-            :visible.sync="destructionShow"
-            width="800px"
-        >
+        <el-dialog top="0" :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
             <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
                 <!--        <p>正在冲调的账务</p>-->
                 <el-table v-loading="loading" :data="destructionList"
@@ -109,7 +115,7 @@
                 <el-form-item :label="$t('desk.order_mixingWay')+':'" prop="priceType">
                     <el-radio-group v-model="consumeOperForm.priceType">
                         <el-radio :label="9" :value="9">{{ $t('desk.order_completelyAgainst') }}</el-radio>
-                        <el-radio :label="10" :value="10">{{ $t('desk.order_partCompletely') }}</el-radio>
+<!--                        <el-radio :label="10" :value="10">{{ $t('desk.order_partCompletely') }}</el-radio>-->
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="segmentAmount" v-if="consumeOperForm.priceType != 9">
@@ -375,7 +381,6 @@ export default {
             }
         },
         baseInfoChange() {
-            debugger
             this.$emit("baseInfoChange", "");
         },
         consumeOperFormInit() {
@@ -393,8 +398,10 @@ export default {
                 "/pms/consume/consume_order_list",
                 this.searchForm,
                 (res) => {
-
                     this.tableData = res.consumeOrderList;
+                    this.tableData = this.tableData.filter(item=> {
+                        return item.priceType != 9
+                    })
                     this.listTotal = res.consumeOrderList.length || 0;
                     this.$forceUpdate();
                 }
@@ -472,6 +479,9 @@ export default {
             //冲调
             if (type == 3) {
                 params.payType = 0;  //冲调没有支付类型
+                params.richType = 1;
+                params.richRemark = params.remark;
+                debugger
             }
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -480,8 +490,8 @@ export default {
                         this.refundShow = false;
                         this.destructionShow = false;
                         this.consume_order_list();
-                        this.consumeOperFormInit()
                         this.baseInfoChange();
+                        this.consumeOperFormInit()
                     });
                 } else {
                     console.log("error submit!!");
@@ -491,22 +501,21 @@ export default {
         },
         destructionHandle() {
             if (this.multipleSelection.length < 1) {
-                this.$message.error(this.$t('desk.order_selectOperateAccount'));
-                return;
+                return this.$message.error(this.$t('desk.order_selectOperateAccount'));
             }
             if (this.multipleSelection.length > 1) {
-                this.$message.error(this.$t('desk.order_onlyOneAccount'));
-                return;
+                return this.$message.error(this.$t('desk.order_onlyOneAccount'));
             }
             for (let k in this.multipleSelection) {
                 if (this.multipleSelection[k].billingType == 1) {
-                    this.$message.error(this.$t('desk.order_autoTiePrice'));
-                    return;
+                    return this.$message.error(this.$t('desk.order_autoTiePrice'));
                 }
                 if (this.multipleSelection[k].priceType == 9 || this.multipleSelection[k].priceType == 10) {
-                    this.$message.error(this.$t('desk.order_priceShould'));
-                    return;
+                    return this.$message.error(this.$t('desk.order_priceShould'));
                 }
+            }
+            if (this.multipleSelection[0].richType == 1 || this.multipleSelection[0].priceType == 9) {
+                return  this.$message.error(this.$t('desk.order_priceShould'));
             }
             this.destuctionAbleAmount = this.multipleSelection[0].payPrice || this.multipleSelection[0].consumePrice;
             this.tableData.forEach(data => {
@@ -548,5 +557,11 @@ export default {
 <style lang="less" scoped>
 .base p {
     font-size: 12px;
+}
+.red {
+    color: red;
+}
+.blue {
+    color: blue;
 }
 </style>

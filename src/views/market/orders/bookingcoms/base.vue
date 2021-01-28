@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 13:33:03
+ * @LastEditTime: 2021-01-27 14:57:09
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -193,7 +193,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item :label="$t('desk.home_bookPeople')" class="" prop="name">
-              <el-input type="text" v-model="baseInfoChangeForm.name" style="width: 150px"></el-input>
+              <el-input type="text" v-model="baseInfoChangeForm.region" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">

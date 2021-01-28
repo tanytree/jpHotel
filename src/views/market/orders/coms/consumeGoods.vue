@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 11:20:12
+ * @LastEditTime: 2021-01-27 16:50:14
  * @FilePath: \jiudian\src\views\market\orders\coms\consumeGoods.vue
  -->
 <template>
@@ -11,10 +11,10 @@
                 <el-row>
                     <div class="padding-20 clearfix" style="border:1px solid #eee;">
                         <el-form inline size="small" label-width="100px">
-                            <el-form-item :label="$t('desk.order_goodsName') + ':'">
-                                <el-input v-model="category.goodsName" :placeholder="$t('desk.order_goodsName')" style="width:150px"></el-input>
+                            <el-form-item :label="$t('desk.order_goodsNameA') + ':'">
+                                <el-input v-model="category.goodsName" :placeholder="$t('desk.order_goodsNameA')" style="width:150px"></el-input>
                             </el-form-item>
-                            <el-form-item :label="$t('desk.order_goodsType')+':'">
+                            <el-form-item :label="$t('desk.order_goodsTypeC')+':'">
                                 <el-cascader v-model="category.categoryId" :options="categoryList" @change="changeCategoryId"></el-cascader>
                             </el-form-item>
                             <el-form-item>
@@ -23,8 +23,8 @@
                             </el-form-item>
                         </el-form>
                         <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                            <el-table-column prop="goodsName" :label="$t('desk.order_goodsName')"  show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="sellName" :label="$t('desk.order_goodsType')" show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="goodsName" :label="$t('desk.order_goodsNameA')"  show-overflow-tooltip></el-table-column>
+                            <el-table-column prop="sellName" :label="$t('desk.order_goodsTypeC')" show-overflow-tooltip></el-table-column>
                             <el-table-column prop="retailPrice" :label="$t('desk.order_goodsUnit')" show-overflow-tooltip></el-table-column>
                             <el-table-column prop="employeePrice" :label="$t('desk.order_empoyeePrice')" show-overflow-tooltip></el-table-column>
                             <!-- <el-table-column prop="inventoryCount" :label="$t('desk.customer_inventory')" show-overflow-tooltip></el-table-column> -->
@@ -41,7 +41,7 @@
                 <div class="padding-20 clearfix" style="border:1px solid #eee;">
                     <h3 style="margin-top:0;border-bottom: 1px solid #eee;padding-bottom:10px;">{{$t('desk.customer_chooseGoods')}}</h3>
                     <el-table v-loading="loading" :data="cart" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                        <el-table-column :label="$t('desk.order_goodsName')" prop="goodsName" show-overflow-tooltip></el-table-column>
+                        <el-table-column :label="$t('desk.order_goodsNameA')" prop="goodsName" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="retailPrice" :label="$t('desk.order_unitPrice')" show-overflow-tooltip></el-table-column>
                         <el-table-column :label="$t('desk.order_number')" width="150">
                             <template slot-scope="scope">

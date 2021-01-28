@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 11:26:31
+ * @LastEditTime: 2021-01-27 15:26:07
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -108,7 +108,7 @@ module.exports = {
   },
   //证件类型 1身份证 2护照 3驾照 4个人号码卡（My No. Card) 5在留卡（旧：外国人登录证） 6健康保险证  7其他
   idCardType: {
-    // "1": ' 本人確認書',
+    "1": ' その他証明書',
     "2": 'パスポート',
     '3': '運転免許証',
     '4': '個人番号カード（マイナンバー）',
@@ -220,10 +220,10 @@ module.exports = {
     "1": '予約中',
     "2": '確認済',
     "4": 'NOSHOW',
-    "5": '未使用（未宿泊）',
+    "5": '未着',
     "6": '滞在中',
-    "7": 'チェックアウト済',
-    "8": 'キャンセル',
+    "7": '出発',
+    "8": '取消',
     '9': '客未着	'
   },
   //入住状态

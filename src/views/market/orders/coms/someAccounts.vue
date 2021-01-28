@@ -16,9 +16,21 @@
                     {{F_priceType(row.priceType)}}
                 </template>
             </el-table-column>
-            <el-table-column prop="consumePrice" :label="$t('desk.order_payment')" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="consumePrice" :label="$t('desk.order_saleDay')" show-overflow-tooltip></el-table-column>
+            <el-table-column :label="$t('desk.order_payment')" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{numFormate(getPriceStr(row.payPrice))}}
+                </template>
+
+            </el-table-column>
+            <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    {{numFormate(getPriceStr(row.consumePrice))}}
+                </template>
+            </el-table-column>
+            <el-table-column  :label="$t('desk.order_saleDay')" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                </template>
+            </el-table-column>
             <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
@@ -52,7 +64,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
         <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
-        <el-button type="primary" @click="consume_oper(2,'onAccount')">{{ $t('desk.order_invoicing') }}</el-button>
+        <!-- <el-button type="primary" @click="consume_oper(2,'onAccount')">{{ $t('desk.order_invoicing') }}</el-button> -->
     </div>
 
 
@@ -85,7 +97,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="getStatus = false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" @click="addDestructionList" >{{ $t('commons.confirm') }}</el-button>
+            <!-- <el-button type="primary" @click="addDestructionList" >{{ $t('commons.confirm') }}</el-button> -->
         </div>
     </el-dialog>
 
@@ -134,7 +146,8 @@ export default {
             },
 
             // title:'收款',
-            type:1
+            type:1,
+            priceTypeList:[12,9,10]
         };
     },
     computed: {
@@ -159,7 +172,18 @@ export default {
             };
             this.$F.doRequest(this, '/pms/consume/consume_order_list', params, (res) => {
                 console.log(res)
-                this.tableData = res.consumeOrderList
+
+                // priceTypeList
+                let list = res.consumeOrderList
+                let arr = []
+                list.forEach(element => {
+                    if(this.priceTypeList.indexOf(element.priceType) == -1 && element.state == 1){
+                        arr.push(element)
+                    }
+                })
+
+
+                this.tableData = arr
                 this.loading = false
                 this.$forceUpdate()
             })

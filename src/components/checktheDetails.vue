@@ -212,10 +212,12 @@ export default {
     props: ["checkinType", "checkInDetail"],
     mounted() {
         // type: checkin: 前台入住  1：入住人管理  2：批量入住  3：单个房间入住
+        debugger
         if (this.checkinType) {
             //当是从前台办理过来的请求
             this.type = "checkin";
             let checkInDetail = this.$F.deepClone(this.checkInDetail);
+
             checkInDetail.forEach((item) => {
                 if (item.headerObj) {
                     item.headerObj.personType = 2; //主入住人
@@ -263,6 +265,7 @@ export default {
                     room: room,
                 };
 
+
                 room.personList.forEach((person, index) => {
                     person.customerType = person.customerType ? person.customerType + "" : "1";
                     person.idcardType = person.idcardType ? person.idcardType + "" : "1";
@@ -279,6 +282,9 @@ export default {
                     }
                 });
                 object.personList = room.personList || [];
+                if (room.personList) {
+
+                }
                 this.inRoomList.push(object);
             });
         }
@@ -382,9 +388,10 @@ export default {
                 name: query,
                 searchType: 1,
                 pageIndex: 1,
-                // filter: true,
+                filter: true,
                 pageSize: 999,
                 paging: false,
+                storesNum: '',
             };
             this.$F.doRequest(
                 this,
@@ -498,7 +505,7 @@ export default {
             console.log(this.inRoomList);
             let checkInRoomIds = [];
             this.inRoomList.forEach((room) => {
-                checkInRoomIds.push(room.room.roomId);
+                checkInRoomIds.push(room.room.id);
             })
             if (this.type == "checkin") {
                 this.$emit("personCallback", checkInRoomJson);

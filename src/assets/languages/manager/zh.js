@@ -393,6 +393,7 @@ module.exports = {
   grsl_sureEnable: '是否确认启用',
   grsl_sureDisable: '是否确认禁用',
   grsl_ifSureDelete: '是否确认删除',
+  grsl_ifSureDeleteA: '是否确认删除',
   grsl_superior: '上级',
   grsl_selectZao: '请选择早餐',
   grsl_inputbedNum: '请输入床位数/座位',

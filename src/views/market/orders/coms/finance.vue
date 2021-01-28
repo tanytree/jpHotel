@@ -1,118 +1,119 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 18:09:57
+ * @LastEditTime: 2021-01-27 17:07:13
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
-<div class="finance">
-    <!-- 查询部分 -->
-    <el-form inline size="small">
-        <el-row>
-            <el-form-item label="">
-                <el-button type="primary" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccount')}}</el-button>
-                <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
-                <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
-                <el-button type="primary" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
-                <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
-<!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
-                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_rich')}}</el-button>
-                <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
-<!--                <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>-->
-<!--                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>-->
-                <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMeal')}}</el-button>
+    <div class="finance">
+        <!-- 查询部分 -->
+        <el-form inline size="small">
+            <el-row>
+                <el-form-item label="">
+                    <el-button type="primary" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccountA')}}</el-button>
+                    <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
+                    <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
+                    <el-button type="primary" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
+                    <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
+                    <!--                <el-button type="primary" size="mini">{{$t('commons.print')}}</el-button>-->
+                    <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_richA')}}</el-button>
+                    <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
+                    <el-button type="primary" size="mini" @click="someAccountsHandle">部分结账</el-button>
+                    <!--                <el-button type="primary" size="mini" @click="undoCheckoutA" :disabled="detailData.checkIn.state != 2">{{$t('desk.customer_undoCheckoutA')}}</el-button>-->
+                    <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMealA')}}</el-button>
+                </el-form-item>
+            </el-row>
+            <el-form-item :label="$t('desk.order_accountsType')+':'">
+                <el-button :type="searchForm.state == '' ? 'primary' : ''" size="mini" @click="consume_order_list('')">{{$t('desk.order_allAccounts')}}</el-button>
+                <el-button :type="searchForm.state == '2' ? 'primary' : ''" size="mini" @click="consume_order_list(2)">{{$t('desk.order_haveAccounts')}}</el-button>
+                <el-button :type="searchForm.state == '1' ? 'primary' : ''" size="mini" @click="consume_order_list(1)">{{$t('desk.order_notHaveAccounts')}}</el-button>
             </el-form-item>
-        </el-row>
-        <el-form-item :label="$t('desk.order_accountsType')+':'">
-            <el-button :type="searchForm.state == '' ? 'primary' : ''" size="mini" @click="consume_order_list('')">{{$t('desk.order_allAccounts')}}</el-button>
-            <el-button :type="searchForm.state == '2' ? 'primary' : ''" size="mini" @click="consume_order_list(2)">{{$t('desk.order_haveAccounts')}}</el-button>
-            <el-button :type="searchForm.state == '1' ? 'primary' : ''" size="mini" @click="consume_order_list(1)">{{$t('desk.order_notHaveAccounts')}}</el-button>
-        </el-form-item>
-<!--        <el-form-item class="fr">-->
-<!--            <el-button type="primary">导出</el-button>-->
-<!--        </el-form-item>-->
-    </el-form>
-    <!--表格数据 -->
-    <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
-              @selection-change="handleSelectionChange" size="mini">
-        <el-table-column type="selection" width="55">
-        </el-table-column>
-        <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
-        <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
-            <template slot-scope="{row}">
-                <!-- {{row.priceType}}/ -->
-             <span v-if="row.priceType == 9 || row.priceType == 10"  class="text-red">
+            <!--        <el-form-item class="fr">-->
+            <!--            <el-button type="primary">导出</el-button>-->
+            <!--        </el-form-item>-->
+        </el-form>
+        <!--表格数据 -->
+        <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
+                  @selection-change="handleSelectionChange" size="mini">
+            <el-table-column type="selection" width="55">
+            </el-table-column>
+            <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
+            <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
+                <template slot-scope="{row}">
+                    {{row.priceType}}/
+                    <span v-if="row.priceType == 9 || row.priceType == 10"  class="text-red">
              {{F_priceType(row.richList[0].priceType)}}
              </span>
-             <span v-else>
-             {{F_priceType(row.priceType)}}
+                    <span :class="row.richType == 1 ? 'text-red' : ''" v-else>
+                {{F_priceType(row.priceType)}}
              </span>
-            </template>
-        </el-table-column>
-        <el-table-column :label="$t('desk.order_payment')" >
-            <template slot-scope="{row}">
-                {{numFormate(getPriceStr(row.payPrice))}}
-            </template>
-        </el-table-column>
-        <el-table-column prop="consumePrice" :label="$t('desk.order_expense')">
-            <template slot-scope="{row}" style="color: red">
-                {{numFormate(getPriceStr(row.consumePrice))}}
-            </template>
-        </el-table-column>
-		<el-table-column prop="state" label="业务说明" width="200" show-overflow-tooltip>
-		    <template slot-scope="{row}">
-               <!-- "1": '订金',
-                "2": '押金',
-                "3": '收款',
-                "4": '退款',
-                "5": '加收全天房费',
-                "6": '加收半天房费',
-                "7": '损物赔偿',
-                "8": '迷你吧',
-                "9": '完全冲调',
-                "10": '部分冲调',
-                "11": '免单',
-                "12": '房费',
-                "13": '挂账',
-                "14": '餐吧消费',
-                "15":'温泉税',
-                "16":'住宿税',
-                "100": '其他' -->
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('desk.order_paymentB')" >
+                <template slot-scope="{row}">
+                    {{numFormate(getPriceStr(row.payPrice))}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="consumePrice" :label="$t('desk.order_expenseA')">
+                <template slot-scope="{row}" style="color: red">
+                    {{numFormate(getPriceStr(row.consumePrice))}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="state" :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <!-- "1": '订金',
+                     "2": '押金',
+                     "3": '收款',
+                     "4": '退款',
+                     "5": '加收全天房费',
+                     "6": '加收半天房费',
+                     "7": '损物赔偿',
+                     "8": '迷你吧',
+                     "9": '完全冲调',
+                     "10": '部分冲调',
+                     "11": '免单',
+                     "12": '房费',
+                     "13": '挂账',
+                     "14": '餐吧消费',
+                     "15":'温泉税',
+                     "16":'住宿税',
+                     "100": '其他' -->
+
+                    <div :class="row.richType == 1 ? 'text-blue' : ''">
 		       <span v-if="row.priceType == 1">
                     <span v-if="row.payType == 1">现金定金</span>
                     <span v-if="row.payType == 2">信用卡订金 </span>
                     <span v-if="row.payType == 4">其他定金 </span>
                 </span>
-                <span v-if="row.priceType == 2">
+                        <span v-if="row.priceType == 2">
                     <span v-if="row.payType == 1">现金押金</span>
                     <span v-if="row.payType == 2">信用卡押金 </span>
                     <span v-if="row.payType == 4">其他押金</span>
                 </span>
-                <span v-if="row.priceType == 3">
+                        <span v-if="row.priceType == 3">
                     <span v-if="row.payType == 1">现金收款</span>
                     <span v-if="row.payType == 2">信用卡收款 </span>
                     <span v-if="row.payType == 4">其他收款</span>
                 </span>
-                <span v-if="row.priceType == 5">房费</span>
-                <span v-if="row.priceType == 6">房费</span>
-                <span v-if="row.priceType == 7">
+                        <span v-if="row.priceType == 5">房费</span>
+                        <span v-if="row.priceType == 6">房费</span>
+                        <span v-if="row.priceType == 7">
                     {{row.damageTypeName}}(￥{{row.consumePrice}}) * {{row.damageCount}}
                 </span>
-                <span v-if="row.priceType == 8">
+                        <span v-if="row.priceType == 8">
                    <span v-if="row.goodsList&&row.goodsList.length > 0" >
-                       <span v-for="item in row.goodsList">
+                       <span  v-for="item in row.goodsList">
                            {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
                        </span>
                    </span>
                 </span>
-                <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
-                <!-- 全部冲调 -->
-                <span class="text-blue" v-if="(row.priceType == 9 || row.priceType == 10) && row.richList.length > 0">
+                        <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
+                        <!-- 全部冲调 -->
+                        <span class="text-blue" v-if="(row.priceType == 9 || row.priceType == 10) && row.richList.length > 0">
                     <!-- {{row.richList[0].priceType}}/ -->
-                    <!-- 全部冲调 -- -->
+                            <!-- 全部冲调 -- -->
                     {{F_priceType(row.richList[0].priceType)}} --
-
                     <span v-if="row.richList[0].priceType == 1">
                          <span v-if="row.richList[0].payType == 1">现金定金</span>
                          <span v-if="row.richList[0].payType == 2">信用卡订金 </span>
@@ -160,286 +161,287 @@
                     </span>
                 </span>
 
-               <!-- <span v-if="row.priceType == 10">
-                </span> -->
-                <span v-if="row.priceType == 12">房费</span>
-                <span v-if="row.priceType == 13">
+                        <!-- <span v-if="row.priceType == 10">
+                         </span> -->
+                        <span v-if="row.priceType == 12">房费</span>
+                        <span v-if="row.priceType == 13">
                      {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
                 </span>
-                <span v-if="row.priceType == 14">
+                        <span v-if="row.priceType == 14">
                    <!-- 具体餐品 -->
                    <span  class="toDot" v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="item in row.disherOrderSubList">
                        {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
                    </span>
                 </span>
-                <span v-if="row.priceType == 15">
-                    温泉税(￥{{row.unitPrice}}) * {{row.taxCount}}
+                        <span v-if="row.priceType == 15">
+                    {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
                 </span>
-                <span v-if="row.priceType == 16">
-                    住宿税(￥{{row.unitPrice}}) * {{row.taxCount}}
+                        <span v-if="row.priceType == 16">
+                    {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
                 </span>
-                <span v-if="row.priceType == 22">
+                        <span v-if="row.priceType == 22">
                     <!-- 商品费 -->
                     <span class="toDot" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
                         {{item.goodsName}}({{item.unitPrice}})*{{item.goodsCount}}
                     </span>
                 </span>
-		    </template>
-		</el-table-column>
-        <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
-            <template slot-scope="{row}">
-                {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
-            </template>
-        </el-table-column>
-<!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
-        <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
-        <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
-            <template slot-scope="{row}">
-                <span :class="row.priceType == 9 || row.priceType == 10 ? 'text-red' : ''">{{row.remark}}</span>
-            </template>
-        </el-table-column>
-        <el-table-column :label="$t('commons.operating')">
-            <template slot-scope="{row}">
-                <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
-    <div style="margin-top:10px"></div>
-    <!-- 分页 -->
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
-
-    <!--入账 -->
-    <el-dialog top='0' :title="$t('desk.enterAccount')" :visible.sync="entryShow">
-        <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
-            <p>{{$t('desk.book_firstInto')}}</p>
-            <el-form-item :label="$t('desk.order_payProject')+':'">
-                <el-radio-group v-model="consumeOperForm.priceType">
-                    <el-radio-button :label="3" :value="3">{{$t('desk.customer_collectionA')}}</el-radio-button>
-                    <el-radio-button :label="2" :value="2">{{$t('desk.order_theDeposit')}}</el-radio-button>
-                </el-radio-group>
-            </el-form-item>
-
-            <el-form-item :label="$t('desk.order_selectPayWay')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
-                <el-radio-group v-model="consumeOperForm.payType">
-                    <!-- <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio> -->
-                    <el-radio v-for="(value, key) in payTypeList()" :label="key" :key="key">{{value}}</el-radio>
-                </el-radio-group>
-            </el-form-item>
-
-            <el-form-item :label="$t('desk.order_consumptionProject')+':'">
-                <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
-                    <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
-                    <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
-                    <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
-                    <el-radio-button :label="15" :value="15">{{$t('desk.book_wenquan')}}</el-radio-button>
-                    <el-radio-button :label="16" :value="16">{{$t('desk.book_liveFee')}}</el-radio-button>
-                </el-radio-group>
-            </el-form-item>
-
-            <template v-if="consumeOperForm.priceType==7">
-                <el-form-item :label="$t('desk.order_goodsType')+':'">
-                    <el-select v-model="consumeOperForm.damageTypeId" @change="damageTypeIdChange">
-                        <el-option v-for="item in hoteldamagetypeList" :key="item.id" :label="item.name" :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('desk.order_goodsName')+':'">
-                    <el-select v-model="consumeOperForm.damageId" @change="getDdamageInfo">
-                        <el-option v-for="item in hoteldamageList" :key="item.id" :label="item.name" :value="item.id">
-                        </el-option>
-                    </el-select>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <el-input-number @change="getDamagePrice" :disabled="!consumeOperForm.damageId"  v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
-                </el-form-item>
-            </template>
-
-            <template v-if="consumeOperForm.priceType == 15 || consumeOperForm.priceType == 16">
-                <el-form-item :label="$t('desk.order_unitPrice')+':'">
-                    <el-input @change="getDamagePrice" :placeholder="$t('desk.order_unitPrice')" type="number" style="width: 100px;" v-model="unitPrice" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('desk.order_number')+':'">
-                    <el-input-number style="width: 100px;" @change="getDamagePrice" @focus="getDamagePrice" :disabled="!taxCount"  v-model="taxCount" :min="1" label=""></el-input-number>
-                </el-form-item>
-            </template>
-
-            <el-form-item :label="$t('desk.customer_sum')+':'">
-                <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
-                <el-input type="number" style="width: 100px;" v-else v-model="consumeOperForm.consumePrices" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
-            </el-form-item>
-
-            <el-form-item :label="$t('desk.home_note') + ':'">
-                <el-input class="" :placeholder="$t('desk.home_note')" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
-            </el-form-item>
-<!--            <el-form-item label="打印单据：">-->
-<!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
-<!--            </el-form-item>-->
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="entryShow = false">{{ $t('commons.close') }}</el-button>
-            <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
-        </div>
-    </el-dialog>
-    <!-- 挂账 -->
-    <cardTao @refreshFatherData="updataInfo" ref="cardTao" :detailData = "detailData" :currentRoom="currentRoom" ></cardTao>
-
-    <!--开发票-->
-
-    <!--退房结账-->
-    <checkoutTao ref="checkoutTao" :detailData = "detailData" :currentRoom="currentRoom" @getOrderDetail="getOrderDetail" ></checkoutTao>
-   <!-- <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
-        <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
-            <el-row v-if="currentRoom">
-                <el-col :span="8">
-                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                </el-col>
-                <el-col :span="8">
-                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
-                </el-col>
-                <el-col :span="8">
-                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
-                </el-col>
-            </el-row>
-            <br/>
-            <div class="cost margin-t-10" v-if="detailData">
-                <div class="wrap" style="background:#efefef">
-                    <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
-                    <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
-                    <div class="costNum">
-                        <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
-                        <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
                     </div>
-                </div>
-            </div>
-            <br/>
-            <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
-                <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrices" autocomplete="off" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('desk.home_note') + ':'">
-                <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
-            </el-form-item>
-
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="checkOutShow=false">{{ $t('commons.close') }}</el-button>
-            <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog> -->
-    <!--冲调-->
-    <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
-        <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
-            <el-row v-if="currentRoom">
-                <el-col :span="8">
-                    {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                </el-col>
-                <el-col :span="8">
-                    {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
-                </el-col>
-                <el-col :span="8" v-if="currentRoom.personList">
-                   {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
-                </el-col>
-            </el-row>
-            <el-row v-else>
-                <template v-if="detailData&&detailData.inRoomList">
-                    <el-col :span="8">
-                        {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
-                    </el-col>
-                    <el-col :span="8">
-                        {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
-                    </el-col>
-                    <el-col :span="8">
-                       {{$t('desk.customer_livePeople')+':'}}{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
-                        detailData.inRoomList[0].personList[0].name}}
-                    </el-col>
                 </template>
-            </el-row>
-            <br />
-            <p>{{$t('desk.order_accountDeveloped')}}</p>
-            <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
-                <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
-                    <template slot-scope="{row}">
-                        {{F_priceType(row.priceType)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="payPrice" :label="$t('desk.order_payment')" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
-<!--                <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
-                <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
-            </el-table>
-            <el-form-item style="margin-top: 10px;" :label="$t('desk.order_mixingWay')+':'" prop="priceType">
-                <el-radio-group v-model="consumeOperForm.priceType">
-                    <el-radio :label="9" :value="9">{{$t('desk.order_completelyAgainst')}}</el-radio>
-                    <!-- <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio> -->
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrices"  v-if="consumeOperForm.priceType == 10">
-                <el-input class="width200" type="text" v-model="consumeOperForm.consumePrices"></el-input>
-                <em style="margin-left:10px;color:#888;font-size: 12px;">
-                <!-- {{$t('desk.order_attention')}} -->
-                    最大可冲调金额
-                    <span v-if="priceTypeList.indexOf(destructionList[0].priceType) > -1">
-                        {{destructionList.length > 0&&destructionList[0].consumePrice}}
-                    </span>
-                    <span v-else>
-                        {{destructionList.length > 0&&destructionList[0].payPrice}}
-                    </span>
-                </em>
-            </el-form-item>
-            <el-form-item :label="$t('desk.order_completelyReason')+':'" prop="remark">
-                <el-input type="textarea" v-model="consumeOperForm.remark"></el-input>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="destructionShow=false">{{ $t('commons.cancel') }}</el-button>
-            <el-button type="primary" @click="consume_oper(3,'destruction')">{{ $t('commons.confirm') }}</el-button>
-        </div>
-    </el-dialog>
-
-    <!--    续住-->
-    <el-dialog top="0" :title="$t('desk.home_stayOver')" :visible.sync="stayoverVisible" width="60%">
-        <el-alert :title="$t('desk.home_needLeave')" type="error" :closable="false" show-icon></el-alert>
-        <el-table :data="overstayTabledata" style="width: 100%" border header-row-class-name="default" size="small">
-            <el-table-column :label="$t('desk.home_roomNum')" prop="houseNum">
             </el-table-column>
-            <el-table-column :label="$t('desk.home_name')" prop="name">
-
-            </el-table-column>
-            <el-table-column :label="$t('desk.home_orignLeaveTime')" prop="checkoutTime">
-            </el-table-column>
-            <el-table-column :label="$t('desk.home_stayOverDay')" width="250">
+            <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
                 <template slot-scope="{row}">
-                    <el-input-number v-model="row.number" :step="1" @change="checkinDaysChange(row.number, row)"></el-input-number>
+                    {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('desk.home_newLeaveTime')" width="250">
-                <template class="block" slot-scope="{row}">
-                    <el-date-picker
-                        v-model="row.newLeaveTime"
-                        type="date"
-                        format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        :placeholder="$t('desk.serve_chooseDate')"
-                        @change="endTimeChange(row)"
-                    ></el-date-picker>
+            <!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
+            <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
+            <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
+                <template slot-scope="{row}">
+                    <span :class="row.priceType == 9 || row.priceType == 10 || row.richType == 1 ? 'text-red' : ''">{{row.remark}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column :label="$t('commons.operating')">
+                <template slot-scope="{row}">
+                    <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <div slot="footer" class="dialog-footer">
-            <el-button size="small" class="white" @click="stayoverVisible = false">{{$t('commons.cancel')}}</el-button>
-            <el-button size="small" type="primary" class="submit" @click="stayoverSubmit">{{$t('commons.determine')}}</el-button>
-        </div>
-    </el-dialog>
+        <div style="margin-top:10px"></div>
+        <!-- 分页 -->
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
-    <!--部分结账-->
-    <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
-    <!--迷你吧-->
-    <consumeGoods ref="consumeGoods" :detailData = "detailData" @getOrderDetail="getOrderDetail"  @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
-    <!--开发票-->
-    <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
-    <!-- 附餐 -->
-    <sideOrder ref='sideOrder'></sideOrder>
-</div>
+        <!--入账 -->
+        <el-dialog top='0' :title="$t('desk.enterAccountB')" :visible.sync="entryShow">
+            <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
+                <p>{{$t('desk.book_firstInto')}}</p>
+                <el-form-item :label="$t('desk.order_payProject')+':'">
+                    <el-radio-group v-model="consumeOperForm.priceType">
+                        <el-radio-button :label="3" :value="3">{{$t('desk.customer_collectionA')}}</el-radio-button>
+                        <el-radio-button :label="2" :value="2">{{$t('desk.order_theDeposit')}}</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+
+                <el-form-item :label="$t('desk.order_selectPayWayA')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
+                    <el-radio-group v-model="consumeOperForm.payType">
+                        <!-- <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">{{value}}</el-radio> -->
+                        <el-radio v-for="(value, key) in payTypeList()" :label="key" :key="key">{{value}}</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+
+                <el-form-item :label="$t('desk.order_consumptionProject')+':'">
+                    <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
+                        <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
+                        <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
+                        <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
+                        <el-radio-button :label="15" :value="15">{{$t('desk.book_wenquan')}}</el-radio-button>
+                        <el-radio-button :label="16" :value="16">{{$t('desk.book_liveFee')}}</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+
+                <template v-if="consumeOperForm.priceType==7">
+                    <el-form-item :label="$t('desk.order_goodsType')+':'">
+                        <el-select v-model="consumeOperForm.damageTypeId" @change="damageTypeIdChange">
+                            <el-option v-for="item in hoteldamagetypeList" :key="item.id" :label="item.name" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('desk.order_goodsName')+':'">
+                        <el-select v-model="consumeOperForm.damageId" @change="getDdamageInfo">
+                            <el-option v-for="item in hoteldamageList" :key="item.id" :label="item.name" :value="item.id">
+                            </el-option>
+                        </el-select>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <el-input-number @change="getDamagePrice" :disabled="!consumeOperForm.damageId"  v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
+                    </el-form-item>
+                </template>
+
+                <template v-if="consumeOperForm.priceType == 15 || consumeOperForm.priceType == 16">
+                    <el-form-item :label="$t('desk.order_unitPrice')+':'">
+                        <el-input @change="getDamagePrice" :placeholder="$t('desk.order_unitPrice')" type="number" style="width: 100px;" v-model="unitPrice" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('desk.order_number')+':'">
+                        <el-input-number style="width: 100px;" @change="getDamagePrice" @focus="getDamagePrice" :disabled="!taxCount"  v-model="taxCount" :min="1" label=""></el-input-number>
+                    </el-form-item>
+                </template>
+
+                <el-form-item :label="$t('desk.customer_sum')+':'">
+                    <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
+                    <el-input type="number" style="width: 100px;" v-else v-model="consumeOperForm.consumePrices" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
+                </el-form-item>
+
+                <el-form-item :label="$t('desk.home_note') + ':'">
+                    <el-input class="" :placeholder="$t('desk.home_noteA')" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                </el-form-item>
+                <!--            <el-form-item label="打印单据：">-->
+                <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
+                <!--            </el-form-item>-->
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="entryShow = false">{{ $t('commons.close') }}</el-button>
+                <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
+            </div>
+        </el-dialog>
+        <!-- 挂账 -->
+        <cardTao @refreshFatherData="updataInfo" ref="cardTao" :detailData = "detailData" :currentRoom="currentRoom" ></cardTao>
+
+        <!--开发票-->
+
+        <!--退房结账-->
+        <checkoutTao ref="checkoutTao" :detailData = "detailData" :currentRoom="currentRoom" @getOrderDetail="getOrderDetail" ></checkoutTao>
+        <!-- <el-dialog top='0' :title="$t('desk.order_checkout')" :visible.sync="checkOutShow" width="800px">
+             <el-form :model="consumeOperForm" ref="checkOut" :rules="rules" size="mini" label-width="100px">
+                 <el-row v-if="currentRoom">
+                     <el-col :span="8">
+                         {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
+                     </el-col>
+                     <el-col :span="8">
+                         {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
+                     </el-col>
+                     <el-col :span="8">
+                        {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
+                     </el-col>
+                 </el-row>
+                 <br/>
+                 <div class="cost margin-t-10" v-if="detailData">
+                     <div class="wrap" style="background:#efefef">
+                         <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
+                         <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
+                         <div class="costNum">
+                             <el-row style="padding-bottom: 10px;">{{ $t('desk.consumerTotal') }}：<span class="text-red">{{detailData.consumePrice}}</span></el-row>
+                             <el-row>{{ $t('desk.payTotal') }}：<span class="text-green">{{detailData.payPrice}}</span></el-row>
+                         </div>
+                     </div>
+                 </div>
+                 <br/>
+                 <el-form-item :label="$t('desk.customer_sum') + ':'" class="" prop="consumePrice">
+                     <el-input size="medium" class="width200" type="number" v-model="consumeOperForm.consumePrices" autocomplete="off" :disabled="true"></el-input>
+                 </el-form-item>
+                 <el-form-item :label="$t('desk.home_note') + ':'">
+                     <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                 </el-form-item>
+
+             </el-form>
+             <div slot="footer" class="dialog-footer">
+                 <el-button @click="checkOutShow=false">{{ $t('commons.close') }}</el-button>
+                 <el-button type="primary" @click="set_out_check_in">{{ $t('commons.confirm') }}</el-button>
+             </div>
+         </el-dialog> -->
+        <!--冲调-->
+        <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
+            <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
+                <el-row v-if="currentRoom">
+                    <el-col :span="8">
+                        {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
+                    </el-col>
+                    <el-col :span="8">
+                        {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
+                    </el-col>
+                    <el-col :span="8" v-if="currentRoom.personList">
+                        {{$t('desk.customer_livePeople')+':'}}{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}
+                    </el-col>
+                </el-row>
+                <el-row v-else>
+                    <template v-if="detailData&&detailData.inRoomList">
+                        <el-col :span="8">
+                            {{$t('desk.home_roomType')}}：{{detailData.inRoomList[0].roomTypeName}}
+                        </el-col>
+                        <el-col :span="8">
+                            {{$t('desk.home_roomNum')}}：{{detailData.inRoomList[0].houseNum}}
+                        </el-col>
+                        <el-col :span="8">
+                            {{$t('desk.customer_livePeople')+':'}}{{detailData.inRoomList && detailData.inRoomList[0] && detailData.inRoomList[0].personList &&
+                        detailData.inRoomList[0].personList[0].name}}
+                        </el-col>
+                    </template>
+                </el-row>
+                <br />
+                <p>{{$t('desk.order_accountDeveloped')}}</p>
+                <el-table v-loading="loading" :data="destructionList" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
+                    <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
+                        <template slot-scope="{row}">
+                            {{F_priceType(row.priceType)}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="payPrice" :label="$t('desk.order_payment')" show-overflow-tooltip></el-table-column>
+                    <el-table-column prop="consumePrice" :label="$t('desk.order_expense')" show-overflow-tooltip></el-table-column>
+                    <!--                <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
+                    <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
+                    <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
+                    <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
+                </el-table>
+                <el-form-item style="margin-top: 10px;" :label="$t('desk.order_mixingWay')+':'" prop="priceType">
+                    <el-radio-group v-model="consumeOperForm.priceType">
+                        <el-radio :label="9" :value="9">{{$t('desk.order_completelyAgainst')}}</el-radio>
+                        <!-- <el-radio :label="10" :value="10">{{$t('desk.order_partCompletely')}}</el-radio> -->
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item :label="$t('desk.order_completelyPrice')+':'" prop="consumePrices"  v-if="consumeOperForm.priceType == 10">
+                    <el-input class="width200" type="text" v-model="consumeOperForm.consumePrices"></el-input>
+                    <em style="margin-left:10px;color:#888;font-size: 12px;">
+                        <!-- {{$t('desk.order_attention')}} -->
+                        最大可冲调金额
+                        <span v-if="priceTypeList.indexOf(destructionList[0].priceType) > -1">
+                        {{destructionList.length > 0&&destructionList[0].consumePrice}}
+                    </span>
+                        <span v-else>
+                        {{destructionList.length > 0&&destructionList[0].payPrice}}
+                    </span>
+                    </em>
+                </el-form-item>
+                <el-form-item :label="$t('desk.order_completelyReason')+':'" prop="remark">
+                    <el-input type="textarea" v-model="consumeOperForm.remark"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="destructionShow=false">{{ $t('commons.cancel') }}</el-button>
+                <el-button type="primary" @click="consume_oper(3,'destruction')">{{ $t('commons.confirm') }}</el-button>
+            </div>
+        </el-dialog>
+
+        <!--    续住-->
+        <el-dialog top="0" :title="$t('desk.home_stayOver')" :visible.sync="stayoverVisible" width="60%">
+            <el-alert :title="$t('desk.home_needLeave')" type="error" :closable="false" show-icon></el-alert>
+            <el-table :data="overstayTabledata" style="width: 100%" border header-row-class-name="default" size="small">
+                <el-table-column :label="$t('desk.home_roomNum')" prop="houseNum">
+                </el-table-column>
+                <el-table-column :label="$t('desk.home_name')" prop="name">
+
+                </el-table-column>
+                <el-table-column :label="$t('desk.home_orignLeaveTime')" prop="checkoutTime">
+                </el-table-column>
+                <el-table-column :label="$t('desk.home_stayOverDay')" width="250">
+                    <template slot-scope="{row}">
+                        <el-input-number v-model="row.number" :step="1" @change="checkinDaysChange(row.number, row)"></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column :label="$t('desk.home_newLeaveTime')" width="250">
+                    <template class="block" slot-scope="{row}">
+                        <el-date-picker
+                            v-model="row.newLeaveTime"
+                            type="date"
+                            format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            :placeholder="$t('desk.serve_chooseDate')"
+                            @change="endTimeChange(row)"
+                        ></el-date-picker>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="small" class="white" @click="stayoverVisible = false">{{$t('commons.cancel')}}</el-button>
+                <el-button size="small" type="primary" class="submit" @click="stayoverSubmit">{{$t('commons.determine')}}</el-button>
+            </div>
+        </el-dialog>
+
+        <!--部分结账-->
+        <someAccounts ref="someAccounts" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom"  />
+        <!--迷你吧-->
+        <consumeGoods ref="consumeGoods" :detailData = "detailData" @getOrderDetail="getOrderDetail"  @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
+        <!--开发票-->
+        <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
+        <!-- 附餐 -->
+        <sideOrder ref='sideOrder'></sideOrder>
+    </div>
 </template>
 
 <script>
@@ -494,7 +496,7 @@ export default {
         }),
         rules(){
             return{
-              consumePrice: [{
+                consumePrice: [{
                     required: true,
                     // message: '请输入金额',
                     message: this.$t('commons.mustInput'),
@@ -625,7 +627,7 @@ export default {
             this.getDamagePrice();
         });
         this.$watch('taxCount', (value) => {
-          this.getDamagePrice();
+            this.getDamagePrice();
         });
 
     },
@@ -650,26 +652,26 @@ export default {
                 new Date(row.newLeaveTime).Format("yyyy-MM-dd")
             );
         },
-      payTypeList(){
-        let obj = this. $t('commons.payType');
-        let newArry={};
-         for(let i in obj){
-           if(i!=3){
-             newArry[i] = obj[i];
-           }
-         }
-         return newArry;
+        payTypeList(){
+            let obj = this. $t('commons.payType');
+            let newArry={};
+            for(let i in obj){
+                if(i!=3){
+                    newArry[i] = obj[i];
+                }
+            }
+            return newArry;
 
-      },
-      updataInfo(){
-          this.consume_order_list()
-          this.getOrderDetail()
-      },
-      //点击挂账按钮
-      onAccountShow(){
-        //该id为checkinId
-        this.$refs.cardTao.resetVisibel(this.$route.query.id);
-      },
+        },
+        updataInfo(){
+            this.consume_order_list()
+            this.getOrderDetail()
+        },
+        //点击挂账按钮
+        onAccountShow(){
+            //该id为checkinId
+            this.$refs.cardTao.resetVisibel(this.$route.query.id);
+        },
         //撤销结账
         undoCheckoutA() {
             this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', {
@@ -711,6 +713,15 @@ export default {
             }).catch(() => {});
         },
         consume_oper(type, formName) {
+            if(type == 1){
+                if(!this.consumeOperForm.remark){
+                    this.$message({
+                        message: '備考欄必ず理由・内容を記入してください',
+                        type: 'warning'
+                    })
+                    return false
+                }
+            }
             /**
              * 1.入账
              * 2.挂账
@@ -792,8 +803,8 @@ export default {
             //冲调
             if (type == 3) {
                 if(parseFloat(this.consumeOperForm.consumePrices) > parseFloat(this.destructionList[0].payPrice)){
-                   this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
-                   return;
+                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
+                    return;
                 }
                 let priceType  =  this.destructionList[0].priceType
                 // if(priceType == 9){
@@ -814,8 +825,8 @@ export default {
                 params.priceType = this.consumeOperForm.priceType
                 params.state = this.destructionList[0].state
                 params.payType = 0
-                // params.richType = 1
-                // params.richRemark  = '完全冲调'
+                params.richType = 1
+                params.richRemark  = this.consumeOperForm.remark
 
             }
             console.log(params)
@@ -886,7 +897,7 @@ export default {
             }
             this.openInvoiceShow = true
         },
-          //点击退房结账按钮
+        //点击退房结账按钮
         checkOutHandle() {
             this.$refs.checkoutTao.resetVisibel()
             // this.checkOutShow = true;
@@ -1006,16 +1017,16 @@ export default {
                 console.log(this.hoteldamageList)
                 let list = this.hoteldamageList
                 if(list.length > 0 && this.consumeOperForm.damageTypeId && this.consumeOperForm.damageId ){
-                   for(let i in list){
-                       if(this.consumeOperForm.damageId == list[i].id){
-                           console.log(list[i])
-                           let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
-                           this.consumeOperForm.consumePrices = p.toFixed(0)
-                           this.consumeOperForm.damageName = list[i].name
-                       }
-                   }
+                    for(let i in list){
+                        if(this.consumeOperForm.damageId == list[i].id){
+                            console.log(list[i])
+                            let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
+                            this.consumeOperForm.consumePrices = p.toFixed(0)
+                            this.consumeOperForm.damageName = list[i].name
+                        }
+                    }
                 }
-             }
+            }
         },
 
 
@@ -1107,7 +1118,7 @@ export default {
             })[0];
             let roomInfo = {
                 houseNum: this.currentRoom.houseNum,
-                name: personInfo.name,
+                name: personInfo&&personInfo.name?personInfo.name:'',
                 checkoutTime: this.detailData.checkIn.checkoutTime,
                 newLeaveTime: '',
                 number: 1,
@@ -1134,7 +1145,7 @@ export default {
                     this.$message.error(this.$t('desk.order_autoTiePrice'));
                     return false
                 }
-                  //判断是否是冲调记录
+                //判断是否是冲调记录
                 let priceType  =  this.multipleSelection[k].priceType
                 if(priceType == 9 || priceType == 10){
                     this.$message.error('已冲调记录不能被冲调!')
@@ -1171,16 +1182,16 @@ export default {
             this.$refs.invoicing.init(this.$route.query.id, this.openInvoiceForm);
         },
         consumeGoodsHandle() {
-          //该id为checkinId
+            //该id为checkinId
             this.$refs.consumeGoods.init(this.$route.query.id);
         },
         //点击 附餐 按钮
         sideOrderHandle(){
-          //该id为checkinId
+            //该id为checkinId
             this.$refs.sideOrder.init(this.$route.query.id);
         },
         someAccountsHandle() {
-          //该id为checkinId
+            //该id为checkinId
             this.$refs.someAccounts.init(this.$route.query.id);
         },
         /**多选 */
@@ -1220,16 +1231,16 @@ export default {
                     console.log('消费类')
                     this.consumeOperForm.payPrice = ''
                     if(val == 9){
-                       this.consumeOperForm.consumePrices =  this.destructionList[0].consumePrice
+                        this.consumeOperForm.consumePrices =  this.destructionList[0].consumePrice
                     }
                     if(val == 100){
                         this.consumeOperForm.consumePrices =  ''
                     }
                 }else{
                     console.log('入账类')
-                     this.consumeOperForm.consumePrices = ''
+                    this.consumeOperForm.consumePrices = ''
                     if(val == 9){
-                       this.consumeOperForm.payPrice =  this.destructionList[0].payPrice
+                        this.consumeOperForm.payPrice =  this.destructionList[0].payPrice
                     }
                     if(val == 100){
                         this.consumeOperForm.payPrice =  ''
@@ -1244,19 +1255,19 @@ export default {
 
 
 
-                // console.log(val)
-               // if(val !== 3){
-               //    this.consumeOperForm.payType = ''
-               // }
-               // if(val !== 7){
-               //     this.consumeOperForm.consumePrices = ''
-               // }
+            // console.log(val)
+            // if(val !== 3){
+            //    this.consumeOperForm.payType = ''
+            // }
+            // if(val !== 7){
+            //     this.consumeOperForm.consumePrices = ''
+            // }
 
-                // if(val == 9){
+            // if(val == 9){
 
-                //     this.consumeOperForm.consumePrices = ''
-                // }
-                // console.log(this.consumeOperForm.payType)
+            //     this.consumeOperForm.consumePrices = ''
+            // }
+            // console.log(this.consumeOperForm.payType)
         }
 
 

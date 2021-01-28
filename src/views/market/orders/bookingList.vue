@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-18 11:59:42
+ * @LastEditTime: 2021-01-27 15:32:30
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -9,182 +9,151 @@
   <!-- 统一的列表格式 -->
   <div class="boss-index">
     <div class="booking">
-        <el-collapse v-model="queryFormIndex" >
-            <el-collapse-item :title="$t('commons.moreOperating')" class="term" name="query">
-                <!-- 查询部分 -->
-                <el-form class="term" inline size="small" label-width="100px">
-                    <el-row>
-                        <el-form-item :label="$t('desk.order_orderStatus') + ':'">
-                            <div class="tagList">
-                                <template v-for="(item, key, index) of reserveStatusObject">
-                                    <el-tag class="tag" :type="searchForm.state == key ? '' : 'info'" :key="index" @click="stateClick(key)">{{ item }}</el-tag>
-                                </template>
-                            </div>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <el-form-item :label="$t('desk.order_dateList') + ':'">
-                            <el-tag  :type="searchForm.checkInTimeType == '' ? '' : 'info'" @click="timeTypeClick('')">{{
+      <el-collapse v-model="queryFormIndex">
+        <el-collapse-item :title="$t('commons.moreOperating')" class="term" name="query">
+          <!-- 查询部分 -->
+          <el-form class="term" inline size="small" label-width="100px">
+            <el-row>
+              <el-form-item :label="$t('desk.order_orderStatus') + ':'">
+                <div class="tagList">
+                  <template v-for="(item, key, index) of reserveStatusObject">
+                    <el-tag class="tag" :type="searchForm.state == key ? '' : 'info'" :key="index" @click="stateClick(key)">{{ item }}</el-tag>
+                  </template>
+                </div>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item :label="$t('desk.order_dateList') + ':'">
+                <el-tag :type="searchForm.checkInTimeType == '' ? '' : 'info'" @click="timeTypeClick('')">{{
                                     $t("desk.home_noLimit")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.checkInTimeType == '1' ? '' : 'info'" @click="timeTypeClick('1')">{{
+                <el-tag :type="searchForm.checkInTimeType == '1' ? '' : 'info'" @click="timeTypeClick('1')">{{
                                     $t("desk.customer_lastWeek")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.checkInTimeType == '2' ? '' : 'info'" @click="timeTypeClick('2')">{{
+                <el-tag :type="searchForm.checkInTimeType == '2' ? '' : 'info'" @click="timeTypeClick('2')">{{
                                     $t("desk.customer_today")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.checkInTimeType == '3' ? '' : 'info'" @click="timeTypeClick('3')">{{
+                <el-tag :type="searchForm.checkInTimeType == '3' ? '' : 'info'" @click="timeTypeClick('3')">{{
                                     $t("desk.customer_thisWeek")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.checkInTimeType == '4' ? '' : 'info'" @click="timeTypeClick('4')">{{
+                <el-tag :type="searchForm.checkInTimeType == '4' ? '' : 'info'" @click="timeTypeClick('4')">{{
                                     $t("desk.order_nextWeek")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.checkInTimeType == '10' ? '' : 'info'" @click="timeTypeClick('10')">{{
-                                    $t("desk.book_theCustom")
+                <el-tag :type="searchForm.checkInTimeType == '10' ? '' : 'info'" @click="timeTypeClick('10')">{{
+                                    $t("desk.book_theCustomA")
                                 }}</el-tag>
-                        </el-form-item>
-                        <el-form-item label="" v-if="searchForm.checkInTimeType==10">
-                            <el-date-picker v-model="searchForm.cstartTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-                            <el-date-picker v-model="searchForm.cendTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <el-form-item :label="$t('desk.order_bookDate') + ':'">
-                            <el-tag :type="searchForm.createTimeType == '' ? '' : 'info'" @click="dateNum('')">{{
+              </el-form-item>
+              <el-form-item label="" v-if="searchForm.checkInTimeType==10">
+                <el-date-picker v-model="searchForm.cstartTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+                <el-date-picker v-model="searchForm.cendTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item :label="$t('desk.order_bookDate') + ':'">
+                <el-tag :type="searchForm.createTimeType == '' ? '' : 'info'" @click="dateNum('')">{{
                                     $t("desk.home_noLimit")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.createTimeType == '1' ? '' : 'info'" @click="dateNum('1')">{{
+                <el-tag :type="searchForm.createTimeType == '1' ? '' : 'info'" @click="dateNum('1')">{{
                                     $t("desk.customer_lastWeek")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.createTimeType == '2' ? '' : 'info'" @click="dateNum('2')">{{
+                <el-tag :type="searchForm.createTimeType == '2' ? '' : 'info'" @click="dateNum('2')">{{
                                     $t("desk.customer_today")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.createTimeType == '3' ? '' : 'info'" @click="dateNum('3')">{{
+                <el-tag :type="searchForm.createTimeType == '3' ? '' : 'info'" @click="dateNum('3')">{{
                                     $t("desk.customer_thisWeek")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.createTimeType == '4' ? '' : 'info'" @click="dateNum('4')">{{
+                <el-tag :type="searchForm.createTimeType == '4' ? '' : 'info'" @click="dateNum('4')">{{
                                     $t("desk.order_nextWeek")
                                 }}</el-tag>
-                            <el-tag :type="searchForm.createTimeType == '5' ? '' : 'info'" @click="dateNum('5')">{{
-                                    $t("desk.book_theCustom")
+                <el-tag :type="searchForm.createTimeType == '5' ? '' : 'info'" @click="dateNum('5')">{{
+                                    $t("desk.book_theCustomA")
                                 }}</el-tag>
-                        </el-form-item>
-                        <el-form-item label="" v-if="searchForm.createTimeType == 5">
-                            <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-                            <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <el-form-item :label="$t('desk.book_orderSoutce')">
-                            <el-select v-model="searchForm.orderSource" class="width150">
-                                <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="OTA" v-if="searchForm.orderSource == 5" >
-                            <el-select  v-model="searchForm.otaChannelId"  style="width:330px">
-                                <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.order_teamName') + ':'">
-                            <el-input
-                                v-model="searchForm.enterName"
-                                class="width150"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.order_bookOrderNum') + ':'">
-                            <el-input v-model="searchForm.orderNum" class="width150"></el-input>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <el-form-item :label="$t('desk.home_bookPeople')">
-                            <el-input v-model="searchForm.name" class="width150"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.home_phoneNum') + ':'">
-                            <el-input v-model="searchForm.mobile" class="width150"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.home_roomType')">
-                            <el-select v-model="searchForm.enterStatus" class="width150">
-                                <el-option
-                                    :label="
+              </el-form-item>
+              <el-form-item label="" v-if="searchForm.createTimeType == 5">
+                <el-date-picker v-model="searchForm.startTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+                <el-date-picker v-model="searchForm.endTime" value-format="yyyy-MM-dd" type="date" style="width: 140px"></el-date-picker>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item :label="$t('desk.book_orderSoutce')">
+                <el-select v-model="searchForm.orderSource" class="width150">
+                  <el-option :value="key" v-for="(item, key, index) of $t('commons.orderSource')" :label="item" :key="index"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="OTA" v-if="searchForm.orderSource == 5">
+                <el-select v-model="searchForm.otaChannelId" style="width:330px">
+                  <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item :label="$t('desk.order_teamName') + ':'">
+                <el-input v-model="searchForm.enterName" class="width150"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('desk.order_bookOrderNum') + ':'">
+                <el-input v-model="searchForm.orderNum" class="width150"></el-input>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item :label="$t('desk.home_bookPeople')">
+                <el-input v-model="searchForm.name" class="width150"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('desk.home_phoneNum') + ':'">
+                <el-input v-model="searchForm.mobile" class="width150"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('desk.home_roomType')">
+                <el-select v-model="searchForm.enterStatus" class="width150">
+                  <el-option :label="
                   item.houseName ? item.houseName : $t('desk.home_unknown')
-                "
-                                    :value="item.roomTypeId"
-                                    v-for="(item, index) of roomTypeList"
-                                    :key="index"
-                                ></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('desk.home_roomNum')">
-                            <el-input v-model="searchForm.houseNum" class="width150"></el-input>
-                        </el-form-item>
-                    </el-row>
-                    <el-row>
-                        <el-form-item :label="$t('desk.order_outOrderNum') + ':'">
-                            <el-input
-                                v-model="searchForm.thirdOrdernum"
-                                class="width150"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="getDataList">{{
+                " :value="item.roomTypeId" v-for="(item, index) of roomTypeList" :key="index"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item :label="$t('desk.home_roomNum')">
+                <el-input v-model="searchForm.houseNum" class="width150"></el-input>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item :label="$t('desk.order_outOrderNum') + ':'">
+                <el-input v-model="searchForm.thirdOrdernum" class="width150"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="getDataList">{{
                                     $t("commons.queryBtn")
                                 }}</el-button>
-                            <el-button type="primary" @click="initForm">{{
+                <el-button type="primary" @click="initForm">{{
                                     $t("commons.resetBtn")
                                 }}</el-button>
-                            <!--                        <el-button type="primary">{{-->
-                            <!--                            $t("commons.exportBtn")-->
-                            <!--                        }}</el-button>-->
-                        </el-form-item>
-                    </el-row>
-                </el-form>
-            </el-collapse-item>
-        </el-collapse>
+                <!--                        <el-button type="primary">{{-->
+                <!--                            $t("commons.exportBtn")-->
+                <!--                        }}</el-button>-->
+              </el-form-item>
+            </el-row>
+          </el-form>
+        </el-collapse-item>
+      </el-collapse>
 
       <!--表格数据 -->
-      <el-table
-        ref="multipleTable"
-        v-loading="loading"
-        :data="tableData"
-        height="100%"
-        header-row-class-name="default"
-        size="small"
-      >
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')">
-            <template slot-scope="{ row }">
-                <span>{{$t('desk.home_bookPeople') + ": "}}   {{`${row.name} 【${row.pronunciation}】` }}</span>
-                <span v-if="row.teamName">
-                    <br>
-                    {{$t('desk.order_teamName') + ": "}}   {{`${row.teamName} 【${row.teamPronunciation}】` }}
-                </span>
-            </template>
+          <template slot-scope="{ row }">
+            <span>{{$t('desk.home_bookPeople') + ": "}} {{`${row.name} 【${row.pronunciation}】` }}</span>
+            <span v-if="row.teamName">
+              <br>
+              {{$t('desk.order_teamName') + ": "}} {{`${row.teamName} 【${row.teamPronunciation}】` }}
+            </span>
+          </template>
         </el-table-column>
-        <el-table-column
-          prop="mobile"
-          :label="$t('boss.loginDetail_phone')"
-        ></el-table-column>
-        <el-table-column
-          prop="createTime"
-          :label="$t('desk.order_bookTime')"
-          width="160px"
-        ></el-table-column>
-        <el-table-column
-          prop=""
-          :label="$t('desk.nightAudit.arriveTime')"
-          width="220"
-        >
+        <el-table-column prop="mobile" :label="$t('boss.loginDetail_phone')"></el-table-column>
+        <el-table-column prop="createTime" :label="$t('desk.order_bookTime')" width="160px"></el-table-column>
+        <el-table-column prop="" :label="$t('desk.nightAudit.arriveTimeA')" width="220">
           <template slot-scope="{ row }">
             <div class="box">
               <div class="item">
                 <div>
                   <span class="text-blue">{{
                     $t("desk.customer_arrived")
-                  }}</span
-                  >{{ row.checkinTime }}
+                  }}</span>{{ row.checkinTime }}
                 </div>
                 <div>
-                  <span class="text-red">{{ $t("desk.customer_leave") }}</span
-                  >{{ row.checkoutTime }}
+                  <span class="text-red">{{ $t("desk.customer_leave") }}</span>{{ row.checkoutTime }}
                 </div>
               </div>
               <div>{{ row.checkinDays }}{{ $t("desk.order_day") }}</div>
@@ -193,39 +162,24 @@
         </el-table-column>
         <el-table-column :label="$t('desk.customer_roomKind')" width="140">
           <template slot-scope="{ row }">
-              <div v-html="getRoomInfo(row)"></div>
+            <div v-html="getRoomInfo(row)"></div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="deposit"
-          :label="$t('desk.downPayment')"
-          width="100"
-          align="center"
-        >
+        <el-table-column prop="deposit" :label="$t('desk.downPaymentA')" width="100" align="center">
           <template slot-scope="{ row }">
             {{ row.deposit || 0 }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop="totalRoomPrice"
-          :label="$t('desk.order_totalRoomPrice')"
-          width="100"
-          align="center"
-        >
+        <el-table-column prop="totalRoomPrice" :label="$t('desk.order_totalRoomPrice')" width="100" align="center">
           <template slot-scope="{ row }">
             {{ row.totalRoomPrice || 0 }}
           </template>
         </el-table-column>
-        <el-table-column
-          prop=""
-          :label="$t('desk.book_orderSoutce')"
-          width="100"
-          align="center"
-        >
+        <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="100" align="center">
           <template slot-scope="{ row }">
             {{ F_orderSource(row.orderSource) }}
-              <span v-if="row.orderSource == 5">-</span>
-              <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
+            <span v-if="row.orderSource == 5">-</span>
+            <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="" :label="$t('food.common.status')" align="center">
@@ -239,8 +193,8 @@
               $t("commons.detail")
             }}</el-button>
             <template v-if="row.state != 7">
-<!--              <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>-->
-<!--              <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>-->
+              <!--              <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>-->
+              <!--              <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>-->
               <el-button type="text" size="mini" v-if="row.state == 1 || row.state == 2 || row.state == 5" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
               <!--                        只有当渠道订单才会有接收和拒单-->
               <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleAccept(row)">{{ $t("desk.order_accept") }}</el-button>
@@ -253,23 +207,11 @@
       </el-table>
       <!--分页 -->
       <div class="block">
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="searchForm.pageIndex"
-          :page-size="searchForm.pageSize"
-          :total="listTotal"
-          layout="total, prev, pager, next, jumper"
-        ></el-pagination>
+        <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-size="searchForm.pageSize" :total="listTotal" layout="total, prev, pager, next, jumper"></el-pagination>
       </div>
     </div>
     <!-- 编辑or详情弹窗 -->
-    <el-dialog
-      top="0"
-      title="NOSHOW"
-      :visible.sync="noShowDiaShow"
-      width="600px"
-      center
-    >
+    <el-dialog top="0" title="NOSHOW" :visible.sync="noShowDiaShow" width="600px" center>
       <el-form :model="currentItem" style="margin-top: -20px" size="mini">
         <el-row>
           <el-col :span="12">
@@ -283,30 +225,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              :label="$t('desk.order_accountingService') + ':'"
-              class=""
-            >
+            <el-form-item :label="$t('desk.order_accountingService') + ':'" class="">
               NOSHOW{{ $t("desk.serve_roomPrice") }}
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="$t('desk.customer_sum') + ':'" class="">
-              <el-input
-                type="text"
-                disabled
-                v-model="currentItem.deposit"
-                style="width: 150px"
-              ></el-input>
+              <el-input type="text" disabled v-model="currentItem.deposit" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item :label="$t('desk.home_note') + ':'" class="">
-              <el-input
-                type="textarea"
-                v-model="currentItem.remark"
-                style="width: 450px"
-              ></el-input>
+              <el-input type="textarea" v-model="currentItem.remark" style="width: 450px"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -322,21 +252,12 @@
     </el-dialog>
     <!--交订金-->
     <el-dialog :title="$t('desk.order_payDeposit')" :visible.sync="depositShow">
-      <el-form
-        :model="consumeOperForm"
-        ref="deposit"
-        size="mini"
-        label-width="100px"
-      >
+      <el-form :model="consumeOperForm" ref="deposit" size="mini" label-width="100px">
         <el-row>
-          <el-col :span="8"
-            >{{ $t("desk.order_bookOrderNum") }}：{{
+          <el-col :span="8">{{ $t("desk.order_bookOrderNum") }}：{{
               currentItem.reserveOrderNum
-            }}</el-col
-          >
-          <el-col :span="8"
-            >{{ $t("desk.home_bookPeople") }}：{{ currentItem.name }}</el-col
-          >
+            }}</el-col>
+          <el-col :span="8">{{ $t("desk.home_bookPeople") }}：{{ currentItem.name }}</el-col>
         </el-row>
         <br />
         <el-form-item :label="$t('desk.order_payProject') + ':'">
@@ -347,20 +268,10 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_sum') + ':'">
-          <el-input
-            class="width100"
-            v-model="consumeOperForm.payPrice"
-            :autofocus="true"
-            autocomplete="off"
-          ></el-input>
+          <el-input class="width100" v-model="consumeOperForm.payPrice" :autofocus="true" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item :label="$t('desk.home_note') + ':'">
-          <el-input
-            class="width200"
-            type="textarea"
-            v-model="consumeOperForm.remark"
-            autocomplete="off"
-          ></el-input>
+          <el-input class="width200" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
         </el-form-item>
         <!--            <el-form-item label="打印单据：">-->
         <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
@@ -370,24 +281,15 @@
         <el-button @click="depositShow = false">{{
           $t("commons.close")
         }}</el-button>
-        <el-button type="primary" @click="consume_oper(1, 'deposit')"
-          >{{ $t("desk.customer_settlement") }}
+        <el-button type="primary" @click="consume_oper(1, 'deposit')">{{ $t("desk.customer_settlement") }}
         </el-button>
       </div>
     </el-dialog>
-    <el-dialog
-      :title="$t('desk.order_selectPayWay')"
-      :visible.sync="payTypeShow"
-    >
+    <el-dialog :title="$t('desk.order_selectPayWay')" :visible.sync="payTypeShow">
       <el-form :model="consumeOperForm" size="mini">
         <el-form-item label="">
           <el-radio-group v-model="consumeOperForm.payType">
-            <el-radio
-              v-for="(value, key) in $t('commons.payType')"
-              :label="key"
-              :key="key"
-              >{{ value }}</el-radio
-            >
+            <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -411,15 +313,14 @@ export default {
   mixins: [myMixin],
   data() {
     return {
-        queryFormIndex: '',
-        platformList: [],
+      queryFormIndex: "",
+      platformList: [],
       loading: false,
       noShowDiaShow: false,
       showDetail: false,
       depositShow: false,
       payTypeShow: false,
       searchForm: {
-
         pageIndex: 1,
         pageSize: 10,
       },
@@ -428,51 +329,55 @@ export default {
       tableData: [], //表格数据
       roomTypeList: [],
       currentItem: {},
-        otaList: [],
+      otaList: [],
       consumeOperForm: {
         priceType: "1",
         payType: "",
         name: "",
       },
-        reserveStatusObject: {},
     };
   },
   mounted() {
-      let reserveStatus = this.$t('commons.reserveState');
-        console.log(reserveStatus)
+    this.changeObject();
+    this.initForm();
+    this.$F.commons.fetchOtaList({}, (list) => {
+      this.otaList = list;
+      this.$forceUpdate();
+    });
+  },
+  computed: {
+    reserveStatusObject() {
+      let reserveStatus = this.$t("commons.reserveState");
+      console.log(reserveStatus);
 
       let reserveStatusObject = {};
       for (let i in reserveStatus) {
-          if (i == 1 || i == 2 || i == 9 || i == 5) {
-              reserveStatusObject['5'] = reserveStatus['5']
-          } else {
-              reserveStatusObject[i] = reserveStatus[i]
-          }
+        if (i == 1 || i == 2 || i == 9 || i == 5) {
+          reserveStatusObject["5"] = reserveStatus["5"];
+        } else {
+          reserveStatusObject[i] = reserveStatus[i];
+        }
       }
-      this.reserveStatusObject = reserveStatusObject;
-
-    this.initForm();
-      this.$F.commons.fetchOtaList({}, (list)=> {
-          this.otaList = list;
-          this.$forceUpdate();
-      })
+      return reserveStatusObject
+    },
   },
   methods: {
-      getRoomInfo(row) {
-          let value = row.roomInfo.split(',').join("<br>");
-          return value;
-      },
-      checkPlatform(otaChannelId) {
-          let array =  this.otaList.filter(item => {
-              return item.id == otaChannelId
-          }) || [{}]
-          return array.length > 0 ? array[0].otaName : '';
-      },
+    changeObject() {},
+    getRoomInfo(row) {
+      let value = row.roomInfo.split(",").join("<br>");
+      return value;
+    },
+    checkPlatform(otaChannelId) {
+      let array = this.otaList.filter((item) => {
+        return item.id == otaChannelId;
+      }) || [{}];
+      return array.length > 0 ? array[0].otaName : "";
+    },
 
     initForm() {
       this.searchForm = {
-          createTimeType: '',
-          checkInTimeType: '',
+        createTimeType: "",
+        checkInTimeType: "",
         operCheckinType: "",
         enterName: "",
         houseNum: "",
@@ -489,49 +394,58 @@ export default {
         pageSize: 10, //页数
         paging: true,
         // filterType: 1,  //数据类型过滤  1过滤已办理入住数据     int选填
-        timeType:'',
+        timeType: "",
       };
-        this.realtime_room_statistics();
-        //加载数据
-        //加载渠道
-        this.getDataList();
-
+      this.realtime_room_statistics();
+      //加载数据
+      //加载渠道
+      this.getDataList();
     },
     /**获取表格数据 */
     getDataList() {
       let params = this.$F.deepClone(this.searchForm);
       if (params.state == "0") params.state = "";
-      if (params.checkInTimeType == "5" || params.checkInTimeType == "10") params.checkInTimeType = "";
-      if (params.createTimeType == "5" || params.checkInTimeType == "10") params.createTimeType = "";
+      if (params.checkInTimeType == "5" || params.checkInTimeType == "10")
+        params.checkInTimeType = "";
+      if (params.createTimeType == "5" || params.checkInTimeType == "10")
+        params.createTimeType = "";
       this.$F.doRequest(
         this,
         "/pms/reserve/reserve_order_list",
         params,
         (res) => {
-            if (res.resreveList) {
-                //这里吧房型/间解析出来  可能没有房间 可能多间房
-                res.resreveList.forEach(order => {
-                    if (order.checkInRoomList)  {
-                        if (order.checkInRoomList.length == 1) {
-                            order.roomInfo = (order.checkInRoomList[0].roomTypeName || '') + '/';
-                            order.roomInfo += order.checkInRoomList[0].houseNum ? order.checkInRoomList[0].houseNum : `(${this.$t('desk.noRowHouses')})`
-                        } else {
-                            order.roomInfo = '';
-                            order.checkInRoomList.forEach(room => {
-                                order.roomInfo += (room.roomTypeName || '') + '/';
-                                order.roomInfo += room.houseNum ? room.houseNum : `(${this.$t('desk.noRowHouses')})`
-                                order.roomInfo += ',';
-                            })
-                            order.roomInfo = order.roomInfo.substring(0, order.roomInfo.length -1);
-                        }
-                    } else {
-                        order.roomInfo = this.$t('desk.noRowHouses');
-                    }
-                })
-                this.tableData = res.resreveList;
-                this.listTotal = res.page.count;
-                this.$forceUpdate()
-            }
+          if (res.resreveList) {
+            //这里吧房型/间解析出来  可能没有房间 可能多间房
+            res.resreveList.forEach((order) => {
+              if (order.checkInRoomList) {
+                if (order.checkInRoomList.length == 1) {
+                  order.roomInfo =
+                    (order.checkInRoomList[0].roomTypeName || "") + "/";
+                  order.roomInfo += order.checkInRoomList[0].houseNum
+                    ? order.checkInRoomList[0].houseNum
+                    : `(${this.$t("desk.noRowHouses")})`;
+                } else {
+                  order.roomInfo = "";
+                  order.checkInRoomList.forEach((room) => {
+                    order.roomInfo += (room.roomTypeName || "") + "/";
+                    order.roomInfo += room.houseNum
+                      ? room.houseNum
+                      : `(${this.$t("desk.noRowHouses")})`;
+                    order.roomInfo += ",";
+                  });
+                  order.roomInfo = order.roomInfo.substring(
+                    0,
+                    order.roomInfo.length - 1
+                  );
+                }
+              } else {
+                order.roomInfo = this.$t("desk.noRowHouses");
+              }
+            });
+            this.tableData = res.resreveList;
+            this.listTotal = res.page.count;
+            this.$forceUpdate();
+          }
         }
       );
     },
@@ -552,13 +466,12 @@ export default {
     },
 
     timeTypeClick(key) {
-        this.searchForm.checkInTimeType = key;
-        this.getDataList();
+      this.searchForm.checkInTimeType = key;
+      this.getDataList();
     },
     dateNum(key) {
-        this.searchForm.createTimeType = key;
-        this.getDataList();
-
+      this.searchForm.createTimeType = key;
+      this.getDataList();
     },
     handleNoshow(item) {
       this.currentItem = item;
@@ -592,7 +505,7 @@ export default {
         state: 8,
       };
       this.$confirm(
-        this.$t("desk.order_sureDelete"),
+        this.$t("desk.order_sureDeleteA"),
         this.$t("commons.tip_desc"),
         {
           confirmButtonText: this.$t("commons.confirm"),
@@ -819,10 +732,10 @@ export default {
 </script>
 
 <style lang="scss">
-.el-table .cell{
-    white-space:pre-line;
+.el-table .cell {
+  white-space: pre-line;
 }
 .el-collapse-item .el-collapse-item__header {
-    float: right !important;
+  float: right !important;
 }
 </style>

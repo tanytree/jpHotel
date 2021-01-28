@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 11:54:39
+ * @LastEditTime: 2021-01-27 17:51:33
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -95,13 +95,8 @@
       <el-table-column :label="$t('desk.home_idCardNumB')" align="center" width="110">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
-            <span v-if="row.headerObj">
-              ({{
-              $t("commons.idCardType")[
-                row.headerObj.idcardType ? row.headerObj.idcardType + "" : "2"
-              ]
-            }}) {{ row.headerObj.idcard }}
-            </span>
+            <div v-if="row.headerObj"> ({{$t("commons.idCardType")[row.headerObj.idcardType ? row.headerObj.idcardType + "" : "2"]}})</div>
+            <div v-if="row.headerObj"> {{ row.headerObj.idcard }}</div>
           </div>
           <div v-if="$index ==checkinInfo.inRoomList.length - 1" style="text-align: left;">{{ checkinInfo.remark }}</div>
         </template>
@@ -166,53 +161,45 @@
       </el-table-column>
     </el-table>
     <el-dialog top="0" width="80%" :title="$t('desk.home_custormerDetail')" :visible.sync="currentCustomerVisible" append-to-body>
-      <el-form ref="currentCustomerForm" :model="currentCustomer" label-width="110px" inline>
-        <el-row>
+    
+      <el-row>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.customer_livePeople')+':'">{{ currentCustomer.headerObj.name }}【{{currentCustomer.headerObj.pronunciation}}】</el-form-item>
+          <div>{{$t('desk.customer_livePeople')+':'}}{{ currentCustomer.headerObj.name }}【{{currentCustomer.headerObj.pronunciation}}】</div>
+          </el-col>
+          <el-col :span="9">
+          <div>{{$t('desk.home_cardAnumber')+':'}} ({{checkIdcardType(currentCustomer.headerObj.idcardType)}}) {{ currentCustomer.headerObj.idcard }}</div>
+          </el-col>
+          <el-col :span="3">
+            <div>{{$t('desk.customer_sex')+':'}}{{ F_sex(currentCustomer.headerObj.sex) }} </div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.home_cardAnumber')+':'">
-              ({{
-                              $t("commons.idCardType")[currentCustomer.headerObj.idcardType ? currentCustomer.headerObj.idcardType + "" : "2"]
-                          }}) {{ currentCustomer.headerObj.idcard }}
-            </el-form-item>
+          <div>{{$t('desk.order_guestKind')+':'}}{{ F_customerTypes(currentCustomer.headerObj.customerType) }}</div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.customer_sex')+':'"> {{ F_sex(currentCustomer.headerObj.sex) }} </el-form-item>
+             <div>{{$t('desk.customer_email')+':'}}{{ currentCustomer.headerObj.email }}</div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.order_guestKind')+':'"> {{ F_customerTypes(currentCustomer.headerObj.customerType) }} </el-form-item>
+             <div>{{$t('desk.customer_region')+':'}}{{ currentCustomer.headerObj.region }}</div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.customer_email')+':'"> {{ currentCustomer.headerObj.email }} </el-form-item>
+             <div>{{$t('desk.order_liveAddress')+':'}}{{ currentCustomer.headerObj.homeAddress }}</div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.customer_region')+':'"> {{ currentCustomer.headerObj.region }} </el-form-item>
+             <div>{{$t('desk.order_homePhone')+':'}}{{ currentCustomer.headerObj.homeMobile }} </div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.order_liveAddress')+':'"> {{ currentCustomer.headerObj.homeAddress }} </el-form-item>
+             <div>{{$t('desk.home_phoneNum')+':'}}{{ currentCustomer.headerObj.phone }} </div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.order_homePhone')+':'"> {{ currentCustomer.headerObj.homeMobile }} </el-form-item>
+            <div>{{$t('desk.customer_unitNameA')+':'}}{{ currentCustomer.headerObj.enterName }}<span v-if="currentCustomer.headerObj.enterPinyin">【{{currentCustomer.headerObj.enterPinyin}}】</span></div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.home_phoneNum')+':'"> {{ currentCustomer.headerObj.phone }} </el-form-item>
+            <div>{{$t('desk.home_unitMobile')+':'}}{{ currentCustomer.headerObj.enterMobile }} </div>
           </el-col>
           <el-col :span="6">
-            <el-form-item :label="$t('desk.customer_unitNameA')+':'">
-              {{ currentCustomer.headerObj.enterName }}【{{currentCustomer.headerObj.enterPinyin}}】
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item :label="$t('desk.home_unitMobile')+':'"> {{ currentCustomer.headerObj.enterMobile }} </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item :label="$t('desk.customer_unitAddress')+':'"> {{ currentCustomer.headerObj.enterAddress }} </el-form-item>
+            <div>{{$t('desk.customer_unitAddress')+':'}}{{currentCustomer.headerObj.enterAddress}}</div>
           </el-col>
         </el-row>
-      </el-form>
-
       <div>
         <div class="sameTo">{{$t('desk.customer_toTheGuest')}}</div>
         <el-table ref="multipleTable" :data="currentCustomer.headerObj.personList" border height="100%" header-row-class-name="default" size="small">
@@ -221,14 +208,18 @@
               {{row.name +'【' + row.pronunciation + '】'}}
             </template>
           </el-table-column>
-          <el-table-column :label="$t('desk.home_idCardNum')" prop="idcard" show-overflow-tooltip>
+          <el-table-column :label="$t('desk.home_idCardNumB')"  show-overflow-tooltip>
+            <template slot-scope="{row}">
+              <div>{{checkIdcardType(row.idcardType)}}</div>
+              <div>{{row.idcard}}</div>
+            </template>
           </el-table-column>
           <el-table-column prop="sex" :label="$t('desk.customer_sex')">
             <template slot-scope="{ row, $index }">
               {{ F_sex(row.sex) }}
             </template>
           </el-table-column>
-          <el-table-column prop="type" :label="$t('desk.home_typeText')" show-overflow-tooltip>
+          <el-table-column  :label="$t('desk.home_typeText')" show-overflow-tooltip>
             <template slot-scope="{ row, $index }">
               {{ F_customerTypes(row.customerType || '1') }}
             </template>
@@ -285,7 +276,19 @@ export default {
             }
 
         },
+checkIdcardType(type){
+  console.log(type);
+ if(type){
+   for(let i in this.$t("commons.idCardType")){
+     if(type == i){
+       return this.$t("commons.idCardType")[i]
+     }
+   }
+ }else{
+    return this.$t("commons.idCardType")['2']
+ }
 
+},
         customerDetail(row) {
             this.currentCustomer = {
                 headerObj: {

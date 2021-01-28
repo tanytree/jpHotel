@@ -61,6 +61,8 @@ export default {
     props: ["roomId"],
     data() {
         return {
+            checkinTime: '',
+            checkoutTime: '',
             roomList: [],   //该房型下有多少房间
             floorList: [],   //楼层
             selectList: [], //选中的房间list
@@ -78,12 +80,14 @@ export default {
     },
 
     methods: {
-        init(roomTypeId, num, hadReadyCheckArray) {
+        init(roomTypeId, num, hadReadyCheckArray, checkinTime, checkoutTime) {
             this.roomList = [];
             this.selectList = hadReadyCheckArray;
             this.hadReadyCheckArray = hadReadyCheckArray;
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
             this.endTime = this.$F.formatDate('yyyy-MM-dd', 14);
+            this.checkinTime = checkinTime || this.startTime;
+            this.checkoutTime = checkoutTime || this.endTime;
             let tempArray = this.getDateStr(this.startTime, this.endTime, 0);
             this.dates = [''];
 
@@ -108,7 +112,7 @@ export default {
                     endTime: this.endTime,
                     searchType: 2,
                     roomTypeId: this.roomTypeId,
-                    checkinTime: this.startTime,
+                    checkinTime: this.checkinTime,
                     checkoutTime: this.checkoutTime,
                 }, (res) => {
 

@@ -601,9 +601,7 @@ export default {
         },
         // 待开票
         handleEdit(index, row) {
-            // console.log(index, row);
             this.billList = row;
-            console.log(this.billList, 11111);
         },
         // 重置
         resetForm(formName) {

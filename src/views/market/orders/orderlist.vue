@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-11 16:42:24
+ * @LastEditTime: 2021-01-27 15:58:54
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -139,7 +139,7 @@
 
             <!--表格数据 -->
             <el-table ref="multipleTable" v-loading="loading" :data="tableData" header-row-class-name="default" height="100%" size="small">
-                <el-table-column prop="name" :label="$t('boss.loginDetail_name')">
+                <el-table-column prop="name" :label="$t('boss.loginDetail_nameA')">
                     <template slot-scope="{ row }">
                         <span>{{`${row.name} 【${row.pronunciation}】` }}  </span>
 <!--                        <span v-if="row.teamName">-->

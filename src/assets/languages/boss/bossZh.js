@@ -82,6 +82,7 @@ module.exports = {
   report_: '',
   // loginDetail页面内容
   loginDetail_name: "姓名",
+  loginDetail_nameA: "姓名",
   loginDetail_state: "状态",
   loginDetail_phone: "联系电话",
   loginDetail_phoneA: "联系电话",

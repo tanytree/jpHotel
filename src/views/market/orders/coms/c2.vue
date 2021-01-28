@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 10:30:14
+ * @LastEditTime: 2021-01-27 16:08:06
  * @FilePath: \jiudian\src\views\market\orders\coms\c2.vue
 -->
 <template>
@@ -9,7 +9,7 @@
     <div class="cost margin-t-10">
       <div class="wrap">
         <span class="fee" v-if="detailData.payPrice - detailData.consumePrice > 0">{{ $t('desk.order_shouldBack') }}：{{detailData.payPrice - detailData.consumePrice}}</span>
-        <span class="fee" v-else>{{ $t('desk.order_receivable') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
+        <span class="fee" v-else>{{ $t('desk.order_receivableA') }}：{{detailData.consumePrice - detailData.payPrice}}</span>
         <div class="costNum">
           <el-row>{{ $t('desk.consumerTotal') }}：
               <span class="text-red">{{ detailData.consumePrice }}</span>
