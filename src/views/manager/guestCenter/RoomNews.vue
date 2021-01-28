@@ -246,7 +246,7 @@
                                     >{{ $t("commons.modify") }}</el-button
                                 >
                                 <el-popconfirm
-                                    :title="$t('manager.hp_bulletTitle')"
+                                    :title="$t('manager.hp_bulletTitleD')"
                                     @confirm="houseConfirm_delete(scope.row)"
                                 >
                                     <el-button
@@ -337,12 +337,7 @@ export default {
             },
             set() {},
         },
-        pleaseSelect: {
-            get() {
-                return this.$t("manager.hk_pleaseSelect");
-            },
-            set() {},
-        },
+       
         deleteSuccess: {
             get() {
                 return this.$t("manager.hk_deleteSuccess");
@@ -427,9 +422,7 @@ export default {
         note(newValue, oldValue) {
             this.note = newValue;
         },
-        pleaseSelect(newValue, oldValue) {
-            this.pleaseSelect = newValue;
-        },
+      
         deleteSuccess(newValue, oldValue) {
             this.deleteSuccess = newValue;
         },
@@ -497,7 +490,7 @@ export default {
                 }
             } else {
                 this.$message({
-                    message: this.pleaseSelect,
+                    message: this.$t("manager.hk_pleaseSelectA"),
                     type: "warning",
                 });
                 return;
