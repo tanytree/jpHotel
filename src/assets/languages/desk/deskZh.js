@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-01-27 17:33:19
+ * @LastEditTime: 2021-01-28 16:15:52
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -450,10 +450,12 @@ module.exports = {
   order_inputThan: "请输入大于0的金额",
   order_inputMinusPrice: "请输入为负数金额",
   order_invoicedAmount: "已开票金额",
-  order_payCompanyName: "付款公司名称",
+  order_payCompanyName: "公司名/个人名",
   order_project: "项目",
   order_projectA: "项目",
+  order_constProject: "消费项目",
   order_dateTime: "日期",
+  order_receiptTime: "开收据日期",
   order_inputCompanyName: "请填写付款公司名称",
   order_inputProjectName: "请填写项目名称",
   order_inputMoney: "请填写金额",
@@ -702,6 +704,7 @@ module.exports = {
   customer_toTheGuestA: '+同来宾客',
   customer_guestsDetail: '外宾详情',
   customer_unitManage: '单位管理',
+  customer_unitManageA: '单位管理',
   customer_receivingQuery: '收款查询',
   customer_zhangSet: '请款管理',
   customer_accounting: '入账管理',
@@ -765,6 +768,7 @@ module.exports = {
   customer_collectionA: '收款',
   customer_refund: '退款',
   customer_sum: '金额',
+  customer_sumA: '金额',
   customer_refundWay: '退款方式',
   customer_canRefundPri: '可退金额',
   customer_advanceBill: '预收款账单',
@@ -827,7 +831,7 @@ module.exports = {
   customer_makeUpStatement: '结算单补打',
   customer_newAccountSet: '新增账套',
   customer_accountingChoose: '账务选择',
-  customer_constPrice: '消费金额',
+  customer_constPrice: '折价券/订金',
   customer_editorAccount: '编辑账套',
   customer_accountingText: '账务',
   customer_accountingTextA: '账务',
@@ -1011,7 +1015,7 @@ module.exports = {
   add_againBill: '重新入账',
   add_ruzhang: '入账',
   add_theMain: '主',
-  add_: '',
+  add_projectAmoney: '消费plan项目/金额',
   add_: '',
   add_: '',
   add_: '',

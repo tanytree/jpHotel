@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 17:25:52
+ * @LastEditTime: 2021-01-28 17:24:09
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -53,9 +53,9 @@ module.exports = {
   hp_room: '部屋タイプ',
   hp_unknown: '未知',
   hp_layer: 'フロア',
-  hp_dealNotArrive: 'no-show処理',
-  hp_selectExplain: 'チェック入れるとno-showに対する処理しなければ、「日時更新」をできなくなります。',
-  hp_dealNotLeave: '出発予定に関する未処理',
+  hp_dealNotArrive: '未到着',
+  hp_selectExplain: 'チェック入れると処理確認しなければ、「日時更新」できません。',
+  hp_dealNotLeave: 'C/O予定に関する未処理',
   hp_dealGoOrder: '未清算',
   hp_roomState: '「日時更新」後に部屋状態を自動的に「要清掃」表示',
   hp_autoSuccession: '「日時更新」後にシフト交替に設定する',
@@ -585,7 +585,7 @@ module.exports = {
   add_last15A:'15日前',
   add_next15A: '15日後',
   add_tyepApri: '部屋タイプ/部屋料金',
-  add_dealNight: 'チェック入れると処理確認しなければ、「日時更新」をできなくなります。',
+  add_dealNight: 'チェック入れると処理確認しなければ、「日時更新」できません。',
   add_setDutity: 'チェック入れると部屋状態を「要清掃」を設定する',
   grsl_resetSoon: '調整後1泊2食付1名料金',
   add_onePrice: '1人素泊まり',

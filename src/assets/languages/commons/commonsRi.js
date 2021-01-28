@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 15:26:07
+ * @LastEditTime: 2021-01-28 17:09:47
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -224,7 +224,7 @@ module.exports = {
     "6": '滞在中',
     "7": '出発',
     "8": '取消',
-    '9': '客未着	'
+    '9': '未到着	'
   },
   //入住状态
   billType: {

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-27 17:11:19
+ * @LastEditTime: 2021-01-28 17:15:41
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -44,8 +44,8 @@ module.exports = {
   //夜审
   nightAudit: {
     topSuggestTip: '建议夜审前处理以下业务',
-    notyet: '客未着',
-    notleaving: '出発予定に関する未処理',
+    notyet: '未到着',
+    notleaving: 'C/O予定に関する未処理',
     leave: '売掛',
     verify: '料金検証',
     schedulerTime: '予約時間',
@@ -404,16 +404,17 @@ module.exports = {
   customer_arrived: 'C/I',
   customer_leave: 'C/O',
   customer_dayNum: '日数',
-  customer_totalRoomPrice: '素泊り料金',
+  customer_totalRoomPrice: 'プラン料金',
   customer_totalConsum: '利用合計',
   customer_toTheGuest: '同伴者',
   customer_toTheGuestA: '同伴者',
   customer_guestsDetail: '外国人顧客情報',
   customer_unitManage: '法人master',
+  customer_unitManageA: '法人一覧',
   customer_receivingQuery: '入金確認',
   customer_zhangSet: '請求管理',
   customer_accounting: '入金管理',
-  customer_accountQuery: '会計確認',
+  customer_accountQuery: '会計明細',
   customer_unitName: '法人名称',
   customer_ifShare: '共通必要',
   customer_contact: '担当者',
@@ -471,6 +472,7 @@ module.exports = {
   customer_collectionA: '支払',
   customer_refund: '返金',
   customer_sum: '金額',
+  customer_sumA: '合計金額',
   customer_refundWay: 'デポ戻し方法',
   customer_canRefundPri: '払戻金額',
   customer_advanceBill: '前受金明細',
@@ -532,7 +534,7 @@ module.exports = {
   customer_makeUpStatement: '清算明細を再印刷',
   customer_newAccountSet: '法人締め請求パッケージを追加',
   customer_accountingChoose: '会計内容を選択してください',
-  customer_constPrice: '合計金額 ',
+  customer_constPrice: '差引請求金額 ',
   customer_editorAccount: '法人締め請求パッケージ編集',
   customer_accountingText: '会計内容',
   customer_accountingTextA: '利用明細',
@@ -576,8 +578,8 @@ module.exports = {
   order_selectPayProject: "支払項目を選択してください",
   order_inputThan: "０より多い金額を入力してください",
   order_inputMinusPrice: "マイナス金額を入力してください",
-  order_invoicedAmount: "請求済み金額",
-  order_payCompanyName: "支払会社名",
+  order_invoicedAmount: "クーポン・前受金",
+  order_payCompanyName: "お名前",
   order_project: "項目",
   order_projectA: "利用内容",
   order_dateTime: "日付",
@@ -845,7 +847,7 @@ module.exports = {
   customer_inputEmail: 'Emailアドレスを入力してください',
   customer_faying: 'カナ',
   customer_sureZipcode: '郵便番号を入力してください',
-  customer_resetmemInfo: '会員情報の編集',
+  customer_resetmemInfo: '会員情報変更',
   customer_ka: 'カード',
   customer_totalCharge: '累積利用金額',
   customer_yearPriceDetail: '年会費明細',
@@ -980,6 +982,9 @@ module.exports = {
   add_againBill: '再計上',
   add_ruzhang: '計上',
   add_theMain: '親',
+  order_receiptTime: "発行日",
+  order_constProject: "利用内容",
+  add_projectAmoney: 'プラン名/料金',
 
 
 

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 15:57:19
+ * @LastEditTime: 2021-01-28 17:12:48
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
     saveGoon: '保存及び次の予約へ',
     chooseRoomType: '部屋タイプを選択してください',
     nightAudit: {
-        auditSuggest: '！締め前に下記業務をご確認ください。',
+        auditSuggest: '日時更新を行う前にここのリストをご確認ください。',
         auditTip: '日時更新を実行しますか？一度、実行しますと、修正ができなくなります。',
         audit: '日時更新',
         reservationNumber: '予約番号',

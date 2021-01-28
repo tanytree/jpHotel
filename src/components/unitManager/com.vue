@@ -38,7 +38,7 @@
             >{{ $t("commons.resetBtn") }}
           </el-button>
         </el-form-item>
-        <el-form-item style="float: right" v-if="isHeader == 1">
+        <el-form-item style="float: right" >
           <el-button
             type="primary"
             class="submit"
@@ -115,7 +115,7 @@
               @click="addAndEditItem('edit', row)"
               >{{ $t("commons.modify") }}</el-button
             >
-            <el-dropdown szie="mini" v-if="isHeader == 1">
+            <el-dropdown szie="mini" >
               <span class="el-dropdown-link" style="font-size: 12px">
                 {{ $t("desk.customer_more") }}
                 <i class="el-icon-arrow-down el-icon--right"></i>

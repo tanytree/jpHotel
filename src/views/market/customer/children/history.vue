@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 10:23:48
+ * @LastEditTime: 2021-01-28 16:19:36
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -78,7 +78,7 @@
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{ background: '#F7F7F7', color: '#1E1E1E' }" size="mini">
         <el-table-column prop="name" :label="$t('desk.customer_livePeople')" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" :label="$t('desk.customer_liveToleave')" width="200">
+        <el-table-column prop="" :label="$t('desk.customer_liveToleave')" width="170">
           <template slot-scope="{ row }">
             <div class="box">
               <div class="item">
@@ -105,8 +105,17 @@
             </div>
           </template>
         </el-table-column>
+        <!-- 预定项目/金额 -->
+        <el-table-column :label="$t('desk.add_projectAmoney')" show-overflow-tooltip>
+          <template slot-scope="{ row }">
+            <div v-for="(item,index) in row.reserveProjectList" :key="index">
+              <div>{{item.projectName}}</div>
+              <div>{{item.price}}*{{item.projectCount}}</div>
+            </div>
+          </template>
+        </el-table-column>
         <!-- 房型/房号 -->
-        <el-table-column :label="$t('desk.editor_roomTypeAnum')"  show-overflow-tooltip>
+        <el-table-column :label="$t('desk.editor_roomTypeAnum')"  show-overflow-tooltip width="150px">
           <template slot-scope="{row}">
             <div>{{row.hotelCheckInRoom.roomTypeName}}</div>
             <div>{{ row.hotelCheckInRoom ? row.hotelCheckInRoom.houseNum : "" }}</div>
