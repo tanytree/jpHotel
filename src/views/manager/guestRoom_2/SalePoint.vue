@@ -50,7 +50,7 @@
                         <template slot-scope="scope">
 <!--                            <el-button type="text" size="small" @click="popup('sale', scope.row)">{{$t('commons.modify')}}</el-button>-->
                             <el-popconfirm :title="$t('manager.grsl_sureShelves')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="offShelf(scope.row)">
-                                <el-button type="text" size="small">{{$t('manager.grsl_shelves')}}</el-button>
+                                <el-button slot="reference" type="text" size="small">{{$t('manager.grsl_shelves')}}</el-button>
                             </el-popconfirm>
                         </template>
                     </el-table-column>
