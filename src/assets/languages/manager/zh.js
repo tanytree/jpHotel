@@ -463,6 +463,7 @@ module.exports = {
   ps_startAt: '起步价',
   ps_everyHourAdd: '每小时加收',
   ps_skyPrice: '封顶费',
+  ps_skyPriceA: '封顶费',
   ps_specifiedTime: '指定办理入住时间段',
   ps_letterGetAllMoney: '分钟后收时租房全价',
   ps_minLetterChange: '分钟后转全日租,',

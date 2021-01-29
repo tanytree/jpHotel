@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-29 10:44:46
+ * @LastEditTime: 2021-01-29 11:37:28
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -242,9 +242,9 @@ module.exports = {
   grsl_billingMode: '料金表',
   grsl_billingPer: '回数（一回利用料）',
   grsl_billingTime: '時間',
-  grsl_startFee: '使用',
-  grsl_startMinute: '分後から、料金が発生します。',
-  grsl_chargeTime: '有料時間',
+  grsl_startFee: '初期使用',
+  grsl_startMinute: '分後から、利用料を請求します。',
+  grsl_chargeTime: '時間計算単位設定',
   grsl_chargeMinute: '分',
   grsl_import: 'アップロード',
   grsl_addGoods: '商品追加',
@@ -400,6 +400,7 @@ module.exports = {
   ps_startAt: '初期料金',
   ps_everyHourAdd: '１時間毎に',
   ps_skyPrice: '最多料金',
+  ps_skyPriceA: '最多請求料金',
   ps_specifiedTime: 'チェックイン時間帯を設定',
   ps_letterGetAllMoney: '分で部屋を借りると全額となる。',
   ps_minLetterChange: '分間を超えると、終日素泊り料金を課金する',
@@ -525,10 +526,10 @@ module.exports = {
   hk_goodsType: 'カテゴリー',
   hk_goodsTypeA: '種別',
   hk_an: '料金計算単位：',
-  hk_startAt: '停止（または使用）するべき販売所ですか？',
-  hk_getPriceRule: '計算単位料金',
+  hk_startAt: '初期料金（≦30分）',
+  hk_getPriceRule: '計算単位（）分料金',
   hk_deposit: '押金',
-  hk_addGetContent: '説明：60分未満の場合に、30分以内は0.5；30分以上は１計算単位として請求します。',
+  hk_addGetContent: '説明：例：60分未満の場合：半分30分以内は50％；半分30分以上は100％として請求します。',
   add_taxIn: '消費税率',
   add_taxOut: '消費税軽減税率',
   hk_oatName: '経路名称',
