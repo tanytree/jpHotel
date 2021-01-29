@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-29 15:12:06
+ * @LastEditTime: 2021-01-29 16:35:06
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -987,6 +987,7 @@ module.exports = {
   order_receiptTime: "発行日",
   order_constProject: "利用内容",
   add_projectAmoney: 'プラン名/料金',
+  add_notOpen: '未開放',
 
 
 

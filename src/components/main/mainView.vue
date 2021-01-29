@@ -101,6 +101,7 @@ export default {
         },
 
         menulfuc(item) {
+          console.log(item);
             if (item.childList && item.childList.length > 0) {
                 this.menul = item;
                 this.routerCompany = "";
@@ -120,7 +121,7 @@ export default {
                 this.toSection(childMenu);
                 this.$forceUpdate();
             } else {
-                this.$message.warning("暂未开放");
+                this.$message.warning(this.$t('desk.add_notOpen'));
             }
         },
         //点击左侧导航

@@ -131,7 +131,7 @@
                 <el-dropdown-item
                   @click.native="disableItem(row)"
                   v-if="row.state == 2"
-                  >{{ $t("desk.customer_enable") }}
+                  >{{ $t("desk.customer_enableA") }}
                 </el-dropdown-item>
                 <el-dropdown-item @click.native="delItem(row)"
                   >{{ $t("commons.delete") }}

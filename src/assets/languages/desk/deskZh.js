@@ -1018,7 +1018,7 @@ module.exports = {
   add_ruzhang: '入账',
   add_theMain: '主',
   add_projectAmoney: '消费plan项目/金额',
-  add_: '',
+  add_notOpen: '暂未开放',
   add_: '',
   add_: '',
   add_: '',
