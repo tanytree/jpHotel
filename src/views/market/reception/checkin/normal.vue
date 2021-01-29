@@ -76,7 +76,7 @@
                             :disabled="operCheckinType == 'a2'"
                             type="datetime"
                             :picker-options="leaveTime"
-                            format="yyyy-MM-dd"
+                            format="yyyy-MM-dd HH:mm:ss"
                             value-format="yyyy-MM-dd HH:mm:ss"
                             @change="endTimeChange"
                         ></el-date-picker>
@@ -195,7 +195,7 @@
                     <el-date-picker
                         v-model="checkInForm.checkoutTime"
                         type="datetime"
-                        format="yyyy-MM-dd"
+                        format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
                         :picker-options="leaveTime"
                         @change="endTimeChange"
@@ -205,7 +205,7 @@
                     <el-date-picker
                         v-model="checkInForm.checkoutTime"
                         type="datetime"
-                        format="yyyy-MM-dd HH"
+                        format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
                         :picker-options="leaveTime"
                         @change="endTimeChange"
@@ -342,7 +342,7 @@
             <div class="wrap">
                 <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">{{$t('commons.cancel')}}</el-button>
                 <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">{{$t('desk.book_bookText')}}</el-button>
-                <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum">{{ $t("commons.save") }}</el-button>
+                <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum" v-loading="loading">{{ $t("commons.save") }}</el-button>
                 <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>
             </div>
         </div>
@@ -972,8 +972,6 @@ export default {
                 })
                 params.roomIds = roomIdArray.join(",");
                 this.makeStoresNum(params);
-                console.log(params);
-                debugger
                 this.$F.doRequest(this, url, params, (data) => {
                     debugger
                     this.$message({message: "Success", type: "success",});
@@ -1121,8 +1119,8 @@ export default {
             this.rowRoomCurrentIndex = index;
             this.hotelRoomListParams.roomTypeId = item.roomTypeId;
             this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray,
-                new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),
-                new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"));
+                new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd HH:mm:ss"),
+                new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd HH:mm:ss"));
         },
 
         //获取可排房的房间
@@ -1447,11 +1445,8 @@ export default {
                 if (this.operCheckinType == "b1") {
                     this.checkInForm.checkinDays = 1;
                     nowDate.setDate(nowDate.getDate() + this.checkInForm.checkinDays);
-                    this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd HH:mm:ss");
-                } else if (
-                    this.operCheckinType == "b2" ||
-                    this.operCheckinType == "b3"
-                ) {
+                    this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd 11:00:00");
+                } else if (this.operCheckinType == "b2" || this.operCheckinType == "b3") {
                     this.checkInForm.checkinDays = "";
                     nowDate.setDate(nowDate.getDate() + 1);
                     nowDate.setHours(12);
@@ -1471,7 +1466,7 @@ export default {
                 this.checkInForm.checkinTime = new Date().Format("yyyy-MM-dd HH:mm:ss");
                 nowDate = new Date();
                 nowDate.setDate(nowDate.getDate() + 1);
-                this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd") + " 23:59:00";
+                this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd") + " 11:00:00";
             }
             //  else {
             //     this.typeText = "预订";
@@ -1527,7 +1522,7 @@ export default {
             } else {
                 var date = new Date(this.checkInForm.checkinTime);
                 date.setDate(date.getDate() + e);
-                this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
+                this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd 11:00:00");
             }
         },
 
