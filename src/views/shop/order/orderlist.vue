@@ -68,9 +68,11 @@
                 </el-table-column>
                 <el-table-column
                   :label="$t('shop.reset.goodDetail')"
+                  width="180"
+                  show-overflow-tooltip
                   >
                   <template slot-scope="scope" >
-                    <div v-for="sumItem in scope.row.orderSubList" class="text-size12">
+                    <div v-for="(sumItem,index) in scope.row.orderSubList" :key="index" class="text-size12">
                         {{sumItem.goodsName}} * {{sumItem.goodsCount}}
                     </div>
                   </template>

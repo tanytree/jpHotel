@@ -34,14 +34,14 @@
                 <el-table ref="multipleTable" :data="list" height="100%" header-row-class-name="default" size="small">
                     <el-table-column prop="goodsName" :label="$t('manager.grsl_goodsNameA')"></el-table-column>
                     <el-table-column :label="$t('manager.grsl_defaultTetailPriceA')">
-                        <template slot-scope="scope">
-                            ¥ {{$F.numFormate(scope.row.retailPrice)}}
+                        <template slot-scope="{row}">
+                            <span v-if="row.retailPrice">¥</span> {{$F.numFormate(row.retailPrice)}}
                         </template>
                     </el-table-column>
 <!--                    <el-table-column prop="employeePrice" :label="$t('manager.grsl_employeePriceJapen')"></el-table-column>-->
                     <el-table-column :label="$t('manager.grsl_costPrice')">
-                        <template slot-scope="scope">
-                            ¥ {{$F.numFormate(scope.row.costPrice)}}
+                        <template slot-scope="{row}">
+                           <span v-if="row.costPrice">¥</span> {{$F.numFormate(row.costPrice)}}
                         </template>
                     </el-table-column>
 <!--                    <el-table-column prop="buyCount" :label="$t('manager.grsl_defaultBuyNum')"></el-table-column>-->

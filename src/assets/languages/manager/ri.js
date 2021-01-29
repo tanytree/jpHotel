@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-28 17:24:09
+ * @LastEditTime: 2021-01-29 10:44:46
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -240,7 +240,7 @@ module.exports = {
   grsl_goodsServiceN: '無し',
   grsl_goodsServiceY: '有る',
   grsl_billingMode: '料金表',
-  grsl_billingPer: 'grsl_billingPer',
+  grsl_billingPer: '回数（一回利用料）',
   grsl_billingTime: '時間',
   grsl_startFee: '使用',
   grsl_startMinute: '分後から、料金が発生します。',
@@ -278,11 +278,11 @@ module.exports = {
   grsl_shelves: '棚落ち',
   grsl_sureShelves: '該当商品/サービスを棚落ちに確認しますか？',
   grsl_salePointManagement: '付帯管理',
-  grsl_salePointName: '付帯名称変更',
+  grsl_salePointName: '付帯名称',
   grsl_allowedToRoom: '〇 部屋付（売掛）',
   grsl_allowerToUnit: '〇法人売掛',
   grsl_allowDelete: '削除可能',
-  grsl_toEnble: '起用',
+  grsl_toEnble: '利用中',
   grsl_allowedCheckUnit: '〇 法人売掛',
   grsl_allowedCheckRoom: '〇部屋付',
   grsl_resetGoodsInfo: '商品情報を編集',

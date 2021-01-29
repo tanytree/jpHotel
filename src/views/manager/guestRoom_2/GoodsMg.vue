@@ -182,7 +182,7 @@
       <div class="footer">
         <el-button type="primary" size="small" class="submit" @click="submit(1)">{{$t('commons.save')}}
         </el-button>
-        <el-button type="primary" size="small" class="submit" @click="submit">{{$t('manager.grsl_saveAndAddA')}}
+        <el-button type="primary" size="small" v-if="!edit" class="submit" @click="submit">{{$t('manager.grsl_saveAndAddA')}}
         </el-button>
         <el-button size="small" class="cancel" @click="back">{{$t('commons.back')}}</el-button>
       </div>
