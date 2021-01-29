@@ -1490,7 +1490,7 @@ export default {
                 let date = new Date(e);
                 if (e > this.checkInForm.checkoutTime || (date.Format("yyyy-MM-dd") == new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd"))) {
                     date.setDate(date.getDate() + 1);
-                    this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd HH:mm:ss");
+                    this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd 11:00:00");
                 }
                 this.checkInForm.checkinDays = this.$F.getDaysBetween(
                     new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd"),

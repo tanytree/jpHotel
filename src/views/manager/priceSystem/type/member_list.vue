@@ -159,11 +159,11 @@
 						<el-row v-if="ruleForm.roomType==1">
 							<el-row class="demo-form-inline">
 								<el-col>{{$t('manager.hk_breakfast')}} [{{scope.row.mealBreakfastObject.mealName}} :
-									{{scope.row.mealBreakfastObject.mealPrice}}]</el-col>
+									{{scope.row.mealBreakfastObject && scope.row.mealBreakfastObject.mealPrice}}]</el-col>
 							</el-row>
 							<el-row class="demo-form-inline">
 								<el-col>{{$t('manager.hk_dinner')}} [{{scope.row.mealDinnerObject.mealName}} :
-									{{scope.row.mealDinnerObject.mealPrice}}]</el-col>
+									{{scope.row.mealDinnerObject && scope.row.mealDinnerObject.mealPrice}}]</el-col>
 							</el-row>
 						</el-row>
 					</template>
@@ -310,7 +310,8 @@
 						//
 						if (a.roomType == 1) {
 							//
-							a.adjustPrice = Number(a.newLivePrice) + Number(a.mealBreakfastObject.mealPrice || 0) + Number(a.mealDinnerObject
+							a.adjustPrice = Number(a.newLivePrice) + Number(a.mealBreakfastObject && (a.mealBreakfastObject.mealPrice || 0)) +
+                                Number(a.mealDinnerObject
 								.mealPrice || 0)
 						} else {
 							a.adjustPrice = Number(a.newMarketPrice || 0)
@@ -417,9 +418,10 @@
 						if (item.roomTypePrises[finalIndex].personPrice && !tempPrice) {
 							tempPrice = parseInt(item.roomTypePrises[finalIndex].personPrice.split(',')[0])
 						}
-						price = tempPrice + item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice + item.roomTypePrises[
-								finalIndex]
-							.mealDinnerObject.mealPrice
+						console.log(item.roomTypePrises)
+						console.log(finalIndex)
+						price = tempPrice + (item.roomTypePrises[finalIndex].mealBreakfastObject ? item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice : 0)
+                            + (item.roomTypePrises[finalIndex].mealDinnerObject ? item.roomTypePrises[finalIndex].mealDinnerObject.mealPrice : 0);
 					}
 				}
 

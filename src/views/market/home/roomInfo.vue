@@ -220,7 +220,7 @@ export default {
                     this.orderInfo.checkInRoomType = '';
                     this.showCheckinInfo();
                 }
-            } else if (this.currentRoom.checkInRoomType == 2) {
+            } else if (this.currentRoom.checkInRoomType == 2) {  //预订单详情
                 if (this.currentRoom.reseverCheckInObj) {
                     let id = this.currentRoom.reseverCheckInObj.id;
                     this.orderInfo = this.currentRoom.reseverCheckInObj;
