@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-31 17:57:27
+ * @LastEditTime: 2021-01-29 15:21:28
  * @FilePath: \jiudian\src\views\market\customer\children\comTaodetail.vue
  -->
 <template>
@@ -11,7 +11,7 @@
       <div slot="header" class="clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item @click.native="danweiClick()" class="point">{{
-            $t("desk.customer_unitManage")
+            $t("desk.customer_unitManageA")
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{ $t("commons.detail") }}</el-breadcrumb-item>
         </el-breadcrumb>

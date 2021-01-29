@@ -57,6 +57,7 @@ module.exports = {
 
   //总办 > 部门负责人
   department_name: "メニュー",
+  department_nameA: "セクション",
   department_head: "責任者",
   department_setHead: "責任者設定",
   department_placeEnterContent: "従業員名を入力してください",

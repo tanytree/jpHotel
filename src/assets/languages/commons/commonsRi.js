@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-28 17:09:47
+ * @LastEditTime: 2021-01-29 15:15:00
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -18,11 +18,13 @@ module.exports = {
   placeChooseA: '種別一覧',
   placeChooseB: '法人一覧',
   confirm_delete: '予約経路リストから削除に確認しますか？',
+  confirm_deleteA: '該当担当者アカウントを削除に確認しますか？',
   tip_desc: 'ご注意',
   request_success: '受取確認',
   delete_success: '削除確認',
   delete_batch: '「一括削除」操作実行しますか？',
   delete_single: '「削除」操作を実行にしますか？',
+  delete_singleA: '該当法人をリストから削除に確認しますか？',
   request_fail: '指令実行失敗',
   cancel: '取消',
   confirm: '確認',
@@ -131,7 +133,7 @@ module.exports = {
     // "4": '直電',
     // "10": 'その他'
     '1': 'ウォークイン',
-    '2': '直電',
+    '2': '電話予約',
     "3": '営業',
     "4": 'その他',
     "5": 'OTA'
@@ -243,7 +245,7 @@ module.exports = {
   },
   //单位是否停用
   comState: {
-    "1": 'せいじょう',
+    "1": '通常',
     "2": '停止'
   },
   //集团内是否共享

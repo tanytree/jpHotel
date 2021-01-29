@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 10:26:18
+ * @LastEditTime: 2021-01-29 13:49:25
  * @FilePath: \jiudian\src\views\market\customer\children\historyTao.vue
  -->
 
@@ -83,6 +83,15 @@
             <div v-if="row.operCheckinType==3">{{$t('desk.customer_venue')}}</div>
           </template>
         </el-table-column>
+          <!-- 预定项目/金额 -->
+        <el-table-column :label="$t('desk.add_projectAmoney')" show-overflow-tooltip>
+          <template slot-scope="{ row }">
+            <div v-for="(item,index) in row.reserveProjectList" :key="index">
+              <div>{{item.projectName}}</div>
+              <div>{{item.price}}*{{item.projectCount}}</div>
+            </div>
+          </template>
+        </el-table-column>
         <!-- 房型/房号 -->
         <el-table-column :label="$t('desk.editor_roomTypeAnum')"  show-overflow-tooltip>
           <template slot-scope="{row}">
@@ -90,11 +99,11 @@
             <div>{{ row.hotelCheckInRoom ? row.hotelCheckInRoom.houseNum : "" }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
+        <!-- <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom.realPrice }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="consumeTotalPrice" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="enterType" :label="$t('desk.customer_occurrenceStore')" show-overflow-tooltip>

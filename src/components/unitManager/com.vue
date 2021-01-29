@@ -98,7 +98,7 @@
             ><div>
               {{
                 row.state == 1
-                  ? $t("desk.customer_enable")
+                  ? $t("desk.customer_enableA")
                   : $t("desk.customer_disable")
               }}
             </div></template
@@ -1058,7 +1058,7 @@ export default {
     },
     delItem(item) {
       this.$confirm(
-        this.$t("commons.delete_single"),
+        this.$t("commons.delete_singleA"),
         this.$t("commons.tip_desc"),
         {
           confirmButtonText: this.$t("commons.confirm"),

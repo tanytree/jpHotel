@@ -107,6 +107,7 @@ module.exports = {
 
   //总办 > 部门负责人
   department_name: "部门名称",
+  department_nameA: "部门名称",
   department_head: "负责人",
   department_setHead: "设置负责人",
   department_placeEnterContent: "请输入内容",

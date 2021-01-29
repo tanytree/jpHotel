@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-21 11:38:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-20 14:05:03
+ * @LastEditTime: 2021-01-29 14:35:56
  * @FilePath: \jiudian\src\views\organization\components\employees.vue
 -->
 <template>
@@ -98,7 +98,7 @@ export default {
     },
     deleteItem(item) {
       this.$confirm(
-        this.$t("commons.confirm_delete"),
+        this.$t("commons.confirm_deleteA"),
         this.$t("commons.tip_desc"),
         {
           confirmButtonText: this.$t("commons.confirm"),

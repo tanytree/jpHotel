@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-26 17:52:47
+ * @LastEditTime: 2021-01-29 14:11:04
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -256,7 +256,7 @@
                 <el-form-item :label="$t('desk.customer_region')" prop="prop">
                     <el-input v-model="checkInForm.region"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('desk.orderMarkInfo') + ':'">
+                <el-form-item :label="$t('desk.orderMarkInfo_one') + ':'">
                     <el-input type="textarea" v-model="checkInForm.remark"></el-input>
                 </el-form-item>
             </el-form>

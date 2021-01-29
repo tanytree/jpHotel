@@ -20,9 +20,9 @@
         <el-form-item :label="$t('desk.customer_billState') + ':'">
           <el-select v-model="searchForm.intoStatus" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option :label="$t('desk.customer_closeAccount')" value="3"></el-option>
-            <el-option :label="$t('desk.customer_outStand')" value="1"></el-option>
-            <el-option :label="$t('desk.order_partBill')" value="2"></el-option>
+            <el-option :label="$t('desk.customer_areadyBookA')" value="3"></el-option>
+            <el-option :label="$t('desk.customer_notInbill')" value="1"></el-option>
+            <el-option :label="$t('desk.customer_partBill')" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>

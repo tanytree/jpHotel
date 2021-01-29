@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-28 16:19:36
+ * @LastEditTime: 2021-01-29 13:49:03
  * @FilePath: \jiudian\src\views\market\customer\children\history.vue
  -->
 
@@ -121,11 +121,11 @@
             <div>{{ row.hotelCheckInRoom ? row.hotelCheckInRoom.houseNum : "" }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
+        <!-- <el-table-column prop="" :label="$t('desk.customer_totalRoomPrice')" show-overflow-tooltip>
           <template slot-scope="{ row }">
             {{ row.hotelCheckInRoom ? row.hotelCheckInRoom.realPrice : "" }}
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="consumeTotalPrice" :label="$t('desk.customer_totalConsum')" show-overflow-tooltip>
         </el-table-column>
         <el-table-column :label="$t('desk.customer_occurrenceStore')" show-overflow-tooltip>

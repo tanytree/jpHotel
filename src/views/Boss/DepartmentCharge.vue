@@ -15,7 +15,7 @@
                     tooltip-effect="dark"
                     :header-cell-style="{background:'#e6eaed',color:'#1E1E1E'}"
                 >
-                    <el-table-column :label="$t('boss.department_name')">
+                    <el-table-column :label="$t('boss.department_nameA')">
                         <template slot-scope="{row}">
                             {{$i18n.locale == 'ri' ? row.japanese : row.menuTitle}}
                         </template>

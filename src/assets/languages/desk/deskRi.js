@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-28 17:15:41
+ * @LastEditTime: 2021-01-29 15:12:06
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -19,6 +19,7 @@ module.exports = {
   consumerTotal: '利用合計金額',
   balanceTotal: '差引',
   orderMarkInfo: '備考',
+  orderMarkInfo_one: '備考1',
   hadRowHouses: 'アサイン済み',
   noRowHouses: '未アサイン',
   updateOrder: '予約修正',
@@ -431,6 +432,7 @@ module.exports = {
   customer_accountRules: '料金レート',
   customer_pricingStrategy: '料金設定規則',
   customer_contractNo: '契約番号',
+  customer_enableA: '通常',
   customer_enable: '起用',
   customer_disable: '停止',
   customer_newUnit: '法人追加',
@@ -442,7 +444,7 @@ module.exports = {
   customer_resetText: '設定',
   customer_enableIng: '利用中',
   customer_disableIng: '停止中',
-  customer_sureDisable: '該当法人を使用停止に確認しますか？',
+  customer_sureDisable: '該当法人の利用状態を「停止」に確認しますか？',
   customer_priRuleNotBlank: '料金レートは空白できません。',
   customer_billRuleNotBlank: '料金設定ルールは空白できません',
   customer_selectUnit: '法人を選択してください',
@@ -747,7 +749,7 @@ module.exports = {
   night_auditTime: '日時更新時間（営業日）',
   night_auditDay: '日時更新日',
   night_auditResults: '日時更新結果',
-  customer_sureEnable: '該当法人を起用確認します',
+  customer_sureEnable: '該当法人の利用状態を「通常」に確認しますか？',
   customer_guestNum: '顧客番号',
   order_clickPai: "アサインをクリックしてください",
   order_inputName: "名前を入力してください",

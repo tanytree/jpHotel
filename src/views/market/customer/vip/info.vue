@@ -58,7 +58,7 @@
             F_memberTypeId(row.memberTypeId)
           }}</template>
         </el-table-column>
-        <el-table-column :label="$t('desk.home_telNum')">
+        <el-table-column :label="$t('desk.home_telNumA')">
           <template slot-scope="{ row }">
             <div v-if="row.mobile">({{$t('desk.editor_hand')}}){{ row.mobile }}</div>
             <div v-if="row.mobile2">({{$t('desk.editor_home')}}){{ row.mobile2 }}</div>
