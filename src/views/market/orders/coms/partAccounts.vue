@@ -80,7 +80,7 @@ export default {
             },
             multipleSelection: [], //多选
             tableData: [], //表格数据
-            priceTypeList:[12,9,10]
+            priceTypeList:[9,10]
         };
     },
     computed: {
@@ -108,7 +108,7 @@ export default {
                 let list = res.consumeOrderList
                 let arr = []
                 list.forEach(element => {
-                    if(this.priceTypeList.indexOf(element.priceType) == -1 && element.state == 1){
+                    if(element.priceType&&this.priceTypeList.indexOf(element.priceType) == -1 && element.state == 1){
                         arr.push(element)
                     }
                 })
@@ -138,6 +138,7 @@ export default {
 
         getOrderDetail(){
             console.log('part')
+            this.visible = false
             this.$emit('getOrderDetail')
         }
 

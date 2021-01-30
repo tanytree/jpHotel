@@ -81,6 +81,7 @@
                      "100": '其他' -->
 
                     <div :class="row.richType == 1 ? 'text-blue' : ''">
+                       <span v-if="row.richType == 1 ? 'text-blue' : ''"> {{F_priceType(9)}}--</span>
                        <span v-if="row.priceType == 1">
                             <span v-if="row.payType == 1">现金定金</span>
                             <span v-if="row.payType == 2">信用卡订金 </span>

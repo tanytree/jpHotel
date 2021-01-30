@@ -176,28 +176,31 @@ export default {
 
 
         list.forEach(element => {
-            let priceType = element.priceType
-            total += parseFloat(element.consumePrice ? element.consumePrice : 0)
-            if(priceType == 5 || priceType == 6 || priceType == 12){
-                if(element.taxStatus == 1){
-                    taxFee +=  parseFloat(element.realPrice)  * consumeTax
+            console.log(element.state)
+            if(element.state == 1){
+                let priceType = element.priceType
+                total += parseFloat(element.consumePrice ? element.consumePrice : 0)
+                if(priceType == 5 || priceType == 6 || priceType == 12){
+                    if(element.taxStatus == 1){
+                        taxFee +=  parseFloat(element.realPrice)  * consumeTax
+                    }
+                    if(element.seviceStatus == 1){
+                        service += parseFloat(element.realPrice) * consumeTax
+                    }
                 }
-                if(element.seviceStatus == 1){
-                    service += parseFloat(element.realPrice) * consumeTax
+                if(priceType == 15){
+                    console.log(priceType +':' +this.F_priceType(priceType))
+                    priceType15 = parseFloat(element.consumePrice)
                 }
-            }
-            if(priceType == 15){
-                console.log(priceType +':' +this.F_priceType(priceType))
-                priceType15 = parseFloat(element.consumePrice)
-            }
-            if(priceType == 16){
-                console.log(priceType +':' +this.F_priceType(priceType))
-                priceType16 = parseFloat(element.consumePrice)
-            }
+                if(priceType == 16){
+                    console.log(priceType +':' +this.F_priceType(priceType))
+                    priceType16 = parseFloat(element.consumePrice)
+                }
 
-            console.log(priceType +':' +this.F_priceType(priceType))
-            console.log(element.consumePrice)
-            console.log(element)
+                console.log(priceType +':' +this.F_priceType(priceType))
+                console.log(element.consumePrice)
+                console.log(element)
+            }
         });
 
         sum = total + taxFee + service
@@ -223,6 +226,8 @@ export default {
         }
         // console.log(obj)
         return obj
+
+
     },
   },
   created() {
@@ -291,11 +296,15 @@ export default {
             for(let i = 0;i < list.length;i++){
                 // console.log(list[i].priceType)
                 let priceType = list[i].priceType
-                if(priceTypeList.indexOf(priceType) > -1 &&   list[i].state == 1){
-                   //  console.log(list[i].priceType)
-                   // console.log(list[i].priceType +':' +this.F_priceType(list[i].priceType))
-                    arr.push(list[i])
+                if(priceTypeList.indexOf(priceType) > -1 ){
+                    if(list[i].state == 1){
+                       //  console.log(list[i].priceType)
+                       // console.log(list[i].priceType +':' +this.F_priceType(list[i].priceType))
+
+                        arr.push(list[i])
+                    }
                 }
+
             }
             console.log(arr)
             this.consumeOrderList = arr
@@ -314,7 +323,7 @@ export default {
         //付款 500
         //优惠 10
 
-        if(this.getRealPayFee.sum - this. detailData.payPrice > 0){
+        if(this.getRealPayFee.sum - this.detailData.payPrice > 0){
            return  this.getRealPayFee.sum - this.detailData.payPrice
         }else{
            return  this.detailData.payPrice - this.getRealPayFee.sum + preferentialPrice
