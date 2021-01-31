@@ -7,6 +7,7 @@
 
 // 管理部 || 日语
 module.exports = {
+    batchSelectTip: '該当部屋番号全てをクリックし選択ください。',
   typeNameList: {
     1: '前台部',
     2: '餐饮部',

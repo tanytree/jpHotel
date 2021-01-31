@@ -6,6 +6,7 @@
  */
 //  前台部 中文
 module.exports = {
+    editRowHouse: '修改排房',
   reserveInfoDesc: '预定信息',
   roomOccupation: '房间被占用',
   attachedMeal: '附餐',
@@ -308,6 +309,7 @@ module.exports = {
   book_meetName: '会议名称',
   book_MeetstartAend: '会议开始-会议结束',
   book_traveler: '散客',
+    book_travelerA: '散客',
   book_member: '会员',
   book_desk: '前台',
   book_saleTo: '销售推荐',

@@ -5,7 +5,7 @@
 				<el-tab-pane :label="$t('manager.ps_member')" name="member">
 					<Member :tab1_show= 'tab1_show'></Member>
 				</el-tab-pane>
-				<el-tab-pane :label="$t('desk.book_traveler')" name="houseMaintain">
+				<el-tab-pane :label="$t('desk.book_travelerA')" name="houseMaintain">
 					<HouseMaintain type="strategy"></HouseMaintain>
 				</el-tab-pane>
 			</el-tabs>

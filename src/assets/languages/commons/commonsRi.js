@@ -17,7 +17,7 @@ module.exports = {
   placeChoose: '選択してください',
   placeChooseA: '種別一覧',
   placeChooseB: '法人一覧',
-  confirm_delete: '予約経路リストから削除に確認しますか？',
+  confirm_delete: '削除コードの確定？',
   confirm_deleteA: '該当担当者アカウントを削除に確認しますか？',
   tip_desc: 'ご注意',
   request_success: '受取確認',
@@ -212,6 +212,7 @@ module.exports = {
   checkinState: {
     '1': '滞在中',
     '2': 'チェックアウト済み',
+     '3': '未使用（未宿泊）'
     // '3': '离店',
     // '4': '离店(走结)',
     // '5': '离店(反结)'
