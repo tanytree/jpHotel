@@ -7,11 +7,11 @@
             <el-button type="primary" class="submit" size="small" @click="popup_kinds('add')">{{ $t("manager.hp_addType") }}</el-button>
           </div>
           <el-table ref="multipleTable" :data="list" border height="100%" header-row-class-name="default" size="small">
-            <el-table-column prop="name" :label="$t('commons.name')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="name" :label="$t('commons.nameA')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('commons.operating')" width="300">
               <template slot-scope="scope">
                 <el-button type="text" size="small" @click="popup_kinds('edit', scope.row)">{{ $t("commons.modify") }}</el-button>
-                <el-popconfirm :title="$t('manager.hp_bulletTitle')" @confirm="onConfirm(scope.row)">
+                <el-popconfirm :title="$t('manager.hp_bulletTitleE')" @confirm="onConfirm(scope.row)">
                   <el-button slot="reference" type="text" size="small">{{ $t("commons.delete") }}</el-button>
                 </el-popconfirm>
               </template>
@@ -47,7 +47,7 @@
           </el-form>
           <el-table ref="multipleTable" :data="damageData" border height="100%" header-row-class-name="default" size="small">
             <el-table-column prop="damageTypeName" :label="$t('manager.hp_goodsType')"></el-table-column>
-            <el-table-column prop="name" :label="$t('manager.hp_goodsName')"></el-table-column>
+            <el-table-column prop="name" :label="$t('manager.hp_goodsNameA')"></el-table-column>
             <el-table-column prop="damagePrice" :label="$t('manager.hp_compensationPrice')"></el-table-column>
             <el-table-column :label="$t('manager.hp_loginDetail_state')">
               <template slot-scope="scope">{{
@@ -95,7 +95,7 @@
             <el-option v-for="(item, index) in list" :key="index" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('manager.hp_goodsName') + ':'" prop="name">
+        <el-form-item :label="$t('manager.hp_goodsNameA') + ':'" prop="name">
           <el-input v-model="goodsData.name"></el-input>
         </el-form-item>
         <el-form-item :label="$t('manager.hp_compensationPrice') + ':'" prop="damagePrice">

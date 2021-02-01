@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-29 11:37:28
+ * @LastEditTime: 2021-02-01 15:00:30
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -9,9 +9,9 @@
 module.exports = {
     batchSelectTip: '該当部屋番号全てをクリックし選択ください。',
   typeNameList: {
-    1: '前台部',
-    2: '餐饮部',
-    3: '商店部'
+    1: '客室',
+    2: '料飲',
+    3: '付帯'
   },
   priceType:{
     1:'订金',
@@ -43,7 +43,7 @@ module.exports = {
       4:'微信',
       5:'会员卡'
   },
-  shiftOver: '交班交替表',
+  shiftOver: '交替情報',
   //   管理部 > 首页(homePage > hp)
   hp_toRoom: '部屋状態',
   hp_floorBuilding: '建物・階設定',
@@ -75,9 +75,11 @@ module.exports = {
   hp_bulletTitleA: '該当物品をリストから削除に確認しますか？',
   hp_bulletTitleB: '該当部屋タイプを削除に確認しますか？',
   hp_bulletTitleD: '該当部屋番号を削除に確認しますか？',
+  hp_bulletTitleE: '該当カテゴリーを削除に確認しますか？',
   hp_compensationGoods: '物品登録',
   hp_goodsName: 'カテゴリ名称',
-  hp_goodsType: '資産種別',
+  hp_goodsNameA: '物品名称',
+  hp_goodsType: 'カテゴリー',
   hp_compensationPrice: '賠償単価',
   hp_typeName: 'カテゴリ名称',
   hp_costPrice: '物品コスト',
@@ -572,9 +574,12 @@ module.exports = {
   add_changeDetail: '交替詳細',
   add_pettyCash: 'レジ金',
   add_nowCashGet: '本シフト現金入金',
+  add_nowCashGetA: 'キャッシュ入金',
   add_nowPettyDown: '繰越レジ金',
-  add_lastHold: '受継ぐレジ金',
+  add_lastHold: '受継・金額',
   add_nowCardGet: 'クレジット入金',
+  add_nowCardGetA: 'クレジットカード入金',
+  add_nowBillGet: '売掛入金',
   add_nowBillUp: '売掛入金',
   add_nowBillPrice: '売掛入金',
   add_allDepartment: 'ALLセクション',
@@ -593,6 +598,8 @@ module.exports = {
   add_setDutity: 'チェック入れると部屋状態を「要清掃」を設定する',
   grsl_resetSoon: '調整後1泊2食付1名料金',
   add_onePrice: '1人素泊まり',
+  add_nowGet: '仕訳',
+  add_nowDownPri: '繰越・金額',
 
 
 

@@ -111,7 +111,9 @@
 								<el-col :span="6">
 									<el-button type="primary" plain @click="addHouse('sit')">{{$t('manager.hk_set')}}</el-button>
 								</el-col>
-								<el-col :span="18" v-for="(value, index) in ruleForm_sit" :key="index">{{index+1}}{{$t('manager.hk_peopleLive')}}【￥ {{value.price}}】</el-col>
+								<el-col :span="18" >
+                  <div style="margin-left:20px" v-for="(value, index) in ruleForm_sit" :key="index">{{index+1}}{{$t('manager.hk_peopleLive')}}【￥ {{value.price}}】</div>
+                </el-col>
 							</el-row>
 						</el-form-item>
 
@@ -148,14 +150,18 @@
 
 						<!-- 床型 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.hk_bedType')+':'" prop="bedType">
-							<el-input v-model="ruleForm.bedType" class="input"></el-input>
+							<!-- <el-input v-model="ruleForm.bedType" class="input"></el-input> -->
+	              <el-select v-model="ruleForm.bedType" >
+								<el-option v-for="(value,key) in $t('commons.bedType')" :key="key" :label="value" :value="value">
+								</el-option>
+							</el-select>
 						</el-form-item>
 
 						<!-- 是否含消费税 -->
-<!--						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">-->
-<!--							<el-radio v-model="ruleForm.taxStatus" :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>-->
-<!--							<el-radio v-model="ruleForm.taxStatus" :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>-->
-<!--						</el-form-item>-->
+						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
+							<el-radio v-model="ruleForm.taxStatus" :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>
+							<el-radio v-model="ruleForm.taxStatus" :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>
+						</el-form-item>
 
 						<!-- 是否包含服务费 -->
 						<el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
@@ -469,13 +475,13 @@
 						break;
 
 					case "sit":
-						this.ruleForm_sit = [];
-						for (let i = 0; i < this.ruleForm.checkinNum; i++) {
-							let obj = {}
-							obj.price = ''
-							obj.sid = i;
-							this.ruleForm_sit.push(obj);
-						}
+						// this.ruleForm_sit = [];
+						// for (let i = 0; i < this.ruleForm.checkinNum; i++) {
+						// 	let obj = {}
+						// 	obj.price = ''
+						// 	obj.sid = i;
+						// 	this.ruleForm_sit.push(obj);
+						// }
 						//
 						this.jiageSit_show = true;
 						this.$forceUpdate();

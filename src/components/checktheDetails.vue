@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 11:38:16
+ * @LastEditTime: 2021-02-01 17:22:41
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
@@ -57,14 +57,14 @@
                     </el-row>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.customer_documentType')+ ':'" label-width="120px">
+                            <el-form-item :label="$t('desk.customer_documentTypeA')+ ':'" label-width="120px">
                                 <el-select v-model="roomInfo.headerObj.idcardType" size="small" :placeholder="$t('commons.selectIdCardType')" style="width: 200px">
                                     <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.customer_documentNum')+ ':'" label-width="130px">
+                            <el-form-item :label="$t('desk.home_idCardNumA')+ ':'" label-width="130px">
                                 <el-input :placeholder="$t('desk.order_inputCardNum')" v-model="roomInfo.headerObj.idcard" size="small" style="width: 200px"></el-input>
                             </el-form-item>
                         </el-col>
@@ -169,8 +169,8 @@
                     </el-table-column>
                     <el-table-column align="center" :label="$t('desk.order_guestKind')">
                         <template slot-scope="{ row }">
-                            <el-select v-model="row.customerType || '1'" size="small" style="width:100%">
-                                <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index"></el-option>
+                            <el-select v-model="row.customerType" size="small" style="width:100%">
+                                <el-option :value="key" v-for="(item,key) of $t('commons.customerTypes')"   :label="item" :key="key"></el-option>
                             </el-select>
                         </template>
                     </el-table-column>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-29 15:15:00
+ * @LastEditTime: 2021-02-01 16:42:53
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -38,6 +38,7 @@ module.exports = {
   newAdd: '追加',
   newAddA: '追加',
   name: '名称',
+  nameA: 'カテゴリー',
   other: 'その他',
   backIntoJob: '再入社',
   delete: "削除",
@@ -64,7 +65,15 @@ module.exports = {
   pleaseEnter: '入力してください',
   pleaseEnterA: '会社名',
   passwordDesc: 'パスワード',
-
+ // 床型
+   bedType: {
+     '0': 'なし',
+     '1': 'シングル',
+     '2': 'ダブル',
+     '3': 'ツイン',
+     '4': 'トリプル',
+     '5': 'クアドラプル',
+   },
   F_sex: {
     '1': '男',
     '2': '女',

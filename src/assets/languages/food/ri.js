@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 16:18:11
+ * @LastEditTime: 2021-02-01 15:09:04
  * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
@@ -301,10 +301,12 @@ module.exports = {
         tabs_1:'シフト交替',
         tabs_2:'交替記録',
 
-        tabs_title_1:'交替前の基本情報',
+      tabs_title_1: '交替前の基本情報',
+      tabs_title_A:'基本情報',
+        
         tabs_time_1:'シフト時間',
         to:'-',
-        tabs_num:'シフト',
+        tabs_num:'シフト番号',
         acter:'担当者',
 
         tabs_title_2:'売上情報  ',
@@ -333,7 +335,9 @@ module.exports = {
         payReport:'入金明細書',
         look:'プレビュー',
 
-        selectOnDutyer:'次シフト担当を選択してください',
+      selectOnDutyer: '次シフト担当を選択してください',
+      selectOnDutyerA:'引継・担当者',
+        
         password:'パワワード'
 
 

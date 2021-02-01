@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-11 17:43:33
+ * @LastEditTime: 2021-02-01 15:52:45
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -14,7 +14,7 @@
         </el-button>
     </el-row>
     <el-row style="padding-top: 20px;">
-      <h3>{{$t('food.shift.tabs_title_1')}}</h3>
+      <h3>{{$t('food.shift.tabs_title_A')}}</h3>
       <el-row>
         <el-col :span="12">
           <div class="item">
@@ -27,20 +27,20 @@
         <el-col :span="12">
           <div class="item">{{$t('food.shift.acter')}}：{{account}}</div>
         </el-col>
-        <el-col :span="12">
+        <!-- <el-col :span="12">
             <div class="item">
               {{$t('manager.hp_patternsSuccession')}}：
               <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
               <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
               <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
             </div>
-        </el-col>
+        </el-col> -->
       </el-row>
     </el-row>
     <el-divider></el-divider>
     <el-row>
       <h3>{{$t('food.shift.tabs_title_2')}}</h3>
-      <div class="total">{{$t('food.shift.total')}}：{{info.income}}{{$t('manager.ps_japanYen')}}</div>
+      <div class="total">{{$t('food.shift.total')}}：{{$F.numFormate(info.income)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
           <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
@@ -48,42 +48,40 @@
             <span v-if="tabCurr == 1">
                 {{$t('manager.priceType.'+item.priceType)}}：
             </span>
-            <span v-if="tabCurr == 2">餐饮费：</span>
-            <span v-if="tabCurr == 3">商品费：</span>
-			<span class="red">{{item.total}}</span>{{$t('manager.ps_japanYen')}}
+            <span v-if="tabCurr == 2">{{$t('desk.serve_foodPrice')}}：</span>
+            <span v-if="tabCurr == 3">{{$t('desk.serve_goodsPrice')}}：</span>
+			<span class="red">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
 		  </div>
         </el-col>
       </el-row>
-      <div class="total">{{$t('food.shift.totalFee')}}：{{info.settlement}}{{$t('manager.ps_japanYen')}}</div>
+      <div class="total">{{$t('food.shift.totalFee')}}：{{$F.numFormate(info.settlement)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPayTypeList" :key="index">
 			<div class="item">
             {{$t('manager.payType.'+item.payType)}}：
-				<span class="blue">{{item.total}}</span>{{$t('manager.ps_japanYen')}}
+				<span class="blue">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
 			</div>
         </el-col>
       </el-row>
     </el-row>
     <el-row>
       <h3>
-          本班收款
+          {{$t('manager.add_nowGet')}}
         <a @click="show = true" class="el-icon-question" style="color: #126EFF;"></a>
       </h3>
 
         <div class="handInCash margin-tb-10">
           <el-row class="padding-tb-10">
-            <el-col :span="8" class="li">
+            <el-col :span="12" class="li">
                 <div class="item">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
                 <div class="item">{{$t('manager.add_lastHold')}}：{{info.upMoneyRetained}}</div>
+                 <div class="item">{{$t('manager.add_nowDownPri')}}：0</div>
             </el-col>
-            <el-col :span="8" class="li">
-                <div class="item">本班现金收款：{{info.nowMoneyRetained}}</div>
-                <div class="item">本班信用卡收款：{{info.nowCreditCardHandin}}</div>
-                <div class="item"  v-if="tabCurr == 1" >本班挂账收款：0</div>
-            </el-col>
-            <el-col :span="8" class="li">
-                <div class="item">本班下方备用金：0</div>
+            <el-col :span="12" class="li">
+                <div class="item">{{$t('manager.add_nowCashGetA')}}：{{info.nowMoneyRetained}}</div>
+                <div class="item">{{$t('manager.add_nowCardGetA')}}：{{info.nowCreditCardHandin}}</div>
+                <div class="item"  v-if="tabCurr == 1" >{{$t('manager.add_nowBillGet')}}：0</div>
             </el-col>
           </el-row>
         </div>
@@ -104,7 +102,7 @@
     <el-row style="text-align: center;margin-top: 20px;">
         <el-divider></el-divider>
         <el-form inline label-width="150px" style="padding-top: 30px;">
-            <el-form-item :label="$t('food.shift.selectOnDutyer')">
+            <el-form-item :label="$t('food.shift.selectOnDutyerA')">
                 <el-select v-model="form.handoveEmployeedId">
                     <el-option
                       v-for="item in employeeList"

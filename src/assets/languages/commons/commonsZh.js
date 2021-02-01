@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-29 14:37:37
+ * @LastEditTime: 2021-02-01 16:42:06
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -40,6 +40,7 @@ module.exports = {
   newAdd: '新增',
   newAddA: '+新增',
   name: '名称',
+  nameA: '名称',
   other: '其他',
   backIntoJob: '重新入职',
   delete: '删除',
@@ -67,6 +68,15 @@ module.exports = {
   pleaseEnter: '请输入',
   pleaseEnterA: '请输入',
   passwordDesc: '密码',
+  // 床型
+  bedType: {
+    '0': '无床',
+    '1': '1床',
+    '2': '双人床',
+    '3': '两床',
+    '4': '三床',
+    '5': '四床',
+  },
   F_sex: {
 
     '1': '男',
@@ -80,10 +90,10 @@ module.exports = {
   },
   //缴费方式
   paymentMethod: {
-  '1':'线上',
-  '2':'汇款',
-  '3':'账户扣款',
-},
+    '1': '线上',
+    '2': '汇款',
+    '3': '账户扣款',
+  },
   //查询字段
   queryText: {
     '1': '总客房数',
@@ -117,7 +127,7 @@ module.exports = {
     '2': '护照',
     '3': '驾照',
     '4': '个人号码卡（My No. Card)',
-     '5': '在留卡（旧：外国人登录证）',
+    '5': '在留卡（旧：外国人登录证）',
     '6': '健康保险证',
     '7': '其他'
   },

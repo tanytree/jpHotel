@@ -53,9 +53,13 @@
       <el-table :data="checkTables" border height="100%" header-row-class-name="default" size="small">
         <el-table-column :label="$t('desk.home_customerName')" prop="guestName"></el-table-column>
         <el-table-column :label="$t('desk.home_roomNum')" prop="roomNum"></el-table-column>
-        <el-table-column :label="$t('desk.home_phoneNumA')" prop="mobile"></el-table-column>
+        <el-table-column :label="$t('desk.home_phoneNumA')" prop="mobile" width="135"></el-table-column>
         <el-table-column :label="$t('desk.home_goodsName')" prop="luggageName"></el-table-column>
-        <el-table-column width="180" :label="$t('desk.home_depositingTime')" prop="createTime"></el-table-column>
+        <el-table-column width="110" :label="$t('desk.home_depositingTime')" prop="createTime">
+          <template slot-scope="{row}">
+            <div v-for="(item,index) in formatTime(row.createTime)" :key="index">{{item}}</div>
+          </template>
+        </el-table-column>
         <el-table-column width="100" :label="$t('desk.home_drawTime')" prop="receiveTime"></el-table-column>
         <el-table-column :label="$t('desk.home_getNum')" width="240" prop="luggageNum"></el-table-column>
         <el-table-column :label="$t('desk.home_state')">
@@ -308,15 +312,23 @@ export default {
     },
   },
   methods: {
+    formatTime(time) {
+      if (time) {
+        let array = time.split(" ");
+        return array;
+      }else{
+        return time;
+      }
+    },
     checkGetState(number) {
       console.log(number);
       switch (parseInt(number)) {
         case 1:
-          return this.$t('desk.home_waitGet');
+          return this.$t("desk.home_waitGet");
         case 2:
-          return this.$t('desk.home_alerdGet');
+          return this.$t("desk.home_alerdGet");
         case 3:
-          return this.$t('desk.home_discard');
+          return this.$t("desk.home_discard");
       }
     },
     //点击 寄存补打 按钮

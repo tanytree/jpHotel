@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 17:25:00
+ * @LastEditTime: 2021-02-01 15:41:10
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -74,8 +74,11 @@ module.exports = {
   hp_bulletTitleA: '确定删除吗？',
   hp_bulletTitleB: '确定删除吗？',
   hp_bulletTitleD: '确定删除吗？',
+  hp_bulletTitleD: '确定删除吗？',
+  hp_bulletTitleE: '确定删除吗？',
   hp_compensationGoods: '损物赔偿物品',
   hp_goodsName: '物品名称',
+  hp_goodsNameA: '物品名称',
   hp_goodsType: '物品类型',
   hp_compensationPrice: '赔偿单价',
   hp_typeName: '类型名称',
@@ -592,9 +595,11 @@ module.exports = {
   add_changeDetail: '交班详情',
   add_pettyCash: '备用金额度',
   add_nowCashGet: '本班现金收款',
+  add_nowCashGetA: '本班现金收款',
   add_nowPettyDown: '本班下放备用金',
   add_lastHold: '上班留存备用金',
   add_nowCardGet: '本班信用卡收款',
+  add_nowCardGetA: '本班信用卡收款',
   add_nowBillUp: '本班挂账上交',
   add_nowBillPrice: '本班挂账金额',
   add_allDepartment: '所有部门',
@@ -603,10 +608,9 @@ module.exports = {
   add_dealNight: '如果勾选，则不处理应离未离无法将进行夜审',
   add_setDutity: '是否把在住过夜房置为脏房',
   add_onePrice: '一人住宿价',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
+  add_nowGet: '本班收款',
+  add_nowBillGet: '本班挂账收款',
+  add_nowDownPri: '本班下方备用金',
   add_: '',
   add_: '',
   add_: '',

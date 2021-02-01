@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-01-29 16:35:06
+ * @LastEditTime: 2021-02-01 17:27:11
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -725,7 +725,7 @@ module.exports = {
   order_cancelOrder: "予約取り消し",
   order_bookRoomType: "予約部屋タイプ",
   order_noText: "ない",
-  order_changeSource: "予約経路変更",
+  order_changeSource: "ゲストカテゴリー変更",
   order_priceShould: "相殺された会計は再度相殺できません",
   order_toLiveTime: "C/I・C/O時間",
   order_goodsUnit: "単価",

@@ -324,6 +324,8 @@ const $F = {
                     return $1 + ",";
                 });
             });
+        } else {
+          return num;
         }
     },
 

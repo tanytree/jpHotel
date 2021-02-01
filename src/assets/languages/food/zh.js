@@ -304,6 +304,7 @@ module.exports = {
         tabs_2:'交班纪录',
 
         tabs_title_1:'预交班基本信息',
+        tabs_title_A:'预交班基本信息',
         tabs_time_1:'班次时间',
 		to:'至',
         tabs_num:'班次号',
@@ -336,6 +337,7 @@ module.exports = {
         look:'预览',
 
         selectOnDutyer:'请选择接班员工',
+        selectOnDutyerA:'请选择接班员工',
         password:'接班员工密码'
 
 

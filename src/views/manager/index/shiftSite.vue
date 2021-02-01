@@ -7,7 +7,7 @@
             <el-tab-pane :label="$t('desk.serve_changeRecord')" name="changeRecord">
                 <c2 :tabs="tabLists"></c2>
             </el-tab-pane>
-            <el-tab-pane :label="$t('manager.hp_patternsSuccession')" name="handover">
+            <!-- <el-tab-pane :label="$t('manager.hp_patternsSuccession')" name="handover">
                 <div class="content">
                     <div class="manage">
                         <div class="manage-item" v-for="(item, index) in handData" :key="index">
@@ -20,8 +20,8 @@
                                     <el-form-item :label="$t('manager.hp_patternsSuccession')+':'">
                                         <el-radio-group v-model="item.handoverStatus">
                                             <el-radio :label="1">{{$t('manager.hp_cashModel')}}</el-radio>
-<!--                                            <el-radio :label="2">{{$t('manager.hp_paidModel')}}</el-radio>-->
-<!--                                            <el-radio :label="3">{{$t('manager.hp_accountsModel')}}</el-radio>-->
+                                           <el-radio :label="2">{{$t('manager.hp_paidModel')}}</el-radio>
+                                           <el-radio :label="3">{{$t('manager.hp_accountsModel')}}</el-radio>
                                         </el-radio-group>
                                     </el-form-item>
                                     <el-form-item :label="$t('manager.hp_locker')+':'" v-if="item.handoverStatus == 1">
@@ -40,7 +40,7 @@
                         <el-button type="primary" class="submit" @click="submit('hand')">{{$t('commons.save')}}</el-button>
                     </div>
                 </div>
-            </el-tab-pane>
+            </el-tab-pane> -->
 <!--            <el-tab-pane :label="$t('manager.hp_flightManagement')" name="handManage">-->
 <!--                <div class="content">-->
 <!--                    <div class="demo-form-inline">-->
