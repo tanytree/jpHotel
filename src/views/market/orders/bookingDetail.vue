@@ -27,11 +27,15 @@
                         roomId有值 但state不为1 已排房（未入住）
                         state:1 已入住
                         state：2 离店
+                        detailData.checkIn.state ： 8 已取消
+                        detailData.checkIn.state ： 4 NOSHOW
                         -->
-                        <span class="ok" v-if="item.state == 1">{{ $t('commons.checkinState')['1'] }}</span>
-                        <span class="ok" v-if="(item.state == 3 && item.roomId) || (item.state == 2 && item.roomId)">{{ $t('desk.hadRowHouses') }}</span>
+                        <span class="ok" v-if="detailData.checkIn.state == 8">{{ $t('commons.checkinState')['10'] }}</span>
+                        <span class="ok" v-else-if="detailData.checkIn.state == 4">{{ $t('commons.checkinState')['20'] }}</span>
+                        <span class="ok" v-else-if="item.state == 1">{{ $t('commons.checkinState')['1'] }}</span>
+                        <span class="ok" v-else-if="(item.state == 3 && item.roomId) || (item.state == 2 && item.roomId)">{{ $t('desk.hadRowHouses') }}</span>
 <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
-                        <span class="no" v-if="!item.roomId">{{ $t('desk.noRowHouses') }}</span>
+                        <span class="no" v-else-if="!item.roomId">{{ $t('desk.noRowHouses') }}</span>
 <!--                        <span class="no" v-if="">{{ $t('food.order_status')[3] }}</span>-->
                     </li>
                 </ul>

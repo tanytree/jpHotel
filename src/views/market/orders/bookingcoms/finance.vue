@@ -37,20 +37,20 @@
                         {{F_priceType(row.priceType ? row.priceType : 99)}}
                     </span>
                     <span v-else :class="row.richType == 1 ? 'red' : ''">
-                        {{'【' + $t('commons.payType')[row.payType] + '】' + F_priceType(row.priceType ? row.priceType : 99)}}
+                        {{'【' + $t('commons.payType')[row.payType || 1] + '】' + F_priceType(row.priceType ? row.priceType : 99)}}
                     </span>
                 </template>
             </el-table-column>
             <el-table-column prop="payPrice" :label="$t('desk.order_paymentA')">
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.payPrice ? (0 - row.payPrice) : ''}}</span>
-                    <span v-else>{{row.payPrice}}</span>
+                    <span v-else :class="row.richType == 1 ? 'red' : ''">{{row.payPrice}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="consumePrice" :label="$t('frontOffice.refundAmountA')">
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.consumePrice ? (0 - row.consumePrice) : ''}}</span>
-                    <span v-else>{{row.consumePrice}}</span>
+                    <span v-else :class="row.richType == 1 ? 'red' : ''">{{row.consumePrice}}</span>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('desk.order_businessThat')">
@@ -60,7 +60,7 @@
                     </span>
                     <br v-if="row.richType == 1">
                     <span v-if="row.richType == 1" class="blue">
-                       原因： {{row.richRemark}}
+                       理由： {{row.richRemark}}
                     </span>
                     <span v-else>{{F_priceType(row.priceType == 1 ? 1 : 99)}}</span>
                 </template>

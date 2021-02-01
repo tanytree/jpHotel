@@ -23,15 +23,15 @@
             <el-col :span="12">
                 <div class="fr">
 <!--                    disabled="checkinInfo.state == 1 || checkinInfo.state == 2"-->
-                    <el-button plain size="mini" @click="goCheckinDetail" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
+                    <el-button plain size="mini" @click="goCheckinDetail" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8">
                         {{ $t('manager.ps_inLive') }}
                     </el-button>
-                    <el-button plain size="mini" @click="updateReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
+                    <el-button plain size="mini" @click="updateReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8">
                         {{$t('desk.editRowHouse')}}
                     </el-button>
-<!--                    <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">-->
-<!--                        {{$t('commons.cancel')}}-->
-<!--                    </el-button>-->
+                    <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8">
+                        {{$t('commons.delete')}}
+                    </el-button>
                     <!--这块暂时隐藏 不要留太多bug-->
                     <el-dropdown split-button type="primary" size="mini" v-show="false">
                         {{ $t('commons.moreOperating') }}
@@ -161,6 +161,11 @@ export default {
             ruleHourList: [],
             liveCardData: [],
             liveData: [],
+            detailData: {
+                checkIn: {
+
+                }
+            }
         };
     },
 
@@ -183,6 +188,8 @@ export default {
             }
         },
         dialogOpen(currentRoom, checkinInfo) {
+            debugger
+            this.detailData.checkIn = checkinInfo;
             this.currentRoom = currentRoom;
             this.checkinInfo = checkinInfo;
             this.show = true;

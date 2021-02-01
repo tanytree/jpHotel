@@ -161,6 +161,7 @@ module.exports = {
   home_putDirty: '置脏',
   home_putDirtyA: '置脏',
   home_service: '维修',
+  home_cannel_service: '取消维修',
   home_buyNet: '置净',
   home_stayOver: '续住',
   home_needLeave: '如果需要提前离店，需要在续住天数中输入负数',

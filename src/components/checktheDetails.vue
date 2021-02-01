@@ -21,7 +21,12 @@
                     <el-row>
                         <el-col :span="6">
                             <el-form-item :label="$t('manager.hk_livePrice') + ':'">
-                                <el-input v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 200px"></el-input>
+<!--                                <el-input v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 200px"></el-input>-->
+                                <el-select v-model="roomInfo.headerObj.housePrice" :class="roomInfo.headerObj.housePrice === 'defined' ? 'width-100' : 'width-200'">
+                                    <el-option v-for="(item,i) in roomInfo.priceList" :key="i" :label="item.label" :value="item.value"></el-option>
+                                </el-select>
+                                <el-input v-if="roomInfo.headerObj.housePrice === 'defined'" v-model.number="roomInfo.headerObj.definedPrice" size="small" type="number"
+                                          style="width: 110px; margin-left: 10px"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
@@ -35,7 +40,7 @@
                                     popper-class="popper-class"
                                     :trigger-on-focus="false"
                                     :placeholder="$t('desk.book_inputContentA')"
-                                    @select="changeName($event, roomInfo.headerObj)"
+                                    @select="changeName($event, roomInfo.headerObj, index)"
                                 ></el-autocomplete>
                                 <el-input style="width: 110px; margin-left: 10px" v-model="roomInfo.headerObj.pronunciation" :placeholder="$t('desk.customer_namePYA')"></el-input>
                             </el-form-item>
@@ -57,14 +62,14 @@
                     </el-row>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.customer_documentTypeA')+ ':'" label-width="120px">
+                            <el-form-item :label="$t('desk.customer_documentTypeA')+ ':'">
                                 <el-select v-model="roomInfo.headerObj.idcardType" size="small" :placeholder="$t('commons.selectIdCardType')" style="width: 200px">
                                     <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.home_idCardNumA')+ ':'" label-width="130px">
+                            <el-form-item :label="$t('desk.home_idCardNumA')+ ':'" label-width="150px">
                                 <el-input :placeholder="$t('desk.order_inputCardNum')" v-model="roomInfo.headerObj.idcard" size="small" style="width: 200px"></el-input>
                             </el-form-item>
                         </el-col>
@@ -122,7 +127,7 @@
                     </el-row>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.editor_asideBreakfast')+ ':'" label-width="130px">
+                            <el-form-item :label="$t('desk.editor_asideBreakfast')+ ':'">
                                 <el-select v-model="roomInfo.headerObj.attachMealId" size="small" style="width: 200px">
                                     <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in breakfastList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
@@ -130,7 +135,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.editor_asideDinner')+ ':'" label-width="130px">
+                            <el-form-item :label="$t('desk.editor_asideDinner')+ ':'" >
                                 <el-select v-model="roomInfo.headerObj.attachMealIdDinner" size="small" style="width: 200px">
                                     <el-option :label="$t('manager.hk_donot')" value=""></el-option>
                                     <el-option v-for="item in dinnerList" :key="item.id" :label="item.mealName" :value="item.id"></el-option>
@@ -217,7 +222,6 @@ export default {
             //当是从前台办理过来的请求
             this.type = "checkin";
             let checkInDetail = this.$F.deepClone(this.checkInDetail);
-
             checkInDetail.forEach((item) => {
                 if (item.headerObj) {
                     item.headerObj.personType = 2; //主入住人
@@ -260,12 +264,17 @@ export default {
                 let object = {
                     headerObj: {
                         checkinRoomId: room.roomId,
-                        housePrice: room.realPrice || room.reservePrice || room.roomMarkPrice,
+                        housePrice: room.housePrice || room.realPrice || room.reservePrice || room.roomMarkPrice,
+                        name: this.detailData.checkIn.name,
+                        pronunciation: this.detailData.checkIn.pronunciation,
+                        mobile: this.detailData.checkIn.mobile,
+                        enterMobile: this.detailData.checkIn.enterMobile,
+                        homeMobile: this.detailData.checkIn.homeMobile,
+                        sex: this.detailData.checkIn.sex || '1',
                     },
                     room: room,
                 };
-
-
+                this.fetchHousePrice(room.roomTypeId, object);
                 room.personList.forEach((person, index) => {
                     person.customerType = person.customerType ? person.customerType + "" : "1";
                     person.idcardType = person.idcardType ? person.idcardType + "" : "1";
@@ -278,6 +287,7 @@ export default {
                             this.$F.deepClone(person)
                         );
                         object.headerObj.checkinRoomId = room.roomId;
+                        object.headerObj.definedPrice = person.housePrice || 0;
                         room.personList.splice(index, 1);
                     }
                 });
@@ -332,6 +342,7 @@ export default {
                     enterAddressZip1: "", //      单位地址邮编1  String选填
                     enterAddressZip2: "", //      单位地址邮编2  String选填
                     enterAddress: "", //      单位地址  String选填
+                    definedPrice: 0,
                 },
             },
             tableData: [],
@@ -346,6 +357,38 @@ export default {
     },
 
     methods: {
+        fetchHousePrice(roomTypeId, object) {
+            let params = {
+                strategyTime: new Date().Format("yyyy-MM-dd"),
+                priceCalend: 2,
+                timeType: 3,
+                roomTypeId: roomTypeId
+            };
+            this.$F.doRequest(
+                this, "/pms/hotel/hotel_price_guest_chamber_list", params, (res) => {
+                    let array = res.roomType.personPrice.split(',');
+                    object.priceList = [];
+                    array.forEach((price, i) => {
+                        object.priceList.push({
+                            label: (i + 1) + this.$t('manager.hk_peopleLive') + ': ' + price,
+                            value: price
+                        })
+                    })
+                    object.priceList.push({
+                        label: this.$t('desk.book_theCustomA'),
+                        value: 'defined'
+                    })
+                    this.$forceUpdate()
+                }
+            )
+        },
+
+        priceChange(value) {
+            if (value === 'defined') {
+
+            }
+        },
+
         changeName(e, personInfo) {
             console.log(e);
             if (e.name) {
@@ -362,8 +405,8 @@ export default {
                 personInfo.sex = '1';
                 personInfo.mobile = '';
                 personInfo.customerType = '1';
-                personInfo.attachMealId = '';
-                personInfo.attachMealIdDinner = '';
+                // personInfo.attachMealId = '';
+                // personInfo.attachMealIdDinner = '';
                 personInfo.email = '';
                 personInfo.region = '';
                 personInfo.homeAddressZip1 = '';
@@ -381,6 +424,10 @@ export default {
             } else {
                 this.checkInForm.name = e;
             }
+            setTimeout( () => {
+                this.$forceUpdate()
+            }, 1000)
+
         },
 
         remoteMethod(query, cb) {
@@ -490,12 +537,14 @@ export default {
             });
             let checkInRoomJson = [];
             this.inRoomList.forEach((room) => {
+                debugger
+                room.headerObj.housePrice = (room.headerObj.housePrice === 'defined' ? room.headerObj.definedPrice : room.headerObj.housePrice);
                 let checkinInfo = {
                     roomId: room.room.roomId,
                     houseNum: room.room.houseNum,
                     roomTypeName: room.room.roomTypeName,
-                    reservePrice: room.room.reservePrice,
-                    realPrice: room.room.realPrice || room.room.roomMarkPrice,
+                    reservePrice: room.housePrice || room.definedPrice || room.room.reservePrice,
+                    realPrice: room.housePrice || room.definedPrice || room.room.realPrice || room.room.roomMarkPrice,
                     roomTypeId: room.room.roomTypeId,
                     headerObj: room.headerObj,
                     personList: room.personList,
@@ -568,6 +617,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+.width-200 {
+    width: 200px;
+}
+.width-100 {
+    width: 100px;
+}
 .headerBox {
     color: rgba(102, 102, 102, 100);
     font-size: 18px;

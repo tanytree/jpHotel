@@ -9,17 +9,17 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button size="small" plain @click="addRoom" :disabled="roomLeaves">{{$t('desk.order_addRoom')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(1)" :disabled="roomLeaves">{{$t('desk.order_livePeopleManegerment')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="roomLeaves">{{ $t("desk.batchCheckin") }}</el-button>
+        <el-button size="small" plain @click="addRoom" :disabled="roomLeaves || detailData.checkIn.state == 8">{{$t('desk.order_addRoom')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(1)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{$t('desk.order_livePeopleManegerment')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{ $t("desk.batchCheckin") }}</el-button>
         <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')"
-                   :disabled="roomLeaves && checkinInfo.state != 1 && checkinInfo.state != 2">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                   :disabled="(roomLeaves && checkinInfo.state != 1 && checkinInfo.state != 2) || detailData.checkIn.state == 8">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown size="small" split-button type="primary">
           {{ $t("commons.moreOperating") }}
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')" :disabled="roomLeaves">
+            <el-dropdown-item @click.native="baseInfoChangeHandle('gustTypeChangeShow')" :disabled="roomLeaves || detailData.checkIn.state == 8">
                 {{ $t("desk.order_changeSource") }}</el-dropdown-item>
-            <el-dropdown-item @click.native="handleCancel(8)" :disabled="roomLeaves || hasCheckinFlag || (checkinInfo.state != 1 && checkinInfo.state != 2 && checkinInfo.state != 5)">
+            <el-dropdown-item @click.native="handleCancel(8)" :disabled="roomLeaves || detailData.checkIn.state == 8 || hasCheckinFlag || (checkinInfo.state != 1 && checkinInfo.state != 2 && checkinInfo.state != 5)">
                 {{ $t("desk.order_cancelOrder") }}</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(4)" v-if="!roomLeaves && !hasCheckinFlag && (checkinInfo.state == 1 || checkinInfo.state == 2 || checkinInfo.state == 5)">NOSHOW</el-dropdown-item>
             <el-dropdown-item @click.native="handleNoshow(5)" v-if="checkinInfo.state == 4">{{ $t("commons.cancel") }}NOSHOW</el-dropdown-item>

@@ -144,9 +144,7 @@ export default {
         }
     };
   },
-  computed:{
 
-  },
   async mounted() {
     this.intForm();
     this.getSoldOutList();

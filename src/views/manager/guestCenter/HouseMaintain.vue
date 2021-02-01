@@ -452,7 +452,7 @@
 						this.tab_show = false;
 						this.ruleForm = value;
 						this.files = [];
-						let arr = value.personPrice.split(',')
+						let arr = (value.personPrice || value.marketPrice).toString().split(',')
 						let obj = {}
 						//
 						arr.forEach((item, i) => {
@@ -580,7 +580,7 @@
 					"/pms/hotel/hotel_room_type_delete",
 					params,
 					(res) => {
-						
+
 						this.get_house_list();
 						this.$message({
 							message: this.$t("manager.hk_deleteSuccess"),

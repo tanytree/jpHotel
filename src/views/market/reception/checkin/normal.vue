@@ -280,7 +280,7 @@
                 <div class="left">
                     <el-form inline size="small" v-if="operCheckinType != 'b3'">
                         <el-form-item>
-                            <el-select v-model="getRoomsForm.bedCount" @change="getDataList" :placeholder="$t('commons.placeChoose')">
+                            <el-select v-model="getRoomsForm.bedCount" @change="getCheckinRoominfoList" :placeholder="$t('commons.placeChoose')">
                                 <el-option :value="key" v-for="(item, key, index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
@@ -768,7 +768,7 @@ export default {
             this.$F.commons.fetchSalesList(params, (data) => {
                 this.salesList = data.hotelUserList;
             });
-            this.getDataList();
+            this.getCheckinRoominfoList();
             this.initForm();
         },
 
@@ -867,16 +867,16 @@ export default {
                 region: '',  //地区
             };
             this.handleOperCheckinType();
-            this.getDataList();
+            this.getCheckinRoominfoList();
         },
+
         /**获取房间信息数据 */
-        getDataList() {
+        getCheckinRoominfoList() {
             let that = this;
             let params = this.$F.deepClone(this.getRoomsForm);
-            params.checkinTime = this.checkInForm.checkinTime.split(' ')[0];
+            params.checkinTime = this.checkInForm.checkinTime;
             params.checkoutTime = this.checkInForm.checkoutTime;
             params.changeType = 2;
-
             this.makeStoresNum(params);
             params.roomType = this.operCheckinType == 'b3' ? 2 : 1;
             this.$F.doRequest(
@@ -899,7 +899,6 @@ export default {
                             element.breakfastMealPrice +
                             element.dinnerMealPrice;
                     });
-
                     function check(id) {
                         for (let k in that.waitingRoom) {
                             if (that.waitingRoom[k].roomTypeId == id) {
@@ -1499,6 +1498,7 @@ export default {
             } else if (this.operCheckinType == 'b2') {
                 this.checkInForm.checkoutTime = new Date(e).Format("yyyy-MM-dd") + " 22:00:00";
             }
+            this.getCheckinRoominfoList();
             // let date = new Date(e);
             // date.setHours(date.getHours() + 2);  //预抵时间修改 保留时间跟着修改
             // this.checkInForm.keepTime = date.Format("yyyy-MM-dd HH:mm:ss");
@@ -1512,6 +1512,7 @@ export default {
                 );
                 this.checkInForm.checkinDays = day;
             }
+            this.getCheckinRoominfoList();
         },
         checkinDaysChange(e) {
             console.log(e);
@@ -1524,6 +1525,7 @@ export default {
                 date.setDate(date.getDate() + e);
                 this.checkInForm.checkoutTime = date.Format("yyyy-MM-dd 11:00:00");
             }
+            this.getCheckinRoominfoList();
         },
 
         //添加同来宾客

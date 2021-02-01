@@ -592,7 +592,7 @@ export default {
     handleReset(item) {
       let params = {
         checkInReserveId: item.id,
-        state: 1,
+        state: 5,
       };
       this.$confirm(
         this.$t("desk.order_sureOperate"),

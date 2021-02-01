@@ -668,6 +668,7 @@ module.exports = {
   home_putDirty: '清掃',
   home_putDirtyA: '清掃指示',
   home_service: '故障',
+  home_cannel_service: '取消维修',
   home_buyNet: '清掃済',
   home_stayOver: '連泊',
   home_needLeave: '予定日より早めに出発場合、連泊日数に【-】を入力必要です。',

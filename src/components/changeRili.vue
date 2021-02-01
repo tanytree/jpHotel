@@ -7,7 +7,7 @@
 					<el-form-item :label="$t('manager.grsl_selectTime')+':'" style="display: flex;">
 						<el-date-picker v-model="search_d.strategyTime" value-format="yyyy-MM-dd" align="right" type="date" :placeholder="$t('commons.selectDate')"
 						 :picker-options="pickerOptions"></el-date-picker>
-						 
+
 					</el-form-item>
 					<el-form-item>
 						<el-col > <el-button type="text"  @click="beforeTap" style="border-bottom: 2rpx solid #409EFF; margin-left: 20rpx;">&lt;&lt; {{$t('manager.add_lsat15')}}</el-button></el-col>
@@ -545,83 +545,82 @@ export default {
 				//  * @param roomTypeId   客房或会议厅房型id  string必填
 				let params = this.search_d;
 				params.roomTypeId = this.ruleForm.id
-				params.roomTypeId =
-					this.$F.doRequest(
-						this,
-						"/pms/hotel/hotel_price_guest_chamber_list",
-						params,
-						(res) => {
-						    // debugger
-                            this.dayPriceList = res.dayPriceList;
-							this.dateList = res.dateList
-							this.dateList.unshift({
-								dateStr: this.$t('desk.home_typeText'),
-								weekDay: "",
-							});
-							if(res.roomType.roomType == 1) {
-								this.roomType = [{
-									name: this.$t('manager.add_onlyLive')
-								}, {
-									name: this.$t('manager.add_liveAzao')
-								}, {
-									name: this.$t('manager.add_liveAwan')
-								}, {
-									name: this.$t('manager.add_zaoAwan')
-								}]
-								let stay = ''; // 纯住宿
-								let stayX = ''; // 住宿+早
-								let stayY = ''; // 住宿+晚
-								let stayXY = ''; // 住宿+早+晚
-								this.roomType.forEach((value, index) => {
-                                    value.roomType = res.roomType
-                                    this.mealBreakfastObject = value.roomType.mealBreakfastObject
-                                    this.mealDinnerObject = value.roomType.mealDinnerObject
-                                    // debugger
-									let roomTypePrises = [];
-									if (value.roomType.roomType == 1) {
-										if (value.roomType.personPrice) {
-											let arr = value.roomType.personPrice.split(',')
-											let arry = arr.filter(function(el) { //多人价格
-												return el !== '';
-											});
-                                            arry.forEach((c, d) => {
-                                                if(index == 0) { //纯住宿
-                                                    stay += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(arr[d]) + '<br/>'
-                                                } else if(index== 1) {  //住宿+早
-                                                    stayX += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))  + '<br/>'
-                                                } else if (index== 2) {  //住宿+晚餐
-                                                    stayY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
-                                                } else if (index== 3) { //住宿+晚餐+早餐
-                                                    stayXY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
-                                                }
-                                            })
-											roomTypePrises.push(stay);
-											roomTypePrises.push(stayX);
-											roomTypePrises.push(stayY);
-											roomTypePrises.push(stayXY);
-											this.dateList.forEach((a, b) => {
-											    a.roomTypePrises = roomTypePrises;
-											})
-										}
-									}
-								})
-							} 
-							else {
-								this.roomType.push(res.roomType)
-								console.log('this.roomType=====', this.roomType)
-								this.dateList.forEach((a, b) => {
-									a.roomTypePrises = this.roomType
-								})
-							}
+                this.$F.doRequest(
+                    this,
+                    "/pms/hotel/hotel_price_guest_chamber_list",
+                    params,
+                    (res) => {
+                        // debugger
+                        this.dayPriceList = res.dayPriceList;
+                        this.dateList = res.dateList
+                        this.dateList.unshift({
+                            dateStr: this.$t('desk.home_typeText'),
+                            weekDay: "",
+                        });
+                        if(res.roomType.roomType == 1) {
+                            this.roomType = [{
+                                name: this.$t('manager.add_onlyLive')
+                            }, {
+                                name: this.$t('manager.add_liveAzao')
+                            }, {
+                                name: this.$t('manager.add_liveAwan')
+                            }, {
+                                name: this.$t('manager.add_zaoAwan')
+                            }]
+                            let stay = ''; // 纯住宿
+                            let stayX = ''; // 住宿+早
+                            let stayY = ''; // 住宿+晚
+                            let stayXY = ''; // 住宿+早+晚
+                            this.roomType.forEach((value, index) => {
+                                value.roomType = res.roomType
+                                this.mealBreakfastObject = value.roomType.mealBreakfastObject
+                                this.mealDinnerObject = value.roomType.mealDinnerObject
+                                // debugger
+                                let roomTypePrises = [];
+                                if (value.roomType.roomType == 1) {
+                                    if (value.roomType.personPrice) {
+                                        let arr = value.roomType.personPrice.split(',')
+                                        let arry = arr.filter(function(el) { //多人价格
+                                            return el !== '';
+                                        });
+                                        arry.forEach((c, d) => {
+                                            if(index == 0) { //纯住宿
+                                                stay += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(arr[d]) + '<br/>'
+                                            } else if(index== 1) {  //住宿+早
+                                                stayX += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))  + '<br/>'
+                                            } else if (index== 2) {  //住宿+晚餐
+                                                stayY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                            } else if (index== 3) { //住宿+晚餐+早餐
+                                                stayXY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                            }
+                                        })
+                                        roomTypePrises.push(stay);
+                                        roomTypePrises.push(stayX);
+                                        roomTypePrises.push(stayY);
+                                        roomTypePrises.push(stayXY);
+                                        this.dateList.forEach((a, b) => {
+                                            a.roomTypePrises = roomTypePrises;
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            this.roomType.push(res.roomType)
+                            console.log('this.roomType=====', this.roomType)
+                            this.dateList.forEach((a, b) => {
+                                a.roomTypePrises = this.roomType
+                            })
+                        }
 
 
-							// console.log('this.roomType=====', this.roomType)
-							// console.log('this.dateList========', this.dateList)
-							// debugger
+                        // console.log('this.roomType=====', this.roomType)
+                        // console.log('this.dateList========', this.dateList)
+                        // debugger
 
-							this.$forceUpdate();
-						}
-					);
+                        this.$forceUpdate();
+                    }
+                );
 			},
 			popup(type, row, item, index) {
 				// console.log(this.ruleForm)
