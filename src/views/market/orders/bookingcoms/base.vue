@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 14:57:09
+ * @LastEditTime: 2021-02-01 17:39:32
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -579,7 +579,7 @@ export default {
         state: 8,
       };
       this.$confirm(
-        this.$t("desk.order_sureDelete"),
+        this.$t("desk.order_sureDeleteA"),
         this.$t("commons.tip_desc"),
         {
           confirmButtonText: this.$t("commons.confirm"),

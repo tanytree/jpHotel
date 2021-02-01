@@ -1,14 +1,14 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2021-01-07 16:13:08
+ * @LastEditTime: 2021-02-01 18:06:21
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
     <el-dialog
         top="0"
         :visible.sync="hosteldis"
-        width="80%"
+        width="90%"
         :title=" `${currentRoom.houseNum}` + '  ' + `${ currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : '' }` + `${currentRoom.checkIn ? '-' : ''}` +
       checkTitleEnd()">
         <!-- 查看预订信息dialog -->
@@ -53,9 +53,9 @@
                         </div>
 
                         <div class="riBottom" @click="lookRoomClick(date)" v-if="date.reserveObj" style="background: #A3E5FD">
-                            <span>{{date.reserveObj.name}}</span>
-                            <span v-if="date.reserveObj.pronunciation">【{{date.reserveObj.pronunciation}}】</span>
-                            <span>{{$t('commons.guestType')[date.reserveObj.guestType + '']}}</span>
+                            <div>{{date.reserveObj.name}}</div>
+                            <!-- <span v-if="date.reserveObj.pronunciation">【{{date.reserveObj.pronunciation}}】</span> -->
+                            <div>{{$t('commons.guestType')[date.reserveObj.guestType + '']}}</div>
                         </div>
                         <div class="riBottom" v-else>{{$t('desk.order_blankText')}}</div>
                     </div>
@@ -501,18 +501,19 @@ export default {
 .riliBox {
     margin: 10px auto;
     margin-bottom: 20px;
-    width: 700px;
+    width: 92%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     .itemRi {
+      width: 14.28%;
         .riTop {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100px;
+           width: 100%;
             height: 80px;
             background-color: rgba(234, 234, 234, 1);
             border: 1px solid rgba(218, 218, 218, 1);
@@ -522,7 +523,7 @@ export default {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100px;
+            width: 100%;
             height: 100px;
             background-color: rgba(255, 255, 255, 1);
             border: 1px solid rgba(218, 218, 218, 1);

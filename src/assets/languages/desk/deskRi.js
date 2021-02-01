@@ -1,12 +1,12 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-01 17:27:11
+ * @LastEditTime: 2021-02-01 18:26:48
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
 module.exports = {
-    editRowHouse: '編集アサイン',
+    editRowHouse: 'アサイン変更',
     roomOccupation: '部屋がとられる',
   reserveInfoDesc: '予定情報',
   attachedMeal: '食付',
@@ -17,7 +17,9 @@ module.exports = {
   roomInfoDesc: '部屋情報',
   customerInfoDesc: '顧客情報',
   payTotal: '支払済合計金額',
+  payTotalB: '支払済',
   consumerTotal: '利用合計金額',
+  consumerTotalA: '利用合計',
   balanceTotal: '差引',
   orderMarkInfo: '備考',
   orderMarkInfo_one: '備考1',
@@ -518,7 +520,7 @@ module.exports = {
   customer_roomNumber: '部屋番号',
   customer_settleBill: '精算明細',
   customer_rich: '相殺調整',
-  customer_richA: '修正',
+  customer_richA: '会計取消',
   customer_businessProject: '業務項目',
   customer_selectText: '選択',
   customer_businessDetail: '業務詳細',
@@ -619,7 +621,7 @@ module.exports = {
   order_accountDeveloped: "相殺調整処理",
   order_ifGoTie: "「未収」確認",
   order_receivable: "会計金額",
-  order_receivableA: "入金/請求金額",
+  order_receivableA: "入金/請求",
   order_shouldBack: "「未収」確認",
   order_canDeduction: "200ポイントで20元を相殺",
   order_mixingWay: "相殺方法",
@@ -735,6 +737,7 @@ module.exports = {
   order_selectGoods: "商品を選択してください",
   order_selectRoomNum: "部屋番号を選択してください",
   order_partBill: "一部支払い",
+  order_partBillA: "支払",
   order_billExplain: "会計選択：自動計算、相殺済、精算済みの会計は一部支払い処理できません",
   order_saleDay: "営業日",
   order_allPay: "支払い合計",
