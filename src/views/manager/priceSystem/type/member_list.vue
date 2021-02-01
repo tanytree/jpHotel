@@ -34,7 +34,8 @@
 								<span>{{scope.row.name || scope.row.houseName}}</span>
 							</div>
 							<div v-if="index > 0">
-								<span @click="changePopup(scope.row, scope.$index, item, index)">
+							 <!-- @click="changePopup(scope.row, scope.$index, item, index)" -->
+								<span> 
 									{{getDateP(scope.row, scope.$index, item, index)}}
 								</span>
 							</div>

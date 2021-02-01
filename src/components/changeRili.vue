@@ -32,9 +32,11 @@
 								<span v-else>{{scope.row.houseName}}</span>
 							</div>
 							<div v-if="index > 0" >
-								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)" v-if="scope.row.roomType.roomType == 1" v-html="getDateP(item, scope.$index)">
+								<!-- @click="popup('single', scope.row, item)" -->
+								<span style=" cursor: pointer !important;"  v-if="scope.row.roomType.roomType == 1" v-html="getDateP(item, scope.$index)">
 								</span>
-								<span style=" cursor: pointer !important;" @click="popup('single', scope.row, item)"  v-html="getDateT(item, scope.$index)" v-else>
+								<!-- @click="popup('single', scope.row, item)" -->
+								<span style=" cursor: pointer !important;"  v-html="getDateT(item, scope.$index)" v-else>
 								    <!-- {{item.onePrice}} -->
 								</span>
 							</div>

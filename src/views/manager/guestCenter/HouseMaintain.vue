@@ -574,6 +574,7 @@
 					"/pms/hotel/hotel_room_type_delete",
 					params,
 					(res) => {
+						
 						this.get_house_list();
 						this.$message({
 							message: this.$t("manager.hk_deleteSuccess"),
