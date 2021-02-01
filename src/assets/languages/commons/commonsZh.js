@@ -203,6 +203,7 @@ module.exports = {
   checkinState: {
     '1': '在住',
     '2': '已退房',
+    '3': '未入住',
   },
   //预订状态
   reserveState: {

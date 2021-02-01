@@ -95,18 +95,27 @@
                                             <span>{{ room.houseNum }}</span>
                                             <span>{{ room.hotelRoomType.houseName }}</span>
                                         </div>
-                                        <div class="line" v-if=" room.livingPersonList && room.livingPersonList.length > 0 &&  room.checkInObj && (room.checkInRoomType == 1 || room.checkInRoomType == 2)">
-                                            <span v-if="room.checkInRoomType == 1"> {{ $t('desk.home_bookPeople') + '：' + room.livingPersonList[0].name }}</span>
-                                            <span v-if="room.checkInRoomType == 2"> {{ $t('desk.customer_livePeople') + '：' + room.livingPersonList[0].name }}</span>
+                                        <div class="line" v-if="room.checkInRoomType == 1 && room.checkInObj">
+                                            <span v-if="room.checkInRoomType == 1"> {{ $t('desk.customer_livePeople') + '：' + room.checkInObj.name }}</span>
                                             <span>{{  '  '  }}</span>
-                                            <span>{{  F_guestType( room.checkInObj.guestType || '1') }}</span>
                                         </div>
-                                        <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && room.checkInObj" style="margin-top: 40px">
+                                        <div class="line" v-if="room.reseverCheckInObj && room.checkInRoomType == 2">
+                                            <span v-if="room.checkInRoomType == 2"> {{ $t('desk.home_bookPeople') + '：' + room.reseverCheckInObj.name }}</span>
+                                            <span>{{  '  '  }}</span>
+                                        </div>
+                                        <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && (room.checkInObj || room.reseverCheckInObj)"
+                                             style="margin-top: 40px">
                                             <span>{{$t('manager.finance_source')}}：{{
-                                                    F_orderSource(room.checkInObj.orderSource)
+                                                    F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource)
                                                         }}
-                                                    <span v-if="room.checkInObj.orderSource == 5 && room.checkInObj.otaChannelId">-</span>
-                                                    <span v-if="room.checkInObj.orderSource == 5">{{getOtaName(room.checkInObj.otaChannelId)}}</span>
+                                                    <span v-if="room.checkInObj">
+                                                        <span v-if="room.checkInObj.orderSource == 5 && room.checkInObj.otaChannelId">-</span>
+                                                        <span v-if="room.checkInObj.orderSource == 5">{{getOtaName(room.checkInObj.otaChannelId)}}</span>
+                                                    </span>
+                                                    <span v-if="room.reseverCheckInObj">
+                                                        <span v-if="room.reseverCheckInObj.orderSource == 5 && room.reseverCheckInObj.otaChannelId">-</span>
+                                                        <span v-if="room.reseverCheckInObj.orderSource == 5">{{getOtaName(room.reseverCheckInObj.otaChannelId)}}</span>
+                                                    </span>
                                                 </span>
                                         </div>
                                         <!-- 清扫图标后期加 -->
@@ -132,7 +141,7 @@
             </el-container>
         </div>
         <!-- 房间信息 -->
-       <room-info ref="roomInfo"></room-info>
+       <room-info ref="roomInfo" @init="init"></room-info>
         <!-- 续住 -->
         <el-dialog top="0" :title="$t('desk.home_stayOver')" :visible.sync="stayoer" width="80%">
             <el-alert
@@ -353,9 +362,16 @@ export default {
 
     mounted() {
         this.init();
+        this.initOthers();
     },
     methods: {
-        async init() {
+        init() {
+            this.realtime_room_statistics();
+            this.get_hotel_building_list();
+            this.initForm();
+        },
+
+        async initOthers() {
             this.$F.commons.fetchOtaList({}, (list)=> {
                 this.otaList = list;
                 this.$forceUpdate();
@@ -364,9 +380,6 @@ export default {
             await this.getPersonRoom();
             // await this.getRoomStatus()
             await this.getIconDes();
-            this.realtime_room_statistics();
-            this.get_hotel_building_list();
-            this.initForm();
         },
 
         getOtaName(otaChannelId) {

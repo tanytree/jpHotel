@@ -6,6 +6,7 @@
  */
 //前台部 日文
 module.exports = {
+    editRowHouse: '編集アサイン',
     roomOccupation: '部屋がとられる',
   reserveInfoDesc: '予定情報',
   attachedMeal: '食付',
@@ -202,6 +203,7 @@ module.exports = {
   book_meetName: '会議名',
   book_MeetstartAend: '開始〜終了時間',
   book_traveler: '一般',
+  book_travelerA: '一般客',
   book_member: '会員',
   book_desk: 'フロント',
   book_saleTo: '営業',

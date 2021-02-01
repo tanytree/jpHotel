@@ -193,7 +193,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item :label="$t('desk.home_bookPeople')" class="" prop="name">
-              <el-input type="text" v-model="baseInfoChangeForm.region" style="width: 150px"></el-input>
+              <el-input type="text" v-model="baseInfoChangeForm.name" style="width: 150px"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">

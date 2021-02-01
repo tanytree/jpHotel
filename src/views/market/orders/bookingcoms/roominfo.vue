@@ -27,11 +27,11 @@
                         {{ $t('manager.ps_inLive') }}
                     </el-button>
                     <el-button plain size="mini" @click="updateReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
-                        {{$t('desk.rowHouse')}}
+                        {{$t('desk.editRowHouse')}}
                     </el-button>
-                    <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">
-                        {{$t('commons.cancel')}}
-                    </el-button>
+<!--                    <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2">-->
+<!--                        {{$t('commons.cancel')}}-->
+<!--                    </el-button>-->
                     <!--这块暂时隐藏 不要留太多bug-->
                     <el-dropdown split-button type="primary" size="mini" v-show="false">
                         {{ $t('commons.moreOperating') }}
@@ -50,9 +50,8 @@
             <el-row>
                 <el-col :span="8">
                     <p>{{ $t('desk.order_checkinState') }}：
-                    <span class="ok" v-if="currentRoom.roomId && currentRoom.personList && currentRoom.personList.length > 0">{{ $t('commons.checkinState')['1'] }}</span>
-                    <span class="ok" v-if="currentRoom.roomId && (!currentRoom.personList || currentRoom.personList.length == 0)">{{ $t('desk.hadRowHouses') }}</span>
-                    <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
+                    <span class="ok">{{ $t('commons.checkinState')[currentRoom.state || '1'] }}</span>
+<!--                    <span class="ok" v-if="currentRoom.roomId && (!currentRoom.personList || currentRoom.personList.length == 0)">{{ $t('desk.hadRowHouses') }}</span>-->
                     </p>
                 </el-col>
             </el-row>

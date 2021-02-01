@@ -14,7 +14,18 @@ let mixin = {
 
     },
     methods: {
-
+        //过滤星期
+        F_weekday(value) {
+            let enums = this.$t('commons.weeks')
+            let weeks = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+            let string = value;
+            weeks.forEach((week,index) => {
+                if (value.indexOf(week) != -1) {
+                   string = enums[index];
+                }
+            })
+            return string;
+        },
         F_checkinState(value) {
             let enums = this.$t('commons.checkinState')
             return value && enums[value] ? enums[value] : ''
@@ -117,7 +128,7 @@ let mixin = {
             }
         },
         getPriceStr(v){
-            
+
             if(v){
                 if(v<0){
                     return Math.abs(v);
@@ -125,8 +136,8 @@ let mixin = {
                     return v
                 }
             }
-            
-            
+
+
         },
         //迷你吧计算税
         getTaxInfo(tax,list,outFlag){

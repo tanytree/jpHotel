@@ -254,23 +254,8 @@ export default {
             payPrice:paySum,
             totalPrice:paySum - consumeSum
         }
-
-
-
-
-        // if (this.detailData.totalPrice > 0) {
-        //     this.consumePrice = this.detailData.totalPrice;
-        // }else {
-        //     this.checkoutForm.payPrice = this.detailData.consumePrice;
-        // }
-
-
-
         this.consumeOrderList = orderList
-
-
         this.checkoutForm.checkInId = this.currentRoom.checkinId
-
         console.log(this.currentRoom)
     },
     //请求 单位 列表
@@ -305,32 +290,7 @@ export default {
             return Math.abs(v);
         }
     },
-    // getConsumeOrderList(){
-    //     let info = {
-    //         checkInId: this.currentRoom.checkinId,
-    //         state:'',
-    //         pageIndex: 1,
-    //         pageSize: 1000
-    //     }
-    //     this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
-    //         // console.log(res.consumeOrderList)
-    //         let list = res.consumeOrderList
-    //         let priceTypeList = [5,6,7,8,9,10,12,14,15,16,17,18,22] //消费类集合
-    //         let arr = []
-    //         for(let i = 0;i < list.length;i++){
-    //             // console.log(list[i].priceType)
-    //             let priceType = list[i].priceType
-    //             if(priceTypeList.indexOf(priceType) > -1 &&   list[i].state == 1){
-    //                //  console.log(list[i].priceType)
-    //                // console.log(list[i].priceType +':' +this.F_priceType(list[i].priceType))
-    //                 arr.push(list[i])
-    //             }
-    //         }
-    //         console.log(arr)
-    //         this.consumeOrderList = arr
-    //     });
-    // },
-    //退房结账
+
 
     getFee(){
         let preferentialPrice = this.checkoutForm.preferentialPrice
@@ -343,7 +303,7 @@ export default {
         //付款 500
         //优惠 10
 
-        if(this.getRealPayFee.sum - this. detailData.payPrice > 0){
+        if(this.getRealPayFee.sum - this.detailData.payPrice > 0){
            return  this.getRealPayFee.sum - this.detailData.payPrice
         }else{
            return  this.detailData.payPrice - this.getRealPayFee.sum + preferentialPrice
@@ -355,7 +315,14 @@ export default {
     consume_oper(){
 
         console.log(this.detailData)
-        console.log(this.currentRoom)
+        console.log(this.consumeOrderList)
+        let list = this.consumeOrderList
+        let ids = list.map((item) =>{
+            return item.id
+        })
+        let consumeOrders = ids.join(',')
+        // console.log(consumeOrders)
+
         let checkoutForm = this.checkoutForm
         console.log(checkoutForm)
         let params = {
@@ -367,8 +334,10 @@ export default {
             roomId:this.currentRoom.roomId,
             roomNum:this.currentRoom.houseNum,
             remark:checkoutForm.remark,
-            state:2
+            state:2,
+            consumeOrders:consumeOrders
         }
+
 
 
         if(checkoutForm.putUp){
@@ -378,11 +347,12 @@ export default {
             params.enterId = checkoutForm.enterId
             params.creditName = checkoutForm.creditName
         }
-        console.log(params)
-        return
+        // console.log(params)
+        // return
         this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
             console.log(res)
-            this.set_out_check_in();
+            // this.set_out_check_in();
+            this.getOrderDetail()
         })
 
    },
@@ -398,12 +368,12 @@ export default {
 
             this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
             console.log(res)
-            this.$router.replace({
-              path: "/orders",
-              query: {
-                type: 'order',
-              },
-            });
+            // this.$router.replace({
+            //   path: "/orders",
+            //   query: {
+            //     type: 'order',
+            //   },
+            // });
            })
     },
     //判断数组中的值是否相同
@@ -414,6 +384,7 @@ export default {
     },
     getOrderDetail(){
         console.log('part')
+        this.checkoutVisible = false
         this.$emit('getOrderDetail')
     },
     get_consume_tax(){

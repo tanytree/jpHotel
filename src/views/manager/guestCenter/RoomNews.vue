@@ -337,7 +337,7 @@ export default {
             },
             set() {},
         },
-       
+
         deleteSuccess: {
             get() {
                 return this.$t("manager.hk_deleteSuccess");
@@ -422,7 +422,7 @@ export default {
         note(newValue, oldValue) {
             this.note = newValue;
         },
-      
+
         deleteSuccess(newValue, oldValue) {
             this.deleteSuccess = newValue;
         },
@@ -490,7 +490,7 @@ export default {
                 }
             } else {
                 this.$message({
-                    message: this.$t("manager.hk_pleaseSelectA"),
+                    message: this.$t("manager.batchSelectTip"),
                     type: "warning",
                 });
                 return;

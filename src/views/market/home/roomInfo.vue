@@ -25,10 +25,12 @@
             <!-- 基本信息 -->
             <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
                 <div class="buttonBox">
-                    <el-button type="primary" size="small" plain @click="goRoomStatus">{{ this.currentRoom.roomStatus == 3 ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}</el-button>
+                    <el-button type="primary" size="small" plain @click="goRoomStatus">{{ ((this.currentRoom.roomStatus == 3 || this.currentRoom.roomStatus == 1)
+                        && this.currentRoom.roomStatus !=5) ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}</el-button>
                     <el-button type="primary" size="small" plain @click="goFinance" :disabled="this.currentRoom.checkInRoomType != 1 && this.currentRoom.checkInRoomType != 2">{{$t('desk.customer_accountingTextA')}}</el-button>
                     <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.chargeA')}}</el-button>
                     <el-button type="primary" @click="checkoutRoom" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.order_checkout')}}</el-button>
+<!--                    <el-button type="primary" @click="goRoomStatus" size="small" plain :disabled="this.currentRoom.roomStatus ==5">{{$t('desk.home_service')}}</el-button>-->
                 </div>
                 <div class="infoBox">
                     <!--            入住人信息展示-->
@@ -147,7 +149,7 @@ export default {
                     roomId: this.currentRoom.id,
                     startTime: this.startTime,
                     endTime: this.endTime,
-                    searchType: this.currentRoom.checkInRoomType || 2,
+                    searchType: this.currentRoom.omType || 2,
                     checkinTime: this.startTime,
                     checkoutTime: this.endTime,
                 }, (res) => {
@@ -243,16 +245,24 @@ export default {
 
         //改变房间状态 置脏置净
         goRoomStatus() {
-            let roomStatus;
-            if (this.currentRoom.checkInRoomType == 1) {
-
+            let roomStatus = 5;
+            console.log(this.currentRoom.roomStatus)
+            debugger
+            if (this.currentRoom.roomStatus == 1) {
+                roomStatus = 2;
+            } else if (this.currentRoom.roomStatus == 2) {
+                roomStatus = 1;
+            } else if (this.currentRoom.roomStatus == 3) {
+                roomStatus = 4;
+            } else if (this.currentRoom.roomStatus == 4) {
+                roomStatus = 3;
             }
-            roomStatus = this.currentRoom.roomStatus == 3 ? 2 : 1;
             this.$F.doRequest(this, '/pms/hotel/oper_room_status', {
                 roomIds: this.currentRoom.id,
                 roomStatus: roomStatus
             }, (res) => {
-                this.currentRoom.roomStatus = this.currentRoom.roomStatus == 3 ? 4: 3;
+                this.currentRoom.roomStatus = roomStatus;
+                this.$emit('init');
             });
         },
 

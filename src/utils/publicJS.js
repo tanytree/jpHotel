@@ -58,6 +58,12 @@ const $F = {
 
     },
 
+    replaceWeekDay(weekdayStr) {
+        this.$t('commons.weeks').forEach((item, i) => {
+
+        })
+    },
+
     doUploadBatch($instance, imgList = [], callback) {
         let formData = new FormData();
         let newImageList = [];

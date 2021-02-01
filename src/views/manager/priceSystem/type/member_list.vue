@@ -28,7 +28,7 @@
 			<div class="components-edit member-price" v-loading="loading">
 				<el-table :data="memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id2" :default-expand-all="false"
 				 header-row-class-name="default" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" border>
-					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + item.weekDay" :width="index== 0? '160': ''">
+					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + F_weekday(item.weekDay)" :width="index== 0? '160': ''">
 						<template slot-scope="scope">
 							<div v-if="index == 0">
 								<span>{{scope.row.name || scope.row.houseName}}</span>
@@ -178,7 +178,9 @@
 </template>
 
 <script>
+import myMixin from "@/utils/filterMixin";
 	export default {
+        mixins: [myMixin],
 		data() {
 			return {
 				memberTypeLength: 0,
