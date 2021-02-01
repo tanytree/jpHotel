@@ -56,13 +56,13 @@
 							 :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20">
+					<!-- <el-col :span="20">
 						<el-form-item :label="$t('manager.ps_selectWeek')+':'">
 							<el-checkbox-group v-model="ruleForm_Pie.weeks" @change="handleWeekDayChange">
 								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
 							</el-checkbox-group>
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 				</el-form>
 			</el-row>
 			<el-table ref="multipleTable" :data="ruleForm_Pie.roomStrategyJson" tooltip-effect="dark" default-expand-all
@@ -432,19 +432,19 @@ export default {
 			onSave() {
 				console.log(this.ruleForm);
 
-				let week = ''
-				this.ruleForm_Pie.weeks.forEach((value, index) => {
-					week = week + ',' + value
-				})
-				if (week.substr(0, 1) === ',') {
-					week = week.substr(1)
-				}
+				// let week = ''
+				// this.ruleForm_Pie.weeks.forEach((value, index) => {
+				// 	week = week + ',' + value
+				// })
+				// if (week.substr(0, 1) === ',') {
+				// 	week = week.substr(1)
+				// }
 				let params = {
 					roomTypeId: this.ruleForm.id,
 					priceCalend: this.ruleForm.roomType == 1 ? '3' : '4',
 					startTime: this.ruleForm_Pie.time[0],
 					endTime: this.ruleForm_Pie.time[1],
-					weeks: week,
+					weeks: '1,2,3,4,5,6,7',
 					strategyJson: JSON.stringify(this.roomStrategyJson_p)
 				}
 				this.$F.doRequest(

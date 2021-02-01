@@ -71,7 +71,7 @@
 							 :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20">
+					<!-- <el-col :span="20">
 						<el-form-item :label="$t('manager.ps_selectWeek')">
 							<el-row style="display: flex;align-items: center;">
 								<el-checkbox-group v-model="batchEditPriceForm.weeks" @change="handleWeekDayChange">
@@ -79,7 +79,7 @@
 								</el-checkbox-group>
 							</el-row>
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 				</el-form>
 			</el-row>
 			<el-table ref="multipleTable" :data="allRoomTypeList" tooltip-effect="dark" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}">
@@ -147,8 +147,8 @@
 
 				<el-table-column prop="newCustomPrice" :label="$t('manager.grsl_newLivePriA')" width="250">
 					<template>
-						<div style="padding: 10px 0px;">
-							<el-input v-model="newCustomPrice" placeholder="请输入" @input="onInput()"></el-input>
+						<div style="padding: 10px 0px;" v-for="(value, index) in roomStrategyJson_p">
+							<el-input v-model="value.newCustomPrice" placeholder="请输入" @input="onInput()"></el-input>
 							<!-- <el-input v-model="star_time" placeholder="请输入"></el-input> -->
 						</div>
 					</template>
@@ -437,17 +437,17 @@
 				params.endTime = this.batchEditPriceForm.time[1];
 				params.memberTypeId = this.checkbox_value_pie;
 				params.channel = '线下';
-				this.batchEditPriceForm.weeks.forEach((item, index) => {
-					if (!item) {
-						this.batchEditPriceForm.weeks.splice(index, 1);
-					}
-				});
+				// this.batchEditPriceForm.weeks.forEach((item, index) => {
+				// 	if (!item) {
+				// 		this.batchEditPriceForm.weeks.splice(index, 1);
+				// 	}
+				// });
 
-				let weeks = this.batchEditPriceForm.weeks.join(",");
-				if (weeks.substr(0, 1) == ',') {
-					weeks = weeks.substr(1);
-				}
-				params.weeks = weeks
+				// let weeks = this.batchEditPriceForm.weeks.join(",");
+				// if (weeks.substr(0, 1) == ',') {
+				// 	weeks = weeks.substr(1);
+				// }
+				params.weeks = '1,2,3,4,5,6,7';
 
 				let obj = {}
 				let arr = []
@@ -581,6 +581,7 @@
 				this.ruleForm_Pie.push(row)
 				console.log(this.ruleForm_Pie)
 				// debugger
+				let roomStrategyJson_p = [];
 				this.ruleForm_Pie.forEach((item, j) => {
 					// debugger
 					let obj = {}
@@ -598,7 +599,7 @@
 							obj.personNum = b + 1;
 							obj.customPrice = a;
 							obj.newCustomPrice = '';
-							this.roomStrategyJson_p.push(obj)
+							roomStrategyJson_p.push(obj)
 						})
 					} else {
 						obj = {};
@@ -608,10 +609,12 @@
 						obj.marketPrice = item.marketPrice;
 						obj.customPrice = ''
 						obj.newCustomPrice = '';
-						this.roomStrategyJson_p.push(obj)
+						roomStrategyJson_p.push(obj)
 					}
+					console.log('roomStrategyJson_p====', roomStrategyJson_p)
+					this.roomStrategyJson_p.push(roomStrategyJson_p[0])
 					console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
-					// debugger
+					debugger
 				})
 			},
 			//确认修改单价
