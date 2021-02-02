@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 14:04:37
+ * @LastEditTime: 2021-02-02 16:56:06
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -20,8 +20,9 @@
                 <el-form-item label="">
                     <el-button type="danger" size="mini" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
-                    <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>                  
+                   
+                    <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
                 </el-form-item>
             </el-row>
             <el-form-item :label="$t('desk.order_accountsType')+':'">

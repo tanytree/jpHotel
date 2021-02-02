@@ -475,14 +475,13 @@
 						break;
 
 					case "sit":
-						// this.ruleForm_sit = [];
-						// for (let i = 0; i < this.ruleForm.checkinNum; i++) {
-						// 	let obj = {}
-						// 	obj.price = ''
-						// 	obj.sid = i;
-						// 	this.ruleForm_sit.push(obj);
-						// }
-						//
+						this.ruleForm_sit = [];
+						for (let i = 0; i < this.ruleForm.checkinNum; i++) {
+							let obj = {}
+							obj.price = ''
+							obj.sid = i;
+							this.ruleForm_sit.push(obj);
+						}
 						this.jiageSit_show = true;
 						this.$forceUpdate();
 						break;

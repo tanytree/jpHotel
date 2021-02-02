@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 15:52:45
+ * @LastEditTime: 2021-02-02 17:30:18
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -9,9 +9,9 @@
   <!-- 统一的列表格式 -->
   <div class="shiftOver">
     <el-row>
-        <el-button v-for="(item,index) in tabs" :key="index"  :type="tabCurr == item.handoverType ? 'primary' : ''" @click="changeTabs(item.handoverType)">
+      <el-button v-for="(item,index) in tabs" :key="index" :type="tabCurr == item.handoverType ? 'primary' : ''" @click="changeTabs(item.handoverType)">
         {{$t('manager.typeNameList.'+item.handoverType)}}
-        </el-button>
+      </el-button>
     </el-row>
     <el-row style="padding-top: 20px;">
       <h3>{{$t('food.shift.tabs_title_A')}}</h3>
@@ -42,49 +42,50 @@
       <h3>{{$t('food.shift.tabs_title_2')}}</h3>
       <div class="total">{{$t('food.shift.total')}}：{{$F.numFormate(info.income)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
-          <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
+        <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
           <div class="item">
             <span v-if="tabCurr == 1">
-                {{$t('manager.priceType.'+item.priceType)}}：
+              {{$t('manager.priceType.'+item.priceType)}}：
             </span>
             <span v-if="tabCurr == 2">{{$t('desk.serve_foodPrice')}}：</span>
             <span v-if="tabCurr == 3">{{$t('desk.serve_goodsPrice')}}：</span>
-			<span class="red">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
-		  </div>
+            <span class="red">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
+          </div>
         </el-col>
       </el-row>
-      <div class="total">{{$t('food.shift.totalFee')}}：{{$F.numFormate(info.settlement)}}{{$t('manager.ps_japanYen')}}</div>
+      <div class="total">{{$t('food.reset.totalFee')}}￥：{{$F.numFormate(info.settlement)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <el-col :span="4" v-for="(item,index) in info.orderPayTypeList" :key="index">
-			<div class="item">
+          <div class="item">
             {{$t('manager.payType.'+item.payType)}}：
-				<span class="blue">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
-			</div>
+            <span class="blue">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
+          </div>
         </el-col>
       </el-row>
     </el-row>
     <el-row>
       <h3>
-          {{$t('manager.add_nowGet')}}
+        {{$t('manager.add_nowGet')}}
         <a @click="show = true" class="el-icon-question" style="color: #126EFF;"></a>
       </h3>
 
-        <div class="handInCash margin-tb-10">
-          <el-row class="padding-tb-10">
-            <el-col :span="12" class="li">
-                <div class="item">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
-                <div class="item">{{$t('manager.add_lastHold')}}：{{info.upMoneyRetained}}</div>
-                 <div class="item">{{$t('manager.add_nowDownPri')}}：0</div>
-            </el-col>
-            <el-col :span="12" class="li">
-                <div class="item">{{$t('manager.add_nowCashGetA')}}：{{info.nowMoneyRetained}}</div>
-                <div class="item">{{$t('manager.add_nowCardGetA')}}：{{info.nowCreditCardHandin}}</div>
-                <div class="item"  v-if="tabCurr == 1" >{{$t('manager.add_nowBillGet')}}：0</div>
-            </el-col>
-          </el-row>
-        </div>
+      <div class="handInCash margin-tb-10">
+        <el-row class="padding-tb-10">
+          <el-col :span="12" class="li">
+            <div class="item">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
+            <div class="item">{{$t('manager.add_lastHold')}}：{{info.upMoneyRetained}}</div>
+            <div class="item">{{$t('manager.add_nowDownPri')}}：0</div>
+            <div class="item">备注：0</div>
+          </el-col>
+          <el-col :span="12" class="li">
+            <div class="item">{{$t('manager.add_nowCashGetA')}}：{{info.nowMoneyRetained}}</div>
+            <div class="item">{{$t('manager.add_nowCardGetA')}}：{{info.nowCreditCardHandin}}</div>
+            <div class="item" v-if="tabCurr == 1">{{$t('manager.add_nowBillGet')}}：0</div>
+          </el-col>
+        </el-row>
+      </div>
 
       <!-- <div class="handInCash margin-tb-10">
         <el-row class="padding-tb-10">
@@ -100,65 +101,58 @@
     </el-row>
 
     <el-row style="text-align: center;margin-top: 20px;">
-        <el-divider></el-divider>
-        <el-form inline label-width="150px" style="padding-top: 30px;">
-            <el-form-item :label="$t('food.shift.selectOnDutyerA')">
-                <el-select v-model="form.handoveEmployeedId">
-                    <el-option
-                      v-for="item in employeeList"
-                      :key="item.id"
-                      :label="item.userName"
-                      :value="item.id"
-                      >
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item :label="$t('food.shift.password')">
-                <el-input type="password" v-model="form.password" :placeholder="$t('food.shift.password')"></el-input>
-            </el-form-item>
-            <el-form-item label="">
-                <el-button type="primary" @click="save">{{ $t('commons.confirm') }}</el-button>
-            </el-form-item>
-         </el-form>
-     </el-row>
+      <el-divider></el-divider>
+      <el-form inline label-width="150px" style="padding-top: 30px;">
+        <el-form-item :label="$t('food.shift.selectOnDutyerA')">
+          <el-select v-model="form.handoveEmployeedId">
+            <el-option v-for="item in employeeList" :key="item.id" :label="item.userName" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('food.shift.password')">
+          <el-input type="password" v-model="form.password" :placeholder="$t('food.shift.password')"></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-button type="primary" @click="save">{{ $t('commons.confirm') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
 
-     <el-dialog :title="$t('manager.add_changeDetail')" :visible.sync="show"  width="700px"  top="0">
-        <div class="margin-b-20">
-            <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
-            <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
-            <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
-        </div>
-        <div class="margin-b-10">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
-        <div class="margin-b-10">
-            {{$t('food.shift.onHas')}} +{{$t('manager.add_nowCashGet')}}=
-            ({{info.upMoneyRetained}}) + ({{info.nowMoneyRetained}})= ({{getTotal(info.upMoneyRetained,info.nowMoneyRetained)}})
-            {{getPriceState(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) ? '>' :'<'}}
-            ({{info.pettyCash}})
-        </div>
-        <!-- 展示大于小于等于备用金额度/纯展示 -->
-        <div class="margin-b-10">
+    <el-dialog :title="$t('manager.add_changeDetail')" :visible.sync="show" width="700px" top="0">
+      <div class="margin-b-20">
+        <span v-if="info.handoverStatus == 1">{{$t('manager.hp_cashModel')}}</span>
+        <span v-if="info.handoverStatus == 2">{{$t('manager.hp_paidModel')}}</span>
+        <span v-if="info.handoverStatus == 3">{{$t('manager.hp_accountsModel')}}</span>
+      </div>
+      <div class="margin-b-10">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
+      <div class="margin-b-10">
+        {{$t('food.shift.onHas')}} +{{$t('manager.add_nowCashGet')}}=
+        ({{info.upMoneyRetained}}) + ({{info.nowMoneyRetained}})= ({{getTotal(info.upMoneyRetained,info.nowMoneyRetained)}})
+        {{getPriceState(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) ? '>' :'<'}}
+        ({{info.pettyCash}})
+      </div>
+      <!-- 展示大于小于等于备用金额度/纯展示 -->
+      <div class="margin-b-10">
         {{$t('manager.add_nowPettyDown')}}
         {{getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash)}}
         {{$t('manager.add_pettyCash')}}
         =
         ({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
-        </div>
-        <!-- 判断  本班下放备用金 < = > 备用金额度-->
-        <!-- 判断  上班留存备用金+本班现金收款的总和和备用金额作比较  > 100或者==100 直接显示100 小于则显示 总和-->
-        <div class="margin-b-10">
-           {{$t('desk.serve_flightCashUp')}}={{$t('manager.add_lastHold')}}+{{$t('manager.add_nowCashGet')}}-{{$t('manager.add_nowPettyDown')}}=
-            ({{info.upMoneyRetained}})+({{info.nowMoneyRetained}})-({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
-            =({{getUpPrice()}})
-        </div>
-        <!-- <div>本班微信上交=本班微信收款=(0)</div> -->1
-        <div class="margin-b-10">{{$t('manager.add_creditCardUp')}}={{$t('manager.add_nowCardGet')}}=({{info.nowCreditCardHandin}})</div>
-        <div class="margin-b-10"  v-if="tabCurr == 1" >{{$t('manager.add_nowBillUp')}}={{$t('manager.add_nowBillPrice')}}</div>
-        <div class="margin-b-10"></div>
-     </el-dialog>
+      </div>
+      <!-- 判断  本班下放备用金 < = > 备用金额度-->
+      <!-- 判断  上班留存备用金+本班现金收款的总和和备用金额作比较  > 100或者==100 直接显示100 小于则显示 总和-->
+      <div class="margin-b-10">
+        {{$t('desk.serve_flightCashUp')}}={{$t('manager.add_lastHold')}}+{{$t('manager.add_nowCashGet')}}-{{$t('manager.add_nowPettyDown')}}=
+        ({{info.upMoneyRetained}})+({{info.nowMoneyRetained}})-({{ getPriceStateFlow(info.upMoneyRetained,info.nowMoneyRetained,info.pettyCash) == '<' ? getTotal(info.upMoneyRetained,info.nowMoneyRetained) : info.pettyCash}})
+        =({{getUpPrice()}})
+      </div>
+      <!-- <div>本班微信上交=本班微信收款=(0)</div> -->1
+      <div class="margin-b-10">{{$t('manager.add_creditCardUp')}}={{$t('manager.add_nowCardGet')}}=({{info.nowCreditCardHandin}})</div>
+      <div class="margin-b-10" v-if="tabCurr == 1">{{$t('manager.add_nowBillUp')}}={{$t('manager.add_nowBillPrice')}}</div>
+      <div class="margin-b-10"></div>
+    </el-dialog>
 
-
-
-      <!-- <div class="handInCash margin-tb-10">
+    <!-- <div class="handInCash margin-tb-10">
         <el-row class="padding-tb-10">
           <el-col :span="8" class="li">
               <div class="item">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
@@ -175,175 +169,183 @@
         </el-row>
       </div> -->
 
-
-
-
-
-
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-  props:['tabs','employeeList'],
+  props: ["tabs", "employeeList"],
   computed: {
     ...mapState({
       token: (state) => state.user.token,
       userId: (state) => state.user.userId,
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
-    })
+    }),
   },
   data() {
     return {
-      tabCurr:1,
+      tabCurr: 1,
       loading: false,
-      searchForm:{},
-      info:{},
-      form:{
-          handoveEmployeedId:'',
-          password:''
+      searchForm: {},
+      info: {},
+      form: {
+        handoveEmployeedId: "",
+        password: "",
       },
-      show:false,
-      account:''
+      show: false,
+      account: "",
     };
   },
 
   mounted() {
     this.initForm();
-    this.account = sessionStorage.getItem('account')
+    this.account = sessionStorage.getItem("account");
   },
   methods: {
-
-    getUpPrice(){
-        let a = this.info.upMoneyRetained  //上班留存备用金
-        let b = this.info.nowMoneyRetained //本班现金收款
-        let c = this.info.pettyCash //备用金额度
-        let d = 0
-        if(this.getPriceState(a,b,c) == false){
-            d = this.getTotal(a,b)
-        }else{
-            d = this.getTotal(a,b,c,1)
-        }
-        return d
+    getUpPrice() {
+      let a = this.info.upMoneyRetained; //上班留存备用金
+      let b = this.info.nowMoneyRetained; //本班现金收款
+      let c = this.info.pettyCash; //备用金额度
+      let d = 0;
+      if (this.getPriceState(a, b, c) == false) {
+        d = this.getTotal(a, b);
+      } else {
+        d = this.getTotal(a, b, c, 1);
+      }
+      return d;
     },
-
 
     initForm() {
       this.changeTabs(1);
     },
-    changeTabs(v){
-       this.tabCurr = v
-       if(v == 1){
-           this.getManagerInfo();
-       }
-       if(v == 2){
-           this.getDishesInfo();
-       }
-       if(v == 3){
-           this.getShopInfo();
-       }
+    changeTabs(v) {
+      this.tabCurr = v;
+      if (v == 1) {
+        this.getManagerInfo();
+      }
+      if (v == 2) {
+        this.getDishesInfo();
+      }
+      if (v == 3) {
+        this.getShopInfo();
+      }
     },
     //计算价格大小
-    getPriceState(num1,num2,num3){
-        let a = num1 || 0
-        let b = num2 || 0
-        let c = num3 || 0
-        if(parseFloat(a) + parseFloat(b) > parseFloat(c) || parseFloat(a) + parseFloat(b) == parseFloat(c) ){
-            return true
-        }else{
-            return false
-        }
+    getPriceState(num1, num2, num3) {
+      let a = num1 || 0;
+      let b = num2 || 0;
+      let c = num3 || 0;
+      if (
+        parseFloat(a) + parseFloat(b) > parseFloat(c) ||
+        parseFloat(a) + parseFloat(b) == parseFloat(c)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
     //获取几个值得符号关系
-    getPriceStateFlow(num1,num2,num3){
-        let a = num1 || 0
-        let b = num2 || 0
-        let c = num3 || 0
-        if(parseFloat(a) + parseFloat(b) > parseFloat(c)){
-            return '>'
-        }else if(parseFloat(a) + parseFloat(b) == parseFloat(c)){
-            return '=='
-        }else{
-            return '<'
-        }
+    getPriceStateFlow(num1, num2, num3) {
+      let a = num1 || 0;
+      let b = num2 || 0;
+      let c = num3 || 0;
+      if (parseFloat(a) + parseFloat(b) > parseFloat(c)) {
+        return ">";
+      } else if (parseFloat(a) + parseFloat(b) == parseFloat(c)) {
+        return "==";
+      } else {
+        return "<";
+      }
     },
     //计算差额
-    getTotal(num1,num2,num3,type){
-        let a = num1 || 0
-        let b = num2 || 0
-        let c = num3 || 0
-        let sum = 0
-        if(type&&type == 1){
-            sum = parseFloat(a) + parseFloat(b) -  parseFloat(c)
-            // console.log(1111)
-        }else{
-            sum = parseFloat(a) + parseFloat(b)
-            // console.log(2222)
-        }
-        return sum
+    getTotal(num1, num2, num3, type) {
+      let a = num1 || 0;
+      let b = num2 || 0;
+      let c = num3 || 0;
+      let sum = 0;
+      if (type && type == 1) {
+        sum = parseFloat(a) + parseFloat(b) - parseFloat(c);
+        // console.log(1111)
+      } else {
+        sum = parseFloat(a) + parseFloat(b);
+        // console.log(2222)
+      }
+      return sum;
     },
-
-
 
     //前台部交班信息
     getManagerInfo() {
-        let params = {}
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-        this.$F.doRequest(this, "/pms/handover/handover_base_info", params, (res) => {
-            // console.log(res)
-            this.info = res
-        });
+      let params = {};
+      params.userId = this.userId;
+      params.storesNum = this.storesNum;
+      this.$F.doRequest(
+        this,
+        "/pms/handover/handover_base_info",
+        params,
+        (res) => {
+          // console.log(res)
+          this.info = res;
+        }
+      );
     },
     //餐饮部交班信息
     getDishesInfo() {
-        let params = {}
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-        this.$F.doRequest(this, "/pms/dishes/handover/handover_base_info", params, (res) => {
-            console.log(res)
-            this.info = res
-        });
+      let params = {};
+      params.userId = this.userId;
+      params.storesNum = this.storesNum;
+      this.$F.doRequest(
+        this,
+        "/pms/dishes/handover/handover_base_info",
+        params,
+        (res) => {
+          console.log(res);
+          this.info = res;
+        }
+      );
     },
     //商店部交班信息
     getShopInfo() {
-        let params = {}
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-        this.$F.doRequest(this, "/pms/shop/handover/handover_base_info", params, (res) => {
-            console.log(res)
-            this.info = res
-        });
+      let params = {};
+      params.userId = this.userId;
+      params.storesNum = this.storesNum;
+      this.$F.doRequest(
+        this,
+        "/pms/shop/handover/handover_base_info",
+        params,
+        (res) => {
+          console.log(res);
+          this.info = res;
+        }
+      );
     },
 
-    save(){
-        let url = '/pms/handover/handover_up'
-        if(this.tabCurr == 1){
-           url = '/pms/handover/handover_up'
-        }
-        if(this.tabCurr == 2){
-           url = '/pms/dishes/handover/handover_up'
-        }
-        if(this.tabCurr == 3){
-            url = '/pms/shop/handover/handover_up'
-        }
-        let params = {
-            workStarTime:this.info.workStarTime,
-            workEndTime:this.info.workEndTime,
-            handoveNum:this.info.handoveNum,
-            handoverStatus:this.info.handoverStatus,
-            handoveEmployeedId:this.form.handoveEmployeedId,
-            password:this.form.password
-        }
-        params.userId = this.userId
-        params.storesNum = this.storesNum
-        this.$F.doRequest(this, url, params, (res) => {
-           // console.log(res)
-           this.$message.success(this.$t('food.common.success'));
-        });
-
+    save() {
+      let url = "/pms/handover/handover_up";
+      if (this.tabCurr == 1) {
+        url = "/pms/handover/handover_up";
+      }
+      if (this.tabCurr == 2) {
+        url = "/pms/dishes/handover/handover_up";
+      }
+      if (this.tabCurr == 3) {
+        url = "/pms/shop/handover/handover_up";
+      }
+      let params = {
+        workStarTime: this.info.workStarTime,
+        workEndTime: this.info.workEndTime,
+        handoveNum: this.info.handoveNum,
+        handoverStatus: this.info.handoverStatus,
+        handoveEmployeedId: this.form.handoveEmployeedId,
+        password: this.form.password,
+      };
+      params.userId = this.userId;
+      params.storesNum = this.storesNum;
+      this.$F.doRequest(this, url, params, (res) => {
+        // console.log(res)
+        this.$message.success(this.$t("food.common.success"));
+      });
     },
 
     /**多选 */
