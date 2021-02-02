@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 15:00:29
+ * @LastEditTime: 2021-02-02 18:33:23
  * @FilePath: \jiudian\src\assets\languages\shop\ri.js
  */
 module.exports = {
@@ -39,7 +39,9 @@ module.exports = {
     xiaoji:'小計',
     sureFlag:'テックアウト',
     orderPriceDesc:'{priceStartMinute}分後から利用料発生,初期料金（≦30分）:￥{startPrice},計算単位（{priceTime} 分）毎に￥{minutePrice}（≦30分＝50％；≧30分＝100％）',
-    orderCapsPrice:',最多請求料金￥{capsPrice}'
+    orderCapsPrice: ',最多請求料金￥{capsPrice}',
+  outFlag: 'テックアウト',
+    
   }
 
 }

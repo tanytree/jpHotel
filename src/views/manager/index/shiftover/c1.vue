@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 17:41:31
+ * @LastEditTime: 2021-02-02 18:11:01
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -43,7 +43,7 @@
       <div class="total">{{$t('food.shift.total')}}：{{$F.numFormate(info.income)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
-        <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
+        <!-- <el-col :span="4" v-for="(item,index) in info.orderPriceProjectList" :key="index">
           <div class="item">
             <span v-if="tabCurr == 1">
               {{$t('manager.priceType.'+item.priceType)}}：
@@ -52,7 +52,7 @@
             <span v-if="tabCurr == 3">{{$t('desk.serve_goodsPrice')}}：</span>
             <span class="red">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
           </div>
-        </el-col>
+        </el-col> -->
       </el-row>
       <div class="total">{{$t('food.reset.totalFee')}}￥：{{$F.numFormate(info.settlement)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
@@ -286,7 +286,7 @@ export default {
         "/pms/handover/handover_base_info",
         params,
         (res) => {
-          // console.log(res)
+          console.log(res)
           this.info = res;
         }
       );

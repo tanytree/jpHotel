@@ -52,16 +52,16 @@
       </el-form>
       <el-table :data="checkTables" border height="100%" header-row-class-name="default" size="small">
         <el-table-column :label="$t('desk.home_customerName')" prop="guestName"></el-table-column>
-        <el-table-column :label="$t('desk.home_roomNum')" prop="roomNum"></el-table-column>
+        <el-table-column :label="$t('desk.home_roomNum')" prop="roomNum" width="100px"></el-table-column>
         <el-table-column :label="$t('desk.home_phoneNumA')" prop="mobile" width="135"></el-table-column>
-        <el-table-column :label="$t('desk.home_goodsName')" prop="luggageName"></el-table-column>
+        <el-table-column :label="$t('desk.home_goodsName')" prop="luggageName" show-overflow-tooltip width="110"></el-table-column>
         <el-table-column width="110" :label="$t('desk.home_depositingTime')" prop="createTime">
           <template slot-scope="{row}">
             <div v-for="(item,index) in formatTime(row.createTime)" :key="index">{{item}}</div>
           </template>
         </el-table-column>
-        <el-table-column width="100" :label="$t('desk.home_drawTime')" prop="receiveTime"></el-table-column>
-        <el-table-column :label="$t('desk.home_getNum')" width="240" prop="luggageNum"></el-table-column>
+        <el-table-column width="110" :label="$t('desk.home_drawTime')" prop="receiveTime"></el-table-column>
+        <el-table-column :label="$t('desk.home_getNum')" width="220" prop="luggageNum"></el-table-column>
         <el-table-column :label="$t('desk.home_state')">
           <template slot-scope="{ row }">
             <div v-if="row.operStatus == 1">
@@ -78,7 +78,7 @@
         <el-table-column :label="$t('desk.home_operator')">
           <template slot-scope="{ row }">{{ row.creatorName }}</template>
         </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="350">
+        <el-table-column :label="$t('commons.operating')" width="280">
           <template slot-scope="{ row }">
             <el-button type="primary" v-if="row.operStatus == 1" @click="getClick(row)">
               {{ $t("desk.home_receive") }}</el-button>

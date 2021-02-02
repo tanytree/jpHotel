@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 15:17:50
+ * @LastEditTime: 2021-02-02 18:30:53
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -131,7 +131,7 @@
       </el-collapse>
 
       <!--表格数据 -->
-      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+      <el-table ref="multipleTable" v-loading="loading" border :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')" width="150px">
           <template slot-scope="{ row }">
             <!-- <span>{{$t('desk.home_bookPeople') + ": "}} {{`${row.name} 【${row.pronunciation}】` }}</span>
@@ -189,12 +189,12 @@
            <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="" :label="$t('food.common.status')" align="center">
+        <el-table-column prop="" :label="$t('food.common.status')" width="120px" align="center">
           <template slot-scope="{ row }">
             {{ F_reserveState((row.state == 1 || row.state == 2 || row.state == 9) ? 5 : row.state ) }}
           </template>
         </el-table-column>
-        <el-table-column :label="$t('commons.operating')" width="220">
+        <el-table-column :label="$t('commons.operating')" width="150">
           <template slot-scope="{ row }">
             <el-button type="text" size="mini" @click="handelDetail(row)">{{
               $t("commons.detail")

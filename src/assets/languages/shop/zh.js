@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 15:32:02
+ * @LastEditTime: 2021-02-02 18:33:05
  * @FilePath: \jiudian\src\assets\languages\shop\zh.js
  */
 module.exports = {
@@ -41,7 +41,9 @@ module.exports = {
     xiaoji: '小计',
     sureFlag:'外带',
     orderPriceDesc:'{priceStartMinute}分钟后收起步价， 起步价{startPrice}日元，每{priceTime}分钟收费{minutePrice}日元',
-    orderCapsPrice:',封顶消费￥{capsPrice}'
+    orderCapsPrice: ',封顶消费￥{capsPrice}',
+  outFlag: '是否外带',
+    
   }
 
 
