@@ -264,7 +264,7 @@
 							<el-col>{{$t('manager.hk_onlyLivePrice')}}</el-col>
 						</el-row>
 						<el-row>
-							<el-col :span="24" v-for="(value, index) in ruleForm_sit" :key="index">
+							<el-col :span="24" v-for="(value, index) in newSitList" :key="index">
 								<el-row :span="20" style="display: flex;align-items: center;justify-content: center; margin-bottom: 10px;">
 									<el-col :span="4" :offest="2">{{index+1}} {{$t('manager.hk_peopleLive')}}</el-col>
 									<el-col :span="18">
@@ -276,7 +276,7 @@
 					</el-row>
 					<span slot="footer" class="dialog-footer">
 						<el-button @click="jiageSit_show = false">{{$t('commons.cancel')}}</el-button>
-						<el-button type="primary" @click="jiageSit_show = false">{{$t('commons.determine')}}</el-button>
+						<el-button type="primary" @click="setConfirm">{{$t('commons.determine')}}</el-button>
 					</span>
 				</el-dialog>
 			</div>
@@ -302,6 +302,7 @@
 		},
 		data() {
 			return {
+			    newSitList: [],
 				tab1_show: true, //是否显示日历组件
 
 				tab_show: true,
@@ -425,6 +426,11 @@
 			this.get_house_list();
 		},
 		methods: {
+	        setConfirm() {
+                this.ruleForm_sit = this.newSitList;
+                this.$forceUpdate();
+                this.jiageSit_show = false;
+            },
 			changeInput(value, index) {
 				// this.ruleForm_sit[index].price = value
 				// this.ruleForm_sit.splice(index, 1, this.ruleForm_sit[index])
@@ -475,12 +481,13 @@
 						break;
 
 					case "sit":
-						this.ruleForm_sit = [];
+						this.newSitList = [];
+                        let a = this;
 						for (let i = 0; i < this.ruleForm.checkinNum; i++) {
 							let obj = {}
-							obj.price = ''
+							obj.price = a.ruleForm_sit[i] ? a.ruleForm_sit[i].price : 0;
 							obj.sid = i;
-							this.ruleForm_sit.push(obj);
+							this.newSitList.push(obj);
 						}
 						this.jiageSit_show = true;
 						this.$forceUpdate();

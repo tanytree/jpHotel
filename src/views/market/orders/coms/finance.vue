@@ -20,8 +20,8 @@
                 <el-form-item label="">
                     <el-button type="danger" size="mini" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
-                    <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>                  
-                   
+                    <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
+
                     <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
                 </el-form-item>
             </el-row>
@@ -332,7 +332,7 @@
                 <el-row v-if="currentRoom">
                     <el-col :span="8">
                         {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                    </el-col> 
+                    </el-col>
                     <el-col :span="8">
                         {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                     </el-col>
@@ -630,15 +630,13 @@ export default {
         this.$watch('taxCount', (value) => {
             this.getDamagePrice();
         });
-
+        this.hoteldamagetype_list()
+        this.hotelenter_list()
+        this.consume_order_list(1)
     },
 
     mounted() {
         let id = this.$route.query.id;
-
-        this.consume_order_list(1)
-        this.hoteldamagetype_list()
-        this.hotelenter_list()
     },
 
     methods: {
@@ -762,8 +760,8 @@ export default {
             // params.orderId = this.$route.query.id
 
             params.checkInId = this.checkInId
-            if (this.currentRoomId) {
-                params.roomId = this.currentRoom.id;
+            if (this.currentRoom && this.currentRoom.roomId) {
+                params.roomId = this.currentRoom.roomId;
                 params.roomNum = this.currentRoom.houseNum
             } else {
                 if (this.detailData.inRoomList.length > 0) {

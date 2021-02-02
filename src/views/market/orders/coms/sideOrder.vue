@@ -119,19 +119,19 @@ export default {
           cancelButtonText: this.$t("commons.cancel"),
           type: 'warning'
         }).then(() => {
-        
+
         }).catch(() => {
-      
+
         });
     },
     getData() {
       let params = {
         checkInId: this.checkInId,
       };
-      this.$F.doRequest(this, "/pms/hotelattachmeal/list", params, (res) => {
+      this.$F.doRequest(this, "/pms/hotelattachmeal/check_in_meal_order_list", params, (res) => {
+          debugger
           this.tableData = res.list
         console.log(res);
-        // 这个接口需要后端改一下，暂时无法继续了
       });
     },
 

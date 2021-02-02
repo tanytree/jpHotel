@@ -30,8 +30,8 @@
                         detailData.checkIn.state ： 8 已取消
                         detailData.checkIn.state ： 4 NOSHOW
                         -->
-                        <span class="ok" v-if="detailData.checkIn.state == 8">{{ $t('commons.checkinState')['10'] }}</span>
-                        <span class="ok" v-else-if="detailData.checkIn.state == 4">{{ $t('commons.checkinState')['20'] }}</span>
+                        <span style="background-color: #CC2424" v-if="detailData.checkIn.state == 8">{{ $t('commons.checkinState')['10'] }}</span>
+                        <span style="background-color: #CC2424" v-else-if="detailData.checkIn.state == 4">{{ $t('commons.checkinState')['20'] }}</span>
                         <span class="ok" v-else-if="item.state == 1">{{ $t('commons.checkinState')['1'] }}</span>
                         <span class="ok" v-else-if="(item.state == 3 && item.roomId) || (item.state == 2 && item.roomId)">{{ $t('desk.hadRowHouses') }}</span>
 <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->

@@ -53,7 +53,7 @@
                     <span v-else :class="row.richType == 1 ? 'red' : ''">{{row.consumePrice}}</span>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('desk.order_businessThat')">
+            <el-table-column :label="$t('desk.order_businessThat')" show-overflow-tooltip>
                 <template slot-scope="{ row }">
                     <span v-if="row.richType == 1" class="blue">
                         {{F_priceType('9') + '【' + $t('commons.payType')[row.payType] + '】' + F_priceType(row.priceType ? row.priceType : 99)}}
@@ -66,8 +66,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="remark" :label="$t('desk.home_note')" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="creatorName" :label="$t('desk.home_operator')"
-                             show-overflow-tooltip></el-table-column>
+            <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
         <div style="margin-top: 10px"></div>
         <!-- 分页 -->

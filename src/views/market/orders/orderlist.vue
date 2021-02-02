@@ -1,4 +1,4 @@
-<!--
+ <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
  * @LastEditTime: 2021-02-02 13:30:39
@@ -139,13 +139,13 @@
 
             <!--表格数据 -->
             <el-table ref="multipleTable" v-loading="loading" :data="tableData" header-row-class-name="default"  height="100%" size="small">
-                <el-table-column prop="name" width="130" :label="$t('boss.loginDetail_nameA')">
+                <el-table-column prop="name" :label="$t('boss.loginDetail_nameA')">
                     <template slot-scope="{ row }">
                         <div>{{row.name}}</div>
                         <div>【{{row.pronunciation}}】</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" width="140px" :label="$t('desk.order_moblePhoneA')"></el-table-column>
+                <el-table-column prop="mobile" :label="$t('desk.order_moblePhoneA')"></el-table-column>
                 <el-table-column prop="checkinTime" :label="$t('desk.order_toLiveTime')" width="160px">
                   <template slot-scope="{row}">
                     <div>{{row.checkinTime}}</div>
@@ -159,26 +159,26 @@
                         <div v-if="row.hotelCheckInRoom&&row.hotelCheckInRoom.houseNum">{{row.hotelCheckInRoom.houseNum}}</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop :label="$t('desk.home_customersCategory')" width="135px">
+                <el-table-column prop :label="$t('desk.home_customersCategory')">
                     <template slot-scope="{ row }">{{
                         F_guestType(row.guestType)
                     }}</template>
                 </el-table-column>
-                <el-table-column prop :label="$t('desk.book_orderSoutce')" width="120px">
+                <el-table-column prop :label="$t('desk.book_orderSoutce')">
                     <template slot-scope="{ row }">
                       <div>{{F_orderSource(row.orderSource)}}</div>
                         <!-- <span v-if="row.orderSource == 5">-</span> -->
                         <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop :label="$t('desk.order_liveStateA')" width="120px">
+                <el-table-column prop :label="$t('desk.order_liveStateA')" >
                     <template slot-scope="{ row }" style="color: red">
                         <span v-if="!row.billType">{{$t('desk.order_keepLive')}}</span>
                         <span v-if=" row.billType == 2 || row.billType == 3 || row.billType == 4">{{$t('desk.book_leaveStore')}}</span>
                         <span v-if="row.billType == 1 || row.billType == 5">{{$t('desk.order_alreadyCheckout')}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop :label="$t('desk.order_checkStatusA')" width="100px">
+                <el-table-column prop :label="$t('desk.order_checkStatusA')" >
                     <template slot-scope="{ row }">
                         <span v-if=" !row.billType || row.billType == 2 || row.billType == 3 || row.billType == 4">{{ F_billType("0") }}</span>
                         <span v-if="row.billType == 1 || row.billType == 5">{{ F_billType("1") }}</span>

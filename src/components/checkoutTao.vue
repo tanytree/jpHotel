@@ -43,7 +43,6 @@
         </div>
       </div>
     </div>
-    <!-- {{checkoutForm}} -->
     <el-form ref="checkoutForm" :rules="paymentRules" :model="checkoutForm" label-width="110px">
       <el-form-item :label-width="detailData.totalPrice<0 ?'140px':'110px'" :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWayA') : $t('desk.customer_payType')" prop="payType">
 
@@ -162,8 +161,6 @@ export default {
 
         let priceType15 = 0 //温泉税
         let priceType16 = 0  //住宿税
-
-
         // let priceTypeList = [5,6,7,8,12,14,15,16,17,18]
         //7 赔偿不用计算
         //15，16温泉税和住宿税不需要计算税和服务费
@@ -171,10 +168,6 @@ export default {
         //商店部的商品消费金额不需要计算税和服务费
         //迷你吧那边计算的时候需要把税算上 未计算需要开发
         //计算 5 6 12三种房费的服务费和税  计算in类型的税率和费率
-
-
-
-
         list.forEach(element => {
             console.log(element.state)
             if(element.state == 1){
@@ -340,7 +333,7 @@ export default {
             })
             return false
         }
-            
+
         console.log(this.detailData)
         console.log(this.currentRoom)
         let checkoutForm = this.checkoutForm
@@ -392,9 +385,18 @@ export default {
             let params = {}
             params.checkInId = this.checkoutForm.checkInId
             params.billType = 1
-
-
-
+            let roomIds = [];
+            if (this.currentRoom && this.currentRoom.roomId) {
+                roomIds.push(this.currentRoom.roomId);
+            } else {
+                this.detailData.inRoomList.forEach( room => {
+                    if (room.state == 1) {
+                        roomIds.push(room.roomId);
+                    }
+                })
+            }
+            params.billType = roomIds
+            debugger
             //console.log(this.isArrSame(array,1))
             //console.log(this.isArrSame(array,2))
             // if(this.isArrSame(array,1) == true){

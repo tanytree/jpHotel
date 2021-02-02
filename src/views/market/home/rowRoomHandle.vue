@@ -477,7 +477,7 @@ export default {
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item));
             this.rowRoomCurrentIndex = index;
             this.hotelRoomListParams.roomTypeId = item.roomTypeId;
-            this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray);
+            this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray, this.checkInForm.checkinTime, this.checkInForm.checkoutTime);
         },
         //获取可排房的房间
         hotel_room_list() {

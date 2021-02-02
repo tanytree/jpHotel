@@ -28,7 +28,7 @@
                     <el-button type="primary" size="small" plain @click="goRoomStatus" v-if="currentRoom.roomStatus != 5">
                         {{ (this.currentRoom.roomStatus == 3 || this.currentRoom.roomStatus == 1) ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}
                     </el-button>
-                    <el-button type="primary" @click="goRoomStatus(5)" size="small" plain>{{this.currentRoom.roomStatus != 5 ? $t('desk.home_service') : $t('desk.home_cannel_service')}}</el-button>
+                    <el-button type="primary" @click="goRoomStatus(5)" size="small" plain :disabled="currentRoom.checkInRoomType == 1">{{this.currentRoom.roomStatus != 5 ? $t('desk.home_service') : $t('desk.home_cannel_service')}}</el-button>
                     <el-button type="primary" size="small" plain @click="goFinance" :disabled="this.currentRoom.checkInRoomType != 1 && this.currentRoom.checkInRoomType != 2">{{$t('desk.customer_accountingTextA')}}</el-button>
                     <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.chargeA')}}</el-button>
                     <el-button type="primary" @click="checkoutRoom" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.order_checkout')}}</el-button>

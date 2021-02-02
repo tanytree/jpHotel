@@ -400,6 +400,8 @@ export default {
                 delete e['checkinId'];
                 delete e['checkinRoomId'];
                 delete e['createTime'];
+                delete e['attachMealId'];
+                delete e['attachMealIdDinner'];
                 e.sex = e.sex ? e.sex.toString() : '1';
                 this.$F.removeNullKey(e, true);
                 personInfo.name = '';

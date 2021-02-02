@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
 import myMixin from "@/utils/filterMixin";
 import finance from "./finance";
 export default {
@@ -38,14 +37,6 @@ export default {
   },
   mixins: [myMixin],
   props: ["detailData", "currentRoom"],
-  computed: {
-    ...mapState({
-      token: (state) => state.user.token,
-      userId: (state) => state.user.userId,
-      msgKey: (state) => state.config.msgKey,
-      plat_source: (state) => state.config.plat_source,
-    }),
-  },
   data() {
     return {
       loading: false,
