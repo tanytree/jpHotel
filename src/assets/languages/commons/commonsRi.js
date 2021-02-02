@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 11:11:53
+ * @LastEditTime: 2021-02-02 15:49:07
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -169,7 +169,7 @@ module.exports = {
     value: '2'
   }, {
     type: "",
-    name: 'OUT室',
+    name: '滞在中',
     value: '3'
   }, {
     type: "warning",
@@ -187,7 +187,7 @@ module.exports = {
   F_roomStatus: {
     '1': '空室',
     '2': '清掃',
-    '3': 'OUT室',
+    '3': '滞在中',
     '4': 'エコ清掃',
     '5': '故障部屋',
     '6': 'みとう'

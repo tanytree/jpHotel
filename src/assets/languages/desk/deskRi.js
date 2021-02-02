@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-02 15:12:36
+ * @LastEditTime: 2021-02-02 15:55:36
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -156,7 +156,7 @@ module.exports = {
   serve_wechat: 'ウェチャットペイ',
   serve_alipay: 'アリペイ',
   serve_other: 'その他',
-  serve_roomPrice: '宿泊料',
+  serve_roomPrice: '宿泊料金',
   serve_miniPub: 'ミニバー',
   serve_memCardPrice: '会員年会費',
   serve_foodPrice: '飲食費',

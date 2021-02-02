@@ -91,7 +91,7 @@
     <el-dialog top="0" :title="addGoodsTitle" :visible.sync="addGoodsVisible" :close-on-click-modal="false">
       <el-form :model="goodsData" :rules="fourrules" size="small" label-width="100px" class="demo-ruleForm" ref="addGoods">
         <el-form-item :label="$t('manager.hp_goodsType') + ':'" prop="damageTypeId">
-          <el-select v-model="goodsData.damageTypeId" :placeholder="$t('boss.compensation_selectState')">
+          <el-select v-model="goodsData.damageTypeId" :placeholder="$t('boss.compensation_selectStateA')">
             <el-option v-for="(item, index) in list" :key="index" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -115,7 +115,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item :label="$t('boss.loginDetail_note') + ':'">
-          <el-input type="textarea" :rows="3" :placeholder="$t('boss.department_placeEnterContent')" v-model="goodsData.remark"></el-input>
+          <el-input type="textarea" :rows="3" v-model="goodsData.remark"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

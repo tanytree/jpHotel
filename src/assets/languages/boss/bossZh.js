@@ -147,6 +147,7 @@ module.exports = {
 
   //总办 > 薪酬管理
   compensation_selectState: '请选择状态',
+  compensation_selectStateA: '请选择状态',
   compensation_payMonth: '工资月份',
   compensation_selectMonth: '选择月',
   compensation_basicSalary: '基本工资',

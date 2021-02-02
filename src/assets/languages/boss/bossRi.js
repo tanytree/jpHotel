@@ -291,7 +291,7 @@ module.exports = {
   add_editorDepart: 'セクション権限',
   add_editorEmploy: 'アカウント編集',
   add_deleteEmploy: 'アカウント削除',
-
+  compensation_selectStateA: '選択してください。',
 
 
 
