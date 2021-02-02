@@ -19,8 +19,8 @@
         </el-form-item>
         <el-form-item :label="$t('desk.order_goodsTypeA') + ':'" label-width="90px">
           <el-select v-model="searchForm.damageTypeId" class="width150">
-            <el-option :label="$t('desk.home_all')" value>{{
-              $t("desk.home_all")
+            <el-option :label="$t('desk.home_allD')" value>{{
+              $t("desk.home_allD")
             }}</el-option>
             <el-option
               v-for="item in goodsKind"

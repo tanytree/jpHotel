@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 15:32:30
+ * @LastEditTime: 2021-02-02 15:17:50
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -132,13 +132,21 @@
 
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
-        <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')">
+        <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')" width="150px">
           <template slot-scope="{ row }">
-            <span>{{$t('desk.home_bookPeople') + ": "}} {{`${row.name} 【${row.pronunciation}】` }}</span>
+            <!-- <span>{{$t('desk.home_bookPeople') + ": "}} {{`${row.name} 【${row.pronunciation}】` }}</span>
             <span v-if="row.teamName">
               <br>
               {{$t('desk.order_teamName') + ": "}} {{`${row.teamName} 【${row.teamPronunciation}】` }}
-            </span>
+            </span> -->
+            <div>
+              <div>{{row.name}}</div>
+              <div v-if="row.pronunciation">【{{row.pronunciation}}】</div>
+            </div>
+             <div v-if="row.teamName">
+              <div>{{row.teamName}}</div>
+              <div v-if="row.teamPronunciation">【{{row.teamPronunciation}}】</div>
+            </div>
           </template>
         </el-table-column>
         <el-table-column prop="mobile" :label="$t('boss.loginDetail_phone')"></el-table-column>
@@ -167,19 +175,18 @@
         </el-table-column>
         <el-table-column prop="deposit" :label="$t('desk.downPaymentA')" width="100" align="center">
           <template slot-scope="{ row }">
-            {{ row.deposit || 0 }}
+            ￥{{$F.numFormate( row.deposit?row.deposit : 0 )}}
           </template>
         </el-table-column>
         <el-table-column prop="totalRoomPrice" :label="$t('desk.order_totalRoomPrice')" width="100" align="center">
           <template slot-scope="{ row }">
-            {{ row.totalRoomPrice || 0 }}
+           ￥{{ $F.numFormate(row.totalRoomPrice?row.totalRoomPrice : 0 )}}
           </template>
         </el-table-column>
-        <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="100" align="center">
+        <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="110" align="center">
           <template slot-scope="{ row }">
-            {{ F_orderSource(row.orderSource) }}
-            <span v-if="row.orderSource == 5">-</span>
-            <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
+           <div> {{ F_orderSource(row.orderSource) }}</div>
+           <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
           </template>
         </el-table-column>
         <el-table-column prop="" :label="$t('food.common.status')" align="center">

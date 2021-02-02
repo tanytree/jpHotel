@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-01-11 15:30:52
- * @FilePath: \jiudian\src\components\checkoutTao.vue
+ * @LastEditTime: 2021-02-02 11:24:33
+ * @FilePath: \jiudian\src\views\market\orders\coms\checkoutPartPay.vue
 -->
   <!-- 结账退房dialog组件-->
   <!--未调-->

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 18:39:51
+ * @LastEditTime: 2021-02-02 14:04:37
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -15,13 +15,13 @@
                     <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
                     <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
                     <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_richA')}}</el-button>
-                    <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>    
                 </el-form-item>
                 <br/>
                 <el-form-item label="">
                     <el-button type="danger" size="mini" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
+                    <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>                  
                 </el-form-item>
             </el-row>
             <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -84,28 +84,28 @@
                     <div :class="row.richType == 1 ? 'text-blue' : ''">
                        <span v-if="row.richType == 1 ? 'text-blue' : ''"> {{F_priceType(9)}}--</span>
                        <span v-if="row.priceType == 1">
-                            <span v-if="row.payType == 1">现金定金</span>
-                            <span v-if="row.payType == 2">信用卡订金 </span>
-                            <span v-if="row.payType == 4">其他定金 </span>
+                            <span v-if="row.payType == 1">{{$t('desk.add_cashDeposit')}}</span>
+                            <span v-if="row.payType == 2">{{$t('desk.add_cardDeposit')}}</span>
+                            <span v-if="row.payType == 4">{{$t('desk.add_otherDeposit')}} </span>
                         </span>
                                 <span v-if="row.priceType == 2">
-                            <span v-if="row.payType == 1">现金押金</span>
-                            <span v-if="row.payType == 2">信用卡押金 </span>
-                            <span v-if="row.payType == 4">其他押金</span>
+                            <span v-if="row.payType == 1">{{$t('desk.add_cashDepositA')}}</span>
+                            <span v-if="row.payType == 2">{{$t('desk.add_cardDepositA')}} </span>
+                            <span v-if="row.payType == 4">{{$t('desk.add_otherDepositA')}}</span>
                         </span>
                                 <span v-if="row.priceType == 3">
-                            <span v-if="row.payType == 1">现金收款</span>
-                            <span v-if="row.payType == 2">信用卡收款 </span>
-                            <span v-if="row.payType == 4">其他收款</span>
+                            <span v-if="row.payType == 1">{{$t('desk.add_cashGet')}}</span>
+                            <span v-if="row.payType == 2">{{$t('desk.add_cardGet')}} </span>
+                            <span v-if="row.payType == 4">{{$t('desk.add_otherGet')}}</span>
                         </span>
-                                <span v-if="row.priceType == 5">房费</span>
-                                <span v-if="row.priceType == 6">房费</span>
+                                <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}}</span>
+                                <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}</span>
                                 <span v-if="row.priceType == 7">
                             {{row.damageTypeName}}(￥{{row.consumePrice}}) * {{row.damageCount}}
                         </span>
                                 <span v-if="row.priceType == 8">
                            <span v-if="row.goodsList&&row.goodsList.length > 0" >
-                               <span  v-for="item in row.goodsList">
+                               <span  v-for="(item,index) in row.goodsList" :key="index">
                                    {{item.goodsName}}({{item.price}})*{{item.goodsCount}}
                                </span>
                            </span>
@@ -117,19 +117,19 @@
                             <!-- 全部冲调 -- -->
                             {{F_priceType(row.priceType)}} --
                             <span v-if="row.richList[0].priceType == 1">
-                                 <span v-if="row.richList[0].payType == 1">现金定金</span>
-                                 <span v-if="row.richList[0].payType == 2">信用卡订金 </span>
-                                 <span v-if="row.richList[0].payType == 4">其他定金 </span>
+                                 <span v-if="row.richList[0].payType == 1">{{$t('desk.add_cashDeposit')}}</span>
+                                 <span v-if="row.richList[0].payType == 2">{{$t('desk.add_cardDeposit')}}</span>
+                                 <span v-if="row.richList[0].payType == 4">{{$t('desk.add_otherDeposit')}} </span>
                              </span>
                             <span v-if="row.richList[0].priceType == 2">
-                                <span v-if="row.richList[0].payType == 1">现金押金</span>
-                                <span v-if="row.richList[0].payType == 2">信用卡押金 </span>
-                                <span v-if="row.richList[0].payType == 4">其他押金</span>
+                                <span v-if="row.richList[0].payType == 1">{{$t('desk.add_cashDepositA')}}</span>
+                                <span v-if="row.richList[0].payType == 2">{{$t('desk.add_cardDepositA')}} </span>
+                                <span v-if="row.richList[0].payType == 4">{{$t('desk.add_otherDepositA')}}</span>
                             </span>
                             <span v-if="row.richList[0].priceType == 3">
-                                <span v-if="row.richList[0].payType == 1">现金收款</span>
-                                <span v-if="row.richList[0].payType == 2">信用卡收款 </span>
-                                <span v-if="row.richList[0].payType == 4">其他收款</span>
+                                <span v-if="row.richList[0].payType == 1">{{$t('desk.add_cashGet')}}</span>
+                                <span v-if="row.richList[0].payType == 2">{{$t('desk.add_cardGet')}} </span>
+                                <span v-if="row.richList[0].payType == 4">{{$t('desk.add_otherGet')}}</span>
                             </span>
                             <span v-if="row.richList[0].priceType == 5"> {{F_priceType(row.richList[0].priceType)}} </span>
                             <span v-if="row.richList[0].priceType == 6"> {{F_priceType(row.richList[0].priceType)}} </span>
@@ -137,7 +137,7 @@
                                 {{row.richList[0].damageTypeName}}(￥{{row.richList[0].consumePrice}}) * {{row.richList[0].damageCount}}
                             </span>
                             <span v-if="row.richList[0].priceType == 8">
-                                <span v-for="item in row.richGoodsList">
+                                <span v-for="(item,index) in row.richGoodsList" :key="index">
                                      {{item.goodsName}}(￥{{item.price}}) * {{item.goodsCount}}
                                 </span>
                             </span>
@@ -146,7 +146,7 @@
                             </span>
                             <span v-if="row.richList[0].priceType == 14">
                                 <span v-if="row.richList[0].disherOrderSubList&&row.richList[0].disherOrderSubList.length > 0">
-                                    <span v-for="item in row.richList[0].disherOrderSubList">
+                                    <span v-for="(item,index) in row.richList[0].disherOrderSubList" :key="index">
                                         {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
                                     </span>
                                 </span>
@@ -162,13 +162,13 @@
                                 </span>
                             </span>
                         </span>
-                        <span v-if="row.priceType == 12">房费</span>
+                        <span v-if="row.priceType == 12">{{$t('desk.serve_roomPrice')}}</span>
                         <span v-if="row.priceType == 13">
                              {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
                         </span>
                         <span v-if="row.priceType == 14">
                    <!-- 具体餐品 -->
-                       <span  class="toDot" v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="item in row.disherOrderSubList">
+                       <span  class="toDot" v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="(item,index) in row.disherOrderSubList" :key="index">
                            {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
                        </span>
                     </span>
@@ -194,7 +194,7 @@
             </el-table-column>
             <!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
-            <el-table-column :label="$t('desk.home_note')" show-overflow-tooltip>
+            <el-table-column :label="$t('desk.home_noteB')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <span :class="row.priceType == 9 || row.priceType == 10 || row.richType == 1 ? 'text-red' : ''">
                         {{row.richRemark ? row.richRemark :  row.remark}}
@@ -215,6 +215,15 @@
         <el-dialog top='0' :title="$t('desk.enterAccountB')" :visible.sync="entryShow">
             <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
                 <p>{{$t('desk.book_firstInto')}}</p>
+                 <el-form-item :label="$t('desk.order_consumptionProject')+':'">
+                    <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
+                        <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
+                        <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
+                        <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
+                        <el-radio-button :label="15" :value="15">{{$t('desk.book_wenquan')}}</el-radio-button>
+                        <el-radio-button :label="16" :value="16">{{$t('desk.book_liveFee')}}</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
                 <el-form-item :label="$t('desk.order_payProject')+':'">
                     <el-radio-group v-model="consumeOperForm.priceType">
                         <el-radio-button :label="3" :value="3">{{$t('desk.customer_collectionA')}}</el-radio-button>
@@ -228,17 +237,6 @@
                         <el-radio v-for="(value, key) in payTypeList()" :label="key" :key="key">{{value}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-
-                <el-form-item :label="$t('desk.order_consumptionProject')+':'">
-                    <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
-                        <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
-                        <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
-                        <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
-                        <el-radio-button :label="15" :value="15">{{$t('desk.book_wenquan')}}</el-radio-button>
-                        <el-radio-button :label="16" :value="16">{{$t('desk.book_liveFee')}}</el-radio-button>
-                    </el-radio-group>
-                </el-form-item>
-
                 <template v-if="consumeOperForm.priceType==7">
                     <el-form-item :label="$t('desk.order_goodsType')+':'">
                         <el-select v-model="consumeOperForm.damageTypeId" @change="damageTypeIdChange">
@@ -279,7 +277,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="entryShow = false">{{ $t('commons.close') }}</el-button>
-                <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccount')}}</el-button>
+                <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccountC')}}</el-button>
             </div>
         </el-dialog>
         <!-- 挂账 -->
@@ -328,12 +326,12 @@
              </div>
          </el-dialog> -->
         <!--冲调-->
-        <el-dialog top='0' :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
+        <el-dialog top='0' :title="$t('desk.customer_richA')" :visible.sync="destructionShow" width="800px">
             <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px" >
                 <el-row v-if="currentRoom">
                     <el-col :span="8">
                         {{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}}
-                    </el-col>
+                    </el-col> 
                     <el-col :span="8">
                         {{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}
                     </el-col>
@@ -725,10 +723,10 @@ export default {
             }).catch(() => {});
         },
         consume_oper(type, formName) {
-            if(type == 1){
+            if(type == 1&&this.consumeOperForm.payType==4){
                 if(!this.consumeOperForm.remark){
                     this.$message({
-                        message: '備考欄必ず理由・内容を記入してください',
+                        message: this.$t('desk.home_noteA'),
                         type: 'warning'
                     })
                     return false

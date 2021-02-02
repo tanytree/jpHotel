@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-06 10:26:35
+ * @LastEditTime: 2021-02-02 15:24:55
  * @FilePath: \jiudian\src\views\market\nightaudit\notleaving.vue
  -->
 
@@ -31,7 +31,7 @@
                     <template slot-scope="{row}">{{ F_guestType(row.guestType) }}</template>
                 </el-table-column>
                 <el-table-column prop="consumeTotalPrice" :label="$t('desk.customer_totalConsum')" width="120" align="center">
-                    <template slot-scope="{row}">{{ row.consumeTotalPrice || 0}}
+                    <template slot-scope="{row}">￥{{$F.numFormate(row.consumeTotalPrice?row.consumeTotalPrice : 0)}}
                     </template>
                 </el-table-column>
                 <el-table-column prop="state" :label="$t('desk.order_liveStateA')"  align="center">

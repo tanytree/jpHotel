@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 15:58:54
+ * @LastEditTime: 2021-02-02 13:30:39
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -138,24 +138,25 @@
             </el-collapse>
 
             <!--表格数据 -->
-            <el-table ref="multipleTable" v-loading="loading" :data="tableData" header-row-class-name="default" height="100%" size="small">
-                <el-table-column prop="name" :label="$t('boss.loginDetail_nameA')">
+            <el-table ref="multipleTable" v-loading="loading" :data="tableData" header-row-class-name="default"  height="100%" size="small">
+                <el-table-column prop="name" width="130" :label="$t('boss.loginDetail_nameA')">
                     <template slot-scope="{ row }">
-                        <span>{{`${row.name} 【${row.pronunciation}】` }}  </span>
-<!--                        <span v-if="row.teamName">-->
-<!--                            <br>-->
-<!--                            {{$t('desk.order_teamName') + ": "}}   {{`${row.teamName} 【${row.teamPronunciation}】` }}-->
-<!--                        </span>-->
+                        <div>{{row.name}}</div>
+                        <div>【{{row.pronunciation}}】</div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="mobile" width="140px" :label="$t('desk.order_moblePhoneA')"></el-table-column>
-                <el-table-column prop="checkinTime" :label="$t('desk.order_checkinDateA')" width="160px"></el-table-column>
-                <el-table-column prop="checkoutTime" :label="$t('desk.order_departureTime')" width="160px"></el-table-column>
-<!--                <el-table-column prop="hotelCheckInRoom.houseNum" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>-->
-<!--                <el-table-column width="90px" prop="hotelCheckInRoom.roomTypeName" :label="$t('desk.home_roomType')" show-overflow-tooltip></el-table-column>-->
-                <el-table-column :label="$t('desk.customer_roomKind')" show-overflow-tooltip>
+                <el-table-column prop="checkinTime" :label="$t('desk.order_toLiveTime')" width="160px">
+                  <template slot-scope="{row}">
+                    <div>{{row.checkinTime}}</div>
+                    <div>{{row.checkoutTime}}</div>
+                  </template>
+                </el-table-column>
+                <el-table-column :label="$t('desk.customer_roomKind')"  align="center" show-overflow-tooltip width="160">
                     <template slot-scope="{ row }">
-                        {{row.hotelCheckInRoom ? (row.hotelCheckInRoom.roomTypeName + '/' + row.hotelCheckInRoom.houseNum) : ''}}
+                        <!-- {{row.hotelCheckInRoom ? (row.hotelCheckInRoom.roomTypeName + '/' + row.hotelCheckInRoom.houseNum) : ''}} -->
+                        <div v-if="row.hotelCheckInRoom&&row.hotelCheckInRoom.roomTypeName">{{row.hotelCheckInRoom.roomTypeName}}</div>
+                        <div v-if="row.hotelCheckInRoom&&row.hotelCheckInRoom.houseNum">{{row.hotelCheckInRoom.houseNum}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column prop :label="$t('desk.home_customersCategory')" width="135px">
@@ -164,11 +165,10 @@
                     }}</template>
                 </el-table-column>
                 <el-table-column prop :label="$t('desk.book_orderSoutce')" width="120px">
-                    <template slot-scope="{ row }">{{
-                        F_orderSource(row.orderSource)
-                    }}
-                        <span v-if="row.orderSource == 5">-</span>
-                        <span v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</span>
+                    <template slot-scope="{ row }">
+                      <div>{{F_orderSource(row.orderSource)}}</div>
+                        <!-- <span v-if="row.orderSource == 5">-</span> -->
+                        <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column prop :label="$t('desk.order_liveStateA')" width="120px">

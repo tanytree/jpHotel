@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-14 14:32:42
+ * @LastEditTime: 2021-02-02 15:25:21
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -35,12 +35,12 @@
         <el-table-column prop="name" align="left" :label="$t('desk.editor_nameAenter')">
           <template slot-scope="{ row }">
             <div>
-              {{ row.name }}
-              <span v-if="row.pronunciation">【{{ row.pronunciation }}】</span>
+             <div> {{ row.name }}</div>
+              <div v-if="row.pronunciation">【{{ row.pronunciation }}】</div>
             </div>
-            <div>
-              {{ row.enterName }}
-              <span v-if="row.enterPinyin">【{{ row.enterPinyin }}】</span>
+            <div v-if="row.enterName">
+              <div>{{ row.enterName }}</div>
+              <div v-if="row.enterPinyin">【{{ row.enterPinyin }}】</div>
             </div>
           </template>
         </el-table-column>
@@ -57,9 +57,7 @@
         </el-table-column>
         <el-table-column prop="age" align="center" :label="$t('desk.editor_age')"></el-table-column>
         <el-table-column align="center" :label="$t('desk.customer_cumulative')">
-          <template slot-scope="{ row }">{{
-            row.consumTotal ? row.consumTotal : "0"
-          }}</template>
+          <template slot-scope="{ row }">￥{{$F.numFormate( row.consumTotal ? row.consumTotal : "0")}}</template>
         </el-table-column>
         <el-table-column prop :label="$t('commons.operating')">
           <template slot-scope="{ row }">

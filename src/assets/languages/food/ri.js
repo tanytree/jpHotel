@@ -389,7 +389,7 @@ module.exports = {
         total_pay:'決済金額',
         consumePrice:'利用合計',
         payPrice:'支払金額',
-        member_card:'会員No',
+        member_card:'会員No.',
         select_member_card:'名前、電話検索',
 
 

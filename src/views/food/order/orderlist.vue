@@ -138,7 +138,7 @@
     <el-dialog
         top="0"
         :title="$t('food.orderTitle.'+ dialogType)"
-        :width="is_add ? '40%' :'70%'"
+        :width="is_add ? '45%' :'70%'"
         :visible.sync="dialogShow"
         :close-on-click-modal="false"
         :close-on-press-escape="false"

@@ -1,20 +1,20 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-01-11 15:30:52
+ * @LastEditTime: 2021-02-02 14:49:23
  * @FilePath: \jiudian\src\components\checkoutTao.vue
 -->
   <!-- 结账退房dialog组件-->
   <!--未调-->
   <template>
-  <el-dialog top="0" width="60%" :title="$t('desk.order_checkoutA')" :visible.sync="checkoutVisible" append-to-body>
+  <el-dialog top="0" width="60%" :title="$t('desk.order_checkout')" :visible.sync="checkoutVisible" append-to-body>
     <div class="innerBoxTop">
       <span>{{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}} </span>
       <span>{{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}</span>
       <span>{{$t('desk.customer_livePeople')}}：{{currentRoom.personList && currentRoom.personList[0] && currentRoom.personList[0].name}}</span>
     </div>
     <div class="priceBox">
-      <div class="leftPrice" v-if="detailData.payPrice - getRealPayFee.sum < 0"><span>{{$t('desk.order_receivable')}}</span>：
+      <div class="leftPrice" v-if="detailData.payPrice - getRealPayFee.sum < 0"><span>{{$t('desk.order_receivableA')}}</span>：
       <!-- {{getFee()}} -->
       {{numFormate(getRealPayFee.sum - detailData.payPrice)}}
       </div>
@@ -25,10 +25,10 @@
       <div class="centerLine"></div>
       <div class="rightPrcie">
         <div class="rightTop">
-          {{$t('desk.consumerTotal')}}：<span class="rightTopNum">{{numFormate(getRealPayFee.sum)}}</span>
+          {{$t('desk.consumerTotalA')}}：<span class="rightTopNum">{{numFormate(getRealPayFee.sum)}}</span>
         </div>
         <div class="rightBottom">
-          {{$t('desk.payTotal')}}：<span class="RightBottomNum">{{numFormate(detailData.payPrice)}}</span>
+          {{$t('desk.payTotalB')}}：<span class="RightBottomNum">{{numFormate(detailData.payPrice)}}</span>
         </div>
       </div>
       <div class="lastRight">
@@ -45,7 +45,7 @@
     </div>
     <!-- {{checkoutForm}} -->
     <el-form ref="checkoutForm" :rules="paymentRules" :model="checkoutForm" label-width="110px">
-      <el-form-item :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWay') : $t('desk.customer_payType')" prop="payType">
+      <el-form-item :label-width="detailData.totalPrice<0 ?'140px':'110px'" :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWayA') : $t('desk.customer_payType')" prop="payType">
 
         <el-radio-group v-model="checkoutForm.payType" v-if="detailData.totalPrice > 0">
           <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>
@@ -80,15 +80,15 @@
 
       </el-form-item>
       <el-form-item :label="$t('desk.home_note')">
-        <el-input type="textarea" v-model="checkoutForm.remark"></el-input>
+        <el-input type="textarea" v-model="checkoutForm.remark" :placeholder="$t('desk.home_noteA')"></el-input>
       </el-form-item>
       <el-form-item label-width="40px">
-        <el-checkbox v-model="checkoutForm.checked">{{$t('desk.book_printDocuments')}}</el-checkbox>
+        <el-checkbox v-model="checkoutForm.checked">{{$t('desk.book_printDocumentsA')}}</el-checkbox>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer" style="text-align: right">
       <el-button @click="checkoutVisible = false">{{$t('commons.cancel')}}</el-button>
-      <el-button type="primary" @click="consume_oper">{{$t('desk.book_billAback')}}</el-button>
+      <el-button type="primary" @click="consume_oper">{{$t('desk.book_billAbackA')}}</el-button>
     </div>
   </el-dialog>
   <!--
@@ -333,6 +333,14 @@ export default {
 
 
     consume_oper(){
+        if(this.checkoutForm.payType==4&&!this.checkoutForm.remark){
+            this.$message({
+                message: this.$t('desk.home_noteA'),
+                type: 'warning'
+            })
+            return false
+        }
+            
         console.log(this.detailData)
         console.log(this.currentRoom)
         let checkoutForm = this.checkoutForm

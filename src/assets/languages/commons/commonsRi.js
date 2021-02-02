@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 16:42:53
+ * @LastEditTime: 2021-02-02 11:11:53
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -294,12 +294,13 @@ module.exports = {
   },
   //挂账方式
   paymentWay: {
-    '1': '单位挂账',
+    '1': '売掛金',
     '2': '商品券',
-    '3': '住宿券',
-    '4': '折价券',
-    '5': '点数',
+    '3': 'バウチャー',
+    '4': 'クーポン',
+    '5': 'ポイント利用',
     '6': '招待券',
+    '8':'補助金',
     '7': 'その他',
   },
   //一周得描述

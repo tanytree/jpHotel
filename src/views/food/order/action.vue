@@ -6,10 +6,10 @@
                 <span class="rel showTax">
                     <el-button size="mini" type="primary" icon="el-icon-more" circle></el-button>
                     <div class="taxBox text-size14">
-                        <div class="item"><span class="w70">小计</span> <span class="text-right">￥{{orderTax.total}}</span> </div>
-                        <div class="item"><span class="w70">服务费 <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service}}</span> </div>
-                        <div class="item"><span class="w70">消费税 <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span> </span> <span class="text-right">￥{{orderTax.taxFee}}</span> </div>
-                        <div class="item"><span class="w70">合计</span> <span class="text-right">￥{{orderTax.sum}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('desk.customer_xiaoJi')}}</span> <span class="text-right">￥{{numFormate(orderTax.total)}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('desk.book_serveFee')}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{numFormate(orderTax.service)}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('desk.book_costFee')}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span> </span> <span class="text-right">￥{{numFormate(orderTax.taxFee)}}</span> </div>
+                        <div class="item"><span class="w70">{{$t('desk.serve_heji')}}</span> <span class="text-right">￥{{numFormate(orderTax.sum)}}</span> </div>
                     </div>
                 </span>
             </div>
@@ -27,7 +27,7 @@
                    <el-input  size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;" ></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('shop.outFlag')" >
-                   <el-checkbox v-model="outFlag">外带</el-checkbox>
+                   <el-checkbox v-model="outFlag">{{$t('desk.add_toGo')}}</el-checkbox>
                 </el-form-item>
                 <div v-if="form.billingType == 1">
                     <el-form-item :label="$t('food.common.payType')">
@@ -40,12 +40,12 @@
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item :label="$t('food.common.payPrice')">
-                        {{numFormate(orderTax.sum - form.preferentialPrice)}}
+                    <el-form-item :label="$t('food.reset.payPrice')">
+                        ￥{{numFormate(orderTax.sum - form.preferentialPrice)}}
                     </el-form-item>
 
-                    <el-form-item :label="$t('food.common.member_card')">
-                        <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.common.select_member_card')" @change="getMerberInfo">
+                    <el-form-item :label="$t('food.reset.member_card')">
+                        <el-select  size="small" v-model="form.memberCard"  filterable :placeholder="$t('food.reset.select_member_card')" @change="getMerberInfo">
                             <el-option
                               v-for="(item,index) in memberList"
                               :key="index"
@@ -97,7 +97,7 @@
                 </div>
 
                 <el-form-item  :label="$t('food.common.remark')">
-                    <el-input type="textarea" :placeholder="$t('food.common.remark')" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
+                    <el-input type="textarea" :placeholder="$t('desk.home_noteA')" v-model="form.remark"  maxlength="200" show-word-limit></el-input>
                 </el-form-item>
 
                 <el-form-item  :label="$t('food.common.order_count')">

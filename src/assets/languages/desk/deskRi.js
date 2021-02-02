@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-01 18:26:48
+ * @LastEditTime: 2021-02-02 15:12:36
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -38,13 +38,15 @@ module.exports = {
   enterAccountMoney: '入金金額',
   enterAccountMoneyA: '入金金額',
   enterAccount: '入金',
+  enterAccountC: '計上',
+  
   enterAccountA: '会計',
   enterAccountB: '会計入力',
   checkInDays: '滞在日数',
   arrivalTime: 'C/I時間',
   reservePersonDesc: '予約者',
   downPayment: '予約金',
-  downPaymentA: 'デポ',
+  downPaymentA: '前受金',
   //夜审
   nightAudit: {
     topSuggestTip: '建议夜审前处理以下业务',
@@ -88,7 +90,8 @@ module.exports = {
   home_checkToPlay: '預かり書を再発行',
   home_checkToPlayA: '預かり証再発行',
   home_note: '備考',
-  home_noteA: '備考欄必ず理由・内容を記入してください',
+  home_noteA: '入金種別「その他」を選択場合、必ず内容を記入してください。',
+  home_noteB: '理由',
   home_goodsGetOrder: '荷物預かり証',
   home_printTime: 'プリントアウト 時間',
   home_printTimeA: '印刷時間',
@@ -130,6 +133,7 @@ module.exports = {
   home_allA: 'ホテル一覧',
   home_allB: '法人一覧',
   home_allC: '全部',
+  home_allD: 'all',
   //serve(前台服务)
   serve_flightTime: 'シフト時間（フロント会計）',
   serve_chooseDate: '期間設定',
@@ -480,6 +484,7 @@ module.exports = {
   customer_sum: '金額',
   customer_sumA: '合計金額',
   customer_refundWay: 'デポ戻し方法',
+  customer_refundWayA: '入金・返金種別',
   customer_canRefundPri: '払戻金額',
   customer_advanceBill: '前受金明細',
   customer_orderNum: '予約番号',
@@ -617,19 +622,19 @@ module.exports = {
   order_paymentB: "支払",
   order_expense: "利用金額",
   order_expenseA: "利用",
-  order_yewu:'内容',
-  order_accountDeveloped: "相殺調整処理",
+  order_yewu:'取消内容',
+  order_accountDeveloped: "取消処理内容",
   order_ifGoTie: "「未収」確認",
   order_receivable: "会計金額",
   order_receivableA: "入金/請求",
   order_shouldBack: "「未収」確認",
   order_canDeduction: "200ポイントで20元を相殺",
-  order_mixingWay: "相殺方法",
-  order_completelyAgainst: "完全相殺",
+  order_mixingWay: "処理",
+  order_completelyAgainst: "全部取消",
   order_partCompletely: "部分相殺",
   order_completelyPrice: "相殺金額",
   order_attention: "注意：相殺金額は請求金額より少なければならない。",
-  order_completelyReason: "相殺理由",
+  order_completelyReason: "理由",
   order_ifDelete: "該当項目削除、確認",
   order_selectEntryItem: "入金項目を選択してください",
   order_pleaseSelectPayWay: "精算方法を選択してください",
@@ -951,12 +956,16 @@ module.exports = {
   add_back14: '後ろ１４日へ',
   order_todayBack: "日帰り",
   book_serveFee: 'サービス料',
-  book_costFee: '消費税',
+  book_costFee: '消费税',
+  book_haveFee:'税込',
+  book_noFee:'税抜き',
   book_wenquan: '入湯税',
   book_liveFee: '宿泊税',
   book_discountAmount: '割引金額',
   book_printDocuments: '帳票印刷',
+  book_printDocumentsA: 'レシート印刷',
   book_billAback: '精算及びC/O',
+  book_billAbackA: '確認',
   book_HQtable: '本部帳票',
   book_HQsale: '本部売上日報',
   side_sidePri: '食事付き金額',
@@ -994,6 +1003,16 @@ module.exports = {
   order_constProject: "利用内容",
   add_projectAmoney: 'プラン名/料金',
   add_notOpen: '未開放',
+  add_cashDeposit: '前受金・キャッシュ',
+  add_cardDeposit: '前受金・クレジットカード',
+  add_otherDeposit: '前受金・その他入金',
+  add_cashDepositA: '前受金・キャッシュ',
+  add_cardDepositA: '前受金・クレジットカード',
+  add_otherDepositA: '前受金・その他入金',
+  add_cashGet: '支払・キャッシュ',
+  add_cardGet: '支払・クレジットカード',
+  add_otherGet: '支払・その他入金',
+  add_toGo: 'テックアウト',
 
 
 
