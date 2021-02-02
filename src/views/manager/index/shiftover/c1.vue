@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 17:30:18
+ * @LastEditTime: 2021-02-02 17:41:31
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -77,12 +77,13 @@
             <div class="item">{{$t('manager.add_pettyCash')}}=({{info.pettyCash}})</div>
             <div class="item">{{$t('manager.add_lastHold')}}：{{info.upMoneyRetained}}</div>
             <div class="item">{{$t('manager.add_nowDownPri')}}：0</div>
-            <div class="item">备注：0</div>
+            <div class="item">{{$t('desk.home_note')}}：0</div>
           </el-col>
           <el-col :span="12" class="li">
             <div class="item">{{$t('manager.add_nowCashGetA')}}：{{info.nowMoneyRetained}}</div>
             <div class="item">{{$t('manager.add_nowCardGetA')}}：{{info.nowCreditCardHandin}}</div>
             <div class="item" v-if="tabCurr == 1">{{$t('manager.add_nowBillGet')}}：0</div>
+            <div class="item">{{$t('desk.add_otherGetA')}}：0</div>
           </el-col>
         </el-row>
       </div>

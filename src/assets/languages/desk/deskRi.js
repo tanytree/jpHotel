@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-02 15:55:36
+ * @LastEditTime: 2021-02-02 17:41:03
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -1013,6 +1013,7 @@ module.exports = {
   add_cardGet: '支払・クレジットカード',
   add_otherGet: '支払・その他入金',
   add_toGo: 'テックアウト',
+  add_otherGetA: 'その他入金',
 
 
 

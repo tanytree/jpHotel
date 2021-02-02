@@ -1042,6 +1042,7 @@ module.exports = {
   add_cashGet: '现金收款',
   add_cardGet: '信用卡收款',
   add_otherGet: '其他收款',
+  add_otherGetA: '其他收款',
   add_cashPledge: '现金押金',
   add_toGo: '外带',
   add_: '',
