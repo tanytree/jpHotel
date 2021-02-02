@@ -40,21 +40,21 @@
                                     popper-class="popper-class"
                                     :trigger-on-focus="false"
                                     :placeholder="$t('desk.book_inputContentA')"
-                                    @select="changeName($event, roomInfo.headerObj, index)"
+                                    @select="changeName($event, roomInfo.headerObj, topIndex)"
                                 ></el-autocomplete>
-                                <el-input style="width: 110px; margin-left: 10px" v-model="roomInfo.headerObj.pronunciation" :placeholder="$t('desk.customer_namePYA')"></el-input>
+                                <el-input style="width: 110px; margin-left: 10px" v-model="roomInfo.headerObj.pronunciation" :placeholder="$t('desk.customer_namePYA')" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_sex')+ ':'">
-                                <el-radio-group v-model="roomInfo.headerObj.sex">
+                                <el-radio-group v-model="roomInfo.headerObj.sex" @change="headerObjChange(topIndex)">
                                     <el-radio v-for="(item, key, index) of $t('commons.F_sex')" :label="key" :key="index">{{ item }}</el-radio>
                                 </el-radio-group>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.order_guestKind')+ ':'">
-                                <el-select v-model="roomInfo.headerObj.customerType" size="small" style="width:200px">
+                                <el-select v-model="roomInfo.headerObj.customerType" size="small" style="width:200px" @change="headerObjChange(topIndex)">
                                     <el-option :value="key" v-for="(item,key,index) of $t('commons.customerTypes')" :label="item" :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -63,65 +63,66 @@
                     <el-row>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_documentTypeA')+ ':'">
-                                <el-select v-model="roomInfo.headerObj.idcardType" size="small" :placeholder="$t('commons.selectIdCardType')" style="width: 200px">
+                                <el-select v-model="roomInfo.headerObj.idcardType" size="small" :placeholder="$t('commons.selectIdCardType')" style="width: 200px" @change="headerObjChange(topIndex)">
                                     <el-option v-for="(value, key) in $t('commons.idCardType')" :label="value" :value="key" :key="key"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.home_idCardNumA')+ ':'" label-width="150px">
-                                <el-input :placeholder="$t('desk.order_inputCardNum')" v-model="roomInfo.headerObj.idcard" size="small" style="width: 200px"></el-input>
+                                <el-input :placeholder="$t('desk.order_inputCardNum')" v-model="roomInfo.headerObj.idcard" size="small" style="width: 200px" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item label="E-mail:">
-                                <el-input :placeholder="$t('commons.pleaseEnter')" v-model="roomInfo.headerObj.email" size="small" style="width: 180px"></el-input>
+                                <el-input :placeholder="$t('commons.pleaseEnter')" v-model="roomInfo.headerObj.email" size="small" style="width: 180px"
+                                          @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_region')+ ':'">
-                                <el-input style="width:200px" :placeholder="$t('desk.customer_pleaceInput')" v-model="roomInfo.headerObj.region" size="small"></el-input>
+                                <el-input style="width:200px" :placeholder="$t('desk.customer_pleaceInput')" v-model="roomInfo.headerObj.region" size="small" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="12">
                             <el-form-item :label="$t('desk.order_liveAddress')+ ':'">
-                                <el-input v-model="roomInfo.headerObj.homeAddressZip1" size="small" @blur="checkNextcode(roomInfo.headerObj.homeAddressZip1)" style="width: 80px"></el-input>
+                                <el-input v-model="roomInfo.headerObj.homeAddressZip1" size="small" maxlength="3" @keyup.native="checkNextcode(roomInfo.headerObj.homeAddressZip1, topIndex)" style="width: 80px"></el-input>
                                 <span style="margin: 0 5px">-</span>
-                                <el-input v-model="roomInfo.headerObj.homeAddressZip2" size="small" @blur="checkAddress(roomInfo.headerObj.homeAddressZip1,roomInfo.headerObj.homeAddressZip2,'addressA',roomInfo)" style="width:80px"></el-input>
-                                <el-input :placeholder="$t('desk.customer_zipcodeTo')" v-model="roomInfo.headerObj.homeAddress" size="small" style="width: 300px; margin-left: 10px"></el-input>
+                                <el-input v-model="roomInfo.headerObj.homeAddressZip2" size="small" maxlength="4" @keyup.native="checkAddress(roomInfo.headerObj.homeAddressZip1,roomInfo.headerObj.homeAddressZip2,'addressA',roomInfo, topIndex)" style="width:80px"></el-input>
+                                <el-input :placeholder="$t('desk.customer_zipcodeTo')" v-model="roomInfo.headerObj.homeAddress" size="small" style="width: 300px; margin-left: 10px" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.order_homePhone')+ ':'">
-                                <el-input :placeholder="$t('desk.customer_pleaceInput')" v-model="roomInfo.headerObj.homeMobile" size="small" style="width: 180px"></el-input>
+                                <el-input :placeholder="$t('desk.customer_pleaceInput')" v-model="roomInfo.headerObj.homeMobile" size="small" style="width: 180px" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.home_phoneNum')+ ':'">
-                                <el-input style="width:200px" :placeholder="$t('desk.customer_pleaceInput')" v-model="roomInfo.headerObj.phone" size="small"></el-input>
+                                <el-input style="width:200px" :placeholder="$t('desk.customer_pleaceInput')" v-model="roomInfo.headerObj.phone" size="small" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_unitName')+ ':'">
-                                <el-input :placeholder="$t('commons.pleaseEnterA')" v-model="roomInfo.headerObj.enterName" size="small" style="width: 95px"></el-input>
-                                <el-input :placeholder="$t('desk.customer_faying')" v-model="roomInfo.headerObj.enterPinyin" size="small" style="width: 95px; margin-left: 5px"></el-input>
+                                <el-input :placeholder="$t('commons.pleaseEnterA')" v-model="roomInfo.headerObj.enterName" size="small" style="width: 95px" @keyup.native="headerObjChange(topIndex)"></el-input>
+                                <el-input :placeholder="$t('desk.customer_faying')" v-model="roomInfo.headerObj.enterPinyin" size="small" style="width: 95px; margin-left: 5px" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
                             <el-form-item :label="$t('desk.customer_unitPhone')+ ':'">
-                                <el-input :placeholder="$t('commons.pleaseEnter')" v-model="roomInfo.headerObj.enterMobile" size="small" style="width: 200px"></el-input>
+                                <el-input :placeholder="$t('commons.pleaseEnter')" v-model="roomInfo.headerObj.enterMobile" size="small" style="width: 200px" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item :label="$t('desk.customer_unitAddress')+ ':'">
-                                <el-input v-model="roomInfo.headerObj.enterAddressZip1" size="small" style="width: 80px" @blur="checkNextcode(roomInfo.headerObj.enterAddressZip1)"></el-input>
+                                <el-input v-model="roomInfo.headerObj.enterAddressZip1" size="small" style="width: 80px" maxlength="3" @keyup.native="checkNextcode(roomInfo.headerObj.enterAddressZip1, topIndex)"></el-input>
                                 <span style="margin: 0 5px">-</span>
-                                <el-input v-model="roomInfo.headerObj.enterAddressZip2" @blur="checkAddress(roomInfo.headerObj.enterAddressZip1,roomInfo.headerObj.enterAddressZip2,'addressB',roomInfo)" size="small" style="width: 80px"></el-input>
-                                <el-input :placeholder="$t('desk.customer_zipcodeTo')" v-model="roomInfo.headerObj.enterAddress" size="small" style="width: 300px; margin-left: 10px"></el-input>
+                                <el-input v-model="roomInfo.headerObj.enterAddressZip2" maxlength="4"  @keyup.native="checkAddress(roomInfo.headerObj.enterAddressZip1,roomInfo.headerObj.enterAddressZip2,'addressB',roomInfo, topIndex)" size="small" style="width: 80px"></el-input>
+                                <el-input :placeholder="$t('desk.customer_zipcodeTo')" v-model="roomInfo.headerObj.enterAddress" size="small" style="width: 300px; margin-left: 10px" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -357,6 +358,9 @@ export default {
     },
 
     methods: {
+        headerObjChange(index) {
+            this.$set(this.inRoomList, index, this.inRoomList[index]);
+        },
         fetchHousePrice(roomTypeId, object) {
             let params = {
                 strategyTime: new Date().Format("yyyy-MM-dd"),
@@ -389,7 +393,7 @@ export default {
             }
         },
 
-        changeName(e, personInfo) {
+        changeName(e, personInfo, index) {
             console.log(e);
             if (e.name) {
                 delete e['checkIn'];
@@ -425,8 +429,9 @@ export default {
                 this.checkInForm.name = e;
             }
             setTimeout( () => {
-                this.$forceUpdate()
-            }, 1000)
+                this.$forceUpdate();
+                this.$set(this.inRoomList, index, this.inRoomList[0]);
+            }, 100)
 
         },
 
@@ -459,16 +464,19 @@ export default {
                 }
             );
         },
-        checkNextcode(code1) {
+        checkNextcode(code1, index) {
+            debugger
+            this.$set(this.inRoomList, index, this.inRoomList[index]);
             if (!code1 || code1.length !== 3) {
-                this.$message({
-                    message: this.$t("desk.customer_sureZipcode"),
-                    type: "warning",
-                });
+                // this.$message({
+                //     message: this.$t("desk.customer_sureZipcode"),
+                //     type: "warning",
+                // });
             }
         },
         // 输入邮编检索地址
-        checkAddress(code1, code2, type, roomInfo) {
+        checkAddress(code1, code2, type, roomInfo, index) {
+            this.$set(this.inRoomList, index, this.inRoomList[index]);
             console.log(roomInfo);
             if (code1 && code2) {
                 if (code1.length == 3 && code2.length == 4) {
@@ -503,10 +511,10 @@ export default {
                         }
                     });
                 } else {
-                    this.$message({
-                        message: this.$t("desk.customer_sureZipcode"),
-                        type: "warning",
-                    });
+                    // this.$message({
+                    //     message: this.$t("desk.customer_sureZipcode"),
+                    //     type: "warning",
+                    // });
                 }
             } else {
                 this.$message({
