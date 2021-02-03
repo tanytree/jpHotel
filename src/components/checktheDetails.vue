@@ -577,19 +577,20 @@ export default {
                         if (this.type == 1) {
                             this.$router.go(-1);
                         } else {
-                            this.fetchRoomStatus( ()=> {
-                                this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
-                                    this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
-                                            checkInRoomIds: checkInRoomIds.join(','),
-                                            state: 1
-                                        }, (res) => {
-                                            this.$router.push(
-                                                `/orderdetail?id=${response.checkinId}`
-                                            );
-                                        }
-                                    );
-                                });
-                            })
+                            // this.fetchRoomStatus( ()=> {
+                            //
+                            // })
+                            this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
+                                this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
+                                        checkInRoomIds: checkInRoomIds.join(','),
+                                        state: 1
+                                    }, (res) => {
+                                        this.$router.push(
+                                            `/orderdetail?id=${response.checkinId}`
+                                        );
+                                    }
+                                );
+                            });
                         }
                     }
                 );

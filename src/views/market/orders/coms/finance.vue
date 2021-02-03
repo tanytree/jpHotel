@@ -660,8 +660,6 @@ export default {
                 return item.id == row.attachMealId;
             }) || [])[0];
             if (node) {
-                debugger
-                // ${this.F_priceType(row.priceType)}
                 return ` ${node.mealName} (￥${node.mealPrice}) *${row.attachMealCount}`
             }
         },

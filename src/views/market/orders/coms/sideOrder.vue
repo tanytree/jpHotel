@@ -11,9 +11,9 @@
         </div>
         <div class="title_one">预订时选择的套餐：</div>
         <div class="flexBox" v-for="data in tableData" :key="i">
-            <div class="name">{{ data.checkIn.name }}</div>
-            <div class="breakfast">早餐-{{ data.mealName ? `【${data.mealName}￥ ${data.mealPrice} 】` : '无'}}</div>
-            <div class="dinner">晚餐-{{ data.mealNameDinner ? `【${data.mealNameDinner}￥ ${data.mealPriceDinner} 】` : '无'}}</div>
+            <div class="name">{{ data.name }}</div>
+            <div class="breakfast">{{ $t('manager.hk_breakfast') }}-{{ data.mealName ? `【${data.mealName}￥ ${data.mealPrice} 】` : $t('manager.hk_toward_malu')}}</div>
+            <div class="dinner">{{ $t('manager.hk_dinner') }}-{{ data.mealNameDinner ? `【${data.mealNameDinner}￥ ${data.mealPriceDinner} 】` : $t('manager.hk_toward_malu')}}</div>
         </div>
         <div class="title_one" style="margin-bottom:10px">入账附餐：</div>
         <el-form :model="sideForm" ref="sideForm" label-width="100px" style="margin-left:-30px;" class="demo-ruleForm">
@@ -32,19 +32,19 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-form-item label="金额:" prop="desc">
+                <el-form-item :label="$t('desk.customer_sum') + ':'" prop="desc">
                     <el-input disabled v-model="sideForm.consumePrice" size="small" style="width:120px"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="备注:" prop="desc">
+                <el-form-item :label="$t('desk.home_note') + ':'" prop="desc">
                     <el-input type="textarea" v-model="sideForm.remark" style="width:350px"></el-input>
                 </el-form-item>
             </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="visible=false">{{ $t('commons.close') }}</el-button>
-            <el-button type="primary" @click="consumeOper">入账</el-button>
+            <el-button type="primary" @click="consumeOper">{{$t('desk.enterAccount')}}</el-button>
         </div>
     </el-dialog>
 </template>
