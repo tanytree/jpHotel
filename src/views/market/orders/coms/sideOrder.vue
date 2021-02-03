@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-03 11:50:55
+ * @LastEditTime: 2021-02-03 11:57:31
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -28,7 +28,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label-width="10px">
-            <el-input-number size="small" v-model="sideForm.number" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+            <el-input-number size="small" v-model="sideForm.number"  :min="1" ></el-input-number>
           </el-form-item>
         </el-col>
       </el-row>
@@ -44,7 +44,7 @@
       </el-row>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="dimissionClose">{{ $t('commons.close') }}</el-button>
+      <el-button @click="visible=false">{{ $t('commons.close') }}</el-button>
       <el-button  type="primary">入账</el-button>
     </div>
   </el-dialog>
