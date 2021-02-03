@@ -42,27 +42,28 @@
             <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
-                <template slot-scope="{row}">
-                    {{row.priceType}}/
-                    <span v-if="row.priceType == 9 || row.priceType == 10"  class="text-red">
-             {{F_priceType(row.richList[0].priceType)}}
-             </span>
-                    <span :class="row.richType == 1 ? 'text-red' : ''" v-else>
-                {{F_priceType(row.priceType)}}
-             </span>
+                <template slot-scope="{ row }">
+                    <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">
+                        {{F_priceType(row.priceType ? row.priceType : 99)}}
+                    </span>
+                    <span v-else :class="row.richType == 1 ? 'red' : ''">
+                        {{'【' + $t('commons.payType')[row.payType || 1] + '】' + F_priceType(row.priceType ? row.priceType : 99)}}
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('desk.order_paymentB')" >
-                <template slot-scope="{row}">
-                    {{numFormate(getPriceStr(row.payPrice))}}
+                <template slot-scope="{ row }">
+                    <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.payPrice ? (0 - row.payPrice) : ''}}</span>
+                    <span v-else :class="row.richType == 1 ? 'red' : ''">{{row.payPrice}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="consumePrice" :label="$t('desk.order_expenseA')">
-                <template slot-scope="{row}" style="color: red">
-                    {{numFormate(getPriceStr(row.consumePrice))}}
+                <template slot-scope="{ row }">
+                    <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.consumePrice ? (0 - row.consumePrice) : ''}}</span>
+                    <span v-else :class="row.richType == 1 ? 'red' : ''">{{row.consumePrice}}</span>
                 </template>
             </el-table-column>
-            <el-table-column  prop="state" :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
+            <el-table-column  :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <!-- "1": '订金',
                      "2": '押金',
@@ -188,7 +189,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="state" :label="$t('food.common.status')" show-overflow-tooltip>
+            <el-table-column :label="$t('food.common.status')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
                 </template>
@@ -440,7 +441,7 @@
         <!--开发票-->
         <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
         <!-- 附餐 -->
-        <sideOrder ref='sideOrder'></sideOrder>
+        <sideOrder ref='sideOrder' :currentRoom="currentRoom" :detailData="detailData" @get_consume_order_list="consume_order_list"></sideOrder>
     </div>
 </template>
 
@@ -1038,9 +1039,6 @@ export default {
             }
         },
 
-
-
-
         /**获取挂账企业 */
         hotelenter_list(name) {
             let searchForm = {
@@ -1338,5 +1336,11 @@ export default {
 
     }
 
+}
+.red {
+    color: red;
+}
+.blue {
+    color: blue;
 }
 </style>

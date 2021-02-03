@@ -7,7 +7,7 @@
 module.exports = {
   refundAmount: '払い戻し額',
   refundAmountA: '返金',
-  
+
     reserveContent: '预定内容',
   englishM:'フリーメモ',
     enterpriseName: '会社名',
@@ -62,6 +62,8 @@ module.exports = {
         "14": '餐吧消费',
         "15":'温泉税',
         "16":'住宿税',
+        "17":'附餐早',
+        "18":'附餐晚',
         "22":'商品费',
         "99":'手付け金を払い下げる',
         "100": 'その他'

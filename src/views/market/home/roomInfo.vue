@@ -25,7 +25,7 @@
             <!-- 基本信息 -->
             <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
                 <div class="buttonBox">
-                    <el-button type="primary" size="small" plain @click="goRoomStatus" v-if="currentRoom.roomStatus != 5">
+                    <el-button type="primary" size="small" plain @click="goRoomStatus()" v-if="currentRoom.roomStatus != 5">
                         {{ (this.currentRoom.roomStatus == 3 || this.currentRoom.roomStatus == 1) ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}
                     </el-button>
                     <el-button type="primary" @click="goRoomStatus(5)" size="small" plain :disabled="currentRoom.checkInRoomType == 1">{{this.currentRoom.roomStatus != 5 ? $t('desk.home_service') : $t('desk.home_cannel_service')}}</el-button>

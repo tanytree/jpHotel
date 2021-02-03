@@ -329,8 +329,8 @@ export default {
                     id: "", //            入住人表id  传改值可以编辑入住人信息  String选填
                     housePrice: "", //    住宿价格   double必填
                     customerType: "", //  客人分类  1大人 2儿童A（小学5年级以上）  3儿童B（3岁至小学5年级） 4儿童C（0至3岁不占床）   int必填
-                    attachMealId: "", //  附餐id-早餐 （附餐列表中获取） string选填
-                    attachMealIdDinner: "", //  附餐id-晚餐 （附餐列表中获取） string选填
+                    // attachMealId: "", //  附餐id-早餐 （附餐列表中获取） string选填
+                    // attachMealIdDinner: "", //  附餐id-晚餐 （附餐列表中获取） string选填
                     email: "", //      邮箱  String选填
                     region: "", //      地区  String选填
                     homeAddressZip1: "", //      住家地址邮编1  String选填
