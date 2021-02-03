@@ -152,6 +152,12 @@ export default {
                     state: 1, //1启用 2禁用
                 },
                 (res) => {
+                    res.list.sort((a, b)=> {
+                        if (a.mealTime < b.mealTime) {return -1;}if (b.mealTime < a.mealTime) {return 1;}return 0;
+                    })
+                    res.list.forEach(item => {
+                        item.mealName = (item.mealTime == 1 ? this.$t('manager.hk_breakfast') : this.$t('manager.hk_dinner'))+ '-' + item.mealName;
+                    })
                     this.hotelattaChmealList = res.list;
                     this.$forceUpdate();
                 }

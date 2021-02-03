@@ -6,6 +6,7 @@
  */
 //前台部 日文
 module.exports = {
+    reason: 'りゆう',
     editRowHouse: 'アサイン変更',
     roomOccupation: '部屋がとられる',
   reserveInfoDesc: '予定情報',
@@ -39,7 +40,7 @@ module.exports = {
   enterAccountMoneyA: '入金金額',
   enterAccount: '入金',
   enterAccountC: '計上',
-  
+
   enterAccountA: '会計',
   enterAccountB: '会計入力',
   checkInDays: '滞在日数',

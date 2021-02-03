@@ -47,7 +47,8 @@
                         {{F_priceType(row.priceType ? row.priceType : 99)}}
                     </span>
                     <span v-else :class="row.richType == 1 ? 'red' : ''">
-                        {{'【' + $t('commons.payType')[row.payType || 1] + '】' + F_priceType(row.priceType ? row.priceType : 99)}}
+                        {{ (row.priceType != 17 && row.priceType != 18) ? `【${$t('commons.payType')[row.payType || 1]}】` : ''}}
+                        {{F_priceType(row.priceType ? row.priceType : 99)}}
                     </span>
                 </template>
             </el-table-column>
@@ -174,17 +175,24 @@
                            {{item.dishesName}}({{item.unitPrice}})*{{item.dishesCount}}
                        </span>
                     </span>
-                            <span v-if="row.priceType == 15">
+                    <span v-if="row.priceType == 15">
                         {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
                     </span>
-                            <span v-if="row.priceType == 16">
+                    <span v-if="row.priceType == 16">
                         {{F_priceType(row.priceType)}}(￥{{row.unitPrice}}) * {{row.taxCount}}
                     </span>
-                            <span v-if="row.priceType == 22">
+                    <span v-if="row.priceType == 17 || row.priceType == 18">
+                        {{getHotelattaChmealDetail(row)}}
+                    </span>
+                    <span v-if="row.priceType == 22">
                         <!-- 商品费 -->
                         <span class="toDot" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
                             {{item.goodsName}}({{item.unitPrice}})*{{item.goodsCount}}
                         </span>
+                    </span>
+                    <br v-if="row.richType == 1">
+                    <span v-if="row.richType == 1" class="blue">
+                       {{ $t('desk.reason') }}： {{row.richRemark}}
                     </span>
                     </div>
                 </template>
@@ -199,15 +207,15 @@
             <el-table-column :label="$t('desk.home_noteB')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <span :class="row.priceType == 9 || row.priceType == 10 || row.richType == 1 ? 'text-red' : ''">
-                        {{row.richRemark ? row.richRemark :  row.remark}}
+                        {{row.remark}}
                     </span>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('commons.operating')">
-                <template slot-scope="{row}">
-                    <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
-                </template>
-            </el-table-column>
+<!--            <el-table-column :label="$t('commons.operating')">-->
+<!--                <template slot-scope="{row}">-->
+<!--                    <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>-->
+<!--                </template>-->
+<!--            </el-table-column>-->
         </el-table>
         <div style="margin-top:10px"></div>
         <!-- 分页 -->
@@ -558,6 +566,7 @@ export default {
     },
     data() {
         return {
+            hotelattaChmealList: [],
             stayoverVisible: false,
             overstayTabledata: [],
             overstayForm: {
@@ -638,9 +647,45 @@ export default {
 
     mounted() {
         let id = this.$route.query.id;
+        this.fetchHotelattaChmealList();
     },
 
     methods: {
+        F_priceType(value) {
+            let enums = this.$t('frontOffice.priceType')
+            return value && enums[value] ? enums[value] : ''
+        },
+        getHotelattaChmealDetail(row) {
+            let node = (this.hotelattaChmealList.filter((item) => {
+                return item.id == row.attachMealId;
+            }) || [])[0];
+            if (node) {
+                debugger
+                // ${this.F_priceType(row.priceType)}
+                return ` ${node.mealName} (￥${node.mealPrice}) *${row.attachMealCount}`
+            }
+        },
+        fetchHotelattaChmealList() {
+            this.$F.doRequest(this,
+                "/pms/hotelattachmeal/list",
+                {
+                    pageIndex: 1,
+                    pageSize: 999,
+                    state: 1, //1启用 2禁用
+                },
+                (res) => {
+                    res.list.sort((a, b)=> {
+                        if (a.mealTime < b.mealTime) {return -1;}if (b.mealTime < a.mealTime) {return 1;}return 0;
+                    })
+                    res.list.forEach(item => {
+                        item.mealName = (item.mealTime == 1 ? this.$t('manager.hk_breakfast') : this.$t('manager.hk_dinner'))+ '-' + item.mealName;
+                    })
+                    this.hotelattaChmealList = res.list;
+                    this.$forceUpdate();
+                }
+            );
+        },
+
         checkinDaysChange(e, row) {
             var date = new Date(row.checkoutTime);
             date.setDate(date.getDate() + e);

@@ -60,7 +60,7 @@
                     </span>
                     <br v-if="row.richType == 1">
                     <span v-if="row.richType == 1" class="blue">
-                       理由： {{row.richRemark}}
+                       {{ $t('desk.reason') }}： {{row.richRemark}}
                     </span>
                     <span v-else>{{F_priceType(row.priceType == 1 ? 1 : 99)}}</span>
                 </template>

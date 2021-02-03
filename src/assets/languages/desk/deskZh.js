@@ -6,6 +6,7 @@
  */
 //  前台部 中文
 module.exports = {
+    reason: '理由',
     editRowHouse: '修改排房',
   reserveInfoDesc: '预定信息',
   roomOccupation: '房间被占用',

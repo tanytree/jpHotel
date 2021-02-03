@@ -264,9 +264,9 @@ export default {
                 } else if (this.currentRoom.roomStatus == 2) {
                     roomStatus = 1;
                 } else if (this.currentRoom.roomStatus == 3) {
-                    roomStatus = 4;
+                    roomStatus = 2;
                 } else if (this.currentRoom.roomStatus == 4) {
-                    roomStatus = 3;
+                    roomStatus = 1;
                 }
             }
 
