@@ -1,83 +1,52 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 17:38:47
+ * @LastEditTime: 2021-02-03 11:50:55
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
-  <el-dialog
-    top="0"
-    :title="$t('desk.side_sideBooked')"
-    :visible.sync="visible"
-    :lock-scroll="false"
-    width="80%"
-  >
-    <el-dialog
-      width="50%"
-       :title="$t('desk.side_changePackage')"
-      top="0"
-      :visible.sync="innerVisible"
-      append-to-body
-    >
-      <el-form ref="innerForm" :model="innerForm">
-        <el-form-item label="早餐:">
-          <el-radio-group v-model="innerForm.breakfast">
-            <el-radio label="">无</el-radio>
-            <el-radio label="1">A套餐【¥2000】</el-radio>
-            <el-radio label="2">B套餐【¥3000】</el-radio>
-            <el-radio label="3">C套餐【¥4000】</el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="innerVisible = false">{{
-          $t("commons.cancel")
-        }}</el-button>
-        <el-button type="primary">确认</el-button>
-      </div>
-    </el-dialog>
+  <el-dialog top="0" :title="$t('desk.side_sideBooked')" :visible.sync="visible" :lock-scroll="false" width="50%">
     <div class="topBox">
-      <div class="fontStyle">
-      {{$t('desk.add_sureBil')}}
-      </div>
-      <el-button type="primary"> {{$t('desk.add_addMeal')}}</el-button>
+      <span>房间号：A001</span><span>入住人：张三</span>
     </div>
-    <el-table
-      header-row-class-name="default"
-      :data="tableData"
-      style="width: 100%"
-      row-key="id"
-      default-expand-all
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-    >
-      <el-table-column prop="date" :label="$t('desk.add_eatTime')" width="150">
-      </el-table-column>
-      <el-table-column prop="name" :label="$t('desk.customer_guestTypeA')" width="120">
-      </el-table-column>
-      <el-table-column  :label="$t('desk.add_mealType')" >
-           <template slot-scope="scope">
-               {{scope.row.mealTime == 1 ? $t('manager.hk_breakfast') : $t('manager.hk_dinner')}}
-           </template>
-      </el-table-column>
-      <el-table-column :label="$t('desk.add_mealPri')" width="200">
-          <template slot-scope="scope">
-              {{ scope.row.mealName}}【￥{{ scope.row.mealPrice}}】
-          </template>
-
-      </el-table-column>
-      <el-table-column prop="address" :label="$t('desk.customer_billState')" width="180">
-      </el-table-column>
-      <el-table-column :label="$t('commons.operating')">
-        <template>
-          <el-button type="text"> {{$t('desk.add_againBill')}}</el-button>
-          <el-button type="text" @click="innerVisible = true"
-            >{{$t('desk.side_changePackageA')}}</el-button
-          >
-          <el-button type="text">{{$t('desk.add_ruzhang')}}</el-button>
-          <el-button type="text" @click="clickDelete">{{$t('commons.delete')}}</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="title_one">预订时选择的套餐：</div>
+    <div class="flexBox" v-for="i in 3" :key="i">
+      <div class="name">张三</div>
+      <div class="breakfast">早餐-套餐1【￥2000】</div>
+      <div class="dinner">晚餐-套餐1【￥2000】</div>
+    </div>
+    <div class="title_one" style="margin-bottom:10px">入账附餐：</div>
+    <el-form :model="sideForm" ref="sideForm" label-width="100px" style="margin-left:-30px;" class="demo-ruleForm">
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="收费套餐:" prop="region">
+            <el-select v-model="sideForm.region" placeholder="请选择活动区域" size="small">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label-width="10px">
+            <el-input-number size="small" v-model="sideForm.number" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-form-item label="金额:" prop="desc">
+          <el-input disabled v-model="sideForm.money" size="small" style="width:120px"></el-input>
+        </el-form-item>
+      </el-row>
+      <el-row>
+        <el-form-item label="备注:" prop="desc">
+          <el-input type="textarea" v-model="sideForm.remark" style="width:350px"></el-input>
+        </el-form-item>
+      </el-row>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dimissionClose">{{ $t('commons.close') }}</el-button>
+      <el-button  type="primary">入账</el-button>
+    </div>
   </el-dialog>
 </template>
 
@@ -90,12 +59,11 @@ export default {
   data() {
     return {
       visible: false,
-      loading: true,
-      innerVisible: false, //内层dialog  更换套餐
-      checkInId: "",
-      innerForm: {
-        breakfast: "",
+      sideForm: {
+        number: 1,
       },
+      checkInId: "",
+
       tableData: [],
     };
   },
@@ -113,45 +81,67 @@ export default {
       this.getData();
       this.visible = true;
     },
-    clickDelete(){
-        this.$confirm(this.$t('manager.grsl_ifSureDeleteA'),  this.$t("commons.tip_desc"), {
-          confirmButtonText:  this.$t("commons.confirm"),
+    clickDelete() {
+      this.$confirm(
+        this.$t("manager.grsl_ifSureDeleteA"),
+        this.$t("commons.tip_desc"),
+        {
+          confirmButtonText: this.$t("commons.confirm"),
           cancelButtonText: this.$t("commons.cancel"),
-          type: 'warning'
-        }).then(() => {
-
-        }).catch(() => {
-
-        });
+          type: "warning",
+        }
+      )
+        .then(() => {})
+        .catch(() => {});
     },
     getData() {
       let params = {
         checkInId: this.checkInId,
       };
-      this.$F.doRequest(this, "/pms/hotelattachmeal/check_in_meal_order_list", params, (res) => {
-          debugger
-          this.tableData = res.list
-        console.log(res);
-      });
+      this.$F.doRequest(
+        this,
+        "/pms/hotelattachmeal/check_in_meal_order_list",
+        params,
+        (res) => {
+          debugger;
+          this.tableData = res.list;
+          console.log(res);
+        }
+      );
     },
-
   },
 };
 </script>
 
 <style lang='less' scoped>
 .topBox {
+  margin-top: -16px;
+  span {
+    &:nth-last-child(-n + 1) {
+      margin-left: 50px;
+    }
+  }
+}
+.title_one {
+  font-weight: 600;
+  margin-top: 15px;
+}
+.flexBox {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  .fontStyle {
-    color: rgba(126, 126, 126, 100);
-    font-size: 13px;
+  justify-content: flex-start;
+  margin-top: 12px;
+  .name {
+    width: 120px;
+  }
+  .breakfast {
+    width: 200px;
+  }
+  .dinner {
+    width: 200px;
   }
 }
 .dialog-footer {
-  text-align: right;
+  text-align: center;
 }
-
 </style>

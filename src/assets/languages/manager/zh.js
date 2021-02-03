@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 15:41:10
+ * @LastEditTime: 2021-02-03 10:50:00
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -611,7 +611,7 @@ module.exports = {
   add_onePrice: '一人住宿价',
   add_nowGet: '本班收款',
   add_nowBillGet: '本班挂账收款',
-  add_nowDownPri: '本班下方备用金',
+  add_nowDownPri: '本班下放备用金',
   add_: '',
   add_: '',
   add_: '',
