@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-02-02 14:51:31
+ * @LastEditTime: 2021-02-03 14:30:05
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -1043,11 +1043,11 @@ module.exports = {
   add_cashGet: '现金收款',
   add_cardGet: '信用卡收款',
   add_otherGet: '其他收款',
-  add_otherGetA: '其他收款',
+  add_otherGetA: '本班其他收款',
   add_cashPledge: '现金押金',
   add_toGo: '外带',
-  add_: '',
-  add_: '',
+  add_sureCount: '确认结账',
+  add_creditCard: '信用卡',
   add_: '',
   add_: '',
   add_: '',

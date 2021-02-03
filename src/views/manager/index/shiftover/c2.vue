@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-11 17:46:38
+ * @LastEditTime: 2021-02-03 18:09:58
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -106,14 +106,10 @@
           </el-table-column>
           <el-table-column prop="createTime" :label="$t('desk.serve_thisCard')">
           </el-table-column>
-          <el-table-column
-            prop="nowWeixinRetained"
-            :label="$t('desk.serve_wechat')"
-          >
-          </el-table-column>
+       
           <el-table-column
             prop="nowAliRetained"
-            :label="$t('desk.serve_alipay')"
+            :label="$t('desk.add_creditCard')"
           >
           </el-table-column>
           <el-table-column prop="createTime" :label="$t('desk.serve_other')">
@@ -153,22 +149,12 @@
           </el-table-column>
           <el-table-column
             prop="nowWeixinHandin"
-            :label="$t('desk.serve_flightWeUp')"
+            :label="$t('manager.add_creditCardUp')"
             width="120px"
           >
           </el-table-column>
-          <el-table-column
-            prop="nowAliHandin"
-            :label="$t('desk.serve_flightAliUp')"
-            width="120px"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="goSettlement"
-            :label="$t('desk.serve_flightGoOrder')"
-            width="140px"
-          >
-          </el-table-column>
+        
+         
           <el-table-column
             prop="createTime"
             :label="$t('desk.serve_actralAmount')"

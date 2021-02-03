@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-03 10:50:00
+ * @LastEditTime: 2021-02-03 14:57:34
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -609,8 +609,8 @@ module.exports = {
   add_dealNight: '如果勾选，则不处理应离未离无法将进行夜审',
   add_setDutity: '是否把在住过夜房置为脏房',
   add_onePrice: '一人住宿价',
-  add_nowGet: '本班收款',
-  add_nowBillGet: '本班挂账收款',
+  add_nowGet: '备用金',
+  add_nowBillGet: '本班挂账到房间',
   add_nowDownPri: '本班下放备用金',
   add_: '',
   add_: '',

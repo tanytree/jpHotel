@@ -1,13 +1,13 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-02-02 11:24:33
+ * @LastEditTime: 2021-02-03 17:56:30
  * @FilePath: \jiudian\src\views\market\orders\coms\checkoutPartPay.vue
 -->
   <!-- 结账退房dialog组件-->
   <!--未调-->
   <template>
-  <el-dialog top="0" width="60%" :title="$t('desk.order_checkoutA')" :visible.sync="checkoutVisible" append-to-body>
+  <el-dialog top="0" width="60%"  :title="$t('desk.order_partBillA')" :visible.sync="checkoutVisible" append-to-body>
     <div class="innerBoxTop">
       <span>{{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}} </span>
       <span>{{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}</span>
@@ -88,7 +88,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer" style="text-align: right">
       <el-button @click="checkoutVisible = false">{{$t('commons.cancel')}}</el-button>
-      <el-button type="primary" @click="consume_oper">{{$t('desk.book_billAback')}}</el-button>
+      <el-button type="primary" @click="consume_oper">{{$t('desk.add_sureCount')}}</el-button>
     </div>
   </el-dialog>
   <!--
