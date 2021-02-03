@@ -269,6 +269,7 @@ export default {
                         name: this.detailData.checkIn.name,
                         pronunciation: this.detailData.checkIn.pronunciation,
                         mobile: this.detailData.checkIn.mobile,
+                        region: this.detailData.checkIn.region,
                         enterMobile: this.detailData.checkIn.enterMobile,
                         homeMobile: this.detailData.checkIn.homeMobile,
                         sex: this.detailData.checkIn.sex || '1',
@@ -576,25 +577,39 @@ export default {
                         if (this.type == 1) {
                             this.$router.go(-1);
                         } else {
-                            this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
-                                this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
-                                        checkInRoomIds: checkInRoomIds.join(','),
-                                        state: 1
-                                    }, (res) => {
-                                        this.$router.push(
-                                            `/orderdetail?id=${response.checkinId}`
-                                        );
-                                    }
-                                );
-                            });
+                            this.fetchRoomStatus( ()=> {
+                                this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
+                                    this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
+                                            checkInRoomIds: checkInRoomIds.join(','),
+                                            state: 1
+                                        }, (res) => {
+                                            this.$router.push(
+                                                `/orderdetail?id=${response.checkinId}`
+                                            );
+                                        }
+                                    );
+                                });
+                            })
                         }
                     }
                 );
             }
         },
+
+        fetchRoomStatus(callback) {
+            console.log(this.currentRoom);
+            debugger
+            this.$F.doRequest(this, "/pms/hotel/hotel_room_detail",
+                {
+                    roomId: this.currentRoom.roomId,
+                }, (res) => {
+                    debugger
+                    callback()
+                }
+            );
+        },
         fetchHotelattaChmealList() {
-            this.$F.doRequest(
-                this,
+            this.$F.doRequest(this,
                 "/pms/hotelattachmeal/list",
                 {
                     pageIndex: 1,
