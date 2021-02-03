@@ -449,7 +449,7 @@
         <!--开发票-->
         <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
         <!-- 附餐 -->
-        <sideOrder ref='sideOrder' :currentRoom="currentRoom" :detailData="detailData" @get_consume_order_list="consume_order_list"></sideOrder>
+        <sideOrder ref='sideOrder' :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" @get_consume_order_list="consume_order_list"></sideOrder>
     </div>
 </template>
 
