@@ -9,7 +9,7 @@
     <el-form v-loading="loading" :model="consumeOperForm" ref="someAccounts" :rules="{}" size="mini" label-width="100px">
         <p>{{$t('desk.order_billExplain')}}</p>
         <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
-            <el-table-column type="selection" width="55">
+            <el-table-column type="selection" width="55" :selectable="selectable">
             </el-table-column>
             <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip>
                 <template slot-scope="{row}">
@@ -156,6 +156,9 @@ export default {
       }
     },
     methods: {
+        selectable(row, index) {
+            return row.richType != 1;
+        },
         async init(id) {
             this.id = id
             this.initForm()

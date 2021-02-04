@@ -37,7 +37,7 @@
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
                   @selection-change="handleSelectionChange" size="mini">
-            <el-table-column type="selection" width="55">
+            <el-table-column type="selection" width="55" :selectable="selectable">
             </el-table-column>
             <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
@@ -651,6 +651,9 @@ export default {
     },
 
     methods: {
+        selectable(row, index) {
+            return row.richType != 1;
+        },
         F_priceType(value) {
             let enums = this.$t('frontOffice.priceType')
             return value && enums[value] ? enums[value] : ''
