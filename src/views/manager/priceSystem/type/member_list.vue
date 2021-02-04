@@ -25,10 +25,11 @@
 					</el-form-item>
 				</el-form>
 			</el-row>
+      <div style="margin:-10px 0 10px">{{$t('manager.pa_explain')}}</div>
 			<div class="components-edit member-price" v-loading="loading">
 				<el-table :data="memberTypeList" style="width: 100%;margin-bottom: 20px;" row-key="id2" :default-expand-all="false"
-				 header-row-class-name="default" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" border>
-					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '' + F_weekday(item.weekDay)" :width="index== 0? '160': ''">
+				 header-row-class-name="default" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" border >
+					<el-table-column v-for="(item, index) in dateList" :key="index"  :label="item.dateStr + '\n' + F_weekday(item.weekDay)" :width="index== 0? '160': '106'">
 						<template slot-scope="scope">
 							<div v-if="index == 0">
 								<span>{{scope.row.name || scope.row.houseName}}</span>
@@ -89,12 +90,12 @@
 					<template slot-scope="{row}">
 						<el-row class="demo-form-inline" v-if="row.roomType == 1">
 							<span>
-								<el-col>{{row.oldOnePrice}}</el-col>
+								<el-col>{{$F.numFormate(row.oldOnePrice)}}</el-col>
 							</span>
 						</el-row>
 						<el-row class="demo-form-inline" v-else>
 							<span>
-								<el-col>{{row.oldMarketPrice}}</el-col>
+								<el-col>{{$F.numFormate(row.oldMarketPrice)}}</el-col>
 							</span>
 						</el-row>
 					</template>
@@ -118,7 +119,11 @@
 					</template>
 				</el-table-column>
 				<!-- 这里是前面输入的一人住宿价+早餐+晚餐的总价,如果前面没有输入的话,先展示早餐+晚餐的价格(附餐价) -->
-				<el-table-column prop="adjustPrice" :label="$t('manager.grsl_resetSoon')"></el-table-column>
+				<el-table-column  :label="$t('manager.grsl_resetSoon')">
+          <template slot-scope="{row}">
+            {{$F.numFormate(row.adjustPrice)}}
+          </template>
+        </el-table-column>
 			</el-table>
 			<el-row style="padding: 20px 0px;">
 				<el-button type="primary" style="width: 80px;" @click="onSave">{{$t('commons.save')}}</el-button>
@@ -149,7 +154,7 @@
 				<el-table-column prop="newCustomPrice" :label="$t('manager.grsl_newLivePriA')" width="250">
 					<template>
 						<div style="padding: 10px 0px;" v-for="(value, index) in roomStrategyJson_p">
-							<el-input v-model="value.newCustomPrice" placeholder="请输入" @input="onInput()"></el-input>
+							<el-input v-model="value.newCustomPrice" :placeholder="$t('commons.pleaseEnter')" @input="onInput()"></el-input>
 							<!-- <el-input v-model="star_time" placeholder="请输入"></el-input> -->
 						</div>
 					</template>
@@ -398,9 +403,9 @@ import myMixin from "@/utils/filterMixin";
 				}
 				let memberTypeObject = this.memberTypeList[row.topIndex];
 				if (memberTypeObject) {
-					console.log('finalIndex：' + finalIndex)
-					console.log(this.dayPriceList)
-					console.log(memberTypeObject)
+					// console.log('finalIndex：' + finalIndex)
+					// console.log(this.dayPriceList)
+					// console.log(memberTypeObject)
 					if (this.dayPriceList && this.dayPriceList.length > 0) {
 						let newArray = this.dayPriceList.filter(dayPrice => {
 							return dayPrice.dayTime == item.dateStr;
@@ -421,14 +426,14 @@ import myMixin from "@/utils/filterMixin";
 						if (item.roomTypePrises[finalIndex].personPrice && !tempPrice) {
 							tempPrice = parseInt(item.roomTypePrises[finalIndex].personPrice.split(',')[0])
 						}
-						console.log(item.roomTypePrises)
-						console.log(finalIndex)
+						// console.log(item.roomTypePrises)
+						// console.log(finalIndex)
 						price = tempPrice + (item.roomTypePrises[finalIndex].mealBreakfastObject ? item.roomTypePrises[finalIndex].mealBreakfastObject.mealPrice : 0)
                             + (item.roomTypePrises[finalIndex].mealDinnerObject ? item.roomTypePrises[finalIndex].mealDinnerObject.mealPrice : 0);
 					}
 				}
 
-				return price
+				return  '￥'+this.$F.numFormate(price)
 			},
 
 			//保存批量修改房价
@@ -725,7 +730,8 @@ import myMixin from "@/utils/filterMixin";
 				let params = {
 					pageIndex: 1,
 					pageSize: 999,
-					roomType: 3, // 1客房类型  2会议室房型 3全部
+					// roomType: 3, // 1客房类型  2会议室房型 3全部
+					roomType: 1, // 1客房类型  2会议室房型 3全部
 				};
 				this.$F.doRequest(
 					this,

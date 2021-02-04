@@ -327,8 +327,16 @@ const $F = {
         } else {
           return num;
         }
+  },
+    //将yyyy-MM-dd HH:mm:ss格式的时间分割成数组
+    formatTime(time) {
+      if (time) {
+        let array = time.split(" ");
+        return array;
+      }else{
+        return time;
+      }
     },
-
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
         //获取ota列表

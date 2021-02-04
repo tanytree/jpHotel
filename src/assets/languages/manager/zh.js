@@ -1,47 +1,51 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-03 14:57:34
+ * @LastEditTime: 2021-02-04 10:51:55
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
 // 管理部 (manager) || 中文
 module.exports = {
-    batchSelectTip: '请点击并选择所有相关的房间号。',
+  batchSelectTip: '请点击并选择所有相关的房间号。',
   typeNameList: {
     1: '前台部',
     2: '餐饮部',
     3: '商店部'
   },
-  priceType:{
-    1:'订金',
-    2:'押金',
-    3:'收款',
-    4:'退款',
-    5:'加收全天房费 ',
-    6:'加收半天房费 ',
-    7:'损物赔偿 ',
-    8:'迷你吧 ',
-    9:'完全冲调 ',
-    10:'部分冲调 ',
-    11:'免单 ',
-    12:'房费 ',
-    13:'挂账 ',
-    14:'附餐结账',
-    15:'温泉税 ',
-    16:'住宿税 ',
-    17:'附餐早 ',
-    18:'附餐晚  ',
-    19:'项目预订金 ',
-    100:'其他 '
+  priceType: {
+    1: '订金',
+    2: '押金',
+    3: '收款',
+    4: '退款',
+    5: '加收全天房费 ',
+    6: '加收半天房费 ',
+    7: '损物赔偿 ',
+    8: '迷你吧商品 ',
+    9: '完全冲调 ',
+    10: '部分冲调 ',
+    11: '免单 ',
+    12: '房费 ',
+    13: '挂账 ',
+    14: '附餐结账',
+    15: '温泉税 ',
+    16: '住宿税 ',
+    17: '附餐早 ',
+    18: '附餐晚  ',
+    19: '项目预订金 ',
+    20: '会议室',
+    21: '附餐费',
+    22: '挂帐到房间餐饮费',
+    23: '挂帐到房间商品费',
+    100: '其他 '
   },
-  payType:{
-      0:'其他',
-      1:'现金',
-      2:'信用卡',
-      3:'支付宝',
-      4:'微信',
-      5:'会员卡'
+  payType: {
+    0: '其他',
+    1: '现金',
+    2: '信用卡',
+    3: '支付宝',
+    4: '微信',
+    5: '会员卡'
   },
   shiftOver: '交班',
   //   管理部 > 首页(homePage > hp)
@@ -258,7 +262,7 @@ module.exports = {
   hk_inputOat: '请输入OTA名称',
   hk_resetSuccess: '修改成功',
   hk_chooseChannel: '请选择渠道',
-  hk_: '',
+  hk_constTotal: '消费总计',
   hk_: '',
   hk_: '',
   hk_: '',
@@ -478,7 +482,7 @@ module.exports = {
   ps_accountingRules: '计费规则',
   ps_setUp: '设置',
   ps_resetSuccess: '设置成功',
-
+  pa_explain: '以下显示价格是各会员类别一泊二食的价格',
   //财务部 （finance）
   finance_startTime: '开始时间',
   finance_endTime: '结束时间',
@@ -570,7 +574,7 @@ module.exports = {
   add_inputNumShould: '输入数值不小于0',
   add_editorSuccess: '编辑成功',
   add_lsat15: '前15天',
-  add_last15A:'前十五天',
+  add_last15A: '前十五天',
   add_next15: '后15天',
   add_next15A: '后十五天',
   add_peoAsit: '人数/座位数',
@@ -612,7 +616,8 @@ module.exports = {
   add_nowGet: '备用金',
   add_nowBillGet: '本班挂账到房间',
   add_nowDownPri: '本班下放备用金',
-  add_: '',
+  add_nowDownPriA: '本班下放备用金',
+  add_cashStatistics: '现金统计',
   add_: '',
   add_: '',
   add_: '',

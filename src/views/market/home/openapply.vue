@@ -145,7 +145,7 @@
                         <span style="color: #888888">{{
                             $t("desk.customer_sum") + ":"
                         }}</span>
-                        {{ invoiceDetail.prices }}
+                        {{ $F.numFormate(invoiceDetail.prices) }}
                     </el-col>
                     <el-col :span="12" style="margin-bottom: 10px">
                         <span style="color: #888888">{{

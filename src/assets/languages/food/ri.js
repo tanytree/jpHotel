@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 17:07:01
+ * @LastEditTime: 2021-02-04 10:54:19
  * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
@@ -391,7 +391,7 @@ module.exports = {
         payPrice:'支払金額',
         member_card:'会員No.',
         select_member_card:'名前、電話検索',
-        totalFee:'中間合計',
+        totalFee:'精算合計',
 
 
 

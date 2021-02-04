@@ -7,7 +7,7 @@
     <!-- 物品寄存 -->
     <div class="content">
       <el-form :model="leftLuggage" ref="leftLuggage" inline size="small" class="term">
-        <el-form-item :label="$t('desk.home_register') + ':'" style="display: block">
+        <el-form-item :label="$t('desk.home_state') + ':'" style="display: block">
           <el-radio-group v-model="leftLuggage.operStatus">
             <el-radio-button label="">{{
               $t("desk.home_noLimit")

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 17:51:33
+ * @LastEditTime: 2021-02-04 16:18:40
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>
@@ -79,26 +79,16 @@
             }}】
             </span>
           </div>
-          <!-- <div v-if="$index < 3">{{ row.name }}</div> -->
           <div v-if="$index ==checkinInfo.inRoomList.length-1">{{$t('desk.home_note')}}</div>
-          <!-- <div v-if="$index ==checkinInfo.inRoomList.length-1">留言</div> -->
-
         </template>
       </el-table-column>
-      <!-- <el-table-column :label="$t('desk.home_roomNum')" align="center">
-        <template slot-scope="{ row, $index }">
-          <div v-if="$index<checkinInfo.inRoomList.length-1">
-            <span>{{ row.houseNum }} / {{ row.roomTypeName }} </span>
-          </div>
-        </template>
-      </el-table-column> -->
       <el-table-column :label="$t('desk.home_idCardNumB')" align="center" width="110">
         <template slot-scope="{ row, $index }">
           <div v-if="$index<checkinInfo.inRoomList.length-1">
             <div v-if="row.headerObj"> ({{$t("commons.idCardType")[row.headerObj.idcardType ? row.headerObj.idcardType + "" : "2"]}})</div>
             <div v-if="row.headerObj"> {{ row.headerObj.idcard }}</div>
           </div>
-          <div v-if="$index ==checkinInfo.inRoomList.length - 1" style="text-align: left;">{{ checkinInfo.remark }}</div>
+          <div v-if="$index ==checkinInfo.inRoomList.length - 1" style="text-align: left;">{{ checkinInfo.checkIn.remark }}</div>
         </template>
       </el-table-column>
       <el-table-column :label="$t('desk.home_contactWay')" align="center">
@@ -111,7 +101,6 @@
               <p v-if="row.headerObj.mobile">({{$t('desk.editor_hand')}}) {{ row.headerObj.mobile }}</p>
             </div>
           </div>
-
         </template>
       </el-table-column>
       <el-table-column :label="$t('desk.customer_sex')" align="center" width="50">
@@ -219,7 +208,7 @@
               {{ F_sex(row.sex) }}
             </template>
           </el-table-column>
-          <el-table-column  :label="$t('desk.home_typeText')" show-overflow-tooltip>
+          <el-table-column  :label="$t('desk.home_typeTextA')" show-overflow-tooltip>
             <template slot-scope="{ row, $index }">
               {{ F_customerTypes(row.customerType || '1') }}
             </template>
@@ -260,6 +249,7 @@ export default {
         // console.log(this.checkinInfo.inRoomList);
     },
     methods: {
+    
         arraySpanMethod({row, column, rowIndex, columnIndex}) {
             if (rowIndex == this.checkinInfo.inRoomList.length - 1) {
                 if (columnIndex > 0) {

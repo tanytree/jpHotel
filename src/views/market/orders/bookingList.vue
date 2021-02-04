@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 18:30:53
+ * @LastEditTime: 2021-02-04 16:34:53
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -132,25 +132,24 @@
 
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" border :data="tableData" height="100%" header-row-class-name="default" size="small">
-        <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')" width="150px">
+        <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')" width="140px">
           <template slot-scope="{ row }">
-            <!-- <span>{{$t('desk.home_bookPeople') + ": "}} {{`${row.name} 【${row.pronunciation}】` }}</span>
-            <span v-if="row.teamName">
-              <br>
-              {{$t('desk.order_teamName') + ": "}} {{`${row.teamName} 【${row.teamPronunciation}】` }}
-            </span> -->
             <div>
               <div>{{row.name}}</div>
               <div v-if="row.pronunciation">【{{row.pronunciation}}】</div>
             </div>
-             <div v-if="row.teamName">
+            <div v-if="row.teamName">
               <div>{{row.teamName}}</div>
               <div v-if="row.teamPronunciation">【{{row.teamPronunciation}}】</div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="mobile" :label="$t('boss.loginDetail_phone')"></el-table-column>
-        <el-table-column prop="createTime" :label="$t('desk.order_bookTime')" width="160px"></el-table-column>
+        <el-table-column prop="mobile" :label="$t('boss.loginDetail_phone')" width="120px"></el-table-column>
+        <el-table-column prop="createTime" :label="$t('desk.order_bookTime')" width="120px">
+          <template slot-scope="{row}">
+            <div v-for="(item,index) in $F.formatTime(row.createTime)" :key="index">{{item}}</div>
+          </template>
+        </el-table-column>
         <el-table-column prop="" :label="$t('desk.nightAudit.arriveTimeA')" width="220">
           <template slot-scope="{ row }">
             <div class="box">
@@ -180,13 +179,13 @@
         </el-table-column>
         <el-table-column prop="totalRoomPrice" :label="$t('desk.order_totalRoomPrice')" width="100" align="center">
           <template slot-scope="{ row }">
-           ￥{{ $F.numFormate(row.totalRoomPrice?row.totalRoomPrice : 0 )}}
+            ￥{{ $F.numFormate(row.totalRoomPrice?row.totalRoomPrice : 0 )}}
           </template>
         </el-table-column>
         <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="110" align="center">
           <template slot-scope="{ row }">
-           <div> {{ F_orderSource(row.orderSource) }}</div>
-           <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
+            <div> {{ F_orderSource(row.orderSource) }}</div>
+            <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
           </template>
         </el-table-column>
         <el-table-column prop="" :label="$t('food.common.status')" width="120px" align="center">
@@ -365,7 +364,7 @@ export default {
           reserveStatusObject[i] = reserveStatus[i];
         }
       }
-      return reserveStatusObject
+      return reserveStatusObject;
     },
   },
   methods: {

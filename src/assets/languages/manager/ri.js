@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 15:00:30
+ * @LastEditTime: 2021-02-04 14:47:36
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -21,19 +21,24 @@ module.exports = {
     5:'加收全天房费 ',
     6:'加收半天房费 ',
     7:'损物赔偿 ',
-    8:'迷你吧 ',
+    8:'ミニバー ',
     9:'完全冲调 ',
     10:'部分冲调 ',
     11:'免单 ',
-    12:'房费 ',
+    12:'宿泊 ',
     13:'挂账 ',
     14:'附餐结账',
     15:'温泉税 ',
     16:'住宿税 ',
     17:'附餐早 ',
     18:'附餐晚  ',
-    19:'项目预订金 ',
-    100:'其他 '
+    19: '项目预订金 ',
+    20: '会場利用',
+    21:'プラン・食事',
+    22: '料飲/部屋付',
+    23:'付帯/部屋付',
+    
+    100:'その他 '
   },
   payType:{
       0:'其他',
@@ -136,7 +141,7 @@ module.exports = {
   hk_doorPrice: '宿泊料',
   hk_doorPriceB: '料金',
   hk_doorPriceA: '利用料金',
-  hk_beds: 'ベット数',
+  hk_beds: '寝具数',
   hk_availabilityPeople: '定員人数',
   hk_drawingRoomType: '会場',
   hk_seating: '座席数',
@@ -518,7 +523,7 @@ module.exports = {
   hk_priceCalendar: '価格カレンダー',
   hk_setLivePrice: '素泊り料金を設定してください',
   hk_priceSet: '料金設定',
-  hk_onlyLivePrice: 'ここの料金は素泊りの1室1人料金です。',
+  hk_onlyLivePrice: '素泊り1室料金',
   hk_peopleLive: '人',
   add_maxNum: '最大値≦100',
   add_serverPrice: 'サービス料',
@@ -573,7 +578,7 @@ module.exports = {
   add_cashHold: '本班现金留存',
   add_creditCardUp: 'クレジット入金',
   add_changeDetail: '交替詳細',
-  add_pettyCash: 'レジ金',
+  add_pettyCash: 'レジ金設定額',
   add_nowCashGet: '本シフト現金入金',
   add_nowCashGetA: 'キャッシュ入金',
   add_nowPettyDown: '繰越レジ金',
@@ -601,6 +606,10 @@ module.exports = {
   add_onePrice: '1人素泊まり',
   add_nowGet: '仕訳',
   add_nowDownPri: '繰越・金額',
+  hk_constTotal: '売上合計',
+  add_cashStatistics: '現金点検',
+  add_nowDownPriA: 'レジ金/繰越・金額',
+  pa_explain:'下記表示は各会員種別の1名1泊2食の料金です。',
 
 
 
