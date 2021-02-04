@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-29 14:11:04
+ * @LastEditTime: 2021-02-04 17:40:35
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -281,7 +281,7 @@
                     <el-form inline size="small" v-if="operCheckinType != 'b3'">
                         <el-form-item>
                             <el-select v-model="getRoomsForm.bedCount" @change="getCheckinRoominfoList" :placeholder="$t('commons.placeChoose')">
-                                <el-option :value="key" v-for="(item, key, index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
+                                <el-option :value="key" v-for="(item, key, index) of $t('commons.bedType')" :label="item" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-form>

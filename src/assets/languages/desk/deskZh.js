@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-02-04 17:05:28
+ * @LastEditTime: 2021-02-04 18:40:36
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -53,6 +53,7 @@ module.exports = {
   enterAccountA: '入账',
   enterAccountB: '入账',
   enterAccountTime: '入账时间',
+  enterAccountTimeA: '入账时间',
   checkInDays: '入住天数',
   arrivalTime: '预抵时间',
   downPayment: '订金',
@@ -552,6 +553,7 @@ module.exports = {
   order_partBill: "部分结账",
   order_partBillA: "部分结账",
   order_billExplain: "选择账务：自动计费、已冲调、已结的账务不可部分结账",
+  order_billExplainA: "选择账务：自动计费、已冲调、已结的账务不可部分结账",
   order_saleDay: "营业日",
   order_allPay: "总支付",
   order_cachRefund: "现金退款",
@@ -802,6 +804,7 @@ module.exports = {
   customer_sumA: '金额',
   customer_refundWay: '退款方式',
   customer_refundWayA: '退款方式',
+  customer_refundWayB: '收款方式',
   customer_canRefundPri: '可退金额',
   customer_advanceBill: '预收款账单',
   customer_orderNum: '订单编号',
@@ -1069,7 +1072,7 @@ module.exports = {
   add_billSide: '入账附餐',
   add_notDo: '不可同时进行早餐，晚餐附餐入账操作',
   add_getPackage: '收费套餐',
-  add_: '',
+  add_receiptNo: '收据号码',
   add_: '',
   add_: '',
   add_: '',

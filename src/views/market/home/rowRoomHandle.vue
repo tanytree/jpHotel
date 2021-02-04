@@ -39,7 +39,7 @@
                         <div class="grid-content">
                             <el-row>
                                 <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
-                                    <el-option :value="key" v-for="(item,key,index) of $t('commons.bedCount')" :label="item" :key="index"></el-option>
+                                    <el-option :value="key" v-for="(item,key,index) of $t('commons.bedType')" :label="item" :key="index"></el-option>
                                 </el-select>
                             </el-row>
                             <br />

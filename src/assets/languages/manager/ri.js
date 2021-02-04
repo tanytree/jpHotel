@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 14:47:36
+ * @LastEditTime: 2021-02-04 18:28:04
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -141,7 +141,7 @@ module.exports = {
   hk_doorPrice: '宿泊料',
   hk_doorPriceB: '料金',
   hk_doorPriceA: '利用料金',
-  hk_beds: '寝具数',
+  hk_beds: 'ベッド／寝具数',
   hk_availabilityPeople: '定員人数',
   hk_drawingRoomType: '会場',
   hk_seating: '座席数',

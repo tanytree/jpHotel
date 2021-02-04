@@ -1,13 +1,13 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-12 14:56:59
- * @FilePath: \jiudian\src\views\market\orders\coms\someAccounts.vue
+ * @LastEditTime: 2021-02-04 18:35:27
+ * @FilePath: \jiudian\src\views\market\orders\coms\partAccounts.vue
  -->
 <template>
-<el-dialog :title="$t('desk.order_partBill')" top="0" :visible.sync="visible" :lock-scroll='false' width="800px">
+<el-dialog :title="$t('desk.order_partBillA')" top="0" :visible.sync="visible" :lock-scroll='false' width="800px">
     <el-form v-loading="loading" ref="someAccounts" :rules="{}" size="mini" label-width="100px">
-        <p>{{$t('desk.order_billExplain')}}</p>
+        <p style="margin-top:-10px;">{{$t('desk.order_billExplainA')}}</p>
         <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" @selection-change="handleSelectionChange" size="mini">
             <el-table-column type="selection" width="55" :selectable="selectable">
             </el-table-column>
@@ -31,7 +31,11 @@
                 <template slot-scope="{row}">
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('desk.enterAccountTime')" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="createTime" :label="$t('desk.enterAccountTimeA')" show-overflow-tooltip>
+              <template slot-scope="{row}">
+                <div v-for="(item,index) in $F.formatTime(row.createTime)" :key="index">{{item}}</div>
+              </template>
+            </el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
         </el-table>
@@ -43,7 +47,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
         <el-button @click="visible=false">{{ $t('commons.cancel') }}</el-button>
-        <el-button type="primary" @click="consume_oper">{{ $t('desk.order_invoicing') }}</el-button>
+        <el-button type="primary" @click="consume_oper">{{ $t('commons.determine') }}</el-button>
     </div>
 
     <checkoutPart ref="checkoutPart" :currentRoom="currentRoom" @getOrderDetail="getOrderDetail" ></checkoutPart>

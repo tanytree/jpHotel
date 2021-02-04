@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-04 17:09:11
+ * @LastEditTime: 2021-02-04 18:50:10
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -17,7 +17,7 @@ module.exports = {
     fifty: '50円',
     one: '1円',
   },
-  reason: 'りゆう',
+  reason: 'ミス',
   editRowHouse: 'アサイン変更',
   roomOccupation: '部屋がとられる',
   reserveInfoDesc: '予定情報',
@@ -47,6 +47,7 @@ module.exports = {
   chargeMoney: '売掛金額',
   chargeTotal: '挂账合計',
   enterAccountTime: '入金時間',
+  enterAccountTimeA: '計上時間',
   enterAccountMoney: '入金金額',
   enterAccountMoneyA: '入金金額',
   enterAccount: '入金',
@@ -500,6 +501,7 @@ module.exports = {
   customer_sumA: '合計金額',
   customer_refundWay: 'デポ戻し方法',
   customer_refundWayA: '入金・返金種別',
+  customer_refundWayB: '入金・返金種別',
   customer_canRefundPri: '払戻金額',
   customer_advanceBill: '前受金明細',
   customer_orderNum: '予約番号',
@@ -656,7 +658,7 @@ module.exports = {
   order_inputPrice: "金額を入力してください",
   order_partComShould: "　　　より相殺金額は少なければならない。",
   order_noPeople: "宿泊者が未入力",
-  order_selectOperateAccount: "操作する会計を選択してください",
+  order_selectOperateAccount: "「会計取消」は同時に1件しか処理できません。",
   order_onlyOneAccount: "相殺会計は一項目しかできないです",
   order_autoTiePrice: "自動計上項目は相殺できないです",
   book_venueBook: '会場予約',
@@ -760,6 +762,7 @@ module.exports = {
   order_partBill: "一部支払い",
   order_partBillA: "支払",
   order_billExplain: "会計選択：自動計算、相殺済、精算済みの会計は一部支払い処理できません",
+  order_billExplainA: "支払項目を選択してください、",
   order_saleDay: "営業日",
   order_allPay: "支払い合計",
   order_cachRefund: "キャッシュ返金",
@@ -1038,6 +1041,7 @@ module.exports = {
   add_billSide: 'プラン・食事計上',
   add_notDo: '朝食、夕食計上操作は一緒にできません',
   add_getPackage: 'プラン・食事',
+  add_receiptNo: '領収書番号',
 
 
 
