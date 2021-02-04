@@ -295,10 +295,16 @@ export default {
       console.log(data.orderSubList);
       let orderGoodsList = data.orderSubList;
       if (orderGoodsList.length > 0) {
-        for (let i in orderGoodsList) {
-          orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus;
-          orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus;
-        }
+            orderGoodsList.forEach((element) => {
+               element.taxStatus = element.goods.taxStatus;
+               element.seviceStatus = element.goods.seviceStatus;
+            })
+
+
+        // for (let i in orderGoodsList) {
+        //   orderGoodsList[i].taxStatus = orderGoodsList[i].goods.taxStatus;
+        //   orderGoodsList[i].seviceStatus = orderGoodsList[i].goods.seviceStatus;
+        // }
       }
 
       console.log(orderGoodsList);
