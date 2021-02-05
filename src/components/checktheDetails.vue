@@ -395,7 +395,6 @@ export default {
         },
 
         changeName(e, personInfo, index) {
-            console.log(e);
             if (e.name) {
                 delete e['checkIn'];
                 delete e['checkinId'];
@@ -403,30 +402,9 @@ export default {
                 delete e['createTime'];
                 delete e['attachMealId'];
                 delete e['attachMealIdDinner'];
+                delete e['housePrice'];
                 e.sex = e.sex ? e.sex.toString() : '1';
                 this.$F.removeNullKey(e, true);
-                personInfo.name = '';
-                personInfo.pronunciation = '';
-                personInfo.idcardType  = '2';
-                personInfo.idcard = '';
-                personInfo.sex = '1';
-                personInfo.mobile = '';
-                personInfo.customerType = '1';
-                // personInfo.attachMealId = '';
-                // personInfo.attachMealIdDinner = '';
-                personInfo.email = '';
-                personInfo.region = '';
-                personInfo.homeAddressZip1 = '';
-                personInfo.homeAddressZip2 = '';
-                personInfo.homeAddress = '';
-                personInfo.homeMobile = '';
-                personInfo.phone = '';
-                personInfo.enterName = '';
-                personInfo.enterPinyin = '';
-                personInfo.enterMobile = '';
-                personInfo.enterAddressZip1 = '';
-                personInfo.enterAddressZip2 = '';
-                personInfo.enterAddress = '';
                 this.$F.merge(personInfo, e);
             } else {
                 this.checkInForm.name = e;

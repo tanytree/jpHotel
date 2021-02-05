@@ -32,7 +32,17 @@
                     <el-row>
                         <el-col :span="14">
                             <el-form-item :label="$t('desk.book_teamName')+':'" prop="teamName">
-                                <el-input v-model="checkInForm.teamName" :placeholder="$t('desk.book_teamName')" style="width:160px" size="small"></el-input>
+<!--                                <el-input v-model="checkInForm.teamName" :placeholder="$t('desk.book_teamName')" style="width:160px" size="small"></el-input>-->
+                                <el-autocomplete
+                                    v-model="checkInForm.teamName"
+                                    name="name"
+                                    :fetch-suggestions="remoteMethodGuest"
+                                    :highlight-first-item="true"
+                                    popper-class="popper-class"
+                                    :trigger-on-focus="false"
+                                    :placeholder="$t('desk.book_teamName')"
+                                    @select="changeNameGuest($event)"
+                                ></el-autocomplete>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10">
@@ -239,7 +249,7 @@ export default {
                 pageIndex: 1,
                 pageSize: 999,
                 paging: false,
-                state: 1,
+                // state: 1,
                 status: 1,
                 isBlacklist: 1,
                 storesNum: "",
@@ -262,19 +272,24 @@ export default {
                     cb(this.options);
                     this.$forceUpdate();
                 });
-            } else {
-                //单位
+            } else if (this.checkInForm.guestType == 4) {
+                //团体
+                params = {
+                    pageIndex: 1,
+                    pageSize: 999,
+                    paging: false,
+                    storesNum: "",
+                };
                 this.$F.merge(params, {
                     enterName: query,
-                    state: 1,
                 });
-                this.$F.doRequest(this, "/pms/hotelenter/list", params, (res) => {
-                    this.options = res.list || [];
+                this.$F.doRequest(this, "/pms/reserve/reserve_order_list", params, (res) => {
+                    this.options = res.resreveList || [];
                     this.options.forEach((element) => {
                         element.value =
-                            element.enterName +
+                            element.teamName +
                             "+" +
-                            (element.mobile || element.contactPhone) +
+                            (element.teamMobile || element.contactPhone) +
                             "+" +
                             (element.contractNum || "");
                     });
@@ -285,6 +300,7 @@ export default {
         },
 
         changeNameGuest(e) {
+            debugger
             if (e.name || e.enterName) {
                 if (this.checkInForm.guestType == 2) {
                     this.checkInForm.name = e.name;
@@ -293,6 +309,8 @@ export default {
                     this.checkInForm.idcardType = e.idcardType.toString();
                     this.checkInForm.mobile = e.mobile;
                     this.checkInForm.sex = e.sex.toString();
+                } else if (this.checkInForm.guestType == 4){
+                    this.$F.merge(this.checkInForm, e);
                 } else {
                     this.checkInForm.name = e.enterName;
                     this.checkInForm.enterId = e.id;

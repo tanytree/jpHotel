@@ -1008,37 +1008,17 @@ export default {
             this.consumeOperForm.priceType = e
             console.log(e)
             console.log(this.currentRoom)
-            if (e == 5) {
+            if (e == 5 || e == 6) {
                 this.taxCount = ''
-                if (this.currentRoom) {
-                    console.log(this.currentRoom.realPrice)
-                    this.consumeOperForm.consumePrices = this.currentRoom.realPrice || 0
-                } else {
-                    if (this.detailData && this.detailData.inRoomList.length) {
-                        console.log(this.detailData.inRoomList[0].realPrice)
-                        this.consumeOperForm.consumePrices = this.detailData.inRoomList[0].realPrice || 0
-                    } else {
-                        this.consumeOperForm.consumePrices = ''
-                        this.$message.error(this.$t('desk.order_noPeople'));
-                        return
-                    }
+                this.consumeOperForm.consumePrices = 0;
+                if (this.currentRoom.personList.length > 0) {
+                    let tempArray = this.currentRoom.personList.filter(person => {
+                        return person.personType == 2
+                    }) || [];
+                    this.consumeOperForm.consumePrices = tempArray[0].housePrice
                 }
-            } else if (e == 6) {
-                this.taxCount = ''
-                console.log(this.currentRoom)
-                if (this.currentRoom) {
-                    console.log(this.currentRoom.realPrice * 0.5)
-                    this.consumeOperForm.consumePrices = (this.currentRoom.realPrice * 0.5).toFixed(0) || 0
-
-                } else {
-                    if (this.detailData && this.detailData.inRoomList.length) {
-                        console.log(this.detailData.inRoomList[0].realPrice)
-                        this.consumeOperForm.consumePrices = (this.detailData.inRoomList[0].realPrice * 0.5).toFixed(0) || 0
-                    } else {
-                        this.consumeOperForm.consumePrices = ''
-                        this.$message.error(this.$t('desk.order_noPeople'));
-                        return
-                    }
+                if (e == 6) {
+                    this.consumeOperForm.consumePrices = this.consumeOperForm.consumePrices * 0.5;
                 }
             } else if (e == 7) {
                 this.taxCount = ''
@@ -1057,7 +1037,6 @@ export default {
         },
         //获取房间的物品价格
         getDdamageInfo(){
-
             if(this.consumeOperForm.priceType == 15 || this.consumeOperForm.priceType == 16){
                 let count = this.taxCount ? this.taxCount : 0
                 let unitPrice = this.unitPrice ? this.unitPrice : 0

@@ -244,7 +244,7 @@ export default {
           //默认获取第一个房间为主账房，暂不明确主账房标识
           // ;
           if (res.inRoomList.length > 0) {
-            // this.currentRoom = res.inRoomList[0];
+            this.currentRoom = res.inRoomList[0];
             this.resetDom();
             this.$forceUpdate();
           }
