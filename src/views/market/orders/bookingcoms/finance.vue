@@ -480,7 +480,6 @@ export default {
                 params.payType = 0;  //冲调没有支付类型
                 params.richType = 1;
                 params.richRemark = params.remark;
-                debugger
             }
             this.$refs[formName].validate((valid) => {
                 if (valid) {

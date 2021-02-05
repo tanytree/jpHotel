@@ -105,9 +105,7 @@
                                         </div>
                                         <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && (room.checkInObj || room.reseverCheckInObj)"
                                              style="margin-top: 40px">
-                                            <span>{{$t('manager.finance_source')}}：{{
-                                                    F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource)
-                                                        }}
+                                            <span>{{$t('manager.finance_source')}}：{{ F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource) }}
                                                     <span v-if="room.checkInObj">
                                                         <span v-if="room.checkInObj.orderSource == 5 && room.checkInObj.otaChannelId">-</span>
                                                         <span v-if="room.checkInObj.orderSource == 5">{{getOtaName(room.checkInObj.otaChannelId)}}</span>
@@ -120,7 +118,7 @@
                                         </div>
                                         <!-- 清扫图标后期加 -->
                                         <div class="placeIcon text-center">
-                                            <img v-if="room.roomStatus == 5" :src="require('@/assets/images/frontdesk/fix.png')"/>
+                                            <img v-if="room.roomStatus == 5 && !room.reseverCheckInObj && !room.checkInObj" :src="require('@/assets/images/frontdesk/fix.png')"/>
                                             <img v-if="room.roomStatus == 2" :src="require('@/assets/images/frontdesk/clearn.png')"/>
                                         </div>
                                     </div>

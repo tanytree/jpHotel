@@ -5,69 +5,74 @@
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
-    <el-dialog
-        top="0"
-        :visible.sync="hosteldis"
-        width="90%"
-        :title=" `${currentRoom.houseNum}` + '  ' + `${ currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : '' }` + `${currentRoom.checkIn ? '-' : ''}` +
+    <div :visible.sync="hosteldis">
+        <el-dialog
+            top="0"
+            width="90%"
+            :visible.sync="hosteldis"
+            :title=" `${currentRoom.houseNum}` + '  ' + `${ currentRoom.hotelRoomType ? currentRoom.hotelRoomType.houseName : '' }` + `${currentRoom.checkIn ? '-' : ''}` +
       checkTitleEnd()">
-        <!-- 查看预订信息dialog -->
-        <el-dialog top="0" width="70%" :title="$t('desk.order_lookOrderInfo')" :visible.sync="lookBookVisible" append-to-body>
-            <div class="infoBox">
-                <!--            房间信息展示  包含订单信息 入住人同来宾客-->
-                <checkInInfo ref="checkInInfo" showOrderInfo="true"></checkInInfo>
-            </div>
-            <div slot="footer" class="dialog-footer" style="text-align: center">
-                <el-button type="primary" @click="lookBookVisible = false">{{$t('commons.close')}}</el-button>
-            </div>
-        </el-dialog>
-        <el-tabs type="border-card" v-model="activeName">
-            <!-- 基本信息 -->
-            <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
-                <div class="buttonBox">
-                    <el-button type="primary" size="small" plain @click="goRoomStatus()" v-if="currentRoom.roomStatus != 5">
-                        {{ (this.currentRoom.roomStatus == 3 || this.currentRoom.roomStatus == 1) ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}
-                    </el-button>
-                    <el-button type="primary" @click="goRoomStatus(5)" size="small" plain :disabled="currentRoom.checkInRoomType == 1">{{this.currentRoom.roomStatus != 5 ? $t('desk.home_service') : $t('desk.home_cannel_service')}}</el-button>
-                    <el-button type="primary" size="small" plain @click="goFinance" :disabled="this.currentRoom.checkInRoomType != 1 && this.currentRoom.checkInRoomType != 2">{{$t('desk.customer_accountingTextA')}}</el-button>
-                    <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.chargeA')}}</el-button>
-                    <el-button type="primary" @click="checkoutRoom" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.order_checkout')}}</el-button>
-                </div>
+            <!-- 查看预订信息dialog -->
+            <el-dialog top="0" width="70%" :title="$t('desk.order_lookOrderInfo')" :visible.sync="lookBookVisible" append-to-body>
                 <div class="infoBox">
-                    <!--            入住人信息展示-->
-                    <checkInInfo type="home" :orderInfo="orderInfo" ref="checkInInfo" showOrderInfo="true"></checkInInfo>
+                    <!--            房间信息展示  包含订单信息 入住人同来宾客-->
+                    <checkInInfo ref="checkInInfo" showOrderInfo="true"></checkInInfo>
                 </div>
-            </el-tab-pane>
-            <!-- 房间信息 -->
-            <el-tab-pane :label="$t('desk.roomInfoDesc')" name="second">
-                <div class="timeBox">
-                    <el-button type="primary" :disabled="startTime <= nowDateString" size="small" plain @click="dateBefore21">&lt;&lt;{{$t('desk.order_go21')}}</el-button>
-                    <div class="middleTime">{{ startTime }}——{{ endTime }}</div>
-                    <el-button type="primary" size="small" plain @click="dateLater21">{{$t('desk.order_back21')}}&gt;&gt;</el-button>
+                <div slot="footer" class="dialog-footer" style="text-align: center">
+                    <el-button type="primary" @click="lookBookVisible = false">{{$t('commons.close')}}</el-button>
                 </div>
-                <div class="riliBox">
-                    <div v-for="date in dates" :key="date.date" class="itemRi">
-                        <div class="riTop">
-                            <span>{{date.date}}</span>
-                            <br>
-                            <span>{{date.week}}</span>
-                        </div>
-
-                        <div class="riBottom" @click="lookRoomClick(date)" v-if="date.reserveObj" style="background: #A3E5FD">
-                            <div>{{date.reserveObj.name}}</div>
-                            <!-- <span v-if="date.reserveObj.pronunciation">【{{date.reserveObj.pronunciation}}】</span> -->
-                            <div>{{$t('commons.guestType')[date.reserveObj.guestType + '']}}</div>
-                        </div>
-                        <div class="riBottom" v-else>{{$t('desk.order_blankText')}}</div>
+            </el-dialog>
+            <el-tabs type="border-card" v-model="activeName">
+                <!-- 基本信息 -->
+                <el-tab-pane :label="$t('desk.serve_basicInfo')" name="first">
+                    <div class="buttonBox">
+                        <el-button type="primary" size="small" plain @click="goRoomStatus()" v-if="currentRoom.roomStatus != 5">
+                            {{ (this.currentRoom.roomStatus == 3 || this.currentRoom.roomStatus == 1) ? $t('desk.home_putDirtyA') : $t('desk.home_buyNet') }}
+                        </el-button>
+                        <el-button type="primary" @click="goRoomStatus(5)" size="small" plain :disabled="currentRoom.checkInRoomType == 1">{{this.currentRoom.roomStatus != 5 ? $t('desk.home_service') : $t('desk.home_cannel_service')}}</el-button>
+                        <el-button type="primary" size="small" plain @click="goFinance" :disabled="this.currentRoom.checkInRoomType != 1 && this.currentRoom.checkInRoomType != 2">{{$t('desk.customer_accountingTextA')}}</el-button>
+                        <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.chargeA')}}</el-button>
+                        <el-button type="primary" @click="checkoutRoom" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.order_checkout')}}</el-button>
+                        <el-button type="primary" @click="psInLive" size="small" plain>{{$t('manager.ps_inLive')}}</el-button>
                     </div>
-                </div>
-            </el-tab-pane>
-        </el-tabs>
-        <!-- 内层挂账dialog -->
-        <cardTao ref="cardTao" :currentRoom="currentRoom" ></cardTao>
-        <!-- 内层结账退房dialog -->
-        <CheckoutTao ref="checkoutTao" :detailData = "orderInfo" :currentRoom="currentRoom"></CheckoutTao>
-    </el-dialog>
+                    <div class="infoBox">
+                        <!--            入住人信息展示-->
+                        <checkInInfo type="home" :orderInfo="orderInfo" ref="checkInInfo" showOrderInfo="true"></checkInInfo>
+                    </div>
+                </el-tab-pane>
+                <!-- 房间信息 -->
+                <el-tab-pane :label="$t('desk.roomInfoDesc')" name="second">
+                    <div class="timeBox">
+                        <el-button type="primary" :disabled="startTime <= nowDateString" size="small" plain @click="dateBefore21">&lt;&lt;{{$t('desk.order_go21')}}</el-button>
+                        <div class="middleTime">{{ startTime }}——{{ endTime }}</div>
+                        <el-button type="primary" size="small" plain @click="dateLater21">{{$t('desk.order_back21')}}&gt;&gt;</el-button>
+                    </div>
+                    <div class="riliBox">
+                        <div v-for="date in dates" :key="date.date" class="itemRi">
+                            <div class="riTop">
+                                <span>{{date.date}}</span>
+                                <br>
+                                <span>{{date.week}}</span>
+                            </div>
+
+                            <div class="riBottom" @click="lookRoomClick(date)" v-if="date.reserveObj" style="background: #A3E5FD">
+                                <div>{{date.reserveObj.name}}</div>
+                                <!-- <span v-if="date.reserveObj.pronunciation">【{{date.reserveObj.pronunciation}}】</span> -->
+                                <div>{{$t('commons.guestType')[date.reserveObj.guestType + '']}}</div>
+                            </div>
+                            <div class="riBottom" v-else>{{$t('desk.order_blankText')}}</div>
+                        </div>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+            <!-- 内层挂账dialog -->
+            <cardTao ref="cardTao" :currentRoom="currentRoom" ></cardTao>
+            <!-- 内层结账退房dialog -->
+            <CheckoutTao ref="checkoutTao" :detailData = "orderInfo" :currentRoom="currentRoom"></CheckoutTao>
+        </el-dialog>
+<!--        <mainView ref="mainView"> </mainView>-->
+        <mainView style="height: 0;width: 0" ref="mainView" v-show="mainViewShow"> </mainView>
+    </div>
 
 </template>
 
@@ -75,16 +80,19 @@
 import myMixin from "@/utils/filterMixin";
 import checkInInfo from "@/components/front/checkInInfo";
 import cardTao from "@/components/cardTao";
-import CheckoutTao from '@/components/checkoutTao.vue';
+import CheckoutTao from '@/components/checkoutTao';
+import mainView from '@/components/main/mainView';
 export default {
     components: {
         checkInInfo,
         cardTao,
-        CheckoutTao
+        CheckoutTao,
+        mainView
     },
     mixins: [myMixin],
     data() {
         return {
+            mainViewShow: false,
             detailData: {},
             currentRoom: {},
             dates: [],
@@ -112,6 +120,20 @@ export default {
         paymentVisible(){
           console.log(this.currentRoom);
             this.$refs.cardTao.resetVisibel(this.currentRoom.checkInObj.id);
+        },
+        //点击入住按钮
+        psInLive() {
+            let item = {"id":"a367289c90e34614a308917f5726bd31","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-02 14:35:29","menuTitle":"预订/入住","menuAliasTitle":null,"japanese":"予約受付","parentMenuId":"a367289c90e34614a308917f5726bd06","icon":"market/nav03.png","path":"booking","menuLevel":2,"menuType":3,"status":1,"menuorder":31,"childList":[{"id":"a367289c90e34614a308917f5726bd101","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:21","menuTitle":"普通预订","menuAliasTitle":null,"japanese":"一般予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"normal","menuLevel":3,"menuType":3,"status":1,"menuorder":101,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd102","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:33","menuTitle":"当日回预订","menuAliasTitle":null,"japanese":"日帰り予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"dayBack","menuLevel":3,"menuType":3,"status":1,"menuorder":102,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd103","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:40","menuTitle":"会场预订","menuAliasTitle":null,"japanese":"会場予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"hall","menuLevel":3,"menuType":3,"status":1,"menuorder":103,"childList":null,"header":null}],"header":null};
+            this.$refs.mainView.toSection(item);
+            // sessionStorage.sectionid = 'a367289c90e34614a308917f5726bd31';
+            // // sessionStorage.subMenul = JSON.stringify(item);
+            // sessionStorage.pageId = 'a367289c90e34614a308917f5726bd101';
+            // sessionStorage.pagePath = 'booking';
+            // sessionStorage.currentPath = 'booking';
+            // this.$router.push({
+            //     name: "normal",
+            // });
+
         },
           //点击结账退房按钮
         checkoutRoom(){
@@ -147,7 +169,6 @@ export default {
             console.log(this.dates);
             console.log(this.startTime);
             console.log(this.currentRoom);
-            debugger
             this.$F.doRequest(this, "/pms/reserve/reserve_room_list", {
                     roomId: this.currentRoom.id,
                     startTime: this.startTime,
@@ -210,7 +231,6 @@ export default {
             this.currentRoom = currentRoom;
             this.initRoomPlan();
             this.currentRoom.label = this.currentRoom.checkInRoomType == 1 ? this.$t('frontOffice.checkInfoDesc') : this.$t('desk.order_bookOrderInfo')
-            debugger
             if (this.currentRoom.checkInRoomType == 1) {   //订单详情
                 if (this.currentRoom.checkInObj) {
                     let id = this.currentRoom.checkInObj.id;
@@ -249,7 +269,6 @@ export default {
         //改变房间状态 置脏置净
 
         goRoomStatus(status) {
-            debugger
             let roomStatus = 5;
             if (status) {
                 if (this.currentRoom.roomStatus == 5) {

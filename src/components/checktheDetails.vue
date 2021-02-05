@@ -218,7 +218,6 @@ export default {
     props: ["checkinType", "checkInDetail"],
     mounted() {
         // type: checkin: 前台入住  1：入住人管理  2：批量入住  3：单个房间入住
-        debugger
         if (this.checkinType) {
             //当是从前台办理过来的请求
             this.type = "checkin";
@@ -446,7 +445,6 @@ export default {
             );
         },
         checkNextcode(code1, index) {
-            debugger
             this.$set(this.inRoomList, index, this.inRoomList[index]);
             if (!code1 || code1.length !== 3) {
                 // this.$message({
@@ -526,7 +524,6 @@ export default {
             });
             let checkInRoomJson = [];
             this.inRoomList.forEach((room) => {
-                debugger
                 room.headerObj.housePrice = (room.headerObj.housePrice === 'defined' ? room.headerObj.definedPrice : room.headerObj.housePrice);
                 let checkinInfo = {
                     roomId: room.room.roomId,
@@ -577,12 +574,21 @@ export default {
 
         fetchRoomStatus(callback) {
             console.log(this.currentRoom);
-            debugger
+            let roomIds = [];
+            if (this.currentRoom && this.currentRoom.roomId) {
+                roomIds.push(this.currentRoom.roomId);
+            } else {
+                this.detailData.inRoomList.forEach(room => {
+                    roomIds.push(room.roomId);
+                })
+            }
             this.$F.doRequest(this, "/pms/hotel/hotel_room_detail",
                 {
-                    roomId: this.currentRoom.roomId,
+                    roomId: roomIds,
                 }, (res) => {
-                    debugger
+                    if (res.roomStatus == 2) {
+
+                    }
                     callback()
                 }
             );

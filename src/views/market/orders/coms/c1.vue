@@ -45,7 +45,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance ref="finance" :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" />
+            <finance ref="finance" :currentRoom2="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" />
         </div>
     </div>
     <el-dialog top="0" :show-close='false'  :title="$t('desk.home_roomCardOpreat')" :visible.sync="mackcade" width="60%">

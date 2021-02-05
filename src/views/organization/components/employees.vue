@@ -69,11 +69,6 @@ export default {
     };
   },
 
-    created() {
-      console.log(this.employee)
-        debugger
-    },
-
     computed: {
     ...mapState({
       companyInfo: (state) => state.company,

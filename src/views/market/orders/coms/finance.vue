@@ -18,7 +18,7 @@
                 </el-form-item>
                 <br/>
                 <el-form-item label="">
-                    <el-button type="danger" size="mini" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button>
+                    <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
 
@@ -492,7 +492,7 @@ import checkoutTao from "@/components/checkoutTao";
 
 export default {
     mixins: [myMixin],
-    props: ["detailData", "currentRoom"],
+    props: ["detailData", "currentRoom2"],
     components: {
         consumeGoods,
         someAccounts,
@@ -566,6 +566,7 @@ export default {
     },
     data() {
         return {
+            currentRoom: {},
             hotelattaChmealList: [],
             stayoverVisible: false,
             overstayTabledata: [],
@@ -642,7 +643,10 @@ export default {
         });
         this.hoteldamagetype_list()
         this.hotelenter_list()
-        this.consume_order_list(1)
+        this.consume_order_list(1);
+        if (this.currentRoom2 && this.currentRoom2.roomId) {
+            this.currentRoom = this.detailData.inRoomList[0];
+        }
     },
 
     mounted() {
@@ -719,15 +723,15 @@ export default {
             this.$refs.cardTao.resetVisibel(this.$route.query.id);
         },
         //撤销结账
-        undoCheckoutA() {
-            this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', {
-                checkInId: this.checkInId
-            }, res => {
-                this.$router.push("/orders?type=order");
-            }, res => {
-                this.$message(res.message);
-            })
-        },
+        // undoCheckoutA() {
+        //     this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', {
+        //         checkInId: this.checkInId
+        //     }, res => {
+        //         this.$router.push("/orders?type=order");
+        //     }, res => {
+        //         this.$message(res.message);
+        //     })
+        // },
 
         //加载财务列表
         consume_order_list(state) {

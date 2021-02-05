@@ -100,7 +100,6 @@ export default {
                             data[k].hasChildren = true;
                         }
                     }
-                    debugger
                     this.tableData = data;
                     console.log(this.tableData);
                     that.$forceUpdate();

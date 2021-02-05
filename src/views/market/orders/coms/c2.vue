@@ -22,7 +22,7 @@
     </div>
     <div class="bd margin-t-10">
       <div class="wrap">
-        <finance :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail"/>
+        <finance :currentRoom2="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail"/>
       </div>
     </div>
   </div>

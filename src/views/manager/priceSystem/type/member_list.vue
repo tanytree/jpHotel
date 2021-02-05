@@ -36,7 +36,7 @@
 							</div>
 							<div v-if="index > 0">
 							 <!-- @click="changePopup(scope.row, scope.$index, item, index)" -->
-								<span> 
+								<span>
 									{{getDateP(scope.row, scope.$index, item, index)}}
 								</span>
 							</div>
@@ -622,7 +622,6 @@ import myMixin from "@/utils/filterMixin";
 					console.log('roomStrategyJson_p====', roomStrategyJson_p)
 					this.roomStrategyJson_p.push(roomStrategyJson_p[0])
 					console.log('this.roomStrategyJson_p====', this.roomStrategyJson_p)
-					debugger
 				})
 			},
 			//确认修改单价

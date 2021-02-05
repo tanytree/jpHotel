@@ -493,7 +493,6 @@ export default {
         },
         //手动排房确定
         db_row_houses() {
-            debugger
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t('desk.home_morethenNum'));
                 return

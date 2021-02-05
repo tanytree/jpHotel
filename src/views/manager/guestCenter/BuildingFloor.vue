@@ -308,7 +308,6 @@
 			},
 			// 添加楼层 -- 确认
 			defineCeng() {
-				debugger
 				if(Number(this.ruleForm_ceng.floor) !== Math.floor(this.ruleForm_ceng.floor)) {
 					return this.$message({
 							message: '楼层只能输入数字',

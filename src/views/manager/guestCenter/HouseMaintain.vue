@@ -469,7 +469,6 @@
 							obj.sid = i + 1
 							this.ruleForm_sit.push(obj)
 						})
-						debugger
 						if (value.houseIcon) {
 							const arr = value.houseIcon.split(",");
 							arr.map((i) => {

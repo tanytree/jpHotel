@@ -34,9 +34,9 @@
                         <span style="background-color: #CC2424" v-else-if="detailData.checkIn.state == 4">{{ $t('commons.checkinState')['20'] }}</span>
                         <span class="ok" v-else-if="item.state == 1">{{ $t('commons.checkinState')['1'] }}</span>
                         <span class="ok" v-else-if="(item.state == 3 && item.roomId) || (item.state == 2 && item.roomId)">{{ $t('desk.hadRowHouses') }}</span>
-<!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
+                        <!--                        <span class="ok" v-if="detailData.checkIn.state > 2">{{ $t('commons.reserveState')[detailData.checkIn.state + ''] }}</span>-->
                         <span class="no" v-else-if="!item.roomId">{{ $t('desk.noRowHouses') }}</span>
-<!--                        <span class="no" v-if="">{{ $t('food.order_status')[3] }}</span>-->
+                        <!--                        <span class="no" v-if="">{{ $t('food.order_status')[3] }}</span>-->
                     </li>
                 </ul>
             </div>
@@ -50,14 +50,14 @@
                                        @baseInfoChange="baseInfoChange"> </sbase>
                             </div>
                         </el-tab-pane>
-<!--                        - 客人信息-->
+                        <!--                        - 客人信息-->
                         <el-tab-pane :label="$t('desk.order_guestInfo')" name="customer">
-<!--                          <div class="tabWrap">-->
-<!--                            <customer type="detail" :detailData="detailData"></customer>-->
-<!--                          </div>-->
-                          <div class="tabWrap">
-                            <checkInInfo type="detail" :orderInfo="detailData" ref="checkInInfo"></checkInInfo>
-                          </div>
+                            <!--                          <div class="tabWrap">-->
+                            <!--                            <customer type="detail" :detailData="detailData"></customer>-->
+                            <!--                          </div>-->
+                            <div class="tabWrap">
+                                <checkInInfo type="detail" :orderInfo="detailData" ref="checkInInfo"></checkInInfo>
+                            </div>
                         </el-tab-pane>
                         <el-tab-pane :label="$t('desk.financialDetails')" name="finance">
                             <div class="tabWrap">
@@ -71,9 +71,8 @@
                     <roominfo @baseInfoChange="baseInfoChange" ref="roominfo"></roominfo>
                 </el-row>
             </div>
-
         </div>
-
+        <mainView style="height: 0;width: 0" ref="mainView" v-if="mainViewShow"> </mainView>
     </div>
 </template>
 
@@ -84,6 +83,7 @@ import customer from "@/components/front/customer";
 import checkInInfo from "@/components/front/checkInInfo";   //客人信息
 import finance from "./bookingcoms/finance";
 import myMixin from "@/utils/filterMixin";
+import mainView from '@/components/main/mainView';
 
 export default {
     mixins: [myMixin],
@@ -93,10 +93,12 @@ export default {
         sbase,
         customer,
         finance,
+        mainView
     },
 
     data() {
         return {
+            mainViewShow: false,
             id: "",
             loading: false,
             isOrder: true,
@@ -109,6 +111,7 @@ export default {
     mounted() {
         this.id = this.$route.query.id;
         this.getDetail(this.id);
+
     },
 
     methods: {
@@ -141,9 +144,14 @@ export default {
 
         },
         goBack(){
-            this.$router.replace({
-                path: "/orders",
-            });
+            this.mainViewShow = true;
+            // let item = {"id":"a367289c90e34614a308917f5726bd32","createTime":"2020-07-05 15:01:00","updateTime":"2020-07-05 15:01:00","menuTitle":"订单管理","menuAliasTitle":null,"japanese":"予約管理","parentMenuId":"a367289c90e34614a308917f5726bd06","icon":"market/nav04.png","path":"orders","menuLevel":2,"menuType":3,"status":1,"menuorder":32,"childList":[{"id":"a367289c90e34614a308917f5726bd104","createTime":"2020-07-05 15:01:00","updateTime":"2021-02-02 15:51:01","menuTitle":"预订单","menuAliasTitle":null,"japanese":"予約情報","parentMenuId":"a367289c90e34614a308917f5726bd32","icon":null,"path":"booking","menuLevel":3,"menuType":3,"status":1,"menuorder":104,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd105","createTime":"2020-07-05 15:01:00","updateTime":"2021-02-02 18:27:46","menuTitle":"订单查询","menuAliasTitle":null,"japanese":"宿泊情報","parentMenuId":"a367289c90e34614a308917f5726bd32","icon":null,"path":"order","menuLevel":3,"menuType":3,"status":1,"menuorder":105,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd106","createTime":"2020-07-05 15:01:00","updateTime":"2020-08-14 12:41:10","menuTitle":"赔偿记录","menuAliasTitle":null,"japanese":"損害賠償記録","parentMenuId":"a367289c90e34614a308917f5726bd32","icon":null,"path":"compensate","menuLevel":3,"menuType":3,"status":1,"menuorder":106,"childList":null,"header":null}],"header":null};
+            // debugger
+            // setTimeout(() => {
+            //     debugger
+            //     this.$refs.mainView.toSection(item);
+            // }, 100)
+
         }
     },
 };

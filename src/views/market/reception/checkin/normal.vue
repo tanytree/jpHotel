@@ -972,7 +972,6 @@ export default {
                 params.roomIds = roomIdArray.join(",");
                 this.makeStoresNum(params);
                 this.$F.doRequest(this, url, params, (data) => {
-                    debugger
                     this.$message({message: "Success", type: "success",});
                     if (type == 2) {
                         window.setTimeout(() => {

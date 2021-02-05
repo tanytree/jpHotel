@@ -13,6 +13,8 @@
                          v-if="$F.filterThirdMenu('sale', item.path, true)">
                 <!-- 中央预定-->
                 <Centralres v-if="item.path == 'central-reservation'"/>
+                <!-- 预订单-->
+                <bookingList v-if="item.path == 'booking'" ref="booking" :storesNum="$F.getHQCode()"/>
                 <!-- 员工权限-->
                 <EmployeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
@@ -23,9 +25,10 @@
 <script>
 import Centralres from './centralRes'
 import EmployeeRights from '@/components/employeeRights'
+import bookingList from "@/views/market/orders/bookingList";
 
 export default {
-    components: {Centralres, EmployeeRights},
+    components: {Centralres, EmployeeRights, bookingList},
     data() {
         return {
             menuList: [],

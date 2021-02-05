@@ -394,8 +394,7 @@ export default {
                     }
                 })
             }
-            params.billType = roomIds
-            debugger
+            params.roomIds = roomIds;
             //console.log(this.isArrSame(array,1))
             //console.log(this.isArrSame(array,2))
             // if(this.isArrSame(array,1) == true){

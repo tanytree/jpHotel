@@ -23,13 +23,13 @@
             <el-col :span="12">
                 <div class="fr">
 <!--                    disabled="checkinInfo.state == 1 || checkinInfo.state == 2"-->
-                    <el-button plain size="mini" @click="goCheckinDetail" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8">
+                    <el-button plain size="mini" @click="goCheckinDetail" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8 || detailData.checkIn.state == 7">
                         {{ $t('manager.ps_inLive') }}
                     </el-button>
-                    <el-button plain size="mini" @click="updateReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8">
+                    <el-button plain size="mini" @click="updateReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8 || detailData.checkIn.state == 7">
                         {{$t('desk.editRowHouse')}}
                     </el-button>
-                    <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8">
+                    <el-button plain size="mini" @click="channelReserved" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8 || detailData.checkIn.state == 7">
                         {{$t('commons.delete')}}
                     </el-button>
                     <!--这块暂时隐藏 不要留太多bug-->
@@ -188,7 +188,6 @@ export default {
             }
         },
         dialogOpen(currentRoom, checkinInfo) {
-            debugger
             this.detailData.checkIn = checkinInfo;
             this.currentRoom = currentRoom;
             this.checkinInfo = checkinInfo;
