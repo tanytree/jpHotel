@@ -3,6 +3,7 @@
 	<el-row class="boss-index">
 		<el-row v-if="rili_show" class="boss-index">
 			<el-tabs class="tabCenter" v-model="active_tag" v-if="tab_show">
+        <!-- 客房房型 -->
 				<el-tab-pane :label="$t('manager.hk_guestRoom')" name="one">
 					<el-container direction="vertical" class="boss-index">
 						<el-row :gutter="20">
@@ -49,17 +50,18 @@
 						 :page-size="form.pageSize" :total="form.totalSize" layout="total, prev, pager, next, jumper"></el-pagination>
 					</el-container>
 				</el-tab-pane>
+        <!-- 会议厅房型 -->
 				<el-tab-pane :label="$t('manager.hk_drawingRoomType')" name="two" v-if="type != 'strategy'" >
 					<el-container direction="vertical" class="boss-index">
 						<el-row :gutter="20">
-							<el-col style="display: flex;justify-content: flex-end;margin: 10px 0px;">
+							<el-col style="display: flex;justify-content: flex-end;margin:-10px 0px 10px;">
 								<el-button type="primary" style="width: 100px;" size="small" @click="addHouse('houseB', '')">{{$t('commons.newAdd')}}
 								</el-button>
 							</el-col>
 						</el-row>
 						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" height="100%" header-row-class-name="default">
-							<el-table-column prop="houseName" :label="$t('manager.hk_roomNameA')"></el-table-column>
-							<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPriceB')"></el-table-column>
+							<el-table-column prop="houseName" :label="$t('manager.hp_roomA')"></el-table-column>
+							<el-table-column prop="marketPrice" :label="$t('manager.hk_doorPriceA')"></el-table-column>
 							<el-table-column prop="bedNum" :label="$t('manager.hk_seating')"></el-table-column>
 							<el-table-column prop="status" :label="$t('boss.loginDetail_state')">
 								<template slot-scope="scope">
@@ -188,12 +190,12 @@
 
 						<!-- ======== 客房会议厅========================================== -->
 						<!-- 房型 -->
-						<el-form-item :label="$t('manager.hp_room')+':'" prop="houseName" v-if="active_tag == 'two'">
+						<el-form-item :label="$t('manager.hp_roomA')+':'" prop="houseName" v-if="active_tag == 'two'">
 							<el-input v-model="ruleForm.houseName" class="input"></el-input>
 						</el-form-item>
 
 						<!-- 门市价 -->
-						<el-form-item :label="$t('manager.hk_doorPrice')+':'" prop="marketPrice" v-if="active_tag == 'two'">
+						<el-form-item :label="$t('manager.hk_doorPriceA')+':'" prop="marketPrice" v-if="active_tag == 'two'">
 							<el-input v-model="ruleForm.marketPrice" type="number" class="input"></el-input>
 						</el-form-item>
 

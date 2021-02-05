@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 18:28:04
+ * @LastEditTime: 2021-02-05 14:53:50
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -55,8 +55,9 @@ module.exports = {
   hp_floor: '階',
   hp_storiedBuilding: '建物の棟',
   hp_storiedBuildingA: '建物',
-
+  hp_roomA: '名称',
   hp_room: '部屋タイプ',
+  hp_roomB: '利用種別',
   hp_unknown: '未知',
   hp_layer: 'フロア',
   hp_dealNotArrive: '未到着',
@@ -91,7 +92,7 @@ module.exports = {
   hp_inputActiveName: 'カテゴリ名称を入力してください',
   hp_inputActivePrice: '賠償単価を入力してください。',
   hp_editor: '編集',
-  hp_patternsSuccession: '交替使用会計モード',
+  hp_patternsSuccession: 'レジ金設定',
   hp_deskDepartment: '客室',
   hp_foodDepartment: '料飲',
   hp_storeDepartment: '付帯',
@@ -144,7 +145,7 @@ module.exports = {
   hk_beds: 'ベッド／寝具数',
   hk_availabilityPeople: '定員人数',
   hk_drawingRoomType: '会場',
-  hk_seating: '座席数',
+  hk_seating: '収容人数',
   hk_basicInformation: '基本情報',
   hk_preferentialPrice: '特別価格',
   hk_preferentialUse: 'オンライン予約ディスカウント',
@@ -189,10 +190,12 @@ module.exports = {
   hk_ext: '内線番号',
   hk_toward: 'view',
   hk_towardA: '向き',
+  hk_towardB: 'ビュー',
   hk_toward_shan: '山',
   hk_toward_hai: '海',
   hk_toward_hu: '湖',
   hk_toward_malu: '马路',
+  hk_toward_maluA: 'シティ',
   hk_byRoad: '道路沿い',
   hk_yes: '利用中',
   hk_no: '停止',
@@ -517,7 +520,7 @@ module.exports = {
   grsl_physicalGoods: '商品',
   grsl_serviceGoods: 'サービス',
   hk_newAddRoomType: '部屋タイプ情報変更',
-  hk_newAddRoomTypeA: 'タイプ追加',
+  hk_newAddRoomTypeA: '宴会・会場追加',
   hk_have: '有る',
   hk_donot: '無し',
   hk_priceCalendar: '価格カレンダー',
@@ -610,6 +613,8 @@ module.exports = {
   add_cashStatistics: '現金点検',
   add_nowDownPriA: 'レジ金/繰越・金額',
   pa_explain:'下記表示は各会員種別の1名1泊2食の料金です。',
+  add_newDoorPriA: '新料金',
+  hk_chamberA: '宴会・会場',
 
 
 

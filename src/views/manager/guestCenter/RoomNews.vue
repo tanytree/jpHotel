@@ -21,7 +21,7 @@
 									<el-option :label="value.name" :value="value.id" v-for="(value, index) in cengList" :key="index"></el-option>
 								</el-select>
 							</el-form-item>
-							<el-form-item :label="$t('manager.hp_room') + ':'">
+							<el-form-item :label="$t('manager.hp_roomB') + ':'">
 								<el-cascader v-model="form.roomTypeId" :options="roomType" @change="handleChange" style="width: 180px"></el-cascader>
 							</el-form-item>
 							<el-form-item :label="$t('manager.hk_roomNumber') + ':'" class="margin-l-15">

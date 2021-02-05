@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-15 21:08:27
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 17:21:17
+ * @LastEditTime: 2021-02-05 14:12:08
  * @FilePath: \jiudian\src\views\manager\guestCenter\AddRoom.vue
  -->
 <template>
@@ -18,7 +18,7 @@
 			<el-row :gutter="20">
 				<el-form :model="selectFrom" :rules="rules" ref="selectFrom" label-width="100px">
 					<el-col :span="8">
-						<el-form-item :label="$t('manager.hp_room') + ':'" prop="roomTypeId">
+						<el-form-item :label="$t('manager.hp_roomB') + ':'" prop="roomTypeId">
 							<!-- <el-cascader :props="props"></el-cascader> -->
 							<el-cascader v-model="selectFrom.roomTypeId" :options="roomType" @change="handleChange" :placeholder="selectFrom.roomTypeId_name"
 							 :show-all-levels="false" style="width: 100%"></el-cascader>
@@ -89,7 +89,7 @@
 			</el-row>
 			<el-row>
 				<el-form :model="selectFrom" :rules="rules" ref="selectFrom" label-width="150px">
-					<el-form-item :label="$t('manager.hk_toward')" prop="toward" label-width="157px">
+					<el-form-item :label="$t('manager.hk_towardB')" prop="toward" label-width="157px">
 						<el-row :gutter="20" class="row-center">
 							<el-col :span="20">
 								<el-radio-group v-model="selectFrom.toward">
@@ -102,7 +102,7 @@
 									<el-radio :label="1">{{$t("manager.hk_toward_shan")}}</el-radio>
 									<el-radio :label="2">{{$t("manager.hk_toward_hai")}}</el-radio>
 									<el-radio :label="3">{{$t("manager.hk_toward_hu")}}</el-radio>
-									<el-radio :label="4">{{$t("manager.hk_toward_malu")}}</el-radio>
+									<el-radio :label="4">{{$t("manager.hk_toward_maluA")}}</el-radio>
 								</el-radio-group>
 							</el-col>
 						</el-row>
@@ -205,7 +205,7 @@
 		],
 		data() {
 			return {
-				roomType: [], // 房型列表
+				// roomType: [], // 房型列表
 				files: [],
 				rules: {
 					roomTypeId: [{
@@ -323,7 +323,7 @@
 					});
 					// debugger
 					this.roomType[0].children = res.roomtype
-					this.roomType[0].label = '客房';
+					this.roomType[0].label = this.$t('manager.hk_guestRooms');
 					console.log('this.roomType+++++', this.roomType);
 					// debugger
 					res.meetingtype.forEach((item, index) => {
@@ -331,7 +331,7 @@
 						item.value = item.id;
 					});
 					this.roomType[1].children = res.meetingtype
-					this.roomType[1].label = '会议厅';
+					this.roomType[1].label = this.$t('manager.hk_chamberA');
 					console.log('this.roomType---', this.roomType);
 				});
 			},
