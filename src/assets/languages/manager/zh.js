@@ -1,51 +1,26 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 10:51:55
+ * @LastEditTime: 2021-02-05 16:13:39
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
 // 管理部 (manager) || 中文
 module.exports = {
+  deskTab: {
+    0:'房费',
+    1:'附餐费',
+    2:'会议室',
+    3:'迷你吧商品',
+    4:'其他',
+    5:'餐饮费',
+    6:'商品费',
+  },
   batchSelectTip: '请点击并选择所有相关的房间号。',
   typeNameList: {
     1: '前台部',
     2: '餐饮部',
     3: '商店部'
-  },
-  priceType: {
-    1: '订金',
-    2: '押金',
-    3: '收款',
-    4: '退款',
-    5: '加收全天房费 ',
-    6: '加收半天房费 ',
-    7: '损物赔偿 ',
-    8: '迷你吧商品 ',
-    9: '完全冲调 ',
-    10: '部分冲调 ',
-    11: '免单 ',
-    12: '房费 ',
-    13: '挂账 ',
-    14: '附餐结账',
-    15: '温泉税 ',
-    16: '住宿税 ',
-    17: '附餐早 ',
-    18: '附餐晚  ',
-    19: '项目预订金 ',
-    20: '会议室',
-    21: '附餐费',
-    22: '挂帐到房间餐饮费',
-    23: '挂帐到房间商品费',
-    100: '其他 '
-  },
-  payType: {
-    0: '其他',
-    1: '现金',
-    2: '信用卡',
-    3: '支付宝',
-    4: '微信',
-    5: '会员卡'
   },
   shiftOver: '交班',
   //   管理部 > 首页(homePage > hp)
@@ -100,7 +75,9 @@ module.exports = {
   hp_cashModel: '现金流模式',
   hp_paidModel: '实收模式',
   hp_accountsModel: '应收模式',
-  hp_locker: '备用金',
+  hp_lockerA: '前台部备用金',
+  hp_lockerB: '餐饮部备用金',
+  hp_lockerC: '商店部备用金',
   hp_modelSpecification: '模式说明',
   hp_flightManagement: '班次管理',
   hp_shift: '班次',
@@ -624,7 +601,6 @@ module.exports = {
   add_nowDownPri: '本班下放备用金',
   add_nowDownPriA: '本班下放备用金',
   add_cashStatistics: '现金统计',
-  add_: '',
   add_: '',
   add_: '',
   add_: '',

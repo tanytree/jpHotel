@@ -315,7 +315,7 @@ const $F = {
         var days = (endDate - startDate) / (1 * 24 * 60 * 60 * 1000);
         return days;
     },
-
+    //千进位处理
     numFormate(num) {
         // console.log(num);
         if (num) {

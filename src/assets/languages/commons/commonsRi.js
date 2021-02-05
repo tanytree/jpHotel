@@ -64,6 +64,8 @@ module.exports = {
   exportBtn: '出力',
   pleaseEnter: '入力してください',
   pleaseEnterA: '会社名',
+  pleaseEnterB: '説明事項',
+
   passwordDesc: 'パスワード',
  // 床型
    bedType: {

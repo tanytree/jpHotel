@@ -1,52 +1,26 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-05 14:53:50
+ * @LastEditTime: 2021-02-05 16:25:11
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
 // 管理部 || 日语
 module.exports = {
+  deskTab: {
+    0:'宿泊',
+    1:'プラン・食事',
+    2:'会場利用',
+    3:'ミニバー',
+    4:'その他',
+    5:'料飲/部屋付',
+    6:'付帯/部屋付',
+  },
     batchSelectTip: '該当部屋番号全てをクリックし選択ください。',
   typeNameList: {
     1: '客室',
     2: '料飲',
     3: '付帯'
-  },
-  priceType:{
-    1:'订金',
-    2:'押金',
-    3:'收款',
-    4:'退款',
-    5:'加收全天房费 ',
-    6:'加收半天房费 ',
-    7:'损物赔偿 ',
-    8:'ミニバー ',
-    9:'完全冲调 ',
-    10:'部分冲调 ',
-    11:'免单 ',
-    12:'宿泊 ',
-    13:'挂账 ',
-    14:'附餐结账',
-    15:'温泉税 ',
-    16:'住宿税 ',
-    17:'附餐早 ',
-    18:'附餐晚  ',
-    19: '项目预订金 ',
-    20: '会場利用',
-    21:'プラン・食事',
-    22: '料飲/部屋付',
-    23:'付帯/部屋付',
-    
-    100:'その他 '
-  },
-  payType:{
-      0:'其他',
-      1:'现金',
-      2:'信用卡',
-      3:'支付宝',
-      4:'微信',
-      5:'会员卡'
   },
   shiftOver: '交替情報',
   //   管理部 > 首页(homePage > hp)
@@ -100,8 +74,10 @@ module.exports = {
   hp_cashModel: '現金モード',
   hp_paidModel: '実際発生モード',
   hp_accountsModel: '売掛モード',
-  hp_locker: '小口現金',
-  hp_modelSpecification: '使用モード説明',
+  hp_lockerA: '客室レジ金',
+  hp_lockerB: '料飲レジ金',
+  hp_lockerC: '付帯レジ金',
+  hp_modelSpecification: '備考',
   hp_flightManagement: 'シフト管理',
   hp_shift: 'シフト',
   hp_shiftName: 'シフト名称',

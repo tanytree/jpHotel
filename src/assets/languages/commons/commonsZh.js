@@ -67,6 +67,7 @@ module.exports = {
   exportBtn: '导出',
   pleaseEnter: '请输入',
   pleaseEnterA: '请输入',
+  pleaseEnterB: '请输入',
   passwordDesc: '密码',
   // 床型
   bedType: {

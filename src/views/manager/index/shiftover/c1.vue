@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 13:42:21
+ * @LastEditTime: 2021-02-05 16:30:06
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -36,14 +36,26 @@
       <div class="total">{{$t('manager.hk_constTotal')}}￥：{{$F.numFormate(info.income)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
-        <el-col :span="6" v-for="(item,index) in info.orderPriceProjectList" :key="index">
-          <div class="item">
-            <span v-if="tabCurr == 1">{{$t('manager.priceType.'+item.priceType)}}：</span>
-            <span v-if="tabCurr == 2">{{$t('desk.serve_foodPriceA')}}：</span>
-            <span v-if="tabCurr == 3">{{$t('desk.serve_goodsPrice')}}：</span>
-            <span class="red">{{$F.numFormate(item.total)}}</span>{{$t('manager.ps_japanYen')}}
-          </div>
-        </el-col>
+        <!-- 前台部 -->
+        <div v-if="tabCurr == 1" class="flexBox">
+          <div>{{$t("manager.deskTab['0']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['1']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['2']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['3']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['4']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['5']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['6']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+        </div>
+        <!-- 餐饮部 -->
+        <div v-if="tabCurr == 2" class="flexBox">
+          <div>{{$t("manager.deskTab['1']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t('desk.serve_foodPriceA')}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+        </div>
+        <!-- 商店部 -->
+        <div v-if="tabCurr == 3" class="flexBox">
+          <div v-for="i in 2" :key="i">{{$t('shop.reset.salePoint')}}{{`${i}：`}}<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['3']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+        </div>
       </el-row>
       <div class="total">{{$t('food.reset.totalFee')}}￥：{{$F.numFormate(info.settlement)}}{{$t('manager.ps_japanYen')}}</div>
       <el-row class="padding-tb-10">
@@ -592,6 +604,17 @@ export default {
   span {
     color: red;
     margin-right: 20px;
+  }
+}
+.flexBox {
+  font-size: 15px;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  div {
+    margin-right: 30px;
   }
 }
 </style>
