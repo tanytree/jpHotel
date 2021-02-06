@@ -43,6 +43,7 @@
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
                 <template slot-scope="{ row }">
+                    {{row.priceType}}
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">
                         {{F_priceType(row.priceType ? row.priceType : 99)}}
                     </span>
@@ -104,7 +105,7 @@
                                 <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}}</span>
                                 <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}</span>
                                 <span v-if="row.priceType == 7">
-                            {{row.damageTypeName}}(￥{{$F.numFormate(row.consumePrice)}}) * {{row.damageCount}}
+                                {{row.damageTypeName}}(￥{{$F.numFormate(row.consumePrice)}}) * {{row.damageCount}}
                         </span>
                                 <span v-if="row.priceType == 8">
                            <span v-if="row.goodsList&&row.goodsList.length > 0" >
@@ -171,9 +172,9 @@
                         </span>
                         <span v-if="row.priceType == 14">
                    <!-- 具体餐品 -->
-                       <span  class="toDot" v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="(item,index) in row.disherOrderSubList" :key="index">
+                       <div  v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="(item,index) in row.disherOrderSubList" :key="index">
                            {{item.dishesName}}({{$F.numFormate(item.unitPrice)}})*{{item.dishesCount}}
-                       </span>
+                       </div>
                     </span>
                     <span v-if="row.priceType == 15">
                         {{F_priceType(row.priceType)}}(￥{{$F.numFormate(row.unitPrice)}}) * {{row.taxCount}}
@@ -186,9 +187,9 @@
                     </span>
                     <span v-if="row.priceType == 22">
                         <!-- 商品费 -->
-                        <span class="toDot" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
+                        <div class="" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
                             {{item.goodsName}}({{$F.numFormate(item.unitPrice)}})*{{item.goodsCount}}
-                        </span>
+                        </div>
                     </span>
                     <br v-if="row.richType == 1">
                     <span v-if="row.richType == 1" class="blue">
