@@ -231,19 +231,16 @@ export default {
       console.log(111);
       let id = this.$route.query.id; //该id为checkinId
       this.itemGuestInfo = this.$route.query.item;
-      this.$F.doRequest(
-        this,
-        "/pms/checkin/check_in_detail",
-        {
-          checkInId: id,
-        },
-        (res) => {
+      let info = {
+          checkInId: id
+      }
+      this.$F.doRequest(this,"/pms/checkin/check_in_detail",info,(res) => {
           this.detailData = res;
+          console.log(res)
           // this.$F.merge(this.detailData, res);
-
           //默认获取第一个房间为主账房，暂不明确主账房标识
           // ;
-            debugger
+            // debugger
           if (res.inRoomList.length > 0) {
             this.currentRoom = res.inRoomList[0];
             this.resetDom();

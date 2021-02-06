@@ -228,15 +228,16 @@ export default {
   methods: {
     resetVisibel() {
         this.checkoutVisible = true;
-        this.getConsumeOrderList();
-        this.getUnitList();
-        this.get_consume_tax();
+   
         if (this.detailData.totalPrice > 0) {
             this.consumePrice = this.detailData.totalPrice;
         }else {
             this.checkoutForm.payPrice = this.detailData.consumePrice;
         }
-        this.checkoutForm.checkInId = this.currentRoom.checkinId
+        this.checkoutForm.checkInId = this.$route.query.id
+        this.getConsumeOrderList();
+        this.getUnitList();
+        this.get_consume_tax();
         // console.log(this.currentRoom)
         console.log(this.detailData)
         // console.log(this.detailData.totalPrice)
@@ -275,10 +276,10 @@ export default {
     },
     getConsumeOrderList(){
         let info = {
-            checkInId: this.currentRoom.checkinId,
+            checkInId: this.checkoutForm.checkInId,
             state:'',
             pageIndex: 1,
-            pageSize: 1000
+            pageSize: 100
         }
         this.$F.doRequest(this, '/pms/consume/consume_order_list', info, (res) => {
             // console.log(res.consumeOrderList)
