@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-28 15:53:21
+ * @LastEditTime: 2021-02-07 11:45:43
  * @FilePath: \jiudian\src\views\market\orders\coms\invoicing.vue
  -->
 
@@ -40,14 +40,18 @@
               <el-input class="width150" type="number" v-model="openInvoiceForm.invoicePrice" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
-        <el-col :span="8">
+          <el-col :span="8">
             <el-form-item :label="$t('desk.customer_constPrice') + ':'">
               <el-input class="width150" type="number" v-model="openInvoiceForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
-
+          <el-col :span="8">
+            <el-form-item label="收据号">
+              <el-input class="width150" type="number" v-model="openInvoiceForm.shouju" ></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
-       
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="openInvoiceShow = false">{{

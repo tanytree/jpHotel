@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-05 18:54:42
+ * @LastEditTime: 2021-02-07 10:56:36
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -44,7 +44,7 @@
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table ref="multipleTable"  v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column :label="$t('desk.serve_basicInfo')" align="center">
           <el-table-column prop="createTime" :label="$t('desk.serve_flight')" width="100px">
             <template slot-scope="{row}">
@@ -91,7 +91,7 @@
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
-                <span @click="lookDetail(row)"><i class="el-icon-view"></i></span>
+                <span @click="lookDetail('cashDialog',row)"><i class="el-icon-view"></i></span>
               </div>
             </template>
           </el-table-column>
@@ -99,7 +99,7 @@
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
-                <span @click="lookDetail(row)"><i class="el-icon-view"></i></span>
+                <span @click="lookDetail('cardDailog',row)"><i class="el-icon-view"></i></span>
               </div>
             </template>
           </el-table-column>
@@ -113,7 +113,7 @@
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
-                <span @click="lookDetail(row)"><i class="el-icon-view"></i></span>
+                <span @click="lookDetail('pettyCashDialog',row)"><i class="el-icon-view"></i></span>
               </div>
             </template>
           </el-table-column>
@@ -124,7 +124,13 @@
           </el-table-column>
           <el-table-column prop="createTime" label="附餐费">
           </el-table-column>
-          <el-table-column prop="createTime" label="现金" width="100px ">
+          <el-table-column label="现金" width="100px ">
+            <template slot-scope="{ row }">
+              <div>
+                {{ row.nowMoneyRetained }}
+                <span @click="lookDetail('cashDialog',row)"><i class="el-icon-view"></i></span>
+              </div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" label="挂账到房间">
           </el-table-column>
@@ -138,7 +144,7 @@
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
-                <span @click="lookDetail(row)"><i class="el-icon-view"></i></span>
+                <span @click="lookDetail('pettyCashDialog',row)"><i class="el-icon-view"></i></span>
               </div>
             </template>
           </el-table-column>
@@ -149,7 +155,13 @@
           </el-table-column>
           <el-table-column prop="createTime" label="售卖点1">
           </el-table-column>
-          <el-table-column prop="createTime" label="现金" width="100px ">
+          <el-table-column label="现金" width="100px ">
+            <template slot-scope="{ row }">
+              <div>
+                {{ row.nowMoneyRetained }}
+                <span @click="lookDetail('cashDialog',row)"><i class="el-icon-view"></i></span>
+              </div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" label="挂账到房间">
           </el-table-column>
@@ -163,7 +175,7 @@
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
-                <span @click="lookDetail(row)"><i class="el-icon-view"></i></span>
+                <span @click="lookDetail('pettyCashDialog',row)"><i class="el-icon-view"></i></span>
               </div>
             </template>
           </el-table-column>
@@ -172,9 +184,8 @@
       <!--分页 -->
       <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" layout="total, prev, pager, next, jumper" :page-size="searchForm.pageSize" :total="listTotal"></el-pagination>
     </div>
-    <!-- 现金统计查看dialog -->
-
-    <el-dialog top="0" :visible.sync="lookMoney" class="liveInPersonDia" :title="$t('desk.serve_cashView')" width="80%">
+    <!-- 现金dialog -->
+    <el-dialog top="0" :visible.sync="cashDialog" class="liveInPersonDia" :title="$t('desk.serve_cashView')" width="50%">
       <div class="dialog_top">
         {{ $t("desk.serve_systemIn") + ":" }}<span>1000.00</span>{{ $t("desk.serve_yen") }}
       </div>
@@ -194,7 +205,70 @@
         {{ $t("desk.serve_balanceNum") }}<span>0</span>{{ $t("desk.serve_parentheses") }}
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="lookMoney = false">{{
+        <el-button size="small" @click="cashDialog = false">{{
+          $t("commons.close")
+        }}</el-button>
+      </span>
+    </el-dialog>
+    <!-- 挂账dialog -->
+    <el-dialog top="0" :visible.sync="cardDailog" title="挂账统计查看" width="50%">
+      <div class="dialog_top">
+        总挂账：<span style="color:#0067ff">{{$F.numFormate(1000)}}</span>日元
+      </div>
+      <div class="dialog_middle">
+        <div class="middle_text2">
+          单位挂账：￥{{$F.numFormate(2000)}}
+        </div>
+        <div class="middle_text2">
+          商品券：￥{{$F.numFormate(2000)}}
+        </div>
+        <div class="middle_text2">
+          住宿券：￥{{$F.numFormate(2000)}}
+        </div>
+        <div class="middle_text2">
+          折价券：￥{{$F.numFormate(2000)}}
+        </div>
+        <div class="middle_text2">
+          点数：￥{{$F.numFormate(2000)}}
+        </div>
+        <div class="middle_text2">
+          招待券：￥{{$F.numFormate(2000)}}
+        </div>
+        <div class="middle_text2">
+          其他：￥{{$F.numFormate(2000)}}
+        </div>
+        <div class="middle_text2">
+          辅助金：￥{{$F.numFormate(2000)}}
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="cardDailog = false">{{
+          $t("commons.close")
+        }}</el-button>
+      </span>
+    </el-dialog>
+    <!-- 本班下放备用金dialog -->
+    <el-dialog top="0" :visible.sync="pettyCashDialog" class="liveInPersonDia" title="本班下放备用金统计查看" width="50%">
+      <div class="dialog_top">
+        本班下放备用金<span>{{$F.numFormate(10000)}}</span>{{ $t("desk.serve_yen") }}
+      </div>
+      <div class="dialog_middle">
+        <div class="middle_text">
+          {{ $t("desk.serve_wuYen") + ":" }}<span>1</span>{{ $t("desk.serve_zhang") }}
+        </div>
+        <div class="middle_text">
+          {{ $t("desk.serve_yiYen") + ":" }}<span>4</span>{{ $t("desk.serve_zhang") }}
+        </div>
+        <div class="middle_text">
+          {{ $t("desk.serve_yiYen") + ":" }}<span>2</span>{{ $t("desk.serve_zhang") }}
+        </div>
+      </div>
+      <el-divider></el-divider>
+      <div class="dialog_bot">
+        {{ $t("desk.serve_balanceNum") }}<span>0</span>(平衡数=实际下放备用金-备用金额度)
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="pettyCashDialog = false">{{
           $t("commons.close")
         }}</el-button>
       </span>
@@ -218,7 +292,9 @@ export default {
   data() {
     return {
       tabCurr: "1",
-      lookMoney: false,
+      cashDialog: false, //现金dialog
+      cardDailog: false, //挂账dialog
+      pettyCashDialog: false, //本班下放备用金dialog
       loading: false,
       searchForm: {
         workStarTime: "",
@@ -281,9 +357,19 @@ export default {
       this.getDataList();
     },
     //点击眼睛图标
-    lookDetail(row) {
+    lookDetail(type, row) {
+      switch (type) {
+        case "cashDialog":
+          this.cashDialog = true;
+          break;
+        case "cardDailog":
+          this.cardDailog = true;
+          break;
+        case "pettyCashDialog":
+          this.pettyCashDialog = true;
+          break;
+      }
       this.itemInfo = row;
-      this.lookMoney = true;
     },
     /**每页数 */
     handleSizeChange(val) {
@@ -319,6 +405,9 @@ export default {
       color: #1872ff;
       margin-left: 20px;
     }
+  }
+  .middle_text2 {
+    margin-bottom: 5px;
   }
 }
 .dialog_bot {

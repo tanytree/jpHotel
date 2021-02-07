@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-05 16:25:11
+ * @LastEditTime: 2021-02-07 11:14:11
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -100,12 +100,12 @@ module.exports = {
   hp_selectLeavingTime: '出発時間を入力してください',
   hp_inputHotelDetuction: 'ホテル紹介を入力してください',
   hp_selectRoomImg: '部屋写真を選択してください',
-  hp_printingParams: '印刷パラメータ',
-  hp_printDocumentSelection: '帳票印刷選択',
-  hp_printFormat: '印刷様式（サイズ）',
-  hp_documentName: '印刷内容',
+  hp_printingParams: '印刷一覧',
+  hp_printDocumentSelection: '選択',
+  hp_printFormat: '印刷サイズ',
+  hp_documentName: '種類',
   hp_copies: '印刷部数',
-  hp_documentNote: '印刷備考欄内容',
+  hp_documentNote: '備考',
   hp_mustInput: '時間入力必須',
 
   //   管理部 > 客房中心 (houseKeeping > hk)

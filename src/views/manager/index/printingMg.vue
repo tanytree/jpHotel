@@ -70,24 +70,6 @@
                 beiYong_show: true,
                 radio: "",
                 popover: {},
-                four_tableData: [
-                    {
-                        name: "张十三",
-                        time: "2020-5-20",
-                        job_status: "实习期",
-                        job: "普通员工",
-                        number: "11223",
-                        parts: "销售部",
-                    },
-                    {
-                        name: "张十三",
-                        time: "2020-5-20",
-                        job_status: "实习期",
-                        job: "普通员工",
-                        number: "11223",
-                        parts: "销售部",
-                    },
-                ],
             };
         },
         props: {printData: Array, initData: Function},

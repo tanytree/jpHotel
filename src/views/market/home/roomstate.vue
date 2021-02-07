@@ -103,18 +103,19 @@
                                             <span v-if="room.checkInRoomType == 2"> {{ $t('desk.home_bookPeople') + '：' + room.reseverCheckInObj.name }}</span>
                                             <span>{{  '  '  }}</span>
                                         </div>
+                                        <div style="font-size:13px" v-if="room.checkInObj&&room.checkInObj.guestType">{{checkCustormSource(room)}}</div>
                                         <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && (room.checkInObj || room.reseverCheckInObj)"
-                                             style="margin-top: 40px">
-                                            <span>{{$t('manager.finance_source')}}：{{ F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource) }}
-                                                    <span v-if="room.checkInObj">
-                                                        <span v-if="room.checkInObj.orderSource == 5 && room.checkInObj.otaChannelId">-</span>
+                                             style="margin-top: 8px">
+                                            <div>{{ F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource) }}
+                                                    <div v-if="room.checkInObj">
+                                                        <!-- <span v-if="room.checkInObj.orderSource == 5 && room.checkInObj.otaChannelId">-</span> -->
                                                         <span v-if="room.checkInObj.orderSource == 5">{{getOtaName(room.checkInObj.otaChannelId)}}</span>
-                                                    </span>
-                                                    <span v-if="room.reseverCheckInObj">
-                                                        <span v-if="room.reseverCheckInObj.orderSource == 5 && room.reseverCheckInObj.otaChannelId">-</span>
+                                                    </div>
+                                                    <div v-if="room.reseverCheckInObj">
+                                                        <!-- <span v-if="room.reseverCheckInObj.orderSource == 5 && room.reseverCheckInObj.otaChannelId">-</span> -->
                                                         <span v-if="room.reseverCheckInObj.orderSource == 5">{{getOtaName(room.reseverCheckInObj.otaChannelId)}}</span>
-                                                    </span>
-                                                </span>
+                                                    </div>
+                                              </div>
                                         </div>
                                         <!-- 清扫图标后期加 -->
                                         <div class="placeIcon text-center">
@@ -363,6 +364,18 @@ export default {
         this.initOthers();
     },
     methods: {
+      checkCustormSource(room){
+        if(room.checkInObj&&room.checkInObj.guestType){
+          let guestType = room.checkInObj.guestType;
+          for(let i in this.$t('commons.guestType')){
+            if(guestType == i ){
+            
+              return this.$t(`commons.guestType.${i}`)
+            }
+          }
+        }
+        
+      },
         init() {
             this.realtime_room_statistics();
             this.get_hotel_building_list();
@@ -841,7 +854,7 @@ export default {
                 flex-wrap: wrap;
 
                 .tag-margin {
-                    height: 150px;
+                    height: 158px;
                     width: 20%;
                     padding: 10px;
                     margin: 0;
