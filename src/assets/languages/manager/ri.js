@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-07 11:14:11
+ * @LastEditTime: 2021-02-07 15:36:34
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -250,7 +250,7 @@ module.exports = {
   grsl_resetGoods: '商品変更',
   grsl_belongType: 'カテゴリー',
   grsl_goodsDescription: '商品/サービス詳細',
-  grsl_defaultNoPrice: '一回利用料',
+  grsl_defaultNoPrice: '単価',
   grsl_costNoPrice: '原価',
   grsl_defaultEmployeePrice: 'スタッフ価格',
   grsl_defaultBuyNum: '数量',
@@ -259,11 +259,11 @@ module.exports = {
   grsl_downloadSuccessful: 'ダウンロード確認',
   grsl_importSuccess: '一括入力確認',
   grsl_managementSalePoint: '付帯登録',
-  grsl_goodsShelves: '陳列商品',
+  grsl_goodsShelves: '項目追加',
   grsl_employeePriceJapen: '社員割引',
   grsl_inventory: '在庫数量',
-  grsl_shelves: '棚落ち',
-  grsl_sureShelves: '該当商品/サービスを棚落ちに確認しますか？',
+  grsl_shelves: '利用削除',
+  grsl_sureShelves: '該当商品/サービス利用を削除に確認しますか？',
   grsl_salePointManagement: '付帯管理',
   grsl_salePointName: '付帯名称',
   grsl_allowedToRoom: '〇 部屋付（売掛）',

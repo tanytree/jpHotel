@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-09 16:21:28
+ * @LastEditTime: 2021-02-07 16:06:21
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\roominfo.vue
  -->
 <template>
@@ -365,9 +365,12 @@ export default {
 
         //取消预留
         channelReserved() {
-            console.log(this.currentRoom);
-
-            this.$F.doRequest(this, "/pms/checkin/checkin_remove_room", {
+            this.$confirm(this.$t('commons.confirm_deleteB'), this.$t('commons.tip_desc'), {
+          confirmButtonText:this.$t('commons.confirm'),
+          cancelButtonText:  this.$t('commons.cancel'),
+          type: 'warning'
+        }).then(() => {
+              this.$F.doRequest(this, "/pms/checkin/checkin_remove_room", {
                     checkinRoomType: 2,
                     checkinReserveId: this.$route.query.id,
                     roomId: this.currentRoom.roomId
@@ -376,6 +379,11 @@ export default {
                     this.$emit('baseInfoChange', this.$route.query.id);
                 }
             );
+        }).catch(() => {
+         return false
+        });
+
+           
         },
         //修改预留
         updateReserved() {

@@ -53,9 +53,16 @@
             {{row.onAccountTotal || row.consumePrice || 0}}
           </template>
         </el-table-column>
-
-        <el-table-column align="center" prop="checkInPerson.checkIn.name" :label="$t('desk.home_consumerNamesA')" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="checkInPerson.checkIn.orderNum" :label="$t('desk.customer_originOrderNum')" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" :label="$t('desk.home_consumerNamesA')" show-overflow-tooltip>
+          <template slot-scope="{row}">
+            <div v-if="row.checkInPerson&&row.checkInPerson.checkIn">{{row.checkInPerson.checkIn.name}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" :label="$t('desk.customer_originOrderNum')" show-overflow-tooltip>
+          <template slot-scope="{row}">
+            <div v-if="row.checkInPerson&&row.checkInPerson.checkIn">{{row.checkInPerson.checkIn.orderNum}}</div>
+          </template>
+        </el-table-column>
         <el-table-column align="center" :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="160px">
           <template slot-scope="{ row }">
             <div v-if="row.checkInPerson">
@@ -65,8 +72,8 @@
         </el-table-column>
         <el-table-column align="center" :label="$t('desk.order_checkinDateA')+'-'+$t('desk.customer_checkoutTime')" show-overflow-tooltip>
           <template slot-scope="{row}">
-            <div> <span class="text-blue">{{$t('desk.customer_arrived')}}</span>{{row.checkInPerson.checkIn.checkinTime}} </div>
-            <div> <span class="text-red">{{$t('desk.customer_leave')}}</span>{{row.checkInPerson.checkIn.checkinTime}} </div>
+            <div v-if="row.checkInPerson&&row.checkInPerson.checkIn"> <span class="text-blue">{{$t('desk.customer_arrived')}}</span>{{row.checkInPerson.checkIn.checkinTime}} </div>
+            <div v-if='row.checkInPerson&&row.checkInPerson.checkIn'> <span class="text-red">{{$t('desk.customer_leave')}}</span>{{row.checkInPerson.checkIn.checkinTime}} </div>
           </template>
         </el-table-column>
         <el-table-column align="center" :label="$t('desk.customer_settlementStatus')" show-overflow-tooltip width="110">

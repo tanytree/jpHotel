@@ -126,12 +126,13 @@ export default {
   },
   props: { findOne: Object, initData: Function },
   methods: {
+  
     submit() {
       if(!this.findOne.trialStartTime || !this.findOne.trialEndTime) {
         this.$message.warning(this.$t("manager.hp_mustInput"));
         return;
       }
-      if(!this.findOne.trialAutoTime) {
+      if(this.findOne.state!=2&&!this.findOne.trialAutoTime) {
         this.$message.warning(this.$t("manager.hp_mustInput"));
         return;
       }

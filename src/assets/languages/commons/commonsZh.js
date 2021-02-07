@@ -23,6 +23,7 @@ module.exports = {
   placeChooseB: '请选择',
   confirm_delete: '确定删除吗？',
   confirm_deleteA: '确定删除吗？',
+  confirm_deleteB: '确定删除吗？',
   tip_desc: '提示',
   request_success: '请求成功',
   delete_success: '删除成功！',
