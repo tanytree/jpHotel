@@ -125,8 +125,11 @@ export default {
     },
   },
   props: { findOne: Object, initData: Function },
+  mounted() {
+    this.initData()
+  },
   methods: {
-  
+
     submit() {
       if(!this.findOne.trialStartTime || !this.findOne.trialEndTime) {
         this.$message.warning(this.$t("manager.hp_mustInput"));

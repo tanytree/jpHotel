@@ -112,11 +112,11 @@ export default {
     },
     getFindOneData() {
       this.$F.doRequest(this, "/pms/nighttrial/findone", {}, (res) => {
-        res.arriveStatus = res.arriveStatus == 1;
-        res.leaveStatus = res.leaveStatus == 1;
-        res.leaveOrder = res.leaveOrder == 1;
-        res.isOd = res.isOd == 1;
-        res.trialType = res.trialType == 1;
+        res.arriveStatus = res.arriveStatus == 1 ? true: false;
+        res.leaveStatus = res.leaveStatus == 1 ? true: false;
+        res.leaveOrder = res.leaveOrder == 1 ? true: false;
+        res.isOd = res.isOd == 1 ? true: false;
+        res.trialType = res.trialType == 1 ? true: false;
         this.findOne = res;
       });
     },
