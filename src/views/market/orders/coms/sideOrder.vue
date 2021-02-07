@@ -5,7 +5,7 @@
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
-  <el-dialog top="0" :title="$t('desk.side_sideBooked')" :visible.sync="visible" :lock-scroll="false" width="50%">
+  <el-dialog top="0" :title="$t('desk.side_sideBooked')" :visible.sync="visible" :lock-scroll="false" width="800px">
     <div class="topBox">
       <span>{{$t('desk.home_roomNum')}}：{{ currentRoom2.houseNum }}</span><span>{{$t('desk.customer_livePeople')}}：{{ detailData.checkIn.name }}</span>
     </div>

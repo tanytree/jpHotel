@@ -102,16 +102,16 @@
                             <span v-if="row.payType == 2">{{$t('desk.add_cardGet')}} </span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherGet')}}</span>
                         </span>
-                                <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}}</span>
-                                <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}</span>
+                                <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}} (￥{{row.consumePrice}}) </span>
+                                <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>
                                 <span v-if="row.priceType == 7">
                                 {{row.damageTypeName}}(￥{{$F.numFormate(row.consumePrice)}}) * {{row.damageCount}}
                         </span>
                                 <span v-if="row.priceType == 8">
                            <span v-if="row.goodsList&&row.goodsList.length > 0" >
-                               <span  v-for="(item,index) in row.goodsList" :key="index">
-                                   {{item.goodsName}}({{$F.numFormate(item.price)}})*{{item.goodsCount}}
-                               </span>
+                               <div v-for="(item,index) in row.goodsList" :key="index">
+                                   {{item.goodsName}}(￥{{$F.numFormate(item.price)}})*{{item.goodsCount}}
+                               </div>
                            </span>
                         </span>
                         <!-- 5,6,7,8,14,15,16,17,18 消费类 -->
@@ -141,18 +141,18 @@
                                 {{row.richList[0].damageTypeName}}(￥{{$F.numFormate(row.richList[0].consumePrice)}}) * {{row.richList[0].damageCount}}
                             </span>
                             <span v-if="row.richList[0].priceType == 8">
-                                <span v-for="(item,index) in row.richGoodsList" :key="index">
+                                <div v-for="(item,index) in row.richGoodsList" :key="index">
                                      {{item.goodsName}}(￥{{$F.numFormate(item.price)}}) * {{item.goodsCount}}
-                                </span>
+                                </div>
                             </span>
                             <span v-if="row.richList[0].priceType == 13">
                                {{row.richList[0].creditName}}({{$t('commons.paymentWay.'+row.richList[0].putUp)}})
                             </span>
                             <span v-if="row.richList[0].priceType == 14">
                                 <span v-if="row.richList[0].disherOrderSubList&&row.richList[0].disherOrderSubList.length > 0">
-                                    <span v-for="(item,index) in row.richList[0].disherOrderSubList" :key="index">
-                                        {{item.dishesName}}({{$F.numFormate(item.unitPrice)}})*{{item.dishesCount}}
-                                    </span>
+                                    <div v-for="(item,index) in row.richList[0].disherOrderSubList" :key="index">
+                                        {{item.dishesName}}(￥{{$F.numFormate(item.unitPrice)}})*{{item.dishesCount}}
+                                    </div>
                                 </span>
                             </span>
                             <span v-if="row.richList[0].priceType == 15">
@@ -166,35 +166,35 @@
                                 </span>
                             </span>
                         </span>
-                        <span v-if="row.priceType == 12">{{$t('desk.serve_roomPrice')}}</span>
+                        <span v-if="row.priceType == 12">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>
                         <span v-if="row.priceType == 13">
                              {{row.creditName}}({{$t('commons.paymentWay.'+row.putUp)}})
                         </span>
                         <span v-if="row.priceType == 14">
-                   <!-- 具体餐品 -->
-                       <div  v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="(item,index) in row.disherOrderSubList" :key="index">
-                           {{item.dishesName}}({{$F.numFormate(item.unitPrice)}})*{{item.dishesCount}}
-                       </div>
-                    </span>
-                    <span v-if="row.priceType == 15">
-                        {{F_priceType(row.priceType)}}(￥{{$F.numFormate(row.unitPrice)}}) * {{row.taxCount}}
-                    </span>
-                    <span v-if="row.priceType == 16">
-                        {{F_priceType(row.priceType)}}(￥{{$F.numFormate(row.unitPrice)}}) * {{row.taxCount}}
-                    </span>
-                    <span v-if="row.priceType == 17 || row.priceType == 18">
-                        {{getHotelattaChmealDetail(row)}}
-                    </span>
-                    <span v-if="row.priceType == 22">
-                        <!-- 商品费 -->
-                        <div class="" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
-                            {{item.goodsName}}({{$F.numFormate(item.unitPrice)}})*{{item.goodsCount}}
-                        </div>
-                    </span>
-                    <br v-if="row.richType == 1">
-                    <span v-if="row.richType == 1" class="blue">
-                       {{ $t('desk.reason') }}： {{row.richRemark}}
-                    </span>
+                            <!-- 具体餐品 -->
+                           <div v-if="row.disherOrderSubList&&row.disherOrderSubList.length > 0" v-for="(item,index) in row.disherOrderSubList" :key="index">
+                               {{item.dishesName}}(￥{{$F.numFormate(item.unitPrice)}})*{{item.dishesCount}}
+                           </div>
+                        </span>
+                        <span v-if="row.priceType == 15">
+                            {{F_priceType(row.priceType)}}(￥{{$F.numFormate(row.unitPrice)}}) * {{row.taxCount}}
+                        </span>
+                        <span v-if="row.priceType == 16">
+                            {{F_priceType(row.priceType)}}(￥{{$F.numFormate(row.unitPrice)}}) * {{row.taxCount}}
+                        </span>
+                        <span v-if="row.priceType == 17 || row.priceType == 18">
+                            {{getHotelattaChmealDetail(row)}}
+                        </span>
+                        <span v-if="row.priceType == 22">
+                            <!-- 商品费 -->
+                            <div class="" v-if="row.shopOrderSubList&&row.shopOrderSubList.length > 0" v-for="item in row.shopOrderSubList">
+                                {{item.goodsName}}(￥{{$F.numFormate(item.unitPrice)}})*{{item.goodsCount}}
+                            </div>
+                        </span>
+                        <br v-if="row.richType == 1">
+                        <span v-if="row.richType == 1" class="blue">
+                           {{ $t('desk.reason') }}： {{row.richRemark}}
+                        </span>
                     </div>
                 </template>
             </el-table-column>
@@ -212,18 +212,18 @@
                     </span>
                 </template>
             </el-table-column>
-<!--            <el-table-column :label="$t('commons.operating')">-->
-<!--                <template slot-scope="{row}">-->
-<!--                    <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>-->
-<!--                </template>-->
-<!--            </el-table-column>-->
+           <el-table-column :label="$t('commons.operating')">
+               <template slot-scope="{row}">
+                   <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
+               </template>
+           </el-table-column>
         </el-table>
         <div style="margin-top:10px"></div>
         <!-- 分页 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
         <!--入账 -->
-        <el-dialog top='0' :title="$t('desk.enterAccountB')" :visible.sync="entryShow">
+        <el-dialog width="800px" top='0' :title="$t('desk.enterAccountB')" :visible.sync="entryShow">
             <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
                 <p>{{$t('desk.book_firstInto')}}</p>
                  <el-form-item :label="$t('desk.order_consumptionProject')+':'">
@@ -892,6 +892,7 @@ export default {
             }
             console.log(params)
 
+            // return
             //退房结账
             // if (type == 4) {
             //     params.state = 2
@@ -1013,6 +1014,7 @@ export default {
             this.consumeOperForm.priceType = e
             console.log(e)
             console.log(this.currentRoom)
+            console.log(this.detailData)
             if (e == 5 || e == 6) {
                 this.taxCount = ''
                 this.consumeOperForm.consumePrices = 0;
@@ -1020,11 +1022,14 @@ export default {
                     let tempArray = this.currentRoom.personList.filter(person => {
                         return person.personType == 2
                     }) || [];
-                    this.consumeOperForm.consumePrices = tempArray[0].housePrice
+
+                   this.consumeOperForm.consumePrices = tempArray[0].housePrice
                 }
                 if (e == 6) {
                     this.consumeOperForm.consumePrices = this.consumeOperForm.consumePrices * 0.5;
                 }
+
+
             } else if (e == 7) {
                 this.taxCount = ''
                 this.consumeOperForm.damageCount = 1
@@ -1032,7 +1037,7 @@ export default {
                 this.getDdamageInfo();
             }
 
-            // console.log( this.consumeOperForm.consumePrices)
+            console.log( this.consumeOperForm.consumePrices)
 
 
             this.$forceUpdate()

@@ -161,6 +161,8 @@ export default {
         let priceType15 = 0 //温泉税
         let priceType16 = 0  //住宿税
         // let priceTypeList = [5,6,7,8,12,14,15,16,17,18]
+
+
         //7 赔偿不用计算
         //15，16温泉税和住宿税不需要计算税和服务费
         //餐饮部的消费金额 不需要计算税和服务费
@@ -168,9 +170,11 @@ export default {
         //迷你吧那边计算的时候需要把税算上 未计算需要开发
         //计算 5 6 12三种房费的服务费和税  计算in类型的税率和费率
         list.forEach(element => {
-            console.log(element.state)
+            console.log('消费税' + element.taxStatus)
+            console.log('服务费' +element.seviceStatus)
             if(element.state == 1){
                 let priceType = element.priceType
+                console.log('财务类型' +priceType)
                 total += parseFloat(element.consumePrice ? element.consumePrice : 0)
                 if(priceType == 5 || priceType == 6 || priceType == 12){
                     if(element.taxStatus == 1){
@@ -190,7 +194,7 @@ export default {
                 }
 
                 console.log(priceType +':' +this.F_priceType(priceType))
-                console.log(element.consumePrice)
+                // console.log(element.consumePrice)
                 console.log(element)
             }
         });
@@ -228,7 +232,7 @@ export default {
   methods: {
     resetVisibel() {
         this.checkoutVisible = true;
-   
+
         if (this.detailData.totalPrice > 0) {
             this.consumePrice = this.detailData.totalPrice;
         }else {

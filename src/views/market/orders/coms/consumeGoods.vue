@@ -473,7 +473,7 @@ export default {
             params.priceType = 8
             params.payType = 0
             params.state = 1
-            params.remak = this.consumeOperForm.remark
+            params.remark = this.consumeOperForm.remark
             params.employeePrice = this.consumeOperForm.employeePrice ? 1 : 2
             params.goodsTotal = this.taxInfo.sum
 
