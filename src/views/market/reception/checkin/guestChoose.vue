@@ -316,8 +316,8 @@ export default {
                 } else if (this.checkInForm.guestType == 4){
                     this.$F.removeNullKey(e, true, true)
                     this.$F.merge(this.checkInForm, e);
-                    this.checkInForm.name = e.guideName;
-                    this.checkInForm.pronunciation = e.guidePronunciation;
+                    this.checkInForm.name = e.teamName;
+                    this.checkInForm.pronunciation = e.teamPronunciation;
                     this.checkInForm.mobile = e.contactPhone;
                 } else {
                     this.checkInForm.name = e.enterName;
