@@ -366,7 +366,6 @@ export default {
     },
     methods: {
       checkCustormSource(type,room){
-        console.log(room);
       if(type=='checkIn'){
           if(room.checkInObj&&room.checkInObj.guestType){
           let guestType = room.checkInObj.guestType;

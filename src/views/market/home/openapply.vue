@@ -10,6 +10,9 @@
         <el-form-item :label="$t('desk.home_customerName') + ':'">
           <el-input v-model="formInline.name"></el-input>
         </el-form-item>
+         <el-form-item label="收据号:">
+          <el-input v-model="formInline.receiptNumber"></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button class="submit" type="primary" @click="queryClick(formInline)">{{ $t("commons.queryBtn") }}</el-button>
           <el-button class="white" @click="resetForm(formInline)">{{
@@ -116,6 +119,7 @@ export default {
         startTime: "",
         endTime: "",
         name: "",
+        receiptNumber:'',
       },
       currentPage3: 1,
       invoiceDetail: null, //发票详情
@@ -137,6 +141,7 @@ export default {
       formInline.startTime = "";
       formInline.endTime = "";
       formInline.name = "";
+      formInline.receiptNumber = "";
       this.pageIndex = 1;
       this.getInvoiceList();
     },
