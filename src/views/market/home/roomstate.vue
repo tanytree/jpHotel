@@ -103,12 +103,8 @@
                                             <span v-if="room.checkInRoomType == 2"> {{ $t('desk.home_bookPeople') + '：' + room.reseverCheckInObj.name }}</span>
                                             <span>{{  '  '  }}</span>
                                         </div>
-<<<<<<< Updated upstream
-                                        <div style="font-size:13px" v-if="room.checkInRoomType == 1 || room.checkInRoomType == 2">{{F_guestType(room.checkInObj ?room.checkInObj.guestType : room.reseverCheckInObj.guestType)}}</div>
-=======
                                         <div style="font-size:13px" v-if="room.checkInObj&&room.checkInObj.guestType">{{checkCustormSource('checkIn',room)}}</div>
                                         <div style="font-size:13px" v-else>{{checkCustormSource('reseverCheck',room)}}</div>
->>>>>>> Stashed changes
                                         <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && (room.checkInObj || room.reseverCheckInObj)"
                                              style="margin-top: 8px">
                                             <div>{{ F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource) }}
@@ -369,8 +365,6 @@ export default {
         this.initOthers();
     },
     methods: {
-<<<<<<< Updated upstream
-=======
       checkCustormSource(type,room){
         console.log(room);
       if(type=='checkIn'){
@@ -393,7 +387,6 @@ export default {
       }
       }
       },
->>>>>>> Stashed changes
         init() {
             this.realtime_room_statistics();
             this.get_hotel_building_list();
