@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-05 16:30:06
+ * @LastEditTime: 2021-02-08 15:35:38
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -96,6 +96,20 @@
 
         <div v-if="tabCurr!=1">
           <el-col :span="6">
+            <div class="item">{{tabCurr==2?$t('manager.add_nowBillGetA'):$t('manager.add_nowBillGetB')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
+          </el-col>
+          <el-col :span="6">
+            <div class="item">{{$t('manager.add_nowCashGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nowMoneyHandin)}}{{$t('manager.ps_japanYen')}}</span></div>
+          </el-col>
+          <el-col :span="6">
+            <div class="item">{{$t('manager.add_nowCardGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nowCreditCardHandin)}}{{$t('manager.ps_japanYen')}}</span></div>
+          </el-col>
+          <el-col :span="6">
+            <div class="item">{{$t('desk.add_otherGetA')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
+          </el-col>
+        </div>
+        <!-- <div v-if="tabCurr==3">
+          <el-col :span="6">
             <div class="item">{{$t('manager.add_nowCashGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nowMoneyHandin)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
           <el-col :span="6">
@@ -107,7 +121,7 @@
           <el-col :span="6">
             <div class="item">{{$t('desk.add_otherGetA')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
-        </div>
+        </div> -->
       </el-row>
     </el-row>
     <el-row>

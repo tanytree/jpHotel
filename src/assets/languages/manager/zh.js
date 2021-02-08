@@ -598,6 +598,8 @@ module.exports = {
   add_onePrice: '一人住宿价',
   add_nowGet: '备用金',
   add_nowBillGet: '本班挂账到房间',
+  add_nowBillGetA: '挂账到房间',
+  add_nowBillGetB: '挂账到房间',
   add_nowDownPri: '本班下放备用金',
   add_nowDownPriA: '本班下放备用金',
   add_cashStatistics: '现金统计',

@@ -757,7 +757,7 @@ export default {
             let params = {
                 orderId: item.id
             };
-            this.$confirm(this.$t('desk.order_ifDelete'), this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('desk.order_ifDeleteA'), this.$t('commons.tip_desc'), {
                 confirmButtonText: this.$t('commons.confirm'),
                 cancelButtonText: this.$t('commons.cancel'),
                 type: 'warning'

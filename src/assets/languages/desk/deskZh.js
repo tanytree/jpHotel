@@ -524,6 +524,7 @@ module.exports = {
   order_attention: "注意：冲调金额小于原账金额",
   order_completelyReason: "冲调原因",
   order_ifDelete: "请确认是否删除该项?",
+  order_ifDeleteA: "请确认是否删除该项?",
   order_selectEntryItem: "请选择入账项目",
   order_pleaseSelectPayWay: "请选择结算方式",
   order_inputPrice: "请输入金额",

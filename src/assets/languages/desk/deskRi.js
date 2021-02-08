@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-04 18:50:10
+ * @LastEditTime: 2021-02-08 15:43:31
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -654,6 +654,7 @@ module.exports = {
   order_attention: "注意：相殺金額は請求金額より少なければならない。",
   order_completelyReason: "理由",
   order_ifDelete: "該当項目削除、確認",
+  order_ifDeleteA: "該当項目を削除に確認しますか？",
   order_selectEntryItem: "入金項目を選択してください",
   order_pleaseSelectPayWay: "精算方法を選択してください",
   order_inputPrice: "金額を入力してください",

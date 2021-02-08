@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 14:32:23
+ * @LastEditTime: 2021-02-08 15:35:26
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -591,6 +591,8 @@ module.exports = {
   pa_explain:'下記表示は各会員種別の1名1泊2食の料金です。',
   add_newDoorPriA: '新料金',
   hk_chamberA: '宴会・会場',
+  add_nowBillGetA: '料飲/部屋付',
+  add_nowBillGetB: '付帯/部屋付',
 
 
 

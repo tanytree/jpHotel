@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 14:46:15
+ * @LastEditTime: 2021-02-08 15:46:34
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -225,7 +225,7 @@ module.exports = {
   //入住状态
   checkinState: {
     '1': '滞在中',
-    '2': 'チェックアウト済み',
+    '2': 'C /O済',
      '3': '未使用（未宿泊）',
      '10': 'キャンセル済み',
       '20': 'NOSHOW',
