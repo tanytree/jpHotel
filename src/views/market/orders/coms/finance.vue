@@ -42,15 +42,14 @@
             <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
-                <template slot-scope="{ row }">
-                    {{row.priceType}}
-                    <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">
-                        {{F_priceType(row.priceType ? row.priceType : 99)}}
-                    </span>
-                    <span v-else :class="row.richType == 1 ? 'red' : ''">
-                        {{ (row.priceType != 17 && row.priceType != 18) ? `【${$t('commons.payType')[row.payType || 1]}】` : ''}}
-                        {{F_priceType(row.priceType ? row.priceType : 99)}}
-                    </span>
+                <template slot-scope="{row}">
+                    {{row.priceType}}/
+                    <span v-if="row.priceType == 9 || row.priceType == 10"  class="text-red">
+             {{F_priceType(row.richList[0].priceType)}}
+             </span>
+                    <span :class="row.richType == 1 ? 'text-red' : ''" v-else>
+                {{F_priceType(row.priceType)}}
+             </span>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('desk.order_paymentB')" >
