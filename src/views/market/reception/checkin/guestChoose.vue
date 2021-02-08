@@ -262,7 +262,7 @@ export default {
             //会员
             if (this.checkInForm.guestType == 2) {
                 this.$F.merge(params, {
-                    name: query,
+                    contents: query,
                 });
                 this.$F.doRequest(this, "/pms/hotelmember/list", params, (res) => {
                     this.options = res.list || [];
