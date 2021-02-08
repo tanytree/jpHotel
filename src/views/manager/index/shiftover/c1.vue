@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 15:35:38
+ * @LastEditTime: 2021-02-08 18:14:18
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -76,7 +76,6 @@
               </div>
             </div>
           </el-col>
-
           <el-col :span="5">
             <div class="item">
               {{$t('desk.serve_cash')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
@@ -93,7 +92,6 @@
             </div>
           </el-col>
         </div>
-
         <div v-if="tabCurr!=1">
           <el-col :span="6">
             <div class="item">{{tabCurr==2?$t('manager.add_nowBillGetA'):$t('manager.add_nowBillGetB')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>

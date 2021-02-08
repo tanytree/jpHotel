@@ -1,7 +1,7 @@
  <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 13:30:39
+ * @LastEditTime: 2021-02-08 16:58:45
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -190,7 +190,7 @@
                         <!--              这里未退房或者今日预离订单才可以操作结账-->
                         <!-- <el-button type="text" size="mini" v-if="row.orderType == 1 || row.orderType == 2" @click="popClick(row, 'detail')">{{ $t("desk.order_invoicing") }}</el-button> -->
                         <!--              @click="settleAccounts(row)"-->
-                        <!-- <el-button type="text" size="mini" @click="popClick(row, 'invoicing')">{{ $t("desk.order_invoice") }}</el-button> -->
+                        <el-button type="text" size="mini" @click="popClick(row, 'invoicing')">{{ $t("desk.order_invoice") }}</el-button>
                         <el-button type="text" size="mini" v-if=" row.orderType == 3 || row.orderType == 4 || row.orderType == 5" @click="popClick(row, 'unCheckOut')">{{ $t("desk.order_notCheckout") }}</el-button>
                     </template>
                 </el-table-column>

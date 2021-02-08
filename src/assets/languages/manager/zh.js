@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-05 16:13:39
+ * @LastEditTime: 2021-02-08 18:21:02
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -109,7 +109,6 @@ module.exports = {
   hp_documentNote: '单据备注',
   hp_mustInput: '时间必填',
   hp_loginDetail_state: '状态',
-
   //   管理部 > 客房中心 (houseKeeping > hk)
   hk_guestRoom: '客房房型',
   hk_roomName: '房型名称',

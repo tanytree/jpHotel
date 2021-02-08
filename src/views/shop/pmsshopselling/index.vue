@@ -417,10 +417,6 @@ export default {
 
     //提交
     submit(){
-        // console.log(this.isUseScore)
-        // console.log(this.form.scoresDiscount)
-        // console.log(this.form.scoresPrice)
-        // console.log(this.form.billingType)
         let list = this.cart
         if(list.length == 0){
             this.$message.error(this.$t('food.common.select_product'));
@@ -428,8 +424,6 @@ export default {
         }
         let arr  = []
         let cateArr = []
-
-
         list.forEach(element => {
             arr.push({
                 goodsId:element.goodsId,

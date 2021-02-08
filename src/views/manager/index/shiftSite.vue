@@ -7,12 +7,13 @@
       <el-tab-pane :label="$t('desk.serve_changeRecord')" name="changeRecord">
         <c2 :tabs="tabLists" :employeeList="employeeList"></c2>
       </el-tab-pane>
+      <!-- 备用金设定 -->
       <el-tab-pane :label="$t('manager.hp_patternsSuccession')" name="handover">
         <div class="content">
           <div class="manage">
             <div class="manage-item" v-for="(item, index) in handData" :key="index">
               <el-form size="small" inline label-position="left">
-                <el-form-item :label="item.handoverType == 1 ? $t('manager.hp_lockerA') : item.handoverType == 2 ? $t('manager.hp_lockerB') : $t('manager.hp_lockerC')+':'" v-if="item.handoverStatus == 1">
+                <el-form-item :label="item.handoverType == 1 ? $t('manager.hp_lockerA') : item.handoverType == 2 ? $t('manager.hp_lockerB') : $t('manager.hp_lockerC')+':'">
                   <el-input v-model="item.pettyCash">
                     <template slot="append">{{$t('manager.ps_japanYen')}}</template>
                   </el-input>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 15:23:43
+ * @LastEditTime: 2021-02-08 18:13:39
  * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
@@ -98,7 +98,7 @@ module.exports = {
     common:{
         yes:'はい',
         no:'いいえ',
-        success:'操作成功',
+        success:'注文確認',
         //点餐
         is_choose_food:'注文受取',
         food_title:'料理名',

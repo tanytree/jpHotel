@@ -112,11 +112,11 @@ export default {
     },
     getFindOneData() {
       this.$F.doRequest(this, "/pms/nighttrial/findone", {}, (res) => {
-        res.arriveStatus = res.arriveStatus == 1 ? true: false;
-        res.leaveStatus = res.leaveStatus == 1 ? true: false;
-        res.leaveOrder = res.leaveOrder == 1 ? true: false;
-        res.isOd = res.isOd == 1 ? true: false;
-        res.trialType = res.trialType == 1 ? true: false;
+        res.arriveStatus = res.arriveStatus == 1 ? true : false;
+        res.leaveStatus = res.leaveStatus == 1 ? true : false;
+        res.leaveOrder = res.leaveOrder == 1 ? true : false;
+        res.isOd = res.isOd == 1 ? true : false;
+        res.trialType = res.trialType == 1 ? true : false;
         this.findOne = res;
       });
     },
@@ -150,8 +150,85 @@ export default {
         res.list.map((item) => {
           item.pop = false;
         });
-        this.printData = res.list;
-        console.log(res);
+        // this.printData = res.list;
+        // 下面是造的假数据
+        let newArray = [
+          {
+            depositFlag: 1,
+            ename: "レジストレーションカード",
+            format: 1,
+            id: "2c98c1df769431c41017697dbdc108001a",
+            name: "入住卡",
+            number: 0,
+            pop: false,
+            remark: "",
+            state: 1,
+            status: 1,
+          },
+          {
+            depositFlag: 1,
+            ename: "預かり書",
+            format: 1,
+            id: "2c98c1df769243c41017697dbd1c18001a",
+            name: "寄存单",
+            number: 0,
+            pop: false,
+            remark: "",
+            state: 1,
+            status: 1,
+          },
+          {
+            depositFlag: 1,
+            ename: "前受金確認書",
+            format: 1,
+            id: "2c98c1df769433c41017697dbd1c18001a",
+            name: "预收款单",
+            number: 0,
+            pop: false,
+            remark: "",
+            state: 1,
+            status: 1,
+          },
+          {
+            depositFlag: 1,
+            ename: "ご請求明細書/レシート	",
+            format: 1,
+            id: "2c98c1df769443c41017697dbd1c18001a",
+            name: "消费明细",
+            number: 0,
+            pop: false,
+            remark: "",
+            state: 1,
+            status: 1,
+          },
+          {
+            depositFlag: 1,
+            ename: "領収書	",
+            format: 1,
+            id: "2c98c1df769435c41017697dbd1c18001a",
+            name: "收据",
+            number: 0,
+            pop: false,
+            remark: "",
+            state: 1,
+            status: 1,
+          },
+          {
+            depositFlag: 1,
+            ename: "清掃指示書",
+            format: 1,
+            id: "2c98c1df769436c41017697dbd1c18001a",
+            name: "打扫指示单",
+            number: 0,
+            pop: false,
+            remark: "",
+            state: 1,
+            status: 1,
+          },
+        ];
+
+        this.printData.push(...newArray);
+        // console.log(res);
       });
     },
     getHandOverData() {
