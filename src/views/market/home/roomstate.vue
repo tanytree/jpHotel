@@ -103,7 +103,7 @@
                                             <span v-if="room.checkInRoomType == 2"> {{ $t('desk.home_bookPeople') + '：' + room.reseverCheckInObj.name }}</span>
                                             <span>{{  '  '  }}</span>
                                         </div>
-                                        <div style="font-size:13px" v-if="room.checkInObj&&room.checkInObj.guestType">{{checkCustormSource(room)}}</div>
+                                        <div style="font-size:13px" v-if="room.checkInRoomType == 1 || room.checkInRoomType == 2">{{F_guestType(room.checkInObj ?room.checkInObj.guestType : room.reseverCheckInObj.guestType)}}</div>
                                         <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && (room.checkInObj || room.reseverCheckInObj)"
                                              style="margin-top: 8px">
                                             <div>{{ F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource) }}
@@ -364,18 +364,6 @@ export default {
         this.initOthers();
     },
     methods: {
-      checkCustormSource(room){
-        if(room.checkInObj&&room.checkInObj.guestType){
-          let guestType = room.checkInObj.guestType;
-          for(let i in this.$t('commons.guestType')){
-            if(guestType == i ){
-            
-              return this.$t(`commons.guestType.${i}`)
-            }
-          }
-        }
-        
-      },
         init() {
             this.realtime_room_statistics();
             this.get_hotel_building_list();

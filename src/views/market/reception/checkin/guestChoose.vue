@@ -27,6 +27,11 @@
                         @select="changeNameGuest($event)"
                     ></el-autocomplete>
                 </el-form-item>
+                <!--客源类型为单位时-->
+                <el-form-item style="margin-bottom: 0;margin-left: 100px" label-width="0" v-if="checkInForm.guestType == 3">
+                    <el-input v-model="checkInForm.enterName" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:5px;" size="small"></el-input>
+                    <el-input v-model="checkInForm.enterPronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:5px;" size="small"></el-input>
+                </el-form-item>
                 <!-- 当客人类型为团队时 -->
                 <div v-if="checkInForm.guestType == 4">
                     <el-row>
@@ -309,7 +314,11 @@ export default {
                     this.checkInForm.mobile = e.mobile;
                     this.checkInForm.sex = e.sex.toString();
                 } else if (this.checkInForm.guestType == 4){
+                    this.$F.removeNullKey(e, true, true)
                     this.$F.merge(this.checkInForm, e);
+                    this.checkInForm.name = e.guideName;
+                    this.checkInForm.pronunciation = e.guidePronunciation;
+                    this.checkInForm.mobile = e.contactPhone;
                 } else {
                     this.checkInForm.name = e.enterName;
                     this.checkInForm.enterId = e.id;

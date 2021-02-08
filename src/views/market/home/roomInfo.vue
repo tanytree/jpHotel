@@ -33,7 +33,7 @@
                         <el-button type="primary" size="small" plain @click="goFinance" :disabled="this.currentRoom.checkInRoomType != 1 && this.currentRoom.checkInRoomType != 2">{{$t('desk.customer_accountingTextA')}}</el-button>
                         <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.chargeA')}}</el-button>
                         <el-button type="primary" @click="checkoutRoom" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.order_checkout')}}</el-button>
-                        <el-button type="primary" @click="psInLive" size="small" plain>{{$t('manager.ps_inLive')}}</el-button>
+                        <el-button type="primary" @click="psInLive" size="small" plain :disabled="this.currentRoom.checkInRoomType != 2">{{$t('manager.ps_inLive')}}</el-button>
                     </div>
                     <div class="infoBox">
                         <!--            入住人信息展示-->
@@ -123,8 +123,12 @@ export default {
         },
         //点击入住按钮
         psInLive() {
-            let item = {"id":"a367289c90e34614a308917f5726bd31","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-02 14:35:29","menuTitle":"预订/入住","menuAliasTitle":null,"japanese":"予約受付","parentMenuId":"a367289c90e34614a308917f5726bd06","icon":"market/nav03.png","path":"booking","menuLevel":2,"menuType":3,"status":1,"menuorder":31,"childList":[{"id":"a367289c90e34614a308917f5726bd101","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:21","menuTitle":"普通预订","menuAliasTitle":null,"japanese":"一般予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"normal","menuLevel":3,"menuType":3,"status":1,"menuorder":101,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd102","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:33","menuTitle":"当日回预订","menuAliasTitle":null,"japanese":"日帰り予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"dayBack","menuLevel":3,"menuType":3,"status":1,"menuorder":102,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd103","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:40","menuTitle":"会场预订","menuAliasTitle":null,"japanese":"会場予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"hall","menuLevel":3,"menuType":3,"status":1,"menuorder":103,"childList":null,"header":null}],"header":null};
-            this.$refs.mainView.toSection(item);
+            if (this.currentRoom.checkInRoomType == 2) {
+                let id = this.currentRoom.reseverCheckInObj.id;
+                this.$router.push("/bookingDetail?id=" + id);
+            }
+            // let item = {"id":"a367289c90e34614a308917f5726bd31","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-02 14:35:29","menuTitle":"预订/入住","menuAliasTitle":null,"japanese":"予約受付","parentMenuId":"a367289c90e34614a308917f5726bd06","icon":"market/nav03.png","path":"booking","menuLevel":2,"menuType":3,"status":1,"menuorder":31,"childList":[{"id":"a367289c90e34614a308917f5726bd101","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:21","menuTitle":"普通预订","menuAliasTitle":null,"japanese":"一般予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"normal","menuLevel":3,"menuType":3,"status":1,"menuorder":101,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd102","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:33","menuTitle":"当日回预订","menuAliasTitle":null,"japanese":"日帰り予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"dayBack","menuLevel":3,"menuType":3,"status":1,"menuorder":102,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd103","createTime":"2020-07-05 15:01:00","updateTime":"2020-12-04 11:46:40","menuTitle":"会场预订","menuAliasTitle":null,"japanese":"会場予約","parentMenuId":"a367289c90e34614a308917f5726bd31","icon":null,"path":"hall","menuLevel":3,"menuType":3,"status":1,"menuorder":103,"childList":null,"header":null}],"header":null};
+            // this.$refs.mainView.toSection(item);
             // sessionStorage.sectionid = 'a367289c90e34614a308917f5726bd31';
             // // sessionStorage.subMenul = JSON.stringify(item);
             // sessionStorage.pageId = 'a367289c90e34614a308917f5726bd101';
@@ -137,7 +141,9 @@ export default {
         },
           //点击结账退房按钮
         checkoutRoom(){
-            this.$refs.CheckoutTao.resetVisibel();
+            // this.$refs.CheckoutTao.resetVisibel();
+            let id = this.currentRoom.checkInObj.id;
+            this.$router.push("/orderdetail?id=" + id);
         },
         lookRoomClick(data) {
             let a = this;

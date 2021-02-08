@@ -373,7 +373,8 @@ export default {
               this.$F.doRequest(this, "/pms/checkin/checkin_remove_room", {
                     checkinRoomType: 2,
                     checkinReserveId: this.$route.query.id,
-                    roomId: this.currentRoom.roomId
+                    roomId: this.currentRoom.roomId,
+                    checkinRoomId: this.currentRoom.id
                 },
                 (res) => {
                     this.$emit('baseInfoChange', this.$route.query.id);
@@ -383,7 +384,7 @@ export default {
          return false
         });
 
-           
+
         },
         //修改预留
         updateReserved() {
