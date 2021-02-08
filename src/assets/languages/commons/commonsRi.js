@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 13:24:31
+ * @LastEditTime: 2021-02-08 14:46:15
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {

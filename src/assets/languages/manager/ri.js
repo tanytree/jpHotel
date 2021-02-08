@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-07 15:36:34
+ * @LastEditTime: 2021-02-08 14:32:23
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -74,9 +74,9 @@ module.exports = {
   hp_cashModel: '現金モード',
   hp_paidModel: '実際発生モード',
   hp_accountsModel: '売掛モード',
-  hp_lockerA: '客室レジ金',
-  hp_lockerB: '料飲レジ金',
-  hp_lockerC: '付帯レジ金',
+  hp_lockerA: '客室レジ金設定額',
+  hp_lockerB: '料飲レジ金設定額',
+  hp_lockerC: '付帯レジ金設定額',
   hp_modelSpecification: '備考',
   hp_flightManagement: 'シフト管理',
   hp_shift: 'シフト',
@@ -583,7 +583,7 @@ module.exports = {
   add_setDutity: 'チェック入れると部屋状態を「要清掃」を設定する',
   grsl_resetSoon: '調整後1泊2食付1名料金',
   add_onePrice: '1人素泊まり',
-  add_nowGet: '仕訳',
+  add_nowGet: 'レジ金',
   add_nowDownPri: '繰越・金額',
   hk_constTotal: '売上合計',
   add_cashStatistics: '現金点検',

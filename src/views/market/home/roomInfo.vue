@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-10 11:22:33
  * @Author: 陶子
- * @LastEditTime: 2021-02-01 18:06:21
+ * @LastEditTime: 2021-02-08 14:22:47
  * @FilePath: \jiudian\src\views\market\home\roomInfo.vue
 -->
 <template>
@@ -31,7 +31,7 @@
                         </el-button>
                         <el-button type="primary" @click="goRoomStatus(5)" size="small" plain :disabled="currentRoom.checkInRoomType == 1">{{this.currentRoom.roomStatus != 5 ? $t('desk.home_service') : $t('desk.home_cannel_service')}}</el-button>
                         <el-button type="primary" size="small" plain @click="goFinance" :disabled="this.currentRoom.checkInRoomType != 1 && this.currentRoom.checkInRoomType != 2">{{$t('desk.customer_accountingTextA')}}</el-button>
-                        <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.chargeA')}}</el-button>
+                        <el-button type="primary" @click="paymentVisible" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.charge')}}</el-button>
                         <el-button type="primary" @click="checkoutRoom" size="small" plain :disabled="this.currentRoom.checkInRoomType != 1">{{$t('desk.order_checkout')}}</el-button>
                         <el-button type="primary" @click="psInLive" size="small" plain :disabled="this.currentRoom.checkInRoomType != 2">{{$t('manager.ps_inLive')}}</el-button>
                     </div>
