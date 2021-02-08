@@ -323,6 +323,7 @@ module.exports = {
   book_week: '近7天',
   book_theCustom: '自定义',
   book_theCustomA: '自定义',
+    book_theCustomB: '自定义',
   book_dateRegistration: '登记日期',
   book_orderSoutce: '订单来源',
   book_chamber: '会议厅',

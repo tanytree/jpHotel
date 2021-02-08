@@ -213,6 +213,7 @@ module.exports = {
   book_week: '7日分',
   book_theCustom: '自己期間選択',
   book_theCustomA: '期間選択',
+    book_theCustomB: '手入力',
   book_dateRegistration: '記録日付',
   book_orderSoutce: '予約経路',
   home_customersCategory: 'ゲストカテゴリー',

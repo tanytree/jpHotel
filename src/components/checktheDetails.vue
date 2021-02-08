@@ -379,7 +379,7 @@ export default {
                         })
                     })
                     object.priceList.push({
-                        label: this.$t('desk.book_theCustomA'),
+                        label: this.$t('desk.book_theCustomB'),
                         value: 'defined'
                     })
                     this.$forceUpdate()
