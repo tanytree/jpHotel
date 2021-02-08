@@ -233,7 +233,7 @@
                   </div>
                   <div v-if="scope.row.goods.categoryType == 2">
                       <span v-if="scope.row.goods.priceModel == 2">
-                          {{getFinalFee(scope.row.goods,scope.row.updateTime,scope.row.createTime)}} (计时:{{getDiffDate(scope.row.createTime,scope.row.updateTime)}})
+                          {{numFormate(scope.row.goodsCount * getFinalFee(scope.row.goods,scope.row.updateTime,scope.row.createTime))}} (计时:{{getDiffDate(scope.row.createTime,scope.row.updateTime)}})
                       </span>
                       <span v-if="scope.row.goods.priceModel == 1">
                          {{numFormate(scope.row.totalPrice)}}
@@ -469,7 +469,7 @@ export default {
                 storesNum:this.storesNum,
             }
             this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
-                
+
                 if(res && res.content){
                     this.tax = JSON.parse(res.content)
                 }

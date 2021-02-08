@@ -200,17 +200,12 @@ export default {
         this.info.orderSubList.length > 0
       ) {
         let list = this.info.orderSubList;
+        console.log(list)
         let sum = 0;
         list.forEach((element) => {
           if (element.goods.categoryType == 2) {
             if (element.goods.priceModel == 2) {
-              sum += this.getFinalFee(
-                element.goods,
-                this.endTime,
-                this.info.createTime,
-                this.taxInfo,
-                this.outFlag
-              );
+              sum += this.getFinalFee(element.goods,this.endTime,this.info.createTime,this.taxInfo,this.outFlag) * element.goodsCount;
             } else {
               sum += element.totalPrice;
             }
@@ -524,8 +519,9 @@ export default {
       params.hasPayPrice = this.info.hasPayPrice;
       params.state = 2;
       let goodsIds = this.info.orderSubList.map((ele, index) => {
-        return ele.goodsId;
+        return ele.id;
       });
+      // console.log(this.info.orderSubList)
       params.goodsSubIds = goodsIds.join(",");
       if (params.billingType == 3) {
         this.form.preferentialPrice = "";
@@ -546,6 +542,9 @@ export default {
       } else {
         params.outFlag = 2;
       }
+        // console.log(params)
+      // return
+
       this.$F.doRequest(
         this,
         "/pms/shop/shop_place_order_pay",

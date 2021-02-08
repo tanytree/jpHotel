@@ -252,7 +252,7 @@ const mixin= {
                     // if(list[i].seviceStatus == 1){
                     //    service += list[i].totalPrice * servicePrice
                     // }
-                    
+
                     if(list[i].taxStatus == 1){
                         if(list[i].seviceStatus == 1){
                            //不包含服务税
@@ -327,9 +327,10 @@ const mixin= {
                 let service = 0 //服务费
                 let taxFee = 0 //消费税
                 let sum = 0 //合计
-                for(let i in list){
-                    if(list[i].goods.categoryType == 2 && list[i].goods.priceModel == 2){
-                            let data = list[i]
+                list.forEach(element => {
+                // for(let i in list){
+                    if(element.goods.categoryType == 2 && element.goods.priceModel == 2){
+                            let data = element
                             let createTime = info.createTime
                             // console.log('按时间计费')
                             // console.log('------------------------------------------')
@@ -341,53 +342,53 @@ const mixin= {
                             // console.log(outFlag)
                             let TP = this.getFinalFee(data.goods,endTime,createTime,tax,outFlag)
                             data.totalPrice = TP
-                            console.log(list[i].totalPrice)
+                            console.log(element.totalPrice)
                             // console.log(TP)
                             // console.log('------------------------------------------')
                             // console.log('按时间计费')
                     }
                     // console.log(list[i].goods.categoryType)
                     // console.log(list[i].goods.priceModel)
-                    total += list[i].totalPrice
+                    total += element.totalPrice
                     //不包含消费税
                     // console.log(list[i].taxStatus)
                     // console.log(list[i].seviceStatus)
                     // console.log(list[i])
-                    if(list[i].taxStatus == 1){
-                        if(list[i].seviceStatus == 1){
+                    if(element.taxStatus == 1){
+                        if(element.seviceStatus == 1){
                            //不包含服务税
                             if(outFlag){
                                 //  1,1,fasle,out
-                              taxFee +=  list[i].totalPrice  * outConsumeTax
+                              taxFee += element.totalPrice  * outConsumeTax
                             }else{
                               //  1,1,fasle,in
-                              taxFee += ( list[i].totalPrice + list[i].totalPrice * servicePrice ) * consumeTax
+                              taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
                             }
                         }else{
                             //1,2,ture,out
                             if(outFlag){
                                let f = 1.00 + servicePrice
-                               taxFee += ( list[i].totalPrice/f ) * outConsumeTax
+                               taxFee += ( element.totalPrice/f ) * outConsumeTax
                             }else{
                                 //1,2,false,in
-                               taxFee += list[i].totalPrice * consumeTax
+                               taxFee += element.totalPrice * consumeTax
                             }
                         }
                     }
                     if(outFlag == false){
                         //不包含服务税
-                        if(list[i].seviceStatus == 1){
+                        if(element.seviceStatus == 1){
                             //不包含消费税
-                            if(list[i].taxStatus == 1){
-                                service += list[i].totalPrice * servicePrice
+                            if(element.taxStatus == 1){
+                                service += element.totalPrice * servicePrice
                             }else{
                                 //包含消费税
                                 let f = 1.00 + consumeTax
-                                service += (list[i].totalPrice / f) * servicePrice
+                                service += (element.totalPrice / f) * servicePrice
                             }
                         }
                     }
-                }
+                })
                 let parms = {
                     total: total ? parseFloat(total).toFixed(0) : 0,
                     service: service ? parseFloat(service).toFixed(0) :0,

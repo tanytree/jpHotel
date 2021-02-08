@@ -414,12 +414,13 @@ export default {
 
             this.$F.doRequest(this, '/pms/checkin/out_check_in', params, (res) => {
             console.log(res)
-            this.$router.replace({
-              path: "/orders",
-              query: {
-                type: 'order',
-              },
-            });
+            this.$emit('getOrderDetail')
+            // this.$router.replace({
+            //   path: "/orders",
+            //   query: {
+            //     type: 'order',
+            //   },
+            // });
            })
     },
     //判断数组中的值是否相同

@@ -75,7 +75,7 @@ import myMixin from "@/utils/filterMixin";
 
 export default {
   mixins: [myMixin],
-  props: ["detailData", "currentRoom"],
+  props: ["detailData", "currentRoom",'tax'],
   data() {
     return {
       currentHotelAttaChameal: {},
@@ -179,6 +179,26 @@ export default {
       );
     },
 
+    //计算附餐种类的消费税和服务费总和
+    getTaxServerFee(obj){
+        let tax = this.tax
+        let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
+        // let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
+        let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
+        let fcSum = 0  //消费税金额
+        let fcSerFee = 0 //服务费金额
+        
+        
+        
+        if(obj.taxStatus == 1){
+            fcSum += obj.consumePrice * consumeTax
+        }
+        if(obj.seviceStatus == 1){
+            fcSerFee += obj.consumePrice * servicePrice
+        }
+        return  fcSum + fcSerFee
+    },
+
     consumeOper(params = {}) {
       // if (!this.currentHotelAttaChameal.id) {
       //   return this.$message({
@@ -191,12 +211,12 @@ export default {
       params.roomId = this.currentRoom2.roomId;
       params.roomNum = this.currentRoom2.houseNum;
       params.state = 1;
+      // return
       if (this.sideForm.attachMealIdBreatfast) {
           params.priceType = 17;
           params.attachMealId = this.sideForm.attachMealIdBreatfast
-          params.consumePrice = this.currentHotelAttaChamealBreakfast.consumePrice
+          params.consumePrice = this.currentHotelAttaChamealBreakfast.consumePrice + this.getTaxServerFee(this.currentHotelAttaChamealBreakfast)
           params.attachMealCount  = this.currentHotelAttaChamealBreakfast.attachMealCount
-
           this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
               this.visible = false;
               this.$emit("getOrderDetail");
@@ -205,7 +225,7 @@ export default {
       if (this.sideForm.attachMealIdDinner) {
           params.priceType = 18;
           params.attachMealId = this.sideForm.attachMealIdDinner
-          params.consumePrice = this.currentHotelAttaChamealDinner.consumePrice
+          params.consumePrice = this.currentHotelAttaChamealDinner.consumePrice + this.getTaxServerFee(this.currentHotelAttaChamealDinner)
           params.attachMealCount  = this.currentHotelAttaChamealDinner.attachMealCount
           this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
               this.visible = false;
@@ -243,6 +263,7 @@ export default {
           //     "-" +
           //     item.mealName;
           // });
+          console.log(res.list)
           this.hotelattaChmealList = res.list;
           this.$forceUpdate();
         }

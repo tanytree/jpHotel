@@ -58,7 +58,7 @@
                     <span v-else :class="row.richType == 1 ? 'red' : ''">{{$F.numFormate(row.payPrice)}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="consumePrice" :label="$t('desk.order_expenseA')">
+            <el-table-column prop="consumePrices" :label="$t('desk.order_expenseA')">
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.consumePrice ? $F.numFormate((0 - row.consumePrice)) : ''}}</span>
                     <span v-else :class="row.richType == 1 ? 'red' : ''">{{$F.numFormate(row.consumePrice)}}</span>
@@ -96,17 +96,17 @@
                             <span v-if="row.payType == 2">{{$t('desk.add_cardDepositA')}} </span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherDepositA')}}</span>
                         </span>
-                                <span v-if="row.priceType == 3">
+                        <span v-if="row.priceType == 3">
                             <span v-if="row.payType == 1">{{$t('desk.add_cashGet')}}</span>
                             <span v-if="row.payType == 2">{{$t('desk.add_cardGet')}} </span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherGet')}}</span>
                         </span>
-                                <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}} (￥{{row.consumePrice}}) </span>
-                                <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>
-                                <span v-if="row.priceType == 7">
-                                {{row.damageTypeName}}(￥{{$F.numFormate(row.consumePrice)}}) * {{row.damageCount}}
+                        <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}} (￥{{row.consumePrice}}) </span>
+                        <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>
+                        <span v-if="row.priceType == 7">
+                                {{row.damageTypeName}}(￥{{$F.numFormate(row.damageInfo.damagePrice)}}) * {{row.damageCount}}
                         </span>
-                                <span v-if="row.priceType == 8">
+                        <span v-if="row.priceType == 8">
                            <span v-if="row.goodsList&&row.goodsList.length > 0" >
                                <div v-for="(item,index) in row.goodsList" :key="index">
                                    {{item.goodsName}}(￥{{$F.numFormate(item.price)}})*{{item.goodsCount}}
@@ -137,7 +137,8 @@
                             <span v-if="row.richList[0].priceType == 5"> {{F_priceType(row.richList[0].priceType)}} </span>
                             <span v-if="row.richList[0].priceType == 6"> {{F_priceType(row.richList[0].priceType)}} </span>
                             <span v-if="row.richList[0].priceType == 7">
-                                {{row.richList[0].damageTypeName}}(￥{{$F.numFormate(row.richList[0].consumePrice)}}) * {{row.richList[0].damageCount}}
+                                <!-- {{row.damageTypeName}}(￥{{$F.numFormate(row.damageInfo.damagePrice)}}) * {{row.damageCount}} -->
+                                {{row.richList[0].damageTypeName}}(￥{{$F.numFormate(row.richList[0].damageInfo.damagePrice)}}) * {{row.richList[0].damageCount}}
                             </span>
                             <span v-if="row.richList[0].priceType == 8">
                                 <div v-for="(item,index) in row.richGoodsList" :key="index">
@@ -449,7 +450,7 @@
         <!--开发票-->
         <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
         <!-- 附餐 -->
-        <sideOrder ref='sideOrder' :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" @get_consume_order_list="consume_order_list"></sideOrder>
+        <sideOrder ref='sideOrder' :tax="taxInfo" :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" @get_consume_order_list="consume_order_list"></sideOrder>
     </div>
 </template>
 
@@ -628,7 +629,8 @@ export default {
             hotelenterList: [], //挂账企业列表
             destructionList: [], //冲调的账务
             checkInId: '',
-            priceTypeList:[5,6,7,8,12,14,15,16,17,18,22]
+            priceTypeList:[5,6,7,8,12,14,15,16,17,18,22],
+            taxInfo:{}
         };
     },
 
@@ -652,6 +654,7 @@ export default {
     mounted() {
         let id = this.$route.query.id;
         this.fetchHotelattaChmealList();
+        this.get_consume_tax();
     },
 
     methods: {
@@ -824,7 +827,39 @@ export default {
             //入账 默认未接
             if (type == 1) {
                 params.state = 1;
-                params.consumePrice = this.consumeOperForm.consumePrices
+                let tax = this.taxInfo
+                let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率
+                let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
+                let consumePrices = this.consumeOperForm.consumePrices
+                let priceType =  this.consumeOperForm.priceType
+                let rzSum = 0
+                let rzSerFee = 0
+                if(priceType == 5 || priceType == 6){
+                    if(this.currentRoom.taxStatus == 1){
+                        rzSum += consumePrices * consumeTax
+                    }
+                    if(this.currentRoom.seviceStatus == 1){
+                        rzSerFee += consumePrices * servicePrice
+                    }
+                }
+                // console.log(rzSum)
+                // console.log(rzSerFee)
+                params.consumePrice = this.consumeOperForm.consumePrices + rzSum + rzSerFee
+
+
+
+                // console.log(tax)
+                // console.log(this.consumeOperForm.consumePrices)
+                // console.log(this.currentRoom.taxStatus)
+                // console.log(this.currentRoom.seviceStatus)
+                // console.log(this.consumeOperForm.priceType)
+
+
+
+
+
+
+
                 if (!params.priceType) {
                     this.$message.error(this.$t('desk.order_selectEntryItem'));
                     return;
@@ -1011,9 +1046,9 @@ export default {
 
         priceTypeChange(e) {
             this.consumeOperForm.priceType = e
-            console.log(e)
-            console.log(this.currentRoom)
-            console.log(this.detailData)
+            // console.log(e)
+            // console.log(this.currentRoom)
+            // console.log(this.detailData)
             if (e == 5 || e == 6) {
                 this.taxCount = ''
                 this.consumeOperForm.consumePrices = 0;
@@ -1051,9 +1086,9 @@ export default {
                 let unitPrice = this.unitPrice ? this.unitPrice : 0
                 let p = count * unitPrice
                 this.consumeOperForm.consumePrices = p
+                this.consumeOperForm.consumePrice = p
 
                 console.log(p)
-
                 console.log( this.consumeOperForm.consumePrices)
             }else{
                 this.taxCount = ''
@@ -1064,8 +1099,10 @@ export default {
                     for(let i in list){
                         if(this.consumeOperForm.damageId == list[i].id){
                             console.log(list[i])
+                            console.log(this.consumeOperForm.damageCount)
                             let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
-                            this.consumeOperForm.consumePrices = p.toFixed(0)
+                            this.consumeOperForm.consumePrices = p
+                            this.consumeOperForm.consumePrice = p
                             this.consumeOperForm.damageName = list[i].name
                         }
                     }
@@ -1253,7 +1290,21 @@ export default {
         getOrderDetail(){
             console.log(111)
             this.$emit('getOrderDetail')
-        }
+        },
+        get_consume_tax(){
+            let params = {
+                userId:this.userId,
+                storesNum:this.storesNum,
+            }
+            this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
+                if(res && res.content){
+                    this.taxInfo = JSON.parse(res.content)
+                    console.log(this.taxInfo)
+
+                }
+            });
+        },
+
     },
     watch:{
         'consumeOperForm.priceType':function(val,oldval){

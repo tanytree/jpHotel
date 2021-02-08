@@ -122,6 +122,7 @@ export default {
         }
         this.$F.doRequest(this, "/pms/dishes/dishes_category_list", params, (res) => {
             let list = res.categoryList
+            console.log(res.categoryList)
             for(let i in list){
                 list[i].is_slide = true
                 let childList = list[i].childList

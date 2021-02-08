@@ -155,7 +155,7 @@ let mixin = {
                 let taxFee = 0 //消费税
                 let sum = 0 //合计
                 for(let i in list){
-                    console.log(list[i].totalPrice)
+                    // console.log(list[i].totalPrice)
                     total += list[i].totalPrice ? list[i].totalPrice : 0
                     // if(list[i].taxStatus == 1){
                     //     taxFee += outFlag ? list[i].totalPrice * outConsumeTax :  list[i].totalPrice * consumeTax

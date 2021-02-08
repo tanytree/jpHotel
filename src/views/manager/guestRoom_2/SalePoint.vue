@@ -3,7 +3,7 @@
     <div class="content">
       <div class="radioBox">
         <el-radio-group v-model="sellId" size="medium" @change="changePoint">
-          <el-radio-button :label="item.id" v-for="(item, index) in salePoint" :disabled="item.state == 2" :key="index" class="btn-margin">{{item.name}}</el-radio-button>
+          <el-radio-button :label="item.id" v-for="(item, index) in salePoint" :disabled="item.state == 2" :key="index" class="btn-margin">{{ $i18n.locale == 'zh' ? item.name :item.jname}}</el-radio-button>
         </el-radio-group>
         <el-button type="text" @click="manageSale">{{$t('manager.grsl_managementSalePoint')}}</el-button>
       </div>

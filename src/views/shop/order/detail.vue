@@ -53,13 +53,14 @@
                     <el-table-column prop="goodsCount" :label="$t('shop.count')" width="50"></el-table-column>
                     <el-table-column :label="$t('shop.reset.customePrice')"  width="200">
                       <template slot-scope="scope">
+
+
                         <div v-if="scope.row.goods.categoryType == 1">
-                            <!-- {{scope.row.totalPrice}} -->
                             ¥ {{numFormate(scope.row.totalPrice)}}
                         </div>
                         <div v-if="scope.row.goods.categoryType == 2">
                             <span v-if="scope.row.goods.priceModel == 2">
-                                {{numFormate(getFinalFee(scope.row.goods,endTime,info.createTime))}} (计时: {{getDiffDate(info.createTime,endTime)}})
+                                {{numFormate(scope.row.goodsCount * getFinalFee(scope.row.goods,endTime,info.createTime))}} (计时: {{getDiffDate(info.createTime,endTime)}})
                             </span>
                             <span v-if="scope.row.goods.priceModel == 1">
                                <!-- {{scope.row.totalPrice}} -->
