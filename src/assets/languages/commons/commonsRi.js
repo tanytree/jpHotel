@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-07 16:07:35
+ * @LastEditTime: 2021-02-08 10:08:01
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
   placeChooseB: '法人一覧',
   confirm_delete: '削除コードの確定？',
   confirm_deleteA: '該当担当者アカウントを削除に確認しますか？',
-  confirm_deleteB: '未翻译词条',
+  confirm_deleteB: '削除に確認しますか？',
   tip_desc: 'ご注意',
   request_success: '受取確認',
   delete_success: '削除確認',

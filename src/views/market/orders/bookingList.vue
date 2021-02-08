@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-07 16:00:32
+ * @LastEditTime: 2021-02-08 10:42:18
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -200,7 +200,7 @@
                         {{ F_reserveState((row.state == 1 || row.state == 2 || row.state == 9) ? 5 : row.state ) }}
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('commons.operating')" width="150">
+                <el-table-column :label="$t('commons.operating')">
                     <template slot-scope="{ row }">
                         <el-button type="text" size="mini" @click="handelDetail(row)">{{ $t("commons.detail") }}</el-button>
                         <template v-if="row.state != 7">

@@ -21,10 +21,8 @@
         <el-table-column prop="name" :label="$t('desk.home_customerName')" width="140"></el-table-column>
         <el-table-column prop="roomNum" :label="$t('desk.home_roomNum')" width="100"></el-table-column>
         <el-table-column prop="mobile" :label="$t('desk.home_telNumA')" width="140"></el-table-column>
-        <el-table-column prop="companyName" :label="$t('desk.home_payCompanyName')" width="150"></el-table-column>
-        <!-- 需要后端加一个收据号码字段 -->
-        <el-table-column prop="companyName" :label="$t('desk.add_receiptNo')" ></el-table-column>
-
+        <el-table-column prop="companyName" :label="$t('desk.home_payCompanyName')" width="120"></el-table-column>
+        <el-table-column prop="receiptNumber" :label="$t('desk.add_receiptNo')" width="150"></el-table-column>
         <el-table-column prop="prices" :label="$t('desk.customer_sum')" width="100"></el-table-column>
         <el-table-column prop="projectName" :label="$t('desk.order_projectA')" width="180"></el-table-column>
         <el-table-column prop="createTime" :label="$t('desk.order_dateTime')" width="180"></el-table-column>
@@ -83,6 +81,9 @@
                             $t("desk.order_projectA") + ":"
                         }}</span>
             {{ invoiceDetail.projectName }}
+          </el-col>
+           <el-col :span="12" style="margin-bottom: 10px">
+            <span style="color: #888888">收据号码:</span>{{ invoiceDetail.receiptNumber }}
           </el-col>
           <el-col>
             <span style="color: #888888">{{

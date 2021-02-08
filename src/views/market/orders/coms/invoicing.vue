@@ -1,15 +1,23 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-07 11:45:43
+ * @LastEditTime: 2021-02-08 11:53:59
  * @FilePath: \jiudian\src\views\market\orders\coms\invoicing.vue
  -->
 
 <template>
   <div id="page1" class="boss-index" v-if="openInvoiceShow">
     <!--开发票-->
-    <el-dialog top="0" :title="$t('desk.order_invoice')" :visible.sync="openInvoiceShow" width="900px">
+    <el-dialog top="0" :title="$t('desk.order_invoice')" :visible.sync="openInvoiceShow" width="65%">
       <el-form :model="openInvoiceForm" ref="openInvoice" :rules="rules" size="mini" label-width="130px">
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="收据号:" >
+              <el-input v-model="openInvoiceForm.prefix" style="width: 150px" :placeholder="$t('desk.customer_numBefore')" @blur="requestnumDetail"></el-input>
+              <span style="margin-left: 10px">{{ date_serial }}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item :label="$t('desk.order_receiptTime') + ':'" prop="invoiceTime">
@@ -34,7 +42,6 @@
               <el-input class="width150" type="text" v-model="openInvoiceForm.prices" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
-
           <el-col :span="8">
             <el-form-item :label="$t('desk.order_invoicedAmount') + ':'">
               <el-input class="width150" type="number" v-model="openInvoiceForm.invoicePrice" autocomplete="off"></el-input>
@@ -45,13 +52,7 @@
               <el-input class="width150" type="number" v-model="openInvoiceForm.consumePrice" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item label="收据号">
-              <el-input class="width150" type="number" v-model="openInvoiceForm.shouju" ></el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="openInvoiceShow = false">{{
@@ -80,7 +81,9 @@ export default {
         prices: "",
         invoiceTime: "",
         remark: "",
+        receiptNumber: "",
       },
+      date_serial: null,
     };
   },
   computed: {
@@ -139,7 +142,22 @@ export default {
       // this.openInvoiceForm.invoicePrice = item. 这里卡住
       this.openInvoiceShow = true;
     },
-
+    requestnumDetail() {
+      if (this.openInvoiceForm.prefix) {
+        let params = {
+          prefix: this.openInvoiceForm.prefix,
+        };
+        this.$F.doRequest(
+          this,
+          "/pms/invoice/invoice_account_serial",
+          params,
+          (res) => {
+            this.openInvoiceForm.receiptNumber = res.prefix_date_serial;
+            this.date_serial = res.date_serial;
+          }
+        );
+      }
+    },
     //开发票提交
     openInvoiceSubmit(formName) {
       this.$refs[formName].validate((valid) => {
