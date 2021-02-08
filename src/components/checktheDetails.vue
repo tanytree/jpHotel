@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 17:20:15
+ * @LastEditTime: 2021-02-08 13:19:14
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
@@ -513,7 +513,15 @@ export default {
             this.$forceUpdate();
         },
         deletePerson(roomInfo, row, index) {
-            roomInfo.personList.splice(index, 1);
+          this.$confirm(this.$t("commons.confirm_deleteC"),  this.$t("commons.tip_desc"), {
+          confirmButtonText: this.$t("commons.confirm"),
+          cancelButtonText: this.$t("commons.cancel"),
+          type: 'warning'
+        }).then(() => {
+           roomInfo.personList.splice(index, 1);
+        }).catch(() => {
+          return false;
+        });
         },
         //提交添加入住人
         addPersonSubmit() {

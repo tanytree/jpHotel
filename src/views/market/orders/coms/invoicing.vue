@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 11:53:59
+ * @LastEditTime: 2021-02-08 13:35:07
  * @FilePath: \jiudian\src\views\market\orders\coms\invoicing.vue
  -->
 
@@ -12,7 +12,7 @@
       <el-form :model="openInvoiceForm" ref="openInvoice" :rules="rules" size="mini" label-width="130px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="收据号:" >
+            <el-form-item :label="$t('desk.add_receiptNo')+':'" >
               <el-input v-model="openInvoiceForm.prefix" style="width: 150px" :placeholder="$t('desk.customer_numBefore')" @blur="requestnumDetail"></el-input>
               <span style="margin-left: 10px">{{ date_serial }}</span>
             </el-form-item>
@@ -50,6 +50,13 @@
           <el-col :span="8">
             <el-form-item :label="$t('desk.customer_constPrice') + ':'">
               <el-input class="width150" type="number" v-model="openInvoiceForm.consumePrice" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+           <el-col :span="12">
+            <el-form-item :label="$t('desk.home_note')">
+              <el-input v-model="openInvoiceForm.remark" style="width: 150px" ></el-input>
             </el-form-item>
           </el-col>
         </el-row>

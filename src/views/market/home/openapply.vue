@@ -10,7 +10,7 @@
         <el-form-item :label="$t('desk.home_customerName') + ':'">
           <el-input v-model="formInline.name"></el-input>
         </el-form-item>
-         <el-form-item label="收据号:">
+         <el-form-item :label="$t('desk.add_receiptNo')+':'">
           <el-input v-model="formInline.receiptNumber"></el-input>
         </el-form-item>
         <el-form-item>
@@ -23,12 +23,11 @@
       <el-table :data="tableDatas" border height="100%" header-row-class-name="default" size="small">
         <el-table-column prop="name" :label="$t('desk.home_customerName')" width="140"></el-table-column>
         <el-table-column prop="roomNum" :label="$t('desk.home_roomNum')" width="100"></el-table-column>
-        <el-table-column prop="mobile" :label="$t('desk.home_telNumA')" width="140"></el-table-column>
-        <el-table-column prop="companyName" :label="$t('desk.home_payCompanyName')" width="120"></el-table-column>
-        <el-table-column prop="receiptNumber" :label="$t('desk.add_receiptNo')" width="150"></el-table-column>
+         <el-table-column prop="receiptNumber" :label="$t('desk.add_receiptNo')" width="150"></el-table-column>
+        <el-table-column prop="companyName" :label="$t('desk.order_payCompanyName')" width="120"></el-table-column>
         <el-table-column prop="prices" :label="$t('desk.customer_sum')" width="100"></el-table-column>
-        <el-table-column prop="projectName" :label="$t('desk.order_projectA')" width="180"></el-table-column>
-        <el-table-column prop="createTime" :label="$t('desk.order_dateTime')" width="180"></el-table-column>
+        <el-table-column prop="projectName" :label="$t('desk.order_constProject')" width="180"></el-table-column>
+        <el-table-column prop="createTime" :label="$t('desk.order_receiptTime')" width="180"></el-table-column>
         <el-table-column prop="updateTime" :label="$t('commons.operatingTime')" width="180"></el-table-column>
         <el-table-column prop="creatorName" :label="$t('desk.home_operator')" width="130"></el-table-column>
         <el-table-column :label="$t('commons.operating')" width="140">
@@ -42,59 +41,58 @@
       </div>
     </div>
     <!-- 点击详情弹出框 -->
-    <el-dialog :title="$t('commons.detail')" width="880px" top="0" v-if="detailsBill" :visible.sync="detailsBill">
+    <el-dialog :title="$t('commons.detail')" width="55%" top="0" v-if="detailsBill" :visible.sync="detailsBill">
       <el-row style="margin: 10px 20px">
-        <el-col :span="12">
-          <el-col :span="12" style="margin-bottom: 10px">
+          <el-col :span="8" style="margin-bottom: 10px">
             <span style="color: #888888">{{
-                            $t("desk.home_customerName") + ":"
+                            $t("desk.home_customerName") +  "："
                         }}</span>
             {{ invoiceDetail.name }}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px">
-            <span style="color: #888888">{{ $t("desk.home_roomNum") }}:</span>
+            <span style="color: #888888">{{ $t("desk.home_roomNum") }}：</span>
             {{ invoiceDetail.roomNum }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px">
-            <span style="color: #888888">{{
-                            $t("desk.home_telNumA") + ":"
-                        }}</span>
-            {{ invoiceDetail.mobile }}
+            <el-col :span="8" style="margin-bottom: 10px">
+            <span style="color: #888888">{{$t('desk.add_receiptNo')}}：</span>{{ invoiceDetail.receiptNumber }}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px">
             <span style="color: #888888">{{
-                            $t("desk.home_companyName") + ":"
+                            $t("desk.order_payCompanyName") + "："
                         }}</span>
             {{ invoiceDetail.companyName }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px">
+          <el-col :span="8" style="margin-bottom: 10px">
             <span style="color: #888888">{{
-                            $t("desk.customer_sum") + ":"
+                            $t("desk.customer_sum") +  "："
                         }}</span>
             {{ $F.numFormate(invoiceDetail.prices) }}
           </el-col>
           <el-col :span="12" style="margin-bottom: 10px">
             <span style="color: #888888">{{
-                            $t("desk.order_dateTime") + ":"
+                            $t("desk.order_receiptTime") +  "："
                         }}</span>
             {{ invoiceDetail.createTime }}
           </el-col>
-          <el-col :span="12" style="margin-bottom: 10px">
+          <el-col :span="8" style="margin-bottom: 10px">
             <span style="color: #888888">{{
-                            $t("desk.order_projectA") + ":"
+                            $t("desk.order_constProject") + "："
                         }}</span>
             {{ invoiceDetail.projectName }}
           </el-col>
            <el-col :span="12" style="margin-bottom: 10px">
-            <span style="color: #888888">收据号码:</span>{{ invoiceDetail.receiptNumber }}
+            <span style="color: #888888">{{$t('desk.order_invoicedAmount')}}：</span>{{ invoiceDetail.invoicePrice }}
           </el-col>
-          <el-col>
+           <el-col :span="8" style="margin-bottom: 10px">
+            <span style="color: #888888">{{$t('desk.customer_constPrice')}}：</span>{{ invoiceDetail.consumePrice }}
+          </el-col>
+          <el-col :span="12">
             <span style="color: #888888">{{
-                            $t("desk.home_note") + ":"
+                            $t("desk.home_note") +  "："
                         }}</span>
             {{ invoiceDetail.remark }}
           </el-col>
-        </el-col>
+      
       </el-row>
       <div slot="footer" class="dialog-footer" style="text-align: center">
         <el-button class="submit" type="primary" @click="detailsBill = false">{{ $t("commons.close") }}</el-button>

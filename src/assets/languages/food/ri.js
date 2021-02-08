@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 10:54:19
+ * @LastEditTime: 2021-02-08 13:26:44
  * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
@@ -210,7 +210,7 @@ module.exports = {
         deskNum:'テーブル番号',
         numberPlat:'部屋番号',
         cancel_order:'注文キャンセル',
-        cancel_confirm_order_tips:'注文をキャンセルしますか?',
+        cancel_confirm_order_tips:'該当注文をキャンセルに確認しますか？',
         confirm_submit:'提出確認しますか?',
         print:'印刷',
         soldOut:' こちらのメニューは売り切れです。注文は受けられません。メニュー管理に品数を追加して下さい!',
