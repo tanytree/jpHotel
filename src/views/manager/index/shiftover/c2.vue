@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-07 10:56:36
+ * @LastEditTime: 2021-02-09 10:59:01
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -46,11 +46,7 @@
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column :label="$t('desk.serve_basicInfo')" align="center">
-          <el-table-column prop="createTime" :label="$t('desk.serve_flight')" width="100px">
-            <template slot-scope="{row}">
-              <div v-for="(item,index) in $F.formatTime(row.createTime)" :key="index">{{item}}</div>
-            </template>
-          </el-table-column>
+          <el-table-column prop="handoveNum" :label="$t('desk.serve_flight')" width="120px"></el-table-column>
           <el-table-column :label="$t('desk.serve_startAend')" width="180px">
             <template slot-scope="{ row }">
               <div>
@@ -65,11 +61,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="handoveEmployeedId" :label="$t('desk.serve_peopleDuty')">
-            <template slot-scope="{row}">
-              {{checkEmployee(row.handoveEmployeedId)}}
-            </template>
-          </el-table-column>
+          <el-table-column prop="creatorName" :label="$t('desk.serve_peopleDuty')"></el-table-column>
         </el-table-column>
         <!-- 本班全责汇总 前台部 tabCurr==1 -->
         <el-table-column :label="$t('desk.serve_flightDuty')" align="center" v-if="tabCurr==1" :key="tabCurr">

@@ -551,7 +551,7 @@ export default {
         params,
         (res) => {
           this.loading = false;
-          this.alert(200, this.$t("food.common.success"));
+          this.alert(200, this.$t("food.reset.success"));
           this.closeDialog();
         }
       );

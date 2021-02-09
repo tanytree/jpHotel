@@ -63,37 +63,6 @@ export default {
     handData: Array,
     initData: Function,
   },
-  computed: {
-    editore: {
-      get() {
-        return this.$t("manager.hp_editor");
-      },
-      set() {},
-    },
-    newAdd: {
-      get() {
-        return this.$t("commons.newAdd");
-      },
-      set() {},
-    },
-    saveSuccess: {
-      get() {
-        return this.$t("commons.saveSuccess");
-      },
-      set() {},
-    },
-  },
-  watch: {
-    editore(newValue, oldValue) {
-      this.editore = newValue;
-    },
-    newAdd(newValue, oldValue) {
-      this.newAdd = newValue;
-    },
-    saveSuccess(newValue, oldValue) {
-      this.saveSuccess = newValue;
-    },
-  },
   mounted() {
     this.getTabsList();
     this.getEmployeelist();
@@ -107,12 +76,7 @@ export default {
         this.getDamageData();
       }
     },
-    radioChange(val) {
-      this.handType = this.$F.deepClone(
-        this.handData.find((item) => item.id === val)
-      );
-      this.getDamageData();
-    },
+  
     getDamageData() {
       const params = {
         handoverType: this.handType.handoverType,
@@ -128,60 +92,15 @@ export default {
         this.total = res.page.count;
       });
     },
-    popup_thing(row) {
-      this.addTypeVisible = true;
-      if (row.id) {
-        this.typeData = row;
-        this.addTypeTitle = this.editore;
-      } else {
-        this.typeData = { name: "", startTime: "", endTime: "" };
-        this.addTypeTitle = this.newAdd;
-      }
-    },
-    saveInfo() {
-      const params = {
-        id: this.typeData.id,
-        name: this.typeData.name,
-        handoverType: this.handType.handoverType,
-        startTime: this.typeData.startTime,
-        endTime: this.typeData.endTime,
-      };
-      this.$F.doRequest(this, "/pms/handoverlog/edit", params, (res) => {
-        this.addTypeVisible = false;
-        this.getDamageData();
-      });
-    },
-    popup_kinds() {
-      this.dialogAdd_kinds = true;
-    },
-    currentChange(val) {
-      this.pageForm.pageIndex = val;
-      this.getDamageData();
-    },
-    onConfirm(row) {
-      this.$F.doRequest(
-        this,
-        "/pms/handoverlog/delete",
-        { id: row.id },
-        (res) => {
-          this.getDamageData();
-        }
-      );
-    },
     submit(type) {
+      console.log(this.handData);
       if (type == "hand") {
-        let arr = [];
-        //
-        // this.handData.map(item => {
-        // 	const obj = {handoverStatus: item.handoverStatus, pettyCash: item.pettyCash, handoverType: item.handoverType}
-        // 	arr.push(obj);
-        // })
         const params = {
           content: JSON.stringify(this.handData),
         };
         this.$F.doRequest(this, "/pms/handover/edit", params, (res) => {
           this.initData();
-          this.$message({ message: this.saveSuccess, type: "success" });
+          this.$message({ message: this.$t("commons.saveSuccess"), type: "success" });
         });
       } else {
       }
@@ -217,36 +136,6 @@ export default {
         }
       );
     },
-
-    // startFocus(e) {
-    //     let start = '00:00', end = '24:00'
-    //     if(this.manageData.length > 0) {
-    //         this.manageData.map(item => {
-    //             if(start < item.endTime) {
-    //                 start = item.endTime
-    //             }
-    //             if(end > item.startTime) {
-    //                 end = item.startTime
-    //             }
-    //         })
-    //     }
-    //     if(start == '24:00') {
-    //         start = '00:00'
-    //     }
-    //     if(start < end) {}
-    //     this.startPicker = {start: '00:00', end: '24:00'}
-    // },
-    // endFocus(e) {
-    //     let end = '24:00';
-    //     if(this.manageData.length > 0) {
-    //         this.manageData.map(item => {
-    //             if(end > item.startTime) {
-    //                 end = item.startTime
-    //             }
-    //         })
-    //     }
-    //     this.endPicker = {start: this.typeData.startTime, end: '48:00'}
-    // },
   },
 };
 </script>

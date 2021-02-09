@@ -438,7 +438,7 @@ export default {
         "/pms/dishes/dishes_place_order_pay",
         params,
         (res) => {
-          this.alert(200, this.$t("food.common.success"));
+          this.alert(200, this.$t("food.reset.success"));
           this.closeDialog();
         }
       );
