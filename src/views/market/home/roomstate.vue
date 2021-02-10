@@ -103,7 +103,7 @@
                                             <span v-if="room.checkInRoomType == 2"> {{ $t('desk.home_bookPeople') + '：' + room.reseverCheckInObj.name }}</span>
                                             <span>{{  '  '  }}</span>
                                         </div>
-                                        <div style="font-size:13px" v-if="room.checkInRoomType == 1 || room.checkInRoomType == 2">{{F_guestType(room.checkInObj ?room.checkInObj.guestType : room.reseverCheckInObj.guestType)}}</div>
+                                        <div style="font-size:13px" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2 ) && (room.checkInObj || room.reseverCheckInObj)">{{F_guestType(room.checkInObj ? room.checkInObj.guestType : (room.reseverCheckInObj ? room.reseverCheckInObj.guestType : '1'))}}</div>
                                         <div class="line source-bottom" v-if="(room.checkInRoomType == 1 || room.checkInRoomType == 2) && (room.checkInObj || room.reseverCheckInObj)"
                                              style="margin-top: 8px">
                                             <div>{{ F_orderSource(room.checkInObj ? room.checkInObj.orderSource : room.reseverCheckInObj.orderSource) }}
