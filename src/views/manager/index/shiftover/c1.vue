@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 18:14:18
+ * @LastEditTime: 2021-02-09 17:05:40
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -78,17 +78,17 @@
           </el-col>
           <el-col :span="5">
             <div class="item">
-              {{$t('desk.serve_cash')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+              本班现金收款：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
           <el-col :span="5">
             <div class="item">
-              {{$t('desk.add_creditCard')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+             本班信用卡收款：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
           <el-col :span="5">
             <div class="item">
-              {{$t('desk.book_other')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+              本班其他收款：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
         </div>
@@ -106,20 +106,6 @@
             <div class="item">{{$t('desk.add_otherGetA')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
         </div>
-        <!-- <div v-if="tabCurr==3">
-          <el-col :span="6">
-            <div class="item">{{$t('manager.add_nowCashGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nowMoneyHandin)}}{{$t('manager.ps_japanYen')}}</span></div>
-          </el-col>
-          <el-col :span="6">
-            <div class="item">{{$t('manager.add_nowCardGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nowCreditCardHandin)}}{{$t('manager.ps_japanYen')}}</span></div>
-          </el-col>
-          <el-col :span="6">
-            <div class="item">{{$t('manager.add_nowBillGet')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
-          </el-col>
-          <el-col :span="6">
-            <div class="item">{{$t('desk.add_otherGetA')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
-          </el-col>
-        </div> -->
       </el-row>
     </el-row>
     <el-row>
@@ -379,18 +365,21 @@ export default {
     this.account = sessionStorage.getItem("account");
   },
   methods: {
+    // PMS统计本班收入 输入0转1
     blurChange(item) {
       let num = this.getMoney[item];
       if (num == 0) {
         this.getMoney[item] = 1;
       }
     },
+    //本班下放备用金 输入0转1
     blurChange_down(item) {
       let num = this.putDown[item];
       if (num == 0) {
         this.putDown[item] = 1;
       }
     },
+     // PMS统计本班收入 选择或者不选择
     changeList(number, type) {
       if (type) {
         this.getMoney[number] = 1;
@@ -398,6 +387,7 @@ export default {
         this.getMoney[number] = 0;
       }
     },
+     //本班下放备用金 选择或者不选择
     changeList_down(number, type) {
       if (type) {
         this.putDown[number] = 1;
@@ -498,21 +488,7 @@ export default {
       });
     },
 
-    /**多选 */
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    /**每页数 */
-    handleSizeChange(val) {
-      this.searchForm.page_num = val;
-      this.searchForm.page = 1;
-      this.getDataList();
-    },
-    /**当前页 */
-    handleCurrentChange(val) {
-      this.searchForm.page = val;
-      this.getDataList();
-    },
+  
   },
 };
 </script>

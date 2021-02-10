@@ -144,6 +144,7 @@ export default {
           });
         } else this.hotelData.files = [];
       });
+      
     },
     getPrintParamData() {
       this.$F.doRequest(this, "/pms/documentsparams/list", {}, (res) => {
@@ -235,6 +236,7 @@ export default {
       this.$F.doRequest(this, "/pms/handover/list", {}, (res) => {
         this.handData = res;
       });
+
     },
   },
 };

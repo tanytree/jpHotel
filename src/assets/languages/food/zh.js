@@ -391,7 +391,7 @@ module.exports = {
     member_card:'会员卡',
     select_member_card:'请选目标会员卡',
     totalFee:'结算总计',
-    
+    success:'客房挂帐操作成功',
 
     }
 

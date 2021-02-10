@@ -24,7 +24,7 @@
         <el-table-column prop="name" :label="$t('desk.home_customerName')" width="140"></el-table-column>
         <el-table-column prop="roomNum" :label="$t('desk.home_roomNum')" width="100"></el-table-column>
          <el-table-column prop="receiptNumber" :label="$t('desk.add_receiptNo')" width="150"></el-table-column>
-        <el-table-column prop="companyName" :label="$t('desk.order_payCompanyName')" width="120"></el-table-column>
+        <el-table-column prop="companyName" :label="$t('desk.home_payCompanyName')" width="120"></el-table-column>
         <el-table-column prop="prices" :label="$t('desk.customer_sum')" width="100"></el-table-column>
         <el-table-column prop="projectName" :label="$t('desk.order_constProject')" width="180"></el-table-column>
         <el-table-column prop="createTime" :label="$t('desk.order_receiptTime')" width="180"></el-table-column>

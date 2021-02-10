@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-07 10:56:36
+ * @LastEditTime: 2021-02-09 18:38:29
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -46,11 +46,7 @@
       <!--表格数据 -->
       <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
         <el-table-column :label="$t('desk.serve_basicInfo')" align="center">
-          <el-table-column prop="createTime" :label="$t('desk.serve_flight')" width="100px">
-            <template slot-scope="{row}">
-              <div v-for="(item,index) in $F.formatTime(row.createTime)" :key="index">{{item}}</div>
-            </template>
-          </el-table-column>
+          <el-table-column prop="handoveNum" :label="$t('desk.serve_flight')" width="120px"></el-table-column>
           <el-table-column :label="$t('desk.serve_startAend')" width="180px">
             <template slot-scope="{ row }">
               <div>
@@ -65,51 +61,68 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="handoveEmployeedId" :label="$t('desk.serve_peopleDuty')">
-            <template slot-scope="{row}">
-              {{checkEmployee(row.handoveEmployeedId)}}
-            </template>
-          </el-table-column>
+          <el-table-column prop="creatorName" :label="$t('desk.serve_peopleDuty')"></el-table-column>
         </el-table-column>
         <!-- 本班全责汇总 前台部 tabCurr==1 -->
         <el-table-column :label="$t('desk.serve_flightDuty')" align="center" v-if="tabCurr==1" :key="tabCurr">
-          <el-table-column prop="createTime" :label="$t('desk.serve_roomPrice')">
+          <el-table-column prop="subList[0].amount" :label="$t('desk.serve_roomPrice')">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[0].amount?row.subList[0].amount:0}}</div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" label="附餐费">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[1].amount?row.subList[1].amount:0}}</div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" label="会议室">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[2].amount?row.subList[2].amount:0}}</div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" label="迷你吧商品">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[3].amount?row.subList[3].amount:0}}</div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" label="其他">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[4].amount?row.subList[4].amount:0}}</div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" :label="$t('desk.serve_goodsPrice')">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[5].amount?row.subList[5].amount:0}}</div>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" :label="$t('desk.serve_foodPrice')">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[6].amount?row.subList[6].amount:0}}</div>
+            </template>
           </el-table-column>
-          <el-table-column :label="$t('desk.serve_cash')">
+          <el-table-column label="本班现金收款">
             <template slot-scope="{ row }">
-              <div>
-                {{ row.nowMoneyRetained }}
-                <span @click="lookDetail('cashDialog',row)"><i class="el-icon-view"></i></span>
-              </div>
+              <div v-if="row.subList.length>0">{{row.subList[7].amount?row.subList[7].amount:0}} <span @click="lookDetail('cashDialog',row)"><i class="el-icon-view"></i></span></div>
             </template>
           </el-table-column>
           <el-table-column prop="createTime" :label="$t('desk.serve_thisCard')">
             <template slot-scope="{ row }">
-              <div>
-                {{ row.nowMoneyRetained }}
-                <span @click="lookDetail('cardDailog',row)"><i class="el-icon-view"></i></span>
-              </div>
+              <div v-if="row.subList.length>0">{{row.subList[8].amount?row.subList[8].amount:0}} <span @click="lookDetail('cardDailog',row)"><i class="el-icon-view"></i></span></div>
             </template>
           </el-table-column>
-          <el-table-column prop="nowAliRetained" :label="$t('desk.add_creditCard')">
+          <el-table-column prop="nowAliRetained" label="本班信用卡收款">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[9].amount?row.subList[9].amount:0}}</div>
+            </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="其他">
+          <el-table-column prop="createTime" label="本班其他收款">
+            <template slot-scope="{row}">
+              <div v-if="row.subList.length>0">{{row.subList[10].amount?row.subList[10].amount:0}}</div>
+            </template>
           </el-table-column>
-          <el-table-column prop="nowMoneyHandin" label="上班留存备用金" width="120px">
+          <el-table-column prop="upMoneyRetained" label="上班留存备用金" width="120px">
           </el-table-column>
-          <el-table-column prop="nowWeixinHandin" label="本班下放备用金" width="120px">
+          <el-table-column prop="nowMoneyRetained" label="本班下放备用金" width="120px">
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
@@ -120,11 +133,13 @@
         </el-table-column>
         <!-- 本班全责汇总 餐饮部 tabCurr==2 -->
         <el-table-column :label="$t('desk.serve_flightDuty')" align="center" v-if="tabCurr==2" :key="tabCurr">
-          <el-table-column prop="createTime" label="餐饮费">
-          </el-table-column>
           <el-table-column prop="createTime" label="附餐费">
           </el-table-column>
-          <el-table-column label="现金" width="100px ">
+          <el-table-column prop="createTime" label="餐饮费">
+          </el-table-column>
+          <el-table-column prop="createTime" label="挂账到房间">
+          </el-table-column>
+          <el-table-column label="本班现金收款" width="100px ">
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
@@ -132,11 +147,9 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="挂账到房间">
+          <el-table-column prop="createTime" label="本班信用卡收款" width="100px">
           </el-table-column>
-          <el-table-column prop="createTime" label="信用卡" width="100px">
-          </el-table-column>
-          <el-table-column prop="createTime" label="其他">
+          <el-table-column prop="createTime" label="本班其他收款">
           </el-table-column>
           <el-table-column prop="nowMoneyHandin" label="上班留存备用金" width="120px">
           </el-table-column>
@@ -151,11 +164,13 @@
         </el-table-column>
         <!-- 本班全责汇总 商店部 tabCurr==3 -->
         <el-table-column :label="$t('desk.serve_flightDuty')" align="center" v-if="tabCurr==3" :key="tabCurr">
-          <el-table-column prop="createTime" label="迷你吧">
-          </el-table-column>
           <el-table-column prop="createTime" label="售卖点1">
           </el-table-column>
-          <el-table-column label="现金" width="100px ">
+          <el-table-column prop="createTime" label="迷你吧商品">
+          </el-table-column>
+          <el-table-column prop="createTime" label="挂账到房间">
+          </el-table-column>
+          <el-table-column label="本班现金收款" width="100px ">
             <template slot-scope="{ row }">
               <div>
                 {{ row.nowMoneyRetained }}
@@ -163,11 +178,9 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label="挂账到房间">
+          <el-table-column prop="createTime" label="本班信用卡收款" width="100px">
           </el-table-column>
-          <el-table-column prop="createTime" label="信用卡" width="100px">
-          </el-table-column>
-          <el-table-column prop="createTime" label="其他">
+          <el-table-column prop="createTime" label="本班其他收款">
           </el-table-column>
           <el-table-column prop="nowMoneyHandin" label="上班留存备用金" width="120px">
           </el-table-column>
@@ -213,32 +226,32 @@
     <!-- 挂账dialog -->
     <el-dialog top="0" :visible.sync="cardDailog" title="挂账统计查看" width="50%">
       <div class="dialog_top">
-        总挂账：<span style="color:#0067ff">{{$F.numFormate(1000)}}</span>日元
+        总挂账：<span style="color:#0067ff">{{checkTotal()}}</span>日元
       </div>
       <div class="dialog_middle">
         <div class="middle_text2">
-          单位挂账：￥{{$F.numFormate(2000)}}
+          单位挂账：￥{{checkMoney('1')}}
         </div>
         <div class="middle_text2">
-          商品券：￥{{$F.numFormate(2000)}}
+          商品券：￥{{checkMoney('2')}}
         </div>
         <div class="middle_text2">
-          住宿券：￥{{$F.numFormate(2000)}}
+          住宿券：￥{{checkMoney('3')}}
         </div>
         <div class="middle_text2">
-          折价券：￥{{$F.numFormate(2000)}}
+          折价券：￥{{checkMoney('4')}}
         </div>
         <div class="middle_text2">
-          点数：￥{{$F.numFormate(2000)}}
+          点数：￥{{checkMoney('5')}}
         </div>
         <div class="middle_text2">
-          招待券：￥{{$F.numFormate(2000)}}
+          招待券：￥{{checkMoney('6')}}
         </div>
         <div class="middle_text2">
-          其他：￥{{$F.numFormate(2000)}}
+          其他：￥{{checkMoney('7')}}
         </div>
         <div class="middle_text2">
-          辅助金：￥{{$F.numFormate(2000)}}
+          辅助金：￥{{checkMoney('8')}}
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -307,6 +320,7 @@ export default {
       listTotal: 0, //总条数
       tableData: [], //表格数据
       itemInfo: null,
+      cardDailogInfo: [], //点击挂账眼睛 显示的信息
     };
   },
 
@@ -314,6 +328,29 @@ export default {
     this.initForm();
   },
   methods: {
+    checkTotal() {
+      if (this.cardDailogInfo.length > 0) {
+        let totalPrice = 0;
+        for (let item of this.cardDailogInfo) {
+          totalPrice += item.totalPrice;
+        }
+        return this.$F.numFormate(totalPrice);
+      } else {
+        return 0;
+      }
+    },
+    checkMoney(num) {
+      if (this.cardDailogInfo.length > 0) {
+        for (let item of this.cardDailogInfo) {
+          if (item.putUp == num) {
+            return this.$F.numFormate(item.totalPrice);
+          }
+        }
+        return 0;
+      } else {
+        return 0;
+      }
+    },
     checkEmployee(handoveEmployeedId) {
       console.log(this.employeeList);
       for (let item of this.employeeList) {
@@ -358,11 +395,28 @@ export default {
     },
     //点击眼睛图标
     lookDetail(type, row) {
+      // console.log(row);
       switch (type) {
         case "cashDialog":
           this.cashDialog = true;
           break;
         case "cardDailog":
+          let startTime = this.$F.formatTime(row.workStarTime)[0];
+          let endTime = this.$F.formatTime(row.workEndTime)[0];
+          let params = {
+            workStarTime: startTime,
+            workEndTime: endTime,
+          };
+          this.$F.doRequest(
+            this,
+            "/pms/handover/handover_putup_group",
+            params,
+            (res) => {
+              this.cardDailogInfo = res.upGroupCount;
+              console.log(this.cardDailogInfo);
+            }
+          );
+
           this.cardDailog = true;
           break;
         case "pettyCashDialog":

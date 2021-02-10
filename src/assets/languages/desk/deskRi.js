@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-08 15:43:31
+ * @LastEditTime: 2021-02-09 14:58:00
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -593,8 +593,7 @@ module.exports = {
   order_payDepositA: "前受金入金",
   order_payBack: "払い戻し金",
   order_payBackA: "前受金返金",
-
-  order_payProject: "入金項目",
+  order_payProject: "項目",
   order_memCard: "会員年費",
   order_selectPayWay: "会計方法を選択",
   order_selectPayWayA: "入金種別",
@@ -643,9 +642,9 @@ module.exports = {
   order_yewu: '内容',
   order_accountDeveloped: "取消処理内容",
   order_ifGoTie: "「未収」確認",
-  order_receivable: "会計金額",
-  order_receivableA: "入金/請求",
-  order_shouldBack: "「未収」確認",
+  order_receivable: "請求金額",
+  order_receivableA: "請求金額",
+  order_shouldBack: "払戻金額",
   order_canDeduction: "200ポイントで20元を相殺",
   order_mixingWay: "処理",
   order_completelyAgainst: "全部取消",
@@ -661,7 +660,7 @@ module.exports = {
   order_partComShould: "　　　より相殺金額は少なければならない。",
   order_noPeople: "宿泊者が未入力",
   order_selectOperateAccount: "「会計取消」は同時に1件しか処理できません。",
-  order_onlyOneAccount: "相殺会計は一項目しかできないです",
+  order_onlyOneAccount: "会計取消処理は同時に１件しかできません。",
   order_autoTiePrice: "自動計上項目は相殺できないです",
   book_venueBook: '会場予約',
   book_meetVerification: '会場取り消し',

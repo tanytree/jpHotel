@@ -201,7 +201,7 @@
 			},
 			chamber: {
 				get() {
-					return this.$t("manager.hk_chamber");
+					return this.$t("manager.hk_chamberA");
 				},
 				set() {},
 			},
