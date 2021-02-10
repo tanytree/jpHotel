@@ -11,10 +11,11 @@
             <div class=" text-red text-size20">
               {{$t('food.common.consumePrice')}} : {{numFormate(orderTax.sum)}}
               <span class="rel showTax">
+                  <!-- {{orderTax}} -->
                 <el-button size="mini" type="primary" icon="el-icon-more" circle></el-button>
                 <div class="taxBox text-size14">
                   <div class="item"><span class="w70">{{$t('desk.customer_xiaoJi')}}</span> <span class="text-right">￥{{numFormate(orderTax.total)}}</span> </div>
-                  <div class="item"><span class="w70">{{$t('desk.book_serveFee')}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{numFormate(orderTax.service)}}</span> </div>
+                  <div class="item"><span class="w70">{{$t('desk.book_serveFee')}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service == 0 ? '0' :numFormate(orderTax.service)}}</span> </div>
                   <div class="item"><span class="w70">{{$t('desk.book_costFee')}} <span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span> </span> <span class="text-right">￥{{numFormate(orderTax.taxFee)}}</span> </div>
                   <div class="item"><span class="w70">{{$t('desk.serve_heji')}}</span> <span class="text-right">￥{{numFormate(orderTax.sum)}}</span> </div>
                 </div>
@@ -425,6 +426,10 @@ export default {
         this.alert(-1, this.$t("food.common.select_rooms"));
         return false;
       }
+
+
+      params.consumTaxPrice  = this.orderTax.taxFee
+      params.servicePrice  = this.orderTax.service
       if (this.outFlag) {
         params.outFlag = 1;
       } else {
@@ -433,6 +438,7 @@ export default {
       params.userId = this.userId;
       params.storesNum = this.storesNum;
       console.log(params);
+      // return
       this.$F.doRequest(
         this,
         "/pms/dishes/dishes_place_order_pay",

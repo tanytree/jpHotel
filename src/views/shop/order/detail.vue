@@ -52,9 +52,7 @@
                     </el-table-column>
                     <el-table-column prop="goodsCount" :label="$t('shop.count')" width="50"></el-table-column>
                     <el-table-column :label="$t('shop.reset.customePrice')"  width="200">
-                      <template slot-scope="scope">
-
-
+                        <template slot-scope="scope">
                         <div v-if="scope.row.goods.categoryType == 1">
                             ¥ {{numFormate(scope.row.totalPrice)}}
                         </div>
@@ -67,7 +65,7 @@
                                 ¥ {{numFormate(scope.row.totalPrice)}}
                             </span>
                         </div>
-                      </template>
+                        </template>
                     </el-table-column>
                     <el-table-column :label="$t('food.common.status')" width="80">
                         <template slot-scope="scope">

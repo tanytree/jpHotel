@@ -529,20 +529,21 @@ export default {
       } else {
         this.form.preferentialPrice ? params.preferentialPrice : 0;
       }
-      params.preferentialPrice = params.preferentialPrice
-        ? params.preferentialPrice
-        : "";
-      params.realPayPrice =
-        parseFloat(this.getPayPrice) - this.num(params.preferentialPrice);
+      params.preferentialPrice = params.preferentialPrice ? params.preferentialPrice  : "";
+      params.realPayPrice = parseFloat(this.getPayPrice) - this.num(params.preferentialPrice);
       params.orderId = this.info.id;
       params.userId = this.userId;
       params.storesNum = this.storesNum;
+      params.consumTaxPrice  = this.orderTax.taxFee
+      params.servicePrice  = this.orderTax.service
+
+
       if (this.outFlag) {
         params.outFlag = 1;
       } else {
         params.outFlag = 2;
       }
-        // console.log(params)
+        console.log(params)
       // return
 
       this.$F.doRequest(

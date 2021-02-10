@@ -326,6 +326,9 @@ const mixin= {
                 let total = 0 //税前税后总的税钱
                 let service = 0 //服务费
                 let taxFee = 0 //消费税
+
+                let taxInFee = 0
+
                 let sum = 0 //合计
                 list.forEach(element => {
                 // for(let i in list){
@@ -359,13 +362,13 @@ const mixin= {
                            //不包含服务税
                             if(outFlag){
                                 //  1,1,fasle,out
-                              taxFee += element.totalPrice  * outConsumeTax
+                                taxFee += element.totalPrice  * outConsumeTax
                             }else{
-                              //  1,1,fasle,in
-                              taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
+                                //  1,1,fasle,in
+                                taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
                             }
                         }else{
-                            //1,2,ture,out
+                            //  1,2,ture,out
                             if(outFlag){
                                let f = 1.00 + servicePrice
                                taxFee += ( element.totalPrice/f ) * outConsumeTax
@@ -374,7 +377,16 @@ const mixin= {
                                taxFee += element.totalPrice * consumeTax
                             }
                         }
+                    }else{
+                        if(outFlag){
+                            let per = (1 - 1/(1.00 + outConsumeTax) )
+                            taxInFee += element.totalPrice * per
+                        }else{
+                            let per = (1 - 1/(1.00 + consumeTax) )
+                            taxInFee += element.totalPrice * per
+                        }
                     }
+
                     if(outFlag == false){
                         //不包含服务税
                         if(element.seviceStatus == 1){
@@ -398,6 +410,7 @@ const mixin= {
                     sum +=  parseFloat(parms[s])
                 }
                 parms.sum = sum
+                parms.taxInFee = taxInFee
                 parms.servicePrice = tax.servicePrice+'%'
                 parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
                 parms.type = outFlag ? 'out' : 'in'
