@@ -593,11 +593,12 @@ export default {
             "/pms/reserve/reserve_oper",
             params,
             (res) => {
-              this.$router.go(-1);
+              // this.$router.go(-1);
               this.$message({
                 message: this.$t("commons.request_success"),
                 type: "success",
               });
+                this.baseInfoChange();
             }
           );
         })

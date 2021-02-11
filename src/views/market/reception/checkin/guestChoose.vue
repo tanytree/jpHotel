@@ -29,7 +29,7 @@
                 </el-form-item>
                 <!--客源类型为单位时-->
                 <el-form-item style="margin-bottom: 0;margin-left: 100px" label-width="0" v-if="checkInForm.guestType == 3">
-                    <el-input v-model="checkInForm.enterName" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:5px;" size="small"></el-input>
+                    <el-input v-model="checkInForm.enterName" :placeholder="$t('desk.customer_inputUnitName')" style="width:160px;margin-left:5px;" size="small"></el-input>
                     <el-input v-model="checkInForm.enterPronunciation" :placeholder="$t('desk.customer_faying')" style="width:160px;margin-left:5px;" size="small"></el-input>
                 </el-form-item>
                 <!-- 当客人类型为团队时 -->

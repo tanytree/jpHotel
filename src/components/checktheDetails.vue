@@ -69,7 +69,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.home_idCardNumA')+ ':'" label-width="150px">
+                            <el-form-item :label="$t('desk.home_idCardNumA')+ ':'">
                                 <el-input :placeholder="$t('desk.order_inputCardNum')" v-model="roomInfo.headerObj.idcard" size="small" style="width: 200px" @keyup.native="headerObjChange(topIndex)"></el-input>
                             </el-form-item>
                         </el-col>
@@ -210,6 +210,21 @@
                 <el-button type="primary" @click="addPersonSubmit">{{$t('commons.confirm')}}</el-button>
             </div>
         </el-card>
+
+        <!-- 脏房/维修房提醒 -->
+        <el-dialog
+            top="0"
+            :show-close="false"
+            :title="$t('desk.home_roomCardOpreat')"
+            :visible.sync="checkInRoomTipVisible"
+            width="60%"
+        >
+            <div>{{checkInRoomTip}}</div>
+            <div class="bottomBottom">
+                <el-button @click="goBack">{{$t('commons.cancel')}}</el-button>
+                <el-button type="primary" @click="checkInRoomTipConfirm">{{$t('commons.confirm')}}</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -303,6 +318,9 @@ export default {
     },
     data() {
         return {
+            checkInRoomTip: '',
+            checkInRoomTipVisible: false,
+            checkInRoomTipConfirmFlag: false,
             inRoomList: [], //入住人主要信息 包括主入住人和同来宾客
             type: 1, //1： 入住人管理   2： 添加入住人 入住
             detailData: {}, //订单信息
@@ -358,6 +376,10 @@ export default {
     },
 
     methods: {
+        checkInRoomTipConfirm() {
+            this.checkInRoomTipConfirmFlag = true;
+            this.addPersonSubmit();
+        },
         headerObjChange(index) {
             this.$set(this.inRoomList, index, this.inRoomList[index]);
         },
@@ -405,6 +427,7 @@ export default {
                 e.sex = e.sex ? e.sex.toString() : '1';
                 this.$F.removeNullKey(e, true);
                 this.$F.merge(personInfo, e);
+                personInfo.phone = e.mobile;
             } else {
                 this.checkInForm.name = e;
             }
@@ -416,28 +439,33 @@ export default {
         },
 
         remoteMethod(query, cb) {
-            let params = {
-                name: query,
-                searchType: 1,
-                pageIndex: 1,
-                filter: true,
-                pageSize: 999,
-                paging: false,
+            // let params = {
+            //     name: query,
+            //     searchType: 1,
+            //     pageIndex: 1,
+            //     filter: true,
+            //     pageSize: 999,
+            //     paging: false,
+            //     storesNum: '',
+            // };
+            let searchForm = {
                 storesNum: '',
+                name: query,
+                pageIndex: 1, //当前页
+                pageSize: 100, //页数
+                paging: false,
             };
             this.$F.doRequest(
                 this,
-                "/pms/checkin/hotel_checkin_person_list",
-                params,
+                // "/pms/checkin/hotel_checkin_person_list",
+                "/pms/guestarchives/guest_archives_list",
+                searchForm,
                 (res) => {
-                    this.options = res.personList || [];
+                    this.options = res.personList || res.guestList || [];
                     this.options.forEach((element) => {
-                        element.value =
-                            element.name +
+                        element.value = `${element.name}【${element.pronunciation}】` +
                             "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
-                            (element.mobile || "") +
-                            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0" +
-                            (element.idcard ? element.idcard.slice(-4) : "");
+                            (element.mobile || "");
                     });
                     cb(this.options);
                     this.$forceUpdate();
@@ -560,20 +588,19 @@ export default {
                         if (this.type == 1) {
                             this.$router.go(-1);
                         } else {
-                            // this.fetchRoomStatus( ()=> {
-                            //
-                            // })
-                            this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
-                                this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
-                                        checkInRoomIds: checkInRoomIds.join(','),
-                                        state: 1
-                                    }, (res) => {
-                                        this.$router.push(
-                                            `/orderdetail?id=${response.checkinId}`
-                                        );
-                                    }
-                                );
-                            });
+                            this.fetchRoomStatus( ()=> {
+                                this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
+                                    this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
+                                            checkInRoomIds: checkInRoomIds.join(','),
+                                            state: 1
+                                        }, (res) => {
+                                            this.$router.push(
+                                                `/orderdetail?id=${response.checkinId}`
+                                            );
+                                        }
+                                    );
+                                });
+                            })
                         }
                     }
                 );
@@ -581,6 +608,8 @@ export default {
         },
 
         fetchRoomStatus(callback) {
+            if (this.checkInRoomTipConfirmFlag)
+                callback();
             console.log(this.currentRoom);
             let roomIds = [];
             if (this.currentRoom && this.currentRoom.roomId) {
@@ -592,12 +621,27 @@ export default {
             }
             this.$F.doRequest(this, "/pms/hotel/hotel_room_detail",
                 {
-                    roomId: roomIds,
+                    roomIds: roomIds,
                 }, (res) => {
-                    if (res.roomStatus == 2) {
-
-                    }
-                    callback()
+                    let dirtyRooms = res.filter((room) => {
+                        return room.roomStatus == 2
+                    }) || []
+                    let serviceRooms = res.filter((room) => {
+                        return room.roomStatus == 5
+                    }) || []
+                    if ((dirtyRooms && dirtyRooms.length > 0) || (serviceRooms && serviceRooms.length > 0)) {
+                        let dirtyRoomsString = '', serviceRoomsString = '', dirtyRoomsArray = [], serviceRoomsArray = [];
+                        dirtyRooms.forEach(dirtyRoom => {
+                            dirtyRoomsArray.push(dirtyRoom.houseNum);
+                        })
+                        serviceRooms.forEach(dirtyRoom => {
+                            serviceRoomsArray.push(dirtyRoom.houseNum);
+                        })
+                        this.checkInRoomTip = `脏房/维修房提醒，${dirtyRoomsArray.length > 0 ? (dirtyRoomsString.join('、') + '为脏房，') : ''}
+                        ${serviceRoomsArray.length > 0 ? (serviceRoomsArray.join('、') + '为维修房，') : ''} 是否继续办理入住`;
+                        this.checkInRoomTipVisible = true;
+                    } else
+                        callback();
                 }
             );
         },
