@@ -394,6 +394,7 @@ module.exports = {
   book_placeRowHouse: '请先排房',
   book_serveFee: '服务费',
   book_costFee: '消費税',
+  book_costFee2: '税内消費税',
   book_haveFee: '含税',
   book_noFee: '未税',
   book_wenquan: '温泉税',

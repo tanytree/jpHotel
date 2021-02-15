@@ -37,6 +37,7 @@
           <div><span>{{$t('desk.customer_xiaoJi')}}</span><span>¥ {{numFormate(getRealPayFee.total)}}；</span></div>
           <div><span>{{$t('desk.book_serveFee')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{numFormate(getRealPayFee.taxFee)}}；</span></div>
           <div><span>{{$t('desk.book_costFee')}}（{{getRealPayFee.servicePrice}}）</span><span>¥{{numFormate(getRealPayFee.service)}}；</span></div>
+          <div><span>{{$t('desk.book_costFee2')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{numFormate(getRealPayFee.taxInFee)}}；</span></div>
           <div><span>{{$t('desk.book_wenquan')}}</span><span>¥{{numFormate(getRealPayFee.priceType15)}}；</span></div>
           <div><span>{{$t('desk.book_liveFee')}}</span><span>¥{{numFormate(getRealPayFee.priceType16)}}；</span></div>
           <div><span>{{$t('desk.serve_heji')}}</span><span>¥{{numFormate(getRealPayFee.sum)}}；</span></div>
@@ -149,6 +150,7 @@ export default {
     getRealPayFee(){
         //tax
         let list = this.consumeOrderList
+        // console.log(list)
         let tax = this.taxInfo
         let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
         let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
@@ -157,7 +159,7 @@ export default {
         let service = 0 //服务费
         let taxFee = 0 //消费税
         let sum = 0 //合计
-
+        let taxInFee = 0 //税内消费税综合
         let priceType15 = 0 //温泉税
         let priceType16 = 0  //住宿税
         // let priceTypeList = [5,6,7,8,12,14,15,16,17,18]
@@ -170,42 +172,85 @@ export default {
         //迷你吧那边计算的时候需要把税算上 未计算需要开发
         //计算 5 6 12三种房费的服务费和税  计算in类型的税率和费率
         list.forEach(element => {
-            console.log('消费税' + element.taxStatus)
-            console.log('服务费' +element.seviceStatus)
+            // console.log('消费税' + element.taxStatus)
+            // console.log('服务费' +element.seviceStatus)
+            // console.log(element)
             if(element.state == 1){
                 let priceType = element.priceType
                 console.log('财务类型' +priceType)
                 total += parseFloat(element.consumePrice ? element.consumePrice : 0)
-                if(priceType == 5 || priceType == 6 || priceType == 12){
-                    if(element.taxStatus == 1){
-                        taxFee +=  parseFloat(element.realPrice)  * consumeTax
+                //---------------------------
+                //计算包含消费税的明细中的商品
+                if(element.taxStatus == 2){
+                    //迷你吧
+                    if(priceType == 8){
+                        let goodsList = element.goodsList || []
+                        goodsList.forEach(v =>{
+                            if(v.goodsObj.taxStatus == 2){
+                                taxInFee +=  this.getTaxIn(consumeTax,v.totalPrice)
+                            }
+                        })
                     }
-                    if(element.seviceStatus == 1){
-                        service += parseFloat(element.realPrice) * consumeTax
+                    //餐费
+                    if(priceType == 14){
+                        let disherOrderSubList = element.disherOrderSubList || []
+                        disherOrderSubList.forEach(v =>{
+                            if(v.taxStatus == 2){
+                                taxInFee +=  this.getTaxIn(consumeTax,v.totalPrice)
+                            }
+                        })
+                    }
+                    //17早餐  //18餐晚
+                    if(priceType == 17 || priceType == 18){
+                        let attachMealObj = element.attachMealObj
+                        if(attachMealObj.taxStatus == 2){
+                            taxInFee +=  this.getTaxIn(consumeTax,mealPrice)
+                        }
+                    }
+
+
+                    //商品
+                    if(priceType == 22){
+                        let shopOrderSubList = element.shopOrderSubList || []
+                        shopOrderSubList.forEach(v =>{
+                            if(v.goods.taxStatus == 2){
+                                taxInFee +=  this.getTaxIn(consumeTax,v.totalPrice)
+                            }
+                        })
                     }
                 }
+                //---------------------------
+                // if(priceType == 5 || priceType == 6 || priceType == 12){
+                    // if(element.taxStatus == 1){
+                taxFee +=  parseFloat(element.consumTaxPrice)
+                    // }
+                    // if(element.seviceStatus == 1){
+                service += parseFloat(element.servicePrice)
+                    // }
+                // }
                 if(priceType == 15){
-                    console.log(priceType +':' +this.F_priceType(priceType))
+                    // console.log(priceType +':' +this.F_priceType(priceType))
                     priceType15 = parseFloat(element.consumePrice)
                 }
                 if(priceType == 16){
-                    console.log(priceType +':' +this.F_priceType(priceType))
+                    // console.log(priceType +':' +this.F_priceType(priceType))
                     priceType16 = parseFloat(element.consumePrice)
                 }
 
                 console.log(priceType +':' +this.F_priceType(priceType))
-                // console.log(element.consumePrice)
+                console.log(element.consumePrice)
                 console.log(element)
             }
         });
 
-        sum = total + taxFee + service
+        sum = total
         console.log('小计：'+total)
         console.log('合计：'+sum)
-        console.log('服务费：'+taxFee)
-        console.log('服务费率：'+tax.consumeTax+'%')
-        console.log('消费税：'+service)
-        console.log('消费税率：'+tax.servicePrice+'%')
+        console.log('消费税：'+taxFee)
+        console.log('税内消费税：'+taxInFee)
+        console.log('消费税率：'+tax.consumeTax+'%')
+        console.log('服务费：'+service)
+        console.log('服务费率：'+tax.servicePrice+'%')
         console.log('温泉税：'+ priceType15)
         console.log('住宿税：'+ priceType16)
         let preferentialPrice = this.checkoutForm.preferentialPrice !=''&&this.checkoutForm.preferentialPrice > 0 ? parseFloat(this.checkoutForm.preferentialPrice) : 0
@@ -213,6 +258,7 @@ export default {
             total:total,
             sum:sum,
             taxFee:taxFee+service,
+            taxInFee:taxInFee,
             consumeTax:tax.consumeTax+'%',
             service:service,
             servicePrice:tax.servicePrice+'%',

@@ -227,6 +227,12 @@ let mixin = {
             }
 
         },
+		
+		getTaxIn(tax,price){
+			let per = (1 - 1/(1.00 + tax) )
+			let taxInFee = price * per
+			return taxInFee
+		}
 
 
     }

@@ -179,24 +179,44 @@ export default {
       );
     },
 
-    //计算附餐种类的消费税和服务费总和
+    //计算附餐种类的消费税和服务费
     getTaxServerFee(obj){
         let tax = this.tax
         let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
         // let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
         let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
-        let fcSum = 0  //消费税金额
-        let fcSerFee = 0 //服务费金额
-        
-        
-        
-        if(obj.taxStatus == 1){
-            fcSum += obj.consumePrice * consumeTax
+        let service = 0 //服务费
+        let taxFee = 0 //消费税
+        let total = 0
+        if(this.currentRoom.taxStatus == 1){
+        	if(this.currentRoom.seviceStatus == 1){
+        	   //不包含服务税
+        	   //  1,1,fasle,in
+        		taxFee += ( obj.consumePrice + obj.consumePrice * servicePrice ) * consumeTax
+        		// taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
+        	}else{
+        	   //1,2,false,in
+        	   taxFee += obj.consumePrice * consumeTax
+        	}
         }
-        if(obj.seviceStatus == 1){
-            fcSerFee += obj.consumePrice * servicePrice
+        //不包含服务税
+        if(this.currentRoom.seviceStatus == 1){
+        	//不包含消费税
+        	if(this.currentRoom.taxStatus == 1){
+        		service += obj.consumePrice * servicePrice
+        	}else{
+        		//包含消费税
+        		let f = 1.00 + consumeTax
+        		service += (obj.consumePrice / f) * servicePrice
+        	}
         }
-        return  fcSum + fcSerFee
+        let pms = {
+        	service: service ? parseFloat(service) :0,
+        	taxFee:taxFee ? parseFloat(taxFee) : 0,
+        	total: service +  taxFee
+        }
+        // console.log(pms)
+        return pms
     },
 
     consumeOper(params = {}) {
@@ -213,24 +233,38 @@ export default {
       params.state = 1;
       // return
       if (this.sideForm.attachMealIdBreatfast) {
-          params.priceType = 17;
-          params.attachMealId = this.sideForm.attachMealIdBreatfast
-          params.consumePrice = this.currentHotelAttaChamealBreakfast.consumePrice + this.getTaxServerFee(this.currentHotelAttaChamealBreakfast)
-          params.attachMealCount  = this.currentHotelAttaChamealBreakfast.attachMealCount
-          this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-              this.visible = false;
-              this.$emit("getOrderDetail");
-          });
+        let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast)
+        // console.log('1')
+        // console.log(all)
+        params.priceType = 17;
+        params.attachMealId = this.sideForm.attachMealIdBreatfast
+        params.consumePrice = this.currentHotelAttaChamealBreakfast.consumePrice + all.total
+        params.attachMealCount  = this.currentHotelAttaChamealBreakfast.attachMealCount
+        params.consumTaxPrice  = all.taxFee
+        params.servicePrice  = all.service
+        // console.log(params)
+        // return
+        this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+            this.visible = false;
+            this.$emit("getOrderDetail");
+        });
       }
       if (this.sideForm.attachMealIdDinner) {
-          params.priceType = 18;
-          params.attachMealId = this.sideForm.attachMealIdDinner
-          params.consumePrice = this.currentHotelAttaChamealDinner.consumePrice + this.getTaxServerFee(this.currentHotelAttaChamealDinner)
-          params.attachMealCount  = this.currentHotelAttaChamealDinner.attachMealCount
-          this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-              this.visible = false;
-              this.$emit("getOrderDetail");
-          });
+        let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner)
+        // console.log('2')
+        // console.log(att)
+        params.priceType = 18;
+        params.attachMealId = this.sideForm.attachMealIdDinner
+        params.consumePrice = this.currentHotelAttaChamealDinner.consumePrice  + att.total
+        params.attachMealCount  = this.currentHotelAttaChamealDinner.attachMealCount
+        params.consumTaxPrice  = att.taxFee
+        params.servicePrice  = att.service
+        // console.log(params)
+        // return
+        this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+        this.visible = false;
+        this.$emit("getOrderDetail");
+        });
       }
 
     },

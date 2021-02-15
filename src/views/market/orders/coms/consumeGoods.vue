@@ -478,6 +478,10 @@ export default {
             params.goodsTotal = this.taxInfo.sum
 
 
+            params.consumTaxPrice  =  this.taxInfo.taxFee
+            params.servicePrice  =  this.taxInfo.service
+
+
 
 
             let roomList = this.detailData.inRoomList
@@ -520,6 +524,7 @@ export default {
             }
             params.goodsJson = JSON.stringify(Json)
             console.log(params)
+            // return
             this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
                 this.consumeOperForm.remark = ''
                 this.consumeOperForm.roorId = ''

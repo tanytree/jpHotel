@@ -977,6 +977,7 @@ module.exports = {
   order_todayBack: "日帰り",
   book_serveFee: 'サービス料',
   book_costFee: '消费税',
+  book_costFee2: '税内消費税',
   book_haveFee: '税込',
   book_noFee: '税抜き',
   book_wenquan: '入湯税',

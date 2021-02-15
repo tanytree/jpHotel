@@ -844,21 +844,50 @@ export default {
                 let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
                 let consumePrices = this.consumeOperForm.consumePrices
                 let priceType =  this.consumeOperForm.priceType
-                let rzSum = 0
-                let rzSerFee = 0
+                // let rzSum = 0
+                // let rzSerFee = 0
+
+
+                let service = 0 //服务费
+                let taxFee = 0 //消费税
+
+
                 if(priceType == 5 || priceType == 6){
                     if(this.currentRoom.taxStatus == 1){
-                        rzSum += consumePrices * consumeTax
+                        if(this.currentRoom.seviceStatus == 1){
+                           //不包含服务税
+                           //  1,1,fasle,in
+                            taxFee += ( consumePrices + consumePrices * servicePrice ) * consumeTax
+                            // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
+                        }else{
+                           //1,2,false,in
+                           taxFee += consumePrices * consumeTax
+                        }
                     }
+                    //不包含服务税
                     if(this.currentRoom.seviceStatus == 1){
-                        rzSerFee += consumePrices * servicePrice
+                        //不包含消费税
+                        if(this.currentRoom.taxStatus == 1){
+                            service += consumePrices * servicePrice
+                        }else{
+                            //包含消费税
+                            let f = 1.00 + consumeTax
+                            service += (consumePrices / f) * servicePrice
+                        }
                     }
+                    let pms = {
+                        service: service ? parseFloat(service).toFixed(0) :0,
+                        taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
+                    }
+                    console.log('消费/服务费'+pms)
                 }
+                params.consumTaxPrice  = taxFee
+                params.servicePrice  = service
                 // console.log(rzSum)
                 // console.log(rzSerFee)
-                params.consumePrice = this.consumeOperForm.consumePrices + rzSum + rzSerFee
+                params.consumePrice = this.consumeOperForm.consumePrices + service + taxFee
 
-
+                // return
 
                 // console.log(tax)
                 // console.log(this.consumeOperForm.consumePrices)
@@ -909,10 +938,10 @@ export default {
 
             //冲调
             if (type == 3) {
-                if(parseFloat(this.consumeOperForm.consumePrices) > parseFloat(this.destructionList[0].payPrice)){
-                    this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
-                    return;
-                }
+                // if(parseFloat(this.consumeOperForm.consumePrices) > parseFloat(this.destructionList[0].payPrice)){
+                //     this.$message.error(this.$t('desk.order_partComShould') +  parseFloat(this.destructionList[0].payPrice));
+                //     return;
+                // }
                 let priceType  =  this.destructionList[0].priceType
                 // if(priceType == 9){
                 //     this.$message.error('已冲调记录不能被冲调!')

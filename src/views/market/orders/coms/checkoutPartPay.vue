@@ -180,14 +180,19 @@ export default {
             let priceType = element.priceType
             let consume = element.consumePrice ? element.consumePrice : 0
             total += parseFloat(consume)
-            if(priceType == 5 || priceType == 6 || priceType == 12){
-                if(element.taxStatus == 1){
-                    taxFee +=  parseFloat(element.realPrice)  * consumeTax
-                }
-                if(element.seviceStatus == 1){
-                    service += parseFloat(element.realPrice) * consumeTax
-                }
-            }
+            // if(priceType == 5 || priceType == 6 || priceType == 12){
+            //     if(element.taxStatus == 1){
+            //         taxFee +=  parseFloat(element.realPrice)  * consumeTax
+            //     }
+            //     if(element.seviceStatus == 1){
+            //         service += parseFloat(element.realPrice) * consumeTax
+            //     }
+            // }
+            taxFee +=  parseFloat(element.consumTaxPrice)
+                // }
+                // if(element.seviceStatus == 1){
+            service += parseFloat(element.servicePrice)
+            
             if(priceType == 15){
                 console.log(priceType +':' +this.F_priceType(priceType))
                 priceType15 = parseFloat(consume)
@@ -202,7 +207,7 @@ export default {
             console.log(element)
         });
 
-        sum = total + taxFee + service
+        sum = total
         console.log('小计：'+total)
         console.log('合计：'+sum)
         console.log('服务费：'+taxFee)
