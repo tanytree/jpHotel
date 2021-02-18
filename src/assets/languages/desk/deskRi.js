@@ -26,6 +26,7 @@ module.exports = {
   keepTime: 'ほりゅうじかん',
   autoRowHouse: '自動アサイン',
   rowHouse: 'アサイン',
+  rowHouseA: '予約入力',
   roomInfoDesc: '部屋情報',
   customerInfoDesc: '顧客情報',
   payTotal: '支払済合計金額',
@@ -114,7 +115,7 @@ module.exports = {
   home_deskPhoneA: 'フロント電話',
   home_hotelAddress: 'ホテル住所',
   home_hotelAddressA: '住所',
-  home_telNum: '自宅電話番号',
+  home_telNum: '電話番号',
   home_telNumA: '電話',
   home_telNum1: '自宅電話1',
   home_telNum2: '自宅電話2',
@@ -1044,6 +1045,7 @@ module.exports = {
   add_notDo: '朝食、夕食計上操作は一緒にできません',
   add_getPackage: 'プラン・食事',
   add_receiptNo: '領収書番号',
+  add_membership: '会員データ',
 
 
 

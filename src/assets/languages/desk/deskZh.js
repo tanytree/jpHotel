@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-02-04 18:40:36
+ * @LastEditTime: 2021-02-18 11:10:29
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -26,6 +26,7 @@ module.exports = {
   keepTime: '保留时间',
   autoRowHouse: '自动排房',
   rowHouse: '排房',
+  rowHouseA: '排房',
   roomInfoDesc: '房间信息',
   customerInfoDesc: '客户信息',
   payTotal: '付款合计',
@@ -1076,7 +1077,7 @@ module.exports = {
   add_notDo: '不可同时进行早餐，晚餐附餐入账操作',
   add_getPackage: '收费套餐',
   add_receiptNo: '收据号码',
-  add_: '',
+  add_membership: '会员资料',
   add_: '',
   add_: '',
   add_: '',

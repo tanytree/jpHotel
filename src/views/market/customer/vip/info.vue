@@ -108,7 +108,7 @@
             <el-option v-for="item in smembertypeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="会员资料:" label-width="90px" required>
+        <el-form-item :label="$t('desk.add_membership')+':'" label-width="90px" required>
           <el-upload ref="upload" action="aa" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload='false' :on-change='changeFile' :limit="1" :multiple="false" accept=".xls,.xlsx" :on-exceed="handleExceed" :file-list="fileList">
             <el-button size="middle" slot="trigger" style="width:120px;" type="text">{{$t('desk.add_selectFile')}}</el-button>
             <div slot="tip" style="marginTop:-15px;"><span>{{$t('commons.tip_desc')}}：</span> {{$t('desk.add_onlySupport')}}</div>

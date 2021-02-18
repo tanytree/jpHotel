@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 17:40:35
+ * @LastEditTime: 2021-02-18 10:55:32
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -119,6 +119,13 @@
             </el-form>
             <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules" label-width="120px"
                      v-if=" operCheckinType == 'b1' || operCheckinType == 'b2' || operCheckinType == 'b3'">
+                <el-form-item :label="$t('desk.order_sourceType')" prop="guestType" label-width="140px">
+                    <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
+                        <template slot="append">
+                            <span @click="popup('guestTypeShow')">…</span>
+                        </template>
+                    </el-input>
+                </el-form-item>
                 <el-form-item :label="$t('desk.customer_reservePerson')" :required="true">
                     <el-row>
                         <el-col :span="12">
@@ -222,13 +229,7 @@
 <!--                    ></el-date-picker>-->
 <!--                </el-form-item>-->
 
-                <el-form-item :label="$t('desk.order_sourceType')" prop="guestType" label-width="140px">
-                    <el-input type="input" :value="$t('commons.guestType')[checkInForm.guestType]" :disabled="true">
-                        <template slot="append">
-                            <span @click="popup('guestTypeShow')">…</span>
-                        </template>
-                    </el-input>
-                </el-form-item>
+              
                 <el-form-item
                     :label="$t('desk.customer_payType')"
                     v-if="operCheckinType != 'b3'"

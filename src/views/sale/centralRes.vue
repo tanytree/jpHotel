@@ -55,7 +55,7 @@
         </el-table>
       </el-row>
     </el-row>
-    <el-dialog top="0" :visible.sync="reserveShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="1400px">
+    <el-dialog top="0" :visible.sync="reserveShow" class="rowRoomDia" :title="$t('desk.rowHouseA')" width="1400px">
       <normal :selectStoresNum="selectStoresNum" operCheckinType="b1" ref="normal" @cancel="cancel"></normal>
     </el-dialog>
   </div>

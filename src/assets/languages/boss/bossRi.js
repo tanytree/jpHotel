@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 15:58:47
+ * @LastEditTime: 2021-02-18 10:39:57
  * @FilePath: \jiudian\src\assets\languages\boss\bossRi.js
  */
 
@@ -283,7 +283,7 @@ module.exports = {
   add_roomDetail: '予約可能部屋数',
   add_onePeople: '１人',
   add_peopleLivePrice: '人',
-  add_normalBook: '一般予約',
+  add_normalBook: '予約',
   add_noHaveInfo: '該当ホテル利用可能部屋はございません',
   report_goodsKinds: '付帯・商品別売上一覧（月次）',
   add_queryText: '検索キーワード',
