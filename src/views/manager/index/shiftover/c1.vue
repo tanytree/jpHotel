@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-09 17:05:40
+ * @LastEditTime: 2021-02-18 15:37:32
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -78,17 +78,17 @@
           </el-col>
           <el-col :span="5">
             <div class="item">
-              本班现金收款：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+             {{$t('manager.add_nowCashGetA')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
           <el-col :span="5">
             <div class="item">
-             本班信用卡收款：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+             {{$t('manager.add_nowCardGetA')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
           <el-col :span="5">
             <div class="item">
-              本班其他收款：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+              {{$t('desk.add_otherGetA')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
         </div>

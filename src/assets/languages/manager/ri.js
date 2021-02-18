@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 15:35:26
+ * @LastEditTime: 2021-02-18 17:49:22
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -538,7 +538,7 @@ module.exports = {
   add_newDoorPri: '新宿泊料金',
   add_nowTime: '只今の時間',
   add_chooseTime: '時間を選択して下さい',
-  add_peoplePrice: '金額/人',
+  add_peoplePrice: '人/',
   add_onlyLive: '素泊まり',
   add_liveAzao: '1泊朝食付き',
   add_liveAwan: '1泊夕食付き',
@@ -559,15 +559,15 @@ module.exports = {
   add_changeDetail: '交替詳細',
   add_pettyCash: 'レジ金設定額',
   add_nowCashGet: '本シフト現金入金',
-  add_nowCashGetA: 'キャッシュ入金',
+  add_nowCashGetA: 'キャッシュ',
   add_nowPettyDown: '繰越レジ金',
   add_lastHold: '受継・金額',
   add_nowCardGet: 'クレジット入金',
-  add_nowCardGetA: 'クレジットカード入金',
+  add_nowCardGetA: 'クレジットカード',
   add_nowBillGet: '売掛入金',
   add_nowBillUp: '売掛入金',
   add_nowBillPrice: '売掛入金',
-  add_allDepartment: 'ALLセクション',
+  add_allDepartment: 'ALL',
   add_start: '起用',
   grsl_doorPri: '調整前1泊2食付1名料金',
   grsl_newLivePri: '新宿泊料金（素泊まり）',
@@ -593,6 +593,8 @@ module.exports = {
   hk_chamberA: '宴会・会場',
   add_nowBillGetA: '料飲/部屋付',
   add_nowBillGetB: '付帯/部屋付',
+  add_flightTime: 'シフト時間',
+  add_chooseDate: '時間設定',
 
 
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 11:24:16
+ * @LastEditTime: 2021-02-18 12:02:29
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -138,7 +138,7 @@
             </el-collapse>
 
             <!--表格数据 -->
-            <el-table ref="multipleTable" v-loading="loading" border :data="tableData"  header-row-class-name="default" size="small">
+            <el-table ref="multipleTable" v-loading="loading" border :data="tableData"  height="100%" header-row-class-name="default" size="small">
                 <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')" width="140px">
                     <template slot-scope="{ row }">
                         <div>

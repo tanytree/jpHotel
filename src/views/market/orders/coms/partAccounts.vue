@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 18:35:27
+ * @LastEditTime: 2021-02-18 17:21:03
  * @FilePath: \jiudian\src\views\market\orders\coms\partAccounts.vue
  -->
 <template>
@@ -128,7 +128,10 @@ export default {
         consume_oper() {
             let list = this.multipleSelection
             if(list.length == 0){
-                alert('请选择一个项目')
+              this.$message({
+                message: this.$t('desk.home_onePrograme'),
+                type: 'warning'
+              });
                 return false
             }
             this.$refs.checkoutPart.resetVisibel(list)

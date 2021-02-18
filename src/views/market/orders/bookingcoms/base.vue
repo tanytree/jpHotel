@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 17:39:32
+ * @LastEditTime: 2021-02-18 14:50:44
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\base.vue
  -->
 <template>
@@ -9,8 +9,8 @@
     <el-row class="clearfix">
       <div class="fr">
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
-        <el-button size="small" plain @click="addRoom" :disabled="roomLeaves || detailData.checkIn.state == 8">{{$t('desk.order_addRoom')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(1)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{$t('desk.order_livePeopleManegerment')}}</el-button>
+        <el-button size="small" plain @click="addRoom" :disabled="roomLeaves || detailData.checkIn.state == 8">{{checkinInfo.operCheckinType==3?$t('desk.order_addRoomA'):$t('desk.order_addRoom')}}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(1,checkinInfo.operCheckinType)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{checkinInfo.operCheckinType==3?$t('desk.order_livePeopleManegermentA'):$t('desk.order_livePeopleManegerment')}}</el-button>
         <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{ $t("desk.batchCheckin") }}</el-button>
         <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')"
                    :disabled="(roomLeaves && checkinInfo.state != 1 && checkinInfo.state != 2) || detailData.checkIn.state == 8">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -75,6 +75,9 @@
       <el-row>
         <el-col :span="6">
           <div>{{$t('desk.order_sourceType')}}：{{ F_guestType(checkinInfo.guestType) }}</div>
+        </el-col>
+        <el-col :span="6" v-if="checkinInfo.guestType == 3">
+          <div>{{$t('desk.customer_unitNameA')}}：{{ checkinInfo.enterName }}【{{checkinInfo.enterPronunciation}}】</div>
         </el-col>
         <el-col :span="6" v-if="checkinInfo.guestType == 4">
           <div>{{$t('desk.book_teamName')}}：{{ checkinInfo.teamName }}【{{checkinInfo.teamPronunciation}}】</div>
@@ -520,7 +523,7 @@ export default {
       this.$refs.rowRoomHandle.initForm(this.reserveId, this.checkinInfo, arr, 1, 2);
     },
     //跳转到入住详情
-    goCheckinDetail(type) {
+    goCheckinDetail(type,ifMeeting) {
         if (this.noCheckinFlag) {
             this.$router.push({
                 name: "checktheDetails",
@@ -528,6 +531,7 @@ export default {
                     detailData: this.detailData,
                     currentRoom: this.currentRoom,
                     type: type,
+                    ifMeeting:ifMeeting
                 },
             });
         } else {

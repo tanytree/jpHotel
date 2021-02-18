@@ -36,7 +36,7 @@
 								<span style=" cursor: pointer !important;"  v-if="scope.row.roomType.roomType == 1" v-html="getDateP(item, scope.$index)">
 								</span>
 								<!-- @click="popup('single', scope.row, item)" -->
-								<span style=" cursor: pointer !important;"  v-html="getDateT(item, scope.$index)" v-else>
+								<span style=" cursor: pointer !important;" v-else  v-html="getDateT(item, scope.$index)" >
 								    <!-- {{item.onePrice}} -->
 								</span>
 							</div>
@@ -384,7 +384,6 @@ export default {
 			},
 			// 客房部操作数据
 		    getDateP(item, topIndex) {
-          console.log(item);
 		        // item 是dateList里面时间
                 if (this.dayPriceList && this.dayPriceList.length > 0) {
                     let newArray = this.dayPriceList.filter(dayPrice => {
@@ -396,7 +395,7 @@ export default {
                             priseList.push(temp.newCustomPrice);
                         })
                         let result = '';
-                        priseList.forEach((c, d) => {
+                        priseList.forEach((c, d) => {   
                             if(topIndex == 0) { //纯住宿
                                 result += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(priseList[d])+ '<br/>'
                             } else if(topIndex== 1) {  //住宿+早
@@ -408,6 +407,7 @@ export default {
                             }
                         })
                         return result;
+
                     }
                 }
                 return item.roomTypePrises[topIndex]
@@ -586,13 +586,13 @@ export default {
                                         });
                                         arry.forEach((c, d) => {
                                             if(index == 0) { //纯住宿
-                                                stay += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(arr[d]) + '<br/>'
+                                                stay += `${d+1}`+this.$t('manager.add_peoplePrice') +this.$F.numFormate( Number(arr[d]) )+ '<br/>'
                                             } else if(index== 1) {  //住宿+早
-                                                stayX += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0))  + '<br/>'
+                                                stayX += `${d+1}`+this.$t('manager.add_peoplePrice') +this.$F.numFormate( Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0)))  + '<br/>'
                                             } else if (index== 2) {  //住宿+晚餐
-                                                stayY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                                stayY += `${d+1}`+this.$t('manager.add_peoplePrice') +this.$F.numFormate( Number(Number(arr[d]) + Number(value.roomType.mealDinnerObject.mealPrice || 0))) + '<br/>'
                                             } else if (index== 3) { //住宿+晚餐+早餐
-                                                stayXY += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0))  + '<br/>'
+                                                stayXY += `${d+1}`+this.$t('manager.add_peoplePrice') + this.$F.numFormate(Number(Number(arr[d]) + Number(value.roomType.mealBreakfastObject.mealPrice || 0) + Number(value.roomType.mealDinnerObject.mealPrice || 0)))  + '<br/>'
                                             }
                                         })
                                         roomTypePrises.push(stay);

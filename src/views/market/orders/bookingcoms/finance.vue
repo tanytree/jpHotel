@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 10:05:25
+ * @LastEditTime: 2021-02-18 18:02:59
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
@@ -133,7 +133,7 @@
             </div>
         </el-dialog>
         <!--交订金-->
-        <el-dialog top="0" :title="$t('desk.order_payDeposit')" :visible.sync="depositShow">
+        <el-dialog top="0" :title="$t('desk.order_payDepositA')" :visible.sync="depositShow">
             <el-form
                 :model="consumeOperForm"
                 ref="deposit"
@@ -186,7 +186,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="depositShow = false">{{ $t('commons.close') }}</el-button>
-                <el-button type="primary" @click="consume_oper(1, 'deposit')">{{ $t('desk.customer_settlement') }}
+                <el-button type="primary" @click="consume_oper(1, 'deposit')">{{ $t('commons.confirm') }}
                 </el-button>
             </div>
         </el-dialog>

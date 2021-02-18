@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 10:55:32
+ * @LastEditTime: 2021-02-18 11:58:48
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -14,7 +14,7 @@
                 {{ $t("desk.order_bookOrderInfo") }}
             </h3>
             <h3 v-if="operCheckinType == 'b3'">
-                {{ $t("desk.serve_conferenceInfo") }}
+                {{ $t("desk.serve_conferenceInfoA") }}
             </h3>
             <el-form ref="checkInForm" class="inForm" inline size="small" :model="checkInForm" :rules="rules"
                      label-width="130px" v-if="operCheckinType == 'a1' || operCheckinType == 'a2'">
@@ -184,7 +184,7 @@
 <!--                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>-->
 <!--                    </el-select>-->
 <!--                </el-form-item>-->
-                <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
+                <el-form-item :label="operCheckinType == 'b3'?$t('desk.arrivalTimeA'):$t('desk.arrivalTime')" prop="checkinTime">
                     <el-date-picker
                         v-model="checkInForm.checkinTime"
                         type="datetime"
@@ -247,7 +247,7 @@
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
                 <template v-if="operCheckinType == 'b3'">
-                    <el-form-item :label="$t('desk.book_meetName') + '：'" prop="meetingName">
+                    <el-form-item :label="$t('desk.book_meetNameA') + '：'" prop="meetingName">
                         <el-input v-model="checkInForm.meetingName"></el-input>
                     </el-form-item>
                     <el-form-item :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">
@@ -276,7 +276,7 @@
             </el-form>
         </div>
         <div class="content last">
-            <h3>{{ $t("desk.roomInfoDesc") }}</h3>
+            <h3>{{ operCheckinType == 'b3'?$t("desk.roomInfoDescA"):$t("desk.roomInfoDesc") }}</h3>
             <div class="roomMsg">
                 <div class="left">
                     <el-form inline size="small" v-if="operCheckinType != 'b3'">
@@ -297,7 +297,7 @@
                                 <div class="row">
 <!--                                    <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>-->
                                     <div style="float: right">
-                                        <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
+                                        <span>{{operCheckinType == 'b3'?$t('desk.home_onePeopleLiveA'):$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                     </div>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 17:15:27
+ * @LastEditTime: 2021-02-18 18:06:02
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -65,7 +65,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="visible=false">{{ $t('commons.close') }}</el-button>
-      <el-button type="primary" @click="consumeOper">{{$t('desk.enterAccount')}}</el-button>
+      <el-button type="primary" @click="consumeOper">{{$t('desk.enterAccountC')}}</el-button>
     </div>
   </el-dialog>
 </template>

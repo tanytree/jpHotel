@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-02 15:25:21
+ * @LastEditTime: 2021-02-18 15:18:59
  * @FilePath: \jiudian\src\views\market\customer\history.vue
  -->
 
@@ -18,7 +18,7 @@
           <el-input v-model="searchForm.name" class="width150"></el-input>
         </el-form-item>
 
-        <el-form-item :label="$t('desk.order_moblePhone') + ':'">
+        <el-form-item :label="$t('desk.home_telNum') + ':'">
           <el-input v-model="searchForm.mobile" class="width150"></el-input>
         </el-form-item>
         <el-form-item>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 15:15:48
+ * @LastEditTime: 2021-02-18 15:07:17
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
@@ -12,7 +12,7 @@
                 <div class="headerBox">
                     <span class="point" @click="goBack">{{$t('desk.order_bookOrderInfo')}}</span>
                     <span style="margin: 0 5px">></span>
-                    <span style="font-size: 16px">{{$t('desk.order_livePeopleManegerment')}}</span>
+                    <span style="font-size: 16px">{{ifMeeting==3?$t('desk.order_livePeopleManegermentA'):$t('desk.order_livePeopleManegerment')}}</span>
                 </div>
             </div>
             <div class="infoBlock" v-for="(roomInfo, topIndex) of inRoomList" :key="topIndex">
@@ -20,7 +20,7 @@
                 <el-form ref="form" :model="form" label-width="100px" inline>
                     <el-row>
                         <el-col :span="6">
-                            <el-form-item :label="$t('manager.hk_livePrice') + ':'">
+                            <el-form-item :label="(ifMeeting==3?$t('desk.home_onePeopleLiveA'):$t('manager.hk_livePrice'))+':'">
 <!--                                <el-input v-model.number="roomInfo.headerObj.housePrice" size="small" style="width: 200px"></el-input>-->
                                 <el-select v-model="roomInfo.headerObj.housePrice" :class="roomInfo.headerObj.housePrice === 'defined' ? 'width-100' : 'width-200'">
                                     <el-option v-for="(item,i) in roomInfo.priceList" :key="i" :label="item.label" :value="item.value"></el-option>
@@ -30,7 +30,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item :label="$t('desk.customer_livePeople')+ ':'">
+                            <el-form-item :label="(ifMeeting==3?$t('desk.customer_livePeopleA'):$t('desk.customer_livePeople'))+':'">
                                 <el-autocomplete
                                     style="width: 100px"
                                     v-model="roomInfo.headerObj.name"
@@ -232,6 +232,8 @@
 export default {
     props: ["checkinType", "checkInDetail"],
     mounted() {
+      this.ifMeeting = this.$route.params.ifMeeting;
+      console.log(this.ifMeeting);
         // type: checkin: 前台入住  1：入住人管理  2：批量入住  3：单个房间入住
         if (this.checkinType) {
             //当是从前台办理过来的请求
@@ -368,6 +370,7 @@ export default {
             //附餐列表
             breakfastList: [], //早餐
             dinnerList: [], //晚餐
+            ifMeeting:'',
         };
     },
 
@@ -392,7 +395,8 @@ export default {
             };
             this.$F.doRequest(
                 this, "/pms/hotel/hotel_price_guest_chamber_list", params, (res) => {
-                    let array = res.roomType.personPrice.split(',');
+                  if(res.roomType.personPrice){
+                     let array = res.roomType.personPrice.split(',');
                     object.priceList = [];
                     array.forEach((price, i) => {
                         object.priceList.push({
@@ -405,6 +409,8 @@ export default {
                         value: 'defined'
                     })
                     this.$forceUpdate()
+                  }
+                   
                 }
             )
         },

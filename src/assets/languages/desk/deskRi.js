@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-09 14:58:00
+ * @LastEditTime: 2021-02-18 16:59:29
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -28,6 +28,7 @@ module.exports = {
   rowHouse: 'アサイン',
   rowHouseA: '予約入力',
   roomInfoDesc: '部屋情報',
+  roomInfoDescA: '会場・個室情報',
   customerInfoDesc: '顧客情報',
   payTotal: '支払済合計金額',
   payTotalB: '支払済',
@@ -58,6 +59,7 @@ module.exports = {
   enterAccountB: '会計入力',
   checkInDays: '滞在日数',
   arrivalTime: 'C/I時間',
+  arrivalTimeA: '到着予定',
   reservePersonDesc: '予約者',
   downPayment: '予約金',
   downPaymentA: '前受金',
@@ -158,6 +160,7 @@ module.exports = {
   serve_basicInfo: '基本情報',
   serve_basicInfoA: '基本情報',
   serve_flight: '締め日',
+  serve_flightA: 'シフト番号',
   serve_startAend: '開始−終了',
   serve_open: '始',
   serve_openA: '自',
@@ -225,6 +228,7 @@ module.exports = {
   book_name: '名称',
   book_unit: '会社',
   book_meetName: '会議名',
+  book_meetNameA: '会議・宴会名',
   book_MeetstartAend: '開始〜終了時間',
   book_traveler: '一般',
   book_travelerA: '一般客',
@@ -426,6 +430,7 @@ module.exports = {
   customer_guestRoom: '客室',
   customer_leaveStoreDate: 'C/O日',
   customer_livePeople: '宿泊者',
+  customer_livePeopleA: '主催者',
   customer_reservePerson: '予約者',
   customer_liveToleave: 'C/I−C/O日',
   customer_arrived: 'C/I',
@@ -716,8 +721,8 @@ module.exports = {
   home_chooseNeedRoom: '要清掃/清掃済を選択してください',
   home_selected: '選択済',
   home_allSelected: '全部',
-  home_bulkDirty: '一括未清掃',
-  home_bulkClear: '一括清掃済み',
+  home_bulkDirty: '一括「掃済指示」の設定です。',
+  home_bulkClear: '一括「清掃済」の設定です。',
   home_thisOperate: 'この操作は',
   home_modityReserved: '仮押さえ変更',
   home_describeText: '文字説明',
@@ -737,6 +742,7 @@ module.exports = {
   home_nowAl: 'グルーピング状況',
   home_sureAl: 'グルーピングを確認してください',
   serve_conferenceInfo: '会議登記情報',
+  serve_conferenceInfoA: '予約情報',
   serve_nameQuery: '名前検索',
   book_roomPriceText: '宿泊料',
   serve_placeChooseRoom: '部屋を選択してください',
@@ -922,6 +928,7 @@ module.exports = {
   customer_memberAble: '会員起用',
   customer_memberCardLoss: '該当会員カード紛失届済',
   order_livePeopleManegerment: "宿泊者管理",
+  order_livePeopleManegermentA: "主催者情報",
   order_guestKind: "区分",
   order_liveAddress: "住所",
   order_homePhone: "自宅電話",
@@ -939,6 +946,7 @@ module.exports = {
   customer_remittanceAccount: '振込口座',
   home_nowLiveRate: '現在の稼働率',
   order_addRoom: "部屋を追加",
+  order_addRoomA: "会場・個室追加",
   book_bookPeople: '予約者',
   book_bookPeoPhone: '予約者電話',
   book_guideText: '添乗員１',
@@ -947,6 +955,7 @@ module.exports = {
   home_unitMobile: '会社電話',
   order_teamText: "団体",
   home_onePeopleLive: '一人素泊まり料金',
+  home_onePeopleLiveA: '利用料金',
   order_go21: "前の21日へ",
   order_back21: "後ろの21日へ",
   order_blankText: "空",
@@ -1046,6 +1055,7 @@ module.exports = {
   add_getPackage: 'プラン・食事',
   add_receiptNo: '領収書番号',
   add_membership: '会員データ',
+  home_onePrograme: '対象項目を選んでください。',
 
 
 

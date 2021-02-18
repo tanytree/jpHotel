@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-09 15:07:28
+ * @LastEditTime: 2021-02-18 15:35:22
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -602,6 +602,19 @@ module.exports = {
   add_nowDownPri: '本班下放备用金',
   add_nowDownPriA: '本班下放备用金',
   add_cashStatistics: '现金统计',
+  add_flightTime: '班次时间',
+  add_chooseDate: '选择日期',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
+  add_: '',
   add_: '',
   add_: '',
   add_: '',
