@@ -502,7 +502,7 @@ export default {
             if(this.consumeOperForm.employeePrice){
                 cart.forEach(element => {
                     Json.push({
-                        goodsId:element.id,
+                        goodsId:element.hotelGoods.id,
                         goodsName:element.goodsName,
                         price:element.employeePrice,
                         goodsCount:element.count,
@@ -513,7 +513,7 @@ export default {
             }else{
                 cart.forEach(element => {
                     Json.push({
-                        goodsId:element.id,
+                        goodsId:element.hotelGoods.id,
                         goodsName:element.goodsName,
                         price:element.retailPrice,
                         goodsCount:element.count,

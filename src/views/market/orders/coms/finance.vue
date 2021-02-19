@@ -43,13 +43,13 @@
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
                 <template slot-scope="{row}">
-                    {{row.priceType}}/
+                    <!-- {{row.priceType}}/ -->
                     <span v-if="row.priceType == 9 || row.priceType == 10"  class="text-red">
-             {{F_priceType(row.richList[0].priceType)}}
-             </span>
+                     {{F_priceType(row.richList[0].priceType)}}
+                     </span>
                     <span :class="row.richType == 1 ? 'text-red' : ''" v-else>
-                {{F_priceType(row.priceType)}}
-             </span>
+                    {{F_priceType(row.priceType)}}
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column :label="$t('desk.order_paymentB')" >
