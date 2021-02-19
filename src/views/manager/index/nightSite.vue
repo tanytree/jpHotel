@@ -51,7 +51,7 @@
     <div class="tag-top" v-if="findOne.state != 2">
       <span class="label">{{$t('manager.hp_auditAutoTime')+':'}}</span>
       <span class="value">
-        <el-time-picker  size="small" v-model="findOne.trialAutoTime" value-format="HH-mm" clearable></el-time-picker>
+        <el-time-picker size="small" v-model="findOne.trialAutoTime" value-format="HH-mm" clearable></el-time-picker>
       </span>
       <span class="tips">{{$t('manager.hp_auditInstructions')}}</span>
     </div>
@@ -126,16 +126,15 @@ export default {
   },
   props: { findOne: Object, initData: Function },
   mounted() {
-    this.initData()
+    this.initData();
   },
   methods: {
-
     submit() {
-      if(!this.findOne.trialStartTime || !this.findOne.trialEndTime) {
+      if (!this.findOne.trialStartTime || !this.findOne.trialEndTime) {
         this.$message.warning(this.$t("manager.hp_mustInput"));
         return;
       }
-      if(this.findOne.state!=2&&!this.findOne.trialAutoTime) {
+      if (this.findOne.state != 2 && !this.findOne.trialAutoTime) {
         this.$message.warning(this.$t("manager.hp_mustInput"));
         return;
       }
@@ -151,8 +150,11 @@ export default {
         trialAutoTime: this.findOne.trialAutoTime,
       };
       this.$F.doRequest(this, "/pms/nighttrial/edit", param, (res) => {
+        this.$message({
+          message:'保存成功',
+          type: "success",
+        });
         this.initData();
-        this.$message.success(this.$t("commons.saveSuccess"))
       });
     },
   },

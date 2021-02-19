@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 15:07:17
+ * @LastEditTime: 2021-02-19 10:37:51
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
@@ -127,7 +127,7 @@
                         </el-col>
                     </el-row>
                     <el-row>
-                        <el-col :span="6">
+                        <el-col :span="6" v-if="ifMeeting!=3">
                             <el-form-item :label="$t('desk.editor_asideBreakfast')+ ':'">
                                 <el-select v-model="roomInfo.headerObj.attachMealId" size="small" style="width: 200px">
                                     <el-option :label="$t('manager.hk_donot')" value=""></el-option>
@@ -147,7 +147,7 @@
                 </el-form>
                 <div class="overLine"></div>
                 <!--表格数据 -->
-                <el-table ref="multipleTable" :data="roomInfo.personList" max-height="500px;" header-row-class-name="default" size="small">
+                <el-table v-if="ifMeeting!=3" ref="multipleTable" :data="roomInfo.personList" max-height="500px;" header-row-class-name="default" size="small">
                     <el-table-column :label="$t('desk.home_nameD')" align="center" width="230px">
                         <template slot-scope="{ row }">
                             <el-input v-model="row.name" size="small" style="width: 100px"></el-input>
@@ -202,7 +202,7 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <el-button type="primary" @click="addPeople(roomInfo, topIndex)" style="margin-top: 10px">{{$t('desk.customer_toTheGuestA')}}</el-button>
+                <el-button v-if="ifMeeting!=3" type="primary" @click="addPeople(roomInfo, topIndex)" style="margin-top: 10px">{{$t('desk.customer_toTheGuestA')}}</el-button>
             </div>
 
             <div class="bottomBottom">
