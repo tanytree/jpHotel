@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 16:56:13
+ * @LastEditTime: 2021-02-19 11:14:44
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -44,7 +44,7 @@
         </el-form-item>
       </el-form>
       <!--表格数据 -->
-      <el-table ref="multipleTable" v-loading="loading" :data="tableData" height="100%" header-row-class-name="default" size="small">
+      <el-table ref="multipleTable" v-loading="loading" :data="tableData" :key="tabCurr" height="100%" header-row-class-name="default" size="small">
         <!-- 基本信息 -->
         <el-table-column :label="$t('desk.serve_basicInfo')" align="center">
           <el-table-column prop="handoveNum" :label="$t('desk.serve_flightA')" width="120px"></el-table-column>
@@ -376,7 +376,7 @@ export default {
       }
 
       this.$F.doRequest(this, url, this.searchForm, (res) => {
-        // console.log(res);
+        console.log(res.handoverListList);
         this.tableData = res.handoverListList;
         this.listTotal = res.page.count;
       });

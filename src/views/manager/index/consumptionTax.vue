@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-04 09:50:32
  * @Author: 陶子
- * @LastEditTime: 2021-01-06 11:18:34
+ * @LastEditTime: 2021-02-19 10:17:03
  * @FilePath: \jiudian\src\views\manager\index\consumptionTax.vue
 -->
 <template>
@@ -82,10 +82,13 @@ export default {
   methods: {
     getPageData() {
       this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", {}, (res) => {
-        let content = JSON.parse(res.content);
+        if(res.content){
+            let content = JSON.parse(res.content);
         this.taxForm.consumeTax = content.consumeTax;
         this.taxForm.outConsumeTax = content.outConsumeTax;
         this.taxForm.servicePrice = content.servicePrice;
+        }
+      
       });
     },
     saveInput(formName) {
