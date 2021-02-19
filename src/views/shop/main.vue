@@ -13,17 +13,20 @@
             <!-- 首页-->
             <shop  ref="shop" v-if="item.path == 'pmsshop_home'"/>
             <bookOff ref="bookOff" v-if="item.path == 'pmsshop_succession'"/>
+            <!-- 员工权限-->
+            <employeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
-    import { mapState, mapActions } from "vuex"
+    import { mapState } from "vuex"
     import shop from "./main/pmsshop_home.vue";
     import bookOff from "../food/home/bookOff.vue";
+    import employeeRights from '@/components/employeeRights'
     export default {
-        components: {shop,bookOff},
+        components: {shop, bookOff, employeeRights},
         data() {
             return {
                 activeName: "",

@@ -8,7 +8,7 @@
             <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle"
                 :name="item.path"
                 :key="item.path"
-                v-if="$F.filterThirdMenu('frontOffice', item.path, true) && ['orderDesk','bookOff'].indexOf(item.path) > -1"
+                v-if="$F.filterThirdMenu('frontOffice', item.path, true) && ['orderDesk','bookOff', 'staff-rights'].indexOf(item.path) > -1"
                 :class="item.path !== 'orderDesk' ? 'bg' : ''"
             >
             <!-- 前台点餐-->
@@ -16,7 +16,7 @@
             <!-- 交班-->
             <bookOff :categroyList = 'categoryList' ref="bookOff" v-if="item.path == 'bookOff'"/>
             <!-- 员工权限-->
-            <!-- <employeeRights v-if="item.path == 'staff-rights'"/> -->
+             <employeeRights v-if="item.path == 'staff-rights'"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -26,8 +26,9 @@
     import { mapState, mapActions } from "vuex"
     import orderDesk from "./home/orderDesk";
     import bookOff from "./home/bookOff";
+    import employeeRights from '@/components/employeeRights'
     export default {
-        components: {orderDesk, bookOff},
+        components: {orderDesk, bookOff, employeeRights},
         data() {
             return {
                 activeName: "",
