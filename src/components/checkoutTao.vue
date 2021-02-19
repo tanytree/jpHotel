@@ -219,13 +219,14 @@ export default {
                         })
                     }
                 }
+
                 //---------------------------
                 // if(priceType == 5 || priceType == 6 || priceType == 12){
                     // if(element.taxStatus == 1){
-                taxFee +=  parseFloat(element.consumTaxPrice)
+                taxFee +=  parseFloat(element.consumTaxPrice || 0)
                     // }
                     // if(element.seviceStatus == 1){
-                service += parseFloat(element.servicePrice)
+                service += parseFloat(element.servicePrice || 0)
                     // }
                 // }
                 if(priceType == 15){
@@ -240,6 +241,8 @@ export default {
                 console.log(priceType +':' +this.F_priceType(priceType))
                 console.log(element.consumePrice)
                 console.log(element)
+                console.log(element.servicePrice)
+                console.log(element.consumTaxPrice)
             }
         });
 
