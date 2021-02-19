@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 15:37:32
+ * @LastEditTime: 2021-02-19 18:06:33
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -38,13 +38,13 @@
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <!-- 前台部 -->
         <div v-if="tabCurr == 1" class="flexBox">
-          <div>{{$t("manager.deskTab['0']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t("manager.deskTab['1']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t("manager.deskTab['2']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t("manager.deskTab['3']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t("manager.deskTab['4']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t("manager.deskTab['5']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t("manager.deskTab['6']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['0']")}}：<span style="color:red">{{$F.numFormate(info.nroomPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['1']")}}：<span style="color:red">{{$F.numFormate(info.nattachMealPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['2']")}}：<span style="color:red">{{$F.numFormate(info.nmeetingPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['3']")}}：<span style="color:red">{{$F.numFormate(info.nlittleShopPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['4']")}}：<span style="color:red">{{$F.numFormate(info.nOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['5']")}}：<span style="color:red">{{$F.numFormate(info.ndishesPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['6']")}}：<span style="color:red">{{$F.numFormate(info.ngoodsPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
         </div>
         <!-- 餐饮部 -->
         <div v-if="tabCurr == 2" class="flexBox">
@@ -63,32 +63,25 @@
         <div v-if="tabCurr==1" class="father">
           <el-col :span="5">
             <div class="item">
-              {{$t('desk.charge')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}} <a class="el-icon-question AAA" style="color: #126EFF;"></a>
+              {{$t('desk.charge')}}：<span class="blue">{{$F.numFormate(info.nuploadPrice)}}</span>{{$t('manager.ps_japanYen')}} <a @mouseenter="requestData()" class="el-icon-question AAA" style="color: #126EFF; cursor: pointer;"></a>
               <div class="son">
-                <div>{{$t('commons.paymentWay[1]')}}：￥2000</div>
-                <div>{{$t('commons.paymentWay[2]')}}：￥2000</div>
-                <div>{{$t('commons.paymentWay[3]')}}：￥2000</div>
-                <div>{{$t('commons.paymentWay[4]')}}：￥2000</div>
-                <div>{{$t('commons.paymentWay[5]')}}：￥2000</div>
-                <div>{{$t('commons.paymentWay[6]')}}：￥2000</div>
-                <div>{{$t('commons.paymentWay[7]')}}：￥2000</div>
-                <div>{{$t('commons.paymentWay[8]')}}：￥2000</div>
+                <div v-for="(item,index) in billList" :key="index">{{$t(`commons.paymentWay[${item.putUp}]`)}}：￥{{$F.numFormate(item.totalPrice)}}</div>
               </div>
             </div>
           </el-col>
           <el-col :span="5">
             <div class="item">
-             {{$t('manager.add_nowCashGetA')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+              {{$t('manager.add_nowCashGetA')}}：<span class="blue">{{$F.numFormate(info.nmoneyPrice)}}</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
           <el-col :span="5">
             <div class="item">
-             {{$t('manager.add_nowCardGetA')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+              {{$t('manager.add_nowCardGetA')}}：<span class="blue">{{$F.numFormate(info.ncardPrice)}}</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
           <el-col :span="5">
             <div class="item">
-              {{$t('desk.add_otherGetA')}}：<span class="blue">20000</span>{{$t('manager.ps_japanYen')}}
+              {{$t('desk.add_otherGetA')}}：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
         </div>
@@ -131,18 +124,18 @@
 
     <el-row style="text-align: center;margin-top: 20px;">
       <el-divider></el-divider>
-      <el-form inline label-width="150px" style="padding-top: 30px;">
-        <el-form-item :label="$t('food.shift.selectOnDutyerA')">
+      <el-form inline label-width="150px" ref="form" style="padding-top: 30px;" :model="form"  :rules="rules">
+        <el-form-item :label="$t('food.shift.selectOnDutyerA')" prop="handoveEmployeedId">
           <el-select v-model="form.handoveEmployeedId">
             <el-option v-for="item in employeeList" :key="item.id" :label="item.userName" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('food.shift.password')">
+        <el-form-item :label="$t('food.shift.password')" prop="password">
           <el-input type="password" v-model="form.password" :placeholder="$t('food.shift.password')"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-button type="primary" @click="dialogVisible=true">{{ $t('commons.confirm') }}</el-button>
+          <el-button type="primary" @click="sureButton('form')">{{ $t('commons.confirm') }}</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -298,6 +291,16 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
+    rules(){
+      return{
+          handoveEmployeedId:[
+            { required: true, message: '请选择员工', trigger: 'change' }
+          ],
+          password:  [
+            { required: true, message: '请输入密码', trigger: 'blur' }
+          ],
+      }
+    }
   },
   data() {
     return {
@@ -311,6 +314,7 @@ export default {
       show: false,
       account: "",
       remark: "",
+      billList:[], //挂账列表
       dialogVisible: false, //现金统计dialog
       // 下面是收入日元
       getMoney: {
@@ -379,7 +383,7 @@ export default {
         this.putDown[item] = 1;
       }
     },
-     // PMS统计本班收入 选择或者不选择
+    // PMS统计本班收入 选择或者不选择
     changeList(number, type) {
       if (type) {
         this.getMoney[number] = 1;
@@ -387,7 +391,7 @@ export default {
         this.getMoney[number] = 0;
       }
     },
-     //本班下放备用金 选择或者不选择
+    //本班下放备用金 选择或者不选择
     changeList_down(number, type) {
       if (type) {
         this.putDown[number] = 1;
@@ -458,7 +462,35 @@ export default {
         }
       );
     },
-
+    // 鼠标移动到问号的请求
+    requestData() {
+      let workStarTime = this.$F.formatTime(this.info.workStarTime)[0];
+      let workEndTime = this.$F.formatTime(this.info.workEndTime)[0];
+      let params = {
+        workStarTime,
+        workEndTime,
+      };
+      this.$F.doRequest(
+        this,
+        "/pms/handover/handover_putup_group",
+        params,
+        (res) => {
+          console.log(res);
+        this.billList = res.upGroupCount;
+        }
+      );
+    },
+    // 点击确定按钮
+    sureButton(formName){
+       this.$refs[formName].validate((valid) => {
+          if (valid) {
+        this.dialogVisible=true
+          } else {
+            return false;
+          }
+        });
+      
+    },
     save() {
       let url = "/pms/handover/handover_up";
       if (this.tabCurr == 1) {
@@ -487,8 +519,6 @@ export default {
         this.dialogVisible = false;
       });
     },
-
-  
   },
 };
 </script>
@@ -555,7 +585,6 @@ export default {
     box-sizing: border-box;
     padding: 20px;
     width: 200px;
-    height: 200px;
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
