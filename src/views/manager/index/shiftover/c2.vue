@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-19 11:14:44
+ * @LastEditTime: 2021-02-19 13:30:46
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -72,41 +72,47 @@
                 <div v-if="row.subList.length>0">{{row.subList[0].amount?row.subList[0].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('manager.deskTab[1]')">
+            <el-table-column :label="$t('manager.deskTab[1]')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0">{{row.subList[1].amount?row.subList[1].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('manager.deskTab[2]')">
+            <el-table-column  :label="$t('manager.deskTab[2]')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0">{{row.subList[2].amount?row.subList[2].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('manager.deskTab[3]')">
+            <el-table-column  :label="$t('manager.deskTab[3]')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0">{{row.subList[3].amount?row.subList[3].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('manager.deskTab[4]')">
+            <el-table-column  :label="$t('manager.deskTab[4]')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0">{{row.subList[4].amount?row.subList[4].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('desk.serve_goodsPrice')">
+            <el-table-column  :label="$t('desk.serve_goodsPrice')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0">{{row.subList[5].amount?row.subList[5].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('desk.serve_foodPrice')">
+            <el-table-column  :label="$t('desk.serve_foodPrice')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0">{{row.subList[6].amount?row.subList[6].amount:0}}</div>
               </template>
             </el-table-column>
           </template>
           <template v-if="tabCurr==2">
-            <el-table-column prop="createTime" :label="$t('manager.deskTab[1]')" :key="2">
+            <el-table-column  :label="$t('manager.deskTab[1]')" :key="2">
+              <template slot-scope="{row}">
+                <div v-if="row.subList.length>0">{{row.subList[0].amount?row.subList[0].amount:0}}</div>
+              </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('desk.serve_foodPriceA')" :key="3">
+            <el-table-column  :label="$t('desk.serve_foodPriceA')" :key="3">
+              <template slot-scope="{row}">
+                <div v-if="row.subList.length>0">{{row.subList[1].amount?row.subList[1].amount:0}}</div>
+              </template>
             </el-table-column>
           </template>
           <template v-if="tabCurr==3">
@@ -141,19 +147,28 @@
             </el-table-column>
           </template>
           <template v-if="tabCurr==2">
-            <el-table-column prop="createTime" :label="$t('manager.deskTab[5]')">
-            </el-table-column>
             <el-table-column :label="$t('manager.add_nowCashGetA')" width="100px ">
               <template slot-scope="{ row }">
-                <div>
-                  {{ row.nowMoneyRetained }}
+                <div v-if="row.subList.length>0">
+                  {{ row.subList[2].amount?row.subList[2].amount:0}}
                   <span @click="lookDetail('cashDialog',row)"><i class="el-icon-view"></i></span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('manager.add_nowCardGetA')" width="100px">
+             <el-table-column  :label="$t('manager.add_nowBillGet')">
+                <template slot-scope="{row}">
+                <div v-if="row.subList.length>0">{{row.subList[3].amount?row.subList[3].amount:0}}</div>
+              </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('desk.add_otherGetA')">
+            <el-table-column  :label="$t('manager.add_nowCardGetA')" width="100px">
+                <template slot-scope="{row}">
+                <div v-if="row.subList.length>0">{{row.subList[4].amount?row.subList[4].amount:0}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column  :label="$t('desk.add_otherGetA')">
+                <template slot-scope="{row}">
+                <div v-if="row.subList.length>0">{{row.subList[5].amount?row.subList[5].amount:0}}</div>
+              </template>
             </el-table-column>
           </template>
           <template v-if="tabCurr==3">

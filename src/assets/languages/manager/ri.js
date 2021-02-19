@@ -564,7 +564,7 @@ module.exports = {
   add_lastHold: '受継・金額',
   add_nowCardGet: 'クレジット入金',
   add_nowCardGetA: 'クレジットカード',
-  add_nowBillGet: '売掛入金',
+  add_nowBillGet: '料飲/部屋付',
   add_nowBillUp: '売掛入金',
   add_nowBillPrice: '売掛入金',
   add_allDepartment: 'ALL',

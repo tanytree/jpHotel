@@ -97,6 +97,7 @@ module.exports = {
   home_addRegister: '新增寄存',
   home_phoneNum: '手机号',
   home_phoneNumA: '联络电话',
+  home_phoneNumB: '手机号',
   home_depositingTime: '寄放时间',
   home_drawTime: '领取时间',
   home_state: '状态',

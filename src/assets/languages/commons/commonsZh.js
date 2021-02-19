@@ -15,6 +15,7 @@ module.exports = {
   mobile: '手机号码',
   operatingTime: '操作时间',
   moreOperating: '更多操作',
+  moreOperatingA: '更多操作',
   goBackHome: '返回首页',
   home: '首页',
   checkAll: '全选',

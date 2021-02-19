@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-18 16:59:29
+ * @LastEditTime: 2021-02-19 14:13:54
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -96,6 +96,7 @@ module.exports = {
   home_goodsName: '預かり内容',
   home_addRegister: '預かり追加',
   home_phoneNum: '携帯番号',
+  home_phoneNumB: '電話番号',
   home_depositingTime: '預かり時間',
   home_drawTime: '受取時間',
   home_state: '状態',

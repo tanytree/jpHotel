@@ -11,6 +11,7 @@ module.exports = {
   mobile: '携帯電話番号',
   operatingTime: '利用時間',
   moreOperating: 'もっと操作',
+  moreOperatingA: 'もっと',
   goBackHome: 'ホームに戻る',
   home: 'ホーム',
   checkAll: '全部',

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 12:02:29
+ * @LastEditTime: 2021-02-19 14:14:15
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -10,7 +10,7 @@
     <div class="boss-index">
         <div class="booking">
             <el-collapse v-model="queryFormIndex">
-                <el-collapse-item :title="$t('commons.moreOperating')" class="term" name="query">
+                <el-collapse-item :title="$t('commons.moreOperatingA')" class="term" name="query">
                     <!-- 查询部分 -->
                     <el-form class="term" inline size="small" label-width="100px">
                         <el-row v-if="storesNum == $F.getHQCode()">
@@ -103,7 +103,7 @@
                             <el-form-item :label="$t('desk.home_bookPeople')">
                                 <el-input v-model="searchForm.name" class="width150"></el-input>
                             </el-form-item>
-                            <el-form-item :label="$t('desk.home_phoneNum') + ':'">
+                            <el-form-item :label="$t('desk.home_phoneNumB') + ':'">
                                 <el-input v-model="searchForm.mobile" class="width150"></el-input>
                             </el-form-item>
                             <el-form-item :label="$t('desk.home_roomType')">
@@ -151,7 +151,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" :label="$t('boss.loginDetail_phone')" width="120px"></el-table-column>
+                <el-table-column prop="mobile" :label="$t('desk.home_phoneNumB')" width="120px"></el-table-column>
                 <el-table-column prop="createTime" :label="$t('desk.order_bookTime')" width="120px">
                     <template slot-scope="{row}">
                         <div v-for="(item,index) in $F.formatTime(row.createTime)" :key="index">{{item}}</div>
