@@ -2,7 +2,8 @@
 <template>
   <div class="boss-index" id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle" :name="item.path" :key="item.path" v-if="$F.filterThirdMenu('finance', item.path, true)">
+      <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle" :name="item.path"
+                   :key="item.path" v-if="$F.filterThirdMenu('finance', item.path, true)">
         <!-- 房间动态-->
         <!--                <roomStatus v-if="item.path == 'roomStatus'"/>-->
         <!-- 夜审设置-->
@@ -144,7 +145,7 @@ export default {
           });
         } else this.hotelData.files = [];
       });
-      
+
     },
     getPrintParamData() {
       this.$F.doRequest(this, "/pms/documentsparams/list", {}, (res) => {

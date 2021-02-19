@@ -8,6 +8,8 @@
 
 
 module.exports = {
+    add_dayBackBook: '日帰り予約',
+    add_meetingBook: '会場予約',
   //    总办 > 首页
   memberPostCode: '郵便番号',
   report_home: 'ホーム',

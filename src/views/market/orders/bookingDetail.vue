@@ -84,9 +84,15 @@ import checkInInfo from "@/components/front/checkInInfo";   //客人信息
 import finance from "./bookingcoms/finance";
 import myMixin from "@/utils/filterMixin";
 import mainView from '@/components/main/mainView';
+import {mapState} from "vuex";
 
 export default {
     mixins: [myMixin],
+    computed: {
+        ...mapState({
+            storesNum: (state) => state.user.storesInfo.storesNum,
+        }),
+    },
     components: {
         checkInInfo,
         roominfo,
@@ -119,6 +125,9 @@ export default {
         getDetail(id) {
             this.$F.doRequest(this, "/pms/checkin/reserve_check_in_detail", { reserveId: id},
                 (res) => {
+                    if (this.$F.getHQCode() == this.storesNum) {
+                        sessionStorage.checkinDetailStoresNum = res.checkIn.storesNum;
+                    }
                     this.detailData = res;
                     this.$forceUpdate();
                 }

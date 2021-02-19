@@ -6,7 +6,8 @@
  */
 //  前台部 中文
 module.exports = {
-  money: {
+    roomInfoDelete: '确定删除该房间？',
+    money: {
     myriadNuber: '1万日元',
     fiveHundred: '五百日元',
     ten: '十日元',

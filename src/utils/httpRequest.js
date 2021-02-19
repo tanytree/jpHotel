@@ -103,7 +103,9 @@ http.adornData = (data = {}, openDefultdata = true, contentType = 'form') => {
     data = merge({platSource: '1005'}, data)
     var defaults = {
         userId: store.state.user.id,
-        storesNum: store.state.user.storesInfo && store.state.user.storesInfo.storesNum ? store.state.user.storesInfo.storesNum : ''
+        storesNum: (store.state.user.storesInfo && store.state.user.storesInfo.storesNum ?
+            ((store.state.user.storesInfo.storesNum == '0000000000' && sessionStorage.checkinDetailStoresNum) ?
+                sessionStorage.checkinDetailStoresNum : store.state.user.storesInfo.storesNum) : '')
     }
     data = openDefultdata ? merge(defaults, data) : data
     return contentType === 'json' ? JSON.stringify(data) : objToParams(data)

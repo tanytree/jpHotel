@@ -6,7 +6,9 @@
  */
 //前台部 日文
 module.exports = {
+    roomInfoDelete: '該当アサインを削除に確認しますか？',
   money: {
+
     myriadNuber: '１万円札',
     fiveHundred: '五百円',
     ten: '10円',
@@ -722,8 +724,8 @@ module.exports = {
   home_chooseNeedRoom: '要清掃/清掃済を選択してください',
   home_selected: '選択済',
   home_allSelected: '全部',
-  home_bulkDirty: '一括「掃済指示」の設定です。',
-  home_bulkClear: '一括「清掃済」の設定です。',
+  home_bulkDirty: '一括「掃済指示」の設定。',
+  home_bulkClear: '一括「清掃済」の設定。',
   home_thisOperate: 'この操作は',
   home_modityReserved: '仮押さえ変更',
   home_describeText: '文字説明',

@@ -59,7 +59,7 @@
                 <el-form-item :label="$t('desk.customer_idNo') + ':'" >
                     <el-input v-model="checkInForm.idcard"></el-input>
                 </el-form-item>
-                <template v-if="operCheckinType == 'a1' || operCheckinType == 'a2'">
+                <template v-if="operCheckinType == 'a1' || operCheckinType == 'a2' || operCheckinType == 'a2'">
                     <el-form-item :label="$t('frontOffice.nightAudit.checkInTime')" prop="checkinTime">
                         <el-date-picker
                             v-model="checkInForm.checkinTime"
@@ -198,7 +198,7 @@
                 <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays" v-if="operCheckinType == 'b1'">
                     <el-input-number v-model="checkInForm.checkinDays" :step="1" :min="1" @change="checkinDaysChange"></el-input-number>
                 </el-form-item>
-                <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime" v-if="operCheckinType == 'b1'">
+                <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime" v-if="operCheckinType == 'b1' || operCheckinType == 'b3'">
                     <el-date-picker
                         v-model="checkInForm.checkoutTime"
                         type="datetime"
@@ -229,7 +229,7 @@
 <!--                    ></el-date-picker>-->
 <!--                </el-form-item>-->
 
-              
+
                 <el-form-item
                     :label="$t('desk.customer_payType')"
                     v-if="operCheckinType != 'b3'"

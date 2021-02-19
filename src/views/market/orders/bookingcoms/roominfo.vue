@@ -363,9 +363,9 @@ export default {
             this.$emit("baseInfoChange", "");
         },
 
-        //取消预留
+        //删除房间
         channelReserved() {
-            this.$confirm(this.$t('commons.confirm_deleteB'), this.$t('commons.tip_desc'), {
+            this.$confirm(this.$t('desk.roomInfoDelete'), this.$t('commons.tip_desc'), {
           confirmButtonText:this.$t('commons.confirm'),
           cancelButtonText:  this.$t('commons.cancel'),
           type: 'warning'

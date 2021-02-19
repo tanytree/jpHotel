@@ -62,8 +62,10 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
-          <div>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</div>
+        <el-col :span="12">
+          <span>{{$t('desk.book_orderSoutce')}}：{{ F_orderSource(checkinInfo.orderSource) }}</span>
+            <span v-if="checkinInfo.orderSource == 5"> - </span>
+            <span v-if="checkinInfo.orderSource == 5">{{checkPlatform(checkinInfo.otaChannelId)}}</span>
         </el-col>
         <el-col :span="12">
           <div>
@@ -188,7 +190,15 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <!--                地区-->
+<!--            ota-->
+            <el-col :span="8">
+                <el-form-item label="OTA" prop="orderSource" v-if="baseInfoChangeForm.orderSource==5" >
+                    <el-select  v-model="baseInfoChangeForm.otaChannelId" >
+                        <el-option :value="item.id" v-for="(item, index) of otaList" :label="item.otaName" :key="index"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-col>
+            <!--                地区-->
           <el-col :span="8">
             <el-form-item :label="$t('desk.customer_region')" prop="region">
               <el-input type="text" v-model="baseInfoChangeForm.region" style="width: 150px"></el-input>
@@ -333,6 +343,7 @@ export default {
       currentItem: {},
       liveData: [],
       baseInfoChangeForm: {},
+        otaList: [],
         roomLeaves: false,   //【是否都离店】  是否有离店的房间
         hasCheckinFlag: false,  //是否有入住房间
         noCheckinFlag: false,  //是否还有未入住房间
@@ -341,6 +352,11 @@ export default {
 
   created() {
     console.log(JSON.parse(JSON.stringify(this.checkinInfo)));
+      let params = {};
+      this.$F.commons.fetchOtaList(params, (list)=> {
+          this.otaList = list;
+          this.$forceUpdate();
+      })
   },
     computed: {
         rules() {
@@ -474,6 +490,12 @@ export default {
   },
 
   methods: {
+      checkPlatform(otaChannelId) {
+          let array = this.otaList.filter((item) => {
+              return item.id == otaChannelId;
+          }) || [{}];
+          return array.length > 0 ? array[0].otaName : "";
+      },
       //选择客源类型组件的确认回调
       guestChooseCallback(data) {
           this.baseInfoChangeForm = data;

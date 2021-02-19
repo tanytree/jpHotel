@@ -73,6 +73,7 @@ export default {
             token: (state) => state.user.token,
             userId: (state) => state.user.id,
             storeList: (state) => state.user.storeList,
+            storesNum: (state) => state.user.storesInfo.storesNum,
         }),
     },
     data() {
@@ -98,6 +99,12 @@ export default {
 
         refresh() {
             this.reload();
+        },
+
+        clearMainStoresNum(path) {
+            if (this.$F.getHQCode() == this.storesNum && path == 'booking') {
+                sessionStorage.checkinDetailStoresNum = '';
+            }
         },
 
         menulfuc(item) {
@@ -139,6 +146,7 @@ export default {
                 if (this.$route.name == item.path) {
                     return false;
                 } else {
+                    this.clearMainStoresNum(item.path);
                     sessionStorage.currentPath = item.path;
                     this.$router.push({
                         name: item.path,

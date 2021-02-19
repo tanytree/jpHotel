@@ -295,6 +295,8 @@ module.exports = {
   add_onePeople: '1人',
   add_peopleLivePrice: '人',
   add_normalBook: '普通预订',
+  add_dayBackBook: '单日回预定',
+  add_meetingBook: '会场预定',
   add_noHaveInfo: '该酒店暂无房间信息',
   add_queryText: '查询字段',
   add_onlyLivePri: '纯住宿价格',
