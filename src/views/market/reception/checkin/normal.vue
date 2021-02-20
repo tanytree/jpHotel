@@ -246,14 +246,14 @@
                 <el-form-item :label="$t('desk.order_outOrder')" v-if="operCheckinType != 'b3'">
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
-                <template v-if="operCheckinType == 'b3'">
-                    <el-form-item :label="$t('desk.book_meetNameA') + '：'" prop="meetingName">
-                        <el-input v-model="checkInForm.meetingName"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">
-                        <el-input v-model="checkInForm.enterName"></el-input>
-                    </el-form-item>
-                </template>
+<!--                <template v-if="operCheckinType == 'b3'">-->
+<!--                    <el-form-item :label="$t('desk.book_meetNameA') + '：'" prop="meetingName">-->
+<!--                        <el-input v-model="checkInForm.meetingName"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                    <el-form-item :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">-->
+<!--                        <el-input v-model="checkInForm.enterName"></el-input>-->
+<!--                    </el-form-item>-->
+<!--                </template>-->
                 <el-form-item :label="$t('desk.customer_region')" prop="prop">
                     <el-input v-model="checkInForm.region"></el-input>
                 </el-form-item>
