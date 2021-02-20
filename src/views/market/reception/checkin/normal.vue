@@ -758,27 +758,19 @@ export default {
                 }
             }
             let params = {};
-            this.makeStoresNum(params);
+            this.$F.makeStoresNum(this, params);
             this.$F.commons.fetchOtaList(params, (list)=> {
                 this.otaList = list;
                 this.$forceUpdate();
             })
             this.handleOperCheckinType();
             params = { salesFlag: 1 }
-            this.makeStoresNum(params);
+            this.$F.makeStoresNum(this, params);
             this.$F.commons.fetchSalesList(params, (data) => {
                 this.salesList = data.hotelUserList;
             });
             this.getCheckinRoominfoList();
             this.initForm();
-        },
-
-        makeStoresNum(params) {
-            if (this.storesNum) {
-                this.$F.merge(params, {
-                    storesNum: this.storesNum
-                })
-            }
         },
 
         // 排房组件回调
@@ -878,7 +870,7 @@ export default {
             params.checkinTime = this.checkInForm.checkinTime;
             params.checkoutTime = this.checkInForm.checkoutTime;
             params.changeType = 2;
-            this.makeStoresNum(params);
+            this.$F.makeStoresNum(this, params);
             params.roomType = this.operCheckinType == 'b3' ? 2 : 1;
             this.$F.doRequest(
                 this,
@@ -971,7 +963,7 @@ export default {
                     roomIdArray.push(temp.roomId);
                 })
                 params.roomIds = roomIdArray.join(",");
-                this.makeStoresNum(params);
+                this.$F.makeStoresNum(this, params);
                 this.$F.doRequest(this, url, params, (data) => {
                     this.$message({message: "Success", type: "success",});
                     if (type == 2) {
@@ -1119,7 +1111,7 @@ export default {
             this.hotelRoomListParams.roomTypeId = item.roomTypeId;
             this.$refs.rowHouse.init(item.roomTypeId, item.num, hadReadyCheckArray,
                 new Date(this.checkInForm.checkinTime).Format("yyyy-MM-dd HH:mm:ss"),
-                new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd HH:mm:ss"));
+                new Date(this.checkInForm.checkoutTime).Format("yyyy-MM-dd HH:mm:ss"), this.storesNum);
         },
 
         //获取可排房的房间
@@ -1237,7 +1229,7 @@ export default {
                     }
                 }
             };
-            this.makeStoresNum(params);
+            this.$F.makeStoresNum(this, params);
             this.$F.doRequest(
                 this,
                 "/pms/checkin/empty_row_houses",
@@ -1325,7 +1317,7 @@ export default {
             let params = {
                 checkInRoomIds: arr,
             };
-            this.makeStoresNum(params);
+            this.$F.makeStoresNum(this, params);
             this.$F.doRequest(this, "/pms/checkin/make_card_status", params, (res) => {
                     this.$message({
                         message: this.$t("commons.request_success"),
@@ -1355,7 +1347,7 @@ export default {
                 paging: false,
             };
             this.nameLoading = true;
-            this.makeStoresNum(params);
+            this.$F.makeStoresNum(this, params);
             if (this.operCheckinType.startsWith('a')) {
                 this.$F.doRequest(this, "/pms/checkin/checkin_order_list", params,
                     (res) => {

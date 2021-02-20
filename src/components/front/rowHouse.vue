@@ -61,6 +61,7 @@ export default {
     props: ["roomId"],
     data() {
         return {
+            storesNum: '',
             checkinTime: '',
             checkoutTime: '',
             roomList: [],   //该房型下有多少房间
@@ -80,7 +81,8 @@ export default {
     },
 
     methods: {
-        init(roomTypeId, num, hadReadyCheckArray, checkinTime, checkoutTime) {
+        init(roomTypeId, num, hadReadyCheckArray, checkinTime, checkoutTime, storesNum) {
+            this.storesNum = storesNum;
             this.roomList = [];
             this.selectList = hadReadyCheckArray;
             this.hadReadyCheckArray = hadReadyCheckArray;
@@ -90,7 +92,6 @@ export default {
             this.checkoutTime = checkoutTime || this.endTime;
             let tempArray = this.getDateStr(this.startTime, this.endTime, 0);
             this.dates = [''];
-
             tempArray.forEach( (value, index) => {
                 this.dates.push({
                     date: value,
@@ -104,18 +105,19 @@ export default {
             this.calendar();
         },
 
-        calendar() {
+        calendar(params = {}) {
             this.roomList = [];
+            params = {
+                startTime: this.startTime,
+                endTime: this.endTime,
+                searchType: 2,
+                roomTypeId: this.roomTypeId,
+                checkinTime: this.checkinTime,
+                checkoutTime: this.checkoutTime,
+            }
+            this.$F.makeStoresNum(this, params);
             this.$F.doRequest(
-                this,"/pms/reserve/reserve_room_list", {
-                    startTime: this.startTime,
-                    endTime: this.endTime,
-                    searchType: 2,
-                    roomTypeId: this.roomTypeId,
-                    checkinTime: this.checkinTime,
-                    checkoutTime: this.checkoutTime,
-                }, (res) => {
-
+                this,"/pms/reserve/reserve_room_list", params, (res) => {
                     this.floorList = res.floorList || [];
                     this.floorList.forEach( floor=> {
                         this.roomList = this.roomList.concat(floor.roomList)
