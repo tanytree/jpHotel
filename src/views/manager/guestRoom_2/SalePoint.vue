@@ -3,7 +3,7 @@
     <div class="content">
       <div class="radioBox">
         <el-radio-group v-model="sellId" size="medium" @change="changePoint">
-          <el-radio-button :label="item.id" v-for="(item, index) in salePoint" :disabled="item.state == 2" :key="index" class="btn-margin">{{ $i18n.locale == 'zh' ? item.name :item.jname}}</el-radio-button>
+          <el-radio-button :label="item.id" v-for="(item, index) in salePoint" :disabled="item.state == 2" :key="index" class="btn-margin">{{ $i18n.locale == 'zh' ? item.name : item.jname ? item.jname : item.name}}</el-radio-button>
         </el-radio-group>
         <el-button type="text" @click="manageSale">{{$t('manager.grsl_managementSalePoint')}}</el-button>
       </div>
@@ -236,7 +236,7 @@ export default {
       categoryProps: { value: "id", label: "name", children: "child" },
       salePoint: [],
       shelfData: [],
-      point: { name: "", allowEnter: 1, allowRoom: 1, state: 1, delFlag: 1 },
+      point: { name: "", jname: '', allowEnter: 1, allowRoom: 1, state: 1, delFlag: 1 },
       rowData: { goodsName: "" },
       salePointVisible: false,
       editPointVisible: false,
@@ -389,6 +389,7 @@ export default {
         this.point = {
           id: row.id,
           name: row.name,
+          jname: row.jname,
           allowEnter: row.allowEnter,
           allowRoom: row.allowRoom,
           state: row.state,
@@ -399,6 +400,7 @@ export default {
         this.pointType = true;
         this.point = {
           name: "",
+          jname: '',
           allowEnter: 1,
           allowRoom: 1,
           state: 1,
@@ -502,6 +504,7 @@ export default {
         });
       } else if (type == "point") {
         if (this.pointType) {
+          this.point.jname = this.point.name;
           this.$F.doRequest(
             this,
             "/pms/hotelgoodsSelling/addSelling",
