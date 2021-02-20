@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-20 16:25:07
+ * @LastEditTime: 2021-02-20 17:27:16
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -204,7 +204,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>{{checkget_Balance}}</span>{{$t('desk.customer_banJi')}}</div>
+      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>{{$F.numFormate(checkget_Balance)}}</span>{{$t('desk.customer_banJi')}}</div>
       <!-- 上面选框 -->
       <el-divider></el-divider>
       <!-- 下面选框 -->
@@ -271,7 +271,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>{{checkput_Balance}}</span> {{$t('desk.customer_banJiA')}}</div>
+      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>{{$F.numFormate(checkput_Balance)}}</span> {{$t('desk.customer_banJiA')}}</div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelClick">{{$t('commons.cancel')}}</el-button>
         <el-button type="primary" @click="save">{{$t('commons.determine')}}</el-button>
@@ -294,9 +294,9 @@ export default {
     rules() {
       return {
         handoveEmployeedId: [
-          { required: true, message: "请选择员工", trigger: "change" },
+          { required: true, message: this.$t('commons.placeChoose'), trigger: "change" },
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ required: true, message: this.$t('login.passwordEnterTip'), trigger: "blur" }],
       };
     },
     checkget_Balance() {
@@ -616,7 +616,7 @@ export default {
             case "myriadNuber":
               let objA = {
                 amount: 10000,
-                amount_name: "1万日元",
+                amount_name: this.$t('desk.money.myriadNuber'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -625,7 +625,7 @@ export default {
             case "oneHundred":
               let objB = {
                 amount: 100,
-                amount_name: "一百日元",
+                amount_name: this.$t('desk.money.oneHundred'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -634,7 +634,7 @@ export default {
             case "fiveThousand":
               let objC = {
                 amount: 5000,
-                amount_name: "五千日元",
+                amount_name: this.$t('desk.money.fiveThousand'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -643,7 +643,7 @@ export default {
             case "fifty":
               let objD = {
                 amount: 50,
-                amount_name: "五十日元",
+                amount_name:  this.$t('desk.money.fifty'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -652,7 +652,7 @@ export default {
             case "ten":
               let objE = {
                 amount: 10,
-                amount_name: "十日元",
+                amount_name: this.$t('desk.money.ten'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -661,7 +661,7 @@ export default {
             case "oneThousand":
               let objF = {
                 amount: 1000,
-                amount_name: "一千日元",
+                amount_name: this.$t('desk.money.oneThousand'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -670,7 +670,7 @@ export default {
             case "five":
               let objG = {
                 amount: 5,
-                amount_name: "五日元",
+                amount_name: this.$t('desk.money.five'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -679,7 +679,7 @@ export default {
             case "fiveHundred":
               let objH = {
                 amount: 500,
-                amount_name: "五百日元",
+                amount_name: this.$t('desk.money.fiveHundred'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -688,7 +688,7 @@ export default {
             case "one":
               let objI = {
                 amount: 1,
-                amount_name: "一日元",
+                amount_name: this.$t('desk.money.one'),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };

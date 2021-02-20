@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-20 16:22:16
+ * @LastEditTime: 2021-02-20 17:47:32
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -248,32 +248,32 @@
     <!-- 挂账dialog -->
     <el-dialog top="0" :visible.sync="cardDailog" title="挂账统计查看" width="50%">
       <div class="dialog_top">
-        总挂账：<span style="color:#0067ff">{{checkTotal()}}</span>日元
+        总挂账：<span style="color:#0067ff">{{checkTotal()}}</span>{{ $t("desk.serve_yen") }}
       </div>
       <div class="dialog_middle">
         <div class="middle_text2">
-          单位挂账：￥{{checkMoney('1')}}
+         {{$t('commons.paymentWay[1]')}}：￥{{checkMoney('1')}}
         </div>
         <div class="middle_text2">
-          商品券：￥{{checkMoney('2')}}
+          {{$t('commons.paymentWay[2]')}}：￥{{checkMoney('2')}}
         </div>
         <div class="middle_text2">
-          住宿券：￥{{checkMoney('3')}}
+          {{$t('commons.paymentWay[3]')}}：￥{{checkMoney('3')}}
         </div>
         <div class="middle_text2">
-          折价券：￥{{checkMoney('4')}}
+          {{$t('commons.paymentWay[4]')}}：￥{{checkMoney('4')}}
         </div>
         <div class="middle_text2">
-          点数：￥{{checkMoney('5')}}
+          {{$t('commons.paymentWay[5]')}}：￥{{checkMoney('5')}}
         </div>
         <div class="middle_text2">
-          招待券：￥{{checkMoney('6')}}
+          {{$t('commons.paymentWay[6]')}}：￥{{checkMoney('6')}}
         </div>
         <div class="middle_text2">
-          其他：￥{{checkMoney('7')}}
+         {{$t('commons.paymentWay[7]')}}：￥{{checkMoney('7')}}
         </div>
         <div class="middle_text2">
-          辅助金：￥{{checkMoney('8')}}
+          {{$t('commons.paymentWay[8]')}}：￥{{checkMoney('8')}}
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -285,7 +285,7 @@
     <!-- 本班下放备用金dialog -->
     <el-dialog top="0" :visible.sync="pettyCashDialog" class="liveInPersonDia" title="本班下放备用金统计查看" width="50%">
       <div class="dialog_top">
-        本班下放备用金<span v-if="itemInfo">{{$F.numFormate(itemInfo.nowMoneyRetained)}}</span>{{ $t("desk.serve_yen") }}
+        {{$t('manager.add_nowDownPriA')}}：<span v-if="itemInfo">{{$F.numFormate(itemInfo.nowMoneyRetained)}}</span>{{ $t("desk.serve_yen") }}
       </div>
       <div class="dialog_middle" v-if="itemInfo">
         <div class="middle_text" v-for="(item,index) in itemInfo.moneyList" :key="index">
@@ -296,7 +296,7 @@
       </div>
       <el-divider></el-divider>
       <div class="dialog_bot">
-        {{ $t("desk.serve_balanceNum") }}<span v-if="itemInfo">{{$F.numFormate(itemInfo.standbyBalancePrice)}}</span>(平衡数=实际下放备用金-备用金额度)
+        {{ $t("desk.serve_balanceNum") }}<span v-if="itemInfo">{{$F.numFormate(itemInfo.standbyBalancePrice)}}</span>{{$t('desk.customer_banJiA')}}
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="pettyCashDialog = false">{{
@@ -306,7 +306,6 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 import { mapState, mapActions } from "vuex";
 
