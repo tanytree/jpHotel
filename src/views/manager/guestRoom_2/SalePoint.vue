@@ -9,18 +9,19 @@
       </div>
       <!--售卖点-->
       <el-form class="term line demo-form-inline" v-model="form" inline size="small">
+        <el-form-item :label="$t('manager.grsl_goodsNameB')+':'">
+          <el-input v-model="form.name" :placeholder="$t('manager.grsl_goodsNameC')"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('manager.hk_goodsTypeA')+':'">
           <el-select v-model="form.categoryType" :placeholder="$t('commons.placeChoose')" @change="geProductType">
             <el-option :label="$t('manager.grsl_matter')" :value="1"></el-option>
             <el-option v-if="serviceVisible" :label="$t('manager.grsl_service')" :value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item  :label="$t('manager.grsl_goodsTypeA')+':'">
+        <el-form-item :label="$t('manager.grsl_goodsTypeA')+':'">
           <el-cascader :key="form.categoryType" v-model="form.category" :options="form.categoryType == 2?category:cateList" :props="categoryProps" @change="casChange"></el-cascader>
         </el-form-item>
-        <el-form-item :label="$t('manager.grsl_goodsNameB')+':'">
-          <el-input v-model="form.name" :placeholder="$t('manager.grsl_goodsNameC')"></el-input>
-        </el-form-item>
+
         <el-form-item>
           <el-button type="primary" class="submit" @click="search('')">{{$t('commons.queryBtn')}}</el-button>
           <el-button class="grey" @click="reset('')">{{$t('commons.resetBtn')}}</el-button>
@@ -248,7 +249,7 @@ export default {
       upshelf: { name: "", categoryType: "", category: "" },
       shelfTotal: 0,
       category: [], //虚拟物品列表
-      goodList:[],  //商品物品列表
+      goodList: [], //商品物品列表
 
       //是否可以上架服务类商品
       serviceVisible: true,
@@ -264,7 +265,7 @@ export default {
   },
   mounted() {
     this.cateData(1);
-    this.goodList = this.cateList
+    this.goodList = this.cateList;
     this.cateData(2);
     this.category = this.serviceList;
     this.getManageData(() => {

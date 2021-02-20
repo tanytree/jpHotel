@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-19 16:47:29
+ * @LastEditTime: 2021-02-20 16:22:16
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -218,24 +218,26 @@
       <el-pagination @current-change="handleCurrentChange" :current-page="searchForm.page" layout="total, prev, pager, next, jumper" :page-size="searchForm.pageSize" :total="listTotal"></el-pagination>
     </div>
     <!-- 现金dialog -->
-    <el-dialog top="0" :visible.sync="cashDialog" class="liveInPersonDia" :title="$t('desk.serve_cashView')" width="50%">
-      <div class="dialog_top">
-        {{ $t("desk.serve_systemIn") + ":" }}<span>1000.00</span>{{ $t("desk.serve_yen") }}
+    <el-dialog top="0" :visible.sync="cashDialog" v-if="cashDialog" class="liveInPersonDia" :title="$t('desk.serve_cashView')" width="50%">
+      <div class="dialog_top" v-if="tabCurr==1">
+        {{ $t("desk.serve_systemIn") + ":" }}<span v-if="itemInfo&&itemInfo.subList">{{$F.numFormate(itemInfo.subList[7].amount)}}</span>{{ $t("desk.serve_yen") }}
       </div>
-      <div class="dialog_middle">
-        <div class="middle_text">
-          {{ $t("desk.serve_wuYen") + ":" }}<span>1</span>{{ $t("desk.serve_zhang") }}
-        </div>
-        <div class="middle_text">
-          {{ $t("desk.serve_yiYen") + ":" }}<span>4</span>{{ $t("desk.serve_zhang") }}
-        </div>
-        <div class="middle_text">
-          {{ $t("desk.serve_yiYen") + ":" }}<span>2</span>{{ $t("desk.serve_zhang") }}
+      <div class="dialog_top" v-if="tabCurr==2">
+        {{ $t("desk.serve_systemIn") + ":" }}<span v-if="itemInfo&&itemInfo.subList">{{$F.numFormate(itemInfo.subList[2].amount)}}</span>{{ $t("desk.serve_yen") }}
+      </div>
+      <div class="dialog_top" v-if="tabCurr==3">
+        {{ $t("desk.serve_systemIn") + ":" }}<span v-if="itemInfo&&itemInfo.subList">{{$F.numFormate(itemInfo.subList[1].amount)}}</span>{{ $t("desk.serve_yen") }}
+      </div>
+      <div class="dialog_middle" v-if="itemInfo">
+        <div class="middle_text" v-for="(item,index) in itemInfo.moneyList" :key="index">
+          <template v-if="item.projectType==1">
+            {{ item.amountName + ":" }}<span>{{item.amountCount}}</span>{{ $t("desk.serve_zhang") }}
+          </template>
         </div>
       </div>
       <el-divider></el-divider>
-      <div class="dialog_bot">
-        {{ $t("desk.serve_balanceNum") }}<span>0</span>{{ $t("desk.serve_parentheses") }}
+      <div class="dialog_bot" v-if="itemInfo">
+        {{ $t("desk.serve_balanceNum") }}<span>{{$F.numFormate(itemInfo.balancePrice)}}</span>{{ $t("desk.serve_parentheses") }}
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="cashDialog = false">{{
@@ -283,22 +285,18 @@
     <!-- 本班下放备用金dialog -->
     <el-dialog top="0" :visible.sync="pettyCashDialog" class="liveInPersonDia" title="本班下放备用金统计查看" width="50%">
       <div class="dialog_top">
-        本班下放备用金<span>{{$F.numFormate(10000)}}</span>{{ $t("desk.serve_yen") }}
+        本班下放备用金<span v-if="itemInfo">{{$F.numFormate(itemInfo.nowMoneyRetained)}}</span>{{ $t("desk.serve_yen") }}
       </div>
-      <div class="dialog_middle">
-        <div class="middle_text">
-          {{ $t("desk.serve_wuYen") + ":" }}<span>1</span>{{ $t("desk.serve_zhang") }}
-        </div>
-        <div class="middle_text">
-          {{ $t("desk.serve_yiYen") + ":" }}<span>4</span>{{ $t("desk.serve_zhang") }}
-        </div>
-        <div class="middle_text">
-          {{ $t("desk.serve_yiYen") + ":" }}<span>2</span>{{ $t("desk.serve_zhang") }}
+      <div class="dialog_middle" v-if="itemInfo">
+        <div class="middle_text" v-for="(item,index) in itemInfo.moneyList" :key="index">
+          <template v-if="item.projectType==2">
+            {{ item.amountName + ":" }}<span>{{item.amountCount}}</span>{{ $t("desk.serve_zhang") }}
+          </template>
         </div>
       </div>
       <el-divider></el-divider>
       <div class="dialog_bot">
-        {{ $t("desk.serve_balanceNum") }}<span>0</span>(平衡数=实际下放备用金-备用金额度)
+        {{ $t("desk.serve_balanceNum") }}<span v-if="itemInfo">{{$F.numFormate(itemInfo.standbyBalancePrice)}}</span>(平衡数=实际下放备用金-备用金额度)
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="pettyCashDialog = false">{{
@@ -415,7 +413,7 @@ export default {
     },
     //点击眼睛图标
     lookDetail(type, row) {
-      // console.log(row);
+      this.itemInfo = row;
       switch (type) {
         case "cashDialog":
           this.cashDialog = true;
@@ -443,7 +441,6 @@ export default {
           this.pettyCashDialog = true;
           break;
       }
-      this.itemInfo = row;
     },
     /**每页数 */
     handleSizeChange(val) {

@@ -25,7 +25,11 @@
         <el-table-column prop="roomNum" :label="$t('desk.home_roomNum')" width="100"></el-table-column>
          <el-table-column prop="receiptNumber" :label="$t('desk.add_receiptNo')" width="150"></el-table-column>
         <el-table-column prop="companyName" :label="$t('desk.home_payCompanyName')" width="120"></el-table-column>
-        <el-table-column prop="prices" :label="$t('desk.customer_sum')" width="100"></el-table-column>
+        <el-table-column  :label="$t('desk.customer_sum')" width="100">
+          <template slot-scope="{row}">
+            {{$F.numFormate(row.prices)}}
+          </template>
+        </el-table-column>
         <el-table-column prop="projectName" :label="$t('desk.order_constProject')" width="180"></el-table-column>
         <el-table-column prop="createTime" :label="$t('desk.order_receiptTime')" width="180"></el-table-column>
         <el-table-column prop="updateTime" :label="$t('commons.operatingTime')" width="180"></el-table-column>
@@ -81,10 +85,10 @@
             {{ invoiceDetail.projectName }}
           </el-col>
            <el-col :span="12" style="margin-bottom: 10px">
-            <span style="color: #888888">{{$t('desk.order_invoicedAmount')}}：</span>{{ invoiceDetail.invoicePrice }}
+            <span style="color: #888888">{{$t('desk.order_invoicedAmount')}}：</span>{{ $F.numFormate(invoiceDetail.invoicePrice) }}
           </el-col>
            <el-col :span="8" style="margin-bottom: 10px">
-            <span style="color: #888888">{{$t('desk.customer_constPrice')}}：</span>{{ invoiceDetail.consumePrice }}
+            <span style="color: #888888">{{$t('desk.customer_constPrice')}}：</span>{{ $F.numFormate(invoiceDetail.consumePrice) }}
           </el-col>
           <el-col :span="12">
             <span style="color: #888888">{{

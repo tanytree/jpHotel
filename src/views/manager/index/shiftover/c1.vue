@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-19 18:06:33
+ * @LastEditTime: 2021-02-20 16:25:07
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -48,13 +48,13 @@
         </div>
         <!-- 餐饮部 -->
         <div v-if="tabCurr == 2" class="flexBox">
-          <div>{{$t("manager.deskTab['1']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t('desk.serve_foodPriceA')}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['1']")}}：<span style="color:red">{{$F.numFormate(info.nattachMealPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t('desk.serve_foodPriceA')}}：<span style="color:red">{{$F.numFormate(info.ndishesPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
         </div>
         <!-- 商店部 -->
         <div v-if="tabCurr == 3" class="flexBox">
-          <div v-for="i in 2" :key="i">{{$t('shop.reset.salePoint')}}{{`${i}：`}}<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
-          <div>{{$t("manager.deskTab['3']")}}：<span style="color:red">{{$F.numFormate(8000)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div v-for="(item,index) in info.sellingList" :key="index">{{item.sellingName+':'}}<span style="color:red">{{$F.numFormate(item.totalPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
+          <div>{{$t("manager.deskTab['3']")}}：<span style="color:red">{{$F.numFormate(info.nlittleShopPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
         </div>
       </el-row>
       <div class="total">{{$t('food.reset.totalFee')}}￥：{{$F.numFormate(info.settlement)}}{{$t('manager.ps_japanYen')}}</div>
@@ -87,16 +87,16 @@
         </div>
         <div v-if="tabCurr!=1">
           <el-col :span="6">
-            <div class="item">{{tabCurr==2?$t('manager.add_nowBillGetA'):$t('manager.add_nowBillGetB')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
+            <div class="item">{{tabCurr==2?$t('manager.add_nowBillGetA'):$t('manager.add_nowBillGetB')}}：<span style="color:#126eff">{{$F.numFormate(info.nuploadPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
           <el-col :span="6">
-            <div class="item">{{$t('manager.add_nowCashGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nowMoneyHandin)}}{{$t('manager.ps_japanYen')}}</span></div>
+            <div class="item">{{$t('manager.add_nowCashGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nmoneyPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
           <el-col :span="6">
-            <div class="item">{{$t('manager.add_nowCardGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nowCreditCardHandin)}}{{$t('manager.ps_japanYen')}}</span></div>
+            <div class="item">{{$t('manager.add_nowCardGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.ncardPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
           <el-col :span="6">
-            <div class="item">{{$t('desk.add_otherGetA')}}：<span style="color:#126eff">{{$F.numFormate(0)}}{{$t('manager.ps_japanYen')}}</span></div>
+            <div class="item">{{$t('desk.add_otherGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.npayOtherPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
         </div>
       </el-row>
@@ -111,10 +111,10 @@
             <div class="item">{{$t('manager.add_pettyCash')}}={{$F.numFormate(info.pettyCash)}}</div>
           </el-col>
           <el-col :span="6" class="li">
-            <div class="item">{{$t('manager.add_lastHold')}}：{{$F.numFormate(info.pettyCash)}}</div>
+            <div class="item">{{$t('manager.add_lastHold')}}：{{$F.numFormate(info.upMoneyRetained)}}</div>
           </el-col>
           <el-col :span="6" class="li">
-            <div class="item">{{$t('manager.add_nowDownPri')}}：{{$F.numFormate(info.pettyCash)}}</div>
+            <div class="item">{{$t('manager.add_nowDownPri')}}：{{$F.numFormate(info.nowMoneyRetained)}}</div>
           </el-col>
         </el-row>
       </div>
@@ -124,7 +124,7 @@
 
     <el-row style="text-align: center;margin-top: 20px;">
       <el-divider></el-divider>
-      <el-form inline label-width="150px" ref="form" style="padding-top: 30px;" :model="form"  :rules="rules">
+      <el-form inline label-width="150px" ref="form" style="padding-top: 30px;" :model="form" :rules="rules">
         <el-form-item :label="$t('food.shift.selectOnDutyerA')" prop="handoveEmployeedId">
           <el-select v-model="form.handoveEmployeedId">
             <el-option v-for="item in employeeList" :key="item.id" :label="item.userName" :value="item.id">
@@ -141,7 +141,7 @@
     </el-row>
     <!-- 现金统计dialog -->
     <el-dialog :title="$t('manager.add_cashStatistics')" :visible.sync="dialogVisible" width="80%" top="0">
-      <div class="dialog_top">{{$t('desk.serve_systemInA')}}：￥<span>1000</span>{{$t('manager.ps_japanYen')}}</div>
+      <div class="dialog_top">{{$t('desk.serve_systemInA')}}：￥<span>{{$F.numFormate(info.nmoneyPrice)}}</span>{{$t('manager.ps_japanYen')}}</div>
       <div>
         <el-row>
           <el-col :span="8">
@@ -204,11 +204,11 @@
           </el-col>
         </el-row>
       </div>
-      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>0</span>{{$t('desk.customer_banJi')}}</div>
+      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>{{checkget_Balance}}</span>{{$t('desk.customer_banJi')}}</div>
       <!-- 上面选框 -->
       <el-divider></el-divider>
       <!-- 下面选框 -->
-      <div class="dialog_top" style="margin-top:20px">{{$t('manager.add_nowDownPriA')}}：￥<span>100000</span>{{$t('manager.ps_japanYen')}}</div>
+      <div class="dialog_top" style="margin-top:20px">{{$t('manager.add_nowDownPriA')}}：￥<span>{{$F.numFormate(info.nowMoneyRetained)}}</span>{{$t('manager.ps_japanYen')}}</div>
       <div>
         <el-row>
           <el-col :span="8">
@@ -271,9 +271,9 @@
           </el-col>
         </el-row>
       </div>
-      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>0</span> {{$t('desk.customer_banJiA')}}</div>
+      <div class="contentBox">{{$t('desk.customer_banlance')}} = <span>{{checkput_Balance}}</span> {{$t('desk.customer_banJiA')}}</div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">{{$t('commons.cancel')}}</el-button>
+        <el-button @click="cancelClick">{{$t('commons.cancel')}}</el-button>
         <el-button type="primary" @click="save">{{$t('commons.determine')}}</el-button>
       </div>
     </el-dialog>
@@ -291,16 +291,88 @@ export default {
       msgKey: (state) => state.config.msgKey,
       plat_source: (state) => state.config.plat_source,
     }),
-    rules(){
-      return{
-          handoveEmployeedId:[
-            { required: true, message: '请选择员工', trigger: 'change' }
-          ],
-          password:  [
-            { required: true, message: '请输入密码', trigger: 'blur' }
-          ],
+    rules() {
+      return {
+        handoveEmployeedId: [
+          { required: true, message: "请选择员工", trigger: "change" },
+        ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      };
+    },
+    checkget_Balance() {
+      this.totalMoney = 0;
+      for (let i in this.getMoney) {
+        if (this.getMoney[i] > 0) {
+          switch (i) {
+            case "myriadNuber":
+              this.totalMoney += this.getMoney[i] * 10000;
+              break;
+            case "oneHundred":
+              this.totalMoney += this.getMoney[i] * 100;
+              break;
+            case "fiveThousand":
+              this.totalMoney += this.getMoney[i] * 5000;
+              break;
+            case "fifty":
+              this.totalMoney += this.getMoney[i] * 50;
+              break;
+            case "ten":
+              this.totalMoney += this.getMoney[i] * 10;
+              break;
+            case "oneThousand":
+              this.totalMoney += this.getMoney[i] * 1000;
+              break;
+            case "five":
+              this.totalMoney += this.getMoney[i] * 5;
+              break;
+            case "fiveHundred":
+              this.totalMoney += this.getMoney[i] * 500;
+              break;
+            case "one":
+              this.totalMoney += this.getMoney[i] * 1;
+              break;
+          }
+        }
       }
-    }
+      return this.totalMoney - this.info.nmoneyPrice;
+    },
+    checkput_Balance() {
+      this.totalMoney_putDown = 0;
+      for (let i in this.putDown) {
+        if (this.putDown[i] > 0) {
+          switch (i) {
+            case "myriadNuber":
+              this.totalMoney_putDown += this.putDown[i] * 10000;
+              break;
+            case "oneHundred":
+              this.totalMoney_putDown += this.putDown[i] * 100;
+              break;
+            case "fiveThousand":
+              this.totalMoney_putDown += this.putDown[i] * 5000;
+              break;
+            case "fifty":
+              this.totalMoney_putDown += this.putDown[i] * 50;
+              break;
+            case "ten":
+              this.totalMoney_putDown += this.putDown[i] * 10;
+              break;
+            case "oneThousand":
+              this.totalMoney_putDown += this.putDown[i] * 1000;
+              break;
+            case "five":
+              this.totalMoney_putDown += this.putDown[i] * 5;
+              break;
+            case "fiveHundred":
+              this.totalMoney_putDown += this.putDown[i] * 500;
+              break;
+            case "one":
+              this.totalMoney_putDown += this.putDown[i] * 1;
+              break;
+          }
+        }
+      }
+      return this.totalMoney_putDown - this.info.nowMoneyRetained;
+    },
   },
   data() {
     return {
@@ -314,9 +386,9 @@ export default {
       show: false,
       account: "",
       remark: "",
-      billList:[], //挂账列表
+      billList: [], //挂账列表
       dialogVisible: false, //现金统计dialog
-      // 下面是收入日元
+      // 下面是PMS统计本班收入现金
       getMoney: {
         myriadNuber: 0, //一万日元
         oneHundred: 0, //一百日元
@@ -327,17 +399,7 @@ export default {
         five: 0, //五日元
         fiveHundred: 0, // 五百日元
         one: 0, //一日元
-      },
-      putDown: {
-        myriadNuber: 0, //一万日元
-        oneHundred: 0, //一百日元
-        fiveThousand: 0, //五千日元
-        fifty: 0, //五十日元
-        ten: 0, //十日元
-        oneThousand: 0, //一千日元
-        five: 0, //五日元
-        fiveHundred: 0, // 五百日元
-        one: 0, //一日元
+        name: "getMoney",
       },
       checkBox: {
         checked_one: false,
@@ -350,6 +412,19 @@ export default {
         checked_nine: false,
         checked_ten: false,
       },
+      //下面是下放备用金
+      putDown: {
+        myriadNuber: 0, //一万日元
+        oneHundred: 0, //一百日元
+        fiveThousand: 0, //五千日元
+        fifty: 0, //五十日元
+        ten: 0, //十日元
+        oneThousand: 0, //一千日元
+        five: 0, //五日元
+        fiveHundred: 0, // 五百日元
+        one: 0, //一日元
+        name: "putDown",
+      },
       checkBox2: {
         checked_one: false,
         checked_two: false,
@@ -361,6 +436,9 @@ export default {
         checked_nine: false,
         checked_ten: false,
       },
+      moneyList: [],
+      totalMoney: 0, //现金实收数
+      totalMoney_putDown: 0, //备用金实收数
     };
   },
 
@@ -412,6 +490,11 @@ export default {
       if (v == 3) {
         this.getShopInfo(v);
       }
+      this.remark = "";
+      this.form = {
+        handoveEmployeedId: "",
+        password: "",
+      };
     },
 
     //前台部交班信息
@@ -476,22 +559,24 @@ export default {
         params,
         (res) => {
           console.log(res);
-        this.billList = res.upGroupCount;
+          this.billList = res.upGroupCount;
         }
       );
     },
     // 点击确定按钮
-    sureButton(formName){
-       this.$refs[formName].validate((valid) => {
-          if (valid) {
-        this.dialogVisible=true
-          } else {
-            return false;
-          }
-        });
-      
+    sureButton(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.dialogVisible = true;
+        } else {
+          return false;
+        }
+      });
     },
+    // 点击弹框确定按钮
     save() {
+      this.publicMethod(this.getMoney);
+      this.publicMethod(this.putDown);
       let url = "/pms/handover/handover_up";
       if (this.tabCurr == 1) {
         url = "/pms/handover/handover_up";
@@ -503,21 +588,139 @@ export default {
         url = "/pms/shop/handover/handover_up";
       }
       let params = {
-        remark: this.remark,
         workStarTime: this.info.workStarTime,
         workEndTime: this.info.workEndTime,
         handoveNum: this.info.handoveNum,
         handoverStatus: this.info.handoverStatus,
         handoveEmployeedId: this.form.handoveEmployeedId,
         password: this.form.password,
+        remark: this.remark,
+        realMoneyIncome: this.totalMoney,
+        balancePrice: this.checkget_Balance,
+        standbyMoney: this.totalMoney_putDown,
+        standbyBalancePrice: this.checkput_Balance,
+        pmsMoneyJson: JSON.stringify(this.moneyList),
       };
       params.userId = this.userId;
       params.storesNum = this.storesNum;
       this.$F.doRequest(this, url, params, (res) => {
         // console.log(res)
         this.$message.success(this.$t("food.common.success"));
-        this.dialogVisible = false;
+        this.cancelClick();
       });
+    },
+    publicMethod(objectName) {
+      for (let i in objectName) {
+        if (objectName[i] > 0) {
+          switch (i) {
+            case "myriadNuber":
+              let objA = {
+                amount: 10000,
+                amount_name: "1万日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objA);
+              break;
+            case "oneHundred":
+              let objB = {
+                amount: 100,
+                amount_name: "一百日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objB);
+              break;
+            case "fiveThousand":
+              let objC = {
+                amount: 5000,
+                amount_name: "五千日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objC);
+              break;
+            case "fifty":
+              let objD = {
+                amount: 50,
+                amount_name: "五十日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objD);
+              break;
+            case "ten":
+              let objE = {
+                amount: 10,
+                amount_name: "十日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objE);
+              break;
+            case "oneThousand":
+              let objF = {
+                amount: 1000,
+                amount_name: "一千日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objF);
+              break;
+            case "five":
+              let objG = {
+                amount: 5,
+                amount_name: "五日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objG);
+              break;
+            case "fiveHundred":
+              let objH = {
+                amount: 500,
+                amount_name: "五百日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objH);
+              break;
+            case "one":
+              let objI = {
+                amount: 1,
+                amount_name: "一日元",
+                amount_count: objectName[i],
+                project_type: objectName["name"] == "getMoney" ? 1 : 2,
+              };
+              this.moneyList.push(objI);
+              break;
+          }
+        }
+      }
+      console.log(this.moneyList);
+    },
+    //点击弹框取消
+    cancelClick() {
+      for (let i in this.checkBox) {
+        this.checkBox[i] = false;
+      }
+      for (let k in this.checkBox2) {
+        this.checkBox2[k] = false;
+      }
+      for (let a in this.getMoney) {
+        if (a != "name") {
+          this.changeList(a, false);
+        }
+      }
+      for (let b in this.putDown) {
+        if (b != "name") {
+          this.changeList_down(b, false);
+        }
+      }
+      this.moneyList = [];
+      this.totalMoney = 0;
+      this.totalMoney_putDown = 0;
+      this.dialogVisible = false;
     },
   },
 };
