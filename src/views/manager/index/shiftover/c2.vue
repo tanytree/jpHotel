@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-20 17:47:32
+ * @LastEditTime: 2021-02-22 10:17:20
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -246,9 +246,9 @@
       </span>
     </el-dialog>
     <!-- 挂账dialog -->
-    <el-dialog top="0" :visible.sync="cardDailog" title="挂账统计查看" width="50%">
+    <el-dialog top="0" :visible.sync="cardDailog" :title="$t('manager.add_viewThisCard')" width="50%">
       <div class="dialog_top">
-        总挂账：<span style="color:#0067ff">{{checkTotal()}}</span>{{ $t("desk.serve_yen") }}
+        {{$t('manager.add_paymentOfTotal')}}：<span style="color:#0067ff">{{checkTotal()}}</span>{{ $t("desk.serve_yen") }}
       </div>
       <div class="dialog_middle">
         <div class="middle_text2">
@@ -283,7 +283,7 @@
       </span>
     </el-dialog>
     <!-- 本班下放备用金dialog -->
-    <el-dialog top="0" :visible.sync="pettyCashDialog" class="liveInPersonDia" title="本班下放备用金统计查看" width="50%">
+    <el-dialog top="0" :visible.sync="pettyCashDialog" class="liveInPersonDia" :title="$t('manager.add_viewPettyCash')" width="50%">
       <div class="dialog_top">
         {{$t('manager.add_nowDownPriA')}}：<span v-if="itemInfo">{{$F.numFormate(itemInfo.nowMoneyRetained)}}</span>{{ $t("desk.serve_yen") }}
       </div>
