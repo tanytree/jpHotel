@@ -331,8 +331,8 @@ export default {
             activeThree: "a",
             currentPage3: "",
             value1: "", //时间
-            loading: true,
-            roomloading: true,
+            loading: false,
+            roomloading: false,
             searchForm: {
                 keyword: "",
                 checkInType: [],
@@ -354,7 +354,6 @@ export default {
 
             },
             liveCardData: [],
-            liveCardLoading: false,
             multipleSelection: [],
         };
     },
@@ -406,7 +405,6 @@ export default {
         },
         /**获取表格数据 */
         getDataList() {
-            this.roomloading = true;
             this.roomList = [];
             // checkInType: [],
             //     state: 1,
@@ -425,7 +423,6 @@ export default {
                 "/pms/realtime/realtime_hotel_room_list",
                 params,
                 (res) => {
-                    this.roomloading = false;
                     this.roomList = res.floorList;
                     this.$forceUpdate();
                 }
@@ -433,7 +430,7 @@ export default {
         },
         getChannel() {
             return new Promise((resolve, reject) => {
-                this.$F.getPublicDictByType(this, 1, (res) => {
+                this.$F.getPublicDictByType(null, 1, (res) => {
                     this.dict_channel = res;
                     resolve(res);
                 });
@@ -441,7 +438,7 @@ export default {
         },
         getPersonRoom() {
             return new Promise((resolve, reject) => {
-                this.$F.getPublicDictByType(this, 7, (res) => {
+                this.$F.getPublicDictByType(null, 7, (res) => {
                     this.dict_personRoom = res;
                     this.personRoom = res;
                     resolve(res);
@@ -450,7 +447,7 @@ export default {
         },
         getRoomStatus() {
             return new Promise((resolve, reject) => {
-                this.$F.getPublicDictByType(this, 15, (res) => {
+                this.$F.getPublicDictByType(null, 15, (res) => {
                     // this.dict_roomStatus= res
                     resolve(res);
                 });
@@ -459,7 +456,7 @@ export default {
         //获取图标说明
         getIconDes() {
             return new Promise((resolve, reject) => {
-                this.$F.getPublicDictByType(this, 15, (res) => {
+                this.$F.getPublicDictByType(null, 15, (res) => {
                     this.iconDesList = res;
                     resolve(res);
                 });
@@ -546,13 +543,13 @@ export default {
             );
         },
         get_hotel_building_list() {
-            this.$F.doRequest(this, "/pms/hotel/hotel_building_list", {}, (res) => {
+            this.$F.doRequest(null, "/pms/hotel/hotel_building_list", {}, (res) => {
                 this.hotel_building_list = res;
             });
         },
         get_hotel_building_floor_list(id) {
             this.$F.doRequest(
-                this,
+                null,
                 "/pms/hotel/hotel_building_floor_list",
                 {
                     buildingId: id,
@@ -645,9 +642,8 @@ export default {
                 pageIndex: 1,
                 pageSize: 999,
             };
-            this.liveCardLoading = true;
             this.$F.doRequest(
-                this,
+                null,
                 "/pms/checkin/live_in_person_list",
                 params,
                 (res) => {
@@ -664,7 +660,6 @@ export default {
                             this.liveCardData.unfinished++;
                         }
                     }
-                    this.liveCardLoading = false;
                     this.mackcade = true;
                     this.$forceUpdate();
                 }
@@ -690,7 +685,7 @@ export default {
                 checkInRoomIds: arr,
             };
             this.$F.doRequest(
-                this,
+                null,
                 "/pms/checkin/make_card_status",
                 params,
                 (res) => {
