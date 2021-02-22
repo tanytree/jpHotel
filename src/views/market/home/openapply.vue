@@ -96,7 +96,7 @@
                         }}</span>
             {{ invoiceDetail.remark }}
           </el-col>
-      
+
       </el-row>
       <div slot="footer" class="dialog-footer" style="text-align: center">
         <el-button class="submit" type="primary" @click="detailsBill = false">{{ $t("commons.close") }}</el-button>

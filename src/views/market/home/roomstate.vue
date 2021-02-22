@@ -132,9 +132,9 @@
                     <el-button class="white" size="small" @click="batchRoomHaldel">{{ $t("desk.home_batchSet") }}</el-button>
                     <div class='rateClass'>
                         <span>{{$t('desk.home_nowLiveRate')}}：{{(menuBottomInfo.checkInRate)*100}}%</span>
-                        <span style="margin-left: 15px">ADR：{{(menuBottomInfo.ADR)*100}}%</span>
-                        <span style="margin-left: 15px">DOR：{{(menuBottomInfo.DOR)*100}}%</span>
-                        <span style="margin-left: 15px">RevPAR：{{(menuBottomInfo.RevPAR)*100}}%</span>
+                        <span style="margin-left: 15px">ADR：{{menuBottomInfo.ADR}}</span>
+                        <span style="margin-left: 15px">DOR：{{menuBottomInfo.DOR}}</span>
+                        <span style="margin-left: 15px">RevPAR：{{menuBottomInfo.RevPAR}}</span>
                     </div>
                 </el-footer>
             </el-container>

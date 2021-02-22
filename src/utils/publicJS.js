@@ -351,7 +351,7 @@ const $F = {
     commons: {
         //获取ota列表
         fetchOtaList(params = {}, callback) {
-            $F.doRequest(this, '/pms/oat/oat_list', params, res => {
+            $F.doRequest(null, '/pms/oat/oat_list', params, res => {
                 callback(res.oatList || [])
             })
         },

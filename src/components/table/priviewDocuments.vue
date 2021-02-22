@@ -46,7 +46,7 @@
 export default {
   data() {
     return {
-      printDialog: true,
+      printDialog: false,
     };
   },
   mounted() {},
