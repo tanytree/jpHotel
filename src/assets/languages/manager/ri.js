@@ -579,6 +579,7 @@ module.exports = {
   add_last15A:'15日前',
   add_next15A: '15日後',
   add_tyepApri: '部屋タイプ/部屋料金',
+    add_tyepApri: '会員種別',
   add_dealNight: 'チェック入れると処理確認しなければ、「日時更新」できません。',
   add_setDutity: 'チェック入れると部屋状態を「要清掃」を設定する',
   grsl_resetSoon: '調整後1泊2食付1名料金',

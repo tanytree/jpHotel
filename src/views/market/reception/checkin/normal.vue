@@ -964,6 +964,9 @@ export default {
                 })
                 params.roomIds = roomIdArray.join(",");
                 this.$F.makeStoresNum(this, params);
+                if (this.storesNum) {
+                    params.headquarters = 1; //区分总部下的单
+                }
                 this.$F.doRequest(this, url, params, (data) => {
                     this.$message({message: "Success", type: "success",});
                     if (type == 2) {
@@ -1439,16 +1442,13 @@ export default {
                     this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd 11:00:00");
                 } else if (this.operCheckinType == "b2" || this.operCheckinType == "b3") {
                     this.checkInForm.checkinDays = "";
-                    nowDate.setDate(nowDate.getDate() + 1);
+                    if (this.operCheckinType == "b3") {
+                        nowDate.setDate(nowDate.getDate() + 1);
+                    }
                     nowDate.setHours(12);
                     nowDate.setMinutes(0);
                     nowDate.setSeconds(0);
                     this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd HH:mm:ss");
-                    // for (let k in this.checkInForm) {
-                    //     if (k !== 'operCheckinType') {
-                    //         this.checkInForm[k] = ''
-                    //     }
-                    // }
                 }
                 // this.checkInForm.keepTime =
                 //     new Date().Format("yyyy-MM-dd") + " 23:59:00";

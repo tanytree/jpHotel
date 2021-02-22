@@ -127,7 +127,7 @@ export default {
             this,
             "/pms/freeuser/stores_list",
             {
-                filterHeader: true,
+                filterHeader: false,
             },
             (data) => {
                 this.storeList = data;

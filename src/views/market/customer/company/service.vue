@@ -17,14 +17,14 @@
             <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('desk.customer_settlementStatus')+':'">
-          <el-select v-model="searchForm.state" class="width150">
-            <el-option :label="$t('commons.all')" value=""></el-option>
-            <el-option :label="$t('desk.customer_notRequest')" value="1"></el-option>
-            <el-option :label="$t('desk.customer_noInto')" value="3"></el-option>
-            <el-option :label="$t('desk.customer_areadyInto')" value="2"></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item :label="$t('desk.customer_settlementStatus')+':'">-->
+<!--          <el-select v-model="searchForm.state" class="width150">-->
+<!--            <el-option :label="$t('commons.all')" value=""></el-option>-->
+<!--            <el-option :label="$t('desk.customer_notRequest')" value="1"></el-option>-->
+<!--            <el-option :label="$t('desk.customer_noInto')" value="3"></el-option>-->
+<!--            <el-option :label="$t('desk.customer_areadyInto')" value="2"></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <br />
         <el-form-item :label="$t('desk.home_consumerNames')+':'">
           <el-input v-model="searchForm.name" class="width150"></el-input>
@@ -118,7 +118,7 @@ export default {
       searchForm: {
         storesNum: "",
         enterId: "",
-        state: "",
+          state: "",
         startTime: "", //考试时件
         endTime: "", //结束时间
         name: "",
@@ -172,7 +172,7 @@ export default {
       this.searchForm = {
         storesNum: "",
         enterId: "",
-        state: "",
+        state: "2",
         startTime: "", //考试时件
         endTime: "", //结束时间
         name: "",
@@ -186,8 +186,10 @@ export default {
         paging: true,
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
+          state: '2',
       });
-      this.$F.merge(params, this.searchForm);
+
+      this.$F.merge(this.searchForm, params);
       this.$F.doRequest(
         this,
         "/pms/consume/enter_finance_order_list",

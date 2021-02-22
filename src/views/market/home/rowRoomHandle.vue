@@ -163,7 +163,7 @@ import myMixin from './rowRoomMixin';
 import rowHouse from "@/components/front/rowHouse";
 export default {
     mixins: [myMixin],
-    props: ['title'],
+    props: ['title', 'operCheckinType'],
     components: {
         rowHouse
     },

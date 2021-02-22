@@ -17,7 +17,7 @@
             </div>
             <div class="infoBlock" v-for="(roomInfo, topIndex) of inRoomList" :key="topIndex">
                 <div class="roomItem">{{ roomInfo.room.houseNum }}/{{ roomInfo.room.roomTypeName }}</div>
-                <el-form ref="form" :model="form" label-width="100px" inline>
+                <el-form ref="form" :model="form" label-width="130px" inline>
                     <el-row>
                         <el-col :span="6">
                             <el-form-item :label="(ifMeeting==3?$t('desk.home_onePeopleLiveA'):$t('manager.hk_livePrice'))+':'">
@@ -410,7 +410,7 @@ export default {
                     })
                     this.$forceUpdate()
                   }
-                   
+
                 }
             )
         },

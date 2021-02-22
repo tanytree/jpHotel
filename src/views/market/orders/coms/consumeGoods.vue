@@ -242,10 +242,9 @@ export default {
             this.tableData = []
             this.loading = true
             this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", {}, (res) => {
-                // console.log(res)
                 let name = this.$t('desk.serve_miniPub');
                 for(let i in res.list){
-                   if(res.list[i].name == name){
+                   if(res.list[i].name == name || res.list[i].jname == name){
                        this.sellId = res.list[i].id
                        this.getProductsList(res.list[i].id)
                        break;

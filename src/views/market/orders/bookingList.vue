@@ -139,6 +139,11 @@
 
             <!--表格数据 -->
             <el-table ref="multipleTable" v-loading="loading" border :data="tableData"  height="100%" header-row-class-name="default" size="small">
+                <el-table-column prop="mobile" :label="$t('boss.store_storeNameA')" v-if="storesNum == $F.getHQCode()">
+                    <template slot-scope="{row}">
+                        {{getStoresNumDesc(row)}}
+                    </template>
+                </el-table-column>
                 <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')" width="140px">
                     <template slot-scope="{ row }">
                         <div>
@@ -191,8 +196,10 @@
                 </el-table-column>
                 <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="110" align="center">
                     <template slot-scope="{ row }">
-                        <div> {{ F_orderSource(row.orderSource) }}</div>
+                        <div v-if="row.headquarters">{{$t('desk.book_HQ')}}</div>
+                        <div>{{ F_orderSource(row.orderSource) }}</div>
                         <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
+
                     </template>
                 </el-table-column>
                 <el-table-column prop="" :label="$t('food.common.status')" width="120px" align="center">
@@ -210,7 +217,7 @@
                             <!--                        只有当渠道订单才会有接收和拒单-->
                             <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleAccept(row)">{{ $t("desk.order_accept") }}</el-button>
                             <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleRefuse(row)">{{ $t("desk.book_reject") }}</el-button>
-                            <el-button type="text" size="mini" v-if="row.state == 8" @click="handleReset(row)">{{ $t("desk.order_restore") }}</el-button>
+<!--                            <el-button type="text" size="mini" v-if="row.state == 8" @click="handleReset(row)">{{ $t("desk.order_restore") }}</el-button>-->
                             <!--                        <el-button type="text" size="mini" v-if="row.state==4" @click="handleReset(row)">撤销</el-button>-->
                         </template>
                     </template>
@@ -363,6 +370,7 @@ export default {
                 this.storeList = data;
             }
         );
+
     },
     computed: {
         reserveStatusObject() {
@@ -381,6 +389,12 @@ export default {
         },
     },
     methods: {
+        getStoresNumDesc(row) {
+            let tempArray = this.storeList.filter(store => {
+                return store.storesNum == row.storesNum;
+            }) || [];
+            return tempArray[0] && tempArray[0].storesName;
+        },
         changeObject() {},
         getRoomInfo(row) {
             let value = row.roomInfo.split(",").join("<br>");

@@ -5,14 +5,15 @@ import merge from 'lodash/merge'
 import httpRequest from "@/utils/httpRequest";
 
 var publicDict = {}
-const uploadUrl = 'http://39.104.116.153:8887'
-// const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
+// const uploadUrl = 'http://39.104.116.153:8887'
+const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
 var tabsName = {}
 const languageObject = {
     'ri': '日本语',
     'zh': '中文'
 }
 const HQCODE = '0000000000'  //总部账号定义
+const platSource = 1005;
 var NATIONALITYLIST = []  //国籍列表
 const $F = {
     makeStoresNum($instance, params) {

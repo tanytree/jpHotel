@@ -6,7 +6,7 @@
  -->
 <template>
     <div>
-        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="1400px">
+        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="1400px" append-to-body>
             <!-- 房间选择块 -->
             <div class="topBigbox">
                 <div class="eackBlock" v-for="(item, key) in floorList" :key="key">
@@ -117,7 +117,7 @@ export default {
             }
             this.$F.makeStoresNum(this, params);
             this.$F.doRequest(
-                this,"/pms/reserve/reserve_room_list", params, (res) => {
+                null,"/pms/reserve/reserve_room_list", params, (res) => {
                     this.floorList = res.floorList || [];
                     this.floorList.forEach( floor=> {
                         this.roomList = this.roomList.concat(floor.roomList)

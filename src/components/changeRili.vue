@@ -395,7 +395,7 @@ export default {
                             priseList.push(temp.newCustomPrice);
                         })
                         let result = '';
-                        priseList.forEach((c, d) => {   
+                        priseList.forEach((c, d) => {
                             if(topIndex == 0) { //纯住宿
                                 result += `${d+1}`+this.$t('manager.add_peoplePrice') + Number(priseList[d])+ '<br/>'
                             } else if(topIndex== 1) {  //住宿+早
@@ -555,7 +555,7 @@ export default {
                         this.dayPriceList = res.dayPriceList;
                         this.dateList = res.dateList
                         this.dateList.unshift({
-                            dateStr: this.$t('desk.home_typeText'),
+                            dateStr: this.$t('desk.home_typeTextB'),
                             weekDay: "",
                         });
                         if(res.roomType.roomType == 1) {
