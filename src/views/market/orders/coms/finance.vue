@@ -34,6 +34,7 @@
             <!--            <el-button type="primary">导出</el-button>-->
             <!--        </el-form-item>-->
         </el-form>
+
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
                   @selection-change="handleSelectionChange" size="mini">
@@ -273,7 +274,7 @@
                             </el-option>
                         </el-select>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <el-input-number @change="getDamagePrice" :disabled="!consumeOperForm.damageId"  v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
+                        <el-input-number @change="getDamagePrice" :disabled="!consumeOperForm.damageId "  v-model="consumeOperForm.damageCount" :min="1" label=""></el-input-number>
                     </el-form-item>
                 </template>
 
@@ -288,7 +289,7 @@
 
                 <el-form-item :label="$t('desk.customer_sum')+':'">
                     <el-input class="11111" v-if="consumeOperForm.priceType==3||consumeOperForm.priceType==2" v-model="consumeOperForm.payPrice" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
-                    <el-input type="number" style="width: 100px;" v-else v-model="consumeOperForm.consumePrices" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
+                    <el-input type="number" :disabled="consumeOperForm.priceType == 7 || consumeOperForm.priceType == 15 || consumeOperForm.priceType == 16 " style="width: 100px;" v-else v-model="consumeOperForm.consumePrices" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
                 </el-form-item>
 
                 <el-form-item :label="$t('desk.home_note') + ':'">
@@ -650,9 +651,11 @@ export default {
         this.checkInId = this.$route.query.id;
         //监听单价和数量
         this.$watch('unitPrice', (value) => {
+            console.log(value)
             this.getDamagePrice();
         });
         this.$watch('taxCount', (value) => {
+            console.log(value)
             this.getDamagePrice();
         });
         this.hoteldamagetype_list()
@@ -887,7 +890,7 @@ export default {
                 params.servicePrice  = service
                 // console.log(rzSum)
                 params.consumePrice =  parseFloat(this.consumeOperForm.consumePrices)  +  parseFloat(service) +  parseFloat(taxFee)
-                console.log(consumePrices)
+                // console.log(consumePrices)
                 // return
 
                 // console.log(tax)
@@ -934,7 +937,7 @@ export default {
                 params.payType = 0 //挂账无需支付方式
                 params.state = 1
                 params.payPrice =  this.consumeOperForm.payPrice
-                console.log(params)
+                // console.log(params)
             }
 
             //冲调
@@ -968,7 +971,7 @@ export default {
             }
             console.log(params)
 
-            return
+            // return
             //退房结账
             // if (type == 4) {
             //     params.state = 2
@@ -1124,6 +1127,7 @@ export default {
         //获取房间的物品价格
         getDdamageInfo(){
             if(this.consumeOperForm.priceType == 15 || this.consumeOperForm.priceType == 16){
+                console.log(1)
                 let count = this.taxCount ? this.taxCount : 0
                 let unitPrice = this.unitPrice ? this.unitPrice : 0
                 let p = count * unitPrice
@@ -1133,21 +1137,30 @@ export default {
                 console.log(p)
                 console.log( this.consumeOperForm.consumePrices)
             }else{
+                console.log(2)
                 this.taxCount = ''
                 console.log(this.consumeOperForm.damageId)
                 console.log(this.hoteldamageList)
                 let list = this.hoteldamageList
                 if(list.length > 0 && this.consumeOperForm.damageTypeId && this.consumeOperForm.damageId ){
-                    for(let i in list){
-                        if(this.consumeOperForm.damageId == list[i].id){
-                            console.log(list[i])
-                            console.log(this.consumeOperForm.damageCount)
-                            let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
-                            this.consumeOperForm.consumePrices = p
-                            this.consumeOperForm.consumePrice = p
-                            this.consumeOperForm.damageName = list[i].name
+                    // if(this.consumeOperForm.consumePrices){
+                    //     let p = parseFloat(this.consumeOperForm.consumePrices)  * parseFloat(this.consumeOperForm.damageCount)
+                    //     this.consumeOperForm.consumePrices = p
+                    //     this.consumeOperForm.consumePrice = p
+                    // }else{
+                        for(let i in list){
+                            if(this.consumeOperForm.damageId == list[i].id){
+                                // console.log(list[i])
+                                // console.log(this.consumeOperForm.damageCount)
+                                let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
+                                this.consumeOperForm.consumePrices = p
+                                this.consumeOperForm.consumePrice = p
+                                this.consumeOperForm.damageName = list[i].name
+                            }
                         }
-                    }
+                    // }
+
+
                 }
             }
         },
@@ -1211,10 +1224,8 @@ export default {
                     }
                 }
             }
-
-
             if(e){
-                this.hoteldamage_list()
+                this.hoteldamage_list(e)
             }
 
         },
