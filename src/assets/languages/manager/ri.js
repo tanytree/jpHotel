@@ -595,6 +595,9 @@ module.exports = {
   add_nowBillGetB: '付帯/部屋付',
   add_flightTime: 'シフト時間',
   add_chooseDate: '時間設定',
+  add_viewPettyCash: '繰越・金額仕分け',
+  add_viewThisCard: '売掛仕分け',
+  add_paymentOfTotal: '売掛合計',
 
 
 

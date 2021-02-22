@@ -88,7 +88,8 @@
             <el-button size="small" type="text" v-if="row.operStatus == 1" @click="invalidClick(row)">{{ $t("desk.home_invalid") }}</el-button>
             <el-button size="small" type="text" v-if="row.operStatus == 3" @click="cancelInvalidClick(row)">{{ $t("desk.home_cancelInvalid") }}</el-button>
             <!-- <el-button size="small" type="text" v-if="row.operStatus == 2 || row.operStatus == 3" @click="deletClick(row)">{{ $t("commons.delete") }}</el-button> -->
-            <el-button size="small" type="text" v-if="row.operStatus == 1" @click="jicunClick(row)">{{ $t("desk.home_checkToPlayA") }}</el-button>
+            <!-- 寄存补打 -->
+            <el-button size="small" type="text" v-if="row.operStatus == 1" @click="jicunClick(row.id)">{{ $t("desk.home_checkToPlayA") }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -198,61 +199,107 @@
       </div>
     </el-dialog>
     <!-- checkPatch  寄存补打-->
-    <el-dialog top="0" :title="$t('desk.home_checkToPlayA')" style="text-align: left" width="650px" v-if="checkPatch" :visible.sync="checkPatch">
-      <el-row style="margin: 10px 20px">
+    <el-dialog top="0" :title="$t('desk.home_checkToPlayA')" style="text-align: left" width="60%" v-if="checkPatch" :visible.sync="checkPatch">
+      <div class="dialog_headBox">
+        <img src="~@/assets/images/print/good_print.png" alt="">
+        <div>https://okura-club-hotels.com</div>
+      </div>
+      <el-row style="margin: -10px 20px 10px">
         <h2 style="text-align: center">
-          {{ itemJiCun.storesName }}{{ $t("desk.home_goodsGetOrder") }}
+          <span>預かり書</span><br /><span>Storage Receipt</span>
         </h2>
-        <el-row style="
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-          ">
-          <label>{{ $t("desk.home_printTimeA") + ":" }}</label>
-          {{ itemJiCun.printingTime }}
+        <el-row style="margin-bottom:10px;">
+          <el-col :span="12">
+            印刷時間：{{ itemJiCun.printingTime }}
+          </el-col>
         </el-row>
-
-        <el-row style="
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-          ">
-          <p>
-            <label>{{ $t("desk.home_goodsName") + ":" }}</label>
-            {{ itemJiCun.luggageName }}
-          </p>
-          <label>{{ $t("desk.home_getNum") + ":" }}</label>
-          {{ itemJiCun.luggageNum }}
-        </el-row>
-        <el-row style="margin-bottom: 10px">
-          <label>{{ $t("desk.home_checkTheTime") + ":" }}</label>
-          {{ itemJiCun.createTime }}
-        </el-row>
-        <el-row style="color: red; margin-bottom: 10px">{{
-          $t("desk.home_explain")
-        }}</el-row>
         <el-row>
-          <span>{{ $t("desk.home_deskPhoneA") + ":"
-            }}{{ itemJiCun.receptionMobile }}</span>
-          <span style="margin-left:20px;">{{ $t("desk.home_hotelAddressA") + ":"
-            }}{{ itemJiCun.storesAddress }}</span>
+          <el-col :span="12">
+            No.：{{ itemJiCun.luggageNum }}
+          </el-col>
+          <el-col :span="12">
+            ホテル名：{{ itemJiCun.storesName }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            預かり時間：{{ itemJiCun.createTime }}
+          </el-col>
+          <el-col :span="12">
+            ホテル住所：{{ itemJiCun.storesAddress }}
+          </el-col>
+        </el-row>
+        <el-row style="
+            border-bottom: 1px dashed #333;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+          ">
+          <el-col :span="12">
+            担当者：{{ itemJiCun.creatorName }}
+          </el-col>
+          <el-col :span="12">
+            ホテル電話：{{ itemJiCun.receptionMobile }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            お名前 /Name ：{{itemJiCun.guestName}}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            部屋番号：{{itemJiCun.roomNum}}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            お電話：{{itemJiCun.mobile}}
+          </el-col>
+        </el-row>
+        <el-row style="margin-top:10px;">
+          <el-col :span="12">
+            御預かり内容：{{itemJiCun.luggageName}}
+          </el-col>
         </el-row>
       </el-row>
-
+      <div class="responsible">
+        <div class="innerBox"> 担当者署名</div>
+      </div>
+      <div style="margin-top:10px">
+        <div style="margin-bottom:10px;">毎度ご愛顧賜りましてありがとう御座います。</div>
+        <div>
+          <div>上記通り預ける荷物には現金、貴重品、医薬品、壊れやすいもの、危険物などはありません。
+            <div>
+              この内容と異なるものが含まれる場合、一切責任を負担いたしません。
+            </div>
+            <div>
+              ご了承の程宜しくお願いいたします</div>
+          </div>
+        </div>
+      </div>
+      <div class="imgBox">
+        <img src="~@/assets/images/print/good_print.png" alt="">
+      </div>
       <div slot="footer" class="dialog-footer" style="text-align: center">
         <el-button style="width: 80px" @click="checkPatch = false">{{
           $t("commons.cancel")
         }}</el-button>
-        <!--        <el-button style="width:80px;" type="primary">{{$t('commons.print')}}</el-button>-->
+        <el-button style="width:80px;" type="primary">印刷</el-button>
       </div>
+    </el-dialog>
+     <!-- checkPatch  测试所用-->
+    <el-dialog top="0" title="印刷レビュー" style="text-align: left" width="70%" v-if="testDialog" :visible.sync="testDialog">
+      <customerInfo/>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import customerInfo from '@/components/table/customerInfo'
 export default {
   data() {
     return {
+      testDialog:true,
       nowTime: null,
       pageIndex: 1,
       pageSize: 10,
@@ -288,6 +335,9 @@ export default {
       input: "", //搜索框
     };
   },
+  components:{
+    customerInfo
+  },
   created() {
     this.getDepositList(); //请求寄存列表
   },
@@ -316,7 +366,7 @@ export default {
       if (time) {
         let array = time.split(" ");
         return array;
-      }else{
+      } else {
         return time;
       }
     },
@@ -332,13 +382,13 @@ export default {
       }
     },
     //点击 寄存补打 按钮
-    jicunClick(row) {
+    jicunClick(id) {
       let params = {
-        id: row.id,
+        id: id,
       };
       this.$F.doRequest(
         this,
-        "/pms/luggagedeposit/findone", //请求新增接口  (接口有问题)
+        "/pms/luggagedeposit/findone", 
         params,
         (data) => {
           this.itemJiCun = data;
@@ -453,7 +503,7 @@ export default {
       };
       this.$F.doRequest(
         this,
-        "/pms/luggagedeposit/findone", //请求新增接口
+        "/pms/luggagedeposit/findone", 
         params,
         (data) => {
           this.itemGoodsDetail = data;
@@ -476,13 +526,14 @@ export default {
           this.$F.merge(params, this.newCheckForm);
           this.$F.doRequest(
             this,
-            "/pms/luggagedeposit/edit", //请求新增接口  (接口有问题)
+            "/pms/luggagedeposit/edit", //请求新增接口  
             params,
             (data) => {
-              console.log(data.message);
+              console.log(data);
               this.newCheck = false;
               this.newCheckForm = {};
               this.getDepositList();
+              this.jicunClick(data.id);
             }
           );
         } else {
@@ -547,5 +598,37 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 10px;
+}
+.dialog_headBox {
+  margin-top: -35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    width: 260px;
+    height: 73px;
+  }
+}
+.responsible {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  .innerBox {
+    width: 400px;
+    font-weight: 600;
+    font-size: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+  }
+}
+.imgBox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  img {
+    width: 260px;
+    height: 73px;
+  }
 }
 </style>
