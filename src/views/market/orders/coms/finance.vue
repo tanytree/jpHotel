@@ -857,36 +857,37 @@ export default {
                         if(this.currentRoom.seviceStatus == 1){
                            //不包含服务税
                            //  1,1,fasle,in
-                            taxFee += ( consumePrices + consumePrices * servicePrice ) * consumeTax
+                            taxFee += ( parseFloat(consumePrices) + parseFloat(consumePrices * servicePrice) ) * consumeTax
                             // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
                         }else{
                            //1,2,false,in
-                           taxFee += consumePrices * consumeTax
+                           taxFee += parseFloat(consumePrices * consumeTax)
                         }
                     }
                     //不包含服务税
                     if(this.currentRoom.seviceStatus == 1){
                         //不包含消费税
                         if(this.currentRoom.taxStatus == 1){
-                            service += consumePrices * servicePrice
+                            service += parseFloat(consumePrices * servicePrice)
                         }else{
                             //包含消费税
                             let f = 1.00 + consumeTax
-                            service += (consumePrices / f) * servicePrice
+                            service += parseFloat((consumePrices / f) * servicePrice)
                         }
                     }
                     let pms = {
                         service: service ? parseFloat(service).toFixed(0) :0,
                         taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
                     }
-                    console.log('消费/服务费'+pms)
+                    console.log('消费/服务费')
+                    console.log(pms)
+                    console.log('消费/服务费')
                 }
                 params.consumTaxPrice  = taxFee
                 params.servicePrice  = service
                 // console.log(rzSum)
-                // console.log(rzSerFee)
-                params.consumePrice = this.consumeOperForm.consumePrices + service + taxFee
-
+                params.consumePrice =  parseFloat(this.consumeOperForm.consumePrices)  +  parseFloat(service) +  parseFloat(taxFee)
+                console.log(consumePrices)
                 // return
 
                 // console.log(tax)
@@ -967,7 +968,7 @@ export default {
             }
             console.log(params)
 
-            // return
+            return
             //退房结账
             // if (type == 4) {
             //     params.state = 2
