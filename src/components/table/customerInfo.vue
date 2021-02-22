@@ -1,20 +1,23 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-22 16:39:52
+ * @LastEditTime: 2021-02-22 17:55:36
  * @FilePath: \jiudian\src\components\table\customerInfo.vue
+ * @pageName: 这是--（打印客户资讯 组件）--页面
 -->
+
 <template>
-  <div>
-    <div class="dialog_headBox">
-      <img src="~@/assets/images/print/good_print.png" alt="">
-      <div>https://okura-club-hotels.com</div>
-    </div>
-    <div class="tableTitle">
-      <div>レジストレーションカード</div>
-      <div>Registration Card</div>
-    </div>
-    <div class="tableBox">
+  <el-dialog top="0" title="印刷レビュー" style="text-align: left" width="70%" v-if="printDialog" :visible.sync="printDialog">
+    <div>
+      <div class="dialog_headBox">
+        <img src="~@/assets/images/print/good_print.png" alt="">
+        <div>https://okura-club-hotels.com</div>
+      </div>
+      <div class="tableTitle">
+        <div>レジストレーションカード</div>
+        <div>Registration Card</div>
+      </div>
+
       <table border="1">
         <tr>
           <td>部屋番号</td>
@@ -58,7 +61,7 @@
         </tr>
         <tr>
           <td>D　M</td>
-          <td colspan="12" class="checkBox">
+          <td colspan="12" class="checkBox" style="text-align:left">
             <label><input type='checkbox'>自宅郵送</label>
             <label><input type='checkbox'>勤務先郵送</label>
             <label><input type='checkbox'>E－Mail</label>
@@ -92,7 +95,7 @@
           <td colspan="6">料　金</td>
         </tr>
         <tr>
-          <td colspan="7" ></td>
+          <td colspan="7"></td>
           <td colspan="6"></td>
         </tr>
         <tr>
@@ -101,21 +104,40 @@
           <td colspan="2" rowspan="2">（備考）</td>
           <td colspan="4" rowspan="2"></td>
         </tr>
-         <tr>
+        <tr>
           <td colspan="2">（団体名）</td>
           <td colspan="5"></td>
         </tr>
       </table>
+      <div style="margin-top:10px">ご記入いただいた個人情報は、お客様へのサービスのご提供のために使用するものであり、それ以外の目的で使用することはございません。</div>
+      <div class="responsible">
+        <div class="innerBox">ご署名</div>
+      </div>
+      <div class="bottomImg">
+        <img src="~@/assets/images/print/good_print.png" alt="">
+      </div>
     </div>
-  </div>
+    <div slot="footer" class="dialog-footer" style="text-align: center">
+      <el-button style="width: 80px" @click="printDialog = false">{{
+          $t("commons.cancel")
+        }}</el-button>
+      <el-button style="width:80px;" type="primary">印刷</el-button>
+    </div>
+  </el-dialog>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+       printDialog:false,
+    };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    openDialog(){
+      this.printDialog = true;
+    }
+  },
 };
 </script>
 <style scoped lang='less'>
@@ -137,22 +159,41 @@ export default {
   background-color: #d9d9d9;
   padding: 20px 0;
 }
-.tableBox {
+table {
   margin-top: 20px;
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    tr {
-      td {
-        width: calc(~"100%/13");
-        height: 40px;
-      }
-      .checkBox {
-        label {
-          margin-left: 20px;
-        }
+  border-collapse: collapse;
+  width: 100%;
+  tr {
+    td {
+      width: 80px;
+      height: 40px;
+      text-align: center;
+    }
+    .checkBox {
+      label {
+        margin-left: 20px;
       }
     }
+  }
+}
+.responsible {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 30px;
+  .innerBox {
+    width: 400px;
+    font-weight: 600;
+    font-size: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+  }
+}
+.bottomImg {
+  text-align: right;
+  img {
+    width: 260px;
+    height: 73px;
   }
 }
 </style>

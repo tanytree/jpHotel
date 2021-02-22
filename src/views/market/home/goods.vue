@@ -287,19 +287,14 @@
         <el-button style="width:80px;" type="primary">印刷</el-button>
       </div>
     </el-dialog>
-     <!-- checkPatch  测试所用-->
-    <el-dialog top="0" title="印刷レビュー" style="text-align: left" width="70%" v-if="testDialog" :visible.sync="testDialog">
-      <customerInfo/>
-    </el-dialog>
+    <priviewDocuments />
   </div>
 </template>
-
 <script>
-import customerInfo from '@/components/table/customerInfo'
+import priviewDocuments from "@/components/table/priviewDocuments.vue";
 export default {
   data() {
     return {
-      testDialog:true,
       nowTime: null,
       pageIndex: 1,
       pageSize: 10,
@@ -335,8 +330,8 @@ export default {
       input: "", //搜索框
     };
   },
-  components:{
-    customerInfo
+  components: {
+    priviewDocuments,
   },
   created() {
     this.getDepositList(); //请求寄存列表
@@ -386,16 +381,11 @@ export default {
       let params = {
         id: id,
       };
-      this.$F.doRequest(
-        this,
-        "/pms/luggagedeposit/findone", 
-        params,
-        (data) => {
-          this.itemJiCun = data;
-          this.checkPatch = true;
-          console.log(this.itemJiCun);
-        }
-      );
+      this.$F.doRequest(this, "/pms/luggagedeposit/findone", params, (data) => {
+        this.itemJiCun = data;
+        this.checkPatch = true;
+        console.log(this.itemJiCun);
+      });
     },
     cancelClick() {
       this.newCheck = false;
@@ -501,15 +491,10 @@ export default {
       let params = {
         id: row.id,
       };
-      this.$F.doRequest(
-        this,
-        "/pms/luggagedeposit/findone", 
-        params,
-        (data) => {
-          this.itemGoodsDetail = data;
-          this.checkdetail = true;
-        }
-      );
+      this.$F.doRequest(this, "/pms/luggagedeposit/findone", params, (data) => {
+        this.itemGoodsDetail = data;
+        this.checkdetail = true;
+      });
     },
 
     //新增寄存dialog中点击 保存  按钮
@@ -526,7 +511,7 @@ export default {
           this.$F.merge(params, this.newCheckForm);
           this.$F.doRequest(
             this,
-            "/pms/luggagedeposit/edit", //请求新增接口  
+            "/pms/luggagedeposit/edit", //请求新增接口
             params,
             (data) => {
               console.log(data);
