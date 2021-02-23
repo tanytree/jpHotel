@@ -138,7 +138,6 @@
         <el-button style="width: 80px" type="primary" @click="saveNewAdd('newCheckForm')">{{ $t("commons.save") }}</el-button>
       </div>
     </el-dialog>
-
     <!-- 新增寄存 详情 -->
     <el-dialog top="0" :title="$t('commons.detail')" style="text-align: left" v-if="checkdetail" :visible.sync="checkdetail">
       <el-row style="margin: 10px 20px">
@@ -359,6 +358,7 @@ export default {
     },
   },
   methods: {
+   
     formatTime(time) {
       if (time) {
         let array = time.split(" ");

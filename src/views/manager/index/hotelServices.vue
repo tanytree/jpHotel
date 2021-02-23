@@ -3,15 +3,7 @@
     <div class="content">
       <div class="hotelTitle">{{$t('manager.hp_hotelImg')}}</div>
       <div class="hotelBox uploadBox">
-        <el-upload
-          list-type="picture-card"
-          action="aa"
-          ref="upload"
-          :file-list="hotelData.files"
-          :auto-upload="false"
-          multiple
-          accept="image/png, image/gif, image/jpg, image/jpeg"
-        >
+        <el-upload list-type="picture-card" action="aa" ref="upload" :file-list="hotelData.files" :auto-upload="false" multiple accept="image/png, image/gif, image/jpg, image/jpeg">
           <i slot="default" class="el-icon-plus"></i>
           <div slot="file" slot-scope="{file}">
             <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
@@ -19,11 +11,7 @@
               <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                 <i class="el-icon-zoom-in"></i>
               </span>
-              <span
-                v-if="!disabled"
-                class="el-upload-list__item-delete"
-                @click="handleRemove(file)"
-              >
+              <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
                 <i class="el-icon-delete"></i>
               </span>
             </span>
@@ -34,14 +22,7 @@
         </el-dialog>
       </div>
       <div class="hotelTitle">{{$t('manager.hp_hotelInformation')}}</div>
-      <el-form
-        :model="hotelData"
-        :rules="hotelRule"
-        class="hotelBox"
-        size="small"
-        ref="ruleForm"
-        label-width="100px"
-      >
+      <el-form :model="hotelData" :rules="hotelRule" class="hotelBox" size="small" ref="ruleForm" label-width="100px">
         <el-form-item :label="$t('manager.hp_hotelName')+':'" prop="name">
           <el-input v-model="hotelData.name"></el-input>
         </el-form-item>
@@ -57,24 +38,12 @@
         <el-form-item :label="$t('manager.hp_checkOutTime')+':'" prop="endTime">
           <el-date-picker v-model="hotelData.endTime" type="datetime"></el-date-picker>
         </el-form-item>
-      </el-form>
-      <div class="hotelTitle">{{$t('manager.hp_hotelIntroduction')}}</div>
-      <el-form
-        :model="hotelData"
-        :rules="hotelRule"
-        class="hotelBox area"
-        size="small"
-        ref="ruleForm"
-        label-width="100px"
-      >
+        <el-form-item label="单据前缀:" prop="prefix" label-width="120px">
+          <el-input></el-input>
+        </el-form-item>
+        <div class="hotelTitle">{{$t('manager.hp_hotelIntroduction')}}</div>
         <el-form-item :label="$t('manager.hp_hotelIntroduction')+':'" prop="remark">
-          <el-input
-            type="textarea"
-            resize="none"
-            :rows="5"
-            :placeholder="$t('manager.hp_inputIntroduction')"
-            v-model="hotelData.remark"
-          ></el-input>
+          <el-input type="textarea"  style="width:700px;" :placeholder="$t('manager.hp_inputIntroduction')" v-model="hotelData.remark"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -100,7 +69,6 @@ export default {
           {
             required: true,
             message: this.$t("manager.hp_inputHotelName"),
-
             trigger: "blur",
           },
         ],
@@ -113,7 +81,6 @@ export default {
         ],
         phone: [
           {
-            type: "date",
             required: true,
             message: this.$t("manager.hp_inputPhone"),
             trigger: "blur",
@@ -121,7 +88,6 @@ export default {
         ],
         startTime: [
           {
-            type: "date",
             required: true,
             message: this.$t("manager.hp_selectStayTime"),
             trigger: "blur",
@@ -129,7 +95,6 @@ export default {
         ],
         endTime: [
           {
-            type: "date",
             required: true,
             message: this.$t("manager.hp_selectLeavingTime"),
             trigger: "blur",
@@ -139,6 +104,13 @@ export default {
           {
             required: true,
             message: this.$t("manager.hp_inputHotelDetuction"),
+            trigger: "blur",
+          },
+        ],
+        prefix: [
+          {
+            required: true,
+            message: "请填写",
             trigger: "blur",
           },
         ],
@@ -262,4 +234,5 @@ export default {
     padding: 0 20px;
   }
 }
+
 </style>

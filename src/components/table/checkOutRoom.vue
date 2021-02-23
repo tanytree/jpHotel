@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-23 16:02:48
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 17:29:31
+ * @LastEditTime: 2021-02-23 18:01:17
  * @FilePath: \jiudian\src\components\table\checkOutRoom.vue
  * @pageName: 这是--（结账退房单据打印  组件）--页面
 -->
@@ -507,14 +507,15 @@ export default {
                 border-bottom: 1px solid #727272;
                 tr {
                   td {
+                    word-break:break-all;
                     padding: 5px 0;
                     &:nth-child(1) {
-                      width: 80%;
+                      width: 75%;
                       border-right: 1px solid #727272;
                       padding-left: 15px;
                     }
                     &:nth-child(2) {
-                      width: 20%;
+                      width: 25%;
                       text-align: center;
                     }
                   }
