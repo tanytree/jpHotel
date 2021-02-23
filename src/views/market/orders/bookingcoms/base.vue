@@ -11,7 +11,7 @@
         <!--            :disabled="checkinInfo.state != 1 && checkinInfo.state != 2"-->
         <el-button size="small" plain @click="addRoom" :disabled="roomLeaves || detailData.checkIn.state == 8">{{checkinInfo.operCheckinType==3?$t('desk.order_addRoomA'):$t('desk.order_addRoom')}}</el-button>
         <el-button size="small" plain @click="goCheckinDetail(1,checkinInfo.operCheckinType)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{checkinInfo.operCheckinType==3?$t('desk.order_livePeopleManegermentA'):$t('desk.order_livePeopleManegerment')}}</el-button>
-        <el-button size="small" plain @click="goCheckinDetail(2)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{ $t("desk.batchCheckin") }}</el-button>
+        <el-button size="small" plain @click="goCheckinDetail(2, checkinInfo.operCheckinType)" :disabled="roomLeaves || detailData.checkIn.state == 8">{{ $t("desk.batchCheckin") }}</el-button>
         <el-button size="small" plain @click="baseInfoChangeHandle('baseInfoChangeShow')"
                    :disabled="(roomLeaves && checkinInfo.state != 1 && checkinInfo.state != 2) || detailData.checkIn.state == 8">{{ $t("desk.updateOrder") }}</el-button>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-dropdown size="small" split-button type="primary">
