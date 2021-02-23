@@ -5,8 +5,8 @@ import merge from 'lodash/merge'
 import httpRequest from "@/utils/httpRequest";
 
 var publicDict = {}
-// const uploadUrl = 'http://39.104.116.153:8887'
-const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
+const uploadUrl = 'http://39.104.116.153:8887'
+// const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
 var tabsName = {}
 const languageObject = {
     'ri': '日本语',
