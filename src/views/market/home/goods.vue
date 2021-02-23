@@ -295,7 +295,6 @@
       </div>
     </div>
     <priviewDocuments  ref="priviewDocuments"/>
-    <customerInfo ref="customerInfo"/>
   </div>
 </template>
 <script>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 11:33:44
+ * @LastEditTime: 2021-02-23 14:02:33
  * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
  * @pageName: 这是--（）--页面
 -->
@@ -16,111 +16,142 @@
         <div class="header_rightTitle" @click="printDialog = false">X</div>
       </div>
       <div class="contentBox">
-        <div class="dialog_headBox">
-          <img src="~@/assets/images/print/good_print.png" alt="">
-          <div>https://okura-club-hotels.com</div>
+        <div class="titleBox">
+          <div class="title_leftBox">
+            <img src="~@/assets/images/print/good_print.png" alt="">
+            <div class="urlPath">https://okura-club-hotels.com</div>
+          </div>
+          <div class="title_centerBox">
+            <div style="text-align: center">
+              <span>お控え</span><br /><span>Payments</span>
+            </div>
+          </div>
+          <div class="title_rightBox">
+            <div> No.：karu -PAY20201119-001</div>
+            <div>Rsv.934286904286</div>
+            <div>Date：2021.02.10</div>
+            <div>担当者：张三</div>
+          </div>
         </div>
-        <div class="tableTitle">
-          <div>レジストレーションカード</div>
-          <div>Registration Card</div>
+        <div class="firstTable">
+          <div class="nameInfo">
+            <div>お名前</div>
+            <div>Name 田中太朗様</div>
+          </div>
+          <div class="firstBox">
+            <table border="1">
+              <tr class="row_one">
+                <td>
+                  <div>部屋番号</div>
+                  <div>Room No.</div>
+                </td>
+                <td>
+                  <div>ご利用日</div>
+                  <div>C/I</div>
+                </td>
+                <td>
+                  <div>泊数</div>
+                  <div>Nights</div>
+                </td>
+                <td>
+                  <div>ご出発日</div>
+                  <div>C/O</div>
+                </td>
+                <td>
+                  <div>人数</div>
+                  <div>Person</div>
+                </td>
+                <td>
+                  <div>ページ数</div>
+                  <div>Page</div>
+                </td>
+              </tr>
+              <tr class="row_two">
+                <td>202/A002/A004</td>
+                <td>2021.02.10</td>
+                <td>1</td>
+                <td>2021.02.11</td>
+                <td>2</td>
+                <td>1-1</td>
+              </tr>
+            </table>
+            <div class="rightOfTable">
+              <div>ホテル名：小圆客商大酒店</div>
+              <div>ホテル住所：安徽</div>
+              <div>ホテル電話：888888</div>
+            </div>
+          </div>
         </div>
-        <table border="1">
-          <tr>
-            <td>部屋番号</td>
-            <td></td>
-            <td>ご利用日</td>
-            <td colspan="2"></td>
-            <td>泊数</td>
-            <td></td>
-            <td colspan="2">ご出発日～時間</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>フリガナ</td>
-            <td colspan="6"></td>
-            <td rowspan="2" colspan="2">国籍</td>
-            <td rowspan="2" colspan="4"></td>
-          </tr>
-          <tr>
-            <td>お名前</td>
-            <td colspan="6"></td>
-          </tr>
-          <tr>
-            <td>証明書種類</td>
-            <td colspan="2"></td>
-            <td colspan="2">証明書番号</td>
-            <td colspan="2"></td>
-            <td colspan="2">会員番号</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>ご住所</td>
-            <td colspan="6"></td>
-            <td colspan="2">電話番号</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>予約経路</td>
-            <td colspan="6"></td>
-            <td colspan="2">電話番号</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>D　M</td>
-            <td colspan="12" class="checkBox" style="text-align:left">
-              <label><input type='checkbox'>自宅郵送</label>
-              <label><input type='checkbox'>勤務先郵送</label>
-              <label><input type='checkbox'>E－Mail</label>
-              <label><input type='checkbox'>不要</label>
-            </td>
-          </tr>
-          <tr>
-            <td>ご利用人数</td>
-            <td>男</td>
-            <td>女</td>
-            <td>小学以上</td>
-            <td>小学以下</td>
-            <td>幼児</td>
-            <td>ペット</td>
-            <td colspan="3">夕 食</td>
-            <td colspan="3">朝 食</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td colspan="3"></td>
-            <td colspan="3"></td>
-          </tr>
-          <tr>
-            <td colspan="7">ご利用内容</td>
-            <td colspan="6">料　金</td>
-          </tr>
-          <tr>
-            <td colspan="7"></td>
-            <td colspan="6"></td>
-          </tr>
-          <tr>
-            <td colspan="2">メールアドレス</td>
-            <td colspan="5"></td>
-            <td colspan="2" rowspan="2">（備考）</td>
-            <td colspan="4" rowspan="2"></td>
-          </tr>
-          <tr>
-            <td colspan="2">（団体名）</td>
-            <td colspan="5"></td>
-          </tr>
-        </table>
-        <div style="margin-top:10px">ご記入いただいた個人情報は、お客様へのサービスのご提供のために使用するものであり、それ以外の目的で使用することはございません。</div>
-        <div class="responsible">
-          <div class="innerBox">ご署名</div>
-        </div>
-        <div class="bottomImg">
-          <img src="~@/assets/images/print/good_print.png" alt="">
+        <div class="secondTable">
+          <table border="1">
+            <tr class="second_rowOne">
+              <td>
+                <div>日付</div>
+                <div>Date</div>
+              </td>
+              <td>
+                <div>部屋</div>
+                <div>Room No.</div>
+              </td>
+              <td>
+                <div>ご利用明細</div>
+                <div>Description</div>
+              </td>
+              <td>
+                <div>単価（税込）</div>
+                <div>Price</div>
+              </td>
+              <td>
+                <div>数量</div>
+                <div>Qty</div>
+              </td>
+              <td>
+                <div>金額（税込</div>
+                <div>Amount</div>
+              </td>
+              <td>
+                <div>備考</div>
+                <div>Note</div>
+              </td>
+            </tr>
+            <tr class="second_roTwo">
+              <td>
+                <div>02/10</div>
+                <div>02/10</div>
+                <div>02/10</div>
+              </td>
+              <td>
+                <div>202</div>
+                <div>202</div>
+                <div>202</div>
+              </td>
+              <td style="width:30%;">
+                <div>宿泊料（平日）一泊2食</div>
+                <div>商品名称1</div>
+                <div>赔偿商品1</div>
+              </td>
+              <td>
+                <div>¥20,000</div>
+                <div>¥100</div>
+                <div>¥100</div>
+              </td>
+              <td>
+                <div>2</div>
+                <div>2</div>
+                <div>2</div>
+              </td>
+              <td>
+                <div>¥40,000</div>
+                <div>¥200</div>
+                <div>¥200</div>
+              </td>
+              <td style="width:20%;">
+                <div>123456备注内容</div>
+                <div>123456备注内容</div>
+                <div>123456备注内容</div>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="bottomBox">
@@ -134,7 +165,7 @@
 export default {
   data() {
     return {
-      printDialog: false,
+      printDialog: true,
     };
   },
   mounted() {},
@@ -163,12 +194,12 @@ export default {
   .flex();
   .innerDialogBox {
     border-radius: 6px;
-    width: 75%;
+    width: 65%;
     height: 74%;
     overflow: auto;
     background-color: #fff;
     .headerTitle {
-      width: 75%;
+      width: 65%;
       background-color: rgb(200, 216, 241);
       padding: 10px 20px;
       position: fixed;
@@ -179,59 +210,88 @@ export default {
       }
       .header_rightTitle {
         font-size: 14px;
-        color: rgba(176, 176, 176, 1);
+        color: rgba(31, 31, 31, 0.8);
         cursor: default;
       }
     }
     .contentBox {
-      margin-top: 20px;
       box-sizing: border-box;
-      padding: 20px;
-      .dialog_headBox {
+      padding: 30px;
+      margin-top: 6px;
+      .titleBox {
         .flex(space-between,center);
-        img {
-          width: 260px;
-          height: 73px;
+        .title_leftBox {
+          img {
+            width: 260px;
+            height: 73px;
+          }
+          .urlPath {
+            margin-left: 10px;
+            font-size: 14px;
+          }
+        }
+        .title_centerBox {
+          align-self: flex-end;
+          margin-bottom: -35px;
+        }
+        .title_rightBox {
+          font-size: 14px;
+          color: #333333;
+          align-self: flex-end;
+          margin-bottom: -25px;
         }
       }
-      .tableTitle {
-        .flex(center,center,column);
-        background-color: #d9d9d9;
-        padding: 20px 0;
-      }
-      table {
-        margin-top: 20px;
-        border-collapse: collapse;
-        width: 100%;
-        tr {
-          td {
-            width: 80px;
-            height: 40px;
+      .firstTable {
+        margin-top: 50px;
+        .nameInfo {
+          font-weight: 500;
+        }
+        .firstBox {
+          margin-top: 5px;
+          .flex(flex-start,flex-start);
+          table {
+            border-collapse: collapse;
             text-align: center;
-          }
-          .checkBox {
-            label {
-              margin-left: 20px;
+            tr {
+              td {
+                width: 100px;
+              }
+            }
+            .row_one {
+              background: #ededed;
+            }
+            .row_two{
+              td{
+                 word-break: break-all;
+              }
             }
           }
+          .rightOfTable {
+            margin-left: 25px;
+          }
         }
       }
-      .bottomImg {
-        text-align: right;
-        img {
-          width: 260px;
-          height: 73px;
-        }
-      }
-      .responsible {
-        .flex(flex-start,center);
-        margin-top: 30px;
-        .innerBox {
-          width: 400px;
-          font-weight: 600;
-          font-size: 18px;
-          padding-bottom: 10px;
-          border-bottom: 1px solid black;
+      .secondTable {
+        margin-top: 20px;
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          text-align: center;
+          tr{
+            td{
+              width: 10%;
+            }
+          }
+          .second_rowOne {
+            background: #ededed;
+          }
+          .second_roTwo{
+            td{
+              div{
+              word-break: break-all;
+              }
+            }
+          }
         }
       }
     }
