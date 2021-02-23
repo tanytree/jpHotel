@@ -25,7 +25,7 @@
 			<div class="components-edit member-price">
 				<el-table :data="roomType" style="width: 100%;margin-bottom: 20px;" row-key="id2" default-expand-all
 				 header-row-class-name="default">
-					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '\n' + item.weekDay" :width="index== 0? '150': '118'">
+					<el-table-column v-for="(item, index) in dateList" :key="index" :label="item.dateStr + '\n' + F_weekday(item.weekDay)" :width="index== 0? '150': '118'">
 						<template slot-scope="scope">
 							<div v-if="index == 0">
 								<span v-if="scope.row.roomType.roomType == 1">{{scope.row.name || scope.row.houseName}}</span>
@@ -210,7 +210,9 @@
 </template>
 
 <script>
+import myMixin from "@/utils/filterMixin";
 export default {
+    mixins: [myMixin],
 		props: ['ruleForm'],
 		data() {
 			return {
