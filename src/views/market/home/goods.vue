@@ -4,6 +4,7 @@
  -->
 <template>
   <div class="boss-index">
+    <h1 @click="openDialog">Hello Vue</h1>
     <!-- 物品寄存 -->
     <div class="content">
       <el-form :model="leftLuggage" ref="leftLuggage" inline size="small" class="term">
@@ -199,95 +200,102 @@
       </div>
     </el-dialog>
     <!-- checkPatch  寄存补打-->
-    <el-dialog top="0" :title="$t('desk.home_checkToPlayA')" style="text-align: left" width="60%" v-if="checkPatch" :visible.sync="checkPatch">
-      <div class="dialog_headBox">
-        <img src="~@/assets/images/print/good_print.png" alt="">
-        <div>https://okura-club-hotels.com</div>
-      </div>
-      <el-row style="margin: -10px 20px 10px">
-        <h2 style="text-align: center">
-          <span>預かり書</span><br /><span>Storage Receipt</span>
-        </h2>
-        <el-row style="margin-bottom:10px;">
-          <el-col :span="12">
-            印刷時間：{{ itemJiCun.printingTime }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            No.：{{ itemJiCun.luggageNum }}
-          </el-col>
-          <el-col :span="12">
-            ホテル名：{{ itemJiCun.storesName }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            預かり時間：{{ itemJiCun.createTime }}
-          </el-col>
-          <el-col :span="12">
-            ホテル住所：{{ itemJiCun.storesAddress }}
-          </el-col>
-        </el-row>
-        <el-row style="
+    <div v-if="checkPatch" class="dialogBox">
+      <div class="innerDialogBox">
+        <div class="headerTitle">
+          <div class="header_leftTitle">{{$t('desk.home_checkToPlayA')}}</div>
+          <div class="header_rightTitle" @click="checkPatch = false">X</div>
+        </div>
+        <div class="contentBox">
+          <div class="dialog_headBox">
+            <img src="~@/assets/images/print/good_print.png" alt="">
+            <div>https://okura-club-hotels.com</div>
+          </div>
+          <div style="margin: -10px 20px 10px">
+            <h2 style="text-align: center">
+              <span>預かり書</span><br /><span>Storage Receipt</span>
+            </h2>
+            <div style="margin-bottom:10px;">
+              <div>
+                印刷時間：{{ itemJiCun.printingTime }}
+              </div>
+            </div>
+            <div class="flexBox">
+              <div class="flexBox_left">
+                No.：{{ itemJiCun.luggageNum }}
+              </div>
+              <div class="flexBox_right">
+                ホテル名：{{ itemJiCun.storesName }}
+              </div>
+            </div>
+            <div class="flexBox">
+              <div class="flexBox_left">
+                預かり時間：{{ itemJiCun.createTime }}
+              </div>
+              <div class="flexBox_right">
+                ホテル住所：{{ itemJiCun.storesAddress }}
+              </div>
+            </div>
+            <div style="
             border-bottom: 1px dashed #333;
             padding-bottom: 20px;
             margin-bottom: 20px;
-          ">
-          <el-col :span="12">
-            担当者：{{ itemJiCun.creatorName }}
-          </el-col>
-          <el-col :span="12">
-            ホテル電話：{{ itemJiCun.receptionMobile }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            お名前 /Name ：{{itemJiCun.guestName}}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            部屋番号：{{itemJiCun.roomNum}}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            お電話：{{itemJiCun.mobile}}
-          </el-col>
-        </el-row>
-        <el-row style="margin-top:10px;">
-          <el-col :span="12">
-            御預かり内容：{{itemJiCun.luggageName}}
-          </el-col>
-        </el-row>
-      </el-row>
-      <div class="responsible">
-        <div class="innerBox"> 担当者署名</div>
-      </div>
-      <div style="margin-top:10px">
-        <div style="margin-bottom:10px;">毎度ご愛顧賜りましてありがとう御座います。</div>
-        <div>
-          <div>上記通り預ける荷物には現金、貴重品、医薬品、壊れやすいもの、危険物などはありません。
-            <div>
-              この内容と異なるものが含まれる場合、一切責任を負担いたしません。
+          " class="flexBox">
+              <div class="flexBox_left">
+                担当者：{{ itemJiCun.creatorName }}
+              </div>
+              <div class="flexBox_right">
+                ホテル電話：{{ itemJiCun.receptionMobile }}
+              </div>
             </div>
             <div>
-              ご了承の程宜しくお願いいたします</div>
+              <div>
+                お名前 /Name ：{{itemJiCun.guestName}}
+              </div>
+            </div>
+            <div>
+              <div>
+                部屋番号：{{itemJiCun.roomNum}}
+              </div>
+            </div>
+            <div>
+              <div>
+                お電話：{{itemJiCun.mobile}}
+              </div>
+            </div>
+            <div style="margin-top:10px;">
+              <div>
+                御預かり内容：{{itemJiCun.luggageName}}
+              </div>
+            </div>
+          </div>
+          <div class="responsible">
+            <div class="innerBox"> 担当者署名</div>
+          </div>
+          <div style="margin-top:10px">
+            <div style="margin-bottom:10px;">毎度ご愛顧賜りましてありがとう御座います。</div>
+            <div>
+              <div>上記通り預ける荷物には現金、貴重品、医薬品、壊れやすいもの、危険物などはありません。
+                <div>
+                  この内容と異なるものが含まれる場合、一切責任を負担いたしません。
+                </div>
+                <div>
+                  ご了承の程宜しくお願いいたします</div>
+              </div>
+            </div>
+          </div>
+          <div class="imgBox">
+            <img src="~@/assets/images/print/good_print.png" alt="">
           </div>
         </div>
+        <div class="bottomBox">
+          <div class="bottomBox_left" @click="checkPatch = false">{{$t("commons.cancel")}}</div>
+          <div class="bottomBox_right">印刷</div>
+        </div>
       </div>
-      <div class="imgBox">
-        <img src="~@/assets/images/print/good_print.png" alt="">
-      </div>
-      <div slot="footer" class="dialog-footer" style="text-align: center">
-        <el-button style="width: 80px" @click="checkPatch = false">{{
-          $t("commons.cancel")
-        }}</el-button>
-        <el-button style="width:80px;" type="primary">印刷</el-button>
-      </div>
-    </el-dialog>
-    <priviewDocuments />
+    </div>
+    <priviewDocuments  ref="priviewDocuments"/>
+    <customerInfo ref="customerInfo"/>
   </div>
 </template>
 <script>
@@ -357,6 +365,9 @@ export default {
     },
   },
   methods: {
+    openDialog(){
+      this.$refs.priviewDocuments.openDialog()
+    },
     formatTime(time) {
       if (time) {
         let array = time.split(" ");
@@ -578,42 +589,109 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+.flex(@justify:center,@align:center,@direction:row) {
+  display: flex;
+  justify-content: @justify;
+  align-items: @align;
+  flex-direction: @direction;
+}
 .content {
   height: 100%;
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
-.dialog_headBox {
-  margin-top: -35px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  img {
-    width: 260px;
-    height: 73px;
-  }
-}
-.responsible {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 20px;
-  .innerBox {
-    width: 400px;
-    font-weight: 600;
-    font-size: 18px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid black;
-  }
-}
-.imgBox {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  img {
-    width: 260px;
-    height: 73px;
+.dialogBox {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 900;
+  .flex();
+  .innerDialogBox {
+    border-radius: 6px;
+    width: 65%;
+    height: 74%;
+    overflow: auto;
+    background-color: #fff;
+    .headerTitle {
+      width: 65%;
+      background-color: rgb(200, 216, 241);
+      padding: 10px 20px;
+      position: fixed;
+      top: 13%;
+      .flex(space-between,center);
+      .header_leftTitle {
+        font-weight: 600;
+      }
+      .header_rightTitle {
+        font-size: 14px;
+        color: rgba(176, 176, 176, 1);
+        cursor: default;
+      }
+    }
+    .contentBox {
+      margin-top: 35px;
+      box-sizing: border-box;
+      padding: 20px;
+      .dialog_headBox {
+        .flex(space-between,center);
+        img {
+          width: 260px;
+          height: 73px;
+        }
+      }
+      .flexBox {
+        .flex(flex-start,center);
+        .flexBox_left {
+          flex: 1;
+        }
+        .flexBox_right {
+          flex: 1;
+        }
+      }
+      .responsible {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 20px;
+        .innerBox {
+          width: 400px;
+          font-weight: 600;
+          font-size: 18px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid black;
+        }
+      }
+      .imgBox {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        img {
+          width: 260px;
+          height: 73px;
+        }
+      }
+    }
+    .bottomBox {
+      .flex();
+      padding: 20px;
+      border-top: 1px solid rgb(223, 226, 232);
+      .bottomBox_left {
+        padding: 10px 30px;
+        border: 1px solid rgb(223, 226, 232);
+        border-radius: 6px;
+      }
+      .bottomBox_right {
+        padding: 10px 30px;
+        background-color: rgb(64, 158, 255);
+        border-radius: 6px;
+        margin-left: 15px;
+        color: #fff;
+      }
+    }
   }
 }
 </style>
