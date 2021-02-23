@@ -4,7 +4,6 @@
  -->
 <template>
   <div class="boss-index">
-    <h1 @click="openDialog">Hello Vue</h1>
     <!-- 物品寄存 -->
     <div class="content">
       <el-form :model="leftLuggage" ref="leftLuggage" inline size="small" class="term">
@@ -294,11 +293,9 @@
         </div>
       </div>
     </div>
-    <priviewDocuments  ref="priviewDocuments"/>
   </div>
 </template>
 <script>
-import priviewDocuments from "@/components/table/priviewDocuments.vue";
 export default {
   data() {
     return {
@@ -337,9 +334,7 @@ export default {
       input: "", //搜索框
     };
   },
-  components: {
-    priviewDocuments,
-  },
+  
   created() {
     this.getDepositList(); //请求寄存列表
   },
@@ -364,9 +359,6 @@ export default {
     },
   },
   methods: {
-    openDialog(){
-      this.$refs.priviewDocuments.openDialog()
-    },
     formatTime(time) {
       if (time) {
         let array = time.split(" ");

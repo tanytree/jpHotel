@@ -1,13 +1,10 @@
 <!--
- * @Date: 2021-02-22 14:24:59
+ * @Date: 2021-02-23 16:02:48
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 15:21:57
- * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
- * @pageName: 这是--（单据预览  组件）--页面
+ * @LastEditTime: 2021-02-23 17:29:31
+ * @FilePath: \jiudian\src\components\table\checkOutRoom.vue
+ * @pageName: 这是--（结账退房单据打印  组件）--页面
 -->
-
-
-
 <template>
   <div v-if="printDialog" class="dialogBox">
     <div class="innerDialogBox">
@@ -23,7 +20,7 @@
           </div>
           <div class="title_centerBox">
             <div style="text-align: center">
-              <span>お控え</span><br /><span>Payments</span>
+              <span style="font-weight:bold;">ご利用明細書</span><br /><span>Bill Information</span>
             </div>
           </div>
           <div class="title_rightBox">
@@ -33,6 +30,7 @@
             <div>担当者：张三</div>
           </div>
         </div>
+        <!-- 下面是表格 -->
         <div class="firstTable">
           <div class="nameInfo">
             <div>お名前</div>
@@ -110,8 +108,8 @@
                 <div>Amount</div>
               </td>
               <td>
-                <div>備考</div>
-                <div>Note</div>
+                <div>備考入金</div>
+                <div>Note／Received</div>
               </td>
             </tr>
             <tr class="second_roTwo" v-for="i in 3" :key="i">
@@ -134,7 +132,7 @@
                 <div>¥200</div>
               </td>
               <td style="width:20%;">
-                <div>123456备注内容</div>
+                <div>¥2,000</div>
               </td>
             </tr>
 
@@ -167,40 +165,116 @@
               </td>
             </tr>
           </table>
-          <div class="third_bottom">合計：¥41,500</div>
         </div>
         <div class="fourthTable">
           <table border="1">
-            <tr class="fourth_rowOne" v-for="i in 4" :key="i">
+            <tr>
               <td>
-                <div></div>
+                <div>ご利用合計①</div>
+                <div>Total</div>
               </td>
+              <td>¥41,500</td>
               <td>
-                <div></div>
+                <div>ご入金合計②</div>
+                <div>Received</div>
               </td>
-              <td style="width:30%;">
-                <div>キャッシュ</div>
-              </td>
+              <td>¥2,000</td>
               <td>
-                <div></div>
+                <div>ご請求金額①−②</div>
+                <div>Amount Due</div>
               </td>
-              <td>
-                <div></div>
-              </td>
-              <td>
-                <div>¥100</div>
-              </td>
-              <td style="width:20%;">
-                <div>备注内容</div>
-              </td>
+              <td>¥39,500</td>
             </tr>
           </table>
-          <div class="third_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
+          <div class="fourth_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
+        </div>
+        <div class="cutOff"></div>
+        <div class="fifthTabel">
+          <div class="fifth_titleBox">
+            <div class="fifthTitle_left">
+              <div>お名前</div>
+              <div>Name 田中太朗様</div>
+            </div>
+            <div class=" fifthTitle_right">
+              <div class="boldText">領収書</div>
+              <div>Receipt</div>
+            </div>
+          </div>
+          <div class="fifth_container">
+            <table border="1">
+              <tr>
+                <table>
+                  <tr>
+                    <td>合計領収金額</td>
+                    <td>¥41,500</td>
+                  </tr>
+                  <tr>
+                    <td>内入湯税</td>
+                    <td>（¥100）</td>
+                  </tr>
+                  <tr>
+                    <td>内宿泊税</td>
+                    <td>（¥100）</td>
+                  </tr>
+                  <tr>
+                    <td>内消費税</td>
+                    <td>（¥100）</td>
+                  </tr>
+                </table>
+              </tr>
+              <tr>
+                <table>
+                  <tr>
+                    <td>商品券</td>
+                    <td>¥41,500</td>
+                  </tr>
+                  <tr>
+                    <td>ポイント利用</td>
+                    <td>（¥100）</td>
+                  </tr>
+                </table>
+              </tr>
+              <tr>
+                <table>
+                  <tr>
+                    <td>現金</td>
+                    <td>¥41,500</td>
+                  </tr>
+                  <tr>
+                    <td>クレジットカード</td>
+                    <td>（¥100）</td>
+                  </tr>
+                </table>
+              </tr>
+            </table>
+            <div class="fifth_rightBox">
+              <div class="fifthRight_top">
+                <div> No.：karu -PAY20201119-001</div>
+                <div>Rsv.934286904286</div>
+                <div>Date：2021.02.10</div>
+                <div>担当者：张三</div>
+              </div>
+              <div class="fifthRight_middle">
+                <div>ホテル名：小圆客商大酒店</div>
+                <div>ホテル住所：安徽</div>
+                <div>ホテル電話：888888</div>
+              </div>
+              <div class="fifthRight_bottom">
+                <div>印収</div>
+                <div style="margin-top:10px;">紙入</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="inscribeBox">
+          <div class="inscribe_top">￥　41,500円</div>
+          <div class="inscribe_bottom">上記の通り、正に領収いたしました。</div>
         </div>
         <div class="lastBox">
           <img src="~@/assets/images/print/good_print.png" alt="">
         </div>
       </div>
+
       <div class="bottomBox">
         <div class="bottomBox_left" @click="printDialog = false">{{$t("commons.cancel")}}</div>
         <div class="bottomBox_right">印刷</div>
@@ -315,6 +389,7 @@ export default {
           }
           .rightOfTable {
             margin-left: 25px;
+            font-weight: 500;
           }
         }
       }
@@ -370,35 +445,123 @@ export default {
             }
           }
         }
-        .third_bottom {
-          margin-top: 5px;
-        }
       }
       .fourthTable {
-        margin-top: 5px;
+        margin-top: 10px;
         table {
           border-collapse: collapse;
           width: 100%;
           text-align: center;
           tr {
             td {
-              width: 10%;
-            }
-          }
-          .fourth_rowOne {
-            border-bottom: none;
-            td {
-              border-bottom: none;
-              border-top: none;
-              div {
-                margin-bottom: 5px;
-                word-break: break-all;
+              width: calc(~"100%/6");
+              padding: 5px 0;
+              &:nth-child(2n + 1) {
+                background: #ededed;
               }
             }
           }
         }
-        .third_bottom {
+        .fourth_bottom {
           margin-top: 5px;
+        }
+      }
+      .cutOff {
+        margin-top: 15px;
+        margin-left: -30px;
+        margin-right: -30px;
+        border: 1px dashed rgba(186, 186, 186, 0.5);
+      }
+      .fifthTabel {
+        margin-top: 25px;
+        .fifth_titleBox {
+          .flex(space-between,center);
+          .fifthTitle_left {
+            text-align: left;
+            font-weight: 500;
+            .boldText {
+              font-weight: bold;
+              font-size: 22px;
+            }
+          }
+          .fifthTitle_right {
+            text-align: center;
+            font-weight: 500;
+            margin-right: 100px;
+
+            .boldText {
+              font-weight: bold;
+              font-size: 22px;
+            }
+          }
+        }
+        .fifth_container {
+          margin-top: 10px;
+          .flex(flex-start,flex-start);
+          table {
+            border-collapse: collapse;
+            width: 55%;
+            tr {
+              table {
+                width: 100%;
+                border-bottom: 1px solid #727272;
+                tr {
+                  td {
+                    padding: 5px 0;
+                    &:nth-child(1) {
+                      width: 80%;
+                      border-right: 1px solid #727272;
+                      padding-left: 15px;
+                    }
+                    &:nth-child(2) {
+                      width: 20%;
+                      text-align: center;
+                    }
+                  }
+                }
+              }
+              &:nth-last-child(1) table {
+                border: none;
+              }
+            }
+          }
+          .fifth_rightBox {
+            margin-left: 70px;
+            .fifthRight_top {
+              font-size: 14px;
+              color: #333333;
+              margin-top: 10px;
+            }
+            .fifthRight_middle {
+              font-weight: 500;
+              margin-top: 20px;
+            }
+            .fifthRight_bottom {
+              margin-top: 15px;
+              margin-left: -50px;
+              font-size: 14px;
+              color: #333333;
+              width: 100px;
+              height: 100px;
+              background: #fefd00;
+              border: 1px solid #505050;
+              .flex(center,center,column);
+            }
+          }
+        }
+      }
+      .inscribeBox {
+        .inscribe_top {
+          width: 55%;
+          border-bottom: 1px solid black;
+          padding-bottom: 7px;
+          padding-left: 15px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        .inscribe_bottom {
+          font-size: 14px;
+          color: #333333;
         }
       }
       .lastBox {

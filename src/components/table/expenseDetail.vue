@@ -1,13 +1,10 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 15:21:57
- * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
- * @pageName: 这是--（单据预览  组件）--页面
+ * @LastEditTime: 2021-02-23 16:05:34
+ * @FilePath: \jiudian\src\components\table\expenseDetail.vue
+ * @pageName: 这是--（消费明细预览  组件）--页面
 -->
-
-
-
 <template>
   <div v-if="printDialog" class="dialogBox">
     <div class="innerDialogBox">
@@ -23,7 +20,7 @@
           </div>
           <div class="title_centerBox">
             <div style="text-align: center">
-              <span>お控え</span><br /><span>Payments</span>
+              <span style="font-weight:bold;">請求書</span><br /><span>Invoice</span>
             </div>
           </div>
           <div class="title_rightBox">
@@ -33,6 +30,7 @@
             <div>担当者：张三</div>
           </div>
         </div>
+        <!-- 下面是表格 -->
         <div class="firstTable">
           <div class="nameInfo">
             <div>お名前</div>
@@ -110,8 +108,8 @@
                 <div>Amount</div>
               </td>
               <td>
-                <div>備考</div>
-                <div>Note</div>
+                <div>備考入金</div>
+                <div>Note／Received</div>
               </td>
             </tr>
             <tr class="second_roTwo" v-for="i in 3" :key="i">
@@ -134,7 +132,7 @@
                 <div>¥200</div>
               </td>
               <td style="width:20%;">
-                <div>123456备注内容</div>
+                <div>¥2,000</div>
               </td>
             </tr>
 
@@ -167,35 +165,40 @@
               </td>
             </tr>
           </table>
-          <div class="third_bottom">合計：¥41,500</div>
         </div>
         <div class="fourthTable">
           <table border="1">
-            <tr class="fourth_rowOne" v-for="i in 4" :key="i">
+            <tr>
               <td>
-                <div></div>
+                <div>ご利用合計①</div>
+                <div>Total</div>
               </td>
+              <td>¥41,500</td>
               <td>
-                <div></div>
+                <div>ご入金合計②</div>
+                <div>Received</div>
               </td>
-              <td style="width:30%;">
-                <div>キャッシュ</div>
-              </td>
+              <td>¥2,000</td>
               <td>
-                <div></div>
+                <div>ご請求金額①−②</div>
+                <div>Amount Due</div>
               </td>
-              <td>
-                <div></div>
-              </td>
-              <td>
-                <div>¥100</div>
-              </td>
-              <td style="width:20%;">
-                <div>备注内容</div>
-              </td>
+              <td>¥39,500</td>
             </tr>
           </table>
-          <div class="third_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
+        </div>
+        <div class="fifthTable">
+          <table border="1">
+            <tr class="fifth_rowOne">
+              <td style="width:20%">ご署名</td>
+              <td></td>
+            </tr>
+            <tr class="fifth_rowTwo">
+              <td style="width:20%">会社名</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="fifth_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
         </div>
         <div class="lastBox">
           <img src="~@/assets/images/print/good_print.png" alt="">
@@ -370,34 +373,48 @@ export default {
             }
           }
         }
-        .third_bottom {
-          margin-top: 5px;
-        }
       }
       .fourthTable {
-        margin-top: 5px;
+        margin-top: 10px;
         table {
           border-collapse: collapse;
           width: 100%;
           text-align: center;
           tr {
             td {
-              width: 10%;
-            }
-          }
-          .fourth_rowOne {
-            border-bottom: none;
-            td {
-              border-bottom: none;
-              border-top: none;
-              div {
-                margin-bottom: 5px;
-                word-break: break-all;
+              width: calc(~"100%/6");
+              padding: 5px 0;
+              &:nth-child(2n + 1) {
+                background: #ededed;
               }
             }
           }
         }
-        .third_bottom {
+      }
+      .fifthTable {
+        margin-top: 10px;
+        table {
+          text-align: center;
+          width: 100%;
+          border-collapse: collapse;
+          .fifth_rowOne {
+            td {
+              padding: 10px 0;
+              &:nth-child(1) {
+                background: #ededed;
+              }
+            }
+          }
+          .fifth_rowTwo {
+            td {
+              padding: 10px 0;
+              &:nth-child(1) {
+                background: #ededed;
+              }
+            }
+          }
+        }
+        .fifth_bottom{
           margin-top: 5px;
         }
       }
