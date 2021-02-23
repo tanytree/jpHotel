@@ -1,9 +1,9 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 14:02:33
+ * @LastEditTime: 2021-02-23 14:54:37
  * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
- * @pageName: 这是--（）--页面
+ * @pageName: 这是--（单据预览  组件）--页面
 -->
 
 
@@ -114,44 +114,91 @@
                 <div>Note</div>
               </td>
             </tr>
-            <tr class="second_roTwo">
+            <tr class="second_roTwo" v-for="i in 3" :key="i">
               <td>
-                <div>02/10</div>
-                <div>02/10</div>
                 <div>02/10</div>
               </td>
               <td>
-                <div>202</div>
-                <div>202</div>
                 <div>202</div>
               </td>
               <td style="width:30%;">
-                <div>宿泊料（平日）一泊2食</div>
-                <div>商品名称1</div>
                 <div>赔偿商品1</div>
               </td>
               <td>
-                <div>¥20,000</div>
-                <div>¥100</div>
                 <div>¥100</div>
               </td>
               <td>
                 <div>2</div>
-                <div>2</div>
-                <div>2</div>
               </td>
               <td>
-                <div>¥40,000</div>
-                <div>¥200</div>
                 <div>¥200</div>
               </td>
               <td style="width:20%;">
                 <div>123456备注内容</div>
-                <div>123456备注内容</div>
-                <div>123456备注内容</div>
+              </td>
+            </tr>
+
+          </table>
+          <div class="second_bottom">小計：¥40,200</div>
+        </div>
+        <div class="thirdTable">
+          <table border="1">
+            <tr class="third_rowOne" v-for="i in 4" :key="i">
+              <td>
+                <div></div>
+              </td>
+              <td>
+                <div></div>
+              </td>
+              <td style="width:30%;">
+                <div>宿泊税</div>
+              </td>
+              <td>
+                <div>¥300</div>
+              </td>
+              <td>
+                <div>2</div>
+              </td>
+              <td>
+                <div>¥100</div>
+              </td>
+              <td style="width:20%;">
+                <div></div>
               </td>
             </tr>
           </table>
+          <div class="third_bottom">合計：¥41,500</div>
+        </div>
+        <div class="fourthTable">
+          <table border="1">
+            <tr class="fourth_rowOne" v-for="i in 4" :key="i">
+              <td>
+                <div></div>
+              </td>
+              <td>
+                <div></div>
+              </td>
+              <td style="width:30%;">
+                <div>キャッシュ</div>
+              </td>
+              <td>
+                <div></div>
+              </td>
+              <td>
+                <div></div>
+              </td>
+              <td>
+                <div>¥100</div>
+              </td>
+              <td style="width:20%;">
+                <div>备注内容</div>
+              </td>
+            </tr>
+          </table>
+          <div class="third_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
+        </div>
+        <div class="lastBox">
+          <img src="~@/assets/images/print/good_print.png" alt="">
         </div>
       </div>
       <div class="bottomBox">
@@ -195,7 +242,7 @@ export default {
   .innerDialogBox {
     border-radius: 6px;
     width: 65%;
-    height: 74%;
+    height: 80%;
     overflow: auto;
     background-color: #fff;
     .headerTitle {
@@ -203,7 +250,7 @@ export default {
       background-color: rgb(200, 216, 241);
       padding: 10px 20px;
       position: fixed;
-      top: 13%;
+      top: 10%;
       .flex(space-between,center);
       .header_leftTitle {
         font-weight: 600;
@@ -260,9 +307,9 @@ export default {
             .row_one {
               background: #ededed;
             }
-            .row_two{
-              td{
-                 word-break: break-all;
+            .row_two {
+              td {
+                word-break: break-all;
               }
             }
           }
@@ -277,21 +324,89 @@ export default {
           border-collapse: collapse;
           width: 100%;
           text-align: center;
-          tr{
-            td{
+          tr {
+            td {
               width: 10%;
             }
           }
           .second_rowOne {
             background: #ededed;
           }
-          .second_roTwo{
-            td{
-              div{
-              word-break: break-all;
+          .second_roTwo {
+            border: none;
+            td {
+              border-bottom: none;
+              border-top: none;
+              div {
+                margin-bottom: 5px;
+                word-break: break-all;
               }
             }
           }
+        }
+        .second_bottom {
+          margin-top: 5px;
+        }
+      }
+      .thirdTable {
+        margin-top: 5px;
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          text-align: center;
+          tr {
+            td {
+              width: 10%;
+            }
+          }
+          .third_rowOne {
+            border-bottom: none;
+            td {
+              border-bottom: none;
+              border-top: none;
+              div {
+                margin-bottom: 5px;
+                word-break: break-all;
+              }
+            }
+          }
+        }
+        .third_bottom {
+          margin-top: 5px;
+        }
+      }
+      .fourthTable {
+        margin-top: 5px;
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          text-align: center;
+          tr {
+            td {
+              width: 10%;
+            }
+          }
+          .fourth_rowOne {
+            border-bottom: none;
+            td {
+              border-bottom: none;
+              border-top: none;
+              div {
+                margin-bottom: 5px;
+                word-break: break-all;
+              }
+            }
+          }
+        }
+        .third_bottom {
+          margin-top: 5px;
+        }
+      }
+      .lastBox {
+        text-align: right;
+        img {
+          width: 260px;
+          height: 73px;
         }
       }
     }
