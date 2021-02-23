@@ -564,7 +564,8 @@ export default {
                 checkInReserveId: this.detailData.checkIn.id,
                 checkinId: this.detailData.checkIn.id,
             });
-            let checkInRoomJson = [];
+            let checkInRoomJson = [], checkinId = '';
+
             this.inRoomList.forEach((room) => {
                 room.headerObj.housePrice = (room.headerObj.housePrice === 'defined' ? room.headerObj.definedPrice : room.headerObj.housePrice);
                 let checkinInfo = {
@@ -577,8 +578,10 @@ export default {
                     headerObj: room.headerObj,
                     personList: room.personList,
                 };
+                checkinId = room.room.checkinId;
                 checkInRoomJson.push(checkinInfo);
             });
+            debugger
             console.log(this.inRoomList);
             let checkInRoomIds = [];
             this.inRoomList.forEach((room) => {
@@ -595,22 +598,37 @@ export default {
                             this.$router.go(-1);
                         } else {
                             this.fetchRoomStatus( ()=> {
-                                this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
-                                    this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
-                                            checkInRoomIds: checkInRoomIds.join(','),
-                                            state: 1
-                                        }, (res) => {
-                                            this.$router.push(
-                                                `/orderdetail?id=${response.checkinId}`
-                                            );
-                                        }
-                                    );
-                                });
+                                if (checkinId) {
+                                    this.update_checkinroom_state(checkInRoomIds, checkinId);
+                                } else {
+                                    this.reserve_to_checkin(params, (response) => {
+                                        this.update_checkinroom_state(checkInRoomIds, response.checkinId);
+                                    })
+                                }
+
                             })
                         }
                     }
                 );
             }
+        },
+
+        update_checkinroom_state(checkInRoomIds, checkinId) {
+            this.$F.doRequest(this, "/pms/reserve/update_checkinroom_state", {
+                    checkInRoomIds: checkInRoomIds.join(','),
+                    state: 1
+                }, (res) => {
+                    this.$router.push(
+                        `/orderdetail?id=${checkinId}`
+                    );
+                }
+            );
+        },
+
+        reserve_to_checkin(params, callback) {
+            this.$F.doRequest(this, "/pms/reserve/reserve_to_checkin", params, (response) => {
+                callback(response);
+            });
         },
 
         fetchRoomStatus(callback) {
