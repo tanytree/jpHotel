@@ -577,7 +577,7 @@ module.exports = {
   order_inputName: "请填写姓名",
   order_inputCardNum: "请填写证件号",
   order_livePeopleManegerment: "入住人管理",
-  order_livePeopleManegermentA: "入住人管理",
+  order_livePeopleManegermentA: "主办人资料",
   order_guestKind: "客人分类",
   order_liveAddress: "住家地址",
   order_homePhone: "住家号码",

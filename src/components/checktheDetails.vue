@@ -12,7 +12,7 @@
                 <div class="headerBox">
                     <span class="point" @click="goBack">{{$t('desk.order_bookOrderInfo')}}</span>
                     <span style="margin: 0 5px">></span>
-                    <span style="font-size: 16px">{{ifMeeting==3?$t('desk.order_livePeopleManegermentA'):$t('desk.order_livePeopleManegerment')}}</span>
+                    <span style="font-size: 16px">{{ifMeeting==3? $t('desk.order_livePeopleManegermentA'):$t('desk.order_livePeopleManegerment')}}</span>
                 </div>
             </div>
             <div class="infoBlock" v-for="(roomInfo, topIndex) of inRoomList" :key="topIndex">

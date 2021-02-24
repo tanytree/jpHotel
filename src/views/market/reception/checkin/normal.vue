@@ -1442,9 +1442,9 @@ export default {
                     this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd 11:00:00");
                 } else if (this.operCheckinType == "b2" || this.operCheckinType == "b3") {
                     this.checkInForm.checkinDays = "";
-                    if (this.operCheckinType == "b3") {
-                        nowDate.setDate(nowDate.getDate() + 1);
-                    }
+                    // if (this.operCheckinType == "b3") {
+                    //     nowDate.setDate(nowDate.getDate() + 1);
+                    // }
                     nowDate.setHours(12);
                     nowDate.setMinutes(0);
                     nowDate.setSeconds(0);
