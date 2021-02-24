@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-09 13:51:59
+ * @LastEditTime: 2021-02-24 14:12:42
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -1340,9 +1340,9 @@ export default {
             this.searchForm.pageIndex = val;
             this.consume_order_list();
         },
-        getOrderDetail(){
+        getOrderDetail(transferObj){
             console.log(111)
-            this.$emit('getOrderDetail')
+            this.$emit('getOrderDetail',transferObj)
         },
         get_consume_tax(){
             let params = {

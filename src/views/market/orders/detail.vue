@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 17:44:33
+ * @LastEditTime: 2021-02-24 14:19:56
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -129,6 +129,8 @@
       </el-row>
     </div>
     <unitedRoomHandle ref="unitedRoomHandle" />
+    <!-- 单据预览 -->
+    <priviewDocuments ref="priviewDocuments"/>
   </div>
 </template>
 
@@ -139,6 +141,7 @@ import customer from "@/components/front/customer";
 import myMixin from "@/utils/filterMixin";
 import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
 import checkInInfo from "@/components/front/checkInInfo";   //客人信息
+import priviewDocuments from "@/components/table/priviewDocuments";
 
 export default {
   mixins: [myMixin],
@@ -148,6 +151,7 @@ export default {
     c2,
     customer,
     unitedRoomHandle,
+    priviewDocuments
   },
   data() {
     return {
@@ -227,7 +231,7 @@ export default {
         });
       }
     },
-    getDetail() {
+    getDetail(transferObj) {
       console.log(111);
       let id = this.$route.query.id; //该id为checkinId
       this.itemGuestInfo = this.$route.query.item;
@@ -248,6 +252,10 @@ export default {
           }
         }
       );
+      console.log(transferObj);
+      if(transferObj&&transferObj.checked){
+          this.$refs.priviewDocuments.openDialog();
+        }
     },
 
     F_salesId(v) {

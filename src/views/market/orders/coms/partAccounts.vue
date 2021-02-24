@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 17:21:03
+ * @LastEditTime: 2021-02-24 14:12:32
  * @FilePath: \jiudian\src\views\market\orders\coms\partAccounts.vue
  -->
 <template>
@@ -51,7 +51,7 @@
     </div>
 
     <checkoutPart ref="checkoutPart" :currentRoom="currentRoom" @getOrderDetail="getOrderDetail" ></checkoutPart>
-
+    
 </el-dialog>
 </template>
 
@@ -146,10 +146,10 @@ export default {
 
 
 
-        getOrderDetail(){
+        getOrderDetail(transferObj){
             console.log('part')
             this.visible = false
-            this.$emit('getOrderDetail')
+            this.$emit('getOrderDetail',transferObj)
         }
 
 

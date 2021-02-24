@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 11:58:48
+ * @LastEditTime: 2021-02-24 11:13:43
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -343,6 +343,7 @@
             <div class="wrap">
                 <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">{{$t('commons.cancel')}}</el-button>
                 <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">{{$t('desk.book_bookText')}}</el-button>
+                <el-button type="primary" class="submit" @click="openPrintDialog" v-if="!this.storesNum" v-loading="loading">印刷</el-button>
                 <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum" v-loading="loading">{{ $t("commons.save") }}</el-button>
                 <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>
             </div>
@@ -362,6 +363,8 @@
 
         <!--        排房组件 -->
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
+       <!-- 打印客户资讯 组件 -->
+        <customerInfo  ref="customerInfo"/>
     </div>
 </template>
 
@@ -394,6 +397,7 @@ Date.prototype.Format = function (fmt) {
 import { mapState } from "vuex";
 const vm = window.vm;
 import checkTheDetails from '@/components/checktheDetails'
+import customerInfo from '@/components/table/customerInfo'
 import customer from "@/components/front/customer2";
 import guestChoose from "@/views/market/reception/checkin/guestChoose";
 import rowHouse from "@/components/front/rowHouse";
@@ -404,6 +408,7 @@ export default {
         checkTheDetails,
         customer,
         guestChoose,
+        customerInfo
     },
     computed: {
         ...mapState({
@@ -739,6 +744,9 @@ export default {
         },
     },
     methods: {
+      openPrintDialog(){
+        this.$refs.customerInfo.openDialog();
+      },
         //中央预定取消和预定操作
         handleCenter(type) {
             if (type == 'centerReserve') {

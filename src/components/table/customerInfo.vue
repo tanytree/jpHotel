@@ -1,9 +1,9 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 11:32:08
+ * @LastEditTime: 2021-02-24 11:19:47
  * @FilePath: \jiudian\src\components\table\customerInfo.vue
- * @pageName: 这是--（）--页面
+ * @pageName: 这是--（打印客户资讯 组件）--页面
 -->
 
 
@@ -164,7 +164,7 @@ export default {
   .innerDialogBox {
     border-radius: 6px;
     width: 75%;
-    height: 74%;
+    height: 84%;
     overflow: auto;
     background-color: #fff;
     .headerTitle {
@@ -172,7 +172,7 @@ export default {
       background-color: rgb(200, 216, 241);
       padding: 10px 20px;
       position: fixed;
-      top: 13%;
+      top: 7%;
       .flex(space-between,center);
       .header_leftTitle {
         font-weight: 600;

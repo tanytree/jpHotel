@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-02-09 14:39:53
+ * @LastEditTime: 2021-02-24 14:02:10
  * @FilePath: \jiudian\src\views\market\orders\coms\checkoutPartPay.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -114,7 +114,8 @@ export default {
         enterId:'',
         creditName:'',
         putUp:'',
-        remark:''
+        remark:'',
+        checked:true,
       }, //退房结账弹框的表单
       consumeOrderList:[],
       detailData:{},
@@ -316,7 +317,7 @@ export default {
 
     },
 
-
+// 点击确认结账按钮
     consume_oper(){
 
         console.log(this.detailData)
@@ -352,12 +353,13 @@ export default {
             params.enterId = checkoutForm.enterId
             params.creditName = checkoutForm.creditName
         }
-        // console.log(params)
-        // return
         this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
             console.log(res)
-            // this.set_out_check_in();
-            this.getOrderDetail()
+            let transferObj ={
+              checked:this.checkoutForm.checked,
+              orderId:res.orderId,
+            }
+            this.getOrderDetail(transferObj)
         })
 
    },
@@ -387,10 +389,10 @@ export default {
             return value !== state
         });
     },
-    getOrderDetail(){
+    getOrderDetail(transferObj){
         console.log('part')
         this.checkoutVisible = false
-        this.$emit('getOrderDetail')
+        this.$emit('getOrderDetail',transferObj)
     },
     get_consume_tax(){
         let params = {

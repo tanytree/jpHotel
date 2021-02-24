@@ -220,7 +220,7 @@
             </div>
             <div class="flexBox">
               <div class="flexBox_left">
-                No.：{{ itemJiCun.luggageNum }}
+                No.：{{ printNum }}
               </div>
               <div class="flexBox_right">
                 ホテル名：{{ itemJiCun.storesName }}
@@ -298,6 +298,7 @@
 export default {
   data() {
     return {
+      printNum:'',  // 打印编号
       nowTime: null,
       pageIndex: 1,
       pageSize: 10,
@@ -380,7 +381,11 @@ export default {
     },
     //点击 寄存补打 按钮
     jicunClick(id) {
-      let params = {
+     
+      this.$F.doRequest(this,'/pms/hotelservice/print_num',{typeStr:'STO'},(res)=>{
+        this.printNum = res;
+      })
+       let params = {
         id: id,
       };
       this.$F.doRequest(this, "/pms/luggagedeposit/findone", params, (data) => {

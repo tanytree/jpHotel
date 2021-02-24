@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 18:25:50
+ * @LastEditTime: 2021-02-24 14:12:53
  * @FilePath: \jiudian\src\views\market\orders\coms\c2.vue
 -->
 <template>
@@ -105,9 +105,9 @@ export default {
         })
         .catch(() => {});
     },
-    getOrderDetail() {
+    getOrderDetail(transferObj) {
       console.log("c2");
-      this.$emit("getOrderDetail");
+      this.$emit("getOrderDetail",transferObj);
     },
   },
 };
