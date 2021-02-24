@@ -199,7 +199,7 @@ let mixin = {
                         }
                     }
                 }
-                console.log(total)
+                // console.log(total)
                 let parms = {
                     total: total ? parseFloat(total).toFixed(0) : 0,
                     service: service ? parseFloat(service).toFixed(0) :0,
@@ -227,11 +227,12 @@ let mixin = {
             }
 
         },
-		
+
 		getTaxIn(tax,price){
 			let per = (1 - 1/(1.00 + tax) )
 			let taxInFee = price * per
-			return taxInFee
+            let t = Math.round(taxInFee *1)/1
+			return  t
 		}
 
 

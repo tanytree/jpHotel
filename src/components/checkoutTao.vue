@@ -181,9 +181,12 @@ export default {
                 total += parseFloat(element.consumePrice ? element.consumePrice : 0)
                 //---------------------------
                 //计算包含消费税的明细中的商品
-                if(element.taxStatus == 2){
+
+                console.log(element.taxStatus)
+                // if(element.taxStatus == 2){
                     //迷你吧
                     if(priceType == 8){
+                        console.log(element)
                         let goodsList = element.goodsList || []
                         goodsList.forEach(v =>{
                             if(v.goodsObj.taxStatus == 2){
@@ -218,7 +221,7 @@ export default {
                             }
                         })
                     }
-                }
+                // }
 
                 //---------------------------
                 // if(priceType == 5 || priceType == 6 || priceType == 12){
@@ -239,10 +242,9 @@ export default {
                 }
 
                 console.log(priceType +':' +this.F_priceType(priceType))
-                console.log(element.consumePrice)
-                console.log(element)
-                console.log(element.servicePrice)
-                console.log(element.consumTaxPrice)
+                // console.log(element.consumePrice)
+                // console.log(element.servicePrice)
+                // console.log(element.consumTaxPrice)
             }
         });
 
@@ -299,7 +301,7 @@ export default {
     getUnitList() {
       this.$F.doRequest(this, "/pms/hotelenter/list", {}, (res) => {
         this.unitList = res.list;
-        console.log(this.unitList);
+        // console.log(this.unitList);
       });
     },
     getPutUp(value){
@@ -572,6 +574,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 5px;
       }
     }
   }

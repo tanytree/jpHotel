@@ -133,7 +133,7 @@ export default {
             attachMealCount: 1,
                 consumePrice: 0,
         }
-      console.log(this.currentRoom);
+      // console.log(this.currentRoom);
       this.currentRoom2 = this.currentRoom;
       //如果没有当前房间 默认到主账房
       if (this.currentRoom && this.currentRoom.roomId) {
@@ -181,6 +181,9 @@ export default {
 
     //计算附餐种类的消费税和服务费
     getTaxServerFee(obj){
+
+        // console.log(obj)
+
         let tax = this.tax
         let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
         // let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
@@ -188,8 +191,8 @@ export default {
         let service = 0 //服务费
         let taxFee = 0 //消费税
         let total = 0
-        if(this.currentRoom.taxStatus == 1){
-        	if(this.currentRoom.seviceStatus == 1){
+        if(obj.taxStatus == 1){
+        	if(obj.seviceStatus == 1){
         	   //不包含服务税
         	   //  1,1,fasle,in
         		taxFee += ( obj.consumePrice + obj.consumePrice * servicePrice ) * consumeTax
@@ -200,9 +203,9 @@ export default {
         	}
         }
         //不包含服务税
-        if(this.currentRoom.seviceStatus == 1){
+        if(obj.seviceStatus == 1){
         	//不包含消费税
-        	if(this.currentRoom.taxStatus == 1){
+        	if(obj.taxStatus == 1){
         		service += obj.consumePrice * servicePrice
         	}else{
         		//包含消费税
@@ -232,6 +235,10 @@ export default {
       params.roomNum = this.currentRoom2.houseNum;
       params.state = 1;
       // return
+
+
+
+
       if (this.sideForm.attachMealIdBreatfast) {
         let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast)
         // console.log('1')
