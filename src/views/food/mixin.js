@@ -50,6 +50,8 @@ const mixin= {
                         return $1 + ",";
                     });
                 });
+            }else{
+                return 0
             }
             // var intPartFormat = (Math.round(a * 100) / 100).toFixed(0).toString().replace(/(\d)(?=(\d{3})+\.)/g, function($0, $1) {return $1 + ",";});
             // return intPartFormat
@@ -68,7 +70,7 @@ const mixin= {
                 let service = 0 //服务费
                 let taxFee = 0 //消费税
                 let sum = 0 //合计
-
+                let taxInFee = 0
 
                 list.forEach(element => {
 
@@ -98,6 +100,25 @@ const mixin= {
                                taxFee += element.totalPrice * consumeTax
                             }
                         }
+                    }else{
+                        //税内消费税
+                        if(outFlag){
+
+
+                            // let per = (1 - 1/(1.00 + outConsumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+
+
+                        }else{
+                            // let per = (1 - 1/(1.00 + consumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                        }
+
+
+
+
                     }
                     if(outFlag == false){
                         //不包含服务税
@@ -113,18 +134,19 @@ const mixin= {
                         }
                     }
                 // }
-                
+
                 });
                 let parms = {
                     total: total ? parseFloat(total).toFixed(0) : 0,
                     service: service ? parseFloat(service).toFixed(0) :0,
                     taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
                 }
-                
+
                 for(let s in parms){
                     sum +=  parseFloat(parms[s])
                 }
                 parms.sum = sum
+                parms.taxInFee = taxInFee
                 parms.servicePrice = tax.servicePrice+'%'
                 parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
                 parms.type = outFlag ? 'out' : 'in'
@@ -135,6 +157,7 @@ const mixin= {
                 parms.service = 0
                 parms.servicePrice  =  0
                 parms.sum =  0
+                parms.taxInFee = taxInFee
                 parms.tax  = 0
                 parms.taxFee = 0
                 parms.total  = 0
@@ -142,6 +165,13 @@ const mixin= {
                 return parms
             }
 
+        },
+
+        getTaxIn(tax,price){
+        	let per = (1 - 1/(1.00 + tax) )
+        	let taxInFee = price * per
+            let t = Math.round(taxInFee *1)/1
+        	return  t
         },
         alert(v,msg){
              if(v == 200){

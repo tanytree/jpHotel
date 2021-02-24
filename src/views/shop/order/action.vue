@@ -17,6 +17,7 @@
                   <div class="item"><span class="w70">{{$t('shop.reset.xiaoji')}}</span> <span class="text-right">￥{{numFormate(orderTax.total)}}</span> </div>
                   <div class="item"><span class="w70">{{$t('food.reset.servePri')}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{numFormate(orderTax.service)}}</span> </div>
                   <div class="item"><span class="w70">{{$t('food.reset.constPri')}} <span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span> </span> <span class="text-right">￥{{numFormate(orderTax.taxFee)}}</span> </div>
+                  <div class="item"><span class="w70">{{$t('desk.book_costFee2')}}（{{orderTax.tax}}）</span><span>¥{{numFormate(orderTax.taxInFee)}}</span></div>
                   <div class="item"><span class="w70">{{$t('food.common.product_total')}}</span> <span class="text-right">￥{{numFormate(orderTax.sum)}}</span> </div>
                 </div>
               </span>
@@ -625,7 +626,7 @@ export default {
   z-index: 999;
   display: none;
   div {
-    padding-bottom: 5px;
+    padding-bottom: 0px;
     display: flex;
     span {
       display: inline-block;

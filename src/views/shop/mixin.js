@@ -211,7 +211,7 @@ const mixin= {
                     });
                 });
             }else{
-                return num
+                return 0
             }
             // // console.log(a);
             //   if (!a){
@@ -380,12 +380,22 @@ const mixin= {
                     }else{
                         //税内消费税
                         if(outFlag){
-                            let per = (1 - 1/(1.00 + outConsumeTax) )
-                            taxInFee += element.totalPrice * per
+
+
+                            // let per = (1 - 1/(1.00 + outConsumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+
+
                         }else{
-                            let per = (1 - 1/(1.00 + consumeTax) )
-                            taxInFee += element.totalPrice * per
+                            // let per = (1 - 1/(1.00 + consumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
                         }
+
+
+
+
                     }
 
                     if(outFlag == false){
@@ -425,13 +435,19 @@ const mixin= {
                 parms.tax  = 0
                 parms.taxFee = 0
                 parms.total  = 0
+                parms.taxInFee = taxInFee
                 parms.type  = outFlag ? 'out' : 'in'
                 return parms
             }
 
         },
 
-
+        getTaxIn(tax,price){
+        	let per = (1 - 1/(1.00 + tax) )
+        	let taxInFee = price * per
+            let t = Math.round(taxInFee *1)/1
+        	return  t
+        },
         alert(v,msg){
              if(v == 200){
                  this.$message({
