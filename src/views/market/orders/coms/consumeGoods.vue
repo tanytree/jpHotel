@@ -77,6 +77,7 @@
                        <div class="item mb10"><span class="w70">小计</span> <span class="text-right">￥{{taxInfo.total}}</span> </div>
                        <div class="item mb10"><span class="w70">服务费 <span class="text-size12">({{taxInfo.servicePrice}})</span></span> <span class="text-right">￥{{taxInfo.service}}</span> </div>
                        <div class="item mb10"><span class="w70">消费税 <span class="text-size12">({{taxInfo.type}}  {{taxInfo.tax}})</span> </span> <span class="text-right">￥{{taxInfo.taxFee}}</span> </div>
+                       <div class="item mb10"><span class="w70">{{$t('desk.book_costFee2')}} <span class="text-size12">{{taxInfo.tax}}</span> </span> <span class="text-right">￥{{numFormate(taxInfo.taxInFee)}}</span></div>
                        <div class="item padding-tb-10"><span class="w70 text-size20">合计</span> <span class="text-right text-size20">￥{{taxInfo.sum}}</span> </div>
                     </el-row>
 
@@ -432,7 +433,7 @@ export default {
             }
             console.log(cart)
             this.taxInfo = this.getTaxInfo(this.tax,cart,false)
-            console.log(this.taxInfo)
+            // console.log(this.taxInfo)
         },
 
         consume_oper() {

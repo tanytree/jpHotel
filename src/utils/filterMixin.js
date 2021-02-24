@@ -124,7 +124,7 @@ let mixin = {
                     });
                 });
             }else{
-                return num
+                return  0
             }
         },
         getPriceStr(v){
@@ -153,6 +153,7 @@ let mixin = {
                 let total = 0 //所有商品的价格
                 let service = 0 //服务费
                 let taxFee = 0 //消费税
+                let taxInFee = 0
                 let sum = 0 //合计
                 for(let i in list){
                     // console.log(list[i].totalPrice)
@@ -184,7 +185,30 @@ let mixin = {
                                taxFee += list[i].totalPrice * consumeTax
                             }
                         }
+                    }else{
+                        //税内消费税
+                        if(outFlag){
+
+
+                            // let per = (1 - 1/(1.00 + outConsumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(outConsumeTax,list[i].totalPrice)
+
+
+                        }else{
+                            // let per = (1 - 1/(1.00 + consumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(consumeTax,list[i].totalPrice)
+                        }
+
+
+
+
                     }
+
+
+
+
                     if(outFlag == false){
                         //不包含服务税
                         if(list[i].seviceStatus == 1){
@@ -208,6 +232,7 @@ let mixin = {
                 for(let s in parms){
                     sum +=  parseFloat(parms[s])
                 }
+                parms.taxInFee = taxInFee
                 parms.sum = sum
                 parms.servicePrice = tax.servicePrice+'%'
                 parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
@@ -217,6 +242,7 @@ let mixin = {
             }else{
                 let parms = {}
                 parms.service = 0
+                parms.taxInFee = 0
                 parms.servicePrice  =  0
                 parms.sum =  0
                 parms.tax  = 0
