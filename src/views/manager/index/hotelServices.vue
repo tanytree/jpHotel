@@ -38,8 +38,8 @@
         <el-form-item :label="$t('manager.hp_checkOutTime')+':'" prop="endTime">
           <el-date-picker v-model="hotelData.endTime" type="datetime"></el-date-picker>
         </el-form-item>
-        <el-form-item label="单据前缀:" prop="prefix" label-width="120px">
-          <el-input></el-input>
+        <el-form-item :label="$t('manager.hk_documentsPrefix')+':'" prop="prefix" label-width="120px">
+          <el-input v-model="hotelData.prefix"></el-input>
         </el-form-item>
         <div class="hotelTitle">{{$t('manager.hp_hotelIntroduction')}}</div>
         <el-form-item :label="$t('manager.hp_hotelIntroduction')+':'" prop="remark">
@@ -110,7 +110,7 @@ export default {
         prefix: [
           {
             required: true,
-            message: "请填写",
+            message: this.$t('manager.hk_inputPrefix'),
             trigger: "blur",
           },
         ],

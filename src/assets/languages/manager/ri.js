@@ -599,7 +599,8 @@ module.exports = {
   add_viewPettyCash: '繰越・金額仕分け',
   add_viewThisCard: '売掛仕分け',
   add_paymentOfTotal: '売掛合計',
-
+  hk_documentsPrefix: '接頭辞',
+  hk_inputPrefix: '入力してください',
 
 
 
