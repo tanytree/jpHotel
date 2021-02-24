@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-24 14:19:56
+ * @LastEditTime: 2021-02-24 16:12:25
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -131,6 +131,8 @@
     <unitedRoomHandle ref="unitedRoomHandle" />
     <!-- 单据预览 -->
     <priviewDocuments ref="priviewDocuments"/>
+     <!-- 结账退房单据打印 -->
+    <checkOutRoom ref="checkOutRoom"/>
   </div>
 </template>
 
@@ -142,6 +144,7 @@ import myMixin from "@/utils/filterMixin";
 import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
 import checkInInfo from "@/components/front/checkInInfo";   //客人信息
 import priviewDocuments from "@/components/table/priviewDocuments";
+import checkOutRoom from "@/components/table/checkOutRoom";
 
 export default {
   mixins: [myMixin],
@@ -151,7 +154,8 @@ export default {
     c2,
     customer,
     unitedRoomHandle,
-    priviewDocuments
+    priviewDocuments,
+    checkOutRoom
   },
   data() {
     return {
@@ -254,7 +258,14 @@ export default {
       );
       console.log(transferObj);
       if(transferObj&&transferObj.checked){
-          this.$refs.priviewDocuments.openDialog();
+          switch (transferObj.type) {
+            case 'checkoutPartPay':
+               this.$refs.priviewDocuments.openDialog();
+              break;
+            case 'checkoutTao':
+              this.$refs.checkOutRoom.openDialog();
+            break;
+          }
         }
     },
 

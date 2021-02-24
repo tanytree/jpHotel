@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 16:05:34
+ * @LastEditTime: 2021-02-24 15:53:05
  * @FilePath: \jiudian\src\components\table\expenseDetail.vue
  * @pageName: 这是--（消费明细预览  组件）--页面
 -->
@@ -234,28 +234,32 @@ export default {
   flex-direction: @direction;
 }
 .dialogBox {
-  width: 100vw;
-  height: 100vh;
+  // width: 100vw;
+  // height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
+  // background-color: pink;
   position: fixed;
   top: 0;
+  bottom: 0;
   left: 0;
+  right: 0;
   z-index: 900;
   .flex();
   .innerDialogBox {
     border-radius: 6px;
-    width: 65%;
-    height: 80%;
+    width: 95%;
+    height: 95%;
     overflow: auto;
     background-color: #fff;
     .headerTitle {
-      width: 65%;
+      width: 95%;
       background-color: rgb(200, 216, 241);
       padding: 10px 20px;
       position: fixed;
-      top: 10%;
+      top: 2.5%;
       .flex(space-between,center);
       .header_leftTitle {
+        font-size: 22px;
         font-weight: 600;
       }
       .header_rightTitle {

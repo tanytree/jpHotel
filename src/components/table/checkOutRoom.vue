@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-23 16:02:48
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 18:01:17
+ * @LastEditTime: 2021-02-24 14:50:23
  * @FilePath: \jiudian\src\components\table\checkOutRoom.vue
  * @pageName: 这是--（结账退房单据打印  组件）--页面
 -->
@@ -327,6 +327,7 @@ export default {
       top: 10%;
       .flex(space-between,center);
       .header_leftTitle {
+        font-size: 22px;
         font-weight: 600;
       }
       .header_rightTitle {

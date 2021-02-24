@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-23 15:21:57
+ * @LastEditTime: 2021-02-24 14:50:41
  * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
  * @pageName: 这是--（单据预览  组件）--页面
 -->
@@ -253,6 +253,7 @@ export default {
       top: 10%;
       .flex(space-between,center);
       .header_leftTitle {
+        font-size: 22px;
         font-weight: 600;
       }
       .header_rightTitle {

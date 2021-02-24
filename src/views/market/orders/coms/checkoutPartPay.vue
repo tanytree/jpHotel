@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 14:02:10
+ * @LastEditTime: 2021-02-24 16:07:10
  * @FilePath: \jiudian\src\views\market\orders\coms\checkoutPartPay.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -358,6 +358,7 @@ export default {
             let transferObj ={
               checked:this.checkoutForm.checked,
               orderId:res.orderId,
+              type:'checkoutPartPay'  //部分结账
             }
             this.getOrderDetail(transferObj)
         })

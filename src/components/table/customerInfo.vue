@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 11:19:47
+ * @LastEditTime: 2021-02-24 14:50:04
  * @FilePath: \jiudian\src\components\table\customerInfo.vue
  * @pageName: 这是--（打印客户资讯 组件）--页面
 -->
@@ -12,7 +12,7 @@
   <div v-if="printDialog" class="dialogBox">
     <div class="innerDialogBox">
       <div class="headerTitle">
-        <div class="header_leftTitle">印刷レビュー</div>
+        <div class="header_leftTitle" >印刷レビュー</div>
         <div class="header_rightTitle" @click="printDialog = false">X</div>
       </div>
       <div class="contentBox">
@@ -175,6 +175,7 @@ export default {
       top: 7%;
       .flex(space-between,center);
       .header_leftTitle {
+        font-size: 22px;
         font-weight: 600;
       }
       .header_rightTitle {

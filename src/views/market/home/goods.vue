@@ -620,6 +620,7 @@ export default {
       top: 13%;
       .flex(space-between,center);
       .header_leftTitle {
+        font-size: 22px;
         font-weight: 600;
       }
       .header_rightTitle {
