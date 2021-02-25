@@ -171,7 +171,7 @@
         </el-table-column>
         <el-table-column align="center" :label="$t('desk.customer_roomKind')" show-overflow-tooltip width="110px">
           <template slot-scope="{ row }">
-            <div>
+            <div v-if="row.checkIn&&row.checkIn.hotelCheckInRoom">
               {{ row.checkIn.hotelCheckInRoom.roomTypeName || "" }}
               <span>/</span>
               {{ row.checkIn.hotelCheckInRoom.houseNum || "" }}
@@ -393,7 +393,7 @@ export default {
         this,
         "/pms/freeuser/stores_list",
         {
-          filterHeader: false,
+          filterHeader: true,
         },
         (data) => {
           this.storeList = data;
