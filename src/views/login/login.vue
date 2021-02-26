@@ -184,6 +184,7 @@ export default {
     },
 
     mounted() {
+
         this.language = getLanguage();
         this.onLanguageChange();
         this.$i18n.locale = this.language;
@@ -223,40 +224,50 @@ export default {
             })[0];
             sessionStorage.storesNum = data.data.storesInfo.storesNum;
             this.saveuser(data);
-            var array = {
-                id: "menuAssert",
-                menuTitle: "维护菜单（开发用）",
-                menuAliasTitle: "维护菜单",
-                japanese: "メニュー管理",
-                parentMenuId: null,
-                icon: "icon06",
-                path: "",
-                menuLevel: 1,
-                menuType: 1,
-                status: 1,
-                menuorder: 1,
-                childList: [
-                    {
-                        id: "menuAssert2",
-                        createTime: "2020-07-05 15:01:00",
-                        updateTime: "2020-07-05 15:01:00",
-                        menuTitle: "首页",
-                        menuAliasTitle: null,
-                        japanese: "ホームページ",
-                        parentMenuId: "menuAssert",
-                        icon: "boss/nav01.png",
-                        path: "menuAssert",
-                    },
-                ],
-            };
             this.onLanguageChange(); //保存选中语言
-            data.data.menuList.push(array);
+            if (this.loginForm.account == 'admin' || data.data.user.userType == 3) {
+                var array = {
+                    id: "menuAssert",
+                    menuTitle: "维护菜单（开发用）",
+                    menuAliasTitle: "维护菜单",
+                    japanese: "メニュー管理",
+                    parentMenuId: null,
+                    icon: "icon06",
+                    path: "",
+                    menuLevel: 1,
+                    menuType: 1,
+                    status: 1,
+                    menuorder: 1,
+                    childList: [
+                        {
+                            id: "menuAssert2",
+                            createTime: "2020-07-05 15:01:00",
+                            updateTime: "2020-07-05 15:01:00",
+                            menuTitle: "首页",
+                            menuAliasTitle: null,
+                            japanese: "ホームページ",
+                            parentMenuId: "menuAssert",
+                            icon: "boss/nav01.png",
+                            path: "menuAssert",
+                        },
+                    ],
+                };
+                data.data.menuList.push(array);
+            }
             for (let i = 0; i < data.data.menuList.length; i++) {
                 let item = data.data.menuList[i];
                 if (item.id == "a367289c90e34614a308917f5726bd03") {
                     data.data.menuList.splice(i, 1);
                     break;
                 }
+            }
+            if (this.loginForm.storesNum == this.$F.getHQCode()) {
+                document.title = this.$t('desk.book_HQ');
+            } else {
+                let tempArray = this.storeList.filter(item => {
+                    return item.storesNum == this.loginForm.storesNum;
+                }) || [];
+                document.title = tempArray[0].storesName;
             }
             this.routeractions(data.data.menuList);
             this.$forceUpdate();
