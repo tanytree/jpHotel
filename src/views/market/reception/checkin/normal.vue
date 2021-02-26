@@ -542,9 +542,16 @@ export default {
                         if (this.operCheckinType == "b2" || this.operCheckinType == "a2") {
                             return timeStr.getTime() > timeStr - 8.64e6
                         }
-                        return (
-                            new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr
-                        );
+                        if (this.operCheckinType == "b3") {
+                            return (
+                                new Date(time.Format("yyyy-MM-dd")).getTime() < timeStr
+                            );
+                        } else {
+                            return (
+                                new Date(time.Format("yyyy-MM-dd")).getTime() - 8.64e7 < timeStr
+                            );
+                        }
+
                     } else if (this.checkInForm.checkinTime == "") {
                         return (
                             new Date(time.Format("yyyy-MM-dd")).getTime() <
