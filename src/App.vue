@@ -57,100 +57,6 @@
     align-items: @align;
     flex-direction: @direction;
   }
-  .checkThePrint {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 900;
-    .flex();
-    .innerDialogBox {
-      border-radius: 6px;
-      width:100vw;
-      // height: 84%;
-      // width: 1000px;
-      background-color: #fff;
-      .headerTitle {
-        width: 100vw;
-        background-color: rgb(200, 216, 241);
-        padding: 10px 20px;
-        position: fixed;
-        top: 8%;
-        .flex(space-between,center);
-        .header_leftTitle {
-          font-size: 22px;
-          font-weight: 600;
-        }
-        .header_rightTitle {
-          font-size: 14px;
-          color: rgba(176, 176, 176, 1);
-          cursor: default;
-        }
-      }
-      .contentBox {
-        margin-top: 35px;
-        box-sizing: border-box;
-        padding: 20px;
-        .dialog_headBox {
-          .flex(space-between,center);
-          img {
-            width: 260px;
-            height: 73px;
-          }
-        }
-        .flexBox {
-          .flex(flex-start,center);
-          .flexBox_left {
-            flex: 1;
-          }
-          .flexBox_right {
-            flex: 1;
-          }
-        }
-        .responsible {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          margin-top: 20px;
-          .innerBox {
-            width: 400px;
-            font-weight: 600;
-            font-size: 18px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid black;
-          }
-        }
-        .imgBox {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          img {
-            width: 260px;
-            height: 73px;
-          }
-        }
-      }
-      .bottomBox {
-        .flex();
-        padding: 20px;
-        border-top: 1px solid rgb(223, 226, 232);
-        .bottomBox_left {
-          padding: 10px 30px;
-          border: 1px solid rgb(223, 226, 232);
-          border-radius: 6px;
-        }
-        .bottomBox_right {
-          padding: 10px 30px;
-          background-color: rgb(64, 158, 255);
-          border-radius: 6px;
-          margin-left: 15px;
-          color: #fff;
-        }
-      }
-    }
-  }
   .customerInfoBox {
   width: 100vw;
   // height: 100vh;
@@ -263,6 +169,77 @@ html {
 body {
   width: 100%;
   height: 100%;
+}
+.flex(@justify:center,@align:center,@direction:row) {
+    display: flex;
+    justify-content: @justify;
+    align-items: @align;
+    flex-direction: @direction;
+  }
+   .innerDialogBox {
+  border-radius: 6px;
+  width: 1000px;
+  background-color: #fff;
+  .headerTitle {
+    box-sizing: border-box;
+    width: 1000px;
+    background-color: rgb(200, 216, 241);
+    padding: 10px 20px 0 20px;
+    .flex(space-between,center);
+    .header_leftTitle {
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .header_rightTitle {
+      font-size: 14px;
+      color: rgba(176, 176, 176, 1);
+      cursor: default;
+    }
+  }
+  .contentBox {
+    // margin-top: 15px;
+    box-sizing: border-box;
+    padding: 20px;
+    .dialog_headBox {
+      .flex(space-between,center);
+      img {
+        width: 260px;
+        height: 73px;
+      }
+    }
+    .flexBox {
+      .flex(flex-start,center);
+      .flexBox_left {
+        flex: 1;
+      }
+      .flexBox_right {
+        flex: 1;
+      }
+    }
+    .responsible {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 20px;
+      .innerBox {
+        width: 400px;
+        font-weight: 600;
+        font-size: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid black;
+      }
+    }
+    .imgBox {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      img {
+        width: 260px;
+        height: 73px;
+      }
+    }
+  }
+  
 }
 </style>
 <script>

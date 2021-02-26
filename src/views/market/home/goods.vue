@@ -199,7 +199,7 @@
     </el-dialog>
     <!-- checkPatch  寄存补打-->
     
-      <div v-if="checkPatch" class="checkThePrint" ref="checkThePrint">
+      <div v-if="checkPatch" class="checkThePrint" id="checkTheTwo">
         <div class="innerDialogBox">
           <div class="headerTitle">
             <div class="header_leftTitle">{{$t('desk.home_checkToPlayA')}}</div>
@@ -299,6 +299,7 @@
 export default {
   data() {
     return {
+      nowDis:'none',
       printNum: "", // 打印编号
       nowTime: null,
       pageIndex: 1,
@@ -361,7 +362,9 @@ export default {
   },
   methods: {
     clickPrint(){
-      this.$print(this.$refs.checkThePrint)
+  
+    this.$F.doPrint('checkTheTwo')
+      // this.$print(this.$refs.checkTheTwo)
     },
     formatTime(time) {
       if (time) {

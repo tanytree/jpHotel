@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-26 18:08:44
+ * @LastEditTime: 2021-02-26 20:17:03
  * @FilePath: \jiudian\src\components\table\customerInfo.vue
  * @pageName: 这是--（打印客户资讯 组件）--页面
 -->
@@ -10,7 +10,7 @@
 
 <template>
   
-    <div v-if="printDialog" class="customerInfoBox" ref="customerInfo">
+    <div v-if="printDialog" class="customerInfoBox" id="customerInfo">
       <div class="innerDialogBox">
         <div class="headerTitle">
           <div class="header_leftTitle">印刷レビュー</div>
@@ -144,7 +144,8 @@ export default {
       this.printDialog = true;
     },
     printInfo() {
-     this.$print(this.$refs.customerInfo)
+       this.$F.doPrint('customerInfo')
+
     },
   },
 };
