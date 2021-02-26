@@ -1,9 +1,10 @@
 /*
  * @Date: 2019-12-12 11:15:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 09:56:35
+ * @LastEditTime: 2021-02-26 17:58:44
  * @FilePath: \jiudian\src\main.js
  */
+import Print from '@/plugs/print'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router.js'
@@ -31,6 +32,7 @@ locale.use(lang)
 
 import 'video.js/dist/video-js.css'
 
+Vue.use(Print)
 Vue.use(filters)
 
 Vue.use(VueI18n)

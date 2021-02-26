@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-23 16:02:48
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 14:50:23
+ * @LastEditTime: 2021-02-26 16:44:50
  * @FilePath: \jiudian\src\components\table\checkOutRoom.vue
  * @pageName: 这是--（结账退房单据打印  组件）--页面
 -->
@@ -276,8 +276,8 @@
       </div>
 
       <div class="bottomBox">
-        <div class="bottomBox_left" @click="printDialog = false">{{$t("commons.cancel")}}</div>
-        <div class="bottomBox_right">印刷</div>
+        <div class="bottomBox_left noprint" @click="printDialog = false">{{$t("commons.cancel")}}</div>
+        <div class="bottomBox_right noprint" @click='printCheckout'>印刷</div>
       </div>
     </div>
   </div>
@@ -294,6 +294,9 @@ export default {
     openDialog() {
       this.printDialog = true;
     },
+    printCheckout(){
+      // this.$print(this.$refs.checkThePrint)
+    }
   },
 };
 </script>

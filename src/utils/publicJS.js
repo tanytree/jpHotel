@@ -346,7 +346,18 @@ const $F = {
         } else {
             return time;
         }
-    },
+  },
+    // 打印表格
+  // doPrint(idName) {
+  //     console.log('进入打印了');
+  //     let newstr = document.getElementById(idName).innerHTML;
+  //     let oldstr = document.body.innerHTML;
+  //     document.body.innerHTML = newstr;
+  //     window.print();
+  //     document.body.innerHTML = oldstr;
+  //     window.location.reload();//打印取消后刷新页面防止按钮不能点击
+  //     return true;
+  //   },
     // 一些多个页面都会用到的方法 统一写到commons里面
     commons: {
         //获取ota列表

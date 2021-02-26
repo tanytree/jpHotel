@@ -198,107 +198,108 @@
       </div>
     </el-dialog>
     <!-- checkPatch  寄存补打-->
-    <div v-if="checkPatch" class="dialogBox">
-      <div class="innerDialogBox">
-        <div class="headerTitle">
-          <div class="header_leftTitle">{{$t('desk.home_checkToPlayA')}}</div>
-          <div class="header_rightTitle" @click="checkPatch = false">X</div>
-        </div>
-        <div class="contentBox">
-          <div class="dialog_headBox">
-            <img src="~@/assets/images/print/good_print.png" alt="">
-            <div>https://okura-club-hotels.com</div>
+    
+      <div v-if="checkPatch" class="checkThePrint" ref="checkThePrint">
+        <div class="innerDialogBox">
+          <div class="headerTitle">
+            <div class="header_leftTitle">{{$t('desk.home_checkToPlayA')}}</div>
+            <div class="header_rightTitle" @click="checkPatch = false">X</div>
           </div>
-          <div style="margin: -10px 20px 10px">
-            <h2 style="text-align: center">
-              <span>預かり書</span><br /><span>Storage Receipt</span>
-            </h2>
-            <div style="margin-bottom:10px;">
-              <div>
-                印刷時間：{{ itemJiCun.printingTime }}
-              </div>
+          <div class="contentBox">
+            <div class="dialog_headBox">
+              <img src="~@/assets/images/print/good_print.png" alt="">
+              <div>https://okura-club-hotels.com</div>
             </div>
-            <div class="flexBox">
-              <div class="flexBox_left">
-                No.：{{ printNum }}
+            <div style="margin: -10px 20px 10px">
+              <h2 style="text-align: center">
+                <span>預かり書</span><br /><span>Storage Receipt</span>
+              </h2>
+              <div style="margin-bottom:10px;">
+                <div>
+                  印刷時間：{{ itemJiCun.printingTime }}
+                </div>
               </div>
-              <div class="flexBox_right">
-                ホテル名：{{ itemJiCun.storesName }}
+              <div class="flexBox">
+                <div class="flexBox_left">
+                  No.：{{ printNum }}
+                </div>
+                <div class="flexBox_right">
+                  ホテル名：{{ itemJiCun.storesName }}
+                </div>
               </div>
-            </div>
-            <div class="flexBox">
-              <div class="flexBox_left">
-                預かり時間：{{ itemJiCun.createTime }}
+              <div class="flexBox">
+                <div class="flexBox_left">
+                  預かり時間：{{ itemJiCun.createTime }}
+                </div>
+                <div class="flexBox_right">
+                  ホテル住所：{{ itemJiCun.storesAddress }}
+                </div>
               </div>
-              <div class="flexBox_right">
-                ホテル住所：{{ itemJiCun.storesAddress }}
-              </div>
-            </div>
-            <div style="
+              <div style="
             border-bottom: 1px dashed #333;
             padding-bottom: 20px;
             margin-bottom: 20px;
           " class="flexBox">
-              <div class="flexBox_left">
-                担当者：{{ itemJiCun.creatorName }}
-              </div>
-              <div class="flexBox_right">
-                ホテル電話：{{ itemJiCun.receptionMobile }}
-              </div>
-            </div>
-            <div>
-              <div>
-                お名前 /Name ：{{itemJiCun.guestName}}
-              </div>
-            </div>
-            <div>
-              <div>
-                部屋番号：{{itemJiCun.roomNum}}
-              </div>
-            </div>
-            <div>
-              <div>
-                お電話：{{itemJiCun.mobile}}
-              </div>
-            </div>
-            <div style="margin-top:10px;">
-              <div>
-                御預かり内容：{{itemJiCun.luggageName}}
-              </div>
-            </div>
-          </div>
-          <div class="responsible">
-            <div class="innerBox"> 担当者署名</div>
-          </div>
-          <div style="margin-top:10px">
-            <div style="margin-bottom:10px;">毎度ご愛顧賜りましてありがとう御座います。</div>
-            <div>
-              <div>上記通り預ける荷物には現金、貴重品、医薬品、壊れやすいもの、危険物などはありません。
-                <div>
-                  この内容と異なるものが含まれる場合、一切責任を負担いたしません。
+                <div class="flexBox_left">
+                  担当者：{{ itemJiCun.creatorName }}
                 </div>
+                <div class="flexBox_right">
+                  ホテル電話：{{ itemJiCun.receptionMobile }}
+                </div>
+              </div>
+              <div>
                 <div>
-                  ご了承の程宜しくお願いいたします</div>
+                  お名前 /Name ：{{itemJiCun.guestName}}
+                </div>
+              </div>
+              <div>
+                <div>
+                  部屋番号：{{itemJiCun.roomNum}}
+                </div>
+              </div>
+              <div>
+                <div>
+                  お電話：{{itemJiCun.mobile}}
+                </div>
+              </div>
+              <div style="margin-top:10px;">
+                <div>
+                  御預かり内容：{{itemJiCun.luggageName}}
+                </div>
               </div>
             </div>
+            <div class="responsible">
+              <div class="innerBox"> 担当者署名</div>
+            </div>
+            <div style="margin-top:10px">
+              <div style="margin-bottom:10px;">毎度ご愛顧賜りましてありがとう御座います。</div>
+              <div>
+                <div>上記通り預ける荷物には現金、貴重品、医薬品、壊れやすいもの、危険物などはありません。
+                  <div>
+                    この内容と異なるものが含まれる場合、一切責任を負担いたしません。
+                  </div>
+                  <div>
+                    ご了承の程宜しくお願いいたします</div>
+                </div>
+              </div>
+            </div>
+            <div class="imgBox">
+              <img src="~@/assets/images/print/good_print.png" alt="">
+            </div>
           </div>
-          <div class="imgBox">
-            <img src="~@/assets/images/print/good_print.png" alt="">
+          <div class="bottomBox">
+            <div class="bottomBox_left noprint" @click="checkPatch = false">{{$t("commons.cancel")}}</div>
+            <div class="bottomBox_right noprint" @click="clickPrint">印刷</div>
           </div>
-        </div>
-        <div class="bottomBox">
-          <div class="bottomBox_left" @click="checkPatch = false">{{$t("commons.cancel")}}</div>
-          <div class="bottomBox_right">印刷</div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      printNum:'',  // 打印编号
+      printNum: "", // 打印编号
       nowTime: null,
       pageIndex: 1,
       pageSize: 10,
@@ -307,7 +308,7 @@ export default {
       currentPage4: 1, //分页当前所在页数的位置
       checkdetail: false, //物品寄存dialog
       newCheck: false, //新增寄存按钮
-      checkPatch: false, //寄存补打 按钮
+      checkPatch: false, //寄存补打 弹框
       leftLuggage: {
         // 物品寄存
         operStatus: "",
@@ -334,7 +335,7 @@ export default {
       input: "", //搜索框
     };
   },
-  
+
   created() {
     this.getDepositList(); //请求寄存列表
   },
@@ -359,7 +360,9 @@ export default {
     },
   },
   methods: {
-   
+    clickPrint(){
+      this.$print(this.$refs.checkThePrint)
+    },
     formatTime(time) {
       if (time) {
         let array = time.split(" ");
@@ -381,11 +384,15 @@ export default {
     },
     //点击 寄存补打 按钮
     jicunClick(id) {
-     
-      this.$F.doRequest(this,'/pms/hotelservice/print_num',{typeStr:'STO'},(res)=>{
-        this.printNum = res;
-      })
-       let params = {
+      this.$F.doRequest(
+        this,
+        "/pms/hotelservice/print_num",
+        { typeStr: "STO" },
+        (res) => {
+          this.printNum = res;
+        }
+      );
+      let params = {
         id: id,
       };
       this.$F.doRequest(this, "/pms/luggagedeposit/findone", params, (data) => {
@@ -597,7 +604,7 @@ export default {
   flex-direction: column;
   padding: 10px;
 }
-.dialogBox {
+.checkThePrint {
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);

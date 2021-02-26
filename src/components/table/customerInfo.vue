@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 14:50:04
+ * @LastEditTime: 2021-02-26 18:08:44
  * @FilePath: \jiudian\src\components\table\customerInfo.vue
  * @pageName: 这是--（打印客户资讯 组件）--页面
 -->
@@ -9,126 +9,127 @@
 
 
 <template>
-  <div v-if="printDialog" class="dialogBox">
-    <div class="innerDialogBox">
-      <div class="headerTitle">
-        <div class="header_leftTitle" >印刷レビュー</div>
-        <div class="header_rightTitle" @click="printDialog = false">X</div>
-      </div>
-      <div class="contentBox">
-        <div class="dialog_headBox">
-          <img src="~@/assets/images/print/good_print.png" alt="">
-          <div>https://okura-club-hotels.com</div>
+  
+    <div v-if="printDialog" class="customerInfoBox" ref="customerInfo">
+      <div class="innerDialogBox">
+        <div class="headerTitle">
+          <div class="header_leftTitle">印刷レビュー</div>
+          <div class="header_rightTitle" @click="printDialog = false">X</div>
         </div>
-        <div class="tableTitle">
-          <div>レジストレーションカード</div>
-          <div>Registration Card</div>
+        <div class="contentBox">
+          <div class="dialog_headBox">
+            <img src="~@/assets/images/print/good_print.png" alt="">
+            <div>https://okura-club-hotels.com</div>
+          </div>
+          <div class="tableTitle">
+            <div>レジストレーションカード</div>
+            <div>Registration Card</div>
+          </div>
+          <table border="1">
+            <tr>
+              <td>部屋番号</td>
+              <td></td>
+              <td>ご利用日</td>
+              <td colspan="2"></td>
+              <td>泊数</td>
+              <td></td>
+              <td colspan="2">ご出発日～時間</td>
+              <td colspan="4"></td>
+            </tr>
+            <tr>
+              <td>フリガナ</td>
+              <td colspan="6"></td>
+              <td rowspan="2" colspan="2">国籍</td>
+              <td rowspan="2" colspan="4"></td>
+            </tr>
+            <tr>
+              <td>お名前</td>
+              <td colspan="6"></td>
+            </tr>
+            <tr>
+              <td>証明書種類</td>
+              <td colspan="2"></td>
+              <td colspan="2">証明書番号</td>
+              <td colspan="2"></td>
+              <td colspan="2">会員番号</td>
+              <td colspan="4"></td>
+            </tr>
+            <tr>
+              <td>ご住所</td>
+              <td colspan="6"></td>
+              <td colspan="2">電話番号</td>
+              <td colspan="4"></td>
+            </tr>
+            <tr>
+              <td>予約経路</td>
+              <td colspan="6"></td>
+              <td colspan="2">電話番号</td>
+              <td colspan="4"></td>
+            </tr>
+            <tr>
+              <td>D　M</td>
+              <td colspan="12" class="checkBox" style="text-align:left">
+                <label><input type='checkbox'>自宅郵送</label>
+                <label><input type='checkbox'>勤務先郵送</label>
+                <label><input type='checkbox'>E－Mail</label>
+                <label><input type='checkbox'>不要</label>
+              </td>
+            </tr>
+            <tr>
+              <td>ご利用人数</td>
+              <td>男</td>
+              <td>女</td>
+              <td>小学以上</td>
+              <td>小学以下</td>
+              <td>幼児</td>
+              <td>ペット</td>
+              <td colspan="3">夕 食</td>
+              <td colspan="3">朝 食</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="3"></td>
+              <td colspan="3"></td>
+            </tr>
+            <tr>
+              <td colspan="7">ご利用内容</td>
+              <td colspan="6">料　金</td>
+            </tr>
+            <tr>
+              <td colspan="7"></td>
+              <td colspan="6"></td>
+            </tr>
+            <tr>
+              <td colspan="2">メールアドレス</td>
+              <td colspan="5"></td>
+              <td colspan="2" rowspan="2">（備考）</td>
+              <td colspan="4" rowspan="2"></td>
+            </tr>
+            <tr>
+              <td colspan="2">（団体名）</td>
+              <td colspan="5"></td>
+            </tr>
+          </table>
+          <div style="margin-top:10px">ご記入いただいた個人情報は、お客様へのサービスのご提供のために使用するものであり、それ以外の目的で使用することはございません。</div>
+          <div class="responsible">
+            <div class="innerBox">ご署名</div>
+          </div>
+          <div class="bottomImg">
+            <img src="~@/assets/images/print/good_print.png" alt="">
+          </div>
         </div>
-        <table border="1">
-          <tr>
-            <td>部屋番号</td>
-            <td></td>
-            <td>ご利用日</td>
-            <td colspan="2"></td>
-            <td>泊数</td>
-            <td></td>
-            <td colspan="2">ご出発日～時間</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>フリガナ</td>
-            <td colspan="6"></td>
-            <td rowspan="2" colspan="2">国籍</td>
-            <td rowspan="2" colspan="4"></td>
-          </tr>
-          <tr>
-            <td>お名前</td>
-            <td colspan="6"></td>
-          </tr>
-          <tr>
-            <td>証明書種類</td>
-            <td colspan="2"></td>
-            <td colspan="2">証明書番号</td>
-            <td colspan="2"></td>
-            <td colspan="2">会員番号</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>ご住所</td>
-            <td colspan="6"></td>
-            <td colspan="2">電話番号</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>予約経路</td>
-            <td colspan="6"></td>
-            <td colspan="2">電話番号</td>
-            <td colspan="4"></td>
-          </tr>
-          <tr>
-            <td>D　M</td>
-            <td colspan="12" class="checkBox" style="text-align:left">
-              <label><input type='checkbox'>自宅郵送</label>
-              <label><input type='checkbox'>勤務先郵送</label>
-              <label><input type='checkbox'>E－Mail</label>
-              <label><input type='checkbox'>不要</label>
-            </td>
-          </tr>
-          <tr>
-            <td>ご利用人数</td>
-            <td>男</td>
-            <td>女</td>
-            <td>小学以上</td>
-            <td>小学以下</td>
-            <td>幼児</td>
-            <td>ペット</td>
-            <td colspan="3">夕 食</td>
-            <td colspan="3">朝 食</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td colspan="3"></td>
-            <td colspan="3"></td>
-          </tr>
-          <tr>
-            <td colspan="7">ご利用内容</td>
-            <td colspan="6">料　金</td>
-          </tr>
-          <tr>
-            <td colspan="7"></td>
-            <td colspan="6"></td>
-          </tr>
-          <tr>
-            <td colspan="2">メールアドレス</td>
-            <td colspan="5"></td>
-            <td colspan="2" rowspan="2">（備考）</td>
-            <td colspan="4" rowspan="2"></td>
-          </tr>
-          <tr>
-            <td colspan="2">（団体名）</td>
-            <td colspan="5"></td>
-          </tr>
-        </table>
-        <div style="margin-top:10px">ご記入いただいた個人情報は、お客様へのサービスのご提供のために使用するものであり、それ以外の目的で使用することはございません。</div>
-        <div class="responsible">
-          <div class="innerBox">ご署名</div>
+        <div class="bottomBox">
+          <div class="bottomBox_left noprint" @click="printDialog = false">{{$t("commons.cancel")}}</div>
+          <div class="bottomBox_right noprint" @click="printInfo">印刷</div>
         </div>
-        <div class="bottomImg">
-          <img src="~@/assets/images/print/good_print.png" alt="">
-        </div>
-      </div>
-      <div class="bottomBox">
-        <div class="bottomBox_left" @click="printDialog = false">{{$t("commons.cancel")}}</div>
-        <div class="bottomBox_right">印刷</div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
@@ -142,6 +143,9 @@ export default {
     openDialog() {
       this.printDialog = true;
     },
+    printInfo() {
+     this.$print(this.$refs.customerInfo)
+    },
   },
 };
 </script>
@@ -152,7 +156,7 @@ export default {
   align-items: @align;
   flex-direction: @direction;
 }
-.dialogBox {
+.customerInfoBox {
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
