@@ -8,7 +8,10 @@
   <!--未调-->
   <template>
   <div>
+
+
     <el-dialog top="0" width="65%" :title="$t('desk.order_checkout')" :visible.sync="checkoutVisible" append-to-body>
+
     <div class="innerBoxTop">
       <span>{{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}} </span>
       <span>{{$t('desk.home_roomNum')}}：{{currentRoom.houseNum}}</span>
@@ -214,8 +217,9 @@ export default {
           //17早餐  //18餐晚
           if (priceType == 17 || priceType == 18) {
             let attachMealObj = element.attachMealObj;
+            console.log(attachMealObj)
             if (attachMealObj.taxStatus == 2) {
-              taxInFee += this.getTaxIn(consumeTax, mealPrice);
+              taxInFee += this.getTaxIn(consumeTax,attachMealObj.mealPrice);
             }
           }
 
@@ -347,6 +351,11 @@ export default {
         pageIndex: 1,
         pageSize: 100,
       };
+      if(localStorage.getItem('roomType') == 'customer'){
+          info.roomId = this.currentRoom.roomId
+      }else{
+          info.roomId = ''
+      }
       this.$F.doRequest(
         this,
         "/pms/consume/consume_order_list",
@@ -407,18 +416,29 @@ export default {
       console.log(this.detailData);
       console.log(this.currentRoom);
       let checkoutForm = this.checkoutForm;
+
+
+
       console.log(checkoutForm);
       let params = {
         checkInId: checkoutForm.checkInId,
         priceType: checkoutForm.priceType,
-        payPrice: this.getFee(),
+        // payPrice: this.getFee(),
         payType: checkoutForm.payType,
         preferentialPrice: checkoutForm.preferentialPrice,
         roomId: this.currentRoom.roomId,
         roomNum: this.currentRoom.houseNum,
         remark: checkoutForm.remark,
-        state: 2,
+        state: 2
       };
+
+      // if(localStorage.getItem('roomType') == 'customer'){
+      //     params.state = 2
+      // }else{
+      //     params.state = 1
+      // }
+
+
 
       if (checkoutForm.putUp) {
         params.putUp = checkoutForm.putUp;
@@ -428,6 +448,19 @@ export default {
         params.creditName = checkoutForm.creditName;
       }
       console.log(params);
+      console.log(this.detailData.payPrice);
+      console.log(this.getRealPayFee.sum);
+
+        if(this.detailData.payPrice - this.getRealPayFee.sum < 0){
+            params.payPrice = this.getFee()
+            console.log(1)
+            console.log(this.getFee())
+        }else{
+            params.payPrice = 0 - this.getFee()
+            console.log(2)
+            console.log(0 - this.getFee())
+        }
+
       // return
       this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
         console.log(res);
@@ -458,7 +491,7 @@ export default {
       params.billType = 1;
       let roomIds = [];
       if (this.currentRoom && this.currentRoom.roomId) {
-        roomIds.push(this.currentRoom.roomId);
+         roomIds.push(this.currentRoom.roomId);
       } else {
         this.detailData.inRoomList.forEach((room) => {
           if (room.state == 1) {
@@ -466,7 +499,13 @@ export default {
           }
         });
       }
-      params.roomIds = roomIds;
+      if(localStorage.getItem('roomType') == 'order'){
+        params.roomIds = roomIds.join(',');
+      }else{
+        params.roomIds =  this.currentRoom.roomId
+      }
+
+
       //console.log(this.isArrSame(array,1))
       //console.log(this.isArrSame(array,2))
       // if(this.isArrSame(array,1) == true){
@@ -482,12 +521,6 @@ export default {
       this.$F.doRequest(this, "/pms/checkin/out_check_in", params, (res) => {
         console.log(res);
         this.$emit("getOrderDetail",transferObj);
-        // this.$router.replace({
-        //   path: "/orders",
-        //   query: {
-        //     type: 'order',
-        //   },
-        // });
       });
     },
     //判断数组中的值是否相同

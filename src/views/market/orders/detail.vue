@@ -16,6 +16,7 @@
     </div>
 
     <div class="bodyInfo margin-t-10" v-loading="loading">
+
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="grid-content">
@@ -236,7 +237,8 @@ export default {
       }
     },
     getDetail(transferObj) {
-      console.log(111);
+      // console.log(111);
+      localStorage.setItem('roomType','order')
       let id = this.$route.query.id; //该id为checkinId
       this.itemGuestInfo = this.$route.query.item;
       let info = {
@@ -244,7 +246,9 @@ export default {
       }
       this.$F.doRequest(this,"/pms/checkin/check_in_detail",info,(res) => {
           this.detailData = res;
-          console.log(res)
+          // console.log('1131213132')
+          // console.log(res)
+          // console.log('1131213132')
           // this.$F.merge(this.detailData, res);
           //默认获取第一个房间为主账房，暂不明确主账房标识
           // ;
@@ -256,7 +260,7 @@ export default {
           }
         }
       );
-      console.log(transferObj);
+      // console.log(transferObj);
       if(transferObj&&transferObj.checked){
           switch (transferObj.type) {
             case 'checkoutPartPay':
@@ -303,8 +307,45 @@ export default {
       this.currentRoom = item || {};
       this.resetDom();
       this.$forceUpdate();
+      console.log(v)
+      localStorage.setItem('roomType',v)
+      if(v == 'customer'){
+          this.getSingleDetail(item);
+      }else{
+          this.getDetail();
+      }
       //切换关联订单后需要刷新组件，原来没有刷新，所以里面的内容没有变化
     },
+
+
+    getSingleDetail(item) {
+      console.log(item);
+      let id = this.$route.query.id; //该id为checkinId
+      let info = {
+          checkInId: id,
+          roomId:item.roomId
+      }
+      this.$F.doRequest(this,"/pms/checkin/check_in_oneroom_order",info,(res) => {
+          // this.detailData = res;
+          console.log(this.detailData)
+          console.log(res)
+          this.detailData.consumePrice = res.consumePrice
+          this.detailData.payPrice = res.payPrice
+          this.detailData.totalPrice = res.totalPrice
+          // console.log('1131213132')
+          // this.$F.merge(this.detailData, res);
+          //默认获取第一个房间为主账房，暂不明确主账房标识
+          // ;
+            // debugger
+          // if (res.inRoomList.length > 0) {
+          //   this.currentRoom = res.inRoomList[0];
+          //   this.resetDom();
+          //   this.$forceUpdate();
+          // }
+        }
+      );
+    },
+
     resetDom() {
       this.isReset = false;
       this.$nextTick(() => (this.isReset = true));

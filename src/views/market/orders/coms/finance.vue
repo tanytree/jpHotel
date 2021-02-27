@@ -7,7 +7,9 @@
 <template>
     <div class="finance">
         <!-- 查询部分 -->
+        <!-- {{detailData.checkIn}} -->
         <el-form inline size="small">
+            <!-- {{currentRoom.id}} -->
             <el-row>
                 <el-form-item label="">
                     <el-button type="danger" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccountA')}}</el-button>
@@ -21,8 +23,11 @@
                     <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
-
                     <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
+
+                    <el-button type="primary" size="mini" @click="out_check_in_cancel" >撤销退房</el-button>
+
+
                 </el-form-item>
             </el-row>
             <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -38,8 +43,7 @@
         <!--表格数据 -->
         <el-table ref="multipleTable" v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}"
                   @selection-change="handleSelectionChange" size="mini">
-            <el-table-column type="selection" width="55" :selectable="selectable">
-            </el-table-column>
+            <el-table-column type="selection" width="55" :selectable="selectable"></el-table-column>
             <el-table-column prop="createTime" :label="$t('desk.customer_spendTime')" show-overflow-tooltip></el-table-column>
             <el-table-column prop="roomName" :label="$t('desk.home_roomNum')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('desk.order_accountingProgram')" show-overflow-tooltip width="120">
@@ -56,7 +60,10 @@
             <el-table-column :label="$t('desk.order_paymentB')" >
                 <template slot-scope="{ row }">
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.payPrice ? $F.numFormate((0 - row.payPrice)) : ''}}</span>
-                    <span v-else :class="row.richType == 1 ? 'red' : ''">{{$F.numFormate(row.payPrice)}}</span>
+                    <span v-else :class="row.richType == 1 ? 'red' : ''">
+
+                    {{$F.numFormate(getPriceStr(row.payPrice))}}
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column prop="consumePrices" :label="$t('desk.order_expenseA')">
@@ -75,9 +82,7 @@
                      {{$F.numFormate(row.servicePrice)}}
                  </template>
              </el-table-column>
-
-
-            <el-table-column  :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
+             <el-table-column  :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <!-- "1": '订金',
                      "2": '押金',
@@ -662,7 +667,8 @@ export default {
         this.hotelenter_list()
         this.consume_order_list(1);
         if (this.currentRoom2 && this.currentRoom2.roomId) {
-            this.currentRoom = this.detailData.inRoomList[0];
+            // this.currentRoom = this.detailData.inRoomList[0];
+            this.currentRoom = this.currentRoom2
         }
     },
 
@@ -755,13 +761,16 @@ export default {
         consume_order_list(state) {
             this.searchForm.state = state || '';
             this.searchForm.checkInId = this.checkInId;
+            if(localStorage.getItem('roomType') == 'customer'){
+                this.searchForm.roomId = this.currentRoom2.roomId
+            }else{
+                this.searchForm.roomId = ''
+            }
             this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
                 let list = res.consumeOrderList
                 let arr = []
                 for(let i =0;i<list.length;i++){
                     let element = list[i]
-                    // console.log(element)
-                    // console.log(element.priceType)
                     if(element.priceType !== 9&&element.priceType !== 10){
                         arr.push(element)
                     }
@@ -808,18 +817,6 @@ export default {
              * **/
 
             let params = this.consumeOperForm
-            // let parms = {
-            //     consumePrice: '',
-            //     payPrice:'',
-            //     priceType: '',
-            //     payType: '',
-            //     name: '',
-            //     damageCount:''
-            // }
-
-
-
-
             if(this.unitPrice){
                 params.unitPrice = this.unitPrice
             }
@@ -1063,6 +1060,18 @@ export default {
         //     });
         //
         // },
+        //撤销退款
+        out_check_in_cancel(){
+            let params = {
+                checkInId:this.$route.query.id
+            };
+            this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', params, (res) => {
+                this.getOrderDetail()
+            })
+
+        },
+
+
         hoteldamagetype_list() {
             let params = {
                 pageIndex: 1,
@@ -1341,7 +1350,7 @@ export default {
             this.consume_order_list();
         },
         getOrderDetail(transferObj){
-            console.log(111)
+            // console.log(111)
             this.$emit('getOrderDetail',transferObj)
         },
         get_consume_tax(){
@@ -1352,7 +1361,7 @@ export default {
             this.$F.doRequest(this, "/pms/hotelparam/get_consume_tax", params, (res) => {
                 if(res && res.content){
                     this.taxInfo = JSON.parse(res.content)
-                    console.log(this.taxInfo)
+                    // console.log(this.taxInfo)
 
                 }
             });
