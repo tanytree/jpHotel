@@ -352,6 +352,7 @@ const $F = {
     let oldstr = document.body.innerHTML;
     let printhtml = document.getElementById(idName).innerHTML;
     let f = document.getElementById('printf');
+    // 寄存打印   表格
     if (idName == 'checkTheTwo') {
       f.contentDocument.write(`<style type="text/css"> 
     .innerDialogBox {
@@ -430,7 +431,7 @@ const $F = {
       display:none;
     }
     </style>`);
-    } else {
+    }else if(idName == 'customerInfo'){    //打印客户资讯  表格
       f.contentDocument.write(`<style type="text/css"> 
       .innerDialogBox {
         border-radius: 6px;
@@ -536,20 +537,202 @@ const $F = {
         display:none;
       }
       </style>`);
+    }else if(idName == 'priviewDocuments'){    //单据预览  表格
+      f.contentDocument.write(`<style type="text/css"> 
+      .innerDialogBox {
+        border-radius: 6px;
+        width:1000px;
+        background-color: #fff;
+      }
+      .innerDialogBox .headerTitle {
+        width:1000px;
+        background-color: #c8d8f1;
+        padding: 0px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .headerTitle .header_leftTitle {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .innerDialogBox .headerTitle .header_rightTitle {
+        font-size: 14px;
+        color: rgba(31, 31, 31, 0.8);
+        cursor: default;
+      }
+      .innerDialogBox .contentBox {
+        box-sizing: border-box;
+        padding:0 20px 20px;
+      
+      }
+      .innerDialogBox .contentBox .titleBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox .urlPath {
+        margin-left: 10px;
+        font-size: 14px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_centerBox {
+        align-self: flex-end;
+        margin-bottom: -35px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_rightBox {
+        font-size: 14px;
+        color: #333333;
+        align-self: flex-end;
+        margin-bottom: -25px;
+      }
+      .innerDialogBox .contentBox .firstTable {
+        margin-top: 50px;
+      }
+      .innerDialogBox .contentBox .firstTable .nameInfo {
+        font-weight: 500;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox {
+        margin-top: 5px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table {
+        border-collapse: collapse;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table tr td {
+        width: 100px;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_one {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_two td {
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox .rightOfTable {
+        margin-left: 25px;
+      }
+      .innerDialogBox .contentBox .secondTable {
+        margin-top: 20px;
+      }
+      .innerDialogBox .contentBox .secondTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .secondTable table tr td {
+        width: 10%;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_rowOne {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_roTwo td {
+        border-bottom: none;
+        border-top: none;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_roTwo td div {
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .secondTable .second_bottom {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .thirdTable {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .thirdTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .thirdTable table tr td {
+        width: 10%;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne {
+        border-bottom: none;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne td {
+        border-bottom: none;
+        border-top: none;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne td div {
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .thirdTable .third_bottom {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .fourthTable {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .fourthTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .fourthTable table tr td {
+        width: 10%;
+      }
+      .innerDialogBox .contentBox .fourthTable table .fourth_rowOne {
+        border-bottom: none;
+      }
+      .innerDialogBox .contentBox .fourthTable table .fourth_rowOne td {
+        border-bottom: none;
+        border-top: none;
+      }
+      .innerDialogBox .contentBox .fourthTable table .fourth_rowOne td div {
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .fourthTable .third_bottom {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .lastBox {
+        text-align: right;
+      }
+      .innerDialogBox .contentBox .lastBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .bottomBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        padding: 20px;
+        border-top: 1px solid #dfe2e8;
+      }
+      .innerDialogBox .bottomBox .bottomBox_left {
+        padding: 10px 30px;
+        border: 1px solid #dfe2e8;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .innerDialogBox .bottomBox .bottomBox_right {
+        padding: 10px 30px;
+        background-color: #409eff;
+        border-radius: 6px;
+        margin-left: 15px;
+        color: #fff;
+        cursor: pointer;
+      }
+      .noprint{
+        display:none;
+      }
+      
+      </style>`);
     }
-
     f.contentDocument.write(printhtml);
     f.contentDocument.close();
     f.contentWindow.print();
-
-
-    // console.log('进入打印了');
-    // let newstr = document.getElementById(idName).innerHTML;
-    // let oldstr = document.body.innerHTML;
-    // document.body.innerHTML = newstr;
-    // window.print();
-    // document.body.innerHTML = oldstr;
-    // window.location.reload();//打印取消后刷新页面防止按钮不能点击
     return true;
   },
   // 一些多个页面都会用到的方法 统一写到commons里面

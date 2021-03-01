@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 15:53:05
+ * @LastEditTime: 2021-03-01 13:42:54
  * @FilePath: \jiudian\src\components\table\expenseDetail.vue
  * @pageName: 这是--（消费明细预览  组件）--页面
 -->

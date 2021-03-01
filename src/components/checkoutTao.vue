@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 16:07:21
+ * @LastEditTime: 2021-03-01 13:44:38
  * @FilePath: \jiudian\src\components\checkoutTao.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -94,6 +94,7 @@
       <el-button @click="checkoutVisible = false">{{$t('commons.cancel')}}</el-button>
       <el-button type="primary" @click="consume_oper">{{$t('commons.determine')}}</el-button>
     </div>
+    <!-- 消费明细预览 -->
     <expenseDetail ref="expenseDetail"/>
   </el-dialog>
   </div>

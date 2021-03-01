@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-26 20:17:03
+ * @LastEditTime: 2021-03-01 10:06:06
  * @FilePath: \jiudian\src\components\table\customerInfo.vue
  * @pageName: 这是--（打印客户资讯 组件）--页面
 -->
@@ -249,6 +249,8 @@ export default {
         padding: 10px 30px;
         border: 1px solid rgb(223, 226, 232);
         border-radius: 6px;
+        cursor: pointer;
+
       }
       .bottomBox_right {
         padding: 10px 30px;
@@ -256,6 +258,8 @@ export default {
         border-radius: 6px;
         margin-left: 15px;
         color: #fff;
+        cursor: pointer;
+
       }
     }
   }

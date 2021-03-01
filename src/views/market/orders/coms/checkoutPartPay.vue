@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 16:07:10
+ * @LastEditTime: 2021-03-01 12:21:03
  * @FilePath: \jiudian\src\views\market\orders\coms\checkoutPartPay.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -120,8 +120,9 @@ export default {
       consumeOrderList:[],
       detailData:{},
       taxInfo:{},
-      isPartPay:false
-
+      isPartPay:false,
+priviewDocumentsNum:'',
+transferObj:{}
     };
   },
   computed: {
@@ -355,12 +356,15 @@ export default {
         }
         this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
             console.log(res)
-            let transferObj ={
-              checked:this.checkoutForm.checked,
-              orderId:res.orderId,
-              type:'checkoutPartPay'  //部分结账
-            }
-            this.getOrderDetail(transferObj)
+            // this.transferObj ={
+            //   checked:this.checkoutForm.checked,
+            //   orderId:res.orderId,
+            //   type: 'checkoutPartPay' //部分结账
+            // }
+            this.transferObj.checked =this.checkoutForm.checked;
+            this.transferObj.orderId = res.orderId;
+            this.transferObj.type = 'checkoutPartPay';
+            this.getOrderDetail();
         })
 
    },
@@ -390,10 +394,20 @@ export default {
             return value !== state
         });
     },
-    getOrderDetail(transferObj){
+    getOrderDetail(){
+      this.$F.doRequest(
+        this,
+        "/pms/hotelservice/print_num",
+        { typeStr: "PAY" },
+        (res) => {
+         this.transferObj.priviewDocumentsNum = res;
+           this.checkoutVisible = false
+        console.log(this.transferObj.priviewDocumentsNum);
+        this.$emit('getOrderDetail',this.transferObj)
+        }
+      );
         console.log('part')
-        this.checkoutVisible = false
-        this.$emit('getOrderDetail',transferObj)
+      
     },
     get_consume_tax(){
         let params = {

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-24 16:12:25
+ * @LastEditTime: 2021-03-01 11:57:21
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -131,7 +131,7 @@
     </div>
     <unitedRoomHandle ref="unitedRoomHandle" />
     <!-- 单据预览 -->
-    <priviewDocuments ref="priviewDocuments"/>
+    <priviewDocuments ref="priviewDocuments" />
      <!-- 结账退房单据打印 -->
     <checkOutRoom ref="checkOutRoom"/>
   </div>
@@ -260,11 +260,12 @@ export default {
           }
         }
       );
-      // console.log(transferObj);
+      console.log(transferObj);
       if(transferObj&&transferObj.checked){
+        console.log(transferObj);
           switch (transferObj.type) {
-            case 'checkoutPartPay':
-               this.$refs.priviewDocuments.openDialog();
+            case 'checkoutPartPay':   //部分结账
+               this.$refs.priviewDocuments.openDialog(transferObj);
               break;
             case 'checkoutTao':
               this.$refs.checkOutRoom.openDialog();

@@ -362,9 +362,7 @@ export default {
   },
   methods: {
     clickPrint(){
-  
     this.$F.doPrint('checkTheTwo')
-      // this.$print(this.$refs.checkTheTwo)
     },
     formatTime(time) {
       if (time) {
@@ -690,6 +688,7 @@ export default {
         padding: 10px 30px;
         border: 1px solid rgb(223, 226, 232);
         border-radius: 6px;
+        cursor: pointer;
       }
       .bottomBox_right {
         padding: 10px 30px;
@@ -697,6 +696,8 @@ export default {
         border-radius: 6px;
         margin-left: 15px;
         color: #fff;
+        cursor: pointer;
+
       }
     }
   }

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-24 11:13:43
+ * @LastEditTime: 2021-03-01 11:01:17
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -365,6 +365,7 @@
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
        <!-- 打印客户资讯 组件 -->
         <customerInfo  ref="customerInfo"/>
+     
     </div>
 </template>
 

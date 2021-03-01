@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-02-24 14:50:41
+ * @LastEditTime: 2021-03-01 12:17:27
  * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
  * @pageName: 这是--（单据预览  组件）--页面
 -->
@@ -9,7 +9,7 @@
 
 
 <template>
-  <div v-if="printDialog" class="dialogBox">
+  <div v-if="printDialog" class="dialogBox" id="priviewDocuments">
     <div class="innerDialogBox">
       <div class="headerTitle">
         <div class="header_leftTitle">印刷レビュー</div>
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="title_rightBox">
-            <div> No.：karu -PAY20201119-001</div>
+            <div> No.：{{priviewDocumentsNum}}</div>
             <div>Rsv.934286904286</div>
             <div>Date：2021.02.10</div>
             <div>担当者：张三</div>
@@ -202,23 +202,33 @@
         </div>
       </div>
       <div class="bottomBox">
-        <div class="bottomBox_left" @click="printDialog = false">{{$t("commons.cancel")}}</div>
-        <div class="bottomBox_right">印刷</div>
+        <div class="bottomBox_left  noprint" @click="printDialog = false">{{$t("commons.cancel")}}</div>
+        <div class="bottomBox_right noprint"   @click="printBills">印刷</div>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
+ 
   data() {
     return {
       printDialog: false,
+      priviewDocumentsNum:'',
     };
   },
   mounted() {},
   methods: {
-    openDialog() {
+    openDialog(transferObj) {
+      console.log(transferObj);
+      console.log(this.priviewDocumentsNum);
+      this.priviewDocumentsNum = transferObj.priviewDocumentsNum;
+      console.log(this.priviewDocumentsNum);
       this.printDialog = true;
+    },
+      printBills() {
+       this.$F.doPrint('priviewDocuments')
+
     },
   },
 };
@@ -418,6 +428,7 @@ export default {
         padding: 10px 30px;
         border: 1px solid rgb(223, 226, 232);
         border-radius: 6px;
+        cursor: pointer;
       }
       .bottomBox_right {
         padding: 10px 30px;
@@ -425,6 +436,8 @@ export default {
         border-radius: 6px;
         margin-left: 15px;
         color: #fff;
+        cursor: pointer;
+
       }
     }
   }
