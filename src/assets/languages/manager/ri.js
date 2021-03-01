@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 17:49:22
+ * @LastEditTime: 2021-03-01 18:23:47
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -495,7 +495,7 @@ module.exports = {
   hk_placeEnterContentC: '備考を入力してくだあい',
   grsl_physicalGoods: '商品',
   grsl_serviceGoods: 'サービス',
-  hk_newAddRoomType: '部屋タイプ情報変更',
+  hk_newAddRoomType: '部屋タイプ情報',
   hk_newAddRoomTypeA: '宴会・会場追加',
   hk_have: '有る',
   hk_donot: '無し',

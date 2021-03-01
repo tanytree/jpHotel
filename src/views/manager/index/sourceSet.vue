@@ -2,7 +2,7 @@
  * @Date: 2020-12-21 13:51:39
  * @Author: 陶子
  * @pageName:渠道来源设置页面
- * @LastEditTime: 2020-12-21 16:42:39
+ * @LastEditTime: 2021-03-01 18:10:36
  * @FilePath: \jiudian\src\views\manager\index\sourceSet.vue
 -->
 <template>
@@ -89,7 +89,7 @@ export default {
     },
     //点击删除按钮
     deletePlat(row) {
-      this.$confirm(this.$t('commons.confirm_delete'), this.$t('commons.tip_desc'), {
+      this.$confirm(this.$t('commons.confirm_deleteD'), this.$t('commons.tip_desc'), {
         confirmButtonText: this.$t('commons.confirm'),
         cancelButtonText:this.$t('commons.cancel'),
         type: "warning",

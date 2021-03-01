@@ -214,7 +214,7 @@ module.exports = {
   hk_enable: '启用',
   hk_enableA: '启用',
   hk_disable: '禁用',
-  hk_addRoomType: '新增房型',
+  hk_addRoomType: '变更房型',
   hk_livePrice: '住宿价格',
   hk_set: '设定',
   hk_breakfast: '早餐',
