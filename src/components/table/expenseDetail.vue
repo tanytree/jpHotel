@@ -1,12 +1,12 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 13:42:54
+ * @LastEditTime: 2021-03-01 14:12:41
  * @FilePath: \jiudian\src\components\table\expenseDetail.vue
  * @pageName: 这是--（消费明细预览  组件）--页面
 -->
 <template>
-  <div v-if="printDialog" class="dialogBox">
+  <div v-if="printDialog" class="dialogBox" id="expenseDetail">
     <div class="innerDialogBox">
       <div class="headerTitle">
         <div class="header_leftTitle">印刷レビュー</div>
@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="title_rightBox">
-            <div> No.：karu -PAY20201119-001</div>
+            <div> No.：{{expenseDetailNum}}</div>
             <div>Rsv.934286904286</div>
             <div>Date：2021.02.10</div>
             <div>担当者：张三</div>
@@ -205,8 +205,8 @@
         </div>
       </div>
       <div class="bottomBox">
-        <div class="bottomBox_left" @click="printDialog = false">{{$t("commons.cancel")}}</div>
-        <div class="bottomBox_right">印刷</div>
+        <div class="bottomBox_left noprint" @click="printDialog = false">{{$t("commons.cancel")}}</div>
+        <div class="bottomBox_right noprint" @click="printInfo">印刷</div>
       </div>
     </div>
   </div>
@@ -216,12 +216,18 @@ export default {
   data() {
     return {
       printDialog: false,
+      expenseDetailNum:'',
     };
   },
   mounted() {},
   methods: {
-    openDialog() {
+    openDialog(expenseDetailNum) {
+      this.expenseDetailNum = expenseDetailNum;
       this.printDialog = true;
+    },
+      printInfo() {
+       this.$F.doPrint('expenseDetail')
+
     },
   },
 };

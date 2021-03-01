@@ -1,12 +1,12 @@
 <!--
  * @Date: 2021-02-23 16:02:48
  * @Author: 陶子
- * @LastEditTime: 2021-02-26 16:44:50
+ * @LastEditTime: 2021-03-01 17:01:43
  * @FilePath: \jiudian\src\components\table\checkOutRoom.vue
  * @pageName: 这是--（结账退房单据打印  组件）--页面
 -->
 <template>
-  <div v-if="printDialog" class="dialogBox">
+  <div v-if="printDialog" class="dialogBox" id="checkOutRoom">
     <div class="innerDialogBox">
       <div class="headerTitle">
         <div class="header_leftTitle">印刷レビュー</div>
@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="title_rightBox">
-            <div> No.：karu -PAY20201119-001</div>
+            <div> No.：{{checkOutRoomNum}}</div>
             <div>Rsv.934286904286</div>
             <div>Date：2021.02.10</div>
             <div>担当者：张三</div>
@@ -201,52 +201,54 @@
             </div>
           </div>
           <div class="fifth_container">
-            <table border="1">
-              <tr>
-                <table>
-                  <tr>
-                    <td>合計領収金額</td>
-                    <td>¥41,500</td>
-                  </tr>
-                  <tr>
-                    <td>内入湯税</td>
-                    <td>（¥100）</td>
-                  </tr>
-                  <tr>
-                    <td>内宿泊税</td>
-                    <td>（¥100）</td>
-                  </tr>
-                  <tr>
-                    <td>内消費税</td>
-                    <td>（¥100）</td>
-                  </tr>
-                </table>
-              </tr>
-              <tr>
-                <table>
-                  <tr>
-                    <td>商品券</td>
-                    <td>¥41,500</td>
-                  </tr>
-                  <tr>
-                    <td>ポイント利用</td>
-                    <td>（¥100）</td>
-                  </tr>
-                </table>
-              </tr>
-              <tr>
-                <table>
-                  <tr>
-                    <td>現金</td>
-                    <td>¥41,500</td>
-                  </tr>
-                  <tr>
-                    <td>クレジットカード</td>
-                    <td>（¥100）</td>
-                  </tr>
-                </table>
-              </tr>
-            </table>
+            <div>
+              <div class='boxDiv'>
+                <div class="itemDiv">
+                  <table>
+                    <tr>
+                      <td>合計領収金額</td>
+                      <td>¥41,500</td>
+                    </tr>
+                    <tr>
+                      <td>内入湯税</td>
+                      <td>（¥100）</td>
+                    </tr>
+                    <tr>
+                      <td>内宿泊税</td>
+                      <td>（¥100）</td>
+                    </tr>
+                    <tr>
+                      <td>内消費税</td>
+                      <td>（¥100）</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="itemDiv">
+                  <table>
+                    <tr>
+                      <td>商品券</td>
+                      <td>¥41,500</td>
+                    </tr>
+                    <tr>
+                      <td>ポイント利用</td>
+                      <td>（¥100）</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="itemDiv">
+                  <table>
+                    <tr>
+                      <td>現金</td>
+                      <td>¥41,500</td>
+                    </tr>
+                    <tr>
+                      <td>クレジットカード</td>
+                      <td>（¥100）</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
             <div class="fifth_rightBox">
               <div class="fifthRight_top">
                 <div> No.：karu -PAY20201119-001</div>
@@ -287,16 +289,18 @@ export default {
   data() {
     return {
       printDialog: false,
+      checkOutRoomNum: "",
     };
   },
   mounted() {},
   methods: {
-    openDialog() {
+    openDialog(transferObj) {
+      this.checkOutRoomNum = transferObj.checkOutRoomNum;
       this.printDialog = true;
     },
-    printCheckout(){
-      // this.$print(this.$refs.checkThePrint)
-    }
+    printCheckout() {
+      this.$F.doPrint("checkOutRoom");
+    },
   },
 };
 </script>
@@ -483,10 +487,6 @@ export default {
           .fifthTitle_left {
             text-align: left;
             font-weight: 500;
-            .boldText {
-              font-weight: bold;
-              font-size: 22px;
-            }
           }
           .fifthTitle_right {
             text-align: center;
@@ -502,31 +502,38 @@ export default {
         .fifth_container {
           margin-top: 10px;
           .flex(flex-start,flex-start);
-          table {
-            border-collapse: collapse;
+          div {
             width: 55%;
-            tr {
-              table {
+            .boxDiv {
+              border: 1px solid #727272;
+              width: 100%;
+              .itemDiv {
                 width: 100%;
-                border-bottom: 1px solid #727272;
-                tr {
-                  td {
-                    word-break:break-all;
-                    padding: 5px 0;
-                    &:nth-child(1) {
-                      width: 75%;
-                      border-right: 1px solid #727272;
-                      padding-left: 15px;
-                    }
-                    &:nth-child(2) {
-                      width: 25%;
-                      text-align: center;
+                table {
+                  width: 100%;
+                  border-bottom: 1px solid #727272;
+                  border-spacing: 0;
+                  tr {
+                    margin: 0;
+                    padding: 0;
+                    td {
+                      word-break: break-all;
+                      padding: 5px 0;
+                      &:nth-child(1) {
+                        width: 75%;
+                        border-right: 1px solid #727272;
+                        padding-left: 15px;
+                      }
+                      &:nth-child(2) {
+                        width: 25%;
+                        text-align: center;
+                      }
                     }
                   }
                 }
-              }
-              &:nth-last-child(1) table {
-                border: none;
+                &:nth-last-child(1) table {
+                  border: none;
+                }
               }
             }
           }
@@ -586,7 +593,6 @@ export default {
         border: 1px solid rgb(223, 226, 232);
         border-radius: 6px;
         cursor: pointer;
-
       }
       .bottomBox_right {
         padding: 10px 30px;
@@ -595,7 +601,6 @@ export default {
         margin-left: 15px;
         color: #fff;
         cursor: pointer;
-
       }
     }
   }

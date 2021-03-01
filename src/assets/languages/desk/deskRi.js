@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-02-19 14:13:54
+ * @LastEditTime: 2021-03-01 13:59:42
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -1061,6 +1061,7 @@ module.exports = {
   add_receiptNo: '領収書番号',
   add_membership: '会員データ',
   home_onePrograme: '対象項目を選んでください。',
+  add_expenseDetail: '請求書印刷',
 
 
 

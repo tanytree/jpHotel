@@ -1091,7 +1091,7 @@ module.exports = {
   add_getPackage: '收费套餐',
   add_receiptNo: '收据号码',
   add_membership: '会员资料',
-  add_: '',
+  add_expenseDetail: '消费明细打印',
   add_: '',
   add_: '',
   add_: '',

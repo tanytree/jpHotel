@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-01 11:57:21
+ * @LastEditTime: 2021-03-01 16:47:32
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -267,8 +267,8 @@ export default {
             case 'checkoutPartPay':   //部分结账
                this.$refs.priviewDocuments.openDialog(transferObj);
               break;
-            case 'checkoutTao':
-              this.$refs.checkOutRoom.openDialog();
+            case "checkoutTao":
+              this.$refs.checkOutRoom.openDialog(transferObj);
             break;
           }
         }

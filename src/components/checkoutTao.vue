@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 13:44:38
+ * @LastEditTime: 2021-03-01 14:21:33
  * @FilePath: \jiudian\src\components\checkoutTao.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -90,7 +90,7 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer" style="text-align: right">
-      <el-button type="primary" @click="printExpenseDetail">消费明细打印</el-button>
+      <el-button type="primary" @click="printExpenseDetail">{{$t('desk.add_expenseDetail')}}</el-button>
       <el-button @click="checkoutVisible = false">{{$t('commons.cancel')}}</el-button>
       <el-button type="primary" @click="consume_oper">{{$t('commons.determine')}}</el-button>
     </div>
@@ -295,7 +295,15 @@ export default {
   methods: {
     // 点击消费明细打印按钮
     printExpenseDetail(){
-      this.$refs.expenseDetail.openDialog();
+      this.$F.doRequest(
+        this,
+        "/pms/hotelservice/print_num",
+        { typeStr: "SE" },
+        (res) => {
+         this.$refs.expenseDetail.openDialog(res);
+        }
+      );
+     
     },
     resetVisibel() {
       this.checkoutVisible = true;
@@ -521,8 +529,16 @@ export default {
 
       this.$F.doRequest(this, "/pms/checkin/out_check_in", params, (res) => {
         console.log(res);
-        this.$emit("getOrderDetail",transferObj);
       });
+       this.$F.doRequest(
+        this,
+        "/pms/hotelservice/print_num",
+        { typeStr: "ME" },
+        (res) => {
+          transferObj.checkOutRoomNum = res;
+           this.$emit("getOrderDetail",transferObj);
+        }
+      );
     },
     //判断数组中的值是否相同
     isArrSame(array, state) {

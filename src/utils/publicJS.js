@@ -352,8 +352,7 @@ const $F = {
     let oldstr = document.body.innerHTML;
     let printhtml = document.getElementById(idName).innerHTML;
     let f = document.getElementById('printf');
-    // 寄存打印   表格
-    if (idName == 'checkTheTwo') {
+    if (idName == 'checkTheTwo') {      // 寄存打印   表格
       f.contentDocument.write(`<style type="text/css"> 
     .innerDialogBox {
       border-radius: 6px;
@@ -431,7 +430,7 @@ const $F = {
       display:none;
     }
     </style>`);
-    }else if(idName == 'customerInfo'){    //打印客户资讯  表格
+    } else if (idName == 'customerInfo') {    //打印客户资讯  表格
       f.contentDocument.write(`<style type="text/css"> 
       .innerDialogBox {
         border-radius: 6px;
@@ -537,7 +536,7 @@ const $F = {
         display:none;
       }
       </style>`);
-    }else if(idName == 'priviewDocuments'){    //单据预览  表格
+    } else if (idName == 'priviewDocuments') {    //单据预览  表格
       f.contentDocument.write(`<style type="text/css"> 
       .innerDialogBox {
         border-radius: 6px;
@@ -727,7 +726,495 @@ const $F = {
       .noprint{
         display:none;
       }
+      </style>`);
+    } else if (idName == 'expenseDetail') {    //消费明细预览  表格
+      f.contentDocument.write(`<style type="text/css"> 
+      .innerDialogBox {
+        border-radius: 6px;
+        width: 1000px;
+        background-color: #fff;
+      }
+      .innerDialogBox .headerTitle {
+        width: 1000px;
+        background-color: #c8d8f1;
+        padding: 0px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .headerTitle .header_leftTitle {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .innerDialogBox .headerTitle .header_rightTitle {
+        font-size: 14px;
+        color: rgba(31, 31, 31, 0.8);
+        cursor: default;
+      }
+      .innerDialogBox .contentBox {
+        box-sizing: border-box;
+        padding: 0 20px 20px;
+      }
+      .innerDialogBox .contentBox .titleBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox .urlPath {
+        margin-left: 10px;
+        font-size: 14px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_centerBox {
+        align-self: flex-end;
+        margin-bottom: -35px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_rightBox {
+        font-size: 14px;
+        color: #333333;
+        align-self: flex-end;
+        margin-bottom: -25px;
+      }
+      .innerDialogBox .contentBox .firstTable {
+        margin-top: 50px;
+      }
+      .innerDialogBox .contentBox .firstTable .nameInfo {
+        font-weight: 500;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox {
+        margin-top: 5px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table {
+        border-collapse: collapse;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table tr td {
+        width: 100px;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_one {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_two td {
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox .rightOfTable {
+        margin-left: 25px;
+      }
+      .innerDialogBox .contentBox .secondTable {
+        margin-top: 20px;
+      }
+      .innerDialogBox .contentBox .secondTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .secondTable table tr td {
+        width: 10%;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_rowOne {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_roTwo td {
+        border-bottom: none;
+        border-top: none;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_roTwo td div {
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .secondTable .second_bottom {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .thirdTable {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .thirdTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .thirdTable table tr td {
+        width: 10%;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne {
+        border-bottom: none;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne td {
+        border-bottom: none;
+        border-top: none;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne td div {
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .fourthTable {
+        margin-top: 10px;
+      }
+      .innerDialogBox .contentBox .fourthTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .fourthTable table tr td {
+        width: calc(100%/6);
+        padding: 5px 0;
+      }
+      .innerDialogBox .contentBox .fourthTable table tr td:nth-child(2n+1) {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .fifthTable {
+        margin-top: 10px;
+      }
+      .innerDialogBox .contentBox .fifthTable table {
+        text-align: center;
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .innerDialogBox .contentBox .fifthTable table .fifth_rowOne td {
+        padding: 10px 0;
+      }
+      .innerDialogBox .contentBox .fifthTable table .fifth_rowOne td:nth-child(1) {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .fifthTable table .fifth_rowTwo td {
+        padding: 10px 0;
+      }
+      .innerDialogBox .contentBox .fifthTable table .fifth_rowTwo td:nth-child(1) {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .fifthTable .fifth_bottom {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .lastBox {
+        text-align: right;
+      }
+      .innerDialogBox .contentBox .lastBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .bottomBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        padding: 20px;
+        border-top: 1px solid #dfe2e8;
+      }
+      .innerDialogBox .bottomBox .bottomBox_left {
+        padding: 10px 30px;
+        border: 1px solid #dfe2e8;
+        border-radius: 6px;
+      }
+      .innerDialogBox .bottomBox .bottomBox_right {
+        padding: 10px 30px;
+        background-color: #409eff;
+        border-radius: 6px;
+        margin-left: 15px;
+        color: #fff;
+      }
       
+      .noprint{
+        display:none;
+      }
+      </style>`);
+    } else {
+      f.contentDocument.write(`<style type="text/css"> 
+      .innerDialogBox {
+        border-radius: 6px;
+        width:1000px;
+        background-color: #fff;
+      }
+      .innerDialogBox .headerTitle {
+        width:1000px;
+        background-color: #c8d8f1;
+        padding: 0px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .headerTitle .header_leftTitle {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .innerDialogBox .headerTitle .header_rightTitle {
+        font-size: 14px;
+        color: rgba(31, 31, 31, 0.8);
+        cursor: default;
+      }
+      .innerDialogBox .contentBox {
+        box-sizing: border-box;
+        padding:0 20px 20px;
+      
+      }
+      .innerDialogBox .contentBox .titleBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox .urlPath {
+        margin-left: 10px;
+        font-size: 14px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_centerBox {
+        align-self: flex-end;
+        margin-bottom: -35px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_rightBox {
+        font-size: 14px;
+        color: #333333;
+        align-self: flex-end;
+        margin-bottom: -25px;
+      }
+      .innerDialogBox .contentBox .firstTable {
+        margin-top: 50px;
+      }
+      .innerDialogBox .contentBox .firstTable .nameInfo {
+        font-weight: 500;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox {
+        margin-top: 5px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table {
+        border-collapse: collapse;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table tr td {
+        width: 100px;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_one {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_two td {
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox .rightOfTable {
+        margin-left: 25px;
+        font-weight: 500;
+      }
+      .innerDialogBox .contentBox .secondTable {
+        margin-top: 20px;
+      }
+      .innerDialogBox .contentBox .secondTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .secondTable table tr td {
+        width: 10%;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_rowOne {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_roTwo td {
+        border-bottom: none;
+        border-top: none;
+      }
+      .innerDialogBox .contentBox .secondTable table .second_roTwo td div {
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .secondTable .second_bottom {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .thirdTable {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .thirdTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .thirdTable table tr td {
+        width: 10%;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne {
+        border-bottom: none;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne td {
+        border-bottom: none;
+        border-top: none;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_rowOne td div {
+        margin-bottom: 5px;
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .fourthTable {
+        margin-top: 10px;
+      }
+      .innerDialogBox .contentBox .fourthTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .fourthTable table tr td {
+        width: calc(100%/6);
+        padding: 5px 0;
+      }
+      .innerDialogBox .contentBox .fourthTable table tr td:nth-child(2n+1) {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .fourthTable .fourth_bottom {
+        margin-top: 5px;
+      }
+      .innerDialogBox .contentBox .cutOff {
+        margin-top: 15px;
+        margin-left: -30px;
+        margin-right: -30px;
+        border: 1px dashed rgba(186, 186, 186, 0.5);
+      }
+      .fifthTabel {
+        margin-top: 25px;
+      }
+      .fifthTabel .fifth_titleBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .fifthTabel .fifth_titleBox .fifthTitle_left {
+        text-align: left;
+        font-weight: 500;
+      }
+      .fifthTabel .fifth_titleBox .fifthTitle_right {
+        text-align: center;
+        font-weight: 500;
+        margin-right: 100px;
+      }
+      .fifthTabel .fifth_titleBox .fifthTitle_right .boldText {
+        font-weight: bold;
+        font-size: 22px;
+      }
+      .fifthTabel .fifth_container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: row;
+      }
+      .fifthTabel .fifth_container div {
+        width: 55%;
+      }
+      .fifthTabel .fifth_container div .boxDiv {
+        border: 1px solid #727272;
+        width: 100%;
+      }
+      .fifthTabel .fifth_container div .boxDiv .itemDiv {
+        width: 100%;
+      }
+      .fifthTabel .fifth_container div .boxDiv .itemDiv table {
+        width: 100%;
+        border-bottom: 1px solid #727272;
+        border-spacing: 0;
+      }
+      .fifthTabel .fifth_container div .boxDiv .itemDiv table tr {
+        margin: 0;
+        padding: 0;
+      }
+      .fifthTabel .fifth_container div .boxDiv .itemDiv table tr td {
+        word-break: break-all;
+        padding: 5px 0;
+      }
+      .fifthTabel .fifth_container div .boxDiv .itemDiv table tr td:nth-child(1) {
+        width: 75%;
+        border-right: 1px solid #727272;
+        padding-left: 15px;
+      }
+      .fifthTabel .fifth_container div .boxDiv .itemDiv table tr td:nth-child(2) {
+        width: 25%;
+        text-align: center;
+      }
+      .fifthTabel .fifth_container div .boxDiv .itemDiv:nth-last-child(1) table {
+        border: none;
+      }
+      .fifthTabel .fifth_container .fifth_rightBox {
+        margin-left: 70px;
+      }
+      .fifthTabel .fifth_container .fifth_rightBox .fifthRight_top {
+        font-size: 14px;
+        color: #333333;
+        margin-top: 10px;
+      }
+      .fifthTabel .fifth_container .fifth_rightBox .fifthRight_middle {
+        font-weight: 500;
+        margin-top: 20px;
+      }
+      .fifthTabel .fifth_container .fifth_rightBox .fifthRight_bottom {
+        margin-top: 15px;
+        margin-left: -50px;
+        font-size: 14px;
+        color: #333333;
+        width: 100px;
+        height: 100px;
+        background: #fefd00;
+        border: 1px solid #505050;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }      
+      .innerDialogBox .contentBox .inscribeBox .inscribe_top {
+        width: 55%;
+        border-bottom: 1px solid black;
+        padding-bottom: 7px;
+        padding-left: 15px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .innerDialogBox .contentBox .inscribeBox .inscribe_bottom {
+        font-size: 14px;
+        color: #333333;
+      }
+      .innerDialogBox .contentBox .lastBox {
+        text-align: right;
+      }
+      .innerDialogBox .contentBox .lastBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .bottomBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        padding: 20px;
+        border-top: 1px solid #dfe2e8;
+      }
+      .innerDialogBox .bottomBox .bottomBox_left {
+        padding: 10px 30px;
+        border: 1px solid #dfe2e8;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .innerDialogBox .bottomBox .bottomBox_right {
+        padding: 10px 30px;
+        background-color: #409eff;
+        border-radius: 6px;
+        margin-left: 15px;
+        color: #fff;
+        cursor: pointer;
+      }
+      .noprint{
+        display:none;
+      }
       </style>`);
     }
     f.contentDocument.write(printhtml);
