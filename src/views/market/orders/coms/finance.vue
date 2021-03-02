@@ -7,12 +7,11 @@
 <template>
     <div class="finance">
         <!-- 查询部分 -->
-        <!-- {{detailData.checkIn}} -->
         <el-form inline size="small">
-            <!-- {{currentRoom.id}} -->
+            <!-- {{isType}} -->
             <el-row>
                 <el-form-item label="">
-                    <el-button type="danger" size="mini" @click="entryShow=true" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccountA')}}</el-button>
+                    <el-button type="danger" size="mini" @click="entryShow=true,isType=0" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccountA')}}</el-button>
                     <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMealA')}}</el-button>
                     <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
                     <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
@@ -20,14 +19,12 @@
                 </el-form-item>
                 <br/>
                 <el-form-item label="">
-                    <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button>
+                    <!-- <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button> -->
+                    <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
                     <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
-
                     <!-- <el-button type="primary" size="mini" @click="out_check_in_cancel" >撤销退房</el-button> -->
-
-
                 </el-form-item>
             </el-row>
             <el-form-item :label="$t('desk.order_accountsType')+':'">
@@ -241,10 +238,11 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
         <!--入账 -->
-        <el-dialog width="800px" top='0' :title="$t('desk.enterAccountB')" :visible.sync="entryShow">
+        <el-dialog width="600px" top='0' :title="isType == 0 ? $t('desk.enterAccountB') : $t('desk.customer_collection') " :visible.sync="entryShow">
             <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
-                <p>{{$t('desk.book_firstInto')}}</p>
-                 <el-form-item :label="$t('desk.order_consumptionProject')+':'">
+                 <p><b style="padding-left: 30px;">{{$t('desk.book_firstInto')}}</b></p>
+                  <!-- <el-form-item :label="$t('desk.book_firstInto')"></el-form-item> -->
+                 <el-form-item :label="$t('desk.order_consumptionProject')+':'" v-show="isType == 0">
                     <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
                         <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
                         <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
@@ -253,12 +251,22 @@
                         <el-radio-button :label="16" :value="16">{{$t('desk.book_liveFee')}}</el-radio-button>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('desk.order_payProject')+':'">
+                <el-form-item :label="$t('desk.order_payProject')+':'" v-show="isType == 1">
                     <el-radio-group v-model="consumeOperForm.priceType">
                         <el-radio-button :label="3" :value="3">{{$t('desk.customer_collection')}}</el-radio-button>
                         <el-radio-button :label="2" :value="2">{{$t('desk.order_theDeposit')}}</el-radio-button>
                     </el-radio-group>
                 </el-form-item>
+
+                <template v-if="consumeOperForm.priceType== 5 || consumeOperForm.priceType== 6 ">
+                    <el-form-item label="归属项目">
+                        <el-select @change="reserveProjectChange" v-model="reserveId">
+                            <el-option v-for="item in detailData.checkIn.reserveProjectList" :key="item.id" :label="item.projectName" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </template>
+
+                <!-- detailData.checkIn.reserveProjectList -->
 
                 <el-form-item :label="$t('desk.order_selectPayWayA')+':'" v-if="consumeOperForm.priceType == 3 || consumeOperForm.priceType == 2">
                     <el-radio-group v-model="consumeOperForm.payType">
@@ -297,12 +305,18 @@
                     <el-input type="number" :disabled="consumeOperForm.priceType == 7 || consumeOperForm.priceType == 15 || consumeOperForm.priceType == 16 " style="width: 100px;" v-else v-model="consumeOperForm.consumePrices" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
                 </el-form-item>
 
-                <el-form-item :label="$t('desk.home_note') + ':'">
-                    <el-input class="" :placeholder="$t('desk.home_noteA')" type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
+                <el-form-item :label="isType == 0 ? $t('desk.home_note') + ':' :  $t('desk.order_consumptionProject') + ':'">
+                    <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
                 </el-form-item>
-                <!--            <el-form-item label="打印单据：">-->
-                <!--                <el-checkbox v-model="consumeOperForm.name"></el-checkbox>-->
-                <!--            </el-form-item>-->
+                <div style="padding-left: 100px;">
+                   <el-checkbox v-model="isUseSeserve"></el-checkbox>
+                   <span class="margin-l-8">使用预定项目</span>
+                </div>
+
+
+                         <!--  <el-form-item label="打印单据：">
+                               <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
+                           </el-form-item> -->
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="entryShow = false">{{ $t('commons.close') }}</el-button>
@@ -496,10 +510,7 @@ Date.prototype.Format = function (fmt) {
             );
     return fmt;
 };
-import {
-    mapState,
-    mapActions
-} from "vuex";
+import {mapState,mapActions} from "vuex";
 import myMixin from '@/utils/filterMixin';
 import consumeGoods from './consumeGoods'
 // import someAccounts from './someAccounts'
@@ -595,7 +606,7 @@ export default {
             },
             loading: false,
             hotelenterLoading: false,
-            entryShow: false, //入账
+            entryShow: false, //
             payTypeShow: false,
             knotShow: false,
             openInvoiceShow: false,
@@ -648,7 +659,11 @@ export default {
             destructionList: [], //冲调的账务
             checkInId: '',
             priceTypeList:[5,6,7,8,12,14,15,16,17,18,22],
-            taxInfo:{}
+            taxInfo:{},
+            isType:0,
+            reserveId:'',//预定项目ID
+            reserveProjects:{},//预定项目
+            isUseSeserve:true, //是否使用预定项目
         };
     },
 
@@ -879,14 +894,28 @@ export default {
                         service: service ? parseFloat(service).toFixed(0) :0,
                         taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
                     }
-                    console.log('消费/服务费')
-                    console.log(pms)
-                    console.log('消费/服务费')
+                    // console.log('消费/服务费')
+                    // console.log(pms)
+                    // console.log('消费/服务费')
                 }
                 params.consumTaxPrice  = taxFee
                 params.servicePrice  = service
                 // console.log(rzSum)
                 params.consumePrice =  parseFloat(this.consumeOperForm.consumePrices)  +  parseFloat(service) +  parseFloat(taxFee)
+
+
+                // [{"projectName":"洗脚","projectCount":1,"price":33.3}]
+                let reserve = []
+                let obj = {}
+                obj.projectName = this.reserveProjects.projectName
+                obj.projectCount = this.reserveProjects.projectCount
+                obj.price = this.reserveProjects.price
+                reserve.push(obj)
+
+                params.reserveProjects = reserve
+
+
+
                 // console.log(consumePrices)
                 // return
 
@@ -1366,6 +1395,17 @@ export default {
                 }
             });
         },
+        reserveProjectChange(value){
+            console.log(value)
+            let list = this.detailData.checkIn.reserveProjectList
+            let res = list.filter((ele)=>{
+                return ele.id == value
+            })
+            this.reserveProjects = res[0]
+            console.log(res[0])
+
+        }
+
 
     },
     watch:{

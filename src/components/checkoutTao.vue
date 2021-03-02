@@ -234,6 +234,18 @@ export default {
             });
           }
           // }
+          if(priceType == 5 || priceType == 6){
+            console.log('房费')
+            console.log(element)
+            console.log(this.currentRoom)
+
+            if (this.currentRoom.taxStatus == 2) {
+              taxInFee += this.getTaxIn(consumeTax, element.consumePrice);
+            }
+
+
+            console.log('房费')
+          }
 
           //---------------------------
           // if(priceType == 5 || priceType == 6 || priceType == 12){
@@ -303,7 +315,7 @@ export default {
          this.$refs.expenseDetail.openDialog(res);
         }
       );
-     
+
     },
     resetVisibel() {
       this.checkoutVisible = true;
