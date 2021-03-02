@@ -926,7 +926,7 @@ const $F = {
         display:none;
       }
       </style>`);
-    } else {
+    } else if (idName == 'checkOutRoom') {   //结账退房单据打印   表格
       f.contentDocument.write(`<style type="text/css"> 
       .innerDialogBox {
         border-radius: 6px;
@@ -1212,6 +1212,164 @@ const $F = {
         color: #fff;
         cursor: pointer;
       }
+      .noprint{
+        display:none;
+      }
+      </style>`);
+    } else {                      //收款条  表格
+      f.contentDocument.write(`<style type="text/css"> 
+      .innerDialogBox {
+        border-radius: 6px;
+        width:1000px;
+        background-color: #fff;
+      }
+      .innerDialogBox .headerTitle {
+        width:1000px;
+        background-color: #c8d8f1;
+        padding: 0px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .headerTitle .header_leftTitle {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .innerDialogBox .headerTitle .header_rightTitle {
+        font-size: 14px;
+        color: rgba(31, 31, 31, 0.8);
+        cursor: default;
+      }
+      .innerDialogBox .contentBox {
+        box-sizing: border-box;
+        padding: 30px;
+        margin-top: 6px;
+      }
+      .innerDialogBox .contentBox .titleBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_leftBox .urlPath {
+        margin-left: 10px;
+        font-size: 14px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_centerBox {
+        align-self: flex-end;
+        margin-bottom: -35px;
+      }
+      .innerDialogBox .contentBox .titleBox .title_rightBox {
+        font-size: 14px;
+        color: #333333;
+        align-self: flex-end;
+        margin-bottom: -25px;
+      }
+      .innerDialogBox .contentBox .firstTable {
+        margin-top: 50px;
+      }
+      .innerDialogBox .contentBox .firstTable .nameInfo {
+        font-weight: 500;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox {
+        margin-top: 5px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: row;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table {
+        border-collapse: collapse;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table tr td {
+        width: 100px;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_one {
+        background: #ededed;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_two td {
+        word-break: break-all;
+      }
+      .innerDialogBox .contentBox .firstTable .firstBox .rightOfTable {
+        margin-left: 25px;
+      }
+      .innerDialogBox .contentBox .secondTable {
+        margin-top: 20px;
+      }
+      .innerDialogBox .contentBox .secondTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .secondTable table tr {
+        width: 100%;
+      }
+      .innerDialogBox .contentBox .secondTable table tr:nth-child(1) {
+        background: #EDEDED;
+      }
+      .innerDialogBox .contentBox .secondTable table tr:nth-child(n+1) td {
+        padding: 8px 0;
+        margin-bottom: 10px;
+      }
+      .innerDialogBox .contentBox .secondTable table tr td:nth-child(1) {
+        width: 20%;
+      }
+      .innerDialogBox .contentBox .thirdTable {
+        margin-top: 20px;
+      }
+      .innerDialogBox .contentBox .thirdTable table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .innerDialogBox .contentBox .thirdTable table tr {
+        width: 100%;
+      }
+      .innerDialogBox .contentBox .thirdTable table tr td {
+        padding: 8px 0;
+      }
+      .innerDialogBox .contentBox .thirdTable table tr td:nth-child(1) {
+        width: 20%;
+      }
+      .innerDialogBox .contentBox .thirdTable table .third_bottom {
+        margin-top:20px;
+      }
+      .innerDialogBox .contentBox .lastBox {
+        text-align: right;
+      }
+      .innerDialogBox .contentBox .lastBox img {
+        width: 260px;
+        height: 73px;
+      }
+      .innerDialogBox .bottomBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        padding: 20px;
+        border-top: 1px solid #dfe2e8;
+      }
+      .innerDialogBox .bottomBox .bottomBox_left {
+        padding: 10px 30px;
+        border: 1px solid #dfe2e8;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .innerDialogBox .bottomBox .bottomBox_right {
+        padding: 10px 30px;
+        background-color: #409eff;
+        border-radius: 6px;
+        margin-left: 15px;
+        color: #fff;
+        cursor: pointer;
+      }
+      
       .noprint{
         display:none;
       }
