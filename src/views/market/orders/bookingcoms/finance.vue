@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 18:02:59
+ * @LastEditTime: 2021-03-02 11:42:23
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
@@ -10,7 +10,7 @@
             <div class="">
                 <el-button type="primary" size="mini" @click="depositShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payDepositA') }}</el-button>
                 <el-button type="primary" size="mini" @click="refundShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payBackA') }}</el-button>
-                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.customer_richA') }}</el-button>
+                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.customer_rich') }}</el-button>
                 <!--        <el-button type="primary" size="mini">{{ $t("commons.print") }}</el-button>-->
             </div>
         </el-row>

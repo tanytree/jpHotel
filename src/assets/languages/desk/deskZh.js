@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-02-18 11:10:29
+ * @LastEditTime: 2021-03-02 14:13:44
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -820,6 +820,7 @@ module.exports = {
   customer_sum: '金额',
   customer_sumA: '金额',
   customer_refundWay: '退款方式',
+  customer_refundWayC: '退款方式',
   customer_refundWayA: '退款方式',
   customer_refundWayB: '收款方式',
   customer_canRefundPri: '可退金额',

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 13:59:42
+ * @LastEditTime: 2021-03-02 15:22:15
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -512,6 +512,7 @@ module.exports = {
   customer_refundWay: 'デポ戻し方法',
   customer_refundWayA: '入金・返金種別',
   customer_refundWayB: '入金・返金種別',
+  customer_refundWayC: '方法',
   customer_canRefundPri: '払戻金額',
   customer_advanceBill: '前受金明細',
   customer_orderNum: '予約番号',
@@ -636,7 +637,7 @@ module.exports = {
   order_addHalfPrice: "日帰り料金",
   order_loosAndCompensation: "損害賠償",
   order_consumptionProject: "利用項目",
-  order_theDeposit: "前受金",
+  order_theDeposit: "保証金",
   order_businessThat: "業務内容",
   order_accountingProgram: "会計項目",
   order_haveAccounts: "支払済",
@@ -1050,7 +1051,7 @@ module.exports = {
   add_otherGet: '支払・その他入金',
   add_toGo: 'テックアウト',
   add_otherGetA: 'その他入金',
-  add_sureCount: '确认结账',
+  add_sureCount: '確認',
   add_creditCard: 'クレジットカード',
   customer_banJi: '(差額=現金金額-PMS統計キャッシュ入金金額)',
   customer_banJiA: '(差額=繰越・金額-レジ金設定額)',

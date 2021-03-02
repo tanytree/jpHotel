@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 12:21:03
+ * @LastEditTime: 2021-03-02 14:11:03
  * @FilePath: \jiudian\src\views\market\orders\coms\checkoutPartPay.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -45,7 +45,7 @@
     </div>
     <!-- {{checkoutForm}} -->
     <el-form ref="checkoutForm" :rules="paymentRules" :model="checkoutForm" label-width="110px">
-      <el-form-item :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWay') : $t('desk.customer_payType')" prop="payType">
+      <el-form-item :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWayC') : $t('desk.customer_payType')" prop="payType">
 
         <el-radio-group v-model="checkoutForm.payType" v-if="detailData.totalPrice > 0">
           <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>
@@ -83,7 +83,7 @@
         <el-input type="textarea" v-model="checkoutForm.remark"></el-input>
       </el-form-item>
       <el-form-item label-width="40px">
-        <el-checkbox v-model="checkoutForm.checked">{{$t('desk.book_printDocuments')}}</el-checkbox>
+        <el-checkbox v-model="checkoutForm.checked">{{$t('desk.book_printDocumentsA')}}</el-checkbox>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer" style="text-align: right">
