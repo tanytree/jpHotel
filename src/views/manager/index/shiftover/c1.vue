@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-20 17:27:16
+ * @LastEditTime: 2021-03-02 17:20:52
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -111,10 +111,10 @@
             <div class="item">{{$t('manager.add_pettyCash')}}={{$F.numFormate(info.pettyCash)}}</div>
           </el-col>
           <el-col :span="6" class="li">
-            <div class="item">{{$t('manager.add_lastHold')}}：{{$F.numFormate(info.upMoneyRetained)}}</div>
+            <div class="item">{{$t('manager.add_lastHold')}}：{{$F.numFormate(info.pettyCash)}}</div>
           </el-col>
           <el-col :span="6" class="li">
-            <div class="item">{{$t('manager.add_nowDownPri')}}：{{$F.numFormate(info.nowMoneyRetained)}}</div>
+            <div class="item">{{$t('manager.add_nowDownPri')}}：{{$F.numFormate(info.pettyCash)}}</div>
           </el-col>
         </el-row>
       </div>
@@ -127,7 +127,7 @@
       <el-form inline label-width="150px" ref="form" style="padding-top: 30px;" :model="form" :rules="rules">
         <el-form-item :label="$t('food.shift.selectOnDutyerA')" prop="handoveEmployeedId">
           <el-select v-model="form.handoveEmployeedId">
-            <el-option v-for="item in employeeList" :key="item.id" :label="item.userName" :value="item.id">
+            <el-option v-for="item in filterEmployeeList" :key="item.id" :label="item.userName" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -294,9 +294,19 @@ export default {
     rules() {
       return {
         handoveEmployeedId: [
-          { required: true, message: this.$t('commons.placeChoose'), trigger: "change" },
+          {
+            required: true,
+            message: this.$t("commons.placeChoose"),
+            trigger: "change",
+          },
         ],
-        password: [{ required: true, message: this.$t('login.passwordEnterTip'), trigger: "blur" }],
+        password: [
+          {
+            required: true,
+            message: this.$t("login.passwordEnterTip"),
+            trigger: "blur",
+          },
+        ],
       };
     },
     checkget_Balance() {
@@ -372,6 +382,13 @@ export default {
         }
       }
       return this.totalMoney_putDown - this.info.nowMoneyRetained;
+    },
+    // 去除当前员工
+    filterEmployeeList() {
+      let newEmployeeList = this.employeeList.filter((item) => {
+        return item.account != this.account;
+      });
+      return newEmployeeList;
     },
   },
   data() {
@@ -616,7 +633,7 @@ export default {
             case "myriadNuber":
               let objA = {
                 amount: 10000,
-                amount_name: this.$t('desk.money.myriadNuber'),
+                amount_name: this.$t("desk.money.myriadNuber"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -625,7 +642,7 @@ export default {
             case "oneHundred":
               let objB = {
                 amount: 100,
-                amount_name: this.$t('desk.money.oneHundred'),
+                amount_name: this.$t("desk.money.oneHundred"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -634,7 +651,7 @@ export default {
             case "fiveThousand":
               let objC = {
                 amount: 5000,
-                amount_name: this.$t('desk.money.fiveThousand'),
+                amount_name: this.$t("desk.money.fiveThousand"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -643,7 +660,7 @@ export default {
             case "fifty":
               let objD = {
                 amount: 50,
-                amount_name:  this.$t('desk.money.fifty'),
+                amount_name: this.$t("desk.money.fifty"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -652,7 +669,7 @@ export default {
             case "ten":
               let objE = {
                 amount: 10,
-                amount_name: this.$t('desk.money.ten'),
+                amount_name: this.$t("desk.money.ten"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -661,7 +678,7 @@ export default {
             case "oneThousand":
               let objF = {
                 amount: 1000,
-                amount_name: this.$t('desk.money.oneThousand'),
+                amount_name: this.$t("desk.money.oneThousand"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -670,7 +687,7 @@ export default {
             case "five":
               let objG = {
                 amount: 5,
-                amount_name: this.$t('desk.money.five'),
+                amount_name: this.$t("desk.money.five"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -679,7 +696,7 @@ export default {
             case "fiveHundred":
               let objH = {
                 amount: 500,
-                amount_name: this.$t('desk.money.fiveHundred'),
+                amount_name: this.$t("desk.money.fiveHundred"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };
@@ -688,7 +705,7 @@ export default {
             case "one":
               let objI = {
                 amount: 1,
-                amount_name: this.$t('desk.money.one'),
+                amount_name: this.$t("desk.money.one"),
                 amount_count: objectName[i],
                 project_type: objectName["name"] == "getMoney" ? 1 : 2,
               };

@@ -1,7 +1,7 @@
 <template>
   <div class="boss-index">
     <el-tabs v-model="activeName" class="tabCenter">
-      <el-tab-pane :label="$t('manager.hp_printingParams')" name="params">
+      <!-- <el-tab-pane :label="$t('manager.hp_printingParams')" name="params">
         <div class="params_box">
           <div class="printTitle">{{$t('manager.hp_printDocumentSelection')+':'}}</div>
           <el-checkbox-group v-model="printMsg" @change="changeCheck">
@@ -11,16 +11,16 @@
         <div class="footer">
           <el-button type="primary" class="submit" @click="submit('params')">{{$t('commons.save')}}</el-button>
         </div>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane :label="$t('manager.hp_printFormat')" name="format">
         <div class="content">
           <el-table ref="multipleTable" :data="printData" border height="100%" header-row-class-name="default" size="small">
             <el-table-column :prop="$i18n.locale == 'ri'?'ename':'name'" :label="$t('manager.hp_documentName')"></el-table-column>
-            <el-table-column :label="$t('manager.hp_copies')">
+            <!-- <el-table-column :label="$t('manager.hp_copies')">
               <template slot-scope="scope">
                 <el-input v-model="scope.row.number" size="small"></el-input>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column :label="$t('manager.hp_documentNote')">
               <template slot-scope="scope">
                 <el-input type="textarea" :rows="3" resize="none" v-model="scope.row.remark" size="small"></el-input>
@@ -28,7 +28,7 @@
             </el-table-column>
             <el-table-column :label="$t('manager.hp_printFormat')" width="400">
               <template slot-scope="scope">
-                <el-popover v-model="scope.row.pop" placement="bottom" width="400" trigger="click">
+                <!-- <el-popover v-model="scope.row.pop" placement="bottom" width="400" trigger="click">
                   <div class="pop">
                     <div class="pop-title">{{popover.name}}</div>
                     <ul class="printMsg">
@@ -41,13 +41,13 @@
                     </ul>
                     <div class="remark" v-html="popover.remark" />
                   </div>
-                  <el-radio-group v-model="scope.row.format" slot="reference" @change="showDetail(scope.row)">
+                </el-popover> -->
+                 <el-radio-group v-model="scope.row.format" slot="reference" @change="showDetail(scope.row)">
                     <el-radio :label="1">A4</el-radio>
-                    <el-radio :label="2">A4-1/2</el-radio>
-                    <el-radio :label="3">A4-1/3</el-radio>
-                    <el-radio :label="4">POS(76mm)</el-radio>
+                    <el-radio :label="2">A5</el-radio>
+                    <!-- <el-radio :label="3">A4-1/3</el-radio>
+                    <el-radio :label="4">POS(76mm)</el-radio> -->
                   </el-radio-group>
-                </el-popover>
               </template>
             </el-table-column>
           </el-table>
@@ -64,7 +64,7 @@
 export default {
   data() {
     return {
-      activeName: "params",
+      activeName: "format",
       printMsg: [],
       five_money: "",
       beiYong_show: true,

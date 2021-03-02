@@ -33,17 +33,17 @@
           <el-input v-model="hotelData.phone"></el-input>
         </el-form-item>
         <el-form-item :label="$t('manager.hp_checkInTime')+':'" prop="startTime">
-          <el-date-picker v-model="hotelData.startTime" type="datetime"></el-date-picker>
+          <el-time-select :picker-options="{start: '00:00',step: '01:00',end: '24:00'}" v-model="hotelData.startTime"></el-time-select>
         </el-form-item>
         <el-form-item :label="$t('manager.hp_checkOutTime')+':'" prop="endTime">
-          <el-date-picker v-model="hotelData.endTime" type="datetime"></el-date-picker>
+          <el-time-select :picker-options="{start: '00:00',step: '01:00',end: '24:00'}" v-model="hotelData.endTime" ></el-time-select>
         </el-form-item>
         <el-form-item :label="$t('manager.hk_documentsPrefix')+':'" prop="prefix" label-width="120px">
           <el-input v-model="hotelData.prefix"></el-input>
         </el-form-item>
         <div class="hotelTitle">{{$t('manager.hp_hotelIntroduction')}}</div>
         <el-form-item :label="$t('manager.hp_hotelIntroduction')+':'" prop="remark">
-          <el-input type="textarea"  style="width:700px;" :placeholder="$t('manager.hp_inputIntroduction')" v-model="hotelData.remark"></el-input>
+          <el-input type="textarea" style="width:700px;" :placeholder="$t('manager.hp_inputIntroduction')" v-model="hotelData.remark"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -110,7 +110,7 @@ export default {
         prefix: [
           {
             required: true,
-            message: this.$t('manager.hk_inputPrefix'),
+            message: this.$t("manager.hk_inputPrefix"),
             trigger: "blur",
           },
         ],
@@ -234,5 +234,4 @@ export default {
     padding: 0 20px;
   }
 }
-
 </style>

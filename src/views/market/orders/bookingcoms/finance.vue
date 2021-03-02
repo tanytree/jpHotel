@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 11:42:23
+ * @LastEditTime: 2021-03-02 16:06:51
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
@@ -191,7 +191,7 @@
             </div>
         </el-dialog>
         <!--退订金-->
-        <el-dialog top="0" :title="$t('desk.order_payBack')" :visible.sync="refundShow">
+        <el-dialog top="0" :title="$t('desk.order_payBackA')" :visible.sync="refundShow">
             <el-form :model="consumeOperForm" ref="refund" :rules="rules" size="mini" label-width="100px">
                 <el-row v-if="detailData">
                     <el-col :span="8" v-if="detailData.checkIn">{{
@@ -208,7 +208,7 @@
                 <!--            <el-radio-button :label="4" :value="4">{{ $t('desk.order_payBack') }}</el-radio-button>-->
                 <!--          </el-radio-group>-->
                 <!--        </el-form-item>-->
-                <el-form-item :label="$t('desk.customer_refundWay') + ':'">
+                <el-form-item :label="$t('desk.customer_refundWayD') + ':'">
                     <el-radio-group v-model="consumeOperForm.payType">
                         <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key" v-if="key != 3">
                             {{ value }}
@@ -236,7 +236,7 @@
             <div slot="footer" class="dialog-footer">
                 <el-button @click="refundShow = false">{{ $t('commons.close') }}</el-button>
                 <el-button type="primary" @click="consume_oper(2, 'refund')"
-                >{{ $t('desk.customer_settlement') }}
+                >{{ $t('commons.confirm') }}
                 </el-button
                 >
             </div>

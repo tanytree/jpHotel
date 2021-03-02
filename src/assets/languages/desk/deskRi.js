@@ -513,6 +513,7 @@ module.exports = {
   customer_refundWayA: '入金・返金種別',
   customer_refundWayB: '入金・返金種別',
   customer_refundWayC: '方法',
+  customer_refundWayD: '返金方法',
   customer_canRefundPri: '払戻金額',
   customer_advanceBill: '前受金明細',
   customer_orderNum: '予約番号',

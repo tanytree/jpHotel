@@ -823,6 +823,7 @@ module.exports = {
   customer_refundWayC: '退款方式',
   customer_refundWayA: '退款方式',
   customer_refundWayB: '收款方式',
+  customer_refundWayD: '退款方式',
   customer_canRefundPri: '可退金额',
   customer_advanceBill: '预收款账单',
   customer_orderNum: '订单编号',
