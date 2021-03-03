@@ -153,7 +153,7 @@
 
 				<el-table-column prop="newCustomPrice" :label="$t('manager.grsl_newLivePriA')" width="250">
 					<template>
-						<div style="padding: 10px 0px;" v-for="(value, index) in roomStrategyJson_p">
+						<div style="padding: 10px 0px;" v-for="(value, index) in roomStrategyJson_p" :key="index">
 							<el-input v-model="value.newCustomPrice" :placeholder="$t('commons.pleaseEnter')" @input="onInput()"></el-input>
 							<!-- <el-input v-model="star_time" placeholder="请输入"></el-input> -->
 						</div>
