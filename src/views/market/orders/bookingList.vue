@@ -107,10 +107,9 @@
                                 <el-input v-model="searchForm.mobile" class="width150"></el-input>
                             </el-form-item>
                             <el-form-item :label="$t('desk.home_roomType')">
-                                <el-select v-model="searchForm.enterStatus" class="width150">
-                                    <el-option :label="
-                  item.houseName ? item.houseName : $t('desk.home_unknown')
-                " :value="item.roomTypeId" v-for="(item, index) of roomTypeList" :key="index"></el-option>
+                                <el-select v-model="searchForm.roomTypeId" class="width150">
+                                    <el-option :label="item.houseName ? item.houseName : $t('desk.home_unknown')" :value="item.roomTypeId"
+                                               v-for="(item, index) of roomTypeList" :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item :label="$t('desk.home_roomNum')">
@@ -343,6 +342,7 @@ export default {
             depositShow: false,
             payTypeShow: false,
             searchForm: {
+                roomTypeId: '',
                 pageIndex: 1,
                 pageSize: 10,
             },
