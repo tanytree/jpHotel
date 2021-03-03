@@ -80,7 +80,11 @@
       </el-form-item>
       <el-form-item :label="$t('desk.customer_sum')" prop="name">
         <!-- <el-input  size="small" v-model="checkoutForm.payPrice" :disabled="true" style="width: 260px"></el-input> -->
-        ￥{{numFormate(getRealPayFee.sum - checkoutForm.preferentialPrice)}}
+
+        <!-- {{getRealPayFee.sum - detailData.payPrice -  checkoutForm.preferentialPrice}} -->
+
+
+        ￥{{numFormate(getRealPayFee.sum - detailData.payPrice  - checkoutForm.preferentialPrice)}}
       </el-form-item>
       <el-form-item :label="$t('desk.home_note')">
         <el-input type="textarea" v-model="checkoutForm.remark" :placeholder="$t('desk.home_noteA')"></el-input>
@@ -189,16 +193,16 @@ export default {
         // console.log(element)
         if (element.state == 1) {
           let priceType = element.priceType;
-          console.log("财务类型" + priceType);
+          // console.log("财务类型" + priceType);
           total += parseFloat(element.consumePrice ? element.consumePrice : 0);
           //---------------------------
           //计算包含消费税的明细中的商品
 
-          console.log(element.taxStatus);
+          // console.log(element.taxStatus);
           // if(element.taxStatus == 2){
           //迷你吧
           if (priceType == 8) {
-            console.log(element);
+            // console.log(element);
             let goodsList = element.goodsList || [];
             goodsList.forEach((v) => {
               if (v.goodsObj.taxStatus == 2) {
@@ -235,16 +239,16 @@ export default {
           }
           // }
           if(priceType == 5 || priceType == 6){
-            console.log('房费')
-            console.log(element)
-            console.log(this.currentRoom)
+            // console.log('房费')
+            // console.log(element)
+            // console.log(this.currentRoom)
 
             if (this.currentRoom.taxStatus == 2) {
               taxInFee += this.getTaxIn(consumeTax, element.consumePrice);
             }
 
 
-            console.log('房费')
+            // console.log('房费')
           }
 
           //---------------------------
@@ -417,10 +421,10 @@ export default {
       //优惠 10
 
       if (this.getRealPayFee.sum - this.detailData.payPrice > 0) {
-        return this.getRealPayFee.sum - this.detailData.payPrice;
+        return this.getRealPayFee.sum - this.detailData.payPrice - preferentialPrice;
       } else {
         return (
-          this.detailData.payPrice - this.getRealPayFee.sum + preferentialPrice
+          this.detailData.payPrice - this.getRealPayFee.sum - preferentialPrice
         );
       }
     },
@@ -481,8 +485,9 @@ export default {
             console.log(2)
             console.log(0 - this.getFee())
         }
+      console.log(params);
 
-      // return
+      return
       this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
         console.log(res);
         let transferObj ={

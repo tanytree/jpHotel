@@ -165,6 +165,8 @@
             <div class="taxBox text-size14 text-gray">
                 <div class="item margin-t-10">{{$t('food.reset.servePri')}}({{orderTax.servicePrice}})： ¥{{orderTax.service}}  </div>
                 <div class="item margin-t-10">{{$t('food.reset.constPri')}}<span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span>： ¥{{orderTax.taxFee}} </div>
+				<div class="item margin-t-10"><span>{{$t('desk.book_costFee2')}}：<span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></span><span>¥{{numFormate(orderTax.taxInFee)}}；</span></div>
+
                 <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('food.reset.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
                 <div class="item margin-t-10" v-if="detail.billingType">
                     {{$t('food.reset.paymoney')}}: {{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
@@ -175,7 +177,7 @@
               class="margin-t-10 "
               :data="detail.orderSubList"
               border
-              header-row-class-name="default" 
+              header-row-class-name="default"
               size="small"
             >
               <el-table-column prop="dishesName" :label="$t('food.common.food_title')" ></el-table-column>

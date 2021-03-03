@@ -235,6 +235,7 @@ const mixin= {
                let total = 0 //税前税后总的税钱
                let service = 0 //服务费
                let taxFee = 0 //消费税
+               let taxInFee = 0
                let sum = 0 //合计
                 list.forEach(element => {
                     if(element.goods.categoryType == 2 && element.goods.priceModel == 2){
@@ -273,6 +274,17 @@ const mixin= {
                                taxFee += element.totalPrice * consumeTax
                             }
                         }
+                    }else{
+                        //税内消费税
+                        if(outFlag){
+                            // let per = (1 - 1/(1.00 + outConsumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+                        }else{
+                            // let per = (1 - 1/(1.00 + consumeTax) )
+                            // taxInFee += element.totalPrice * per
+                            taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                        }
                     }
                     if(outFlag == false){
                         //不包含服务税
@@ -299,7 +311,8 @@ const mixin= {
                parms.sum = sum
                parms.servicePrice = tax.servicePrice+'%'
                parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'
-               parms.type = outFlag ? 'out' : 'in'
+               parms.type = outFlag ? 'out' : 'in',
+               parms.taxInFee = taxInFee
                console.log(parms)
                return parms
             }else{
@@ -310,6 +323,7 @@ const mixin= {
                 parms.tax  = 0
                 parms.taxFee = 0
                 parms.total  = 0
+                parms.taxInFee = 0
                 parms.type  = outFlag ? 'out' : 'in'
                 return parms
             }
@@ -380,22 +394,14 @@ const mixin= {
                     }else{
                         //税内消费税
                         if(outFlag){
-
-
                             // let per = (1 - 1/(1.00 + outConsumeTax) )
                             // taxInFee += element.totalPrice * per
                             taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
-
-
                         }else{
                             // let per = (1 - 1/(1.00 + consumeTax) )
                             // taxInFee += element.totalPrice * per
                             taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
                         }
-
-
-
-
                     }
 
                     if(outFlag == false){

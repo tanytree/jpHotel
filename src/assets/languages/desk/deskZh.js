@@ -1097,7 +1097,7 @@ module.exports = {
   add_membership: '会员资料',
   add_expenseDetail: '消费明细打印',
   add_belongPro: '归属项目',
-  add_useSelectPro: '使用预定项目',
+  add_useSelectPro: '使用预订项目',
   add_: '',
   add_: '',
   add_: '',

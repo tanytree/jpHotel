@@ -308,7 +308,7 @@
                 <el-form-item :label="isType == 0 ? $t('desk.home_note') + ':' :  $t('desk.order_consumptionProject') + ':'">
                     <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
                 </el-form-item>
-                <div style="padding-left: 100px;">
+                <div style="padding-left: 100px;" v-if="isType == 1">
                    <el-checkbox v-model="isUseSeserve"></el-checkbox>
                    <span class="margin-l-8">{{$t('desk.add_useSelectPro')}}</span>
                 </div>
