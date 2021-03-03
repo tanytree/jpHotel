@@ -1,14 +1,14 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-03-03 15:37:31
+ * @LastEditTime: 2021-03-03 17:48:22
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
 module.exports = {
-    reserveOperator: '预约操作员',
-    roomInfoDelete: '确定删除该房间？',
-    money: {
+  reserveOperator: '预约操作员',
+  roomInfoDelete: '确定删除该房间？',
+  money: {
     myriadNuber: '1万日元',
     fiveHundred: '五百日元',
     ten: '十日元',
@@ -240,7 +240,7 @@ module.exports = {
   home_cardAnumber: '（证件）号码',
   home_typeText: '类型',
   home_typeTextA: '类型',
-    home_typeTextB: '类型',
+  home_typeTextB: '类型',
   home_liveInfo: '入住信息',
   home_allLiveWay: '入住人/单位名称/团队名',
   home_sureGet: '是否确认领取？',
@@ -334,7 +334,7 @@ module.exports = {
   book_week: '近7天',
   book_theCustom: '自定义',
   book_theCustomA: '自定义',
-    book_theCustomB: '自定义',
+  book_theCustomB: '自定义',
   book_dateRegistration: '登记日期',
   book_orderSoutce: '订单来源',
   book_chamber: '会议厅',
@@ -418,7 +418,7 @@ module.exports = {
   book_billAbackA: '结账并退房',
   book_HQtable: '总部报表',
   book_HQsale: '总部销售日报',
-    book_HQ: '总部',
+  book_HQ: '总部',
   book_firstInto: '请选择项目',
   book_: '',
   book_: '',
