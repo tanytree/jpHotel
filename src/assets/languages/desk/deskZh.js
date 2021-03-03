@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-03-02 14:13:44
+ * @LastEditTime: 2021-03-03 15:37:31
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -22,6 +22,7 @@ module.exports = {
   reason: '理由',
   editRowHouse: '修改排房',
   reserveInfoDesc: '预定信息',
+  reserveInfoDescA: '预定信息',
   roomOccupation: '房间被占用',
   attachedMeal: '附餐',
   attachedMealA: '附餐',
@@ -507,8 +508,8 @@ module.exports = {
   order_checkout: "退房结账",
   order_checkoutA: "结账退房",
   order_goTie: "走结",
-  order_addDayPrice: "加收全天房费",
-  order_addHalfPrice: "加收半天房费",
+  order_addDayPrice: "房费",
+  order_addHalfPrice: "延长费用",
   order_loosAndCompensation: "损物赔偿",
   order_consumptionProject: "消费项目",
   order_theDeposit: "押金",
@@ -1095,8 +1096,8 @@ module.exports = {
   add_receiptNo: '收据号码',
   add_membership: '会员资料',
   add_expenseDetail: '消费明细打印',
-  add_: '',
-  add_: '',
+  add_belongPro: '归属项目',
+  add_useSelectPro: '使用预定项目',
   add_: '',
   add_: '',
   add_: '',

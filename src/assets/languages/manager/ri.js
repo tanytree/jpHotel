@@ -1,22 +1,22 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-01 18:23:47
+ * @LastEditTime: 2021-03-03 16:23:19
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
 // 管理部 || 日语
 module.exports = {
   deskTab: {
-    0:'宿泊',
-    1:'プラン・食事',
-    2:'会場利用',
-    3:'ミニバー',
-    4:'その他',
-    5:'料飲/部屋付',
-    6:'付帯/部屋付',
+    0: '宿泊',
+    1: 'プラン・食事',
+    2: '会場利用',
+    3: 'ミニバー',
+    4: 'その他',
+    5: '料飲/部屋付',
+    6: '付帯/部屋付',
   },
-    batchSelectTip: '該当部屋番号全てをクリックし選択ください。',
+  batchSelectTip: '該当部屋番号全てをクリックし選択ください。',
   typeNameList: {
     1: '客室',
     2: '料飲',
@@ -576,10 +576,9 @@ module.exports = {
   grsl_oneLive: '1人素泊まり',
   hk_chooseChannel: '予約経路を選択してください',
   grsl_inputNewPri: '新宿泊料金を入力してください',
-  add_last15A:'15日前',
+  add_last15A: '15日前',
   add_next15A: '15日後',
-  add_tyepApri: '部屋タイプ/部屋料金',
-    add_tyepApri: '会員種別',
+  add_tyepApri: '会員種別',
   add_dealNight: 'チェック入れると処理確認しなければ、「日時更新」できません。',
   add_setDutity: 'チェック入れると部屋状態を「要清掃」を設定する',
   grsl_resetSoon: '調整後1泊2食付1名料金',
@@ -589,7 +588,7 @@ module.exports = {
   hk_constTotal: '売上合計',
   add_cashStatistics: '現金点検',
   add_nowDownPriA: 'レジ金/繰越・金額',
-  pa_explain:'下記表示は各会員種別の1名1泊2食の料金です。',
+  pa_explain: '下記表示は各会員種別の1名1泊2食の料金です。',
   add_newDoorPriA: '新料金',
   hk_chamberA: '宴会・会場',
   add_nowBillGetA: '料飲/部屋付',

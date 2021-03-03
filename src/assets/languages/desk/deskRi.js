@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-02 15:22:15
+ * @LastEditTime: 2021-03-03 16:25:19
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -24,6 +24,7 @@ module.exports = {
   editRowHouse: 'アサイン変更',
   roomOccupation: '部屋がとられる',
   reserveInfoDesc: '予定情報',
+  reserveInfoDescA: '予約者',
   attachedMeal: '食付',
   attachedMealA: 'プラン・食事',
   keepTime: 'ほりゅうじかん',
@@ -636,7 +637,7 @@ module.exports = {
   order_checkout: "C/O精算",
   order_goTie: "未収",
   order_addDayPrice: "素泊り料金",
-  order_addHalfPrice: "日帰り料金",
+  order_addHalfPrice: "延長料金",
   order_loosAndCompensation: "損害賠償",
   order_consumptionProject: "利用項目",
   order_theDeposit: "保証金",
@@ -1065,6 +1066,8 @@ module.exports = {
   add_membership: '会員データ',
   home_onePrograme: '対象項目を選んでください。',
   add_expenseDetail: '請求書印刷',
+  add_belongPro: '紐付けプラン',
+  add_useSelectPro: '予約プラン連動',
 
 
 

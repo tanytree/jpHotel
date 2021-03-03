@@ -1,10 +1,10 @@
 <!--
  * @Date: 2020-11-25 16:27:58
  * @Author: 陶子
- * @LastEditTime: 2021-03-02 15:31:53
+ * @LastEditTime: 2021-03-03 14:53:24
  * @FilePath: \jiudian\src\components\storeLookTao.vue
+ * @pageName: 这是--（门店概览）--页面
 -->
-<!-- 总后台 > 总办 > 首页 > 门店概览 -->
 <template>
   <!-- 统一的列表格式 -->
   <div class="boss-index">
@@ -80,7 +80,7 @@
                 <img src="../assets/images/storeLookTao/housePrice.png" class="boxLeft" />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_averageRoomprice')}}</div>
-                  <div class="botRight_bottom">{{$F.numFormate(itemInfo.room_avg_prices)}}</div>
+                  <div class="botRight_bottom">{{$F.numFormate(Math.round(itemInfo.room_avg_prices))}}</div>
                 </div>
               </div>
             </el-col>
@@ -89,7 +89,7 @@
                 <img src="../assets/images/storeLookTao/RevPAR.png" class="boxLeft" />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_averageCoustormerprice')}}</div>
-                  <div class="botRight_bottom">{{$F.numFormate(itemInfo.guest_avg_prices)}}</div>
+                  <div class="botRight_bottom">{{$F.numFormate(Math.round(itemInfo.guest_avg_prices))}}</div>
                 </div>
               </div>
             </el-col>
@@ -98,7 +98,7 @@
                 <img src="../assets/images/storeLookTao/totalRevenue.png" class="boxLeft" />
                 <div class="boxRight">
                   <div class="boxRight_top">RevPAR</div>
-                  <div class="botRight_bottom">{{$F.numFormate(itemInfo.guest_revpar)}}</div>
+                  <div class="botRight_bottom">{{$F.numFormate(Math.round(itemInfo.guest_revpar))}}</div>
                 </div>
               </div>
             </el-col>
@@ -170,8 +170,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-
 export default {
   data() {
     return {

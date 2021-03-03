@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 15:21:20
+ * @LastEditTime: 2021-03-03 16:25:50
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -259,7 +259,7 @@
                 </el-form-item>
 
                 <template v-if="consumeOperForm.priceType== 5 || consumeOperForm.priceType== 6 ">
-                    <el-form-item label="归属项目">
+                    <el-form-item :label="$t('desk.add_belongPro')">
                         <el-select @change="reserveProjectChange" v-model="reserveId">
                             <el-option v-for="item in detailData.checkIn.reserveProjectList" :key="item.id" :label="item.projectName" :value="item.id"></el-option>
                         </el-select>
@@ -310,7 +310,7 @@
                 </el-form-item>
                 <div style="padding-left: 100px;">
                    <el-checkbox v-model="isUseSeserve"></el-checkbox>
-                   <span class="margin-l-8">使用预定项目</span>
+                   <span class="margin-l-8">{{$t('desk.add_useSelectPro')}}</span>
                 </div>
 
 

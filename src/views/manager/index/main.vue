@@ -15,7 +15,7 @@
         <!-- 酒店服务-->
         <hotelServices v-if="item.path == 'hotelServices'" ref="hotelServices" :hotelData="hotelData" :initData="getHotelServiceData" />
         <!-- 打印管理-->
-        <printingMg v-if="item.path == 'printingMg'" ref="printingMg" :printData="printData" :initData="getPrintParamData" />
+        <!-- <printingMg v-if="item.path == 'printingMg'" ref="printingMg" :printData="printData" :initData="getPrintParamData" /> -->
         <!-- 消费税管理 -->
         <consumptionTax v-if="item.path=='salesTax'" />
         <!-- 渠道设置 -->

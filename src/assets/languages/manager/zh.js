@@ -1,20 +1,20 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-20 16:30:02
+ * @LastEditTime: 2021-03-03 16:23:09
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
 // 管理部 (manager) || 中文
 module.exports = {
   deskTab: {
-    0:'房费',
-    1:'附餐费',
-    2:'会议室',
-    3:'迷你吧商品',
-    4:'其他',
-    5:'餐饮费',
-    6:'商品费',
+    0: '房费',
+    1: '附餐费',
+    2: '会议室',
+    3: '迷你吧商品',
+    4: '其他',
+    5: '餐饮费',
+    6: '商品费',
   },
   batchSelectTip: '请点击并选择所有相关的房间号。',
   typeNameList: {
@@ -592,7 +592,7 @@ module.exports = {
   add_allDepartment: '所有部门',
   add_start: '启动',
   add_tyepApri: '会员类型',
-    menberTypeDesc: '房型/房价',
+  menberTypeDesc: '房型/房价',
   add_dealNight: '如果勾选，则不处理应离未离无法将进行夜审',
   add_setDutity: '是否把在住过夜房置为脏房',
   add_onePrice: '一人住宿价',

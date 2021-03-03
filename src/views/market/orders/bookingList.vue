@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 14:42:31
+ * @LastEditTime: 2021-03-03 15:02:23
  * @FilePath: \jiudian\src\views\market\orders\bookingList.vue
  -->
 
@@ -143,7 +143,7 @@
                         {{getStoresNumDesc(row)}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="name" :label="$t('desk.reserveInfoDesc')" width="140px">
+                <el-table-column prop="name" :label="$t('desk.reserveInfoDescA')" width="140px">
                     <template slot-scope="{ row }">
                         <div>
                             <div>{{row.name}}</div>
