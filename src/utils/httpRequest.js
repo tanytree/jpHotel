@@ -107,7 +107,10 @@ http.adornData = (data = {}, openDefultdata = true, contentType = 'form') => {
             ((store.state.user.storesInfo.storesNum == '0000000000' && sessionStorage.checkinDetailStoresNum) ?
                 sessionStorage.checkinDetailStoresNum : store.state.user.storesInfo.storesNum) : '')
     }
-    data = openDefultdata ? merge(defaults, data) : data
+    data = openDefultdata ? merge(defaults, data) : data;
+    if (!data.storesNum) {
+       delete data['storesNum'];
+    }
     return contentType === 'json' ? JSON.stringify(data) : objToParams(data)
 }
 

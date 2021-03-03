@@ -6,6 +6,7 @@
  */
 //  前台部 中文
 module.exports = {
+    reserveOperator: '预约操作员',
     roomInfoDelete: '确定删除该房间？',
     money: {
     myriadNuber: '1万日元',

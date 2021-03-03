@@ -148,8 +148,8 @@
                 <el-table-column prop="mobile" :label="$t('desk.order_moblePhoneA')"></el-table-column>
                 <el-table-column prop="checkinTime" :label="$t('desk.order_toLiveTime')" width="160px">
                   <template slot-scope="{row}">
-                    <div>{{row.checkinTime}}</div>
-                    <div>{{row.checkoutTime}}</div>
+                    <div>{{ $F.substringDate(row.checkinTime, 16) }}</div>
+                    <div>{{ $F.substringDate(row.checkoutTime, 16) }} </div>
                   </template>
                 </el-table-column>
                 <el-table-column :label="$t('desk.customer_roomKind')"  align="center" show-overflow-tooltip width="160">
@@ -331,7 +331,7 @@ export default {
                 }
             );
         },
-        
+
         popClick(item, type) {
             if (type == "detail") {
                 //跳转至订单详情

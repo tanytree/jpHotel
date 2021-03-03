@@ -208,7 +208,7 @@ export default {
         },
         (data) => {
           this.storeList = data;
-          this.storeForm.storesNum = this.storeList[0].storesNum;
+          this.storeForm.storesNum = '';
           this.getData();
         }
       );

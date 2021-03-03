@@ -169,10 +169,10 @@
                                 <div>
                   <span class="text-blue">{{
                           $t("desk.customer_arrived")
-                      }}</span>{{ row.checkinTime }}
+                      }}</span>{{ $F.substringDate(row.checkinTime, 16) }}
                                 </div>
                                 <div>
-                                    <span class="text-red">{{ $t("desk.customer_leave") }}</span>{{ row.checkoutTime }}
+                                    <span class="text-red">{{ $t("desk.customer_leave") }}</span>{{ $F.substringDate(row.checkoutTime, 16) }}
                                 </div>
                             </div>
                             <div>{{ row.checkinDays }}{{ $t("desk.order_day") }}</div>
@@ -184,22 +184,26 @@
                         <div v-html="getRoomInfo(row)"></div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="deposit" :label="$t('desk.downPaymentA')" width="100" align="center">
-                    <template slot-scope="{ row }">
-                        ￥{{$F.numFormate( row.deposit?row.deposit : 0 )}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="totalRoomPrice" :label="$t('desk.order_totalRoomPrice')" width="100" align="center">
-                    <template slot-scope="{ row }">
-                        ￥{{ $F.numFormate(row.totalRoomPrice?row.totalRoomPrice : 0 )}}
-                    </template>
-                </el-table-column>
+<!--                <el-table-column prop="deposit" :label="$t('desk.downPaymentA')" width="100" align="center">-->
+<!--                    <template slot-scope="{ row }">-->
+<!--                        ￥{{$F.numFormate( row.deposit?row.deposit : 0 )}}-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
+<!--                <el-table-column prop="totalRoomPrice" :label="$t('desk.order_totalRoomPrice')" width="100" align="center">-->
+<!--                    <template slot-scope="{ row }">-->
+<!--                        ￥{{ $F.numFormate(row.totalRoomPrice?row.totalRoomPrice : 0 )}}-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
                 <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="110" align="center">
                     <template slot-scope="{ row }">
-                        <div v-if="row.headquarters">{{$t('desk.book_HQ')}}</div>
                         <div>{{ F_orderSource(row.orderSource) }}</div>
                         <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
-
+                    </template>
+                </el-table-column>
+                <el-table-column prop="" :label="$t('desk.reserveOperator')" width="110" align="center">
+                    <template slot-scope="{ row }">
+                        <div v-if="row.headquarters">{{$t('desk.book_HQ') + '/' + row.creatorName}}</div>
+                        <div v-else>{{row.creatorName}}</div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="" :label="$t('food.common.status')" width="120px" align="center">
@@ -210,10 +214,10 @@
                 <el-table-column :label="$t('commons.operating')">
                     <template slot-scope="{ row }">
                         <el-button type="text" size="mini" @click="handelDetail(row)">{{ $t("commons.detail") }}</el-button>
+                        <el-button type="text" size="mini" v-if="(row.state == 1 || row.state == 2 || row.state == 5) && row.headquarters" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
                         <template v-if="row.state != 7">
                             <!--              <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>-->
                             <!--              <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>-->
-                            <el-button type="text" size="mini" v-if="row.state == 1 || row.state == 2 || row.state == 5" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
                             <!--                        只有当渠道订单才会有接收和拒单-->
                             <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleAccept(row)">{{ $t("desk.order_accept") }}</el-button>
                             <el-button type="text" size="mini" v-if="row.state == 1 && row.orderSource == 3" @click="handleRefuse(row)">{{ $t("desk.book_reject") }}</el-button>

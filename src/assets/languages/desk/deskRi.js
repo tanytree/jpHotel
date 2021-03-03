@@ -6,6 +6,7 @@
  */
 //前台部 日文
 module.exports = {
+    reserveOperator: '予約担当',
     roomInfoDelete: '該当アサインを削除に確認しますか？',
   money: {
 
