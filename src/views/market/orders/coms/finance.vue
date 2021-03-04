@@ -69,12 +69,12 @@
                     <span v-else :class="row.richType == 1 ? 'red' : ''">{{$F.numFormate(row.consumePrice)}}</span>
                 </template>
             </el-table-column>
-             <el-table-column  label="消费税">
+             <el-table-column  :label="$t('desk.book_costFee')">
                  <template slot-scope="{ row }">
                      {{$F.numFormate(row.consumTaxPrice)}}
                  </template>
              </el-table-column>
-             <el-table-column  label="服务费">
+             <el-table-column  :label="$t('desk.book_serveFee')">
                  <template slot-scope="{ row }">
                      {{$F.numFormate(row.servicePrice)}}
                  </template>
