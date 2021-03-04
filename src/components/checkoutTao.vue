@@ -486,8 +486,6 @@ export default {
             console.log(0 - this.getFee())
         }
       console.log(params);
-
-      return
       this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
         console.log(res);
         let transferObj ={
