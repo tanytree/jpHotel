@@ -288,7 +288,7 @@ const $F = {
             .replace("5", weeks[4])
             .replace("6", weeks[5])//就是你要的星期几
     },
-
+//切割时间分发  orgiDate为时间； cutLength为要剪切长度；lenght可选，如果有length则分钟归零
     substringDate(orgiDate, cutLength, length) {
         if (!orgiDate) return '';
         if (orgiDate.length < cutLength) return orgiDate;

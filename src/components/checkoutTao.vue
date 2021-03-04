@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 14:21:33
+ * @LastEditTime: 2021-03-04 10:57:27
  * @FilePath: \jiudian\src\components\checkoutTao.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -49,7 +49,7 @@
       </div>
     </div>
     <el-form ref="checkoutForm" :rules="paymentRules" :model="checkoutForm" label-width="110px">
-      <el-form-item :label-width="detailData.totalPrice<0 ?'140px':'110px'" :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWayA') : $t('desk.customer_refundWayB')" prop="payType">
+      <el-form-item :label-width="detailData.totalPrice<0 ?'140px':'130px'" :label=" detailData.totalPrice<0 ? $t('desk.customer_refundWayA') : $t('desk.customer_refundWayB')" prop="payType">
 
         <el-radio-group v-model="checkoutForm.payType" v-if="detailData.totalPrice > 0">
           <el-radio v-for="(value, key) in $t('commons.payType')" :label="key" :key="key">{{ value }}</el-radio>

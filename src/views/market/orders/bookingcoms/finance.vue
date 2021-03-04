@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 16:06:51
+ * @LastEditTime: 2021-03-04 11:02:17
  * @FilePath: \jiudian\src\views\market\orders\bookingcoms\finance.vue
  -->
 <template>
@@ -10,7 +10,7 @@
             <div class="">
                 <el-button type="primary" size="mini" @click="depositShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payDepositA') }}</el-button>
                 <el-button type="primary" size="mini" @click="refundShow = true" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.order_payBackA') }}</el-button>
-                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.customer_rich') }}</el-button>
+                <el-button type="primary" size="mini" @click="destructionHandle" :disabled="roomLeaves || hasCheckinFlag">{{ $t('desk.customer_richA') }}</el-button>
                 <!--        <el-button type="primary" size="mini">{{ $t("commons.print") }}</el-button>-->
             </div>
         </el-row>
@@ -81,7 +81,7 @@
         ></el-pagination>
 
         <!--冲调-->
-        <el-dialog top="0" :title="$t('desk.customer_rich')" :visible.sync="destructionShow" width="800px">
+        <el-dialog top="0" :title="$t('desk.customer_richA')" :visible.sync="destructionShow" width="800px">
             <el-form :model="consumeOperForm" ref="destruction" :rules="rules" size="mini" label-width="100px">
                 <!--        <p>正在冲调的账务</p>-->
                 <el-table v-loading="loading" :data="destructionList"

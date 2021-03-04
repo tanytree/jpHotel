@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-03 16:25:19
+ * @LastEditTime: 2021-03-04 11:10:31
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -58,7 +58,6 @@ module.exports = {
   enterAccountMoneyA: '入金金額',
   enterAccount: '入金',
   enterAccountC: '計上',
-
   enterAccountA: '会計',
   enterAccountB: '会計入力',
   checkInDays: '滞在日数',

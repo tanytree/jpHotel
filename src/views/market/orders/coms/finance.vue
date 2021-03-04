@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-03 16:25:50
+ * @LastEditTime: 2021-03-04 11:11:26
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -320,7 +320,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="entryShow = false">{{ $t('commons.close') }}</el-button>
-                <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('desk.enterAccountC')}}</el-button>
+                <el-button type="primary" @click="consume_oper(1,'entry')">{{$t('commons.confirm')}}</el-button>
             </div>
         </el-dialog>
         <!-- 挂账 -->

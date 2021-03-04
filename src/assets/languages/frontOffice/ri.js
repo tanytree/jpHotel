@@ -1,11 +1,11 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 14:43:37
+ * @LastEditTime: 2021-03-04 11:14:40
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
-  refundAmount: '払い戻し額',
+  refundAmount: '返金金額',
   refundAmountA: '返金',
 
     reserveContent: '预定内容',

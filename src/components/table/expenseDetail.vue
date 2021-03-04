@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 14:12:41
+ * @LastEditTime: 2021-03-04 10:59:45
  * @FilePath: \jiudian\src\components\table\expenseDetail.vue
  * @pageName: 这是--（消费明细预览  组件）--页面
 -->
@@ -444,6 +444,7 @@ export default {
         padding: 10px 30px;
         border: 1px solid rgb(223, 226, 232);
         border-radius: 6px;
+        cursor: default;
       }
       .bottomBox_right {
         padding: 10px 30px;
@@ -451,6 +452,7 @@ export default {
         border-radius: 6px;
         margin-left: 15px;
         color: #fff;
+        cursor: default;
       }
     }
   }
