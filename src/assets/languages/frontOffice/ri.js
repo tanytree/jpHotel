@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-04 11:14:40
+ * @LastEditTime: 2021-03-04 15:05:15
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -51,7 +51,7 @@ module.exports = {
         "3": '支払',
         "4": '返金',
         "5": '素泊り料金請求',
-        "6": '日帰り料金請求',
+        "6": '延長料金',
         "7": '損害賠償',
         "8": 'ミニバー',
         "9": '会計取消',
