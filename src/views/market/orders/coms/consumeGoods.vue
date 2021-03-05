@@ -150,7 +150,7 @@ export default {
                 goodsTotal:'',
                 goodsJson:[],
                 remark:'',
-                roorId:''
+                // consumeOperForm:''
             },
             categoryList:[],
             tax:{},
@@ -439,7 +439,6 @@ export default {
         consume_oper() {
             console.log(this.currentRoom)
             // console.log(this.detailData)
-            this.consumeOperForm.roorId = this.currentRoom.id
 
             // console.log(this.consumeOperForm.roorId)
             if(this.cart.length == 0){
@@ -452,13 +451,13 @@ export default {
 
 
 
-            if(!this.consumeOperForm.roorId){
-                this.$message({
-                  type: 'error',
-                  message: this.$t('desk.order_selectRoomNum')
-                });
-                return false
-            }
+            // if(!this.consumeOperForm.roorId){
+            //     this.$message({
+            //       type: 'error',
+            //       message: this.$t('desk.order_selectRoomNum')
+            //     });
+            //     return false
+            // }
 
 
             if(!this.consumeOperForm.remark){
@@ -477,25 +476,10 @@ export default {
             params.employeePrice = this.consumeOperForm.employeePrice ? 1 : 2
             params.goodsTotal = this.taxInfo.sum
 
-
             params.consumTaxPrice  =  this.taxInfo.taxFee
             params.servicePrice  =  this.taxInfo.service
 
-
-
-
-            let roomList = this.detailData.inRoomList
-            console.log(roomList)
-            // let choose = {}
-            // roomList.forEach(element => {
-            //     console.log(element)
-            //    if(element.roomId == this.consumeOperForm.roorId){
-            //        choose = element
-            //    }
-            // });
-          //   params.roomId = this.consumeOperForm.roorId;
-          //   params.roomNum = choose.houseNum
-            params.roomId = this.consumeOperForm.roorId
+            params.roomId = this.currentRoom.roomId
             params.roomNum = this.currentRoom.houseNum
             let Json = []
             let cart = this.cart
@@ -524,7 +508,6 @@ export default {
             }
             params.goodsJson = JSON.stringify(Json)
             console.log(params)
-            // return
             this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
                 this.consumeOperForm.remark = ''
                 this.consumeOperForm.roorId = ''

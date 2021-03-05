@@ -127,7 +127,7 @@ export default {
                 }
             } else {
                 if (this.currentRoom.id) {
-                    this.paymentForm.roomId = this.currentRoom.id;
+                    this.paymentForm.roomId = this.currentRoom.roomId;
                     this.paymentForm.roomNum = this.currentRoom.houseNum;
                 } else {
                     if (this.detailData.inRoomList.length > 0) {
@@ -136,6 +136,8 @@ export default {
                     }
                 }
             }
+
+            console.log(this.paymentForm)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(

@@ -84,7 +84,7 @@
         <!-- {{getRealPayFee.sum - detailData.payPrice -  checkoutForm.preferentialPrice}} -->
 
 
-        ￥{{numFormate(getRealPayFee.sum - detailData.payPrice  - checkoutForm.preferentialPrice)}}
+        ￥{{numFormate(getPriceStr(getRealPayFee.sum - detailData.payPrice  - checkoutForm.preferentialPrice))}}
       </el-form-item>
       <el-form-item :label="$t('desk.home_note')">
         <el-input type="textarea" v-model="checkoutForm.remark" :placeholder="$t('desk.home_noteA')"></el-input>
@@ -441,9 +441,6 @@ export default {
       console.log(this.detailData);
       console.log(this.currentRoom);
       let checkoutForm = this.checkoutForm;
-
-
-
       console.log(checkoutForm);
       let params = {
         checkInId: checkoutForm.checkInId,
@@ -472,20 +469,25 @@ export default {
         params.enterId = checkoutForm.enterId;
         params.creditName = checkoutForm.creditName;
       }
-      console.log(params);
-      console.log(this.detailData.payPrice);
-      console.log(this.getRealPayFee.sum);
+      // console.log(params);
+      // console.log(this.detailData.payPrice);
+      // console.log(this.getRealPayFee.sum);
 
         if(this.detailData.payPrice - this.getRealPayFee.sum < 0){
             params.payPrice = this.getFee()
-            console.log(1)
-            console.log(this.getFee())
+            // console.log(1)
+            // console.log(this.getFee())
         }else{
             params.payPrice = 0 - this.getFee()
-            console.log(2)
-            console.log(0 - this.getFee())
+            // console.log(2)
+            // console.log(0 - this.getFee())
+            params.priceType = 4
         }
       console.log(params);
+
+
+      // return
+
       this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
         console.log(res);
         let transferObj ={

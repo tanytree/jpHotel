@@ -9,21 +9,21 @@
         <!-- 查询部分 -->
         <el-form inline size="small">
             <!-- {{isType}} -->
-            <el-row>
+            <el-row v-show="roomType == 'customer'">
                 <el-form-item label="">
-                    <el-button type="danger" size="mini" @click="entryShow=true,isType=0" :disabled="detailData.checkIn.state == 2">{{$t('desk.enterAccountA')}}</el-button>
-                    <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="detailData.checkIn.state == 2">{{$t('desk.attachedMealA')}}</el-button>
-                    <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="detailData.checkIn.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
-                    <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
-                    <el-button type="primary" size="mini" @click="destructionHandle" :disabled="detailData.checkIn.state == 2">{{$t('desk.customer_richA')}}</el-button>
+                    <el-button type="danger" size="mini" @click="entryShow=true,isType=0" :disabled="currentRoom.state == 2">{{$t('desk.enterAccountA')}}</el-button>
+                    <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="currentRoom.state == 2">{{$t('desk.attachedMealA')}}</el-button>
+                    <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="currentRoom.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
+                    <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="currentRoom.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
+                    <el-button type="primary" size="mini" @click="destructionHandle" :disabled="currentRoom.state == 2">{{$t('desk.customer_richA')}}</el-button>
                 </el-form-item>
                 <br/>
                 <el-form-item label="">
                     <!-- <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button> -->
-                    <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
-                    <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_checkout') }}</el-button>
-                    <el-button type="primary" size="mini" @click="onAccountShow" :disabled="detailData.checkIn.state == 2">{{ $t('desk.charge') }}</el-button>
-                    <el-button type="primary" size="mini" @click="invoicingHandle" :disabled="detailData.checkIn.state == 2">{{ $t('desk.order_invoice') }}</el-button>
+                    <el-button type="danger" size="mini" :disabled="currentRoom.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
+                    <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="currentRoom.state == 2">{{ $t('desk.order_checkout') }}</el-button>
+                    <el-button type="primary" size="mini" @click="onAccountShow" :disabled="currentRoom.state == 2">{{ $t('desk.charge') }}</el-button>
+                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
                     <!-- <el-button type="primary" size="mini" @click="out_check_in_cancel" >撤销退房</el-button> -->
                 </el-form-item>
             </el-row>
@@ -56,6 +56,7 @@
             </el-table-column>
             <el-table-column :label="$t('desk.order_paymentB')" >
                 <template slot-scope="{ row }">
+
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.payPrice ? $F.numFormate((0 - row.payPrice)) : ''}}</span>
                     <span v-else :class="row.richType == 1 ? 'red' : ''">
 
@@ -115,6 +116,9 @@
                             <span v-if="row.payType == 1">{{$t('desk.add_cashGet')}}</span>
                             <span v-if="row.payType == 2">{{$t('desk.add_cardGet')}} </span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherGet')}}</span>
+                        </span>
+                        <span v-if="row.priceType == 4">
+                             {{$t('desk.order_cachRefund')}}
                         </span>
                         <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}} (￥{{row.consumePrice}}) </span>
                         <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>
@@ -258,7 +262,7 @@
                     </el-radio-group>
                 </el-form-item>
 
-                <template v-if="consumeOperForm.priceType== 5 || consumeOperForm.priceType== 6 ">
+                <template v-if="consumeOperForm.priceType== 5">
                     <el-form-item :label="$t('desk.add_belongPro')">
                         <el-select @change="reserveProjectChange" v-model="reserveId">
                             <el-option v-for="item in detailData.checkIn.reserveProjectList" :key="item.id" :label="item.projectName" :value="item.id"></el-option>
@@ -664,10 +668,13 @@ export default {
             reserveId:'',//预定项目ID
             reserveProjects:{},//预定项目
             isUseSeserve:true, //是否使用预定项目
+            roomType:''
         };
     },
 
     created() {
+        this.roomType = localStorage.getItem('roomType')
+        console.log(this.roomType)
         this.checkInId = this.$route.query.id;
         //监听单价和数量
         this.$watch('unitPrice', (value) => {
@@ -900,19 +907,22 @@ export default {
                 }
                 params.consumTaxPrice  = taxFee
                 params.servicePrice  = service
-                // console.log(rzSum)
+                // console.log(rzSum)else
                 params.consumePrice =  parseFloat(this.consumeOperForm.consumePrices)  +  parseFloat(service) +  parseFloat(taxFee)
-
-
+                if(params.priceType == 5){
+                    params.reserveId = this.reserveProjects.id
+                }else{
+                    params.reserveId = ''
+                }
                 // [{"projectName":"洗脚","projectCount":1,"price":33.3}]
-                let reserve = []
-                let obj = {}
-                obj.projectName = this.reserveProjects.projectName
-                obj.projectCount = this.reserveProjects.projectCount
-                obj.price = this.reserveProjects.price
-                reserve.push(obj)
+                // let reserve = []
+                // let obj = {}
+                // obj.projectName = this.reserveProjects.projectName
+                // obj.projectCount = this.reserveProjects.projectCount
+                // obj.price = this.reserveProjects.price
+                // reserve.push(obj)
 
-                params.reserveProjects = reserve
+                // params.reserveProjects = reserve
 
 
 
@@ -1144,6 +1154,9 @@ export default {
                 }
                 if (e == 6) {
                     this.consumeOperForm.consumePrices = this.consumeOperForm.consumePrices * 0.5;
+                }
+                if(e !== 5){
+                    this.reserveId = ''
                 }
 
 

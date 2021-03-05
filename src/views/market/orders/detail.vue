@@ -49,6 +49,7 @@
                   <li @click="checkTypeHandle('order')" :class="checkType == 'order' ? 'active' : ''">
                     <div class="wrap"><span>{{$t('desk.order_lookOrderInfo')}}></span></div>
                   </li>
+
                   <li @click="checkTypeHandle('customer', item)" v-for="(item, index) of detailData.inRoomList" :key="index" :class=" checkType == 'customer' && currentRoom.id == item.id ? 'active' : ''">
                     <div class="wrap">
                       <el-button size="mini" :type="item.state == 1 ? 'success' : 'danger'" plain class="fr">
@@ -238,26 +239,42 @@ export default {
     },
     getDetail(transferObj) {
       // console.log(111);
-      localStorage.setItem('roomType','order')
+      if(!localStorage.getItem('roomType')){
+        localStorage.setItem('roomType','order')
+      }
+
+
       let id = this.$route.query.id; //该id为checkinId
       this.itemGuestInfo = this.$route.query.item;
       let info = {
           checkInId: id
       }
+
       this.$F.doRequest(this,"/pms/checkin/check_in_detail",info,(res) => {
           this.detailData = res;
-          // console.log('1131213132')
-          // console.log(res)
-          // console.log('1131213132')
+          console.log('1131213132')
+          console.log(res.inRoomList[0]);
+
+          console.log('1131213132')
           // this.$F.merge(this.detailData, res);
           //默认获取第一个房间为主账房，暂不明确主账房标识
           // ;
             // debugger
-          if (res.inRoomList.length > 0) {
-            this.currentRoom = res.inRoomList[0];
-            this.resetDom();
-            this.$forceUpdate();
-          }
+
+           if(this.currentRoom&&this.currentRoom.id){
+                // this.getSingleDetail(item);
+                 this.getSingleDetail(this.currentRoom.roomId);
+           }else{
+               if (res.inRoomList.length > 0) {
+                 this.currentRoom = res.inRoomList[0];
+                 this.getSingleDetail(this.currentRoom.roomId);
+                 console.log(this.currentRoom.id)
+               }
+           }
+           this.resetDom();
+           this.$forceUpdate();
+
+
         }
       );
       console.log(transferObj);
@@ -311,20 +328,21 @@ export default {
       console.log(v)
       localStorage.setItem('roomType',v)
       if(v == 'customer'){
-          this.getSingleDetail(item);
+          this.getSingleDetail(item.roomId);
+          console.log(item.id)
       }else{
-          this.getDetail();
+            this.getDetail();
       }
       //切换关联订单后需要刷新组件，原来没有刷新，所以里面的内容没有变化
     },
 
 
-    getSingleDetail(item) {
-      console.log(item);
+    getSingleDetail(roomId) {
+      console.log(roomId);
       let id = this.$route.query.id; //该id为checkinId
       let info = {
           checkInId: id,
-          roomId:item.roomId
+          roomId:roomId
       }
       this.$F.doRequest(this,"/pms/checkin/check_in_oneroom_order",info,(res) => {
           // this.detailData = res;

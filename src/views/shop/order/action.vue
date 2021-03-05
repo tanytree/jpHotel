@@ -514,8 +514,12 @@ export default {
 
     //提交结账
     submit() {
-      // this.loading = true
+        
+    
+    
+
       let params = this.form;
+      console.log(params)
       params.consumePrice = this.info.consumePrice;
       params.hasPayPrice = this.info.hasPayPrice;
       params.state = 2;
@@ -547,13 +551,11 @@ export default {
         console.log(params)
       // return
 
-      this.$F.doRequest(
-        this,
-        "/pms/shop/shop_place_order_pay",
-        params,
-        (res) => {
+        console.log(params.billingType)
+
+      this.$F.doRequest(this,"/pms/shop/shop_place_order_pay",params,(res) => {
           this.loading = false;
-          this.alert(200, this.$t("food.reset.success"));
+          this.alert(200, params.billingType == 1 ? this.$t("food.common.success") : this.$t("food.reset.success"));
           this.closeDialog();
         }
       );
