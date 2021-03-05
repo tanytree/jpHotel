@@ -107,7 +107,7 @@
                             <span v-if="row.payType == 2">{{$t('desk.add_cardDeposit')}}</span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherDeposit')}} </span>
                         </span>
-                                <span v-if="row.priceType == 2">
+                        <span v-if="row.priceType == 2">
                             <span v-if="row.payType == 1">{{$t('desk.add_cashDepositA')}}</span>
                             <span v-if="row.payType == 2">{{$t('desk.add_cardDepositA')}} </span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherDepositA')}}</span>
@@ -118,7 +118,9 @@
                             <span v-if="row.payType == 4">{{$t('desk.add_otherGet')}}</span>
                         </span>
                         <span v-if="row.priceType == 4">
-                             {{$t('desk.order_cachRefund')}}
+                            <span v-if="row.payType == 1">现金退款</span>
+                            <span v-if="row.payType == 2">信用卡退款 </span>
+                            <span v-if="row.payType == 4">其他方式退款</span>
                         </span>
                         <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}} (￥{{row.consumePrice}}) </span>
                         <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>

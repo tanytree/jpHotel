@@ -460,13 +460,16 @@ export default {
             // }
 
 
-            if(!this.consumeOperForm.remark){
-                this.$message({
-                  type: 'error',
-                  message: this.$t('desk.customer_inputRemark')
-                });
-                return false
-            }
+            // if(!this.consumeOperForm.remark){
+            //     this.$message({
+            //       type: 'error',
+            //       message: this.$t('desk.customer_inputRemark')
+            //     });
+            //     return false
+            // }
+            
+            
+            
             let params = {}
             params.checkInId = this.$route.query.id
             params.priceType = 8

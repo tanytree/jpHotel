@@ -192,7 +192,10 @@ export default {
       isReset: true,
     };
   },
-
+  beforeDestroy() {
+   console.log('我要出去了')
+    localStorage.removeItem('roomType');
+  },
   mounted() {
     this.getDetail();
     this.$F.commons.fetchSalesList({ salesFlag: 1 }, (data) => {
