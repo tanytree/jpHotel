@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-04 15:05:15
+ * @LastEditTime: 2021-03-08 18:26:32
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
     enterpriseMobile: '会社電話',
     enterpriseAddress: '会社住所',
     cancelRoomKeep: '仮押さえ取り消し',
-    checkInfoDesc: '入居情報',
+    checkInfoDesc: '会計情報',
     saveGoon: '保存及び次の予約へ',
     chooseRoomType: '部屋タイプを選択してください',
     nightAudit: {
