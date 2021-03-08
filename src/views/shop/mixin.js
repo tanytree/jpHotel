@@ -182,7 +182,7 @@ const mixin= {
                      totSum =  sum
                 }
                 // console.log(totSum)
-                return totSum
+                return parseFloat(totSum).toFixed(0)
 
             }
         },
@@ -279,11 +279,15 @@ const mixin= {
                         if(outFlag){
                             // let per = (1 - 1/(1.00 + outConsumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+                            if(element.seviceStatus == 1){ //1 不包含
+                                taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+                            }
                         }else{
                             // let per = (1 - 1/(1.00 + consumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                            if(element.seviceStatus == 1){ //1 不包含
+                                taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                            }
                         }
                     }
                     if(outFlag == false){
@@ -299,7 +303,26 @@ const mixin= {
                             }
                         }
                     }
+                    
+                    if(element.seviceStatus == 2){
+                        let tax = outFlag ? outConsumeTax : consumeTax
+                        //不包含消费税
+                        if(element.taxStatus == 1){
+                            let s = element.totalPrice * servicePrice
+                            taxInFee += this.getTaxInOff(tax,element.totalPrice,s)
+                        }else{
+                            //包含消费税
+                            let f = 1.00 + consumeTax
+                            let s = (element.totalPrice / f) * servicePrice
+                            taxInFee += this.getTaxInOff(tax,element.totalPrice,s)
+                        }
+                    }
                })
+
+               
+
+
+
                let parms = {
                    total: total ? parseFloat(total).toFixed(0) : 0,
                    service: service ? parseFloat(service).toFixed(0) :0,
@@ -371,6 +394,9 @@ const mixin= {
                     // console.log(list[i].taxStatus)
                     // console.log(list[i].seviceStatus)
                     // console.log(list[i])
+
+
+
                     if(element.taxStatus == 1){
                         if(element.seviceStatus == 1){
                            //不包含服务税
@@ -394,16 +420,22 @@ const mixin= {
                     }else{
                         //税内消费税
                         if(outFlag){
+                            //1 不包含  //包含
+                            if(element.seviceStatus == 1){ //1 不包含
+                                taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+                            }
                             // let per = (1 - 1/(1.00 + outConsumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+                            // taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
                         }else{
                             // let per = (1 - 1/(1.00 + consumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                            // taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                            if(element.seviceStatus == 1){ //1 不包含
+                                taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                            }
                         }
                     }
-
                     if(outFlag == false){
                         //不包含服务税
                         if(element.seviceStatus == 1){
@@ -417,6 +449,21 @@ const mixin= {
                             }
                         }
                     }
+                    if(element.seviceStatus == 2){
+                        let tax = outFlag ? outConsumeTax : consumeTax
+                        //不包含消费税
+                        if(element.taxStatus == 1){
+                            let s = element.totalPrice * servicePrice
+                            taxInFee += this.getTaxInOff(tax,element.totalPrice,s)
+                        }else{
+                            //包含消费税
+                            let f = 1.00 + consumeTax
+                            let s = (element.totalPrice / f) * servicePrice
+                            taxInFee += this.getTaxInOff(tax,element.totalPrice,s)
+                        }
+                    }
+
+
                 })
                 let parms = {
                     total: total ? parseFloat(total).toFixed(0) : 0,
@@ -454,6 +501,19 @@ const mixin= {
             let t = Math.round(taxInFee *1)/1
         	return  t
         },
+
+        getTaxInOff(tax,price,service){
+        	let per =(price+service) * (1 - 1/(1.00 + tax) )
+        	let taxInFee = parseFloat(per).toFixed(0)
+            let t = Math.round(taxInFee *1)/1
+            // console.log(tax)
+            // console.log(price)
+            // console.log(service)
+            // console.log(taxInFee)
+        	return  t
+        },
+
+
         alert(v,msg){
              if(v == 200){
                  this.$message({

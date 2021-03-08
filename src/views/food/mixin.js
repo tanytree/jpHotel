@@ -103,22 +103,18 @@ const mixin= {
                     }else{
                         //税内消费税
                         if(outFlag){
-
-
                             // let per = (1 - 1/(1.00 + outConsumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
-
-
+                            if(element.seviceStatus == 1){
+                                taxInFee += this.getTaxIn(outConsumeTax,element.totalPrice)
+                            }
                         }else{
                             // let per = (1 - 1/(1.00 + consumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                            if(element.seviceStatus == 1){
+                               taxInFee += this.getTaxIn(consumeTax,element.totalPrice)
+                            }
                         }
-
-
-
-
                     }
                     if(outFlag == false){
                         //不包含服务税
@@ -133,6 +129,23 @@ const mixin= {
                             }
                         }
                     }
+
+                    if(element.seviceStatus == 2){
+                        let tax = outFlag ? outConsumeTax : consumeTax
+                        //不包含消费税
+                        if(element.taxStatus == 1){
+                            let s = element.totalPrice * servicePrice
+                            taxInFee += this.getTaxInOff(tax,element.totalPrice,s)
+                        }else{
+                            //包含消费税
+                            let f = 1.00 + consumeTax
+                            let s = (element.totalPrice / f) * servicePrice
+                            taxInFee += this.getTaxInOff(tax,element.totalPrice,s)
+                        }
+                    }
+
+
+
                 // }
 
                 });
@@ -173,6 +186,19 @@ const mixin= {
             let t = Math.round(taxInFee *1)/1
         	return  t
         },
+
+        getTaxInOff(tax,price,service){
+        	let per =(price+service) * (1 - 1/(1.00 + tax) )
+        	let taxInFee = parseFloat(per).toFixed(0)
+            let t = Math.round(taxInFee *1)/1
+            // console.log(tax)
+            // console.log(price)
+            // console.log(service)
+            // console.log(taxInFee)
+        	return  t
+        },
+
+
         alert(v,msg){
              if(v == 200){
                  this.$message({

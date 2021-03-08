@@ -245,11 +245,11 @@ export default {
         // console.log(all)
         params.priceType = 17;
         params.attachMealId = this.sideForm.attachMealIdBreatfast
-        params.consumePrice = this.currentHotelAttaChamealBreakfast.consumePrice + all.total
+        params.consumePrice = parseFloat(this.currentHotelAttaChamealBreakfast.consumePrice + all.total).toFixed(0)
         params.attachMealCount  = this.currentHotelAttaChamealBreakfast.attachMealCount
-        params.consumTaxPrice  = all.taxFee
-        params.servicePrice  = all.service
-        // console.log(params)
+        params.consumTaxPrice  =  parseFloat(all.taxFee).toFixed(0)
+        params.servicePrice  =  parseFloat(all.service).toFixed(0)
+        console.log(params)
         // return
         this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
             this.visible = false;
@@ -262,10 +262,10 @@ export default {
         // console.log(att)
         params.priceType = 18;
         params.attachMealId = this.sideForm.attachMealIdDinner
-        params.consumePrice = this.currentHotelAttaChamealDinner.consumePrice  + att.total
+        params.consumePrice = parseFloat(this.currentHotelAttaChamealDinner.consumePrice + att.total).toFixed(0)
         params.attachMealCount  = this.currentHotelAttaChamealDinner.attachMealCount
-        params.consumTaxPrice  = att.taxFee
-        params.servicePrice  = att.service
+        params.consumTaxPrice  =  parseFloat(att.taxFee).toFixed(0)
+        params.servicePrice  =  parseFloat(att.service).toFixed(0)
         // console.log(params)
         // return
         this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {

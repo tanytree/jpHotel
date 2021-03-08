@@ -191,11 +191,15 @@ let mixin = {
                         if(outFlag){
                             // let per = (1 - 1/(1.00 + outConsumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(outConsumeTax,list[i].totalPrice)
+                            if(list[i].seviceStatus == 2){
+                                taxInFee += this.getTaxIn(outConsumeTax,list[i].totalPrice)
+                            }
                         }else{
                             // let per = (1 - 1/(1.00 + consumeTax) )
                             // taxInFee += element.totalPrice * per
-                            taxInFee += this.getTaxIn(consumeTax,list[i].totalPrice)
+                            if(list[i].seviceStatus == 2){
+                                taxInFee += this.getTaxIn(consumeTax,list[i].totalPrice)
+                            }
                         }
 
 
@@ -217,6 +221,20 @@ let mixin = {
                                 let f = 1.00 + consumeTax
                                 service += (list[i].totalPrice / f) * servicePrice
                             }
+                        }
+                    }
+
+                    if(list[i].seviceStatus == 2){
+                        let tax = outFlag ? outConsumeTax : consumeTax
+                        //不包含消费税
+                        if(list[i].taxStatus == 1){
+                            let s = list[i].totalPrice * servicePrice
+                            taxInFee += this.getTaxInOff(tax,list[i].totalPrice,s)
+                        }else{
+                            //包含消费税
+                            let f = 1.00 + consumeTax
+                            let s = (list[i].totalPrice / f) * servicePrice
+                            taxInFee += this.getTaxInOff(tax,list[i].totalPrice,s)
                         }
                     }
                 }
@@ -256,7 +274,18 @@ let mixin = {
 			let taxInFee = price * per
             let t = Math.round(taxInFee *1)/1
 			return  t
-		}
+		},
+
+        getTaxInOff(tax,price,service){
+        	let per =(price+service) * (1 - 1/(1.00 + tax) )
+        	let taxInFee = parseFloat(per).toFixed(0)
+            let t = Math.round(taxInFee *1)/1
+            // console.log(tax)
+            // console.log(price)
+            // console.log(service)
+            // console.log(taxInFee)
+        	return  t
+        },
 
 
     }

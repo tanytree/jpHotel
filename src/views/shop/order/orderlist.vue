@@ -109,6 +109,8 @@
                   :label="$t('food.common.status')"
                  >
                     <template slot-scope="scope">
+
+
                       <span v-if="scope.row.state">{{$t('food.order_status.'+ scope.row.state)}}</span>
                       <!-- {{scope.row.state == 1 ? '未结' : (scope.row.state == 2 ? '已结' : '已取消') }} -->
                     </template>
@@ -244,7 +246,8 @@
               </el-table-column>
               <el-table-column :label="$t('food.common.status')" width="80">
                   <template slot-scope="scope">
-                      {{scope.row.state == 2 ? $t('desk.customer_closeAccount') : $t('desk.customer_outStand')}}
+                    {{$t('desk.customer_closeAccount')}}
+                      <!-- {{scope.row.state == 2 ? $t('desk.customer_closeAccount') : $t('desk.customer_outStand')}} -->
                   </template>
               </el-table-column>
             </el-table>

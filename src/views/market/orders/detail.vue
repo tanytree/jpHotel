@@ -193,7 +193,6 @@ export default {
     };
   },
   beforeDestroy() {
-   console.log('我要出去了')
     localStorage.removeItem('roomType');
   },
   mounted() {

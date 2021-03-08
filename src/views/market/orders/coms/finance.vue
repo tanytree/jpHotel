@@ -907,10 +907,11 @@ export default {
                     // console.log(pms)
                     // console.log('消费/服务费')
                 }
-                params.consumTaxPrice  = taxFee
-                params.servicePrice  = service
+                params.consumTaxPrice  =  parseFloat(taxFee).toFixed(0)
+                params.servicePrice  = parseFloat(service).toFixed(0)
                 // console.log(rzSum)else
-                params.consumePrice =  parseFloat(this.consumeOperForm.consumePrices)  +  parseFloat(service) +  parseFloat(taxFee)
+                let p  =  parseFloat(this.consumeOperForm.consumePrices)  +  parseFloat(service) +  parseFloat(taxFee)
+                params.consumePrice =  parseFloat(p).toFixed(0)
                 if(params.priceType == 5){
                     params.reserveId = this.reserveProjects.id
                 }else{
