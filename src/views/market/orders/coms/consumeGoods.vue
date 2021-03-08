@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-08 18:08:15
+ * @LastEditTime: 2021-03-08 10:28:35
  * @FilePath: \jiudian\src\views\market\orders\coms\consumeGoods.vue
  -->
 <template>
@@ -74,11 +74,11 @@
                     <!-- <el-row class="padding-tb-10"> <em>小计 : {{taxInfo.total}} </em></el-row> -->
 
                     <el-row class="">
-                       <div class="item mb10"><span class="w70">小计</span> <span class="text-right">￥{{taxInfo.total}}</span> </div>
-                       <div class="item mb10"><span class="w70">服务费 <span class="text-size12">({{taxInfo.servicePrice}})</span></span> <span class="text-right">￥{{taxInfo.service}}</span> </div>
-                       <div class="item mb10"><span class="w70">消费税 <span class="text-size12">({{taxInfo.type}}  {{taxInfo.tax}})</span> </span> <span class="text-right">￥{{taxInfo.taxFee}}</span> </div>
+                       <div class="item mb10"><span class="w70">{{$t('desk.customer_xiaoJi')}}</span> <span class="text-right">￥{{taxInfo.total}}</span> </div>
+                       <div class="item mb10"><span class="w70">{{$t('desk.book_serveFee')}} <span class="text-size12">({{taxInfo.servicePrice}})</span></span> <span class="text-right">￥{{taxInfo.service}}</span> </div>
+                       <div class="item mb10"><span class="w70">{{$t('desk.book_costFee')}} <span class="text-size12">({{taxInfo.type}}  {{taxInfo.tax}})</span> </span> <span class="text-right">￥{{taxInfo.taxFee}}</span> </div>
                        <div class="item mb10"><span class="w70">{{$t('desk.book_costFee2')}} <span class="text-size12">{{taxInfo.tax}}</span> </span> <span class="text-right">￥{{numFormate(taxInfo.taxInFee)}}</span></div>
-                       <div class="item padding-tb-10"><span class="w70 text-size20">合计</span> <span class="text-right text-size20">￥{{taxInfo.sum}}</span> </div>
+                       <div class="item padding-tb-10"><span class="w70 text-size20">{{$t('desk.serve_heji')}}</span> <span class="text-right text-size20">￥{{taxInfo.sum}}</span> </div>
                     </el-row>
 
                     <el-form>

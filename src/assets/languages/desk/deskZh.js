@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-03-03 17:48:22
+ * @LastEditTime: 2021-03-08 10:44:52
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -1098,8 +1098,8 @@ module.exports = {
   add_expenseDetail: '消费明细打印',
   add_belongPro: '归属项目',
   add_useSelectPro: '使用预订项目',
-  add_: '',
-  add_: '',
+  add_include: '含消费税',
+  add_outclude: '不含消费税',
   add_: '',
   add_: '',
 

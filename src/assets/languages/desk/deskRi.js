@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-04 11:10:31
+ * @LastEditTime: 2021-03-08 10:24:28
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -363,7 +363,7 @@ module.exports = {
   customer_count: '数量',
   customer_remove: '削除',
   customer_all: '計',
-  customer_each: '件数',
+  customer_each: '件',
   customer_sureChange: 'ポイント交換確認',
   customer_changeSuccess: 'ポイント交換成功',
   customer_inputName: '名前を入力してください',
@@ -1067,7 +1067,8 @@ module.exports = {
   add_expenseDetail: '請求書印刷',
   add_belongPro: '紐付けプラン',
   add_useSelectPro: '予約プラン連動',
-
+  add_include: '内含消费税',
+  add_outclude: '不含消费税',
 
 
 
