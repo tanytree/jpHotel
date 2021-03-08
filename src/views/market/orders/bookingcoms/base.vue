@@ -306,7 +306,7 @@
       <!--      更改客源dialog  客源类型-->
       <guestChoose @guestChooseCallback="guestChooseCallback" ref="guestChoose" :checkInForm="baseInfoChangeForm"></guestChoose>
     <!--      排房组件-->
-    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" :title="$t('desk.order_addRoom')"
+    <rowRoomHandle ref="rowRoomHandle" @baseInfoChange="baseInfoChange" :title="$t('desk.order_addRoom')" :inRoomList="inRoomList"
                    :operCheckinType="'b' + detailData.checkIn.operCheckinType"/>
     <!--    <checkTheDetails ref="checkTheDetails" @baseInfoChange="baseInfoChange" :checkinInfo="checkinInfo" :inRoomList="inRoomList" />-->
   </div>
@@ -543,7 +543,7 @@ export default {
     addRoom() {
       let arr = [];
       if (this.currentRoom) arr.push(this.currentRoom);
-      this.$refs.rowRoomHandle.initForm(this.reserveId, this.checkinInfo, arr, 1, 2);
+      this.$refs.rowRoomHandle.initForm(this.reserveId, this.checkinInfo, arr, 1, 2, this.detailData);
     },
     //跳转到入住详情
     goCheckinDetail(type,ifMeeting) {

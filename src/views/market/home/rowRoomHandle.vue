@@ -5,157 +5,157 @@
  * @FilePath: \jiudian\src\views\market\home\rowRoomHandle.vue
  -->
 <template>
-<div>
-    <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="title ? title : $t('desk.rowHouse')" width="80%">
+    <div>
+        <el-dialog top="0" :visible.sync="rowRoomHandleShow" class="rowRoomHandle" :title="title ? title : $t('desk.rowHouse')" width="80%">
 
-        <el-row style="margin-bottom:60px" v-loading="loading">
-            <!--这里暂时不要做的那么细  接口暂时不支持修改单个房间预抵预离-->
-            <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
-                            <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"
-                                            :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss"
-                                            value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays">
-                            <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
-                            <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px"
-                                            :placeholder="$t('desk.serve_chooseDate')" format="yyyy-MM-dd HH:mm:ss"
-                                            value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-            </el-form>
-            <el-form inline size="mini">
-                <el-row>
-                    <el-col :span="17">
-                        <div class="grid-content">
-                            <el-row>
-                                <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
-                                    <el-option :value="key" v-for="(item,key,index) of $t('commons.bedType')" :label="item" :key="index"></el-option>
-                                </el-select>
-                            </el-row>
-                            <br />
-                            <el-row>
-                                <el-col :span="8" v-for="v in roomList" :key="v.roomTypeId">
-                                    <div class="grid-content rooms">
-                                        <div class="grid-cell" :class="activeRoomCheck(v.roomTypeId)?'active':''">
-                                            <div class="wrap">
-                                                <el-row class="row">
-                                                    <el-col :span="14">
-                                                        <span>{{v.roomTypeName}}</span>
-                                                    </el-col>
-                                                    <el-col :span="10">
-                                                        <div style="text-align: right">
-                                                            <el-input-number @change="handleNumChange($event,v)" :min="0"
-                                                                             :max="v.reserveTotal" :label="$t('desk.home_describeText')"
-                                                                             size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
-                                                        </div>
-                                                    </el-col>
-                                                </el-row>
-                                                <el-row class="row">
-                                                    <el-col :span="8">
-<!--                                                        <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>-->
-                                                    </el-col>
-                                                    <el-col :span="15">
-                                                        <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
-                                                    </el-col>
-                                                </el-row>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </el-col>
-                            </el-row>
-                        </div>
-                    </el-col>
-                    <el-col :span="7">
-                        <div class="grid-content">
-<!--                            <el-row>-->
-<!--                                <el-button @click="page_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;-->
-<!--                            </el-row>-->
-                            <br />
-                            <el-row class="roomSelect">
-                                <ul>
-                                    <li v-for="(v,index) in waitingRoom" :key="index">
-                                        <div class="grid-content">
-                                            <div class="grid-cell">
+            <el-row style="margin-bottom:60px" v-loading="loading">
+                <!--这里暂时不要做的那么细  接口暂时不支持修改单个房间预抵预离-->
+                <el-form ref="checkInForm" inline size="small" :model="checkInForm" :rules="rules" label-width="100px">
+                    <el-row>
+                        <el-col :span="6">
+                            <el-form-item :label="$t('desk.arrivalTime')" prop="checkinTime">
+                                <el-date-picker v-model="checkInForm.checkinTime" type="datetime" style="width:200px" :placeholder="$t('desk.serve_chooseDate')"
+                                                :picker-options="startTime" format="yyyy-MM-dd HH:mm:ss"
+                                                value-format="yyyy-MM-dd HH:mm:ss" @change="startTimeChange"></el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item :label="$t('desk.checkInDays')" prop="checkinDays">
+                                <el-input-number class="width200" v-model="checkInForm.checkinDays" :step="1" :min="0" @change="checkinDaysChange"></el-input-number>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item :label="$t('desk.order_departureTime')" prop="checkoutTime">
+                                <el-date-picker v-model="checkInForm.checkoutTime" type="datetime" style="width:200px"
+                                                :placeholder="$t('desk.serve_chooseDate')" format="yyyy-MM-dd HH:mm:ss"
+                                                value-format="yyyy-MM-dd HH:mm:ss" :picker-options="leaveTime" @change="endTimeChange"></el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                </el-form>
+                <el-form inline size="mini">
+                    <el-row>
+                        <el-col :span="17">
+                            <div class="grid-content">
+                                <el-row>
+                                    <el-select v-model="getRoomsForm.bedCount" size="small" style="margin-left:40px; width:200px" @change="getDataList">
+                                        <el-option :value="key" v-for="(item,key,index) of $t('commons.bedType')" :label="item" :key="index"></el-option>
+                                    </el-select>
+                                </el-row>
+                                <br />
+                                <el-row>
+                                    <el-col :span="8" v-for="v in roomList" :key="v.roomTypeId">
+                                        <div class="grid-content rooms">
+                                            <div class="grid-cell" :class="activeRoomCheck(v.roomTypeId)?'active':''">
                                                 <div class="wrap">
                                                     <el-row class="row">
                                                         <el-col :span="14">
                                                             <span>{{v.roomTypeName}}</span>
-                                                            <span class="text-red" style="margin-left: 10px">{{v.num}}{{$t('manager.hk_space')}}</span>
                                                         </el-col>
-
                                                         <el-col :span="10">
                                                             <div style="text-align: right">
-                                                                <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">{{ $t('desk.rowHouse') }}</el-button>
+                                                                <el-input-number @change="handleNumChange($event,v)" :min="0"
+                                                                                 :max="v.reserveTotal" :label="$t('desk.home_describeText')"
+                                                                                 size="mini" style="width:100px" v-model.number="v.num"></el-input-number>
                                                             </div>
                                                         </el-col>
                                                     </el-row>
-                                                    <el-row class="row" v-if="v.roomsArr && v.roomsArr.length && v.roomsArr[0].houseNum">
-                                                        <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">
-                                                            <span v-if="item.houseNum"> {{item.houseNum}}</span>
-                                                            <span v-if="item.houseNum" class="del" @click="delete_db_row_houses(v,item.id,i)">✕ {{$t('desk.customer_remove')}}</span>
-                                                        </el-button>
+                                                    <el-row class="row">
+                                                        <el-col :span="8">
+                                                            <!--                                                        <el-button type="text" size="mini">{{$t('desk.home_canOrderText')}}{{v.reserveTotal}}</el-button>-->
+                                                        </el-col>
+                                                        <el-col :span="15">
+                                                            <span>{{$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
+                                                        </el-col>
                                                     </el-row>
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                        </el-col>
+                        <el-col :span="7">
+                            <div class="grid-content">
+                                <!--                            <el-row>-->
+                                <!--                                <el-button @click="page_row_houses">{{ $t('desk.autoRowHouse') }}</el-button>&nbsp;&nbsp;-->
+                                <!--                            </el-row>-->
+                                <br />
+                                <el-row class="roomSelect">
+                                    <ul>
+                                        <li v-for="(v,index) in waitingRoom" :key="index">
+                                            <div class="grid-content">
+                                                <div class="grid-cell">
+                                                    <div class="wrap">
+                                                        <el-row class="row">
+                                                            <el-col :span="14">
+                                                                <span>{{v.roomTypeName}}</span>
+                                                                <span class="text-red" style="margin-left: 10px">{{v.num}}{{$t('manager.hk_space')}}</span>
+                                                            </el-col>
 
-                            </el-row>
+                                                            <el-col :span="10">
+                                                                <div style="text-align: right">
+                                                                    <el-button type="primary" size="mini" @click="rowRoomByItem(v,index)">{{ $t('desk.rowHouse') }}</el-button>
+                                                                </div>
+                                                            </el-col>
+                                                        </el-row>
+                                                        <el-row class="row" v-if="v.roomsArr && v.roomsArr.length && v.roomsArr[0].houseNum">
+                                                            <el-button class="roomNumTag" size="mini" v-for="(item,i) of v.roomsArr" :key="i">
+                                                                <span v-if="item.houseNum"> {{item.houseNum}}</span>
+                                                                <span v-if="item.houseNum" class="del" @click="delete_db_row_houses(v,item.id,i)">✕ {{$t('desk.customer_remove')}}</span>
+                                                            </el-button>
+                                                        </el-row>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
 
-                        </div>
-                    </el-col>
-                </el-row>
-            </el-form>
-        </el-row>
-        <span slot="footer" class="dialog-footer">
+                                </el-row>
+
+                            </div>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="rowRoomHandleShow = false">{{ $t('commons.cancel') }}</el-button>
             <el-button size="small" type="primary" @click="hotel_check_inChange">{{ $t('commons.confirm') }}</el-button>
         </span>
-    </el-dialog>
+        </el-dialog>
 
-    <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="800px">
-        <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
-            <el-form-item :label="$t('manager.hk_toward') + ':'" class="" style="margin-bottom:0">
-                <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
-                    <el-checkbox v-for="(item,key,index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{item}}</el-checkbox>
-                </el-checkbox-group>
-            </el-form-item>
-            <el-form-item :label="$t('desk.home_attribute') + ':'" class="" style="margin-bottom:0">
-                <el-checkbox v-model="hotelRoomListParams.windowFlag" @change="hotel_room_list">{{$t('desk.home_haveWindow')}}</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.roadFlag" @change="hotel_room_list">{{$t('desk.home_onRoad')}}</el-checkbox>
-                <el-checkbox v-model="hotelRoomListParams.smokeFlag" @change="hotel_room_list">{{$t('desk.home_noSmoke')}}</el-checkbox>
-            </el-form-item>
-            <div class="rowRoomsList">
-                <div class="wrap">
-                    <el-row>
-                        <!-- <h3>新加坡假日酒店</h3> -->
-                        <el-row class="roomsInserted" :gutter="10">
-                            <el-col v-for="v in rowRoomCurrentList" :key="v.id" :span="3" style="margin-bottom:10px">
-                                <el-tag :type="checkIsSelect(v)?'danger':'info'" effect="dark" class="tag" @click="rowRoomCurrentListItemAdd(v)">{{v.houseNum}}</el-tag>
-                            </el-col>
+        <el-dialog top="0" :visible.sync="rowRoomShow" class="rowRoomDia" :title="$t('desk.rowHouse')" width="800px">
+            <el-form :model="hotelRoomListParams" style="margin-top:-20px" v-loading="loading">
+                <el-form-item :label="$t('manager.hk_toward') + ':'" class="" style="margin-bottom:0">
+                    <el-checkbox-group v-model="hotelRoomListParams.toward" @change="hotel_room_list">
+                        <el-checkbox v-for="(item,key,index) of $t('commons.toward')" :label="key" :value="key" :key="index">{{item}}</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+                <el-form-item :label="$t('desk.home_attribute') + ':'" class="" style="margin-bottom:0">
+                    <el-checkbox v-model="hotelRoomListParams.windowFlag" @change="hotel_room_list">{{$t('desk.home_haveWindow')}}</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.roadFlag" @change="hotel_room_list">{{$t('desk.home_onRoad')}}</el-checkbox>
+                    <el-checkbox v-model="hotelRoomListParams.smokeFlag" @change="hotel_room_list">{{$t('desk.home_noSmoke')}}</el-checkbox>
+                </el-form-item>
+                <div class="rowRoomsList">
+                    <div class="wrap">
+                        <el-row>
+                            <!-- <h3>新加坡假日酒店</h3> -->
+                            <el-row class="roomsInserted" :gutter="10">
+                                <el-col v-for="v in rowRoomCurrentList" :key="v.id" :span="3" style="margin-bottom:10px">
+                                    <el-tag :type="checkIsSelect(v)?'danger':'info'" effect="dark" class="tag" @click="rowRoomCurrentListItemAdd(v)">{{v.houseNum}}</el-tag>
+                                </el-col>
+                            </el-row>
                         </el-row>
-                    </el-row>
+                    </div>
                 </div>
-            </div>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
+            </el-form>
+            <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="rowRoomShow = false">{{ $t('commons.cancel') }}</el-button>
             <el-button size="small" type="primary" @click="db_row_houses">{{ $t('commons.confirm') }}</el-button>
         </span>
-    </el-dialog>
-    <rowHouse ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
-</div>
+        </el-dialog>
+        <rowHouse ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
+    </div>
 </template>
 
 <script>
@@ -163,7 +163,7 @@ import myMixin from './rowRoomMixin';
 import rowHouse from "@/components/front/rowHouse";
 export default {
     mixins: [myMixin],
-    props: ['title', 'operCheckinType'],
+    props: ['title', 'operCheckinType', ''],
     components: {
         rowHouse
     },
@@ -355,11 +355,19 @@ export default {
     },
     methods: {
         // handleType： 操作类型  默认为空 修改预留   1： 添加房间
-         // orderType ： 订单类型 1： 预订单  2：订单
-        initForm(checkInId, checkinInfo, reservedRoom, handleType, orderType = 2) {
+        // orderType ： 订单类型 1： 预订单  2：订单
+        initForm(checkInId, checkinInfo, reservedRoom, handleType, orderType = 2, detailData = {}) {
+            console.log(detailData);
+
             this.reservedRoom = reservedRoom;
             this.handleType = handleType;
             this.orderType = orderType;
+            let inRoomListLength = detailData.inRoomList.length;
+            debugger;
+            if (inRoomListLength > 0 && detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId']) {
+                checkInId = detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId'] || checkInId;
+                this.orderType = 1;   //订单
+            }
             let that = this
             that.waitingRoom = [];
             //初始化已排房
@@ -665,17 +673,21 @@ export default {
                     realPrice: item.realPrice
                 })
             })
+            debugger
             // this.checkInForm.roomIds = roomIdArray.join(",");
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
+                    debugger
                     if (this.handleType == 1) {
                         this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
-                            checkinRoomType:  this.orderType,
-                            checkinId:  this.checkInForm.checkInId,
+                            checkinRoomType:  2,
+                            // checkinId: this.orderType == 1 ?  this.checkInForm.checkInId : '',
+                            // checkinReserveId: this.orderType == 2 ? this.checkInForm.checkInReserveId : '',
+                            checkinId: this.checkInForm.checkInId,
                             checkinReserveId: this.checkInForm.checkInReserveId,
                             checkInRoomJson: this.checkInForm.checkInRoomJson
-                    }, (data) => {
+                        }, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');
                         })

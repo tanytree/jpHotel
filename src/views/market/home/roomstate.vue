@@ -96,7 +96,7 @@
                                             <span>{{ room.hotelRoomType.houseName }}</span>
                                         </div>
                                         <div class="line" v-if="room.checkInRoomType == 1 && room.checkInObj">
-                                            <span v-if="room.checkInRoomType == 1"> {{ $t('desk.customer_livePeople') + '：' + room.checkInObj.name }}</span>
+                                            <span v-if="room.checkInRoomType == 1"> {{ $t('desk.customer_livePeople') + '：' + (getCheckinPerson(room) || room.checkInObj.name)}}</span>
                                             <span>{{  '  '  }}</span>
                                         </div>
                                         <div class="line" v-if="room.reseverCheckInObj && room.checkInRoomType == 2">
@@ -363,6 +363,19 @@ export default {
         this.initOthers();
     },
     methods: {
+
+        getCheckinPerson(room) {
+            if (room.livingPersonList && room.livingPersonList.length > 0) {
+                if (room.livingPersonList.length == 1) {
+                    return room.livingPersonList[0].name;
+                }
+                let livingPerson = room.livingPersonList.filter(e => {
+                    return e.personType == 2
+                }) || room.livingPersonList[0];
+                return livingPerson.name;
+            }
+            return '';
+        },
         init() {
             this.realtime_room_statistics();
             this.get_hotel_building_list();
@@ -440,6 +453,15 @@ export default {
             return new Promise((resolve, reject) => {
                 this.$F.getPublicDictByType(null, 7, (res) => {
                     this.dict_personRoom = res;
+
+                    res.forEach(item => {
+                        this.personRoomList.forEach(personRoom => {
+                            if (item.eName == personRoom.eName) {
+                                item.total = personRoom.total;
+                            }
+                        })
+                    })
+                    debugger
                     this.personRoom = res;
                     resolve(res);
                 });
@@ -489,15 +511,15 @@ export default {
                         // 7: "orders_free", //免费
                     };
                     this.roomStatusList = res.roomStatusList;
-                    this.personRoom = res.personRoomList;
+                    this.personRoomList = res.personRoomList;
                     this.roomTypeList = res.roomTypeList;
                     this.channel = res.channelList;
                     this.channel.forEach((element) => {
                         element.name = checkIdInDict(element.channel, this.dict_channel);
                     });
-                    let personRoomNoExistArray = [];
                     let array = [];
-                    this.personRoom.forEach((element) => {
+
+                    this.personRoomList.forEach((element) => {
                         array.push(parseInt(element.personRoomType));
                         element.eName = menu[element.personRoomType];
                         element.name = checkIdInDict(
@@ -506,21 +528,23 @@ export default {
                             "icon"
                         );
                     });
-                    for (let key in menu) {
-                        if (array.indexOf(parseInt(key)) == -1) {
-                            let temp = {
-                                eName: menu[key],
-                                total: 0,
-                                personRoomType: key,
-                            }
-                            temp.name = checkIdInDict(
-                                temp.eName,
-                                that.dict_personRoom,
-                                "icon"
-                            );
-                            that.personRoom.push(temp)
-                        }
-                    }
+                    console.log(this.personRoomList);
+                    debugger
+                    // for (let key in menu) {
+                    //     if (array.indexOf(parseInt(key)) == -1) {
+                    //         let temp = {
+                    //             eName: menu[key],
+                    //             total: 0,
+                    //             personRoomType: key,
+                    //         }
+                    //         temp.name = checkIdInDict(
+                    //             temp.eName,
+                    //             that.dict_personRoom,
+                    //             "icon"
+                    //         );
+                    //         that.personRoom.push(temp)
+                    //     }
+                    // }
                     function checkIdInDict(id, arr, eName) {
                         for (let k in arr) {
                             if (eName) {
@@ -538,7 +562,7 @@ export default {
 
                     // console.log(this.channel)
                     // console.log(this.roomStatus)
-                    console.log(this.personRoom);
+
                 }
             );
         },

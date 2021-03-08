@@ -345,7 +345,7 @@
                 <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">{{$t('desk.book_bookText')}}</el-button>
                 <el-button type="primary" class="submit" @click="openPrintDialog" v-if="!this.storesNum" v-loading="loading">印刷</el-button>
                 <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum" v-loading="loading">{{ $t("commons.save") }}</el-button>
-                <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>
+<!--                <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>-->
             </div>
         </div>
 
@@ -365,7 +365,7 @@
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
        <!-- 打印客户资讯 组件 -->
         <customerInfo  ref="customerInfo"/>
-       
+
     </div>
 </template>
 
@@ -1418,7 +1418,7 @@ export default {
                 this.baseInfo = e;
                 this.checkInForm.name = e.name;
                 this.checkInForm.pronunciation = e.pronunciation;
-                this.checkInForm.guestType = e.guestType ? e.guestType.toString() : '';
+                // this.checkInForm.guestType = e.guestType ? e.guestType.toString() : '';
                 this.checkInForm.idcard = e.idcard;
                 // this.checkInForm.idcardType = e.idcardType.toString();
                 this.checkInForm.idcardType = e.idcardType ? e.idcardType.toString() : '2';
