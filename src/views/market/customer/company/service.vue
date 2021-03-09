@@ -18,7 +18,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('desk.customer_settlementStatus')+':'">
-          <el-select v-model="searchForm.state" class="width150">
+          <el-select v-model="searchForm.requestStatus" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option :label="$t('desk.customer_notRequest')" value="1"></el-option>
             <el-option :label="$t('desk.customer_noInto')" value="3"></el-option>
@@ -100,10 +100,7 @@ export default {
   props: ["souracePage"],
   computed: {
     ...mapState({
-      token: (state) => state.user.token,
-      userId: (state) => state.user.userId,
-      msgKey: (state) => state.config.msgKey,
-      plat_source: (state) => state.config.plat_source,
+        storesNum: (state) => state.user.storesInfo.storesNum,
     }),
   },
   data() {
@@ -116,12 +113,7 @@ export default {
       showEdit: false,
       showDetail: false,
       searchForm: {
-        storesNum: "",
-        enterId: "",
-          state: "",
-        startTime: "", //考试时件
-        endTime: "", //结束时间
-        name: "",
+
       },
       listTotal: 0, //总条数
       multipleSelection: [], //多选
@@ -130,7 +122,6 @@ export default {
   },
 
   created() {
-    console.log(this.souracePage);
     this.resetForm();
     this.getStoreList();
     this.getUnitList();
@@ -170,9 +161,9 @@ export default {
     // 重置
     resetForm() {
       this.searchForm = {
-        storesNum: "",
         enterId: "",
         state: "2",
+        requestStatus: "",  // 结算状态：  1未请款  2已请款待入账  3已入账  int选填
         startTime: "", //考试时件
         endTime: "", //结束时间
         name: "",
@@ -190,10 +181,14 @@ export default {
       });
 
       this.$F.merge(this.searchForm, params);
+      if (this.$F.getHQCode() == this.storesNum) {
+            this.searchForm.storesNum = '';
+      }
+      debugger
       this.$F.doRequest(
         this,
         "/pms/consume/enter_finance_order_list",
-        params,
+          this.searchForm,
         (data) => {
           console.log(data);
           this.tableData = data.enterOrderLogList;
