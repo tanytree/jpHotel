@@ -6,6 +6,7 @@
  */
 //  前台部 中文
 module.exports = {
+    reserveReset: "预约恢复",
   reserveOperator: '预约操作员',
   roomInfoDelete: '确定删除该房间？',
   money: {

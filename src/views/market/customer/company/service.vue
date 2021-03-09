@@ -162,7 +162,7 @@ export default {
     resetForm() {
       this.searchForm = {
         enterId: "",
-        state: "2",
+        state: "2",          //订单中的状态
         requestStatus: "",  // 结算状态：  1未请款  2已请款待入账  3已入账  int选填
         startTime: "", //考试时件
         endTime: "", //结束时间
@@ -184,7 +184,6 @@ export default {
       if (this.$F.getHQCode() == this.storesNum) {
             this.searchForm.storesNum = '';
       }
-      debugger
       this.$F.doRequest(
         this,
         "/pms/consume/enter_finance_order_list",

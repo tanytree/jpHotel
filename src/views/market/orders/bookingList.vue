@@ -214,6 +214,8 @@
                     <template slot-scope="{ row }">
                         <el-button type="text" size="mini" @click="handelDetail(row)">{{ $t("commons.detail") }}</el-button>
                         <el-button type="text" size="mini" v-if="(row.state == 1 || row.state == 2 || row.state == 5) && row.headquarters" @click="handleCancel(row)">{{ $t("commons.cancel") }}</el-button>
+                        <el-button type="text" size="mini" v-if="row.state==8 && row.headquarters" @click="handleReset(row)">
+                            {{ $t('desk.reserveReset') }}</el-button>
                         <template v-if="row.state != 7">
                             <!--              <el-button type="text" size="mini" v-if="!row.deposit" @click="handleDeposit(row)">{{ $t("desk.order_deposit") }}</el-button>-->
                             <!--              <el-button type="text" size="mini" v-if="row.state == 5" @click="handleNoshow(row)">NOSHOW</el-button>-->
