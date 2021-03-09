@@ -358,15 +358,15 @@ export default {
         // orderType ： 订单类型 1： 预订单  2：订单
         initForm(checkInId, checkinInfo, reservedRoom, handleType, orderType = 2, detailData = {}) {
             console.log(detailData);
-
+            this.checkInForm.checkInReserveId = checkInId
             this.reservedRoom = reservedRoom;
             this.handleType = handleType;
             this.orderType = orderType;
             let inRoomListLength = detailData.inRoomList.length;
-            debugger;
             if (inRoomListLength > 0 && detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId']) {
                 checkInId = detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId'] || checkInId;
                 this.orderType = 1;   //订单
+                this.checkInForm.checkInId = checkInId
             }
             let that = this
             that.waitingRoom = [];
@@ -395,8 +395,8 @@ export default {
             }
             this.rowRoomHandleShow = true
             this.checkInForm = checkinInfo
-            this.checkInForm.checkInId = checkInId
-            this.checkInForm.checkInReserveId = checkInId
+
+
             this.getRoomsForm = {
                 changeType: 2,
                 bedCount: '',
@@ -678,14 +678,22 @@ export default {
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
             this.$refs.checkInForm.validate((valid) => {
                 if (valid) {
-                    debugger
                     if (this.handleType == 1) {
+                        let params = {
+                            checkinRoomType:  2,
+                            checkinId: this.checkInForm.checkInId || '',
+                            checkinReserveId: this.checkInForm.checkInReserveId,
+                            // checkinId: this.checkInForm.checkInId,
+                            // checkinReserveId: this.checkInForm.checkInReserveId,
+                            checkInRoomJson: this.checkInForm.checkInRoomJson
+                        }
+                        debugger
                         this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
                             checkinRoomType:  2,
-                            // checkinId: this.orderType == 1 ?  this.checkInForm.checkInId : '',
-                            // checkinReserveId: this.orderType == 2 ? this.checkInForm.checkInReserveId : '',
-                            checkinId: this.checkInForm.checkInId,
+                            checkinId: this.checkInForm.checkInId || '',
                             checkinReserveId: this.checkInForm.checkInReserveId,
+                            // checkinId: this.checkInForm.checkInId,
+                            // checkinReserveId: this.checkInForm.checkInReserveId,
                             checkInRoomJson: this.checkInForm.checkInRoomJson
                         }, (data) => {
                             this.rowRoomHandleShow = false

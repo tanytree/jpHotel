@@ -78,9 +78,9 @@
         </el-table-column>
         <el-table-column align="center" :label="$t('desk.customer_settlementStatus')" show-overflow-tooltip width="110">
           <template slot-scope="{ row }">
-            <div v-if="row.state == 1">{{$t('desk.customer_notRequest')}}</div>
-            <div v-if="row.state == 2">{{$t('desk.customer_areadyInto')}}</div>
-            <div v-if="row.state == 3">{{$t('desk.customer_noInto')}}</div>
+            <div v-if="row.requestStatus == 1">{{$t('desk.customer_notRequest')}}</div>
+            <div v-if="row.requestStatus == 2">{{$t('desk.customer_areadyInto')}}</div>
+            <div v-if="row.requestStatus == 3">{{$t('desk.customer_noInto')}}</div>
           </template>
         </el-table-column>
       </el-table>
