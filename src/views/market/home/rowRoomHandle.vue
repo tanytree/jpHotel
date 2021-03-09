@@ -673,7 +673,6 @@ export default {
                     realPrice: item.realPrice
                 })
             })
-            debugger
             // this.checkInForm.roomIds = roomIdArray.join(",");
             this.checkInForm.checkInRoomJson = JSON.stringify(checkInRoomJson);
             this.$refs.checkInForm.validate((valid) => {
@@ -687,7 +686,6 @@ export default {
                             // checkinReserveId: this.checkInForm.checkInReserveId,
                             checkInRoomJson: this.checkInForm.checkInRoomJson
                         }
-                        debugger
                         this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
                             checkinRoomType:  2,
                             checkinId: this.checkInForm.checkInId || '',

@@ -461,7 +461,6 @@ export default {
                             }
                         })
                     })
-                    debugger
                     this.personRoom = res;
                     resolve(res);
                 });
@@ -529,7 +528,6 @@ export default {
                         );
                     });
                     console.log(this.personRoomList);
-                    debugger
                     // for (let key in menu) {
                     //     if (array.indexOf(parseInt(key)) == -1) {
                     //         let temp = {
