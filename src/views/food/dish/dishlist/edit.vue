@@ -108,6 +108,9 @@
                  price: [
                    { required: true, message: this.$t('food.common.input_food_price'), trigger: 'change' }
                  ],
+                 costPrice:[
+                     { required: true, message: this.$t('food.common.input_food_price'), trigger: 'change' }
+                 ],
                  remark:[
                      { required: true, message:'请输入菜品介绍', trigger: 'change' }
                  ],
