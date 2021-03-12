@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-11-25 16:27:58
  * @Author: 陶子
- * @LastEditTime: 2021-03-03 14:53:24
+ * @LastEditTime: 2021-03-12 11:24:24
  * @FilePath: \jiudian\src\components\storeLookTao.vue
  * @pageName: 这是--（门店概览）--页面
 -->
@@ -18,7 +18,7 @@
         </el-form-item>
         <el-form-item :label="$t('boss.add_chooseStore') + ':'" label-width="100px">
           <el-select v-model="storeForm.storesNum" :placeholder="$t('login.sTip')">
-             <el-option   label="ALL" value=""></el-option>
+            <el-option label="ALL" value=""></el-option>
             <el-option v-for="item in storeList" :key="item.storesNum" :label="item.storesName" :value="item.storesNum"></el-option>
           </el-select>
         </el-form-item>
@@ -80,7 +80,7 @@
                 <img src="../assets/images/storeLookTao/housePrice.png" class="boxLeft" />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_averageRoomprice')}}</div>
-                  <div class="botRight_bottom">{{$F.numFormate(Math.round(itemInfo.room_avg_prices))}}</div>
+                  <div class="botRight_bottom">{{$F.numFormate((itemInfo.room_avg_prices).toFixed(2))}}</div>
                 </div>
               </div>
             </el-col>
@@ -206,7 +206,7 @@ export default {
         },
         (data) => {
           this.storeList = data;
-          this.storeForm.storesNum = '';
+          this.storeForm.storesNum = "";
           this.getData();
         }
       );

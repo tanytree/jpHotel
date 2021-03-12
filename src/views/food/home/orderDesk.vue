@@ -169,9 +169,9 @@
             <el-form-item :label="$t('food.common.deskNum')" prop="deskNum">
                 <el-input type="number" size="small" :placeholder="$t('food.common.deskNum')" v-model="desk.deskNum"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('food.common.numberPlat')" prop="numberPlat">
+            <!-- <el-form-item :label="$t('food.common.numberPlat')" prop="numberPlat">
                 <el-input  type="number" size="small" :placeholder="$t('food.common.numberPlat')" v-model="desk.numberPlat"></el-input>
-            </el-form-item>
+            </el-form-item> -->
         </el-form>
         <div class="text-center"  style="padding-top: 20px;border-top: 1px solid #ddd;">
            <el-button @click="closeDialog">{{$t('food.common.cancel')}}</el-button>

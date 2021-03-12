@@ -224,6 +224,7 @@ module.exports = {
   hk_placeEnterContentB: '请输入内容',
   hk_placeEnterContentC: '请输入内容',
   hk_placeEnterContentD: '请输入内容',
+  hk_placeEnterContentLast: '请输入内容',
   hk_newAddRoomType: '新增房型',
   hk_newAddRoomTypeA: '新增房型',
   hk_priceCalendar: '价格日历',

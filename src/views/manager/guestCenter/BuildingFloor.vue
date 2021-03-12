@@ -67,7 +67,7 @@
           </el-col>
           <el-col :span="20">
             <el-form-item :label="$t('manager.hk_buildingNote')+':'">
-              <el-input type="textarea" :rows="2" :placeholder="$t('manager.hk_placeEnterContent')" v-model="ruleForm_dong.remark"></el-input>
+              <el-input type="textarea" :rows="2" :placeholder="$t('manager.hk_placeEnterContentLast')" v-model="ruleForm_dong.remark"></el-input>
             </el-form-item>
           </el-col>
         </el-form>
@@ -93,7 +93,7 @@
           </el-col>
           <el-col :span="20">
             <el-form-item :label="$t('manager.hk_floorNote')+':'">
-              <el-input type="textarea" :rows="2" :placeholder="$t('manager.hk_placeEnterContentC')" v-model="ruleForm_ceng.remark"></el-input>
+              <el-input type="textarea" :rows="2" :placeholder="$t('manager.hk_placeEnterContentLast')" v-model="ruleForm_ceng.remark"></el-input>
             </el-form-item>
           </el-col>
         </el-form>

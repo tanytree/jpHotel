@@ -2,8 +2,7 @@
 <template>
   <div class="boss-index" id="page1">
     <el-tabs class="pageTab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle" :name="item.path"
-                   :key="item.path" v-if="$F.filterThirdMenu('finance', item.path, true)">
+      <el-tab-pane v-for="item in menuList" :label="$i18n.locale == 'ri' ? item.japanese : item.menuTitle" :name="item.path" :key="item.path" v-if="$F.filterThirdMenu('finance', item.path, true)">
         <!-- 房间动态-->
         <!--                <roomStatus v-if="item.path == 'roomStatus'"/>-->
         <!-- 夜审设置-->
@@ -18,10 +17,11 @@
         <!-- <printingMg v-if="item.path == 'printingMg'" ref="printingMg" :printData="printData" :initData="getPrintParamData" /> -->
         <!-- 消费税管理 -->
         <consumptionTax v-if="item.path=='salesTax'" />
-        <!-- 渠道设置 -->
-        <sourceSet v-if="item.path=='channelSetting'" />
         <!-- 员工权限-->
         <EmployeeRights v-if="item.path == 'staff-rights'" />
+        <!-- 渠道设置 -->
+        <sourceSet v-if="item.path=='channelSetting'" />
+
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -145,7 +145,6 @@ export default {
           });
         } else this.hotelData.files = [];
       });
-
     },
     getPrintParamData() {
       this.$F.doRequest(this, "/pms/documentsparams/list", {}, (res) => {
@@ -237,7 +236,6 @@ export default {
       this.$F.doRequest(this, "/pms/handover/list", {}, (res) => {
         this.handData = res;
       });
-
     },
   },
 };

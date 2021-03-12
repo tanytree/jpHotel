@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-08 10:24:28
+ * @LastEditTime: 2021-03-12 10:39:43
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -963,8 +963,8 @@ module.exports = {
   order_teamText: "団体",
   home_onePeopleLive: '一人素泊まり料金',
   home_onePeopleLiveA: '利用料金',
-  order_go21: "前の21日へ",
-  order_back21: "後ろの21日へ",
+  order_go21: "21日前へ",
+  order_back21: "21日後へ",
   order_blankText: "空",
   order_ordinaryLive: "一般宿泊",
   order_clockLive: "日帰り",
@@ -990,8 +990,8 @@ module.exports = {
   home_idCardNumB: '身分証明書/番号',
   book_bookText: '予約',
   book_placeRowHouse: 'アサインをしてください',
-  add_go14: '前14日へ',
-  add_back14: '後ろ１４日へ',
+  add_go14: '14日前へ',
+  add_back14: '14日後へ',
   order_todayBack: "日帰り",
   book_serveFee: 'サービス料',
   book_costFee: '消费税',

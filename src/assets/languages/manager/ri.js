@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-03 16:23:19
+ * @LastEditTime: 2021-03-12 11:33:55
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -493,6 +493,7 @@ module.exports = {
   hk_placeEnterContentB: '階の名称を入力してください',
   hk_placeEnterContentD: 'その他追加事項を入力してください',
   hk_placeEnterContentC: '備考を入力してくだあい',
+  hk_placeEnterContentLast: '備考を入力してください',
   grsl_physicalGoods: '商品',
   grsl_serviceGoods: 'サービス',
   hk_newAddRoomType: '部屋タイプ情報',
@@ -598,7 +599,7 @@ module.exports = {
   add_viewPettyCash: '繰越・金額仕分け',
   add_viewThisCard: '売掛仕分け',
   add_paymentOfTotal: '売掛合計',
-  hk_documentsPrefix: '接頭辞',
+  hk_documentsPrefix: '頭文字',
   hk_inputPrefix: '入力してください',
 
 
