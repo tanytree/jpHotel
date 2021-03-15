@@ -184,10 +184,13 @@
                 {{$t('shop.realPrice')}}：  ¥{{numFormate(detail.realPayPrice)}}
             </div>
 
-            <div class="item margin-t-10 text-gray" v-if="detail.billingType">
+            <div class="item margin-t-10 text-gray" v-if="detail.billingType&&detail.payType!=100">
                 结账信息：{{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
             </div>
 
+            <div class="item margin-t-10 text-gray" v-if="detail.billingType&&detail.payType==100">
+                结账信息：【payments】 ¥{{numFormate(detail.realPayPrice)}}
+            </div>
 
 
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-04 11:11:26
+ * @LastEditTime: 2021-03-15 14:06:18
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -116,11 +116,13 @@
                             <span v-if="row.payType == 1">{{$t('desk.add_cashGet')}}</span>
                             <span v-if="row.payType == 2">{{$t('desk.add_cardGet')}} </span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherGet')}}</span>
+                            <span v-if="row.payType == 100">payments</span>
                         </span>
                         <span v-if="row.priceType == 4">
                             <span v-if="row.payType == 1">现金退款</span>
                             <span v-if="row.payType == 2">信用卡退款 </span>
                             <span v-if="row.payType == 4">其他方式退款</span>
+                            <span v-if="row.payType == 100">payments</span>
                         </span>
                         <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}} (￥{{row.consumePrice}}) </span>
                         <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>

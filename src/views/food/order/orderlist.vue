@@ -168,8 +168,11 @@
 				<div class="item margin-t-10"><span>{{$t('desk.book_costFee2')}}：<span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></span><span>¥{{numFormate(orderTax.taxInFee)}}；</span></div>
 
                 <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('food.reset.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
-                <div class="item margin-t-10" v-if="detail.billingType">
+                <div class="item margin-t-10" v-if="detail.billingType&&detail.payType!=100">
                     {{$t('food.reset.paymoney')}}: {{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+                 </div>
+                  <div class="item margin-t-10" v-if="detail.billingType&&detail.payType==100">
+                    {{$t('food.reset.paymoney')}}: 【payments】 ¥{{numFormate(detail.realPayPrice)}}
                  </div>
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.reset.create_time')}}：{{detail.createTime}}</div>
