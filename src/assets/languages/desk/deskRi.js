@@ -60,7 +60,7 @@ module.exports = {
   enterAccount: '入金',
   enterAccountC: '計上',
   enterAccountA: '会計',
-  enterAccountB: '会計入力',
+  enterAccountB: '他の計上',
   checkInDays: '滞在日数',
   arrivalTime: 'C/I時間',
   arrivalTimeA: '到着予定',

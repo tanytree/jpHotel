@@ -15,7 +15,7 @@
       <div class="breakfast">{{ $t('manager.hk_breakfast') }}-{{ data.mealName ? `【${data.mealName}￥ ${data.mealPrice} 】` : $t('manager.hk_toward_malu')}}</div>
       <div class="dinner">{{ $t('manager.hk_dinner') }}-{{ data.mealNameDinner ? `【${data.mealNameDinner}￥ ${data.mealPriceDinner} 】` : $t('manager.hk_toward_malu')}}</div>
     </div>
-    <div class="title_one" style="margin-bottom:10px">{{$t('desk.add_billSide')}}：{{$t('desk.add_notDo')}}</div>
+<!--    <div class="title_one" style="margin-bottom:10px">{{$t('desk.add_billSide')}}：{{$t('desk.add_notDo')}}</div>-->
     <el-form :model="sideForm" ref="sideForm" label-width="100px"  class="demo-ruleForm">
       <el-row>
         <el-col :span="10">

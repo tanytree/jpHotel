@@ -23,7 +23,7 @@
                     <el-button type="danger" size="mini" :disabled="currentRoom.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="currentRoom.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="currentRoom.state == 2">{{ $t('desk.charge') }}</el-button>
-                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>
+<!--                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>-->
                     <!-- <el-button type="primary" size="mini" @click="out_check_in_cancel" >撤销退房</el-button> -->
                 </el-form-item>
             </el-row>

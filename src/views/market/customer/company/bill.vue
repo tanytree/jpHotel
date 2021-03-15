@@ -416,7 +416,7 @@ export default {
     dialogClose() {
       this.dialogNew_cancle();
     },
-  
+
     //点击 挂账明细 按钮
     advancePayments(row) {
       this.innerPageSize = 10;

@@ -357,6 +357,7 @@ export default {
         // handleType： 操作类型  默认为空 修改预留   1： 添加房间
         // orderType ： 订单类型 1： 预订单  2：订单
         initForm(checkInId, checkinInfo, reservedRoom, handleType, orderType = 2, detailData = {}) {
+            this.checkInForm = checkinInfo
             console.log(detailData);
             this.checkInForm.checkInReserveId = checkInId
             this.reservedRoom = reservedRoom;
@@ -368,6 +369,9 @@ export default {
                 this.orderType = 1;   //订单
                 this.checkInForm.checkInId = checkInId
             }
+            console.log(this.checkInForm.checkInReserveId);
+            console.log(this.checkInForm.checkInId);
+            debugger
             let that = this
             that.waitingRoom = [];
             //初始化已排房
@@ -394,9 +398,6 @@ export default {
                 }
             }
             this.rowRoomHandleShow = true
-            this.checkInForm = checkinInfo
-
-
             this.getRoomsForm = {
                 changeType: 2,
                 bedCount: '',
@@ -513,7 +514,7 @@ export default {
                 checkinRoomType: 1,
                 roomTypeId: this.rowRoomCurrentItem.roomTypeId,
                 checkinId: this.checkInForm.checkInId,
-                checkinReserveId: this.checkInForm.checkInId,
+                checkinReserveId: this.checkInForm.checkinReserveId,
                 roomId: ids,
                 reservePrice: this.rowRoomCurrentItem.todayPrice,
                 realPrice: this.rowRoomCurrentItem.price
@@ -523,64 +524,64 @@ export default {
             this.$forceUpdate()
         },
         //自动排房确定
-        page_row_houses() {
-            if (!this.checkInForm.checkInId) {
-                this.$message.error(this.$t('desk.home_inputLiveAfter'))
-                return false
-            }
-            if (this.waitingRoom.length < 1) {
-                this.$message.error(this.$t('desk.home_roomTypeOperate'));
-                return
-            }
-            let roomTypeId = [],
-                number = 0;
-            this.waitingRoom.forEach(element => {
-                let thisNum = element.num - (element.roomsArr ? element.roomsArr.length : 0)
-                number += thisNum
-                if (thisNum > 0) {
-                    for (let i = 0; i < thisNum; i++) {
-                        roomTypeId.push(element.roomTypeId);
-                    }
-                }
-            });
-            if (number < 1) {
-                return
-            }
-            let params = {
-                checkinRoomType: 1,
-                roomTypeId: roomTypeId,
-                rowHousesTotal: number
-            }
-            params.checkinId = this.checkInForm.checkInId
-            params.checkinReserveId = this.checkInForm.checkInId
-            let setRooms = (key, item) => {
-                console.log(key)
-                console.log(item)
-                for (let k in this.waitingRoom) {
-                    if (this.waitingRoom[k].roomTypeId == key) {
-                        if (!this.waitingRoom[k].roomsArr) {
-                            this.waitingRoom[k].roomsArr = []
-                        }
-
-                        this.waitingRoom[k].roomsArr.push({
-                            houseNum: item.houseNum,
-                            id: item.id,
-                            reservePrice: 555,
-                            realPrice: 555
-                        })
-                    }
-                }
-            }
-            this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
-                let data = res
-                for (let k in data) {
-                    data[k].forEach(element => {
-                        setRooms(k, element)
-                    });
-                }
-                this.$forceUpdate()
-            })
-        },
+        // page_row_houses() {
+        //     if (!this.checkInForm.checkInId) {
+        //         this.$message.error(this.$t('desk.home_inputLiveAfter'))
+        //         return false
+        //     }
+        //     if (this.waitingRoom.length < 1) {
+        //         this.$message.error(this.$t('desk.home_roomTypeOperate'));
+        //         return
+        //     }
+        //     let roomTypeId = [],
+        //         number = 0;
+        //     this.waitingRoom.forEach(element => {
+        //         let thisNum = element.num - (element.roomsArr ? element.roomsArr.length : 0)
+        //         number += thisNum
+        //         if (thisNum > 0) {
+        //             for (let i = 0; i < thisNum; i++) {
+        //                 roomTypeId.push(element.roomTypeId);
+        //             }
+        //         }
+        //     });
+        //     if (number < 1) {
+        //         return
+        //     }
+        //     let params = {
+        //         checkinRoomType: 1,
+        //         roomTypeId: roomTypeId,
+        //         rowHousesTotal: number
+        //     }
+        //     params.checkinId = this.checkInForm.checkInId
+        //     params.checkinReserveId = this.checkInForm.checkInId
+        //     let setRooms = (key, item) => {
+        //         console.log(key)
+        //         console.log(item)
+        //         for (let k in this.waitingRoom) {
+        //             if (this.waitingRoom[k].roomTypeId == key) {
+        //                 if (!this.waitingRoom[k].roomsArr) {
+        //                     this.waitingRoom[k].roomsArr = []
+        //                 }
+        //
+        //                 this.waitingRoom[k].roomsArr.push({
+        //                     houseNum: item.houseNum,
+        //                     id: item.id,
+        //                     reservePrice: 555,
+        //                     realPrice: 555
+        //                 })
+        //             }
+        //         }
+        //     }
+        //     this.$F.doRequest(this, '/pms/checkin/empty_row_houses', params, (res) => {
+        //         let data = res
+        //         for (let k in data) {
+        //             data[k].forEach(element => {
+        //                 setRooms(k, element)
+        //             });
+        //         }
+        //         this.$forceUpdate()
+        //     })
+        // },
         //移除排房
         delete_db_row_houses(item, id, i) {
             item.roomsArr.splice(i, 1)
@@ -686,14 +687,8 @@ export default {
                             // checkinReserveId: this.checkInForm.checkInReserveId,
                             checkInRoomJson: this.checkInForm.checkInRoomJson
                         }
-                        this.$F.doRequest(this, '/pms/checkin/checkin_add_room', {
-                            checkinRoomType:  2,
-                            checkinId: this.checkInForm.checkInId || '',
-                            checkinReserveId: this.checkInForm.checkInReserveId,
-                            // checkinId: this.checkInForm.checkInId,
-                            // checkinReserveId: this.checkInForm.checkInReserveId,
-                            checkInRoomJson: this.checkInForm.checkInRoomJson
-                        }, (data) => {
+                        debugger
+                        this.$F.doRequest(this, '/pms/checkin/checkin_add_room', params, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');
                         })
