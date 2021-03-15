@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-01 18:10:22
+ * @LastEditTime: 2021-03-15 11:41:41
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -296,6 +296,7 @@ module.exports = {
     '2': 'クレジットカード',
     '3': '売掛',
     '4': 'その他',
+    '100': 'payments',
     // '3': '支付宝',
     // '4': '微信',
   },

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-01 16:42:06
+ * @LastEditTime: 2021-03-15 11:41:18
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -290,6 +290,7 @@ module.exports = {
     '3': '挂账',
     '4': '其他',
     // '3': '支付宝',
+    '100': 'payments',
     // '4': '微信',
   },
 

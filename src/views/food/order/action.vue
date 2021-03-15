@@ -49,6 +49,7 @@
           <el-select size="small" v-model="form.payType">
             <el-option :label="$t('food.payType.1')" :value="1"></el-option>
             <el-option :label="$t('food.payType.2')" :value="2"></el-option>
+            <el-option label="payments" :value="100"></el-option>
             <!-- <el-option :label="$t('food.payType.3')" :value="3"></el-option>
                             <el-option :label="$t('food.payType.4')" :value="4"></el-option> -->
             <!-- <el-option :label="$t('food.payType.5')" :value="5"></el-option> -->
