@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-03-08 10:44:52
+ * @LastEditTime: 2021-03-17 10:19:49
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -26,7 +26,7 @@ module.exports = {
   reserveInfoDescA: '预定信息',
   roomOccupation: '房间被占用',
   attachedMeal: '附餐',
-  attachedMealA: '附餐',
+  attachedMealA: '住宿项目入账',
   keepTime: '保留时间',
   autoRowHouse: '自动排房',
   rowHouse: '排房',
@@ -594,7 +594,7 @@ module.exports = {
   order_clockLive: "时租房入住",
   order_meetingLive: "会场",
   order_todayBack: "当日回入住",
-  order_: "",
+  order_otherEnter: "其他入账",
   order_: "",
   //客户管理（customer）
   customer_openCarmen: '开卡门店',

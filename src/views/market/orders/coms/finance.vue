@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-15 14:06:18
+ * @LastEditTime: 2021-03-17 10:45:31
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -11,8 +11,8 @@
             <!-- {{isType}} -->
             <el-row v-show="roomType == 'customer'">
                 <el-form-item label="">
-                    <el-button type="danger" size="mini" @click="entryShow=true,isType=0" :disabled="currentRoom.state == 2">{{$t('desk.enterAccountA')}}</el-button>
                     <el-button type="primary" size="mini" @click='sideOrderHandle' :disabled="currentRoom.state == 2">{{$t('desk.attachedMealA')}}</el-button>
+                    <el-button type="primary" size="mini" @click="entryShow=true,isType=0" :disabled="currentRoom.state == 2">{{$t('desk.order_otherEnter')}}</el-button>
                     <el-button type="primary" size="mini" @click="stayoverHandle" :disabled="currentRoom.state == 2" v-if="currentRoom.id">{{$t('desk.home_stayOver')}}</el-button>
                     <el-button type="primary" size="mini" @click="consumeGoodsHandle" :disabled="currentRoom.state == 2">{{ $t('desk.serve_miniPub') }}</el-button>
                     <el-button type="primary" size="mini" @click="destructionHandle" :disabled="currentRoom.state == 2">{{$t('desk.customer_richA')}}</el-button>
@@ -20,8 +20,8 @@
                 <br/>
                 <el-form-item label="">
                     <!-- <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button> -->
-                    <el-button type="danger" size="mini" :disabled="currentRoom.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
-                    <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="currentRoom.state == 2">{{ $t('desk.order_checkout') }}</el-button>
+                    <el-button type="primary" size="mini" :disabled="currentRoom.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
+                    <el-button type="primary" size="mini" @click="checkOutHandle" :disabled="currentRoom.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="currentRoom.state == 2">{{ $t('desk.charge') }}</el-button>
 <!--                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>-->
                     <!-- <el-button type="primary" size="mini" @click="out_check_in_cancel" >撤销退房</el-button> -->
@@ -252,7 +252,7 @@
                   <!-- <el-form-item :label="$t('desk.book_firstInto')"></el-form-item> -->
                  <el-form-item :label="$t('desk.order_consumptionProject')+':'" v-show="isType == 0">
                     <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
-                        <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button>
+                        <!-- <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button> -->
                         <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
                         <el-radio-button :label="7" :value="7">{{$t('desk.order_loosAndCompensation')}}</el-radio-button>
                         <el-radio-button :label="15" :value="15">{{$t('desk.book_wenquan')}}</el-radio-button>

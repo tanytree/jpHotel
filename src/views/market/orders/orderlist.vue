@@ -1,7 +1,7 @@
  <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 11:47:26
+ * @LastEditTime: 2021-03-16 18:29:10
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -96,7 +96,7 @@
                                 <el-option :label="$t('desk.home_all')" value>{{
                                         $t("desk.home_all")
                                     }}</el-option>
-                                <el-option :value="item.id" v-for="(item, index) of roomTypeList" :label="item.houseName" :key="index"></el-option>
+                                <el-option :value="item.roomTypeId" v-for="(item, index) of roomTypeList" :label="item.houseName" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item :label="$t('desk.order_outOrder')">
@@ -323,11 +323,12 @@ export default {
             this.loading = true;
             this.$F.doRequest(
                 this,
-                "/pms/hotel/room_type_list",
+                "/pms/realtime/realtime_room_statistics",
                 this.searchForm,
                 (res) => {
+                  console.log(res);
                     this.loading = false;
-                    this.roomTypeList = res.roomtype;
+                    this.roomTypeList = res.roomTypeList;
                 }
             );
         },

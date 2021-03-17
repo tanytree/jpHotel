@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-12 10:39:43
+ * @LastEditTime: 2021-03-17 10:43:13
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -27,7 +27,7 @@ module.exports = {
   reserveInfoDesc: '予定情報',
   reserveInfoDescA: '予約者',
   attachedMeal: '食付',
-  attachedMealA: 'プラン・食事',
+  attachedMealA: '宿泊プラン計上',
   keepTime: 'ほりゅうじかん',
   autoRowHouse: '自動アサイン',
   rowHouse: 'アサイン',
@@ -871,7 +871,7 @@ module.exports = {
   home_idCardNum: '証明番号',
   editor_asideBreakfast: 'プラン・朝食',
   editor_asideDinner: 'プラン・夕食',
-  side_sideBooked: 'プラン・食事計上',
+  side_sideBooked: '宿泊プラン計上',
   side_changePackage: 'コース変更',
   side_changePackageA: '食事種別変更',
   customer_intoPrcieShould: '入金金額は請求金額から入金済金額の差し引きより少なければなりません。',
@@ -1070,6 +1070,7 @@ module.exports = {
   add_useSelectPro: '予約プラン連動',
   add_include: '内含消费税',
   add_outclude: '不含消费税',
+  order_otherEnter: "他の計上",
 
 
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-18 18:06:02
+ * @LastEditTime: 2021-03-17 10:54:01
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -15,8 +15,16 @@
       <div class="breakfast">{{ $t('manager.hk_breakfast') }}-{{ data.mealName ? `【${data.mealName}￥ ${data.mealPrice} 】` : $t('manager.hk_toward_malu')}}</div>
       <div class="dinner">{{ $t('manager.hk_dinner') }}-{{ data.mealNameDinner ? `【${data.mealNameDinner}￥ ${data.mealPriceDinner} 】` : $t('manager.hk_toward_malu')}}</div>
     </div>
+
 <!--    <div class="title_one" style="margin-bottom:10px">{{$t('desk.add_billSide')}}：{{$t('desk.add_notDo')}}</div>-->
     <el-form :model="sideForm" ref="sideForm" label-width="100px"  class="demo-ruleForm">
+      <el-row>
+           <el-form-item :label="$t('desk.order_addDayPrice')+':'" >
+             <el-select size="small" v-model="sideForm.reserveId">
+              <el-option v-for="item in detailData.checkIn.reserveProjectList" :key="item.id" :label="item.projectName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+      </el-row>
       <el-row>
         <el-col :span="10">
           <el-form-item :label="$t('desk.editor_asideBreakfast')+':'" prop="region">
