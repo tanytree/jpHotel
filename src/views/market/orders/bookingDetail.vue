@@ -145,17 +145,16 @@ export default {
         showRoomInfo(item) {
             this.isOrder = false;
             console.log(item);
-            console.log(this.detailData);
+
             this.currentRoom = item;
             setTimeout(() => {
-                this.$refs.roominfo.dialogOpen(this.currentRoom, this.detailData.checkIn)
+                this.$refs.roominfo.dialogOpen(this.currentRoom, this.detailData.checkIn, this.detailData)
             }, 100)
 
         },
         goBack(){
             this.mainViewShow = true;
             // let item = {"id":"a367289c90e34614a308917f5726bd32","createTime":"2020-07-05 15:01:00","updateTime":"2020-07-05 15:01:00","menuTitle":"订单管理","menuAliasTitle":null,"japanese":"予約管理","parentMenuId":"a367289c90e34614a308917f5726bd06","icon":"market/nav04.png","path":"orders","menuLevel":2,"menuType":3,"status":1,"menuorder":32,"childList":[{"id":"a367289c90e34614a308917f5726bd104","createTime":"2020-07-05 15:01:00","updateTime":"2021-02-02 15:51:01","menuTitle":"预订单","menuAliasTitle":null,"japanese":"予約情報","parentMenuId":"a367289c90e34614a308917f5726bd32","icon":null,"path":"booking","menuLevel":3,"menuType":3,"status":1,"menuorder":104,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd105","createTime":"2020-07-05 15:01:00","updateTime":"2021-02-02 18:27:46","menuTitle":"订单查询","menuAliasTitle":null,"japanese":"宿泊情報","parentMenuId":"a367289c90e34614a308917f5726bd32","icon":null,"path":"order","menuLevel":3,"menuType":3,"status":1,"menuorder":105,"childList":null,"header":null},{"id":"a367289c90e34614a308917f5726bd106","createTime":"2020-07-05 15:01:00","updateTime":"2020-08-14 12:41:10","menuTitle":"赔偿记录","menuAliasTitle":null,"japanese":"損害賠償記録","parentMenuId":"a367289c90e34614a308917f5726bd32","icon":null,"path":"compensate","menuLevel":3,"menuType":3,"status":1,"menuorder":106,"childList":null,"header":null}],"header":null};
-            // debugger
             // setTimeout(() => {
             //     debugger
             //     this.$refs.mainView.toSection(item);

@@ -912,7 +912,8 @@ export default {
                 params.consumTaxPrice  =  parseFloat(taxFee).toFixed(0)
                 params.servicePrice  = parseFloat(service).toFixed(0)
                 // console.log(rzSum)else
-                let p  =  parseFloat(this.consumeOperForm.consumePrices)  +  parseFloat(service) +  parseFloat(taxFee)
+                debugger
+                let p = parseFloat(this.consumeOperForm.consumePrices || 0)  +  parseFloat(service) +  parseFloat(taxFee)
                 params.consumePrice =  parseFloat(p).toFixed(0)
                 if(params.priceType == 5){
                     params.reserveId = this.reserveProjects.id

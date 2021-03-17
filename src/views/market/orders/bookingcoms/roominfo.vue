@@ -22,7 +22,6 @@
             </el-col>
             <el-col :span="12">
                 <div class="fr">
-<!--                    disabled="checkinInfo.state == 1 || checkinInfo.state == 2"-->
                     <el-button plain size="mini" @click="goCheckinDetail" :disabled="currentRoom.state == 1 || checkinInfo.state == 2 || detailData.checkIn.state == 4 || detailData.checkIn.state == 8 || detailData.checkIn.state == 7">
                         {{ $t('manager.ps_inLive') }}
                     </el-button>
@@ -187,20 +186,22 @@ export default {
                 return array[0].otaName
             }
         },
-        dialogOpen(currentRoom, checkinInfo) {
-            this.detailData.checkIn = checkinInfo;
+        dialogOpen(currentRoom, checkinInfo, detailData) {
+            this.detailData = detailData;
             this.currentRoom = currentRoom;
             this.checkinInfo = checkinInfo;
             this.show = true;
+            this.$forceUpdate();
         },
         goCheckinDetail(){
             this.$router.push({
-                name:'checktheDetails',
+                name: "checktheDetails",
                 params: {
+                    detailData: this.detailData,
                     currentRoom: this.currentRoom,
-                    type: 3,  //单个房间入住维护
+                    type: 3
                 },
-            })
+            });
         },
         //cancel room
         cancelRoom() {
@@ -254,10 +255,7 @@ export default {
         },
         doLiveInPerson() {
             // this.liveCard_in_person_list();
-            if (
-                this.currentRoom.personList &&
-                this.currentRoom.personList.length > 1
-            ) {
+            if (this.currentRoom.personList && this.currentRoom.personList.length > 1) {
                 var personList = this.currentRoom.personList;
                 var room = {};
                 this.$F.merge(room, {
@@ -397,7 +395,9 @@ export default {
             this.$refs.rowRoomHandle.initForm(
                 this.$route.query.id,
                 this.checkinInfo,
-                arr
+                arr,
+                null, null,
+                this.detailData
             );
         },
     },

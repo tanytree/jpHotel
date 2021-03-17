@@ -230,7 +230,7 @@
 
 <script>
 export default {
-    props: ["checkinType", "checkInDetail"],
+    props: ["checkinType"],
     mounted() {
       this.ifMeeting = this.$route.params.ifMeeting;
       console.log(this.ifMeeting);
@@ -253,12 +253,17 @@ export default {
             };
         } else {
             this.type = this.$route.params.type;
-            this.currentRoom = this.$route.params.currentRoom || "";
+            this.currentRoom = this.$route.params.currentRoom || {};
+            debugger
             if (this.type == 3) {
-                this.detailData = {
-                    checkIn: {id: this.currentRoom.checkinId || this.currentRoom.checkinReserveId,},
-                    inRoomList: [this.currentRoom],
-                };
+                this.detailData = this.$F.deepClone(
+                    this.$route.params.detailData
+                );
+                this.detailData.inRoomList = [this.currentRoom];
+                // this.detailData = {
+                //     checkIn: {id: this.currentRoom.checkinId || this.currentRoom.checkinReserveId,},
+                //     inRoomList: [this.currentRoom],
+                // };
             } else {
                 this.detailData = this.$F.deepClone(
                     this.$route.params.detailData
@@ -423,6 +428,7 @@ export default {
 
         changeName(e, personInfo, index) {
             if (e.name) {
+                debugger
                 delete e['checkIn'];
                 delete e['checkinId'];
                 delete e['checkinRoomId'];
@@ -439,7 +445,7 @@ export default {
             }
             setTimeout( () => {
                 this.$forceUpdate();
-                this.$set(this.inRoomList, index, this.inRoomList[0]);
+                this.$set(this.inRoomList, index, this.inRoomList[index]);
             }, 100)
 
         },

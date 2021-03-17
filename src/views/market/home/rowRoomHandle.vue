@@ -363,6 +363,7 @@ export default {
             this.reservedRoom = reservedRoom;
             this.handleType = handleType;
             this.orderType = orderType;
+            debugger
             let inRoomListLength = detailData.inRoomList.length;
             if (inRoomListLength > 0 && detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId']) {
                 checkInId = detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId'] || checkInId;
