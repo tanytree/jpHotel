@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-12 11:33:55
+ * @LastEditTime: 2021-03-17 11:52:31
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -145,16 +145,17 @@ module.exports = {
   hk_forward: '前へ移動',
   hk_moveBack: '後へ移動',
   hk_newBuilding: '建物追加',
-  hk_newFloor: '建物・階設定',
+  hk_newFloor: 'フロア/階設定',
   hk_newFloorA: '階を追加',
   hk_roomNum: '部屋数',
-  hk_floorNote: 'フロア備考',
+  hk_floorNote: '備考',
   hk_buildingName: '建物名称',
   hk_inputBuildName: '建物名称を入力してください',
   hk_buildingNote: '建物備考',
   hk_floorName: 'フロア名称',
+  hk_floorNameA: 'フロア/階名称',
   hk_modifyBuilding: '建物編集',
-  hk_modifyFloor: 'フロア編集',
+  hk_modifyFloor: 'フロア/階編集',
   hk_success: '成功',
   hk_newSuccess: '追加確認',
   hk_roomNumber: '部屋番号',

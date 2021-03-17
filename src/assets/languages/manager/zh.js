@@ -154,6 +154,7 @@ module.exports = {
   hk_inputBuildName: '请输入楼栋名称',
   hk_buildingNote: '楼栋备注',
   hk_floorName: '楼层名称',
+  hk_floorNameA: '楼层名称',
   hk_modifyBuilding: '修改楼栋',
   hk_modifyFloor: '修改楼层',
   hk_success: '成功',

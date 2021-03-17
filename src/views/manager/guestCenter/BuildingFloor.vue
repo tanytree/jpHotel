@@ -87,7 +87,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item :label="$t('manager.hk_floorName')+':'" prop="name">
+            <el-form-item :label="$t('manager.hk_floorNameA')+':'" prop="name">
               <el-input :placeholder="$t('manager.hk_placeEnterContentB')" v-model="ruleForm_ceng.name"></el-input>
             </el-form-item>
           </el-col>
@@ -133,7 +133,7 @@ export default {
     },
     newFloor: {
       get() {
-        return this.$t("manager.hk_newFloorA");
+        return this.$t("manager.hk_newFloor");
       },
       set() {},
     },

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 17:20:52
+ * @LastEditTime: 2021-03-17 13:32:20
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -61,7 +61,7 @@
       <el-row class="padding-tb-10">
         <!-- tabCurr 1前台部 2餐饮部 3商店部 -->
         <div v-if="tabCurr==1" class="father">
-          <el-col :span="5">
+          <el-col :span="4">
             <div class="item">
               {{$t('desk.charge')}}：<span class="blue">{{$F.numFormate(info.nuploadPrice)}}</span>{{$t('manager.ps_japanYen')}} <a @mouseenter="requestData()" class="el-icon-question AAA" style="color: #126EFF; cursor: pointer;"></a>
               <div class="son">
@@ -84,19 +84,29 @@
               {{$t('desk.add_otherGetA')}}：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
+           <el-col :span="5">
+            <div class="item">
+              本班payments收款：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
+            </div>
+          </el-col>
         </div>
         <div v-if="tabCurr!=1">
-          <el-col :span="6">
+          <el-col :span="4">
             <div class="item">{{tabCurr==2?$t('manager.add_nowBillGetA'):$t('manager.add_nowBillGetB')}}：<span style="color:#126eff">{{$F.numFormate(info.nuploadPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="5">
             <div class="item">{{$t('manager.add_nowCashGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.nmoneyPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="5">
             <div class="item">{{$t('manager.add_nowCardGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.ncardPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="5">
             <div class="item">{{$t('desk.add_otherGetA')}}：<span style="color:#126eff">{{$F.numFormate(info.npayOtherPrice)}}{{$t('manager.ps_japanYen')}}</span></div>
+          </el-col>
+           <el-col :span="5">
+            <div class="item">
+              本班payments收款：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
+            </div>
           </el-col>
         </div>
       </el-row>
@@ -809,7 +819,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
     z-index: 2;
-    left: 100px;
+    left: 80px;
     top: 30px;
     display: none;
   }

@@ -92,9 +92,9 @@
           <el-input type="textarea" :placeholder="$t('desk.home_noteA')" v-model="form.remark" maxlength="200" show-word-limit></el-input>
         </el-form-item>
 
-        <el-form-item :label="$t('food.common.order_count')">
+        <!-- <el-form-item :label="$t('food.common.order_count')">
           <el-input-number size="mini" v-model="form.docCount" :step="1" step-strictly></el-input-number>
-        </el-form-item>
+        </el-form-item> -->
         <!--
                 <el-form-item>
                     <el-checkbox v-model="isPrint">{{$t('food.common.order_print')}}</el-checkbox>

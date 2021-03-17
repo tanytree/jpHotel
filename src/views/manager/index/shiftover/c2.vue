@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-22 10:17:20
+ * @LastEditTime: 2021-03-17 13:37:45
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -133,17 +133,22 @@
                 <div v-if="row.subList.length>0&&row.subList[7]">{{row.subList[7].amount?row.subList[7].amount:0}} <span @click="lookDetail('cashDialog',row)"><i class="el-icon-view"></i></span></div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('desk.serve_thisCard')">
+            <el-table-column  :label="$t('desk.serve_thisCard')">
               <template slot-scope="{ row }">
                 <div v-if="row.subList.length>0&&row.subList[8]">{{row.subList[8].amount?row.subList[8].amount:0}} <span @click="lookDetail('cardDailog',row)"><i class="el-icon-view"></i></span></div>
               </template>
             </el-table-column>
-            <el-table-column prop="nowAliRetained" :label="$t('manager.add_nowCardGetA')">
+            <el-table-column  :label="$t('manager.add_nowCardGetA')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0&&row.subList[9]">{{row.subList[9].amount?row.subList[9].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" :label="$t('desk.add_otherGetA')">
+            <el-table-column  :label="$t('desk.add_otherGetA')">
+              <template slot-scope="{row}">
+                <div v-if="row.subList.length>0&&row.subList[10]">{{row.subList[10].amount?row.subList[10].amount:0}}</div>
+              </template>
+            </el-table-column>
+             <el-table-column  label="本班payments收款">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0&&row.subList[10]">{{row.subList[10].amount?row.subList[10].amount:0}}</div>
               </template>
@@ -173,6 +178,11 @@
                 <div v-if="row.subList.length>0&&row.subList[5]">{{row.subList[5].amount?row.subList[5].amount:0}}</div>
               </template>
             </el-table-column>
+            <el-table-column label="本班payments收款">
+              <template slot-scope="{row}">
+                <div v-if="row.subList.length>0&&row.subList[5]">{{row.subList[5].amount?row.subList[5].amount:0}}</div>
+              </template>
+            </el-table-column>
           </template>
           <template v-if="tabCurr==3">
             <el-table-column :label="$t('manager.add_nowCashGetA')" width="100px ">
@@ -194,6 +204,11 @@
               </template>
             </el-table-column>
             <el-table-column :label="$t('desk.add_otherGetA')">
+              <template slot-scope="{row}">
+                <div v-if="row.subList.length>0&&row.subList[4]">{{row.subList[4].amount?row.subList[4].amount:0}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column label="本班payments收款">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0&&row.subList[4]">{{row.subList[4].amount?row.subList[4].amount:0}}</div>
               </template>
@@ -252,7 +267,7 @@
       </div>
       <div class="dialog_middle">
         <div class="middle_text2">
-         {{$t('commons.paymentWay[1]')}}：￥{{checkMoney('1')}}
+          {{$t('commons.paymentWay[1]')}}：￥{{checkMoney('1')}}
         </div>
         <div class="middle_text2">
           {{$t('commons.paymentWay[2]')}}：￥{{checkMoney('2')}}
@@ -270,7 +285,7 @@
           {{$t('commons.paymentWay[6]')}}：￥{{checkMoney('6')}}
         </div>
         <div class="middle_text2">
-         {{$t('commons.paymentWay[7]')}}：￥{{checkMoney('7')}}
+          {{$t('commons.paymentWay[7]')}}：￥{{checkMoney('7')}}
         </div>
         <div class="middle_text2">
           {{$t('commons.paymentWay[8]')}}：￥{{checkMoney('8')}}

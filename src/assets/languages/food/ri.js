@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-09 14:50:41
+ * @LastEditTime: 2021-03-17 11:16:55
  * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
@@ -225,7 +225,7 @@ module.exports = {
         read_member_card:'会員カード読み取り',
         remark:'備考',
         order_count:'レシート部数',
-        order_print:'レシート印刷',
+        order_print:'領収書印刷',
         pay_order_deal:'確認',
         select_company:'法人/会社入力',
         acount_info:'利用者情報',

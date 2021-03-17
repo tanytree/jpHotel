@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-17 10:43:13
+ * @LastEditTime: 2021-03-17 11:06:18
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -1002,7 +1002,7 @@ module.exports = {
   book_liveFee: '宿泊税',
   book_discountAmount: '割引金額',
   book_printDocuments: '帳票印刷',
-  book_printDocumentsA: 'レシート印刷',
+  book_printDocumentsA: '領収書印刷',
   book_billAback: '精算及びC/O',
   book_billAbackA: '確認',
   book_HQtable: '本部帳票',
@@ -1065,7 +1065,7 @@ module.exports = {
   add_receiptNo: '領収書番号',
   add_membership: '会員データ',
   home_onePrograme: '対象項目を選んでください。',
-  add_expenseDetail: '請求書印刷',
+  add_expenseDetail: '利用明細印刷',
   add_belongPro: '紐付けプラン',
   add_useSelectPro: '予約プラン連動',
   add_include: '内含消费税',

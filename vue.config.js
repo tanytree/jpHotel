@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-02-04 15:51:25
- * @LastEditors: 董林
- * @LastEditTime: 2020-07-10 10:44:36
- * @FilePath: /jiudian/vue.config.js
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-03-17 16:13:22
+ * @FilePath: \jiudian\vue.config.js
  */
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
@@ -37,3 +37,4 @@ module.exports = {
         }
     }
 }
+
