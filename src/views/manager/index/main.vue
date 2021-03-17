@@ -21,7 +21,8 @@
         <EmployeeRights v-if="item.path == 'staff-rights'" />
         <!-- 渠道设置 -->
         <sourceSet v-if="item.path=='channelSetting'" />
-
+         <!-- 预定项目管理 -->
+        <reserveProject v-if="item.path=='reserveProjet'"/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -36,6 +37,7 @@ import sourceSet from "./sourceSet";
 import shiftSite from "./shiftSite";
 import hotelServices from "./hotelServices";
 import printingMg from "./printingMg";
+import reserveProject from "./reserveProject";
 import EmployeeRights from "@/components/employeeRights";
 import { mapState, mapActions } from "vuex";
 export default {
@@ -49,6 +51,7 @@ export default {
     consumptionTax,
     EmployeeRights,
     sourceSet,
+    reserveProject
   },
   computed: {
     ...mapState({
