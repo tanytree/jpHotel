@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-03-17 16:33:37
  * @Author: 陶子
- * @LastEditTime: 2021-03-18 10:09:03
+ * @LastEditTime: 2021-03-18 15:00:47
  * @FilePath: \jiudian\src\views\manager\index\reserveProject.vue
  * @pageName: 这是--（"预定项目管理"）--页面
 -->
@@ -90,7 +90,7 @@ export default {
     },
     //点击删除按钮
     deletePlat(row) {
-      this.$confirm(this.$t('commons.confirm_deleteD'), this.$t('commons.tip_desc'), {
+      this.$confirm(this.$t('commons.confirm_deleteF'), this.$t('commons.tip_desc'), {
         confirmButtonText: this.$t('commons.confirm'),
         cancelButtonText:this.$t('commons.cancel'),
         type: "warning",

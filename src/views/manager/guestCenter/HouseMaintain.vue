@@ -106,7 +106,7 @@
             </el-form-item>
 
             <!-- 住宿价格 -->
-            <el-form-item :label="$t('manager.hk_livePrice')" v-if="active_tag == 'one'">
+            <el-form-item :label="$t('manager.hk_livePrice')" required v-if="active_tag == 'one'">
               <el-row :gutter="20">
                 <el-col :span="6">
                   <el-button type="primary" plain @click="addHouse('sit')">{{$t('manager.hk_set')}}</el-button>
@@ -397,14 +397,14 @@ export default {
           {
             required: true,
             message: this.$t("manager.grsl_selectZao"),
-            trigger: "blur",
+            trigger: "change",
           },
         ],
         mealDinner: [
           {
             required: true,
             message: this.$t("commons.placeChoose"),
-            trigger: "blur",
+            trigger: "change",
           },
         ],
         taxStatus: [
@@ -412,6 +412,13 @@ export default {
             required: true,
             message: this.$t("commons.placeChoose"),
             trigger: "blur",
+          },
+        ],
+        bedType:[
+          {
+            required: true,
+            message: this.$t("commons.placeChoose"),
+            trigger: "change",
           },
         ],
         seviceStatus: [

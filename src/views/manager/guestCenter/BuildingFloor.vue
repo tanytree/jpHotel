@@ -131,12 +131,7 @@ export default {
       },
       set() {},
     },
-    newFloor: {
-      get() {
-        return this.$t("manager.hk_newFloor");
-      },
-      set() {},
-    },
+   
     modifyFloor: {
       get() {
         return this.$t("manager.hk_modifyFloor");
@@ -233,9 +228,7 @@ export default {
     modifyBuilding(newValue, oldValue) {
       this.modifyBuilding = newValue;
     },
-    newFloor(newValue, oldValue) {
-      this.newFloor = newValue;
-    },
+   
     modifyFloor(newValue, oldValue) {
       this.modifyFloor = newValue;
     },
@@ -269,7 +262,7 @@ export default {
           break;
         case "addCeng":
           this.addCeng_show = true;
-          this.ceng_title = this.newFloor;
+          this.ceng_title = this.$t("manager.hk_newFloorA");
           this.ruleForm_ceng = {
             buildingId: "", // 楼栋id
             buildingFloorId: "", //楼层id

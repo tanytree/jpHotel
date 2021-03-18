@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-17 13:37:45
+ * @LastEditTime: 2021-03-18 13:58:57
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -63,6 +63,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="creatorName" :label="$t('desk.serve_peopleDuty')"></el-table-column>
+           <el-table-column prop="remark" show-overflow-tooltip label="备注"></el-table-column>
         </el-table-column>
         <!-- 消费总计 -->
         <el-table-column :label="$t('manager.hk_constTotal')" align="center">

@@ -27,6 +27,7 @@ module.exports = {
   confirm_deleteB: '确定删除吗？',
   confirm_deleteC: '确定删除吗？',
   confirm_deleteD: '确定删除吗？',
+  confirm_deleteF: '确定删除吗？',
   tip_desc: '提示',
   request_success: '请求成功',
   delete_success: '删除成功！',

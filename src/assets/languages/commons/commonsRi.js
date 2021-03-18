@@ -23,6 +23,7 @@ module.exports = {
   confirm_deleteB: '削除に確認しますか？',
   confirm_deleteC: '該当項目を削除に確認しますか？',
   confirm_deleteD: '該当予約経路を削除に確認しますか？',
+  confirm_deleteF: '該当予約プランを削除に確認しますか？',
 
   tip_desc: 'ご注意',
   request_success: '受取確認',
