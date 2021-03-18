@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-03 16:23:09
+ * @LastEditTime: 2021-03-18 10:08:41
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -248,8 +248,8 @@ module.exports = {
   hk_constTotal: '消费总计',
   hk_documentsPrefix: '单据前缀',
   hk_inputPrefix: '请填写单据前缀',
-  hk_: '',
-  hk_: '',
+  hk_bookProjectName: '预订项目名称',
+  hk_inputBookName: '请输入预订项目名称',
   hk_: '',
   hk_: '',
   hk_: '',

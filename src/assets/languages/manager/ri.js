@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-17 11:52:31
+ * @LastEditTime: 2021-03-18 10:09:36
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -602,6 +602,8 @@ module.exports = {
   add_paymentOfTotal: '売掛合計',
   hk_documentsPrefix: '頭文字',
   hk_inputPrefix: '入力してください',
+  hk_bookProjectName: '予約プラン',
+  hk_inputBookName: 'プラン名称を入力してください。',
 
 
 

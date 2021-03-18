@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-03-17 16:33:37
  * @Author: 陶子
- * @LastEditTime: 2021-03-17 18:22:57
+ * @LastEditTime: 2021-03-18 10:09:03
  * @FilePath: \jiudian\src\views\manager\index\reserveProject.vue
  * @pageName: 这是--（"预定项目管理"）--页面
 -->
@@ -16,7 +16,7 @@
       header-row-class-name="default"
       size="small"
     >
-      <el-table-column prop="projectName" label="预订项目名称"></el-table-column>
+      <el-table-column prop="projectName" :label="$t('manager.hk_bookProjectName')"></el-table-column>
       <el-table-column :label="$t('commons.operating')" width="200px">
         <template slot-scope="{ row }">
           <el-button @click="resetOta(row)" type="text">{{$t('commons.modify')}}</el-button>
@@ -38,7 +38,7 @@
         :rules="addRule"
         label-width="110px"
       >
-        <el-form-item label="预订项目名称:" prop="projectName">
+        <el-form-item :label="$t('manager.hk_bookProjectName')+':'" prop="projectName">
           <el-input
             style="width: 260px"
             v-model="addPlatForm.projectName"
@@ -60,7 +60,7 @@ export default {
     addRule() {
       return {
         projectName: [
-          { required: true, message:'请输入预订项目名称', trigger: "blur" },
+          { required: true, message:this.$t('manager.hk_inputBookName'), trigger: "blur" },
         ],
        
       };
