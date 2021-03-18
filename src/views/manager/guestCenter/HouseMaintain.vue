@@ -330,7 +330,7 @@ export default {
         personPrice: "", //住宿价格
         mealBreakfast: "",
         mealDinner: "",
-        otaFeizhuPrice: "",
+        otaFeizhuPrice: "", 
         otaXiechengPrice: "",
         otaMeituan: "",
         taxStatus: 0,
