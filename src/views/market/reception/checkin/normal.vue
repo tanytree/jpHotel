@@ -265,7 +265,10 @@
                 <el-form-item :label="$t('desk.book_bookProject') + ':'" required>
                     <template>
                         <div v-for="(value, index) in checkInForm.reserveProjects" :key="index">
-                            <el-input :placeholder="$t('desk.book_projectName')+(index+1)" size="small" v-model="value.projectName" style="width: 300px"></el-input>
+                            <el-select v-model="value.projectName" :placeholder="$t('desk.book_projectName')+(index+1)" style="width: 300px">
+                                <el-option :value="project.projectName" v-for="(project, index) of projectList" :label="project.projectName" :key="index"></el-option>
+                            </el-select>
+<!--                            <el-input :placeholder="$t('desk.book_projectName')+(index+1)" size="small" v-model="value.projectName" style="width: 300px"></el-input>-->
                             <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model="value.projectCount" style="width: 100px; margin-left: 10px"></el-input>
                             <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px"></el-input>
                             <img src="~@/assets/images/close.png" @click="deleteProject(index)" v-if="checkInForm.reserveProjects.length>1" class="closePng">
@@ -411,6 +414,7 @@ export default {
         guestChoose,
         customerInfo
     },
+
     computed: {
         ...mapState({
             token: (state) => state.user.token,
@@ -653,6 +657,7 @@ export default {
             },
             liveInPersonData: [],
             liveCardData: "",
+            projectList: []
         };
     },
 
@@ -752,6 +757,20 @@ export default {
         },
     },
     methods: {
+        loadReserveProject(params={}) {
+            if (this.storesNum) {
+                params.storesNum = this.storesNum;
+            }
+            this.$F.doRequest(
+                this,
+            "pms/project/project_list",
+                params,
+    (res) => {
+                this.projectList = res.projectList;
+                this.$forceUpdate();
+            });
+        },
+
       openPrintDialog(){
         this.$refs.customerInfo.openDialog();
       },
@@ -787,6 +806,7 @@ export default {
             });
             this.getCheckinRoominfoList();
             this.initForm();
+
         },
 
         // 排房组件回调
@@ -825,6 +845,7 @@ export default {
         },
 
         initForm() {
+            this.loadReserveProject();
             this.getRoomsForm = {
                 changeType: 1,
                 bedCount: "",
@@ -1842,5 +1863,10 @@ export default {
     position: relative;
     top: 6px;
     margin-left: 5px;
+}
+
+.el-select .el-input input {
+    line-height: 32px;
+    height: 32px;
 }
 </style>

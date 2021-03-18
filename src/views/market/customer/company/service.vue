@@ -21,8 +21,8 @@
           <el-select v-model="searchForm.requestStatus" class="width150">
             <el-option :label="$t('commons.all')" value=""></el-option>
             <el-option :label="$t('desk.customer_notRequest')" value="1"></el-option>
-            <el-option :label="$t('desk.customer_noInto')" value="3"></el-option>
-            <el-option :label="$t('desk.customer_areadyInto')" value="2"></el-option>
+            <el-option :label="$t('desk.customer_areadyInto')" value="3"></el-option>
+            <el-option :label="$t('desk.customer_noInto')" value="2"></el-option>
           </el-select>
         </el-form-item>
         <br />
@@ -79,8 +79,8 @@
         <el-table-column align="center" :label="$t('desk.customer_settlementStatus')" show-overflow-tooltip width="110">
           <template slot-scope="{ row }">
             <div v-if="row.requestStatus == 1">{{$t('desk.customer_notRequest')}}</div>
-            <div v-if="row.requestStatus == 2">{{$t('desk.customer_areadyInto')}}</div>
-            <div v-if="row.requestStatus == 3">{{$t('desk.customer_noInto')}}</div>
+            <div v-if="row.requestStatus == 2">{{$t('desk.customer_noInto')}}</div>
+            <div v-if="row.requestStatus == 3">{{$t('desk.customer_areadyInto')}}</div>
           </template>
         </el-table-column>
       </el-table>

@@ -138,12 +138,18 @@
 
             <!--表格数据 -->
             <el-table ref="multipleTable" v-loading="loading" border :data="tableData"  height="100%" header-row-class-name="default" size="small">
+                <el-table-column prop="mobile" :label="$t('desk.readStatusDesc')" align="center">
+                    <template slot-scope="{row}">
+                        <span style="color: blue; cursor: pointer;text-decoration: underline" @click="handelDetail(row)" v-if="row.readStatus == 1">{{$t('commons.comShareFlag')['1']}}</span>
+                        <span v-if="row.readStatus == 2">{{$t('commons.comShareFlag')['2']}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="mobile" :label="$t('boss.store_storeNameA')" v-if="storesNum == $F.getHQCode()">
                     <template slot-scope="{row}">
                         {{getStoresNumDesc(row)}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="name" :label="$t('desk.reserveInfoDescA')" width="140px">
+                <el-table-column prop="name" :label="$t('desk.reserveInfoDescA')">
                     <template slot-scope="{ row }">
                         <div>
                             <div>{{row.name}}</div>
@@ -155,8 +161,8 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mobile" :label="$t('desk.home_phoneNumB')" width="120px"></el-table-column>
-                <el-table-column prop="createTime" :label="$t('desk.order_bookTime')" width="120px">
+                <el-table-column prop="mobile" :label="$t('desk.home_phoneNumB')" ></el-table-column>
+                <el-table-column prop="createTime" :label="$t('desk.order_bookTime')">
                     <template slot-scope="{row}">
                         <div v-for="(item,index) in $F.formatTime(row.createTime)" :key="index">{{item}}</div>
                     </template>
@@ -178,7 +184,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('desk.customer_roomKind')" width="140">
+                <el-table-column :label="$t('desk.customer_roomKind')">
                     <template slot-scope="{ row }">
                         <div v-html="getRoomInfo(row)"></div>
                     </template>
@@ -193,13 +199,13 @@
 <!--                        ￥{{ $F.numFormate(row.totalRoomPrice?row.totalRoomPrice : 0 )}}-->
 <!--                    </template>-->
 <!--                </el-table-column>-->
-                <el-table-column prop="" :label="$t('desk.book_orderSoutce')" width="110" align="center">
+                <el-table-column prop="" :label="$t('desk.book_orderSoutce')" align="center">
                     <template slot-scope="{ row }">
                         <div>{{ F_orderSource(row.orderSource) }}</div>
                         <div v-if="row.orderSource == 5">{{checkPlatform(row.otaChannelId)}}</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="" :label="$t('desk.reserveOperator')" width="110" align="center">
+                <el-table-column prop="" :label="$t('desk.reserveOperator')" align="center">
                     <template slot-scope="{ row }">
                         <div v-if="row.headquarters">{{$t('desk.book_HQ') + '/' + row.creatorName}}</div>
                         <div v-else>{{row.creatorName}}</div>

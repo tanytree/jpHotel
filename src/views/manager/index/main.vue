@@ -22,7 +22,7 @@
         <!-- 渠道设置 -->
         <sourceSet v-if="item.path=='channelSetting'" />
          <!-- 预定项目管理 -->
-        <reserveProject v-if="item.path=='reserveProjet'"/>
+        <reserveProject v-if="item.path=='reserveProject'"/>
       </el-tab-pane>
     </el-tabs>
   </div>

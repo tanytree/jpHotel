@@ -238,13 +238,13 @@
             <el-form-item :label="$t('desk.book_bookProject') + ':'">
               <template>
                 <div v-for="(value, index) in baseInfoChangeForm.reserveProjects" :key="index">
-                  <el-input :placeholder="$t('desk.book_projectName') + (index + 1)" size="small" v-model="value.projectName" style="width: 300px"
-                            @keyup.native="reserveProjectsChange('projectName', value.projectName, index)"></el-input>
-                  <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model.number="value.projectCount" style="width: 100px; margin: 10px"
-                            @keyup.native="reserveProjectsChange('projectCount', value.projectCount, index)"></el-input>
-                  <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px"
-                            @keyup.native="reserveProjectsChange('price', value.price, index)"></el-input>
-                  <!--                            <img src="~@/assets/images/close.png" @click="deleteProject(index)" v-if="baseInfoChangeForm.reserveProjects.length>1" class="closePng">-->
+                    <el-select v-model="value.projectName" :placeholder="$t('desk.book_projectName')+(index+1)" style="width: 300px" @change="reserveProjectsChange('projectName', value.projectName, index)">
+                        <el-option :value="project.projectName" v-for="(project, index) of projectList" :label="project.projectName" :key="index"></el-option>
+                    </el-select>
+<!--                  <el-input :placeholder="$t('desk.book_projectName') + (index + 1)" size="small" v-model="value.projectName" style="width: 300px"-->
+<!--                            @keyup.native="reserveProjectsChange('projectName', value.projectName, index)"></el-input>-->
+                  <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model.number="value.projectCount" style="width: 100px; margin: 10px" @keyup.native="reserveProjectsChange('projectCount', value.projectCount, index)"></el-input>
+                  <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px" @keyup.native="reserveProjectsChange('price', value.price, index)"></el-input>
                 </div>
               </template>
               <el-button type="text" @click="addProject()">{{
@@ -331,6 +331,7 @@ export default {
   props: ["checkinInfo", "inRoomList", "detailData"],
   data() {
     return {
+        projectList: [],
       checkTheDetailsShow: false,
       reserveId: "",
       currentSale: {},
@@ -358,6 +359,7 @@ export default {
           this.otaList = list;
           this.$forceUpdate();
       })
+      this.loadReserveProject();
   },
     computed: {
         rules() {
@@ -491,6 +493,15 @@ export default {
   },
 
   methods: {
+      loadReserveProject() {
+          this.$F.doRequest(
+              this,
+              "pms/project/project_list",
+              {},
+              (res) => {
+                  this.projectList = res.projectList;
+              });
+      },
       checkPlatform(otaChannelId) {
           let array = this.otaList.filter((item) => {
               return item.id == otaChannelId;
