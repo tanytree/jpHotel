@@ -27,7 +27,7 @@
               <el-form-item  size="small"  :label="$t('food.reset.costPrice')" prop="costPrice">
                 <el-input  size="small" :placeholder="$t('food.reset.costPrice')" v-model="info.costPrice" type="number" name="costPrice"></el-input>
               </el-form-item>
-              <el-form-item  size="small" :label="$t('food.common.food_pic')" required>
+              <el-form-item  size="small" :label="$t('food.common.food_pic')" >
                     <el-upload
                        action="#"
                        ref="upload"
@@ -52,11 +52,11 @@
                     <div class="picdesc text-gray text-size12">{{$t('food.reset.onePhoto')}}</div>
               </el-form-item>
 
-              <el-form-item :label="$t('food.common.material')" prop="marterial">
+              <el-form-item :label="$t('food.common.material')" >
                 <el-input  size="small" :placeholder="$t('food.common.material')"  v-model="info.marterial"></el-input>
               </el-form-item>
 
-             <el-form-item :label="$t('food.common.food_desc')" prop="remark">
+             <el-form-item :label="$t('food.common.food_desc')" >
                <el-input  size="small" :placeholder="$t('food.common.food_desc')" type="textarea" v-model="info.remark"></el-input>
              </el-form-item>
 
@@ -209,10 +209,10 @@
                  if (valid) {
                     this.formData = new FormData();
                     let imgList = this.$refs.upload.uploadFiles || [];
-                    if (imgList.length == 0) {
-                        this.alert(0,this.$t('food.common.input_food_pic'));
-                        return false
-                    }
+                    // if (imgList.length == 0) {
+                    //     this.alert(0,this.$t('food.common.input_food_pic'));
+                    //     return false
+                    // }
                     this.$F.doUploadBatch(this, imgList, (data) => {
                         this.info.images = data;
                         let params = this.info

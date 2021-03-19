@@ -53,7 +53,7 @@
             <el-option label="payments" :value="100"></el-option>
             <!-- <el-option :label="$t('food.payType.3')" :value="3"></el-option>
                             <el-option :label="$t('food.payType.4')" :value="4"></el-option> -->
-            <!-- <el-option :label="$t('food.payType.5')" :value="5"></el-option> -->
+            <el-option :label="$t('food.payType.5')" :value="5"></el-option>
           </el-select>
         </el-form-item>
 
@@ -85,7 +85,7 @@
         </div>
 
         <el-form-item :label="$t('food.common.remark')+':'">
-          <el-input type="textarea" :placeholder="$t('food.common.remark')" v-model="form.remark" maxlength="200" show-word-limit></el-input>
+          <el-input type="textarea" :placeholder="$t('food.common.remarkA')" v-model="form.remark" maxlength="200" show-word-limit></el-input>
         </el-form-item>
 
         <!-- <el-form-item :label="$t('food.common.order_count')+':'">
@@ -516,7 +516,13 @@ export default {
     //提交结账
     submit() {
         
-    
+    if (this.form.payType == 5 && !this.form.remark) {
+        this.$message({
+          message: this.$t('desk.customer_inputRemarkA'),
+          type: "warning",
+        });
+        return
+      }
     
 
       let params = this.form;

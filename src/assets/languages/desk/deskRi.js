@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-17 11:06:18
+ * @LastEditTime: 2021-03-19 14:40:08
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -114,6 +114,7 @@ module.exports = {
   home_note: '備考',
   home_noteA: '入金種別「その他」を選択場合、必ず内容を記入してください。',
   home_noteB: '理由',
+  home_noteC: '支払方法を「その他入金」の場合、必ず記入してください。',
   home_goodsGetOrder: '荷物預かり証',
   home_printTime: 'プリントアウト 時間',
   home_printTimeA: '印刷時間',
@@ -637,7 +638,7 @@ module.exports = {
   book_inputContentA: '名前',
   order_checkout: "C/O精算",
   order_goTie: "未収",
-  order_addDayPrice: "素泊り料金",
+  order_addDayPrice: "素泊料金",
   order_addHalfPrice: "延長料金",
   order_loosAndCompensation: "損害賠償",
   order_consumptionProject: "利用項目",
@@ -705,7 +706,7 @@ module.exports = {
   home_putDirty: '清掃',
   home_putDirtyA: '清掃指示',
   home_service: '故障',
-  home_cannel_service: '取消维修',
+  home_cannel_service: '故障取消',
   home_buyNet: '清掃済',
   home_stayOver: '連泊',
   home_needLeave: '予定日より早めに出発場合、連泊日数に【-】を入力必要です。',
@@ -1072,6 +1073,8 @@ module.exports = {
   add_include: '内含消费税',
   add_outclude: '不含消费税',
   order_otherEnter: "他の計上",
+  customer_inputRemarkA: '備考記入をしてください。',
+  add_bookProject: '予約プラン',
 
 
 

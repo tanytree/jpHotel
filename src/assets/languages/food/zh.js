@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-25 16:16:59
+ * @LastEditTime: 2021-03-19 14:18:10
  * @FilePath: \jiudian\src\assets\languages\food\zh.js
  */
 module.exports = {
@@ -83,6 +83,7 @@ module.exports = {
         // 3:'支付宝',
         // 4:'支票',
         // 5:'会员卡'
+        5:'其他'
     },
     //身份类型
     card_type:{
@@ -224,6 +225,7 @@ module.exports = {
         select_member_card:'请选目标会员卡',
         read_member_card:'读会员卡',
         remark:'备注',
+        remarkA:'备注',
         order_count:'单据份数',
         order_print:'单据打印',
         pay_order_deal:'立即结账',

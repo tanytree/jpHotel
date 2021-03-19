@@ -11,7 +11,7 @@
             <div class=" text-red text-size20">
               {{$t('food.common.consumePrice')}} : {{numFormate(orderTax.sum)}}
               <span class="rel showTax">
-                  <!-- {{orderTax}} -->
+                <!-- {{orderTax}} -->
                 <el-button size="mini" type="primary" icon="el-icon-more" circle></el-button>
                 <div class="taxBox text-size14">
                   <div class="item"><span class="w70">{{$t('desk.customer_xiaoJi')}}</span> <span class="text-right">￥{{numFormate(orderTax.total)}}</span> </div>
@@ -52,7 +52,7 @@
             <el-option label="payments" :value="100"></el-option>
             <!-- <el-option :label="$t('food.payType.3')" :value="3"></el-option>
                             <el-option :label="$t('food.payType.4')" :value="4"></el-option> -->
-            <!-- <el-option :label="$t('food.payType.5')" :value="5"></el-option> -->
+            <el-option :label="$t('food.payType.5')" :value="5"></el-option>
           </el-select>
         </el-form-item>
 
@@ -89,16 +89,16 @@
         </div>
 
         <el-form-item :label="$t('food.common.remark')">
-          <el-input type="textarea" :placeholder="$t('desk.home_noteA')" v-model="form.remark" maxlength="200" show-word-limit></el-input>
+          <el-input type="textarea" :placeholder="$t('desk.home_noteC')" v-model="form.remark" maxlength="200" show-word-limit></el-input>
         </el-form-item>
 
         <!-- <el-form-item :label="$t('food.common.order_count')">
           <el-input-number size="mini" v-model="form.docCount" :step="1" step-strictly></el-input-number>
         </el-form-item> -->
-        <!--
-                <el-form-item>
-                    <el-checkbox v-model="isPrint">{{$t('food.common.order_print')}}</el-checkbox>
-                </el-form-item> -->
+
+        <el-form-item>
+          <el-checkbox v-model="isPrint">{{$t('food.common.order_print')}}</el-checkbox>
+        </el-form-item>
       </el-form>
     </div>
     <el-divider></el-divider>
@@ -418,6 +418,13 @@ export default {
     },
     //提交结账
     submit() {
+      if (this.form.payType == 5 && !this.form.remark) {
+        this.$message({
+          message: this.$t("desk.customer_inputRemarkA"),
+          type: "warning",
+        });
+        return;
+      }
       let params = this.form;
       if (params.billingType == 3) {
         this.form.preferentialPrice = "";
@@ -429,9 +436,8 @@ export default {
         return false;
       }
 
-
-      params.consumTaxPrice  = this.orderTax.taxFee
-      params.servicePrice  = this.orderTax.service
+      params.consumTaxPrice = this.orderTax.taxFee;
+      params.servicePrice = this.orderTax.service;
       if (this.outFlag) {
         params.outFlag = 1;
       } else {

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-17 10:45:31
+ * @LastEditTime: 2021-03-19 11:57:31
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -20,8 +20,8 @@
                 <br/>
                 <el-form-item label="">
                     <!-- <el-button type="danger" size="mini" :disabled="detailData.checkIn.state == 2" @click="someAccountsHandle">{{$t('desk.order_partBillA')}}</el-button> -->
-                    <el-button type="primary" size="mini" :disabled="currentRoom.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
-                    <el-button type="primary" size="mini" @click="checkOutHandle" :disabled="currentRoom.state == 2">{{ $t('desk.order_checkout') }}</el-button>
+                    <el-button type="danger" size="mini" :disabled="currentRoom.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
+                    <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="currentRoom.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="currentRoom.state == 2">{{ $t('desk.charge') }}</el-button>
 <!--                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>-->
                     <!-- <el-button type="primary" size="mini" @click="out_check_in_cancel" >撤销退房</el-button> -->

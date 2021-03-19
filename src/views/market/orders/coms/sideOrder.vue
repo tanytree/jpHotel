@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-17 10:54:01
+ * @LastEditTime: 2021-03-19 14:51:18
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -16,15 +16,14 @@
       <div class="dinner">{{ $t('manager.hk_dinner') }}-{{ data.mealNameDinner ? `【${data.mealNameDinner}￥ ${data.mealPriceDinner} 】` : $t('manager.hk_toward_malu')}}</div>
     </div>
 
-<!--    <div class="title_one" style="margin-bottom:10px">{{$t('desk.add_billSide')}}：{{$t('desk.add_notDo')}}</div>-->
-    <el-form :model="sideForm" ref="sideForm" label-width="100px"  class="demo-ruleForm">
+    <!--    <div class="title_one" style="margin-bottom:10px">{{$t('desk.add_billSide')}}：{{$t('desk.add_notDo')}}</div>-->
+    <el-form :model="sideForm" ref="sideForm" label-width="100px" class="demo-ruleForm">
       <el-row>
-           <el-form-item :label="$t('desk.order_addDayPrice')+':'" >
-             <el-select size="small" v-model="sideForm.reserveId">
-              <el-option v-for="item in detailData.checkIn.reserveProjectList" :key="item.id" :label="item.projectName" :value="item.id"></el-option>
-            </el-select>
-          </el-form-item>
+        <el-form-item :label="$t('desk.order_addDayPrice')+':'">
+          <el-input size="small" style="width:215px" type="number" v-model="sideForm.consumePrices"></el-input>
+        </el-form-item>
       </el-row>
+
       <el-row>
         <el-col :span="10">
           <el-form-item :label="$t('desk.editor_asideBreakfast')+':'" prop="region">
@@ -39,32 +38,38 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-            <el-form-item :label="$t('desk.customer_sum') + ':'" prop="desc">
-                <el-input disabled v-model="currentHotelAttaChamealBreakfast.consumePrice" size="small" style="width:120px"></el-input>
-            </el-form-item>
+          <el-form-item :label="$t('desk.customer_sum') + ':'" prop="desc">
+            <el-input disabled v-model="currentHotelAttaChamealBreakfast.consumePrice" size="small" style="width:120px"></el-input>
+          </el-form-item>
         </el-col>
       </el-row>
-        <el-row>
-            <el-col :span="10">
-                <el-form-item :label="$t('desk.editor_asideDinner')+':'" prop="region">
-                    <el-select v-model="sideForm.attachMealIdDinner" size="small" @change="hotelattaChmealChange(sideForm.attachMealIdDinner, 2)">
-                        <el-option v-for="item in hotelattaChmealList" :key="item.id" :label="item.mealName" :value="item.id"  v-if="item.mealTime == 2"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-col>
-            <el-col :span="6">
-                <el-form-item label-width="10px">
-                    <el-input-number size="small" v-model="currentHotelAttaChamealDinner.attachMealCount" :min="1" @change="attachMealCountChange(2)"></el-input-number>
-                </el-form-item>
-            </el-col>
-            <el-col :span="6">
-                <el-form-item :label="$t('desk.customer_sum') + ':'" prop="desc">
-                    <el-input disabled v-model="currentHotelAttaChamealDinner.consumePrice" size="small" style="width:120px"></el-input>
-                </el-form-item>
-            </el-col>
-        </el-row>
       <el-row>
+        <el-col :span="10">
+          <el-form-item :label="$t('desk.editor_asideDinner')+':'" prop="region">
+            <el-select v-model="sideForm.attachMealIdDinner" size="small" @change="hotelattaChmealChange(sideForm.attachMealIdDinner, 2)">
+              <el-option v-for="item in hotelattaChmealList" :key="item.id" :label="item.mealName" :value="item.id" v-if="item.mealTime == 2"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label-width="10px">
+            <el-input-number size="small" v-model="currentHotelAttaChamealDinner.attachMealCount" :min="1" @change="attachMealCountChange(2)"></el-input-number>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item :label="$t('desk.customer_sum') + ':'" prop="desc">
+            <el-input disabled v-model="currentHotelAttaChamealDinner.consumePrice" size="small" style="width:120px"></el-input>
+          </el-form-item>
+        </el-col>
       </el-row>
+      <el-row>
+        <el-form-item :label="$t('desk.add_bookProject')+':'">
+          <el-select size="small" v-model="sideForm.reserveId">
+            <el-option v-for="item in detailData.checkIn.reserveProjectList" :key="item.id" :label="item.projectName" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-row>
+     
       <el-row>
         <el-form-item :label="$t('desk.home_note') + ':'" prop="desc">
           <el-input type="textarea" v-model="sideForm.remark" style="width:350px"></el-input>
@@ -83,25 +88,25 @@ import myMixin from "@/utils/filterMixin";
 
 export default {
   mixins: [myMixin],
-  props: ["detailData", "currentRoom",'tax'],
+  props: ["detailData", "currentRoom", "tax"],
   data() {
     return {
       currentHotelAttaChameal: {},
       currentHotelAttaChamealBreakfast: {
-          attachMealCount: 1,
-          consumePrice: 0,
+        attachMealCount: 1,
+        consumePrice: 0,
       },
       currentHotelAttaChamealDinner: {
-          attachMealCount: 1,
-          consumePrice: 0,
+        attachMealCount: 1,
+        consumePrice: 0,
       },
       currentRoom2: {},
       roomId: "",
       hotelattaChmealList: [],
       visible: false,
       sideForm: {
-          attachMealIdBreatfast: '',
-          attachMealIdDinner: '',
+        attachMealIdBreatfast: "",
+        attachMealIdDinner: "",
         priceType: "1", //项目类型 需要确定
         payType: "1", //结算方式 1现金 2银行卡 3支付宝 4微信 5会员卡  7信用卡 0其他类型（比如挂账和免单等无需支付类型）
         consumePrice: 0,
@@ -121,26 +126,26 @@ export default {
   },
   methods: {
     init(checkInId) {
-        this.sideForm = {
-            attachMealIdBreatfast: '',
-                attachMealIdDinner: '',
-                priceType: "1", //项目类型 需要确定
-                payType: "1", //结算方式 1现金 2银行卡 3支付宝 4微信 5会员卡  7信用卡 0其他类型（比如挂账和免单等无需支付类型）
-                consumePrice: 0,
-                attachMealId: "",
-                attachMealCount: 1,
-                roomId: "",
-                roomNum: "",
-                remark: "",
-        };
-        this.currentHotelAttaChamealBreakfast = {
-            attachMealCount: 1,
-                consumePrice: 0,
-        };
-        this.currentHotelAttaChamealDinner = {
-            attachMealCount: 1,
-                consumePrice: 0,
-        }
+      this.sideForm = {
+        attachMealIdBreatfast: "",
+        attachMealIdDinner: "",
+        priceType: "1", //项目类型 需要确定
+        payType: "1", //结算方式 1现金 2银行卡 3支付宝 4微信 5会员卡  7信用卡 0其他类型（比如挂账和免单等无需支付类型）
+        consumePrice: 0,
+        attachMealId: "",
+        attachMealCount: 1,
+        roomId: "",
+        roomNum: "",
+        remark: "",
+      };
+      this.currentHotelAttaChamealBreakfast = {
+        attachMealCount: 1,
+        consumePrice: 0,
+      };
+      this.currentHotelAttaChamealDinner = {
+        attachMealCount: 1,
+        consumePrice: 0,
+      };
       // console.log(this.currentRoom);
       this.currentRoom2 = this.currentRoom;
       //如果没有当前房间 默认到主账房
@@ -188,46 +193,46 @@ export default {
     },
 
     //计算附餐种类的消费税和服务费
-    getTaxServerFee(obj){
+    getTaxServerFee(obj) {
+      // console.log(obj)
 
-        // console.log(obj)
-
-        let tax = this.tax
-        let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率  type:false
-        // let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
-        let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
-        let service = 0 //服务费
-        let taxFee = 0 //消费税
-        let total = 0
-        if(obj.taxStatus == 1){
-        	if(obj.seviceStatus == 1){
-        	   //不包含服务税
-        	   //  1,1,fasle,in
-        		taxFee += ( obj.consumePrice + obj.consumePrice * servicePrice ) * consumeTax
-        		// taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
-        	}else{
-        	   //1,2,false,in
-        	   taxFee += obj.consumePrice * consumeTax
-        	}
+      let tax = this.tax;
+      let consumeTax = tax.consumeTax ? tax.consumeTax / 100 : 0; //in对应的税率  type:false
+      // let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
+      let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0;
+      let service = 0; //服务费
+      let taxFee = 0; //消费税
+      let total = 0;
+      if (obj.taxStatus == 1) {
+        if (obj.seviceStatus == 1) {
+          //不包含服务税
+          //  1,1,fasle,in
+          taxFee +=
+            (obj.consumePrice + obj.consumePrice * servicePrice) * consumeTax;
+          // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
+        } else {
+          //1,2,false,in
+          taxFee += obj.consumePrice * consumeTax;
         }
-        //不包含服务税
-        if(obj.seviceStatus == 1){
-        	//不包含消费税
-        	if(obj.taxStatus == 1){
-        		service += obj.consumePrice * servicePrice
-        	}else{
-        		//包含消费税
-        		let f = 1.00 + consumeTax
-        		service += (obj.consumePrice / f) * servicePrice
-        	}
+      }
+      //不包含服务税
+      if (obj.seviceStatus == 1) {
+        //不包含消费税
+        if (obj.taxStatus == 1) {
+          service += obj.consumePrice * servicePrice;
+        } else {
+          //包含消费税
+          let f = 1.0 + consumeTax;
+          service += (obj.consumePrice / f) * servicePrice;
         }
-        let pms = {
-        	service: service ? parseFloat(service) :0,
-        	taxFee:taxFee ? parseFloat(taxFee) : 0,
-        	total: service +  taxFee
-        }
-        // console.log(pms)
-        return pms
+      }
+      let pms = {
+        service: service ? parseFloat(service) : 0,
+        taxFee: taxFee ? parseFloat(taxFee) : 0,
+        total: service + taxFee,
+      };
+      // console.log(pms)
+      return pms;
     },
 
     consumeOper(params = {}) {
@@ -244,44 +249,44 @@ export default {
       params.state = 1;
       // return
 
-
-
-
       if (this.sideForm.attachMealIdBreatfast) {
-        let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast)
+        let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast);
         // console.log('1')
         // console.log(all)
         params.priceType = 17;
-        params.attachMealId = this.sideForm.attachMealIdBreatfast
-        params.consumePrice = parseFloat(this.currentHotelAttaChamealBreakfast.consumePrice + all.total).toFixed(0)
-        params.attachMealCount  = this.currentHotelAttaChamealBreakfast.attachMealCount
-        params.consumTaxPrice  =  parseFloat(all.taxFee).toFixed(0)
-        params.servicePrice  =  parseFloat(all.service).toFixed(0)
-        console.log(params)
+        params.attachMealId = this.sideForm.attachMealIdBreatfast;
+        params.consumePrice = parseFloat(
+          this.currentHotelAttaChamealBreakfast.consumePrice + all.total
+        ).toFixed(0);
+        params.attachMealCount = this.currentHotelAttaChamealBreakfast.attachMealCount;
+        params.consumTaxPrice = parseFloat(all.taxFee).toFixed(0);
+        params.servicePrice = parseFloat(all.service).toFixed(0);
+        console.log(params);
         // return
         this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-            this.visible = false;
-            this.$emit("getOrderDetail");
+          this.visible = false;
+          this.$emit("getOrderDetail");
         });
       }
       if (this.sideForm.attachMealIdDinner) {
-        let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner)
+        let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner);
         // console.log('2')
         // console.log(att)
         params.priceType = 18;
-        params.attachMealId = this.sideForm.attachMealIdDinner
-        params.consumePrice = parseFloat(this.currentHotelAttaChamealDinner.consumePrice + att.total).toFixed(0)
-        params.attachMealCount  = this.currentHotelAttaChamealDinner.attachMealCount
-        params.consumTaxPrice  =  parseFloat(att.taxFee).toFixed(0)
-        params.servicePrice  =  parseFloat(att.service).toFixed(0)
+        params.attachMealId = this.sideForm.attachMealIdDinner;
+        params.consumePrice = parseFloat(
+          this.currentHotelAttaChamealDinner.consumePrice + att.total
+        ).toFixed(0);
+        params.attachMealCount = this.currentHotelAttaChamealDinner.attachMealCount;
+        params.consumTaxPrice = parseFloat(att.taxFee).toFixed(0);
+        params.servicePrice = parseFloat(att.service).toFixed(0);
         // console.log(params)
         // return
         this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-        this.visible = false;
-        this.$emit("getOrderDetail");
+          this.visible = false;
+          this.$emit("getOrderDetail");
         });
       }
-
     },
 
     //加載早餐晚餐
@@ -312,7 +317,7 @@ export default {
           //     "-" +
           //     item.mealName;
           // });
-          console.log(res.list)
+          console.log(res.list);
           this.hotelattaChmealList = res.list;
           this.$forceUpdate();
         }
@@ -320,13 +325,15 @@ export default {
     },
 
     attachMealCountChange(mealTime) {
-        if (mealTime == 1 && this.sideForm.attachMealIdBreatfast) {
-            this.currentHotelAttaChamealBreakfast.consumePrice = this.currentHotelAttaChamealBreakfast.mealPrice
-                * this.currentHotelAttaChamealBreakfast.attachMealCount;
-        } else if (mealTime == 2 && this.sideForm.attachMealIdDinner) {
-            this.currentHotelAttaChamealDinner.consumePrice = this.currentHotelAttaChamealDinner.mealPrice
-                * this.currentHotelAttaChamealDinner.attachMealCount;
-        }
+      if (mealTime == 1 && this.sideForm.attachMealIdBreatfast) {
+        this.currentHotelAttaChamealBreakfast.consumePrice =
+          this.currentHotelAttaChamealBreakfast.mealPrice *
+          this.currentHotelAttaChamealBreakfast.attachMealCount;
+      } else if (mealTime == 2 && this.sideForm.attachMealIdDinner) {
+        this.currentHotelAttaChamealDinner.consumePrice =
+          this.currentHotelAttaChamealDinner.mealPrice *
+          this.currentHotelAttaChamealDinner.attachMealCount;
+      }
       //   if (this.currentHotelAttaChameal.id) {
       //   this.sideForm.consumePrice =
       //     this.currentHotelAttaChameal.mealPrice *
@@ -339,11 +346,14 @@ export default {
         return item.id == id;
       })[0];
       if (mealTime == 1) {
-          this.$F.merge(this.currentHotelAttaChamealBreakfast, node);
-          this.currentHotelAttaChamealBreakfast.consumePrice = node.mealPrice * this.currentHotelAttaChamealBreakfast.attachMealCount;;
+        this.$F.merge(this.currentHotelAttaChamealBreakfast, node);
+        this.currentHotelAttaChamealBreakfast.consumePrice =
+          node.mealPrice *
+          this.currentHotelAttaChamealBreakfast.attachMealCount;
       } else {
-          this.$F.merge(this.currentHotelAttaChamealDinner, node);
-          this.currentHotelAttaChamealDinner.consumePrice = node.mealPrice * this.currentHotelAttaChamealDinner.attachMealCount;;
+        this.$F.merge(this.currentHotelAttaChamealDinner, node);
+        this.currentHotelAttaChamealDinner.consumePrice =
+          node.mealPrice * this.currentHotelAttaChamealDinner.attachMealCount;
       }
     },
   },

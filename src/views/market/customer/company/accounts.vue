@@ -428,10 +428,12 @@ export default {
     },
     /**获取表格数据 */
     getDataList(params = {}) {
+      let storesNum = sessionStorage.storesNum;
       this.$F.merge(params, {
         paging: true,
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
+        storesNum:storesNum
       });
       this.$F.merge(params, this.searchForm);
       this.$F.doRequest(

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-17 11:16:55
+ * @LastEditTime: 2021-03-19 13:45:14
  * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
@@ -83,6 +83,7 @@ module.exports = {
         // 3:'支付宝',
         // 4:'支票',
         // 5:'会員カード'
+        5:'その他入金'
     },
     //身份类型
     card_type:{
@@ -223,7 +224,9 @@ module.exports = {
         member_card:'会員カード',
         select_member_card:'会員カードを選択して下さい',
         read_member_card:'会員カード読み取り',
-        remark:'備考',
+      remark: '備考',
+      remarkA:'支払方法を「その他入金」の場合、必ず記入してください。',
+        
         order_count:'レシート部数',
         order_print:'領収書印刷',
         pay_order_deal:'確認',

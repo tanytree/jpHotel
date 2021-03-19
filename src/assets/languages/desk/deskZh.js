@@ -115,6 +115,7 @@ module.exports = {
   home_note: '备注',
   home_noteA: '付款种类选其他时备注栏必须注明理由',
   home_noteB: '备注',
+  home_noteC: '备注',
   home_goodsGetOrder: '物品寄存领取单',
   home_printTime: '打印时间',
   home_printTimeA: '打印时间',
@@ -685,6 +686,7 @@ module.exports = {
   customer_chooseMemType: '请选择会员类型',
   customer_chooseIfcard: '请选择是否立即发卡',
   customer_inputRemark: '请填写备注',
+  customer_inputRemarkA: '请填写备注',
   customer_inputPayPrice: '请填写支付金额',
   customer_choosePayType: '请选择支付方式',
   customer_chooseOpearType: '请选择操作类型',
@@ -1102,7 +1104,7 @@ module.exports = {
   add_useSelectPro: '使用预订项目',
   add_include: '含消费税',
   add_outclude: '不含消费税',
-  add_: '',
+  add_bookProject: '预约项目',
   add_: '',
 
 }
