@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 10:06:06
+ * @LastEditTime: 2021-03-19 16:38:03
  * @FilePath: \jiudian\src\components\table\customerInfo.vue
  * @pageName: 这是--（打印客户资讯 组件）--页面
 -->
@@ -56,6 +56,12 @@
             </tr>
             <tr>
               <td>ご住所</td>
+              <td colspan="6"></td>
+              <td colspan="2">電話番号</td>
+              <td colspan="4"></td>
+            </tr>
+            <tr>
+              <td>お勤め先</td>
               <td colspan="6"></td>
               <td colspan="2">電話番号</td>
               <td colspan="4"></td>

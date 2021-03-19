@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-03-04 10:59:45
+ * @LastEditTime: 2021-03-19 16:46:12
  * @FilePath: \jiudian\src\components\table\expenseDetail.vue
  * @pageName: 这是--（消费明细预览  组件）--页面
 -->
@@ -188,7 +188,7 @@
           </table>
         </div>
         <div class="fifthTable">
-          <table border="1">
+          <!-- <table border="1">
             <tr class="fifth_rowOne">
               <td style="width:20%">ご署名</td>
               <td></td>
@@ -197,7 +197,7 @@
               <td style="width:20%">会社名</td>
               <td></td>
             </tr>
-          </table>
+          </table> -->
           <div class="fifth_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
         </div>
         <div class="lastBox">

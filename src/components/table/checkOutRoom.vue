@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-23 16:02:48
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 17:01:43
+ * @LastEditTime: 2021-03-19 17:13:43
  * @FilePath: \jiudian\src\components\table\checkOutRoom.vue
  * @pageName: 这是--（结账退房单据打印  组件）--页面
 -->
@@ -18,7 +18,7 @@
             <img src="~@/assets/images/print/good_print.png" alt="">
             <div class="urlPath">https://okura-club-hotels.com</div>
           </div>
-          <div class="title_centerBox">
+          <!-- <div class="title_centerBox">
             <div style="text-align: center">
               <span style="font-weight:bold;">ご利用明細書</span><br /><span>Bill Information</span>
             </div>
@@ -28,10 +28,10 @@
             <div>Rsv.934286904286</div>
             <div>Date：2021.02.10</div>
             <div>担当者：张三</div>
-          </div>
+          </div> -->
         </div>
         <!-- 下面是表格 -->
-        <div class="firstTable">
+        <!-- <div class="firstTable">
           <div class="nameInfo">
             <div>お名前</div>
             <div>Name 田中太朗様</div>
@@ -187,8 +187,8 @@
             </tr>
           </table>
           <div class="fourth_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
-        </div>
-        <div class="cutOff"></div>
+        </div> -->
+        <!-- <div class="cutOff"></div> -->
         <div class="fifthTabel">
           <div class="fifth_titleBox">
             <div class="fifthTitle_left">
@@ -201,7 +201,7 @@
             </div>
           </div>
           <div class="fifth_container">
-            <div>
+            <div class='fifth_leftBox'>
               <div class='boxDiv'>
                 <div class="itemDiv">
                   <table>
@@ -274,6 +274,7 @@
         </div>
         <div class="lastBox">
           <img src="~@/assets/images/print/good_print.png" alt="">
+          <div class="urlPath">https://okura-club-hotels.com</div>
         </div>
       </div>
 
@@ -502,7 +503,7 @@ export default {
         .fifth_container {
           margin-top: 10px;
           .flex(flex-start,flex-start);
-          div {
+          .fifth_leftBox {
             width: 55%;
             .boxDiv {
               border: 1px solid #727272;

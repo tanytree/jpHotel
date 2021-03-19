@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 11:28:04
+ * @LastEditTime: 2021-03-19 17:59:04
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -368,6 +368,7 @@
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
        <!-- 打印客户资讯 组件 -->
         <customerInfo  ref="customerInfo"/>
+        <priviewDocuments  ref="priviewDocuments"/>
 
     </div>
 </template>
@@ -402,6 +403,7 @@ import { mapState } from "vuex";
 const vm = window.vm;
 import checkTheDetails from '@/components/checktheDetails'
 import customerInfo from '@/components/table/customerInfo'
+import priviewDocuments from '@/components/table/priviewDocuments'
 import customer from "@/components/front/customer2";
 import guestChoose from "@/views/market/reception/checkin/guestChoose";
 import rowHouse from "@/components/front/rowHouse";
@@ -412,7 +414,8 @@ export default {
         checkTheDetails,
         customer,
         guestChoose,
-        customerInfo
+        customerInfo,
+        priviewDocuments
     },
 
     computed: {
@@ -772,7 +775,7 @@ export default {
         },
 
       openPrintDialog(){
-        this.$refs.customerInfo.openDialog();
+        this.$refs.priviewDocuments.openDialog();
       },
         //中央预定取消和预定操作
         handleCenter(type) {

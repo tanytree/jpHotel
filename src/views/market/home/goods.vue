@@ -1,4 +1,11 @@
 <!--
+ * @Date: 2021-03-18 23:05:47
+ * @Author: 陶子
+ * @LastEditTime: 2021-03-19 16:27:28
+ * @FilePath: \jiudian\src\views\market\home\goods.vue
+ * @pageName: 这是--（物品寄存）--页面
+-->
+<!--
  * @LastEditors: Please set LastEditors
  *
  -->
@@ -198,7 +205,6 @@
       </div>
     </el-dialog>
     <!-- checkPatch  寄存补打-->
-    
       <div v-if="checkPatch" class="checkThePrint" id="checkTheTwo">
         <div class="innerDialogBox">
           <div class="headerTitle">

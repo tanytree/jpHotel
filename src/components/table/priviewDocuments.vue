@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-03-01 12:17:27
+ * @LastEditTime: 2021-03-19 18:24:07
  * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
  * @pageName: 这是--（单据预览  组件）--页面
 -->
@@ -23,7 +23,7 @@
           </div>
           <div class="title_centerBox">
             <div style="text-align: center">
-              <span>お控え</span><br /><span>Payments</span>
+              <span>領収書</span><br /><span>Receipt</span>
             </div>
           </div>
           <div class="title_rightBox">
@@ -110,8 +110,8 @@
                 <div>Amount</div>
               </td>
               <td>
-                <div>備考</div>
-                <div>Note</div>
+                <div>備考入金</div>
+                <div>Note／Received</div>
               </td>
             </tr>
             <tr class="second_roTwo" v-for="i in 3" :key="i">
@@ -139,63 +139,61 @@
             </tr>
 
           </table>
-          <div class="second_bottom">小計：¥40,200</div>
-        </div>
-        <div class="thirdTable">
-          <table border="1">
-            <tr class="third_rowOne" v-for="i in 4" :key="i">
-              <td>
-                <div></div>
-              </td>
-              <td>
-                <div></div>
-              </td>
-              <td style="width:30%;">
-                <div>宿泊税</div>
-              </td>
-              <td>
-                <div>¥300</div>
-              </td>
-              <td>
-                <div>2</div>
-              </td>
-              <td>
-                <div>¥100</div>
-              </td>
-              <td style="width:20%;">
-                <div></div>
-              </td>
-            </tr>
-          </table>
-          <div class="third_bottom">合計：¥41,500</div>
         </div>
         <div class="fourthTable">
           <table border="1">
-            <tr class="fourth_rowOne" v-for="i in 4" :key="i">
+            <tr>
               <td>
-                <div></div>
+                <div>ご利用合計①</div>
+                <div>Total</div>
               </td>
+              <td>¥41,500</td>
               <td>
-                <div></div>
+                <div>ご入金合計②</div>
+                <div>Received</div>
               </td>
-              <td style="width:30%;">
-                <div>キャッシュ</div>
-              </td>
+              <td>¥2,000</td>
               <td>
-                <div></div>
+                <div>ご請求金額①−②</div>
+                <div>Amount Due</div>
               </td>
-              <td>
-                <div></div>
-              </td>
-              <td>
-                <div>¥100</div>
-              </td>
-              <td style="width:20%;">
-                <div>备注内容</div>
-              </td>
+              <td>¥39,500</td>
             </tr>
           </table>
-          <div class="third_bottom">毎度ご愛顧賜りましてありがとう御座います。</div>
+        </div>
+        <div class="fifth_container">
+          <div class='fifth_leftBox'>
+            <div class='boxDiv'>
+              <div class="itemDiv">
+                <table>
+                  <tr>
+                    <td>合計領収金額</td>
+                    <td>¥41,500</td>
+                  </tr>
+                  <tr>
+                    <td>内消費税</td>
+                    <td>（¥100）</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="itemDiv">
+                <table>
+                  <tr>
+                    <td>現金</td>
+                    <td>¥41,500</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="fifth_rightBox">
+            <div>印収</div>
+            <div style="margin-top:10px;">紙入</div>
+          </div>
+        </div>
+        <div class="textBox">
+          <div>上記の通り、正に領収いたしました。</div>
+          <div>毎度ご愛顧賜りましてありがとう御座います。</div>
         </div>
         <div class="lastBox">
           <img src="~@/assets/images/print/good_print.png" alt="">
@@ -203,18 +201,17 @@
       </div>
       <div class="bottomBox">
         <div class="bottomBox_left  noprint" @click="printDialog = false">{{$t("commons.cancel")}}</div>
-        <div class="bottomBox_right noprint"   @click="printBills">印刷</div>
+        <div class="bottomBox_right noprint" @click="printBills">印刷</div>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
- 
   data() {
     return {
       printDialog: false,
-      priviewDocumentsNum:'',
+      priviewDocumentsNum: "",
     };
   },
   mounted() {},
@@ -222,13 +219,14 @@ export default {
     openDialog(transferObj) {
       console.log(transferObj);
       console.log(this.priviewDocumentsNum);
-      this.priviewDocumentsNum = transferObj.priviewDocumentsNum;
+      if (transferObj && transferObj.priviewDocumentsNum) {
+        this.priviewDocumentsNum = transferObj.priviewDocumentsNum;
+      }
       console.log(this.priviewDocumentsNum);
       this.printDialog = true;
     },
-      printBills() {
-       this.$F.doPrint('priviewDocuments')
-
+    printBills() {
+      this.$F.doPrint("priviewDocuments");
     },
   },
 };
@@ -358,59 +356,76 @@ export default {
           margin-top: 5px;
         }
       }
-      .thirdTable {
-        margin-top: 5px;
+      .fourthTable {
+        margin-top: 10px;
         table {
           border-collapse: collapse;
           width: 100%;
           text-align: center;
           tr {
             td {
-              width: 10%;
-            }
-          }
-          .third_rowOne {
-            border-bottom: none;
-            td {
-              border-bottom: none;
-              border-top: none;
-              div {
-                margin-bottom: 5px;
-                word-break: break-all;
+              width: calc(~"100%/6");
+              padding: 5px 0;
+              &:nth-child(2n + 1) {
+                background: #ededed;
               }
             }
           }
-        }
-        .third_bottom {
-          margin-top: 5px;
         }
       }
-      .fourthTable {
-        margin-top: 5px;
-        table {
-          border-collapse: collapse;
-          width: 100%;
-          text-align: center;
-          tr {
-            td {
-              width: 10%;
-            }
-          }
-          .fourth_rowOne {
-            border-bottom: none;
-            td {
-              border-bottom: none;
-              border-top: none;
-              div {
-                margin-bottom: 5px;
-                word-break: break-all;
+      .fifth_container {
+        margin-top: 20px;
+        .flex(flex-start,center);
+        .fifth_leftBox {
+          width: 50%;
+          .boxDiv {
+            border: 1px solid #727272;
+            width: 100%;
+            .itemDiv {
+              width: 100%;
+              table {
+                width: 100%;
+                border-bottom: 1px solid #727272;
+                border-spacing: 0;
+                tr {
+                  margin: 0;
+                  padding: 0;
+                  td {
+                    word-break: break-all;
+                    padding: 5px 0;
+                    &:nth-child(1) {
+                      width: 75%;
+                      border-right: 1px solid #727272;
+                      padding-left: 15px;
+                    }
+                    &:nth-child(2) {
+                      width: 25%;
+                      text-align: center;
+                    }
+                  }
+                }
+              }
+              &:nth-last-child(1) table {
+                border: none;
               }
             }
           }
         }
-        .third_bottom {
-          margin-top: 5px;
+        .fifth_rightBox {
+          margin-left: 50px;
+          font-size: 14px;
+          color: #333333;
+          width: 100px;
+          height: 100px;
+          background: #fefd00;
+          border: 1px solid #505050;
+          .flex(center,center,column);
         }
+      }
+      .textBox {
+        color: rgba(51, 51, 51, 100);
+        font-size: 14px;
+        text-align: left;
       }
       .lastBox {
         text-align: right;
@@ -437,7 +452,6 @@ export default {
         margin-left: 15px;
         color: #fff;
         cursor: pointer;
-
       }
     }
   }

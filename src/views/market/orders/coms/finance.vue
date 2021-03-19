@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-19 11:57:31
+ * @LastEditTime: 2021-03-19 17:46:00
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -1398,6 +1398,7 @@ export default {
             this.consume_order_list();
         },
         getOrderDetail(transferObj){
+          console.log(transferObj);
             // console.log(111)
             this.$emit('getOrderDetail',transferObj)
         },

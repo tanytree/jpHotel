@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-27 16:05:16
+ * @LastEditTime: 2021-03-19 17:47:25
  * @FilePath: \jiudian\src\views\market\orders\coms\c1.vue
 -->
 <template>
@@ -241,6 +241,7 @@ export default {
             this.getDataList();
         },
         getOrderDetail(v){
+          // 如果要打印退房结账，把v传入$emit中即可
             console.log(v)
             this.$emit('getOrderDetail')
         }
