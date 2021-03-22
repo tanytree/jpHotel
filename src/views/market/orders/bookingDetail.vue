@@ -123,7 +123,7 @@ export default {
     methods: {
         //获取预定单详情信息
         getDetail(id) {
-            this.$F.doRequest(this, "/pms/checkin/reserve_check_in_detail", { reserveId: id},
+            this.$F.doRequest(this, "/pms/checkin/reserve_check_in_detail", { reserveId: id, storesNum: this.storesNum},
                 (res) => {
                     if (this.$F.getHQCode() == this.storesNum) {
                         sessionStorage.checkinDetailStoresNum = res.checkIn.storesNum;
