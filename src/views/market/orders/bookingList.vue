@@ -138,10 +138,10 @@
 
             <!--表格数据 -->
             <el-table ref="multipleTable" v-loading="loading" border :data="tableData"  height="100%" header-row-class-name="default" size="small">
-                <el-table-column prop="mobile" :label="$t('desk.readStatusDesc')" align="center">
+                <el-table-column prop="mobile" :label="$t('desk.readStatusDesc')" align="center" v-if="$F.getHQCode() != storesNum">
                     <template slot-scope="{row}">
-                        <span style="color: blue; cursor: pointer;text-decoration: underline" @click="handelDetail(row)" v-if="row.readStatus == 1">{{$t('commons.comShareFlag')['1']}}</span>
-                        <span v-if="row.readStatus == 2">{{$t('commons.comShareFlag')['2']}}</span>
+                        <span style="color: red; cursor: pointer;text-decoration: underline" @click="handelDetail(row)" v-if="row.readStatus == 1">No</span>
+                        <span v-if="row.readStatus == 2">Yes</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="mobile" :label="$t('boss.store_storeNameA')" v-if="storesNum == $F.getHQCode()">

@@ -496,7 +496,7 @@ export default {
       loadReserveProject() {
           this.$F.doRequest(
               this,
-              "pms/project/project_list",
+              "/pms/project/project_list",
               {},
               (res) => {
                   this.projectList = res.projectList;

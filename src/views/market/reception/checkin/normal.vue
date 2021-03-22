@@ -763,7 +763,7 @@ export default {
             }
             this.$F.doRequest(
                 this,
-            "pms/project/project_list",
+            "/pms/project/project_list",
                 params,
     (res) => {
                 this.projectList = res.projectList;
