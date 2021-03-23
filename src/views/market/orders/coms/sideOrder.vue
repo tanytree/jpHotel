@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-19 14:51:18
+ * @LastEditTime: 2021-03-23 11:01:36
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -18,7 +18,7 @@
 
     <!--    <div class="title_one" style="margin-bottom:10px">{{$t('desk.add_billSide')}}：{{$t('desk.add_notDo')}}</div>-->
     <el-form :model="sideForm" ref="sideForm" label-width="100px" class="demo-ruleForm">
-      <el-row>
+      <el-row v-if="currentRoom2.personList&&currentRoom2.personList.length>0">
         <el-form-item :label="$t('desk.order_addDayPrice')+':'">
           <el-input size="small" style="width:215px" type="number" v-model="sideForm.consumePrices"></el-input>
         </el-form-item>
@@ -156,8 +156,17 @@ export default {
         this.roomId = this.detailData.inRoomList[0].roomId;
       }
       this.checkInId = checkInId;
+      console.log(this.currentRoom2);
+      if (this.currentRoom2.personList&&this.currentRoom2.personList.length > 0) {
+          let tempArray = this.currentRoom2.personList.filter(person => {
+             return person.personType == 2
+            }) || [];
+
+          this.sideForm.consumePrices = tempArray[0].housePrice
+          }
       this.getData();
       this.visible = true;
+      
     },
     clickDelete() {
       this.$confirm(
@@ -247,6 +256,7 @@ export default {
       params.roomId = this.currentRoom2.roomId;
       params.roomNum = this.currentRoom2.houseNum;
       params.state = 1;
+      params.consumePrice = this.currentRoom2.personList[0].housePrice;
       // return
 
       if (this.sideForm.attachMealIdBreatfast) {
@@ -268,7 +278,7 @@ export default {
           this.$emit("getOrderDetail");
         });
       }
-      if (this.sideForm.attachMealIdDinner) {
+      else if(this.sideForm.attachMealIdDinner) {
         let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner);
         // console.log('2')
         // console.log(att)
@@ -286,6 +296,8 @@ export default {
           this.visible = false;
           this.$emit("getOrderDetail");
         });
+      }else{
+        this.$message ('请选择附餐')
       }
     },
 

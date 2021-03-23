@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-03-17 10:19:49
+ * @LastEditTime: 2021-03-23 10:01:47
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -1044,7 +1044,7 @@ module.exports = {
   editor_roomTypeAnum: '房型/房号',
   editor_: '',
   //附餐（side）
-  side_sideBooked: '附餐入账',
+  side_sideBooked: '住宿项目入账',
   side_changePackage: '更换套餐',
   side_changePackageA: '更换套餐',
   side_sidePri: '附餐价',
