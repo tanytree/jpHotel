@@ -1258,13 +1258,13 @@ const $F = {
       f.contentDocument.write(`<style type="text/css">
       .innerDialogBox {
         border-radius: 6px;
-        width:1000px;
+        width: 800px;
         background-color: #fff;
       }
       .innerDialogBox .headerTitle {
-        width:1000px;
+        width: 800px;
         background-color: #c8d8f1;
-        padding: 0px 20px;
+        padding: 10px 20px 0px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1298,21 +1298,27 @@ const $F = {
         margin-left: 10px;
         font-size: 14px;
       }
-      .innerDialogBox .contentBox .titleBox .title_centerBox {
-        align-self: flex-end;
-        margin-bottom: -35px;
-      }
-      .innerDialogBox .contentBox .titleBox .title_rightBox {
-        font-size: 14px;
-        color: #333333;
-        align-self: flex-end;
-        margin-bottom: -25px;
-      }
       .innerDialogBox .contentBox .firstTable {
-        margin-top: 50px;
+        margin-top: 30px;
       }
-      .innerDialogBox .contentBox .firstTable .nameInfo {
+      .innerDialogBox .contentBox .firstTable .first_topBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .innerDialogBox .contentBox .firstTable .first_topBox .nameInfo {
         font-weight: 500;
+      }
+      .innerDialogBox .contentBox .firstTable .first_topBox .titleConter {
+        margin-right: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .innerDialogBox .contentBox .firstTable .first_topBox .titleConter .titleText {
+        font-weight: bold;
+        font-size: 24px;
       }
       .innerDialogBox .contentBox .firstTable .firstBox {
         margin-top: 5px;
@@ -1323,67 +1329,53 @@ const $F = {
       }
       .innerDialogBox .contentBox .firstTable .firstBox table {
         border-collapse: collapse;
-        text-align: center;
+        text-align: left;
+        width: 400px;
       }
-      .innerDialogBox .contentBox .firstTable .firstBox table tr td {
-        width: 100px;
-      }
-      .innerDialogBox .contentBox .firstTable .firstBox table .row_one {
-        background: #ededed;
-      }
-      .innerDialogBox .contentBox .firstTable .firstBox table .row_two td {
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_one td {
+        box-sizing: border-box;
+        padding: 15px;
         word-break: break-all;
       }
+      .innerDialogBox .contentBox .firstTable .firstBox table .row_one td:nth-child(1) {
+        width: 260px;
+      }
       .innerDialogBox .contentBox .firstTable .firstBox .rightOfTable {
-        margin-left: 25px;
+        margin-left: 55px;
       }
-      .innerDialogBox .contentBox .secondTable {
+      .innerDialogBox .contentBox .showMoney {
         margin-top: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: row;
       }
-      .innerDialogBox .contentBox .secondTable table {
-        border-collapse: collapse;
-        width: 100%;
-        text-align: center;
+      .innerDialogBox .contentBox .showMoney .showLeft {
+        width: 400px;
       }
-      .innerDialogBox .contentBox .secondTable table tr {
-        width: 100%;
+      .innerDialogBox .contentBox .showMoney .showLeft .moneyNum {
+        padding-bottom: 8px;
+        border-bottom: 1px solid #5f5f5f;
       }
-      .innerDialogBox .contentBox .secondTable table tr:nth-child(1) {
-        background: #EDEDED;
+      .innerDialogBox .contentBox .showMoney .showLeft .explain {
+        margin-top: 5px;
+        color: rgba(51, 51, 51, 100);
+        font-size: 14px;
       }
-      .innerDialogBox .contentBox .secondTable table tr:nth-child(n+1) td {
-        padding: 8px 0;
-        margin-bottom: 10px;
-      }
-      .innerDialogBox .contentBox .secondTable table tr td:nth-child(1) {
-        width: 20%;
-      }
-      .innerDialogBox .contentBox .thirdTable {
-        margin-top: 20px;
-      }
-      .innerDialogBox .contentBox .thirdTable table {
-        border-collapse: collapse;
-        width: 100%;
-        text-align: center;
-      }
-      .innerDialogBox .contentBox .thirdTable table tr {
-        width: 100%;
-      }
-      .innerDialogBox .contentBox .thirdTable table tr td {
-        padding: 8px 0;
-      }
-      .innerDialogBox .contentBox .thirdTable table tr td:nth-child(1) {
-        width: 20%;
-      }
-      .innerDialogBox .contentBox .thirdTable table .third_bottom {
-        margin-top:20px;
+      .innerDialogBox .contentBox .showMoney .showRight {
+        margin-left: 55px;
       }
       .innerDialogBox .contentBox .lastBox {
+        margin-top:20px;
         text-align: right;
       }
       .innerDialogBox .contentBox .lastBox img {
         width: 260px;
         height: 73px;
+      }
+      .innerDialogBox .contentBox .lastBox .urlPath {
+        margin-right: 10px;
+        font-size: 14px;
       }
       .innerDialogBox .bottomBox {
         display: flex;
@@ -1407,7 +1399,7 @@ const $F = {
         color: #fff;
         cursor: pointer;
       }
-
+      
       .noprint{
         display:none;
       }
