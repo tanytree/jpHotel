@@ -69,7 +69,7 @@
           </el-select>
         </el-form-item>
       </el-row>
-     
+
       <el-row>
         <el-form-item :label="$t('desk.home_note') + ':'" prop="desc">
           <el-input type="textarea" v-model="sideForm.remark" style="width:350px"></el-input>
@@ -166,7 +166,7 @@ export default {
           }
       this.getData();
       this.visible = true;
-      
+
     },
     clickDelete() {
       this.$confirm(
@@ -244,6 +244,7 @@ export default {
       return pms;
     },
 
+
     consumeOper(params = {}) {
       // if (!this.currentHotelAttaChameal.id) {
       //   return this.$message({
@@ -251,54 +252,116 @@ export default {
       //     message: this.$t("commons.request_success"),
       //   });
       // }
-      params = this.sideForm;
-      params.checkInId = this.checkInId;
-      params.roomId = this.currentRoom2.roomId;
-      params.roomNum = this.currentRoom2.houseNum;
-      params.state = 1;
-      params.consumePrice = this.currentRoom2.personList[0].housePrice;
-      // return
+        if(!!this.sideForm.attachMealIdDinner || !!this.sideForm.attachMealIdBreatfast){
+          params = this.sideForm;
+          params.checkInId = this.checkInId;
+          params.roomId = this.currentRoom2.roomId;
+          params.roomNum = this.currentRoom2.houseNum;
+          params.state = 1;
+          params.consumePrice = this.currentRoom2.personList[0].housePrice;
+          // 加收全天房费
+          let info = {
+             checkInId:this.checkInId,
+             roomId:this.currentRoom2.roomId,
+             roomNum:this.currentRoom2.houseNum,
+             state:1
+          }
+          let tax = this.tax
+          let consumeTax = tax.consumeTax ?  tax.consumeTax / 100 : 0  //in对应的税率
+          let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
+          let consumePrices = params.consumePrice
+          let priceType =  5
+          let service = 0 //服务费
+          let taxFee = 0 //消费税
+          if(priceType == 5){
+              if(this.currentRoom2.taxStatus == 1){
+                  if(this.currentRoom2.seviceStatus == 1){
+                     //不包含服务税
+                     //  1,1,fasle,in
+                      taxFee += ( parseFloat(consumePrices) + parseFloat(consumePrices * servicePrice) ) * consumeTax
+                  }else{
+                     //1,2,false,in
+                     taxFee += parseFloat(consumePrices * consumeTax)
+                  }
+              }
+              //不包含服务税
+              if(this.currentRoom2.seviceStatus == 1){
+                  //不包含消费税
+                  if(this.currentRoom2.taxStatus == 1){
+                      service += parseFloat(consumePrices * servicePrice)
+                  }else{
+                      //包含消费税
+                      let f = 1.00 + consumeTax
+                      service += parseFloat((consumePrices / f) * servicePrice)
+                  }
+              }
+              let pms = {
+                  service: service ? parseFloat(service).toFixed(0) :0,
+                  taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
+              }
+          }
+          info.consumTaxPrice  =  parseFloat(taxFee).toFixed(0)
+          info.servicePrice  = parseFloat(service).toFixed(0)
+          let p = parseFloat(consumePrices || 0)  +  parseFloat(service) +  parseFloat(taxFee)
+          info.consumePrice =  parseFloat(p).toFixed(0)
+          info.priceType = priceType
+          info.payPrice = ''
+          this.$F.doRequest(this, "/pms/consume/consume_oper", info, (res) => {
+          // this.$emit("getOrderDetail"); //暂时不执行回调订单详情等附餐选择接口完毕后重新刷新接口即可
+          });
+          // 加收全天房费
 
-      if (this.sideForm.attachMealIdBreatfast) {
-        let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast);
-        // console.log('1')
-        // console.log(all)
-        params.priceType = 17;
-        params.attachMealId = this.sideForm.attachMealIdBreatfast;
-        params.consumePrice = parseFloat(
-          this.currentHotelAttaChamealBreakfast.consumePrice + all.total
-        ).toFixed(0);
-        params.attachMealCount = this.currentHotelAttaChamealBreakfast.attachMealCount;
-        params.consumTaxPrice = parseFloat(all.taxFee).toFixed(0);
-        params.servicePrice = parseFloat(all.service).toFixed(0);
-        console.log(params);
-        // return
-        this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-          this.visible = false;
-          this.$emit("getOrderDetail");
-        });
-      }
-      else if(this.sideForm.attachMealIdDinner) {
-        let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner);
-        // console.log('2')
-        // console.log(att)
-        params.priceType = 18;
-        params.attachMealId = this.sideForm.attachMealIdDinner;
-        params.consumePrice = parseFloat(
-          this.currentHotelAttaChamealDinner.consumePrice + att.total
-        ).toFixed(0);
-        params.attachMealCount = this.currentHotelAttaChamealDinner.attachMealCount;
-        params.consumTaxPrice = parseFloat(att.taxFee).toFixed(0);
-        params.servicePrice = parseFloat(att.service).toFixed(0);
-        // console.log(params)
-        // return
-        this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-          this.visible = false;
-          this.$emit("getOrderDetail");
-        });
-      }else{
-        this.$message ('请选择附餐')
-      }
+
+          params = this.sideForm;
+          params.checkInId = this.checkInId;
+          params.roomId = this.currentRoom2.roomId;
+          params.roomNum = this.currentRoom2.houseNum;
+          params.state = 1;
+          params.consumePrice = this.currentRoom2.personList[0].housePrice;
+          // return
+
+          if (this.sideForm.attachMealIdBreatfast) {
+            let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast);
+            // console.log('1')
+            // console.log(all)
+            params.priceType = 17;
+            params.attachMealId = this.sideForm.attachMealIdBreatfast;
+            params.consumePrice = parseFloat(
+              this.currentHotelAttaChamealBreakfast.consumePrice + all.total
+            ).toFixed(0);
+            params.attachMealCount = this.currentHotelAttaChamealBreakfast.attachMealCount;
+            params.consumTaxPrice = parseFloat(all.taxFee).toFixed(0);
+            params.servicePrice = parseFloat(all.service).toFixed(0);
+            console.log(params);
+            // return
+            this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+              this.visible = false;
+              this.$emit("getOrderDetail");
+            });
+          }
+          if(this.sideForm.attachMealIdDinner) {
+            let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner);
+            // console.log('2')
+            // console.log(att)
+            params.priceType = 18;
+            params.attachMealId = this.sideForm.attachMealIdDinner;
+            params.consumePrice = parseFloat(
+              this.currentHotelAttaChamealDinner.consumePrice + att.total
+            ).toFixed(0);
+            params.attachMealCount = this.currentHotelAttaChamealDinner.attachMealCount;
+            params.consumTaxPrice = parseFloat(att.taxFee).toFixed(0);
+            params.servicePrice = parseFloat(att.service).toFixed(0);
+            // console.log(params)
+            // return
+            this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+              this.visible = false;
+              this.$emit("getOrderDetail");
+            });
+          }
+        }else{
+            this.$message ('请选择附餐');
+            return false
+        }
     },
 
     //加載早餐晚餐
