@@ -77,7 +77,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                   :label="$t('food.common.curstom_info')">
                   <template slot-scope="scope">
                       <span v-if="scope.row.memberCard">
@@ -88,7 +88,7 @@
                       </span>
                       <span v-else>{{$t('food.reset.guests')}}</span>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column :label="$t('food.common.order_from')">
                   <template slot-scope="scope">
                   {{ scope.row.orderSource ? getSource(scope.row.orderSource) : ''}}</template>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-24 11:45:52
+ * @LastEditTime: 2021-03-24 14:26:36
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -20,7 +20,7 @@
     <el-form :model="sideForm" ref="sideForm" label-width="100px" class="demo-ruleForm">
       <el-row v-if="currentRoom2.personList&&currentRoom2.personList.length>0">
         <el-form-item :label="$t('desk.order_addDayPrice')+':'">
-          <el-input size="small" style="width:215px" type="number" @input="updeInputNum" v-model="sideForm.consumePrices"></el-input>
+          <el-input size="small" style="width:215px" type="number" @input="updeInputNum" v-model="roomPrice"></el-input>
         </el-form-item>
       </el-row>
 
@@ -119,6 +119,8 @@ export default {
       checkInId: "",
 
       tableData: [],
+      roomPrice:0,    //这是房费，可以输入的
+
     };
   },
   created() {
@@ -165,7 +167,8 @@ export default {
              return person.personType == 2
             }) || [];
 
-          this.sideForm.consumePrices = tempArray[0].housePrice
+          // this.sideForm.consumePrices = tempArray[0].housePrice
+          this.roomPrice = tempArray[0].housePrice;
           }
       this.getData();
       this.visible = true;
@@ -261,7 +264,8 @@ export default {
           params.roomId = this.currentRoom2.roomId;
           params.roomNum = this.currentRoom2.houseNum;
           params.state = 1;
-          params.consumePrice = this.currentRoom2.personList[0].housePrice;
+          // params.consumePrice = this.currentRoom2.personList[0].housePrice;
+          params.consumePrice = this.roomPrice;
           // 加收全天房费
           let info = {
              checkInId:this.checkInId,
@@ -320,7 +324,8 @@ export default {
           params.roomId = this.currentRoom2.roomId;
           params.roomNum = this.currentRoom2.houseNum;
           params.state = 1;
-          params.consumePrice = this.currentRoom2.personList[0].housePrice;
+          // params.consumePrice = this.currentRoom2.personList[0].housePrice;
+          params.consumePrice = this.roomPrice;
           // return
 
           if (this.sideForm.attachMealIdBreatfast) {
